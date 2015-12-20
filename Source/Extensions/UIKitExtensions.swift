@@ -101,6 +101,24 @@ public extension UIView {
         gradient.endPoint = endPoint
         layer.mask = gradient
     }
+
+    @IBInspectable public var cornerRadius: CGFloat {
+        get { return layer.cornerRadius }
+        set {
+            layer.cornerRadius = newValue
+            layer.masksToBounds = newValue > 0
+        }
+    }
+
+    @IBInspectable public var borderWidth: CGFloat {
+        get { return layer.borderWidth }
+        set { layer.borderWidth = newValue }
+    }
+
+    @IBInspectable public var borderColor: UIColor {
+        get { return layer.borderColor != nil ? UIColor(CGColor: layer.borderColor!) : UIColor.blackColor() }
+        set { layer.borderColor = newValue.CGColor }
+    }
 }
 
 // MARK: UIViewController Extension
