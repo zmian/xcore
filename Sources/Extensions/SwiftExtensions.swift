@@ -92,6 +92,21 @@ public extension String {
     public var stringByDeletingLastPathComponent: String { return (self as NSString).stringByDeletingLastPathComponent }
     public var stringByDeletingPathExtension: String { return (self as NSString).stringByDeletingPathExtension }
     public var pathExtension: String { return (self as NSString).pathExtension }
+
+    /// Decode specified `Base64` string
+    public init?(base64: String) {
+        if let decodedData   = NSData(base64EncodedString: base64, options: NSDataBase64DecodingOptions(rawValue: 0)),
+           let decodedString = String(data: decodedData, encoding: NSUTF8StringEncoding) {
+            self = decodedString
+        } else {
+            return nil
+        }
+    }
+
+    /// Returns `Base64` representation of `self`.
+    public var base64: String? {
+        return dataUsingEncoding(NSUTF8StringEncoding)?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+    }
 }
 
 public extension Int {

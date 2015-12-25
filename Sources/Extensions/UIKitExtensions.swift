@@ -392,6 +392,20 @@ public extension UIImageView {
 // MARK: UIImage Extension
 
 public extension UIImage {
+    /// Creates an image from specified color and size
+    ///
+    /// Default size is `GSizeMake(50, 50)`
+    public convenience init(color: UIColor, size: CGSize = CGSizeMake(50, 50)) {
+        let rect = CGRect(origin: CGPointZero, size: size)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        CGContextSetFillColorWithColor(context, color.CGColor)
+        CGContextFillRect(context, rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        self.init(CGImage: image.CGImage!)
+    }
+
     /// Identical to UIImage:named but does not cache the images in memory.
     /// Great for image based animations to quickly discard objects after use.
     public convenience init?(fileName: String) {
