@@ -12,7 +12,7 @@ public final class dispatch {
         }
 
         public class func main(block: dispatch_block_t) {
-            dispatch_async(dispatch_get_main_queue(), block)
+            dispatch_async(dispatch_get_main_queue(), dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, block))
         }
     }
 
