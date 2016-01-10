@@ -540,6 +540,16 @@ public extension UITableView {
 // MARK: UIFont Extension
 
 public extension UIFont {
+    public static func printAvailableFontNames() {
+        for family in UIFont.familyNames() {
+            let count = UIFont.fontNamesForFamilyName(family).count
+            print("▿ \(family) (\(count) \(count == 1 ? "font" : "fonts"))")
+            for name in UIFont.fontNamesForFamilyName(family) {
+                print("  - \(name)")
+            }
+        }
+    }
+
     public var monospacedDigitFont: UIFont {
         let oldFontDescriptor = fontDescriptor()
         let newFontDescriptor = oldFontDescriptor.monospacedDigitFontDescriptor
