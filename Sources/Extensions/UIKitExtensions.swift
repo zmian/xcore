@@ -121,6 +121,30 @@ public extension UIView {
     }
 }
 
+// MARK: UIButton Extension
+
+extension UIButton {
+    /// Add spacing between `text` and `image` while preserving the `intrinsicContentSize` and respecting `sizeToFit`
+    @IBInspectable public var textImageSpacing: CGFloat {
+        get {
+            let (left, right) = (imageEdgeInsets.left, imageEdgeInsets.right)
+
+            if left + right == 0 {
+                return right * 2
+            } else {
+                return 0
+            }
+        }
+
+        set(spacing) {
+            let insetAmount   = spacing / 2
+            imageEdgeInsets   = UIEdgeInsets(top: 0, left: -insetAmount, bottom: 0, right: insetAmount)
+            titleEdgeInsets   = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: -insetAmount)
+            contentEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
+        }
+    }
+}
+
 // MARK: UIViewController Extension
 
 public extension UIViewController {
