@@ -23,9 +23,25 @@
 //
 
 import UIKit
+import SafariServices
 
 public func ControllerFromStoryboard(identifier: String) -> UIViewController {
     return UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(identifier)
+}
+
+/// Attempts to open the resource at the specified URL.
+///
+/// Requests are made using `SafariViewController` if available; otherwise it uses `UIApplication:openURL`
+///
+/// - parameter presentingViewController: A view controller that wants to open the url.
+/// - parameter url:                      The url to open.
+public func openURL(presentingViewController: UIViewController, url: NSURL) {
+    if #available(iOS 9.0, *) {
+        let svc = SFSafariViewController(URL: url)
+        presentingViewController.presentViewController(svc, animated: true, completion: nil)
+    } else {
+        UIApplication.sharedApplication().openURL(url)
+    }
 }
 
 /// Displays `UIAlertController` with the given `title` and `message`, and an OK button to dismiss it.
@@ -403,10 +419,10 @@ public extension UIImageView {
             image = endImage
         }
         startAnimating()
-        dispatch_after(seconds(animationDuration), dispatch_get_main_queue()) {[weak self] in
+        delayBy(animationDuration) {[weak self] in
             self?.stopAnimating()
             self?.animationImages = nil
-            dispatch_after(seconds(0.5), dispatch_get_main_queue()) {
+            delayBy(0.5) {
                 completion?()
             }
         }
@@ -725,10 +741,4 @@ public extension NSBundle {
     public static var appBuildNumber: String {
         return NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String ?? ""
     }
-}
-
-// MARK: Private Helpers
-
-private func seconds(interval: NSTimeInterval) -> dispatch_time_t {
-    return dispatch_time(DISPATCH_TIME_NOW, Int64(interval * Double(NSEC_PER_SEC)))
 }
