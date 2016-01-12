@@ -173,8 +173,8 @@ extension SequenceType {
     ///
     /// - returns: Return an `Array` containing only the unique elements of `self`,
     /// in order, that satisfy the predicate `uniqueProperty`.
-    public func unique(uniqueProperty: (Self.Generator.Element) -> String) -> [Self.Generator.Element] {
-        var seen: [String: Bool] = [:]
+    public func unique<T: Hashable>(uniqueProperty: (Self.Generator.Element) -> T) -> [Self.Generator.Element] {
+        var seen: [T: Bool] = [:]
         return filter { seen.updateValue(true, forKey: uniqueProperty($0)) == nil }
     }
 }
