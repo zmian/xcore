@@ -157,7 +157,24 @@ public extension Array {
     }
 }
 
-public func uniq<S: SequenceType, E: Hashable where E == S.Generator.Element>(source: S) -> [E] {
-    var seen: [E: Bool] = [:]
-    return source.filter { seen.updateValue(true, forKey: $0) == nil }
+extension SequenceType where Self.Generator.Element: Hashable {
+    /// Return an `Array` containing only the unique elements of `self` in order.
+    public func unique() -> [Self.Generator.Element] {
+        var seen: [Self.Generator.Element: Bool] = [:]
+        return filter { seen.updateValue(true, forKey: $0) == nil }
+    }
+}
+
+extension SequenceType {
+    /// Return an `Array` containing only the unique elements of `self`,
+    /// in order, where `unique` criteria is determined by the `uniqueProperty` block.
+    ///
+    /// - parameter uniqueProperty: `unique` criteria is determined by the value returned by this block.
+    ///
+    /// - returns: Return an `Array` containing only the unique elements of `self`,
+    /// in order, that satisfy the predicate `uniqueProperty`.
+    public func unique(uniqueProperty: (Self.Generator.Element) -> String) -> [Self.Generator.Element] {
+        var seen: [String: Bool] = [:]
+        return filter { seen.updateValue(true, forKey: uniqueProperty($0)) == nil }
+    }
 }
