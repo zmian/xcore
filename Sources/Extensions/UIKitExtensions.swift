@@ -375,6 +375,29 @@ public extension UIColor {
     public func alpha(value: CGFloat) -> UIColor {
         return self.colorWithAlphaComponent(value)
     }
+
+    // Credit: http://stackoverflow.com/a/31466450
+
+    public func lighter(amount: CGFloat = 0.25) -> UIColor {
+        return hueColorWithBrightness(1 + amount)
+    }
+
+    public func darker(amount: CGFloat = 0.25) -> UIColor {
+        return hueColorWithBrightness(1 - amount)
+    }
+
+    private func hueColorWithBrightness(amount: CGFloat) -> UIColor {
+        var hue: CGFloat        = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat      = 0
+
+        if getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) {
+            return UIColor(hue: hue, saturation: saturation, brightness: brightness * amount, alpha: alpha)
+        } else {
+            return self
+        }
+    }
 }
 
 // MARK: UIImageView Extension
