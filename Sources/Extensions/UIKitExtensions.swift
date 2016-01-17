@@ -164,6 +164,23 @@ extension UIButton {
         super.tintColorDidChange()
         imageView?.tintColor = tintColor
     }
+
+    public convenience init(image: UIImage?, handler: ((sender: UIButton) -> Void)? = nil) {
+        self.init(type: UIButtonType.Custom)
+        setImage(image, forState: .Normal)
+        imageView?.contentMode = .ScaleAspectFit
+        imageView?.tintColor   = tintColor
+        if let handler = handler {
+            addAction(.TouchUpInside, handler: handler)
+        }
+    }
+
+    public convenience init(imageNamed: String, handler: ((sender: UIButton) -> Void)? = nil) {
+        self.init(image: nil, handler: handler)
+        imageView?.remoteOrLocalImage(imageNamed) {[weak self] image in
+            self?.setImage(image, forState: UIControlState.Normal)
+        }
+    }
 }
 
 // MARK: UIViewController Extension
