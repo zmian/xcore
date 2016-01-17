@@ -159,6 +159,11 @@ extension UIButton {
             contentEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
         }
     }
+
+    public override func tintColorDidChange() {
+        super.tintColorDidChange()
+        imageView?.tintColor = tintColor
+    }
 }
 
 // MARK: UIViewController Extension
