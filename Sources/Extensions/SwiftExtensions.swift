@@ -41,8 +41,13 @@ public extension String {
 
     public var count: Int { return characters.count }
 
-    /// Normalize whitespaces in the string.
-    public var normalizeWhitespaces: String {
+    /// Returns an array of strings at new lines.
+    public var lines: [String] {
+        return componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
+    }
+
+    /// Trims white space and new line characters in `self`.
+    public func trim() -> String {
         return replace("[ ]+", replacement: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
     }
 
@@ -128,19 +133,13 @@ public extension Array {
     ///
     /// - returns: true if removed; false otherwise
     public mutating func removeObject<U: Equatable>(object: U) -> Bool {
-        for (idx, objectToCompare) in self.enumerate() {
-            if let to = objectToCompare as? U {
-                if object == to {
-                    self.removeAtIndex(idx)
-                    return true
-                }
+        for (idx, objectToCompare) in enumerate() {
+            if let to = objectToCompare as? U where object == to {
+                removeAtIndex(idx)
+                return true
             }
         }
         return false
-    }
-
-    public mutating func appendAll(collection: [Element]) {
-        self += collection
     }
 
     /// Returns a random subarray of given length
@@ -154,6 +153,12 @@ public extension Array {
 
         let index = Int(arc4random_uniform(UInt32(count - size)))
         return Array(self[index..<(size + index)])
+    }
+}
+
+extension RangeReplaceableCollectionType {
+    public mutating func appendAll(collection: [Self.Generator.Element]) {
+        appendContentsOf(collection)
     }
 }
 

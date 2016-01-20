@@ -165,9 +165,10 @@ extension UIButton {
         imageView?.tintColor = tintColor
     }
 
-    public convenience init(image: UIImage?, handler: ((sender: UIButton) -> Void)? = nil) {
+    public convenience init(image: UIImage?, highlightedImage: UIImage? = nil, handler: ((sender: UIButton) -> Void)? = nil) {
         self.init(type: UIButtonType.Custom)
         setImage(image, forState: .Normal)
+        setImage(highlightedImage, forState: .Highlighted)
         imageView?.contentMode = .ScaleAspectFit
         imageView?.tintColor   = tintColor
         if let handler = handler {
@@ -368,9 +369,9 @@ public extension UITabBarController {
 // MARK: UILabel Extension
 
 public extension UILabel {
-    public func setText(text: String, animated: Bool) {
+    public func setText(text: String, animated: Bool, duration: NSTimeInterval = 0.5) {
         if animated && text != self.text {
-            UIView.transitionWithView(self, duration: 0.5, options: [.CurveEaseInOut, .TransitionCrossDissolve], animations: {[weak self] in
+            UIView.transitionWithView(self, duration: duration, options: [.CurveEaseInOut, .TransitionCrossDissolve], animations: {[weak self] in
                 self?.text = text
             }, completion: nil)
         } else {

@@ -36,7 +36,7 @@ public struct JSONHelpers {
             }
         } else {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                let json = self.parse(named)
+                let json = self.parse(fileName: named)
                 dispatch_async(dispatch_get_main_queue()) {
                     callback(json)
                 }
@@ -45,7 +45,7 @@ public struct JSONHelpers {
     }
 
     /// Parse local JSON file from `mainBundle`
-    public static func parse(fileName: String) -> AnyObject? {
+    public static func parse(fileName fileName: String) -> AnyObject? {
         if let filePath = NSBundle.mainBundle().pathForResource((fileName as NSString).stringByDeletingPathExtension, ofType: "json") {
             if let data = NSData(contentsOfFile: filePath) {
                 return parse(data)
@@ -64,6 +64,15 @@ public struct JSONHelpers {
     /// Parse NSData to JSON
     public static func parse(data: NSData) -> AnyObject? {
         return try? NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+    }
+
+    /// Parse String to JSON
+    public static func parse(jsonString jsonString: String) -> AnyObject? {
+        if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding) {
+            return try? NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+        } else {
+            return nil
+        }
     }
 
     /// Convert value to a JSON string
