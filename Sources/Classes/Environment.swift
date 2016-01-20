@@ -47,11 +47,11 @@ public class Environment {
     public private(set) var type = Type.Production // Safest default
 
     public init() {
-        #if ENVIRONMENT_Release
+        #if XCORE_ENVIRONMENT_Release
             type = .Production
-        #elseif ENVIRONMENT_Staging
+        #elseif XCORE_ENVIRONMENT_Staging
             type = .Staging
-        #elseif ENVIRONMENT_Debug
+        #elseif XCORE_ENVIRONMENT_Debug
             type = .Development
         #endif
 

@@ -13,7 +13,7 @@ pod 'Xcore', '~> 1.0'
 ```
 
 ### Manual Installation
-Drag the classes from the *Source* folder directly into your project.
+Drag the classes from the *Sources* folder directly into your project.
 
 ## Author
 
