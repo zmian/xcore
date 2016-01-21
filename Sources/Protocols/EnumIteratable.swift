@@ -60,7 +60,7 @@ public extension EnumIteratable {
     ///     South: '1'
     ///     East: '2'
     ///     West: '3'
-    static func enumerate() -> AnyGenerator<EnumType> {
+    private static func enumerate() -> AnyGenerator<EnumType> {
         var i = 0
         return anyGenerator {
             let next = withUnsafePointer(&i) { UnsafePointer<EnumType>($0).memory }
