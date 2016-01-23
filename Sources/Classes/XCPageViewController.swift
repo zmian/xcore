@@ -139,10 +139,10 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
 
     // MARK: Navigation
 
-    public func setCurrentPage(index: Int) {
-        guard index >= viewControllers.count else { return }
+    public func setCurrentPage(index: Int, direction: UIPageViewControllerNavigationDirection = .Forward, animated: Bool = false, completion: ((Bool) -> Void)? = nil) {
+        guard viewControllers.count > index else { return }
         let viewControllerAtIndex = viewControllers[index]
-        pageViewController.setViewControllers([viewControllerAtIndex], direction: .Forward, animated: false, completion: nil)
+        pageViewController.setViewControllers([viewControllerAtIndex], direction: direction, animated: animated, completion: completion)
         pageControl.currentPage = index
     }
 
