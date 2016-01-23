@@ -390,6 +390,20 @@ public extension UIColor {
         self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
 
+    @nonobjc
+    public convenience init(hex: String, alpha: CGFloat = 1.0) {
+        var hexString = hex
+        if hexString.hasPrefix("#"), let cleanString = hexString.stripPrefix("#") {
+            hexString = cleanString
+        }
+
+        if let hex = Int(hexString, radix: 16) {
+            self.init(hex: hex, alpha: alpha)
+        } else {
+            self.init(hex: 0x000000, alpha: alpha)
+        }
+    }
+
     public var alpha: CGFloat {
         get { return CGColorGetAlpha(self.CGColor) }
         set { self.colorWithAlphaComponent(newValue) }
