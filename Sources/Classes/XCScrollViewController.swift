@@ -33,21 +33,21 @@ public class XCScrollViewController: UIViewController {
     }
 
     private func setupContentView() {
-        self.view.addSubview(contentView)
-        self.view.addConstraints(NSLayoutConstraint.constraintsForViewToFillSuperview(contentView))
+        view.addSubview(contentView)
+        view.addConstraints(NSLayoutConstraint.constraintsForViewToFillSuperview(contentView))
         resolveContentSize()
     }
 
     private func resolveContentSize() {
         let scrollViewWidthResolver = UIView()
         scrollViewWidthResolver.hidden = true
-        self.contentView.addSubview(scrollViewWidthResolver)
-        self.contentView.addConstraints(NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(scrollViewWidthResolver))
-        self.contentView.addConstraint(NSLayoutConstraint(item: scrollViewWidthResolver, attribute: .Top, relatedBy: .Equal, toItem: self.contentView, attribute: .Top, multiplier: 1, constant: 0))
-        scrollViewWidthResolver.addConstraint(NSLayoutConstraint(item: scrollViewWidthResolver, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 1))
+        contentView.addSubview(scrollViewWidthResolver)
+        contentView.addConstraints(NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(scrollViewWidthResolver))
+        contentView.addConstraint(NSLayoutConstraint(item: scrollViewWidthResolver, attribute: .Top, toItem: contentView))
+        scrollViewWidthResolver.addConstraint(NSLayoutConstraint(item: scrollViewWidthResolver, height: 1))
 
         // Now the important part
         // Setting the `scrollViewWidthResolver` width to `self.view` width correctly defines the content width of the scroll view
-        self.view.addConstraint(NSLayoutConstraint(item: scrollViewWidthResolver, attribute: .Width, relatedBy: .Equal, toItem: self.view, attribute: .Width, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: scrollViewWidthResolver, attribute: .Width, toItem: view))
     }
 }

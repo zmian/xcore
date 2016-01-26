@@ -62,7 +62,7 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
     public var transitionStyle = UIPageViewControllerTransitionStyle.Scroll
     public var navigationOrientation = UIPageViewControllerNavigationOrientation.Horizontal
 
-    private var didChangeCurrentPage: ((index: Int) -> ())?
+    private var didChangeCurrentPage: ((index: Int) -> Void)?
     /// Closure for listening page change events in subclasses
     public func didChangeCurrentPage(callback: ((index: Int) -> Void)? = nil) {
         didChangeCurrentPage = callback
@@ -107,11 +107,11 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
 
         switch pageControlPosition {
             case .Top:
-                view.addConstraint(NSLayoutConstraint(item: pageControl, attribute: .Top, toItem: self.view, attribute: .Top))
+                view.addConstraint(NSLayoutConstraint(item: pageControl, attribute: .Top, toItem: view))
             case .Center:
-                view.addConstraint(NSLayoutConstraint(item: pageControl, attribute: .CenterY, toItem: self.view, attribute: .CenterY))
+                view.addConstraint(NSLayoutConstraint(item: pageControl, attribute: .CenterY, toItem: view))
             case .Bottom:
-                view.addConstraint(NSLayoutConstraint(item: pageControl, attribute: .Bottom, toItem: self.view, attribute: .Bottom))
+                view.addConstraint(NSLayoutConstraint(item: pageControl, attribute: .Bottom, toItem: view))
         }
     }
 
