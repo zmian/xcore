@@ -26,8 +26,16 @@ import UIKit
 import SafariServices
 import ObjectiveC
 
-public func ControllerFromStoryboard(identifier: String) -> UIViewController {
-    return UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(identifier)
+/// Instantiates and returns the view controller with the specified identifier for the specified storyboard resource file.
+///
+/// - parameter identifier:     An identifier string that uniquely identifies the view controller in the storyboard file.
+/// - parameter storyboardName: The name of the storyboard resource file without the filename extension. Default is `Main`
+/// - parameter bundle:         The bundle containing the storyboard file and its related resources. If you specify nil,
+///   this method looks in the main bundle of the current application. Default is `nil`.
+///
+/// - returns: The view controller corresponding to the specified identifier string.
+public func ControllerFromStoryboard(identifier: String, storyboardName: String = "Main", bundle: NSBundle? = nil) -> UIViewController {
+    return UIStoryboard(name: storyboardName, bundle: bundle).instantiateViewControllerWithIdentifier(identifier)
 }
 
 /// Attempts to open the resource at the specified URL.
@@ -67,25 +75,25 @@ public extension UIAlertController {
 public extension UIView {
 
     /// Spring animation with completion handler
-    public static func animate(duration: NSTimeInterval = 0.6, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: UIViewAnimationOptions = .AllowUserInteraction, animations: (Void -> Void), completion: ((Bool) -> Void)?) {
+    public static func animate(duration: NSTimeInterval = 0.6, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: UIViewAnimationOptions = .AllowUserInteraction, animations: (() -> Void), completion: ((Bool) -> Void)?) {
         UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: {
             animations()
         }, completion: completion)
     }
 
     /// Spring animation
-    public static func animate(duration: NSTimeInterval = 0.6, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: UIViewAnimationOptions = .AllowUserInteraction, animations: (Void -> Void)) {
+    public static func animate(duration: NSTimeInterval = 0.6, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: UIViewAnimationOptions = .AllowUserInteraction, animations: (() -> Void)) {
         UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: {
             animations()
         }, completion: nil)
     }
 
     public func roundCorners(corners: UIRectCorner, radius: CGFloat) {
-        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        let mask = CAShapeLayer()
-        mask.path = path.CGPath
-        self.layer.mask = mask
-        self.layer.masksToBounds = true
+        let path             = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask            = CAShapeLayer()
+        mask.path           = path.CGPath
+        layer.mask          = mask
+        layer.masksToBounds = true
     }
 
     public var viewController: UIViewController? {
@@ -193,11 +201,11 @@ public extension UIViewController {
     /// - parameter childController: The view controller to add as a child view controller
     /// - parameter containerView:   A container view where this child view controller will be added. Default is parent view controller's view.
     public func addContainerViewController(childController: UIViewController, containerView: UIView? = nil, enableConstraints: Bool = false, padding: UIEdgeInsets = UIEdgeInsetsZero) {
-        guard let containerView = containerView ?? self.view else { return }
+        guard let containerView = containerView ?? view else { return }
 
         childController.beginAppearanceTransition(true, animated: false)
         childController.willMoveToParentViewController(self)
-        self.addChildViewController(childController)
+        addChildViewController(childController)
         containerView.addSubview(childController.view)
         childController.view.frame = containerView.bounds
         childController.didMoveToParentViewController(self)
@@ -212,7 +220,7 @@ public extension UIViewController {
     ///
     /// - parameter childController: The view controller to remove from its parent's children controllers
     public func removeContainerViewController(childController: UIViewController) {
-        guard self.childViewControllers.contains(childController) else { return }
+        guard childViewControllers.contains(childController) else { return }
 
         childController.beginAppearanceTransition(false, animated: false)
         childController.willMoveToParentViewController(nil)
@@ -228,29 +236,27 @@ public extension UIViewController {
             return true
         }
 
-        if let viewControllers = self.navigationController?.viewControllers {
-            if viewControllers.contains(self) {
-                return false
-            }
+        if let viewControllers = navigationController?.viewControllers where viewControllers.contains(self) {
+            return false
         }
 
         return false
     }
 
     public var isModal: Bool {
-        if self.presentingViewController != nil {
+        if presentingViewController != nil {
             return true
         }
 
-        if self.presentingViewController?.presentedViewController == self {
+        if presentingViewController?.presentedViewController == self {
             return true
         }
 
-        if self.navigationController?.presentingViewController?.presentedViewController == self.navigationController {
+        if navigationController?.presentingViewController?.presentedViewController == navigationController {
             return true
         }
 
-        if (self.tabBarController?.presentingViewController?.isKindOfClass(UITabBarController)) != nil {
+        if (tabBarController?.presentingViewController?.isKindOfClass(UITabBarController)) != nil {
             return true
         }
 
@@ -260,38 +266,23 @@ public extension UIViewController {
     /// True iff `isDeviceLandscape` and `isInterfaceLandscape` both are true; false otherwise
     public var isLandscape: Bool          { return isDeviceLandscape && isInterfaceLandscape }
     public var isInterfaceLandscape: Bool { return UIApplication.sharedApplication().statusBarOrientation.isLandscape }
+    /// Returns the physical orientation of the device.
     public var isDeviceLandscape: Bool    { return UIDevice.currentDevice().orientation.isLandscape }
+    /// This value represents the physical orientation of the device and may be different from the current orientation
+    /// of your application’s user interface. See `UIDeviceOrientation` for descriptions of the possible values.
     public var deviceOrientation: UIDeviceOrientation { return UIDevice.currentDevice().orientation }
 
     /// Method to display view controller over current view controller as modal
-    public func presentViewControllerAsModal(viewControllerToPresent: UIViewController, animated: Bool, completion: (Void -> Void)?) {
-        if UIDevice.SystemVersion.iOS7OrLess {
-            var root = self
-            while root.parentViewController != nil {
-                root = root.parentViewController!
-            }
+    public func presentViewControllerAsModal(viewControllerToPresent: UIViewController, animated: Bool, completion: (() -> Void)?) {
+        let orginalStyle = viewControllerToPresent.modalPresentationStyle
+        if orginalStyle != .OverCurrentContext {
+            viewControllerToPresent.modalPresentationStyle = .OverCurrentContext
+        }
 
-            self.presentViewController(viewControllerToPresent, animated: true) {
-                viewControllerToPresent.dismissViewControllerAnimated(false) {
-                    let orginalStyle = root.modalPresentationStyle
-                    if orginalStyle != .CurrentContext {
-                        root.modalPresentationStyle = .CurrentContext
-                    }
-                    self.presentViewController(viewControllerToPresent, animated: false, completion: completion)
-                    if orginalStyle != .CurrentContext {
-                        root.modalPresentationStyle = orginalStyle
-                    }
-                }
-            }
-        } else {
-            let orginalStyle = viewControllerToPresent.modalPresentationStyle
-            if orginalStyle != .OverCurrentContext {
-                viewControllerToPresent.modalPresentationStyle = .OverCurrentContext
-            }
-            self.presentViewController(viewControllerToPresent, animated: animated, completion: completion)
-            if orginalStyle != .OverCurrentContext {
-                viewControllerToPresent.modalPresentationStyle = orginalStyle
-            }
+        presentViewController(viewControllerToPresent, animated: animated, completion: completion)
+
+        if orginalStyle != .OverCurrentContext {
+            viewControllerToPresent.modalPresentationStyle = orginalStyle
         }
     }
 
@@ -301,10 +292,10 @@ public extension UIViewController {
     /// - parameter transitioningDelegate:   The delegate object that provides transition animator and interactive controller objects.
     /// - parameter animated:                Pass `true` to animate the presentation; otherwise, pass `false`.
     /// - parameter completion:              The block to execute after the presentation finishes.
-    public func presentViewControllerWithTransition(viewControllerToPresent: UIViewController, transitioningDelegate: UIViewControllerTransitioningDelegate, animated: Bool, completion: (Void -> Void)?) {
+    public func presentViewControllerWithTransition(viewControllerToPresent: UIViewController, transitioningDelegate: UIViewControllerTransitioningDelegate, animated: Bool, completion: (() -> Void)?) {
         viewControllerToPresent.transitioningDelegate = transitioningDelegate
         viewControllerToPresent.modalPresentationStyle = UIModalPresentationStyle.FullScreen // .Custom prevents per view controller rotation
-        self.presentViewController(viewControllerToPresent, animated: animated, completion: completion)
+        presentViewController(viewControllerToPresent, animated: animated, completion: completion)
     }
 }
 
@@ -344,12 +335,12 @@ public extension UINavigationBar {
             guard newValue != isTransparent else { return }
 
             if newValue {
-                self.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-                self.shadowImage = UIImage()
-                self.translucent = true
-                self.backgroundColor = UIColor.clearColor()
+                setBackgroundImage(UIImage(), forBarMetrics: .Default)
+                shadowImage     = UIImage()
+                translucent     = true
+                backgroundColor = UIColor.clearColor()
             } else {
-                self.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
+                setBackgroundImage(nil, forBarMetrics: .Default)
             }
 
             objc_setAssociatedObject(self, &AssociatedKey.IsTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
@@ -386,11 +377,11 @@ public extension UINavigationController {
 
 public extension UITabBarController {
     public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return self.selectedViewController?.supportedInterfaceOrientations() ?? super.supportedInterfaceOrientations()
+        return selectedViewController?.supportedInterfaceOrientations() ?? super.supportedInterfaceOrientations()
     }
 
     public override func shouldAutorotate() -> Bool {
-        return self.selectedViewController?.shouldAutorotate() ?? super.shouldAutorotate()
+        return selectedViewController?.shouldAutorotate() ?? super.shouldAutorotate()
     }
 }
 
@@ -433,12 +424,12 @@ public extension UIColor {
     }
 
     public var alpha: CGFloat {
-        get { return CGColorGetAlpha(self.CGColor) }
-        set { self.colorWithAlphaComponent(newValue) }
+        get { return CGColorGetAlpha(CGColor) }
+        set { colorWithAlphaComponent(newValue) }
     }
 
     public func alpha(value: CGFloat) -> UIColor {
-        return self.colorWithAlphaComponent(value)
+        return colorWithAlphaComponent(value)
     }
 
     // Credit: http://stackoverflow.com/a/31466450
@@ -492,17 +483,17 @@ public extension UIImageView {
             images.append(UIImage(fileName: "\(prefix)\(i).\(ext)")!)
         }
 
-        self.animationImages = images
-        self.animationDuration = duration
-        self.animationRepeatCount = 1
-        self.image = images.first
+        animationImages      = images
+        animationDuration    = duration
+        animationRepeatCount = 1
+        image                = images.first
     }
 
     /// Convenience method to start animation with completion handler
     ///
     /// - parameter endImage:   Image to set when the animation finishes
     /// - parameter completion: The block to execute after the animation finishes
-    public func startAnimating(endImage endImage: UIImage? = nil, completion: (Void -> Void)?) {
+    public func startAnimating(endImage endImage: UIImage? = nil, completion: (() -> Void)?) {
         if endImage != nil {
             image = endImage
         }
@@ -561,7 +552,7 @@ public extension UIImage {
 
     public func resize(newSize: CGSize, tintColor: UIColor? = nil, completionHandler: (resizedImage: UIImage) -> Void) {
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            UIGraphicsBeginImageContextWithOptions(newSize, false, 0);
+            UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
             self.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
@@ -629,14 +620,14 @@ public extension UITableView {
         var offsetY: CGFloat = 0
         for s in 0..<indexPath.section {
             for r in 0..<indexPath.row {
-                let indexPath = NSIndexPath(forRow: r, inSection: s)
-                var rowHeight = self.delegate?.tableView?(self, heightForRowAtIndexPath: indexPath) ?? 0
+                let indexPath           = NSIndexPath(forRow: r, inSection: s)
+                var rowHeight           = self.delegate?.tableView?(self, heightForRowAtIndexPath: indexPath) ?? 0
                 var sectionHeaderHeight = self.delegate?.tableView?(self, heightForHeaderInSection: s) ?? 0
                 var sectionFooterHeight = self.delegate?.tableView?(self, heightForFooterInSection: s) ?? 0
-                rowHeight           = rowHeight == 0 ? self.rowHeight : rowHeight
-                sectionFooterHeight = sectionFooterHeight == 0 ? self.sectionFooterHeight : sectionFooterHeight
-                sectionHeaderHeight = sectionHeaderHeight == 0 ? self.sectionHeaderHeight : sectionHeaderHeight
-                offsetY += rowHeight + sectionHeaderHeight + sectionFooterHeight
+                rowHeight               = rowHeight == 0 ? self.rowHeight : rowHeight
+                sectionFooterHeight     = sectionFooterHeight == 0 ? self.sectionFooterHeight : sectionFooterHeight
+                sectionHeaderHeight     = sectionHeaderHeight == 0 ? self.sectionHeaderHeight : sectionHeaderHeight
+                offsetY                += rowHeight + sectionHeaderHeight + sectionFooterHeight
             }
         }
 
@@ -909,10 +900,10 @@ public extension UIDevice {
     }
 
     public struct DeviceType {
-        public static var iPhone4OrLess: Bool { return UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.maxLength < 568.0 }
-        public static var iPhone5: Bool       { return UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.maxLength == 568.0 }
-        public static var iPhone6: Bool       { return UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.maxLength == 667.0 }
-        public static var iPhone6Plus: Bool   { return UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.maxLength == 736.0 }
+        public static var iPhone4OrLess: Bool { return UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.maxLength < 568 }
+        public static var iPhone5: Bool       { return UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.maxLength == 568 }
+        public static var iPhone6: Bool       { return UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.maxLength == 667 }
+        public static var iPhone6Plus: Bool   { return UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.maxLength == 736 }
         public static var Simulator: Bool     { return TARGET_IPHONE_SIMULATOR == 1 }
     }
 
