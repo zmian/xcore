@@ -23,10 +23,15 @@
 //
 
 import AVFoundation
+import ObjectiveC
 
 // Current Playback Time monitoring
 
 public extension AVPlayer {
+    public var isPlaying: Bool {
+        return rate != 0 && error == nil
+    }
+
     public func currentTime(block: (seconds: Int, formattedTime: String) -> Void) -> AnyObject {
         let interval = CMTimeMake(1, 1)
         return addPeriodicTimeObserverForInterval(interval, queue: dispatch_get_main_queue()) {[weak self] time in
@@ -48,27 +53,65 @@ public extension AVPlayer {
 
         return String(format: "%02d:%02d:%02d", hrs, min, sec)
     }
+}
 
-    /// Loops playback of the current item.
-    public func loop() {
-        NSNotificationCenter.defaultCenter().addObserverForName(AVPlayerItemDidPlayToEndTimeNotification, object: self.currentItem, queue: nil) {[weak self] notification in
-            self?.seekToTime(kCMTimeZero)
-            self?.play()
+public extension AVPlayer {
+    private struct AssociatedKey {
+        static var Repeat = "XcoreAVPlayerRepeat"
+    }
+
+    /// Indicates whether to repeat playback of the current item.
+    public var `repeat`: Bool {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.Repeat) as? Bool ?? false }
+        set {
+            guard newValue != `repeat` else { return }
+            objc_setAssociatedObject(self, &AssociatedKey.Repeat, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+
+            if newValue {
+                NSNotificationCenter.defaultCenter().addObserverForName(AVPlayerItemDidPlayToEndTimeNotification, object: currentItem, queue: nil) {[weak self] notification in
+                    if let currentItem = notification.object as? AVPlayerItem {
+                        self?.actionAtItemEnd = .None
+                        currentItem.seekToTime(kCMTimeZero)
+                        self?.play()
+                    }
+                }
+            } else {
+                NSNotificationCenter.defaultCenter().removeObserver(self, name: AVPlayerItemDidPlayToEndTimeNotification, object: currentItem)
+            }
         }
     }
 }
 
+public extension AVPlayerItem {
+    public var hasValidDuration: Bool {
+        return status == .ReadyToPlay && duration.isValid
+    }
+}
+
+public extension CMTime {
+    public var isValid: Bool { return flags.contains(.Valid) }
+
+    public func timeWithOffset(offset: NSTimeInterval) -> CMTime {
+        let seconds = CMTimeGetSeconds(self)
+        let secondsWithOffset = seconds + offset
+        return CMTimeMakeWithSeconds(secondsWithOffset, timescale)
+    }
+}
+
+// MARK: RemoteOrLocalInstantiable
+
 // Convenience methods for initializing videos
 
 public extension AVPlayer {
-    /// Initializes an AVPlayer that plays a single local audiovisual resource referenced file name.
+    /// Initializes an AVPlayer that automatically detect and load the asset from local or a remote url.
     ///
     /// Implicitly creates an AVPlayerItem. Clients can obtain the AVPlayerItem as it becomes the player's currentItem.
     ///
-    /// - parameter filename: The local file name from `NSBundle.mainBundle()`
+    /// - parameter remoteOrLocalName: The local file name from `NSBundle.mainBundle()` or remote url
+    ///
     /// - returns:            An instance of AVPlayer
-    public convenience init?(fileName: String) {
-        if let playerItem = AVPlayerItem(fileName: fileName) {
+    public convenience init?(remoteOrLocalName: String) {
+        if let playerItem = AVPlayerItem(remoteOrLocalName: remoteOrLocalName) {
             self.init(playerItem: playerItem)
         } else {
             return nil
@@ -76,18 +119,20 @@ public extension AVPlayer {
     }
 }
 
-// Convenience methods for initializing videos
-
 public extension AVPlayerItem {
     /// Initializes an AVPlayerItem with local resource referenced file name.
     ///
-    /// - parameter filename: The local file name from `NSBundle.mainBundle()`
+    /// - parameter filename: The local file name
+    /// - parameter bundle:   The bundle containing the storyboard file and its related resources. If you specify nil,
+    ///   this method looks in the main bundle of the current application. Default is `nil`.
+    ///
     /// - returns:            An instance of AVPlayerItem
-    public convenience init?(fileName: String) {
-        let name = fileName.lastPathComponent.stringByDeletingPathExtension
-        let ext  = fileName.pathExtension
+    public convenience init?(fileName: String, bundle: NSBundle? = nil) {
+        let name   = ((fileName as NSString).lastPathComponent as NSString).stringByDeletingPathExtension
+        let ext    = (fileName as NSString).pathExtension
+        let bundle = bundle ?? NSBundle.mainBundle()
 
-        if let url = NSBundle.mainBundle().URLForResource(name, withExtension: ext) {
+        if let url = bundle.URLForResource(name, withExtension: ext) {
             self.init(URL: url)
         } else {
             return nil
@@ -102,12 +147,34 @@ public extension AVPlayerItem {
             self.init(fileName: remoteOrLocalName)
         }
     }
-
-    public var hasValidDuration: Bool {
-        return status == .ReadyToPlay && duration.isValid
-    }
 }
 
-public extension CMTime {
-    public var isValid: Bool { return flags.contains(.Valid) }
+public extension AVAsset {
+    /// Initializes an AVAsset with local resource referenced file name.
+    ///
+    /// - parameter filename: The local file name
+    /// - parameter bundle:   The bundle containing the storyboard file and its related resources. If you specify nil,
+    ///   this method looks in the main bundle of the current application. Default is `nil`.
+    ///
+    /// - returns:            An instance of AVAsset
+    public convenience init?(fileName: String, bundle: NSBundle? = nil) {
+        let name   = ((fileName as NSString).lastPathComponent as NSString).stringByDeletingPathExtension
+        let ext    = (fileName as NSString).pathExtension
+        let bundle = bundle ?? NSBundle.mainBundle()
+
+        if let url = bundle.URLForResource(name, withExtension: ext) {
+            self.init(URL: url)
+        } else {
+            return nil
+        }
+    }
+
+    /// Automatically detect and load the asset from local or a remote url.
+    public convenience init?(remoteOrLocalName: String) {
+        if let url = NSURL(string: remoteOrLocalName) where url.host != nil {
+            self.init(URL: url)
+        } else {
+            self.init(fileName: remoteOrLocalName)
+        }
+    }
 }
