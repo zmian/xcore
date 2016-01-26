@@ -308,6 +308,7 @@ public extension UIToolbar {
         get { return objc_getAssociatedObject(self, &AssociatedKey.IsTransparent) as? Bool ?? false }
         set {
             guard newValue != isTransparent else { return }
+            objc_setAssociatedObject(self, &AssociatedKey.IsTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 
             if newValue {
                 setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
@@ -316,8 +317,6 @@ public extension UIToolbar {
             } else {
                 setBackgroundImage(nil, forToolbarPosition: .Any, barMetrics: .Default)
             }
-
-            objc_setAssociatedObject(self, &AssociatedKey.IsTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 }
@@ -333,6 +332,7 @@ public extension UINavigationBar {
         get { return objc_getAssociatedObject(self, &AssociatedKey.IsTransparent) as? Bool ?? false }
         set {
             guard newValue != isTransparent else { return }
+            objc_setAssociatedObject(self, &AssociatedKey.IsTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 
             if newValue {
                 setBackgroundImage(UIImage(), forBarMetrics: .Default)
@@ -342,8 +342,6 @@ public extension UINavigationBar {
             } else {
                 setBackgroundImage(nil, forBarMetrics: .Default)
             }
-
-            objc_setAssociatedObject(self, &AssociatedKey.IsTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 }
