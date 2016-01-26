@@ -24,6 +24,7 @@
 
 import UIKit
 import SafariServices
+import ObjectiveC
 
 public func ControllerFromStoryboard(identifier: String) -> UIViewController {
     return UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier(identifier)
@@ -307,16 +308,41 @@ public extension UIViewController {
     }
 }
 
+public extension UIToolbar {
+    private struct AssociatedKey {
+        static var IsTransparent = "Xcore_IsTransparent"
+    }
+
+    public var isTransparent: Bool {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.IsTransparent) as? Bool ?? false }
+        set {
+            guard newValue != isTransparent else { return }
+
+            if newValue {
+                setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
+                translucent     = true
+                backgroundColor = UIColor.clearColor()
+            } else {
+                setBackgroundImage(nil, forToolbarPosition: .Any, barMetrics: .Default)
+            }
+
+            objc_setAssociatedObject(self, &AssociatedKey.IsTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+}
+
 // MARK: UINavigationBar Extension
 
-private var navigationBarTransparent = false
 public extension UINavigationBar {
+    private struct AssociatedKey {
+        static var IsTransparent = "Xcore_IsTransparent"
+    }
+
     public var isTransparent: Bool {
-        get {
-            return navigationBarTransparent
-        }
+        get { return objc_getAssociatedObject(self, &AssociatedKey.IsTransparent) as? Bool ?? false }
         set {
-            navigationBarTransparent = newValue
+            guard newValue != isTransparent else { return }
+
             if newValue {
                 self.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
                 self.shadowImage = UIImage()
@@ -325,6 +351,8 @@ public extension UINavigationBar {
             } else {
                 self.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
             }
+
+            objc_setAssociatedObject(self, &AssociatedKey.IsTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 }
