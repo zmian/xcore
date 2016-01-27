@@ -89,7 +89,7 @@ public extension UIView {
     }
 
     public func roundCorners(corners: UIRectCorner, radius: CGFloat) {
-        let path             = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let path            = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         let mask            = CAShapeLayer()
         mask.path           = path.CGPath
         layer.mask          = mask
@@ -110,27 +110,27 @@ public extension UIView {
     // MARK: Fade Content
 
     public func fadeHead(bounds: CGRect, startPoint: CGPoint = CGPointMake(0.5, 0), endPoint: CGPoint = CGPointMake(0.5, 0.03)) {
-        let gradient = CAGradientLayer()
-        gradient.frame = bounds
-        gradient.colors = [UIColor.clearColor().CGColor, UIColor.whiteColor().CGColor]
+        let gradient        = CAGradientLayer()
+        gradient.frame      = bounds
+        gradient.colors     = [UIColor.clearColor().CGColor, UIColor.whiteColor().CGColor]
         gradient.startPoint = startPoint
-        gradient.endPoint = endPoint
-        layer.mask = gradient
+        gradient.endPoint   = endPoint
+        layer.mask          = gradient
     }
 
     public func fadeTail(bounds: CGRect, startPoint: CGPoint = CGPointMake(0.5, 0.93), endPoint: CGPoint = CGPointMake(0.5, 1)) {
-        let gradient = CAGradientLayer()
-        gradient.frame = bounds
-        gradient.colors = [UIColor.whiteColor().CGColor, UIColor.clearColor().CGColor]
+        let gradient        = CAGradientLayer()
+        gradient.frame      = bounds
+        gradient.colors     = [UIColor.whiteColor().CGColor, UIColor.clearColor().CGColor]
         gradient.startPoint = startPoint
-        gradient.endPoint = endPoint
-        layer.mask = gradient
+        gradient.endPoint   = endPoint
+        layer.mask          = gradient
     }
 
     @IBInspectable public var cornerRadius: CGFloat {
         get { return layer.cornerRadius }
         set {
-            layer.cornerRadius = newValue
+            layer.cornerRadius  = newValue
             layer.masksToBounds = newValue > 0
         }
     }
@@ -273,7 +273,7 @@ public extension UIViewController {
     public var deviceOrientation: UIDeviceOrientation { return UIDevice.currentDevice().orientation }
 
     /// Method to display view controller over current view controller as modal
-    public func presentViewControllerAsModal(viewControllerToPresent: UIViewController, animated: Bool, completion: (() -> Void)?) {
+    public func presentViewControllerAsModal(viewControllerToPresent: UIViewController, animated: Bool, completion: (() -> Void)? = nil) {
         let orginalStyle = viewControllerToPresent.modalPresentationStyle
         if orginalStyle != .OverCurrentContext {
             viewControllerToPresent.modalPresentationStyle = .OverCurrentContext
@@ -292,12 +292,14 @@ public extension UIViewController {
     /// - parameter transitioningDelegate:   The delegate object that provides transition animator and interactive controller objects.
     /// - parameter animated:                Pass `true` to animate the presentation; otherwise, pass `false`.
     /// - parameter completion:              The block to execute after the presentation finishes.
-    public func presentViewControllerWithTransition(viewControllerToPresent: UIViewController, transitioningDelegate: UIViewControllerTransitioningDelegate, animated: Bool, completion: (() -> Void)?) {
+    public func presentViewControllerWithTransition(viewControllerToPresent: UIViewController, transitioningDelegate: UIViewControllerTransitioningDelegate, animated: Bool, completion: (() -> Void)? = nil) {
         viewControllerToPresent.transitioningDelegate = transitioningDelegate
         viewControllerToPresent.modalPresentationStyle = UIModalPresentationStyle.FullScreen // .Custom prevents per view controller rotation
         presentViewController(viewControllerToPresent, animated: animated, completion: completion)
     }
 }
+
+// MARK: UIToolbar Extension
 
 public extension UIToolbar {
     private struct AssociatedKey {
@@ -889,12 +891,14 @@ public extension NSLayoutConstraint {
     }
 }
 
+// MARK: UIDevice Extension
+
 public extension UIDevice {
     public struct ScreenSize {
-        public static var width: CGFloat     { return UIScreen.mainScreen().bounds.size.width }
-        public static var height: CGFloat    { return UIScreen.mainScreen().bounds.size.height }
-        public static var maxLength: CGFloat { return max(ScreenSize.width, ScreenSize.height) }
-        public static var minLength: CGFloat { return min(ScreenSize.width, ScreenSize.height) }
+        public static var width: CGFloat     { return UIScreen.mainScreen().bounds.width }
+        public static var height: CGFloat    { return UIScreen.mainScreen().bounds.height }
+        public static var minLength: CGFloat { return min(width, height) }
+        public static var maxLength: CGFloat { return max(width, height) }
     }
 
     public struct DeviceType {
@@ -922,6 +926,8 @@ public extension UIDevice {
         }
     }
 }
+
+// MARK: NSBundle Extension
 
 public extension NSBundle {
     public static var appVersionNumber: String {
