@@ -124,11 +124,7 @@ public extension Int {
     }
 }
 
-public extension Array {
-    public subscript(safe index: Int) -> Element? {
-        return indices ~= index ? self[index] : nil
-    }
-
+extension Array {
     /// Remove object by value.
     ///
     /// - returns: true if removed; false otherwise
@@ -153,6 +149,13 @@ public extension Array {
 
         let index = Int(arc4random_uniform(UInt32(count - size)))
         return Array(self[index..<(size + index)])
+    }
+}
+
+extension CollectionType {
+    /// Returns the element at the specified index iff it is within bounds, otherwise nil.
+    public func at(index: Index) -> Generator.Element? {
+        return indices.contains(index) ? self[index] : nil
     }
 }
 
