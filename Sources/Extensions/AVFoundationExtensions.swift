@@ -123,8 +123,8 @@ public extension AVPlayerItem {
     /// Initializes an AVPlayerItem with local resource referenced file name.
     ///
     /// - parameter filename: The local file name
-    /// - parameter bundle:   The bundle containing the storyboard file and its related resources. If you specify nil,
-    ///   this method looks in the main bundle of the current application. Default is `nil`.
+    /// - parameter bundle:   The bundle containing the specified file name. If you specify nil,
+    ///   this method looks in the main bundle of the current application. The default value is `nil`.
     ///
     /// - returns:            An instance of AVPlayerItem
     public convenience init?(fileName: String, bundle: NSBundle? = nil) {
@@ -153,8 +153,8 @@ public extension AVAsset {
     /// Initializes an AVAsset with local resource referenced file name.
     ///
     /// - parameter filename: The local file name
-    /// - parameter bundle:   The bundle containing the storyboard file and its related resources. If you specify nil,
-    ///   this method looks in the main bundle of the current application. Default is `nil`.
+    /// - parameter bundle:   The bundle containing the specified file name. If you specify nil,
+    ///   this method looks in the main bundle of the current application. The default value is `nil`.
     ///
     /// - returns:            An instance of AVAsset
     public convenience init?(fileName: String, bundle: NSBundle? = nil) {
