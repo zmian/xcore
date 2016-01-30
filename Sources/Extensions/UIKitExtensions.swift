@@ -225,53 +225,6 @@ public extension UIView {
     }
 }
 
-// MARK: UIButton Extension
-
-extension UIButton {
-    /// Add spacing between `text` and `image` while preserving the `intrinsicContentSize` and respecting `sizeToFit`
-    @IBInspectable public var textImageSpacing: CGFloat {
-        get {
-            let (left, right) = (imageEdgeInsets.left, imageEdgeInsets.right)
-
-            if left + right == 0 {
-                return right * 2
-            } else {
-                return 0
-            }
-        }
-
-        set(spacing) {
-            let insetAmount   = spacing / 2
-            imageEdgeInsets   = UIEdgeInsets(top: 0, left: -insetAmount, bottom: 0, right: insetAmount)
-            titleEdgeInsets   = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: -insetAmount)
-            contentEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
-        }
-    }
-
-    public override func tintColorDidChange() {
-        super.tintColorDidChange()
-        imageView?.tintColor = tintColor
-    }
-
-    public convenience init(image: UIImage?, highlightedImage: UIImage? = nil, handler: ((sender: UIButton) -> Void)? = nil) {
-        self.init(type: UIButtonType.Custom)
-        setImage(image, forState: .Normal)
-        setImage(highlightedImage, forState: .Highlighted)
-        imageView?.contentMode = .ScaleAspectFit
-        imageView?.tintColor   = tintColor
-        if let handler = handler {
-            addAction(.TouchUpInside, handler: handler)
-        }
-    }
-
-    public convenience init(imageNamed: String, handler: ((sender: UIButton) -> Void)? = nil) {
-        self.init(image: nil, handler: handler)
-        imageView?.remoteOrLocalImage(imageNamed) {[weak self] image in
-            self?.setImage(image, forState: UIControlState.Normal)
-        }
-    }
-}
-
 // MARK: UIViewController Extension
 
 public extension UIViewController {
@@ -378,55 +331,6 @@ public extension UIViewController {
     }
 }
 
-// MARK: UIToolbar Extension
-
-public extension UIToolbar {
-    private struct AssociatedKey {
-        static var IsTransparent = "Xcore_IsTransparent"
-    }
-
-    public var isTransparent: Bool {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.IsTransparent) as? Bool ?? false }
-        set {
-            guard newValue != isTransparent else { return }
-            objc_setAssociatedObject(self, &AssociatedKey.IsTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-
-            if newValue {
-                setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
-                translucent     = true
-                backgroundColor = UIColor.clearColor()
-            } else {
-                setBackgroundImage(nil, forToolbarPosition: .Any, barMetrics: .Default)
-            }
-        }
-    }
-}
-
-// MARK: UINavigationBar Extension
-
-public extension UINavigationBar {
-    private struct AssociatedKey {
-        static var IsTransparent = "Xcore_IsTransparent"
-    }
-
-    public var isTransparent: Bool {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.IsTransparent) as? Bool ?? false }
-        set {
-            guard newValue != isTransparent else { return }
-            objc_setAssociatedObject(self, &AssociatedKey.IsTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-
-            if newValue {
-                setBackgroundImage(UIImage(), forBarMetrics: .Default)
-                shadowImage     = UIImage()
-                translucent     = true
-                backgroundColor = UIColor.clearColor()
-            } else {
-                setBackgroundImage(nil, forBarMetrics: .Default)
-            }
-        }
-    }
-}
-
 // MARK: UINavigationController Extension
 
 public extension UINavigationController {
@@ -461,6 +365,102 @@ public extension UITabBarController {
 
     public override func shouldAutorotate() -> Bool {
         return selectedViewController?.shouldAutorotate() ?? super.shouldAutorotate()
+    }
+}
+
+// MARK: UINavigationBar Extension
+
+public extension UINavigationBar {
+    private struct AssociatedKey {
+        static var IsTransparent = "Xcore_IsTransparent"
+    }
+
+    public var isTransparent: Bool {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.IsTransparent) as? Bool ?? false }
+        set {
+            guard newValue != isTransparent else { return }
+            objc_setAssociatedObject(self, &AssociatedKey.IsTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+
+            if newValue {
+                setBackgroundImage(UIImage(), forBarMetrics: .Default)
+                shadowImage     = UIImage()
+                translucent     = true
+                backgroundColor = UIColor.clearColor()
+            } else {
+                setBackgroundImage(nil, forBarMetrics: .Default)
+            }
+        }
+    }
+}
+
+// MARK: UIToolbar Extension
+
+public extension UIToolbar {
+    private struct AssociatedKey {
+        static var IsTransparent = "Xcore_IsTransparent"
+    }
+
+    public var isTransparent: Bool {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.IsTransparent) as? Bool ?? false }
+        set {
+            guard newValue != isTransparent else { return }
+            objc_setAssociatedObject(self, &AssociatedKey.IsTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+
+            if newValue {
+                setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
+                translucent     = true
+                backgroundColor = UIColor.clearColor()
+            } else {
+                setBackgroundImage(nil, forToolbarPosition: .Any, barMetrics: .Default)
+            }
+        }
+    }
+}
+
+// MARK: UIButton Extension
+
+extension UIButton {
+    /// Add spacing between `text` and `image` while preserving the `intrinsicContentSize` and respecting `sizeToFit`
+    @IBInspectable public var textImageSpacing: CGFloat {
+        get {
+            let (left, right) = (imageEdgeInsets.left, imageEdgeInsets.right)
+
+            if left + right == 0 {
+                return right * 2
+            } else {
+                return 0
+            }
+        }
+
+        set(spacing) {
+            let insetAmount   = spacing / 2
+            imageEdgeInsets   = UIEdgeInsets(top: 0, left: -insetAmount, bottom: 0, right: insetAmount)
+            titleEdgeInsets   = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: -insetAmount)
+            contentEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
+        }
+    }
+
+    public override func tintColorDidChange() {
+        super.tintColorDidChange()
+        imageView?.tintColor = tintColor
+    }
+
+    public convenience init(image: UIImage?, highlightedImage: UIImage? = nil, handler: ((sender: UIButton) -> Void)? = nil) {
+        self.init(type: UIButtonType.Custom)
+        setImage(image, forState: .Normal)
+        setImage(highlightedImage, forState: .Highlighted)
+        imageView?.contentMode = .ScaleAspectFit
+        imageView?.tintColor   = tintColor
+        if let handler = handler {
+            addAction(.TouchUpInside, handler: handler)
+        }
+    }
+
+    public convenience init(imageNamed: String, handler: ((sender: UIButton) -> Void)? = nil) {
+        self.init(image: nil, handler: handler)
+        imageView?.remoteOrLocalImage(imageNamed) {[weak self] image in
+            self?.setImage(image, forState: .Normal)
+        }
     }
 }
 
