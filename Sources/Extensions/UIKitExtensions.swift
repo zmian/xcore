@@ -144,6 +144,85 @@ public extension UIView {
         get { return layer.borderColor != nil ? UIColor(CGColor: layer.borderColor!) : UIColor.blackColor() }
         set { layer.borderColor = newValue.CGColor }
     }
+
+    // Credit: http://stackoverflow.com/a/23157272
+
+    public func addBorder(edges edges: UIRectEdge, colour: UIColor = UIColor.whiteColor(), thickness: CGFloat = 1) -> [UIView] {
+        var borders = [UIView]()
+
+        func border() -> UIView {
+            let border = UIView(frame: CGRectZero)
+            border.backgroundColor = colour
+            border.translatesAutoresizingMaskIntoConstraints = false
+            return border
+        }
+
+        if edges.contains(.Top) || edges.contains(.All) {
+            let top = border()
+            addSubview(top)
+            addConstraints(
+                NSLayoutConstraint.constraintsWithVisualFormat("V:|-(0)-[top(==thickness)]",
+                    options: [],
+                    metrics: ["thickness": thickness],
+                    views: ["top": top]))
+            addConstraints(
+                NSLayoutConstraint.constraintsWithVisualFormat("H:|-(0)-[top]-(0)-|",
+                    options: [],
+                    metrics: nil,
+                    views: ["top": top]))
+            borders.append(top)
+        }
+
+        if edges.contains(.Left) || edges.contains(.All) {
+            let left = border()
+            addSubview(left)
+            addConstraints(
+                NSLayoutConstraint.constraintsWithVisualFormat("H:|-(0)-[left(==thickness)]",
+                    options: [],
+                    metrics: ["thickness": thickness],
+                    views: ["left": left]))
+            addConstraints(
+                NSLayoutConstraint.constraintsWithVisualFormat("V:|-(0)-[left]-(0)-|",
+                    options: [],
+                    metrics: nil,
+                    views: ["left": left]))
+            borders.append(left)
+        }
+
+        if edges.contains(.Right) || edges.contains(.All) {
+            let right = border()
+            addSubview(right)
+            addConstraints(
+                NSLayoutConstraint.constraintsWithVisualFormat("H:[right(==thickness)]-(0)-|",
+                    options: [],
+                    metrics: ["thickness": thickness],
+                    views: ["right": right]))
+            addConstraints(
+                NSLayoutConstraint.constraintsWithVisualFormat("V:|-(0)-[right]-(0)-|",
+                    options: [],
+                    metrics: nil,
+                    views: ["right": right]))
+            borders.append(right)
+        }
+
+        if edges.contains(.Bottom) || edges.contains(.All) {
+            let bottom = border()
+            addSubview(bottom)
+            addConstraints(
+                NSLayoutConstraint.constraintsWithVisualFormat("V:[bottom(==thickness)]-(0)-|",
+                    options: [],
+                    metrics: ["thickness": thickness],
+                    views: ["bottom": bottom]))
+            addConstraints(
+                NSLayoutConstraint.constraintsWithVisualFormat("H:|-(0)-[bottom]-(0)-|",
+                    options: [],
+                    metrics: nil,
+                    views: ["bottom": bottom]))
+            borders.append(bottom)
+        }
+
+        return borders
+    }
 }
 
 // MARK: UIButton Extension
@@ -653,241 +732,6 @@ public extension UITableView {
 
         let firstRowRect = rectForRowAtIndexPath(firstPath)
         return firstRowRect.origin.y > contentOffset.y ? firstPath : secondPath
-    }
-}
-
-// MARK: UIFont Extension
-
-public extension UIFont {
-    public enum TextStyle: RawRepresentable {
-        case Title1, Title2, Title3, Headline, Subheadline, Body, Callout, Footnote, Caption1, Caption2
-
-        public typealias RawValue = String
-
-        public var rawValue: RawValue {
-            switch self {
-                case .Title1:      if #available(iOS 9.0, *) { return UIFontTextStyleTitle1 } else { return UIFontTextStyleHeadline }
-                case .Title2:      if #available(iOS 9.0, *) { return UIFontTextStyleTitle2 } else { return UIFontTextStyleHeadline }
-                case .Title3:      if #available(iOS 9.0, *) { return UIFontTextStyleTitle3 } else { return UIFontTextStyleHeadline }
-                case .Headline:    return UIFontTextStyleHeadline
-                case .Subheadline: return UIFontTextStyleSubheadline
-                case .Body:        return UIFontTextStyleBody
-                case .Callout:     if #available(iOS 9.0, *) { return UIFontTextStyleCallout } else { return UIFontTextStyleSubheadline }
-                case .Footnote:    return UIFontTextStyleFootnote
-                case .Caption1:    return UIFontTextStyleCaption1
-                case .Caption2:    return UIFontTextStyleCaption2
-            }
-        }
-
-        public init?(rawValue: RawValue) {
-            if #available(iOS 9.0, *) {
-                switch rawValue {
-                    case UIFontTextStyleTitle1:      self = .Title1
-                    case UIFontTextStyleTitle2:      self = .Title2
-                    case UIFontTextStyleTitle3:      self = .Title3
-                    case UIFontTextStyleHeadline:    self = .Headline
-                    case UIFontTextStyleSubheadline: self = .Subheadline
-                    case UIFontTextStyleBody:        self = .Body
-                    case UIFontTextStyleCallout:     self = .Callout
-                    case UIFontTextStyleFootnote:    self = .Footnote
-                    case UIFontTextStyleCaption1:    self = .Caption1
-                    case UIFontTextStyleCaption2:    self = .Caption2
-                    default: fatalError("Unsupported `TextStyle`")
-                }
-            } else {
-                switch rawValue {
-                    case UIFontTextStyleHeadline:    self = .Headline
-                    case UIFontTextStyleSubheadline: self = .Subheadline
-                    case UIFontTextStyleBody:        self = .Body
-                    case UIFontTextStyleFootnote:    self = .Footnote
-                    case UIFontTextStyleCaption1:    self = .Caption1
-                    case UIFontTextStyleCaption2:    self = .Caption2
-                    default: fatalError("Unsupported `TextStyle`")
-                }
-            }
-        }
-    }
-
-    public static func systemFont(style: TextStyle) -> UIFont {
-        return UIFont.preferredFontForTextStyle(style.rawValue)
-    }
-}
-
-public extension UIFont {
-    enum Style {
-        case Normal, Italic, Monospace
-    }
-
-    enum Weight {
-        case UltraLight, Thin, Light, Regular, Medium, Semibold, Bold, Heavy, Black
-    }
-
-    public struct Size {
-        public static let Headline: CGFloat    = 16
-        public static let Subheadline: CGFloat = 14
-        public static let Body: CGFloat        = 16
-        public static let Label                = UIFont.labelFontSize()
-        public static let Button               = UIFont.buttonFontSize()
-        public static let Small                = UIFont.smallSystemFontSize()
-        public static let System               = UIFont.systemFontSize()
-    }
-
-    static func systemFont(size: CGFloat, style: Style = .Normal, weight: Weight = .Regular) -> UIFont {
-        let fontWeight: CGFloat
-
-        switch weight {
-            case .UltraLight:
-                fontWeight = UIFontWeightUltraLight
-            case .Thin:
-                fontWeight = UIFontWeightThin
-            case .Light:
-                fontWeight = UIFontWeightLight
-            case .Regular:
-                fontWeight = UIFontWeightRegular
-            case .Medium:
-                fontWeight = UIFontWeightMedium
-            case .Semibold:
-                fontWeight = UIFontWeightSemibold
-            case .Bold:
-                fontWeight = UIFontWeightBold
-            case .Heavy:
-                fontWeight = UIFontWeightHeavy
-            case .Black:
-                fontWeight = UIFontWeightBlack
-        }
-
-        switch style {
-            case .Normal:
-                return UIFont.systemFontOfSize(size, weight: fontWeight)
-            case .Italic:
-                return UIFont.italicSystemFontOfSize(size)
-            case .Monospace:
-                if #available(iOS 9.0, *) {
-                    return UIFont.monospacedDigitSystemFontOfSize(size, weight: fontWeight)
-                } else {
-                    return UIFont.systemFontOfSize(size, weight: fontWeight).monospacedDigitFont
-                }
-        }
-    }
-}
-
-public extension UIFont {
-    public static func printAvailableFontNames() {
-        for family in UIFont.familyNames() {
-            let count = UIFont.fontNamesForFamilyName(family).count
-            print("▿ \(family) (\(count) \(count == 1 ? "font" : "fonts"))")
-            for name in UIFont.fontNamesForFamilyName(family) {
-                print("  - \(name)")
-            }
-        }
-    }
-
-    public var monospacedDigitFont: UIFont {
-        let oldFontDescriptor = fontDescriptor()
-        let newFontDescriptor = oldFontDescriptor.monospacedDigitFontDescriptor
-        return UIFont(descriptor: newFontDescriptor, size: pointSize)
-    }
-}
-
-private extension UIFontDescriptor {
-    var monospacedDigitFontDescriptor: UIFontDescriptor {
-        let fontDescriptorFeatureSettings = [[UIFontFeatureTypeIdentifierKey: kNumberSpacingType, UIFontFeatureSelectorIdentifierKey: kMonospacedNumbersSelector]]
-        let fontDescriptorAttributes = [UIFontDescriptorFeatureSettingsAttribute: fontDescriptorFeatureSettings]
-        let fontDescriptor = fontDescriptorByAddingAttributes(fontDescriptorAttributes)
-        return fontDescriptor
-    }
-}
-
-// MARK: NSLayoutConstraint Extension
-
-public extension NSLayoutConstraint {
-
-    private static let defaultPriority: Float = 1000
-
-    private enum ConstraintPriority: Float {
-        case Low      = 250
-        case High     = 750
-        case Required = 1000
-    }
-
-    // MARK: Convenience Methods
-
-    public convenience init(item view1: AnyObject, attribute attr1: NSLayoutAttribute, relatedBy relation: NSLayoutRelation = .Equal, toItem view2: AnyObject? = nil, attribute attr2: NSLayoutAttribute? = nil, multiplier: CGFloat = 1, constant c: CGFloat = 0, priority: Float = NSLayoutConstraint.defaultPriority) {
-        let attribute2 = attr2 != nil ? attr2! : attr1
-        self.init(item: view1, attribute: attr1, relatedBy: relation, toItem: view2, attribute: attribute2, multiplier: multiplier, constant: c)
-        self.priority = priority
-    }
-
-    public convenience init(item view1: AnyObject, aspectRatio: CGFloat, priority: Float = NSLayoutConstraint.defaultPriority) {
-        self.init(item: view1, attribute: .Width, relatedBy: .Equal, toItem: view1, attribute: .Height, multiplier: aspectRatio)
-        self.priority = priority
-    }
-
-    public convenience init(item view1: AnyObject, width: CGFloat, priority: Float = NSLayoutConstraint.defaultPriority) {
-        self.init(item: view1, attribute: .Width, attribute: .NotAnAttribute, constant: width)
-        self.priority = priority
-    }
-
-    public convenience init(item view1: AnyObject, height: CGFloat, priority: Float = NSLayoutConstraint.defaultPriority) {
-        self.init(item: view1, attribute: .Height, attribute: .NotAnAttribute, constant: height)
-        self.priority = priority
-    }
-
-    // MARK: Static Methods
-
-    public static func size(viewToSize: UIView, size: CGSize, priority: Float = NSLayoutConstraint.defaultPriority) -> [NSLayoutConstraint] {
-        viewToSize.translatesAutoresizingMaskIntoConstraints = false
-        return [
-            NSLayoutConstraint(item: viewToSize, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: size.width, priority: priority),
-            NSLayoutConstraint(item: viewToSize, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: size.height, priority: priority)
-        ]
-    }
-
-    public static func centerX(viewToCenter: UIView, superview: UIView? = nil, offset: CGFloat = 0) -> NSLayoutConstraint {
-        let superview = superview ?? viewToCenter.superview
-        viewToCenter.translatesAutoresizingMaskIntoConstraints = false
-        return NSLayoutConstraint(item: viewToCenter, attribute: .CenterX, relatedBy: .Equal, toItem: superview, attribute: .CenterX, multiplier: 1, constant: offset)
-    }
-
-    public static func centerY(viewToCenter: UIView, superview: UIView? = nil, offset: CGFloat = 0) -> NSLayoutConstraint {
-        let superview = superview ?? viewToCenter.superview
-        viewToCenter.translatesAutoresizingMaskIntoConstraints = false
-        return NSLayoutConstraint(item: viewToCenter, attribute: .CenterY, relatedBy: .Equal, toItem: superview, attribute: .CenterY, multiplier: 1, constant: offset)
-    }
-
-    public static func centerXY(viewToCenter: UIView, superview: UIView? = nil, offset: CGPoint = CGPointZero) -> [NSLayoutConstraint] {
-        let superview = superview ?? viewToCenter.superview
-        viewToCenter.translatesAutoresizingMaskIntoConstraints = false
-
-        return [
-            NSLayoutConstraint(item: viewToCenter, attribute: .CenterX, relatedBy: .Equal, toItem: superview, attribute: .CenterX, multiplier: 1, constant: offset.x),
-            NSLayoutConstraint(item: viewToCenter, attribute: .CenterY, relatedBy: .Equal, toItem: superview, attribute: .CenterY, multiplier: 1, constant: offset.y)
-        ]
-    }
-
-    public static func constraintsForViewToFillSuperviewHorizontal(viewToSize: UIView, paddingLeft: CGFloat = 0, paddingRight: CGFloat = 0, priority: Float = NSLayoutConstraint.defaultPriority) -> [NSLayoutConstraint] {
-        let views = ["view": viewToSize]
-        let metrics = ["priority": CGFloat(priority), "paddingLeft": paddingLeft, "paddingRight": paddingRight]
-        viewToSize.translatesAutoresizingMaskIntoConstraints = false
-        return NSLayoutConstraint.constraintsWithVisualFormat("H:|-paddingLeft@priority-[view]-paddingRight@priority-|", options: [], metrics: metrics, views: views)
-    }
-
-    public static func constraintsForViewToFillSuperviewVertical(viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, priority: Float = NSLayoutConstraint.defaultPriority) -> [NSLayoutConstraint] {
-        let views = ["view": viewToSize]
-        let metrics = ["priority": CGFloat(priority), "paddingTop": paddingTop, "paddingBottom": paddingBottom]
-        viewToSize.translatesAutoresizingMaskIntoConstraints = false
-        return NSLayoutConstraint.constraintsWithVisualFormat("V:|-paddingTop@priority-[view]-paddingBottom@priority-|", options: [], metrics: metrics, views: views)
-    }
-
-    public static func constraintsForViewToFillSuperview(viewToSize: UIView, padding: UIEdgeInsets = UIEdgeInsetsZero) -> [NSLayoutConstraint] {
-        let views = ["view": viewToSize]
-        let metrics = ["paddingTop": padding.top, "paddingLeft": padding.left, "paddingBottom": padding.bottom, "paddingRight": padding.right]
-        viewToSize.translatesAutoresizingMaskIntoConstraints = false
-
-        var constraints: [NSLayoutConstraint] = []
-        constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|-paddingLeft-[view]-paddingRight-|", options: [], metrics: metrics, views: views)
-        constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|-paddingTop-[view]-paddingBottom-|", options: [], metrics: metrics, views: views)
-        return constraints
     }
 }
 
