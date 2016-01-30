@@ -121,8 +121,11 @@ public extension NSLayoutConstraint {
     /// Activating or deactivating the constraint calls `addConstraint:` and `removeConstraint:` on the view
     /// that is the closest common ancestor of the items managed by this constraint.
     /// Use this property instead of calling `addConstraint:` or `removeConstraint:` directly.
-    public func activate() {
+    ///
+    /// - returns: `self`
+    public func activate() -> NSLayoutConstraint {
         active = true
+        return self
     }
 
     /// Deactivates constraint.
@@ -132,8 +135,11 @@ public extension NSLayoutConstraint {
     /// Activating or deactivating the constraint calls `addConstraint:` and `removeConstraint:` on the view
     /// that is the closest common ancestor of the items managed by this constraint.
     /// Use this property instead of calling `addConstraint:` or `removeConstraint:` directly.
-    public func deactivate() {
+    ///
+    /// - returns: `self`
+    public func deactivate() -> NSLayoutConstraint {
         active = false
+        return self
     }
 }
 
@@ -143,8 +149,11 @@ public extension Array where Element: NSLayoutConstraint {
     /// This convenience method provides an easy way to activate a set of constraints with one call.
     /// The effect of this method is the same as setting the `active` property of each constraint to `true`.
     /// Typically, using this method is more efficient than activating each constraint individually.
-    public func activate() {
+    ///
+    /// - returns: `self`
+    public func activate() -> Array {
         NSLayoutConstraint.activateConstraints(self)
+        return self
     }
 
     /// Deactivates each constraint in `self`.
@@ -152,7 +161,10 @@ public extension Array where Element: NSLayoutConstraint {
     /// This is a convenience method that provides an easy way to deactivate a set of constraints with one call.
     /// The effect of this method is the same as setting the `active` property of each constraint to `false`.
     /// Typically, using this method is more efficient than deactivating each constraint individually.
-    public func deactivate() {
+    ///
+    /// - returns: `self`
+    public func deactivate() -> Array {
         NSLayoutConstraint.deactivateConstraints(self)
+        return self
     }
 }

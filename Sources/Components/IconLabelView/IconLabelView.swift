@@ -202,12 +202,10 @@ public class IconLabelView: UIView {
         imageViewContainer.backgroundColor = UIColor.whiteColor()
         imageViewContainer.cornerRadius    = imageCornerRadius
         imageViewContainer.addSubview(imageView)
-        let size = NSLayoutConstraint.size(imageViewContainer, size: imageSize)
-        size.activate()
+        let size = NSLayoutConstraint.size(imageViewContainer, size: imageSize).activate()
         imageSizeConstraints.width  = size[0]
         imageSizeConstraints.height = size[1]
-        imagePaddingConstraints = NSLayoutConstraint.constraintsForViewToFillSuperview(imageView, padding: UIEdgeInsetsMake(imagePadding, imagePadding, imagePadding, imagePadding))
-        imagePaddingConstraints.activate()
+        imagePaddingConstraints = NSLayoutConstraint.constraintsForViewToFillSuperview(imageView, padding: UIEdgeInsetsMake(imagePadding, imagePadding, imagePadding, imagePadding)).activate()
 
         // Ensures smooth scaling quality
         imageView.layer.minificationFilter = kCAFilterTrilinear
