@@ -55,14 +55,14 @@ public class SplitScreenViewController: UIViewController {
         let headerContainerViewAspectRatio: CGFloat = 16/9.1 // Set to 9.1 to ensure iPhone 5S landscape view doesn't have 1px gap below
 
         // Setup constraints: headerContainerView
-        view.addConstraints(NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(headerContainerView))
-        view.addConstraint(NSLayoutConstraint(item: headerContainerView, attribute: .Top, toItem: view))
+        NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(headerContainerView).activate()
+        NSLayoutConstraint(item: headerContainerView, attribute: .Top, toItem: view).activate()
         // Set aspect-ratio priority to low this ensures that landscape view works as expected.
-        view.addConstraint(NSLayoutConstraint(item: headerContainerView, attribute: .Width, toItem: headerContainerView, attribute: .Height, multiplier: headerContainerViewAspectRatio, priority: 750))
+        NSLayoutConstraint(item: headerContainerView, attribute: .Width, toItem: headerContainerView, attribute: .Height, multiplier: headerContainerViewAspectRatio, priority: 750).activate()
 
         // Setup constraints: bodyContainerView
-        view.addConstraints(NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(bodyContainerView))
-        view.addConstraint(NSLayoutConstraint(item: bodyContainerView, attribute: .Bottom, toItem: view, priority: 750))
-        view.addConstraint(NSLayoutConstraint(item: bodyContainerView, attribute: .Top, toItem: headerContainerView, attribute: .Bottom))
+        NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(bodyContainerView).activate()
+        NSLayoutConstraint(item: bodyContainerView, attribute: .Bottom, toItem: view, priority: 750).activate()
+        NSLayoutConstraint(item: bodyContainerView, attribute: .Top, toItem: headerContainerView, attribute: .Bottom).activate()
     }
 }

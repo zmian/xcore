@@ -62,13 +62,13 @@ public class IconLabelView: UIView {
             guard oldValue != labelsWidth else { return }
             if labelsWidth == 0 {
                 guard !labelsWidthConstraints.isEmpty else { return }
-                NSLayoutConstraint.deactivateConstraints(labelsWidthConstraints)
+                labelsWidthConstraints.deactivate()
             } else {
                 if labelsWidthConstraints.isEmpty {
                     labelsWidthConstraints.append(NSLayoutConstraint(item: titleLabel,    width: labelsWidth))
                     labelsWidthConstraints.append(NSLayoutConstraint(item: subtitleLabel, width: labelsWidth))
                 }
-                NSLayoutConstraint.activateConstraints(labelsWidthConstraints)
+                labelsWidthConstraints.activate()
             }
         }
     }
@@ -177,7 +177,7 @@ public class IconLabelView: UIView {
 
     private func setupSubviews() {
         addSubview(stackView)
-        addConstraints(NSLayoutConstraint.constraintsForViewToFillSuperview(stackView))
+        NSLayoutConstraint.constraintsForViewToFillSuperview(stackView).activate()
 
         axis         = .Vertical
         distribution = .Fill
@@ -203,11 +203,11 @@ public class IconLabelView: UIView {
         imageViewContainer.cornerRadius    = imageCornerRadius
         imageViewContainer.addSubview(imageView)
         let size = NSLayoutConstraint.size(imageViewContainer, size: imageSize)
+        size.activate()
         imageSizeConstraints.width  = size[0]
         imageSizeConstraints.height = size[1]
-        imageViewContainer.addConstraints(size)
         imagePaddingConstraints = NSLayoutConstraint.constraintsForViewToFillSuperview(imageView, padding: UIEdgeInsetsMake(imagePadding, imagePadding, imagePadding, imagePadding))
-        imageViewContainer.addConstraints(imagePaddingConstraints)
+        imagePaddingConstraints.activate()
 
         // Ensures smooth scaling quality
         imageView.layer.minificationFilter = kCAFilterTrilinear

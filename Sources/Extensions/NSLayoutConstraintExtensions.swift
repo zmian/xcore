@@ -113,6 +113,30 @@ public extension NSLayoutConstraint {
     }
 }
 
+public extension NSLayoutConstraint {
+    /// Activates constraint.
+    ///
+    /// This is a convenience method that provides an easy way to activate constraint by setting the `active` property to `true`.
+    ///
+    /// Activating or deactivating the constraint calls `addConstraint:` and `removeConstraint:` on the view
+    /// that is the closest common ancestor of the items managed by this constraint.
+    /// Use this property instead of calling `addConstraint:` or `removeConstraint:` directly.
+    public func activate() {
+        active = true
+    }
+
+    /// Deactivates constraint.
+    ///
+    /// This is a convenience method that provides an easy way to deactivate constraint by setting the `active` property to `false`.
+    ///
+    /// Activating or deactivating the constraint calls `addConstraint:` and `removeConstraint:` on the view
+    /// that is the closest common ancestor of the items managed by this constraint.
+    /// Use this property instead of calling `addConstraint:` or `removeConstraint:` directly.
+    public func deactivate() {
+        active = false
+    }
+}
+
 public extension Array where Element: NSLayoutConstraint {
     /// Activates each constraint in `self`.
     ///

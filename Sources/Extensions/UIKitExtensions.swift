@@ -160,64 +160,56 @@ public extension UIView {
         if edges.contains(.Top) || edges.contains(.All) {
             let top = border()
             addSubview(top)
-            addConstraints(
-                NSLayoutConstraint.constraintsWithVisualFormat("V:|-(0)-[top(==thickness)]",
-                    options: [],
-                    metrics: ["thickness": thickness],
-                    views: ["top": top]))
-            addConstraints(
-                NSLayoutConstraint.constraintsWithVisualFormat("H:|-(0)-[top]-(0)-|",
-                    options: [],
-                    metrics: nil,
-                    views: ["top": top]))
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|-(0)-[top(==thickness)]",
+                options: [],
+                metrics: ["thickness": thickness],
+                views: ["top": top]).activate()
+            NSLayoutConstraint.constraintsWithVisualFormat("H:|-(0)-[top]-(0)-|",
+                options: [],
+                metrics: nil,
+                views: ["top": top]).activate()
             borders.append(top)
         }
 
         if edges.contains(.Left) || edges.contains(.All) {
             let left = border()
             addSubview(left)
-            addConstraints(
-                NSLayoutConstraint.constraintsWithVisualFormat("H:|-(0)-[left(==thickness)]",
-                    options: [],
-                    metrics: ["thickness": thickness],
-                    views: ["left": left]))
-            addConstraints(
-                NSLayoutConstraint.constraintsWithVisualFormat("V:|-(0)-[left]-(0)-|",
-                    options: [],
-                    metrics: nil,
-                    views: ["left": left]))
+            NSLayoutConstraint.constraintsWithVisualFormat("H:|-(0)-[left(==thickness)]",
+                options: [],
+                metrics: ["thickness": thickness],
+                views: ["left": left]).activate()
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|-(0)-[left]-(0)-|",
+                options: [],
+                metrics: nil,
+                views: ["left": left]).activate()
             borders.append(left)
         }
 
         if edges.contains(.Right) || edges.contains(.All) {
             let right = border()
             addSubview(right)
-            addConstraints(
-                NSLayoutConstraint.constraintsWithVisualFormat("H:[right(==thickness)]-(0)-|",
-                    options: [],
-                    metrics: ["thickness": thickness],
-                    views: ["right": right]))
-            addConstraints(
-                NSLayoutConstraint.constraintsWithVisualFormat("V:|-(0)-[right]-(0)-|",
-                    options: [],
-                    metrics: nil,
-                    views: ["right": right]))
+            NSLayoutConstraint.constraintsWithVisualFormat("H:[right(==thickness)]-(0)-|",
+                options: [],
+                metrics: ["thickness": thickness],
+                views: ["right": right]).activate()
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|-(0)-[right]-(0)-|",
+                options: [],
+                metrics: nil,
+                views: ["right": right]).activate()
             borders.append(right)
         }
 
         if edges.contains(.Bottom) || edges.contains(.All) {
             let bottom = border()
             addSubview(bottom)
-            addConstraints(
-                NSLayoutConstraint.constraintsWithVisualFormat("V:[bottom(==thickness)]-(0)-|",
-                    options: [],
-                    metrics: ["thickness": thickness],
-                    views: ["bottom": bottom]))
-            addConstraints(
-                NSLayoutConstraint.constraintsWithVisualFormat("H:|-(0)-[bottom]-(0)-|",
-                    options: [],
-                    metrics: nil,
-                    views: ["bottom": bottom]))
+            NSLayoutConstraint.constraintsWithVisualFormat("V:[bottom(==thickness)]-(0)-|",
+                options: [],
+                metrics: ["thickness": thickness],
+                views: ["bottom": bottom]).activate()
+            NSLayoutConstraint.constraintsWithVisualFormat("H:|-(0)-[bottom]-(0)-|",
+                options: [],
+                metrics: nil,
+                views: ["bottom": bottom]).activate()
             borders.append(bottom)
         }
 
@@ -244,7 +236,7 @@ public extension UIViewController {
         childController.endAppearanceTransition()
 
         if enableConstraints {
-            containerView.addConstraints(NSLayoutConstraint.constraintsForViewToFillSuperview(childController.view, padding: padding))
+            NSLayoutConstraint.constraintsForViewToFillSuperview(childController.view, padding: padding).activate()
         }
     }
 

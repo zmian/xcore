@@ -102,16 +102,16 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
 
     private func setupConstraints() {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        pageControl.addConstraint(NSLayoutConstraint(item: pageControl, height: pageControlHeight))
-        view.addConstraints(NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(pageControl))
+        NSLayoutConstraint(item: pageControl, height: pageControlHeight).activate()
+        NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(pageControl).activate()
 
         switch pageControlPosition {
             case .Top:
-                view.addConstraint(NSLayoutConstraint(item: pageControl, attribute: .Top, toItem: view))
+                NSLayoutConstraint(item: pageControl, attribute: .Top, toItem: view).activate()
             case .Center:
-                view.addConstraint(NSLayoutConstraint(item: pageControl, attribute: .CenterY, toItem: view))
+                NSLayoutConstraint(item: pageControl, attribute: .CenterY, toItem: view).activate()
             case .Bottom:
-                view.addConstraint(NSLayoutConstraint(item: pageControl, attribute: .Bottom, toItem: view))
+                NSLayoutConstraint(item: pageControl, attribute: .Bottom, toItem: view).activate()
         }
     }
 

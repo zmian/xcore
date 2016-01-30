@@ -56,7 +56,7 @@ public class IconLabelCollectionViewCell: UICollectionViewCell {
 
     private func setupSubviews() {
         contentView.addSubview(iconLabelView)
-        contentView.addConstraints(NSLayoutConstraint.constraintsForViewToFillSuperview(iconLabelView))
+        NSLayoutConstraint.constraintsForViewToFillSuperview(iconLabelView).activate()
         iconLabelView.userInteractionEnabled   = false
         iconLabelView.isRoundImageView         = true
         iconLabelView.imagePadding             = 0
