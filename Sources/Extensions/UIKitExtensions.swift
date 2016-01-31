@@ -147,12 +147,12 @@ public extension UIView {
 
     // Credit: http://stackoverflow.com/a/23157272
 
-    public func addBorder(edges edges: UIRectEdge, colour: UIColor = UIColor.whiteColor(), thickness: CGFloat = 1) -> [UIView] {
+    public func addBorder(edges edges: UIRectEdge, color: UIColor = UIColor.whiteColor(), thickness: CGFloat = 1) -> [UIView] {
         var borders = [UIView]()
 
         func border() -> UIView {
             let border = UIView(frame: CGRectZero)
-            border.backgroundColor = colour
+            border.backgroundColor = color
             border.translatesAutoresizingMaskIntoConstraints = false
             return border
         }
