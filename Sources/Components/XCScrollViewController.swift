@@ -25,7 +25,8 @@
 import UIKit
 
 public class XCScrollViewController: UIViewController {
-    public let contentView = UIScrollView(frame: UIScreen.mainScreen().bounds)
+    public let scrollView = UIScrollView()
+    public var constraintToLayoutGuides = true
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,17 +34,23 @@ public class XCScrollViewController: UIViewController {
     }
 
     private func setupContentView() {
-        view.addSubview(contentView)
-        NSLayoutConstraint.constraintsForViewToFillSuperview(contentView).activate()
+        view.addSubview(scrollView)
+        if constraintToLayoutGuides {
+            NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(scrollView).activate()
+            NSLayoutConstraint(item: scrollView, attribute: .Top, toItem: topLayoutGuide, attribute: .Bottom).activate()
+            NSLayoutConstraint(item: scrollView, attribute: .Bottom, toItem: bottomLayoutGuide, attribute: .Top).activate()
+        } else {
+            NSLayoutConstraint.constraintsForViewToFillSuperview(scrollView).activate()
+        }
         resolveContentSize()
     }
 
     private func resolveContentSize() {
         let scrollViewWidthResolver = UIView()
         scrollViewWidthResolver.hidden = true
-        contentView.addSubview(scrollViewWidthResolver)
+        scrollView.addSubview(scrollViewWidthResolver)
         NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(scrollViewWidthResolver).activate()
-        NSLayoutConstraint(item: scrollViewWidthResolver, attribute: .Top, toItem: contentView).activate()
+        NSLayoutConstraint(item: scrollViewWidthResolver, attribute: .Top, toItem: scrollView).activate()
         NSLayoutConstraint(item: scrollViewWidthResolver, height: 1).activate()
 
         // Now the important part
