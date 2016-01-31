@@ -32,12 +32,20 @@ public final class dispatch {
     }
 
     public class after {
-        public class func bg(when: dispatch_time_t, block: dispatch_block_t) {
+        public class func bg(dispatchTime when: dispatch_time_t, block: dispatch_block_t) {
             dispatch_after(when, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)!, block)
         }
 
-        public class func main(when: dispatch_time_t, block: dispatch_block_t) {
+        public class func main(dispatchTime when: dispatch_time_t, block: dispatch_block_t) {
             dispatch_after(when, dispatch_get_main_queue(), block)
+        }
+
+        public class func bg(interval: NSTimeInterval, block: dispatch_block_t) {
+            dispatch_after(dispatch.seconds(interval), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)!, block)
+        }
+
+        public class func main(interval: NSTimeInterval, block: dispatch_block_t) {
+            dispatch_after(dispatch.seconds(interval), dispatch_get_main_queue(), block)
         }
     }
 
