@@ -41,16 +41,21 @@ public extension UIImageView {
                 }
             }
         } else {
-            if alwaysAnimate {
-                self.alpha = 0
-                self.image = UIImage(named: named)
-                UIView.animateWithDuration(0.5) {
-                    self.alpha = 1
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {[weak self] in
+                guard let weakSelf = self, image = UIImage(named: named) else { return }
+                dispatch.async.main {
+                    if alwaysAnimate {
+                        weakSelf.alpha = 0
+                        weakSelf.image = image
+                        UIView.animateWithDuration(0.5) {
+                            weakSelf.alpha = 1
+                        }
+                        callback?(image: image)
+                    } else {
+                        weakSelf.image = image
+                        callback?(image: image)
+                    }
                 }
-                callback?(image: self.image!)
-            } else {
-                self.image = UIImage(named: named)
-                callback?(image: self.image!)
             }
         }
     }
