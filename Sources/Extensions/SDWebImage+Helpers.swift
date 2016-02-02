@@ -41,7 +41,7 @@ public extension UIImageView {
                 }
             }
         } else {
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {[weak self] in
+            dispatch.async.bg(.UserInitiated) {[weak self] in
                 guard let weakSelf = self, image = UIImage(named: named) else { return }
                 dispatch.async.main {
                     if alwaysAnimate {

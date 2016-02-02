@@ -28,16 +28,16 @@ public struct JSONHelpers {
     /// Automatically detect and load the JSON from local(mainBundle) or a remote url.
     public static func remoteOrLocalJSONFile(named: String, callback: (AnyObject? -> Void)) {
         if let url = NSURL(string: named) where url.host != nil {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            dispatch.async.bg(.Default) {
                 let json = self.parse(url)
-                dispatch_async(dispatch_get_main_queue()) {
+                dispatch.async.main {
                     callback(json)
                 }
             }
         } else {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            dispatch.async.bg(.Default) {
                 let json = self.parse(fileName: named)
-                dispatch_async(dispatch_get_main_queue()) {
+                dispatch.async.main {
                     callback(json)
                 }
             }

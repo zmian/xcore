@@ -532,9 +532,9 @@ public extension UIColor {
 public extension UIImageView {
     /// Load the image on the background thread
     public func image(named: String) {
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+        dispatch.async.bg(.UserInitiated) {
             let image = UIImage(named: named)
-            dispatch_async(dispatch_get_main_queue()) {
+            dispatch.async.main {
                 self.image = image
             }
         }
@@ -622,7 +622,7 @@ public extension UIImage {
     }
 
     public func resize(newSize: CGSize, tintColor: UIColor? = nil, completionHandler: (resizedImage: UIImage) -> Void) {
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+        dispatch.async.bg(.UserInitiated) {
             UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
             self.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -633,7 +633,7 @@ public extension UIImage {
             } else {
                 tintedImage = newImage
             }
-            dispatch_async(dispatch_get_main_queue()) {
+            dispatch.async.main {
                 completionHandler(resizedImage: tintedImage)
             }
         }

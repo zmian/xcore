@@ -1,6 +1,6 @@
 //
-//  NSTimer+Closure.swift
-//  Nate Cook
+// NSTimer+Closure.swift
+// Nate Cook
 //
 
 import Foundation
