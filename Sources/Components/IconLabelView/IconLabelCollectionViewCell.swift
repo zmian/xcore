@@ -24,7 +24,6 @@
 
 import UIKit
 
-@available(iOS 9.0, *)
 public class IconLabelCollectionViewCell: UICollectionViewCell {
     public class var reuseIdentifier: String { return "IconLabelCollectionViewCellIdentifier" }
     public let iconLabelView = IconLabelView()

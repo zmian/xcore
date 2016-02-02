@@ -24,7 +24,6 @@
 
 import UIKit
 
-@available(iOS 9.0, *)
 public class IconLabelCollectionViewController: UIViewController {
     public lazy var collectionView: IconLabelCollectionView = {
         return IconLabelCollectionView(options: [.Movable, .Deletable])

@@ -35,7 +35,6 @@ public struct IconLabelCollectionCellOptions: OptionSetType {
 
 public typealias IconLabelCollectionViewDataSourceModel = [ImageTitleDisplayable]
 
-@available(iOS 9.0, *)
 public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
     private let reuseIdentifier = IconLabelCollectionViewCell.reuseIdentifier
     public var sections: [IconLabelCollectionViewDataSourceModel] = []

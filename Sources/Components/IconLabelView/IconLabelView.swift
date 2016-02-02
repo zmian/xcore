@@ -23,8 +23,8 @@
 //
 
 import UIKit
+import TZStackView
 
-@available(iOS 9.0, *)
 public class IconLabelView: UIView {
     public enum Style { case TopBottom, LeftRight }
 
@@ -34,7 +34,7 @@ public class IconLabelView: UIView {
 
     // MARK: Subviews
 
-    private let stackView          = UIStackView()
+    private let stackView          = TZStackView()
     private let imageViewContainer = UIView()
     public let imageView           = UIImageView()
     public let titleLabel          = UILabel()
@@ -133,12 +133,12 @@ public class IconLabelView: UIView {
         set { stackView.axis = newValue }
     }
 
-    private var distribution: UIStackViewDistribution {
+    private var distribution: TZStackViewDistribution {
         get { return stackView.distribution }
         set { stackView.distribution = newValue }
     }
 
-    private var alignment: UIStackViewAlignment {
+    private var alignment: TZStackViewAlignment {
         get { return stackView.alignment }
         set { stackView.alignment = newValue }
     }
