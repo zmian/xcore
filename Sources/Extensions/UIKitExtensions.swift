@@ -461,6 +461,36 @@ extension UIButton {
         imageView?.tintColor = tintColor
     }
 
+    public var image: UIImage? {
+        get { return imageForState(.Normal) }
+        set { setImage(newValue, forState: .Normal) }
+    }
+
+    public var highlightedImage: UIImage? {
+        get { return imageForState(.Highlighted) }
+        set { setImage(newValue, forState: .Highlighted) }
+    }
+
+    public var text: String? {
+        get { return titleForState(.Normal) }
+        set { setTitle(newValue, forState: .Normal) }
+    }
+
+    public var highlightedText: String? {
+        get { return titleForState(.Highlighted) }
+        set { setTitle(newValue, forState: .Highlighted) }
+    }
+
+    public var textColor: UIColor? {
+        get { return titleColorForState(.Normal) }
+        set { setTitleColor(newValue, forState: .Normal) }
+    }
+
+    public var highlightedTextColor: UIColor? {
+        get { return titleColorForState(.Highlighted) }
+        set { setTitleColor(newValue, forState: .Highlighted) }
+    }
+
     public convenience init(image: UIImage?, highlightedImage: UIImage? = nil, handler: ((sender: UIButton) -> Void)? = nil) {
         self.init(type: UIButtonType.Custom)
         setImage(image, forState: .Normal)
