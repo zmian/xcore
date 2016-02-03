@@ -88,6 +88,18 @@ public extension UIView {
         }, completion: nil)
     }
 
+    public func setHiddenAnimated(hide: Bool, duration: NSTimeInterval) {
+        guard hidden != hide else { return }
+        alpha  = hide ? 1 : 0
+        hidden = false
+
+        UIView.animateWithDuration(duration, animations: {
+            self.alpha = hide ? 0 : 1
+        }, completion: { _ in
+            self.hidden = hide
+        })
+    }
+
     public func roundCorners(corners: UIRectCorner, radius: CGFloat) {
         let path            = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         let mask            = CAShapeLayer()
@@ -143,6 +155,18 @@ public extension UIView {
     @IBInspectable public var borderColor: UIColor {
         get { return layer.borderColor != nil ? UIColor(CGColor: layer.borderColor!) : UIColor.blackColor() }
         set { layer.borderColor = newValue.CGColor }
+    }
+
+    public func addGradient(colors: [UIColor], startPoint: CGPoint = CGPoint(x: 0, y: 1), endPoint: CGPoint = CGPoint(x: 1, y: 1), locations: [Int] = [0, 1]) -> CAGradientLayer {
+        let gradient          = CAGradientLayer()
+        gradient.colors       = colors.map { $0.CGColor }
+        gradient.startPoint   = startPoint
+        gradient.endPoint     = endPoint
+        gradient.locations    = locations
+        gradient.frame.size   = frame.size
+        gradient.cornerRadius = layer.cornerRadius
+        layer.insertSublayer(gradient, atIndex: 0)
+        return gradient
     }
 
     // Credit: http://stackoverflow.com/a/23157272

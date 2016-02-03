@@ -143,7 +143,7 @@ public class IconLabelView: UIView {
         set { stackView.alignment = newValue }
     }
 
-    var spacing: CGFloat {
+    public var spacing: CGFloat {
         get { return stackView.spacing }
         set { stackView.spacing = newValue }
     }
