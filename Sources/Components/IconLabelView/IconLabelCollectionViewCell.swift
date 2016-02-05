@@ -47,7 +47,7 @@ public class IconLabelCollectionViewCell: UICollectionViewCell {
     // MARK: Setters
 
     public func setData(data: ImageTitleDisplayable) {
-        iconLabelView.titleLabel.text = data.title
+        iconLabelView.setData(title: data.title, subtitle: data.subtitle)
         data.setImage(iconLabelView.imageView)
     }
 
@@ -63,5 +63,6 @@ public class IconLabelCollectionViewCell: UICollectionViewCell {
         iconLabelView.imageView.borderColor    = UIColor.blackColor().alpha(0.1)
         iconLabelView.titleLabel.numberOfLines = 1
         iconLabelView.titleLabel.textColor     = UIColor.lightGrayColor()
+        iconLabelView.subtitleLabel.textColor  = UIColor.lightGrayColor()
     }
 }

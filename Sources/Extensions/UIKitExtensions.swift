@@ -26,12 +26,13 @@ import UIKit
 import SafariServices
 import ObjectiveC
 
-/// Instantiates and returns the view controller with the specified identifier for the specified storyboard resource file.
+/// Instantiates and returns the view controller with the specified identifier
+/// for the specified storyboard resource file.
 ///
 /// - parameter identifier:     An identifier string that uniquely identifies the view controller in the storyboard file.
 /// - parameter storyboardName: The name of the storyboard resource file without the filename extension. Default is `Main`
 /// - parameter bundle:         The bundle containing the storyboard file and its related resources. If you specify nil,
-///   this method looks in the main bundle of the current application. Default is `nil`.
+///   this method looks in the main bundle of the current application. The default value is `nil`.
 ///
 /// - returns: The view controller corresponding to the specified identifier string.
 public func ControllerFromStoryboard(identifier: String, storyboardName: String = "Main", bundle: NSBundle? = nil) -> UIViewController {
@@ -40,7 +41,8 @@ public func ControllerFromStoryboard(identifier: String, storyboardName: String 
 
 /// Attempts to open the resource at the specified URL.
 ///
-/// Requests are made using `SafariViewController` if available; otherwise it uses `UIApplication:openURL`
+/// Requests are made using `SafariViewController` if available;
+/// otherwise it uses `UIApplication:openURL`.
 ///
 /// - parameter presentingViewController: A view controller that wants to open the url.
 /// - parameter url:                      The url to open.
@@ -74,7 +76,7 @@ public extension UIAlertController {
 
 public extension UIView {
 
-    /// Spring animation with completion handler
+    /// Spring animation with completion handler.
     public static func animate(duration: NSTimeInterval = 0.6, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: UIViewAnimationOptions = .AllowUserInteraction, animations: (() -> Void), completion: ((Bool) -> Void)?) {
         UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: {
             animations()
@@ -169,6 +171,14 @@ public extension UIView {
         return gradient
     }
 
+    public func addOverlay(color: UIColor) -> UIView {
+        let overlay = UIView()
+        overlay.backgroundColor = color
+        addSubview(overlay)
+        NSLayoutConstraint.constraintsForViewToFillSuperview(overlay).activate()
+        return overlay
+    }
+
     // Credit: http://stackoverflow.com/a/23157272
 
     public func addBorder(edges edges: UIRectEdge, color: UIColor = UIColor.whiteColor(), thickness: CGFloat = 1) -> [UIView] {
@@ -244,10 +254,10 @@ public extension UIView {
 // MARK: UIViewController Extension
 
 public extension UIViewController {
-    /// Easily add child view controller
+    /// A convenience method to easily add child view controller.
     ///
-    /// - parameter childController: The view controller to add as a child view controller
-    /// - parameter containerView:   A container view where this child view controller will be added. Default is parent view controller's view.
+    /// - parameter childController: The view controller to add as a child view controller.
+    /// - parameter containerView:   A container view where this child view controller will be added. The default value is view controller's view.
     public func addContainerViewController(childController: UIViewController, containerView: UIView? = nil, enableConstraints: Bool = false, padding: UIEdgeInsets = UIEdgeInsetsZero) {
         guard let containerView = containerView ?? view else { return }
 
@@ -264,9 +274,9 @@ public extension UIViewController {
         }
     }
 
-    /// Easily remove child view controller
+    /// A convenience method to easily remove child view controller.
     ///
-    /// - parameter childController: The view controller to remove from its parent's children controllers
+    /// - parameter childController: The view controller to remove from its parent's children controllers.
     public func removeContainerViewController(childController: UIViewController) {
         guard childViewControllers.contains(childController) else { return }
 
@@ -278,7 +288,7 @@ public extension UIViewController {
         childController.endAppearanceTransition()
     }
 
-    /// Determine whether the view controller is being popped or is showing a subview controller
+    /// A boolean value to determine whether the view controller is being popped or is showing a subview controller.
     public var isBeingPopped: Bool {
         if isMovingFromParentViewController() || isBeingDismissed() {
             return true
@@ -311,7 +321,7 @@ public extension UIViewController {
         return false
     }
 
-    /// True iff `isDeviceLandscape` and `isInterfaceLandscape` both are true; false otherwise
+    /// True iff `isDeviceLandscape` and `isInterfaceLandscape` both are true; false otherwise.
     public var isLandscape: Bool          { return isDeviceLandscape && isInterfaceLandscape }
     public var isInterfaceLandscape: Bool { return UIApplication.sharedApplication().statusBarOrientation.isLandscape }
     /// Returns the physical orientation of the device.
@@ -320,7 +330,7 @@ public extension UIViewController {
     /// of your application’s user interface. See `UIDeviceOrientation` for descriptions of the possible values.
     public var deviceOrientation: UIDeviceOrientation { return UIDevice.currentDevice().orientation }
 
-    /// Method to display view controller over current view controller as modal
+    /// Method to display view controller over current view controller as modal.
     public func presentViewControllerAsModal(viewControllerToPresent: UIViewController, animated: Bool, completion: (() -> Void)? = nil) {
         let orginalStyle = viewControllerToPresent.modalPresentationStyle
         if orginalStyle != .OverCurrentContext {
@@ -334,7 +344,7 @@ public extension UIViewController {
         }
     }
 
-    /// Presents a view controller modally using a custom transition
+    /// Presents a view controller modally using a custom transition.
     ///
     /// - parameter viewControllerToPresent: The view controller to display over the current view controller's content.
     /// - parameter transitioningDelegate:   The delegate object that provides transition animator and interactive controller objects.
@@ -347,28 +357,121 @@ public extension UIViewController {
     }
 }
 
+public extension UIViewController {
+    private struct AssociatedKey {
+        static var SupportedInterfaceOrientations = "Xcore_SupportedInterfaceOrientations"
+        static var PreferredStatusBarStyle        = "Xcore_preferredStatusBarStyle"
+        static var PrefersStatusBarHidden         = "Xcore_PrefersStatusBarHidden"
+        static var ShouldAutorotate               = "Xcore_ShouldAutorotate"
+    }
+
+    /// A convenience property to set `supportedInterfaceOrientations()` without subclassing.
+    /// This is useful when you don't have access to the actual class and need
+    /// to set supported interface orientation.
+    ///
+    /// The default value is `nil` which means use the `supportedInterfaceOrientations() value`.
+    /// ```
+    /// let vc = UIImagePickerController()
+    /// vc.preferredInterfaceOrientations = .AllButUpsideDown
+    /// ```
+    public var preferredInterfaceOrientations: UIInterfaceOrientationMask? {
+        get {
+            if let intValue = objc_getAssociatedObject(self, &AssociatedKey.SupportedInterfaceOrientations) as? UInt {
+                return UIInterfaceOrientationMask(rawValue: intValue)
+            } else {
+                return nil
+            }
+        }
+        set { objc_setAssociatedObject(self, &AssociatedKey.SupportedInterfaceOrientations, newValue?.rawValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+
+    /// A convenience property to set status bar style without subclassing.
+    /// This is useful when you don't have access to the actual class and need
+    /// to update the status bar style to match with app look and feel.
+    ///
+    /// The default value is `nil` which means use the `preferredStatusBarStyle() value`.
+    /// ```
+    /// let vc = UIImagePickerController()
+    /// vc.statusBarStyle = .LightContent
+    /// ```
+    public var statusBarStyle: UIStatusBarStyle? {
+        get {
+            if let intValue = objc_getAssociatedObject(self, &AssociatedKey.PreferredStatusBarStyle) as? Int {
+                return UIStatusBarStyle(rawValue: intValue)
+            } else {
+                return nil
+            }
+        }
+        set { objc_setAssociatedObject(self, &AssociatedKey.PreferredStatusBarStyle, newValue?.rawValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+
+    /// A convenience property to set `prefersStatusBarHidden()` without subclassing.
+    /// This is useful when you don't have access to the actual class and need
+    /// to show/hide status bar.
+    ///
+    /// The default value is `nil` which means use the `prefersStatusBarHidden() value`.
+    /// ```
+    /// let vc = UIImagePickerController()
+    /// vc.isStatusBarHidden = false
+    /// ```
+    public var isStatusBarHidden: Bool? {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.PrefersStatusBarHidden) as? Bool }
+        set { objc_setAssociatedObject(self, &AssociatedKey.PrefersStatusBarHidden, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+
+    /// A convenience property to set `shouldAutorotate()` without subclassing.
+    /// This is useful when you don't have access to the actual class and need
+    /// to enable/disable rotation.
+    ///
+    /// The default value is `nil` which means use the `shouldAutorotate()` value.
+    /// ```
+    /// let vc = UIImagePickerController()
+    /// vc.enableAutorotate = false
+    /// ```
+    public var enableAutorotate: Bool? {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.ShouldAutorotate) as? Bool }
+        set { objc_setAssociatedObject(self, &AssociatedKey.ShouldAutorotate, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+}
+
 // MARK: UINavigationController Extension
 
 public extension UINavigationController {
-    /// Autorotation Fix. Simply override `supportedInterfaceOrientations`
-    /// method in any view controller and it would respect that orientation
-    /// setting per view controller
+    // Autorotation Fix. Simply override `supportedInterfaceOrientations`
+    // method in any view controller and it would respect that orientation
+    // setting per view controller.
     public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        return topViewController?.supportedInterfaceOrientations() ?? super.supportedInterfaceOrientations()
+        return topViewController?.preferredInterfaceOrientations ?? preferredInterfaceOrientations ?? topViewController?.supportedInterfaceOrientations() ?? super.supportedInterfaceOrientations()
     }
 
-    /// Setting `preferredStatusBarStyle` works
+    // Setting `preferredStatusBarStyle` works.
     public override func childViewControllerForStatusBarStyle() -> UIViewController? {
-        return topViewController
+        if topViewController?.statusBarStyle != nil || statusBarStyle != nil {
+            return nil
+        } else {
+            return topViewController
+        }
     }
 
-    /// Setting `prefersStatusBarHidden` works
+    // Setting `prefersStatusBarHidden` works.
     public override func childViewControllerForStatusBarHidden() -> UIViewController? {
-        return topViewController
+        if topViewController?.isStatusBarHidden != nil || isStatusBarHidden != nil {
+            return nil
+        } else {
+            return topViewController
+        }
     }
 
     public override func shouldAutorotate() -> Bool {
-        return topViewController?.shouldAutorotate() ?? super.shouldAutorotate()
+        return topViewController?.enableAutorotate ?? enableAutorotate ?? topViewController?.shouldAutorotate() ?? super.shouldAutorotate()
+    }
+
+    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return topViewController?.statusBarStyle ?? statusBarStyle ?? topViewController?.preferredStatusBarStyle() ?? super.preferredStatusBarStyle()
+    }
+
+    public override func prefersStatusBarHidden() -> Bool {
+        return topViewController?.isStatusBarHidden ?? isStatusBarHidden ?? topViewController?.prefersStatusBarHidden() ?? super.prefersStatusBarHidden()
     }
 }
 
@@ -436,7 +539,7 @@ public extension UIToolbar {
 // MARK: UIButton Extension
 
 extension UIButton {
-    /// Add spacing between `text` and `image` while preserving the `intrinsicContentSize` and respecting `sizeToFit`
+    /// Add space between `text` and `image` while preserving the `intrinsicContentSize` and respecting `sizeToFit`.
     @IBInspectable public var textImageSpacing: CGFloat {
         get {
             let (left, right) = (imageEdgeInsets.left, imageEdgeInsets.right)
@@ -461,36 +564,49 @@ extension UIButton {
         imageView?.tintColor = tintColor
     }
 
+    /// The image used for the normal state.
     public var image: UIImage? {
         get { return imageForState(.Normal) }
         set { setImage(newValue, forState: .Normal) }
     }
 
+    /// The image used for the highlighted state.
     public var highlightedImage: UIImage? {
         get { return imageForState(.Highlighted) }
         set { setImage(newValue, forState: .Highlighted) }
     }
 
+    /// The text used for the normal state.
     public var text: String? {
         get { return titleForState(.Normal) }
         set { setTitle(newValue, forState: .Normal) }
     }
 
+    /// The text used for the highlighted state.
     public var highlightedText: String? {
         get { return titleForState(.Highlighted) }
         set { setTitle(newValue, forState: .Highlighted) }
     }
 
+    /// The color of the title used for the normal state.
     public var textColor: UIColor? {
         get { return titleColorForState(.Normal) }
         set { setTitleColor(newValue, forState: .Normal) }
     }
 
+    /// The color of the title used for the highlighted state.
     public var highlightedTextColor: UIColor? {
         get { return titleColorForState(.Highlighted) }
         set { setTitleColor(newValue, forState: .Highlighted) }
     }
 
+    /// Creates and returns a new button of the specified type with action handler.
+    ///
+    /// - parameter image:            The image to use for the normal state.
+    /// - parameter highlightedImage: The image to use for the highlighted state.
+    /// - parameter handler:          The block to invoke when the button is tapped.
+    ///
+    /// - returns: A newly created button.
     public convenience init(image: UIImage?, highlightedImage: UIImage? = nil, handler: ((sender: UIButton) -> Void)? = nil) {
         self.init(type: UIButtonType.Custom)
         setImage(image, forState: .Normal)
@@ -502,6 +618,12 @@ extension UIButton {
         }
     }
 
+    /// Creates and returns a new button of the specified type with action handler.
+    ///
+    /// - parameter imageNamed: A string to identify a local or a remote image.
+    /// - parameter handler:    The block to invoke when the button is tapped.
+    ///
+    /// - returns: A newly created button.
     public convenience init(imageNamed: String, handler: ((sender: UIButton) -> Void)? = nil) {
         self.init(image: nil, handler: handler)
         imageView?.remoteOrLocalImage(imageNamed) {[weak self] image in
@@ -584,7 +706,7 @@ public extension UIColor {
 // MARK: UIImageView Extension
 
 public extension UIImageView {
-    /// Load the image on the background thread
+    /// Load the specified named image on the background thread.
     public func image(named: String) {
         dispatch.async.bg(.UserInitiated) {
             let image = UIImage(named: named)
@@ -594,11 +716,12 @@ public extension UIImageView {
         }
     }
 
-    /// Create animated images. This does not cache the images in memory. Thus, less memory consumption
+    /// Create animated images. This does not cache the images in memory.
+    /// Thus, less memory consumption for one of images.
     ///
-    /// - parameter name:     The name of the pattern (e.g., "AnimationImage.png")
-    /// - parameter range:    Images range (e.g., 0..<30 This will create: "AnimationImage0.png"..."AnimationImage29.png")
-    /// - parameter duration: The animation duration
+    /// - parameter name:     The name of the pattern (e.g., `"AnimationImage.png"`).
+    /// - parameter range:    Images range (e.g., `0..<30` This will create: `"AnimationImage0.png"..."AnimationImage29.png"`).
+    /// - parameter duration: The animation duration.
     public func createAnimatedImages(name: String, _ range: Range<Int>, _ duration: NSTimeInterval) {
         let prefix = name.stringByDeletingPathExtension
         let ext = name.pathExtension == "" ? "png" : name.pathExtension
@@ -614,10 +737,10 @@ public extension UIImageView {
         image                = images.first
     }
 
-    /// Convenience method to start animation with completion handler
+    /// A convenience method to start animation with completion handler.
     ///
-    /// - parameter endImage:   Image to set when the animation finishes
-    /// - parameter completion: The block to execute after the animation finishes
+    /// - parameter endImage:   Image to set when the animation finishes.
+    /// - parameter completion: The block to execute after the animation finishes.
     public func startAnimating(endImage endImage: UIImage? = nil, completion: (() -> Void)?) {
         if endImage != nil {
             image = endImage
@@ -636,10 +759,10 @@ public extension UIImageView {
 // MARK: UIImage Extension
 
 public extension UIImage {
-    /// Creates an image from specified color and size
+    /// Creates an image from specified color and size.
     ///
-    /// Default size is `GSizeMake(50, 50)`
-    public convenience init(color: UIColor, size: CGSize = CGSizeMake(50, 50)) {
+    /// The default size is `CGSize(width: 50, height: 50)`.
+    public convenience init(color: UIColor, size: CGSize = CGSize(width: 50, height: 50)) {
         let rect = CGRect(origin: CGPointZero, size: size)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
@@ -650,8 +773,8 @@ public extension UIImage {
         self.init(CGImage: image.CGImage!)
     }
 
-    /// Identical to UIImage:named but does not cache the images in memory.
-    /// Great for image based animations to quickly discard objects after use.
+    /// Identical to `UIImage:named` but does not cache images in memory.
+    /// This is great for animations to quickly discard images after use.
     public convenience init?(fileName: String) {
         let name = fileName.stringByDeletingPathExtension
         let ext  = fileName.pathExtension == "" ? "png" : fileName.pathExtension
@@ -662,7 +785,7 @@ public extension UIImage {
         }
     }
 
-    /// Creating arbitrarily-colored icons from a black-with-alpha master image
+    /// Creating arbitrarily-colored icons from a black-with-alpha master image.
     public func tintColor(color: UIColor) -> UIImage {
         let image = self
         let rect = CGRectMake(0, 0, image.size.width, image.size.height)
@@ -726,10 +849,11 @@ public extension UITableView {
     /// Adjust target offset so that cells are snapped to top.
     ///
     /// Call this method in scroll view delegate:
-    ///
-    ///     func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    ///        snapRowsToTop(targetContentOffset, cellHeight: cellHeight, headerHeight: headerHeight)
-    ///     }
+    ///```
+    /// func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    ///     snapRowsToTop(targetContentOffset, cellHeight: cellHeight, headerHeight: headerHeight)
+    /// }
+    ///```
     public func snapRowsToTop(targetContentOffset: UnsafeMutablePointer<CGPoint>, cellHeight: CGFloat, headerHeight: CGFloat) {
         // Adjust target offset so that cells are snapped to top
         let section = (indexPathsForVisibleRows?.first?.section ?? 0) + 1
@@ -760,8 +884,8 @@ public extension UITableView {
         targetContentOffset.memory.y = offsetY
     }
 
-    /// Compare the top two visible rows to the current content offset
-    /// and returns the best index path that is visible on top
+    /// Compares the top two visible rows to the current content offset
+    /// and returns the best index path that is visible on the top.
     public var visibleTopIndexPath: NSIndexPath? {
         let visibleRows  = indexPathsForVisibleRows ?? []
         let firstPath: NSIndexPath

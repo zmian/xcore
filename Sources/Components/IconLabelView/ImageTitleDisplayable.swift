@@ -44,10 +44,13 @@ extension UIImage: ImageRepresentable {
 
 public protocol ImageTitleDisplayable {
     var title: String { get }
+    var subtitle: String? { get }
     var image: ImageRepresentable { get }
 }
 
 public extension ImageTitleDisplayable {
+    var subtitle: String? { return nil }
+
     func setImage(imageView: UIImageView?) {
         switch image.imageSourceType {
             case .URL:

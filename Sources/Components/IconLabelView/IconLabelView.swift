@@ -40,7 +40,7 @@ public class IconLabelView: UIView {
     public let titleLabel          = UILabel()
     public let subtitleLabel       = UILabel()
 
-    /// Default value is `.TopBottom`.
+    /// The default value is `.TopBottom`.
     public var style = Style.TopBottom {
         didSet {
             guard oldValue != style else { return }
@@ -48,7 +48,7 @@ public class IconLabelView: UIView {
         }
     }
 
-    /// Default size is `55,55`.
+    /// The default size is `55,55`.
     public var imageSize = CGSizeMake(55, 55) {
         didSet {
             imageSizeConstraints.width?.constant  = imageSize.width
@@ -56,7 +56,7 @@ public class IconLabelView: UIView {
         }
     }
 
-    /// Default value is `0` which means size to fit.
+    /// The default value is `0` which means size to fit.
     public var labelsWidth: CGFloat = 0 {
         didSet {
             guard oldValue != labelsWidth else { return }
@@ -73,7 +73,7 @@ public class IconLabelView: UIView {
         }
     }
 
-    /// Default value is `8`.
+    /// The default value is `8`.
     public var imagePadding: CGFloat = 8 {
         didSet {
             imagePaddingConstraints.forEach { $0.constant = imagePadding }
@@ -81,28 +81,28 @@ public class IconLabelView: UIView {
         }
     }
 
-    /// Default value is `13`.
+    /// The default value is `13`.
     public var imageCornerRadius: CGFloat = 13 {
         didSet {
             imageViewContainer.cornerRadius = imageCornerRadius
         }
     }
 
-    /// Default value is `false`.
+    /// The default value is `false`.
     public var isRoundImageView = false {
         didSet {
             imageCornerRadius = isRoundImageView ? imageSize.height / 2 : 0
         }
     }
 
-    /// Default color is white.
+    /// The default color is white.
     public var imageBackgroundColor = UIColor.whiteColor() {
         didSet {
             imageViewContainer.backgroundColor = imageBackgroundColor
         }
     }
 
-    /// Default value is `false`.
+    /// The default value is `false`.
     public var subtitleLabelVisible: Bool = false {
         didSet {
             guard oldValue != subtitleLabelVisible else { return }
@@ -115,7 +115,7 @@ public class IconLabelView: UIView {
         }
     }
 
-    /// Default value is `true`.
+    /// The default value is `true`.
     public var imageViewVisible: Bool = true {
         didSet {
             guard oldValue != imageViewVisible else { return }
@@ -128,21 +128,25 @@ public class IconLabelView: UIView {
         }
     }
 
+    /// The default value is `.Vertical`.
     private var axis: UILayoutConstraintAxis {
         get { return stackView.axis }
         set { stackView.axis = newValue }
     }
 
+    /// The default value is `.Fill`.
     private var distribution: TZStackViewDistribution {
         get { return stackView.distribution }
         set { stackView.distribution = newValue }
     }
 
+    /// The default value is `.Center`.
     private var alignment: TZStackViewAlignment {
         get { return stackView.alignment }
         set { stackView.alignment = newValue }
     }
 
+    /// The default value is `5`.
     public var spacing: CGFloat {
         get { return stackView.spacing }
         set { stackView.spacing = newValue }
@@ -168,8 +172,8 @@ public class IconLabelView: UIView {
 
     public func setData(imageUrl: String = "", title: String, subtitle: String? = nil) {
         imageView.remoteOrLocalImage(imageUrl)
-        titleLabel.text = title
-        subtitleLabel.text = subtitle
+        titleLabel.text      = title
+        subtitleLabel.text   = subtitle
         subtitleLabelVisible = subtitle != nil
     }
 
@@ -205,7 +209,7 @@ public class IconLabelView: UIView {
         let size = NSLayoutConstraint.size(imageViewContainer, size: imageSize).activate()
         imageSizeConstraints.width  = size[0]
         imageSizeConstraints.height = size[1]
-        imagePaddingConstraints = NSLayoutConstraint.constraintsForViewToFillSuperview(imageView, padding: UIEdgeInsetsMake(imagePadding, imagePadding, imagePadding, imagePadding)).activate()
+        imagePaddingConstraints = NSLayoutConstraint.constraintsForViewToFillSuperview(imageView, padding: UIEdgeInsets(all: imagePadding)).activate()
 
         // Ensures smooth scaling quality
         imageView.layer.minificationFilter = kCAFilterTrilinear
