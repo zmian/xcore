@@ -396,7 +396,7 @@ public extension UIViewController {
     ///
     /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
     /// And, any of its view controllers can override this on as needed basis.
-    /// This enables `info.plist`'s `View controller-based status bar appearance: NO` like beahvior
+    /// This enables `info.plist`'s `View controller-based status bar appearance: NO` like behavior
     /// but allowing any of its view controllers to override the value.
     /// ```
     /// let vc = UIImagePickerController()
