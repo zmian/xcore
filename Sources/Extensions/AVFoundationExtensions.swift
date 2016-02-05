@@ -33,7 +33,7 @@ public extension AVPlayer {
     }
 
     public func currentTime(block: (seconds: Int, formattedTime: String) -> Void) -> AnyObject {
-        let interval = CMTimeMake(1, 1)
+        let interval = CMTime(value: 1, timescale: 1)
         return addPeriodicTimeObserverForInterval(interval, queue: dispatch_get_main_queue()) {[weak self] time in
             if let weakSelf = self {
                 let normalizedTime = Double(weakSelf.currentTime().value) / Double(weakSelf.currentTime().timescale)
@@ -94,7 +94,7 @@ public extension CMTime {
     public func timeWithOffset(offset: NSTimeInterval) -> CMTime {
         let seconds = CMTimeGetSeconds(self)
         let secondsWithOffset = seconds + offset
-        return CMTimeMakeWithSeconds(secondsWithOffset, timescale)
+        return CMTime(seconds: secondsWithOffset, preferredTimescale: timescale)
     }
 }
 

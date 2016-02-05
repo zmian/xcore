@@ -30,7 +30,7 @@ public class IntrinsicContentSizeView: UIView {
 
     public init(intrinsicContentSize: CGSize) {
         self.contentSize = intrinsicContentSize
-        super.init(frame: CGRectZero)
+        super.init(frame: .zero)
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -48,7 +48,7 @@ public class IntrinsicContentSizeImageView: UIImageView {
 
     public init(intrinsicContentSize: CGSize) {
         self.contentSize = intrinsicContentSize
-        super.init(frame: CGRectZero)
+        super.init(frame: .zero)
     }
 
     public required init?(coder aDecoder: NSCoder) {

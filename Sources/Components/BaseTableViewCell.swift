@@ -30,7 +30,7 @@ public class BaseTableViewCell: UITableViewCell {
 
     public class var reuseIdentifier: String { return "BaseTableViewCellIdentifier" }
 
-    public var separatorInsets = UIEdgeInsetsZero {
+    public var separatorInsets = UIEdgeInsets.zero {
         didSet { setupSeparatorInset() }
     }
 

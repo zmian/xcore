@@ -31,7 +31,7 @@ public class IconLabelCollectionViewCell: UICollectionViewCell {
     // MARK: Init Methods
 
     public convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: .zero)
     }
 
     public override init(frame: CGRect) {

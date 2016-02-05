@@ -49,7 +49,7 @@ public class IconLabelView: UIView {
     }
 
     /// The default size is `55,55`.
-    public var imageSize = CGSizeMake(55, 55) {
+    public var imageSize = CGSize(width: 55, height: 55) {
         didSet {
             imageSizeConstraints.width?.constant  = imageSize.width
             imageSizeConstraints.height?.constant = imageSize.height
@@ -155,7 +155,7 @@ public class IconLabelView: UIView {
     // MARK: Init Methods
 
     public convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: .zero)
     }
 
     public override init(frame: CGRect) {

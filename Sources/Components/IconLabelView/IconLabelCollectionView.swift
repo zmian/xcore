@@ -83,7 +83,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
         self.init(frame: frame, options: [])
     }
 
-    public convenience init(frame: CGRect = CGRectZero, collectionViewLayout: UICollectionViewLayout? = nil, options: IconLabelCollectionCellOptions) {
+    public convenience init(frame: CGRect = .zero, collectionViewLayout: UICollectionViewLayout? = nil, options: IconLabelCollectionCellOptions) {
         self.init(frame: frame, collectionViewLayout: collectionViewLayout ?? UICollectionViewFlowLayout())
     }
 
@@ -119,10 +119,10 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
         registerClass(IconLabelCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         let itemSpacing: CGFloat        = 8
-        layout?.itemSize                = CGSizeMake(60, 74)
+        layout?.itemSize                = CGSize(width: 60, height: 74)
         layout?.minimumLineSpacing      = 15
         layout?.minimumInteritemSpacing = itemSpacing
-        layout?.sectionInset            = UIEdgeInsetsMake(15, 15, 15, 15)
+        layout?.sectionInset            = UIEdgeInsets(all: 15)
         layout?.scrollDirection         = .Vertical
     }
 

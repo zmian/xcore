@@ -77,7 +77,7 @@ public extension NSLayoutConstraint {
         return NSLayoutConstraint(item: viewToCenter, attribute: .CenterY, toItem: superview, constant: offset)
     }
 
-    public static func centerXY(viewToCenter: UIView, superview: UIView? = nil, offset: CGPoint = CGPointZero) -> [NSLayoutConstraint] {
+    public static func centerXY(viewToCenter: UIView, superview: UIView? = nil, offset: CGPoint = .zero) -> [NSLayoutConstraint] {
         return [
             NSLayoutConstraint.centerX(viewToCenter, superview: superview, offset: offset.x),
             NSLayoutConstraint.centerY(viewToCenter, superview: superview, offset: offset.y)
@@ -98,7 +98,7 @@ public extension NSLayoutConstraint {
         return NSLayoutConstraint.constraintsWithVisualFormat("V:|-paddingTop@priority-[view]-paddingBottom@priority-|", options: [], metrics: metrics, views: views)
     }
 
-    public static func constraintsForViewToFillSuperview(viewToSize: UIView, padding: UIEdgeInsets = UIEdgeInsetsZero) -> [NSLayoutConstraint] {
+    public static func constraintsForViewToFillSuperview(viewToSize: UIView, padding: UIEdgeInsets = .zero) -> [NSLayoutConstraint] {
         let views   = ["view": viewToSize]
         let metrics = ["paddingTop": padding.top, "paddingLeft": padding.left, "paddingBottom": padding.bottom, "paddingRight": padding.right]
         viewToSize.translatesAutoresizingMaskIntoConstraints = false

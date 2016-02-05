@@ -123,7 +123,7 @@ public extension UIView {
 
     // MARK: Fade Content
 
-    public func fadeHead(bounds: CGRect, startPoint: CGPoint = CGPointMake(0.5, 0), endPoint: CGPoint = CGPointMake(0.5, 0.03)) {
+    public func fadeHead(bounds: CGRect, startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 0.03)) {
         let gradient        = CAGradientLayer()
         gradient.frame      = bounds
         gradient.colors     = [UIColor.clearColor().CGColor, UIColor.whiteColor().CGColor]
@@ -132,7 +132,7 @@ public extension UIView {
         layer.mask          = gradient
     }
 
-    public func fadeTail(bounds: CGRect, startPoint: CGPoint = CGPointMake(0.5, 0.93), endPoint: CGPoint = CGPointMake(0.5, 1)) {
+    public func fadeTail(bounds: CGRect, startPoint: CGPoint = CGPoint(x: 0.5, y: 0.93), endPoint: CGPoint = CGPoint(x: 0.5, y: 1)) {
         let gradient        = CAGradientLayer()
         gradient.frame      = bounds
         gradient.colors     = [UIColor.whiteColor().CGColor, UIColor.clearColor().CGColor]
@@ -185,7 +185,7 @@ public extension UIView {
         var borders = [UIView]()
 
         func border() -> UIView {
-            let border = UIView(frame: CGRectZero)
+            let border = UIView(frame: .zero)
             border.backgroundColor = color
             border.translatesAutoresizingMaskIntoConstraints = false
             return border
@@ -258,7 +258,7 @@ public extension UIViewController {
     ///
     /// - parameter childController: The view controller to add as a child view controller.
     /// - parameter containerView:   A container view where this child view controller will be added. The default value is view controller's view.
-    public func addContainerViewController(childController: UIViewController, containerView: UIView? = nil, enableConstraints: Bool = false, padding: UIEdgeInsets = UIEdgeInsetsZero) {
+    public func addContainerViewController(childController: UIViewController, containerView: UIView? = nil, enableConstraints: Bool = false, padding: UIEdgeInsets = .zero) {
         guard let containerView = containerView ?? view else { return }
 
         childController.beginAppearanceTransition(true, animated: false)
@@ -385,9 +385,9 @@ public extension UIViewController {
         set { objc_setAssociatedObject(self, &AssociatedKey.SupportedInterfaceOrientations, newValue?.rawValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
-    /// A convenience property to set status bar style without subclassing.
+    /// A convenience property to set `preferredStatusBarStyle()` without subclassing.
     /// This is useful when you don't have access to the actual class and need
-    /// to update the status bar style to match with app look and feel.
+    /// to update the status bar style to match with the app's look and feel.
     ///
     /// The default value is `nil` which means use the `preferredStatusBarStyle() value`.
     /// ```
@@ -761,9 +761,9 @@ public extension UIImageView {
 public extension UIImage {
     /// Creates an image from specified color and size.
     ///
-    /// The default size is `CGSize(width: 50, height: 50)`.
+    /// The default size is `50,50`.
     public convenience init(color: UIColor, size: CGSize = CGSize(width: 50, height: 50)) {
-        let rect = CGRect(origin: CGPointZero, size: size)
+        let rect = CGRect(origin: .zero, size: size)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
         CGContextSetFillColorWithColor(context, color.CGColor)
@@ -788,7 +788,7 @@ public extension UIImage {
     /// Creating arbitrarily-colored icons from a black-with-alpha master image.
     public func tintColor(color: UIColor) -> UIImage {
         let image = self
-        let rect = CGRectMake(0, 0, image.size.width, image.size.height)
+        let rect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
         UIGraphicsBeginImageContextWithOptions(rect.size, false, image.scale)
         let c: CGContextRef = UIGraphicsGetCurrentContext()!
         image.drawInRect(rect)
@@ -801,7 +801,7 @@ public extension UIImage {
     public func resize(newSize: CGSize, tintColor: UIColor? = nil, completionHandler: (resizedImage: UIImage) -> Void) {
         dispatch.async.bg(.UserInitiated) {
             UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
-            self.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
+            self.drawInRect(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             let tintedImage: UIImage
