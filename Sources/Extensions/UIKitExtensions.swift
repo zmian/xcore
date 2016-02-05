@@ -366,10 +366,13 @@ public extension UIViewController {
     }
 
     /// A convenience property to set `supportedInterfaceOrientations()` without subclassing.
-    /// This is useful when you don't have access to the actual class and need
+    /// This is useful when you don't have access to the actual class source code and need
     /// to set supported interface orientation.
     ///
     /// The default value is `nil` which means use the `supportedInterfaceOrientations() value`.
+    ///
+    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
+    /// And, any of its view controllers can override this on as needed basis.
     /// ```
     /// let vc = UIImagePickerController()
     /// vc.preferredInterfaceOrientations = .AllButUpsideDown
@@ -386,10 +389,15 @@ public extension UIViewController {
     }
 
     /// A convenience property to set `preferredStatusBarStyle()` without subclassing.
-    /// This is useful when you don't have access to the actual class and need
+    /// This is useful when you don't have access to the actual class source code and need
     /// to update the status bar style to match with the app's look and feel.
     ///
     /// The default value is `nil` which means use the `preferredStatusBarStyle() value`.
+    ///
+    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
+    /// And, any of its view controllers can override this on as needed basis.
+    /// This enables `info.plist`'s `View controller-based status bar appearance: NO` like beahvior
+    /// but allowing any of its view controllers to override the value.
     /// ```
     /// let vc = UIImagePickerController()
     /// vc.statusBarStyle = .LightContent
@@ -406,10 +414,13 @@ public extension UIViewController {
     }
 
     /// A convenience property to set `prefersStatusBarHidden()` without subclassing.
-    /// This is useful when you don't have access to the actual class and need
+    /// This is useful when you don't have access to the actual class source code and need
     /// to show/hide status bar.
     ///
     /// The default value is `nil` which means use the `prefersStatusBarHidden() value`.
+    ///
+    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
+    /// And, any of its view controllers can override this on as needed basis.
     /// ```
     /// let vc = UIImagePickerController()
     /// vc.isStatusBarHidden = false
@@ -420,10 +431,13 @@ public extension UIViewController {
     }
 
     /// A convenience property to set `shouldAutorotate()` without subclassing.
-    /// This is useful when you don't have access to the actual class and need
+    /// This is useful when you don't have access to the actual class source code and need
     /// to enable/disable rotation.
     ///
     /// The default value is `nil` which means use the `shouldAutorotate()` value.
+    ///
+    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
+    /// And, any of its view controllers can override this on as needed basis.
     /// ```
     /// let vc = UIImagePickerController()
     /// vc.enableAutorotate = false
