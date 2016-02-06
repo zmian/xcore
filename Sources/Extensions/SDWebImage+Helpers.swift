@@ -32,8 +32,9 @@ public extension UIImageView {
 
         if let url = NSURL(string: named) where url.host != nil {
             self.sd_setImageWithURL(url) {[weak self] (image, _, cacheType, _) in
-                if let weakSelf = self, image = image where (alwaysAnimate || cacheType != SDImageCacheType.Memory) {
-                    callback?(image: image)
+                guard let image = image else { return }
+                defer { callback?(image: image) }
+                if let weakSelf = self where (alwaysAnimate || cacheType != SDImageCacheType.Memory) {
                     weakSelf.alpha = 0
                     UIView.animateWithDuration(0.5) {
                         weakSelf.alpha = 1
@@ -44,16 +45,16 @@ public extension UIImageView {
             dispatch.async.bg(.UserInitiated) {[weak self] in
                 guard let weakSelf = self, image = UIImage(named: named) else { return }
                 dispatch.async.main {
+                    defer { callback?(image: image) }
+
                     if alwaysAnimate {
                         weakSelf.alpha = 0
                         weakSelf.image = image
                         UIView.animateWithDuration(0.5) {
                             weakSelf.alpha = 1
                         }
-                        callback?(image: image)
                     } else {
                         weakSelf.image = image
-                        callback?(image: image)
                     }
                 }
             }
