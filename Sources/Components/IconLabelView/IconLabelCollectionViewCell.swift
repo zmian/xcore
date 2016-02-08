@@ -47,8 +47,7 @@ public class IconLabelCollectionViewCell: UICollectionViewCell {
     // MARK: Setters
 
     public func setData(data: ImageTitleDisplayable) {
-        iconLabelView.setData(title: data.title, subtitle: data.subtitle)
-        data.setImage(iconLabelView.imageView)
+        iconLabelView.setData(data)
     }
 
     // MARK: Setup Method

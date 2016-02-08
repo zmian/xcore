@@ -24,7 +24,10 @@
 
 import UIKit
 
-public enum ImageSourceType { case URL, UIImage }
+public enum ImageSourceType  { case URL, UIImage }
+public enum StringSourceType { case AttributedString, String }
+
+// MARK: ImageRepresentable
 
 public protocol ImageRepresentable {
     var imageSourceType: ImageSourceType { get }
@@ -42,25 +45,67 @@ extension UIImage: ImageRepresentable {
     public var imageSourceType: ImageSourceType { return .UIImage }
 }
 
-public protocol ImageTitleDisplayable {
-    var title: String { get }
-    var subtitle: String? { get }
-    var image: ImageRepresentable { get }
-}
+public extension UIImageView {
+    public func setImage(image: ImageRepresentable?) {
+        guard let image = image else {
+            self.image = nil
+            return
+        }
 
-public extension ImageTitleDisplayable {
-    var subtitle: String? { return nil }
-
-    func setImage(imageView: UIImageView?) {
         switch image.imageSourceType {
             case .URL:
                 if let imageName = image as? String {
-                    imageView?.remoteOrLocalImage(imageName)
+                    remoteOrLocalImage(imageName)
                 } else if let url = image as? NSURL {
-                    imageView?.remoteOrLocalImage(url.absoluteString)
+                    remoteOrLocalImage(url.absoluteString)
                 }
             case .UIImage:
-                imageView?.image = image as? UIImage
+                self.image = image as? UIImage
         }
     }
+}
+
+// MARK: StringRepresentable
+
+public protocol StringRepresentable: CustomStringConvertible {
+    var stringSourceType: StringSourceType { get }
+}
+
+extension String: StringRepresentable {
+    public var stringSourceType: StringSourceType { return .String }
+    public var description: String { return self }
+}
+
+extension NSAttributedString: StringRepresentable {
+    public var stringSourceType: StringSourceType { return .AttributedString }
+    public override var description: String { return string }
+}
+
+public extension UILabel {
+    public func setText(string: StringRepresentable?) {
+        guard let string = string else {
+            text = nil
+            attributedText = nil
+            return
+        }
+
+        switch string.stringSourceType {
+            case .String:
+                text = string as? String
+            case .AttributedString:
+                attributedText = string as? NSAttributedString
+        }
+    }
+}
+
+// MARK: ImageTitleDisplayable
+
+public protocol ImageTitleDisplayable {
+    var title:    StringRepresentable  { get }
+    var subtitle: StringRepresentable? { get }
+    var image:    ImageRepresentable   { get }
+}
+
+public extension ImageTitleDisplayable {
+    var subtitle: StringRepresentable? { return nil }
 }

@@ -115,15 +115,15 @@ public class IconLabelView: UIView {
         }
     }
 
-    /// The default value is `true`.
-    public var imageViewVisible: Bool = true {
+    /// The default value is `false`.
+    public var isImageViewHidden: Bool = false {
         didSet {
-            guard oldValue != imageViewVisible else { return }
-            if imageViewVisible {
-                stackView.insertArrangedSubview(imageViewContainer, atIndex: 0)
-            } else {
+            guard oldValue != isImageViewHidden else { return }
+            if isImageViewHidden {
                 stackView.removeArrangedSubview(imageViewContainer)
                 imageViewContainer.removeFromSuperview()
+            } else {
+                stackView.insertArrangedSubview(imageViewContainer, atIndex: 0)
             }
         }
     }
@@ -171,10 +171,18 @@ public class IconLabelView: UIView {
     // MARK: Setters
 
     public func setData(imageUrl: String = "", title: String, subtitle: String? = nil) {
-        imageView.remoteOrLocalImage(imageUrl)
-        titleLabel.text      = title
-        subtitleLabel.text   = subtitle
+        setData(imageUrl, title: title, subtitle: subtitle)
+    }
+
+    public func setData(image: ImageRepresentable = "", title: StringRepresentable, subtitle: StringRepresentable? = nil) {
+        imageView.setImage(image)
+        titleLabel.setText(title)
+        subtitleLabel.setText(subtitle)
         subtitleLabelVisible = subtitle != nil
+    }
+
+    public func setData(data: ImageTitleDisplayable) {
+        setData(data.image, title: data.title, subtitle: data.subtitle)
     }
 
     // MARK: Setup Methods
