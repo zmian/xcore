@@ -103,19 +103,6 @@ public class IconLabelView: UIView {
     }
 
     /// The default value is `false`.
-    public var subtitleLabelVisible: Bool = false {
-        didSet {
-            guard oldValue != subtitleLabelVisible else { return }
-            if subtitleLabelVisible {
-                stackView.addArrangedSubview(subtitleLabel)
-            } else {
-                stackView.removeArrangedSubview(subtitleLabel)
-                subtitleLabel.removeFromSuperview()
-            }
-        }
-    }
-
-    /// The default value is `false`.
     public var isImageViewHidden: Bool = false {
         didSet {
             guard oldValue != isImageViewHidden else { return }
@@ -124,6 +111,19 @@ public class IconLabelView: UIView {
                 imageViewContainer.removeFromSuperview()
             } else {
                 stackView.insertArrangedSubview(imageViewContainer, atIndex: 0)
+            }
+        }
+    }
+
+    /// The default value is `true`.
+    public var isSubtitleLabelHidden: Bool = true {
+        didSet {
+            guard oldValue != isSubtitleLabelHidden else { return }
+            if isSubtitleLabelHidden {
+                stackView.removeArrangedSubview(subtitleLabel)
+                subtitleLabel.removeFromSuperview()
+            } else {
+                stackView.addArrangedSubview(subtitleLabel)
             }
         }
     }
@@ -174,7 +174,7 @@ public class IconLabelView: UIView {
         imageView.setImage(image)
         titleLabel.setText(title)
         subtitleLabel.setText(subtitle)
-        subtitleLabelVisible = subtitle != nil
+        isSubtitleLabelHidden = subtitle == nil
     }
 
     public func setData(data: ImageTitleDisplayable) {
