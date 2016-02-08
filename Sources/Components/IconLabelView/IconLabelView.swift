@@ -170,10 +170,6 @@ public class IconLabelView: UIView {
 
     // MARK: Setters
 
-    public func setData(imageUrl: String = "", title: String, subtitle: String? = nil) {
-        setData(imageUrl, title: title, subtitle: subtitle)
-    }
-
     public func setData(image: ImageRepresentable = "", title: StringRepresentable, subtitle: StringRepresentable? = nil) {
         imageView.setImage(image)
         titleLabel.setText(title)
