@@ -182,10 +182,10 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     }
 }
 
-// MARK: Syntactic Sugar API
+// MARK: Convenience API
 
 public extension IconLabelCollectionView {
-    /// Syntactic sugar to create a single section collection view.
+    /// A convenience property to create a single section collection view.
     public var items: [ImageTitleDisplayable] {
         get { return sections.first ?? [] }
         set { sections = [newValue] }
