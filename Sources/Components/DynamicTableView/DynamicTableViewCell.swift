@@ -34,7 +34,7 @@ public class DynamicTableViewCell: BaseTableViewCell {
 
     /// The distance that the view is inset from the enclosing  content view.
     /// The default value is `UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15)`.
-    public dynamic var contentInset = UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15) {
+    public var contentInset = UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15) {
         didSet {
             contentConstraints.top?.constant    = contentInset.top
             contentConstraints.left?.constant   = contentInset.left
@@ -44,42 +44,42 @@ public class DynamicTableViewCell: BaseTableViewCell {
     }
 
     /// The default size is `55,55`.
-    public dynamic var imageSize = CGSize(width: 55, height: 55) {
+    public var imageSize = CGSize(width: 55, height: 55) {
         didSet {
-            setImageSize(imageSize)
+            setDefaultImageSize(imageSize)
         }
     }
 
     /// The space between image and text. The default value is `8`.
-    public dynamic var textImageSpacing: CGFloat = 8 {
+    public var textImageSpacing: CGFloat = 8 {
         didSet {
-            setTextImageSpacing(textImageSpacing)
+            setDefaultTextImageSpacing(textImageSpacing)
         }
     }
 
     /// The default value is `false`.
-    public dynamic var isImageViewHidden: Bool = false {
+    public var isImageViewHidden: Bool = false {
         didSet {
             guard oldValue != isImageViewHidden else { return }
             if isImageViewHidden {
-                setImageSize(.zero)
-                setTextImageSpacing(0)
+                setDefaultImageSize(.zero)
+                setDefaultTextImageSpacing(0)
             } else {
-                setImageSize(imageSize)
-                setTextImageSpacing(textImageSpacing)
+                setDefaultImageSize(imageSize)
+                setDefaultTextImageSpacing(textImageSpacing)
             }
         }
     }
 
     /// The default value is `true`.
-    public dynamic var isRoundImageView = true {
+    public var isRoundImageView = true {
         didSet {
             avatarView.layer.cornerRadius = isRoundImageView ? imageSize.height / 2 : 0
         }
     }
 
     /// The background color of the cell when it is highlighted.
-    public dynamic var highlightedBackgroundColor: UIColor?
+    public var highlightedBackgroundColor: UIColor?
     private var regularBackgroundColor: UIColor?
     private var observeBackgroundColorSetter = true
     public override var backgroundColor: UIColor? {
@@ -204,22 +204,24 @@ public class DynamicTableViewCell: BaseTableViewCell {
         contentView.addSubview(v)
         return v
     }
-
-    // MARK: Helpers
-
-    private func setImageSize(size: CGSize) {
-        imageSizeConstraints.width?.constant  = size.width
-        imageSizeConstraints.height?.constant = size.height
-    }
-
-    private func setTextImageSpacing(value: CGFloat) {
-        imageAndTitleSpacingConstraint?.constant = value
-    }
 }
 
 // MARK: UIAppearance Properties
 
 public extension DynamicTableViewCell {
+    public dynamic func setDefaultImageSize(size: CGSize) {
+        imageSizeConstraints.width?.constant  = size.width
+        imageSizeConstraints.height?.constant = size.height
+    }
+
+    public dynamic func setDefaultTextImageSpacing(value: CGFloat) {
+        imageAndTitleSpacingConstraint?.constant = value
+    }
+
+    public dynamic func setDefaultContentInset(value: UIEdgeInsets) {
+        contentInset = value
+    }
+
     public dynamic var titleColor: UIColor? {
         get { return titleLabel.textColor }
         set { titleLabel.textColor = newValue }
