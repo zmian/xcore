@@ -37,17 +37,18 @@ public typealias IconLabelCollectionViewDataSourceModel = [ImageTitleDisplayable
 
 public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
     private let reuseIdentifier = IconLabelCollectionViewCell.reuseIdentifier
+    private var allowReordering: Bool { return cellOptions.contains(.Movable) }
+    private var allowDeletion: Bool   { return cellOptions.contains(.Deletable) }
     public var sections: [IconLabelCollectionViewDataSourceModel] = []
     /// The layout used to organize the collection view’s items.
     public var layout: UICollectionViewFlowLayout? {
         return collectionViewLayout as? UICollectionViewFlowLayout
     }
     public private(set) var cellOptions: IconLabelCollectionCellOptions = []
-    private var allowReordering: Bool { return cellOptions.contains(.Movable) }
-    private var allowDeletion: Bool   { return cellOptions.contains(.Deletable) }
-    public var centerCells = false {
+    /// A boolean value to determine whether the content is centered in the collection view. The default value is `false`.
+    public var isContentCentered = false {
         didSet {
-            if centerCells {
+            if isContentCentered {
                 layout?.minimumInteritemSpacing = bounds.height
             }
         }

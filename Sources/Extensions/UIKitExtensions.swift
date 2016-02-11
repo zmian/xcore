@@ -715,6 +715,24 @@ public extension UIColor {
             return self
         }
     }
+
+    /// A convenience method to return default system tint color.
+    ///
+    /// - returns: The default tint color.
+    public static func defaultSystemTintColor() -> UIColor {
+        struct Static {
+            static let tintColor = UIView().tintColor
+        }
+
+        return Static.tintColor
+    }
+
+    public static func randomColor() -> UIColor {
+        let hue        = CGFloat(arc4random() % 256) / 256
+        let saturation = CGFloat(arc4random() % 128) / 256 + 0.5
+        let brightness = CGFloat(arc4random() % 128) / 256 + 0.5
+        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
+    }
 }
 
 // MARK: UIImageView Extension
