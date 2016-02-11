@@ -27,15 +27,14 @@ import UIKit
 public class DynamicTableViewCell: BaseTableViewCell {
     public override class var reuseIdentifier: String { return "DynamicTableViewCellIdentifier" }
     private var data: DynamicTableModel!
-    private let padding: CGFloat      = 15
-    private let paddingSmall: CGFloat = 8
+    private let padding: CGFloat = 15
     private var imageAndTitleSpacingConstraint: NSLayoutConstraint?
     private var imageSizeConstraints: (width: NSLayoutConstraint?,  height: NSLayoutConstraint?)
     private var contentConstraints: (top: NSLayoutConstraint?, left: NSLayoutConstraint?, bottom: NSLayoutConstraint?, right: NSLayoutConstraint?)
 
     /// The distance that the view is inset from the enclosing  content view.
-    /// The default value is `UIEdgeInsets(top: 7, left: 8, bottom: 8, right: 8)`.
-    public var contentInset = UIEdgeInsets.zero {
+    /// The default value is `UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15)`.
+    public dynamic var contentInset = UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15) {
         didSet {
             contentConstraints.top?.constant    = contentInset.top
             contentConstraints.left?.constant   = contentInset.left
@@ -45,43 +44,42 @@ public class DynamicTableViewCell: BaseTableViewCell {
     }
 
     /// The default size is `55,55`.
-    public var imageSize = CGSize(width: 55, height: 55) {
+    public dynamic var imageSize = CGSize(width: 55, height: 55) {
         didSet {
-            imageSizeConstraints.width?.constant  = imageSize.width
-            imageSizeConstraints.height?.constant = imageSize.height
+            setImageSize(imageSize)
         }
     }
 
     /// The space between image and text. The default value is `8`.
-    public var textImageSpacing: CGFloat = 8 {
+    public dynamic var textImageSpacing: CGFloat = 8 {
         didSet {
-            imageAndTitleSpacingConstraint?.constant = textImageSpacing
+            setTextImageSpacing(textImageSpacing)
         }
     }
 
     /// The default value is `false`.
-    public var isImageViewHidden: Bool = false {
+    public dynamic var isImageViewHidden: Bool = false {
         didSet {
             guard oldValue != isImageViewHidden else { return }
             if isImageViewHidden {
-                imageSize        = .zero
-                textImageSpacing = 0
+                setImageSize(.zero)
+                setTextImageSpacing(0)
             } else {
-                imageSize        = CGSize(width: 55, height: 55)
-                textImageSpacing = paddingSmall
+                setImageSize(imageSize)
+                setTextImageSpacing(textImageSpacing)
             }
         }
     }
 
     /// The default value is `true`.
-    public var isRoundImageView = true {
+    public dynamic var isRoundImageView = true {
         didSet {
-            avatarView.layer.cornerRadius = isRoundImageView ? imageSize.height/2 : 0
+            avatarView.layer.cornerRadius = isRoundImageView ? imageSize.height / 2 : 0
         }
     }
 
     /// The background color of the cell when it is highlighted.
-    public var highlightedBackgroundColor: UIColor?
+    public dynamic var highlightedBackgroundColor: UIColor?
     private var regularBackgroundColor: UIColor?
     private var observeBackgroundColorSetter = true
     public override var backgroundColor: UIColor? {
@@ -191,13 +189,13 @@ public class DynamicTableViewCell: BaseTableViewCell {
         // Avatar Center
         NSLayoutConstraint.centerY(avatarView).activate()
 
-        imageAndTitleSpacingConstraint = NSLayoutConstraint(item: titleLabel, attribute: .Leading, toItem: avatarView, attribute: .Trailing, constant: paddingSmall).activate()
+        imageAndTitleSpacingConstraint = NSLayoutConstraint(item: titleLabel, attribute: .Leading, toItem: avatarView, attribute: .Trailing, constant: textImageSpacing).activate()
 
         // Content Constraints
-        contentConstraints.left   = NSLayoutConstraint(item: avatarView, attribute: .Leading, toItem: contentView, constant: padding).activate()
-        contentConstraints.right  = NSLayoutConstraint(item: contentView, attribute: .Trailing, toItem: titleLabel, constant: padding).activate()
-        contentConstraints.top    = NSLayoutConstraint(item: avatarView, attribute: .Top, relatedBy: .GreaterThanOrEqual, toItem: contentView, constant: padding - 1).activate()
-        contentConstraints.bottom = NSLayoutConstraint(item: contentView, attribute: .Bottom, relatedBy: .GreaterThanOrEqual, toItem: avatarView, constant: padding).activate()
+        contentConstraints.left   = NSLayoutConstraint(item: avatarView, attribute: .Leading, toItem: contentView, constant: contentInset.left).activate()
+        contentConstraints.right  = NSLayoutConstraint(item: contentView, attribute: .Trailing, toItem: titleLabel, constant: contentInset.right).activate()
+        contentConstraints.top    = NSLayoutConstraint(item: avatarView, attribute: .Top, relatedBy: .GreaterThanOrEqual, toItem: contentView, constant: contentInset.top).activate()
+        contentConstraints.bottom = NSLayoutConstraint(item: contentView, attribute: .Bottom, relatedBy: .GreaterThanOrEqual, toItem: avatarView, constant: contentInset.bottom).activate()
     }
 
     private func getSpacerView() -> UIView {
@@ -205,6 +203,17 @@ public class DynamicTableViewCell: BaseTableViewCell {
         v.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(v)
         return v
+    }
+
+    // MARK: Helpers
+
+    private func setImageSize(size: CGSize) {
+        imageSizeConstraints.width?.constant  = size.width
+        imageSizeConstraints.height?.constant = size.height
+    }
+
+    private func setTextImageSpacing(value: CGFloat) {
+        imageAndTitleSpacingConstraint?.constant = value
     }
 }
 
