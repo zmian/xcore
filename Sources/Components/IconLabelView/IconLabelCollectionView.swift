@@ -33,13 +33,11 @@ public struct IconLabelCollectionCellOptions: OptionSetType {
     public static let All: IconLabelCollectionCellOptions = [Movable, Deletable]
 }
 
-public typealias IconLabelCollectionViewDataSourceModel = [ImageTitleDisplayable]
-
 public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
     private let reuseIdentifier = IconLabelCollectionViewCell.reuseIdentifier
     private var allowReordering: Bool { return cellOptions.contains(.Movable) }
     private var allowDeletion: Bool   { return cellOptions.contains(.Deletable) }
-    public var sections: [IconLabelCollectionViewDataSourceModel] = []
+    public var sections: [Section<ImageTitleDisplayable>] = []
     /// The layout used to organize the collection view’s items.
     public var layout: UICollectionViewFlowLayout? {
         return collectionViewLayout as? UICollectionViewFlowLayout
@@ -139,7 +137,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
 
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! IconLabelCollectionViewCell
-        let item = sections[indexPath.section][indexPath.item]
+        let item = itemAt(indexPath)
         cell.setData(item)
         configureCell?(indexPath: indexPath, cell: cell, item: item)
         return cell
@@ -147,7 +145,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
 
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         collectionView.deselectItemAtIndexPath(indexPath, animated: true)
-        let item = sections[indexPath.section][indexPath.item]
+        let item = itemAt(indexPath)
         didSelectItem?(indexPath: indexPath, item: item)
     }
 
@@ -158,8 +156,8 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     }
 
     public func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        let itemToMove = sections[sourceIndexPath.section].removeAtIndex(sourceIndexPath.item)
-        sections[destinationIndexPath.section].insert(itemToMove, atIndex: destinationIndexPath.item)
+        let itemToMove = sections[sourceIndexPath.section].items.removeAtIndex(sourceIndexPath.item)
+        sections[destinationIndexPath.section].items.insert(itemToMove, atIndex: destinationIndexPath.item)
         didMoveItem?(sourceIndexPath: sourceIndexPath, destinationIndexPath: destinationIndexPath, item: itemToMove)
     }
 
@@ -170,7 +168,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     /// - parameter indexPaths: An array of NSIndexPath objects identifying the items to delete.
     public func removeItems(indexPaths: [NSIndexPath]) {
         indexPaths.forEach {
-            let item = sections[$0.section].removeAtIndex($0.item)
+            let item = sections[$0.section].items.removeAtIndex($0.item)
             didRemoveItem?(indexPath: $0, item: item)
         }
 
@@ -181,6 +179,12 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
             weakSelf.reloadItemsAtIndexPaths(weakSelf.indexPathsForVisibleItems())
         })
     }
+
+    // MARK: Helpers
+
+    private func itemAt(indexPath: NSIndexPath) -> ImageTitleDisplayable {
+        return sections[indexPath.section][indexPath.item]
+    }
 }
 
 // MARK: Convenience API
@@ -188,7 +192,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
 public extension IconLabelCollectionView {
     /// A convenience property to create a single section collection view.
     public var items: [ImageTitleDisplayable] {
-        get { return sections.first ?? [] }
-        set { sections = [newValue] }
+        get { return sections.first?.items ?? [] }
+        set { sections = [Section(items: newValue)] }
     }
 }

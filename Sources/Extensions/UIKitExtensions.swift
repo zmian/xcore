@@ -935,6 +935,19 @@ public extension UITableView {
         let firstRowRect = rectForRowAtIndexPath(firstPath)
         return firstRowRect.origin.y > contentOffset.y ? firstPath : secondPath
     }
+
+    /// Deselects all selected rows, with an option to animate the deselection.
+    ///
+    /// Calling this method does not cause the delegate to receive a `tableView:willDeselectRowAtIndexPath:`
+    /// or `tableView:didDeselectRowAtIndexPath:` message, nor does it send `UITableViewSelectionDidChangeNotification`
+    /// notifications to observers.
+    ///
+    /// - parameter animated: true if you want to animate the deselection, and false if the change should be immediate.
+    public func deselectAllRows(animated: Bool) {
+        indexPathsForSelectedRows?.forEach {
+            deselectRowAtIndexPath($0, animated: animated)
+        }
+    }
 }
 
 // MARK: UIDevice Extension

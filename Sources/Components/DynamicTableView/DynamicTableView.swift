@@ -25,13 +25,11 @@
 import UIKit
 import BEMCheckBox
 
-public typealias DynamicTableDataSourceModel = (headerTitle: String?, footerTitle: String?, items: [DynamicTableModel])
-
 public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     private let reuseIdentifier = DynamicTableViewCell.reuseIdentifier
     private var allowReordering: Bool { return cellOptions.contains(.Movable) }
     private var allowDeletion: Bool   { return cellOptions.contains(.Deletable) }
-    public var sections: [DynamicTableDataSourceModel] = []
+    public var sections: [Section<DynamicTableModel>] = []
     public var cellOptions: DynamicTableCellOptions = []
     public var rowActionDeleteColor: UIColor?
     /// A boolean value to determine whether the content is centered in the table view. The default value is `false`.
@@ -160,12 +158,12 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     }
 
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].items.count
+        return sections[section].count
     }
 
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as! DynamicTableViewCell
-        let item = sections[indexPath.section].items[indexPath.row]
+        let item = itemAt(indexPath)
         cell.setData(item)
         configureAccessoryView(cell, type: item.accessory, indexPath: indexPath)
         configureCell?(indexPath: indexPath, cell: cell, item: item)
@@ -175,20 +173,20 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     // Header
 
     public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].headerTitle
+        return sections[section].title
     }
 
     // Footer
 
     public func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return sections[section].footerTitle
+        return sections[section].detail
     }
 
     // MARK: UITableViewDelegate
 
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let item = sections[indexPath.section].items[indexPath.row]
+        let item = itemAt(indexPath)
         if case .Checkbox(_, let callback) = item.accessory {
             if let cell = tableView.cellForRowAtIndexPath(indexPath), checkboxView = cell.accessoryView as? BEMCheckBox {
                 checkboxView.setOn(!checkboxView.on, animated: true)
@@ -202,7 +200,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         if let header = view as? UITableViewHeaderFooterView {
             header.textLabel?.font      = headerFont
             header.textLabel?.textColor = headerTextColor
-            configureHeader?(section: section, header: header, text: sections[section].headerTitle)
+            configureHeader?(section: section, header: header, text: sections[section].title)
         }
     }
 
@@ -210,7 +208,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         if let footer = view as? UITableViewHeaderFooterView {
             footer.textLabel?.font      = footerFont
             footer.textLabel?.textColor = footerTextColor
-            configureFooter?(section: section, footer: footer, text: sections[section].footerTitle)
+            configureFooter?(section: section, footer: footer, text: sections[section].detail)
         }
     }
 
@@ -276,6 +274,10 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
     }
 
+    private func itemAt(indexPath: NSIndexPath) -> DynamicTableModel {
+        return sections[indexPath.section][indexPath.row]
+    }
+
     // MARK: UIAppearance Properties
 
     public dynamic var headerFont                   = UIFont.systemFont(UIFont.Size.Small)
@@ -308,8 +310,7 @@ extension DynamicTableView: BEMCheckBoxDelegate {
                 accessorySwitch.on  = isOn
                 accessorySwitch.addAction(.ValueChanged) {[weak self] sender in
                     guard let weakSelf = self else { return }
-                    let items = weakSelf.sections[indexPath.section].items
-                    let accessory = items[indexPath.row].accessory
+                    let accessory = weakSelf.itemAt(indexPath).accessory
                     if case .Switch(_, let callback) = accessory {
                         callback(sender: sender)
                     }
@@ -346,8 +347,7 @@ extension DynamicTableView: BEMCheckBoxDelegate {
 
     public func didTapCheckBox(checkBox: BEMCheckBox) {
         if let indexPath = checkBox.indexPath {
-            let items = sections[indexPath.section].items
-            let accessory = items[indexPath.row].accessory
+            let accessory = itemAt(indexPath).accessory
             if case .Checkbox(_, let callback) = accessory {
                 callback(sender: checkBox)
             }
@@ -361,7 +361,7 @@ public extension DynamicTableView {
     /// A convenience property to create a single section table view.
     public var items: [DynamicTableModel] {
         get { return sections.first?.items ?? [] }
-        set { sections = [(headerTitle: nil, footerTitle: nil, items: newValue)] }
+        set { sections = [Section(items: newValue)] }
     }
 }
 

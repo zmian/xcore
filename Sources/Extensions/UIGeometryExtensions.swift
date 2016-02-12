@@ -54,3 +54,11 @@ public extension CGFloat {
         return self * 180 / π
     }
 }
+
+public func +(lhs: CGSize, rhs: CGFloat) -> CGSize {
+    return CGSize(width: lhs.width + rhs, height: lhs.height + rhs)
+}
+
+public func +=(inout lhs: CGSize, rhs: CGFloat) {
+    lhs = lhs + rhs
+}

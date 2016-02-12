@@ -40,16 +40,15 @@ private class TestDynamicTableViewController: UIViewController {
         NSLayoutConstraint.constraintsForViewToFillSuperview(tableView).activate()
 
         tableView.sections = [
-            (
-                headerTitle: "Section 1",
-                footerTitle: "Important notice about the footer can be displayed here.",
+            Section(
+                title: "Section 1",
+                detail: "Important notice about the footer can be displayed here.",
                 items: [
                     DynamicTableModel(title: "Hummingbird", subtitle: "Hummingbirds are New World birds that constitute the family Trochilidae. They are among the {#ff0000|smallest of birds}, most species measuring in the 7.5–13 cm range."),
                 ]
             ),
-            (
-                headerTitle: "Birds",
-                footerTitle: nil,
+            Section(
+                title: "Birds",
                 items: [
                     DynamicTableModel(title: "Hummingbird", subtitle: "Hummingbirds are New World birds that constitute the family Trochilidae. They are among the {#ff0000|smallest of birds}, most species measuring in the 7.5–13 cm range."),
                     DynamicTableModel(title: "Hummingbird", image: R(.BlueJay)),

@@ -42,6 +42,11 @@ public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     /// The distance that the text is inset from the enclosing scroll view.
     /// The default value is `UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)`.
     public var contentInset = UIEdgeInsets(all: 15)
+
+    /// A convenience property to set view’s background image.
+    /// The default value is `nil`, which means apply view's background color.
+    public var backgroundImage: UIImage?
+
     /// The text that will be displayed.
     public var text = "Sample Text" {
         didSet {
@@ -49,9 +54,27 @@ public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
         }
     }
 
-    /// A convenience property to set view’s background image.
-    /// The default value is `nil`, which means apply view's background color.
-    public var backgroundImage: UIImage?
+    /// Sets text from the specified file name.
+    ///
+    /// ```
+    /// let vc = TextViewController()
+    /// vc.setText("Terms.txt")
+    /// navigationController.pushViewController(vc, animated: true)
+    /// ```
+    ///
+    /// - parameter filename: The file name.
+    /// - parameter bundle:   The bundle containing the specified file name. If you specify nil,
+    ///   this method looks in the main bundle of the current application. The default value is `nil`.
+    public func setText(filename: String, bundle: NSBundle? = nil) {
+        let name   = filename.lastPathComponent.stringByDeletingPathExtension
+        let ext    = filename.pathExtension
+        let bundle = bundle ?? NSBundle.mainBundle()
+
+        if let path = bundle.pathForResource(name, ofType: ext),
+            content = try? String(contentsOfFile: path, encoding: NSUTF8StringEncoding) {
+            text = content
+        }
+    }
 
     public override func viewDidLoad() {
         constraintToLayoutGuides = false

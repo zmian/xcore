@@ -49,7 +49,7 @@ public class IconLabelView: UIView {
     }
 
     /// The default size is `55,55`.
-    public var imageSize = CGSize(width: 55, height: 55) {
+    public dynamic var imageSize = CGSize(width: 55, height: 55) {
         didSet {
             imageSizeConstraints.width?.constant  = imageSize.width
             imageSizeConstraints.height?.constant = imageSize.height
@@ -57,7 +57,7 @@ public class IconLabelView: UIView {
     }
 
     /// The default value is `0` which means size to fit.
-    public var labelsWidth: CGFloat = 0 {
+    public dynamic var labelsWidth: CGFloat = 0 {
         didSet {
             guard oldValue != labelsWidth else { return }
             if labelsWidth == 0 {
@@ -74,7 +74,7 @@ public class IconLabelView: UIView {
     }
 
     /// The default value is `8`.
-    public var imagePadding: CGFloat = 8 {
+    public dynamic var imagePadding: CGFloat = 8 {
         didSet {
             imagePaddingConstraints.forEach { $0.constant = imagePadding }
             imageView.cornerRadius = imageCornerRadius - imagePadding
@@ -82,28 +82,28 @@ public class IconLabelView: UIView {
     }
 
     /// The default value is `13`.
-    public var imageCornerRadius: CGFloat = 13 {
+    public dynamic var imageCornerRadius: CGFloat = 13 {
         didSet {
             imageViewContainer.cornerRadius = imageCornerRadius
         }
     }
 
     /// The default value is `false`.
-    public var isRoundImageView = false {
+    public dynamic var isRoundImageView = false {
         didSet {
             imageCornerRadius = isRoundImageView ? imageSize.height / 2 : 0
         }
     }
 
     /// The default color is white.
-    public var imageBackgroundColor = UIColor.whiteColor() {
+    public dynamic var imageBackgroundColor = UIColor.whiteColor() {
         didSet {
             imageViewContainer.backgroundColor = imageBackgroundColor
         }
     }
 
     /// The default value is `false`.
-    public var isImageViewHidden: Bool = false {
+    public dynamic var isImageViewHidden: Bool = false {
         didSet {
             guard oldValue != isImageViewHidden else { return }
             if isImageViewHidden {
@@ -116,7 +116,7 @@ public class IconLabelView: UIView {
     }
 
     /// The default value is `true`.
-    public var isSubtitleLabelHidden: Bool = true {
+    public dynamic var isSubtitleLabelHidden: Bool = true {
         didSet {
             guard oldValue != isSubtitleLabelHidden else { return }
             if isSubtitleLabelHidden {
@@ -197,13 +197,13 @@ public class IconLabelView: UIView {
 
         titleLabel.font          = UIFont.systemFont(UIFont.Size.Small)
         titleLabel.textAlignment = .Center
-        titleLabel.textColor     = UIColor.whiteColor()
+        titleLabel.textColor     = UIColor.blackColor()
         titleLabel.numberOfLines = 2
         titleLabel.sizeToFit()
 
         subtitleLabel.font          = UIFont.systemFont(UIFont.Size.Small)
         subtitleLabel.textAlignment = .Center
-        subtitleLabel.textColor     = UIColor.whiteColor()
+        subtitleLabel.textColor     = UIColor.lightGrayColor()
         subtitleLabel.numberOfLines = 1
         subtitleLabel.sizeToFit()
 
@@ -228,5 +228,29 @@ public class IconLabelView: UIView {
             case .LeftRight:
                 axis = .Horizontal
         }
+    }
+}
+
+// MARK: UIAppearance Properties
+
+public extension IconLabelView {
+    public dynamic var titleColor: UIColor? {
+        get { return titleLabel.textColor }
+        set { titleLabel.textColor = newValue }
+    }
+
+    public dynamic var titleFont: UIFont {
+        get { return titleLabel.font }
+        set { titleLabel.font = newValue }
+    }
+
+    public dynamic var subtitleColor: UIColor? {
+        get { return subtitleLabel.textColor }
+        set { subtitleLabel.textColor = newValue }
+    }
+
+    public dynamic var subtitleFont: UIFont {
+        get { return subtitleLabel.font }
+        set { subtitleLabel.font = newValue }
     }
 }

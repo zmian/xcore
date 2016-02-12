@@ -122,14 +122,14 @@ public extension AVPlayer {
 public extension AVPlayerItem {
     /// Initializes an AVPlayerItem with local resource referenced file name.
     ///
-    /// - parameter filename: The local file name
+    /// - parameter filename: The local file name.
     /// - parameter bundle:   The bundle containing the specified file name. If you specify nil,
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
     ///
-    /// - returns:            An instance of AVPlayerItem
-    public convenience init?(fileName: String, bundle: NSBundle? = nil) {
-        let name   = ((fileName as NSString).lastPathComponent as NSString).stringByDeletingPathExtension
-        let ext    = (fileName as NSString).pathExtension
+    /// - returns:            An instance of AVPlayerItem.
+    public convenience init?(filename: String, bundle: NSBundle? = nil) {
+        let name   = ((filename as NSString).lastPathComponent as NSString).stringByDeletingPathExtension
+        let ext    = (filename as NSString).pathExtension
         let bundle = bundle ?? NSBundle.mainBundle()
 
         if let url = bundle.URLForResource(name, withExtension: ext) {
@@ -144,7 +144,7 @@ public extension AVPlayerItem {
         if let url = NSURL(string: remoteOrLocalName) where url.host != nil {
             self.init(URL: url)
         } else {
-            self.init(fileName: remoteOrLocalName)
+            self.init(filename: remoteOrLocalName)
         }
     }
 }
@@ -152,14 +152,14 @@ public extension AVPlayerItem {
 public extension AVAsset {
     /// Initializes an AVAsset with local resource referenced file name.
     ///
-    /// - parameter filename: The local file name
+    /// - parameter filename: The local file name.
     /// - parameter bundle:   The bundle containing the specified file name. If you specify nil,
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
     ///
-    /// - returns:            An instance of AVAsset
-    public convenience init?(fileName: String, bundle: NSBundle? = nil) {
-        let name   = ((fileName as NSString).lastPathComponent as NSString).stringByDeletingPathExtension
-        let ext    = (fileName as NSString).pathExtension
+    /// - returns:            An instance of AVAsset.
+    public convenience init?(filename: String, bundle: NSBundle? = nil) {
+        let name   = ((filename as NSString).lastPathComponent as NSString).stringByDeletingPathExtension
+        let ext    = (filename as NSString).pathExtension
         let bundle = bundle ?? NSBundle.mainBundle()
 
         if let url = bundle.URLForResource(name, withExtension: ext) {
@@ -174,7 +174,7 @@ public extension AVAsset {
         if let url = NSURL(string: remoteOrLocalName) where url.host != nil {
             self.init(URL: url)
         } else {
-            self.init(fileName: remoteOrLocalName)
+            self.init(filename: remoteOrLocalName)
         }
     }
 }
