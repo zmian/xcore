@@ -24,12 +24,38 @@
 
 import UIKit
 
+/// A type that all `UIViewController` subclasses conform to.
+/// It provides a safe way to init view controllers from Storyboard.
+/// It also eliminates casting as `initFromStoryboard()` method automatically
+/// returns the correct `UIViewController`'s subclass.
+///
+/// The default `storyboardIdentifier` value is `UIViewController`'s class name.
+/// ```
+/// class SettingsViewController: UIViewController { }
+///
+/// print(SettingsViewController.storyboardIdentifier)
+///
+/// "SettingsViewController"
+///
+/// let vc = SettingsViewController.initFromStoryboard()
+/// navigationController.pushViewController(vc, animated: true)
+///
+/// ```
+/// If you want to provide your own custom `storyboardIdentifier` you can do so like:
+/// ```
+/// class SettingsViewController: UIViewController {
+///     override class var storyboardIdentifier: String { return "Settings" }
+/// }
+/// 
+/// let vc = SettingsViewController.initFromStoryboard()
+/// navigationController.pushViewController(vc, animated: true)
+/// ```
 public protocol StoryboardInstantiable {
     static var storyboardIdentifier: String { get }
 }
 
 extension UIViewController: StoryboardInstantiable {
-    public static var storyboardIdentifier: String { return "\(self)" }
+    public class var storyboardIdentifier: String { return "\(self)" }
 }
 
 public extension StoryboardInstantiable where Self: UIViewController {

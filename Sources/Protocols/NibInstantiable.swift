@@ -24,12 +24,38 @@
 
 import UIKit
 
+/// A type that all `UIView` subclasses conform to.
+/// It provides a safe way to load views from nibs.
+/// It also eliminates casting as `initFromNib()` method automatically
+/// returns the correct `UIView`'s subclass.
+///
+/// The default `nibName` value is `UIView`'s class name.
+/// ```
+/// class ProfileView: UIView { }
+///
+/// print(ProfileView.nibName)
+///
+/// "ProfileView"
+///
+/// let view = ProfileView.initFromNib()
+/// addSubview(view)
+///
+/// ```
+/// If you want to provide your own custom `nibName` you can do so like:
+/// ```
+/// class ProfileView: UIView {
+///     override class var nibName: String { return "Profile" }
+/// }
+///
+/// let view = ProfileView.initFromNib()
+/// addSubview(view)
+/// ```
 public protocol NibInstantiable {
     static var nibName: String { get }
 }
 
 extension UIView: NibInstantiable {
-    public static var nibName: String { return "\(self)" }
+    public class var nibName: String { return "\(self)" }
 }
 
 public extension NibInstantiable where Self: UIView {
