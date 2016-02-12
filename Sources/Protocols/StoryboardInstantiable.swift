@@ -26,13 +26,14 @@ import UIKit
 
 public protocol StoryboardInstantiable {
     static var storyboardIdentifier: String { get }
-    init(fromStoryboard: Bool)
+}
+
+extension UIViewController: StoryboardInstantiable {
+    public static var storyboardIdentifier: String { return "\(self)" }
 }
 
 public extension StoryboardInstantiable where Self: UIViewController {
-    static var storyboardIdentifier: String { return "\(Self.self)" }
-
-    init(fromStoryboard: Bool) {
+    public init(fromStoryboard: Bool) {
         if fromStoryboard {
             self = Self.initFromStoryboard()
         } else {
@@ -40,7 +41,7 @@ public extension StoryboardInstantiable where Self: UIViewController {
         }
     }
 
-    static func initFromStoryboard() -> Self {
+    public static func initFromStoryboard() -> Self {
         return ControllerFromStoryboard(storyboardIdentifier) as! Self
     }
 }

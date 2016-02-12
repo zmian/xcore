@@ -24,14 +24,16 @@
 
 import UIKit
 
-public protocol NibInstantiable {}
+public protocol NibInstantiable {
+    static var nibName: String { get }
+}
 
-extension UIView: NibInstantiable { }
+extension UIView: NibInstantiable {
+    public static var nibName: String { return "\(self)" }
+}
 
 public extension NibInstantiable where Self: UIView {
-    public static var nibName: String { return "\(Self.self)" }
-
-    static func initFromNib() -> Self {
+    public static func initFromNib() -> Self {
         return NSBundle.mainBundle().loadNibNamed(nibName, owner: nil, options: nil).first as! Self
     }
 }
