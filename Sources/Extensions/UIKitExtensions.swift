@@ -451,6 +451,32 @@ public extension UIViewController {
 // MARK: UINavigationController Extension
 
 public extension UINavigationController {
+    /// Initializes and returns a newly created navigation controller that uses your custom bar subclasses.
+    ///
+    /// - parameter rootViewController: The view controller that resides at the bottom of the navigation stack. This object cannot be an instance of the `UITabBarController` class.
+    /// - parameter navigationBarClass: Specify the custom `UINavigationBar` subclass you want to use, or specify `nil` to use the standard `UINavigationBar` class.
+    /// - parameter toolbarClass:       Specify the custom `UIToolbar` subclass you want to use, or specify `nil` to use the standard `UIToolbar` class.
+    ///
+    /// - returns: The initialized navigation controller object.
+    public convenience init(rootViewController: UIViewController, navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
+        self.init(navigationBarClass: navigationBarClass, toolbarClass: toolbarClass)
+        self.rootViewController = rootViewController
+    }
+
+    /// A convenience property to set root view controller without animation.
+    public var rootViewController: UIViewController? {
+        get { return viewControllers.first }
+        set {
+            var rvc: [UIViewController] = []
+            if let vc = newValue {
+                rvc = [vc]
+            }
+            setViewControllers(rvc, animated: false)
+        }
+    }
+}
+
+public extension UINavigationController {
     // Autorotation Fix. Simply override `supportedInterfaceOrientations`
     // method in any view controller and it would respect that orientation
     // setting per view controller.
