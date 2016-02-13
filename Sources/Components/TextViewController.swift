@@ -77,7 +77,6 @@ public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     }
 
     public override func viewDidLoad() {
-        constraintToLayoutGuides = false
         super.viewDidLoad()
         setupTextLabel()
     }
