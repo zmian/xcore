@@ -61,21 +61,14 @@ extension UIBarButtonItem {
 // MARK: UIBarButtonItem Block-based Interface
 
 extension UIBarButtonItem {
-    public convenience init(image: UIImage?, style: UIBarButtonItemStyle, handler: (() -> Void)? = nil) {
-        self.init(image: image, style: style, target: nil, action: nil)
-        if let handler = handler {
-            actionHandler(handler)
-        }
-    }
-
-    public convenience init(image: UIImage?, landscapeImagePhone: UIImage?, style: UIBarButtonItemStyle, handler: (() -> Void)? = nil) {
+    public convenience init(image: UIImage?, landscapeImagePhone: UIImage? = nil, style: UIBarButtonItemStyle = .Plain, handler: (() -> Void)? = nil) {
         self.init(image: image, landscapeImagePhone: landscapeImagePhone, style: style, target: nil, action: nil)
         if let handler = handler {
             actionHandler(handler)
         }
     }
 
-    public convenience init(title: String?, style: UIBarButtonItemStyle, handler: (() -> Void)? = nil) {
+    public convenience init(title: String?, style: UIBarButtonItemStyle = .Plain, handler: (() -> Void)? = nil) {
         self.init(title: title, style: style, target: nil, action: nil)
         if let handler = handler {
             actionHandler(handler)
