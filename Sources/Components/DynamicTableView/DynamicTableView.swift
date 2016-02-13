@@ -163,7 +163,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
 
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as! DynamicTableViewCell
-        let item = itemAt(indexPath)
+        let item = sections[indexPath]
         cell.setData(item)
         configureAccessoryView(cell, type: item.accessory, indexPath: indexPath)
         configureCell?(indexPath: indexPath, cell: cell, item: item)
@@ -186,7 +186,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
 
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let item = itemAt(indexPath)
+        let item = sections[indexPath]
         if case .Checkbox(_, let callback) = item.accessory {
             if let cell = tableView.cellForRowAtIndexPath(indexPath), checkboxView = cell.accessoryView as? BEMCheckBox {
                 checkboxView.setOn(!checkboxView.on, animated: true)
@@ -219,9 +219,8 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     }
 
     public func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        let itemToMove = sections[sourceIndexPath.section].items.removeAtIndex(sourceIndexPath.row)
-        sections[destinationIndexPath.section].items.insert(itemToMove, atIndex: destinationIndexPath.row)
-        didMoveItem?(sourceIndexPath: sourceIndexPath, destinationIndexPath: destinationIndexPath, item: itemToMove)
+        let movedItem = sections.moveElement(fromIndexPath: sourceIndexPath, toIndexPath: destinationIndexPath)
+        didMoveItem?(sourceIndexPath: sourceIndexPath, destinationIndexPath: destinationIndexPath, item: movedItem)
     }
 
     // MARK: Deletion
@@ -268,14 +267,10 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     /// - parameter animation:  A constant that indicates how the deletion is to be animated.
     private func removeItems(indexPaths: [NSIndexPath], animation: UITableViewRowAnimation = .Fade) {
         indexPaths.forEach {
-            let item = sections[$0.section].items.removeAtIndex($0.row)
+            let item = sections.removeAt($0)
             didRemoveItem?(indexPath: $0, item: item)
         }
         deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
-    }
-
-    private func itemAt(indexPath: NSIndexPath) -> DynamicTableModel {
-        return sections[indexPath.section][indexPath.row]
     }
 
     // MARK: UIAppearance Properties
@@ -310,7 +305,7 @@ extension DynamicTableView: BEMCheckBoxDelegate {
                 accessorySwitch.on  = isOn
                 accessorySwitch.addAction(.ValueChanged) {[weak self] sender in
                     guard let weakSelf = self else { return }
-                    let accessory = weakSelf.itemAt(indexPath).accessory
+                    let accessory = weakSelf.sections[indexPath].accessory
                     if case .Switch(_, let callback) = accessory {
                         callback(sender: sender)
                     }
@@ -347,7 +342,7 @@ extension DynamicTableView: BEMCheckBoxDelegate {
 
     public func didTapCheckBox(checkBox: BEMCheckBox) {
         if let indexPath = checkBox.indexPath {
-            let accessory = itemAt(indexPath).accessory
+            let accessory = sections[indexPath].accessory
             if case .Checkbox(_, let callback) = accessory {
                 callback(sender: checkBox)
             }
@@ -360,8 +355,8 @@ extension DynamicTableView: BEMCheckBoxDelegate {
 public extension DynamicTableView {
     /// A convenience property to create a single section table view.
     public var items: [DynamicTableModel] {
-        get { return sections.first?.items ?? [] }
-        set { sections = [Section(items: newValue)] }
+        get { return sections.first?.elements ?? [] }
+        set { sections = [Section(elements: newValue)] }
     }
 }
 
