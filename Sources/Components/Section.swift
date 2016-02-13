@@ -116,8 +116,8 @@ public extension Array where Element: RangeReplaceableCollectionType, Element.In
     ///
     /// - returns: The moved element.
     public mutating func moveElement(fromIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) -> Element.Generator.Element {
-        let itemToMove = removeAt(fromIndexPath)
-        insert(itemToMove, atIndexPath: toIndexPath)
-        return itemToMove
+        let elementToMove = removeAt(fromIndexPath)
+        insert(elementToMove, atIndexPath: toIndexPath)
+        return elementToMove
     }
 }
