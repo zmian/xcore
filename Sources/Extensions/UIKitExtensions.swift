@@ -26,13 +26,12 @@ import UIKit
 import SafariServices
 import ObjectiveC
 
-/// Instantiates and returns the view controller with the specified identifier
-/// for the specified storyboard resource file.
+/// Instantiates and returns the view controller with the specified identifier for the specified storyboard resource file.
 ///
 /// - parameter identifier:     An identifier string that uniquely identifies the view controller in the storyboard file.
 /// - parameter storyboardName: The name of the storyboard resource file without the filename extension. Default is `Main`
 /// - parameter bundle:         The bundle containing the storyboard file and its related resources. If you specify nil,
-///   this method looks in the main bundle of the current application. The default value is `nil`.
+///                             this method looks in the main bundle of the current application. The default value is `nil`.
 ///
 /// - returns: The view controller corresponding to the specified identifier string.
 public func ControllerFromStoryboard(identifier: String, storyboardName: String = "Main", bundle: NSBundle? = nil) -> UIViewController {
@@ -55,7 +54,7 @@ public func openURL(presentingViewController: UIViewController, url: NSURL) {
     }
 }
 
-/// Displays `UIAlertController` with the given `title` and `message`, and an OK button to dismiss it.
+/// Displays an instance of `UIAlertController` with the given `title` and `message`, and an OK button to dismiss it.
 public func alert(title: String = "", message: String = "") {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
     let cancelAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
