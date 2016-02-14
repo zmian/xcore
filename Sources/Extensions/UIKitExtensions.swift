@@ -29,11 +29,13 @@ import ObjectiveC
 /// Instantiates and returns the view controller with the specified identifier for the specified storyboard resource file.
 ///
 /// - parameter identifier:     An identifier string that uniquely identifies the view controller in the storyboard file.
-/// - parameter storyboardName: The name of the storyboard resource file without the filename extension. Default is `Main`
-/// - parameter bundle:         The bundle containing the storyboard file and its related resources. If you specify nil,
+/// - parameter storyboardName: The name of the storyboard file without the file extension. The default value is `Main`.
+/// - parameter bundle:         The bundle containing the storyboard file and its related resources. If you specify `nil`,
 ///                             this method looks in the main bundle of the current application. The default value is `nil`.
 ///
 /// - returns: The view controller corresponding to the specified identifier string.
+///
+/// - seealso: `StoryboardInstantiable` and `NibInstantiable` protocols.
 public func ControllerFromStoryboard(identifier: String, storyboardName: String = "Main", bundle: NSBundle? = nil) -> UIViewController {
     return UIStoryboard(name: storyboardName, bundle: bundle).instantiateViewControllerWithIdentifier(identifier)
 }
