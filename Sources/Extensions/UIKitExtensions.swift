@@ -75,19 +75,29 @@ public extension UIAlertController {
 // MARK: UIView Extension
 
 public extension UIView {
-
-    /// Spring animation with completion handler.
-    public static func animate(duration: NSTimeInterval = 0.6, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: UIViewAnimationOptions = .AllowUserInteraction, animations: (() -> Void), completion: ((Bool) -> Void)?) {
-        UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: {
-            animations()
-        }, completion: completion)
+    /// Performs a view animation using a timing curve corresponding to the motion of a physical spring.
+    ///
+    /// - parameter duration:   The total duration of the animations, measured in seconds. If you specify a negative value or `0`, the changes are made without animating them. The default value is `0.6`.
+    /// - parameter delay:      The amount of time (measured in seconds) to wait before beginning the animations. The default value is `0`.
+    /// - parameter damping:    The damping ratio for the spring animation as it approaches its quiescent state. The default value is `0.7`.
+    /// - parameter velocity:   The initial spring velocity. For smooth start to the animation, match this value to the view’s velocity as it was prior to attachment. The default value is `0`.
+    /// - parameter options:    A mask of options indicating how you want to perform the animations. The default value is `UIViewAnimationOptions.AllowUserInteraction`.
+    /// - parameter animations: A block object containing the changes to commit to the views.
+    /// - parameter completion: A block object to be executed when the animation sequence ends.
+    public static func animate(duration: NSTimeInterval = 0.6, delay: NSTimeInterval = 0, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: UIViewAnimationOptions = .AllowUserInteraction, animations: (() -> Void), completion: ((Bool) -> Void)?) {
+        UIView.animateWithDuration(duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: completion)
     }
 
-    /// Spring animation
-    public static func animate(duration: NSTimeInterval = 0.6, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: UIViewAnimationOptions = .AllowUserInteraction, animations: (() -> Void)) {
-        UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: {
-            animations()
-        }, completion: nil)
+    /// Performs a view animation using a timing curve corresponding to the motion of a physical spring.
+    ///
+    /// - parameter duration:   The total duration of the animations, measured in seconds. If you specify a negative value or `0`, the changes are made without animating them. The default value is `0.6`.
+    /// - parameter delay:      The amount of time (measured in seconds) to wait before beginning the animations. The default value is `0`.
+    /// - parameter damping:    The damping ratio for the spring animation as it approaches its quiescent state. The default value is `0.7`.
+    /// - parameter velocity:   The initial spring velocity. For smooth start to the animation, match this value to the view’s velocity as it was prior to attachment. The default value is `0`.
+    /// - parameter options:    A mask of options indicating how you want to perform the animations. The default value is `UIViewAnimationOptions.AllowUserInteraction`.
+    /// - parameter animations: A block object containing the changes to commit to the views.
+    public static func animate(duration: NSTimeInterval = 0.6, delay: NSTimeInterval = 0, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: UIViewAnimationOptions = .AllowUserInteraction, animations: (() -> Void)) {
+        UIView.animateWithDuration(duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: nil)
     }
 
     public func setHiddenAnimated(hide: Bool, duration: NSTimeInterval) {
