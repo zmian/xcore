@@ -812,6 +812,25 @@ public extension UIImageView {
             }
         }
     }
+
+    /// Determines how the image is rendered.
+    /// The default rendering mode is `UIImageRenderingModeAutomatic`.
+    ///
+    /// Int is workaround since `@IBInspectable` doesn't support Enums.
+    /// ```
+    /// Possible Values:
+    ///
+    /// UIImageRenderingMode.Automatic      // 0
+    /// UIImageRenderingMode.AlwaysOriginal // 1
+    /// UIImageRenderingMode.AlwaysTemplate // 2
+    /// ```
+    @IBInspectable public var renderingMode: Int {
+        get { return image?.renderingMode.rawValue ?? UIImageRenderingMode.Automatic.rawValue }
+        set {
+            guard let renderingMode = UIImageRenderingMode(rawValue: newValue) else { return }
+            image?.imageWithRenderingMode(renderingMode)
+        }
+    }
 }
 
 // MARK: UIImage Extension
