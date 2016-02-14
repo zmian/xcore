@@ -885,7 +885,12 @@ public extension UIImage {
     /// Sample Result:
     ///
     /// <img src="http://yannickstephan.com/easyhelper/tint1.png" height="70" width="120"/>
+    ///
     /// <img src="http://yannickstephan.com/easyhelper/tint2.png" height="70" width="120"/>
+    ///
+    /// - parameter tintColor: The color used to colorize `self`.
+    ///
+    /// - returns: Colorize image.
     public func colorize(tintColor: UIColor) -> UIImage {
         return modifiedImage { context, rect in
             // draw black background - workaround to preserve color of partially transparent pixels
