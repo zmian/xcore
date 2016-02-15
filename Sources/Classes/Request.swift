@@ -24,12 +24,17 @@
 
 import Foundation
 
-public struct Request {
-    public static func GET(url: NSURL, callback: (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void) {
-        let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
-        session.dataTaskWithURL(url) { data, response, error in
+public final class Request {
+    public static let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+
+    public static func GET(request: NSURLRequest, callback: (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void) {
+        session.dataTaskWithRequest(request) { data, response, error in
             callback(response: response, data: data, error: error)
         }.resume()
+    }
+
+    public static func GET(url: NSURL, callback: (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void) {
+        GET(NSURLRequest(URL: url), callback: callback)
     }
 
     public static func json(url: NSURL, callback: (response: NSURLResponse?, json: AnyObject?, error: NSError?) -> Void) {
