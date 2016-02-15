@@ -97,6 +97,9 @@ public extension String {
     public var stringByDeletingLastPathComponent: String { return (self as NSString).stringByDeletingLastPathComponent }
     public var stringByDeletingPathExtension: String { return (self as NSString).stringByDeletingPathExtension }
     public var pathExtension: String { return (self as NSString).pathExtension }
+    public func sizeWithFont(font: UIFont) -> CGSize {
+        return (self as NSString).sizeWithAttributes([NSFontAttributeName: font])
+    }
 
     /// Decode specified `Base64` string
     public init?(base64: String) {
