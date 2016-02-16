@@ -355,8 +355,8 @@ extension DynamicTableView: BEMCheckBoxDelegate {
 public extension DynamicTableView {
     /// A convenience property to create a single section table view.
     public var items: [DynamicTableModel] {
-        get { return sections.first?.elements ?? [] }
-        set { sections = [Section(elements: newValue)] }
+        get { return sections.first?.items ?? [] }
+        set { sections = [Section(items: newValue)] }
     }
 }
 

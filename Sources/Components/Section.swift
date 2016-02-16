@@ -42,40 +42,40 @@ public struct ArrayGenerator<Element>: GeneratorType {
 public struct Section<Element>: RangeReplaceableCollectionType, MutableSliceable, ArrayLiteralConvertible {
     public var title: String?
     public var detail: String?
-    public var elements: [Element]
+    public var items: [Element]
 
     public init() {
-        self.title    = nil
-        self.detail   = nil
-        self.elements = []
+        self.title  = nil
+        self.detail = nil
+        self.items  = []
     }
 
     public init(arrayLiteral elements: Element...) {
-        self.elements = elements
+        self.items = elements
     }
 
-    public init(title: String? = nil, detail: String? = nil, elements: [Element]) {
-        self.title    = title
-        self.detail   = detail
-        self.elements = elements
+    public init(title: String? = nil, detail: String? = nil, items: [Element]) {
+        self.title  = title
+        self.detail = detail
+        self.items  = items
     }
 
     public let startIndex = 0
     public var endIndex: Int {
-        return elements.count
+        return items.count
     }
 
     public subscript(index: Int) -> Element {
-        get { return elements[index] }
-        set { elements[index] = newValue }
+        get { return items[index] }
+        set { items[index] = newValue }
     }
 
     public func generate() -> ArrayGenerator<Element> {
-        return ArrayGenerator(elements)
+        return ArrayGenerator(items)
     }
 
     public mutating func replaceRange<C: CollectionType where C.Generator.Element == Element>(subRange: Range<Int>, with newElements: C) {
-        elements.replaceRange(subRange, with: newElements)
+        items.replaceRange(subRange, with: newElements)
     }
 }
 

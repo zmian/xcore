@@ -41,15 +41,15 @@ private class TestDynamicTableViewController: UIViewController {
 
         tableView.sections = [
             Section(
-                title: "Section 1",
+                title:  "Section 1",
                 detail: "Important notice about the footer can be displayed here.",
-                elements: [
+                items:  [
                     DynamicTableModel(title: "Hummingbird", subtitle: "Hummingbirds are New World birds that constitute the family Trochilidae. They are among the {#ff0000|smallest of birds}, most species measuring in the 7.5–13 cm range."),
                 ]
             ),
             Section(
                 title: "Birds",
-                elements: [
+                items: [
                     DynamicTableModel(title: "Hummingbird", subtitle: "Hummingbirds are New World birds that constitute the family Trochilidae. They are among the {#ff0000|smallest of birds}, most species measuring in the 7.5–13 cm range."),
                     DynamicTableModel(title: "Hummingbird", image: R(.BlueJay)),
                     DynamicTableModel(title: "Hummingbird", image: R(.BlueJay), accessory: .DisclosureIndicator),

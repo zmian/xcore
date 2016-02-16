@@ -185,7 +185,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
 public extension IconLabelCollectionView {
     /// A convenience property to create a single section collection view.
     public var items: [ImageTitleDisplayable] {
-        get { return sections.first?.elements ?? [] }
-        set { sections = [Section(elements: newValue)] }
+        get { return sections.first?.items ?? [] }
+        set { sections = [Section(items: newValue)] }
     }
 }
