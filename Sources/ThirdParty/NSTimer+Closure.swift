@@ -37,6 +37,34 @@ public extension NSTimer {
     }
 }
 
+public extension NSTimer {
+    private struct AssociatedKey {
+        static var TimerPauseDate        = "Xcore_TimerPauseDate"
+        static var TimerPreviousFireDate = "Xcore_TimerPreviousFireDate"
+    }
+
+    private var pauseDate: NSDate? {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.TimerPauseDate) as? NSDate }
+        set { objc_setAssociatedObject(self, &AssociatedKey.TimerPauseDate, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+
+    private var previousFireDate: NSDate? {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.TimerPreviousFireDate) as? NSDate }
+        set { objc_setAssociatedObject(self, &AssociatedKey.TimerPreviousFireDate, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+
+    public func pauseTimer() {
+        pauseDate        = NSDate()
+        previousFireDate = fireDate
+        fireDate         = NSDate.distantFuture()
+    }
+
+    public func resumeTimer() {
+        guard let pauseDate = pauseDate, previousFireDate = previousFireDate else { return }
+        fireDate = NSDate(timeInterval: -pauseDate.timeIntervalSinceNow, sinceDate: previousFireDate)
+    }
+}
+
 public func delayBy(interval: NSTimeInterval, callback: () -> Void) {
     NSTimer.schedule(delay: interval) { _ in
         callback()
