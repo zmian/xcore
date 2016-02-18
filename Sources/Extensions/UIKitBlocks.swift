@@ -141,3 +141,48 @@ extension UIControlEventsBlockRepresentable where Self: UIControl {
         self.actionEvents?.removeValueForKey(events.rawValue)
     }
 }
+
+import MessageUI
+
+private class MailClosureWrapper: NSObject {
+    var closure: ((controller: MFMailComposeViewController, result: MFMailComposeResult, error: NSError?) -> Void)?
+
+    init(_ closure: ((controller: MFMailComposeViewController, result: MFMailComposeResult, error: NSError?) -> Void)?) {
+        self.closure = closure
+    }
+}
+
+extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
+    private struct AssociatedKey {
+        static var ActionHandler     = "Xcore_ActionHandler"
+        static var ShouldAutoDismiss = "Xcore_ShouldAutoDismiss"
+    }
+
+    private var actionHandlerWrapper: MailClosureWrapper? {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.ActionHandler) as? MailClosureWrapper }
+        set { objc_setAssociatedObject(self, &AssociatedKey.ActionHandler, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+
+    public var shouldAutoDismiss: Bool {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.ShouldAutoDismiss) as? Bool ?? false }
+        set {
+            mailComposeDelegate = self
+            objc_setAssociatedObject(self, &AssociatedKey.ShouldAutoDismiss, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
+    public func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        if let actionHandler = actionHandlerWrapper?.closure {
+            actionHandler(controller: controller, result: result, error: error)
+        }
+
+        if shouldAutoDismiss {
+            controller.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
+
+    public func didFinishWithResult(handler: (controller: MFMailComposeViewController, result: MFMailComposeResult, error: NSError?) -> Void) {
+        mailComposeDelegate  = self
+        actionHandlerWrapper = MailClosureWrapper(handler)
+    }
+}
