@@ -162,6 +162,18 @@ extension CollectionType {
     }
 }
 
+extension CollectionType where Index: BidirectionalIndexType {
+    /// Returns the `SubSequence` at the specified index iff it is within bounds, otherwise nil.
+    public func at(range: Range<Index>) -> SubSequence? {
+        return indices.contains(range) ? self[range] : nil
+    }
+
+    /// Return true iff range is in `self`.
+    public func contains(range: Range<Index>) -> Bool {
+        return indices.contains(range.startIndex) && indices.contains(range.endIndex.predecessor())
+    }
+}
+
 extension RangeReplaceableCollectionType {
     public mutating func appendAll(collection: [Self.Generator.Element]) {
         appendContentsOf(collection)
