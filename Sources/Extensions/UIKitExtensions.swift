@@ -1221,11 +1221,33 @@ public extension UIDevice {
 // MARK: NSBundle Extension
 
 public extension NSBundle {
+    /// The app version number extracted from `CFBundleShortVersionString`.
     public static var appVersionNumber: String {
         return NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     }
 
+    /// The app build number extracted from `CFBundleVersion`.
     public static var appBuildNumber: String {
         return NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String ?? ""
+    }
+
+    /// Returns common app information.
+    ///
+    /// Sample output:
+    /// ```
+    /// iOS 9.2.1         // OS Version
+    /// iPhone 6s         // Device
+    /// Version 1.0 (300) // App Version and Build number
+    /// ```
+    public static var appInfo: String {
+        var systemName = UIDevice.currentDevice().systemName
+
+        if systemName == "iPhone OS" {
+            systemName = "iOS"
+        }
+
+        return "\(systemName) \(UIDevice.currentDevice().systemVersion)\n" +
+               "\(UIDevice.currentDevice().modelType.description)\n" +
+               "Version \(NSBundle.appVersionNumber) (\(NSBundle.appBuildNumber))"
     }
 }
