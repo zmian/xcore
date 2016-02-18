@@ -35,11 +35,11 @@ public struct console {
     /// and terminated by terminator, into the standard output.
     ///
     /// - parameter messages:   Messages to write to standard output.
-    /// - parameter condition:  To achieve assert like behavior you can pass condition that must be met before log.
+    /// - parameter condition:  To achieve assert like behavior, you can pass condition that must be met to write ouput.
     /// - parameter separator:  The separator to use between messages. The default value is `" "`.
     /// - parameter terminator: To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
     /// - parameter className:  The name of the class where this log is executed. The default value is extracted from `#file`.
-    /// - parameter lineNumber: The line number where this log is executed. The default value is extracted from `#line`.
+    /// - parameter lineNumber: The line number where this log is executed. The default value is of `#line`.
     public static func log(messages: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = __FILE__, lineNumber: Int = __LINE__) {
         guard condition && !disableAllLogs && enableLogLevelDebug else { return }
 
@@ -52,11 +52,11 @@ public struct console {
     /// and terminated by terminator, into the standard output.
     ///
     /// - parameter messages:   Messages to write to standard output.
-    /// - parameter condition:  To achieve assert like behavior you can pass condition that must be met before log.
+    /// - parameter condition:  To achieve assert like behavior, you can pass condition that must be met to write ouput.
     /// - parameter separator:  The separator to use between messages. The default value is `" "`.
     /// - parameter terminator: To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
     /// - parameter className:  The name of the class where this log is executed. The default value is extracted from `#file`.
-    /// - parameter lineNumber: The line number where this log is executed. The default value is extracted from `#line`.
+    /// - parameter lineNumber: The line number where this log is executed. The default value is of `#line`.
     public static func info(messages: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = __FILE__, lineNumber: Int = __LINE__) {
         guard condition && !disableAllLogs && enableLogLevelInfo else { return }
 
@@ -69,11 +69,11 @@ public struct console {
     /// and terminated by terminator, into the standard output.
     ///
     /// - parameter messages:   Messages to write to standard output.
-    /// - parameter condition:  To achieve assert like behavior you can pass condition that must be met before log.
+    /// - parameter condition:  To achieve assert like behavior, you can pass condition that must be met to write ouput.
     /// - parameter separator:  The separator to use between messages. The default value is `" "`.
     /// - parameter terminator: To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
     /// - parameter className:  The name of the class where this log is executed. The default value is extracted from `#file`.
-    /// - parameter lineNumber: The line number where this log is executed. The default value is extracted from `#line`.
+    /// - parameter lineNumber: The line number where this log is executed. The default value is of `#line`.
     public static func warn(messages: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = __FILE__, lineNumber: Int = __LINE__) {
         guard condition && !disableAllLogs && enableLogLevelWarn else { return }
 
@@ -86,11 +86,11 @@ public struct console {
     /// and terminated by terminator, into the standard output.
     ///
     /// - parameter messages:   Messages to write to standard output.
-    /// - parameter condition:  To achieve assert like behavior you can pass condition that must be met before log.
+    /// - parameter condition:  To achieve assert like behavior, you can pass condition that must be met to write ouput.
     /// - parameter separator:  The separator to use between messages. The default value is `" "`.
     /// - parameter terminator: To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
     /// - parameter className:  The name of the class where this log is executed. The default value is extracted from `#file`.
-    /// - parameter lineNumber: The line number where this log is executed. The default value is extracted from `#line`.
+    /// - parameter lineNumber: The line number where this log is executed. The default value is of `#line`.
     public static func error(messages: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = __FILE__, lineNumber: Int = __LINE__) {
         guard condition && !disableAllLogs && enableLogLevelError else { return }
 
