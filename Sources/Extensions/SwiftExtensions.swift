@@ -163,7 +163,7 @@ extension CollectionType {
 }
 
 extension CollectionType where Index: BidirectionalIndexType {
-    /// Returns the `SubSequence` at the specified index iff it is within bounds, otherwise nil.
+    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise nil.
     public func at(range: Range<Index>) -> SubSequence? {
         return indices.contains(range) ? self[range] : nil
     }
@@ -175,15 +175,15 @@ extension CollectionType where Index: BidirectionalIndexType {
 }
 
 extension RangeReplaceableCollectionType {
-    public mutating func appendAll(collection: [Self.Generator.Element]) {
+    public mutating func appendAll(collection: [Generator.Element]) {
         appendContentsOf(collection)
     }
 }
 
-extension SequenceType where Self.Generator.Element: Hashable {
+extension SequenceType where Generator.Element: Hashable {
     /// Return an `Array` containing only the unique elements of `self` in order.
-    public func unique() -> [Self.Generator.Element] {
-        var seen: [Self.Generator.Element: Bool] = [:]
+    public func unique() -> [Generator.Element] {
+        var seen: [Generator.Element: Bool] = [:]
         return filter { seen.updateValue(true, forKey: $0) == nil }
     }
 }
@@ -196,7 +196,7 @@ extension SequenceType {
     ///
     /// - returns: Return an `Array` containing only the unique elements of `self`,
     /// in order, that satisfy the predicate `uniqueProperty`.
-    public func unique<T: Hashable>(uniqueProperty: (Self.Generator.Element) -> T) -> [Self.Generator.Element] {
+    public func unique<T: Hashable>(uniqueProperty: (Generator.Element) -> T) -> [Generator.Element] {
         var seen: [T: Bool] = [:]
         return filter { seen.updateValue(true, forKey: uniqueProperty($0)) == nil }
     }
