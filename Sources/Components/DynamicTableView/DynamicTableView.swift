@@ -185,7 +185,6 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     // MARK: UITableViewDelegate
 
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let item = sections[indexPath]
         if case .Checkbox(_, let callback) = item.accessory {
             if let cell = tableView.cellForRowAtIndexPath(indexPath), checkboxView = cell.accessoryView as? BEMCheckBox {
