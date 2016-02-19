@@ -23,6 +23,7 @@
 //
 
 import UIKit
+import TZStackView
 
 public class DynamicTableViewCell: BaseTableViewCell {
     public override class var reuseIdentifier: String { return "DynamicTableViewCellIdentifier" }
@@ -31,6 +32,7 @@ public class DynamicTableViewCell: BaseTableViewCell {
     private var imageAndTitleSpacingConstraint: NSLayoutConstraint?
     private var imageSizeConstraints: (width: NSLayoutConstraint?,  height: NSLayoutConstraint?)
     private var contentConstraints: (top: NSLayoutConstraint?, left: NSLayoutConstraint?, bottom: NSLayoutConstraint?, right: NSLayoutConstraint?)
+    private var labelsStackViewConstraints: (top: NSLayoutConstraint?, bottom: NSLayoutConstraint?)
 
     /// The distance that the view is inset from the enclosing  content view.
     /// The default value is `UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15)`.
@@ -40,6 +42,10 @@ public class DynamicTableViewCell: BaseTableViewCell {
             contentConstraints.left?.constant   = contentInset.left
             contentConstraints.bottom?.constant = contentInset.bottom
             contentConstraints.right?.constant  = contentInset.right
+
+            // Update stack view constraints
+            labelsStackViewConstraints.top?.constant    = contentInset.top
+            labelsStackViewConstraints.bottom?.constant = contentInset.bottom
         }
     }
 
@@ -57,6 +63,12 @@ public class DynamicTableViewCell: BaseTableViewCell {
         }
     }
 
+    /// The space between `title` and `subtitle` labels. The default value is `3`.
+    public dynamic var interLabelSpacing: CGFloat {
+        get { return labelsStackView.spacing }
+        set { labelsStackView.spacing = newValue }
+    }
+
     /// The default value is `false`.
     public dynamic var isImageViewHidden: Bool = false {
         didSet {
@@ -64,6 +76,19 @@ public class DynamicTableViewCell: BaseTableViewCell {
             avatarView.hidden = isImageViewHidden
             updateImageSizeIfNeeded()
             updateTextImageSpacingIfNeeded()
+        }
+    }
+
+    /// The default value is `false`.
+    public dynamic var isSubtitleLabelHidden: Bool = false {
+        didSet {
+            guard oldValue != isSubtitleLabelHidden else { return }
+            if isSubtitleLabelHidden {
+                labelsStackView.removeArrangedSubview(subtitleLabel)
+                subtitleLabel.removeFromSuperview()
+            } else {
+                labelsStackView.addArrangedSubview(subtitleLabel)
+            }
         }
     }
 
@@ -111,15 +136,17 @@ public class DynamicTableViewCell: BaseTableViewCell {
 
     // MARK: Subviews
 
-    public let avatarView    = UIImageView()
-    public let titleLabel    = UILabel()
-    public let subtitleLabel = UILabel()
+    private let labelsStackView = TZStackView()
+    public let avatarView       = UIImageView()
+    public let titleLabel       = UILabel()
+    public let subtitleLabel    = UILabel()
 
     // MARK: Setters
 
     public func setData(data: DynamicTableModel) {
-        self.data         = data
-        isImageViewHidden = data.image == nil
+        self.data             = data
+        isImageViewHidden     = data.image == nil
+        isSubtitleLabelHidden = data.subtitle == nil
         titleLabel.setText(data.title)
         subtitleLabel.setText(data.subtitle)
         avatarView.setImage(data.image)
@@ -152,15 +179,21 @@ public class DynamicTableViewCell: BaseTableViewCell {
     }
 
     private func setupLabels() {
+        contentView.addSubview(labelsStackView)
+
+        labelsStackView.axis    = .Vertical
+        labelsStackView.spacing = 3
+
+        labelsStackView.addArrangedSubview(titleLabel)
+        labelsStackView.addArrangedSubview(subtitleLabel)
+
         // TitleLabel
-        contentView.addSubview(titleLabel)
         titleLabel.font          = UIFont.systemFont(.Body)
         titleLabel.textAlignment = .Left
         titleLabel.textColor     = UIColor.blackColor()
         titleLabel.numberOfLines = 0
 
         // SubtitleLabel
-        contentView.addSubview(subtitleLabel)
         subtitleLabel.font          = UIFont.systemFont(.Subheadline)
         subtitleLabel.textAlignment = .Left
         subtitleLabel.textColor     = UIColor.lightGrayColor() // This is ignored if NSAttributedText declares it's own color
@@ -168,14 +201,13 @@ public class DynamicTableViewCell: BaseTableViewCell {
     }
 
     private func setupConstraints() {
-        avatarView.translatesAutoresizingMaskIntoConstraints    = false
-        titleLabel.translatesAutoresizingMaskIntoConstraints    = false
-        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        avatarView.translatesAutoresizingMaskIntoConstraints      = false
+        labelsStackView.translatesAutoresizingMaskIntoConstraints = false
 
-        // Constraints for subviews
-        let views   = ["avatarView": avatarView, "titleLabel": titleLabel, "subtitleLabel": subtitleLabel, "spacer1": getSpacerView(), "spacer2": getSpacerView()]
-        let metrics = ["padding": padding, "interTextPaddingVertical": 1, "paddingMinusOne": padding - 1]
-        NSLayoutConstraint.constraintsWithVisualFormat("V:|[spacer1(==spacer2)]-padding-[titleLabel]-interTextPaddingVertical-[subtitleLabel]-paddingMinusOne-[spacer2(==spacer1)]|", options: [.AlignAllLeft, .AlignAllRight], metrics: metrics, views: views).activate()
+        // Constraints for Labels Stack View
+        labelsStackViewConstraints.top    = NSLayoutConstraint(item: labelsStackView, attribute: .Top, relatedBy: .GreaterThanOrEqual, toItem: contentView, constant: contentInset.top).activate()
+        labelsStackViewConstraints.bottom = NSLayoutConstraint(item: contentView, attribute: .Bottom, relatedBy: .GreaterThanOrEqual, toItem: labelsStackView, constant: contentInset.bottom).activate()
+        NSLayoutConstraint.centerY(labelsStackView).activate()
 
         // Avatar size
         let size = NSLayoutConstraint.size(avatarView, size: imageSize).activate()
@@ -185,20 +217,13 @@ public class DynamicTableViewCell: BaseTableViewCell {
         // Avatar Center
         NSLayoutConstraint.centerY(avatarView).activate()
 
-        imageAndTitleSpacingConstraint = NSLayoutConstraint(item: titleLabel, attribute: .Leading, toItem: avatarView, attribute: .Trailing, constant: textImageSpacing).activate()
+        imageAndTitleSpacingConstraint = NSLayoutConstraint(item: labelsStackView, attribute: .Leading, toItem: avatarView, attribute: .Trailing, constant: textImageSpacing).activate()
 
         // Content Constraints
         contentConstraints.left   = NSLayoutConstraint(item: avatarView, attribute: .Leading, toItem: contentView, constant: contentInset.left).activate()
-        contentConstraints.right  = NSLayoutConstraint(item: contentView, attribute: .Trailing, toItem: titleLabel, constant: contentInset.right).activate()
+        contentConstraints.right  = NSLayoutConstraint(item: contentView, attribute: .Trailing, toItem: labelsStackView, constant: contentInset.right).activate()
         contentConstraints.top    = NSLayoutConstraint(item: avatarView, attribute: .Top, relatedBy: .GreaterThanOrEqual, toItem: contentView, constant: contentInset.top).activate()
         contentConstraints.bottom = NSLayoutConstraint(item: contentView, attribute: .Bottom, relatedBy: .GreaterThanOrEqual, toItem: avatarView, constant: contentInset.bottom).activate()
-    }
-
-    private func getSpacerView() -> UIView {
-        let v = UIView()
-        v.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(v)
-        return v
     }
 
     // MARK: Helpers

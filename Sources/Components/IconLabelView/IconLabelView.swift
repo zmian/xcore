@@ -171,10 +171,10 @@ public class IconLabelView: UIView {
     // MARK: Setters
 
     public func setData(image: ImageRepresentable = "", title: StringRepresentable, subtitle: StringRepresentable? = nil) {
+        isSubtitleLabelHidden = subtitle == nil
         imageView.setImage(image)
         titleLabel.setText(title)
         subtitleLabel.setText(subtitle)
-        isSubtitleLabelHidden = subtitle == nil
     }
 
     public func setData(data: ImageTitleDisplayable) {
