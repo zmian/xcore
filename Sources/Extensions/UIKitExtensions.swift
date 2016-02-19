@@ -370,10 +370,11 @@ public extension UIViewController {
 
 public extension UIViewController {
     private struct AssociatedKey {
-        static var SupportedInterfaceOrientations = "Xcore_SupportedInterfaceOrientations"
-        static var PreferredStatusBarStyle        = "Xcore_preferredStatusBarStyle"
-        static var PrefersStatusBarHidden         = "Xcore_PrefersStatusBarHidden"
-        static var ShouldAutorotate               = "Xcore_ShouldAutorotate"
+        static var SupportedInterfaceOrientations               = "Xcore_SupportedInterfaceOrientations"
+        static var PreferredInterfaceOrientationForPresentation = "Xcore_PreferredInterfaceOrientationForPresentation"
+        static var PreferredStatusBarStyle                      = "Xcore_preferredStatusBarStyle"
+        static var PrefersStatusBarHidden                       = "Xcore_PrefersStatusBarHidden"
+        static var ShouldAutorotate                             = "Xcore_ShouldAutorotate"
     }
 
     /// A convenience property to set `supportedInterfaceOrientations()` without subclassing.
@@ -397,6 +398,29 @@ public extension UIViewController {
             }
         }
         set { objc_setAssociatedObject(self, &AssociatedKey.SupportedInterfaceOrientations, newValue?.rawValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+
+    /// A convenience property to set `preferredInterfaceOrientationForPresentation()` without subclassing.
+    /// This is useful when you don't have access to the actual class source code and need
+    /// to set supported interface orientation.
+    ///
+    /// The default value is `nil` which means use the `preferredInterfaceOrientationForPresentation() value`.
+    ///
+    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
+    /// And, any of its view controllers can override this on as needed basis.
+    /// ```
+    /// let vc = UIImagePickerController()
+    /// vc.preferredInterfaceOrientationForPresentation = .Portrait
+    /// ```
+    public var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation? {
+        get {
+            if let intValue = objc_getAssociatedObject(self, &AssociatedKey.PreferredInterfaceOrientationForPresentation) as? Int {
+                return UIInterfaceOrientation(rawValue: intValue)
+            } else {
+                return nil
+            }
+        }
+        set { objc_setAssociatedObject(self, &AssociatedKey.PreferredInterfaceOrientationForPresentation, newValue?.rawValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
     /// A convenience property to set `preferredStatusBarStyle()` without subclassing.
@@ -493,6 +517,10 @@ public extension UINavigationController {
     // setting per view controller.
     public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         return topViewController?.preferredInterfaceOrientations ?? preferredInterfaceOrientations ?? topViewController?.supportedInterfaceOrientations() ?? super.supportedInterfaceOrientations()
+    }
+
+    public override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
+        return topViewController?.preferredInterfaceOrientationForPresentation ?? preferredInterfaceOrientationForPresentation ?? topViewController?.preferredInterfaceOrientationForPresentation() ?? super.preferredInterfaceOrientationForPresentation()
     }
 
     // Setting `preferredStatusBarStyle` works.
