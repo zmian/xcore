@@ -222,8 +222,8 @@ public class DynamicTableViewCell: BaseTableViewCell {
         // Content Constraints
         contentConstraints.left   = NSLayoutConstraint(item: avatarView, attribute: .Leading, toItem: contentView, constant: contentInset.left).activate()
         contentConstraints.right  = NSLayoutConstraint(item: contentView, attribute: .Trailing, toItem: labelsStackView, constant: contentInset.right).activate()
-        contentConstraints.top    = NSLayoutConstraint(item: avatarView, attribute: .Top, relatedBy: .GreaterThanOrEqual, toItem: contentView, constant: contentInset.top).activate()
-        contentConstraints.bottom = NSLayoutConstraint(item: contentView, attribute: .Bottom, relatedBy: .GreaterThanOrEqual, toItem: avatarView, constant: contentInset.bottom).activate()
+        contentConstraints.top    = NSLayoutConstraint(item: avatarView, attribute: .Top, relatedBy: .GreaterThanOrEqual, toItem: contentView, constant: contentInset.top, priority: UILayoutPriorityDefaultHigh).activate()
+        contentConstraints.bottom = NSLayoutConstraint(item: contentView, attribute: .Bottom, relatedBy: .GreaterThanOrEqual, toItem: avatarView, constant: contentInset.bottom, priority: UILayoutPriorityDefaultHigh).activate()
     }
 
     // MARK: Helpers
