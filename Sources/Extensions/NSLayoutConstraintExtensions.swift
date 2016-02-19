@@ -65,22 +65,22 @@ public extension NSLayoutConstraint {
         ]
     }
 
-    public static func centerX(viewToCenter: UIView, superview: UIView? = nil, offset: CGFloat = 0) -> NSLayoutConstraint {
+    public static func centerX(viewToCenter: UIView, superview: UIView? = nil, offset: CGFloat = 0, priority: Float = Priority.Required.rawValue) -> NSLayoutConstraint {
         let superview = superview ?? viewToCenter.superview
         viewToCenter.translatesAutoresizingMaskIntoConstraints = false
-        return NSLayoutConstraint(item: viewToCenter, attribute: .CenterX, toItem: superview, constant: offset)
+        return NSLayoutConstraint(item: viewToCenter, attribute: .CenterX, toItem: superview, constant: offset, priority: priority)
     }
 
-    public static func centerY(viewToCenter: UIView, superview: UIView? = nil, offset: CGFloat = 0) -> NSLayoutConstraint {
+    public static func centerY(viewToCenter: UIView, superview: UIView? = nil, offset: CGFloat = 0, priority: Float = Priority.Required.rawValue) -> NSLayoutConstraint {
         let superview = superview ?? viewToCenter.superview
         viewToCenter.translatesAutoresizingMaskIntoConstraints = false
-        return NSLayoutConstraint(item: viewToCenter, attribute: .CenterY, toItem: superview, constant: offset)
+        return NSLayoutConstraint(item: viewToCenter, attribute: .CenterY, toItem: superview, constant: offset, priority: priority)
     }
 
-    public static func centerXY(viewToCenter: UIView, superview: UIView? = nil, offset: CGPoint = .zero) -> [NSLayoutConstraint] {
+    public static func centerXY(viewToCenter: UIView, superview: UIView? = nil, offset: CGPoint = .zero, priority: Float = Priority.Required.rawValue) -> [NSLayoutConstraint] {
         return [
-            NSLayoutConstraint.centerX(viewToCenter, superview: superview, offset: offset.x),
-            NSLayoutConstraint.centerY(viewToCenter, superview: superview, offset: offset.y)
+            NSLayoutConstraint.centerX(viewToCenter, superview: superview, offset: offset.x, priority: priority),
+            NSLayoutConstraint.centerY(viewToCenter, superview: superview, offset: offset.y, priority: priority)
         ]
     }
 
