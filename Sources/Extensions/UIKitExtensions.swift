@@ -368,6 +368,33 @@ public extension UIViewController {
     }
 }
 
+public extension UIApplication {
+    public class func topViewController(base: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController) -> UIViewController? {
+        if let nav = base as? UINavigationController {
+            return topViewController(nav.visibleViewController)
+        }
+
+        if let tab = base as? UITabBarController {
+            if let selected = tab.selectedViewController {
+                return topViewController(selected)
+            }
+        }
+
+        if let presented = base?.presentedViewController {
+            return topViewController(presented)
+        }
+
+        return base
+    }
+}
+
+public extension UIWindow {
+    /// The view controller at the top of the window's `rootViewController` stack.
+    public var topViewController: UIViewController? {
+        return UIApplication.topViewController(rootViewController)
+    }
+}
+
 public extension UIViewController {
     private struct AssociatedKey {
         static var SupportedInterfaceOrientations               = "Xcore_SupportedInterfaceOrientations"
