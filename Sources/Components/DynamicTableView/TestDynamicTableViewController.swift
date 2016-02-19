@@ -55,6 +55,7 @@ private class TestDynamicTableViewController: UIViewController {
                     DynamicTableModel(title: "Hummingbird", image: R(.BlueJay), accessory: .DisclosureIndicator),
                     DynamicTableModel(subtitle: "**You** are now a **confirmed bird watcher** with 70 birds spotted!"),
                     DynamicTableModel(title: "Showcase", subtitle: "This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}", image: R(.BlueJay)),
+                    DynamicTableModel(title: "Showcase", subtitle: "This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}", image: R(.BlueJay)),
                     DynamicTableModel(title: "Woodpecker", accessory: .DisclosureIndicator),
                     DynamicTableModel(title: "Blue Jay", accessory: .Text("462")),
                     DynamicTableModel(title: "1,223", subtitle: "Globally, 1,223 species of birds", image: R(.BlueJay), accessory: .Text("5m")),
@@ -79,6 +80,10 @@ private class TestDynamicTableViewController: UIViewController {
         tableView.configureCell { indexPath, cell, item in
             if indexPath.row == 1 {
                 cell.isRoundImageView = true
+            }
+
+            if indexPath.row == 5 {
+                cell.imageSize = CGSize(width: 30, height: 30)
             }
         }
 
