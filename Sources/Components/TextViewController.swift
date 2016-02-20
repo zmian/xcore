@@ -66,13 +66,18 @@ public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     /// - parameter bundle:   The bundle containing the specified file name. If you specify nil,
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
     public func setText(filename: String, bundle: NSBundle? = nil) {
-        let name   = filename.lastPathComponent.stringByDeletingPathExtension
-        let ext    = filename.pathExtension
-        let bundle = bundle ?? NSBundle.mainBundle()
+        dispatch.async.bg(.UserInitiated) {[weak self] in
+            guard let weakSelf = self else { return }
 
-        if let path = bundle.pathForResource(name, ofType: ext),
-            content = try? String(contentsOfFile: path, encoding: NSUTF8StringEncoding) {
-            text = content
+            let name   = filename.lastPathComponent.stringByDeletingPathExtension
+            let ext    = filename.pathExtension
+            let bundle = bundle ?? NSBundle.mainBundle()
+
+            if let path = bundle.pathForResource(name, ofType: ext), content = try? String(contentsOfFile: path, encoding: NSUTF8StringEncoding) {
+                dispatch.async.main {
+                    weakSelf.text = content
+                }
+            }
         }
     }
 
