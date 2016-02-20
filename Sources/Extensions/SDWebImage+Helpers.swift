@@ -61,3 +61,28 @@ public extension UIImageView {
         }
     }
 }
+
+public extension UIImage {
+    /// Automatically detect and load the image from local or a remote url.
+    public class func remoteOrLocalImage(named: String, callback: (image: UIImage) -> Void) {
+        guard !named.isBlank else { return }
+
+        if let url = NSURL(string: named) where url.host != nil {
+            SDWebImageDownloader.sharedDownloader().downloadImageWithURL(url, options: [],
+                progress: { receivedSize, expectedSize in
+
+                }, completed: { image, data, error, finished in
+                    guard let image = image where finished else { return }
+                    callback(image: image)
+                }
+            )
+        } else {
+            dispatch.async.bg(.UserInitiated) {
+                guard let image = UIImage(named: named) else { return }
+                dispatch.async.main {
+                    callback(image: image)
+                }
+            }
+        }
+    }
+}
