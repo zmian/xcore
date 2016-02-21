@@ -361,9 +361,9 @@ public extension UIViewController {
     /// - parameter transitioningDelegate:   The delegate object that provides transition animator and interactive controller objects.
     /// - parameter animated:                Pass `true` to animate the presentation; otherwise, pass `false`.
     /// - parameter completion:              The block to execute after the presentation finishes.
-    public func presentViewControllerWithTransition(viewControllerToPresent: UIViewController, transitioningDelegate: UIViewControllerTransitioningDelegate, animated: Bool, completion: (() -> Void)? = nil) {
-        viewControllerToPresent.transitioningDelegate = transitioningDelegate
-        viewControllerToPresent.modalPresentationStyle = UIModalPresentationStyle.FullScreen // .Custom prevents per view controller rotation
+    public func presentViewControllerWithTransition(viewControllerToPresent: UIViewController, modalPresentationStyle: UIModalPresentationStyle = .Custom, transitioningDelegate: UIViewControllerTransitioningDelegate, animated: Bool = true, completion: (() -> Void)? = nil) {
+        viewControllerToPresent.transitioningDelegate  = transitioningDelegate
+        viewControllerToPresent.modalPresentationStyle = modalPresentationStyle
         presentViewController(viewControllerToPresent, animated: animated, completion: completion)
     }
 }
