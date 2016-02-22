@@ -48,7 +48,7 @@ public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     public var backgroundImage: UIImage?
 
     /// The text that will be displayed.
-    public var text = "Sample Text" {
+    public var text = "" {
         didSet {
             textLabel.htmlText = text
         }
