@@ -32,6 +32,8 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     public var sections: [Section<DynamicTableModel>] = []
     public var cellOptions: DynamicTableCellOptions = []
     public var rowActionDeleteColor: UIColor?
+    /// Text to display in the swipe to delete row action. The default value is **"Delete"**.
+    public var rowActionDeleteTitle: String = "Delete"
     /// A boolean value to determine whether the content is centered in the table view. The default value is `false`.
     public var isContentCentered = false
     /// A boolean value to determine whether the empty table view cells are hidden. The default value is `false`.
@@ -246,7 +248,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         var actions: [UITableViewRowAction] = []
 
         if allowDeletion {
-            let delete = UITableViewRowAction(style: .Default, title: "Delete") {[weak self] action, index in
+            let delete = UITableViewRowAction(style: .Default, title: rowActionDeleteTitle) {[weak self] action, index in
                 self?.removeItems([indexPath])
             }
             actions.append(delete)
