@@ -163,6 +163,7 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
 
     // MARK: Helpers
 
+    @warn_unused_result
     private func indexOf(viewController: UIViewController) -> Int {
         return viewControllers.indexOf(viewController) ?? 0
     }

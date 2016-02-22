@@ -43,6 +43,7 @@ public extension CGFloat {
     /// A convenience method to convert an angle from degrees to radians.
     ///
     /// - returns: `self` value in radians.
+    @warn_unused_result
     public func degreesToRadians() -> CGFloat {
         return π * self / 180
     }
@@ -50,6 +51,7 @@ public extension CGFloat {
     /// A convenience method to convert an angle from radians to degrees.
     ///
     /// - returns: `self` value in degrees.
+    @warn_unused_result
     public func radiansToDegrees() -> CGFloat {
         return self * 180 / π
     }

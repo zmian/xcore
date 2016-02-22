@@ -45,6 +45,7 @@ public struct JSONHelpers {
     }
 
     /// Parse local JSON file from `mainBundle`
+    @warn_unused_result
     public static func parse(fileName fileName: String) -> AnyObject? {
         if let filePath = NSBundle.mainBundle().pathForResource((fileName as NSString).stringByDeletingPathExtension, ofType: "json") {
             if let data = NSData(contentsOfFile: filePath) {
@@ -56,17 +57,20 @@ public struct JSONHelpers {
     }
 
     /// Parse remote JSON file
+    @warn_unused_result
     public static func parse(url: NSURL) -> AnyObject? {
         guard let data = NSData(contentsOfURL: url) else { return nil }
         return parse(data)
     }
 
     /// Parse NSData to JSON
+    @warn_unused_result
     public static func parse(data: NSData) -> AnyObject? {
         return try? NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
     }
 
     /// Parse String to JSON
+    @warn_unused_result
     public static func parse(jsonString jsonString: String) -> AnyObject? {
         if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding) {
             return try? NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
@@ -76,6 +80,7 @@ public struct JSONHelpers {
     }
 
     /// Convert value to a JSON string
+    @warn_unused_result
     public static func stringify(value: AnyObject, prettyPrinted: Bool = false) -> String {
         let options: NSJSONWritingOptions = prettyPrinted ? .PrettyPrinted : []
         if NSJSONSerialization.isValidJSONObject(value) {

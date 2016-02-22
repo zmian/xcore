@@ -74,6 +74,7 @@ public extension UIFont {
         }
     }
 
+    @warn_unused_result
     public static func systemFont(style: TextStyle) -> UIFont {
         return UIFont.preferredFontForTextStyle(style.rawValue)
     }
@@ -98,6 +99,7 @@ public extension UIFont {
         public static let System               = UIFont.systemFontSize()
     }
 
+    @warn_unused_result
     static func systemFont(size: CGFloat, style: Style = .Normal, weight: Weight = .Regular) -> UIFont {
         let fontWeight: CGFloat
 

@@ -59,6 +59,7 @@ extension UIView: NibInstantiable {
 }
 
 public extension NibInstantiable where Self: UIView {
+    @warn_unused_result
     public static func initFromNib(bundle: NSBundle? = nil) -> Self {
         let bundle = bundle ?? NSBundle(forClass: Self.self)
         return bundle.loadNibNamed(nibName, owner: nil, options: nil).first as! Self

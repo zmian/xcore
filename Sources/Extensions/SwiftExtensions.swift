@@ -47,16 +47,19 @@ public extension String {
     }
 
     /// Trims white space and new line characters in `self`.
+    @warn_unused_result
     public func trim() -> String {
         return replace("[ ]+", replacement: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
     }
 
     /// Searches for pattern matches in the string and replaces them with replacement.
+    @warn_unused_result
     public func replace(pattern: String, replacement: String, options: NSStringCompareOptions = .RegularExpressionSearch) -> String {
         return stringByReplacingOccurrencesOfString(pattern, withString: replacement, options: options, range: nil)
     }
 
     /// Returns `true` iff `value` is in `self`.
+    @warn_unused_result
     public func contains(value: String, options: NSStringCompareOptions = []) -> Bool {
         return rangeOfString(value, options: options) != nil
     }
@@ -86,6 +89,7 @@ public extension String {
     /// Drops the given `prefix` from `self`.
     ///
     /// - returns: String without the specified `prefix` or nil if `prefix` doesn't exists.
+    @warn_unused_result
     public func stripPrefix(prefix: String) -> String? {
         guard let prefixRange = rangeOfString(prefix) else { return nil }
         let attributeRange  = Range(start: prefixRange.endIndex, end: endIndex)
@@ -118,6 +122,7 @@ public extension String {
 }
 
 public extension Int {
+    @warn_unused_result
     public func padding(amountToPad: Int) -> String {
         let numberFormatter = NSNumberFormatter()
         numberFormatter.paddingPosition = .BeforePrefix
@@ -145,6 +150,7 @@ extension Array {
     ///
     /// - parameter size: Length
     /// - returns:        Random subarray of length n
+    @warn_unused_result
     public func randomElements(size: Int = 1) -> Array {
         if size >= count {
             return self
@@ -157,6 +163,7 @@ extension Array {
 
 extension CollectionType {
     /// Returns the element at the specified index iff it is within bounds, otherwise nil.
+    @warn_unused_result
     public func at(index: Index) -> Generator.Element? {
         return indices.contains(index) ? self[index] : nil
     }
@@ -164,11 +171,13 @@ extension CollectionType {
 
 extension CollectionType where Index: BidirectionalIndexType {
     /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise nil.
+    @warn_unused_result
     public func at(range: Range<Index>) -> SubSequence? {
         return indices.contains(range) ? self[range] : nil
     }
 
     /// Return true iff range is in `self`.
+    @warn_unused_result
     public func contains(range: Range<Index>) -> Bool {
         return indices.contains(range.startIndex) && indices.contains(range.endIndex.predecessor())
     }
@@ -182,6 +191,7 @@ extension RangeReplaceableCollectionType {
 
 extension SequenceType where Generator.Element: Hashable {
     /// Return an `Array` containing only the unique elements of `self` in order.
+    @warn_unused_result
     public func unique() -> [Generator.Element] {
         var seen: [Generator.Element: Bool] = [:]
         return filter { seen.updateValue(true, forKey: $0) == nil }
@@ -196,6 +206,7 @@ extension SequenceType {
     ///
     /// - returns: Return an `Array` containing only the unique elements of `self`,
     /// in order, that satisfy the predicate `uniqueProperty`.
+    @warn_unused_result
     public func unique<T: Hashable>(uniqueProperty: (Generator.Element) -> T) -> [Generator.Element] {
         var seen: [T: Bool] = [:]
         return filter { seen.updateValue(true, forKey: uniqueProperty($0)) == nil }

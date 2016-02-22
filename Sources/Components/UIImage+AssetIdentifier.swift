@@ -55,6 +55,7 @@ extension UIButton {
 }
 
 /// A convenience function to get image name from `xcassets`.
+@warn_unused_result
 func R(assetIdentifier: UIImage.AssetIdentifier) -> String {
     return assetIdentifier.rawValue
 }

@@ -60,6 +60,7 @@ public extension EnumIteratable {
     ///     South: '1'
     ///     East: '2'
     ///     West: '3'
+    @warn_unused_result
     private static func enumerate() -> AnyGenerator<EnumType> {
         var i = 0
         return anyGenerator {

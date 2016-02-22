@@ -67,6 +67,7 @@ public extension StoryboardInstantiable where Self: UIViewController {
         }
     }
 
+    @warn_unused_result
     public static func initFromStoryboard(bundle: NSBundle? = nil) -> Self {
         let bundle = bundle ?? NSBundle(forClass: Self.self)
         return ControllerFromStoryboard(storyboardIdentifier, bundle: bundle) as! Self

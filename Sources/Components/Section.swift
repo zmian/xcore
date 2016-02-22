@@ -32,6 +32,7 @@ public struct ArrayGenerator<Element>: GeneratorType {
         self.array = array
     }
 
+    @warn_unused_result
     public mutating func next() -> Element? {
         let element = array.at(currentIndex)
         currentIndex += 1
@@ -70,6 +71,7 @@ public struct Section<Element>: RangeReplaceableCollectionType, MutableSliceable
         set { items[index] = newValue }
     }
 
+    @warn_unused_result
     public func generate() -> ArrayGenerator<Element> {
         return ArrayGenerator(items)
     }

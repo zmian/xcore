@@ -36,6 +36,7 @@ import ObjectiveC
 /// - returns: The view controller corresponding to the specified identifier string.
 ///
 /// - seealso: `StoryboardInstantiable` and `NibInstantiable` protocols.
+@warn_unused_result
 public func ControllerFromStoryboard(identifier: String, storyboardName: String = "Main", bundle: NSBundle? = nil) -> UIViewController {
     return UIStoryboard(name: storyboardName, bundle: bundle).instantiateViewControllerWithIdentifier(identifier)
 }
@@ -68,7 +69,7 @@ public func alert(title: String = "", message: String = "") {
 
 public extension UIAlertController {
     public func show(presentingViewController: UIViewController? = nil) {
-        guard let presentingViewController = presentingViewController ?? UIApplication.sharedApplication().keyWindow?.rootViewController else { return }
+        guard let presentingViewController = presentingViewController ?? UIApplication.sharedApplication().keyWindow?.topViewController else { return }
         presentingViewController.presentViewController(self, animated: true, completion: nil)
     }
 }
@@ -369,6 +370,7 @@ public extension UIViewController {
 }
 
 public extension UIApplication {
+    @warn_unused_result
     public class func topViewController(base: UIViewController? = UIApplication.sharedApplication().keyWindow?.rootViewController) -> UIViewController? {
         if let nav = base as? UINavigationController {
             return topViewController(nav.visibleViewController)
@@ -781,20 +783,24 @@ public extension UIColor {
         set { colorWithAlphaComponent(newValue) }
     }
 
+    @warn_unused_result
     public func alpha(value: CGFloat) -> UIColor {
         return colorWithAlphaComponent(value)
     }
 
     // Credit: http://stackoverflow.com/a/31466450
 
+    @warn_unused_result
     public func lighter(amount: CGFloat = 0.25) -> UIColor {
         return hueColorWithBrightness(1 + amount)
     }
 
+    @warn_unused_result
     public func darker(amount: CGFloat = 0.25) -> UIColor {
         return hueColorWithBrightness(1 - amount)
     }
 
+    @warn_unused_result
     private func hueColorWithBrightness(amount: CGFloat) -> UIColor {
         var hue: CGFloat        = 0
         var saturation: CGFloat = 0
@@ -811,6 +817,7 @@ public extension UIColor {
     /// A convenience method to return default system tint color.
     ///
     /// - returns: The default tint color.
+    @warn_unused_result
     public static func defaultSystemTintColor() -> UIColor {
         struct Static {
             static let tintColor = UIView().tintColor
@@ -819,6 +826,7 @@ public extension UIColor {
         return Static.tintColor
     }
 
+    @warn_unused_result
     public static func randomColor() -> UIColor {
         let hue        = CGFloat(arc4random() % 256) / 256
         let saturation = CGFloat(arc4random() % 128) / 256 + 0.5
@@ -929,6 +937,7 @@ public extension UIImage {
     }
 
     /// Creating arbitrarily-colored icons from a black-with-alpha master image.
+    @warn_unused_result
     public func tintColor(color: UIColor) -> UIImage {
         let image = self
         let rect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
@@ -976,6 +985,7 @@ public extension UIImage {
     /// - parameter tintColor: The color used to colorize `self`.
     ///
     /// - returns: Colorize image.
+    @warn_unused_result
     public func colorize(tintColor: UIColor) -> UIImage {
         return modifiedImage { context, rect in
             // draw black background - workaround to preserve color of partially transparent pixels
@@ -1003,6 +1013,7 @@ public extension UIImage {
     /// - parameter fillColor: UIColor
     ///
     /// - returns: UIImage
+    @warn_unused_result
     public func tintPicto(fillColor: UIColor) -> UIImage {
         return modifiedImage { context, rect in
             // draw tint color
@@ -1017,6 +1028,7 @@ public extension UIImage {
     }
 
     /// Modified Image Context, apply modification on image
+    @warn_unused_result
     private func modifiedImage(@noescape draw: (CGContext, CGRect) -> ()) -> UIImage {
         // using scale correctly preserves retina images
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
@@ -1157,14 +1169,17 @@ public extension UIDevice {
         public static let iOS8OrGreater = floor(NSFoundationVersionNumber) > floor(NSFoundationVersionNumber_iOS_7_0)
         public static let iOS7OrLess    = floor(NSFoundationVersionNumber) <= floor(NSFoundationVersionNumber_iOS_7_0)
 
+        @warn_unused_result
         public static func lessThanOrEqual(string: String) -> Bool {
             return  UIDevice.currentDevice().systemVersion.compare(string, options: .NumericSearch, range: nil, locale: nil) == .OrderedAscending
         }
 
+        @warn_unused_result
         public static func greaterThanOrEqual(string: String) -> Bool {
             return !lessThanOrEqual(string)
         }
 
+        @warn_unused_result
         public static func equal(string: String) -> Bool {
             return  UIDevice.currentDevice().systemVersion.compare(string, options: .NumericSearch, range: nil, locale: nil) == .OrderedSame
         }

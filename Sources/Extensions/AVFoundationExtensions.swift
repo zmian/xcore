@@ -32,6 +32,7 @@ public extension AVPlayer {
         return rate != 0 && error == nil
     }
 
+    @warn_unused_result
     public func currentTime(block: (seconds: Int, formattedTime: String) -> Void) -> AnyObject {
         let interval = CMTime(value: 1, timescale: 1)
         return addPeriodicTimeObserverForInterval(interval, queue: dispatch_get_main_queue()) {[weak self] time in
@@ -42,6 +43,7 @@ public extension AVPlayer {
         }
     }
 
+    @warn_unused_result
     private func formatSeconds(seconds: Int) -> String {
         let sec = seconds % 60
         let min = seconds / 60
@@ -91,6 +93,7 @@ public extension AVPlayerItem {
 public extension CMTime {
     public var isValid: Bool { return flags.contains(.Valid) }
 
+    @warn_unused_result
     public func timeWithOffset(offset: NSTimeInterval) -> CMTime {
         let seconds = CMTimeGetSeconds(self)
         let secondsWithOffset = seconds + offset
