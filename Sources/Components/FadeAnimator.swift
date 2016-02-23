@@ -24,6 +24,10 @@
 
 import UIKit
 
+public protocol FadeAnimatorBounceable {
+    func fadeAnimatorBounceContainerView() -> UIView
+}
+
 public class FadeAnimatorDelegate: NSObject, UIViewControllerTransitioningDelegate {
 
     let transition = FadeAnimator()
@@ -97,12 +101,7 @@ public class FadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(destinationViewController.view)
 
         if fadeIn {
-            destinationViewController.view.alpha = 0
-            UIView.animateWithDuration(fadeInDuration, animations: {
-                destinationViewController.view.alpha = 1
-            }, completion: { _ in
-                transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
-            })
+            animateBounceFadeInOrFadeIn(destinationViewController, transitionContext: transitionContext)
         } else {
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
         }
@@ -119,13 +118,64 @@ public class FadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         destinationViewController.view.frame = containerView.bounds
 
         if fadeOut {
-            UIView.animateWithDuration(fadeOutDuration, animations: {
-                sourceViewController.view.alpha = 0
-            }, completion: { _ in
-                transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
-            })
+            animateBounceFadeOutOrFadeOut(sourceViewController, transitionContext: transitionContext)
         } else {
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
         }
+    }
+
+    // MARK: FadeIn
+
+    private func animateBounceFadeInOrFadeIn(destinationViewController: UIViewController, transitionContext: UIViewControllerContextTransitioning) {
+        guard let fadeAnimatorBounceContainerView = (destinationViewController as? FadeAnimatorBounceable)?.fadeAnimatorBounceContainerView() else {
+            animateFadeIn(destinationViewController, transitionContext: transitionContext)
+            return
+        }
+
+        destinationViewController.view.alpha = 0
+        fadeAnimatorBounceContainerView.transform = CGAffineTransformMakeScale(0.5, 0.5)
+        UIView.animateWithDuration(fadeInDuration, animations: {
+            destinationViewController.view.alpha = 1
+            fadeAnimatorBounceContainerView.transform = CGAffineTransformMakeScale(1.05, 1.05)
+        }, completion: { _ in
+            UIView.animateWithDuration(0.2, animations: {
+                fadeAnimatorBounceContainerView.transform = CGAffineTransformIdentity
+            }, completion: { _ in
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
+            })
+        })
+    }
+
+    private func animateFadeIn(destinationViewController: UIViewController, transitionContext: UIViewControllerContextTransitioning) {
+        destinationViewController.view.alpha = 0
+        UIView.animateWithDuration(fadeInDuration, animations: {
+            destinationViewController.view.alpha = 1
+        }, completion: { _ in
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
+        })
+    }
+
+    // MARK: FadeOut
+
+    private func animateBounceFadeOutOrFadeOut(sourceViewController: UIViewController, transitionContext: UIViewControllerContextTransitioning) {
+        guard let fadeAnimatorBounceContainerView = (sourceViewController as? FadeAnimatorBounceable)?.fadeAnimatorBounceContainerView() else {
+            animateFadeOut(sourceViewController, transitionContext: transitionContext)
+            return
+        }
+
+        UIView.animateWithDuration(fadeOutDuration, animations: {
+            sourceViewController.view.alpha = 0
+            fadeAnimatorBounceContainerView.transform = CGAffineTransformMakeScale(0.9, 0.9)
+        }, completion: { _ in
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
+        })
+    }
+
+    private func animateFadeOut(sourceViewController: UIViewController, transitionContext: UIViewControllerContextTransitioning) {
+        UIView.animateWithDuration(fadeOutDuration, animations: {
+            sourceViewController.view.alpha = 0
+        }, completion: { _ in
+            transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
+        })
     }
 }
