@@ -146,6 +146,11 @@ extension Array {
         return false
     }
 
+    /// Remove objects by value.
+    public mutating func removeObjects<U: Equatable>(objects: [U]) {
+        objects.forEach { removeObject($0) }
+    }
+
     /// Returns a random subarray of given length
     ///
     /// - parameter size: Length
