@@ -26,7 +26,11 @@ import UIKit
 
 public class IntrinsicContentSizeView: UIView {
 
-    public let contentSize: CGSize
+    public var contentSize: CGSize
+
+    public convenience init() {
+        self.init(intrinsicContentSize: .zero)
+    }
 
     public init(intrinsicContentSize: CGSize) {
         self.contentSize = intrinsicContentSize
@@ -44,7 +48,11 @@ public class IntrinsicContentSizeView: UIView {
 
 public class IntrinsicContentSizeImageView: UIImageView {
 
-    public let contentSize: CGSize
+    public var contentSize: CGSize
+
+    public convenience init() {
+        self.init(intrinsicContentSize: .zero)
+    }
 
     public init(intrinsicContentSize: CGSize) {
         self.contentSize = intrinsicContentSize
