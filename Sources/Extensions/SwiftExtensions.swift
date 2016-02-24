@@ -164,6 +164,13 @@ extension Array {
         let index = Int(arc4random_uniform(UInt32(count - size)))
         return Array(self[index..<(size + index)])
     }
+
+    /// Returns a random element from `self`.
+    @warn_unused_result
+    public func randomElement() -> Element {
+        let randomIndex = Int(rand()) % count
+        return self[randomIndex]
+    }
 }
 
 extension CollectionType {
