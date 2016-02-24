@@ -151,7 +151,10 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     }()
 
     @objc private func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
-        guard gestureRecognizer.state == .Began else { return }
+        guard gestureRecognizer.state == .Began,
+        let _ = indexPathForItemAtPoint(gestureRecognizer.locationInView(self))
+        else { return }
+
         isEditing = !isEditing
         toggleVisibleCellsDeleteButtons()
     }
