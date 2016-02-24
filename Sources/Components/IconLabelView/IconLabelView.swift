@@ -29,16 +29,18 @@ public class IconLabelView: UIView {
     public enum Style { case TopBottom, LeftRight }
 
     private var imagePaddingConstraints: [NSLayoutConstraint] = []
-    private var imageSizeConstraints: (width: NSLayoutConstraint?,  height: NSLayoutConstraint?)
+    private var imageSizeConstraints: (width: NSLayoutConstraint?, height: NSLayoutConstraint?)
     private var labelsWidthConstraints: [NSLayoutConstraint] = []
+    private var stackViewConstraints: (topBottom: [NSLayoutConstraint]?, leftRight: [NSLayoutConstraint]?)
 
     // MARK: Subviews
 
-    private let stackView          = TZStackView()
-    private let imageViewContainer = UIView()
-    public let imageView           = UIImageView()
-    public let titleLabel          = UILabel()
-    public let subtitleLabel       = UILabel()
+    private let stackView           = TZStackView()
+    private let textImageSpacerView = IntrinsicContentSizeView()
+    public let imageViewContainer   = UIView()
+    public let imageView            = UIImageView()
+    public let titleLabel           = UILabel()
+    public let subtitleLabel        = UILabel()
 
     /// The default value is `.TopBottom`.
     public var style = Style.TopBottom {
@@ -53,6 +55,13 @@ public class IconLabelView: UIView {
         didSet {
             imageSizeConstraints.width?.constant  = imageSize.width
             imageSizeConstraints.height?.constant = imageSize.height
+        }
+    }
+
+    /// The space between image and text. The default value is `0`.
+    public dynamic var textImageSpacing: CGFloat = 0 {
+        didSet {
+            updateTextImageSpacingIfNeeded()
         }
     }
 
@@ -147,7 +156,7 @@ public class IconLabelView: UIView {
     }
 
     /// The default value is `5`.
-    public var spacing: CGFloat {
+    public dynamic var spacing: CGFloat {
         get { return stackView.spacing }
         set { stackView.spacing = newValue }
     }
@@ -185,14 +194,15 @@ public class IconLabelView: UIView {
 
     private func setupSubviews() {
         addSubview(stackView)
-        NSLayoutConstraint.constraintsForViewToFillSuperview(stackView).activate()
+        NSLayoutConstraint.centerXY(stackView).activate()
 
-        axis         = .Vertical
+        updateStyle(style)
         distribution = .Fill
         alignment    = .Center
         spacing      = 5
 
         stackView.addArrangedSubview(imageViewContainer)
+        stackView.addArrangedSubview(textImageSpacerView)
         stackView.addArrangedSubview(titleLabel)
 
         titleLabel.font          = UIFont.systemFont(UIFont.Size.Small)
@@ -225,9 +235,28 @@ public class IconLabelView: UIView {
         switch style {
             case .TopBottom:
                 axis = .Vertical
+                // Deactivate `LeftRight` and activate `TopBottom` constraints.
+                stackViewConstraints.leftRight?.deactivate()
+                if stackViewConstraints.topBottom == nil {
+                    stackViewConstraints.topBottom = NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(stackView)
+                }
+                stackViewConstraints.topBottom?.activate()
             case .LeftRight:
                 axis = .Horizontal
+                // Deactivate `TopBottom` and activate `LeftRight` constraints.
+                stackViewConstraints.topBottom?.deactivate()
+                if stackViewConstraints.leftRight == nil {
+                    stackViewConstraints.leftRight = NSLayoutConstraint.constraintsForViewToFillSuperviewVertical(stackView)
+                }
+                stackViewConstraints.leftRight?.activate()
         }
+    }
+
+    // MARK: Helpers
+
+    private func updateTextImageSpacingIfNeeded() {
+        let spacing = isImageViewHidden ? 0 : textImageSpacing
+        textImageSpacerView.contentSize = CGSize(width: 0, height: spacing)
     }
 }
 
