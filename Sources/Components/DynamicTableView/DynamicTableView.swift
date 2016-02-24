@@ -39,7 +39,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     /// A boolean value to determine whether the empty table view cells are hidden. The default value is `false`.
     public var emptyCellsHidden = false {
         didSet {
-            tableFooterView = emptyCellsHidden ? UIView(frame: CGRect.zero) : nil
+            tableFooterView = emptyCellsHidden ? UIView(frame: .zero) : nil
         }
     }
 

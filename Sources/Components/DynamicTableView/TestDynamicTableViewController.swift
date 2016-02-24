@@ -24,20 +24,9 @@
 
 import UIKit
 
-private class TestDynamicTableViewController: UIViewController {
-    private(set) lazy var tableView: DynamicTableView = DynamicTableView(style: self.style, options: self.cellOptions)
-    /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
-    var style: UITableViewStyle = .Grouped
-    var cellOptions: DynamicTableCellOptions = [.Movable, .Deletable]
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupDynamicTableView()
-    }
-
-    private func setupDynamicTableView() {
-        view.addSubview(tableView)
-        NSLayoutConstraint.constraintsForViewToFillSuperview(tableView).activate()
+private class TestDynamicTableViewController: DynamicTableViewController {
+    override func setupSubviews() {
+        tableView.cellOptions = [.Movable, .Deletable]
 
         tableView.sections = [
             Section(
