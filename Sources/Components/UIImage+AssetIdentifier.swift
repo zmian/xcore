@@ -28,6 +28,7 @@ import UIKit
 extension UIImage {
     enum AssetIdentifier: String {
         case DisclosureIndicator
+        case CollectionViewCellDeleteIcon
         case BlueJay
     }
 

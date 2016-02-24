@@ -37,12 +37,18 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     private let reuseIdentifier = IconLabelCollectionViewCell.reuseIdentifier
     private var allowReordering: Bool { return cellOptions.contains(.Movable) }
     private var allowDeletion: Bool   { return cellOptions.contains(.Deletable) }
+    private var isEditing = false
+    private var hasLongPressGestureRecognizer = false
     public var sections: [Section<ImageTitleDisplayable>] = []
     /// The layout used to organize the collection view’s items.
     public var layout: UICollectionViewFlowLayout? {
         return collectionViewLayout as? UICollectionViewFlowLayout
     }
-    public private(set) var cellOptions: IconLabelCollectionCellOptions = []
+    public var cellOptions: IconLabelCollectionCellOptions = [] {
+        didSet {
+            updateCellOptionsIfNeeded()
+        }
+    }
     /// A boolean value to determine whether the content is centered in the collection view. The default value is `false`.
     public var isContentCentered = false {
         didSet {
@@ -123,6 +129,28 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
         layout?.minimumInteritemSpacing = itemSpacing
         layout?.sectionInset            = UIEdgeInsets(all: 15)
         layout?.scrollDirection         = .Vertical
+
+        updateCellOptionsIfNeeded()
+    }
+
+    public override func reloadData() {
+        isEditing = false
+        super.reloadData()
+    }
+
+    // MARK: UILongPressGestureRecognizer
+
+    private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+        gestureRecognizer.delaysTouchesBegan   = true
+        gestureRecognizer.minimumPressDuration = 0.5
+        return gestureRecognizer
+    }()
+
+    @objc private func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
+        guard gestureRecognizer.state == .Began else { return }
+        isEditing = !isEditing
+        visibleCells().flatMap { $0 as? IconLabelCollectionViewCell }.forEach { $0.setDeleteButtonHidden(!isEditing) }
     }
 
     // MARK: UICollectionViewDataSource
@@ -139,6 +167,9 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! IconLabelCollectionViewCell
         let item = sections[indexPath]
         cell.setData(item)
+        cell.deleteButton.addAction(.TouchUpInside) {[weak self] sender in
+            self?.removeItems([indexPath])
+        }
         configureCell?(indexPath: indexPath, cell: cell, item: item)
         return cell
     }
@@ -147,6 +178,11 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
         collectionView.deselectItemAtIndexPath(indexPath, animated: true)
         let item = sections[indexPath]
         didSelectItem?(indexPath: indexPath, item: item)
+    }
+
+    public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        guard allowDeletion, let cell = cell as? IconLabelCollectionViewCell else { return }
+        cell.setDeleteButtonHidden(!isEditing)
     }
 
     // MARK: Reordering
@@ -177,6 +213,18 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
             guard let weakSelf = self else { return }
             weakSelf.reloadItemsAtIndexPaths(weakSelf.indexPathsForVisibleItems())
         })
+    }
+
+    // MARK: Helpers
+
+    private func updateCellOptionsIfNeeded() {
+        if allowDeletion && !hasLongPressGestureRecognizer {
+            addGestureRecognizer(longPressGestureRecognizer)
+            hasLongPressGestureRecognizer = true
+        } else if !allowDeletion && hasLongPressGestureRecognizer {
+            removeGestureRecognizer(longPressGestureRecognizer)
+            hasLongPressGestureRecognizer = false
+        }
     }
 }
 
