@@ -134,7 +134,10 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     }
 
     public override func reloadData() {
-        isEditing = false
+        if isEditing {
+            isEditing = false
+            toggleVisibleCellsDeleteButtons()
+        }
         super.reloadData()
     }
 
@@ -150,7 +153,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     @objc private func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
         guard gestureRecognizer.state == .Began else { return }
         isEditing = !isEditing
-        visibleCells().flatMap { $0 as? IconLabelCollectionViewCell }.forEach { $0.setDeleteButtonHidden(!isEditing) }
+        toggleVisibleCellsDeleteButtons()
     }
 
     // MARK: UICollectionViewDataSource
@@ -225,6 +228,10 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
             removeGestureRecognizer(longPressGestureRecognizer)
             hasLongPressGestureRecognizer = false
         }
+    }
+
+    private func toggleVisibleCellsDeleteButtons() {
+        visibleCells().flatMap { $0 as? IconLabelCollectionViewCell }.forEach { $0.setDeleteButtonHidden(!isEditing) }
     }
 }
 
