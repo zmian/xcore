@@ -24,6 +24,13 @@
 
 import UIKit
 
+extension NSBundle {
+    // Methods for creating or retrieving bundle instances.
+    static func xcoreBundle() -> NSBundle {
+        return NSBundle(forClass: DynamicTableView.self)
+    }
+}
+
 /// Extension to get compile time checks for asset identifiers
 extension UIImage {
     enum AssetIdentifier: String {
@@ -33,7 +40,7 @@ extension UIImage {
     }
 
     convenience init(assetIdentifier: AssetIdentifier) {
-        self.init(named: assetIdentifier.rawValue, inBundle: NSBundle(forClass: DynamicTableView.self), compatibleWithTraitCollection: nil)!
+        self.init(named: assetIdentifier.rawValue, inBundle: NSBundle.xcoreBundle(), compatibleWithTraitCollection: nil)!
     }
 }
 

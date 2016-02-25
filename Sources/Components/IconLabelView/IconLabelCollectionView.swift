@@ -173,6 +173,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! IconLabelCollectionViewCell
         let item = sections[indexPath]
         cell.setData(item)
+        cell.setDeleteButtonHidden(!isEditing, animated: false)
         cell.deleteButton.addAction(.TouchUpInside) {[weak self] sender in
             self?.removeItems([indexPath])
         }

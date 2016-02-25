@@ -78,9 +78,7 @@ public class IconLabelCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint(item: deleteButton, attribute: .Top, toItem: contentView, constant: -offset).activate()
         NSLayoutConstraint(item: contentView, attribute: .Trailing, toItem: deleteButton, constant: -offset).activate()
 
-        deleteButton.image = UIImage(assetIdentifier: .CollectionViewCellDeleteIcon)
-
-
+        deleteButton.image(R(.CollectionViewCellDeleteIcon), forState: .Normal, bundle: NSBundle.xcoreBundle())
         deleteButton.imageView?.cornerRadius    = 24/2
         deleteButton.imageView?.backgroundColor = UIColor.whiteColor()
 
@@ -92,13 +90,17 @@ public class IconLabelCollectionViewCell: UICollectionViewCell {
         deleteButton.hidden = true
     }
 
-    func setDeleteButtonHidden(hide: Bool) {
+    func setDeleteButtonHidden(hide: Bool, animated: Bool = true) {
         guard hide != deleteButton.hidden else { return }
 
-        if hide {
-            deleteButtonZoomOut()
+        if animated {
+            if hide {
+                deleteButtonZoomOut()
+            } else {
+                deleteButtonZoomIn()
+            }
         } else {
-            deleteButtonZoomIn()
+            deleteButton.hidden = hide
         }
     }
 
