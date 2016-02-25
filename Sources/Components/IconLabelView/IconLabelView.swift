@@ -158,7 +158,11 @@ public class IconLabelView: UIView {
     /// The default value is `5`.
     public dynamic var spacing: CGFloat {
         get { return stackView.spacing }
-        set { stackView.spacing = newValue }
+        set {
+            stackView.spacing = newValue
+            // Bug in TZStackView
+            stackView.invalidateIntrinsicContentSize()
+        }
     }
 
     // MARK: Init Methods
