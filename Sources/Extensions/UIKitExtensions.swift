@@ -672,6 +672,20 @@ extension UIButton {
         imageView?.tintColor = tintColor
     }
 
+    /// Sets the image on **background thread** to use for the specified state.
+    ///
+    /// - parameter named:  The image to use for the specified state.
+    /// - parameter state:  The state that uses the specified image.
+    /// - parameter bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the main bundle.
+    public func image(named: String, forState state: UIControlState, bundle: NSBundle? = nil) {
+        dispatch.async.bg(.UserInitiated) {
+            let image = UIImage(named: named, inBundle: bundle, compatibleWithTraitCollection: nil)
+            dispatch.async.main {
+                self.setImage(image, forState: state)
+            }
+        }
+    }
+
     /// The image used for the normal state.
     public var image: UIImage? {
         get { return imageForState(.Normal) }
@@ -838,10 +852,13 @@ public extension UIColor {
 // MARK: UIImageView Extension
 
 public extension UIImageView {
-    /// Load the specified named image on the background thread.
-    public func image(named: String) {
+    /// Load the specified named image on **background thread**.
+    ///
+    /// - parameter named:  The name of the image.
+    /// - parameter bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the main bundle.
+    public func image(named: String, bundle: NSBundle? = nil) {
         dispatch.async.bg(.UserInitiated) {
-            let image = UIImage(named: named)
+            let image = UIImage(named: named, inBundle: bundle, compatibleWithTraitCollection: nil)
             dispatch.async.main {
                 self.image = image
             }
