@@ -55,7 +55,7 @@ private func formatSeconds(value: NSTimeInterval) -> String {
 ///     // ...
 /// }
 /// ```
-public func measure(title: String, block: (finish: () -> Void) -> Void) {
+public func measure(title: String, @noescape block: (finish: () -> Void) -> Void) {
     let startTime = CFAbsoluteTimeGetCurrent()
 
     block {
