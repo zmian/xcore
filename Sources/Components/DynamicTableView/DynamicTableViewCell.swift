@@ -152,6 +152,12 @@ public class DynamicTableViewCell: BaseTableViewCell {
         avatarView.setImage(data.image)
     }
 
+    /// The default implementation of this method does nothing.
+    ///
+    /// Subclasses can override it to perform additional actions,
+    /// This method is called when `UITableView` invokes `tableView:willDisplayCell:forRowAtIndexPath:` delegate method.
+    public func cellWillAppear(indexPath: NSIndexPath, data: DynamicTableModel) {}
+
     // MARK: Setup Methods
 
     public override func setupSubviews() {

@@ -48,6 +48,11 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         configureCell = callback
     }
 
+    private var willDisplayCell: ((indexPath: NSIndexPath, cell: DynamicTableViewCell, item: DynamicTableModel) -> Void)?
+    public func willDisplayCell(callback: (indexPath: NSIndexPath, cell: DynamicTableViewCell, item: DynamicTableModel) -> Void) {
+        willDisplayCell = callback
+    }
+
     private var configureHeader: ((section: Int, header: UITableViewHeaderFooterView, text: String?) -> Void)?
     public func configureHeader(callback: (section: Int, header: UITableViewHeaderFooterView, text: String?) -> Void) {
         configureHeader = callback
@@ -153,6 +158,10 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         registerClass(DynamicTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
 
+    public func overrideRegisteredClass(cellClass: DynamicTableViewCell.Type) {
+        registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
+    }
+
     // MARK: UITableViewDataSource
 
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -170,6 +179,13 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         configureAccessoryView(cell, type: item.accessory, indexPath: indexPath)
         configureCell?(indexPath: indexPath, cell: cell, item: item)
         return cell
+    }
+
+    public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        guard let cell = cell as? DynamicTableViewCell else { return }
+        let item = sections[indexPath]
+        cell.cellWillAppear(indexPath, data: item)
+        willDisplayCell?(indexPath: indexPath, cell: cell, item: item)
     }
 
     // Header
@@ -267,11 +283,11 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     /// - parameter indexPaths: An array of NSIndexPath objects identifying the rows to delete.
     /// - parameter animation:  A constant that indicates how the deletion is to be animated.
     private func removeItems(indexPaths: [NSIndexPath], animation: UITableViewRowAnimation = .Fade) {
-        indexPaths.forEach {
-            let item = sections.removeAt($0)
-            didRemoveItem?(indexPath: $0, item: item)
-        }
+        let items = indexPaths.map { (indexPath: $0, item: sections.removeAt($0)) }
         deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+        items.forEach { indexPath, item in
+            didRemoveItem?(indexPath: indexPath, item: item)
+        }
     }
 
     // MARK: UIAppearance Properties
