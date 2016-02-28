@@ -134,6 +134,26 @@ public class DynamicTableViewCell: BaseTableViewCell {
         onHighlight?(highlighted: highlighted, animated: animated)
     }
 
+    // MARK: UITableViewCellStateMask
+
+    private var willTransitionToState: ((state: UITableViewCellStateMask) -> Void)?
+    @nonobjc public func willTransitionToState(callback: (state: UITableViewCellStateMask) -> Void) {
+        willTransitionToState = callback
+    }
+    public override func willTransitionToState(state: UITableViewCellStateMask) {
+        super.willTransitionToState(state)
+        willTransitionToState?(state: state)
+    }
+
+    private var didTransitionToState: ((state: UITableViewCellStateMask) -> Void)?
+    @nonobjc public func didTransitionToState(callback: (state: UITableViewCellStateMask) -> Void) {
+        didTransitionToState = callback
+    }
+    public override func didTransitionToState(state: UITableViewCellStateMask) {
+        super.didTransitionToState(state)
+        didTransitionToState?(state: state)
+    }
+
     // MARK: Subviews
 
     private let labelsStackView = TZStackView()
