@@ -82,13 +82,22 @@ public struct JSONHelpers {
     /// Convert value to a JSON string
     @warn_unused_result
     public static func stringify(value: AnyObject, prettyPrinted: Bool = false) -> String {
-        let options: NSJSONWritingOptions = prettyPrinted ? .PrettyPrinted : []
-        if NSJSONSerialization.isValidJSONObject(value) {
-            if let data = try? NSJSONSerialization.dataWithJSONObject(value, options: options),
-                 string = String(data: data, encoding: NSUTF8StringEncoding) {
-                    return string
-            }
+        guard let
+            data   = serialize(value, prettyPrinted: prettyPrinted),
+            string = String(data: data, encoding: NSUTF8StringEncoding)
+        else { return "" }
+        return string
+    }
+
+    /// Serialize value to NSData
+    @warn_unused_result
+    public static func serialize(value: AnyObject, prettyPrinted: Bool = false) -> NSData? {
+        guard NSJSONSerialization.isValidJSONObject(value) else {
+            console.error("Invalid JSON Object.")
+            return nil
         }
-        return ""
+
+        let options: NSJSONWritingOptions = prettyPrinted ? .PrettyPrinted : []
+        return try? NSJSONSerialization.dataWithJSONObject(value, options: options ?? [])
     }
 }
