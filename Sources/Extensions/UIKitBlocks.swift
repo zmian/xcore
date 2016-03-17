@@ -25,61 +25,75 @@
 import UIKit
 import ObjectiveC
 
-private class ClosureWrapper: NSObject, NSCopying {
-    var closure: (() -> Void)?
+private class ClosureWrapper: NSObject {
+    private var closure: (() -> Void)?
 
-    init(_ closure: (() -> Void)?) {
+    init(_ closure: () -> Void) {
         self.closure = closure
     }
 
-    @objc func copyWithZone(zone: NSZone) -> AnyObject {
-        return ClosureWrapper(closure)
+    @objc private func invoke(sender: AnyObject) {
+        closure?()
     }
 }
 
-extension UIBarButtonItem {
-    private struct AssociatedKey {
+private extension UIBarButtonItem {
+    struct AssociatedKey {
         static var ActionHandler = "Xcore_ActionHandler"
     }
 
-    private var tapAction: (() -> Void)? {
-        get { return (objc_getAssociatedObject(self, &AssociatedKey.ActionHandler) as? ClosureWrapper)?.closure }
-        set { objc_setAssociatedObject(self, &AssociatedKey.ActionHandler, ClosureWrapper(newValue), .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    var actionHandler: ClosureWrapper? {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.ActionHandler) as? ClosureWrapper }
+        set { objc_setAssociatedObject(self, &AssociatedKey.ActionHandler, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
-    @objc private func performActionHandler() {
-        tapAction?()
-    }
-
-    private func actionHandler(callback: () -> Void) {
-        tapAction = callback
-        target    = self
-        action    = "performActionHandler"
+    func setActionHandler(handler: (() -> Void)?) {
+        if let handler = handler {
+            let wrapper   = ClosureWrapper(handler)
+            actionHandler = wrapper
+            target        = wrapper
+            action        = "invoke:"
+        } else {
+            actionHandler = nil
+            target        = nil
+            action        = nil
+        }
     }
 }
 
 // MARK: UIBarButtonItem Block-based Interface
 
-extension UIBarButtonItem {
+public extension UIBarButtonItem {
+    /// Add action handler when the item is selected.
+    ///
+    /// - parameter handler: The block to invoke when the item is selected.
+    public func addAction(handler: () -> Void) {
+        setActionHandler(handler)
+    }
+
+    /// Removes action handler from `self`.
+    public func removeAction() {
+        setActionHandler(nil)
+    }
+
+    /// A boolean value to determine whether an action handler is attached.
+    public var hasActionHandler: Bool {
+        return target != nil
+    }
+
     public convenience init(image: UIImage?, landscapeImagePhone: UIImage? = nil, style: UIBarButtonItemStyle = .Plain, handler: (() -> Void)? = nil) {
         self.init(image: image, landscapeImagePhone: landscapeImagePhone, style: style, target: nil, action: nil)
-        if let handler = handler {
-            actionHandler(handler)
-        }
+        setActionHandler(handler)
     }
 
     public convenience init(title: String?, style: UIBarButtonItemStyle = .Plain, handler: (() -> Void)? = nil) {
         self.init(title: title, style: style, target: nil, action: nil)
-        if let handler = handler {
-            actionHandler(handler)
-        }
+        setActionHandler(handler)
     }
 
     public convenience init(barButtonSystemItem systemItem: UIBarButtonSystemItem, handler: (() -> Void)? = nil) {
         self.init(barButtonSystemItem: systemItem, target: nil, action: nil)
-        if let handler = handler {
-            actionHandler(handler)
-        }
+        setActionHandler(handler)
     }
 }
 
@@ -184,5 +198,55 @@ extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
     public func didFinishWithResult(handler: (controller: MFMailComposeViewController, result: MFMailComposeResult, error: NSError?) -> Void) {
         mailComposeDelegate  = self
         actionHandlerWrapper = MailClosureWrapper(handler)
+    }
+}
+
+// MARK: Gestures
+
+private extension UIGestureRecognizer {
+    struct AssociatedKey {
+        static var ActionHandler = "Xcore_ActionHandler"
+    }
+
+    var actionHandler: ClosureWrapper? {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.ActionHandler) as? ClosureWrapper }
+        set { objc_setAssociatedObject(self, &AssociatedKey.ActionHandler, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+
+    func setActionHandler(handler: (() -> Void)?) {
+        if let handler = handler {
+            let wrapper   = ClosureWrapper(handler)
+            actionHandler = wrapper
+            addTarget(wrapper, action: "invoke:")
+        } else {
+            actionHandler = nil
+            removeTarget(nil, action: nil)
+        }
+    }
+}
+
+// MARK: UIGestureRecognizer Block-based Interface
+
+public extension UIGestureRecognizer {
+    public convenience init(handler: () -> Void) {
+        self.init()
+        setActionHandler(handler)
+    }
+
+    /// Add action handler when the item is selected.
+    ///
+    /// - parameter handler: The block to invoke when the item is selected.
+    public func addAction(handler: () -> Void) {
+        setActionHandler(handler)
+    }
+
+    /// Removes action handler from `self`.
+    public func removeAction() {
+        setActionHandler(nil)
+    }
+
+    /// A boolean value to determine whether an action handler is attached.
+    public var hasActionHandler: Bool {
+        return actionHandler != nil
     }
 }
