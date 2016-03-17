@@ -674,15 +674,12 @@ extension UIButton {
 
     /// Sets the image on **background thread** to use for the specified state.
     ///
-    /// - parameter named:  The image to use for the specified state.
+    /// - parameter named:  The remote image url or local image name to use for the specified state.
     /// - parameter state:  The state that uses the specified image.
     /// - parameter bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the main bundle.
-    public func image(named: String, forState state: UIControlState, bundle: NSBundle? = nil) {
-        dispatch.async.bg(.UserInitiated) {
-            let image = UIImage(named: named, inBundle: bundle, compatibleWithTraitCollection: nil)
-            dispatch.async.main {
-                self.setImage(image, forState: state)
-            }
+    public func image(remoteOrLocalImage: String, forState state: UIControlState, bundle: NSBundle? = nil) {
+        UIImage.remoteOrLocalImage(remoteOrLocalImage, bundle: bundle) {[weak self] image in
+            self?.setImage(image, forState: state)
         }
     }
 
@@ -1336,5 +1333,19 @@ public extension NSBundle {
         return "\(systemName) \(UIDevice.currentDevice().systemVersion)\n" +
                "\(UIDevice.currentDevice().modelType.description)\n" +
                "Version \(NSBundle.appVersionNumber) (\(NSBundle.appBuildNumber))"
+    }
+}
+
+// MARK: NSMutableData Extension
+
+public extension NSMutableData {
+    /// A convenience method to append string to `NSMutableData` using specified encoding.
+    ///
+    /// - parameter string:               The string to be added to the `NSMutableData`.
+    /// - parameter encoding:             The encoding to use for representing the specified string. The default value is `NSUTF8StringEncoding`.
+    /// - parameter allowLossyConversion: A boolean value to determine lossy conversion. The default value is `false`.
+    public func appendString(string: String, encoding: NSStringEncoding = NSUTF8StringEncoding, allowLossyConversion: Bool = false) {
+        let data = string.dataUsingEncoding(encoding, allowLossyConversion: allowLossyConversion)!
+        appendData(data)
     }
 }
