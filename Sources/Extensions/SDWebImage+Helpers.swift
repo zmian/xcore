@@ -33,7 +33,11 @@ public extension UIImageView {
         if let url = NSURL(string: named) where url.host != nil {
             self.sd_setImageWithURL(url) {[weak self] (image, _, cacheType, _) in
                 guard let image = image else { return }
-                defer { callback?(image: image) }
+                defer {
+                    dispatch.async.main {
+                        callback?(image: image)
+                    }
+                }
                 if let weakSelf = self where (alwaysAnimate || cacheType != SDImageCacheType.Memory) {
                     weakSelf.alpha = 0
                     UIView.animateWithDuration(0.5) {
@@ -64,7 +68,7 @@ public extension UIImageView {
 
 public extension UIImage {
     /// Automatically detect and load the image from local or a remote url.
-    public class func remoteOrLocalImage(named: String, callback: (image: UIImage) -> Void) {
+    public class func remoteOrLocalImage(named: String, bundle: NSBundle? = nil, callback: (image: UIImage) -> Void) {
         guard !named.isBlank else { return }
 
         if let url = NSURL(string: named) where url.host != nil {
@@ -73,12 +77,14 @@ public extension UIImage {
 
                 }, completed: { image, data, error, finished in
                     guard let image = image where finished else { return }
-                    callback(image: image)
+                    dispatch.async.main {
+                        callback(image: image)
+                    }
                 }
             )
         } else {
             dispatch.async.bg(.UserInitiated) {
-                guard let image = UIImage(named: named) else { return }
+                guard let image = UIImage(named: named, inBundle: bundle, compatibleWithTraitCollection: nil) else { return }
                 dispatch.async.main {
                     callback(image: image)
                 }
