@@ -40,7 +40,7 @@
 ///
 /// `EnumIteratable` requires conforming enums types to be `RawRepresentable`.
 public protocol EnumIteratable {
-    typealias EnumType: Hashable, RawRepresentable = Self
+    associatedtype EnumType: Hashable, RawRepresentable = Self
     static var allValues: [EnumType] { get }
     static var rawValues: [EnumType.RawValue] { get }
 }
@@ -63,7 +63,7 @@ public extension EnumIteratable {
     @warn_unused_result
     private static func enumerate() -> AnyGenerator<EnumType> {
         var i = 0
-        return anyGenerator {
+        return AnyGenerator {
             let next = withUnsafePointer(&i) { UnsafePointer<EnumType>($0).memory }
             let nextValue: EnumType? = next.hashValue == i ? next : nil
             i += 1

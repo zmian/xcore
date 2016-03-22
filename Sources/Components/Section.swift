@@ -40,7 +40,7 @@ public struct ArrayGenerator<Element>: GeneratorType {
     }
 }
 
-public struct Section<Element>: RangeReplaceableCollectionType, MutableSliceable, ArrayLiteralConvertible {
+public struct Section<Element>: RangeReplaceableCollectionType, MutableCollectionType, ArrayLiteralConvertible {
     public var title: String?
     public var detail: String?
     public var items: [Element]

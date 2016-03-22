@@ -52,7 +52,7 @@ private extension UIBarButtonItem {
             let wrapper   = ClosureWrapper(handler)
             actionHandler = wrapper
             target        = wrapper
-            action        = "invoke:"
+            action        = #selector(wrapper.invoke(_:))
         } else {
             actionHandler = nil
             target        = nil
@@ -146,7 +146,7 @@ extension UIControlEventsBlockRepresentable where Self: UIControl {
 
         actionEvents[events.rawValue] = wrapper
         self.actionEvents = actionEvents
-        addTarget(wrapper, action: "invoke:", forControlEvents: events)
+        addTarget(wrapper, action: #selector(wrapper.invoke(_:)), forControlEvents: events)
     }
 
     public func removeAction(events: UIControlEvents) {
@@ -217,7 +217,7 @@ private extension UIGestureRecognizer {
         if let handler = handler {
             let wrapper   = ClosureWrapper(handler)
             actionHandler = wrapper
-            addTarget(wrapper, action: "invoke:")
+            addTarget(wrapper, action: #selector(wrapper.invoke(_:)))
         } else {
             actionHandler = nil
             removeTarget(nil, action: nil)

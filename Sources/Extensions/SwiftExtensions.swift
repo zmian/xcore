@@ -32,11 +32,11 @@ public extension String {
     }
 
     /// var string = "abcde"[0...2] // string equals "abc"
-    /// var string2 = "fghij"[2..4] // string2 equals "hi"
+    /// var string2 = "fghij"[2..<4] // string2 equals "hi"
     public subscript (r: Range<Int>) -> String {
         let start = startIndex.advancedBy(r.startIndex)
         let end   = startIndex.advancedBy(r.endIndex)
-        return substringWithRange(Range(start: start, end: end))
+        return substringWithRange(Range(start..<end))
     }
 
     public var count: Int { return characters.count }
@@ -92,7 +92,7 @@ public extension String {
     @warn_unused_result
     public func stripPrefix(prefix: String) -> String? {
         guard let prefixRange = rangeOfString(prefix) else { return nil }
-        let attributeRange  = Range(start: prefixRange.endIndex, end: endIndex)
+        let attributeRange  = Range(prefixRange.endIndex..<endIndex)
         let attributeString = substringWithRange(attributeRange)
         return attributeString
     }

@@ -69,12 +69,12 @@ public class BaseTableViewCell: UITableViewCell {
     public func setupSubviews() {}
 
     private func setupSeparatorInset() {
-        if self.respondsToSelector("setLayoutMargins:") {
+        if self.respondsToSelector(Selector("setLayoutMargins:")) {
             self.layoutMargins = separatorInsets
             self.preservesSuperviewLayoutMargins = false
         }
 
-        if self.respondsToSelector("setSeparatorInset:") {
+        if self.respondsToSelector(Selector("setSeparatorInset:")) {
             self.separatorInset = separatorInsets
         }
     }

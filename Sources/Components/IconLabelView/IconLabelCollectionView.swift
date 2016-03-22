@@ -144,7 +144,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     // MARK: UILongPressGestureRecognizer
 
     private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
-        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         gestureRecognizer.delaysTouchesBegan   = true
         gestureRecognizer.minimumPressDuration = 0.5
         return gestureRecognizer
