@@ -49,12 +49,14 @@ public struct DynamicTableModel {
     public var image: ImageRepresentable?
     public var accessory: DynamicTableAccessoryType
     public var userInfo: [String: Any]
+    public var handler: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)?
 
-    public init(title: StringRepresentable? = nil, subtitle: StringRepresentable? = nil, image: ImageRepresentable? = nil, accessory: DynamicTableAccessoryType = .None, userInfo: [String: Any] = [:]) {
+    public init(title: StringRepresentable? = nil, subtitle: StringRepresentable? = nil, image: ImageRepresentable? = nil, accessory: DynamicTableAccessoryType = .None, userInfo: [String: Any] = [:], handler: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)? = nil) {
         self.title     = title
         self.subtitle  = subtitle
         self.image     = image
         self.accessory = accessory
         self.userInfo  = userInfo
+        self.handler   = handler
     }
 }

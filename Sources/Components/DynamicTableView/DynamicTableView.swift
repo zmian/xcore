@@ -211,6 +211,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
             }
         }
         didSelectItem?(indexPath: indexPath, item: item)
+        item.handler?(indexPath: indexPath, item: item)
     }
 
     public func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
