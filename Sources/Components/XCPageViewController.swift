@@ -181,4 +181,22 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
     private func reloadData() {
         pageViewController.setViewControllers(viewControllers, direction: .Forward, animated: false, completion: nil)
     }
+
+    // MARK: Statusbar and Orientation
+
+    public override func prefersStatusBarHidden() -> Bool {
+        return isStatusBarHidden ?? super.prefersStatusBarHidden()
+    }
+
+    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return statusBarStyle ?? super.preferredStatusBarStyle()
+    }
+
+    public override func shouldAutorotate() -> Bool {
+        return enableAutorotate ?? super.shouldAutorotate()
+    }
+
+    public override func preferredStatusBarUpdateAnimation() -> UIStatusBarAnimation {
+        return statusBarUpdateAnimation ?? super.preferredStatusBarUpdateAnimation()
+    }
 }

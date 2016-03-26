@@ -401,7 +401,8 @@ public extension UIViewController {
     private struct AssociatedKey {
         static var SupportedInterfaceOrientations               = "Xcore_SupportedInterfaceOrientations"
         static var PreferredInterfaceOrientationForPresentation = "Xcore_PreferredInterfaceOrientationForPresentation"
-        static var PreferredStatusBarStyle                      = "Xcore_preferredStatusBarStyle"
+        static var PreferredStatusBarStyle                      = "Xcore_PreferredStatusBarStyle"
+        static var PreferredStatusBarUpdateAnimation            = "Xcore_PreferredStatusBarUpdateAnimation"
         static var PrefersStatusBarHidden                       = "Xcore_PrefersStatusBarHidden"
         static var ShouldAutorotate                             = "Xcore_ShouldAutorotate"
     }
@@ -474,7 +475,33 @@ public extension UIViewController {
                 return nil
             }
         }
-        set { objc_setAssociatedObject(self, &AssociatedKey.PreferredStatusBarStyle, newValue?.rawValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKey.PreferredStatusBarStyle, newValue?.rawValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+
+    /// A convenience property to set `preferredStatusBarUpdateAnimation()` without subclassing.
+    /// This is useful when you don't have access to the actual class source code and need
+    /// to update the status bar animation.
+    ///
+    /// The default value is `nil` which means use the `preferredStatusBarUpdateAnimation() value`.
+    ///
+    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
+    /// And, any of its view controllers can override this on as needed basis.
+    /// ```
+    /// let vc = UIImagePickerController()
+    /// vc.statusBarUpdateAnimation = .Fade
+    /// ```
+    public var statusBarUpdateAnimation: UIStatusBarAnimation? {
+        get {
+            if let intValue = objc_getAssociatedObject(self, &AssociatedKey.PreferredStatusBarUpdateAnimation) as? Int {
+                return UIStatusBarAnimation(rawValue: intValue)
+            } else {
+                return nil
+            }
+        }
+        set { objc_setAssociatedObject(self, &AssociatedKey.PreferredStatusBarUpdateAnimation, newValue?.rawValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
     /// A convenience property to set `prefersStatusBarHidden()` without subclassing.
@@ -491,7 +518,10 @@ public extension UIViewController {
     /// ```
     public var isStatusBarHidden: Bool? {
         get { return objc_getAssociatedObject(self, &AssociatedKey.PrefersStatusBarHidden) as? Bool }
-        set { objc_setAssociatedObject(self, &AssociatedKey.PrefersStatusBarHidden, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKey.PrefersStatusBarHidden, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            setNeedsStatusBarAppearanceUpdate()
+        }
     }
 
     /// A convenience property to set `shouldAutorotate()` without subclassing.
@@ -576,6 +606,10 @@ public extension UINavigationController {
 
     public override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return topViewController?.statusBarStyle ?? statusBarStyle ?? topViewController?.preferredStatusBarStyle() ?? super.preferredStatusBarStyle()
+    }
+
+    public override func preferredStatusBarUpdateAnimation() -> UIStatusBarAnimation {
+        return topViewController?.statusBarUpdateAnimation ?? statusBarUpdateAnimation ?? topViewController?.preferredStatusBarUpdateAnimation() ?? super.preferredStatusBarUpdateAnimation()
     }
 
     public override func prefersStatusBarHidden() -> Bool {
@@ -717,6 +751,15 @@ extension UIButton {
     public var highlightedTextColor: UIColor? {
         get { return titleColorForState(.Highlighted) }
         set { setTitleColor(newValue, forState: .Highlighted) }
+    }
+
+    /// The background color to used for the highlighted state.
+    public func setHighlightedBackgroundColor(color: UIColor?) {
+        var image: UIImage?
+        if let color = color {
+            image = UIImage(color: color, size: CGSize(width: 1, height: 1))
+        }
+        setBackgroundImage(image, forState: .Highlighted)
     }
 
     /// Creates and returns a new button of the specified type with action handler.
