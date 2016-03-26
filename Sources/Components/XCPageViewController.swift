@@ -25,13 +25,18 @@
 import UIKit
 
 private class XCUIPageViewController: UIPageViewController {
+    var swipeEnabled = true {
+        didSet { scrollView?.scrollEnabled = swipeEnabled }
+    }
+
     // Subclasses have to be responsible when using this setting
     // as view controller count stays at one when we are disabling
     // bounce.
     var disableBounceForSinglePage = false
     private var scrollView: UIScrollView? {
         didSet {
-            scrollView?.bounces = !disableBounceForSinglePage
+            scrollView?.bounces       = !disableBounceForSinglePage
+            scrollView?.scrollEnabled = swipeEnabled
         }
     }
 
@@ -56,6 +61,9 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
     public var pageControlPosition = PageControlPosition.Bottom
     public var viewControllers: [UIViewController] = []
     public var disableBounceForSinglePage = true
+    public var swipeEnabled = true {
+        didSet { (pageViewController as? XCUIPageViewController)?.swipeEnabled = swipeEnabled }
+    }
     /// Spacing between between pages. Default is `0`.
     /// Page spacing is only valid if the transition style is `UIPageViewControllerTransitionStyle.Scroll`.
     public var pageSpacing: CGFloat = 0
@@ -98,6 +106,8 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
         if viewControllers.count == 1 && disableBounceForSinglePage {
             (pageViewController as? XCUIPageViewController)?.disableBounceForSinglePage = true
         }
+
+        (pageViewController as? XCUIPageViewController)?.swipeEnabled = swipeEnabled
     }
 
     private func setupConstraints() {
