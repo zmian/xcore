@@ -142,7 +142,9 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
 
     public func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed, let newViewController = pageViewController.viewControllers?.first {
-            pageControl.currentPage = indexOf(newViewController)
+            let index = indexOf(newViewController)
+            pageControl.currentPage = index
+            updateStatusBar(forIndex: index)
             didChangeCurrentPage?(index: pageControl.currentPage)
         }
     }
@@ -154,6 +156,7 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
         let viewControllerAtIndex = viewControllers[index]
         pageViewController.setViewControllers([viewControllerAtIndex], direction: direction, animated: animated, completion: completion)
         pageControl.currentPage = index
+        updateStatusBar(forIndex: index)
     }
 
     public func removeViewController(viewController: UIViewController) {
@@ -180,6 +183,15 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
 
     private func reloadData() {
         pageViewController.setViewControllers(viewControllers, direction: .Forward, animated: false, completion: nil)
+    }
+
+    private func updateStatusBar(forIndex index: Int) {
+        guard let vc = viewControllers.at(index) else { return }
+        if let nvc = vc as? UINavigationController {
+            statusBarStyle = nvc.preferredStatusBarStyle()
+        } else {
+            statusBarStyle = vc.statusBarStyle ?? vc.preferredStatusBarStyle()
+        }
     }
 
     // MARK: Statusbar and Orientation
