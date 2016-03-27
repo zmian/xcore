@@ -150,7 +150,7 @@ public class IconLabelView: UIView {
     }
 
     /// The default value is `.Center`.
-    private var alignment: TZStackViewAlignment {
+    public var alignment: TZStackViewAlignment {
         get { return stackView.alignment }
         set { stackView.alignment = newValue }
     }
