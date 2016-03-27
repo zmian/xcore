@@ -346,19 +346,20 @@ extension DynamicTableView: BEMCheckBoxDelegate {
                 }
                 cell.accessoryView = accessorySwitch
             case .Checkbox(let isOn, _):
-                cell.selectionStyle        = .None
-                let checkbox               = BEMCheckBox(frame: CGRect(x: 0, y: 0, width: 26, height: 26))
-                checkbox.on                = isOn
-                checkbox.lineWidth         = 1
-                checkbox.onTintColor       = accessoryTintColor
-                checkbox.onFillColor       = accessoryTintColor
-                checkbox.onCheckColor      = UIColor.whiteColor()
-                checkbox.onAnimationType   = .Fill
-                checkbox.offAnimationType  = .Fill
-                checkbox.animationDuration = 0.4
-                checkbox.delegate          = self
-                checkbox.indexPath         = indexPath
-                cell.accessoryView         = checkbox
+                cell.selectionStyle             = .None
+                let checkbox                    = BEMCheckBox(frame: CGRect(x: 0, y: 0, width: 26, height: 26))
+                checkbox.on                     = isOn
+                checkbox.lineWidth              = 1
+                checkbox.onTintColor            = accessoryTintColor
+                checkbox.onFillColor            = accessoryTintColor
+                checkbox.onCheckColor           = UIColor.whiteColor()
+                checkbox.onAnimationType        = .Fill
+                checkbox.offAnimationType       = .Fill
+                checkbox.animationDuration      = 0.4
+                checkbox.delegate               = self
+                checkbox.indexPath              = indexPath
+                checkbox.userInteractionEnabled = false
+                cell.accessoryView              = checkbox
             case .Text(let text):
                 let label           = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
                 label.text          = text
