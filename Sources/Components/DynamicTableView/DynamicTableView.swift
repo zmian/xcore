@@ -68,6 +68,11 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         didSelectItem = callback
     }
 
+    private var didDeselectItem: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)?
+    public func didDeselectItem(callback: (indexPath: NSIndexPath, item: DynamicTableModel) -> Void) {
+        didDeselectItem = callback
+    }
+
     private var didRemoveItem: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)?
     public func didRemoveItem(callback: (indexPath: NSIndexPath, item: DynamicTableModel) -> Void) {
         didRemoveItem = callback
@@ -212,6 +217,17 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         }
         didSelectItem?(indexPath: indexPath, item: item)
         item.handler?(indexPath: indexPath, item: item)
+    }
+
+    public func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        let item = sections[indexPath]
+        if case .Checkbox(_, let callback) = item.accessory {
+            if let cell = tableView.cellForRowAtIndexPath(indexPath), checkboxView = cell.accessoryView as? BEMCheckBox {
+                checkboxView.setOn(false, animated: true)
+                callback(sender: checkboxView)
+            }
+        }
+        didDeselectItem?(indexPath: indexPath, item: item)
     }
 
     public func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
