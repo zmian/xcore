@@ -28,9 +28,9 @@ public struct LayoutGuideOptions: OptionSetType {
     public let rawValue: UInt
     public init(rawValue: UInt) { self.rawValue = rawValue }
 
-    public static let Top                      = LayoutGuideOptions(rawValue: 1)
-    public static let Bottom                   = LayoutGuideOptions(rawValue: 2)
-    public static let Both: LayoutGuideOptions = [Top, Bottom]
+    public static let TopLayoutGuide                       = LayoutGuideOptions(rawValue: 1)
+    public static let BottomLayoutGuide                    = LayoutGuideOptions(rawValue: 2)
+    public static let BothLayoutGuides: LayoutGuideOptions = [TopLayoutGuide, BottomLayoutGuide]
 }
 
 public extension NSLayoutConstraint {
@@ -140,16 +140,16 @@ public extension UIViewController {
             NSLayoutConstraint(
                 item:      viewToSize,
                 attribute: .Top,
-                toItem:    constraintToLayoutGuideOptions.contains(.Top) ? topLayoutGuide : view,
-                attribute: constraintToLayoutGuideOptions.contains(.Top) ? .Bottom : .Top,
+                toItem:    constraintToLayoutGuideOptions.contains(.TopLayoutGuide) ? topLayoutGuide : view,
+                attribute: constraintToLayoutGuideOptions.contains(.TopLayoutGuide) ? .Bottom : .Top,
                 constant:  paddingTop,
                 priority:  priority
             ),
             NSLayoutConstraint(
                 item:      viewToSize,
                 attribute: .Bottom,
-                toItem:    constraintToLayoutGuideOptions.contains(.Bottom) ? bottomLayoutGuide : view,
-                attribute: constraintToLayoutGuideOptions.contains(.Bottom) ? .Top : .Bottom,
+                toItem:    constraintToLayoutGuideOptions.contains(.BottomLayoutGuide) ? bottomLayoutGuide : view,
+                attribute: constraintToLayoutGuideOptions.contains(.BottomLayoutGuide) ? .Top : .Bottom,
                 constant:  paddingBottom,
                 priority:  priority
             )
