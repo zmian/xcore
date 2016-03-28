@@ -34,7 +34,7 @@ public class DynamicTableViewCell: BaseTableViewCell {
     private var contentConstraints: (top: NSLayoutConstraint?, left: NSLayoutConstraint?, bottom: NSLayoutConstraint?, right: NSLayoutConstraint?)
     private var labelsStackViewConstraints: (top: NSLayoutConstraint?, bottom: NSLayoutConstraint?)
 
-    /// The distance that the view is inset from the enclosing  content view.
+    /// The distance that the view is inset from the enclosing content view.
     /// The default value is `UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15)`.
     public dynamic var contentInset = UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15) {
         didSet {

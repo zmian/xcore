@@ -25,6 +25,7 @@
 import UIKit
 
 public class DynamicTableViewController: UIViewController {
+    private var tableViewConstraints = [NSLayoutConstraint]()
     public private(set) lazy var tableView: DynamicTableView = DynamicTableView(style: self.style, options: self.cellOptions)
     /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
     public var style: UITableViewStyle = .Plain
@@ -39,6 +40,17 @@ public class DynamicTableViewController: UIViewController {
     /// An option to determine whether the `scrollView`'s `top` and `bottom` is constrained
     /// to `topLayoutGuide` and `bottomLayoutGuide`. The default value is `[]`.
     public var constraintToLayoutGuideOptions: LayoutGuideOptions = []
+
+    /// The distance that the tableView is inset from the enclosing view.
+    /// The default value is `UIEdgeInsets.zero`.
+    public dynamic var contentInset = UIEdgeInsets.zero {
+        didSet {
+            tableViewConstraints.at(0)?.constant = contentInset.left
+            tableViewConstraints.at(1)?.constant = contentInset.right
+            tableViewConstraints.at(2)?.constant = contentInset.top
+            tableViewConstraints.at(3)?.constant = contentInset.bottom
+        }
+    }
 
     // MARK: Init Methods
 
@@ -67,7 +79,8 @@ public class DynamicTableViewController: UIViewController {
             tableView.cellOptions = cellOptions
         }
         view.addSubview(tableView)
-        constraintsForViewToFillSuperview(tableView, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
+
+        tableViewConstraints = constraintsForViewToFillSuperview(tableView, padding: contentInset, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
     }
 
     /// The default implementation of this method does nothing.
