@@ -61,7 +61,7 @@ public class DynamicTableViewController: UIViewController {
     private func setupDynamicTableView() {
         tableView.cellOptions = cellOptions
         view.addSubview(tableView)
-        NSLayoutConstraint.constraintsForViewToFillSuperview(tableView).activate()
+        constraintsForViewToFillSuperview(tableView, constraintToLayoutGuideOptions: .Both).activate()
     }
 
     /// The default implementation of this method does nothing.

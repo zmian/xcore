@@ -27,13 +27,9 @@ import UIKit
 public class XCScrollViewController: UIViewController {
     public let scrollView = UIScrollView()
 
-    /// A boolean value to determine whether the `scrollView`'s `top` is constrained to `topLayoutGuide`.
-    /// The default value is `false`.
-    public var constraintToTopLayoutGuide    = false
-
-    /// A boolean value to determine whether the `scrollView`'s `bottom` is constrained to `bottomLayoutGuide`.
-    /// The default value is `false`.
-    public var constraintToBottomLayoutGuide = false
+    /// An option to determine whether the `scrollView`'s `top` and `bottom` is constrained
+    /// to `topLayoutGuide` and `bottomLayoutGuide`. The default value is `[]`.
+    public var constraintToLayoutGuideOptions: LayoutGuideOptions = []
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,23 +38,7 @@ public class XCScrollViewController: UIViewController {
 
     private func setupContentView() {
         view.addSubview(scrollView)
-
-        NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(scrollView).activate()
-
-        NSLayoutConstraint(
-            item:      scrollView,
-            attribute: .Top,
-            toItem:    constraintToTopLayoutGuide ? topLayoutGuide : view,
-            attribute: constraintToTopLayoutGuide ? .Bottom : .Top
-        ).activate()
-
-        NSLayoutConstraint(
-            item:      scrollView,
-            attribute: .Bottom,
-            toItem:    constraintToBottomLayoutGuide ? bottomLayoutGuide : view,
-            attribute: constraintToBottomLayoutGuide ? .Top : .Bottom
-        ).activate()
-
+        constraintsForViewToFillSuperview(scrollView, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
         resolveContentSize()
     }
 

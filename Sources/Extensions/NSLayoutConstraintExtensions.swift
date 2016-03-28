@@ -24,6 +24,15 @@
 
 import UIKit
 
+public struct LayoutGuideOptions: OptionSetType {
+    public let rawValue: UInt
+    public init(rawValue: UInt) { self.rawValue = rawValue }
+
+    public static let Top                      = LayoutGuideOptions(rawValue: 1)
+    public static let Bottom                   = LayoutGuideOptions(rawValue: 2)
+    public static let Both: LayoutGuideOptions = [Top, Bottom]
+}
+
 public extension NSLayoutConstraint {
 
     // MARK: Convenience Methods
@@ -112,6 +121,39 @@ public extension NSLayoutConstraint {
         constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|-paddingLeft-[view]-paddingRight-|", options: [], metrics: metrics, views: views)
         constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|-paddingTop-[view]-paddingBottom-|", options: [], metrics: metrics, views: views)
         return constraints
+    }
+}
+
+public extension UIViewController {
+    @warn_unused_result
+    public func constraintsForViewToFillSuperview(viewToSize: UIView, padding: UIEdgeInsets = .zero, constraintToLayoutGuideOptions: LayoutGuideOptions = []) -> [NSLayoutConstraint] {
+        var constraints = NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(viewToSize, paddingLeft: padding.left, paddingRight: padding.right)
+        constraints += constraintsForViewToFillSuperviewVertical(viewToSize, paddingTop: padding.top, paddingBottom: padding.bottom, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions)
+        return constraints
+    }
+
+    @warn_unused_result
+    public func constraintsForViewToFillSuperviewVertical(viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, priority: Float = UILayoutPriorityRequired, constraintToLayoutGuideOptions: LayoutGuideOptions = []) -> [NSLayoutConstraint] {
+        viewToSize.translatesAutoresizingMaskIntoConstraints = false
+
+        return [
+            NSLayoutConstraint(
+                item:      viewToSize,
+                attribute: .Top,
+                toItem:    constraintToLayoutGuideOptions.contains(.Top) ? topLayoutGuide : view,
+                attribute: constraintToLayoutGuideOptions.contains(.Top) ? .Bottom : .Top,
+                constant:  paddingTop,
+                priority:  priority
+            ),
+            NSLayoutConstraint(
+                item:      viewToSize,
+                attribute: .Bottom,
+                toItem:    constraintToLayoutGuideOptions.contains(.Bottom) ? bottomLayoutGuide : view,
+                attribute: constraintToLayoutGuideOptions.contains(.Bottom) ? .Top : .Bottom,
+                constant:  paddingBottom,
+                priority:  priority
+            )
+        ]
     }
 }
 
