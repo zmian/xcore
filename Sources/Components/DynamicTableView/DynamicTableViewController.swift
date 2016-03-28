@@ -58,12 +58,14 @@ public class DynamicTableViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.cellOptions = cellOptions
         setupSubviews()
         setupDynamicTableView()
     }
 
     private func setupDynamicTableView() {
+        if !cellOptions.isEmpty && tableView.cellOptions.isEmpty {
+            tableView.cellOptions = cellOptions
+        }
         view.addSubview(tableView)
         constraintsForViewToFillSuperview(tableView, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
     }
