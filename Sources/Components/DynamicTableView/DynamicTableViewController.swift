@@ -36,6 +36,10 @@ public class DynamicTableViewController: UIViewController {
         }
     }
 
+    /// An option to determine whether the `scrollView`'s `top` and `bottom` is constrained
+    /// to `topLayoutGuide` and `bottomLayoutGuide`. The default value is `[]`.
+    public var constraintToLayoutGuideOptions: LayoutGuideOptions = []
+
     // MARK: Init Methods
 
     public convenience init() {
@@ -54,14 +58,14 @@ public class DynamicTableViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setupDynamicTableView()
         setupSubviews()
+        setupDynamicTableView()
     }
 
     private func setupDynamicTableView() {
         tableView.cellOptions = cellOptions
         view.addSubview(tableView)
-        constraintsForViewToFillSuperview(tableView, constraintToLayoutGuideOptions: .Both).activate()
+        constraintsForViewToFillSuperview(tableView, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
     }
 
     /// The default implementation of this method does nothing.
