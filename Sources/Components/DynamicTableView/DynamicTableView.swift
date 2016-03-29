@@ -212,7 +212,10 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         if case .Checkbox(_, let callback) = item.accessory {
             if let cell = tableView.cellForRowAtIndexPath(indexPath), checkboxView = cell.accessoryView as? BEMCheckBox {
                 checkboxView.setOn(!checkboxView.on, animated: true)
-                callback(sender: checkboxView)
+                if !checkboxView.on {
+                    deselectRowAtIndexPath(indexPath, animated: true)
+                }
+                callback?(sender: checkboxView)
             }
         }
         didSelectItem?(indexPath: indexPath, item: item)
@@ -224,7 +227,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         if case .Checkbox(_, let callback) = item.accessory {
             if let cell = tableView.cellForRowAtIndexPath(indexPath), checkboxView = cell.accessoryView as? BEMCheckBox {
                 checkboxView.setOn(false, animated: true)
-                callback(sender: checkboxView)
+                callback?(sender: checkboxView)
             }
         }
         didDeselectItem?(indexPath: indexPath, item: item)
@@ -341,7 +344,7 @@ extension DynamicTableView: BEMCheckBoxDelegate {
                     guard let weakSelf = self else { return }
                     let accessory = weakSelf.sections[indexPath].accessory
                     if case .Switch(_, let callback) = accessory {
-                        callback(sender: sender)
+                        callback?(sender: sender)
                     }
                 }
                 cell.accessoryView = accessorySwitch
@@ -379,7 +382,7 @@ extension DynamicTableView: BEMCheckBoxDelegate {
         if let indexPath = checkBox.indexPath {
             let accessory = sections[indexPath].accessory
             if case .Checkbox(_, let callback) = accessory {
-                callback(sender: checkBox)
+                callback?(sender: checkBox)
             }
         }
     }

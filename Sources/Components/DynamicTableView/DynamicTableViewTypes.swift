@@ -30,8 +30,8 @@ public enum DynamicTableAccessoryType {
     case DisclosureIndicator
     case Text(String)
     case Custom(UIView)
-    case Switch(isOn: Bool, callback: (sender: UISwitch) -> Void)
-    case Checkbox(isOn: Bool, callback: (sender: BEMCheckBox) -> Void)
+    case Switch(isOn: Bool, callback: ((sender: UISwitch) -> Void)?)
+    case Checkbox(isOn: Bool, callback: ((sender: BEMCheckBox) -> Void)?)
 }
 
 public struct DynamicTableCellOptions: OptionSetType {
