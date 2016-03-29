@@ -310,6 +310,16 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         }
     }
 
+    public override func deselectRowAtIndexPath(indexPath: NSIndexPath, animated: Bool) {
+        super.deselectRowAtIndexPath(indexPath, animated: animated)
+        let item = sections[indexPath]
+        if case .Checkbox = item.accessory {
+            if let cell = cellForRowAtIndexPath(indexPath), checkboxView = cell.accessoryView as? BEMCheckBox {
+                checkboxView.setOn(false, animated: animated)
+            }
+        }
+    }
+
     // MARK: UIAppearance Properties
 
     public dynamic var headerFont                   = UIFont.systemFont(UIFont.Size.Small)
