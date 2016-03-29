@@ -210,7 +210,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let item = sections[indexPath]
         if case .Checkbox(_, let callback) = item.accessory {
-            if let cell = tableView.cellForRowAtIndexPath(indexPath), checkboxView = cell.accessoryView as? BEMCheckBox {
+            if let checkboxView = tableView.cellForRowAtIndexPath(indexPath)?.accessoryView as? BEMCheckBox {
                 checkboxView.setOn(!checkboxView.on, animated: true)
                 if !checkboxView.on {
                     deselectRowAtIndexPath(indexPath, animated: true)
@@ -225,7 +225,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     public func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         let item = sections[indexPath]
         if case .Checkbox(_, let callback) = item.accessory {
-            if let cell = tableView.cellForRowAtIndexPath(indexPath), checkboxView = cell.accessoryView as? BEMCheckBox {
+            if let checkboxView = tableView.cellForRowAtIndexPath(indexPath)?.accessoryView as? BEMCheckBox {
                 checkboxView.setOn(false, animated: true)
                 callback?(sender: checkboxView)
             }
@@ -314,7 +314,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         super.deselectRowAtIndexPath(indexPath, animated: animated)
         let item = sections[indexPath]
         if case .Checkbox = item.accessory {
-            if let cell = cellForRowAtIndexPath(indexPath), checkboxView = cell.accessoryView as? BEMCheckBox {
+            if let checkboxView = cellForRowAtIndexPath(indexPath)?.accessoryView as? BEMCheckBox {
                 checkboxView.setOn(false, animated: animated)
             }
         }
