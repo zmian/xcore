@@ -100,6 +100,15 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     public convenience init(frame: CGRect = CGRectZero, style: UITableViewStyle = .Plain, options: DynamicTableCellOptions) {
         self.init(frame: frame, style: style)
         cellOptions = options
+    }
+
+    public override init(frame: CGRect, style: UITableViewStyle) {
+        super.init(frame: frame, style: style)
+        commonInit()
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         commonInit()
     }
 
