@@ -90,6 +90,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
 
     public convenience init(frame: CGRect = .zero, collectionViewLayout: UICollectionViewLayout? = nil, options: IconLabelCollectionCellOptions) {
         self.init(frame: frame, collectionViewLayout: collectionViewLayout ?? UICollectionViewFlowLayout())
+        cellOptions = options
     }
 
     public override init(frame: CGRect, collectionViewLayout: UICollectionViewLayout) {
