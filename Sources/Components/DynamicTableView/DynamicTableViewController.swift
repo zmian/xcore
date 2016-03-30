@@ -70,7 +70,6 @@ public class DynamicTableViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setupSubviews()
         setupDynamicTableView()
     }
 
@@ -78,15 +77,8 @@ public class DynamicTableViewController: UIViewController {
         if !cellOptions.isEmpty && tableView.cellOptions.isEmpty {
             tableView.cellOptions = cellOptions
         }
-        view.addSubview(tableView)
 
+        view.addSubview(tableView)
         tableViewConstraints = constraintsForViewToFillSuperview(tableView, padding: contentInset, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
     }
-
-    /// The default implementation of this method does nothing.
-    ///
-    /// Subclasses can override it to perform additional actions,
-    /// for example, add new subviews or configure properties.
-    /// This method is called when `viewDidLoad` method is invoked.
-    public func setupSubviews() {}
 }

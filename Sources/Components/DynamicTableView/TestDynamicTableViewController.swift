@@ -25,7 +25,10 @@
 import UIKit
 
 private class TestDynamicTableViewController: DynamicTableViewController {
-    override func setupSubviews() {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
         tableView.cellOptions = [.Movable, .Deletable]
 
         tableView.sections = [
