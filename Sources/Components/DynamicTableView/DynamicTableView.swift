@@ -31,7 +31,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     private var allowDeletion: Bool   { return cellOptions.contains(.Deletable) }
     public var sections: [Section<DynamicTableModel>] = []
     public var cellOptions: DynamicTableCellOptions = []
-    public var rowActionDeleteColor: UIColor?
+    public dynamic var rowActionDeleteColor: UIColor?
     /// Text to display in the swipe to delete row action. The default value is **"Delete"**.
     public var rowActionDeleteTitle: String = "Delete"
     /// A boolean value to determine whether the content is centered in the table view. The default value is `false`.
