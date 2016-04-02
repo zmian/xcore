@@ -112,28 +112,28 @@ public extension NSLayoutConstraint {
     }
 
     @warn_unused_result
-    public static func constraintsForViewToFillSuperview(viewToSize: UIView, padding: UIEdgeInsets = .zero) -> [NSLayoutConstraint] {
+    public static func constraintsForViewToFillSuperview(viewToSize: UIView, padding: UIEdgeInsets = .zero, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
         let views   = ["view": viewToSize]
-        let metrics = ["paddingTop": padding.top, "paddingLeft": padding.left, "paddingBottom": padding.bottom, "paddingRight": padding.right]
+        let metrics = ["priority": CGFloat(priority), "paddingTop": padding.top, "paddingLeft": padding.left, "paddingBottom": padding.bottom, "paddingRight": padding.right]
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
 
         var constraints: [NSLayoutConstraint] = []
-        constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|-paddingLeft-[view]-paddingRight-|", options: [], metrics: metrics, views: views)
-        constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|-paddingTop-[view]-paddingBottom-|", options: [], metrics: metrics, views: views)
+        constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|-paddingLeft@priority-[view]-paddingRight@priority-|", options: [], metrics: metrics, views: views)
+        constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|-paddingTop@priority-[view]-paddingBottom@priority-|", options: [], metrics: metrics, views: views)
         return constraints
     }
 }
 
 public extension UIViewController {
     @warn_unused_result
-    public func constraintsForViewToFillSuperview(viewToSize: UIView, padding: UIEdgeInsets = .zero, constraintToLayoutGuideOptions: LayoutGuideOptions = []) -> [NSLayoutConstraint] {
-        var constraints = NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(viewToSize, paddingLeft: padding.left, paddingRight: padding.right)
-        constraints += constraintsForViewToFillSuperviewVertical(viewToSize, paddingTop: padding.top, paddingBottom: padding.bottom, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions)
+    public func constraintsForViewToFillSuperview(viewToSize: UIView, padding: UIEdgeInsets = .zero, constraintToLayoutGuideOptions: LayoutGuideOptions = [], priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
+        var constraints = NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(viewToSize, paddingLeft: padding.left, paddingRight: padding.right, priority: priority)
+        constraints += constraintsForViewToFillSuperviewVertical(viewToSize, paddingTop: padding.top, paddingBottom: padding.bottom, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions, priority: priority)
         return constraints
     }
 
     @warn_unused_result
-    public func constraintsForViewToFillSuperviewVertical(viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, priority: Float = UILayoutPriorityRequired, constraintToLayoutGuideOptions: LayoutGuideOptions = []) -> [NSLayoutConstraint] {
+    public func constraintsForViewToFillSuperviewVertical(viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, constraintToLayoutGuideOptions: LayoutGuideOptions = [], priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
 
         return [
