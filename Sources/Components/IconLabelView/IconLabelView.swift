@@ -199,6 +199,7 @@ public class IconLabelView: UIView {
     private func setupSubviews() {
         addSubview(stackView)
         NSLayoutConstraint.centerXY(stackView).activate()
+        NSLayoutConstraint.constraintsForViewToFillSuperview(stackView, priority: UILayoutPriorityDefaultLow).activate()
 
         updateStyle(style)
         distribution = .Fill
