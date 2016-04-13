@@ -258,6 +258,10 @@ public class DynamicTableViewCell: BaseTableViewCell {
         let size = isImageViewHidden ? .zero : imageSize
         imageSizeConstraints.width?.constant  = size.width
         imageSizeConstraints.height?.constant = size.height
+
+        if isRoundImageView {
+            isRoundImageView = true
+        }
     }
 
     private func updateTextImageSpacingIfNeeded() {
