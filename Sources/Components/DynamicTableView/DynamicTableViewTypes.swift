@@ -60,3 +60,27 @@ public struct DynamicTableModel {
         self.handler   = handler
     }
 }
+
+// MARK: DynamicTableModelDisplayable
+// TODO: WIP Make the model genric so any class can conform to it.
+
+//private protocol DynamicTableModelDisplayable {
+//    typealias Model: DynamicTableModelDisplayable
+//
+//    var title: StringRepresentable? { get }
+//    var subtitle: StringRepresentable? { get }
+//    var image: ImageRepresentable? { get }
+//    var accessory: DynamicTableAccessoryType { get set }
+//    var userInfo: [String: Any] { get set }
+//    var handler: ((indexPath: NSIndexPath, item: Model) -> Void)? { get }
+//}
+//
+//private extension DynamicTableModelDisplayable {
+//    var title: StringRepresentable? { return nil }
+//    var subtitle: StringRepresentable? { return nil }
+//    var image: ImageRepresentable? { return nil }
+//    var accessory: DynamicTableAccessoryType { return .None }
+//    var userInfo: [String: Any] { return [:] }
+//    var handler: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)? { return nil }
+//}
+
