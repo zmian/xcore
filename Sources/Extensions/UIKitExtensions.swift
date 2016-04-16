@@ -1200,6 +1200,27 @@ public extension UITableView {
             deselectRowAtIndexPath($0, animated: animated)
         }
     }
+
+    /// Selects a row in the table view identified by index path, optionally scrolling the row to a location in the table view.
+    ///
+    /// Calling this method does not cause the delegate to receive a `tableView:willSelectRowAtIndexPath:` or
+    /// `tableView:didSelectRowAtIndexPath:` message, nor does it send `UITableViewSelectionDidChangeNotification`
+    /// notifications to observers.
+    ///
+    /// Passing `UITableViewScrollPositionNone` results in no scrolling, rather than the minimum scrolling described for that constant.
+    /// To scroll to the newly selected row with minimum scrolling, select the row using this method with `UITableViewScrollPositionNone`,
+    /// then call `scrollToRowAtIndexPath:atScrollPosition:animated:` with `UITableViewScrollPositionNone`.
+    ///
+    /// - parameter indexPaths:     An array of index paths identifying rows in the table view.
+    /// - parameter animated:       Pass `true` if you want to animate the selection and any change in position;
+    ///                             Pass `false` if the change should be immediate.
+    /// - parameter scrollPosition: A constant that identifies a relative position in the table view (top, middle, bottom)
+    ///                             for the row when scrolling concludes. The default value is `UITableViewScrollPositionNone`.
+    public func selectRows(atIndexPaths indexPaths: [NSIndexPath], animated: Bool, scrollPosition: UITableViewScrollPosition = .None) {
+        indexPaths.forEach {
+            selectRowAtIndexPath($0, animated: animated, scrollPosition: scrollPosition)
+        }
+    }
 }
 
 // MARK: UIDevice Extension
