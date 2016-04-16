@@ -150,6 +150,17 @@ public extension UIFont {
         }
     }
 
+    /// Returns a font matching the given font descriptor.
+    ///
+    /// - parameter traits: The new symbolic traits.
+    ///
+    /// - returns: The new font matching the given font descriptor.
+    @warn_unused_result
+    public func traits(traits: UIFontDescriptorSymbolicTraits...) -> UIFont {
+        let descriptor = fontDescriptor().fontDescriptorWithSymbolicTraits(UIFontDescriptorSymbolicTraits(traits))
+        return UIFont(descriptor: descriptor, size: 0)
+    }
+
     public var monospacedDigitFont: UIFont {
         let oldFontDescriptor = fontDescriptor()
         let newFontDescriptor = oldFontDescriptor.monospacedDigitFontDescriptor
