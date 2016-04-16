@@ -32,6 +32,7 @@ public class DynamicTableViewCell: BaseTableViewCell {
     private var imageAndTitleSpacingConstraint: NSLayoutConstraint?
     private var imageSizeConstraints: (width: NSLayoutConstraint?,  height: NSLayoutConstraint?)
     private var contentConstraints: (top: NSLayoutConstraint?, left: NSLayoutConstraint?, bottom: NSLayoutConstraint?, right: NSLayoutConstraint?)
+    private var minimumContentHeightConstraint: NSLayoutConstraint?
     private var labelsStackViewConstraints: (top: NSLayoutConstraint?, bottom: NSLayoutConstraint?)
 
     /// The distance that the view is inset from the enclosing content view.
@@ -46,6 +47,13 @@ public class DynamicTableViewCell: BaseTableViewCell {
             // Update stack view constraints
             labelsStackViewConstraints.top?.constant    = contentInset.top
             labelsStackViewConstraints.bottom?.constant = contentInset.bottom
+        }
+    }
+
+    /// The default value is `44`.
+    public dynamic var minimumContentHeight: CGFloat = 44 {
+        didSet {
+            minimumContentHeightConstraint?.constant = minimumContentHeight
         }
     }
 
@@ -250,6 +258,8 @@ public class DynamicTableViewCell: BaseTableViewCell {
         contentConstraints.right  = NSLayoutConstraint(item: contentView, attribute: .Trailing, toItem: labelsStackView, constant: contentInset.right).activate()
         contentConstraints.top    = NSLayoutConstraint(item: avatarView, attribute: .Top, relatedBy: .GreaterThanOrEqual, toItem: contentView, constant: contentInset.top, priority: UILayoutPriorityDefaultHigh).activate()
         contentConstraints.bottom = NSLayoutConstraint(item: contentView, attribute: .Bottom, relatedBy: .GreaterThanOrEqual, toItem: avatarView, constant: contentInset.bottom, priority: UILayoutPriorityDefaultHigh).activate()
+
+        minimumContentHeightConstraint = NSLayoutConstraint(item: contentView, height: minimumContentHeight, priority: UILayoutPriorityDefaultLow).activate()
     }
 
     // MARK: Helpers
