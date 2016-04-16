@@ -339,6 +339,8 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     public dynamic var accessoryTextColor           = UIColor.grayColor()
     public dynamic var accessoryTintColor           = UIColor.defaultSystemTintColor()
     public dynamic var disclosureIndicatorTintColor = UIColor.grayColor()
+    /// The color of the check box ring when the checkbox is Off. The default value is `UIColor.lightGrayColor().colorWithAlphaComponent(0.5)`.
+    public dynamic var checkboxOffTintColor         = UIColor.lightGrayColor().colorWithAlphaComponent(0.5)
 }
 
 // MARK: AccessoryView
@@ -369,9 +371,10 @@ extension DynamicTableView: BEMCheckBoxDelegate {
                 cell.accessoryView = accessorySwitch
             case .Checkbox(let isOn, _):
                 cell.selectionStyle             = .None
-                let checkbox                    = BEMCheckBox(frame: CGRect(x: 0, y: 0, width: 26, height: 26))
+                let checkbox                    = BEMCheckBox(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
                 checkbox.on                     = isOn
                 checkbox.lineWidth              = 1
+                checkbox.tintColor              = checkboxOffTintColor
                 checkbox.onTintColor            = accessoryTintColor
                 checkbox.onFillColor            = accessoryTintColor
                 checkbox.onCheckColor           = UIColor.whiteColor()
