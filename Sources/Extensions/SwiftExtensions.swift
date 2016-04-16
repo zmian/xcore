@@ -133,24 +133,6 @@ public extension Int {
 }
 
 extension Array {
-    /// Remove object by value.
-    ///
-    /// - returns: true if removed; false otherwise
-    public mutating func removeObject<U: Equatable>(object: U) -> Bool {
-        for (idx, objectToCompare) in enumerate() {
-            if let to = objectToCompare as? U where object == to {
-                removeAtIndex(idx)
-                return true
-            }
-        }
-        return false
-    }
-
-    /// Remove objects by value.
-    public mutating func removeObjects<U: Equatable>(objects: [U]) {
-        objects.forEach { removeObject($0) }
-    }
-
     /// Returns a random subarray of given length
     ///
     /// - parameter size: Length
@@ -170,6 +152,38 @@ extension Array {
     public func randomElement() -> Element {
         let randomIndex = Int(rand()) % count
         return self[randomIndex]
+    }
+}
+
+public extension Array where Element: Equatable {
+    /// Remove element by value.
+    ///
+    /// - returns: true if removed; false otherwise
+    public mutating func remove(element: Element) -> Bool {
+        for (index, elementToCompare) in enumerate() {
+            if let to = elementToCompare as? Element where element == to {
+                removeAtIndex(index)
+                return true
+            }
+        }
+        return false
+    }
+
+    /// Remove elements by value.
+    public mutating func remove(elements: [Element]) {
+        elements.forEach { remove($0) }
+    }
+
+    /// Move an element in `self` to a specific index.
+    ///
+    /// - parameter element: The element in `self` to move.
+    /// - parameter toIndex: An index locating the new location of the element in `self`.
+    ///
+    /// - returns: true if moved; false otherwise.
+    public mutating func move(element: Element, toIndex index: Int) -> Bool {
+        guard remove(element) else { return false }
+        insert(element, atIndex: index)
+        return true
     }
 }
 
