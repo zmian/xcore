@@ -161,7 +161,7 @@ public extension Array where Element: Equatable {
     /// - returns: true if removed; false otherwise
     public mutating func remove(element: Element) -> Bool {
         for (index, elementToCompare) in enumerate() {
-            if let to = elementToCompare as? Element where element == to {
+            if element == elementToCompare {
                 removeAtIndex(index)
                 return true
             }
