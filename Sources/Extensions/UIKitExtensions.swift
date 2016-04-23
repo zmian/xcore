@@ -1188,6 +1188,16 @@ public extension UITableView {
         return firstRowRect.origin.y > contentOffset.y ? firstPath : secondPath
     }
 
+    /// A convenience property for the index paths representing the selected rows.
+    /// This simply return empty array when there are no selected rows instead of `nil`.
+    ///
+    /// ```
+    /// return indexPathsForSelectedRows ?? []
+    /// ```
+    public var selectedIndexPaths: [NSIndexPath] {
+        return indexPathsForSelectedRows ?? []
+    }
+
     /// Deselects all selected rows, with an option to animate the deselection.
     ///
     /// Calling this method does not cause the delegate to receive a `tableView:willDeselectRowAtIndexPath:`
