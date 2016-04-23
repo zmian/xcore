@@ -29,7 +29,7 @@ public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     public private(set) lazy var textLabel: MDHTMLLabel = {
         var textLabel                  = MDHTMLLabel()
         textLabel.delegate             = self
-        textLabel.font                 = UIFont.systemFont(UIFont.Size.Small)
+        textLabel.font                 = UIFont.systemFont(.Footnote)
         textLabel.textColor            = UIColor.darkGrayColor()
         textLabel.lineBreakMode        = .ByWordWrapping
         textLabel.numberOfLines        = 0

@@ -76,7 +76,7 @@ public extension UIFont {
 
     @warn_unused_result
     public static func systemFont(style: TextStyle) -> UIFont {
-        return UIFont.preferredFontForTextStyle(style.rawValue)
+        return preferredFontForTextStyle(style.rawValue)
     }
 }
 
@@ -103,48 +103,65 @@ public extension UIFont {
     static func systemFont(size: CGFloat, style: Style = .Normal, weight: Weight = .Regular) -> UIFont {
         let fontWeight: CGFloat
 
-        switch weight {
-            case .UltraLight:
-                fontWeight = UIFontWeightUltraLight
-            case .Thin:
-                fontWeight = UIFontWeightThin
-            case .Light:
-                fontWeight = UIFontWeightLight
-            case .Regular:
-                fontWeight = UIFontWeightRegular
-            case .Medium:
-                fontWeight = UIFontWeightMedium
-            case .Semibold:
-                fontWeight = UIFontWeightSemibold
-            case .Bold:
-                fontWeight = UIFontWeightBold
-            case .Heavy:
-                fontWeight = UIFontWeightHeavy
-            case .Black:
-                fontWeight = UIFontWeightBlack
+        if #available(iOS 8.2, *) {
+            switch weight {
+                case .UltraLight:
+                    fontWeight = UIFontWeightUltraLight
+                case .Thin:
+                    fontWeight = UIFontWeightThin
+                case .Light:
+                    fontWeight = UIFontWeightLight
+                case .Regular:
+                    fontWeight = UIFontWeightRegular
+                case .Medium:
+                    fontWeight = UIFontWeightMedium
+                case .Semibold:
+                    fontWeight = UIFontWeightSemibold
+                case .Bold:
+                    fontWeight = UIFontWeightBold
+                case .Heavy:
+                    fontWeight = UIFontWeightHeavy
+                case .Black:
+                    fontWeight = UIFontWeightBlack
+            }
+        } else {
+            fontWeight = 0
         }
 
         switch style {
             case .Normal:
-                return UIFont.systemFontOfSize(size, weight: fontWeight)
+                return _systemFontOfSize(size, weight: fontWeight, weightType: weight)
             case .Italic:
-                return UIFont.italicSystemFontOfSize(size)
+                return italicSystemFontOfSize(size)
             case .Monospace:
                 if #available(iOS 9.0, *) {
-                    return UIFont.monospacedDigitSystemFontOfSize(size, weight: fontWeight)
+                    return monospacedDigitSystemFontOfSize(size, weight: fontWeight)
                 } else {
-                    return UIFont.systemFontOfSize(size, weight: fontWeight).monospacedDigitFont
+                    return _systemFontOfSize(size, weight: fontWeight, weightType: weight).monospacedDigitFont
                 }
+        }
+    }
+
+    private static func _systemFontOfSize(size: CGFloat, weight: CGFloat, weightType: Weight) -> UIFont {
+        if #available(iOS 8.2, *) {
+            return systemFontOfSize(size, weight: weight)
+        } else {
+            switch weightType {
+                case .Bold, .Heavy, .Black:
+                    return boldSystemFontOfSize(size)
+                default:
+                    return systemFontOfSize(size)
+            }
         }
     }
 }
 
 public extension UIFont {
     public static func printAvailableFontNames() {
-        for family in UIFont.familyNames() {
-            let count = UIFont.fontNamesForFamilyName(family).count
+        for family in familyNames() {
+            let count = fontNamesForFamilyName(family).count
             print("▿ \(family) (\(count) \(count == 1 ? "font" : "fonts"))")
-            for name in UIFont.fontNamesForFamilyName(family) {
+            for name in fontNamesForFamilyName(family) {
                 print("  - \(name)")
             }
         }

@@ -210,13 +210,13 @@ public class IconLabelView: UIView {
         stackView.addArrangedSubview(textImageSpacerView)
         stackView.addArrangedSubview(titleLabel)
 
-        titleLabel.font          = UIFont.systemFont(UIFont.Size.Small)
+        titleLabel.font          = UIFont.systemFont(.Footnote)
         titleLabel.textAlignment = .Center
         titleLabel.textColor     = UIColor.blackColor()
         titleLabel.numberOfLines = 2
         titleLabel.sizeToFit()
 
-        subtitleLabel.font          = UIFont.systemFont(UIFont.Size.Small)
+        subtitleLabel.font          = UIFont.systemFont(.Footnote)
         subtitleLabel.textAlignment = .Center
         subtitleLabel.textColor     = UIColor.lightGrayColor()
         subtitleLabel.numberOfLines = 1

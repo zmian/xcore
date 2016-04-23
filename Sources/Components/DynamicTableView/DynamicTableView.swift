@@ -333,9 +333,9 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
 
     // MARK: UIAppearance Properties
 
-    public dynamic var headerFont                   = UIFont.systemFont(UIFont.Size.Small)
+    public dynamic var headerFont                   = UIFont.systemFont(.Footnote)
     public dynamic var headerTextColor              = UIColor.blackColor()
-    public dynamic var footerFont                   = UIFont.systemFont(UIFont.Size.Small)
+    public dynamic var footerFont                   = UIFont.systemFont(.Footnote)
     public dynamic var footerTextColor              = UIColor.darkGrayColor()
     public dynamic var accessoryFont                = UIFont.systemFont(.Subheadline)
     public dynamic var accessoryTextColor           = UIColor.grayColor()
