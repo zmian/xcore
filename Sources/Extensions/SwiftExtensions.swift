@@ -238,3 +238,18 @@ extension SequenceType {
         return filter { seen.updateValue(true, forKey: uniqueProperty($0)) == nil }
     }
 }
+
+public extension Array where Element: Hashable {
+    /// Modify `self` in-place such that only the unique elements of `self` in order are remaining.
+    public mutating func uniqueInPlace() {
+        self = unique()
+    }
+
+    /// Modify `self` in-place such that only the unique elements of `self` in order are remaining,
+    /// where `unique` criteria is determined by the `uniqueProperty` block.
+    ///
+    /// - parameter uniqueProperty: `unique` criteria is determined by the value returned by this block.
+    public mutating func uniqueInPlace<T: Hashable>(uniqueProperty: (Element) -> T) {
+        self = unique(uniqueProperty)
+    }
+}
