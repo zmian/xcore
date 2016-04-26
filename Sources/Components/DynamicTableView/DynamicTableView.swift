@@ -325,9 +325,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         super.deselectRowAtIndexPath(indexPath, animated: animated)
         let item = sections[indexPath]
         if case .Checkbox = item.accessory {
-            if let checkboxView = cellForRowAtIndexPath(indexPath)?.accessoryView as? BEMCheckBox {
-                checkboxView.setOn(false, animated: animated)
-            }
+            checkboxAccessoryView(atIndexPath: indexPath)?.setOn(false, animated: animated)
         }
     }
 
@@ -419,6 +417,24 @@ public extension DynamicTableView {
     public var items: [DynamicTableModel] {
         get { return sections.first?.items ?? [] }
         set { sections = [Section(items: newValue)] }
+    }
+
+    /// A convenience method to access `UISwitch` at the specified index path.
+    public func switchAccessoryView(atIndexPath indexPath: NSIndexPath) -> UISwitch? {
+        if let switchAccessoryView = cellForRowAtIndexPath(indexPath)?.accessoryView as? UISwitch {
+            return switchAccessoryView
+        }
+
+        return nil
+    }
+
+    /// A convenience method to access `BEMCheckBox` at the specified index path.
+    public func checkboxAccessoryView(atIndexPath indexPath: NSIndexPath) -> BEMCheckBox? {
+        if let checkboxAccessoryView = cellForRowAtIndexPath(indexPath)?.accessoryView as? BEMCheckBox {
+            return checkboxAccessoryView
+        }
+
+        return nil
     }
 }
 
