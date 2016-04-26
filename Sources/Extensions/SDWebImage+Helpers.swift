@@ -91,4 +91,35 @@ public extension UIImage {
             }
         }
     }
+
+    /// Download multiple remote images.
+    public class func downloadImages(urls: [String], callback: (images: [(url: NSURL, image: UIImage)]) -> Void) {
+        guard !urls.isEmpty else { return }
+
+        var orderedObjects: [(url: NSURL, image: UIImage?)] = urls.flatMap(NSURL.init).filter { $0.host != nil }.flatMap { ($0, nil) }
+        var downloadedImages = 0
+
+        orderedObjects.forEach { object in
+            SDWebImageDownloader.sharedDownloader().downloadImageWithURL(object.url, options: [],
+                progress: { receivedSize, expectedSize in
+
+                }, completed: { image, data, error, finished in
+                    downloadedImages += 1
+
+                    if let image = image where finished {
+                        if let indexType = (orderedObjects.indexOf { $0.url == object.url }), index = indexType as? Int {
+                            orderedObjects[index].image = image
+                        }
+                    }
+
+                    if downloadedImages == urls.count {
+                        let imagesAndUrls = orderedObjects.filter { $0.image != nil }.flatMap { (url: $0.url, image: $0.image!) }
+                        dispatch.async.main {
+                            callback(images: imagesAndUrls)
+                        }
+                    }
+                }
+            )
+        }
+    }
 }
