@@ -179,17 +179,10 @@ public extension UIFont {
     }
 
     public var monospacedDigitFont: UIFont {
-        let oldFontDescriptor = fontDescriptor()
-        let newFontDescriptor = oldFontDescriptor.monospacedDigitFontDescriptor
-        return UIFont(descriptor: newFontDescriptor, size: pointSize)
-    }
-}
-
-private extension UIFontDescriptor {
-    var monospacedDigitFontDescriptor: UIFontDescriptor {
-        let fontDescriptorFeatureSettings = [[UIFontFeatureTypeIdentifierKey: kNumberSpacingType, UIFontFeatureSelectorIdentifierKey: kMonospacedNumbersSelector]]
-        let fontDescriptorAttributes = [UIFontDescriptorFeatureSettingsAttribute: fontDescriptorFeatureSettings]
-        let fontDescriptor = fontDescriptorByAddingAttributes(fontDescriptorAttributes)
-        return fontDescriptor
+        let featureSettings = [[UIFontFeatureTypeIdentifierKey: kNumberSpacingType, UIFontFeatureSelectorIdentifierKey: kMonospacedNumbersSelector]]
+        let attributes      = [UIFontDescriptorFeatureSettingsAttribute: featureSettings]
+        let oldDescriptor   = fontDescriptor()
+        let newDescriptor   = oldDescriptor.fontDescriptorByAddingAttributes(attributes)
+        return UIFont(descriptor: newDescriptor, size: 0)
     }
 }
