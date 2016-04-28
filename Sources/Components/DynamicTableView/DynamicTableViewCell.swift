@@ -206,7 +206,7 @@ public class DynamicTableViewCell: BaseTableViewCell {
         // Border
         avatarView.layer.masksToBounds = true
         avatarView.layer.borderWidth   = 1
-        avatarView.layer.borderColor   = UIColor.blackColor().alpha(0.1).CGColor
+        avatarView.layer.borderColor   = UIColor.blackColor().alpha(0.08).CGColor
 
         // Ensures smooth scaling quality
         avatarView.layer.minificationFilter = kCAFilterTrilinear
@@ -283,6 +283,26 @@ public class DynamicTableViewCell: BaseTableViewCell {
 // MARK: UIAppearance Properties
 
 public extension DynamicTableViewCell {
+    public dynamic var avatarBorderColor: UIColor? {
+        get {
+            if let borderColor = avatarView.layer.borderColor {
+                return UIColor(CGColor: borderColor)
+            }
+            return nil
+        }
+        set { avatarView.layer.borderColor = newValue?.CGColor }
+    }
+
+    public dynamic var avatarBorderWidth: CGFloat {
+        get { return avatarView.layer.borderWidth }
+        set { avatarView.layer.borderWidth = newValue }
+    }
+
+    public dynamic var avatarCornerRadius: CGFloat {
+        get { return avatarView.layer.cornerRadius }
+        set { avatarView.layer.cornerRadius = newValue }
+    }
+
     public dynamic var titleColor: UIColor? {
         get { return titleLabel.textColor }
         set { titleLabel.textColor = newValue }

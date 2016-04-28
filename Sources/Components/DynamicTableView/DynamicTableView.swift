@@ -339,8 +339,8 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     public dynamic var accessoryTextColor           = UIColor.grayColor()
     public dynamic var accessoryTintColor           = UIColor.defaultSystemTintColor()
     public dynamic var disclosureIndicatorTintColor = UIColor.grayColor()
-    /// The color of the check box ring when the checkbox is Off. The default value is `UIColor.lightGrayColor().colorWithAlphaComponent(0.5)`.
-    public dynamic var checkboxOffTintColor         = UIColor.lightGrayColor().colorWithAlphaComponent(0.5)
+    /// The color of the check box ring when the checkbox is Off. The default value is `UIColor.blackColor().colorWithAlphaComponent(0.13)`.
+    public dynamic var checkboxOffTintColor         = UIColor.blackColor().alpha(0.13)
 }
 
 // MARK: AccessoryView
