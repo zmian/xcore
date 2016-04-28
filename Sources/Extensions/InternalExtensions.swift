@@ -69,7 +69,7 @@ extension UIView {
 }
 
 extension DynamicTableView {
-    private func expandCellReorderControl(willDisplayCell cell: UITableViewCell) {
+    func expandCellReorderControl(willDisplayCell cell: UITableViewCell) {
         // The grip control customization
         // Credit: http://b2cloud.com.au/tutorial/reordering-a-uitableviewcell-from-any-touch-point
         guard let reorderControl = cell.subview(withClassName: "UITableViewCellReorderControl") else {
@@ -78,7 +78,7 @@ extension DynamicTableView {
 
         let resizedGripView = UIView(frame: CGRect(x: 0, y: 0, width: reorderControl.frame.maxX, height: reorderControl.frame.maxY))
         resizedGripView.addSubview(reorderControl)
-        cell.contentView.addSubview(resizedGripView)
+        cell.addSubview(resizedGripView)
 
         let sizeDifference = CGSizeMake(resizedGripView.frame.size.width - reorderControl.frame.size.width, resizedGripView.frame.size.height - reorderControl.frame.size.height)
         let transformRatio = CGSizeMake(resizedGripView.frame.size.width / reorderControl.frame.size.width, resizedGripView.frame.size.height / reorderControl.frame.size.height)
