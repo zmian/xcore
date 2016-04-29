@@ -45,9 +45,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
         return collectionViewLayout as? UICollectionViewFlowLayout
     }
     public var cellOptions: IconLabelCollectionCellOptions = [] {
-        didSet {
-            updateCellOptionsIfNeeded()
-        }
+        didSet { updateCellOptionsIfNeeded() }
     }
     /// A boolean value to determine whether the content is centered in the collection view. The default value is `false`.
     public var isContentCentered = false {
@@ -145,20 +143,36 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     // MARK: UILongPressGestureRecognizer
 
     private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
-        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        gestureRecognizer.delaysTouchesBegan   = true
-        gestureRecognizer.minimumPressDuration = 0.5
+        let gestureRecognizer = UILongPressGestureRecognizer()
+
+        gestureRecognizer.addAction {[weak self, weak gestureRecognizer] in
+            guard let weakSelf = self, gestureRecognizer = gestureRecognizer else { return }
+
+            guard gestureRecognizer.state == .Began,
+                let _ = weakSelf.indexPathForItemAtPoint(gestureRecognizer.locationInView(weakSelf))
+                else { return }
+
+            weakSelf.isEditing = !weakSelf.isEditing
+            weakSelf.tapGestureRecognizer.enabled = true
+            weakSelf.toggleVisibleCellsDeleteButtons()
+        }
+
         return gestureRecognizer
     }()
 
-    @objc private func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
-        guard gestureRecognizer.state == .Began,
-        let _ = indexPathForItemAtPoint(gestureRecognizer.locationInView(self))
-        else { return }
+    private lazy var tapGestureRecognizer: UITapGestureRecognizer = {
+        let gestureRecognizer = UITapGestureRecognizer()
+        gestureRecognizer.enabled = false
 
-        isEditing = !isEditing
-        toggleVisibleCellsDeleteButtons()
-    }
+        gestureRecognizer.addAction {[weak self, weak gestureRecognizer] in
+            guard let weakSelf = self, gestureRecognizer = gestureRecognizer where weakSelf.isEditing else { return }
+            gestureRecognizer.enabled = false
+            weakSelf.isEditing = !weakSelf.isEditing
+            weakSelf.toggleVisibleCellsDeleteButtons()
+        }
+
+        return gestureRecognizer
+    }()
 
     // MARK: UICollectionViewDataSource
 
@@ -227,9 +241,11 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
 
     private func updateCellOptionsIfNeeded() {
         if allowDeletion && !hasLongPressGestureRecognizer {
+            addGestureRecognizer(tapGestureRecognizer)
             addGestureRecognizer(longPressGestureRecognizer)
             hasLongPressGestureRecognizer = true
         } else if !allowDeletion && hasLongPressGestureRecognizer {
+            removeGestureRecognizer(tapGestureRecognizer)
             removeGestureRecognizer(longPressGestureRecognizer)
             hasLongPressGestureRecognizer = false
         }
