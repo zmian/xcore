@@ -25,6 +25,40 @@
 
 import UIKit
 
+private class ReorderTableDraggingView: BaseView {
+    private let imageView             = UIImageView()
+    private let topShadowImage        = UIImageView(assetIdentifier: .ReorderTableViewCellShadowTop)
+    private let bottomShadowImage     = UIImageView(assetIdentifier: .ReorderTableViewCellShadowBottom)
+    private let shadowHeight: CGFloat = 19
+
+    var image: UIImage? {
+        get { return imageView.image }
+        set { imageView.image = newValue }
+    }
+
+    override func setupSubviews() {
+        //userInteractionEnabled = false
+        addSubview(topShadowImage)
+        addSubview(imageView)
+        addSubview(bottomShadowImage)
+
+        clipsToBounds = false
+        layer.masksToBounds = false
+
+        NSLayoutConstraint.constraintsForViewToFillSuperview(imageView).activate()
+        NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(topShadowImage).activate()
+        NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(bottomShadowImage).activate()
+        NSLayoutConstraint(item: topShadowImage, height: shadowHeight).activate()
+        NSLayoutConstraint(item: bottomShadowImage, height: shadowHeight).activate()
+
+        NSLayoutConstraint.constraintsWithVisualFormat("V:[topShadowImage][imageView]-(-1)-[bottomShadowImage]", options: [], metrics: nil, views: [
+            "topShadowImage":    topShadowImage,
+            "imageView":         imageView,
+            "bottomShadowImage": bottomShadowImage
+        ]).activate()
+    }
+}
+
 public protocol ReorderTableViewDelegate: UITableViewDelegate {
     // This method is called when starting the re-ording process. You insert a blank row object into your
     // data source and return the object you want to save for later. This method is only called once.
@@ -41,18 +75,18 @@ public class ReorderTableView: UITableView {
     public var canReorder: Bool = false {
         didSet { longPressGestureRecognizer.enabled = canReorder }
     }
-    public var draggingViewOpacity: Float = 1
+    public var draggingViewOpacity: CGFloat = 0.8
     public var draggingRowHeight: CGFloat = 0
 
     private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
         return UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
     }()
 
-    private var scrollDisplayLink: CADisplayLink?
     private var scrollRate: CGFloat = 0
+    private var scrollDisplayLink: CADisplayLink?
+    private var draggingView: ReorderTableDraggingView?
     private var currentLocationIndexPath: NSIndexPath?
     private var initialIndexPath: NSIndexPath?
-    private var draggingView: UIImageView?
     private var savedObject: Any?
 
     // MARK: Init Methods
@@ -181,24 +215,13 @@ public class ReorderTableView: UITableView {
             
             // create and image view that we will drag around the screen
             if draggingView == nil {
-                draggingView = UIImageView(image: cellImage)
-                addSubview(draggingView!)
+                draggingView        = ReorderTableDraggingView()
+                draggingView!.alpha = draggingViewOpacity
+                draggingView!.image = cellImage
                 let rect = rectForRowAtIndexPath(indexPath)
-                draggingView!.frame = CGRectOffset(draggingView!.bounds, rect.origin.x, rect.origin.y)
-                
-                // add drop shadow to image and lower opacity
-                draggingView!.layer.masksToBounds = false
-                draggingView!.layer.shadowColor = UIColor.blackColor().CGColor
-                draggingView!.layer.shadowOffset = .zero
-                draggingView!.layer.shadowRadius = 4
-                draggingView!.layer.shadowOpacity = 0.7
-                draggingView!.layer.opacity = draggingViewOpacity
-                
-                // zoom image towards user
-                UIView.beginAnimations("zoom", context: nil)
-                draggingView!.transform = CGAffineTransformMakeScale(1.1, 1.1)
+                draggingView!.frame  = rect
                 draggingView!.center = CGPoint(x: center.x, y: location.y)
-                UIView.commitAnimations()
+                addSubview(draggingView!)
             }
 
             beginUpdates()

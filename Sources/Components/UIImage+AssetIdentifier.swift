@@ -36,6 +36,8 @@ extension UIImage {
     enum AssetIdentifier: String {
         case DisclosureIndicator
         case CollectionViewCellDeleteIcon
+        case ReorderTableViewCellShadowTop
+        case ReorderTableViewCellShadowBottom
         case BlueJay
     }
 
