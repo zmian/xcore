@@ -102,7 +102,7 @@ public extension UIView {
         UIView.animateWithDuration(duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: nil)
     }
 
-    public func setHiddenAnimated(hide: Bool, duration: NSTimeInterval) {
+    public func setHiddenAnimated(hide: Bool, duration: NSTimeInterval, completion: (() -> Void)? = nil) {
         guard hidden != hide else { return }
         alpha  = hide ? 1 : 0
         hidden = false
@@ -111,6 +111,7 @@ public extension UIView {
             self.alpha = hide ? 0 : 1
         }, completion: { _ in
             self.hidden = hide
+            completion?()
         })
     }
 
