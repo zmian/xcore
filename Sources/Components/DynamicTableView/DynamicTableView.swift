@@ -35,14 +35,14 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
     }
     public dynamic var rowActionDeleteColor: UIColor?
     /// Text to display in the swipe to delete row action. The default value is **"Delete"**.
-    public var rowActionDeleteTitle: String = "Delete"
+    public dynamic var rowActionDeleteTitle = "Delete"
     /// A boolean value to determine whether the content is centered in the table view. The default value is `false`.
-    public var isContentCentered = false
+    public dynamic var isContentCentered = false
+    /// A boolean value to determine whether the last table view cell separator is hidden. The default value is `false`.
+    public dynamic var isLastCellSeparatorHidden = false
     /// A boolean value to determine whether the empty table view cells are hidden. The default value is `false`.
-    public var emptyCellsHidden = false {
-        didSet {
-            tableFooterView = emptyCellsHidden ? UIView(frame: .zero) : nil
-        }
+    public dynamic var emptyCellsHidden = false {
+        didSet { tableFooterView = emptyCellsHidden ? UIView(frame: .zero) : nil }
     }
 
     private var configureCell: ((indexPath: NSIndexPath, cell: DynamicTableViewCell, item: DynamicTableModel) -> Void)?
@@ -194,6 +194,12 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
         let item = sections[indexPath]
         cell.setData(item)
         configureAccessoryView(cell, type: item.accessory, indexPath: indexPath)
+
+        if isLastCellSeparatorHidden {
+            if indexPath.row == sections[indexPath.section].count - 1 {
+                cell.separatorInset.left = cell.bounds.size.width
+            }
+        }
 
         if item.userInfo[DynamicTableView.ReorderTableViewDummyItemIdentifier] == nil {
             configureCell?(indexPath: indexPath, cell: cell, item: item)
