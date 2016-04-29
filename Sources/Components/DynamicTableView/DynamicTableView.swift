@@ -25,12 +25,14 @@
 import UIKit
 import BEMCheckBox
 
-public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
+public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewDataSource {
     private let reuseIdentifier = DynamicTableViewCell.reuseIdentifier
     private var allowReordering: Bool { return cellOptions.contains(.Movable) }
     private var allowDeletion: Bool   { return cellOptions.contains(.Deletable) }
     public var sections: [Section<DynamicTableModel>] = []
-    public var cellOptions: DynamicTableCellOptions = []
+    public var cellOptions: DynamicTableCellOptions = [] {
+        didSet { canReorder = allowReordering }
+    }
     public dynamic var rowActionDeleteColor: UIColor?
     /// Text to display in the swipe to delete row action. The default value is **"Delete"**.
     public var rowActionDeleteTitle: String = "Delete"
@@ -166,6 +168,7 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
     private func setupTableView() {
         delegate           = self
         dataSource         = self
+        reorderDelegate    = self
         backgroundColor    = UIColor.clearColor()
         estimatedRowHeight = 44
         rowHeight          = UITableViewAutomaticDimension
@@ -191,7 +194,11 @@ public class DynamicTableView: UITableView, UITableViewDelegate, UITableViewData
         let item = sections[indexPath]
         cell.setData(item)
         configureAccessoryView(cell, type: item.accessory, indexPath: indexPath)
-        configureCell?(indexPath: indexPath, cell: cell, item: item)
+
+        if item.userInfo[DynamicTableView.ReorderTableViewDummyItemIdentifier] == nil {
+            configureCell?(indexPath: indexPath, cell: cell, item: item)
+        }
+
         return cell
     }
 
@@ -435,6 +442,27 @@ public extension DynamicTableView {
         }
 
         return nil
+    }
+}
+
+// MARK: ReorderTableViewDelegate
+
+extension DynamicTableView: ReorderTableViewDelegate {
+    private static let ReorderTableViewDummyItemIdentifier = "_Xcore_ReorderTableView_Dummy_Item_Identifier"
+
+    // This method is called when starting the re-ording process. You insert a blank row object into your
+    // data source and return the object you want to save for later. This method is only called once.
+    public func saveObjectAndInsertBlankRowAtIndexPath(indexPath: NSIndexPath) -> Any {
+        let item = sections[indexPath]
+        sections[indexPath.section][indexPath.row] = DynamicTableModel(userInfo: [DynamicTableView.ReorderTableViewDummyItemIdentifier: true])
+        return item
+    }
+
+    // This method is called when the selected row is released to its new position. The object is the same
+    // object you returned in saveObjectAndInsertBlankRowAtIndexPath:. Simply update the data source so the
+    // object is in its new position. You should do any saving/cleanup here.
+    public func finishReorderingWithObject(object: Any, atIndexPath indexPath: NSIndexPath) {
+        items[indexPath.row] = object as! DynamicTableModel
     }
 }
 
