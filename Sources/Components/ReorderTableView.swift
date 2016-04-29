@@ -36,8 +36,15 @@ private class ReorderTableDraggingView: BaseView {
         set { imageView.image = newValue }
     }
 
+    var shadowAlpha: CGFloat = 1 {
+        didSet {
+            topShadowImage.alpha    = shadowAlpha
+            bottomShadowImage.alpha = shadowAlpha
+        }
+    }
+
     override func setupSubviews() {
-        //userInteractionEnabled = false
+        userInteractionEnabled = false
         addSubview(topShadowImage)
         addSubview(imageView)
         addSubview(bottomShadowImage)
@@ -80,13 +87,13 @@ public class ReorderTableView: UITableView {
     public var canReorder: Bool = false {
         didSet { longPressGestureRecognizer.enabled = canReorder }
     }
-    public var draggingViewOpacity: CGFloat = 0.8
     public var draggingRowHeight: CGFloat = 0
+    public dynamic var draggingViewOpacity: CGFloat = 0.8
+    public dynamic var draggingViewBackgroundColor  = UIColor.clearColor()
 
     private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
         return UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
     }()
-
     private var scrollRate: CGFloat = 0
     private var scrollDisplayLink: CADisplayLink?
     private var draggingView: ReorderTableDraggingView?
@@ -220,12 +227,17 @@ public class ReorderTableView: UITableView {
             // create and image view that we will drag around the screen
             if draggingView == nil {
                 draggingView        = ReorderTableDraggingView()
-                draggingView!.alpha = draggingViewOpacity
                 draggingView!.image = cellImage
                 let rect = rectForRowAtIndexPath(indexPath)
-                draggingView!.frame  = rect
-                draggingView!.center = CGPoint(x: center.x, y: location.y)
+                draggingView!.frame           = rect
+                draggingView!.center          = CGPoint(x: center.x, y: location.y)
+                draggingView!.backgroundColor = draggingViewBackgroundColor
+                draggingView!.alpha           = draggingViewOpacity
+                draggingView!.shadowAlpha     = 0
                 addSubview(draggingView!)
+                UIView.animateWithDuration(0.3) {
+                    self.draggingView!.shadowAlpha = 1
+                }
             }
 
             beginUpdates()
@@ -295,16 +307,17 @@ public class ReorderTableView: UITableView {
             scrollRate = 0
             
             // animate the drag view to the newly hovered cell
-            UIView.animateWithDuration(0.3,
-            animations: {[weak self] in
+            UIView.animateWithDuration(0.3, animations: {[weak self] in
                 guard let weakSelf = self else { return }
                 let rect = weakSelf.rectForRowAtIndexPath(indexPath)
                 draggingView.transform = CGAffineTransformIdentity
                 draggingView.frame = CGRectOffset(draggingView.bounds, rect.origin.x, rect.origin.y)
-            }, completion: {[weak self] finished in
+            }, completion: {[weak self] _ in
                 guard let weakSelf = self else { return }
 
-                draggingView.removeFromSuperview()
+                draggingView.setHiddenAnimated(true, duration: 0.3) {
+                    draggingView.removeFromSuperview()
+                }
 
                 weakSelf.beginUpdates()
                 weakSelf.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .None)
