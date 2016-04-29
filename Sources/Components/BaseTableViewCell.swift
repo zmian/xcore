@@ -30,10 +30,6 @@ public class BaseTableViewCell: UITableViewCell {
 
     public class var reuseIdentifier: String { return "BaseTableViewCellIdentifier" }
 
-    public var separatorInsets = UIEdgeInsets.zero {
-        didSet { setupSeparatorInset() }
-    }
-
     // MARK: Init Methods
 
     public convenience init() {
@@ -57,7 +53,6 @@ public class BaseTableViewCell: UITableViewCell {
 
     private func commonInit() {
         backgroundColor = UIColor.clearColor()
-        setupSeparatorInset()
         setupSubviews()
     }
 
@@ -67,15 +62,4 @@ public class BaseTableViewCell: UITableViewCell {
     /// for example, add new subviews or configure properties.
     /// This method is called when self is initialized using any of the relevant `init` methods.
     public func setupSubviews() {}
-
-    private func setupSeparatorInset() {
-        if self.respondsToSelector(Selector("setLayoutMargins:")) {
-            self.layoutMargins = separatorInsets
-            self.preservesSuperviewLayoutMargins = false
-        }
-
-        if self.respondsToSelector(Selector("setSeparatorInset:")) {
-            self.separatorInset = separatorInsets
-        }
-    }
 }
