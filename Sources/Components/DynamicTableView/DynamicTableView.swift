@@ -452,17 +452,25 @@ extension DynamicTableView: ReorderTableViewDelegate {
 
     // This method is called when starting the re-ording process. You insert a blank row object into your
     // data source and return the object you want to save for later. This method is only called once.
-    public func saveObjectAndInsertBlankRowAtIndexPath(indexPath: NSIndexPath) -> Any {
+    public func saveObjectAndInsertBlankRow(atIndexPath indexPath: NSIndexPath) -> Any {
         let item = sections[indexPath]
-        sections[indexPath.section][indexPath.row] = DynamicTableModel(userInfo: [DynamicTableView.ReorderTableViewDummyItemIdentifier: true])
+        sections[indexPath] = DynamicTableModel(userInfo: [DynamicTableView.ReorderTableViewDummyItemIdentifier: true])
         return item
     }
 
+    // This method is called when the selected row is dragged to a new position. You simply update your
+    // data source to reflect that the rows have switched places. This can be called multiple times
+    // during the reordering process.
+    public func draggedRow(fromIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+        sections.moveElement(fromIndexPath: fromIndexPath, toIndexPath: toIndexPath)
+    }
+
     // This method is called when the selected row is released to its new position. The object is the same
-    // object you returned in saveObjectAndInsertBlankRowAtIndexPath:. Simply update the data source so the
+    // object you returned in `saveObjectAndInsertBlankRow:atIndexPath:`. Simply update the data source so the
     // object is in its new position. You should do any saving/cleanup here.
-    public func finishReorderingWithObject(object: Any, atIndexPath indexPath: NSIndexPath) {
-        items[indexPath.row] = object as! DynamicTableModel
+    public func finishedDragging(fromIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath, withObject object: Any) {
+        items[toIndexPath.row] = object as! DynamicTableModel
+        didMoveItem?(sourceIndexPath: fromIndexPath, destinationIndexPath: toIndexPath, item: items[toIndexPath.row])
     }
 }
 

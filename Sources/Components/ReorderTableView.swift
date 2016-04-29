@@ -59,15 +59,20 @@ private class ReorderTableDraggingView: BaseView {
     }
 }
 
-public protocol ReorderTableViewDelegate: UITableViewDelegate {
+public protocol ReorderTableViewDelegate: NSObjectProtocol {
     // This method is called when starting the re-ording process. You insert a blank row object into your
     // data source and return the object you want to save for later. This method is only called once.
-    func saveObjectAndInsertBlankRowAtIndexPath(indexPath: NSIndexPath) -> Any
+    func saveObjectAndInsertBlankRow(atIndexPath indexPath: NSIndexPath) -> Any
+
+    // This method is called when the selected row is dragged to a new position. You simply update your
+    // data source to reflect that the rows have switched places. This can be called multiple times
+    // during the reordering process.
+    func draggedRow(fromIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath)
 
     // This method is called when the selected row is released to its new position. The object is the same
-    // object you returned in saveObjectAndInsertBlankRowAtIndexPath:. Simply update the data source so the
+    // object you returned in `saveObjectAndInsertBlankRow:atIndexPath:`. Simply update the data source so the
     // object is in its new position. You should do any saving/cleanup here.
-    func finishReorderingWithObject(object: Any, atIndexPath indexPath: NSIndexPath)
+    func finishedDragging(fromIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath, withObject object: Any)
 }
 
 public class ReorderTableView: UITableView {
@@ -135,10 +140,10 @@ public class ReorderTableView: UITableView {
             deleteRowsAtIndexPaths([currentLocationIndexPath], withRowAnimation: .Automatic)
             insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
 
-            if let dataSource = dataSource where dataSource.respondsToSelector(#selector(dataSource.tableView(_:moveRowAtIndexPath:toIndexPath:))) {
-                dataSource.tableView?(self, moveRowAtIndexPath: currentLocationIndexPath, toIndexPath: indexPath)
+            if let reorderDelegate = reorderDelegate {
+                reorderDelegate.draggedRow(fromIndexPath: currentLocationIndexPath, toIndexPath: indexPath)
             } else {
-                print("tableView:moveRowAtIndexPath:toIndexPath: is not implemented")
+                print("draggedRow:fromIndexPath:toIndexPath: is not implemented")
             }
 
             self.currentLocationIndexPath = indexPath
@@ -180,9 +185,8 @@ public class ReorderTableView: UITableView {
     }
 
     @objc private func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        let location  = gesture.locationInView(self)
-        let indexPath = indexPathForRowAtPoint(location)
-        let rows      = numberOfRowsInAllSections
+        let location = gesture.locationInView(self)
+        let rows     = numberOfRowsInAllSections
 
         // get out of here if the long press was not on a valid row or our table is empty
         guard rows > 0 else {
@@ -192,7 +196,7 @@ public class ReorderTableView: UITableView {
 
         // Started
         if gesture.state == .Began {
-            guard let indexPath = indexPath, cell = cellForRowAtIndexPath(indexPath) else {
+            guard let indexPath = indexPathForRowAtPoint(location), cell = cellForRowAtIndexPath(indexPath) else {
                 cancelGesture()
                 return
             }
@@ -229,9 +233,9 @@ public class ReorderTableView: UITableView {
             insertRowsAtIndexPaths([indexPath], withRowAnimation: .None)
 
             if let reorderDelegate = reorderDelegate {
-                savedObject = reorderDelegate.saveObjectAndInsertBlankRowAtIndexPath(indexPath)
+                savedObject = reorderDelegate.saveObjectAndInsertBlankRow(atIndexPath: indexPath)
             } else {
-                print("saveObjectAndInsertBlankRowAtIndexPath: is not implemented")
+                print("saveObjectAndInsertBlankRow:atIndexPath: is not implemented")
             }
 
             self.currentLocationIndexPath = indexPath
@@ -306,10 +310,10 @@ public class ReorderTableView: UITableView {
                 weakSelf.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                 weakSelf.insertRowsAtIndexPaths([indexPath], withRowAnimation: .None)
 
-                if let reorderDelegate = weakSelf.reorderDelegate, savedObject = weakSelf.savedObject {
-                    reorderDelegate.finishReorderingWithObject(savedObject, atIndexPath: indexPath)
+                if let reorderDelegate = weakSelf.reorderDelegate, savedObject = weakSelf.savedObject, initialIndexPath = weakSelf.initialIndexPath {
+                    reorderDelegate.finishedDragging(fromIndexPath: initialIndexPath, toIndexPath: indexPath, withObject: savedObject)
                 } else {
-                    print("finishReorderingWithObject:atIndexPath: is not implemented")
+                    print("finishedDragging:fromIndexPath:toIndexPath:withObject: is not implemented")
                 }
 
                 weakSelf.endUpdates()
