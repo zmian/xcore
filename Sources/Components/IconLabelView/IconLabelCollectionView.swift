@@ -153,7 +153,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
                 else { return }
 
             weakSelf.isEditing = !weakSelf.isEditing
-            weakSelf.tapGestureRecognizer.enabled = true
+            weakSelf.tapGestureRecognizer.enabled = weakSelf.isEditing
             weakSelf.toggleVisibleCellsDeleteButtons()
         }
 
