@@ -37,7 +37,6 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     private let reuseIdentifier = IconLabelCollectionViewCell.reuseIdentifier
     private var allowReordering: Bool { return cellOptions.contains(.Movable) }
     private var allowDeletion: Bool   { return cellOptions.contains(.Deletable) }
-    private var isEditing = false
     private var hasLongPressGestureRecognizer = false
     public var sections: [Section<ImageTitleDisplayable>] = []
     /// The layout used to organize the collection view’s items.
@@ -47,6 +46,15 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     public var cellOptions: IconLabelCollectionCellOptions = [] {
         didSet { updateCellOptionsIfNeeded() }
     }
+
+    public var isEditing = false {
+        didSet {
+            guard oldValue != isEditing else { return }
+            tapGestureRecognizer.enabled = isEditing
+            toggleVisibleCellsDeleteButtons()
+        }
+    }
+
     /// A boolean value to determine whether the content is centered in the collection view. The default value is `false`.
     public var isContentCentered = false {
         didSet {
@@ -54,6 +62,15 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
                 layout?.minimumInteritemSpacing = bounds.height
             }
         }
+    }
+
+    private var didTapCollectionView: ((touches: Set<UITouch>, event: UIEvent?) -> Void)?
+    /// Tells the responder when one or more fingers touch down in the collection view.
+    ///
+    /// - parameter touches: A set of UITouch instances that represent the touches for the starting phase of the event represented by event.
+    /// - parameter event:   An object representing the event to which the touches belong.
+    public func didTapCollectionView(callback: (touches: Set<UITouch>, event: UIEvent?) -> Void) {
+        didTapCollectionView = callback
     }
 
     private var configureCell: ((indexPath: NSIndexPath, cell: IconLabelCollectionViewCell, item: ImageTitleDisplayable) -> Void)?
@@ -133,10 +150,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     }
 
     public override func reloadData() {
-        if isEditing {
-            isEditing = false
-            toggleVisibleCellsDeleteButtons()
-        }
+        isEditing = false
         super.reloadData()
     }
 
@@ -153,8 +167,6 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
                 else { return }
 
             weakSelf.isEditing = !weakSelf.isEditing
-            weakSelf.tapGestureRecognizer.enabled = weakSelf.isEditing
-            weakSelf.toggleVisibleCellsDeleteButtons()
         }
 
         return gestureRecognizer
@@ -164,11 +176,8 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
         let gestureRecognizer = UITapGestureRecognizer()
         gestureRecognizer.enabled = false
 
-        gestureRecognizer.addAction {[weak self, weak gestureRecognizer] in
-            guard let weakSelf = self, gestureRecognizer = gestureRecognizer where weakSelf.isEditing else { return }
-            gestureRecognizer.enabled = false
-            weakSelf.isEditing = !weakSelf.isEditing
-            weakSelf.toggleVisibleCellsDeleteButtons()
+        gestureRecognizer.addAction {[weak self] in
+            self?.isEditing = false
         }
 
         return gestureRecognizer
@@ -245,6 +254,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
             addGestureRecognizer(longPressGestureRecognizer)
             hasLongPressGestureRecognizer = true
         } else if !allowDeletion && hasLongPressGestureRecognizer {
+            isEditing = false
             removeGestureRecognizer(tapGestureRecognizer)
             removeGestureRecognizer(longPressGestureRecognizer)
             hasLongPressGestureRecognizer = false
@@ -263,5 +273,14 @@ public extension IconLabelCollectionView {
     public var items: [ImageTitleDisplayable] {
         get { return sections.first?.items ?? [] }
         set { sections = [Section(items: newValue)] }
+    }
+}
+
+// MARK: UIResponder API
+
+public extension IconLabelCollectionView {
+    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        super.touchesBegan(touches, withEvent: event)
+        didTapCollectionView?(touches: touches, event: event)
     }
 }
