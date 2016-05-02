@@ -107,7 +107,7 @@ public extension UIImage {
                     downloadedImages += 1
 
                     if let image = image where finished {
-                        if let indexType = (orderedObjects.indexOf { $0.url == object.url }), index = indexType as? Int {
+                        if let index = (orderedObjects.indexOf { $0.url == object.url }) {
                             orderedObjects[index].image = image
                         }
                     }
