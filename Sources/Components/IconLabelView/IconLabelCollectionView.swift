@@ -64,13 +64,13 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
         }
     }
 
-    private var didTapCollectionView: ((touches: Set<UITouch>, event: UIEvent?) -> Void)?
+    private var didTapView: ((touches: Set<UITouch>, event: UIEvent?) -> Void)?
     /// Tells the responder when one or more fingers touch down in the collection view.
     ///
     /// - parameter touches: A set of UITouch instances that represent the touches for the starting phase of the event represented by event.
     /// - parameter event:   An object representing the event to which the touches belong.
-    public func didTapCollectionView(callback: (touches: Set<UITouch>, event: UIEvent?) -> Void) {
-        didTapCollectionView = callback
+    public func didTapView(callback: (touches: Set<UITouch>, event: UIEvent?) -> Void) {
+        didTapView = callback
     }
 
     private var configureCell: ((indexPath: NSIndexPath, cell: IconLabelCollectionViewCell, item: ImageTitleDisplayable) -> Void)?
@@ -281,6 +281,6 @@ public extension IconLabelCollectionView {
 public extension IconLabelCollectionView {
     public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
-        didTapCollectionView?(touches: touches, event: event)
+        didTapView?(touches: touches, event: event)
     }
 }
