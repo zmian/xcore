@@ -34,6 +34,7 @@ public extension UIDevice {
 
     public struct DeviceType {
         public static var iPhone4OrLess: Bool { return iPhone && ScreenSize.maxLength < 568 }
+        public static var iPhone5OrLess: Bool { return iPhone && ScreenSize.maxLength <= 568 }
         public static var iPhone5: Bool       { return iPhone && ScreenSize.maxLength == 568 }
         public static var iPhone6: Bool       { return iPhone && ScreenSize.maxLength == 667 }
         public static var iPhone6Plus: Bool   { return iPhone && ScreenSize.maxLength == 736 }
