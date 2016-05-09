@@ -39,3 +39,26 @@ public extension Serializable where Self: NSCoding {
         return NSKeyedArchiver.archivedDataWithRootObject(self)
     }
 }
+
+public protocol DictionaryInitializable: CustomStringConvertible, Serializable {
+    init?(dictionary: NSDictionary)
+    func dictionary() -> [String: AnyObject]
+}
+
+public extension DictionaryInitializable {
+    public init?(serialize: NSData) {
+        guard
+            let dictionary = NSKeyedUnarchiver.unarchiveObjectWithData(serialize) as? NSDictionary,
+            let object     = Self(dictionary: dictionary)
+        else { return nil }
+        self = object
+    }
+
+    public var serialize: NSData? {
+        return NSKeyedArchiver.archivedDataWithRootObject(dictionary())
+    }
+
+    public var description: String {
+        return JSONHelpers.stringify(dictionary(), prettyPrinted: true)
+    }
+}
