@@ -49,6 +49,13 @@ public struct Response {
             return nil
         }
     }
+
+    public init(request: NSURLRequest, response: NSURLResponse? = nil, data: NSData? = nil, error: NSError? = nil) {
+        self.request  = request
+        self.response = response
+        self.data     = data
+        self.error    = error
+    }
 }
 
 public final class Request {
