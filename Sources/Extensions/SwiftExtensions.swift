@@ -187,6 +187,17 @@ public extension Array where Element: Equatable {
     }
 }
 
+public extension Array {
+    // Credit: https://gist.github.com/ericdke/fa262bdece59ff786fcb
+
+    public func splitBy(subSize: Int) -> [[Element]] {
+        return 0.stride(to: count, by: subSize).map { startIndex in
+            let endIndex = startIndex.advancedBy(subSize, limit: count)
+            return Array(self[startIndex..<endIndex])
+        }
+    }
+}
+
 extension CollectionType {
     /// Returns the element at the specified index iff it is within bounds, otherwise nil.
     @warn_unused_result

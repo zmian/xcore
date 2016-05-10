@@ -65,3 +65,26 @@ public func collectionify<Parameter, Result>(fetcher: (param: Parameter, callbac
         }
     }
 }
+
+/// A convenience wrapper to turn rate limiting multiple object fetcher into collection fetcher
+/// by splitting fetching size to `splitSize`.
+///
+/// - parameter fetcher:   A fetcher function that is executed with each of the `params`.
+/// - parameter splitSize: The maximum number of requests allowed in the fetcher.
+/// - parameter params:    An array of parameters to pass to the fetcher.
+/// - parameter callback:  The block to invoked when we have th results of all the `params` by calling `fetcher`.
+public func collectionify<Parameter, Result>(fetcher: (param: [Parameter], callback: (object: [Result]) -> Void) -> Void, splitSize: Int, params: [Parameter], callback: (objects: [Result]) -> Void) {
+    let pages            = params.splitBy(splitSize)
+    var allObjects       = [Result]()
+    var fetchedPageCount = 0
+
+    pages.forEach {
+        fetcher(param: $0) { objects in
+            fetchedPageCount += 1
+            allObjects += objects
+            if fetchedPageCount == pages.count {
+                callback(objects: allObjects)
+            }
+        }
+    }
+}
