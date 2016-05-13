@@ -32,7 +32,7 @@ extension UIView {
     /// - parameter className: The class name of the child view (e.g., `UIImageView`).
     ///
     /// - returns: The child view if exists; otherwise nil.
-    func subview(withClassName className: String) -> UIView? {
+    public func subview(withClassName className: String) -> UIView? {
         if NSClassFromString(className) == self.dynamicType {
             return self
         }
@@ -46,6 +46,29 @@ extension UIView {
         return nil
     }
 
+    /// Get a child views by class name.
+    ///
+    /// - parameter className: The class name of the child views (e.g., `UIImageView`).
+    ///
+    /// - returns: The child views if exists; otherwise empty array.
+    public func subviews(withClassName className: String) -> [UIView] {
+        if NSClassFromString(className) == self.dynamicType {
+            return [self]
+        }
+
+        var sv = [UIView]()
+
+        for view in subviews {
+            if let subview = view.subview(withClassName: className) {
+                sv.append(subview)
+            }
+        }
+
+        return sv
+    }
+}
+
+extension UIView {
     /// Prints `self` child view hierarchy.
     func debugSubviews(count: Int = 0) {
         if count == 0 {
