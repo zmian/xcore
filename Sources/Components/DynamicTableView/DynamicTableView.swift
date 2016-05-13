@@ -172,6 +172,7 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
         backgroundColor    = UIColor.clearColor()
         estimatedRowHeight = 44
         rowHeight          = UITableViewAutomaticDimension
+        canReorder         = allowReordering
         registerClass(DynamicTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     }
 

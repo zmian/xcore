@@ -83,23 +83,24 @@ public protocol ReorderTableViewDelegate: NSObjectProtocol {
 }
 
 public class ReorderTableView: UITableView {
-    public weak var reorderDelegate: ReorderTableViewDelegate?
-    public var canReorder: Bool = false {
-        didSet { longPressGestureRecognizer.enabled = canReorder }
-    }
-    public var draggingRowHeight: CGFloat = 0
-    public dynamic var draggingViewOpacity: CGFloat = 0.8
-    public dynamic var draggingViewBackgroundColor  = UIColor.clearColor()
-
-    private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
-        return UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-    }()
     private var scrollRate: CGFloat = 0
     private var scrollDisplayLink: CADisplayLink?
     private var draggingView: ReorderTableDraggingView?
     private var currentLocationIndexPath: NSIndexPath?
     private var initialIndexPath: NSIndexPath?
     private var savedObject: Any?
+    private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
+        return UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+    }()
+
+    public weak var reorderDelegate: ReorderTableViewDelegate?
+    /// The default value is `true`.
+    public var canReorder: Bool = true {
+        didSet { longPressGestureRecognizer.enabled = canReorder }
+    }
+    public var draggingRowHeight: CGFloat = 0
+    public dynamic var draggingViewOpacity: CGFloat = 0.8
+    public dynamic var draggingViewBackgroundColor  = UIColor.clearColor()
 
     // MARK: Init Methods
 
