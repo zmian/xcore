@@ -136,8 +136,11 @@ public class DynamicTableViewCell: BaseTableViewCell {
     public override func setHighlighted(highlighted: Bool, animated: Bool) {
         if let highlightedBackgroundColor = highlightedBackgroundColor {
             observeBackgroundColorSetter = false
-            backgroundColor = highlighted ? highlightedBackgroundColor : regularBackgroundColor
-            observeBackgroundColorSetter = true
+            UIView.animateWithDuration(0.25, animations: {
+                self.backgroundColor = highlighted ? highlightedBackgroundColor : self.regularBackgroundColor
+            }, completion: { _ in
+                self.observeBackgroundColorSetter = true
+            })
         }
         onHighlight?(highlighted: highlighted, animated: animated)
     }
