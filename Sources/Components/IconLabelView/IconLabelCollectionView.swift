@@ -28,15 +28,15 @@ public struct IconLabelCollectionCellOptions: OptionSetType {
     public let rawValue: UInt
     public init(rawValue: UInt) { self.rawValue = rawValue }
 
-    public static let Movable                             = IconLabelCollectionCellOptions(rawValue: 1)
-    public static let Deletable                           = IconLabelCollectionCellOptions(rawValue: 2)
-    public static let All: IconLabelCollectionCellOptions = [Movable, Deletable]
+    public static let movable                             = IconLabelCollectionCellOptions(rawValue: 1)
+    public static let deletable                           = IconLabelCollectionCellOptions(rawValue: 2)
+    public static let all: IconLabelCollectionCellOptions = [movable, deletable]
 }
 
 public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
     private let reuseIdentifier = IconLabelCollectionViewCell.reuseIdentifier
-    private var allowReordering: Bool { return cellOptions.contains(.Movable) }
-    private var allowDeletion: Bool   { return cellOptions.contains(.Deletable) }
+    private var allowReordering: Bool { return cellOptions.contains(.movable) }
+    private var allowDeletion: Bool   { return cellOptions.contains(.deletable) }
     private var hasLongPressGestureRecognizer = false
     public var sections: [Section<ImageTitleDisplayable>] = []
     /// The layout used to organize the collection view’s items.

@@ -29,7 +29,7 @@ public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     public private(set) lazy var textLabel: MDHTMLLabel = {
         var textLabel                  = MDHTMLLabel()
         textLabel.delegate             = self
-        textLabel.font                 = UIFont.systemFont(.Footnote)
+        textLabel.font                 = UIFont.systemFont(.footnote)
         textLabel.textColor            = UIColor.darkGrayColor()
         textLabel.lineBreakMode        = .ByWordWrapping
         textLabel.numberOfLines        = 0
@@ -66,7 +66,7 @@ public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     /// - parameter bundle:   The bundle containing the specified file name. If you specify nil,
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
     public func setText(filename: String, bundle: NSBundle? = nil) {
-        dispatch.async.bg(.UserInitiated) {[weak self] in
+        dispatch.async.bg(.userInitiated) {[weak self] in
             guard let weakSelf = self else { return }
 
             let name   = filename.lastPathComponent.stringByDeletingPathExtension

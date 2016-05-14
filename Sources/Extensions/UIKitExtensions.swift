@@ -902,7 +902,7 @@ public extension UIImageView {
     /// - parameter named:  The name of the image.
     /// - parameter bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the main bundle.
     public func image(named: String, bundle: NSBundle? = nil) {
-        dispatch.async.bg(.UserInitiated) {
+        dispatch.async.bg(.userInitiated) {
             let image = UIImage(named: named, inBundle: bundle, compatibleWithTraitCollection: nil)
             dispatch.async.main {
                 self.image = image
@@ -952,13 +952,13 @@ public extension UIImageView {
     /// Determines how the image is rendered.
     /// The default rendering mode is `UIImageRenderingModeAutomatic`.
     ///
-    /// Int is workaround since `@IBInspectable` doesn't support Enums.
+    /// `Int` is workaround since `@IBInspectable` doesn't support enums.
     /// ```
     /// Possible Values:
     ///
-    /// UIImageRenderingMode.Automatic      // 0
-    /// UIImageRenderingMode.AlwaysOriginal // 1
-    /// UIImageRenderingMode.AlwaysTemplate // 2
+    /// UIImageRenderingMode.automatic      // 0
+    /// UIImageRenderingMode.alwaysOriginal // 1
+    /// UIImageRenderingMode.alwaysTemplate // 2
     /// ```
     @IBInspectable public var renderingMode: Int {
         get { return image?.renderingMode.rawValue ?? UIImageRenderingMode.Automatic.rawValue }
@@ -1013,7 +1013,7 @@ public extension UIImage {
     }
 
     public func resize(newSize: CGSize, tintColor: UIColor? = nil, completionHandler: (resizedImage: UIImage) -> Void) {
-        dispatch.async.bg(.UserInitiated) {
+        dispatch.async.bg(.userInitiated) {
             UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
             self.drawInRect(CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
             let newImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -1110,25 +1110,25 @@ public extension UIImage {
 
 public extension UIScrollView {
     public enum ScrollDirection {
-        case None, Up, Down, Left, Right, Unknown
+        case none, up, down, left, right, unknown
     }
 
     public var scrollDirection: ScrollDirection {
         let translation = panGestureRecognizer.translationInView(superview)
 
         if translation.y > 0 {
-            return .Down
+            return .down
         } else if !(translation.y > 0) {
-            return .Up
+            return .up
         }
 
         if translation.x > 0 {
-            return .Right
+            return .right
         } else if !(translation.x > 0) {
-            return .Left
+            return .left
         }
 
-        return .Unknown
+        return .unknown
     }
 }
 

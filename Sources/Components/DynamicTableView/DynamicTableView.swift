@@ -27,8 +27,8 @@ import BEMCheckBox
 
 public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewDataSource {
     private let reuseIdentifier = DynamicTableViewCell.reuseIdentifier
-    private var allowReordering: Bool { return cellOptions.contains(.Movable) }
-    private var allowDeletion: Bool   { return cellOptions.contains(.Deletable) }
+    private var allowReordering: Bool { return cellOptions.contains(.movable) }
+    private var allowDeletion: Bool   { return cellOptions.contains(.deletable) }
     public var sections: [Section<DynamicTableModel>] = []
     public var cellOptions: DynamicTableCellOptions = [] {
         didSet { canReorder = allowReordering }
@@ -232,7 +232,7 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
 
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let item = sections[indexPath]
-        if case .Checkbox(_, let callback) = item.accessory {
+        if case .checkbox(_, let callback) = item.accessory {
             if let checkboxView = tableView.cellForRowAtIndexPath(indexPath)?.accessoryView as? BEMCheckBox {
                 if checkboxView.on && (indexPathsForSelectedRows ?? []).contains(indexPath) {
                     deselectRowAtIndexPath(indexPath, animated: true)
@@ -249,7 +249,7 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
 
     public func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
         let item = sections[indexPath]
-        if case .Checkbox(_, let callback) = item.accessory {
+        if case .checkbox(_, let callback) = item.accessory {
             if let checkboxView = tableView.cellForRowAtIndexPath(indexPath)?.accessoryView as? BEMCheckBox {
                 checkboxView.setOn(false, animated: true)
                 callback?(sender: checkboxView)
@@ -338,18 +338,18 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
     public override func deselectRowAtIndexPath(indexPath: NSIndexPath, animated: Bool) {
         super.deselectRowAtIndexPath(indexPath, animated: animated)
         let item = sections[indexPath]
-        if case .Checkbox = item.accessory {
+        if case .checkbox = item.accessory {
             checkboxAccessoryView(atIndexPath: indexPath)?.setOn(false, animated: animated)
         }
     }
 
     // MARK: UIAppearance Properties
 
-    public dynamic var headerFont                   = UIFont.systemFont(.Footnote)
+    public dynamic var headerFont                   = UIFont.systemFont(.footnote)
     public dynamic var headerTextColor              = UIColor.blackColor()
-    public dynamic var footerFont                   = UIFont.systemFont(.Footnote)
+    public dynamic var footerFont                   = UIFont.systemFont(.footnote)
     public dynamic var footerTextColor              = UIColor.darkGrayColor()
-    public dynamic var accessoryFont                = UIFont.systemFont(.Subheadline)
+    public dynamic var accessoryFont                = UIFont.systemFont(.subheadline)
     public dynamic var accessoryTextColor           = UIColor.grayColor()
     public dynamic var accessoryTintColor           = UIColor.defaultSystemTintColor()
     public dynamic var disclosureIndicatorTintColor = UIColor.grayColor()
@@ -366,24 +366,24 @@ extension DynamicTableView: BEMCheckBoxDelegate {
         cell.accessoryView  = nil
 
         switch type {
-            case .None:
+            case .none:
                 break
-            case .DisclosureIndicator:
+            case .disclosureIndicator:
                 cell.accessoryView = UIImageView(assetIdentifier: .DisclosureIndicator)
                 cell.accessoryView?.tintColor = disclosureIndicatorTintColor
-            case .Switch(let isOn, _):
+            case .`switch`(let isOn, _):
                 cell.selectionStyle = .None
                 let accessorySwitch = UISwitch()
                 accessorySwitch.on  = isOn
                 accessorySwitch.addAction(.ValueChanged) {[weak self] sender in
                     guard let weakSelf = self else { return }
                     let accessory = weakSelf.sections[indexPath].accessory
-                    if case .Switch(_, let callback) = accessory {
+                    if case .`switch`(_, let callback) = accessory {
                         callback?(sender: sender)
                     }
                 }
                 cell.accessoryView = accessorySwitch
-            case .Checkbox(let isOn, _):
+            case .checkbox(let isOn, _):
                 cell.selectionStyle             = .None
                 let checkbox                    = BEMCheckBox(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
                 checkbox.on                     = isOn
@@ -399,7 +399,7 @@ extension DynamicTableView: BEMCheckBoxDelegate {
                 checkbox.indexPath              = indexPath
                 checkbox.userInteractionEnabled = false
                 cell.accessoryView              = checkbox
-            case .Text(let text):
+            case .text(let text):
                 let label           = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
                 label.text          = text
                 label.font          = accessoryFont
@@ -407,7 +407,7 @@ extension DynamicTableView: BEMCheckBoxDelegate {
                 label.textColor     = accessoryTextColor
                 label.numberOfLines = 0
                 cell.accessoryView = label
-            case .Custom(let view):
+            case .custom(let view):
                 cell.accessoryView = view
         }
     }
@@ -417,7 +417,7 @@ extension DynamicTableView: BEMCheckBoxDelegate {
     public func didTapCheckBox(checkBox: BEMCheckBox) {
         if let indexPath = checkBox.indexPath {
             let accessory = sections[indexPath].accessory
-            if case .Checkbox(_, let callback) = accessory {
+            if case .checkbox(_, let callback) = accessory {
                 callback?(sender: checkBox)
             }
         }

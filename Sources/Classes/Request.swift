@@ -60,7 +60,7 @@ public struct Response {
 
 public final class Request {
     public enum Method: String { case GET, POST, PUT, DELETE }
-    public enum Body { case JSON(NSDictionary), Data(NSData) }
+    public enum Body { case json(NSDictionary), data(NSData) }
 
     public static let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
 

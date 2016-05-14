@@ -67,15 +67,15 @@ public extension UIDevice {
 public extension UIDevice {
 
     public enum ModelType: CustomStringConvertible {
-        case Unknown(String)
-        case Simulator
+        case unknown(String)
+        case simulator
         case iPodTouch
         case iPhone4, iPhone4s, iPhone5, iPhone5c, iPhone5s, iPhone6, iPhone6Plus, iPhone6s, iPhone6sPlus
         case iPad2, iPad3, iPad4, iPadAir, iPadAir2, iPadMini, iPadMini2, iPadMini3
 
         public var description: String {
             switch self {
-                case Simulator:    return "Simulator"
+                case simulator:    return "Simulator"
                 case iPodTouch:    return "iPod Touch"
                 case iPhone4:      return "iPhone 4"
                 case iPhone4s:     return "iPhone 4s"
@@ -94,14 +94,14 @@ public extension UIDevice {
                 case iPadMini:     return "iPad Mini"
                 case iPadMini2:    return "iPad Mini 2"
                 case iPadMini3:    return "iPad Mini 3"
-                case Unknown(let identifier): return identifier
+                case unknown(let identifier): return identifier
             }
         }
 
         static func modelNumber(identifier: String) -> ModelType {
             switch identifier {
                 case "x86_64", "i386":
-                    return .Simulator
+                    return .simulator
                 case "iPod5,1":
                     return .iPodTouch
                 case "iPhone3,1", "iPhone3,2", "iPhone3,3":
@@ -139,7 +139,7 @@ public extension UIDevice {
                 case "iPad4,7", "iPad4,8", "iPad4,9":
                     return .iPadMini3
                 default:
-                    return .Unknown(identifier)
+                    return .unknown(identifier)
             }
         }
     }

@@ -26,7 +26,7 @@ import UIKit
 import TZStackView
 
 public class IconLabelView: UIView {
-    public enum Style { case TopBottom, LeftRight }
+    public enum Style { case topBottom, leftRight }
 
     private var imagePaddingConstraints: [NSLayoutConstraint] = []
     private var imageSizeConstraints: (width: NSLayoutConstraint?, height: NSLayoutConstraint?)
@@ -42,8 +42,8 @@ public class IconLabelView: UIView {
     public let titleLabel           = UILabel()
     public let subtitleLabel        = UILabel()
 
-    /// The default value is `.TopBottom`.
-    public var style = Style.TopBottom {
+    /// The default value is `Style.topBottom`.
+    public var style = Style.topBottom {
         didSet {
             guard oldValue != style else { return }
             updateStyle(style)
@@ -210,13 +210,13 @@ public class IconLabelView: UIView {
         stackView.addArrangedSubview(textImageSpacerView)
         stackView.addArrangedSubview(titleLabel)
 
-        titleLabel.font          = UIFont.systemFont(.Footnote)
+        titleLabel.font          = UIFont.systemFont(.footnote)
         titleLabel.textAlignment = .Center
         titleLabel.textColor     = UIColor.blackColor()
         titleLabel.numberOfLines = 2
         titleLabel.sizeToFit()
 
-        subtitleLabel.font          = UIFont.systemFont(.Footnote)
+        subtitleLabel.font          = UIFont.systemFont(.footnote)
         subtitleLabel.textAlignment = .Center
         subtitleLabel.textColor     = UIColor.lightGrayColor()
         subtitleLabel.numberOfLines = 1
@@ -238,7 +238,7 @@ public class IconLabelView: UIView {
 
     private func updateStyle(style: Style) {
         switch style {
-            case .TopBottom:
+            case .topBottom:
                 axis = .Vertical
                 // Deactivate `LeftRight` and activate `TopBottom` constraints.
                 stackViewConstraints.leftRight?.deactivate()
@@ -246,7 +246,7 @@ public class IconLabelView: UIView {
                     stackViewConstraints.topBottom = NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(stackView)
                 }
                 stackViewConstraints.topBottom?.activate()
-            case .LeftRight:
+            case .leftRight:
                 axis = .Horizontal
                 // Deactivate `TopBottom` and activate `LeftRight` constraints.
                 stackViewConstraints.topBottom?.deactivate()

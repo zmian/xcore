@@ -26,43 +26,40 @@ import UIKit
 
 public class Environment {
     public enum Type: CustomStringConvertible {
-        case Development, Staging, Production
+        case development, staging, production
 
         public var description: String {
             switch self {
-                case .Development:
-                    return "Development"
-                case .Staging:
-                    return "Staging"
-                case .Production:
-                    return "Production"
+                case .development: return "Development"
+                case .staging:     return "Staging"
+                case .production:  return "Production"
             }
         }
     }
 
-    public var isDevelopment: Bool { return type == .Development }
-    public var isStaging: Bool     { return type == .Staging }
-    public var isProduction: Bool  { return type == .Production }
+    public var isDevelopment: Bool { return type == .development }
+    public var isStaging: Bool     { return type == .staging }
+    public var isProduction: Bool  { return type == .production }
 
-    public private(set) var type = Type.Production // Safest default
+    public private(set) var type = Type.production // Safest default
 
     public init() {
         #if XCORE_ENVIRONMENT_Release
-            type = .Production
+            type = .production
         #elseif XCORE_ENVIRONMENT_Staging
-            type = .Staging
+            type = .staging
         #elseif XCORE_ENVIRONMENT_Debug
-            type = .Development
+            type = .development
         #endif
 
         setupSharedEnvironment()
 
         switch type {
-            case .Development:
+            case .development:
                 setupDevelopment()
-            case .Staging:
+            case .staging:
                 setupStaging()
-            case .Production:
+            case .production:
                 setupProduction()
         }
     }

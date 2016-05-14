@@ -24,8 +24,8 @@
 
 import UIKit
 
-public enum ImageSourceType  { case URL, UIImage }
-public enum StringSourceType { case AttributedString, String }
+public enum ImageSourceType  { case url, UIImage }
+public enum StringSourceType { case attributedString, string }
 
 // MARK: ImageRepresentable
 
@@ -34,11 +34,11 @@ public protocol ImageRepresentable {
 }
 
 extension String: ImageRepresentable {
-    public var imageSourceType: ImageSourceType { return .URL }
+    public var imageSourceType: ImageSourceType { return .url }
 }
 
 extension NSURL: ImageRepresentable {
-    public var imageSourceType: ImageSourceType { return .URL }
+    public var imageSourceType: ImageSourceType { return .url }
 }
 
 extension UIImage: ImageRepresentable {
@@ -53,7 +53,7 @@ public extension UIImageView {
         }
 
         switch image.imageSourceType {
-            case .URL:
+            case .url:
                 if let imageName = image as? String {
                     remoteOrLocalImage(imageName)
                 } else if let url = image as? NSURL {
@@ -72,12 +72,12 @@ public protocol StringRepresentable: CustomStringConvertible {
 }
 
 extension String: StringRepresentable {
-    public var stringSourceType: StringSourceType { return .String }
+    public var stringSourceType: StringSourceType { return .string }
     public var description: String { return self }
 }
 
 extension NSAttributedString: StringRepresentable {
-    public var stringSourceType: StringSourceType { return .AttributedString }
+    public var stringSourceType: StringSourceType { return .attributedString }
     public override var description: String { return string }
 }
 
@@ -90,9 +90,9 @@ public extension UILabel {
         }
 
         switch string.stringSourceType {
-            case .String:
+            case .string:
                 text = string as? String
-            case .AttributedString:
+            case .attributedString:
                 attributedText = string as? NSAttributedString
         }
     }

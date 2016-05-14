@@ -230,13 +230,13 @@ public class DynamicTableViewCell: BaseTableViewCell {
         labelsStackView.addArrangedSubview(subtitleLabel)
 
         // TitleLabel
-        titleLabel.font          = UIFont.systemFont(.Body)
+        titleLabel.font          = UIFont.systemFont(.body)
         titleLabel.textAlignment = .Left
         titleLabel.textColor     = UIColor.blackColor()
         titleLabel.numberOfLines = 0
 
         // SubtitleLabel
-        subtitleLabel.font          = UIFont.systemFont(.Subheadline)
+        subtitleLabel.font          = UIFont.systemFont(.subheadline)
         subtitleLabel.textAlignment = .Left
         subtitleLabel.textColor     = UIColor.lightGrayColor() // This is ignored if NSAttributedText declares it's own color
         subtitleLabel.numberOfLines = 0

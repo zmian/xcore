@@ -54,11 +54,11 @@ private class XCUIPageViewController: UIPageViewController {
 }
 
 public class XCPageViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-    public enum PageControlPosition { case Top, Center, Bottom }
+    public enum PageControlPosition { case top, center, bottom }
     public var pageViewController: UIPageViewController!
     public let pageControl = UIPageControl()
     public let pageControlHeight: CGFloat = 40
-    public var pageControlPosition = PageControlPosition.Bottom
+    public var pageControlPosition = PageControlPosition.bottom
     public var viewControllers: [UIViewController] = []
     public var disableBounceForSinglePage = true
     public var swipeEnabled = true {
@@ -116,11 +116,11 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
         NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(pageControl).activate()
 
         switch pageControlPosition {
-            case .Top:
+            case .top:
                 NSLayoutConstraint(item: pageControl, attribute: .Top, toItem: view).activate()
-            case .Center:
+            case .center:
                 NSLayoutConstraint(item: pageControl, attribute: .CenterY, toItem: view).activate()
-            case .Bottom:
+            case .bottom:
                 NSLayoutConstraint(item: pageControl, attribute: .Bottom, toItem: view).activate()
         }
     }

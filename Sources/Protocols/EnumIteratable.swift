@@ -27,11 +27,11 @@
 /// A type that makes conforming `Enum` cases iteratable.
 ///
 ///     enum CompassPoint: Int, EnumIteratable {
-///         case North, South, East, West
+///         case north, south, east, west
 ///     }
 ///
 ///     for point in CompassPoint.allValues {
-///         // point [North, South, East, West]
+///         // point [north, south, east, west]
 ///     }
 ///
 ///     for point in CompassPoint.rawValues {
@@ -49,17 +49,17 @@ public extension EnumIteratable {
     /// Return `AnyGenerator` to iterate over all cases of `self`:
     ///
     ///     enum CompassPoint: Int, EnumIteratable {
-    ///         case North, South, East, West
+    ///         case north, south, east, west
     ///     }
     ///
     ///     > for point in CompassPoint.enumerate() {
     ///         print("\(point): '\(point.rawValue)'")
     ///     }
     ///
-    ///     North: '0'
-    ///     South: '1'
-    ///     East: '2'
-    ///     West: '3'
+    ///     north: '0'
+    ///     south: '1'
+    ///     wast: '2'
+    ///     west: '3'
     @warn_unused_result
     private static func enumerate() -> AnyGenerator<EnumType> {
         var i = 0

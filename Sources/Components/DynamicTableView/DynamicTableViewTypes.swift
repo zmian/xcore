@@ -26,21 +26,21 @@ import UIKit
 import BEMCheckBox
 
 public enum DynamicTableAccessoryType {
-    case None
-    case DisclosureIndicator
-    case Text(String)
-    case Custom(UIView)
-    case Switch(isOn: Bool, callback: ((sender: UISwitch) -> Void)?)
-    case Checkbox(isOn: Bool, callback: ((sender: BEMCheckBox) -> Void)?)
+    case none
+    case disclosureIndicator
+    case text(String)
+    case custom(UIView)
+    case `switch`(isOn: Bool, callback: ((sender: UISwitch) -> Void)?)
+    case checkbox(isOn: Bool, callback: ((sender: BEMCheckBox) -> Void)?)
 }
 
 public struct DynamicTableCellOptions: OptionSetType {
     public let rawValue: UInt
     public init(rawValue: UInt) { self.rawValue = rawValue }
 
-    public static let Movable                      = DynamicTableCellOptions(rawValue: 1)
-    public static let Deletable                    = DynamicTableCellOptions(rawValue: 2)
-    public static let All: DynamicTableCellOptions = [Movable, Deletable]
+    public static let movable                      = DynamicTableCellOptions(rawValue: 1)
+    public static let deletable                    = DynamicTableCellOptions(rawValue: 2)
+    public static let all: DynamicTableCellOptions = [movable, deletable]
 }
 
 public struct DynamicTableModel {
@@ -51,7 +51,7 @@ public struct DynamicTableModel {
     public var userInfo: [String: Any]
     public var handler: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)?
 
-    public init(title: StringRepresentable? = nil, subtitle: StringRepresentable? = nil, image: ImageRepresentable? = nil, accessory: DynamicTableAccessoryType = .None, userInfo: [String: Any] = [:], handler: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)? = nil) {
+    public init(title: StringRepresentable? = nil, subtitle: StringRepresentable? = nil, image: ImageRepresentable? = nil, accessory: DynamicTableAccessoryType = .none, userInfo: [String: Any] = [:], handler: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)? = nil) {
         self.title     = title
         self.subtitle  = subtitle
         self.image     = image

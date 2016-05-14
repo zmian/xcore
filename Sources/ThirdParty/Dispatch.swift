@@ -7,16 +7,16 @@ import Foundation
 
 public final class dispatch {
     public enum QOS {
-        case UserInteractive, UserInitiated, Default, Utility, Background, Unspecified
+        case userInteractive, userInitiated, `default`, utility, background, unspecified
 
         private var identifier: qos_class_t {
             switch self {
-                case UserInteractive: return QOS_CLASS_USER_INTERACTIVE
-                case UserInitiated:   return QOS_CLASS_USER_INITIATED
-                case Default:         return QOS_CLASS_DEFAULT
-                case Utility:         return QOS_CLASS_UTILITY
-                case Background:      return QOS_CLASS_BACKGROUND
-                case Unspecified:     return QOS_CLASS_UNSPECIFIED
+                case .userInteractive: return QOS_CLASS_USER_INTERACTIVE
+                case .userInitiated:   return QOS_CLASS_USER_INITIATED
+                case .`default`:       return QOS_CLASS_DEFAULT
+                case .utility:         return QOS_CLASS_UTILITY
+                case .background:      return QOS_CLASS_BACKGROUND
+                case .unspecified:     return QOS_CLASS_UNSPECIFIED
             }
         }
     }
@@ -27,7 +27,7 @@ public final class dispatch {
         /// - parameter qos:   The quality of service you want to give to tasks executed using this queue.
         ///                    The default value is `QOS_CLASS_BACKGROUND`.
         /// - parameter block: The block to submit to the target dispatch queue.
-        public class func bg(qos: QOS = .Background, block: dispatch_block_t) {
+        public class func bg(qos: QOS = .background, block: dispatch_block_t) {
             dispatch_async(dispatch_get_global_queue(qos.identifier, 0), block)
         }
 
@@ -45,7 +45,7 @@ public final class dispatch {
         /// - parameter qos:   The quality of service you want to give to tasks executed using this queue.
         ///                    The default value is `QOS_CLASS_BACKGROUND`.
         /// - parameter block: The block to be invoked on the target dispatch queue.
-        public class func bg(qos: QOS = .Background, block: dispatch_block_t) {
+        public class func bg(qos: QOS = .background, block: dispatch_block_t) {
             dispatch_sync(dispatch_get_global_queue(qos.identifier, 0), block)
         }
 
@@ -69,7 +69,7 @@ public final class dispatch {
         /// - parameter qos:   The quality of service you want to give to tasks executed using this queue.
         ///                    The default value is `QOS_CLASS_BACKGROUND`.
         /// - parameter block: The block to submit.
-        public class func bg(dispatchTime when: dispatch_time_t, qos: QOS = .Background, block: dispatch_block_t) {
+        public class func bg(dispatchTime when: dispatch_time_t, qos: QOS = .background, block: dispatch_block_t) {
             dispatch_after(when, dispatch_get_global_queue(qos.identifier, 0), block)
         }
 
@@ -87,7 +87,7 @@ public final class dispatch {
         /// - parameter qos:      The quality of service you want to give to tasks executed using this queue.
         ///                       The default value is `QOS_CLASS_BACKGROUND`.
         /// - parameter block:    The block to submit.
-        public class func bg(interval: NSTimeInterval, qos: QOS = .Background, block: dispatch_block_t) {
+        public class func bg(interval: NSTimeInterval, qos: QOS = .background, block: dispatch_block_t) {
             dispatch_after(dispatch.seconds(interval), dispatch_get_global_queue(qos.identifier, 0), block)
         }
 

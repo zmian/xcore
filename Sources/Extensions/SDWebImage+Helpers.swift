@@ -46,7 +46,7 @@ public extension UIImageView {
                 }
             }
         } else {
-            dispatch.async.bg(.UserInitiated) {[weak self] in
+            dispatch.async.bg(.userInitiated) {[weak self] in
                 guard let weakSelf = self, image = UIImage(named: named) else { return }
                 dispatch.async.main {
                     defer { callback?(image: image) }
@@ -83,7 +83,7 @@ public extension UIImage {
                 }
             )
         } else {
-            dispatch.async.bg(.UserInitiated) {
+            dispatch.async.bg(.userInitiated) {
                 guard let image = UIImage(named: named, inBundle: bundle, compatibleWithTraitCollection: nil) else { return }
                 dispatch.async.main {
                     callback(image: image)

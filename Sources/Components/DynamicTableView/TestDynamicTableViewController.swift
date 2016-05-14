@@ -29,7 +29,7 @@ private class TestDynamicTableViewController: DynamicTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.cellOptions = [.Movable, .Deletable]
+        tableView.cellOptions = [.movable, .deletable]
 
         tableView.sections = [
             Section(
@@ -44,22 +44,22 @@ private class TestDynamicTableViewController: DynamicTableViewController {
                 items: [
                     DynamicTableModel(title: "Hummingbird", subtitle: "Hummingbirds are New World birds that constitute the family Trochilidae. They are among the {#ff0000|smallest of birds}, most species measuring in the 7.5–13 cm range."),
                     DynamicTableModel(title: "Hummingbird", image: R(.BlueJay)),
-                    DynamicTableModel(title: "Hummingbird", image: R(.BlueJay), accessory: .DisclosureIndicator),
+                    DynamicTableModel(title: "Hummingbird", image: R(.BlueJay), accessory: .disclosureIndicator),
                     DynamicTableModel(subtitle: "**You** are now a **confirmed bird watcher** with 70 birds spotted!"),
                     DynamicTableModel(title: "Showcase", subtitle: "This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}", image: R(.BlueJay)),
                     DynamicTableModel(title: "Showcase", subtitle: "This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}", image: R(.BlueJay)),
-                    DynamicTableModel(title: "Woodpecker", accessory: .DisclosureIndicator),
-                    DynamicTableModel(title: "Blue Jay", accessory: .Text("462")),
-                    DynamicTableModel(title: "1,223", subtitle: "Globally, 1,223 species of birds", image: R(.BlueJay), accessory: .Text("5m")),
-                    DynamicTableModel(title: "American Goldfinch", subtitle: "Spinus tristis", image: R(.BlueJay), accessory: DynamicTableAccessoryType.Checkbox(isOn: true) { sender in
+                    DynamicTableModel(title: "Woodpecker", accessory: .disclosureIndicator),
+                    DynamicTableModel(title: "Blue Jay", accessory: .text("462")),
+                    DynamicTableModel(title: "1,223", subtitle: "Globally, 1,223 species of birds", image: R(.BlueJay), accessory: .text("5m")),
+                    DynamicTableModel(title: "American Goldfinch", subtitle: "Spinus tristis", image: R(.BlueJay), accessory: DynamicTableAccessoryType.checkbox(isOn: true) { sender in
                         let choice = sender.on ? "On" : "Off"
                         print("American Goldfinch \(choice)")
                     }),
-                    DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: DynamicTableAccessoryType.Checkbox(isOn: true) { sender in
+                    DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: DynamicTableAccessoryType.checkbox(isOn: true) { sender in
                         let choice = sender.on ? "On" : "Off"
                         print("Woodpecker \(choice)")
                     }),
-                    DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: DynamicTableAccessoryType.Switch(isOn: true) { sender in
+                    DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: DynamicTableAccessoryType.`switch`(isOn: true) { sender in
                         let choice = sender.on ? "On" : "Off"
                         print("Woodpecker \(choice)")
                     }),
