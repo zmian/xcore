@@ -686,6 +686,22 @@ public extension UIToolbar {
 // MARK: UIButton Extension
 
 extension UIButton {
+
+    // Increase button touch area to be 44 points
+    // See: http://stackoverflow.com/a/27683614
+
+    public override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+        if !userInteractionEnabled || !enabled || hidden {
+            return super.hitTest(point, withEvent: event)
+        }
+
+        let buttonSize  = frame.size
+        let widthToAdd  = (44 - buttonSize.width  > 0) ? 44 - buttonSize.width  : 0
+        let heightToAdd = (44 - buttonSize.height > 0) ? 44 - buttonSize.height : 0
+        let largerFrame = CGRect(x: 0 - (widthToAdd / 2), y: 0 - (heightToAdd / 2), width: buttonSize.width + widthToAdd, height: buttonSize.height + heightToAdd)
+        return largerFrame.contains(point) ? self : nil
+    }
+
     /// Add space between `text` and `image` while preserving the `intrinsicContentSize` and respecting `sizeToFit`.
     @IBInspectable public var textImageSpacing: CGFloat {
         get {
