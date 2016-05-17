@@ -136,20 +136,23 @@ public extension UIViewController {
     public func constraintsForViewToFillSuperviewVertical(viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, constraintToLayoutGuideOptions: LayoutGuideOptions = [], priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
 
+        let isTopLayoutGuide    = constraintToLayoutGuideOptions.contains(.TopLayoutGuide)
+        let isBottomLayoutGuide = constraintToLayoutGuideOptions.contains(.BottomLayoutGuide)
+
         return [
             NSLayoutConstraint(
                 item:      viewToSize,
                 attribute: .Top,
-                toItem:    constraintToLayoutGuideOptions.contains(.TopLayoutGuide) ? topLayoutGuide : view,
-                attribute: constraintToLayoutGuideOptions.contains(.TopLayoutGuide) ? .Bottom : .Top,
+                toItem:    isTopLayoutGuide ? topLayoutGuide : view,
+                attribute: isTopLayoutGuide ? .Bottom : .Top,
                 constant:  paddingTop,
                 priority:  priority
             ),
             NSLayoutConstraint(
-                item:      viewToSize,
+                item:      isBottomLayoutGuide ? bottomLayoutGuide : view,
+                attribute: isBottomLayoutGuide ? .Top : .Bottom,
+                toItem:    viewToSize,
                 attribute: .Bottom,
-                toItem:    constraintToLayoutGuideOptions.contains(.BottomLayoutGuide) ? bottomLayoutGuide : view,
-                attribute: constraintToLayoutGuideOptions.contains(.BottomLayoutGuide) ? .Top : .Bottom,
                 constant:  paddingBottom,
                 priority:  priority
             )
