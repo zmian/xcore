@@ -102,9 +102,7 @@ public class DynamicTableViewCell: BaseTableViewCell {
 
     /// The default value is `true`.
     public dynamic var isRoundImageView = true {
-        didSet {
-            avatarView.layer.cornerRadius = isRoundImageView ? imageSize.height / 2 : 0
-        }
+        didSet { roundAvatarViewCornersIfNeeded() }
     }
 
     /// The background color of the cell when it is highlighted.
@@ -216,6 +214,8 @@ public class DynamicTableViewCell: BaseTableViewCell {
         avatarView.layer.borderWidth   = 1
         avatarView.layer.borderColor   = UIColor.blackColor().alpha(0.08).CGColor
 
+        roundAvatarViewCornersIfNeeded()
+
         // Ensures smooth scaling quality
         avatarView.layer.minificationFilter = kCAFilterTrilinear
     }
@@ -277,14 +277,16 @@ public class DynamicTableViewCell: BaseTableViewCell {
         imageSizeConstraints.width?.constant  = size.width
         imageSizeConstraints.height?.constant = size.height
 
-        if isRoundImageView {
-            isRoundImageView = true
-        }
+        roundAvatarViewCornersIfNeeded()
     }
 
     private func updateTextImageSpacingIfNeeded() {
         let spacing = isImageViewHidden ? 0 : textImageSpacing
         imageAndTitleSpacingConstraint?.constant = spacing
+    }
+
+    private func roundAvatarViewCornersIfNeeded() {
+        avatarView.layer.cornerRadius = isRoundImageView ? imageSize.height / 2 : 0
     }
 }
 
