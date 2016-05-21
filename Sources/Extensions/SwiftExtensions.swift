@@ -153,6 +153,21 @@ extension Array {
         let randomIndex = Int(rand()) % count
         return self[randomIndex]
     }
+
+    /// Split array by chunks of given size.
+    ///
+    /// ```
+    /// let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    /// let chunks = arr.splitBy(5)
+    /// print(chunks) // [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12]]
+    /// ```
+    /// - seealso: https://gist.github.com/ericdke/fa262bdece59ff786fcb
+    public func splitBy(subSize: Int) -> [[Element]] {
+        return 0.stride(to: count, by: subSize).map { startIndex in
+            let endIndex = startIndex.advancedBy(subSize, limit: count)
+            return Array(self[startIndex..<endIndex])
+        }
+    }
 }
 
 public extension Array where Element: Equatable {
@@ -184,17 +199,6 @@ public extension Array where Element: Equatable {
         guard remove(element) else { return false }
         insert(element, atIndex: index)
         return true
-    }
-}
-
-public extension Array {
-    // Credit: https://gist.github.com/ericdke/fa262bdece59ff786fcb
-
-    public func splitBy(subSize: Int) -> [[Element]] {
-        return 0.stride(to: count, by: subSize).map { startIndex in
-            let endIndex = startIndex.advancedBy(subSize, limit: count)
-            return Array(self[startIndex..<endIndex])
-        }
     }
 }
 
@@ -262,5 +266,18 @@ public extension Array where Element: Hashable {
     /// - parameter uniqueProperty: `unique` criteria is determined by the value returned by this block.
     public mutating func uniqueInPlace<T: Hashable>(uniqueProperty: (Element) -> T) {
         self = unique(uniqueProperty)
+    }
+}
+
+public extension Dictionary {
+    public mutating func unionInPlace(dictionary: Dictionary) {
+        dictionary.forEach { updateValue($1, forKey: $0) }
+    }
+
+    @warn_unused_result
+    public func union(dictionary: Dictionary) -> Dictionary {
+        var dictionary = dictionary
+        dictionary.unionInPlace(self)
+        return dictionary
     }
 }
