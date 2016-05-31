@@ -360,6 +360,7 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
     public dynamic var footerTextColor              = UIColor.darkGrayColor()
     public dynamic var accessoryFont                = UIFont.systemFont(.subheadline)
     public dynamic var accessoryTextColor           = UIColor.grayColor()
+    public dynamic var accessoryTextFrame           = CGRect(x: 0, y: 0, width: 50, height: 50)
     public dynamic var accessoryTintColor           = UIColor.defaultSystemTintColor()
     public dynamic var disclosureIndicatorTintColor = UIColor.grayColor()
     /// The color of the check box ring when the checkbox is Off. The default value is `UIColor.blackColor().colorWithAlphaComponent(0.13)`.
@@ -409,7 +410,7 @@ extension DynamicTableView: BEMCheckBoxDelegate {
                 checkbox.userInteractionEnabled = false
                 cell.accessoryView              = checkbox
             case .text(let text):
-                let label           = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+                let label           = UILabel(frame: accessoryTextFrame)
                 label.text          = text
                 label.font          = accessoryFont
                 label.textAlignment = .Right
@@ -455,6 +456,15 @@ public extension DynamicTableView {
     public func checkboxAccessoryView(atIndexPath indexPath: NSIndexPath) -> BEMCheckBox? {
         if let checkboxAccessoryView = cellForRowAtIndexPath(indexPath)?.accessoryView as? BEMCheckBox {
             return checkboxAccessoryView
+        }
+
+        return nil
+    }
+
+    /// A convenience method to access `accessoryView` at the specified index path.
+    public func accessoryView(atIndexPath indexPath: NSIndexPath) -> UIView? {
+        if let accessoryView = cellForRowAtIndexPath(indexPath)?.accessoryView {
+            return accessoryView
         }
 
         return nil
