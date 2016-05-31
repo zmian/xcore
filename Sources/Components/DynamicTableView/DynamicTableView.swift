@@ -85,6 +85,11 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
         didMoveItem = callback
     }
 
+    private var editActionsForCell: ((indexPath: NSIndexPath) -> [UITableViewRowAction]?)?
+    public func editActionsForCell(callback: (indexPath: NSIndexPath) -> [UITableViewRowAction]?) {
+        editActionsForCell = callback
+    }
+
     // MARK: Init Methods
 
     public convenience init() {
@@ -288,7 +293,7 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
     // MARK: Deletion
 
     public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return allowReordering || allowDeletion
+        return allowReordering || allowDeletion || editActionsForCell != nil
     }
 
     public func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -307,6 +312,10 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
 
     public func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         var actions: [UITableViewRowAction] = []
+
+        if let customActions = editActionsForCell?(indexPath: indexPath) {
+            actions += customActions
+        }
 
         if allowDeletion {
             let delete = UITableViewRowAction(style: .Default, title: rowActionDeleteTitle) {[weak self] action, index in

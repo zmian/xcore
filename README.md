@@ -4,7 +4,7 @@ Cocoa Touch Classes
 ## Installation
 You have two options to include the `xcore.swift` in your project:
 
-### [CocoaPods](http://cocoapods.org/)
+### [CocoaPods](http://cocoapods.org)
 
 #### Podfile
 
