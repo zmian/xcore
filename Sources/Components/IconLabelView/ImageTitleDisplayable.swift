@@ -103,7 +103,7 @@ public extension UILabel {
 public protocol ImageTitleDisplayable {
     var title:    StringRepresentable  { get }
     var subtitle: StringRepresentable? { get }
-    var image:    ImageRepresentable   { get }
+    var image:    ImageRepresentable?  { get }
 }
 
 public extension ImageTitleDisplayable {
