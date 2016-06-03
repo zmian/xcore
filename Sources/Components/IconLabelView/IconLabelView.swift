@@ -104,8 +104,8 @@ public class IconLabelView: UIView {
         }
     }
 
-    /// The default color is white.
-    public dynamic var imageBackgroundColor = UIColor.whiteColor() {
+    /// The default value is `nil`, which results in a transparent background color.
+    public dynamic var imageBackgroundColor: UIColor? = nil {
         didSet {
             imageViewContainer.backgroundColor = imageBackgroundColor
         }
@@ -223,7 +223,7 @@ public class IconLabelView: UIView {
         subtitleLabel.numberOfLines = 1
         subtitleLabel.sizeToFit()
 
-        imageViewContainer.backgroundColor = UIColor.whiteColor()
+        imageViewContainer.backgroundColor = imageBackgroundColor
         imageViewContainer.cornerRadius    = imageCornerRadius
         imageViewContainer.addSubview(imageView)
         let size = NSLayoutConstraint.size(imageViewContainer, size: imageSize).activate()
