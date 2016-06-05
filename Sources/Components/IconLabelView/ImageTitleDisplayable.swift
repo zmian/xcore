@@ -31,14 +31,21 @@ public enum StringSourceType { case attributedString, string }
 
 public protocol ImageRepresentable {
     var imageSourceType: ImageSourceType { get }
+    var url: String? { get }
+}
+
+public extension ImageRepresentable {
+    var url: String? { return nil }
 }
 
 extension String: ImageRepresentable {
     public var imageSourceType: ImageSourceType { return .url }
+    public var url: String? { return self }
 }
 
 extension NSURL: ImageRepresentable {
     public var imageSourceType: ImageSourceType { return .url }
+    public var url: String? { return self.absoluteString }
 }
 
 extension UIImage: ImageRepresentable {
@@ -54,10 +61,8 @@ public extension UIImageView {
 
         switch image.imageSourceType {
             case .url:
-                if let imageName = image as? String {
-                    remoteOrLocalImage(imageName)
-                } else if let url = image as? NSURL {
-                    remoteOrLocalImage(url.absoluteString)
+                if let url = image.url {
+                    remoteOrLocalImage(url)
                 }
             case .UIImage:
                 self.image = image as? UIImage
