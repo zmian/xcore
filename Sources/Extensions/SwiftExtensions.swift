@@ -101,9 +101,6 @@ public extension String {
     public var stringByDeletingLastPathComponent: String { return (self as NSString).stringByDeletingLastPathComponent }
     public var stringByDeletingPathExtension: String { return (self as NSString).stringByDeletingPathExtension }
     public var pathExtension: String { return (self as NSString).pathExtension }
-    public func sizeWithFont(font: UIFont) -> CGSize {
-        return (self as NSString).sizeWithAttributes([NSFontAttributeName: font])
-    }
 
     /// Decode specified `Base64` string
     public init?(base64: String) {
@@ -118,6 +115,47 @@ public extension String {
     /// Returns `Base64` representation of `self`.
     public var base64: String? {
         return dataUsingEncoding(NSUTF8StringEncoding)?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+    }
+}
+
+public extension String {
+    @warn_unused_result
+    public func sizeWithFont(font: UIFont) -> CGSize {
+        return (self as NSString).sizeWithAttributes([NSFontAttributeName: font])
+    }
+
+    @warn_unused_result
+    public func sizeWithFont(font: UIFont, constrainedToSize: CGSize) -> CGSize {
+        let expectedRect = (self as NSString).boundingRectWithSize(constrainedToSize, options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+        return expectedRect.size
+    }
+
+    /// - seealso: http://stackoverflow.com/a/30040937
+    @warn_unused_result
+    public func numberOfLines(font: UIFont, constrainedToSize: CGSize) -> (size: CGSize, numberOfLines: Int) {
+        let textStorage = NSTextStorage(string: self, attributes: [NSFontAttributeName: font])
+
+        let textContainer                  = NSTextContainer(size: constrainedToSize)
+        textContainer.lineBreakMode        = .ByWordWrapping
+        textContainer.maximumNumberOfLines = 0
+        textContainer.lineFragmentPadding  = 0
+
+        let layoutManager = NSLayoutManager()
+        layoutManager.textStorage = textStorage
+        layoutManager.addTextContainer(textContainer)
+
+        var numberOfLines = 0
+        var index         = 0
+        var lineRange     = NSRange(location: 0, length: 0)
+        var size          = CGSize.zero
+
+        while index < layoutManager.numberOfGlyphs {
+            numberOfLines += 1
+            size += layoutManager.lineFragmentRectForGlyphAtIndex(index, effectiveRange: &lineRange).size
+            index = NSMaxRange(lineRange)
+        }
+
+        return (size, numberOfLines)
     }
 }
 
