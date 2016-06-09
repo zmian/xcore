@@ -783,6 +783,15 @@ extension UIButton {
         setBackgroundImage(image, forState: .Highlighted)
     }
 
+    /// The background color to used for the disabled state.
+    public func setDisabledBackgroundColor(color: UIColor?) {
+        var image: UIImage?
+        if let color = color {
+            image = UIImage(color: color, size: CGSize(width: 1, height: 1))
+        }
+        setBackgroundImage(image, forState: .Disabled)
+    }
+
     /// Creates and returns a new button of the specified type with action handler.
     ///
     /// - parameter image:            The image to use for the normal state.
