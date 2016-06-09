@@ -85,8 +85,19 @@ public class IconLabelView: UIView {
     /// The default value is `8`.
     public dynamic var imagePadding: CGFloat = 8 {
         didSet {
-            imagePaddingConstraints.forEach { $0.constant = imagePadding }
+            imageInset = UIEdgeInsets(all: imagePadding)
             imageView.cornerRadius = imageCornerRadius - imagePadding
+        }
+    }
+
+    /// The distance that the view is inset from the enclosing content view.
+    /// The default value is `UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)`.
+    public dynamic var imageInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8) {
+        didSet {
+            imagePaddingConstraints.at(0)?.constant = imageInset.top
+            imagePaddingConstraints.at(1)?.constant = imageInset.bottom
+            imagePaddingConstraints.at(2)?.constant = imageInset.left
+            imagePaddingConstraints.at(3)?.constant = imageInset.right
         }
     }
 
@@ -229,7 +240,7 @@ public class IconLabelView: UIView {
         let size = NSLayoutConstraint.size(imageViewContainer, size: imageSize).activate()
         imageSizeConstraints.width  = size[0]
         imageSizeConstraints.height = size[1]
-        imagePaddingConstraints = NSLayoutConstraint.constraintsForViewToFillSuperview(imageView, padding: UIEdgeInsets(all: imagePadding)).activate()
+        imagePaddingConstraints = NSLayoutConstraint.constraintsForViewToFillSuperview(imageView, padding: imageInset).activate()
 
         // Ensures smooth scaling quality
         imageView.layer.minificationFilter = kCAFilterTrilinear
