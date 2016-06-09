@@ -88,13 +88,13 @@ public extension UIFont {
     }
 
     public struct Size {
-        public static let Headline: CGFloat    = 16
-        public static let Subheadline: CGFloat = 14
-        public static let Body: CGFloat        = 16
-        public static let Label                = UIFont.labelFontSize()
-        public static let Button               = UIFont.buttonFontSize()
-        public static let Small                = UIFont.smallSystemFontSize()
-        public static let System               = UIFont.systemFontSize()
+        public static let headline: CGFloat    = 16
+        public static let subheadline: CGFloat = 14
+        public static let body: CGFloat        = 16
+        public static let label                = UIFont.labelFontSize()
+        public static let button               = UIFont.buttonFontSize()
+        public static let small                = UIFont.smallSystemFontSize()
+        public static let system               = UIFont.systemFontSize()
     }
 
     @warn_unused_result
