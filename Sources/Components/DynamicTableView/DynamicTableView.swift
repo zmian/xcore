@@ -301,7 +301,7 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
     }
 
     public func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return allowDeletion ? .Delete : .None
+        return (allowDeletion || editActionsForCell != nil) ? .Delete : .None
     }
 
     public func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
