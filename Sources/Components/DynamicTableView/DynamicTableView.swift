@@ -313,18 +313,18 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
     public func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         var actions: [UITableViewRowAction] = []
 
-        if let customActions = editActionsForCell?(indexPath: indexPath) {
-            actions += customActions
-        }
-
         if allowDeletion {
-            let delete = UITableViewRowAction(style: .Default, title: rowActionDeleteTitle) {[weak self] action, index in
+            let delete = UITableViewRowAction(style: .Destructive, title: rowActionDeleteTitle) {[weak self] action, index in
                 self?.removeItems([indexPath])
             }
             actions.append(delete)
             if let rowActionDeleteColor = rowActionDeleteColor {
                 delete.backgroundColor = rowActionDeleteColor
             }
+        }
+
+        if let customActions = editActionsForCell?(indexPath: indexPath) {
+            actions += customActions
         }
 
         return actions
