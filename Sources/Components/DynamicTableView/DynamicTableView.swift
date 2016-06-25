@@ -85,8 +85,8 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
         didMoveItem = callback
     }
 
-    private var editActionsForCell: ((indexPath: NSIndexPath) -> [UITableViewRowAction]?)?
-    public func editActionsForCell(callback: (indexPath: NSIndexPath) -> [UITableViewRowAction]?) {
+    private var editActionsForCell: ((indexPath: NSIndexPath, item: DynamicTableModel) -> [UITableViewRowAction]?)?
+    public func editActionsForCell(callback: (indexPath: NSIndexPath, item: DynamicTableModel) -> [UITableViewRowAction]?) {
         editActionsForCell = callback
     }
 
@@ -323,7 +323,7 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
             }
         }
 
-        if let customActions = editActionsForCell?(indexPath: indexPath) {
+        if let customActions = editActionsForCell?(indexPath: indexPath, item: sections[indexPath]) {
             actions += customActions
         }
 
