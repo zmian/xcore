@@ -1261,4 +1261,28 @@ public extension UITableView {
             selectRowAtIndexPath($0, animated: animated, scrollPosition: scrollPosition)
         }
     }
+
+    /// Toggles the table view into and out of editing mode with completion handler when animation is completed.
+    ///
+    /// - parameter editing:           `true` to enter editing mode; `false` to leave it. The default value is `false`.
+    /// - parameter animated:          `true` to animate the transition to editing mode; `false` to make the transition immediate.
+    /// - parameter completionHandler: A block object called when animation is completed.
+    public func setEditing(editing: Bool, animated: Bool, completionHandler: () -> Void) {
+        CATransaction.animationTransaction({
+            setEditing(editing, animated: animated)
+        }, completionHandler: completionHandler)
+    }
+}
+
+extension CATransaction {
+    /// A helper function to group animation transactions and call completion handler when animations for this transaction group are completed.
+    ///
+    /// - parameter animateBlock:      The block that have animations that must be completed before completion handler is called.
+    /// - parameter completionHandler: A block object called when animations for this transaction group are completed.
+    public static func animationTransaction(@noescape animateBlock: () -> Void, completionHandler: (() -> Void)?) {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completionHandler)
+        animateBlock()
+        CATransaction.commit()
+    }
 }

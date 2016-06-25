@@ -338,15 +338,14 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
     /// - parameter animation:  A constant that indicates how the deletion is to be animated.
     private func removeItems(indexPaths: [NSIndexPath], animation: UITableViewRowAnimation = .Automatic) {
         let items = indexPaths.map { (indexPath: $0, item: sections.removeAt($0)) }
-        CATransaction.begin()
-        CATransaction.setCompletionBlock {[weak self] in
+        CATransaction.animationTransaction({
+            deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+        }, completionHandler: {[weak self] in
             guard let weakSelf = self else { return }
             items.forEach { indexPath, item in
                 weakSelf.didRemoveItem?(indexPath: indexPath, item: item)
             }
-        }
-        deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
-        CATransaction.commit()
+        })
     }
 
     public override func deselectRowAtIndexPath(indexPath: NSIndexPath, animated: Bool) {
