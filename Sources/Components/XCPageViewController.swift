@@ -181,8 +181,8 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
         return viewControllers.indexOf(viewController) ?? 0
     }
 
-    private func reloadData() {
-        pageViewController.setViewControllers(viewControllers, direction: .Forward, animated: false, completion: nil)
+    public func reloadData() {
+        setCurrentPage(pageControl.currentPage)
     }
 
     private func updateStatusBar(forIndex index: Int) {
