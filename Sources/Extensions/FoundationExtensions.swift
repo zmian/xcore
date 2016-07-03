@@ -45,12 +45,22 @@ public extension NSDate {
 // MARK: NSAttributedString Extension
 
 extension NSAttributedString {
-    public func setLineSpacing(spacing: CGFloat) -> NSAttributedString {
+    @warn_unused_result
+    public func setLineSpacing(spacing: CGFloat) -> NSMutableAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = spacing
         let newAttributedString = NSMutableAttributedString(attributedString: self)
         newAttributedString.addAttributes([NSParagraphStyleAttributeName: paragraphStyle], range: NSRange(location: 0, length: string.count))
         return newAttributedString
+    }
+}
+
+extension NSMutableAttributedString {
+    public override func setLineSpacing(spacing: CGFloat) -> NSMutableAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = spacing
+        addAttributes([NSParagraphStyleAttributeName: paragraphStyle], range: NSRange(location: 0, length: string.count))
+        return self
     }
 }
 
