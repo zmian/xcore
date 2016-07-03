@@ -24,6 +24,24 @@
 
 import UIKit
 
+// MARK: NSDate Extension
+
+public extension NSDate {
+    public func fromNow(unitsStyle: NSDateComponentsFormatterUnitsStyle = .Abbreviated, format: String = "%@") -> String? {
+        let formatter              = NSDateComponentsFormatter()
+        formatter.unitsStyle       = unitsStyle
+        formatter.maximumUnitCount = 1
+        formatter.allowedUnits     = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+
+        guard let timeString = formatter.stringFromDate(self, toDate: NSDate()) else {
+            return nil
+        }
+
+        let formatString = NSLocalizedString(format, comment: "Used to say how much time has passed (e.g. '2 hours ago').")
+        return String(format: formatString, timeString)
+    }
+}
+
 // MARK: NSBundle Extension
 
 public extension NSBundle {
