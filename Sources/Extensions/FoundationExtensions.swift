@@ -42,6 +42,18 @@ public extension NSDate {
     }
 }
 
+// MARK: NSAttributedString Extension
+
+extension NSAttributedString {
+    public func setLineSpacing(spacing: CGFloat) -> NSAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = spacing
+        let newAttributedString = NSMutableAttributedString(attributedString: self)
+        newAttributedString.addAttributes([NSParagraphStyleAttributeName: paragraphStyle], range: NSRange(location: 0, length: string.count))
+        return newAttributedString
+    }
+}
+
 // MARK: NSBundle Extension
 
 public extension NSBundle {
