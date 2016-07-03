@@ -44,12 +44,12 @@ public struct DynamicTableCellOptions: OptionSetType {
 }
 
 public struct DynamicTableModel {
-    public var title: StringRepresentable?
-    public var subtitle: StringRepresentable?
-    public var image: ImageRepresentable?
-    public var accessory: DynamicTableAccessoryType
-    public var userInfo: [String: Any]
-    public var handler: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)?
+    public var title: StringRepresentable?          = nil
+    public var subtitle: StringRepresentable?       = nil
+    public var image: ImageRepresentable?           = nil
+    public var accessory: DynamicTableAccessoryType = .none
+    public var userInfo: [String: Any]              = [:]
+    public var handler: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)? = nil
 
     public init(title: StringRepresentable? = nil, subtitle: StringRepresentable? = nil, image: ImageRepresentable? = nil, accessory: DynamicTableAccessoryType = .none, userInfo: [String: Any] = [:], handler: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)? = nil) {
         self.title     = title
