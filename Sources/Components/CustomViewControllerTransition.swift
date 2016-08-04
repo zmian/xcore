@@ -22,6 +22,8 @@
 // THE SOFTWARE.
 //
 
+import UIKit
+
 public class TransitionContext {
     private let transitionContext: UIViewControllerContextTransitioning
     let sourceViewController: UIViewController

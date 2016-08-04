@@ -24,6 +24,8 @@
 
 // Adopted: https://medium.com/swift-programming/ce22d76f120c
 
+import Foundation
+
 public struct ArrayGenerator<Element>: GeneratorType {
     private let array: [Element]
     private var currentIndex = 0
