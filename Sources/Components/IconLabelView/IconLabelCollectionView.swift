@@ -255,11 +255,12 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     private func toggleVisibleCellsDeleteButtons() {
         visibleCells().flatMap { $0 as? IconLabelCollectionViewCell }.forEach { $0.setDeleteButtonHidden(!isEditing) }
     }
-}
 
-// MARK: Convenience API
+    // MARK: Convenience API
 
-public extension IconLabelCollectionView {
+    // Note: This is here instead of separate extension because Swift doesn't allow us to `override`
+    // property declared in an extension.
+
     /// A convenience property to create a single section collection view.
     public var items: [ImageTitleDisplayable] {
         get { return sections.first?.items ?? [] }
