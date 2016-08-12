@@ -573,6 +573,25 @@ public extension UINavigationController {
             setViewControllers(rvc, animated: false)
         }
     }
+
+    /// A convenience method to pop to view controller of specified subclass of `UIViewController` type.
+    ///
+    /// - parameter type:            The View controller type to pop to.
+    /// - parameter animated:        Set this value to true to animate the transition.
+    ///                              Pass `false` if you are setting up a navigation controller
+    ///                              before its view is displayed.
+    /// - parameter isReversedOrder: If multiple view controllers of specified type exists it
+    ///                              pop the latest of type by default. Pass `false` to reverse the behavior.
+    public func popToViewController(ofClassType type: UIViewController.Type, animated: Bool, isReversedOrder: Bool = true) {
+        let viewControllers = isReversedOrder ? self.viewControllers.reverse() : self.viewControllers
+
+        for viewController in viewControllers {
+            if viewController.isKindOfClass(type) {
+                popToViewController(viewController, animated: animated)
+                break
+            }
+        }
+    }
 }
 
 public extension UINavigationController {
