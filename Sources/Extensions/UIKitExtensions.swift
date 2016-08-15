@@ -1302,16 +1302,3 @@ public extension UITableView {
         }, completionHandler: completionHandler)
     }
 }
-
-extension CATransaction {
-    /// A helper function to group animation transactions and call completion handler when animations for this transaction group are completed.
-    ///
-    /// - parameter animateBlock:      The block that have animations that must be completed before completion handler is called.
-    /// - parameter completionHandler: A block object called when animations for this transaction group are completed.
-    public static func animationTransaction(@noescape animateBlock: () -> Void, completionHandler: (() -> Void)?) {
-        CATransaction.begin()
-        CATransaction.setCompletionBlock(completionHandler)
-        animateBlock()
-        CATransaction.commit()
-    }
-}
