@@ -702,6 +702,41 @@ public extension UIToolbar {
     }
 }
 
+// MARK: UITabBar Extension
+
+public extension UITabBar {
+    private struct AssociatedKey {
+        static var IsTransparent = "Xcore_IsTransparent"
+    }
+
+    public var isTransparent: Bool {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.IsTransparent) as? Bool ?? false }
+        set {
+            guard newValue != isTransparent else { return }
+            objc_setAssociatedObject(self, &AssociatedKey.IsTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+
+            if newValue {
+                backgroundImage = UIImage()
+                shadowImage     = UIImage()
+                translucent     = true
+                backgroundColor = UIColor.clearColor()
+            } else {
+                backgroundImage = nil
+            }
+        }
+    }
+
+    public var isBorderHidden: Bool {
+        get { return valueForKey("_hidesShadow") as? Bool ?? false }
+        set { setValue(newValue, forKey: "_hidesShadow") }
+    }
+
+    public func setBorder(color color: UIColor, width: CGFloat = 1) {
+        isBorderHidden = true
+        addBorder(edges: .Top, color: color, thickness: width)
+    }
+}
+
 // MARK: UIButton Extension
 
 extension UIButton {
