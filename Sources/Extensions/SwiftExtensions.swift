@@ -170,6 +170,27 @@ public extension Int {
     }
 }
 
+extension IntervalType {
+    /// Returns a random element from `self`.
+    ///
+    /// ```
+    /// (0.0...1.0).random()   // 0.112358
+    /// (-1.0..<68.5).random() // 26.42
+    /// ```
+    @warn_unused_result
+    public func random() -> Bound {
+        guard
+            let start = self.start as? Double,
+            let end = self.end as? Double
+        else {
+            return self.start
+        }
+
+        let range = end - start
+        return ((Double(arc4random_uniform(UInt32.max)) / Double(UInt32.max)) * range + start) as! Bound
+    }
+}
+
 extension Array {
     /// Returns a random subarray of given length
     ///
