@@ -27,6 +27,7 @@ import UIKit
 // MARK: NSDate Extension
 
 public extension NSDate {
+    @warn_unused_result
     public func fromNow(unitsStyle: NSDateComponentsFormatterUnitsStyle = .Abbreviated, format: String = "%@") -> String? {
         let formatter              = NSDateComponentsFormatter()
         formatter.unitsStyle       = unitsStyle
@@ -40,6 +41,37 @@ public extension NSDate {
         let formatString = NSLocalizedString(format, comment: "Used to say how much time has passed (e.g. '2 hours ago').")
         return String(format: formatString, timeString)
     }
+
+    /// Reset time to beginning of the day (`12 AM`) of `self` without changing the timezone.
+    @warn_unused_result
+    func stripTime() -> NSDate {
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Year, .Month, .Day], fromDate: self)
+        return calendar.dateFromComponents(components) ?? self
+    }
+
+    // MARK: UTC
+
+    private static let utcDateFormatter: NSDateFormatter = {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeZone = .utc
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter
+    }()
+
+    var utc: NSDate {
+        let dateString = NSDate.utcDateFormatter.stringFromDate(self)
+        NSDate.utcDateFormatter.timeZone = .defaultTimeZone()
+        let date = NSDate.utcDateFormatter.dateFromString(dateString)!
+        NSDate.utcDateFormatter.timeZone = .utc
+        return date
+    }
+}
+
+private extension NSTimeZone {
+    static let utc: NSTimeZone = {
+        return NSTimeZone(name: "UTC")!
+    }()
 }
 
 // MARK: NSAttributedString Extension
