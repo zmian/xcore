@@ -226,8 +226,9 @@ public extension UIView {
 
     // Credit: http://stackoverflow.com/a/23157272
 
-    public func addBorder(edges edges: UIRectEdge, color: UIColor = UIColor.whiteColor(), thickness: CGFloat = 1) -> [UIView] {
+    public func addBorder(edges edges: UIRectEdge, color: UIColor = UIColor.whiteColor(), thickness: CGFloat = 1, padding: UIEdgeInsets = .zero) -> [UIView] {
         var borders = [UIView]()
+        let metrics = ["thickness": thickness, "paddingTop": padding.top, "paddingLeft": padding.left, "paddingBottom": padding.bottom, "paddingRight": padding.right]
 
         func border() -> UIView {
             let border = UIView(frame: .zero)
@@ -239,13 +240,13 @@ public extension UIView {
         if edges.contains(.Top) || edges.contains(.All) {
             let top = border()
             addSubview(top)
-            NSLayoutConstraint.constraintsWithVisualFormat("V:|-(0)-[top(==thickness)]",
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|-paddingTop-[top(==thickness)]",
                 options: [],
-                metrics: ["thickness": thickness],
+                metrics: metrics,
                 views: ["top": top]).activate()
-            NSLayoutConstraint.constraintsWithVisualFormat("H:|-(0)-[top]-(0)-|",
+            NSLayoutConstraint.constraintsWithVisualFormat("H:|-paddingLeft-[top]-paddingRight-|",
                 options: [],
-                metrics: nil,
+                metrics: metrics,
                 views: ["top": top]).activate()
             borders.append(top)
         }
@@ -253,13 +254,13 @@ public extension UIView {
         if edges.contains(.Left) || edges.contains(.All) {
             let left = border()
             addSubview(left)
-            NSLayoutConstraint.constraintsWithVisualFormat("H:|-(0)-[left(==thickness)]",
+            NSLayoutConstraint.constraintsWithVisualFormat("H:|-paddingLeft-[left(==thickness)]",
                 options: [],
-                metrics: ["thickness": thickness],
+                metrics: metrics,
                 views: ["left": left]).activate()
-            NSLayoutConstraint.constraintsWithVisualFormat("V:|-(0)-[left]-(0)-|",
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|-paddingTop-[left]-paddingBottom-|",
                 options: [],
-                metrics: nil,
+                metrics: metrics,
                 views: ["left": left]).activate()
             borders.append(left)
         }
@@ -267,13 +268,13 @@ public extension UIView {
         if edges.contains(.Right) || edges.contains(.All) {
             let right = border()
             addSubview(right)
-            NSLayoutConstraint.constraintsWithVisualFormat("H:[right(==thickness)]-(0)-|",
+            NSLayoutConstraint.constraintsWithVisualFormat("H:[right(==thickness)]-paddingRight-|",
                 options: [],
-                metrics: ["thickness": thickness],
+                metrics: metrics,
                 views: ["right": right]).activate()
-            NSLayoutConstraint.constraintsWithVisualFormat("V:|-(0)-[right]-(0)-|",
+            NSLayoutConstraint.constraintsWithVisualFormat("V:|-paddingTop-[right]-paddingBottom-|",
                 options: [],
-                metrics: nil,
+                metrics: metrics,
                 views: ["right": right]).activate()
             borders.append(right)
         }
@@ -281,13 +282,13 @@ public extension UIView {
         if edges.contains(.Bottom) || edges.contains(.All) {
             let bottom = border()
             addSubview(bottom)
-            NSLayoutConstraint.constraintsWithVisualFormat("V:[bottom(==thickness)]-(0)-|",
+            NSLayoutConstraint.constraintsWithVisualFormat("V:[bottom(==thickness)]-paddingBottom-|",
                 options: [],
-                metrics: ["thickness": thickness],
+                metrics: metrics,
                 views: ["bottom": bottom]).activate()
-            NSLayoutConstraint.constraintsWithVisualFormat("H:|-(0)-[bottom]-(0)-|",
+            NSLayoutConstraint.constraintsWithVisualFormat("H:|-paddingLeft-[bottom]-paddingRight-|",
                 options: [],
-                metrics: nil,
+                metrics: metrics,
                 views: ["bottom": bottom]).activate()
             borders.append(bottom)
         }
