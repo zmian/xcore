@@ -1,5 +1,5 @@
 //
-// BaseTextField.swift
+// XCTextField.swift
 //
 // Copyright © 2016 Zeeshan Mian
 //
@@ -24,9 +24,13 @@
 
 import UIKit
 
-public class BaseTextField: UITextField {
+public class XCTextField: UITextField {
     /// The default value is `UIEdgeInsets.zero`.
     public var edgeInsets = UIEdgeInsets.zero
+    /// The default value is `nil`. Uses `font`.
+    public var placeholderFont: UIFont?
+    /// The default value is `nil`. Uses `textColor`.
+    public var placeholderTextColor: UIColor?
 
     public override func textRectForBounds(bounds: CGRect) -> CGRect {
         return super.textRectForBounds(UIEdgeInsetsInsetRect(bounds, edgeInsets))
@@ -34,5 +38,27 @@ public class BaseTextField: UITextField {
 
     public override func editingRectForBounds(bounds: CGRect) -> CGRect {
         return super.editingRectForBounds(UIEdgeInsetsInsetRect(bounds, edgeInsets))
+    }
+
+    // Fixes text jumping
+    public override func resignFirstResponder() -> Bool {
+        let resigned = super.resignFirstResponder()
+        layoutIfNeeded()
+        return resigned
+    }
+
+    public override var placeholder: String? {
+        get { return attributedPlaceholder?.string }
+        set {
+            guard let newValue = newValue else {
+                attributedPlaceholder = nil
+                return
+            }
+
+            attributedPlaceholder = NSAttributedString(string: newValue, attributes: [
+                NSForegroundColorAttributeName: placeholderTextColor ?? textColor ?? .blackColor(),
+                NSFontAttributeName: placeholderFont ?? font ?? UIFont.systemFont(.body)
+            ])
+        }
     }
 }
