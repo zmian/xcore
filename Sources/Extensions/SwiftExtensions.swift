@@ -191,6 +191,29 @@ extension IntervalType {
     }
 }
 
+extension Int {
+    /// Returns an `Array` containing the results of mapping `transform`
+    /// over `self`.
+    ///
+    /// - complexity: O(N).
+    ///
+    /// ```
+    /// let values = 10.map { $0 * 2 }
+    /// print(values)
+    ///
+    /// // prints
+    /// [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+    /// ```
+    @warn_unused_result
+    public func map<T>(@noescape transform: (Int) throws -> T) rethrows -> [T] {
+        var results = [T]()
+        for i in 0..<self {
+            try results.append(transform(i + 1))
+        }
+        return results
+    }
+}
+
 extension Array {
     /// Returns a random subarray of given length
     ///
@@ -397,4 +420,16 @@ extension Double {
     }
 
     private static let testValues: [Double] = [598, -999, 1000, -1284, 9940, 9980, 39900, 99880, 399880, 999898, 999999, 1456384, 12383474, 987, 1200, 12000, 120000, 1200000, 1340, 132456, 9_000_000_000, 16_000_000, 160_000_000, 999_000_000]
+}
+
+extension SequenceType where Generator.Element == Double {
+    /// ```
+    /// [1, 1, 1, 1, 1, 1].runningSum() // -> [1, 2, 3, 4, 5, 6]
+    /// ```
+    @warn_unused_result
+    public func runningSum() -> [Generator.Element] {
+        return self.reduce([]) { sums, element in
+            return sums + [element + (sums.last ?? 0)]
+        }
+    }
 }
