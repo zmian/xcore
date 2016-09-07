@@ -741,6 +741,47 @@ public extension UITabBar {
 // MARK: UIButton Extension
 
 extension UIButton {
+    private struct AssociatedKey {
+        static var TouchAreaEdgeInsets = "Xcore_TouchAreaEdgeInsets"
+    }
+
+    // http://stackoverflow.com/a/32002161
+
+    /// Increase button touch area.
+    ///
+    /// ```
+    /// let button = UIButton()
+    /// button.touchAreaEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
+    /// ```
+    public var touchAreaEdgeInsets: UIEdgeInsets {
+        get {
+            guard let value = objc_getAssociatedObject(self, &AssociatedKey.TouchAreaEdgeInsets) as? NSValue else {
+                return .zero
+            }
+
+            var edgeInsets = UIEdgeInsets.zero
+            value.getValue(&edgeInsets)
+            return edgeInsets
+        }
+        set {
+            var newValueCopy = newValue
+            let objCType = NSValue(UIEdgeInsets: .zero).objCType
+            let value = NSValue(&newValueCopy, withObjCType: objCType)
+            objc_setAssociatedObject(self, &AssociatedKey.TouchAreaEdgeInsets, value, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
+    public override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+        if UIEdgeInsetsEqualToEdgeInsets(touchAreaEdgeInsets, .zero) || !userInteractionEnabled || !enabled || hidden {
+            return super.pointInside(point, withEvent: event)
+        }
+
+        let hitFrame = UIEdgeInsetsInsetRect(bounds, touchAreaEdgeInsets)
+        return CGRectContainsPoint(hitFrame, point)
+    }
+}
+
+extension UIButton {
 
     // Increase button touch area to be 44 points
     // See: http://stackoverflow.com/a/27683614

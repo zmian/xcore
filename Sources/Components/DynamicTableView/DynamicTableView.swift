@@ -104,7 +104,7 @@ public class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableVie
         self.init(style: style, options: [])
     }
 
-    public convenience init(frame: CGRect = CGRectZero, style: UITableViewStyle = .Plain, options: DynamicTableCellOptions) {
+    public convenience init(frame: CGRect = .zero, style: UITableViewStyle = .Plain, options: DynamicTableCellOptions) {
         self.init(frame: frame, style: style)
         cellOptions = options
     }
