@@ -35,11 +35,18 @@ public struct Response {
     }
 
     public var responseJSON: AnyObject? {
-        if let data = data {
-            return try? NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
-        } else {
+        guard let data = data else {
+            console.error("`data` is `nil`.")
             return nil
         }
+
+        do {
+            return try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+        } catch let error {
+            console.error("Failed to parse JSON:", error)
+        }
+
+        return nil
     }
 
     public var responseString: String? {

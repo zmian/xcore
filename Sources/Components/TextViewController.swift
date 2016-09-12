@@ -101,6 +101,8 @@ public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
 
         if let backgroundImage = backgroundImage?.CGImage {
             view.layer.contents = backgroundImage
+        } else {
+            view.backgroundColor = UIColor.whiteColor()
         }
     }
 
