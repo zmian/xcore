@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.authors               = { 'Zeeshan Mian' => 'https://twitter.com/zmian' }
   s.source                = { :git => 'https://github.com/zmian/xcore.swift.git', :tag => s.version }
   s.source_files          = 'Sources/**/*.swift'
-  s.resources             = 'Sources/*.xcassets'
+  s.resources             = 'Sources/**/*.xcassets'
   s.requires_arc          = true
   s.ios.deployment_target = '8.0'
   s.pod_target_xcconfig   = { 'OTHER_SWIFT_FLAGS' => '-DXCORE_ENVIRONMENT_${CONFIGURATION}' }
