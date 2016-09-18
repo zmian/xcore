@@ -11,6 +11,8 @@
 		684832091D8E555C0005D088 /* MDHTMLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 684832071D8E555C0005D088 /* MDHTMLLabel.m */; };
 		6848320C1D8E56830005D088 /* WebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6848320A1D8E56830005D088 /* WebImage.framework */; };
 		6848320D1D8E56830005D088 /* BEMCheckBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6848320B1D8E56830005D088 /* BEMCheckBox.framework */; };
+		6848320E1D8E5F190005D088 /* WebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6848320A1D8E56830005D088 /* WebImage.framework */; };
+		6848320F1D8E5F190005D088 /* BEMCheckBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6848320B1D8E56830005D088 /* BEMCheckBox.framework */; };
 		689D0C7F1D8DBB9600145E0B /* Xcore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689D0C751D8DBB9500145E0B /* Xcore.framework */; };
 		689D0CA51D8DBD6A00145E0B /* Xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = 689D0CA31D8DBD6A00145E0B /* Xcore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		689D0CE21D8DBDDD00145E0B /* Benchmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0CA81D8DBDDD00145E0B /* Benchmark.swift */; };
@@ -156,6 +158,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				689D0C7F1D8DBB9600145E0B /* Xcore.framework in Frameworks */,
+				6848320F1D8E5F190005D088 /* BEMCheckBox.framework in Frameworks */,
+				6848320E1D8E5F190005D088 /* WebImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,11 +372,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 689D0C891D8DBB9600145E0B /* Build configuration list for PBXNativeTarget "Xcore" */;
 			buildPhases = (
-				689D0C711D8DBB9500145E0B /* Frameworks */,
 				689D0C701D8DBB9500145E0B /* Sources */,
+				689D0C711D8DBB9500145E0B /* Frameworks */,
 				689D0C721D8DBB9500145E0B /* Headers */,
 				689D0C731D8DBB9500145E0B /* Resources */,
-				684832031D8E511B0005D088 /* Run Script Phase for Carthage */,
 			);
 			buildRules = (
 			);
@@ -458,25 +461,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		684832031D8E511B0005D088 /* Run Script Phase for Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Carthage/Build/iOS/BEMCheckBox.framework",
-				"$(SRCROOT)/Carthage/Carthage/Build/iOS/WebImage.framework",
-			);
-			name = "Run Script Phase for Carthage";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		689D0C701D8DBB9500145E0B /* Sources */ = {
@@ -705,6 +689,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.XcoreTests;
@@ -717,6 +705,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.XcoreTests;
