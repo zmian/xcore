@@ -68,7 +68,7 @@ public extension AVPlayer {
             objc_setAssociatedObject(self, &AssociatedKey.playerRepeat, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 
             if newValue {
-                NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: currentItem, queue: nil) {[weak self] notification in
+                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: currentItem, queue: nil) {[weak self] notification in
                     if let currentItem = notification.object as? AVPlayerItem {
                         self?.actionAtItemEnd = .none
                         currentItem.seek(to: kCMTimeZero)
@@ -76,7 +76,7 @@ public extension AVPlayer {
                     }
                 }
             } else {
-                NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: currentItem)
+                NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: currentItem)
             }
         }
     }

@@ -64,7 +64,7 @@ public class XCUserDefault<T> {
         return value
     }
 
-    public func save(newValue: T?, storage: UserDefaults = UserDefaults.standard) {
+    public func save(_ newValue: T?, storage: UserDefaults = UserDefaults.standard) {
         if shouldCacheValueInMemory { cachedValueInMemory = newValue }
 
         if let serializableValue = newValue as? Serializable {
@@ -79,7 +79,7 @@ public class XCUserDefault<T> {
     }
 
     private func onApplicationMemoryWarning(callback: @escaping () -> Void) {
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidReceiveMemoryWarning, object: nil, queue: nil) { _ in
+        NotificationCenter.default.addObserver(forName: .UIApplicationDidReceiveMemoryWarning, object: nil, queue: nil) { _ in
             callback()
         }
     }
