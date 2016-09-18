@@ -24,34 +24,34 @@
 
 import UIKit
 
-public class XCScrollViewController: UIViewController {
+open class XCScrollViewController: UIViewController {
     public let scrollView = UIScrollView()
 
     /// An option to determine whether the `scrollView`'s `top` and `bottom` is constrained
     /// to `topLayoutGuide` and `bottomLayoutGuide`. The default value is `[]`.
-    public var constraintToLayoutGuideOptions: LayoutGuideOptions = []
+    open var constraintToLayoutGuideOptions: LayoutGuideOptions = []
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         setupContentView()
     }
 
-    private func setupContentView() {
+    fileprivate func setupContentView() {
         view.addSubview(scrollView)
         constraintsForViewToFillSuperview(scrollView, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
         resolveContentSize()
     }
 
-    private func resolveContentSize() {
+    fileprivate func resolveContentSize() {
         let scrollViewWidthResolver = UIView()
-        scrollViewWidthResolver.hidden = true
+        scrollViewWidthResolver.isHidden = true
         scrollView.addSubview(scrollViewWidthResolver)
         NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(scrollViewWidthResolver).activate()
-        NSLayoutConstraint(item: scrollViewWidthResolver, attribute: .Top, toItem: scrollView).activate()
+        NSLayoutConstraint(item: scrollViewWidthResolver, attribute: .top, toItem: scrollView).activate()
         NSLayoutConstraint(item: scrollViewWidthResolver, height: 1).activate()
 
         // Now the important part
         // Setting the `scrollViewWidthResolver` width to `self.view` width correctly defines the content width of the scroll view
-        NSLayoutConstraint(item: scrollViewWidthResolver, attribute: .Width, toItem: view).activate()
+        NSLayoutConstraint(item: scrollViewWidthResolver, attribute: .width, toItem: view).activate()
     }
 }

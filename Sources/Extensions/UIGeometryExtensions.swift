@@ -43,7 +43,6 @@ public extension CGFloat {
     /// A convenience method to convert an angle from degrees to radians.
     ///
     /// - returns: `self` value in radians.
-    @warn_unused_result
     public func degreesToRadians() -> CGFloat {
         return π * self / 180
     }
@@ -51,13 +50,12 @@ public extension CGFloat {
     /// A convenience method to convert an angle from radians to degrees.
     ///
     /// - returns: `self` value in degrees.
-    @warn_unused_result
     public func radiansToDegrees() -> CGFloat {
         return self * 180 / π
     }
 }
 
-public func +=(inout lhs: CGSize, rhs: CGSize) {
+public func +=(lhs: inout CGSize, rhs: CGSize) {
     lhs.width  += rhs.width
     lhs.height += rhs.height
 }
@@ -70,6 +68,6 @@ public func +(lhs: CGSize, rhs: CGFloat) -> CGSize {
     return CGSize(width: lhs.width + rhs, height: lhs.height + rhs)
 }
 
-public func +=(inout lhs: CGSize, rhs: CGFloat) {
+public func +=(lhs: inout CGSize, rhs: CGFloat) {
     lhs = lhs + rhs
 }

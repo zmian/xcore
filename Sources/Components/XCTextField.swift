@@ -24,30 +24,30 @@
 
 import UIKit
 
-public class XCTextField: UITextField {
+open class XCTextField: UITextField {
     /// The default value is `UIEdgeInsets.zero`.
-    public var edgeInsets = UIEdgeInsets.zero
+    open var edgeInsets = UIEdgeInsets.zero
     /// The default value is `nil`. Uses `font`.
-    public var placeholderFont: UIFont?
+    open var placeholderFont: UIFont?
     /// The default value is `nil`. Uses `textColor`.
-    public var placeholderTextColor: UIColor?
+    open var placeholderTextColor: UIColor?
 
-    public override func textRectForBounds(bounds: CGRect) -> CGRect {
-        return super.textRectForBounds(UIEdgeInsetsInsetRect(bounds, edgeInsets))
+    open override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return super.textRect(forBounds: UIEdgeInsetsInsetRect(bounds, edgeInsets))
     }
 
-    public override func editingRectForBounds(bounds: CGRect) -> CGRect {
-        return super.editingRectForBounds(UIEdgeInsetsInsetRect(bounds, edgeInsets))
+    open override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return super.editingRect(forBounds: UIEdgeInsetsInsetRect(bounds, edgeInsets))
     }
 
     // Fixes text jumping
-    public override func resignFirstResponder() -> Bool {
+    open override func resignFirstResponder() -> Bool {
         let resigned = super.resignFirstResponder()
         layoutIfNeeded()
         return resigned
     }
 
-    public override var placeholder: String? {
+    open override var placeholder: String? {
         get { return attributedPlaceholder?.string }
         set {
             guard let newValue = newValue else {
@@ -56,7 +56,7 @@ public class XCTextField: UITextField {
             }
 
             attributedPlaceholder = NSAttributedString(string: newValue, attributes: [
-                NSForegroundColorAttributeName: placeholderTextColor ?? textColor ?? UIColor.blackColor(),
+                NSForegroundColorAttributeName: placeholderTextColor ?? textColor ?? UIColor.black,
                 NSFontAttributeName: placeholderFont ?? font ?? UIFont.systemFont(.body)
             ])
         }

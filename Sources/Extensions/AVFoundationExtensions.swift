@@ -32,19 +32,17 @@ public extension AVPlayer {
         return rate != 0 && error == nil
     }
 
-    @warn_unused_result
-    public func currentTime(block: (seconds: Int, formattedTime: String) -> Void) -> AnyObject {
+    public func currentTime(_ block: @escaping (_ seconds: Int, _ formattedTime: String) -> Void) -> Any {
         let interval = CMTime(value: 1, timescale: 1)
-        return addPeriodicTimeObserverForInterval(interval, queue: dispatch_get_main_queue()) {[weak self] time in
+        return addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) {[weak self] time in
             if let weakSelf = self {
                 let normalizedTime = Double(weakSelf.currentTime().value) / Double(weakSelf.currentTime().timescale)
-                block(seconds: Int(normalizedTime), formattedTime: weakSelf.formatSeconds(Int(normalizedTime)))
+                block(Int(normalizedTime), weakSelf.format(seconds: Int(normalizedTime)))
             }
         }
     }
 
-    @warn_unused_result
-    private func formatSeconds(seconds: Int) -> String {
+    fileprivate func format(seconds: Int) -> String {
         let sec = seconds % 60
         let min = seconds / 60
         let hrs = seconds / 3600
@@ -58,27 +56,27 @@ public extension AVPlayer {
 }
 
 public extension AVPlayer {
-    private struct AssociatedKey {
-        static var Repeat = "XcoreAVPlayerRepeat"
+    fileprivate struct AssociatedKey {
+        static var playerRepeat = "XcoreAVPlayerRepeat"
     }
 
     /// Indicates whether to repeat playback of the current item.
     public var `repeat`: Bool {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.Repeat) as? Bool ?? false }
+        get { return objc_getAssociatedObject(self, &AssociatedKey.playerRepeat) as? Bool ?? false }
         set {
             guard newValue != `repeat` else { return }
-            objc_setAssociatedObject(self, &AssociatedKey.Repeat, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKey.playerRepeat, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 
             if newValue {
-                NSNotificationCenter.defaultCenter().addObserverForName(AVPlayerItemDidPlayToEndTimeNotification, object: currentItem, queue: nil) {[weak self] notification in
+                NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: currentItem, queue: nil) {[weak self] notification in
                     if let currentItem = notification.object as? AVPlayerItem {
-                        self?.actionAtItemEnd = .None
-                        currentItem.seekToTime(kCMTimeZero)
+                        self?.actionAtItemEnd = .none
+                        currentItem.seek(to: kCMTimeZero)
                         self?.play()
                     }
                 }
             } else {
-                NSNotificationCenter.defaultCenter().removeObserver(self, name: AVPlayerItemDidPlayToEndTimeNotification, object: currentItem)
+                NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: currentItem)
             }
         }
     }
@@ -86,17 +84,16 @@ public extension AVPlayer {
 
 public extension AVPlayerItem {
     public var hasValidDuration: Bool {
-        return status == .ReadyToPlay && duration.isValid
+        return status == .readyToPlay && duration.isValid
     }
 }
 
 public extension CMTime {
-    public var isValid: Bool { return flags.contains(.Valid) }
+    public var isValid: Bool { return flags.contains(.valid) }
 
-    @warn_unused_result
-    public func timeWithOffset(offset: NSTimeInterval) -> CMTime {
+    public func offset(by: TimeInterval) -> CMTime {
         let seconds = CMTimeGetSeconds(self)
-        let secondsWithOffset = seconds + offset
+        let secondsWithOffset = seconds + by
         return CMTime(seconds: secondsWithOffset, preferredTimescale: timescale)
     }
 }
@@ -130,13 +127,13 @@ public extension AVPlayerItem {
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
     ///
     /// - returns:            An instance of AVPlayerItem.
-    public convenience init?(filename: String, bundle: NSBundle? = nil) {
-        let name   = ((filename as NSString).lastPathComponent as NSString).stringByDeletingPathExtension
+    public convenience init?(filename: String, bundle: Bundle? = nil) {
+        let name   = ((filename as NSString).lastPathComponent as NSString).deletingPathExtension
         let ext    = (filename as NSString).pathExtension
-        let bundle = bundle ?? NSBundle.mainBundle()
+        let bundle = bundle ?? Bundle.main
 
-        if let url = bundle.URLForResource(name, withExtension: ext) {
-            self.init(URL: url)
+        if let url = bundle.url(forResource: name, withExtension: ext) {
+            self.init(url: url)
         } else {
             return nil
         }
@@ -144,8 +141,8 @@ public extension AVPlayerItem {
 
     /// Automatically detect and load the asset from local or a remote url.
     public convenience init?(remoteOrLocalName: String) {
-        if let url = NSURL(string: remoteOrLocalName) where url.host != nil {
-            self.init(URL: url)
+        if let url = URL(string: remoteOrLocalName), url.host != nil {
+            self.init(url: url)
         } else {
             self.init(filename: remoteOrLocalName)
         }
@@ -160,13 +157,13 @@ public extension AVAsset {
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
     ///
     /// - returns:            An instance of AVAsset.
-    public convenience init?(filename: String, bundle: NSBundle? = nil) {
-        let name   = ((filename as NSString).lastPathComponent as NSString).stringByDeletingPathExtension
+    public convenience init?(filename: String, bundle: Bundle? = nil) {
+        let name   = ((filename as NSString).lastPathComponent as NSString).deletingPathExtension
         let ext    = (filename as NSString).pathExtension
-        let bundle = bundle ?? NSBundle.mainBundle()
+        let bundle = bundle ?? Bundle.main
 
-        if let url = bundle.URLForResource(name, withExtension: ext) {
-            self.init(URL: url)
+        if let url = bundle.url(forResource: name, withExtension: ext) {
+            self.init(url: url)
         } else {
             return nil
         }
@@ -174,8 +171,8 @@ public extension AVAsset {
 
     /// Automatically detect and load the asset from local or a remote url.
     public convenience init?(remoteOrLocalName: String) {
-        if let url = NSURL(string: remoteOrLocalName) where url.host != nil {
-            self.init(URL: url)
+        if let url = URL(string: remoteOrLocalName), url.host != nil {
+            self.init(url: url)
         } else {
             self.init(filename: remoteOrLocalName)
         }

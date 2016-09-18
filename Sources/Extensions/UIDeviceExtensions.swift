@@ -26,8 +26,8 @@ import UIKit
 
 public extension UIDevice {
     public struct ScreenSize {
-        public static var width: CGFloat     { return UIScreen.mainScreen().bounds.width }
-        public static var height: CGFloat    { return UIScreen.mainScreen().bounds.height }
+        public static var width: CGFloat     { return UIScreen.main.bounds.width }
+        public static var height: CGFloat    { return UIScreen.main.bounds.height }
         public static var minLength: CGFloat { return min(width, height) }
         public static var maxLength: CGFloat { return max(width, height) }
     }
@@ -39,27 +39,27 @@ public extension UIDevice {
         public static var iPhone6: Bool       { return iPhone && ScreenSize.maxLength == 667 }
         public static var iPhone6Plus: Bool   { return iPhone && ScreenSize.maxLength == 736 }
         public static var Simulator: Bool     { return TARGET_IPHONE_SIMULATOR == 1 }
-        public static var iPhone: Bool        { return UIDevice.currentDevice().userInterfaceIdiom == .Phone }
-        public static var iPad: Bool          { return UIDevice.currentDevice().userInterfaceIdiom == .Pad }
+        public static var iPhone: Bool        { return UIDevice.current.userInterfaceIdiom == .phone }
+        public static var iPad: Bool          { return UIDevice.current.userInterfaceIdiom == .pad }
     }
 
     public struct SystemVersion {
         public static let iOS8OrGreater = floor(NSFoundationVersionNumber) > floor(NSFoundationVersionNumber_iOS_7_0)
         public static let iOS7OrLess    = floor(NSFoundationVersionNumber) <= floor(NSFoundationVersionNumber_iOS_7_0)
 
-        @warn_unused_result
-        public static func lessThanOrEqual(string: String) -> Bool {
-            return  UIDevice.currentDevice().systemVersion.compare(string, options: .NumericSearch, range: nil, locale: nil) == .OrderedAscending
+
+        public static func lessThanOrEqual(_ string: String) -> Bool {
+            return  UIDevice.current.systemVersion.compare(string, options: .numeric, range: nil, locale: nil) == .orderedAscending
         }
 
-        @warn_unused_result
-        public static func greaterThanOrEqual(string: String) -> Bool {
+
+        public static func greaterThanOrEqual(_ string: String) -> Bool {
             return !lessThanOrEqual(string)
         }
 
-        @warn_unused_result
-        public static func equal(string: String) -> Bool {
-            return  UIDevice.currentDevice().systemVersion.compare(string, options: .NumericSearch, range: nil, locale: nil) == .OrderedSame
+
+        public static func equal(_ string: String) -> Bool {
+            return  UIDevice.current.systemVersion.compare(string, options: .numeric, range: nil, locale: nil) == .orderedSame
         }
     }
 }
@@ -75,30 +75,30 @@ public extension UIDevice {
 
         public var description: String {
             switch self {
-                case simulator:    return "Simulator"
-                case iPodTouch:    return "iPod Touch"
-                case iPhone4:      return "iPhone 4"
-                case iPhone4s:     return "iPhone 4s"
-                case iPhone5:      return "iPhone 5"
-                case iPhone5c:     return "iPhone 5c"
-                case iPhone5s:     return "iPhone 5s"
-                case iPhone6:      return "iPhone 6"
-                case iPhone6Plus:  return "iPhone 6 Plus"
-                case iPhone6s:     return "iPhone 6s"
-                case iPhone6sPlus: return "iPhone 6s Plus"
-                case iPad2:        return "iPad 2"
-                case iPad3:        return "iPad 3"
-                case iPad4:        return "iPad 4"
-                case iPadAir:      return "iPad Air"
-                case iPadAir2:     return "iPad Air 2"
-                case iPadMini:     return "iPad Mini"
-                case iPadMini2:    return "iPad Mini 2"
-                case iPadMini3:    return "iPad Mini 3"
-                case unknown(let identifier): return identifier
+                case .simulator:    return "Simulator"
+                case .iPodTouch:    return "iPod Touch"
+                case .iPhone4:      return "iPhone 4"
+                case .iPhone4s:     return "iPhone 4s"
+                case .iPhone5:      return "iPhone 5"
+                case .iPhone5c:     return "iPhone 5c"
+                case .iPhone5s:     return "iPhone 5s"
+                case .iPhone6:      return "iPhone 6"
+                case .iPhone6Plus:  return "iPhone 6 Plus"
+                case .iPhone6s:     return "iPhone 6s"
+                case .iPhone6sPlus: return "iPhone 6s Plus"
+                case .iPad2:        return "iPad 2"
+                case .iPad3:        return "iPad 3"
+                case .iPad4:        return "iPad 4"
+                case .iPadAir:      return "iPad Air"
+                case .iPadAir2:     return "iPad Air 2"
+                case .iPadMini:     return "iPad Mini"
+                case .iPadMini2:    return "iPad Mini 2"
+                case .iPadMini3:    return "iPad Mini 3"
+                case .unknown(let identifier): return identifier
             }
         }
 
-        static func modelNumber(identifier: String) -> ModelType {
+        static func modelNumber(_ identifier: String) -> ModelType {
             switch identifier {
                 case "x86_64", "i386":
                     return .simulator
@@ -157,8 +157,8 @@ public extension UIDevice {
         var identifier = ""
 
         for child in mirror.children {
-            if let value = child.value as? Int8 where value != 0 {
-                identifier.append(UnicodeScalar(UInt8(value)))
+            if let value = child.value as? Int8, value != 0 {
+                identifier.append(String(UnicodeScalar(UInt8(value))))
             }
         }
 

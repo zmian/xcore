@@ -26,16 +26,16 @@ import Foundation
 
 public struct JSONHelpers {
     /// Automatically detect and load the JSON from local(mainBundle) or a remote url.
-    public static func remoteOrLocalJSONFile(named: String, callback: (AnyObject? -> Void)) {
-        if let url = NSURL(string: named) where url.host != nil {
-            dispatch.async.bg(.`default`) {
+    public static func remoteOrLocalJSONFile(_ named: String, callback: @escaping ((Any?) -> Void)) {
+        if let url = URL(string: named), url.host != nil {
+            dispatch.async.bg {
                 let json = self.parse(url)
                 dispatch.async.main {
                     callback(json)
                 }
             }
         } else {
-            dispatch.async.bg(.`default`) {
+            dispatch.async.bg {
                 let json = self.parse(fileName: named)
                 dispatch.async.main {
                     callback(json)
@@ -44,11 +44,10 @@ public struct JSONHelpers {
         }
     }
 
-    /// Parse local JSON file from `mainBundle`
-    @warn_unused_result
-    public static func parse(fileName fileName: String) -> AnyObject? {
-        if let filePath = NSBundle.mainBundle().pathForResource((fileName as NSString).stringByDeletingPathExtension, ofType: "json") {
-            if let data = NSData(contentsOfFile: filePath) {
+    /// Parse local JSON file from `Bundle.main`.
+    public static func parse(fileName: String) -> Any? {
+        if let filePath = Bundle.main.path(forResource: (fileName as NSString).deletingPathExtension, ofType: "json") {
+            if let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)) {
                 return parse(data)
             }
         }
@@ -56,48 +55,43 @@ public struct JSONHelpers {
         return nil
     }
 
-    /// Parse remote JSON file
-    @warn_unused_result
-    public static func parse(url: NSURL) -> AnyObject? {
-        guard let data = NSData(contentsOfURL: url) else { return nil }
+    /// Parse remote JSON file.
+    public static func parse(_ url: URL) -> Any? {
+        guard let data = try? Data(contentsOf: url) else { return nil }
         return parse(data)
     }
 
-    /// Parse NSData to JSON
-    @warn_unused_result
-    public static func parse(data: NSData) -> AnyObject? {
-        return try? NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+    /// Parse NSData to JSON.
+    public static func parse(_ data: Data) -> Any? {
+        return try! JSONSerialization.jsonObject(with: data, options: .mutableContainers)
     }
 
-    /// Parse String to JSON
-    @warn_unused_result
-    public static func parse(jsonString jsonString: String) -> AnyObject? {
-        if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding) {
-            return try? NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+    /// Parse String to JSON.
+    public static func parse(jsonString: String) -> Any? {
+        if let data = jsonString.data(using: .utf8) {
+            return try! JSONSerialization.jsonObject(with: data, options: .mutableContainers)
         } else {
             return nil
         }
     }
 
-    /// Convert value to a JSON string
-    @warn_unused_result
-    public static func stringify(value: AnyObject, prettyPrinted: Bool = false) -> String {
-        guard let
-            data   = serialize(value, prettyPrinted: prettyPrinted),
-            string = String(data: data, encoding: NSUTF8StringEncoding)
+    /// Convert value to a JSON string.
+    public static func stringify(_ value: Any, prettyPrinted: Bool = false) -> String {
+        guard
+            let data   = serialize(value, prettyPrinted: prettyPrinted),
+            let string = String(data: data, encoding: .utf8)
         else { return "" }
         return string
     }
 
-    /// Serialize value to NSData
-    @warn_unused_result
-    public static func serialize(value: AnyObject, prettyPrinted: Bool = false) -> NSData? {
-        guard NSJSONSerialization.isValidJSONObject(value) else {
+    /// Serialize value to `Data`.
+    public static func serialize(_ value: Any, prettyPrinted: Bool = false) -> Data? {
+        guard JSONSerialization.isValidJSONObject(value) else {
             console.error("Invalid JSON Object.")
             return nil
         }
 
-        let options: NSJSONWritingOptions = prettyPrinted ? .PrettyPrinted : []
-        return try? NSJSONSerialization.dataWithJSONObject(value, options: options ?? [])
+        let options: JSONSerialization.WritingOptions = prettyPrinted ? .prettyPrinted : []
+        return try? JSONSerialization.data(withJSONObject: value, options: options)
     }
 }

@@ -40,10 +40,10 @@ public struct console {
     /// - parameter terminator: To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
     /// - parameter className:  The name of the class where this log is executed. The default value is extracted from `#file`.
     /// - parameter lineNumber: The line number where this log is executed. The default value is of `#line`.
-    public static func log(messages: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, lineNumber: Int = #line) {
+    public static func log(_ messages: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, lineNumber: Int = #line) {
         guard condition && !disableAllLogs && enableLogLevelDebug else { return }
 
-        let messages  = messages.map { String($0) }.joinWithSeparator(separator)
+        let messages  = messages.map { "\($0)" }.joined(separator: separator)
         let className = className.lastPathComponent.stringByDeletingPathExtension
         print("[\(className):\(lineNumber)]", messages, terminator: terminator)
     }
@@ -57,10 +57,10 @@ public struct console {
     /// - parameter terminator: To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
     /// - parameter className:  The name of the class where this log is executed. The default value is extracted from `#file`.
     /// - parameter lineNumber: The line number where this log is executed. The default value is of `#line`.
-    public static func info(messages: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, lineNumber: Int = #line) {
+    public static func info(_ messages: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, lineNumber: Int = #line) {
         guard condition && !disableAllLogs && enableLogLevelInfo else { return }
 
-        let messages  = messages.map { String($0) }.joinWithSeparator(separator)
+        let messages  = messages.map { "\($0)" }.joined(separator: separator)
         let className = className.lastPathComponent.stringByDeletingPathExtension
         print("[\(className):\(lineNumber)]", messages, terminator: terminator)
     }
@@ -74,10 +74,10 @@ public struct console {
     /// - parameter terminator: To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
     /// - parameter className:  The name of the class where this log is executed. The default value is extracted from `#file`.
     /// - parameter lineNumber: The line number where this log is executed. The default value is of `#line`.
-    public static func warn(messages: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, lineNumber: Int = #line) {
+    public static func warn(_ messages: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, lineNumber: Int = #line) {
         guard condition && !disableAllLogs && enableLogLevelWarn else { return }
 
-        let messages  = messages.map { String($0) }.joinWithSeparator(separator)
+        let messages  = messages.map { "\($0)" }.joined(separator: separator)
         let className = className.lastPathComponent.stringByDeletingPathExtension
         print("[\(className):\(lineNumber)] WARNING:", messages, terminator: terminator)
     }
@@ -91,10 +91,10 @@ public struct console {
     /// - parameter terminator: To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
     /// - parameter className:  The name of the class where this log is executed. The default value is extracted from `#file`.
     /// - parameter lineNumber: The line number where this log is executed. The default value is of `#line`.
-    public static func error(messages: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, lineNumber: Int = #line) {
+    public static func error(_ messages: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, lineNumber: Int = #line) {
         guard condition && !disableAllLogs && enableLogLevelError else { return }
 
-        let messages  = messages.map { String($0) }.joinWithSeparator(separator)
+        let messages  = messages.map { "\($0)" }.joined(separator: separator)
         let className = className.lastPathComponent.stringByDeletingPathExtension
         print("[\(className):\(lineNumber)] ERROR:", messages, terminator: terminator)
     }

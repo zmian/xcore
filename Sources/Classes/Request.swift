@@ -25,23 +25,23 @@
 import UIKit
 
 public struct Response {
-    public let request: NSURLRequest
-    public let response: NSURLResponse?
-    public let data: NSData?
-    public let error: NSError?
+    public let request: URLRequest
+    public let response: URLResponse?
+    public let data: Data?
+    public let error: Error?
 
-    public var responseHTTP: NSHTTPURLResponse? {
-        return response as? NSHTTPURLResponse
+    public var responseHTTP: HTTPURLResponse? {
+        return response as? HTTPURLResponse
     }
 
-    public var responseJSON: AnyObject? {
+    public var responseJSON: Any? {
         guard let data = data else {
             console.error("`data` is `nil`.")
             return nil
         }
 
         do {
-            return try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+            return try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
         } catch let error {
             console.error("Failed to parse JSON:", error)
         }
@@ -51,13 +51,13 @@ public struct Response {
 
     public var responseString: String? {
         if let data = data {
-            return String(data: data, encoding: NSUTF8StringEncoding)
+            return String(data: data, encoding: .utf8)
         } else {
             return nil
         }
     }
 
-    public init(request: NSURLRequest, response: NSURLResponse? = nil, data: NSData? = nil, error: NSError? = nil) {
+    public init(request: URLRequest, response: URLResponse? = nil, data: Data? = nil, error: Error? = nil) {
         self.request  = request
         self.response = response
         self.data     = data
@@ -67,94 +67,90 @@ public struct Response {
 
 public final class Request {
     public enum Method: String { case GET, POST, PUT, DELETE }
-    public enum Body { case json(NSDictionary), data(NSData) }
+    public enum Body { case json(NSDictionary), data(Data) }
 
-    public static let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+    public static let session = URLSession(configuration: URLSessionConfiguration.default)
 
-    public static func GET(request: NSURLRequest, callback: (response: Response) -> Void) {
+    public static func GET(_ request: URLRequest, callback: @escaping (_ response: Response) -> Void) {
         session.dataTaskWithRequest(request, callback: callback).resume()
     }
 
-    public static func GET(url: NSURL, parameters: [String: AnyObject]? = nil, accessToken: String? = nil, callback: (response: Response) -> Void) {
+    public static func GET(_ url: URL, parameters: [String: Any]? = nil, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
         request(.GET, url: url, body: parameters, accessToken: accessToken, callback: callback)
     }
 
-    public static func POST(url: NSURL, parameters: [String: AnyObject]? = nil, accessToken: String? = nil, callback: (response: Response) -> Void) {
+    public static func POST(_ url: URL, parameters: [String: Any]? = nil, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
         request(.POST, url: url, body: parameters, accessToken: accessToken, callback: callback)
     }
 
-    public static func POST(url: NSURL, image: UIImage, accessToken: String? = nil, callback: (response: Response) -> Void) {
+    public static func POST(_ url: URL, image: UIImage, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
         let headers = ["Content-Type": "image/jpeg"]
         request(.POST, url: url, body: UIImageJPEGRepresentation(image, 1), accessToken: accessToken, headers: headers, callback: callback)
     }
 
-    public static func PUT(url: NSURL, parameters: [String: AnyObject]? = nil, accessToken: String? = nil, callback: (response: Response) -> Void) {
+    public static func PUT(_ url: URL, parameters: [String: Any]? = nil, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
         request(.PUT, url: url, body: parameters, accessToken: accessToken, callback: callback)
     }
 
-    public static func DELETE(url: NSURL, parameters: [String: AnyObject]? = nil, accessToken: String? = nil, callback: (response: Response) -> Void) {
+    public static func DELETE(_ url: URL, parameters: [String: Any]? = nil, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
         request(.DELETE, url: url, body: parameters, accessToken: accessToken, callback: callback)
     }
 
-    private static func request(method: Method, url: NSURL, body: NSDictionary? = nil, accessToken: String? = nil, headers: [String: String]? = nil, callback: (response: Response) -> Void) {
+    fileprivate static func request(_ method: Method, url: URL, body: [String: Any]? = nil, accessToken: String? = nil, headers: [String: String]? = nil, callback: @escaping (_ response: Response) -> Void) {
         var headers = headers ?? [:]
-        if let accessToken = accessToken where headers["Authorization"] == nil {
+        if let accessToken = accessToken , headers["Authorization"] == nil {
             headers["Authorization"] = "Bearer \(accessToken)"
         }
-        let request = NSURLRequest.jsonRequest(method, url: url, body: body, headers: headers)
+        let request = URLRequest.jsonRequest(method, url: url, body: body, headers: headers)
         session.dataTaskWithRequest(request, callback: callback).resume()
     }
 
-    public static func request(method: Method, url: NSURL, body: NSData? = nil, accessToken: String? = nil, headers: [String: String]? = nil, callback: (response: Response) -> Void) {
+    public static func request(_ method: Method, url: URL, body: Data? = nil, accessToken: String? = nil, headers: [String: String]? = nil, callback: @escaping (_ response: Response) -> Void) {
         var headers = headers ?? [:]
-        if let accessToken = accessToken where headers["Authorization"] == nil {
+        if let accessToken = accessToken , headers["Authorization"] == nil {
             headers["Authorization"] = "Bearer \(accessToken)"
         }
-        let request = NSMutableURLRequest(method: method, url: url, body: body, headers: headers)
+        let request = URLRequest(method: method, url: url, body: body, headers: headers)
         session.dataTaskWithRequest(request, callback: callback).resume()
     }
 }
 
-private extension NSURLSession {
-    @warn_unused_result
-    func dataTaskWithRequest(request: NSURLRequest, callback: (response: Response) -> Void) -> NSURLSessionDataTask {
-        return dataTaskWithRequest(request) { data, response, error in
-            callback(response: Response(request: request, response: response, data: data, error: error))
+fileprivate extension URLSession {
+    fileprivate func dataTaskWithRequest(_ request: URLRequest, callback: @escaping (_ response: Response) -> Void) -> URLSessionDataTask {
+        return dataTask(with: request) { data, response, error in
+            callback(Response(request: request, response: response, data: data, error: error))
         }
     }
 }
 
-private extension NSMutableURLRequest {
-    convenience init(method: Request.Method, url: NSURL, body: NSData? = nil, headers: [String: String]? = nil) {
-        self.init(URL: url)
-        HTTPMethod = method.rawValue
-        HTTPBody   = body
+fileprivate extension URLRequest {
+    fileprivate init(method: Request.Method, url: URL, body: Data? = nil, headers: [String: String]? = nil) {
+        self.init(url: url)
+        httpMethod = method.rawValue
+        httpBody   = body
         headers?.forEach { addValue($0.1, forHTTPHeaderField: $0.0) }
     }
-}
 
-private extension NSURLRequest {
-    @warn_unused_result
-    class func jsonRequest(method: Request.Method, url: NSURL, body: NSDictionary? = nil, headers: [String: String]? = nil) -> NSURLRequest {
+    fileprivate static func jsonRequest(_ method: Request.Method, url: URL, body: [String: Any]? = nil, headers: [String: String]? = nil) -> URLRequest {
         var headers = headers ?? [:]
         if headers["Accept"] == nil {
             headers["Accept"] = "application/json"
         }
-        let request = NSMutableURLRequest(method: method, url: url, headers: headers)
+        var request = URLRequest(method: method, url: url, headers: headers)
 
         if let body = body {
-            request.HTTPBody = try? NSJSONSerialization.dataWithJSONObject(body, options: [])
+            request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
             request.addValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
         }
         return request
     }
 }
 
-public extension NSURL {
-    public convenience init?(string: String, queryParameters: [String: String]) {
-        let components = NSURLComponents(string: string)
-        components?.queryItems = queryParameters.map(NSURLQueryItem.init)
-        if let string = components?.URL?.absoluteString {
+extension URL {
+    public init?(string: String, queryParameters: [String: String]) {
+        var components = URLComponents(string: string)
+        components?.queryItems = queryParameters.map(URLQueryItem.init)
+        if let string = components?.url?.absoluteString {
             self.init(string: string)
         } else {
             return nil

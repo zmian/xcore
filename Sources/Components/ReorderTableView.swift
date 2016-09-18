@@ -26,10 +26,10 @@
 import UIKit
 
 private class ReorderTableDraggingView: BaseView {
-    private let imageView             = UIImageView()
-    private let topShadowImage        = UIImageView(assetIdentifier: .ReorderTableViewCellShadowTop)
-    private let bottomShadowImage     = UIImageView(assetIdentifier: .ReorderTableViewCellShadowBottom)
-    private let shadowHeight: CGFloat = 19
+    fileprivate let imageView             = UIImageView()
+    fileprivate let topShadowImage        = UIImageView(assetIdentifier: .ReorderTableViewCellShadowTop)
+    fileprivate let bottomShadowImage     = UIImageView(assetIdentifier: .ReorderTableViewCellShadowBottom)
+    fileprivate let shadowHeight: CGFloat = 19
 
     var image: UIImage? {
         get { return imageView.image }
@@ -44,7 +44,7 @@ private class ReorderTableDraggingView: BaseView {
     }
 
     override func setupSubviews() {
-        userInteractionEnabled = false
+        isUserInteractionEnabled = false
         addSubview(topShadowImage)
         addSubview(imageView)
         addSubview(bottomShadowImage)
@@ -58,7 +58,7 @@ private class ReorderTableDraggingView: BaseView {
         NSLayoutConstraint(item: topShadowImage, height: shadowHeight).activate()
         NSLayoutConstraint(item: bottomShadowImage, height: shadowHeight).activate()
 
-        NSLayoutConstraint.constraintsWithVisualFormat("V:[topShadowImage][imageView]-(-1)-[bottomShadowImage]", options: [], metrics: nil, views: [
+        NSLayoutConstraint.constraints(withVisualFormat: "V:[topShadowImage][imageView]-(-1)-[bottomShadowImage]", options: [], metrics: nil, views: [
             "topShadowImage":    topShadowImage,
             "imageView":         imageView,
             "bottomShadowImage": bottomShadowImage
@@ -69,38 +69,38 @@ private class ReorderTableDraggingView: BaseView {
 public protocol ReorderTableViewDelegate: NSObjectProtocol {
     // This method is called when starting the re-ording process. You insert a blank row object into your
     // data source and return the object you want to save for later. This method is only called once.
-    func saveObjectAndInsertBlankRow(atIndexPath indexPath: NSIndexPath) -> Any
+    func saveObjectAndInsertBlankRow(atIndexPath indexPath: IndexPath) -> Any
 
     // This method is called when the selected row is dragged to a new position. You simply update your
     // data source to reflect that the rows have switched places. This can be called multiple times
     // during the reordering process.
-    func draggedRow(fromIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath)
+    func draggedRow(fromIndexPath: IndexPath, toIndexPath: IndexPath)
 
     // This method is called when the selected row is released to its new position. The object is the same
     // object you returned in `saveObjectAndInsertBlankRow:atIndexPath:`. Simply update the data source so the
     // object is in its new position. You should do any saving/cleanup here.
-    func finishedDragging(fromIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath, withObject object: Any)
+    func finishedDragging(fromIndexPath: IndexPath, toIndexPath: IndexPath, withObject object: Any)
 }
 
-public class ReorderTableView: UITableView {
-    private var scrollRate: CGFloat = 0
-    private var scrollDisplayLink: CADisplayLink?
-    private var draggingView: ReorderTableDraggingView?
-    private var currentLocationIndexPath: NSIndexPath?
-    private var initialIndexPath: NSIndexPath?
-    private var savedObject: Any?
-    private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
+open class ReorderTableView: UITableView {
+    fileprivate var scrollRate: CGFloat = 0
+    fileprivate var scrollDisplayLink: CADisplayLink?
+    fileprivate var draggingView: ReorderTableDraggingView?
+    fileprivate var currentLocationIndexPath: IndexPath?
+    fileprivate var initialIndexPath: IndexPath?
+    fileprivate var savedObject: Any?
+    fileprivate lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
         return UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
     }()
 
-    public weak var reorderDelegate: ReorderTableViewDelegate?
+    open weak var reorderDelegate: ReorderTableViewDelegate?
     /// The default value is `true`.
-    public var canReorder: Bool = true {
-        didSet { longPressGestureRecognizer.enabled = canReorder }
+    open var canReorder: Bool = true {
+        didSet { longPressGestureRecognizer.isEnabled = canReorder }
     }
-    public var draggingRowHeight: CGFloat = 0
-    public dynamic var draggingViewOpacity: CGFloat = 0.8
-    public dynamic var draggingViewBackgroundColor  = UIColor.clearColor()
+    open var draggingRowHeight: CGFloat = 0
+    open dynamic var draggingViewOpacity: CGFloat = 0.8
+    open dynamic var draggingViewBackgroundColor  = UIColor.clear
 
     // MARK: Init Methods
 
@@ -109,7 +109,7 @@ public class ReorderTableView: UITableView {
     }
 
     public convenience init(frame: CGRect) {
-        self.init(frame: frame, style: .Plain)
+        self.init(frame: frame, style: .plain)
     }
 
     public override init(frame: CGRect, style: UITableViewStyle) {
@@ -122,31 +122,31 @@ public class ReorderTableView: UITableView {
         commonInit()
     }
 
-    private func commonInit() {
+    fileprivate func commonInit() {
         addGestureRecognizer(longPressGestureRecognizer)
     }
 
-    private func updateCurrentLocation(gesture: UILongPressGestureRecognizer) {
-        let location = gesture.locationInView(self)
+    fileprivate func updateCurrentLocation(_ gesture: UILongPressGestureRecognizer) {
+        let location = gesture.location(in: self)
 
         guard
-            var indexPath                = indexPathForRowAtPoint(location),
+            var indexPath                = indexPathForRow(at: location),
             let initialIndexPath         = initialIndexPath,
             let currentLocationIndexPath = currentLocationIndexPath
         else { return }
 
-        if let targetTndexPath = delegate?.tableView?(self, targetIndexPathForMoveFromRowAtIndexPath: initialIndexPath, toProposedIndexPath: indexPath) {
+        if let targetTndexPath = delegate?.tableView?(self, targetIndexPathForMoveFromRowAt: initialIndexPath, toProposedIndexPath: indexPath) {
             indexPath = targetTndexPath
         }
 
-        let oldHeight    = rectForRowAtIndexPath(currentLocationIndexPath).size.height
-        let newHeight    = rectForRowAtIndexPath(indexPath).size.height
-        let cellLocation = gesture.locationInView(cellForRowAtIndexPath(indexPath))
+        let oldHeight    = rectForRow(at: currentLocationIndexPath).size.height
+        let newHeight    = rectForRow(at: indexPath).size.height
+        let cellLocation = gesture.location(in: cellForRow(at: indexPath))
 
         if (indexPath != currentLocationIndexPath && cellLocation.y > newHeight - oldHeight) {
             beginUpdates()
-            deleteRowsAtIndexPaths([currentLocationIndexPath], withRowAnimation: .Automatic)
-            insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            deleteRows(at: [currentLocationIndexPath], with: .automatic)
+            insertRows(at: [indexPath], with: .automatic)
 
             if let reorderDelegate = reorderDelegate {
                 reorderDelegate.draggedRow(fromIndexPath: currentLocationIndexPath, toIndexPath: indexPath)
@@ -159,17 +159,17 @@ public class ReorderTableView: UITableView {
         }
     }
 
-    @objc private func scrollTableWithCell(timer: NSTimer) {
+    @objc fileprivate func scrollTableWithCell(_ timer: Timer) {
         guard let draggingView = draggingView else {
             cancelGesture()
             return
         }
 
         let gesture       = longPressGestureRecognizer
-        let location      = gesture.locationInView(self)
+        let location      = gesture.location(in: self)
         let currentOffset = contentOffset
         var newOffset     = CGPoint(x: currentOffset.x, y: currentOffset.y + scrollRate * 10)
-        
+
         if newOffset.y < -contentInset.top {
             newOffset.y = -contentInset.top
         } else if contentSize.height + contentInset.bottom < frame.size.height {
@@ -186,14 +186,14 @@ public class ReorderTableView: UITableView {
 
         updateCurrentLocation(gesture)
     }
-    
-    private func cancelGesture() {
-        longPressGestureRecognizer.enabled = false
-        longPressGestureRecognizer.enabled = true
+
+    fileprivate func cancelGesture() {
+        longPressGestureRecognizer.isEnabled = false
+        longPressGestureRecognizer.isEnabled = true
     }
 
-    @objc private func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        let location = gesture.locationInView(self)
+    @objc fileprivate func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        let location = gesture.location(in: self)
         let rows     = numberOfRowsInAllSections
 
         // get out of here if the long press was not on a valid row or our table is empty
@@ -203,14 +203,14 @@ public class ReorderTableView: UITableView {
         }
 
         // Started
-        if gesture.state == .Began {
-            guard let indexPath = indexPathForRowAtPoint(location), cell = cellForRowAtIndexPath(indexPath) else {
+        if gesture.state == .began {
+            guard let indexPath = indexPathForRow(at: location), let cell = cellForRow(at: indexPath) else {
                 cancelGesture()
                 return
             }
 
             // get out of here if the dataSource tableView:canMoveRowAtIndexPath: doesn't allow moving the row
-            if let canMoveRowAtIndexPath = dataSource?.tableView?(self, canMoveRowAtIndexPath: indexPath) where canMoveRowAtIndexPath == false {
+            if let canMoveRowAtIndexPath = dataSource?.tableView?(self, canMoveRowAt: indexPath), canMoveRowAtIndexPath == false {
                 cancelGesture()
                 return
             }
@@ -218,32 +218,32 @@ public class ReorderTableView: UITableView {
             draggingRowHeight = cell.frame.size.height
             cell.setSelected(false, animated: false)
             cell.setHighlighted(false, animated: false)
-            
+
             // make an image from the pressed tableview cell
             UIGraphicsBeginImageContextWithOptions(cell.bounds.size, false, 0)
-            cell.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+            cell.layer.render(in: UIGraphicsGetCurrentContext()!)
             let cellImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            
+
             // create and image view that we will drag around the screen
             if draggingView == nil {
                 draggingView        = ReorderTableDraggingView()
                 draggingView!.image = cellImage
-                let rect = rectForRowAtIndexPath(indexPath)
+                let rect = rectForRow(at: indexPath)
                 draggingView!.frame           = rect
                 draggingView!.center          = CGPoint(x: center.x, y: location.y)
                 draggingView!.backgroundColor = draggingViewBackgroundColor
                 draggingView!.alpha           = draggingViewOpacity
                 draggingView!.shadowAlpha     = 0
                 addSubview(draggingView!)
-                UIView.animateWithDuration(0.3) {
+                UIView.animate(withDuration: 0.3) {
                     self.draggingView!.shadowAlpha = 1
                 }
             }
 
             beginUpdates()
-            deleteRowsAtIndexPaths([indexPath], withRowAnimation: .None)
-            insertRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+            deleteRows(at: [indexPath], with: .none)
+            insertRows(at: [indexPath], with: .none)
 
             if let reorderDelegate = reorderDelegate {
                 savedObject = reorderDelegate.saveObjectAndInsertBlankRow(atIndexPath: indexPath)
@@ -257,11 +257,11 @@ public class ReorderTableView: UITableView {
 
             // enable scrolling for cell
             scrollDisplayLink = CADisplayLink(target: self, selector: #selector(scrollTableWithCell(_:)))
-            scrollDisplayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)
+            scrollDisplayLink?.add(to: .main, forMode: .defaultRunLoopMode)
         }
 
         // Dragging
-        else if gesture.state == .Changed {
+        else if gesture.state == .changed {
             guard let draggingView = draggingView else {
                 cancelGesture()
                 return
@@ -296,8 +296,8 @@ public class ReorderTableView: UITableView {
             }
         }
         // Dropped
-        else if gesture.state == .Ended {
-            guard let indexPath = currentLocationIndexPath, draggingView = draggingView else {
+        else if gesture.state == .ended {
+            guard let indexPath = currentLocationIndexPath, let draggingView = draggingView else {
                 cancelGesture()
                 return
             }
@@ -306,13 +306,13 @@ public class ReorderTableView: UITableView {
             scrollDisplayLink?.invalidate()
             scrollDisplayLink = nil
             scrollRate = 0
-            
+
             // animate the drag view to the newly hovered cell
-            UIView.animateWithDuration(0.3, animations: {[weak self] in
+            UIView.animate(withDuration: 0.3, animations: {[weak self] in
                 guard let weakSelf = self else { return }
-                let rect = weakSelf.rectForRowAtIndexPath(indexPath)
-                draggingView.transform = CGAffineTransformIdentity
-                draggingView.frame = CGRectOffset(draggingView.bounds, rect.origin.x, rect.origin.y)
+                let rect = weakSelf.rectForRow(at: indexPath)
+                draggingView.transform = .identity
+                draggingView.frame = draggingView.bounds.offsetBy(dx: rect.origin.x, dy: rect.origin.y)
             }, completion: {[weak self] _ in
                 guard let weakSelf = self else { return }
 
@@ -321,10 +321,10 @@ public class ReorderTableView: UITableView {
                 }
 
                 weakSelf.beginUpdates()
-                weakSelf.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .None)
-                weakSelf.insertRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                weakSelf.deleteRows(at: [indexPath], with: .none)
+                weakSelf.insertRows(at: [indexPath], with: .none)
 
-                if let reorderDelegate = weakSelf.reorderDelegate, savedObject = weakSelf.savedObject, initialIndexPath = weakSelf.initialIndexPath {
+                if let reorderDelegate = weakSelf.reorderDelegate, let savedObject = weakSelf.savedObject, let initialIndexPath = weakSelf.initialIndexPath {
                     reorderDelegate.finishedDragging(fromIndexPath: initialIndexPath, toIndexPath: indexPath, withObject: savedObject)
                 } else {
                     print("finishedDragging:fromIndexPath:toIndexPath:withObject: is not implemented")
@@ -335,7 +335,7 @@ public class ReorderTableView: UITableView {
                 // reload the rows that were affected just to be safe
                 var visibleRows = weakSelf.indexPathsForVisibleRows ?? []
                 visibleRows.remove(indexPath)
-                weakSelf.reloadRowsAtIndexPaths(visibleRows, withRowAnimation: .None)
+                weakSelf.reloadRows(at: visibleRows, with: .none)
 
                 weakSelf.currentLocationIndexPath = nil
                 weakSelf.draggingView = nil
@@ -346,12 +346,12 @@ public class ReorderTableView: UITableView {
 
 // MARK: Helpers
 
-private extension UITableView {
+fileprivate extension UITableView {
     /// The total number of rows in all the sections.
-    var numberOfRowsInAllSections: Int {
+    fileprivate var numberOfRowsInAllSections: Int {
         var rows = 0
         for i in 0..<numberOfSections {
-            rows += numberOfRowsInSection(i)
+            rows += numberOfRows(inSection: i)
         }
         return rows
     }

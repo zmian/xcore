@@ -24,7 +24,7 @@
 
 import UIKit
 
-public class IconLabelCollectionViewController: UIViewController {
+open class IconLabelCollectionViewController: UIViewController {
     public lazy var collectionView: IconLabelCollectionView = {
         return IconLabelCollectionView(options: [.movable, .deletable])
     }()
@@ -34,12 +34,12 @@ public class IconLabelCollectionViewController: UIViewController {
         return collectionView.layout
     }
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         setupIconLabelCollectionView()
     }
 
-    private func setupIconLabelCollectionView() {
+    fileprivate func setupIconLabelCollectionView() {
         view.addSubview(collectionView)
         NSLayoutConstraint.constraintsForViewToFillSuperview(collectionView).activate()
     }

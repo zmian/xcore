@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		681BD58D1D8DD5C7008E68C3 /* BEMCheckBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 681BD58C1D8DD5C7008E68C3 /* BEMCheckBox.framework */; };
+		681BD58F1D8DD5CA008E68C3 /* WebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 681BD58E1D8DD5CA008E68C3 /* WebImage.framework */; };
 		689D0C7F1D8DBB9600145E0B /* Xcore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689D0C751D8DBB9500145E0B /* Xcore.framework */; };
 		689D0CA51D8DBD6A00145E0B /* Xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = 689D0CA31D8DBD6A00145E0B /* Xcore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		689D0CE21D8DBDDD00145E0B /* Benchmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0CA81D8DBDDD00145E0B /* Benchmark.swift */; };
@@ -74,6 +76,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		681BD58C1D8DD5C7008E68C3 /* BEMCheckBox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BEMCheckBox.framework; path = Frameworks/BEMCheckBox.framework; sourceTree = "<group>"; };
+		681BD58E1D8DD5CA008E68C3 /* WebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebImage.framework; path = Frameworks/WebImage.framework; sourceTree = "<group>"; };
 		689D0C751D8DBB9500145E0B /* Xcore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Xcore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		689D0C7E1D8DBB9600145E0B /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		689D0CA21D8DBD6A00145E0B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -138,6 +142,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				681BD58D1D8DD5C7008E68C3 /* BEMCheckBox.framework in Frameworks */,
+				681BD58F1D8DD5CA008E68C3 /* WebImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,12 +158,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		681BD58B1D8DD5C7008E68C3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				681BD58E1D8DD5CA008E68C3 /* WebImage.framework */,
+				681BD58C1D8DD5C7008E68C3 /* BEMCheckBox.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		689D0C6B1D8DBB9500145E0B = {
 			isa = PBXGroup;
 			children = (
 				689D0C9C1D8DBCA100145E0B /* Sources */,
 				689D0D161D8DBE5C00145E0B /* Tests */,
 				689D0C761D8DBB9500145E0B /* Products */,
+				681BD58B1D8DD5C7008E68C3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -373,10 +389,12 @@
 				TargetAttributes = {
 					689D0C741D8DBB9500145E0B = {
 						CreatedOnToolsVersion = 8.0;
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 					689D0C7D1D8DBB9600145E0B = {
 						CreatedOnToolsVersion = 8.0;
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -601,6 +619,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -619,6 +641,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -672,6 +698,7 @@
 				689D0C8B1D8DBB9600145E0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		689D0C8C1D8DBB9600145E0B /* Build configuration list for PBXNativeTarget "Tests" */ = {
 			isa = XCConfigurationList;
@@ -680,6 +707,7 @@
 				689D0C8E1D8DBB9600145E0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -23,38 +23,38 @@
 //
 
 import UIKit
-import SDWebImage
+import WebImage
 
 public extension UIImageView {
     /// Automatically detect and load the image from local or a remote url.
-    public func remoteOrLocalImage(named: String, alwaysAnimate: Bool = false, callback: ((image: UIImage) -> Void)? = nil) {
+    public func remoteOrLocalImage(_ named: String, alwaysAnimate: Bool = false, callback: ((_ image: UIImage) -> Void)? = nil) {
         guard !named.isBlank else { image = nil; return }
 
-        if let url = NSURL(string: named) where url.host != nil {
-            self.sd_setImageWithURL(url) {[weak self] (image, _, cacheType, _) in
+        if let url = URL(string: named), url.host != nil {
+            self.sd_setImage(with: url) {[weak self] (image, _, cacheType, _) in
                 guard let image = image else { return }
                 defer {
                     dispatch.async.main {
-                        callback?(image: image)
+                        callback?(image)
                     }
                 }
-                if let weakSelf = self where (alwaysAnimate || cacheType != SDImageCacheType.Memory) {
+                if let weakSelf = self, (alwaysAnimate || cacheType != SDImageCacheType.memory) {
                     weakSelf.alpha = 0
-                    UIView.animateWithDuration(0.5) {
+                    UIView.animate(withDuration: 0.5) {
                         weakSelf.alpha = 1
                     }
                 }
             }
         } else {
             dispatch.async.bg(.userInitiated) {[weak self] in
-                guard let weakSelf = self, image = UIImage(named: named) else { return }
+                guard let weakSelf = self, let image = UIImage(named: named) else { return }
                 dispatch.async.main {
-                    defer { callback?(image: image) }
+                    defer { callback?(image) }
 
                     if alwaysAnimate {
                         weakSelf.alpha = 0
                         weakSelf.image = image
-                        UIView.animateWithDuration(0.5) {
+                        UIView.animate(withDuration: 0.5) {
                             weakSelf.alpha = 1
                         }
                     } else {
@@ -68,46 +68,46 @@ public extension UIImageView {
 
 public extension UIImage {
     /// Automatically detect and load the image from local or a remote url.
-    public class func remoteOrLocalImage(named: String, bundle: NSBundle? = nil, callback: (image: UIImage) -> Void) {
+    public class func remoteOrLocalImage(_ named: String, bundle: Bundle? = nil, callback: @escaping (_ image: UIImage) -> Void) {
         guard !named.isBlank else { return }
 
-        if let url = NSURL(string: named) where url.host != nil {
-            SDWebImageDownloader.sharedDownloader().downloadImageWithURL(url, options: [],
+        if let url = URL(string: named), url.host != nil {
+            SDWebImageDownloader.shared().downloadImage(with: url, options: [],
                 progress: { receivedSize, expectedSize in
 
                 }, completed: { image, data, error, finished in
-                    guard let image = image where finished else { return }
+                    guard let image = image, finished else { return }
                     dispatch.async.main {
-                        callback(image: image)
+                        callback(image)
                     }
                 }
             )
         } else {
             dispatch.async.bg(.userInitiated) {
-                guard let image = UIImage(named: named, inBundle: bundle, compatibleWithTraitCollection: nil) else { return }
+                guard let image = UIImage(named: named, in: bundle, compatibleWith: nil) else { return }
                 dispatch.async.main {
-                    callback(image: image)
+                    callback(image)
                 }
             }
         }
     }
 
     /// Download multiple remote images.
-    public class func downloadImages(urls: [String], callback: (images: [(url: NSURL, image: UIImage)]) -> Void) {
+    public class func downloadImages(_ urls: [String], callback: @escaping (_ images: [(url: URL, image: UIImage)]) -> Void) {
         guard !urls.isEmpty else { return }
 
-        var orderedObjects: [(url: NSURL, image: UIImage?)] = urls.flatMap(NSURL.init).filter { $0.host != nil }.flatMap { ($0, nil) }
+        var orderedObjects: [(url: URL, image: UIImage?)] = urls.flatMap(URL.init).filter { $0.host != nil }.flatMap { ($0, nil) }
         var downloadedImages = 0
 
         orderedObjects.forEach { object in
-            SDWebImageDownloader.sharedDownloader().downloadImageWithURL(object.url, options: [],
+            SDWebImageDownloader.shared().downloadImage(with: object.url, options: [],
                 progress: { receivedSize, expectedSize in
 
                 }, completed: { image, data, error, finished in
                     downloadedImages += 1
 
-                    if let image = image where finished {
-                        if let index = (orderedObjects.indexOf { $0.url == object.url }) {
+                    if let image = image, finished {
+                        if let index = (orderedObjects.index { $0.url == object.url }) {
                             orderedObjects[index].image = image
                         }
                     }
@@ -115,7 +115,7 @@ public extension UIImage {
                     if downloadedImages == urls.count {
                         let imagesAndUrls = orderedObjects.filter { $0.image != nil }.flatMap { (url: $0.url, image: $0.image!) }
                         dispatch.async.main {
-                            callback(images: imagesAndUrls)
+                            callback(imagesAndUrls)
                         }
                     }
                 }

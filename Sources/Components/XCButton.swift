@@ -25,14 +25,14 @@
 import UIKit
 
 @IBDesignable
-public class XCButton: UIButton {
-    private var observeBackgroundColorSetter = true
-    private var regularBackgroundColor: UIColor?
+open class XCButton: UIButton {
+    fileprivate var observeBackgroundColorSetter = true
+    fileprivate var regularBackgroundColor: UIColor?
 
-    @nonobjc public var highlightedBackgroundColor: UIColor?
-    @nonobjc public var disabledBackgroundColor: UIColor?
+    @nonobjc open var highlightedBackgroundColor: UIColor?
+    @nonobjc open var disabledBackgroundColor: UIColor?
 
-    public override var backgroundColor: UIColor? {
+    open override var backgroundColor: UIColor? {
         didSet {
             if observeBackgroundColorSetter {
                 regularBackgroundColor = backgroundColor
@@ -40,42 +40,42 @@ public class XCButton: UIButton {
         }
     }
 
-    public override var highlighted: Bool {
+    open override var isHighlighted: Bool {
         didSet {
-            changeBackgroundColor(to: highlightedBackgroundColor, forState: highlighted)
+            changeBackgroundColor(to: highlightedBackgroundColor, forState: isHighlighted)
         }
     }
 
-    public override var enabled: Bool {
+    open override var isEnabled: Bool {
         didSet {
-            changeBackgroundColor(to: disabledBackgroundColor, forState: !enabled)
+            changeBackgroundColor(to: disabledBackgroundColor, forState: !isEnabled)
         }
     }
 
-    public override func setHighlightedBackgroundColor(color: UIColor?) {
+    open override func setHighlightedBackgroundColor(_ color: UIColor?) {
         highlightedBackgroundColor = color
     }
 
-    public override func setDisabledBackgroundColor(color: UIColor?) {
+    open override func setDisabledBackgroundColor(_ color: UIColor?) {
         disabledBackgroundColor = color
     }
 
-    private func changeBackgroundColor(to color: UIColor?, forState: Bool) {
+    fileprivate func changeBackgroundColor(to color: UIColor?, forState: Bool) {
         observeBackgroundColorSetter = false
 
-        UIView.animateWithDuration(0.25, animations: {
+        UIView.animate(withDuration: 0.25, animations: {
             self.backgroundColor = forState ? color : self.regularBackgroundColor
         }, completion: { _ in
             self.observeBackgroundColorSetter = true
         })
     }
 
-    public func setEnabled(enabled enabled: Bool, animated: Bool) {
+    open func setEnabled(enabled: Bool, animated: Bool) {
         if animated {
-            self.enabled = enabled
+            self.isEnabled = enabled
         } else {
             UIView.performWithoutAnimation {[weak self] in
-                self?.enabled = enabled
+                self?.isEnabled = enabled
             }
         }
     }

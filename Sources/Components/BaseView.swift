@@ -24,7 +24,7 @@
 
 import UIKit
 
-public class BaseView: UIView {
+open class BaseView: UIView {
 
     // MARK: Init Methods
 
@@ -44,7 +44,7 @@ public class BaseView: UIView {
 
     // MARK: Setup Methods
 
-    private func commonInit() {
+    fileprivate func commonInit() {
         setupSubviews()
     }
 
@@ -53,5 +53,5 @@ public class BaseView: UIView {
     /// Subclasses can override it to perform additional actions,
     /// for example, add new subviews or configure properties.
     /// This method is called when self is initialized using any of the relevant `init` methods.
-    public func setupSubviews() {}
+    open func setupSubviews() {}
 }
