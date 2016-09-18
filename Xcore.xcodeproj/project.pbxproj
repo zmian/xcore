@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		681BD58D1D8DD5C7008E68C3 /* BEMCheckBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 681BD58C1D8DD5C7008E68C3 /* BEMCheckBox.framework */; };
-		681BD58F1D8DD5CA008E68C3 /* WebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 681BD58E1D8DD5CA008E68C3 /* WebImage.framework */; };
+		684832081D8E555C0005D088 /* MDHTMLLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 684832061D8E555C0005D088 /* MDHTMLLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		684832091D8E555C0005D088 /* MDHTMLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 684832071D8E555C0005D088 /* MDHTMLLabel.m */; };
+		6848320C1D8E56830005D088 /* WebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6848320A1D8E56830005D088 /* WebImage.framework */; };
+		6848320D1D8E56830005D088 /* BEMCheckBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6848320B1D8E56830005D088 /* BEMCheckBox.framework */; };
 		689D0C7F1D8DBB9600145E0B /* Xcore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689D0C751D8DBB9500145E0B /* Xcore.framework */; };
 		689D0CA51D8DBD6A00145E0B /* Xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = 689D0CA31D8DBD6A00145E0B /* Xcore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		689D0CE21D8DBDDD00145E0B /* Benchmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0CA81D8DBDDD00145E0B /* Benchmark.swift */; };
@@ -76,8 +78,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		681BD58C1D8DD5C7008E68C3 /* BEMCheckBox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BEMCheckBox.framework; path = Frameworks/BEMCheckBox.framework; sourceTree = "<group>"; };
-		681BD58E1D8DD5CA008E68C3 /* WebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebImage.framework; path = Frameworks/WebImage.framework; sourceTree = "<group>"; };
+		684832061D8E555C0005D088 /* MDHTMLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDHTMLLabel.h; sourceTree = "<group>"; };
+		684832071D8E555C0005D088 /* MDHTMLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDHTMLLabel.m; sourceTree = "<group>"; };
+		6848320A1D8E56830005D088 /* WebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebImage.framework; path = Carthage/Build/iOS/WebImage.framework; sourceTree = "<group>"; };
+		6848320B1D8E56830005D088 /* BEMCheckBox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BEMCheckBox.framework; path = Carthage/Build/iOS/BEMCheckBox.framework; sourceTree = "<group>"; };
 		689D0C751D8DBB9500145E0B /* Xcore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Xcore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		689D0C7E1D8DBB9600145E0B /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		689D0CA21D8DBD6A00145E0B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -142,8 +146,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				681BD58D1D8DD5C7008E68C3 /* BEMCheckBox.framework in Frameworks */,
-				681BD58F1D8DD5CA008E68C3 /* WebImage.framework in Frameworks */,
+				6848320C1D8E56830005D088 /* WebImage.framework in Frameworks */,
+				6848320D1D8E56830005D088 /* BEMCheckBox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,10 +165,27 @@
 		681BD58B1D8DD5C7008E68C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				681BD58E1D8DD5CA008E68C3 /* WebImage.framework */,
-				681BD58C1D8DD5C7008E68C3 /* BEMCheckBox.framework */,
+				6848320A1D8E56830005D088 /* WebImage.framework */,
+				6848320B1D8E56830005D088 /* BEMCheckBox.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		684832041D8E555C0005D088 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				684832051D8E555C0005D088 /* MDHTMLLabel */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		684832051D8E555C0005D088 /* MDHTMLLabel */ = {
+			isa = PBXGroup;
+			children = (
+				684832061D8E555C0005D088 /* MDHTMLLabel.h */,
+				684832071D8E555C0005D088 /* MDHTMLLabel.m */,
+			);
+			path = MDHTMLLabel;
 			sourceTree = "<group>";
 		};
 		689D0C6B1D8DBB9500145E0B = {
@@ -195,6 +216,7 @@
 				689D0CD71D8DBDDD00145E0B /* Helpers */,
 				689D0CD91D8DBDDD00145E0B /* Protocols */,
 				689D0CDE1D8DBDDD00145E0B /* ThirdParty */,
+				684832041D8E555C0005D088 /* Vendor */,
 				689D0CA11D8DBD6A00145E0B /* Supporting Files */,
 			);
 			path = Sources;
@@ -335,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				689D0CA51D8DBD6A00145E0B /* Xcore.h in Headers */,
+				684832081D8E555C0005D088 /* MDHTMLLabel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,10 +368,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 689D0C891D8DBB9600145E0B /* Build configuration list for PBXNativeTarget "Xcore" */;
 			buildPhases = (
-				689D0C701D8DBB9500145E0B /* Sources */,
 				689D0C711D8DBB9500145E0B /* Frameworks */,
+				689D0C701D8DBB9500145E0B /* Sources */,
 				689D0C721D8DBB9500145E0B /* Headers */,
 				689D0C731D8DBB9500145E0B /* Resources */,
+				684832031D8E511B0005D088 /* Run Script Phase for Carthage */,
 			);
 			buildRules = (
 			);
@@ -435,6 +459,25 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		684832031D8E511B0005D088 /* Run Script Phase for Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Carthage/Build/iOS/BEMCheckBox.framework",
+				"$(SRCROOT)/Carthage/Carthage/Build/iOS/WebImage.framework",
+			);
+			name = "Run Script Phase for Carthage";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		689D0C701D8DBB9500145E0B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -453,6 +496,7 @@
 				689D0CFC1D8DBDDD00145E0B /* UIImage+AssetIdentifier.swift in Sources */,
 				689D0D0E1D8DBDDD00145E0B /* EnumIteratable.swift in Sources */,
 				689D0CF01D8DBDDD00145E0B /* TestDynamicTableViewController.swift in Sources */,
+				684832091D8E555C0005D088 /* MDHTMLLabel.m in Sources */,
 				689D0CF51D8DBDDD00145E0B /* IconLabelView.swift in Sources */,
 				689D0CFF1D8DBDDD00145E0B /* XCScrollViewController.swift in Sources */,
 				689D0D021D8DBDDD00145E0B /* CoreAnimationExtensions.swift in Sources */,
@@ -553,7 +597,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -600,7 +644,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -621,11 +665,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = " $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.Xcore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -643,11 +688,12 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = " $(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.Xcore;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

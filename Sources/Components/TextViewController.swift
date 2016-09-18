@@ -23,15 +23,14 @@
 //
 
 import UIKit
-import MDHTMLLabel
 
-public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
-    public private(set) lazy var textLabel: MDHTMLLabel = {
+open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
+    open fileprivate(set) lazy var textLabel: MDHTMLLabel = {
         var textLabel                  = MDHTMLLabel()
         textLabel.delegate             = self
-        textLabel.font                 = UIFont.systemFont(.footnote)
-        textLabel.textColor            = UIColor.darkGrayColor()
-        textLabel.lineBreakMode        = .ByWordWrapping
+        textLabel.font                 = .systemFont(.footnote)
+        textLabel.textColor            = .darkGray
+        textLabel.lineBreakMode        = .byWordWrapping
         textLabel.numberOfLines        = 0
         textLabel.linkAttributes       = [NSForegroundColorAttributeName: textLabel.tintColor]
         textLabel.activeLinkAttributes = [NSForegroundColorAttributeName: textLabel.tintColor]
@@ -41,14 +40,14 @@ public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
 
     /// The distance that the text is inset from the enclosing scroll view.
     /// The default value is `UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)`.
-    public var contentInset = UIEdgeInsets(all: 15)
+    open var contentInset = UIEdgeInsets(all: 15)
 
     /// A convenience property to set view’s background image.
     /// The default value is `nil`, which means apply view's background color.
-    public var backgroundImage: UIImage?
+    open var backgroundImage: UIImage?
 
     /// The text that will be displayed.
-    public var text = "" {
+    open var text = "" {
         didSet {
             textLabel.htmlText = text
         }
@@ -65,15 +64,15 @@ public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     /// - parameter filename: The file name.
     /// - parameter bundle:   The bundle containing the specified file name. If you specify nil,
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
-    public func setText(filename: String, bundle: NSBundle? = nil) {
+    open func setText(_ filename: String, bundle: Bundle? = nil) {
         dispatch.async.bg(.userInitiated) {[weak self] in
             guard let weakSelf = self else { return }
 
             let name   = filename.lastPathComponent.stringByDeletingPathExtension
             let ext    = filename.pathExtension
-            let bundle = bundle ?? NSBundle.mainBundle()
+            let bundle = bundle ?? Bundle.main
 
-            if let path = bundle.pathForResource(name, ofType: ext), content = try? String(contentsOfFile: path, encoding: NSUTF8StringEncoding) {
+            if let path = bundle.path(forResource: name, ofType: ext), let content = try? String(contentsOfFile: path, encoding: String.Encoding.utf8) {
                 dispatch.async.main {
                     weakSelf.text = content
                 }
@@ -81,7 +80,7 @@ public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
         }
     }
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         setupTextLabel()
     }
@@ -93,20 +92,20 @@ public class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
 
     // MARK: Setup Methods
 
-    private func setupTextLabel() {
+    fileprivate func setupTextLabel() {
         textLabel.htmlText              = text
         scrollView.alwaysBounceVertical = true
         scrollView.addSubview(textLabel)
         NSLayoutConstraint.constraintsForViewToFillSuperview(textLabel, padding: contentInset).activate()
 
-        if let backgroundImage = backgroundImage?.CGImage {
+        if let backgroundImage = backgroundImage?.cgImage {
             view.layer.contents = backgroundImage
         } else {
-            view.backgroundColor = UIColor.whiteColor()
+            view.backgroundColor = .white
         }
     }
 
-    public func HTMLLabel(label: MDHTMLLabel, didSelectLinkWithURL URL: NSURL) {
-        openURL(self, url: URL)
+    open func htmlLabel(_ label: MDHTMLLabel, didSelectLinkWith URL: Foundation.URL) {
+        open(url: URL, presentingViewController: self)
     }
 }

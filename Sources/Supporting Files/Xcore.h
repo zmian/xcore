@@ -23,6 +23,7 @@
 //
 
 @import UIKit;
+#import "MDHTMLLabel.h"
 
 FOUNDATION_EXPORT double XcoreVersionNumber;
 FOUNDATION_EXPORT const unsigned char XcoreVersionString[];
