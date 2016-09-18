@@ -7,12 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		684832081D8E555C0005D088 /* MDHTMLLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 684832061D8E555C0005D088 /* MDHTMLLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		684832091D8E555C0005D088 /* MDHTMLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 684832071D8E555C0005D088 /* MDHTMLLabel.m */; };
-		6848320C1D8E56830005D088 /* WebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6848320A1D8E56830005D088 /* WebImage.framework */; };
-		6848320D1D8E56830005D088 /* BEMCheckBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6848320B1D8E56830005D088 /* BEMCheckBox.framework */; };
-		6848320E1D8E5F190005D088 /* WebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6848320A1D8E56830005D088 /* WebImage.framework */; };
-		6848320F1D8E5F190005D088 /* BEMCheckBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6848320B1D8E56830005D088 /* BEMCheckBox.framework */; };
+		682F2EF11D8E643D0007B4D4 /* WebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 682F2EEF1D8E643D0007B4D4 /* WebImage.framework */; };
+		682F2EF21D8E643D0007B4D4 /* BEMCheckBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 682F2EF01D8E643D0007B4D4 /* BEMCheckBox.framework */; };
 		689D0C7F1D8DBB9600145E0B /* Xcore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689D0C751D8DBB9500145E0B /* Xcore.framework */; };
 		689D0CA51D8DBD6A00145E0B /* Xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = 689D0CA31D8DBD6A00145E0B /* Xcore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		689D0CE21D8DBDDD00145E0B /* Benchmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0CA81D8DBDDD00145E0B /* Benchmark.swift */; };
@@ -80,10 +76,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		684832061D8E555C0005D088 /* MDHTMLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDHTMLLabel.h; sourceTree = "<group>"; };
-		684832071D8E555C0005D088 /* MDHTMLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDHTMLLabel.m; sourceTree = "<group>"; };
-		6848320A1D8E56830005D088 /* WebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebImage.framework; path = Carthage/Build/iOS/WebImage.framework; sourceTree = "<group>"; };
-		6848320B1D8E56830005D088 /* BEMCheckBox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BEMCheckBox.framework; path = Carthage/Build/iOS/BEMCheckBox.framework; sourceTree = "<group>"; };
+		682F2EEF1D8E643D0007B4D4 /* WebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebImage.framework; path = Carthage/Build/iOS/WebImage.framework; sourceTree = "<group>"; };
+		682F2EF01D8E643D0007B4D4 /* BEMCheckBox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BEMCheckBox.framework; path = Carthage/Build/iOS/BEMCheckBox.framework; sourceTree = "<group>"; };
 		689D0C751D8DBB9500145E0B /* Xcore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Xcore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		689D0C7E1D8DBB9600145E0B /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		689D0CA21D8DBD6A00145E0B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -148,8 +142,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6848320C1D8E56830005D088 /* WebImage.framework in Frameworks */,
-				6848320D1D8E56830005D088 /* BEMCheckBox.framework in Frameworks */,
+				682F2EF11D8E643D0007B4D4 /* WebImage.framework in Frameworks */,
+				682F2EF21D8E643D0007B4D4 /* BEMCheckBox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,8 +152,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				689D0C7F1D8DBB9600145E0B /* Xcore.framework in Frameworks */,
-				6848320F1D8E5F190005D088 /* BEMCheckBox.framework in Frameworks */,
-				6848320E1D8E5F190005D088 /* WebImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,27 +161,10 @@
 		681BD58B1D8DD5C7008E68C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6848320A1D8E56830005D088 /* WebImage.framework */,
-				6848320B1D8E56830005D088 /* BEMCheckBox.framework */,
+				682F2EEF1D8E643D0007B4D4 /* WebImage.framework */,
+				682F2EF01D8E643D0007B4D4 /* BEMCheckBox.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		684832041D8E555C0005D088 /* Vendor */ = {
-			isa = PBXGroup;
-			children = (
-				684832051D8E555C0005D088 /* MDHTMLLabel */,
-			);
-			path = Vendor;
-			sourceTree = "<group>";
-		};
-		684832051D8E555C0005D088 /* MDHTMLLabel */ = {
-			isa = PBXGroup;
-			children = (
-				684832061D8E555C0005D088 /* MDHTMLLabel.h */,
-				684832071D8E555C0005D088 /* MDHTMLLabel.m */,
-			);
-			path = MDHTMLLabel;
 			sourceTree = "<group>";
 		};
 		689D0C6B1D8DBB9500145E0B = {
@@ -220,7 +195,6 @@
 				689D0CD71D8DBDDD00145E0B /* Helpers */,
 				689D0CD91D8DBDDD00145E0B /* Protocols */,
 				689D0CDE1D8DBDDD00145E0B /* ThirdParty */,
-				684832041D8E555C0005D088 /* Vendor */,
 				689D0CA11D8DBD6A00145E0B /* Supporting Files */,
 			);
 			path = Sources;
@@ -361,7 +335,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				689D0CA51D8DBD6A00145E0B /* Xcore.h in Headers */,
-				684832081D8E555C0005D088 /* MDHTMLLabel.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,7 +453,6 @@
 				689D0CFC1D8DBDDD00145E0B /* UIImage+AssetIdentifier.swift in Sources */,
 				689D0D0E1D8DBDDD00145E0B /* EnumIteratable.swift in Sources */,
 				689D0CF01D8DBDDD00145E0B /* TestDynamicTableViewController.swift in Sources */,
-				684832091D8E555C0005D088 /* MDHTMLLabel.m in Sources */,
 				689D0CF51D8DBDDD00145E0B /* IconLabelView.swift in Sources */,
 				689D0CFF1D8DBDDD00145E0B /* XCScrollViewController.swift in Sources */,
 				689D0D021D8DBDDD00145E0B /* CoreAnimationExtensions.swift in Sources */,

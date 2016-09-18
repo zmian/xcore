@@ -23,6 +23,7 @@
 //
 
 import UIKit
+import MDHTMLLabel
 
 open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     open fileprivate(set) lazy var textLabel: MDHTMLLabel = {

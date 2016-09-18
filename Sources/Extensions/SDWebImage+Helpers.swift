@@ -23,7 +23,7 @@
 //
 
 import UIKit
-import WebImage
+import SDWebImage
 
 public extension UIImageView {
     /// Automatically detect and load the image from local or a remote url.
