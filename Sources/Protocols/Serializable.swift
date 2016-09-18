@@ -41,14 +41,14 @@ public extension Serializable where Self: NSCoding {
 }
 
 public protocol DictionaryInitializable: CustomStringConvertible, Serializable {
-    init?(dictionary: [String: Any])
-    func dictionary() -> [String: Any]
+    init?(dictionary: [AnyHashable: Any])
+    func dictionary() -> [AnyHashable: Any]
 }
 
 public extension DictionaryInitializable {
     public init?(serialize: Data) {
         guard
-            let dictionary = NSKeyedUnarchiver.unarchiveObject(with: serialize) as? [String: Any],
+            let dictionary = NSKeyedUnarchiver.unarchiveObject(with: serialize) as? [AnyHashable: Any],
             let object     = Self(dictionary: dictionary)
         else { return nil }
         self = object
