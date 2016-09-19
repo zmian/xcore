@@ -128,16 +128,17 @@ public extension Bundle {
     }
 }
 
-// MARK: NSMutableData Extension
+// MARK: Data Extension
 
-public extension NSMutableData {
-    /// A convenience method to append string to `NSMutableData` using specified encoding.
+extension Data {
+    /// A convenience method to append string to `Data` using specified encoding.
     ///
-    /// - parameter string:               The string to be added to the `NSMutableData`.
-    /// - parameter encoding:             The encoding to use for representing the specified string. The default value is `NSUTF8StringEncoding`.
+    /// - parameter string:               The string to be added to the `Data`.
+    /// - parameter encoding:             The encoding to use for representing the specified string. The default value is `.utf8`.
     /// - parameter allowLossyConversion: A boolean value to determine lossy conversion. The default value is `false`.
-    public func append(string: String, encoding: String.Encoding = .utf8, allowLossyConversion: Bool = false) {
-        let data = string.data(using: encoding, allowLossyConversion: allowLossyConversion)!
-        append(data)
+    public mutating func append(_ string: String, encoding: String.Encoding = .utf8, allowLossyConversion: Bool = false) {
+        if let newData = string.data(using: encoding, allowLossyConversion: allowLossyConversion) {
+            append(newData)
+        }
     }
 }

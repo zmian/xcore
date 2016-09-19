@@ -27,7 +27,7 @@
 /// - parameter fetcher:  A fetcher function that is executed with each of the `param`.
 /// - parameter params:   An array of parameters to pass to the fetcher.
 /// - parameter callback: The block to invoked when we have th results of all the `params` by calling `fetcher`.
-public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ param: Parameter, _ callback: (_ object: Result?) -> Void) -> Void, params: [Parameter], callback: @escaping (_ objects: [Result]) -> Void) {
+public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ param: Parameter, _ callback: @escaping (_ object: Result?) -> Void) -> Void, params: [Parameter], callback: @escaping (_ objects: [Result]) -> Void) {
     var objects = [Result]()
     var fetchedCount = 0
 
@@ -51,7 +51,7 @@ public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ param: Para
 /// - parameter fetcher:  A fetcher function that is executed with each of the `param`.
 /// - parameter params:   An array of parameters to pass to the fetcher.
 /// - parameter callback: The block to invoked when we have th results of all the `params` by calling `fetcher`.
-public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ param: Parameter, _ callback: (_ object: Result) -> Void) -> Void, params: [Parameter], callback: @escaping (_ objects: [Result]) -> Void) {
+public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ param: Parameter, _ callback: @escaping (_ object: Result) -> Void) -> Void, params: [Parameter], callback: @escaping (_ objects: [Result]) -> Void) {
     var objects = [Result]()
     var fetchedCount = 0
 
@@ -73,7 +73,7 @@ public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ param: Para
 /// - parameter splitSize: The maximum number of requests allowed in the fetcher.
 /// - parameter params:    An array of parameters to pass to the fetcher.
 /// - parameter callback:  The block to invoked when we have th results of all the `params` by calling `fetcher`.
-public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ param: [Parameter], _ callback: (_ object: [Result]) -> Void) -> Void, splitSize: Int, params: [Parameter], callback: @escaping (_ objects: [Result]) -> Void) {
+public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ param: [Parameter], _ callback: @escaping (_ object: [Result]) -> Void) -> Void, splitSize: Int, params: [Parameter], callback: @escaping (_ objects: [Result]) -> Void) {
     let pages            = params.splitBy(splitSize)
     var allObjects       = [Result]()
     var fetchedPageCount = 0
