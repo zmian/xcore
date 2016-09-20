@@ -292,7 +292,7 @@ extension Collection {
     }
 }
 
-extension Collection where Index: Comparable {
+extension Collection {
     /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise nil.
     public func at(_ range: Range<Index>) -> SubSequence? {
         return contains(range) ? self[range] : nil
@@ -304,9 +304,25 @@ extension Collection where Index: Comparable {
     }
 }
 
-extension RangeReplaceableCollection {
-    public mutating func appendAll(_ collection: [Iterator.Element]) {
-        append(contentsOf: collection)
+extension RandomAccessCollection where Index == Int {
+    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise nil.
+    public func at(_ range: CountableRange<Index>) -> SubSequence? {
+        return contains(range) ? self[range] : nil
+    }
+
+    /// Return true iff range is in `self`.
+    public func contains(_ range: CountableRange<Index>) -> Bool {
+        return range.lowerBound >= startIndex && range.upperBound <= endIndex
+    }
+
+    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise nil.
+    public func at(_ range: CountableClosedRange<Index>) -> SubSequence? {
+        return contains(range) ? self[range] : nil
+    }
+
+    /// Return true iff range is in `self`.
+    public func contains(_ range: CountableClosedRange<Index>) -> Bool {
+        return range.lowerBound >= startIndex && range.upperBound <= endIndex
     }
 }
 
