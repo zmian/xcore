@@ -25,8 +25,6 @@
 import UIKit
 
 public extension UIEdgeInsets {
-    public static var zero: UIEdgeInsets { return UIEdgeInsets(all: 0) }
-
     public init(all: CGFloat) {
         self = UIEdgeInsets(top: all, left: all, bottom: all, right: all)
     }
