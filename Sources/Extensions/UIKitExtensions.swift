@@ -55,7 +55,14 @@ public func alert(title: String = "", message: String = "") {
 extension UIAlertController {
     open func show(presentingViewController: UIViewController? = nil) {
         guard let presentingViewController = presentingViewController ?? UIApplication.shared.keyWindow?.topViewController else { return }
-        presentingViewController.present(self, animated: true)
+
+        // There is bug in `tableView:didSelectRowAtIndexPath` that causes delay in presenting
+        // `UIAlertController` and wrapping the `presentViewController:` call in `dispatch.async.main` fixes it.
+        //
+        // http://openradar.appspot.com/19285091
+        dispatch.async.main {
+            presentingViewController.present(self, animated: true)
+        }
     }
 }
 
