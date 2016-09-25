@@ -53,9 +53,9 @@ open class XCTableViewComposedDataSource: XCTableViewDataSource {
         }
     }
 
-    open override func registerCell(forTableView tableView: UITableView) {
+    open override func registerClasses(for tableView: UITableView) {
         dataSources.forEach {
-            $0.registerCell(forTableView: tableView)
+            $0.registerClasses(for: tableView)
         }
     }
 }
@@ -119,28 +119,28 @@ extension XCTableViewComposedDataSource {
 // MARK: UITableViewDataSource
 
 extension XCTableViewComposedDataSource {
-    open override func heightForRowAtIndexPath(_ indexPath: IndexPath) -> CGFloat {
+    open override func heightForRow(at indexPath: IndexPath) -> CGFloat {
         let (dataSource, localSection) = dataSourceIndex[(indexPath as NSIndexPath).section]!
         let localIndexPath = IndexPath(row: (indexPath as NSIndexPath).row, section: localSection)
-        return dataSource.heightForRowAtIndexPath(localIndexPath)
+        return dataSource.heightForRow(at: localIndexPath)
     }
 
-    open override func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+    open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let (dataSource, localSection) = dataSourceIndex[(indexPath as NSIndexPath).section]!
         let localIndexPath = IndexPath(row: (indexPath as NSIndexPath).row, section: localSection)
-        dataSource.tableView(tableView, didSelectRowAtIndexPath: localIndexPath)
+        dataSource.tableView(tableView, didSelectRowAt: localIndexPath)
     }
 
-    open override func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath) {
+    open override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let (dataSource, localSection) = dataSourceIndex[(indexPath as NSIndexPath).section]!
         let localIndexPath = IndexPath(row: (indexPath as NSIndexPath).row, section: localSection)
-        dataSource.tableView(tableView, willDisplayCell: cell, forRowAtIndexPath: localIndexPath)
+        dataSource.tableView(tableView, willDisplay: cell, forRowAt: localIndexPath)
     }
 
-    open override func tableView(_ tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath) {
+    open override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let (dataSource, localSection) = dataSourceIndex[(indexPath as NSIndexPath).section]!
         let localIndexPath = IndexPath(row: (indexPath as NSIndexPath).row, section: localSection)
-        dataSource.tableView(tableView, didEndDisplayingCell: cell, forRowAtIndexPath: localIndexPath)
+        dataSource.tableView(tableView, didEndDisplaying: cell, forRowAt: localIndexPath)
     }
 
     // Header and Footer
