@@ -1058,10 +1058,10 @@ extension UIImageView {
             image = endImage
         }
         startAnimating()
-        delayBy(animationDuration) {[weak self] in
+        delay(by: animationDuration) {[weak self] in
             self?.stopAnimating()
             self?.animationImages = nil
-            delayBy(0.5) {
+            delay(by: 0.5) {
                 completion?()
             }
         }

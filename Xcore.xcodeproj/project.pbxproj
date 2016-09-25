@@ -10,6 +10,7 @@
 		682F2EF11D8E643D0007B4D4 /* WebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 682F2EEF1D8E643D0007B4D4 /* WebImage.framework */; };
 		682F2EF21D8E643D0007B4D4 /* BEMCheckBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 682F2EF01D8E643D0007B4D4 /* BEMCheckBox.framework */; };
 		6860A9101D9180E900DA030A /* XCUserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6860A90F1D9180E900DA030A /* XCUserDefault.swift */; };
+		6892DC231D983CF200865115 /* Timer+Closure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6892DC221D983CF200865115 /* Timer+Closure.swift */; };
 		689D0C7F1D8DBB9600145E0B /* Xcore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 689D0C751D8DBB9500145E0B /* Xcore.framework */; };
 		689D0CA51D8DBD6A00145E0B /* Xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = 689D0CA31D8DBD6A00145E0B /* Xcore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		689D0CE21D8DBDDD00145E0B /* Benchmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0CA81D8DBDDD00145E0B /* Benchmark.swift */; };
@@ -60,9 +61,11 @@
 		689D0D101D8DBDDD00145E0B /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0CDC1D8DBDDD00145E0B /* Serializable.swift */; };
 		689D0D111D8DBDDD00145E0B /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0CDD1D8DBDDD00145E0B /* StoryboardInstantiable.swift */; };
 		689D0D121D8DBDDD00145E0B /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0CDF1D8DBDDD00145E0B /* Dispatch.swift */; };
-		689D0D131D8DBDDD00145E0B /* NSTimer+Closure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0CE01D8DBDDD00145E0B /* NSTimer+Closure.swift */; };
 		689D0D151D8DBDF800145E0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 689D0D141D8DBDF800145E0B /* Assets.xcassets */; };
 		689D0D1B1D8DBE6400145E0B /* XcoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0D181D8DBE5C00145E0B /* XcoreTests.swift */; };
+		68B902531D978C5200656A51 /* XCComposedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B902501D978C5200656A51 /* XCComposedTableViewController.swift */; };
+		68B902541D978C5200656A51 /* XCTableViewComposedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B902511D978C5200656A51 /* XCTableViewComposedDataSource.swift */; };
+		68B902551D978C5200656A51 /* XCTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B902521D978C5200656A51 /* XCTableViewDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +82,7 @@
 		682F2EEF1D8E643D0007B4D4 /* WebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebImage.framework; path = Carthage/Build/iOS/WebImage.framework; sourceTree = "<group>"; };
 		682F2EF01D8E643D0007B4D4 /* BEMCheckBox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BEMCheckBox.framework; path = Carthage/Build/iOS/BEMCheckBox.framework; sourceTree = "<group>"; };
 		6860A90F1D9180E900DA030A /* XCUserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCUserDefault.swift; sourceTree = "<group>"; };
+		6892DC221D983CF200865115 /* Timer+Closure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Timer+Closure.swift"; sourceTree = "<group>"; };
 		689D0C751D8DBB9500145E0B /* Xcore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Xcore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		689D0C7E1D8DBB9600145E0B /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		689D0CA21D8DBD6A00145E0B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -131,10 +135,12 @@
 		689D0CDC1D8DBDDD00145E0B /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		689D0CDD1D8DBDDD00145E0B /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
 		689D0CDF1D8DBDDD00145E0B /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
-		689D0CE01D8DBDDD00145E0B /* NSTimer+Closure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTimer+Closure.swift"; sourceTree = "<group>"; };
 		689D0D141D8DBDF800145E0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		689D0D171D8DBE5C00145E0B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		689D0D181D8DBE5C00145E0B /* XcoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XcoreTests.swift; sourceTree = "<group>"; };
+		68B902501D978C5200656A51 /* XCComposedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCComposedTableViewController.swift; sourceTree = "<group>"; };
+		68B902511D978C5200656A51 /* XCTableViewComposedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTableViewComposedDataSource.swift; sourceTree = "<group>"; };
+		68B902521D978C5200656A51 /* XCTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTableViewDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +197,7 @@
 			children = (
 				689D0CA71D8DBDDD00145E0B /* Classes */,
 				689D0CAE1D8DBDDD00145E0B /* Components */,
+				68B9024F1D978C5200656A51 /* DataSources */,
 				689D0CCA1D8DBDDD00145E0B /* Extensions */,
 				689D0CD71D8DBDDD00145E0B /* Helpers */,
 				689D0CD91D8DBDDD00145E0B /* Protocols */,
@@ -313,7 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				689D0CDF1D8DBDDD00145E0B /* Dispatch.swift */,
-				689D0CE01D8DBDDD00145E0B /* NSTimer+Closure.swift */,
+				6892DC221D983CF200865115 /* Timer+Closure.swift */,
 			);
 			path = ThirdParty;
 			sourceTree = "<group>";
@@ -325,6 +332,16 @@
 				689D0D181D8DBE5C00145E0B /* XcoreTests.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		68B9024F1D978C5200656A51 /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				68B902501D978C5200656A51 /* XCComposedTableViewController.swift */,
+				68B902511D978C5200656A51 /* XCTableViewComposedDataSource.swift */,
+				68B902521D978C5200656A51 /* XCTableViewDataSource.swift */,
+			);
+			path = DataSources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -443,6 +460,7 @@
 				689D0CF41D8DBDDD00145E0B /* IconLabelCollectionViewController.swift in Sources */,
 				689D0CE21D8DBDDD00145E0B /* Benchmark.swift in Sources */,
 				689D0CF21D8DBDDD00145E0B /* IconLabelCollectionView.swift in Sources */,
+				68B902531D978C5200656A51 /* XCComposedTableViewController.swift in Sources */,
 				689D0CE51D8DBDDD00145E0B /* JSONHelpers.swift in Sources */,
 				689D0CEC1D8DBDDD00145E0B /* DynamicTableView.swift in Sources */,
 				689D0CF71D8DBDDD00145E0B /* IntrinsicContentSizeView.swift in Sources */,
@@ -458,8 +476,10 @@
 				689D0D021D8DBDDD00145E0B /* CoreAnimationExtensions.swift in Sources */,
 				689D0CEB1D8DBDDD00145E0B /* CustomViewControllerTransition.swift in Sources */,
 				689D0CE91D8DBDDD00145E0B /* BaseToolbar.swift in Sources */,
+				6892DC231D983CF200865115 /* Timer+Closure.swift in Sources */,
 				689D0CF61D8DBDDD00145E0B /* ImageTitleDisplayable.swift in Sources */,
 				689D0D031D8DBDDD00145E0B /* FoundationExtensions.swift in Sources */,
+				68B902541D978C5200656A51 /* XCTableViewComposedDataSource.swift in Sources */,
 				689D0D101D8DBDDD00145E0B /* Serializable.swift in Sources */,
 				689D0D0F1D8DBDDD00145E0B /* NibInstantiable.swift in Sources */,
 				689D0CE61D8DBDDD00145E0B /* Request.swift in Sources */,
@@ -472,7 +492,6 @@
 				6860A9101D9180E900DA030A /* XCUserDefault.swift in Sources */,
 				689D0D041D8DBDDD00145E0B /* InternalExtensions.swift in Sources */,
 				689D0CE81D8DBDDD00145E0B /* BaseTableViewCell.swift in Sources */,
-				689D0D131D8DBDDD00145E0B /* NSTimer+Closure.swift in Sources */,
 				689D0D011D8DBDDD00145E0B /* AVFoundationExtensions.swift in Sources */,
 				689D0CEA1D8DBDDD00145E0B /* BaseView.swift in Sources */,
 				689D0D081D8DBDDD00145E0B /* UIDeviceExtensions.swift in Sources */,
@@ -488,6 +507,7 @@
 				689D0CE31D8DBDDD00145E0B /* Console.swift in Sources */,
 				689D0D0D1D8DBDDD00145E0B /* Collectionify.swift in Sources */,
 				689D0D111D8DBDDD00145E0B /* StoryboardInstantiable.swift in Sources */,
+				68B902551D978C5200656A51 /* XCTableViewDataSource.swift in Sources */,
 				689D0CFB1D8DBDDD00145E0B /* TextViewController.swift in Sources */,
 				689D0D121D8DBDDD00145E0B /* Dispatch.swift in Sources */,
 			);

@@ -1,5 +1,5 @@
 //
-// NSTimer+Closure.swift
+// Timer+Closure.swift
 // Nate Cook
 //
 
@@ -43,35 +43,33 @@ extension Timer {
 }
 
 extension Timer {
-    fileprivate struct AssociatedKey {
+    private struct AssociatedKey {
         static var timerPauseDate        = "XcoreTimerPauseDate"
         static var timerPreviousFireDate = "XcoreTimerPreviousFireDate"
     }
 
-    fileprivate var pauseDate: Date? {
+    private var pauseDate: Date? {
         get { return objc_getAssociatedObject(self, &AssociatedKey.timerPauseDate) as? Date }
         set { objc_setAssociatedObject(self, &AssociatedKey.timerPauseDate, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
-    fileprivate var previousFireDate: Date? {
+    private var previousFireDate: Date? {
         get { return objc_getAssociatedObject(self, &AssociatedKey.timerPreviousFireDate) as? Date }
         set { objc_setAssociatedObject(self, &AssociatedKey.timerPreviousFireDate, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
-    public func pauseTimer() {
+    public func pause() {
         pauseDate        = Date()
         previousFireDate = fireDate
         fireDate         = Date.distantFuture
     }
 
-    public func resumeTimer() {
+    public func resume() {
         guard let pauseDate = pauseDate, let previousFireDate = previousFireDate else { return }
         fireDate = Date(timeInterval: -pauseDate.timeIntervalSinceNow, since: previousFireDate)
     }
 }
 
-public func delayBy(_ interval: TimeInterval, callback: @escaping () -> Void) {
-    Timer.schedule(delay: interval) { _ in
-        callback()
-    }
+public func delay(by interval: TimeInterval, callback: @escaping () -> Void) {
+    Timer.schedule(delay: interval, handler: callback)
 }

@@ -68,7 +68,7 @@ open class XCComposedTableViewController: UIViewController {
 extension XCComposedTableViewController {
     fileprivate func setupTableView(forTableView tableView: UITableView) {
         composedDataSource.dataSources = dataSources(forTableView: tableView)
-        composedDataSource.registerCell(forTableView: tableView)
+        composedDataSource.registerClasses(for: tableView)
         tableView.dataSource = composedDataSource
         tableView.delegate = self
     }
@@ -78,13 +78,13 @@ extension XCComposedTableViewController {
 
 extension XCComposedTableViewController: UITableViewDelegate {
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return composedDataSource.heightForRowAtIndexPath(indexPath)
+        return composedDataSource.heightForRow(at: indexPath)
     }
 
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dispatch.async.main {[weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.composedDataSource.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+            weakSelf.composedDataSource.tableView(tableView, didSelectRowAt: indexPath)
         }
     }
 
@@ -97,12 +97,12 @@ extension XCComposedTableViewController: UITableViewDelegate {
     }
 
     open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        composedDataSource.tableView(tableView, willDisplayCell: cell, forRowAtIndexPath: indexPath)
+        composedDataSource.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
         estimatedRowHeightCache.set(height: cell.frame.size.height, forIndexPath: indexPath)
     }
 
     open func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        composedDataSource.tableView(tableView, didEndDisplayingCell: cell, forRowAtIndexPath: indexPath)
+        composedDataSource.tableView(tableView, didEndDisplaying: cell, forRowAt: indexPath)
     }
 
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

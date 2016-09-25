@@ -214,7 +214,7 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
     }
 
     open func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let movedItem = sections.moveElement(fromIndexPath: sourceIndexPath, toIndexPath: destinationIndexPath)
+        let movedItem = sections.moveElement(from: sourceIndexPath, to: destinationIndexPath)
         didMoveItem?(sourceIndexPath, destinationIndexPath, movedItem)
     }
 

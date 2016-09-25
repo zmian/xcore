@@ -34,7 +34,8 @@ open class XCTableViewDataSource: NSObject, UITableViewDataSource {
 
     // MARK: Public Interface
 
-    /// Hide the the section header and section footer views if titles are not provided. The default is `false`.
+    /// Hide the the section header and section footer views if titles are not provided.
+    /// The default is `false`.
     ///
     /// This defaults to `false` for developers' sanity when
     /// subclasses implement custom section header and footer views and forgets to
@@ -52,14 +53,18 @@ open class XCTableViewDataSource: NSObject, UITableViewDataSource {
         return nil
     }
 
-    open func registerCell(forTableView tableView: UITableView) {
+    /// Registers class(es) to use in creating new table cells for this data source.
+    ///
+    /// This method is called in `XCComposedTableViewController.viewDidLoad()`
+    /// before loading any table view data.
+    open func registerClasses(for tableView: UITableView) {
     }
 }
 
 // MARK: UITableViewDelegate
 
 extension XCTableViewDataSource {
-    open func heightForRowAtIndexPath(_ indexPath: IndexPath) -> CGFloat {
+    open func heightForRow(at indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
 
@@ -75,15 +80,15 @@ extension XCTableViewDataSource {
         return nil
     }
 
-    open func tableView(_ tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 
     }
 
-    open func tableView(_ tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 
     }
 
-    open func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
     }
 }

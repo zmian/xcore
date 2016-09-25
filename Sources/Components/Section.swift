@@ -116,20 +116,20 @@ extension Array where Element: RangeReplaceableCollection, Element.Index == Int 
     ///
     /// - parameter newElement: The new element to insert.
     /// - parameter indexPath:  The index path to insert the element at.
-    public mutating func insert(_ newElement: Element.Iterator.Element, atIndexPath: IndexPath) {
-        self[atIndexPath.section].insert(newElement, at: atIndexPath.item)
+    public mutating func insert(_ newElement: Element.Iterator.Element, at indexPath: IndexPath) {
+        self[indexPath.section].insert(newElement, at: indexPath.item)
     }
 
     /// Move an element at a specific location in the `self` to another location.
     ///
-    /// - parameter fromIndexPath: An index path locating the element to be moved in `self`.
-    /// - parameter toIndexPath:   An index path locating the element in `self` that is the destination of the move.
+    /// - parameter from: An index path locating the element to be moved in `self`.
+    /// - parameter to:   An index path locating the element in `self` that is the destination of the move.
     ///
     /// - returns: The moved element.
     @discardableResult
-    public mutating func moveElement(fromIndexPath: IndexPath, toIndexPath: IndexPath) -> Element.Iterator.Element {
-        let elementToMove = remove(at: fromIndexPath)
-        insert(elementToMove, atIndexPath: toIndexPath)
+    public mutating func moveElement(from indexPath: IndexPath, to theIndexPath: IndexPath) -> Element.Iterator.Element {
+        let elementToMove = remove(at: indexPath)
+        insert(elementToMove, at: theIndexPath)
         return elementToMove
     }
 }

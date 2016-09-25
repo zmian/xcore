@@ -286,7 +286,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     }
 
     open func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let movedItem = sections.moveElement(fromIndexPath: sourceIndexPath, toIndexPath: destinationIndexPath)
+        let movedItem = sections.moveElement(from: sourceIndexPath, to: destinationIndexPath)
         didMoveItem?(sourceIndexPath, destinationIndexPath, movedItem)
     }
 
@@ -492,7 +492,7 @@ extension DynamicTableView: ReorderTableViewDelegate {
     // data source to reflect that the rows have switched places. This can be called multiple times
     // during the reordering process.
     open func draggedRow(fromIndexPath: IndexPath, toIndexPath: IndexPath) {
-        sections.moveElement(fromIndexPath: fromIndexPath, toIndexPath: toIndexPath)
+        sections.moveElement(from: fromIndexPath, to: toIndexPath)
     }
 
     // This method is called when the selected row is released to its new position. The object is the same
