@@ -725,7 +725,7 @@ extension UITabBar {
         set { setValue(newValue, forKey: "_hidesShadow") }
     }
 
-    open func setBorder(color: UIColor, width: CGFloat = 1) {
+    open func setBorder(color: UIColor, thickness: CGFloat = 1) {
         isBorderHidden = true
         addBorder(edges: .top, color: color, thickness: width)
     }
