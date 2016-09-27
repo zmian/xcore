@@ -47,13 +47,13 @@ public extension String {
     }
 
     /// Trims white space and new line characters in `self`.
-    public func trim() -> String {
-        return replace("[ ]+", replacement: " ").trimmingCharacters(in: .whitespacesAndNewlines)
+    public func trimed() -> String {
+        return replace("[ ]+", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     /// Searches for pattern matches in the string and replaces them with replacement.
-    public func replace(_ pattern: String, replacement: String, options: NSString.CompareOptions = .regularExpression) -> String {
-        return replacingOccurrences(of: pattern, with: replacement, options: options, range: nil)
+    public func replace(_ pattern: String, with: String, options: NSString.CompareOptions = .regularExpression) -> String {
+        return replacingOccurrences(of: pattern, with: with, options: options, range: nil)
     }
 
     /// Returns `true` iff `value` is in `self`.
