@@ -30,7 +30,8 @@ open class XCTableViewDataSource: NSObject, UITableViewDataSource {
     /// It has to be number greater then zero. Hence, this declaration.
     public static let zero: CGFloat = 0.0001
 
-    open var section = 0
+    /// Global section index.
+    open var globalSection = 0
 
     // MARK: Public Interface
 
@@ -77,6 +78,10 @@ extension XCTableViewDataSource {
     }
 
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return nil
+    }
+
+    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return nil
     }
 

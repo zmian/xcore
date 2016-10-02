@@ -30,7 +30,7 @@ open class XCTableViewComposedDataSource: XCTableViewDataSource {
     fileprivate typealias DataSource = (dataSource: XCTableViewDataSource, localSection: Int)
     fileprivate var dataSourceIndex = [GlobalSection: DataSource]()
 
-    public var dataSources: [XCTableViewDataSource] = []
+    open var dataSources: [XCTableViewDataSource] = []
 
     override init () {
         super.init()
@@ -42,6 +42,12 @@ open class XCTableViewComposedDataSource: XCTableViewDataSource {
     }
 
     // MARK: Public Interface
+
+    /// A convenience method to replace all exisiting data sources and register cells.
+    open func replace(dataSources: [XCTableViewDataSource], for tableView: UITableView) {
+        self.dataSources = dataSources
+        registerClasses(for: tableView)
+    }
 
     open func append(dataSource: XCTableViewDataSource) {
         dataSources.append(dataSource)
@@ -78,7 +84,7 @@ extension XCTableViewComposedDataSource {
             var localSection = 0
 
             while dataSourceSections > 0 {
-                dataSources[i].section = i
+                dataSources[i].globalSection = numberOfSections
                 dataSourceIndex[numberOfSections] = (dataSources[i], localSection)
                 localSection += 1
                 numberOfSections += 1
@@ -113,6 +119,11 @@ extension XCTableViewComposedDataSource {
     open override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let (dataSource, localSection) = dataSourceIndex[section]!
         return dataSource.tableView(tableView, viewForHeaderInSection: localSection)
+    }
+
+    open override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let (dataSource, localSection) = dataSourceIndex[section]!
+        return dataSource.tableView(tableView, viewForFooterInSection: localSection)
     }
 }
 
