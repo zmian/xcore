@@ -109,6 +109,10 @@ extension XCComposedTableViewController: UITableViewDelegate {
         return composedDataSource.tableView(tableView, viewForHeaderInSection: section)
     }
 
+    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return composedDataSource.tableView(tableView, viewForFooterInSection: section)
+    }
+
     open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return estimatedRowHeightCache.get(indexPath: indexPath)
     }

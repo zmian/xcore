@@ -30,7 +30,7 @@ open class XCTableViewComposedDataSource: XCTableViewDataSource {
     fileprivate typealias DataSource = (dataSource: XCTableViewDataSource, localSection: Int)
     fileprivate var dataSourceIndex = [GlobalSection: DataSource]()
 
-    public var dataSources: [XCTableViewDataSource] = []
+    open var dataSources: [XCTableViewDataSource] = []
 
     override init () {
         super.init()
@@ -42,6 +42,12 @@ open class XCTableViewComposedDataSource: XCTableViewDataSource {
     }
 
     // MARK: Public Interface
+
+    /// A convenience method to replace all exisiting data sources and register cells.
+    open func replace(dataSources: [XCTableViewDataSource], for tableView: UITableView) {
+        self.dataSources = dataSources
+        registerClasses(for: tableView)
+    }
 
     open func append(dataSource: XCTableViewDataSource) {
         dataSources.append(dataSource)
@@ -78,7 +84,7 @@ extension XCTableViewComposedDataSource {
             var localSection = 0
 
             while dataSourceSections > 0 {
-                dataSources[i].section = i
+                dataSources[i].globalSection = i
                 dataSourceIndex[numberOfSections] = (dataSources[i], localSection)
                 localSection += 1
                 numberOfSections += 1
@@ -95,8 +101,8 @@ extension XCTableViewComposedDataSource {
     }
 
     open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let (dataSource, localSection) = dataSourceIndex[(indexPath as NSIndexPath).section]!
-        let localIndexPath = IndexPath(row: (indexPath as NSIndexPath).row, section: localSection)
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]!
+        let localIndexPath = IndexPath(row: indexPath.row, section: localSection)
         return dataSource.tableView(tableView, cellForRowAt: localIndexPath)
     }
 
@@ -114,32 +120,37 @@ extension XCTableViewComposedDataSource {
         let (dataSource, localSection) = dataSourceIndex[section]!
         return dataSource.tableView(tableView, viewForHeaderInSection: localSection)
     }
+
+    open override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let (dataSource, localSection) = dataSourceIndex[section]!
+        return dataSource.tableView(tableView, viewForFooterInSection: localSection)
+    }
 }
 
 // MARK: UITableViewDataSource
 
 extension XCTableViewComposedDataSource {
     open override func heightForRow(at indexPath: IndexPath) -> CGFloat {
-        let (dataSource, localSection) = dataSourceIndex[(indexPath as NSIndexPath).section]!
-        let localIndexPath = IndexPath(row: (indexPath as NSIndexPath).row, section: localSection)
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]!
+        let localIndexPath = IndexPath(row: indexPath.row, section: localSection)
         return dataSource.heightForRow(at: localIndexPath)
     }
 
     open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let (dataSource, localSection) = dataSourceIndex[(indexPath as NSIndexPath).section]!
-        let localIndexPath = IndexPath(row: (indexPath as NSIndexPath).row, section: localSection)
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]!
+        let localIndexPath = IndexPath(row: indexPath.row, section: localSection)
         dataSource.tableView(tableView, didSelectRowAt: localIndexPath)
     }
 
     open override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let (dataSource, localSection) = dataSourceIndex[(indexPath as NSIndexPath).section]!
-        let localIndexPath = IndexPath(row: (indexPath as NSIndexPath).row, section: localSection)
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]!
+        let localIndexPath = IndexPath(row: indexPath.row, section: localSection)
         dataSource.tableView(tableView, willDisplay: cell, forRowAt: localIndexPath)
     }
 
     open override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let (dataSource, localSection) = dataSourceIndex[(indexPath as NSIndexPath).section]!
-        let localIndexPath = IndexPath(row: (indexPath as NSIndexPath).row, section: localSection)
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]!
+        let localIndexPath = IndexPath(row: indexPath.row, section: localSection)
         dataSource.tableView(tableView, didEndDisplaying: cell, forRowAt: localIndexPath)
     }
 
