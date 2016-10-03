@@ -84,7 +84,7 @@ extension XCTableViewComposedDataSource {
             var localSection = 0
 
             while dataSourceSections > 0 {
-                dataSources[i].globalSection = numberOfSections
+                dataSources[i].globalSection = i
                 dataSourceIndex[numberOfSections] = (dataSources[i], localSection)
                 localSection += 1
                 numberOfSections += 1
