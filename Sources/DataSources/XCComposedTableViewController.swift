@@ -58,7 +58,7 @@ open class XCComposedTableViewController: UIViewController {
         tableView.reloadData() // Fixes invalid scroll position when a ViewController is pushed/popped
     }
 
-    open func dataSources(forTableView tableView: UITableView) -> [XCTableViewDataSource] {
+    open func dataSources(for tableView: UITableView) -> [XCTableViewDataSource] {
         return []
     }
 }
@@ -67,7 +67,7 @@ open class XCComposedTableViewController: UIViewController {
 
 extension XCComposedTableViewController {
     fileprivate func setupTableView(forTableView tableView: UITableView) {
-        composedDataSource.dataSources = dataSources(forTableView: tableView)
+        composedDataSource.dataSources = dataSources(for: tableView)
         composedDataSource.registerClasses(for: tableView)
         tableView.dataSource = composedDataSource
         tableView.delegate = self
