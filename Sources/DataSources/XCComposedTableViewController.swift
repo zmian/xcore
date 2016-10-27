@@ -25,6 +25,7 @@
 import UIKit
 
 open class XCComposedTableViewController: UIViewController {
+    fileprivate var tableViewConstraints = [NSLayoutConstraint]()
     fileprivate var estimatedRowHeightCache = Cache()
     /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
     /// The default value is `.grouped`.
@@ -42,6 +43,21 @@ open class XCComposedTableViewController: UIViewController {
         return tableView
     }()
 
+    /// An option to determine whether the `scrollView`'s `top` and `bottom` is constrained
+    /// to `topLayoutGuide` and `bottomLayoutGuide`. The default value is `[]`.
+    open var constraintToLayoutGuideOptions: LayoutGuideOptions = []
+
+    /// The distance that the tableView is inset from the enclosing view.
+    /// The default value is `UIEdgeInsets.zero`.
+    open dynamic var contentInset = UIEdgeInsets.zero {
+        didSet {
+            tableViewConstraints.at(0)?.constant = contentInset.left
+            tableViewConstraints.at(1)?.constant = contentInset.right
+            tableViewConstraints.at(2)?.constant = contentInset.top
+            tableViewConstraints.at(3)?.constant = contentInset.bottom
+        }
+    }
+
     // MARK: DataSources
 
     public let composedDataSource = XCTableViewComposedDataSource()
@@ -49,7 +65,7 @@ open class XCComposedTableViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
-        NSLayoutConstraint.constraintsForViewToFillSuperview(tableView).activate()
+        tableViewConstraints = constraintsForViewToFillSuperview(tableView, padding: contentInset, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
         setupTableView(forTableView: tableView)
     }
 
