@@ -78,7 +78,7 @@ open class IconLabelCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint(item: deleteButton, attribute: .top, toItem: contentView, constant: -offset).activate()
         NSLayoutConstraint(item: contentView, attribute: .trailing, toItem: deleteButton, constant: -offset).activate()
 
-        deleteButton.image(R(.CollectionViewCellDeleteIcon), forState: .normal, bundle: .xcore)
+        deleteButton.image(R(.CollectionViewCellDeleteIcon), for: .normal, bundle: .xcore)
         deleteButton.imageView?.cornerRadius    = 24/2
         deleteButton.imageView?.backgroundColor = UIColor.white
 
