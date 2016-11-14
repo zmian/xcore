@@ -809,11 +809,6 @@ extension UIButton {
         }
     }
 
-    open override func tintColorDidChange() {
-        super.tintColorDidChange()
-        imageView?.tintColor = tintColor
-    }
-
     /// Sets the image on **background thread** to use for the specified state.
     ///
     /// - parameter named:  The remote image url or local image name to use for the specified state.
