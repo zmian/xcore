@@ -97,7 +97,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     /// 1. This class needs to be it's own delegate to provide default implementation using data source.
     /// 2. Outside client/classes can also become delegate to do further customizations.
     fileprivate weak var _delegate: UITableViewDelegate?
-    override open var delegate: UITableViewDelegate? {
+    open var tableViewDelegate: UITableViewDelegate? {
         get { return _delegate }
         set { self._delegate = newValue }
     }
@@ -519,59 +519,20 @@ extension DynamicTableView: ReorderTableViewDelegate {
 // MARK: UIScrollViewDelegate Forward Calls
 
 extension DynamicTableView {
-    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        _delegate?.scrollViewDidScroll?(scrollView)
+    open override func responds(to aSelector: Selector!) -> Bool {
+        if let delegate = _delegate, delegate.responds(to: aSelector) {
+            return true
+        }
+
+        return super.responds(to: aSelector)
     }
 
-    open func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        _delegate?.scrollViewDidZoom?(scrollView)
-    }
+    open override func forwardingTarget(for aSelector: Selector!) -> Any? {
+        if let delegate = _delegate, delegate.responds(to: aSelector) {
+            return _delegate
+        }
 
-    open func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        _delegate?.scrollViewWillBeginDragging?(scrollView)
-    }
-
-    open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        _delegate?.scrollViewWillEndDragging?(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
-    }
-
-    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        _delegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
-    }
-
-    open func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-        _delegate?.scrollViewWillBeginDecelerating?(scrollView)
-    }
-
-    open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        _delegate?.scrollViewDidEndDecelerating?(scrollView)
-    }
-
-    open func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        _delegate?.scrollViewDidEndScrollingAnimation?(scrollView)
-    }
-
-    @objc(viewForZoomingInScrollView:)
-    open func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return _delegate?.viewForZooming?(in: scrollView)
-    }
-
-    @objc(scrollViewWillBeginZooming:withView:)
-    open func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
-        _delegate?.scrollViewWillBeginZooming?(scrollView, with: view)
-    }
-
-    @objc(scrollViewDidEndZooming:withView:atScale:)
-    open func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        _delegate?.scrollViewDidEndZooming?(scrollView, with: view, atScale: scale)
-    }
-
-    open func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        return _delegate?.scrollViewShouldScrollToTop?(scrollView) ?? true
-    }
-
-    open func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-        _delegate?.scrollViewDidScrollToTop?(scrollView)
+        return super.forwardingTarget(for: aSelector)
     }
 }
 
