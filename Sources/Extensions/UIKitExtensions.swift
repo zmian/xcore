@@ -1351,7 +1351,7 @@ extension UITableView {
     ///                             Pass `false` if the change should be immediate.
     /// - parameter scrollPosition: A constant that identifies a relative position in the table view (top, middle, bottom)
     ///                             for the row when scrolling concludes. The default value is `UITableViewScrollPositionNone`.
-    public func selectRows(atIndexPaths indexPaths: [IndexPath], animated: Bool, scrollPosition: UITableViewScrollPosition = .none) {
+    public func selectRows(at indexPaths: [IndexPath], animated: Bool, scrollPosition: UITableViewScrollPosition = .none) {
         indexPaths.forEach {
             selectRow(at: $0, animated: animated, scrollPosition: scrollPosition)
         }

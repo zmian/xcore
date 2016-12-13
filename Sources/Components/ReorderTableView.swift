@@ -69,7 +69,7 @@ private class ReorderTableDraggingView: BaseView {
 public protocol ReorderTableViewDelegate: NSObjectProtocol {
     // This method is called when starting the re-ording process. You insert a blank row object into your
     // data source and return the object you want to save for later. This method is only called once.
-    func saveObjectAndInsertBlankRow(atIndexPath indexPath: IndexPath) -> Any
+    func saveObjectAndInsertBlankRow(at indexPath: IndexPath) -> Any
 
     // This method is called when the selected row is dragged to a new position. You simply update your
     // data source to reflect that the rows have switched places. This can be called multiple times
@@ -246,7 +246,7 @@ open class ReorderTableView: UITableView {
             insertRows(at: [indexPath], with: .none)
 
             if let reorderDelegate = reorderDelegate {
-                savedObject = reorderDelegate.saveObjectAndInsertBlankRow(atIndexPath: indexPath)
+                savedObject = reorderDelegate.saveObjectAndInsertBlankRow(at: indexPath)
             } else {
                 print("saveObjectAndInsertBlankRow:atIndexPath: is not implemented")
             }

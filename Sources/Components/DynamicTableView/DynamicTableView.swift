@@ -90,6 +90,18 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         editActionsForCell = callback
     }
 
+    // MARK: Delegate
+
+    /// We need to support two delegates for this class.
+    ///
+    /// 1. This class needs to be it's own delegate to provide default implementation using data source.
+    /// 2. Outside client/classes can also become delegate to do further customizations.
+    fileprivate weak var _delegate: UITableViewDelegate?
+    override open var delegate: UITableViewDelegate? {
+        get { return _delegate }
+        set { self._delegate = newValue }
+    }
+
     // MARK: Init Methods
 
     public convenience init() {
@@ -171,7 +183,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     open func setupSubviews() {}
 
     fileprivate func setupTableView() {
-        delegate           = self
+        super.delegate     = self
         dataSource         = self
         reorderDelegate    = self
         backgroundColor    = .clear
@@ -352,7 +364,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         super.deselectRow(at: indexPath, animated: animated)
         let item = sections[indexPath]
         if case .checkbox = item.accessory {
-            checkboxAccessoryView(atIndexPath: indexPath)?.setOn(false, animated: animated)
+            checkboxAccessoryView(at: indexPath)?.setOn(false, animated: animated)
         }
     }
 
@@ -448,7 +460,7 @@ extension DynamicTableView {
     }
 
     /// A convenience method to access `UISwitch` at the specified index path.
-    public func switchAccessoryView(atIndexPath indexPath: IndexPath) -> UISwitch? {
+    public func switchAccessoryView(at indexPath: IndexPath) -> UISwitch? {
         if let switchAccessoryView = cellForRow(at: indexPath)?.accessoryView as? UISwitch {
             return switchAccessoryView
         }
@@ -457,7 +469,7 @@ extension DynamicTableView {
     }
 
     /// A convenience method to access `BEMCheckBox` at the specified index path.
-    public func checkboxAccessoryView(atIndexPath indexPath: IndexPath) -> BEMCheckBox? {
+    public func checkboxAccessoryView(at indexPath: IndexPath) -> BEMCheckBox? {
         if let checkboxAccessoryView = cellForRow(at: indexPath)?.accessoryView as? BEMCheckBox {
             return checkboxAccessoryView
         }
@@ -466,7 +478,7 @@ extension DynamicTableView {
     }
 
     /// A convenience method to access `accessoryView` at the specified index path.
-    public func accessoryView(atIndexPath indexPath: IndexPath) -> UIView? {
+    public func accessoryView(at indexPath: IndexPath) -> UIView? {
         if let accessoryView = cellForRow(at: indexPath)?.accessoryView {
             return accessoryView
         }
@@ -482,7 +494,7 @@ extension DynamicTableView: ReorderTableViewDelegate {
 
     // This method is called when starting the re-ording process. You insert a blank row object into your
     // data source and return the object you want to save for later. This method is only called once.
-    open func saveObjectAndInsertBlankRow(atIndexPath indexPath: IndexPath) -> Any {
+    open func saveObjectAndInsertBlankRow(at indexPath: IndexPath) -> Any {
         let item = sections[indexPath]
         sections[indexPath] = DynamicTableModel(userInfo: [DynamicTableView.ReorderTableViewDummyItemIdentifier: true])
         return item
@@ -501,6 +513,65 @@ extension DynamicTableView: ReorderTableViewDelegate {
     open func finishedDragging(fromIndexPath: IndexPath, toIndexPath: IndexPath, withObject object: Any) {
         items[toIndexPath.row] = object as! DynamicTableModel
         didMoveItem?(fromIndexPath, toIndexPath, items[toIndexPath.row])
+    }
+}
+
+// MARK: UIScrollViewDelegate Forward Calls
+
+extension DynamicTableView {
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        _delegate?.scrollViewDidScroll?(scrollView)
+    }
+
+    open func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        _delegate?.scrollViewDidZoom?(scrollView)
+    }
+
+    open func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        _delegate?.scrollViewWillBeginDragging?(scrollView)
+    }
+
+    open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        _delegate?.scrollViewWillEndDragging?(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
+    }
+
+    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        _delegate?.scrollViewDidEndDragging?(scrollView, willDecelerate: decelerate)
+    }
+
+    open func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        _delegate?.scrollViewWillBeginDecelerating?(scrollView)
+    }
+
+    open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        _delegate?.scrollViewDidEndDecelerating?(scrollView)
+    }
+
+    open func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        _delegate?.scrollViewDidEndScrollingAnimation?(scrollView)
+    }
+
+    @objc(viewForZoomingInScrollView:)
+    open func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return _delegate?.viewForZooming?(in: scrollView)
+    }
+
+    @objc(scrollViewWillBeginZooming:withView:)
+    open func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        _delegate?.scrollViewWillBeginZooming?(scrollView, with: view)
+    }
+
+    @objc(scrollViewDidEndZooming:withView:atScale:)
+    open func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        _delegate?.scrollViewDidEndZooming?(scrollView, with: view, atScale: scale)
+    }
+
+    open func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+        return _delegate?.scrollViewShouldScrollToTop?(scrollView) ?? true
+    }
+
+    open func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        _delegate?.scrollViewDidScrollToTop?(scrollView)
     }
 }
 
