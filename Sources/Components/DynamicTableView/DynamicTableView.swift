@@ -90,6 +90,18 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         editActionsForCell = callback
     }
 
+    // MARK: Delegate
+
+    /// We need to support two delegates for this class.
+    ///
+    /// 1. This class needs to be it's own delegate to provide default implementation using data source.
+    /// 2. Outside client/classes can also become delegate to do further customizations.
+    fileprivate weak var _delegate: UITableViewDelegate?
+    open var tableViewDelegate: UITableViewDelegate? {
+        get { return _delegate }
+        set { self._delegate = newValue }
+    }
+
     // MARK: Init Methods
 
     public convenience init() {
@@ -171,7 +183,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     open func setupSubviews() {}
 
     fileprivate func setupTableView() {
-        delegate           = self
+        super.delegate     = self
         dataSource         = self
         reorderDelegate    = self
         backgroundColor    = .clear
@@ -352,7 +364,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         super.deselectRow(at: indexPath, animated: animated)
         let item = sections[indexPath]
         if case .checkbox = item.accessory {
-            checkboxAccessoryView(atIndexPath: indexPath)?.setOn(false, animated: animated)
+            checkboxAccessoryView(at: indexPath)?.setOn(false, animated: animated)
         }
     }
 
@@ -448,7 +460,7 @@ extension DynamicTableView {
     }
 
     /// A convenience method to access `UISwitch` at the specified index path.
-    public func switchAccessoryView(atIndexPath indexPath: IndexPath) -> UISwitch? {
+    public func switchAccessoryView(at indexPath: IndexPath) -> UISwitch? {
         if let switchAccessoryView = cellForRow(at: indexPath)?.accessoryView as? UISwitch {
             return switchAccessoryView
         }
@@ -457,7 +469,7 @@ extension DynamicTableView {
     }
 
     /// A convenience method to access `BEMCheckBox` at the specified index path.
-    public func checkboxAccessoryView(atIndexPath indexPath: IndexPath) -> BEMCheckBox? {
+    public func checkboxAccessoryView(at indexPath: IndexPath) -> BEMCheckBox? {
         if let checkboxAccessoryView = cellForRow(at: indexPath)?.accessoryView as? BEMCheckBox {
             return checkboxAccessoryView
         }
@@ -466,7 +478,7 @@ extension DynamicTableView {
     }
 
     /// A convenience method to access `accessoryView` at the specified index path.
-    public func accessoryView(atIndexPath indexPath: IndexPath) -> UIView? {
+    public func accessoryView(at indexPath: IndexPath) -> UIView? {
         if let accessoryView = cellForRow(at: indexPath)?.accessoryView {
             return accessoryView
         }
@@ -482,7 +494,7 @@ extension DynamicTableView: ReorderTableViewDelegate {
 
     // This method is called when starting the re-ording process. You insert a blank row object into your
     // data source and return the object you want to save for later. This method is only called once.
-    open func saveObjectAndInsertBlankRow(atIndexPath indexPath: IndexPath) -> Any {
+    open func saveObjectAndInsertBlankRow(at indexPath: IndexPath) -> Any {
         let item = sections[indexPath]
         sections[indexPath] = DynamicTableModel(userInfo: [DynamicTableView.ReorderTableViewDummyItemIdentifier: true])
         return item
@@ -501,6 +513,26 @@ extension DynamicTableView: ReorderTableViewDelegate {
     open func finishedDragging(fromIndexPath: IndexPath, toIndexPath: IndexPath, withObject object: Any) {
         items[toIndexPath.row] = object as! DynamicTableModel
         didMoveItem?(fromIndexPath, toIndexPath, items[toIndexPath.row])
+    }
+}
+
+// MARK: UIScrollViewDelegate Forward Calls
+
+extension DynamicTableView {
+    open override func responds(to aSelector: Selector!) -> Bool {
+        if let delegate = _delegate, delegate.responds(to: aSelector) {
+            return true
+        }
+
+        return super.responds(to: aSelector)
+    }
+
+    open override func forwardingTarget(for aSelector: Selector!) -> Any? {
+        if let delegate = _delegate, delegate.responds(to: aSelector) {
+            return _delegate
+        }
+
+        return super.forwardingTarget(for: aSelector)
     }
 }
 
