@@ -14,7 +14,7 @@ extension Timer {
     ///
     /// - returns: The newly-created `NSTimer` instance.
     @discardableResult
-    public class func schedule(delay: TimeInterval, handler: @escaping () -> Void) -> Timer {
+    public class func schedule(delay: TimeInterval, _ handler: @escaping () -> Void) -> Timer {
         let fireDate = delay + CFAbsoluteTimeGetCurrent()
         let timer = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, fireDate, 0, 0, 0) { _ in
             handler()
@@ -32,7 +32,7 @@ extension Timer {
     ///     - handler: A closure to execute at each `repeatInterval`.
     ///
     /// - returns: The newly-created `NSTimer` instance.
-    public class func schedule(repeatInterval interval: TimeInterval, handler: @escaping () -> Void) -> Timer {
+    public class func schedule(repeatInterval interval: TimeInterval, _ handler: @escaping () -> Void) -> Timer {
         let fireDate = interval + CFAbsoluteTimeGetCurrent()
         let timer = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, fireDate, interval, 0, 0) { _ in
             handler()
@@ -70,6 +70,6 @@ extension Timer {
     }
 }
 
-public func delay(by interval: TimeInterval, callback: @escaping () -> Void) {
-    Timer.schedule(delay: interval, handler: callback)
+public func delay(by interval: TimeInterval, _ callback: @escaping () -> Void) {
+    Timer.schedule(delay: interval, callback)
 }

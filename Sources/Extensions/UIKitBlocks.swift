@@ -133,12 +133,12 @@ extension UIControl: XCUIControlEventsBlockRepresentable {
 public protocol XCUIControlEventsBlockRepresentable {
     associatedtype SenderType
 
-    func addAction(_ events: UIControlEvents, handler: @escaping (_ sender: SenderType) -> Void)
+    func addAction(_ events: UIControlEvents, _ handler: @escaping (_ sender: SenderType) -> Void)
     func removeAction(_ events: UIControlEvents)
 }
 
 extension XCUIControlEventsBlockRepresentable where Self: UIControl {
-    public func addAction(_ events: UIControlEvents, handler: @escaping (_ sender: Self) -> Void) {
+    public func addAction(_ events: UIControlEvents, _ handler: @escaping (_ sender: Self) -> Void) {
         var actionEvents = self.actionEvents ?? [:]
         let wrapper      = actionEvents[events.rawValue] ?? ControlClosureWrapper(events: events, closure: nil)
 
@@ -232,7 +232,7 @@ private extension UIGestureRecognizer {
 // MARK: UIGestureRecognizer Block-based Interface
 
 public extension UIGestureRecognizer {
-    public convenience init(handler: @escaping () -> Void) {
+    public convenience init(_ handler: @escaping () -> Void) {
         self.init()
         setActionHandler(handler)
     }
