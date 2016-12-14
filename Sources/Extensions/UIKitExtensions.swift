@@ -888,7 +888,7 @@ extension UIButton {
         imageView?.contentMode = .scaleAspectFit
         imageView?.tintColor   = tintColor
         if let handler = handler {
-            addAction(.touchUpInside, handler: handler)
+            addAction(.touchUpInside, handler)
         }
     }
 
