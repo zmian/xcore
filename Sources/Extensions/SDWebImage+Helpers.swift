@@ -27,7 +27,7 @@ import SDWebImage
 
 public extension UIImageView {
     /// Automatically detect and load the image from local or a remote url.
-    public func remoteOrLocalImage(_ named: String, alwaysAnimate: Bool = false, callback: ((_ image: UIImage) -> Void)? = nil) {
+    public func remoteOrLocalImage(_ named: String, alwaysAnimate: Bool = false, animationDuration: TimeInterval = 0.5, callback: ((_ image: UIImage) -> Void)? = nil) {
         guard !named.isBlank else { image = nil; return }
 
         if let url = URL(string: named), url.host != nil {
@@ -40,7 +40,7 @@ public extension UIImageView {
                 }
                 if let weakSelf = self, (alwaysAnimate || cacheType != SDImageCacheType.memory) {
                     weakSelf.alpha = 0
-                    UIView.animate(withDuration: 0.5) {
+                    UIView.animate(withDuration: animationDuration) {
                         weakSelf.alpha = 1
                     }
                 }
@@ -54,7 +54,7 @@ public extension UIImageView {
                     if alwaysAnimate {
                         weakSelf.alpha = 0
                         weakSelf.image = image
-                        UIView.animate(withDuration: 0.5) {
+                        UIView.animate(withDuration: animationDuration) {
                             weakSelf.alpha = 1
                         }
                     } else {
