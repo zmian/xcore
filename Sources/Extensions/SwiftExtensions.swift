@@ -47,7 +47,7 @@ public extension String {
     }
 
     /// Trims white space and new line characters in `self`.
-    public func trimed() -> String {
+    public func trimmed() -> String {
         return replace("[ ]+", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
