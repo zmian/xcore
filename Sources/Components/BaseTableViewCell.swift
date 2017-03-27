@@ -24,16 +24,16 @@
 
 import UIKit
 
-public class BaseTableViewCell: UITableViewCell {
+open class BaseTableViewCell: UITableViewCell {
 
     // MARK: Public Interface
 
-    public class var reuseIdentifier: String { return "BaseTableViewCellIdentifier" }
+    open class var reuseIdentifier: String { return "BaseTableViewCellIdentifier" }
 
     // MARK: Init Methods
 
     public convenience init() {
-        self.init(style: .Default, reuseIdentifier: self.dynamicType.reuseIdentifier)
+        self.init(style: .default, reuseIdentifier: nil)
     }
 
     public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -48,11 +48,11 @@ public class BaseTableViewCell: UITableViewCell {
 
     // MARK: Setup Methods
 
-    public override func setSelected(selected: Bool, animated: Bool) {}
-    public override func setHighlighted(highlighted: Bool, animated: Bool) {}
+    open override func setSelected(_ selected: Bool, animated: Bool) {}
+    open override func setHighlighted(_ highlighted: Bool, animated: Bool) {}
 
-    private func commonInit() {
-        backgroundColor = UIColor.clearColor()
+    fileprivate func commonInit() {
+        backgroundColor = .clear
         setupSubviews()
     }
 
@@ -61,5 +61,5 @@ public class BaseTableViewCell: UITableViewCell {
     /// Subclasses can override it to perform additional actions,
     /// for example, add new subviews or configure properties.
     /// This method is called when self is initialized using any of the relevant `init` methods.
-    public func setupSubviews() {}
+    open func setupSubviews() {}
 }

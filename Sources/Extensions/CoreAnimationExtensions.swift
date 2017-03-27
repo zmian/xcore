@@ -30,7 +30,7 @@ extension CATransaction {
     ///
     /// - parameter animateBlock:      The block that have animations that must be completed before completion handler is called.
     /// - parameter completionHandler: A block object called when animations for this transaction group are completed.
-    public static func animationTransaction(@noescape animateBlock: () -> Void, completionHandler: (() -> Void)?) {
+    public static func animationTransaction(_ animateBlock: () -> Void, completionHandler: (() -> Void)?) {
         CATransaction.begin()
         CATransaction.setCompletionBlock(completionHandler)
         animateBlock()
@@ -51,10 +51,10 @@ extension CALayer {
         let bytesPerRow = 4 * height
         var pixel: [UInt8] = [0, 0, 0, 0]
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
-        let context = CGBitmapContextCreate(UnsafeMutablePointer(pixel), width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo.rawValue)!
-        CGContextTranslateCTM(context, -point.x, -point.y)
-        renderInContext(context)
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
+        let context = CGContext(data: UnsafeMutablePointer(mutating: pixel), width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
+        context.translateBy(x: -point.x, y: -point.y)
+        render(in: context)
         return UIColor(colorLiteralRed: Float(pixel[0])/255, green: Float(pixel[1])/255, blue: Float(pixel[2])/255, alpha: Float(pixel[3])/255)
     }
 }

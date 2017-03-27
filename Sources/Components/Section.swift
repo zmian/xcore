@@ -26,15 +26,14 @@
 
 import Foundation
 
-public struct ArrayGenerator<Element>: GeneratorType {
-    private let array: [Element]
-    private var currentIndex = 0
+public struct ArrayIterator<Element>: IteratorProtocol {
+    fileprivate let array: [Element]
+    fileprivate var currentIndex = 0
 
     public init(_ array: [Element]) {
         self.array = array
     }
 
-    @warn_unused_result
     public mutating func next() -> Element? {
         let element = array.at(currentIndex)
         currentIndex += 1
@@ -42,7 +41,7 @@ public struct ArrayGenerator<Element>: GeneratorType {
     }
 }
 
-public struct Section<Element>: RangeReplaceableCollectionType, MutableCollectionType, ArrayLiteralConvertible {
+public struct Section<Element>: RangeReplaceableCollection, MutableCollection, ExpressibleByArrayLiteral {
     public var title: String?
     public var detail: String?
     public var items: [Element]
@@ -73,55 +72,64 @@ public struct Section<Element>: RangeReplaceableCollectionType, MutableCollectio
         set { items[index] = newValue }
     }
 
-    @warn_unused_result
-    public func generate() -> ArrayGenerator<Element> {
-        return ArrayGenerator(items)
+    /// Returns the position immediately after the given index.
+    ///
+    /// - parameter i: A valid index of the collection. `i` must be less than `endIndex`.
+    /// - returns: The index value immediately after `i`.
+    public func index(after i: Int) -> Int {
+        return i + 1
     }
 
-    public mutating func replaceRange<C: CollectionType where C.Generator.Element == Element>(subRange: Range<Int>, with newElements: C) {
-        items.replaceRange(subRange, with: newElements)
+    public func makeIterator() -> ArrayIterator<Element> {
+        return ArrayIterator(items)
+    }
+
+    public mutating func replaceSubrange<C: Collection>(_ subRange: Range<Int>, with newElements: C) where C.Iterator.Element == Element {
+        items.replaceSubrange(subRange, with: newElements)
     }
 }
 
-public extension Array where Element: MutableCollectionType, Element.Index == Int {
+extension Array where Element: MutableCollection, Element.Index == Int {
     /// A convenience subscript to return the element at the specified index path.
     ///
     /// - parameter indexPath: The index path for the element.
     ///
     /// - returns: The element at the specified index path iff it is within bounds, otherwise fatalError.
-    public subscript(indexPath: NSIndexPath) -> Element.Generator.Element {
+    public subscript(indexPath: IndexPath) -> Element.Iterator.Element {
         get { return self[indexPath.section][indexPath.item] }
         set { self[indexPath.section][indexPath.item] = newValue }
     }
 }
 
-public extension Array where Element: RangeReplaceableCollectionType, Element.Index == Int {
+extension Array where Element: RangeReplaceableCollection, Element.Index == Int {
     /// Remove the element at the specified index path.
     ///
     /// - parameter indexPath: The index path for the element to remove.
     ///
     /// - returns: The removed element.
-    public mutating func removeAt(indexPath: NSIndexPath) -> Element.Generator.Element {
-        return self[indexPath.section].removeAtIndex(indexPath.item)
+    @discardableResult
+    public mutating func remove(at indexPath: IndexPath) -> Element.Iterator.Element {
+        return self[indexPath.section].remove(at: indexPath.item)
     }
 
     /// Insert newElement at the specified index path.
     ///
     /// - parameter newElement: The new element to insert.
     /// - parameter indexPath:  The index path to insert the element at.
-    public mutating func insert(newElement: Element.Generator.Element, atIndexPath: NSIndexPath) {
-        self[atIndexPath.section].insert(newElement, atIndex: atIndexPath.item)
+    public mutating func insert(_ newElement: Element.Iterator.Element, at indexPath: IndexPath) {
+        self[indexPath.section].insert(newElement, at: indexPath.item)
     }
 
     /// Move an element at a specific location in the `self` to another location.
     ///
-    /// - parameter fromIndexPath: An index path locating the element to be moved in `self`.
-    /// - parameter toIndexPath:   An index path locating the element in `self` that is the destination of the move.
+    /// - parameter from: An index path locating the element to be moved in `self`.
+    /// - parameter to:   An index path locating the element in `self` that is the destination of the move.
     ///
     /// - returns: The moved element.
-    public mutating func moveElement(fromIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) -> Element.Generator.Element {
-        let elementToMove = removeAt(fromIndexPath)
-        insert(elementToMove, atIndexPath: toIndexPath)
+    @discardableResult
+    public mutating func moveElement(from indexPath: IndexPath, to theIndexPath: IndexPath) -> Element.Iterator.Element {
+        let elementToMove = remove(at: indexPath)
+        insert(elementToMove, at: theIndexPath)
         return elementToMove
     }
 }

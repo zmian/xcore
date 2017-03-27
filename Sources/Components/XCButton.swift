@@ -31,7 +31,7 @@ open class XCButton: UIButton {
 
     open func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControlState) {
         backgroundColors[state.rawValue] = backgroundColor
-        
+
         if state == .normal {
             super.backgroundColor = backgroundColor
         }
@@ -82,7 +82,7 @@ open class XCButton: UIButton {
 
     fileprivate func changeBackgroundColor(to state: UIControlState) {
         let normalBackgroundColor = backgroundColor
-        
+
         UIView.animate(withDuration: 0.25) {
             super.backgroundColor = self.backgroundColor(for: state)
         }

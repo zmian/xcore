@@ -30,51 +30,50 @@ public extension UIFont {
 
         public var rawValue: String {
             switch self {
-                case .title1:      if #available(iOS 9.0, *) { return UIFontTextStyleTitle1 } else { return UIFontTextStyleHeadline }
-                case .title2:      if #available(iOS 9.0, *) { return UIFontTextStyleTitle2 } else { return UIFontTextStyleHeadline }
-                case .title3:      if #available(iOS 9.0, *) { return UIFontTextStyleTitle3 } else { return UIFontTextStyleHeadline }
-                case .headline:    return UIFontTextStyleHeadline
-                case .subheadline: return UIFontTextStyleSubheadline
-                case .body:        return UIFontTextStyleBody
-                case .callout:     if #available(iOS 9.0, *) { return UIFontTextStyleCallout } else { return UIFontTextStyleSubheadline }
-                case .footnote:    return UIFontTextStyleFootnote
-                case .caption1:    return UIFontTextStyleCaption1
-                case .caption2:    return UIFontTextStyleCaption2
+                case .title1:      if #available(iOS 9.0, *) { return UIFontTextStyle.title1.rawValue } else { return UIFontTextStyle.headline.rawValue }
+                case .title2:      if #available(iOS 9.0, *) { return UIFontTextStyle.title2.rawValue } else { return UIFontTextStyle.headline.rawValue }
+                case .title3:      if #available(iOS 9.0, *) { return UIFontTextStyle.title3.rawValue } else { return UIFontTextStyle.headline.rawValue }
+                case .headline:    return UIFontTextStyle.headline.rawValue
+                case .subheadline: return UIFontTextStyle.subheadline.rawValue
+                case .body:        return UIFontTextStyle.body.rawValue
+                case .callout:     if #available(iOS 9.0, *) { return UIFontTextStyle.callout.rawValue } else { return UIFontTextStyle.subheadline.rawValue }
+                case .footnote:    return UIFontTextStyle.footnote.rawValue
+                case .caption1:    return UIFontTextStyle.caption1.rawValue
+                case .caption2:    return UIFontTextStyle.caption2.rawValue
             }
         }
 
         public init?(rawValue: String) {
             if #available(iOS 9.0, *) {
                 switch rawValue {
-                    case UIFontTextStyleTitle1:      self = .title1
-                    case UIFontTextStyleTitle2:      self = .title2
-                    case UIFontTextStyleTitle3:      self = .title3
-                    case UIFontTextStyleHeadline:    self = .headline
-                    case UIFontTextStyleSubheadline: self = .subheadline
-                    case UIFontTextStyleBody:        self = .body
-                    case UIFontTextStyleCallout:     self = .callout
-                    case UIFontTextStyleFootnote:    self = .footnote
-                    case UIFontTextStyleCaption1:    self = .caption1
-                    case UIFontTextStyleCaption2:    self = .caption2
+                    case UIFontTextStyle.title1.rawValue:      self = .title1
+                    case UIFontTextStyle.title2.rawValue:      self = .title2
+                    case UIFontTextStyle.title3.rawValue:      self = .title3
+                    case UIFontTextStyle.headline.rawValue:    self = .headline
+                    case UIFontTextStyle.subheadline.rawValue: self = .subheadline
+                    case UIFontTextStyle.body.rawValue:        self = .body
+                    case UIFontTextStyle.callout.rawValue:     self = .callout
+                    case UIFontTextStyle.footnote.rawValue:    self = .footnote
+                    case UIFontTextStyle.caption1.rawValue:    self = .caption1
+                    case UIFontTextStyle.caption2.rawValue:    self = .caption2
                     default: fatalError("Unsupported `TextStyle`")
                 }
             } else {
                 switch rawValue {
-                    case UIFontTextStyleHeadline:    self = .headline
-                    case UIFontTextStyleSubheadline: self = .subheadline
-                    case UIFontTextStyleBody:        self = .body
-                    case UIFontTextStyleFootnote:    self = .footnote
-                    case UIFontTextStyleCaption1:    self = .caption1
-                    case UIFontTextStyleCaption2:    self = .caption2
+                    case UIFontTextStyle.headline.rawValue:    self = .headline
+                    case UIFontTextStyle.subheadline.rawValue: self = .subheadline
+                    case UIFontTextStyle.body.rawValue:        self = .body
+                    case UIFontTextStyle.footnote.rawValue:    self = .footnote
+                    case UIFontTextStyle.caption1.rawValue:    self = .caption1
+                    case UIFontTextStyle.caption2.rawValue:    self = .caption2
                     default: fatalError("Unsupported `TextStyle`")
                 }
             }
         }
     }
 
-    @warn_unused_result
-    public static func systemFont(style: TextStyle) -> UIFont {
-        return preferredFontForTextStyle(style.rawValue)
+    public static func systemFont(_ style: TextStyle) -> UIFont {
+        return preferredFont(forTextStyle: UIFontTextStyle(rawValue: style.rawValue))
     }
 }
 
@@ -91,14 +90,13 @@ public extension UIFont {
         public static let headline: CGFloat    = 16
         public static let subheadline: CGFloat = 14
         public static let body: CGFloat        = 16
-        public static let label                = UIFont.labelFontSize()
-        public static let button               = UIFont.buttonFontSize()
-        public static let small                = UIFont.smallSystemFontSize()
-        public static let system               = UIFont.systemFontSize()
+        public static let label                = UIFont.labelFontSize
+        public static let button               = UIFont.buttonFontSize
+        public static let small                = UIFont.smallSystemFontSize
+        public static let system               = UIFont.systemFontSize
     }
 
-    @warn_unused_result
-    static func systemFont(size: CGFloat, style: Style = .normal, weight: Weight = .regular) -> UIFont {
+    static func systemFont(_ size: CGFloat, style: Style = .normal, weight: Weight = .regular) -> UIFont {
         let fontWeight: CGFloat
 
         if #available(iOS 8.2, *) {
@@ -130,25 +128,25 @@ public extension UIFont {
             case .normal:
                 return _systemFontOfSize(size, weight: fontWeight, weightType: weight)
             case .italic:
-                return italicSystemFontOfSize(size)
+                return italicSystemFont(ofSize: size)
             case .monospace:
                 if #available(iOS 9.0, *) {
-                    return monospacedDigitSystemFontOfSize(size, weight: fontWeight)
+                    return monospacedDigitSystemFont(ofSize: size, weight: fontWeight)
                 } else {
                     return _systemFontOfSize(size, weight: fontWeight, weightType: weight).monospacedDigitFont
                 }
         }
     }
 
-    private static func _systemFontOfSize(size: CGFloat, weight: CGFloat, weightType: Weight) -> UIFont {
+    fileprivate static func _systemFontOfSize(_ size: CGFloat, weight: CGFloat, weightType: Weight) -> UIFont {
         if #available(iOS 8.2, *) {
-            return systemFontOfSize(size, weight: weight)
+            return self.systemFont(ofSize: size, weight: weight)
         } else {
             switch weightType {
                 case .bold, .heavy, .black:
-                    return boldSystemFontOfSize(size)
+                    return boldSystemFont(ofSize: size)
                 default:
-                    return systemFontOfSize(size)
+                    return self.systemFont(ofSize: size)
             }
         }
     }
@@ -156,10 +154,10 @@ public extension UIFont {
 
 public extension UIFont {
     public static func printAvailableFontNames() {
-        for family in familyNames() {
-            let count = fontNamesForFamilyName(family).count
+        for family in familyNames {
+            let count = fontNames(forFamilyName: family).count
             print("▿ \(family) (\(count) \(count == 1 ? "font" : "fonts"))")
-            for name in fontNamesForFamilyName(family) {
+            for name in fontNames(forFamilyName: family) {
                 print("  - \(name)")
             }
         }
@@ -170,17 +168,16 @@ public extension UIFont {
     /// - parameter traits: The new symbolic traits.
     ///
     /// - returns: The new font matching the given font descriptor.
-    @warn_unused_result
-    public func traits(traits: UIFontDescriptorSymbolicTraits...) -> UIFont {
-        let descriptor = fontDescriptor().fontDescriptorWithSymbolicTraits(UIFontDescriptorSymbolicTraits(traits))
-        return UIFont(descriptor: descriptor, size: 0)
+    public func traits(_ traits: UIFontDescriptorSymbolicTraits...) -> UIFont {
+        let descriptor = fontDescriptor.withSymbolicTraits(UIFontDescriptorSymbolicTraits(traits))
+        return UIFont(descriptor: descriptor!, size: 0)
     }
 
     public var monospacedDigitFont: UIFont {
         let featureSettings = [[UIFontFeatureTypeIdentifierKey: kNumberSpacingType, UIFontFeatureSelectorIdentifierKey: kMonospacedNumbersSelector]]
         let attributes      = [UIFontDescriptorFeatureSettingsAttribute: featureSettings]
-        let oldDescriptor   = fontDescriptor()
-        let newDescriptor   = oldDescriptor.fontDescriptorByAddingAttributes(attributes)
+        let oldDescriptor   = fontDescriptor
+        let newDescriptor   = oldDescriptor.addingAttributes(attributes)
         return UIFont(descriptor: newDescriptor, size: 0)
     }
 }
