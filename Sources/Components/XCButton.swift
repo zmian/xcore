@@ -26,29 +26,49 @@ import UIKit
 
 @IBDesignable
 open class XCButton: UIButton {
-    fileprivate var observeBackgroundColorSetter = true
-    fileprivate var regularBackgroundColor: UIColor?
+    private typealias State = UInt
+    private var backgroundColors = [State: UIColor?]()
 
-    @nonobjc open var highlightedBackgroundColor: UIColor?
-    @nonobjc open var disabledBackgroundColor: UIColor?
+    open func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControlState) {
+        backgroundColors[state.rawValue] = backgroundColor
+
+        if state == .normal {
+            super.backgroundColor = backgroundColor
+        }
+    }
+
+    open func backgroundColor(for state: UIControlState) -> UIColor? {
+        guard let color = backgroundColors[state.rawValue] else {
+            return nil
+        }
+
+        return color
+    }
+
+    @nonobjc open var highlightedBackgroundColor: UIColor? {
+        get { return backgroundColor(for: .highlighted) }
+        set { setBackgroundColor(newValue, for: .highlighted) }
+    }
+
+    @nonobjc open var disabledBackgroundColor: UIColor? {
+        get { return backgroundColor(for: .disabled) }
+        set { setBackgroundColor(newValue, for: .disabled) }
+    }
 
     open override var backgroundColor: UIColor? {
-        didSet {
-            if observeBackgroundColorSetter {
-                regularBackgroundColor = backgroundColor
-            }
-        }
+        get { return backgroundColor(for: .normal) }
+        set { setBackgroundColor(newValue, for: .normal) }
     }
 
     open override var isHighlighted: Bool {
         didSet {
-            changeBackgroundColor(to: highlightedBackgroundColor, forState: isHighlighted)
+            changeBackgroundColor(to: isHighlighted ? .highlighted : .normal)
         }
     }
 
     open override var isEnabled: Bool {
         didSet {
-            changeBackgroundColor(to: disabledBackgroundColor, forState: !isEnabled)
+            changeBackgroundColor(to: isEnabled ? .normal : .disabled)
         }
     }
 
@@ -60,14 +80,10 @@ open class XCButton: UIButton {
         disabledBackgroundColor = color
     }
 
-    fileprivate func changeBackgroundColor(to color: UIColor?, forState: Bool) {
-        observeBackgroundColorSetter = false
-
-        UIView.animate(withDuration: 0.25, animations: {
-            self.backgroundColor = forState ? color : self.regularBackgroundColor
-        }, completion: { _ in
-            self.observeBackgroundColorSetter = true
-        })
+    fileprivate func changeBackgroundColor(to state: UIControlState) {
+        UIView.animate(withDuration: 0.25) {
+            super.backgroundColor = self.backgroundColor(for: state)
+        }
     }
 
     open func setEnabled(enabled: Bool, animated: Bool) {
