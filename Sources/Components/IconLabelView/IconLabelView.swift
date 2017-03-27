@@ -23,35 +23,34 @@
 //
 
 import UIKit
-import TZStackView
 
-public class IconLabelView: UIView {
+open class IconLabelView: UIView {
     public enum Style { case topBottom, leftRight }
 
-    private var imagePaddingConstraints: [NSLayoutConstraint] = []
-    private var imageSizeConstraints: (width: NSLayoutConstraint?, height: NSLayoutConstraint?)
-    private var labelsWidthConstraints: [NSLayoutConstraint] = []
-    private var stackViewConstraints: (topBottom: [NSLayoutConstraint]?, leftRight: [NSLayoutConstraint]?)
+    fileprivate var imagePaddingConstraints: [NSLayoutConstraint] = []
+    fileprivate var imageSizeConstraints: (width: NSLayoutConstraint?, height: NSLayoutConstraint?)
+    fileprivate var labelsWidthConstraints: [NSLayoutConstraint] = []
+    fileprivate var stackViewConstraints: (topBottom: [NSLayoutConstraint]?, leftRight: [NSLayoutConstraint]?)
 
     // MARK: Subviews
 
-    private let stackView           = TZStackView()
-    private let textImageSpacerView = IntrinsicContentSizeView()
-    public let imageViewContainer   = UIView()
-    public let imageView            = UIImageView()
-    public let titleLabel           = UILabel()
-    public let subtitleLabel        = UILabel()
+    fileprivate let stackView           = UIStackView()
+    fileprivate let textImageSpacerView = IntrinsicContentSizeView()
+    public let imageViewContainer       = UIView()
+    public let imageView                = UIImageView()
+    public let titleLabel               = UILabel()
+    public let subtitleLabel            = UILabel()
 
     /// The default value is `Style.topBottom`.
-    public var style = Style.topBottom {
+    open var style = Style.topBottom {
         didSet {
             guard oldValue != style else { return }
-            updateStyle(style)
+            apply(style: style)
         }
     }
 
     /// The default size is `55,55`.
-    public dynamic var imageSize = CGSize(width: 55, height: 55) {
+    open dynamic var imageSize = CGSize(width: 55, height: 55) {
         didSet {
             imageSizeConstraints.width?.constant  = imageSize.width
             imageSizeConstraints.height?.constant = imageSize.height
@@ -59,14 +58,14 @@ public class IconLabelView: UIView {
     }
 
     /// The space between image and text. The default value is `0`.
-    public dynamic var textImageSpacing: CGFloat = 0 {
+    open dynamic var textImageSpacing: CGFloat = 0 {
         didSet {
             updateTextImageSpacingIfNeeded()
         }
     }
 
     /// The default value is `0` which means size to fit.
-    public dynamic var labelsWidth: CGFloat = 0 {
+    open dynamic var labelsWidth: CGFloat = 0 {
         didSet {
             guard oldValue != labelsWidth else { return }
             if labelsWidth == 0 {
@@ -83,7 +82,7 @@ public class IconLabelView: UIView {
     }
 
     /// The default value is `8`.
-    public dynamic var imagePadding: CGFloat = 8 {
+    open dynamic var imagePadding: CGFloat = 8 {
         didSet {
             imageInset = UIEdgeInsets(all: imagePadding)
             imageView.cornerRadius = imageCornerRadius - imagePadding
@@ -92,7 +91,7 @@ public class IconLabelView: UIView {
 
     /// The distance that the view is inset from the enclosing content view.
     /// The default value is `UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)`.
-    public dynamic var imageInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8) {
+    open dynamic var imageInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8) {
         didSet {
             imagePaddingConstraints.at(0)?.constant = imageInset.top
             imagePaddingConstraints.at(1)?.constant = imageInset.bottom
@@ -102,41 +101,41 @@ public class IconLabelView: UIView {
     }
 
     /// The default value is `13`.
-    public dynamic var imageCornerRadius: CGFloat = 13 {
+    open dynamic var imageCornerRadius: CGFloat = 13 {
         didSet {
             imageViewContainer.cornerRadius = imageCornerRadius
         }
     }
 
     /// The default value is `false`.
-    public dynamic var isRoundImageView = false {
+    open dynamic var isRoundImageView = false {
         didSet {
             imageCornerRadius = isRoundImageView ? imageSize.height / 2 : 0
         }
     }
 
     /// The default value is `nil`, which results in a transparent background color.
-    public dynamic var imageBackgroundColor: UIColor? = nil {
+    open dynamic var imageBackgroundColor: UIColor? = nil {
         didSet {
             imageViewContainer.backgroundColor = imageBackgroundColor
         }
     }
 
     /// The default value is `false`.
-    public dynamic var isImageViewHidden: Bool = false {
+    open dynamic var isImageViewHidden: Bool = false {
         didSet {
             guard oldValue != isImageViewHidden else { return }
             if isImageViewHidden {
                 stackView.removeArrangedSubview(imageViewContainer)
                 imageViewContainer.removeFromSuperview()
             } else {
-                stackView.insertArrangedSubview(imageViewContainer, atIndex: 0)
+                stackView.insertArrangedSubview(imageViewContainer, at: 0)
             }
         }
     }
 
     /// The default value is `true`.
-    public dynamic var isSubtitleLabelHidden: Bool = true {
+    open dynamic var isSubtitleLabelHidden: Bool = true {
         didSet {
             guard oldValue != isSubtitleLabelHidden else { return }
             if isSubtitleLabelHidden {
@@ -149,31 +148,27 @@ public class IconLabelView: UIView {
     }
 
     /// The default value is `.Vertical`.
-    private var axis: UILayoutConstraintAxis {
+    fileprivate var axis: UILayoutConstraintAxis {
         get { return stackView.axis }
         set { stackView.axis = newValue }
     }
 
     /// The default value is `.Fill`.
-    private var distribution: TZStackViewDistribution {
+    fileprivate var distribution: UIStackViewDistribution {
         get { return stackView.distribution }
         set { stackView.distribution = newValue }
     }
 
     /// The default value is `.Center`.
-    public var alignment: TZStackViewAlignment {
+    open var alignment: UIStackViewAlignment {
         get { return stackView.alignment }
         set { stackView.alignment = newValue }
     }
 
     /// The default value is `5`.
-    public dynamic var spacing: CGFloat {
+    open dynamic var spacing: CGFloat {
         get { return stackView.spacing }
-        set {
-            stackView.spacing = newValue
-            // Bug in TZStackView
-            stackView.invalidateIntrinsicContentSize()
-        }
+        set { stackView.spacing = newValue }
     }
 
     // MARK: Init Methods
@@ -194,7 +189,7 @@ public class IconLabelView: UIView {
 
     // MARK: Setters
 
-    public func setData(image: ImageRepresentable? = nil, title: StringRepresentable, subtitle: StringRepresentable? = nil) {
+    open func setData(_ image: ImageRepresentable? = nil, title: StringRepresentable, subtitle: StringRepresentable? = nil) {
         isSubtitleLabelHidden = subtitle == nil
         isImageViewHidden     = image == nil
         imageView.setImage(image)
@@ -202,20 +197,20 @@ public class IconLabelView: UIView {
         subtitleLabel.setText(subtitle)
     }
 
-    public func setData(data: ImageTitleDisplayable) {
+    open func setData(_ data: ImageTitleDisplayable) {
         setData(data.image, title: data.title, subtitle: data.subtitle)
     }
 
     // MARK: Setup Methods
 
-    private func setupSubviews() {
+    fileprivate func setupSubviews() {
         addSubview(stackView)
         NSLayoutConstraint.centerXY(stackView).activate()
         NSLayoutConstraint.constraintsForViewToFillSuperview(stackView, priority: UILayoutPriorityDefaultLow).activate()
 
-        updateStyle(style)
-        distribution = .Fill
-        alignment    = .Center
+        apply(style: style)
+        distribution = .fill
+        alignment    = .center
         spacing      = 5
 
         stackView.addArrangedSubview(imageViewContainer)
@@ -223,14 +218,14 @@ public class IconLabelView: UIView {
         stackView.addArrangedSubview(titleLabel)
 
         titleLabel.font          = UIFont.systemFont(.footnote)
-        titleLabel.textAlignment = .Center
-        titleLabel.textColor     = UIColor.blackColor()
+        titleLabel.textAlignment = .center
+        titleLabel.textColor     = .black
         titleLabel.numberOfLines = 2
         titleLabel.sizeToFit()
 
         subtitleLabel.font          = UIFont.systemFont(.footnote)
-        subtitleLabel.textAlignment = .Center
-        subtitleLabel.textColor     = UIColor.lightGrayColor()
+        subtitleLabel.textAlignment = .center
+        subtitleLabel.textColor     = .lightGray
         subtitleLabel.numberOfLines = 1
         subtitleLabel.sizeToFit()
 
@@ -245,35 +240,7 @@ public class IconLabelView: UIView {
         // Ensures smooth scaling quality
         imageView.layer.minificationFilter = kCAFilterTrilinear
 
-        imageView.contentMode = .ScaleAspectFill
-    }
-
-    private func updateStyle(style: Style) {
-        switch style {
-            case .topBottom:
-                axis = .Vertical
-                // Deactivate `LeftRight` and activate `TopBottom` constraints.
-                stackViewConstraints.leftRight?.deactivate()
-                if stackViewConstraints.topBottom == nil {
-                    stackViewConstraints.topBottom = NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(stackView)
-                }
-                stackViewConstraints.topBottom?.activate()
-            case .leftRight:
-                axis = .Horizontal
-                // Deactivate `TopBottom` and activate `LeftRight` constraints.
-                stackViewConstraints.topBottom?.deactivate()
-                if stackViewConstraints.leftRight == nil {
-                    stackViewConstraints.leftRight = NSLayoutConstraint.constraintsForViewToFillSuperviewVertical(stackView)
-                }
-                stackViewConstraints.leftRight?.activate()
-        }
-    }
-
-    // MARK: Helpers
-
-    private func updateTextImageSpacingIfNeeded() {
-        let spacing = isImageViewHidden ? 0 : textImageSpacing
-        textImageSpacerView.contentSize = CGSize(width: 0, height: spacing)
+        imageView.contentMode = .scaleAspectFill
     }
 }
 
@@ -298,5 +265,33 @@ public extension IconLabelView {
     public dynamic var subtitleFont: UIFont {
         get { return subtitleLabel.font }
         set { subtitleLabel.font = newValue }
+    }
+}
+
+fileprivate extension IconLabelView {
+    fileprivate func apply(style: Style) {
+        switch style {
+            case .topBottom:
+                axis = .vertical
+                // Deactivate `LeftRight` and activate `TopBottom` constraints.
+                stackViewConstraints.leftRight?.deactivate()
+                if stackViewConstraints.topBottom == nil {
+                    stackViewConstraints.topBottom = NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(stackView)
+                }
+                stackViewConstraints.topBottom?.activate()
+            case .leftRight:
+                axis = .horizontal
+                // Deactivate `TopBottom` and activate `LeftRight` constraints.
+                stackViewConstraints.topBottom?.deactivate()
+                if stackViewConstraints.leftRight == nil {
+                    stackViewConstraints.leftRight = NSLayoutConstraint.constraintsForViewToFillSuperviewVertical(stackView)
+                }
+                stackViewConstraints.leftRight?.activate()
+        }
+    }
+
+    fileprivate func updateTextImageSpacingIfNeeded() {
+        let spacing = isImageViewHidden ? 0 : textImageSpacing
+        textImageSpacerView.contentSize = CGSize(width: 0, height: spacing)
     }
 }

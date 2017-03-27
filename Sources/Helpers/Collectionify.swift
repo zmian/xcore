@@ -27,12 +27,12 @@
 /// - parameter fetcher:  A fetcher function that is executed with each of the `param`.
 /// - parameter params:   An array of parameters to pass to the fetcher.
 /// - parameter callback: The block to invoked when we have th results of all the `params` by calling `fetcher`.
-public func collectionify<Parameter, Result>(fetcher: (param: Parameter, callback: (object: Result?) -> Void) -> Void, params: [Parameter], callback: (objects: [Result]) -> Void) {
+public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ param: Parameter, _ callback: @escaping (_ object: Result?) -> Void) -> Void, params: [Parameter], callback: @escaping (_ objects: [Result]) -> Void) {
     var objects = [Result]()
     var fetchedCount = 0
 
     params.forEach {
-        fetcher(param: $0) { object in
+        fetcher($0) { object in
             fetchedCount += 1
 
             if let object = object {
@@ -40,7 +40,7 @@ public func collectionify<Parameter, Result>(fetcher: (param: Parameter, callbac
             }
 
             if fetchedCount == params.count {
-                callback(objects: objects)
+                callback(objects)
             }
         }
     }
@@ -51,16 +51,16 @@ public func collectionify<Parameter, Result>(fetcher: (param: Parameter, callbac
 /// - parameter fetcher:  A fetcher function that is executed with each of the `param`.
 /// - parameter params:   An array of parameters to pass to the fetcher.
 /// - parameter callback: The block to invoked when we have th results of all the `params` by calling `fetcher`.
-public func collectionify<Parameter, Result>(fetcher: (param: Parameter, callback: (object: Result) -> Void) -> Void, params: [Parameter], callback: (objects: [Result]) -> Void) {
+public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ param: Parameter, _ callback: @escaping (_ object: Result) -> Void) -> Void, params: [Parameter], callback: @escaping (_ objects: [Result]) -> Void) {
     var objects = [Result]()
     var fetchedCount = 0
 
     params.forEach {
-        fetcher(param: $0) { object in
+        fetcher($0) { object in
             fetchedCount += 1
             objects.append(object)
             if fetchedCount == params.count {
-                callback(objects: objects)
+                callback(objects)
             }
         }
     }
@@ -73,17 +73,17 @@ public func collectionify<Parameter, Result>(fetcher: (param: Parameter, callbac
 /// - parameter splitSize: The maximum number of requests allowed in the fetcher.
 /// - parameter params:    An array of parameters to pass to the fetcher.
 /// - parameter callback:  The block to invoked when we have th results of all the `params` by calling `fetcher`.
-public func collectionify<Parameter, Result>(fetcher: (param: [Parameter], callback: (object: [Result]) -> Void) -> Void, splitSize: Int, params: [Parameter], callback: (objects: [Result]) -> Void) {
+public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ param: [Parameter], _ callback: @escaping (_ object: [Result]) -> Void) -> Void, splitSize: Int, params: [Parameter], callback: @escaping (_ objects: [Result]) -> Void) {
     let pages            = params.splitBy(splitSize)
     var allObjects       = [Result]()
     var fetchedPageCount = 0
 
     pages.forEach {
-        fetcher(param: $0) { objects in
+        fetcher($0) { objects in
             fetchedPageCount += 1
             allObjects += objects
             if fetchedPageCount == pages.count {
-                callback(objects: allObjects)
+                callback(allObjects)
             }
         }
     }

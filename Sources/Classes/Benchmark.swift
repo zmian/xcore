@@ -26,21 +26,21 @@
 
 import Foundation
 
-private func formatSeconds(value: NSTimeInterval) -> String {
-    let val = Int(value)
-    let seconds = val % 60
-    let minutes = val / 60
+private func format(seconds: TimeInterval) -> String {
+    let value   = Int(seconds)
+    let seconds = value % 60
+    let minutes = value / 60
     return String(format: "%02d:%02d", minutes, seconds)
 }
 
 /// A convenience function to measure code execution.
 ///
-/// - parameter title: Measure block name
+/// - parameter label: Measure block name
 /// - parameter block: Call `finish` block to measure test.
 ///
 /// **Asynchronous code:**
 /// ```
-/// measure("some title") { finish in
+/// measure(label: "some title") { finish in
 ///     myAsyncCall {
 ///         finish()
 ///     }
@@ -49,17 +49,17 @@ private func formatSeconds(value: NSTimeInterval) -> String {
 /// ```
 /// **Synchronous code:**
 /// ```
-/// measure("some title") { finish in
+/// measure(label: "some title") { finish in
 ///     // code to benchmark
 ///     finish()
 ///     // ...
 /// }
 /// ```
-public func measure(title: String, @noescape block: (finish: () -> Void) -> Void) {
+public func measure(label: String, block: (_ finish: () -> Void) -> Void) {
     let startTime = CFAbsoluteTimeGetCurrent()
 
     block {
         let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
-        print("\(title):: Time: \(timeElapsed)", formatSeconds(timeElapsed))
+        print("\(label):: Time: \(timeElapsed)", format(seconds: timeElapsed))
     }
 }

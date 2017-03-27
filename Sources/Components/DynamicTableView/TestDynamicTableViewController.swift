@@ -60,7 +60,7 @@ private class TestDynamicTableViewController: DynamicTableViewController {
                         print("Woodpecker \(choice)")
                     }),
                     DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: DynamicTableAccessoryType.`switch`(isOn: true) { sender in
-                        let choice = sender.on ? "On" : "Off"
+                        let choice = sender.isOn ? "On" : "Off"
                         print("Woodpecker \(choice)")
                     }),
                     DynamicTableModel(title: "Cardinal", subtitle: "Cardinalidae, Passerine"),

@@ -24,7 +24,7 @@
 
 import UIKit
 
-public enum ImageSourceType  { case url, UIImage }
+public enum ImageSourceType  { case url, uiImage }
 public enum StringSourceType { case attributedString, string }
 
 // MARK: ImageRepresentable
@@ -43,17 +43,17 @@ extension String: ImageRepresentable {
     public var url: String? { return self }
 }
 
-extension NSURL: ImageRepresentable {
+extension URL: ImageRepresentable {
     public var imageSourceType: ImageSourceType { return .url }
     public var url: String? { return self.absoluteString }
 }
 
 extension UIImage: ImageRepresentable {
-    public var imageSourceType: ImageSourceType { return .UIImage }
+    public var imageSourceType: ImageSourceType { return .uiImage }
 }
 
 public extension UIImageView {
-    public func setImage(image: ImageRepresentable?) {
+    public func setImage(_ image: ImageRepresentable?) {
         guard let image = image else {
             self.image = nil
             return
@@ -64,7 +64,7 @@ public extension UIImageView {
                 if let url = image.url {
                     remoteOrLocalImage(url)
                 }
-            case .UIImage:
+            case .uiImage:
                 self.image = image as? UIImage
         }
     }
@@ -83,11 +83,11 @@ extension String: StringRepresentable {
 
 extension NSAttributedString: StringRepresentable {
     public var stringSourceType: StringSourceType { return .attributedString }
-    public override var description: String { return string }
+    open override var description: String { return string }
 }
 
 public extension UILabel {
-    public func setText(string: StringRepresentable?) {
+    public func setText(_ string: StringRepresentable?) {
         guard let string = string else {
             text = nil
             attributedText = nil

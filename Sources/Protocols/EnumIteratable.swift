@@ -52,7 +52,7 @@ public extension EnumIteratable {
     ///         case north, south, east, west
     ///     }
     ///
-    ///     > for point in CompassPoint.enumerate() {
+    ///     > for point in CompassPoint.enumerated() {
     ///         print("\(point): '\(point.rawValue)'")
     ///     }
     ///
@@ -60,11 +60,15 @@ public extension EnumIteratable {
     ///     south: '1'
     ///     wast: '2'
     ///     west: '3'
-    @warn_unused_result
-    private static func enumerate() -> AnyGenerator<EnumType> {
+    fileprivate static func enumerated() -> AnyIterator<EnumType> {
         var i = 0
-        return AnyGenerator {
-            let next = withUnsafePointer(&i) { UnsafePointer<EnumType>($0).memory }
+        return AnyIterator {
+            let next = withUnsafePointer(to: &i) {
+                $0.withMemoryRebound(to: EnumType.self, capacity: 0) {
+                    $0.pointee
+                }
+            }
+
             let nextValue: EnumType? = next.hashValue == i ? next : nil
             i += 1
             return nextValue
@@ -73,7 +77,7 @@ public extension EnumIteratable {
 
     /// Return an array containing all cases of `self`.
     static var allValues: [EnumType] {
-        return enumerate().map { $0 }
+        return enumerated().map { $0 }
     }
 
     /// Return an array containing all corresponding `rawValue`s of `self`.

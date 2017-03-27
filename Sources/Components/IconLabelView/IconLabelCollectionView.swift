@@ -24,7 +24,7 @@
 
 import UIKit
 
-public struct IconLabelCollectionCellOptions: OptionSetType {
+public struct IconLabelCollectionCellOptions: OptionSet {
     public let rawValue: UInt
     public init(rawValue: UInt) { self.rawValue = rawValue }
 
@@ -33,30 +33,30 @@ public struct IconLabelCollectionCellOptions: OptionSetType {
     public static let all: IconLabelCollectionCellOptions = [movable, deletable]
 }
 
-public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
-    private let reuseIdentifier = IconLabelCollectionViewCell.reuseIdentifier
-    private var allowReordering: Bool { return cellOptions.contains(.movable) }
-    private var allowDeletion: Bool   { return cellOptions.contains(.deletable) }
-    private var hasLongPressGestureRecognizer = false
-    public var sections: [Section<ImageTitleDisplayable>] = []
+open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
+    fileprivate let reuseIdentifier = IconLabelCollectionViewCell.reuseIdentifier
+    fileprivate var allowReordering: Bool { return cellOptions.contains(.movable) }
+    fileprivate var allowDeletion: Bool   { return cellOptions.contains(.deletable) }
+    fileprivate var hasLongPressGestureRecognizer = false
+    open var sections: [Section<ImageTitleDisplayable>] = []
     /// The layout used to organize the collection view’s items.
-    public var layout: UICollectionViewFlowLayout? {
+    open var layout: UICollectionViewFlowLayout? {
         return collectionViewLayout as? UICollectionViewFlowLayout
     }
-    public var cellOptions: IconLabelCollectionCellOptions = [] {
+    open var cellOptions: IconLabelCollectionCellOptions = [] {
         didSet { updateCellOptionsIfNeeded() }
     }
 
-    public var isEditing = false {
+    open var isEditing = false {
         didSet {
             guard oldValue != isEditing else { return }
-            tapGestureRecognizer.enabled = isEditing
+            tapGestureRecognizer.isEnabled = isEditing
             toggleVisibleCellsDeleteButtons()
         }
     }
 
     /// A boolean value to determine whether the content is centered in the collection view. The default value is `false`.
-    public var isContentCentered = false {
+    open var isContentCentered = false {
         didSet {
             if isContentCentered {
                 layout?.minimumInteritemSpacing = bounds.height
@@ -64,23 +64,23 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
         }
     }
 
-    private var configureCell: ((indexPath: NSIndexPath, cell: IconLabelCollectionViewCell, item: ImageTitleDisplayable) -> Void)?
-    public func configureCell(callback: (indexPath: NSIndexPath, cell: IconLabelCollectionViewCell, item: ImageTitleDisplayable) -> Void) {
+    fileprivate var configureCell: ((_ indexPath: IndexPath, _ cell: IconLabelCollectionViewCell, _ item: ImageTitleDisplayable) -> Void)?
+    open func configureCell(_ callback: @escaping (_ indexPath: IndexPath, _ cell: IconLabelCollectionViewCell, _ item: ImageTitleDisplayable) -> Void) {
         configureCell = callback
     }
 
-    private var didSelectItem: ((indexPath: NSIndexPath, item: ImageTitleDisplayable) -> Void)?
-    public func didSelectItem(callback: (indexPath: NSIndexPath, item: ImageTitleDisplayable) -> Void) {
+    fileprivate var didSelectItem: ((_ indexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void)?
+    open func didSelectItem(_ callback: @escaping (_ indexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void) {
         didSelectItem = callback
     }
 
-    private var didRemoveItem: ((indexPath: NSIndexPath, item: ImageTitleDisplayable) -> Void)?
-    public func didRemoveItem(callback: (indexPath: NSIndexPath, item: ImageTitleDisplayable) -> Void) {
+    fileprivate var didRemoveItem: ((_ indexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void)?
+    open func didRemoveItem(_ callback: @escaping (_ indexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void) {
         didRemoveItem = callback
     }
 
-    private var didMoveItem: ((sourceIndexPath: NSIndexPath, destinationIndexPath: NSIndexPath, item: ImageTitleDisplayable) -> Void)?
-    public func didMoveItem(callback: (sourceIndexPath: NSIndexPath, destinationIndexPath: NSIndexPath, item: ImageTitleDisplayable) -> Void) {
+    fileprivate var didMoveItem: ((_ sourceIndexPath: IndexPath, _ destinationIndexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void)?
+    open func didMoveItem(_ callback: @escaping (_ sourceIndexPath: IndexPath, _ destinationIndexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void) {
         didMoveItem = callback
     }
 
@@ -111,7 +111,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
 
     // MARK: Setup Methods
 
-    private func commonInit() {
+    fileprivate func commonInit() {
         setupCollectionView()
         setupSubviews()
     }
@@ -121,40 +121,40 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     /// Subclasses can override it to perform additional actions,
     /// for example, add new subviews or configure properties.
     /// This method is called when self is initialized using any of the relevant `init` methods.
-    public func setupSubviews() {}
+    open func setupSubviews() {}
 
-    private func setupCollectionView() {
+    fileprivate func setupCollectionView() {
         delegate             = self
         dataSource           = self
-        backgroundColor      = UIColor.clearColor()
+        backgroundColor      = .clear
         alwaysBounceVertical = true
-        registerClass(IconLabelCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        register(IconLabelCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         let itemSpacing: CGFloat        = 8
         layout?.itemSize                = CGSize(width: 60, height: 74)
         layout?.minimumLineSpacing      = 15
         layout?.minimumInteritemSpacing = itemSpacing
         layout?.sectionInset            = UIEdgeInsets(all: 15)
-        layout?.scrollDirection         = .Vertical
+        layout?.scrollDirection         = .vertical
 
         updateCellOptionsIfNeeded()
     }
 
-    public override func reloadData() {
+    open override func reloadData() {
         isEditing = false
         super.reloadData()
     }
 
     // MARK: UILongPressGestureRecognizer
 
-    private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
+    fileprivate lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
         let gestureRecognizer = UILongPressGestureRecognizer()
 
         gestureRecognizer.addAction {[weak self, weak gestureRecognizer] in
-            guard let weakSelf = self, gestureRecognizer = gestureRecognizer else { return }
+            guard let weakSelf = self, let gestureRecognizer = gestureRecognizer else { return }
 
-            guard gestureRecognizer.state == .Began,
-                let _ = weakSelf.indexPathForItemAtPoint(gestureRecognizer.locationInView(weakSelf))
+            guard gestureRecognizer.state == .began,
+                let _ = weakSelf.indexPathForItem(at: gestureRecognizer.location(in: weakSelf))
                 else { return }
 
             weakSelf.isEditing = !weakSelf.isEditing
@@ -163,9 +163,9 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
         return gestureRecognizer
     }()
 
-    private lazy var tapGestureRecognizer: UITapGestureRecognizer = {
+    fileprivate lazy var tapGestureRecognizer: UITapGestureRecognizer = {
         let gestureRecognizer = UITapGestureRecognizer()
-        gestureRecognizer.enabled = false
+        gestureRecognizer.isEnabled = false
 
         gestureRecognizer.addAction {[weak self] in
             self?.isEditing = false
@@ -176,70 +176,70 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
 
     // MARK: UICollectionViewDataSource
 
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    open func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sections.count
     }
 
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return sections[section].count
     }
 
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! IconLabelCollectionViewCell
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! IconLabelCollectionViewCell
         let item = sections[indexPath]
         cell.setData(item)
         cell.setDeleteButtonHidden(!isEditing, animated: false)
-        cell.deleteButton.addAction(.TouchUpInside) {[weak self] sender in
+        cell.deleteButton.addAction(.touchUpInside) {[weak self] sender in
             self?.removeItems([indexPath])
         }
-        configureCell?(indexPath: indexPath, cell: cell, item: item)
+        configureCell?(indexPath, cell, item)
         return cell
     }
 
-    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
         let item = sections[indexPath]
-        didSelectItem?(indexPath: indexPath, item: item)
+        didSelectItem?(indexPath, item)
     }
 
-    public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+    open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard allowDeletion, let cell = cell as? IconLabelCollectionViewCell else { return }
         cell.setDeleteButtonHidden(!isEditing)
     }
 
     // MARK: Reordering
 
-    public func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    open func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         return allowReordering
     }
 
-    public func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        let movedItem = sections.moveElement(fromIndexPath: sourceIndexPath, toIndexPath: destinationIndexPath)
-        didMoveItem?(sourceIndexPath: sourceIndexPath, destinationIndexPath: destinationIndexPath, item: movedItem)
+    open func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movedItem = sections.moveElement(from: sourceIndexPath, to: destinationIndexPath)
+        didMoveItem?(sourceIndexPath, destinationIndexPath, movedItem)
     }
 
     // MARK: Deletion
 
     /// Deletes the items at the specified index paths.
     ///
-    /// - parameter indexPaths: An array of NSIndexPath objects identifying the items to delete.
-    public func removeItems(indexPaths: [NSIndexPath]) {
+    /// - parameter indexPaths: An array of `IndexPath` objects identifying the items to delete.
+    open func removeItems(_ indexPaths: [IndexPath]) {
         indexPaths.forEach {
-            let item = sections.removeAt($0)
-            didRemoveItem?(indexPath: $0, item: item)
+            let item = sections.remove(at: $0)
+            didRemoveItem?($0, item)
         }
 
         performBatchUpdates({[weak self] in
-            self?.deleteItemsAtIndexPaths(indexPaths)
+            self?.deleteItems(at: indexPaths)
         }, completion: {[weak self] isFinished in
             guard let weakSelf = self else { return }
-            weakSelf.reloadItemsAtIndexPaths(weakSelf.indexPathsForVisibleItems())
+            weakSelf.reloadItems(at: weakSelf.indexPathsForVisibleItems)
         })
     }
 
     // MARK: Helpers
 
-    private func updateCellOptionsIfNeeded() {
+    fileprivate func updateCellOptionsIfNeeded() {
         if allowDeletion && !hasLongPressGestureRecognizer {
             addGestureRecognizer(tapGestureRecognizer)
             addGestureRecognizer(longPressGestureRecognizer)
@@ -252,8 +252,8 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
         }
     }
 
-    private func toggleVisibleCellsDeleteButtons() {
-        visibleCells().flatMap { $0 as? IconLabelCollectionViewCell }.forEach { $0.setDeleteButtonHidden(!isEditing) }
+    fileprivate func toggleVisibleCellsDeleteButtons() {
+        visibleCells.flatMap { $0 as? IconLabelCollectionViewCell }.forEach { $0.setDeleteButtonHidden(!isEditing) }
     }
 
     // MARK: Convenience API
@@ -262,7 +262,7 @@ public class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate
     // property declared in an extension.
 
     /// A convenience property to create a single section collection view.
-    public var items: [ImageTitleDisplayable] {
+    open var items: [ImageTitleDisplayable] {
         get { return sections.first?.items ?? [] }
         set { sections = [Section(items: newValue)] }
     }

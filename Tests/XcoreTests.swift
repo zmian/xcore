@@ -1,7 +1,7 @@
 //
-// BaseView.swift
+// XcoreTests.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2016 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,36 +22,30 @@
 // THE SOFTWARE.
 //
 
-import UIKit
+import XCTest
+@testable import Xcore
 
-open class BaseView: UIView {
+class XcoreTests: XCTestCase {
 
-    // MARK: Init Methods
-
-    public convenience init() {
-        self.init(frame: .zero)
+    override func setUp() {
+        super.setUp()
+        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
+    override func tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
+    func testExample() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
-    // MARK: Setup Methods
-
-    fileprivate func commonInit() {
-        setupSubviews()
+    func testPerformanceExample() {
+        // This is an example of a performance test case.
+        self.measure {
+            // Put the code you want to measure the time of here.
+        }
     }
-
-    /// The default implementation of this method does nothing.
-    ///
-    /// Subclasses can override it to perform additional actions,
-    /// for example, add new subviews or configure properties.
-    /// This method is called when self is initialized using any of the relevant `init` methods.
-    open func setupSubviews() {}
 }

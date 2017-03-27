@@ -24,8 +24,8 @@
 
 import UIKit
 
-public class Environment {
-    public enum Type: CustomStringConvertible {
+open class Environment {
+    public enum EnvironmentType: CustomStringConvertible {
         case development, staging, production
 
         public var description: String {
@@ -37,11 +37,11 @@ public class Environment {
         }
     }
 
-    public var isDevelopment: Bool { return type == .development }
-    public var isStaging: Bool     { return type == .staging }
-    public var isProduction: Bool  { return type == .production }
+    open var isDevelopment: Bool { return type == .development }
+    open var isStaging: Bool     { return type == .staging }
+    open var isProduction: Bool  { return type == .production }
 
-    public private(set) var type = Type.production // Safest default
+    open fileprivate(set) var type = EnvironmentType.production // Safest default
 
     public init() {
         #if XCORE_ENVIRONMENT_Release
@@ -64,8 +64,8 @@ public class Environment {
         }
     }
 
-    public func setupSharedEnvironment() {}
-    public func setupDevelopment() {}
-    public func setupStaging() {}
-    public func setupProduction() {}
+    open func setupSharedEnvironment() {}
+    open func setupDevelopment() {}
+    open func setupStaging() {}
+    open func setupProduction() {}
 }

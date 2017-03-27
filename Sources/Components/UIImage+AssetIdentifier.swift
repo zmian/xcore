@@ -24,10 +24,10 @@
 
 import UIKit
 
-extension NSBundle {
+extension Bundle {
     // Methods for creating or retrieving bundle instances.
-    static func xcoreBundle() -> NSBundle {
-        return NSBundle(forClass: DynamicTableView.self)
+    static var xcore: Bundle {
+        return Bundle(for: DynamicTableView.self)
     }
 }
 
@@ -42,7 +42,7 @@ extension UIImage {
     }
 
     convenience init(assetIdentifier: AssetIdentifier) {
-        self.init(named: assetIdentifier.rawValue, inBundle: NSBundle.xcoreBundle(), compatibleWithTraitCollection: nil)!
+        self.init(named: assetIdentifier.rawValue, in: .xcore, compatibleWith: nil)!
     }
 }
 
@@ -54,18 +54,17 @@ extension UIImageView {
 
 extension UIButton {
     convenience init(assetIdentifier: UIImage.AssetIdentifier, highlightedImage: UIImage.AssetIdentifier? = nil) {
-        self.init(type: UIButtonType.Custom)
-        setImage(UIImage(assetIdentifier: assetIdentifier), forState: .Normal)
+        self.init(type: .custom)
+        setImage(UIImage(assetIdentifier: assetIdentifier), for: .normal)
         if let highlightedImage = highlightedImage {
-            setImage(UIImage(assetIdentifier: highlightedImage), forState: .Highlighted)
+            setImage(UIImage(assetIdentifier: highlightedImage), for: .highlighted)
         }
-        imageView?.contentMode = .ScaleAspectFit
+        imageView?.contentMode = .scaleAspectFit
         imageView?.tintColor   = tintColor
     }
 }
 
 /// A convenience function to get image name from `xcassets`.
-@warn_unused_result
-func R(assetIdentifier: UIImage.AssetIdentifier) -> String {
+func R(_ assetIdentifier: UIImage.AssetIdentifier) -> String {
     return assetIdentifier.rawValue
 }

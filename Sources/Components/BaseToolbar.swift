@@ -24,9 +24,9 @@
 
 import UIKit
 
-public class BaseToolbar: UIToolbar {
+open class BaseToolbar: UIToolbar {
     /// The default value is `44` (system's standard).
-    public var preferredHeight: CGFloat = 44
+    open var preferredHeight: CGFloat = 44
 
     // MARK: Init Methods
 
@@ -46,7 +46,7 @@ public class BaseToolbar: UIToolbar {
 
     // MARK: Setup Methods
 
-    private func commonInit() {
+    fileprivate func commonInit() {
         setupSubviews()
     }
 
@@ -55,16 +55,16 @@ public class BaseToolbar: UIToolbar {
     /// Subclasses can override it to perform additional actions,
     /// for example, add new subviews or configure properties.
     /// This method is called when self is initialized using any of the relevant `init` methods.
-    public func setupSubviews() {}
+    open func setupSubviews() {}
 
     // MARK: Override Methods
 
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         frame.size.height = preferredHeight
     }
 
-    public override func sizeThatFits(size: CGSize) -> CGSize {
+    open override func sizeThatFits(_ size: CGSize) -> CGSize {
         var size = super.sizeThatFits(size)
         size.height = preferredHeight
         return size
