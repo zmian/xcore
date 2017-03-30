@@ -370,17 +370,19 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     // MARK: UIAppearance Properties
 
-    open dynamic var headerFont                   = UIFont.systemFont(.footnote)
-    open dynamic var headerTextColor              = UIColor.black
-    open dynamic var footerFont                   = UIFont.systemFont(.footnote)
-    open dynamic var footerTextColor              = UIColor.darkGray
-    open dynamic var accessoryFont                = UIFont.systemFont(.subheadline)
-    open dynamic var accessoryTextColor           = UIColor.gray
-    open dynamic var accessoryTextFrame           = CGRect(x: 0, y: 0, width: 50, height: 50)
-    open dynamic var accessoryTintColor           = UIColor.defaultSystemTintColor()
-    open dynamic var disclosureIndicatorTintColor = UIColor.gray
-    /// The color of the check box ring when the checkbox is Off. The default value is `UIColor.blackColor().colorWithAlphaComponent(0.13)`.
-    open dynamic var checkboxOffTintColor         = UIColor.black.alpha(0.13)
+    open dynamic var headerFont                     = UIFont.systemFont(.footnote)
+    open dynamic var headerTextColor                = UIColor.black
+    open dynamic var footerFont                     = UIFont.systemFont(.footnote)
+    open dynamic var footerTextColor                = UIColor.darkGray
+    open dynamic var accessoryFont                  = UIFont.systemFont(.subheadline)
+    open dynamic var accessoryTextColor             = UIColor.gray
+    open dynamic var accessoryTintColor             = UIColor.defaultSystemTintColor()
+    open dynamic var accessoryTextMaxWidth: CGFloat = 0
+    open dynamic var disclosureIndicatorTintColor   = UIColor.gray
+
+    /// The color of the check box ring when the checkbox is Off.
+    /// The default value is `UIColor.blackColor().alpha(0.13)`.
+    open dynamic var checkboxOffTintColor = UIColor.black.alpha(0.13)
 }
 
 // MARK: AccessoryView
@@ -426,12 +428,16 @@ extension DynamicTableView: BEMCheckBoxDelegate {
                 checkbox.isUserInteractionEnabled = false
                 cell.accessoryView                = checkbox
             case .text(let text):
-                let label           = UILabel(frame: accessoryTextFrame)
+                let label           = UILabel()
                 label.text          = text
                 label.font          = accessoryFont
                 label.textAlignment = .right
                 label.textColor     = accessoryTextColor
                 label.numberOfLines = 0
+                label.sizeToFit()
+                if accessoryTextMaxWidth != 0, label.frame.width > accessoryTextMaxWidth {
+                    label.frame.size.width = accessoryTextMaxWidth
+                }
                 cell.accessoryView  = label
             case .custom(let view):
                 cell.accessoryView = view
