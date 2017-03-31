@@ -156,16 +156,6 @@ extension XCTableViewComposedDataSource {
 
     // Header and Footer
 
-    open override func titleForHeaderInSection(_ section: Int) -> String? {
-        let (dataSource, localSection) = dataSourceIndex[section]!
-        return dataSource.titleForHeaderInSection(localSection)
-    }
-
-    open override func titleForFooterInSection(_ section: Int) -> String? {
-        let (dataSource, localSection) = dataSourceIndex[section]!
-        return dataSource.titleForFooterInSection(localSection)
-    }
-
     open override func heightForHeaderInSection(_ section: Int) -> CGFloat {
         let (dataSource, localSection) = dataSourceIndex[section]!
         return dataSource.heightForHeaderInSection(localSection)

@@ -33,26 +33,7 @@ open class XCTableViewDataSource: NSObject, UITableViewDataSource {
     /// Global section index.
     open var globalSection = 0
 
-    // MARK: Public Interface
-
-    /// Hide the the section header and section footer views if titles are not provided.
-    /// The default is `false`.
-    ///
-    /// This defaults to `false` for developers' sanity when
-    /// subclasses implement custom section header and footer views and forgets to
-    /// set this property to `false`. So, we are setting it to `false` by default.
-    /// Being explicit and asking for such functionality is the right choice.
-    /// UIKit's `UIPageControl` also takes this approach for `hidesForSinglePage` property
-    /// and defaults to `false`.
-    open var hideDefaultHeadersWithoutTitles = false
-
-    open func titleForHeaderInSection(_ section: Int) -> String? {
-        return nil
-    }
-
-    open func titleForFooterInSection(_ section: Int) -> String? {
-        return nil
-    }
+    // MARK: Register Classes
 
     /// Registers class(es) to use in creating new table cells for this data source.
     ///
@@ -112,14 +93,14 @@ extension XCTableViewDataSource {
 
     @objc(tableView:cellForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell(style: .default, reuseIdentifier: "__reuseIdentifier__")
+        fatalError("[XCTableViewDataSource] Should be implemented by subclasses.")
     }
 
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.titleForHeaderInSection(section)
+        return nil
     }
 
     open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return self.titleForFooterInSection(section)
+        return nil
     }
 }

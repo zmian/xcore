@@ -35,7 +35,7 @@ public extension UIEdgeInsets {
 }
 
 /// The value of `π` as a `CGFloat`.
-public let π = CGFloat(M_PI)
+public let π = CGFloat.pi
 
 public extension CGFloat {
     /// A convenience method to convert an angle from degrees to radians.
