@@ -87,7 +87,7 @@ public extension UIImage {
     /// Automatically detect and load the image from local or a remote url.
     public class func remoteOrLocalImage(_ named: String, bundle: Bundle? = nil, callback: @escaping (_ image: UIImage?) -> Void) {
         guard !named.isBlank else {
-            callback?(nil)
+            callback(nil)
             return
         }
 
