@@ -27,17 +27,28 @@ import SDWebImage
 
 public extension UIImageView {
     /// Automatically detect and load the image from local or a remote url.
-    public func remoteOrLocalImage(_ named: String, alwaysAnimate: Bool = false, animationDuration: TimeInterval = 0.5, callback: ((_ image: UIImage) -> Void)? = nil) {
-        guard !named.isBlank else { image = nil; return }
+    public func remoteOrLocalImage(_ named: String, alwaysAnimate: Bool = false, animationDuration: TimeInterval = 0.5, callback: ((_ image: UIImage?) -> Void)? = nil) {
+        guard !named.isBlank else {
+            image = nil
+            callback?(nil)
+            return
+        }
 
         if let url = URL(string: named), url.host != nil {
             self.sd_setImage(with: url) {[weak self] (image, _, cacheType, _) in
-                guard let image = image else { return }
+                guard let image = image else {
+                    dispatch.async.main {
+                        callback?(nil)
+                    }
+                    return
+                }
+
                 defer {
                     dispatch.async.main {
                         callback?(image)
                     }
                 }
+
                 if let weakSelf = self, (alwaysAnimate || cacheType != SDImageCacheType.memory) {
                     weakSelf.alpha = 0
                     UIView.animate(withDuration: animationDuration) {
@@ -47,7 +58,13 @@ public extension UIImageView {
             }
         } else {
             dispatch.async.bg(.userInitiated) {[weak self] in
-                guard let weakSelf = self, let image = UIImage(named: named) else { return }
+                guard let weakSelf = self, let image = UIImage(named: named) else {
+                    dispatch.async.main {
+                        callback?(nil)
+                    }
+                    return
+                }
+
                 dispatch.async.main {
                     defer { callback?(image) }
 
@@ -68,15 +85,24 @@ public extension UIImageView {
 
 public extension UIImage {
     /// Automatically detect and load the image from local or a remote url.
-    public class func remoteOrLocalImage(_ named: String, bundle: Bundle? = nil, callback: @escaping (_ image: UIImage) -> Void) {
-        guard !named.isBlank else { return }
+    public class func remoteOrLocalImage(_ named: String, bundle: Bundle? = nil, callback: @escaping (_ image: UIImage?) -> Void) {
+        guard !named.isBlank else {
+            callback?(nil)
+            return
+        }
 
         if let url = URL(string: named), url.host != nil {
             SDWebImageDownloader.shared().downloadImage(with: url, options: [],
                 progress: { receivedSize, expectedSize in
 
-                }, completed: { image, data, error, finished in
-                    guard let image = image, finished else { return }
+                },
+                completed: { image, data, error, finished in
+                    guard let image = image, finished else {
+                        dispatch.async.main {
+                            callback(nil)
+                        }
+                        return
+                    }
                     dispatch.async.main {
                         callback(image)
                     }
@@ -84,7 +110,12 @@ public extension UIImage {
             )
         } else {
             dispatch.async.bg(.userInitiated) {
-                guard let image = UIImage(named: named, in: bundle, compatibleWith: nil) else { return }
+                guard let image = UIImage(named: named, in: bundle, compatibleWith: nil) else {
+                    dispatch.async.main {
+                        callback(nil)
+                    }
+                    return
+                }
                 dispatch.async.main {
                     callback(image)
                 }
