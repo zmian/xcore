@@ -68,22 +68,22 @@ public extension NSLayoutConstraint {
         ]
     }
 
-    public static func centerX(_ viewToCenter: UIView, toView: UIView? = nil, offset: CGFloat = 0, priority: Float = UILayoutPriorityRequired) -> NSLayoutConstraint {
+    public static func centerX(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGFloat = 0, priority: Float = UILayoutPriorityRequired) -> NSLayoutConstraint {
         let toView = toView ?? viewToCenter.superview
         viewToCenter.translatesAutoresizingMaskIntoConstraints = false
-        return NSLayoutConstraint(item: viewToCenter, attribute: .centerX, toItem: toView, constant: offset, priority: priority)
+        return NSLayoutConstraint(item: viewToCenter, attribute: .centerX, relatedBy: relation, toItem: toView, constant: offset, priority: priority)
     }
 
-    public static func centerY(_ viewToCenter: UIView, toView: UIView? = nil, offset: CGFloat = 0, priority: Float = UILayoutPriorityRequired) -> NSLayoutConstraint {
+    public static func centerY(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGFloat = 0, priority: Float = UILayoutPriorityRequired) -> NSLayoutConstraint {
         let toView = toView ?? viewToCenter.superview
         viewToCenter.translatesAutoresizingMaskIntoConstraints = false
-        return NSLayoutConstraint(item: viewToCenter, attribute: .centerY, toItem: toView, constant: offset, priority: priority)
+        return NSLayoutConstraint(item: viewToCenter, attribute: .centerY, relatedBy: relation, toItem: toView, constant: offset, priority: priority)
     }
 
-    public static func centerXY(_ viewToCenter: UIView, toView: UIView? = nil, offset: CGPoint = .zero, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
+    public static func centerXY(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGPoint = .zero, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
         return [
-            NSLayoutConstraint.centerX(viewToCenter, toView: toView, offset: offset.x, priority: priority),
-            NSLayoutConstraint.centerY(viewToCenter, toView: toView, offset: offset.y, priority: priority)
+            NSLayoutConstraint.centerX(viewToCenter, relatedBy: relation, toView: toView, offset: offset.x, priority: priority),
+            NSLayoutConstraint.centerY(viewToCenter, relatedBy: relation, toView: toView, offset: offset.y, priority: priority)
         ]
     }
 

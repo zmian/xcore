@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class IconLabelView: UIView {
+open class IconLabelView: BaseView {
     public enum Style { case topBottom, leftRight }
 
     fileprivate var imagePaddingConstraints: [NSLayoutConstraint] = []
@@ -68,6 +68,7 @@ open class IconLabelView: UIView {
     open dynamic var labelsWidth: CGFloat = 0 {
         didSet {
             guard oldValue != labelsWidth else { return }
+
             if labelsWidth == 0 {
                 guard !labelsWidthConstraints.isEmpty else { return }
                 labelsWidthConstraints.deactivate()
@@ -75,6 +76,9 @@ open class IconLabelView: UIView {
                 if labelsWidthConstraints.isEmpty {
                     labelsWidthConstraints.append(NSLayoutConstraint(item: titleLabel,    width: labelsWidth))
                     labelsWidthConstraints.append(NSLayoutConstraint(item: subtitleLabel, width: labelsWidth))
+                }
+                labelsWidthConstraints.forEach {
+                    $0.constant = labelsWidth
                 }
                 labelsWidthConstraints.activate()
             }
@@ -125,12 +129,15 @@ open class IconLabelView: UIView {
     open dynamic var isImageViewHidden: Bool = false {
         didSet {
             guard oldValue != isImageViewHidden else { return }
+
             if isImageViewHidden {
                 stackView.removeArrangedSubview(imageViewContainer)
                 imageViewContainer.removeFromSuperview()
             } else {
                 stackView.insertArrangedSubview(imageViewContainer, at: 0)
             }
+
+            updateTextImageSpacingIfNeeded()
         }
     }
 
@@ -138,6 +145,7 @@ open class IconLabelView: UIView {
     open dynamic var isSubtitleLabelHidden: Bool = true {
         didSet {
             guard oldValue != isSubtitleLabelHidden else { return }
+
             if isSubtitleLabelHidden {
                 stackView.removeArrangedSubview(subtitleLabel)
                 subtitleLabel.removeFromSuperview()
@@ -171,25 +179,15 @@ open class IconLabelView: UIView {
         set { stackView.spacing = newValue }
     }
 
-    // MARK: Init Methods
-
-    public convenience init() {
-        self.init(frame: .zero)
-    }
-
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupSubviews()
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupSubviews()
+    /// The default insets is `UIEdgeInsets.zero`.
+    open dynamic var contentInset: UIEdgeInsets {
+        get { return stackView.layoutMargins }
+        set { stackView.layoutMargins = newValue }
     }
 
     // MARK: Setters
 
-    open func setData(_ image: ImageRepresentable? = nil, title: StringRepresentable, subtitle: StringRepresentable? = nil) {
+    open func setData(_ image: ImageRepresentable? = nil, title: StringRepresentable?, subtitle: StringRepresentable? = nil) {
         isSubtitleLabelHidden = subtitle == nil
         isImageViewHidden     = image == nil
         imageView.setImage(image)
@@ -203,27 +201,30 @@ open class IconLabelView: UIView {
 
     // MARK: Setup Methods
 
-    fileprivate func setupSubviews() {
+    open override func setupSubviews() {
         addSubview(stackView)
-        NSLayoutConstraint.centerXY(stackView).activate()
-        NSLayoutConstraint.constraintsForViewToFillSuperview(stackView, priority: UILayoutPriorityDefaultLow).activate()
+
+        NSLayoutConstraint.centerXY(stackView, priority: UILayoutPriorityDefaultLow).activate()
+        NSLayoutConstraint(item: stackView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: self).activate()
+        NSLayoutConstraint(item: stackView, attribute: .bottom, relatedBy: .lessThanOrEqual, toItem: self).activate()
 
         apply(style: style)
         distribution = .fill
         alignment    = .center
         spacing      = 5
 
+        stackView.isLayoutMarginsRelativeArrangement = true
         stackView.addArrangedSubview(imageViewContainer)
         stackView.addArrangedSubview(textImageSpacerView)
         stackView.addArrangedSubview(titleLabel)
 
-        titleLabel.font          = UIFont.systemFont(.footnote)
+        titleLabel.font          = .systemFont(.footnote)
         titleLabel.textAlignment = .center
         titleLabel.textColor     = .black
         titleLabel.numberOfLines = 2
         titleLabel.sizeToFit()
 
-        subtitleLabel.font          = UIFont.systemFont(.footnote)
+        subtitleLabel.font          = .systemFont(.footnote)
         subtitleLabel.textAlignment = .center
         subtitleLabel.textColor     = .lightGray
         subtitleLabel.numberOfLines = 1
@@ -241,6 +242,16 @@ open class IconLabelView: UIView {
         imageView.layer.minificationFilter = kCAFilterTrilinear
 
         imageView.contentMode = .scaleAspectFill
+    }
+
+    open override func setNeedsLayout() {
+        stackView.setNeedsLayout()
+        super.setNeedsLayout()
+    }
+
+    open override func layoutIfNeeded() {
+        stackView.layoutIfNeeded()
+        super.layoutIfNeeded()
     }
 }
 
