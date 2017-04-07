@@ -26,7 +26,7 @@ import UIKit
 
 // MARK: NSDate Extension
 
-public extension Date {
+extension Date {
     public func fromNow(style: DateComponentsFormatter.UnitsStyle = .abbreviated, format: String = "%@") -> String? {
         let formatter              = DateComponentsFormatter()
         formatter.unitsStyle       = style
@@ -42,7 +42,7 @@ public extension Date {
     }
 
     /// Reset time to beginning of the day (`12 AM`) of `self` without changing the timezone.
-    func stripTime() -> Date {
+    public func stripTime() -> Date {
         let calendar = Calendar.current
         let components = (calendar as NSCalendar).components([.year, .month, .day], from: self)
         return calendar.date(from: components) ?? self
@@ -50,14 +50,14 @@ public extension Date {
 
     // MARK: UTC
 
-    fileprivate static let utcDateFormatter: DateFormatter = {
+    private static let utcDateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = .utc
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter
     }()
 
-    var utc: Date {
+    public var utc: Date {
         let dateString = Date.utcDateFormatter.string(from: self)
         Date.utcDateFormatter.timeZone = .current
         let date = Date.utcDateFormatter.date(from: dateString)!
@@ -66,10 +66,12 @@ public extension Date {
     }
 }
 
-private extension TimeZone {
-    static let utc: TimeZone = {
-        return TimeZone(identifier: "UTC")!
-    }()
+extension TimeZone {
+    public static let utc = TimeZone(identifier: "UTC")!
+}
+
+extension Locale {
+    public static let usa = Locale(identifier: "en_US")
 }
 
 // MARK: NSAttributedString Extension

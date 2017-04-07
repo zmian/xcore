@@ -1368,3 +1368,33 @@ extension UITableView {
         }, completionHandler: completionHandler)
     }
 }
+
+@IBDesignable
+extension UIDatePicker {
+    @IBInspectable
+    @nonobjc
+    open var textColor: UIColor? {
+        get { return value(forKey: "textColor") as? UIColor }
+        set { setValue(newValue, forKey: "textColor") }
+    }
+}
+
+extension UIRefreshControl {
+    private struct AssociatedKey {
+        static var timeoutTimer = "timeoutTimer"
+    }
+
+    private var timeoutTimer: Timer? {
+        get { return objc_getAssociatedObject(self, &AssociatedKey.timeoutTimer) as? Timer }
+        set { objc_setAssociatedObject(self, &AssociatedKey.timeoutTimer, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    }
+
+    open func refreshingTimeout(after timeoutInterval: TimeInterval, completion: (() -> Void)? = nil) {
+        timeoutTimer?.invalidate()
+        timeoutTimer = Timer.schedule(delay: timeoutInterval) {[weak self] _ in
+            guard let weakSelf = self else { return }
+            weakSelf.endRefreshing()
+            completion?()
+        }
+    }
+}
