@@ -26,7 +26,15 @@ import UIKit
 
 open class XCComposedTableViewController: UIViewController {
     fileprivate var tableViewConstraints = [NSLayoutConstraint]()
-    fileprivate var estimatedRowHeightCache = Cache()
+
+    /// There is UIKit bug that causes `UITableView` to jump when using `estimatedRowHeight`
+    /// and reloading cells/sections or the entire table view.
+    ///
+    /// This solution patches the said bug of `UITableView` by caching
+    /// heights and automatically switching to those when `reloadData`, `reloadCells`,
+    /// or `reloadSection` methods are invoked.
+    fileprivate var estimatedRowHeightCache = IndexPathCache<CGFloat>(defaultValue: UITableViewAutomaticDimension)
+
     /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
     /// The default value is `.grouped`.
     public var style: UITableViewStyle = .grouped
@@ -114,7 +122,7 @@ extension XCComposedTableViewController: UITableViewDelegate {
 
     open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         composedDataSource.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
-        estimatedRowHeightCache.set(height: cell.frame.size.height, forIndexPath: indexPath)
+        estimatedRowHeightCache[indexPath] = cell.frame.size.height
     }
 
     open func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -130,55 +138,6 @@ extension XCComposedTableViewController: UITableViewDelegate {
     }
 
     open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return estimatedRowHeightCache.get(indexPath: indexPath)
-    }
-}
-
-extension XCComposedTableViewController {
-    /// There is UIKit bug that causes `UITableView` to jump when using `estimatedRowHeight`
-    /// and reloading cells/sections or the entire table view.
-    ///
-    /// This solution patches the said bug of `UITableView` by caching
-    /// heights and automatically switching to those when `reloadData`, `reloadCells`,
-    /// or `reloadSection` methods are invoked.
-    fileprivate struct Cache {
-        private var dictionary = [String: CGFloat]()
-
-        private func key(forIndexPath indexPath: IndexPath) -> String {
-            return "\(indexPath.section)-\(indexPath.row)"
-        }
-
-        /// Set estimated cell height to cache.
-        ///
-        /// - parameter height:       The height to cache for the given index path.
-        /// - parameter forIndexPath: The index path to cache
-        mutating func set(height: CGFloat, forIndexPath: IndexPath) {
-            dictionary[key(forIndexPath: forIndexPath)] = height
-        }
-
-        /// Get estimated cell height from cache.
-        ///
-        /// - parameter indexPath: The index path to get the cached heigh for.
-        ///
-        /// - returns: The cached height if exists; otherwise, `UITableViewAutomaticDimension`.
-        func get(indexPath: IndexPath) -> CGFloat {
-            guard let estimatedHeight = dictionary[key(forIndexPath: indexPath)] else {
-                return UITableViewAutomaticDimension
-            }
-
-            return estimatedHeight
-        }
-
-        mutating func clearAll() {
-            dictionary.removeAll(keepingCapacity: false)
-        }
-
-        mutating func clear(atIndexPath indexPath: IndexPath) {
-            dictionary[key(forIndexPath: indexPath)] = nil
-        }
-
-        func heightExists(forIndexPath indexPath: IndexPath) -> Bool {
-            return dictionary[key(forIndexPath: indexPath)] != nil
-        }
+        return estimatedRowHeightCache[indexPath]
     }
 }
