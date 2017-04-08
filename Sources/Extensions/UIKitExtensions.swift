@@ -125,15 +125,15 @@ extension UIView {
         UIView.animate(withDuration: duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: nil)
     }
 
-    open func setHiddenAnimated(_ hide: Bool, duration: TimeInterval, completion: (() -> Void)? = nil) {
-        guard isHidden != hide else { return }
-        alpha  = hide ? 1 : 0
+    open func setHiddenAnimated(_ hidden: Bool, duration: TimeInterval = 0.35, _ completion: (() -> Void)? = nil) {
+        guard isHidden != hidden else { return }
+        alpha  = hidden ? 1 : 0
         isHidden = false
 
         UIView.animate(withDuration: duration, animations: {
-            self.alpha = hide ? 0 : 1
+            self.alpha = hidden ? 0 : 1
         }, completion: { _ in
-            self.isHidden = hide
+            self.isHidden = hidden
             completion?()
         })
     }

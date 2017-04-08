@@ -1,7 +1,7 @@
 //
-// XcoreTests.swift
+// ViewController.swift
 //
-// Copyright © 2016 Zeeshan Mian
+// Copyright © 2014 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,12 @@
 // THE SOFTWARE.
 //
 
-import XCTest
-@testable import Xcore
+import UIKit
+import Xcore
 
-class XcoreTests: XCTestCase {
+final class ViewController: UIViewController {
 
-}
-
-func expect<T>(_ input: T, _ comparator: (T, T) -> Bool, _ output: T) {
-    XCTAssert(comparator(input, output), "Expected \(output), found \(input).")
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
 }

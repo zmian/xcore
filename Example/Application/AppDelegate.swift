@@ -1,7 +1,7 @@
 //
-// XcoreTests.swift
+// AppDelegate.swift
 //
-// Copyright © 2016 Zeeshan Mian
+// Copyright © 2014 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,13 @@
 // THE SOFTWARE.
 //
 
-import XCTest
-@testable import Xcore
+import UIKit
 
-class XcoreTests: XCTestCase {
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    var window: UIWindow?
 
-}
-
-func expect<T>(_ input: T, _ comparator: (T, T) -> Bool, _ output: T) {
-    XCTAssert(comparator(input, output), "Expected \(output), found \(input).")
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        return true
+    }
 }

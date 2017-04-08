@@ -26,15 +26,17 @@ import Foundation
 
 private enum PredicateQueryBuilder {
     case boolEqual(field: String, value: Bool)
-    case equal(field: String, values: [CVarArg])
-    case notEqual(field: String, values: [CVarArg])
+    case equal(field: String, values: [Any], caseInsensitive: Bool)
+    case notEqual(field: String, values: [Any], caseInsensitive: Bool)
     case lessThanOrEqual(field: String, value: Any)
     case greaterThanOrEqual(field: String, value: Any)
     case beginsWith(field: String, value: Any)
+    case endsWith(field: String, value: Any)
     case contains(field: String, value: Any)
+    case like(field: String, value: Any)
     case between(field: String, value: (this: Any, andThis: Any))
     case notIn(field: String, values: [Any])
-    case isIn(field: String, values: [Any])
+    case isIn(field: String, values: [Any], caseInsensitive: Bool)
     case any(field: String, value: Any)
     case boolAny(field: String, value: Bool)
 
@@ -42,11 +44,16 @@ private enum PredicateQueryBuilder {
         switch self {
             case .boolEqual(let (field, value)):
                 return NSPredicate(format: "\(field) == \(value ? "YES" : "NO")")
-            case .equal(let (field, values)):
-                let formattedString = values.map { String(format: "\(field) == '%@'", $0) }.joined(separator: " OR ")
-                return NSPredicate(format: formattedString)
-            case .notEqual(let (field, values)):
-                let formattedString = values.map { String(format: "\(field) != '%@'", $0) }.joined(separator: " AND ")
+            case .equal(let (field, values, caseInsensitive)):
+                if values.count == 1 {
+                    let caseInsensitiveModifier = caseInsensitive ? "[c]" : ""
+                    return NSPredicate(format: "\(field) ==\(caseInsensitiveModifier) %@", argumentArray: [values.first!])
+                }
+
+                return PredicateQueryBuilder.isIn(field: field, values: values, caseInsensitive: caseInsensitive).rawValue
+            case .notEqual(let (field, values, caseInsensitive)):
+                let caseInsensitiveModifier = caseInsensitive ? "[c]" : ""
+                let formattedString = values.map { NSPredicate(format: "\(field) !=\(caseInsensitiveModifier) %@", argumentArray: [$0]).predicateFormat }.joined(separator: " AND ")
                 return NSPredicate(format: formattedString)
             case .lessThanOrEqual(let (field, value)):
                 return NSPredicate(format: "\(field) <= %@", argumentArray: [value])
@@ -54,16 +61,21 @@ private enum PredicateQueryBuilder {
                 return NSPredicate(format: "\(field) >= %@", argumentArray: [value])
             case .beginsWith(let (field, value)):
                 return NSPredicate(format: "\(field) BEGINSWITH[c] %@", argumentArray: [value])
+            case .endsWith(let (field, value)):
+                return NSPredicate(format: "\(field) ENDSWITH[c] %@", argumentArray: [value])
             case .contains(let (field, value)):
                 return NSPredicate(format: "\(field) CONTAINS[c] %@", argumentArray: [value])
+            case .like(let (field, value)):
+                return NSPredicate(format: "\(field) LIKE[c] %@", argumentArray: [value])
             case .between(let (field, value)):
                 return NSPredicate(format: "\(field) BETWEEN {%@, %@}", argumentArray: [value.this, value.andThis])
             case .notIn(let (field, values)):
                 return NSPredicate(format: "NOT (\(field) IN %@)", argumentArray: [values])
-            case .isIn(let (field, values)):
-                return NSPredicate(format: "\(field) IN %@", values)
+            case .isIn(let (field, values, caseInsensitive)):
+                let caseInsensitiveModifier = caseInsensitive ? "[c]" : ""
+                return NSPredicate(format: "\(field) IN\(caseInsensitiveModifier) %@", values)
             case .any(let (field, value)):
-                return NSPredicate(format: "ANY \(field) = '\(value)'")
+                return NSPredicate(format: "ANY \(field) = %@", argumentArray: [value])
             case .boolAny(let (field, value)):
                 return NSPredicate(format: "ANY \(field) = \(value ? "YES" : "NO")")
         }
@@ -73,20 +85,28 @@ private enum PredicateQueryBuilder {
 public struct PredicateQuery: CustomStringConvertible, CustomDebugStringConvertible {
     fileprivate let builder: PredicateQueryBuilder
 
-    public init(field: String, equal: CVarArg...) {
-        builder = PredicateQueryBuilder.equal(field: field, values: equal)
+    public init(field: String, equal: Any, caseInsensitive: Bool) {
+        builder = PredicateQueryBuilder.equal(field: field, values: [equal], caseInsensitive: caseInsensitive)
     }
 
-    public init(field: String, equal: [CVarArg]) {
-        builder = PredicateQueryBuilder.equal(field: field, values: equal)
+    public init(field: String, equal: Any...) {
+        builder = PredicateQueryBuilder.equal(field: field, values: equal, caseInsensitive: false)
     }
 
-    public init(field: String, notEqual: CVarArg...) {
-        builder = PredicateQueryBuilder.notEqual(field: field, values: notEqual)
+    public init(field: String, equal: [Any], caseInsensitive: Bool = false) {
+        builder = PredicateQueryBuilder.equal(field: field, values: equal, caseInsensitive: caseInsensitive)
     }
 
-    public init(field: String, notEqual: [CVarArg]) {
-        builder = PredicateQueryBuilder.notEqual(field: field, values: notEqual)
+    public init(field: String, notEqual: Any, caseInsensitive: Bool) {
+        builder = PredicateQueryBuilder.notEqual(field: field, values: [notEqual], caseInsensitive: caseInsensitive)
+    }
+
+    public init(field: String, notEqual: Any...) {
+        builder = PredicateQueryBuilder.notEqual(field: field, values: notEqual, caseInsensitive: false)
+    }
+
+    public init(field: String, notEqual: [Any], caseInsensitive: Bool) {
+        builder = PredicateQueryBuilder.notEqual(field: field, values: notEqual, caseInsensitive: caseInsensitive)
     }
 
     public init(field: String, lessThanOrEqual: Any) {
@@ -101,8 +121,16 @@ public struct PredicateQuery: CustomStringConvertible, CustomDebugStringConverti
         builder = PredicateQueryBuilder.beginsWith(field: field, value: beginsWith)
     }
 
+    public init(field: String, endsWith: Any) {
+        builder = PredicateQueryBuilder.endsWith(field: field, value: endsWith)
+    }
+
     public init(field: String, contains: Any) {
         builder = PredicateQueryBuilder.contains(field: field, value: contains)
+    }
+
+    public init(field: String, like: Any) {
+        builder = PredicateQueryBuilder.like(field: field, value: like)
     }
 
     public init(field: String, between: Any, and: Any) {
@@ -113,8 +141,8 @@ public struct PredicateQuery: CustomStringConvertible, CustomDebugStringConverti
         builder = PredicateQueryBuilder.notIn(field: field, values: notIn)
     }
 
-    public init(field: String, isIn: [Any]) {
-        builder = PredicateQueryBuilder.isIn(field: field, values: isIn)
+    public init(field: String, isIn: [Any], caseInsensitive: Bool = false) {
+        builder = PredicateQueryBuilder.isIn(field: field, values: isIn, caseInsensitive: caseInsensitive)
     }
 
     public init(field: String, any: Any) {
