@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		680125BC1E99E408001C14CB /* IndexPathCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680125BA1E99E386001C14CB /* IndexPathCache.swift */; };
+		685F3C6A1E9C6EE70076A6A8 /* XCConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685F3C691E9C6EE70076A6A8 /* XCConfiguration.swift */; };
 		689869E61E9992E600CE7B77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689869DD1E9992E600CE7B77 /* ViewController.swift */; };
 		689869E71E9992E600CE7B77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689869DF1E9992E600CE7B77 /* AppDelegate.swift */; };
 		689869E81E9992E600CE7B77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 689869E01E9992E600CE7B77 /* Assets.xcassets */; };
@@ -93,6 +94,7 @@
 		56D96A853E1B0EC4E75E0691 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		5D3CFC269887586363462B4B /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		680125BA1E99E386001C14CB /* IndexPathCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexPathCache.swift; sourceTree = "<group>"; };
+		685F3C691E9C6EE70076A6A8 /* XCConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCConfiguration.swift; sourceTree = "<group>"; };
 		689869C81E99926100CE7B77 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		689869DB1E9992E600CE7B77 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		689869DD1E9992E600CE7B77 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 				68F549481E998B4500B2725A /* PredicateQuery.swift */,
 				68F549491E998B4500B2725A /* Request.swift */,
 				68F5494A1E998B4500B2725A /* XCUserDefault.swift */,
+				685F3C691E9C6EE70076A6A8 /* XCConfiguration.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				689869E71E9992E600CE7B77 /* AppDelegate.swift in Sources */,
+				685F3C6A1E9C6EE70076A6A8 /* XCConfiguration.swift in Sources */,
 				689869E61E9992E600CE7B77 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
