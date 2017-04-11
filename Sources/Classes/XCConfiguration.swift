@@ -68,8 +68,9 @@ public struct XCConfiguration<Type> {
 }
 
 extension UILabel {
-    public convenience init(style: XCConfiguration<UILabel>) {
+    public convenience init(text: String? = nil, style: XCConfiguration<UILabel>) {
         self.init()
+        self.text = text
         style.configure?(self)
     }
 
