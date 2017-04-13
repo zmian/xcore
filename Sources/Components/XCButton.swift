@@ -29,19 +29,19 @@ public class XCButton: UIButton {
     fileprivate typealias State = UInt
     fileprivate var backgroundColors = [State: UIColor?]()
     fileprivate var borderColors = [State: UIColor?]()
-    
+
     open override var isHighlighted: Bool {
         didSet {
             changeBackgroundColor(to: isHighlighted ? .highlighted : .normal)
         }
     }
-    
+
     open override var isEnabled: Bool {
         didSet {
             changeBackgroundColor(to: isEnabled ? .normal : .disabled)
         }
     }
-    
+
     open func setEnabled(enabled: Bool, animated: Bool) {
         if animated {
             self.isEnabled = enabled
@@ -59,46 +59,46 @@ public class XCButton: UIButton {
 extension XCButton {
     open func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControlState) {
         backgroundColors[state.rawValue] = backgroundColor
-        
+
         if state == .normal {
             super.backgroundColor = backgroundColor
         }
     }
-    
+
     open func backgroundColor(for state: UIControlState) -> UIColor? {
         guard let color = backgroundColors[state.rawValue] else {
             return nil
         }
-        
+
         return color
     }
-    
+
     @nonobjc open var highlightedBackgroundColor: UIColor? {
         get { return backgroundColor(for: .highlighted) }
         set { setBackgroundColor(newValue, for: .highlighted) }
     }
-    
+
     @nonobjc open var disabledBackgroundColor: UIColor? {
         get { return backgroundColor(for: .disabled) }
         set { setBackgroundColor(newValue, for: .disabled) }
     }
-    
+
     open override var backgroundColor: UIColor? {
         get { return backgroundColor(for: .normal) }
         set { setBackgroundColor(newValue, for: .normal) }
     }
-    
+
     open override func setHighlightedBackgroundColor(_ color: UIColor?) {
         highlightedBackgroundColor = color
     }
-    
+
     open override func setDisabledBackgroundColor(_ color: UIColor?) {
         disabledBackgroundColor = color
     }
-    
+
     fileprivate func changeBackgroundColor(to state: UIControlState) {
         var newBackgroundColor = backgroundColor(for: state)
-        
+
         if newBackgroundColor == nil {
             if state == .highlighted {
                 newBackgroundColor = backgroundColor(for: .normal)?.darker(0.1)
@@ -106,11 +106,11 @@ extension XCButton {
                 newBackgroundColor = backgroundColor(for: .normal)?.lighter(0.1)
             }
         }
-        
+
         guard let finalBackgroundColor = newBackgroundColor, super.backgroundColor != finalBackgroundColor else {
             return
         }
-        
+
         UIView.animate(withDuration: 0.25) {
             super.backgroundColor = finalBackgroundColor
         }
@@ -123,23 +123,23 @@ extension XCButton {
 extension XCButton {
     open func setBorderColor(_ borderColor: UIColor?, for state: UIControlState) {
         borderColors[state.rawValue] = borderColor
-        
+
         if state == .normal {
             super.layer.borderColor = borderColor?.cgColor
         }
     }
-    
+
     open func borderColor(for state: UIControlState) -> UIColor? {
         guard let color = borderColors[state.rawValue] else {
             return nil
         }
-        
+
         return color
     }
-    
+
     fileprivate func changeBorderColor(to state: UIControlState) {
         var newBorderColor = borderColor(for: state)
-        
+
         if newBorderColor == nil {
             if state == .highlighted {
                 newBorderColor = borderColor(for: state)?.darker(0.1)
@@ -147,11 +147,11 @@ extension XCButton {
                 newBorderColor = borderColor(for: state)?.lighter(0.1)
             }
         }
-        
+
         guard let finalBorderColor = newBorderColor, super.layer.borderColor != finalBorderColor.cgColor else {
             return
         }
-        
+
         UIView.animate(withDuration: 0.25) {
             super.layer.borderColor = finalBorderColor.cgColor
         }
