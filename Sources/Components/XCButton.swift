@@ -54,7 +54,7 @@ public class XCButton: UIButton {
 }
 
 
-// MARK: Background color
+// MARK: Background Color
 
 extension XCButton {
     open func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControlState) {
@@ -117,8 +117,7 @@ extension XCButton {
     }
 }
 
-
-// MARK: Border color
+// MARK: Border Color
 
 extension XCButton {
     open func setBorderColor(_ borderColor: UIColor?, for state: UIControlState) {
