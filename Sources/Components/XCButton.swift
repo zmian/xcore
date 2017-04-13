@@ -25,7 +25,7 @@
 import UIKit
 
 @IBDesignable
-public class XCButton: UIButton {
+open class XCButton: UIButton {
     fileprivate typealias State = UInt
     fileprivate var backgroundColors = [State: UIColor?]()
     fileprivate var borderColors = [State: UIColor?]()
@@ -52,7 +52,6 @@ public class XCButton: UIButton {
         }
     }
 }
-
 
 // MARK: Background Color
 
