@@ -33,7 +33,7 @@ extension UIView {
     ///
     /// - returns: The child view if exists; otherwise nil.
     public func subview(withClassName className: String) -> UIView? {
-        if NSClassFromString(className) == self.dynamicType {
+        if NSClassFromString(className) == type(of: self) {
             return self
         }
 
@@ -52,7 +52,7 @@ extension UIView {
     ///
     /// - returns: The child views if exists; otherwise empty array.
     public func subviews(withClassName className: String) -> [UIView] {
-        if NSClassFromString(className) == self.dynamicType {
+        if NSClassFromString(className) == type(of: self) {
             return [self]
         }
 
@@ -70,7 +70,7 @@ extension UIView {
 
 extension UIView {
     /// Prints `self` child view hierarchy.
-    func debugSubviews(count: Int = 0) {
+    func debugSubviews(_ count: Int = 0) {
         if count == 0 {
             print("\n\n\n")
         }
@@ -79,7 +79,7 @@ extension UIView {
             print("--")
         }
 
-        print("\(self.dynamicType)")
+        print("\(type(of: self))")
 
         for view in subviews {
             view.debugSubviews(count + 1)
@@ -103,17 +103,17 @@ extension DynamicTableView {
         resizedGripView.addSubview(reorderControl)
         cell.addSubview(resizedGripView)
 
-        let sizeDifference = CGSizeMake(resizedGripView.frame.size.width - reorderControl.frame.size.width, resizedGripView.frame.size.height - reorderControl.frame.size.height)
-        let transformRatio = CGSizeMake(resizedGripView.frame.size.width / reorderControl.frame.size.width, resizedGripView.frame.size.height / reorderControl.frame.size.height)
+        let sizeDifference = CGSize(width: resizedGripView.frame.size.width - reorderControl.frame.size.width, height: resizedGripView.frame.size.height - reorderControl.frame.size.height)
+        let transformRatio = CGSize(width: resizedGripView.frame.size.width / reorderControl.frame.size.width, height: resizedGripView.frame.size.height / reorderControl.frame.size.height)
 
         //	Original transform
-        var transform = CGAffineTransformIdentity
+        var transform = CGAffineTransform.identity
 
         //	Scale custom view so grip will fill entire cell
-        transform = CGAffineTransformScale(transform, transformRatio.width, transformRatio.height)
+        transform = transform.scaledBy(x: transformRatio.width, y: transformRatio.height)
 
         //	Move custom view so the grip's top left aligns with the cell's top left
-        transform = CGAffineTransformTranslate(transform, -sizeDifference.width / 2, -sizeDifference.height / 2)
+        transform = transform.translatedBy(x: -sizeDifference.width / 2, y: -sizeDifference.height / 2)
 
         resizedGripView.transform = transform
 

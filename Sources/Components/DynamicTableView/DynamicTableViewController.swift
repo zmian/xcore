@@ -24,14 +24,14 @@
 
 import UIKit
 
-public class DynamicTableViewController: UIViewController {
-    private var tableViewConstraints = [NSLayoutConstraint]()
-    public private(set) lazy var tableView: DynamicTableView = DynamicTableView(style: self.style, options: self.cellOptions)
+open class DynamicTableViewController: UIViewController {
+    fileprivate var tableViewConstraints = [NSLayoutConstraint]()
+    open fileprivate(set) lazy var tableView: DynamicTableView = DynamicTableView(style: self.style, options: self.cellOptions)
     /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
-    public var style: UITableViewStyle = .Plain
-    public var cellOptions: DynamicTableCellOptions = [] {
+    open var style: UITableViewStyle = .plain
+    open var cellOptions: DynamicTableCellOptions = [] {
         didSet {
-            if isViewLoaded() {
+            if isViewLoaded {
                 tableView.cellOptions = cellOptions
             }
         }
@@ -39,11 +39,11 @@ public class DynamicTableViewController: UIViewController {
 
     /// An option to determine whether the `scrollView`'s `top` and `bottom` is constrained
     /// to `topLayoutGuide` and `bottomLayoutGuide`. The default value is `[]`.
-    public var constraintToLayoutGuideOptions: LayoutGuideOptions = []
+    open var constraintToLayoutGuideOptions: LayoutGuideOptions = []
 
     /// The distance that the tableView is inset from the enclosing view.
     /// The default value is `UIEdgeInsets.zero`.
-    public dynamic var contentInset = UIEdgeInsets.zero {
+    open dynamic var contentInset = UIEdgeInsets.zero {
         didSet {
             tableViewConstraints.at(0)?.constant = contentInset.left
             tableViewConstraints.at(1)?.constant = contentInset.right
@@ -62,18 +62,18 @@ public class DynamicTableViewController: UIViewController {
         self.init(style: style, options: [])
     }
 
-    public convenience init(style: UITableViewStyle = .Plain, options: DynamicTableCellOptions) {
+    public convenience init(style: UITableViewStyle = .plain, options: DynamicTableCellOptions) {
         self.init(nibName: nil, bundle: nil)
         self.style       = style
         self.cellOptions = options
     }
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         setupDynamicTableView()
     }
 
-    private func setupDynamicTableView() {
+    fileprivate func setupDynamicTableView() {
         if !cellOptions.isEmpty && tableView.cellOptions.isEmpty {
             tableView.cellOptions = cellOptions
         }

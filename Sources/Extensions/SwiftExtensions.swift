@@ -34,39 +34,36 @@ public extension String {
     /// var string = "abcde"[0...2] // string equals "abc"
     /// var string2 = "fghij"[2..<4] // string2 equals "hi"
     public subscript (r: Range<Int>) -> String {
-        let start = startIndex.advancedBy(r.startIndex)
-        let end   = startIndex.advancedBy(r.endIndex)
-        return substringWithRange(Range(start..<end))
+        let start = characters.index(startIndex, offsetBy: r.lowerBound)
+        let end   = characters.index(startIndex, offsetBy: r.upperBound)
+        return substring(with: Range(start..<end))
     }
 
     public var count: Int { return characters.count }
 
     /// Returns an array of strings at new lines.
     public var lines: [String] {
-        return componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
+        return components(separatedBy: .newlines)
     }
 
     /// Trims white space and new line characters in `self`.
-    @warn_unused_result
-    public func trim() -> String {
-        return replace("[ ]+", replacement: " ").stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+    public func trimmed() -> String {
+        return replace("[ ]+", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     /// Searches for pattern matches in the string and replaces them with replacement.
-    @warn_unused_result
-    public func replace(pattern: String, replacement: String, options: NSStringCompareOptions = .RegularExpressionSearch) -> String {
-        return stringByReplacingOccurrencesOfString(pattern, withString: replacement, options: options, range: nil)
+    public func replace(_ pattern: String, with: String, options: NSString.CompareOptions = .regularExpression) -> String {
+        return replacingOccurrences(of: pattern, with: with, options: options, range: nil)
     }
 
     /// Returns `true` iff `value` is in `self`.
-    @warn_unused_result
-    public func contains(value: String, options: NSStringCompareOptions = []) -> Bool {
-        return rangeOfString(value, options: options) != nil
+    public func contains(_ value: String, options: NSString.CompareOptions = []) -> Bool {
+        return range(of: value, options: options) != nil
     }
 
     /// Determine whether the string is a valid url.
     public var isValidUrl: Bool {
-        if let url = NSURL(string: self) where url.host != nil {
+        if let url = URL(string: self) , url.host != nil {
             return true
         }
 
@@ -75,37 +72,36 @@ public extension String {
 
     /// `true` iff `self` contains no characters and blank spaces (e.g., \n, " ").
     public var isBlank: Bool {
-        return stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()).isEmpty
+        return trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     public var localized: String {
-        return NSLocalizedString(self, tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: "")
+        return NSLocalizedString(self, tableName: nil, bundle: .main, value: "", comment: "")
     }
 
-    public func localized(comment: String) -> String {
-        return NSLocalizedString(self, tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: comment)
+    public func localized(_ comment: String) -> String {
+        return NSLocalizedString(self, tableName: nil, bundle: .main, value: "", comment: comment)
     }
 
     /// Drops the given `prefix` from `self`.
     ///
     /// - returns: String without the specified `prefix` or nil if `prefix` doesn't exists.
-    @warn_unused_result
-    public func stripPrefix(prefix: String) -> String? {
-        guard let prefixRange = rangeOfString(prefix) else { return nil }
-        let attributeRange  = Range(prefixRange.endIndex..<endIndex)
-        let attributeString = substringWithRange(attributeRange)
+    public func stripPrefix(_ prefix: String) -> String? {
+        guard let prefixRange = range(of: prefix) else { return nil }
+        let attributeRange  = Range(prefixRange.upperBound..<endIndex)
+        let attributeString = substring(with: attributeRange)
         return attributeString
     }
 
     public var lastPathComponent: String { return (self as NSString).lastPathComponent }
-    public var stringByDeletingLastPathComponent: String { return (self as NSString).stringByDeletingLastPathComponent }
-    public var stringByDeletingPathExtension: String { return (self as NSString).stringByDeletingPathExtension }
+    public var stringByDeletingLastPathComponent: String { return (self as NSString).deletingLastPathComponent }
+    public var stringByDeletingPathExtension: String { return (self as NSString).deletingPathExtension }
     public var pathExtension: String { return (self as NSString).pathExtension }
 
     /// Decode specified `Base64` string
     public init?(base64: String) {
-        if let decodedData   = NSData(base64EncodedString: base64, options: NSDataBase64DecodingOptions(rawValue: 0)),
-           let decodedString = String(data: decodedData, encoding: NSUTF8StringEncoding) {
+        if let decodedData   = Data(base64Encoded: base64, options: Data.Base64DecodingOptions(rawValue: 0)),
+           let decodedString = String(data: decodedData, encoding: .utf8) {
             self = decodedString
         } else {
             return nil
@@ -114,29 +110,26 @@ public extension String {
 
     /// Returns `Base64` representation of `self`.
     public var base64: String? {
-        return dataUsingEncoding(NSUTF8StringEncoding)?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        return data(using: .utf8)?.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
     }
 }
 
 public extension String {
-    @warn_unused_result
-    public func sizeWithFont(font: UIFont) -> CGSize {
-        return (self as NSString).sizeWithAttributes([NSFontAttributeName: font])
+    public func sizeWithFont(_ font: UIFont) -> CGSize {
+        return (self as NSString).size(attributes: [NSFontAttributeName: font])
     }
 
-    @warn_unused_result
-    public func sizeWithFont(font: UIFont, constrainedToSize: CGSize) -> CGSize {
-        let expectedRect = (self as NSString).boundingRectWithSize(constrainedToSize, options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+    public func sizeWithFont(_ font: UIFont, constrainedToSize: CGSize) -> CGSize {
+        let expectedRect = (self as NSString).boundingRect(with: constrainedToSize, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
         return expectedRect.size
     }
 
     /// - seealso: http://stackoverflow.com/a/30040937
-    @warn_unused_result
-    public func numberOfLines(font: UIFont, constrainedToSize: CGSize) -> (size: CGSize, numberOfLines: Int) {
+    public func numberOfLines(_ font: UIFont, constrainedToSize: CGSize) -> (size: CGSize, numberOfLines: Int) {
         let textStorage = NSTextStorage(string: self, attributes: [NSFontAttributeName: font])
 
         let textContainer                  = NSTextContainer(size: constrainedToSize)
-        textContainer.lineBreakMode        = .ByWordWrapping
+        textContainer.lineBreakMode        = .byWordWrapping
         textContainer.maximumNumberOfLines = 0
         textContainer.lineFragmentPadding  = 0
 
@@ -151,7 +144,7 @@ public extension String {
 
         while index < layoutManager.numberOfGlyphs {
             numberOfLines += 1
-            size += layoutManager.lineFragmentRectForGlyphAtIndex(index, effectiveRange: &lineRange).size
+            size += layoutManager.lineFragmentRect(forGlyphAt: index, effectiveRange: &lineRange).size
             index = NSMaxRange(lineRange)
         }
 
@@ -160,16 +153,20 @@ public extension String {
 }
 
 public extension Int {
-    @warn_unused_result
-    public func padding(amountToPad: Int) -> String {
-        let numberFormatter = NSNumberFormatter()
-        numberFormatter.paddingPosition = .BeforePrefix
+    private static let numberFormatter: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.paddingPosition = .beforePrefix
         numberFormatter.paddingCharacter = "0"
-        numberFormatter.minimumIntegerDigits = amountToPad
-        return numberFormatter.stringFromNumber(self)!
+        return numberFormatter
+    }()
+
+    public func pad(by amount: Int) -> String {
+        Int.numberFormatter.minimumIntegerDigits = amount
+        return Int.numberFormatter.string(from: NSNumber(value: self))!
     }
 }
 
+/*
 extension IntervalType {
     /// Returns a random element from `self`.
     ///
@@ -177,7 +174,6 @@ extension IntervalType {
     /// (0.0...1.0).random()   // 0.112358
     /// (-1.0..<68.5).random() // 26.42
     /// ```
-    @warn_unused_result
     public func random() -> Bound {
         guard
             let start = self.start as? Double,
@@ -190,6 +186,7 @@ extension IntervalType {
         return ((Double(arc4random_uniform(UInt32.max)) / Double(UInt32.max)) * range + start) as! Bound
     }
 }
+*/
 
 extension Int {
     /// Returns an `Array` containing the results of mapping `transform`
@@ -204,8 +201,7 @@ extension Int {
     /// // prints
     /// [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
     /// ```
-    @warn_unused_result
-    public func map<T>(@noescape transform: (Int) throws -> T) rethrows -> [T] {
+    public func map<T>(transform: (Int) throws -> T) rethrows -> [T] {
         var results = [T]()
         for i in 0..<self {
             try results.append(transform(i + 1))
@@ -215,12 +211,11 @@ extension Int {
 }
 
 extension Array {
-    /// Returns a random subarray of given length
+    /// Returns a random subarray of given length.
     ///
     /// - parameter size: Length
-    /// - returns:        Random subarray of length n
-    @warn_unused_result
-    public func randomElements(size: Int = 1) -> Array {
+    /// - returns:        Random subarray of length n.
+    public func randomElements(_ size: Int = 1) -> Array {
         if size >= count {
             return self
         }
@@ -230,9 +225,8 @@ extension Array {
     }
 
     /// Returns a random element from `self`.
-    @warn_unused_result
     public func randomElement() -> Element {
-        let randomIndex = Int(rand()) % count
+        let randomIndex = Int(arc4random()) % count
         return self[randomIndex]
     }
 
@@ -244,9 +238,9 @@ extension Array {
     /// print(chunks) // [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12]]
     /// ```
     /// - seealso: https://gist.github.com/ericdke/fa262bdece59ff786fcb
-    public func splitBy(subSize: Int) -> [[Element]] {
-        return 0.stride(to: count, by: subSize).map { startIndex in
-            let endIndex = startIndex.advancedBy(subSize, limit: count)
+    public func splitBy(_ subSize: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: subSize).map { startIndex in
+            let endIndex = index(startIndex, offsetBy: subSize, limitedBy: count) ?? startIndex + (count - startIndex)
             return Array(self[startIndex..<endIndex])
         }
     }
@@ -256,10 +250,11 @@ public extension Array where Element: Equatable {
     /// Remove element by value.
     ///
     /// - returns: true if removed; false otherwise
-    public mutating func remove(element: Element) -> Bool {
-        for (index, elementToCompare) in enumerate() {
+    @discardableResult
+    public mutating func remove(_ element: Element) -> Bool {
+        for (index, elementToCompare) in enumerated() {
             if element == elementToCompare {
-                removeAtIndex(index)
+                self.remove(at: index)
                 return true
             }
         }
@@ -267,7 +262,7 @@ public extension Array where Element: Equatable {
     }
 
     /// Remove elements by value.
-    public mutating func remove(elements: [Element]) {
+    public mutating func remove(_ elements: [Element]) {
         elements.forEach { remove($0) }
     }
 
@@ -277,51 +272,69 @@ public extension Array where Element: Equatable {
     /// - parameter toIndex: An index locating the new location of the element in `self`.
     ///
     /// - returns: true if moved; false otherwise.
-    public mutating func move(element: Element, toIndex index: Int) -> Bool {
+    @discardableResult
+    public mutating func move(_ element: Element, toIndex index: Int) -> Bool {
         guard remove(element) else { return false }
-        insert(element, atIndex: index)
+        insert(element, at: index)
         return true
     }
 }
 
-extension CollectionType {
+extension Collection {
     /// Returns the element at the specified index iff it is within bounds, otherwise nil.
-    @warn_unused_result
-    public func at(index: Index) -> Generator.Element? {
-        return indices.contains(index) ? self[index] : nil
+    public func at(_ index: Index) -> Iterator.Element? {
+        return contains(index) ? self[index] : nil
+    }
+
+    /// Return true iff index is in `self`.
+    public func contains(_ index: Index) -> Bool {
+        return index >= startIndex && index < endIndex
     }
 }
 
-extension CollectionType where Index: BidirectionalIndexType {
+extension Collection {
     /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise nil.
-    @warn_unused_result
-    public func at(range: Range<Index>) -> SubSequence? {
-        return indices.contains(range) ? self[range] : nil
+    public func at(_ range: Range<Index>) -> SubSequence? {
+        return contains(range) ? self[range] : nil
     }
 
     /// Return true iff range is in `self`.
-    @warn_unused_result
-    public func contains(range: Range<Index>) -> Bool {
-        return indices.contains(range.startIndex) && indices.contains(range.endIndex.predecessor())
+    public func contains(_ range: Range<Index>) -> Bool {
+        return range.lowerBound >= startIndex && range.upperBound <= endIndex
     }
 }
 
-extension RangeReplaceableCollectionType {
-    public mutating func appendAll(collection: [Generator.Element]) {
-        appendContentsOf(collection)
+extension RandomAccessCollection where Index == Int {
+    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise nil.
+    public func at(_ range: CountableRange<Index>) -> SubSequence? {
+        return contains(range) ? self[range] : nil
+    }
+
+    /// Return true iff range is in `self`.
+    public func contains(_ range: CountableRange<Index>) -> Bool {
+        return range.lowerBound >= startIndex && range.upperBound <= endIndex
+    }
+
+    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise nil.
+    public func at(_ range: CountableClosedRange<Index>) -> SubSequence? {
+        return contains(range) ? self[range] : nil
+    }
+
+    /// Return true iff range is in `self`.
+    public func contains(_ range: CountableClosedRange<Index>) -> Bool {
+        return range.lowerBound >= startIndex && range.upperBound <= endIndex
     }
 }
 
-extension SequenceType where Generator.Element: Hashable {
+extension Sequence where Iterator.Element: Hashable {
     /// Return an `Array` containing only the unique elements of `self` in order.
-    @warn_unused_result
-    public func unique() -> [Generator.Element] {
-        var seen: [Generator.Element: Bool] = [:]
+    public func unique() -> [Iterator.Element] {
+        var seen: [Iterator.Element: Bool] = [:]
         return filter { seen.updateValue(true, forKey: $0) == nil }
     }
 }
 
-extension SequenceType {
+extension Sequence {
     /// Return an `Array` containing only the unique elements of `self`,
     /// in order, where `unique` criteria is determined by the `uniqueProperty` block.
     ///
@@ -329,8 +342,7 @@ extension SequenceType {
     ///
     /// - returns: Return an `Array` containing only the unique elements of `self`,
     /// in order, that satisfy the predicate `uniqueProperty`.
-    @warn_unused_result
-    public func unique<T: Hashable>(uniqueProperty: (Generator.Element) -> T) -> [Generator.Element] {
+    public func unique<T: Hashable>(_ uniqueProperty: (Iterator.Element) -> T) -> [Iterator.Element] {
         var seen: [T: Bool] = [:]
         return filter { seen.updateValue(true, forKey: uniqueProperty($0)) == nil }
     }
@@ -346,18 +358,17 @@ public extension Array where Element: Hashable {
     /// where `unique` criteria is determined by the `uniqueProperty` block.
     ///
     /// - parameter uniqueProperty: `unique` criteria is determined by the value returned by this block.
-    public mutating func uniqueInPlace<T: Hashable>(uniqueProperty: (Element) -> T) {
+    public mutating func uniqueInPlace<T: Hashable>(_ uniqueProperty: (Element) -> T) {
         self = unique(uniqueProperty)
     }
 }
 
 public extension Dictionary {
-    public mutating func unionInPlace(dictionary: Dictionary) {
+    public mutating func unionInPlace(_ dictionary: Dictionary) {
         dictionary.forEach { updateValue($1, forKey: $0) }
     }
 
-    @warn_unused_result
-    public func union(dictionary: Dictionary) -> Dictionary {
+    public func union(_ dictionary: Dictionary) -> Dictionary {
         var dictionary = dictionary
         dictionary.unionInPlace(self)
         return dictionary
@@ -366,17 +377,16 @@ public extension Dictionary {
 
 extension Double {
     // Adopted from: http://stackoverflow.com/a/35504720
-
-    private static let abbrevationNumberFormatter: NSNumberFormatter = {
-        let numberFormatter = NSNumberFormatter()
+    fileprivate static let abbrevationNumberFormatter: NumberFormatter = {
+        let numberFormatter = NumberFormatter()
         numberFormatter.allowsFloats = true
         numberFormatter.minimumIntegerDigits = 1
         numberFormatter.minimumFractionDigits = 0
         numberFormatter.maximumFractionDigits = 1
         return numberFormatter
     }()
-    private typealias Abbrevation = (suffix: String, threshold: Double, divisor: Double)
-    private static let abbreviations: [Abbrevation] = [
+    fileprivate typealias Abbrevation = (suffix: String, threshold: Double, divisor: Double)
+    fileprivate static let abbreviations: [Abbrevation] = [
                                        ("",                0,              1),
                                        ("K",           1_000,          1_000),
                                        ("K",         100_000,          1_000),
@@ -397,7 +407,6 @@ extension Double {
     /// 132456  // -> 132.5K
     /// ```
     /// - returns: Abbreviated version of `self`.
-    @warn_unused_result
     public func abbreviate() -> String {
         let startValue = abs(self)
 
@@ -416,18 +425,17 @@ extension Double {
         let value = self / abbreviation.divisor
         Double.abbrevationNumberFormatter.positiveSuffix = abbreviation.suffix
         Double.abbrevationNumberFormatter.negativeSuffix = abbreviation.suffix
-        return Double.abbrevationNumberFormatter.stringFromNumber(value) ?? "\(self)"
+        return Double.abbrevationNumberFormatter.string(from: NSNumber(value: value)) ?? "\(self)"
     }
 
-    private static let testValues: [Double] = [598, -999, 1000, -1284, 9940, 9980, 39900, 99880, 399880, 999898, 999999, 1456384, 12383474, 987, 1200, 12000, 120000, 1200000, 1340, 132456, 9_000_000_000, 16_000_000, 160_000_000, 999_000_000]
+    fileprivate static let testValues: [Double] = [598, -999, 1000, -1284, 9940, 9980, 39900, 99880, 399880, 999898, 999999, 1456384, 12383474, 987, 1200, 12000, 120000, 1200000, 1340, 132456, 9_000_000_000, 16_000_000, 160_000_000, 999_000_000]
 }
 
-extension SequenceType where Generator.Element == Double {
+extension Sequence where Iterator.Element == Double {
     /// ```
     /// [1, 1, 1, 1, 1, 1].runningSum() // -> [1, 2, 3, 4, 5, 6]
     /// ```
-    @warn_unused_result
-    public func runningSum() -> [Generator.Element] {
+    public func runningSum() -> [Iterator.Element] {
         return self.reduce([]) { sums, element in
             return sums + [element + (sums.last ?? 0)]
         }

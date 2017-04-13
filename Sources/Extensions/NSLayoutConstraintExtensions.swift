@@ -24,7 +24,7 @@
 
 import UIKit
 
-public struct LayoutGuideOptions: OptionSetType {
+public struct LayoutGuideOptions: OptionSet {
     public let rawValue: UInt
     public init(rawValue: UInt) { self.rawValue = rawValue }
 
@@ -37,35 +37,30 @@ public extension NSLayoutConstraint {
 
     // MARK: Convenience Methods
 
-    @warn_unused_result
-    public convenience init(item view1: AnyObject, attribute attr1: NSLayoutAttribute, relatedBy relation: NSLayoutRelation = .Equal, toItem view2: AnyObject? = nil, attribute attr2: NSLayoutAttribute? = nil, multiplier: CGFloat = 1, constant c: CGFloat = 0, priority: Float = UILayoutPriorityRequired) {
+    public convenience init(item view1: AnyObject, attribute attr1: NSLayoutAttribute, relatedBy relation: NSLayoutRelation = .equal, toItem view2: AnyObject? = nil, attribute attr2: NSLayoutAttribute? = nil, multiplier: CGFloat = 1, constant c: CGFloat = 0, priority: Float = UILayoutPriorityRequired) {
         let attr2 = attr2 ?? attr1
         self.init(item: view1, attribute: attr1, relatedBy: relation, toItem: view2, attribute: attr2, multiplier: multiplier, constant: c)
         self.priority = priority
     }
 
-    @warn_unused_result
     public convenience init(item view1: AnyObject, aspectRatio: CGFloat, priority: Float = UILayoutPriorityRequired) {
-        self.init(item: view1, attribute: .Width, toItem: view1, attribute: .Height, multiplier: aspectRatio)
+        self.init(item: view1, attribute: .width, toItem: view1, attribute: .height, multiplier: aspectRatio)
         self.priority = priority
     }
 
-    @warn_unused_result
     public convenience init(item view1: AnyObject, width: CGFloat, priority: Float = UILayoutPriorityRequired) {
-        self.init(item: view1, attribute: .Width, attribute: .NotAnAttribute, constant: width)
+        self.init(item: view1, attribute: .width, attribute: .notAnAttribute, constant: width)
         self.priority = priority
     }
 
-    @warn_unused_result
     public convenience init(item view1: AnyObject, height: CGFloat, priority: Float = UILayoutPriorityRequired) {
-        self.init(item: view1, attribute: .Height, attribute: .NotAnAttribute, constant: height)
+        self.init(item: view1, attribute: .height, attribute: .notAnAttribute, constant: height)
         self.priority = priority
     }
 
     // MARK: Static Methods
 
-    @warn_unused_result
-    public static func size(viewToSize: UIView, size: CGSize, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
+    public static func size(_ viewToSize: UIView, size: CGSize, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
         return [
             NSLayoutConstraint(item: viewToSize, width: size.width, priority: priority),
@@ -73,67 +68,59 @@ public extension NSLayoutConstraint {
         ]
     }
 
-    @warn_unused_result
-    public static func centerX(viewToCenter: UIView, toView: UIView? = nil, offset: CGFloat = 0, priority: Float = UILayoutPriorityRequired) -> NSLayoutConstraint {
+    public static func centerX(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGFloat = 0, priority: Float = UILayoutPriorityRequired) -> NSLayoutConstraint {
         let toView = toView ?? viewToCenter.superview
         viewToCenter.translatesAutoresizingMaskIntoConstraints = false
-        return NSLayoutConstraint(item: viewToCenter, attribute: .CenterX, toItem: toView, constant: offset, priority: priority)
+        return NSLayoutConstraint(item: viewToCenter, attribute: .centerX, relatedBy: relation, toItem: toView, constant: offset, priority: priority)
     }
 
-    @warn_unused_result
-    public static func centerY(viewToCenter: UIView, toView: UIView? = nil, offset: CGFloat = 0, priority: Float = UILayoutPriorityRequired) -> NSLayoutConstraint {
+    public static func centerY(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGFloat = 0, priority: Float = UILayoutPriorityRequired) -> NSLayoutConstraint {
         let toView = toView ?? viewToCenter.superview
         viewToCenter.translatesAutoresizingMaskIntoConstraints = false
-        return NSLayoutConstraint(item: viewToCenter, attribute: .CenterY, toItem: toView, constant: offset, priority: priority)
+        return NSLayoutConstraint(item: viewToCenter, attribute: .centerY, relatedBy: relation, toItem: toView, constant: offset, priority: priority)
     }
 
-    @warn_unused_result
-    public static func centerXY(viewToCenter: UIView, toView: UIView? = nil, offset: CGPoint = .zero, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
+    public static func centerXY(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGPoint = .zero, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
         return [
-            NSLayoutConstraint.centerX(viewToCenter, toView: toView, offset: offset.x, priority: priority),
-            NSLayoutConstraint.centerY(viewToCenter, toView: toView, offset: offset.y, priority: priority)
+            NSLayoutConstraint.centerX(viewToCenter, relatedBy: relation, toView: toView, offset: offset.x, priority: priority),
+            NSLayoutConstraint.centerY(viewToCenter, relatedBy: relation, toView: toView, offset: offset.y, priority: priority)
         ]
     }
 
-    @warn_unused_result
-    public static func constraintsForViewToFillSuperviewHorizontal(viewToSize: UIView, paddingLeft: CGFloat = 0, paddingRight: CGFloat = 0, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
+    public static func constraintsForViewToFillSuperviewHorizontal(_ viewToSize: UIView, paddingLeft: CGFloat = 0, paddingRight: CGFloat = 0, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
         let views   = ["view": viewToSize]
         let metrics = ["priority": CGFloat(priority), "paddingLeft": paddingLeft, "paddingRight": paddingRight]
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
-        return NSLayoutConstraint.constraintsWithVisualFormat("H:|-paddingLeft@priority-[view]-paddingRight@priority-|", options: [], metrics: metrics, views: views)
+        return NSLayoutConstraint.constraints(withVisualFormat: "H:|-paddingLeft@priority-[view]-paddingRight@priority-|", options: [], metrics: metrics, views: views)
     }
 
-    @warn_unused_result
-    public static func constraintsForViewToFillSuperviewVertical(viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
+    public static func constraintsForViewToFillSuperviewVertical(_ viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
         let views   = ["view": viewToSize]
         let metrics = ["priority": CGFloat(priority), "paddingTop": paddingTop, "paddingBottom": paddingBottom]
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
-        return NSLayoutConstraint.constraintsWithVisualFormat("V:|-paddingTop@priority-[view]-paddingBottom@priority-|", options: [], metrics: metrics, views: views)
+        return NSLayoutConstraint.constraints(withVisualFormat: "V:|-paddingTop@priority-[view]-paddingBottom@priority-|", metrics: metrics, views: views)
     }
 
-    @warn_unused_result
-    public static func constraintsForViewToFillSuperview(viewToSize: UIView, padding: UIEdgeInsets = .zero, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
+    public static func constraintsForViewToFillSuperview(_ viewToSize: UIView, padding: UIEdgeInsets = .zero, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
         let views   = ["view": viewToSize]
         let metrics = ["priority": CGFloat(priority), "paddingTop": padding.top, "paddingLeft": padding.left, "paddingBottom": padding.bottom, "paddingRight": padding.right]
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
 
         var constraints: [NSLayoutConstraint] = []
-        constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|-paddingTop@priority-[view]-paddingBottom@priority-|", options: [], metrics: metrics, views: views)
-        constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|-paddingLeft@priority-[view]-paddingRight@priority-|", options: [], metrics: metrics, views: views)
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|-paddingTop@priority-[view]-paddingBottom@priority-|", metrics: metrics, views: views)
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|-paddingLeft@priority-[view]-paddingRight@priority-|", metrics: metrics, views: views)
         return constraints
     }
 }
 
 public extension UIViewController {
-    @warn_unused_result
-    public func constraintsForViewToFillSuperview(viewToSize: UIView, padding: UIEdgeInsets = .zero, constraintToLayoutGuideOptions: LayoutGuideOptions = [], priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
+    public func constraintsForViewToFillSuperview(_ viewToSize: UIView, padding: UIEdgeInsets = .zero, constraintToLayoutGuideOptions: LayoutGuideOptions = [], priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
         var constraints = NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(viewToSize, paddingLeft: padding.left, paddingRight: padding.right, priority: priority)
         constraints += constraintsForViewToFillSuperviewVertical(viewToSize, paddingTop: padding.top, paddingBottom: padding.bottom, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions, priority: priority)
         return constraints
     }
 
-    @warn_unused_result
-    public func constraintsForViewToFillSuperviewVertical(viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, constraintToLayoutGuideOptions: LayoutGuideOptions = [], priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
+    public func constraintsForViewToFillSuperviewVertical(_ viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, constraintToLayoutGuideOptions: LayoutGuideOptions = [], priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
 
         let isTopLayoutGuide    = constraintToLayoutGuideOptions.contains(.TopLayoutGuide)
@@ -142,17 +129,17 @@ public extension UIViewController {
         return [
             NSLayoutConstraint(
                 item:      viewToSize,
-                attribute: .Top,
+                attribute: .top,
                 toItem:    isTopLayoutGuide ? topLayoutGuide : view,
-                attribute: isTopLayoutGuide ? .Bottom : .Top,
+                attribute: isTopLayoutGuide ? .bottom : .top,
                 constant:  paddingTop,
                 priority:  priority
             ),
             NSLayoutConstraint(
                 item:      isBottomLayoutGuide ? bottomLayoutGuide : view,
-                attribute: isBottomLayoutGuide ? .Top : .Bottom,
+                attribute: isBottomLayoutGuide ? .top : .bottom,
                 toItem:    viewToSize,
-                attribute: .Bottom,
+                attribute: .bottom,
                 constant:  paddingBottom,
                 priority:  priority
             )
@@ -170,8 +157,9 @@ public extension NSLayoutConstraint {
     /// Use this property instead of calling `addConstraint:` or `removeConstraint:` directly.
     ///
     /// - returns: `self`
+    @discardableResult
     public func activate() -> NSLayoutConstraint {
-        active = true
+        isActive = true
         return self
     }
 
@@ -184,8 +172,9 @@ public extension NSLayoutConstraint {
     /// Use this property instead of calling `addConstraint:` or `removeConstraint:` directly.
     ///
     /// - returns: `self`
+    @discardableResult
     public func deactivate() -> NSLayoutConstraint {
-        active = false
+        isActive = false
         return self
     }
 }
@@ -198,8 +187,9 @@ public extension Array where Element: NSLayoutConstraint {
     /// Typically, using this method is more efficient than activating each constraint individually.
     ///
     /// - returns: `self`
+    @discardableResult
     public func activate() -> Array {
-        NSLayoutConstraint.activateConstraints(self)
+        NSLayoutConstraint.activate(self)
         return self
     }
 
@@ -210,8 +200,9 @@ public extension Array where Element: NSLayoutConstraint {
     /// Typically, using this method is more efficient than deactivating each constraint individually.
     ///
     /// - returns: `self`
+    @discardableResult
     public func deactivate() -> Array {
-        NSLayoutConstraint.deactivateConstraints(self)
+        NSLayoutConstraint.deactivate(self)
         return self
     }
 }

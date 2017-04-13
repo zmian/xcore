@@ -46,7 +46,7 @@ import UIKit
 /// class SettingsViewController: UIViewController {
 ///     override class var storyboardIdentifier: String { return "Settings" }
 /// }
-/// 
+///
 /// let vc = SettingsViewController.initFromStoryboard()
 /// navigationController.pushViewController(vc, animated: true)
 /// ```
@@ -58,10 +58,23 @@ extension UIViewController: StoryboardInstantiable {
     public class var storyboardIdentifier: String { return "\(self)" }
 }
 
-public extension StoryboardInstantiable where Self: UIViewController {
-    @warn_unused_result
-    public static func initFromStoryboard(named named: String = "Main", bundle: NSBundle? = nil) -> Self {
-        let bundle = bundle ?? NSBundle(forClass: Self.self)
+extension StoryboardInstantiable where Self: UIViewController {
+    public static func initFromStoryboard(named: String = "Main", bundle: Bundle? = nil) -> Self {
+        let bundle = bundle ?? Bundle(for: Self.self)
         return ControllerFromStoryboard(storyboardIdentifier, storyboardName: named, bundle: bundle) as! Self
     }
+}
+
+/// Instantiates and returns the view controller with the specified identifier for the specified storyboard resource file.
+///
+/// - parameter identifier:     An identifier string that uniquely identifies the view controller in the storyboard file.
+/// - parameter storyboardName: The name of the storyboard file without the file extension. The default value is `Main`.
+/// - parameter bundle:         The bundle containing the storyboard file and its related resources. If you specify `nil`,
+///                             this method looks in the main bundle of the current application. The default value is `nil`.
+///
+/// - returns: The view controller corresponding to the specified identifier string.
+///
+/// - seealso: `StoryboardInstantiable` and `NibInstantiable` protocols.
+fileprivate func ControllerFromStoryboard(_ identifier: String, storyboardName: String = "Main", bundle: Bundle? = nil) -> UIViewController {
+    return UIStoryboard(name: storyboardName, bundle: bundle).instantiateViewController(withIdentifier: identifier)
 }

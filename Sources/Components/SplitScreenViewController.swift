@@ -24,46 +24,46 @@
 
 import UIKit
 
-public class SplitScreenViewController: UIViewController {
-    public let headerContainerView = UIView()
-    public let bodyContainerView = UIView()
+open class SplitScreenViewController: UIViewController {
+    open let headerContainerView = UIView()
+    open let bodyContainerView = UIView()
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         setupContainerViews()
         setupConstraints()
     }
 
-    public func addViewController(toHeaderContainerView vc: UIViewController, enableConstraints: Bool = true, padding: UIEdgeInsets = .zero) {
+    open func addViewController(toHeaderContainerView vc: UIViewController, enableConstraints: Bool = true, padding: UIEdgeInsets = .zero) {
         addContainerViewController(vc, containerView: headerContainerView, enableConstraints: enableConstraints, padding: padding)
     }
 
-    public func addViewController(toBodyContainerView vc: UIViewController, enableConstraints: Bool = true, padding: UIEdgeInsets = .zero) {
+    open func addViewController(toBodyContainerView vc: UIViewController, enableConstraints: Bool = true, padding: UIEdgeInsets = .zero) {
         addContainerViewController(vc, containerView: bodyContainerView, enableConstraints: enableConstraints, padding: padding)
     }
 
     // MARK: Setup Methods: Container Views
 
-    private func setupContainerViews() {
+    fileprivate func setupContainerViews() {
         view.addSubview(headerContainerView)
 
         bodyContainerView.clipsToBounds = true
         view.addSubview(bodyContainerView)
     }
 
-    private func setupConstraints() {
+    fileprivate func setupConstraints() {
         let headerContainerViewAspectRatio: CGFloat = 16/9.1 // Set to 9.1 to ensure iPhone 5S landscape view doesn't have 1px gap below
         let priority = UILayoutPriorityDefaultHigh
 
         // Setup constraints: headerContainerView
         NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(headerContainerView).activate()
-        NSLayoutConstraint(item: headerContainerView, attribute: .Top, toItem: view).activate()
+        NSLayoutConstraint(item: headerContainerView, attribute: .top, toItem: view).activate()
         // Set aspect-ratio priority to low this ensures that landscape view works as expected.
-        NSLayoutConstraint(item: headerContainerView, attribute: .Width, toItem: headerContainerView, attribute: .Height, multiplier: headerContainerViewAspectRatio, priority: priority).activate()
+        NSLayoutConstraint(item: headerContainerView, attribute: .width, toItem: headerContainerView, attribute: .height, multiplier: headerContainerViewAspectRatio, priority: priority).activate()
 
         // Setup constraints: bodyContainerView
         NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(bodyContainerView).activate()
-        NSLayoutConstraint(item: bodyContainerView, attribute: .Bottom, toItem: view, priority: priority).activate()
-        NSLayoutConstraint(item: bodyContainerView, attribute: .Top, toItem: headerContainerView, attribute: .Bottom).activate()
+        NSLayoutConstraint(item: bodyContainerView, attribute: .bottom, toItem: view, priority: priority).activate()
+        NSLayoutConstraint(item: bodyContainerView, attribute: .top, toItem: headerContainerView, attribute: .bottom).activate()
     }
 }

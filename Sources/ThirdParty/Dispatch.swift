@@ -9,103 +9,103 @@ public final class dispatch {
     public enum QOS {
         case userInteractive, userInitiated, `default`, utility, background, unspecified
 
-        private var identifier: qos_class_t {
+        fileprivate var identifier: DispatchQoS.QoSClass {
             switch self {
-                case .userInteractive: return QOS_CLASS_USER_INTERACTIVE
-                case .userInitiated:   return QOS_CLASS_USER_INITIATED
-                case .`default`:       return QOS_CLASS_DEFAULT
-                case .utility:         return QOS_CLASS_UTILITY
-                case .background:      return QOS_CLASS_BACKGROUND
-                case .unspecified:     return QOS_CLASS_UNSPECIFIED
+                case .userInteractive: return DispatchQoS.QoSClass.userInteractive
+                case .userInitiated:   return DispatchQoS.QoSClass.userInitiated
+                case .default:         return DispatchQoS.QoSClass.default
+                case .utility:         return DispatchQoS.QoSClass.utility
+                case .background:      return DispatchQoS.QoSClass.background
+                case .unspecified:     return DispatchQoS.QoSClass.unspecified
             }
         }
     }
 
-    public class async {
+    public final class async {
         /// Submits a block for asynchronous execution on a dispatch queue and returns immediately.
         ///
         /// - parameter qos:   The quality of service you want to give to tasks executed using this queue.
-        ///                    The default value is `QOS_CLASS_BACKGROUND`.
+        ///                    The default value is `.default`.
         /// - parameter block: The block to submit to the target dispatch queue.
-        public class func bg(qos: QOS = .background, block: dispatch_block_t) {
-            dispatch_async(dispatch_get_global_queue(qos.identifier, 0), block)
+        public static func bg(_ qos: QOS = .default, block: @escaping () -> Void) {
+            DispatchQueue.global(qos: qos.identifier).async(execute: block)
         }
 
         /// Returns the serial dispatch queue associated with the application’s main thread.
         ///
         /// - parameter block: The block to submit to the target dispatch queue.
-        public class func main(block: dispatch_block_t) {
-            dispatch_async(dispatch_get_main_queue(), dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, block))
+        public static func main(_ block: @escaping () -> Void) {
+            DispatchQueue.main.async(execute: DispatchWorkItem(flags: .inheritQoS, block: block))
         }
     }
 
-    public class sync {
+    public final class sync {
         /// Submits a block object for execution on a dispatch queue and waits until that block completes.
         ///
         /// - parameter qos:   The quality of service you want to give to tasks executed using this queue.
-        ///                    The default value is `QOS_CLASS_BACKGROUND`.
+        ///                    The default value is `.default`.
         /// - parameter block: The block to be invoked on the target dispatch queue.
-        public class func bg(qos: QOS = .background, block: dispatch_block_t) {
-            dispatch_sync(dispatch_get_global_queue(qos.identifier, 0), block)
+        public static func bg(_ qos: QOS = .default, block: () -> Void) {
+            DispatchQueue.global(qos: qos.identifier).sync(execute: block)
         }
 
         /// Submits a block object for execution on application’s main thread and waits until that block completes.
         ///
         /// - parameter block: The block to be invoked on the target dispatch queue.
-        public class func main(block: dispatch_block_t) {
-            if NSThread.isMainThread()  {
+        public static func main(_ block: () -> Void) {
+            if Thread.isMainThread  {
                 block()
             }
             else {
-                dispatch_sync(dispatch_get_main_queue(), block)
+                DispatchQueue.main.sync(execute: block)
             }
         }
     }
 
-    public class after {
+    public final class after {
         /// Enqueue a block for execution at the specified time.
         ///
-        /// - parameter when:  The temporal milestone returned by `dispatch_time` or `dispatch_walltime`.
+        /// - parameter when:  The temporal milestone returned by `DispatchTime` or `DispatchWallTime`.
         /// - parameter qos:   The quality of service you want to give to tasks executed using this queue.
-        ///                    The default value is `QOS_CLASS_BACKGROUND`.
+        ///                    The default value is `.default`.
         /// - parameter block: The block to submit.
-        public class func bg(dispatchTime when: dispatch_time_t, qos: QOS = .background, block: dispatch_block_t) {
-            dispatch_after(when, dispatch_get_global_queue(qos.identifier, 0), block)
+        public static func bg(dispatchTime when: DispatchTime, qos: QOS = .default, block: @escaping () -> Void) {
+            DispatchQueue.global(qos: qos.identifier).asyncAfter(deadline: when, execute: block)
         }
 
         /// Enqueue a block for execution at the specified time on application’s main thread.
         ///
-        /// - parameter when:  The temporal milestone returned by `dispatch_time` or `dispatch_walltime`.
+        /// - parameter when:  The temporal milestone returned by `DispatchTime` or `DispatchWallTime`.
         /// - parameter block: The block to submit.
-        public class func main(dispatchTime when: dispatch_time_t, block: dispatch_block_t) {
-            dispatch_after(when, dispatch_get_main_queue(), block)
+        public static func main(dispatchTime when: DispatchTime, block: @escaping () -> Void) {
+            DispatchQueue.main.asyncAfter(deadline: when, execute: block)
         }
 
         /// Enqueue a block for execution at the specified time.
         ///
         /// - parameter interval: The time interval, in seconds, to wait before the task is executed.
         /// - parameter qos:      The quality of service you want to give to tasks executed using this queue.
-        ///                       The default value is `QOS_CLASS_BACKGROUND`.
+        ///                       The default value is `.default`.
         /// - parameter block:    The block to submit.
-        public class func bg(interval: NSTimeInterval, qos: QOS = .background, block: dispatch_block_t) {
-            dispatch_after(dispatch.seconds(interval), dispatch_get_global_queue(qos.identifier, 0), block)
+        public static func bg(_ interval: TimeInterval, qos: QOS = .default, block: @escaping () -> Void) {
+            DispatchQueue.global(qos: qos.identifier).asyncAfter(deadline: dispatch.seconds(interval), execute: block)
         }
 
         /// Enqueue a block for execution at the specified time on application’s main thread.
         ///
         /// - parameter interval: The time interval, in seconds, to wait before the task is executed.
         /// - parameter block:    The block to submit.
-        public class func main(interval: NSTimeInterval, block: dispatch_block_t) {
-            dispatch_after(dispatch.seconds(interval), dispatch_get_main_queue(), block)
+        public static func main(_ interval: TimeInterval, block: @escaping () -> Void) {
+            DispatchQueue.main.asyncAfter(deadline: dispatch.seconds(interval), execute: block)
         }
     }
 
-    /// A convenience method to convert `NSTimeInterval` to `dispatch_time_t`.
+    /// A convenience method to convert `TimeInterval` to `DispatchTime`.
     ///
     /// - parameter interval: The time interval, in seconds.
     ///
-    /// - returns: A new `dispatch_time_t` from specified seconds.
-    public class func seconds(interval: NSTimeInterval) -> dispatch_time_t {
-        return dispatch_time(DISPATCH_TIME_NOW, Int64(interval * Double(NSEC_PER_SEC)))
+    /// - returns: A new `DispatchTime` from specified seconds.
+    public static func seconds(_ interval: TimeInterval) -> DispatchTime {
+        return DispatchTime.now() + Double(Int64(interval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
     }
 }

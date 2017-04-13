@@ -26,15 +26,14 @@ import UIKit
 
 // MARK: NSDate Extension
 
-public extension NSDate {
-    @warn_unused_result
-    public func fromNow(unitsStyle: NSDateComponentsFormatterUnitsStyle = .Abbreviated, format: String = "%@") -> String? {
-        let formatter              = NSDateComponentsFormatter()
-        formatter.unitsStyle       = unitsStyle
+extension Date {
+    public func fromNow(style: DateComponentsFormatter.UnitsStyle = .abbreviated, format: String = "%@") -> String? {
+        let formatter              = DateComponentsFormatter()
+        formatter.unitsStyle       = style
         formatter.maximumUnitCount = 1
-        formatter.allowedUnits     = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+        formatter.allowedUnits     = [.year, .month, .day, .hour, .minute, .second]
 
-        guard let timeString = formatter.stringFromDate(self, toDate: NSDate()) else {
+        guard let timeString = formatter.string(from: self, to: Date()) else {
             return nil
         }
 
@@ -43,42 +42,43 @@ public extension NSDate {
     }
 
     /// Reset time to beginning of the day (`12 AM`) of `self` without changing the timezone.
-    @warn_unused_result
-    func stripTime() -> NSDate {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Year, .Month, .Day], fromDate: self)
-        return calendar.dateFromComponents(components) ?? self
+    public func stripTime() -> Date {
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components([.year, .month, .day], from: self)
+        return calendar.date(from: components) ?? self
     }
 
     // MARK: UTC
 
-    private static let utcDateFormatter: NSDateFormatter = {
-        let dateFormatter = NSDateFormatter()
+    private static let utcDateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
         dateFormatter.timeZone = .utc
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter
     }()
 
-    var utc: NSDate {
-        let dateString = NSDate.utcDateFormatter.stringFromDate(self)
-        NSDate.utcDateFormatter.timeZone = .defaultTimeZone()
-        let date = NSDate.utcDateFormatter.dateFromString(dateString)!
-        NSDate.utcDateFormatter.timeZone = .utc
+    public var utc: Date {
+        let dateString = Date.utcDateFormatter.string(from: self)
+        Date.utcDateFormatter.timeZone = .current
+        let date = Date.utcDateFormatter.date(from: dateString)!
+        Date.utcDateFormatter.timeZone = .utc
         return date
     }
 }
 
-private extension NSTimeZone {
-    static let utc: NSTimeZone = {
-        return NSTimeZone(name: "UTC")!
-    }()
+extension TimeZone {
+    public static let utc = TimeZone(identifier: "UTC")!
+}
+
+extension Locale {
+    public static let usa = Locale(identifier: "en_US")
 }
 
 // MARK: NSAttributedString Extension
 
 extension NSAttributedString {
-    @warn_unused_result
-    public func setLineSpacing(spacing: CGFloat) -> NSMutableAttributedString {
+
+    public func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = spacing
         let newAttributedString = NSMutableAttributedString(attributedString: self)
@@ -88,7 +88,7 @@ extension NSAttributedString {
 }
 
 extension NSMutableAttributedString {
-    public override func setLineSpacing(spacing: CGFloat) -> NSMutableAttributedString {
+    public override func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = spacing
         addAttributes([NSParagraphStyleAttributeName: paragraphStyle], range: NSRange(location: 0, length: string.count))
@@ -98,15 +98,15 @@ extension NSMutableAttributedString {
 
 // MARK: NSBundle Extension
 
-public extension NSBundle {
+public extension Bundle {
     /// The app version number extracted from `CFBundleShortVersionString`.
     public static var appVersionNumber: String {
-        return NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     }
 
     /// The app build number extracted from `CFBundleVersion`.
     public static var appBuildNumber: String {
-        return NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String ?? ""
+        return Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
     }
 
     /// Returns common app information.
@@ -118,28 +118,29 @@ public extension NSBundle {
     /// Version 1.0 (300) // App Version and Build number
     /// ```
     public static var appInfo: String {
-        var systemName = UIDevice.currentDevice().systemName
+        var systemName = UIDevice.current.systemName
 
         if systemName == "iPhone OS" {
             systemName = "iOS"
         }
 
-        return "\(systemName) \(UIDevice.currentDevice().systemVersion)\n" +
-               "\(UIDevice.currentDevice().modelType.description)\n" +
-               "Version \(NSBundle.appVersionNumber) (\(NSBundle.appBuildNumber))"
+        return "\(systemName) \(UIDevice.current.systemVersion)\n" +
+               "\(UIDevice.current.modelType.description)\n" +
+               "Version \(Bundle.appVersionNumber) (\(Bundle.appBuildNumber))"
     }
 }
 
-// MARK: NSMutableData Extension
+// MARK: Data Extension
 
-public extension NSMutableData {
-    /// A convenience method to append string to `NSMutableData` using specified encoding.
+extension Data {
+    /// A convenience method to append string to `Data` using specified encoding.
     ///
-    /// - parameter string:               The string to be added to the `NSMutableData`.
-    /// - parameter encoding:             The encoding to use for representing the specified string. The default value is `NSUTF8StringEncoding`.
+    /// - parameter string:               The string to be added to the `Data`.
+    /// - parameter encoding:             The encoding to use for representing the specified string. The default value is `.utf8`.
     /// - parameter allowLossyConversion: A boolean value to determine lossy conversion. The default value is `false`.
-    public func appendString(string: String, encoding: NSStringEncoding = NSUTF8StringEncoding, allowLossyConversion: Bool = false) {
-        let data = string.dataUsingEncoding(encoding, allowLossyConversion: allowLossyConversion)!
-        appendData(data)
+    public mutating func append(_ string: String, encoding: String.Encoding = .utf8, allowLossyConversion: Bool = false) {
+        if let newData = string.data(using: encoding, allowLossyConversion: allowLossyConversion) {
+            append(newData)
+        }
     }
 }

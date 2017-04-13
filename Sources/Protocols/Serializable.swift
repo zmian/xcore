@@ -25,37 +25,37 @@
 import Foundation
 
 public protocol Serializable {
-    init?(serialize: NSData)
-    var serialize: NSData? { get }
+    init?(serialize: Data)
+    var serialize: Data? { get }
 }
 
 public extension Serializable where Self: NSCoding {
-    public init?(serialize: NSData) {
-        guard let object = NSKeyedUnarchiver.unarchiveObjectWithData(serialize) as? Self else { return nil }
+    public init?(serialize: Data) {
+        guard let object = NSKeyedUnarchiver.unarchiveObject(with: serialize) as? Self else { return nil }
         self = object
     }
 
-    public var serialize: NSData? {
-        return NSKeyedArchiver.archivedDataWithRootObject(self)
+    public var serialize: Data? {
+        return NSKeyedArchiver.archivedData(withRootObject: self)
     }
 }
 
 public protocol DictionaryInitializable: CustomStringConvertible, Serializable {
-    init?(dictionary: NSDictionary)
-    func dictionary() -> [String: AnyObject]
+    init?(dictionary: [AnyHashable: Any])
+    func dictionary() -> [AnyHashable: Any]
 }
 
 public extension DictionaryInitializable {
-    public init?(serialize: NSData) {
+    public init?(serialize: Data) {
         guard
-            let dictionary = NSKeyedUnarchiver.unarchiveObjectWithData(serialize) as? NSDictionary,
+            let dictionary = NSKeyedUnarchiver.unarchiveObject(with: serialize) as? [AnyHashable: Any],
             let object     = Self(dictionary: dictionary)
         else { return nil }
         self = object
     }
 
-    public var serialize: NSData? {
-        return NSKeyedArchiver.archivedDataWithRootObject(dictionary())
+    public var serialize: Data? {
+        return NSKeyedArchiver.archivedData(withRootObject: dictionary())
     }
 
     public var description: String {

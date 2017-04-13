@@ -30,11 +30,11 @@ public enum DynamicTableAccessoryType {
     case disclosureIndicator
     case text(String)
     case custom(UIView)
-    case `switch`(isOn: Bool, callback: ((sender: UISwitch) -> Void)?)
-    case checkbox(isOn: Bool, callback: ((sender: BEMCheckBox) -> Void)?)
+    case `switch`(isOn: Bool, callback: ((_ sender: UISwitch) -> Void)?)
+    case checkbox(isOn: Bool, callback: ((_ sender: BEMCheckBox) -> Void)?)
 }
 
-public struct DynamicTableCellOptions: OptionSetType {
+public struct DynamicTableCellOptions: OptionSet {
     public let rawValue: UInt
     public init(rawValue: UInt) { self.rawValue = rawValue }
 
@@ -48,10 +48,10 @@ public struct DynamicTableModel {
     public var subtitle: StringRepresentable?       = nil
     public var image: ImageRepresentable?           = nil
     public var accessory: DynamicTableAccessoryType = .none
-    public var userInfo: [String: Any]              = [:]
-    public var handler: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)? = nil
+    public var userInfo: [AnyHashable: Any]         = [:]
+    public var handler: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)? = nil
 
-    public init(title: StringRepresentable? = nil, subtitle: StringRepresentable? = nil, image: ImageRepresentable? = nil, accessory: DynamicTableAccessoryType = .none, userInfo: [String: Any] = [:], handler: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)? = nil) {
+    public init(title: StringRepresentable? = nil, subtitle: StringRepresentable? = nil, image: ImageRepresentable? = nil, accessory: DynamicTableAccessoryType = .none, userInfo: [AnyHashable: Any] = [:], handler: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)? = nil) {
         self.title     = title
         self.subtitle  = subtitle
         self.image     = image
@@ -71,8 +71,8 @@ public struct DynamicTableModel {
 //    var subtitle: StringRepresentable? { get }
 //    var image: ImageRepresentable? { get }
 //    var accessory: DynamicTableAccessoryType { get set }
-//    var userInfo: [String: Any] { get set }
-//    var handler: ((indexPath: NSIndexPath, item: Model) -> Void)? { get }
+//    var userInfo: [AnyHashable: Any] { get set }
+//    var handler: ((indexPath: IndexPath, item: Model) -> Void)? { get }
 //}
 //
 //private extension DynamicTableModelDisplayable {
@@ -80,7 +80,6 @@ public struct DynamicTableModel {
 //    var subtitle: StringRepresentable? { return nil }
 //    var image: ImageRepresentable? { return nil }
 //    var accessory: DynamicTableAccessoryType { return .None }
-//    var userInfo: [String: Any] { return [:] }
-//    var handler: ((indexPath: NSIndexPath, item: DynamicTableModel) -> Void)? { return nil }
+//    var userInfo: [AnyHashable: Any] { return [:] }
+//    var handler: ((indexPath: IndexPath, item: DynamicTableModel) -> Void)? { return nil }
 //}
-

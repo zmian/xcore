@@ -1,0 +1,143 @@
+//
+// XCComposedTableViewController.swift
+//
+// Copyright © 2014 Zeeshan Mian
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+
+import UIKit
+
+open class XCComposedTableViewController: UIViewController {
+    fileprivate var tableViewConstraints = [NSLayoutConstraint]()
+
+    /// There is UIKit bug that causes `UITableView` to jump when using `estimatedRowHeight`
+    /// and reloading cells/sections or the entire table view.
+    ///
+    /// This solution patches the said bug of `UITableView` by caching
+    /// heights and automatically switching to those when `reloadData`, `reloadCells`,
+    /// or `reloadSection` methods are invoked.
+    fileprivate var estimatedRowHeightCache = IndexPathCache<CGFloat>(defaultValue: UITableViewAutomaticDimension)
+
+    /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
+    /// The default value is `.grouped`.
+    public var style: UITableViewStyle = .grouped
+
+    open lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: self.style)
+        tableView.separatorStyle = .none
+        tableView.estimatedRowHeight = 44
+        tableView.estimatedSectionHeaderHeight = 0
+        tableView.estimatedSectionFooterHeight = 0
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.sectionHeaderHeight = UITableViewAutomaticDimension
+        tableView.sectionFooterHeight = UITableViewAutomaticDimension
+        return tableView
+    }()
+
+    /// An option to determine whether the `scrollView`'s `top` and `bottom` is constrained
+    /// to `topLayoutGuide` and `bottomLayoutGuide`. The default value is `[]`.
+    open var constraintToLayoutGuideOptions: LayoutGuideOptions = []
+
+    /// The distance that the tableView is inset from the enclosing view.
+    /// The default value is `UIEdgeInsets.zero`.
+    open dynamic var contentInset = UIEdgeInsets.zero {
+        didSet {
+            tableViewConstraints.at(0)?.constant = contentInset.left
+            tableViewConstraints.at(1)?.constant = contentInset.right
+            tableViewConstraints.at(2)?.constant = contentInset.top
+            tableViewConstraints.at(3)?.constant = contentInset.bottom
+        }
+    }
+
+    // MARK: DataSources
+
+    public let composedDataSource = XCTableViewComposedDataSource()
+
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(tableView)
+        tableViewConstraints = constraintsForViewToFillSuperview(tableView, padding: contentInset, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
+        setupTableView(forTableView: tableView)
+    }
+
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        tableView.reloadData() // Fixes invalid scroll position when a ViewController is pushed/popped
+    }
+
+    open func dataSources(for tableView: UITableView) -> [XCTableViewDataSource] {
+        return []
+    }
+}
+
+// MARK: Setup Methods
+
+extension XCComposedTableViewController {
+    fileprivate func setupTableView(forTableView tableView: UITableView) {
+        composedDataSource.dataSources = dataSources(for: tableView)
+        composedDataSource.registerClasses(for: tableView)
+        tableView.dataSource = composedDataSource
+        tableView.delegate = self
+    }
+}
+
+// MARK: UITableViewDelegate
+
+extension XCComposedTableViewController: UITableViewDelegate {
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return composedDataSource.heightForRow(at: indexPath)
+    }
+
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dispatch.async.main {[weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.composedDataSource.tableView(tableView, didSelectRowAt: indexPath)
+        }
+    }
+
+    open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return composedDataSource.heightForHeaderInSection(section)
+    }
+
+    open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return composedDataSource.heightForFooterInSection(section)
+    }
+
+    open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        composedDataSource.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
+        estimatedRowHeightCache[indexPath] = cell.frame.size.height
+    }
+
+    open func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        composedDataSource.tableView(tableView, didEndDisplaying: cell, forRowAt: indexPath)
+    }
+
+    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return composedDataSource.tableView(tableView, viewForHeaderInSection: section)
+    }
+
+    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return composedDataSource.tableView(tableView, viewForFooterInSection: section)
+    }
+
+    open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return estimatedRowHeightCache[indexPath]
+    }
+}

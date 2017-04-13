@@ -1,5 +1,5 @@
 //
-// UserDefault.swift
+// XCUserDefault.swift
 //
 // Copyright © 2016 Zeeshan Mian
 //
@@ -24,7 +24,7 @@
 
 import Foundation
 
-public class UserDefault<T> {
+public class XCUserDefault<T> {
     private let serializableObjectType = T.self as? Serializable.Type
     private let codingObjectType = T.self as? NSCoding.Type
     private let key: String
@@ -42,21 +42,21 @@ public class UserDefault<T> {
         }
     }
 
-    public func value(storage: NSUserDefaults = NSUserDefaults.standardUserDefaults()) -> T? {
+    public func value(storage: UserDefaults = UserDefaults.standard) -> T? {
         if let cachedValueInMemory = cachedValueInMemory {
             return cachedValueInMemory
         }
 
         let value: T?
 
-        if let data = storage.objectForKey(key) as? NSData {
+        if let data = storage.object(forKey: key) as? Data {
             if let serializableObjectType = serializableObjectType {
                 value = serializableObjectType.init(serialize: data) as? T ?? defaultValue
             } else {
-                value = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? T ?? defaultValue
+                value = NSKeyedUnarchiver.unarchiveObject(with: data) as? T ?? defaultValue
             }
         } else {
-            value = storage.objectForKey(key) as? T ?? defaultValue
+            value = storage.object(forKey: key) as? T ?? defaultValue
         }
 
         if shouldCacheValueInMemory { cachedValueInMemory = value }
@@ -64,22 +64,22 @@ public class UserDefault<T> {
         return value
     }
 
-    public func save(newValue: T?, storage: NSUserDefaults = NSUserDefaults.standardUserDefaults()) {
+    public func save(_ newValue: T?, storage: UserDefaults = UserDefaults.standard) {
         if shouldCacheValueInMemory { cachedValueInMemory = newValue }
 
-        var newValue = newValue as? AnyObject
         if let serializableValue = newValue as? Serializable {
-            newValue = serializableValue.serialize
+            storage.set(serializableValue.serialize, forKey: key)
         } else if let serializableValue = newValue as? NSCoding {
-            newValue = NSKeyedArchiver.archivedDataWithRootObject(serializableValue)
+            storage.set(NSKeyedArchiver.archivedData(withRootObject: serializableValue), forKey: key)
+        } else {
+            storage.set(newValue, forKey: key)
         }
 
-        storage.setObject(newValue, forKey: key)
         storage.synchronize()
     }
 
-    private func onApplicationMemoryWarning(callback: () -> Void) {
-        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationDidReceiveMemoryWarningNotification, object: nil, queue: nil) { _ in
+    private func onApplicationMemoryWarning(callback: @escaping () -> Void) {
+        NotificationCenter.default.addObserver(forName: .UIApplicationDidReceiveMemoryWarning, object: nil, queue: nil) { _ in
             callback()
         }
     }

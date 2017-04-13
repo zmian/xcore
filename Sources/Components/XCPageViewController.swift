@@ -26,17 +26,17 @@ import UIKit
 
 private class XCUIPageViewController: UIPageViewController {
     var swipeEnabled = true {
-        didSet { scrollView?.scrollEnabled = swipeEnabled }
+        didSet { scrollView?.isScrollEnabled = swipeEnabled }
     }
 
     // Subclasses have to be responsible when using this setting
     // as view controller count stays at one when we are disabling
     // bounce.
     var disableBounceForSinglePage = false
-    private var scrollView: UIScrollView? {
+    fileprivate var scrollView: UIScrollView? {
         didSet {
             scrollView?.bounces       = !disableBounceForSinglePage
-            scrollView?.scrollEnabled = swipeEnabled
+            scrollView?.isScrollEnabled = swipeEnabled
         }
     }
 
@@ -53,26 +53,26 @@ private class XCUIPageViewController: UIPageViewController {
     }
 }
 
-public class XCPageViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+open class XCPageViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     public enum PageControlPosition { case top, center, bottom }
-    public var pageViewController: UIPageViewController!
-    public let pageControl = UIPageControl()
-    public let pageControlHeight: CGFloat = 40
-    public var pageControlPosition = PageControlPosition.bottom
-    public var viewControllers: [UIViewController] = []
-    public var disableBounceForSinglePage = true
-    public var swipeEnabled = true {
+    open var pageViewController: UIPageViewController!
+    open let pageControl = UIPageControl()
+    open let pageControlHeight: CGFloat = 40
+    open var pageControlPosition = PageControlPosition.bottom
+    open var viewControllers: [UIViewController] = []
+    open var disableBounceForSinglePage = true
+    open var swipeEnabled = true {
         didSet { (pageViewController as? XCUIPageViewController)?.swipeEnabled = swipeEnabled }
     }
     /// Spacing between between pages. Default is `0`.
     /// Page spacing is only valid if the transition style is `UIPageViewControllerTransitionStyle.Scroll`.
-    public var pageSpacing: CGFloat = 0
-    public var transitionStyle = UIPageViewControllerTransitionStyle.Scroll
-    public var navigationOrientation = UIPageViewControllerNavigationOrientation.Horizontal
+    open var pageSpacing: CGFloat = 0
+    open var transitionStyle = UIPageViewControllerTransitionStyle.scroll
+    open var navigationOrientation = UIPageViewControllerNavigationOrientation.horizontal
 
-    private var didChangeCurrentPage: ((index: Int) -> Void)?
+    fileprivate var didChangeCurrentPage: ((_ index: Int) -> Void)?
     /// Closure for listening page change events in subclasses
-    public func didChangeCurrentPage(callback: ((index: Int) -> Void)? = nil) {
+    open func didChangeCurrentPage(_ callback: ((_ index: Int) -> Void)? = nil) {
         didChangeCurrentPage = callback
     }
 
@@ -82,23 +82,23 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
         self.pageSpacing     = pageSpacing
     }
 
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
-        edgesForExtendedLayout = .None
+        edgesForExtendedLayout = []
         setupPageViewController()
     }
 
-    private func setupPageViewController() {
+    fileprivate func setupPageViewController() {
         pageViewController            = XCUIPageViewController(transitionStyle: transitionStyle, navigationOrientation: navigationOrientation, options: [UIPageViewControllerOptionInterPageSpacingKey: pageSpacing])
         pageViewController.delegate   = self
         pageViewController.dataSource = self
         pageViewController.view.frame = view.frame
         if !viewControllers.isEmpty {
-            pageViewController.setViewControllers([viewControllers[0]], direction: .Forward, animated: false, completion: nil)
+            pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: false)
         }
         addContainerViewController(pageViewController, enableConstraints: true)
 
-        pageControl.userInteractionEnabled = false
+        pageControl.isUserInteractionEnabled = false
         pageControl.numberOfPages          = viewControllers.count
         view.addSubview(pageControl)
         setupConstraints()
@@ -110,48 +110,47 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
         (pageViewController as? XCUIPageViewController)?.swipeEnabled = swipeEnabled
     }
 
-    private func setupConstraints() {
+    fileprivate func setupConstraints() {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: pageControl, height: pageControlHeight).activate()
         NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(pageControl).activate()
 
         switch pageControlPosition {
             case .top:
-                NSLayoutConstraint(item: pageControl, attribute: .Top, toItem: view).activate()
+                NSLayoutConstraint(item: pageControl, attribute: .top, toItem: view).activate()
             case .center:
-                NSLayoutConstraint(item: pageControl, attribute: .CenterY, toItem: view).activate()
+                NSLayoutConstraint(item: pageControl, attribute: .centerY, toItem: view).activate()
             case .bottom:
-                NSLayoutConstraint(item: pageControl, attribute: .Bottom, toItem: view).activate()
+                NSLayoutConstraint(item: pageControl, attribute: .bottom, toItem: view).activate()
         }
     }
 
     // MARK: UIPageViewControllerDataSource
 
-    public func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    open func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         let indexOfCurrentVC = indexOf(viewController)
         return indexOfCurrentVC < viewControllers.count - 1 ? viewControllers[indexOfCurrentVC + 1] : nil
     }
 
-    public func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?  {
-        viewControllers.endIndex
+    open func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController?  {
         let indexOfCurrentVC = indexOf(viewController)
         return indexOfCurrentVC > 0 ? viewControllers[indexOfCurrentVC - 1] : nil
     }
 
     // MARK: UIPageViewControllerDelegate
 
-    public func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    open func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed, let newViewController = pageViewController.viewControllers?.first {
             let index = indexOf(newViewController)
             pageControl.currentPage = index
             updateStatusBar(forIndex: index)
-            didChangeCurrentPage?(index: pageControl.currentPage)
+            didChangeCurrentPage?(pageControl.currentPage)
         }
     }
 
     // MARK: Navigation
 
-    public func setCurrentPage(index: Int, direction: UIPageViewControllerNavigationDirection = .Forward, animated: Bool = false, completion: ((Bool) -> Void)? = nil) {
+    open func setCurrentPage(_ index: Int, direction: UIPageViewControllerNavigationDirection = .forward, animated: Bool = false, completion: ((Bool) -> Void)? = nil) {
         guard viewControllers.count > index else { return }
         let viewControllerAtIndex = viewControllers[index]
         pageViewController.setViewControllers([viewControllerAtIndex], direction: direction, animated: animated, completion: completion)
@@ -159,56 +158,55 @@ public class XCPageViewController: UIViewController, UIPageViewControllerDataSou
         updateStatusBar(forIndex: index)
     }
 
-    public func removeViewController(viewController: UIViewController) {
-        if let index = viewControllers.indexOf(viewController) {
-            viewControllers.removeAtIndex(index)
+    open func removeViewController(_ viewController: UIViewController) {
+        if let index = viewControllers.index(of: viewController) {
+            viewControllers.remove(at: index)
             reloadData()
         }
     }
 
-    public func replaceViewController(viewControllerToReplace: UIViewController, withViewControllers: [UIViewController]) {
-        if let index = viewControllers.indexOf(viewControllerToReplace) {
-            viewControllers.removeAtIndex(index)
-            viewControllers.insertContentsOf(withViewControllers, at: index)
+    open func replaceViewController(_ viewControllerToReplace: UIViewController, withViewControllers: [UIViewController]) {
+        if let index = viewControllers.index(of: viewControllerToReplace) {
+            viewControllers.remove(at: index)
+            viewControllers.insert(contentsOf: withViewControllers, at: index)
             reloadData()
         }
     }
 
     // MARK: Helpers
 
-    @warn_unused_result
-    private func indexOf(viewController: UIViewController) -> Int {
-        return viewControllers.indexOf(viewController) ?? 0
+    fileprivate func indexOf(_ viewController: UIViewController) -> Int {
+        return viewControllers.index(of: viewController) ?? 0
     }
 
-    public func reloadData() {
+    open func reloadData() {
         setCurrentPage(pageControl.currentPage)
     }
 
-    private func updateStatusBar(forIndex index: Int) {
+    fileprivate func updateStatusBar(forIndex index: Int) {
         guard let vc = viewControllers.at(index) else { return }
         if let nvc = vc as? UINavigationController {
-            statusBarStyle = nvc.preferredStatusBarStyle()
+            statusBarStyle = nvc.preferredStatusBarStyle
         } else {
-            statusBarStyle = vc.statusBarStyle ?? vc.preferredStatusBarStyle()
+            statusBarStyle = vc.statusBarStyle ?? vc.preferredStatusBarStyle
         }
     }
 
     // MARK: Statusbar and Orientation
 
-    public override func prefersStatusBarHidden() -> Bool {
-        return isStatusBarHidden ?? super.prefersStatusBarHidden()
+    open override var prefersStatusBarHidden: Bool {
+        return isStatusBarHidden ?? super.prefersStatusBarHidden
     }
 
-    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return statusBarStyle ?? super.preferredStatusBarStyle()
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        return statusBarStyle ?? super.preferredStatusBarStyle
     }
 
-    public override func shouldAutorotate() -> Bool {
-        return enableAutorotate ?? super.shouldAutorotate()
+    open override var shouldAutorotate: Bool {
+        return enableAutorotate ?? super.shouldAutorotate
     }
 
-    public override func preferredStatusBarUpdateAnimation() -> UIStatusBarAnimation {
-        return statusBarUpdateAnimation ?? super.preferredStatusBarUpdateAnimation()
+    open override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return statusBarUpdateAnimation ?? super.preferredStatusBarUpdateAnimation
     }
 }
