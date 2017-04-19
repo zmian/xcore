@@ -28,111 +28,85 @@ public protocol FadeAnimatorBounceable {
     func fadeAnimatorBounceContainerView() -> UIView
 }
 
-open class FadeAnimator: CustomViewControllerTransition {
-    fileprivate var transitionDuration: TimeInterval {
-        var duration: TimeInterval = 0
-
-        if fadeIn {
-            duration = fadeInDuration
-        }
-
-        if fadeOut {
-            duration += fadeOutDuration
-        }
-
-        return duration
-    }
-
+open class FadeAnimator: TransitionAnimator {
     open var fadeInDuration: TimeInterval  = 0.3
     open var fadeOutDuration: TimeInterval = 0.25
     open var fadeIn  = true
     open var fadeOut = true
 
     open override func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return transitionDuration
+        return direction == .in ? fadeInDuration : fadeOutDuration
     }
 
-    open override func animatePresentation(transitionContext ctx: TransitionContext) {
-        // Orientation bug fix
-        // See: http://stackoverflow.com/a/20061872/351305
-        ctx.sourceViewController.view.frame      = ctx.containerView.bounds
-        ctx.destinationViewController.view.frame = ctx.containerView.bounds
-
-        // Add destination view to container
-        ctx.containerView.addSubview(ctx.destinationViewController.view)
-
-        if fadeIn {
-            animateBounceFadeInOrFadeIn(transitionContext: ctx)
-        } else {
-            ctx.completeTransition()
-        }
-    }
-
-    open override func animateDismissal(transitionContext ctx: TransitionContext) {
-        // Orientation bug fix
-        // See: http://stackoverflow.com/a/20061872/351305
-        ctx.sourceViewController.view.frame      = ctx.containerView.bounds
-        ctx.destinationViewController.view.frame = ctx.containerView.bounds
-
-        if fadeOut {
-            animateBounceFadeOutOrFadeOut(transitionContext: ctx)
-        } else {
-            ctx.completeTransition()
+    open override func transition(context: TransitionContext, direction: AnimationDirection) {
+        switch direction {
+            case .in:
+                if fadeIn {
+                    animateBounceFadeInOrFadeIn(context: context)
+                } else {
+                    context.completeTransition()
+                }
+            case .out:
+                if fadeOut {
+                    animateBounceFadeOutOrFadeOut(context: context)
+                } else {
+                    context.completeTransition()
+                }
         }
     }
 
     // MARK: FadeIn
 
-    fileprivate func animateBounceFadeInOrFadeIn(transitionContext ctx: TransitionContext) {
-        guard let fadeAnimatorBounceContainerView = (ctx.destinationViewController as? FadeAnimatorBounceable)?.fadeAnimatorBounceContainerView() else {
-            animateFadeIn(transitionContext: ctx)
+    fileprivate func animateBounceFadeInOrFadeIn(context: TransitionContext) {
+        guard let bounceContainerView = (context.to as? FadeAnimatorBounceable)?.fadeAnimatorBounceContainerView() else {
+            animateFadeIn(context: context)
             return
         }
 
-        ctx.destinationViewController.view.alpha = 0
-        fadeAnimatorBounceContainerView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        context.to.view.alpha = 0
+        bounceContainerView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
         UIView.animate(withDuration: fadeInDuration, animations: {
-            ctx.destinationViewController.view.alpha = 1
-            fadeAnimatorBounceContainerView.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+            context.to.view.alpha = 1
+            bounceContainerView.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
         }, completion: { _ in
             UIView.animate(withDuration: 0.2, animations: {
-                fadeAnimatorBounceContainerView.transform = .identity
+                bounceContainerView.transform = .identity
             }, completion: { _ in
-                ctx.completeTransition()
+                context.completeTransition()
             })
         })
     }
 
-    fileprivate func animateFadeIn(transitionContext ctx: TransitionContext) {
-        ctx.destinationViewController.view.alpha = 0
+    fileprivate func animateFadeIn(context: TransitionContext) {
+        context.to.view.alpha = 0
         UIView.animate(withDuration: fadeInDuration, animations: {
-            ctx.destinationViewController.view.alpha = 1
+            context.to.view.alpha = 1
         }, completion: { _ in
-            ctx.completeTransition()
+            context.completeTransition()
         })
     }
 
     // MARK: FadeOut
 
-    fileprivate func animateBounceFadeOutOrFadeOut(transitionContext ctx: TransitionContext) {
-        guard let fadeAnimatorBounceContainerView = (ctx.sourceViewController as? FadeAnimatorBounceable)?.fadeAnimatorBounceContainerView() else {
-            animateFadeOut(transitionContext: ctx)
+    fileprivate func animateBounceFadeOutOrFadeOut(context: TransitionContext) {
+        guard let bounceContainerView = (context.from as? FadeAnimatorBounceable)?.fadeAnimatorBounceContainerView() else {
+            animateFadeOut(context: context)
             return
         }
 
         UIView.animate(withDuration: fadeOutDuration, animations: {
-            ctx.sourceViewController.view.alpha = 0
-            fadeAnimatorBounceContainerView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            context.from.view.alpha = 0
+            bounceContainerView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         }, completion: { _ in
-            ctx.completeTransition()
+            context.completeTransition()
         })
     }
 
-    fileprivate func animateFadeOut(transitionContext ctx: TransitionContext) {
+    fileprivate func animateFadeOut(context: TransitionContext) {
         UIView.animate(withDuration: fadeOutDuration, animations: {
-            ctx.sourceViewController.view.alpha = 0
+            context.from.view.alpha = 0
         }, completion: { _ in
-            ctx.completeTransition()
+            context.completeTransition()
         })
     }
 }
