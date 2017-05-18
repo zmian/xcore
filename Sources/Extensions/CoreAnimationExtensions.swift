@@ -39,12 +39,12 @@ extension CATransaction {
 }
 
 extension CALayer {
-    /// A convenience method to return the color of a given point in `self`.
+    /// A convenience method to return the color at given point in `self`.
     ///
     /// - parameter point: The point to use to detect color.
     ///
-    /// - returns: UIColor of the specified point.
-    public func color(ofPoint point: CGPoint) -> UIColor {
+    /// - returns: UIColor at the specified point.
+    public func color(at point: CGPoint) -> UIColor {
         let width = 1
         let height = 1
         let bitsPerComponent = 8
