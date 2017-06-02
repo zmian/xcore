@@ -191,6 +191,27 @@ extension UINavigationController {
     }
 }
 
+extension UINavigationController {
+    open func get<T>(viewController: T.Type) -> T? {
+        for vc in viewControllers {
+            if let vc = vc as? T {
+                return vc
+            }
+        }
+
+        return nil
+    }
+
+    open func pushOnFirstViewController(_ viewController: UIViewController, animated: Bool = true) {
+        var vcs = [UIViewController]()
+        if let firstViewController = viewControllers.first {
+            vcs.append(firstViewController)
+        }
+        vcs.append(viewController)
+        setViewControllers(vcs, animated: animated)
+    }
+}
+
 // MARK: UITabBarController Extension
 
 extension UITabBarController {
