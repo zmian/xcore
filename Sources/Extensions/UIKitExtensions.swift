@@ -725,3 +725,23 @@ extension UIRefreshControl {
         }
     }
 }
+
+extension UIBarButtonItem {
+    open dynamic var textColor: UIColor? {
+        get { return titleTextAttributes(for: .normal)?[NSForegroundColorAttributeName] as? UIColor }
+        set {
+            var attributes = titleTextAttributes(for: .normal) ?? [:]
+            attributes[NSForegroundColorAttributeName] = newValue
+            setTitleTextAttributes(attributes, for: .normal)
+        }
+    }
+
+    open dynamic var font: UIFont? {
+        get { return titleTextAttributes(for: .normal)?[NSFontAttributeName] as? UIFont }
+        set {
+            var attributes = titleTextAttributes(for: .normal) ?? [:]
+            attributes[NSFontAttributeName] = newValue
+            setTitleTextAttributes(attributes, for: .normal)
+        }
+    }
+}

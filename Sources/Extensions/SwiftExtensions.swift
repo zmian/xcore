@@ -364,13 +364,13 @@ public extension Array where Element: Hashable {
 }
 
 public extension Dictionary {
-    public mutating func unionInPlace(_ dictionary: Dictionary) {
-        dictionary.forEach { updateValue($1, forKey: $0) }
+    public mutating func unionInPlace(_ other: Dictionary) {
+        other.forEach { updateValue($1, forKey: $0) }
     }
 
-    public func union(_ dictionary: Dictionary) -> Dictionary {
-        var dictionary = dictionary
-        dictionary.unionInPlace(self)
+    public func union(_ other: Dictionary) -> Dictionary {
+        var dictionary = self
+        dictionary.unionInPlace(other)
         return dictionary
     }
 }
