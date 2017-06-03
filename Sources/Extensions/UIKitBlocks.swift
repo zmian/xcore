@@ -63,7 +63,7 @@ private extension UIBarButtonItem {
 
 // MARK: UIBarButtonItem Block-based Interface
 
-public extension UIBarButtonItem {
+extension UIBarButtonItem {
     /// Add action handler when the item is selected.
     ///
     /// - parameter handler: The block to invoke when the item is selected.
@@ -231,7 +231,7 @@ private extension UIGestureRecognizer {
 
 // MARK: UIGestureRecognizer Block-based Interface
 
-public extension UIGestureRecognizer {
+extension UIGestureRecognizer {
     public convenience init(_ handler: @escaping () -> Void) {
         self.init()
         setActionHandler(handler)

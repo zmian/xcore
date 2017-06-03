@@ -27,14 +27,14 @@ import ObjectiveC
 
 // Current Playback Time monitoring
 
-public extension AVPlayer {
+extension AVPlayer {
     public var isPlaying: Bool {
         return rate != 0 && error == nil
     }
 
     public func currentTime(_ block: @escaping (_ seconds: Int, _ formattedTime: String) -> Void) -> Any {
         let interval = CMTime(value: 1, timescale: 1)
-        return addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) {[weak self] time in
+        return addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { [weak self] time in
             if let weakSelf = self {
                 let normalizedTime = Double(weakSelf.currentTime().value) / Double(weakSelf.currentTime().timescale)
                 block(Int(normalizedTime), weakSelf.format(seconds: Int(normalizedTime)))
@@ -55,7 +55,7 @@ public extension AVPlayer {
     }
 }
 
-public extension AVPlayer {
+extension AVPlayer {
     fileprivate struct AssociatedKey {
         static var playerRepeat = "XcoreAVPlayerRepeat"
     }
@@ -68,7 +68,7 @@ public extension AVPlayer {
             objc_setAssociatedObject(self, &AssociatedKey.playerRepeat, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
 
             if newValue {
-                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: currentItem, queue: nil) {[weak self] notification in
+                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: currentItem, queue: nil) { [weak self] notification in
                     if let currentItem = notification.object as? AVPlayerItem {
                         self?.actionAtItemEnd = .none
                         currentItem.seek(to: kCMTimeZero)
@@ -82,13 +82,13 @@ public extension AVPlayer {
     }
 }
 
-public extension AVPlayerItem {
+extension AVPlayerItem {
     public var hasValidDuration: Bool {
         return status == .readyToPlay && duration.isValid
     }
 }
 
-public extension CMTime {
+extension CMTime {
     public var isValid: Bool { return flags.contains(.valid) }
 
     public func offset(by: TimeInterval) -> CMTime {
@@ -102,7 +102,7 @@ public extension CMTime {
 
 // Convenience methods for initializing videos
 
-public extension AVPlayer {
+extension AVPlayer {
     /// Initializes an AVPlayer that automatically detect and load the asset from local or a remote url.
     ///
     /// Implicitly creates an AVPlayerItem. Clients can obtain the AVPlayerItem as it becomes the player's currentItem.
@@ -119,7 +119,7 @@ public extension AVPlayer {
     }
 }
 
-public extension AVPlayerItem {
+extension AVPlayerItem {
     /// Initializes an AVPlayerItem with local resource referenced file name.
     ///
     /// - parameter filename: The local file name.
@@ -149,7 +149,7 @@ public extension AVPlayerItem {
     }
 }
 
-public extension AVAsset {
+extension AVAsset {
     /// Initializes an AVAsset with local resource referenced file name.
     ///
     /// - parameter filename: The local file name.

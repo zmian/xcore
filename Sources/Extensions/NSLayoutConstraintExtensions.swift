@@ -33,7 +33,7 @@ public struct LayoutGuideOptions: OptionSet {
     public static let BothLayoutGuides: LayoutGuideOptions = [TopLayoutGuide, BottomLayoutGuide]
 }
 
-public extension NSLayoutConstraint {
+extension NSLayoutConstraint {
 
     // MARK: Convenience Methods
 
@@ -113,7 +113,7 @@ public extension NSLayoutConstraint {
     }
 }
 
-public extension UIViewController {
+extension UIViewController {
     public func constraintsForViewToFillSuperview(_ viewToSize: UIView, padding: UIEdgeInsets = .zero, constraintToLayoutGuideOptions: LayoutGuideOptions = [], priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
         var constraints = NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(viewToSize, paddingLeft: padding.left, paddingRight: padding.right, priority: priority)
         constraints += constraintsForViewToFillSuperviewVertical(viewToSize, paddingTop: padding.top, paddingBottom: padding.bottom, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions, priority: priority)
@@ -147,7 +147,7 @@ public extension UIViewController {
     }
 }
 
-public extension NSLayoutConstraint {
+extension NSLayoutConstraint {
     /// Activates constraint.
     ///
     /// This is a convenience method that provides an easy way to activate constraint by setting the `active` property to `true`.
@@ -179,7 +179,7 @@ public extension NSLayoutConstraint {
     }
 }
 
-public extension Array where Element: NSLayoutConstraint {
+extension Array where Element: NSLayoutConstraint {
     /// Activates each constraint in `self`.
     ///
     /// This convenience method provides an easy way to activate a set of constraints with one call.

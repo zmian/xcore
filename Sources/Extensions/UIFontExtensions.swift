@@ -24,7 +24,7 @@
 
 import UIKit
 
-public extension UIFont {
+extension UIFont {
     public enum TextStyle: RawRepresentable {
         case title1, title2, title3, headline, subheadline, body, callout, footnote, caption1, caption2
 
@@ -77,12 +77,12 @@ public extension UIFont {
     }
 }
 
-public extension UIFont {
-    enum Style {
+extension UIFont {
+    public enum Style {
         case normal, italic, monospace
     }
 
-    enum Weight {
+    public enum Weight {
         case ultralight, thin, light, regular, medium, semibold, bold, heavy, black
     }
 
@@ -96,7 +96,7 @@ public extension UIFont {
         public static let system               = UIFont.systemFontSize
     }
 
-    static func systemFont(_ size: CGFloat, style: Style = .normal, weight: Weight = .regular) -> UIFont {
+    public static func systemFont(_ size: CGFloat, style: Style = .normal, weight: Weight = .regular) -> UIFont {
         let fontWeight: CGFloat
 
         if #available(iOS 8.2, *) {
@@ -152,7 +152,7 @@ public extension UIFont {
     }
 }
 
-public extension UIFont {
+extension UIFont {
     public static func printAvailableFontNames() {
         for family in familyNames {
             let count = fontNames(forFamilyName: family).count

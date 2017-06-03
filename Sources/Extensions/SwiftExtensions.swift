@@ -24,7 +24,7 @@
 
 import Foundation
 
-public extension String {
+extension String {
     /// Allows us to use String[index] notation
     public subscript(index: Int) -> String? {
         let array = Array(characters)
@@ -114,7 +114,7 @@ public extension String {
     }
 }
 
-public extension String {
+extension String {
     public func sizeWithFont(_ font: UIFont) -> CGSize {
         return (self as NSString).size(attributes: [NSFontAttributeName: font])
     }
@@ -152,7 +152,7 @@ public extension String {
     }
 }
 
-public extension Int {
+extension Int {
     private static let numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         numberFormatter.paddingPosition = .beforePrefix
@@ -246,7 +246,7 @@ extension Array {
     }
 }
 
-public extension Array where Element: Equatable {
+extension Array where Element: Equatable {
     /// Remove element by value.
     ///
     /// - returns: true if removed; false otherwise
@@ -348,7 +348,7 @@ extension Sequence {
     }
 }
 
-public extension Array where Element: Hashable {
+extension Array where Element: Hashable {
     /// Modify `self` in-place such that only the unique elements of `self` in order are remaining.
     public mutating func uniqueInPlace() {
         self = unique()
@@ -363,7 +363,7 @@ public extension Array where Element: Hashable {
     }
 }
 
-public extension Dictionary {
+extension Dictionary {
     public mutating func unionInPlace(_ other: Dictionary) {
         other.forEach { updateValue($1, forKey: $0) }
     }

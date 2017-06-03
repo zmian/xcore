@@ -1,5 +1,5 @@
 //
-// FoundationExtensions.swift
+// DateExtensions.swift
 //
 // Copyright © 2014 Zeeshan Mian
 //
@@ -24,21 +24,34 @@
 
 import UIKit
 
-// MARK: Data Extension
-
-extension Data {
-    /// A convenience method to append string to `Data` using specified encoding.
-    ///
-    /// - parameter string:               The string to be added to the `Data`.
-    /// - parameter encoding:             The encoding to use for representing the specified string. The default value is `.utf8`.
-    /// - parameter allowLossyConversion: A boolean value to determine lossy conversion. The default value is `false`.
-    public mutating func append(_ string: String, encoding: String.Encoding = .utf8, allowLossyConversion: Bool = false) {
-        if let newData = string.data(using: encoding, allowLossyConversion: allowLossyConversion) {
-            append(newData)
-        }
+extension Bundle {
+    /// The release-version-number string for the bundle extracted from `CFBundleShortVersionString`.
+    public var versionNumber: String {
+        return infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     }
 
-    public var hexString: String {
-        return String(format: "%@", self as CVarArg)
+    /// The build-version-number string for the bundle extracted from `CFBundleVersion`.
+    public var buildNumber: String {
+        return infoDictionary?["CFBundleVersion"] as? String ?? ""
+    }
+
+    /// Returns common bundle information.
+    ///
+    /// Sample output:
+    /// ```
+    /// iOS 9.2.1         // OS Version
+    /// iPhone 6s         // Device
+    /// Version 1.0 (300) // App Version and Build number
+    /// ```
+    public var info: String {
+        var systemName = UIDevice.current.systemName
+
+        if systemName == "iPhone OS" {
+            systemName = "iOS"
+        }
+
+        return "\(systemName) \(UIDevice.current.systemVersion)\n" +
+               "\(UIDevice.current.modelType.description)\n" +
+               "Version \(versionNumber) (\(buildNumber))"
     }
 }

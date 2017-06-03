@@ -214,3 +214,28 @@ extension UIView {
         return borders
     }
 }
+
+extension UIView {
+    open var sizeFittingScreenWidth: CGSize {
+        return sizeFitting(width: UIScreen.main.bounds.width)
+    }
+
+    open func sizeFitting(width: CGFloat) -> CGSize {
+        let layoutSize = systemLayoutSizeFitting(CGSize(width: width, height: 0), withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        return CGSize(width: width, height: ceil(layoutSize.height))
+    }
+}
+
+extension UIView {
+    open func resizeToFitSubviews() {
+        var height: CGFloat = 0
+
+        for subview in subviews {
+            height += subview.sizeFitting(width: subview.frame.width).height
+        }
+
+        if frame.size.height != height {
+            frame.size.height = height
+        }
+    }
+}

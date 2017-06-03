@@ -1,5 +1,5 @@
 //
-// FoundationExtensions.swift
+// UILabelExtensions.swift
 //
 // Copyright © 2014 Zeeshan Mian
 //
@@ -24,21 +24,19 @@
 
 import UIKit
 
-// MARK: Data Extension
-
-extension Data {
-    /// A convenience method to append string to `Data` using specified encoding.
-    ///
-    /// - parameter string:               The string to be added to the `Data`.
-    /// - parameter encoding:             The encoding to use for representing the specified string. The default value is `.utf8`.
-    /// - parameter allowLossyConversion: A boolean value to determine lossy conversion. The default value is `false`.
-    public mutating func append(_ string: String, encoding: String.Encoding = .utf8, allowLossyConversion: Bool = false) {
-        if let newData = string.data(using: encoding, allowLossyConversion: allowLossyConversion) {
-            append(newData)
+extension UILabel {
+    open func setText(_ text: String, animated: Bool, duration: TimeInterval = 0.5) {
+        if animated && text != self.text {
+            UIView.transition(with: self, duration: duration, options: .transitionCrossDissolve, animations: { [weak self] in
+                self?.text = text
+            }, completion: nil)
+        } else {
+            self.text = text
         }
     }
 
-    public var hexString: String {
-        return String(format: "%@", self as CVarArg)
+    open func setLineSpacing(_ spacing: CGFloat, text: String? = nil) {
+        guard let text = text ?? self.text else { return }
+        attributedText = NSMutableAttributedString(string: text).setLineSpacing(spacing)
     }
 }

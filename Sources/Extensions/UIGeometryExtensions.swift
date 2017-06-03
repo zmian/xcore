@@ -24,7 +24,7 @@
 
 import UIKit
 
-public extension UIEdgeInsets {
+extension UIEdgeInsets {
     public init(all: CGFloat) {
         self = UIEdgeInsets(top: all, left: all, bottom: all, right: all)
     }
@@ -37,7 +37,7 @@ public extension UIEdgeInsets {
 /// The value of `π` as a `CGFloat`.
 public let π = CGFloat.pi
 
-public extension CGFloat {
+extension CGFloat {
     /// A convenience method to convert an angle from degrees to radians.
     ///
     /// - returns: `self` value in radians.

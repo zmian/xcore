@@ -24,6 +24,25 @@
 
 import UIKit
 
+// MARK: NSAttributedString Extension
+
+extension NSAttributedString {
+    public func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
+         return NSMutableAttributedString(attributedString: self).setLineSpacing(spacing)
+    }
+}
+
+// MARK: NSMutableAttributedString Extension
+
+extension NSMutableAttributedString {
+    public override func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = spacing
+        addAttributes([NSParagraphStyleAttributeName: paragraphStyle], range: NSRange(location: 0, length: string.count))
+        return self
+    }
+}
+
 extension NSMutableAttributedString {
     open func underline(_ text: String) -> NSMutableAttributedString {
         addAttribute(NSUnderlineStyleAttributeName, value: NSUnderlineStyle.styleSingle.rawValue, range: range(of: text))
@@ -71,5 +90,12 @@ extension NSMutableAttributedString {
         }
 
         return range
+    }
+}
+
+extension NSMutableAttributedString {
+    open func replaceAttribute(_ name: String, value: Any, range: NSRange) {
+        removeAttribute(name, range: range)
+        addAttribute(name, value: value, range: range)
     }
 }
