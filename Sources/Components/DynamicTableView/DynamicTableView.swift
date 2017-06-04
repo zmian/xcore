@@ -351,9 +351,9 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         CATransaction.animationTransaction({
             deleteRows(at: indexPaths, with: animation)
         }, completionHandler: { [weak self] in
-            guard let weakSelf = self else { return }
+            guard let strongSelf = self else { return }
             items.forEach { indexPath, item in
-                weakSelf.didRemoveItem?(indexPath, item)
+                strongSelf.didRemoveItem?(indexPath, item)
             }
         })
     }
@@ -402,8 +402,8 @@ extension DynamicTableView: BEMCheckBoxDelegate {
                 let accessorySwitch  = UISwitch()
                 accessorySwitch.isOn = isOn
                 accessorySwitch.addAction(.valueChanged) { [weak self] sender in
-                    guard let weakSelf = self else { return }
-                    let accessory = weakSelf.sections[indexPath].accessory
+                    guard let strongSelf = self else { return }
+                    let accessory = strongSelf.sections[indexPath].accessory
                     if case .`switch`(_, let callback) = accessory {
                         callback?(sender)
                     }

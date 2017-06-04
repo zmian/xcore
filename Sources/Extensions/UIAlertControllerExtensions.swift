@@ -41,8 +41,8 @@ extension UIAlertController {
         //
         // http://openradar.appspot.com/19285091
         DispatchQueue.main.async { [weak self] in
-            guard let weakSelf = self else { return }
-            presentingViewController.present(weakSelf, animated: true)
+            guard let strongSelf = self else { return }
+            presentingViewController.present(strongSelf, animated: true)
         }
     }
 }

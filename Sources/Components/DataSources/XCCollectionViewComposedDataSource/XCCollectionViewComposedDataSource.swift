@@ -192,24 +192,27 @@ extension XCCollectionViewComposedDataSource {
 
     open override func collectionView(_ collectionView: UICollectionView, insetForSectionAt section: Int) -> UIEdgeInsets {
         let (dataSource, localSection) = dataSourceIndex[section]
-        let numberOfItemsInSection = dataSource.collectionView(collectionView, numberOfItemsInSection: localSection)
+        let sectionInset = dataSource.collectionView(collectionView, insetForSectionAt: localSection)
 
         // This is to prevent any section insets being included in layout
         // when given section has no items, header or footer present.
         //
         // If the given section have items, header or footer we include insets; otherwise we remove the insets from the given section.
         // The following logic lazily walks down the tree checking to see if any of those elements present.
-        if numberOfItemsInSection == 0 {
-            let headerSize = dataSource.collectionView(collectionView, sizeForHeaderInSection: localSection)
-            if headerSize.height == 0 {
-                let footerSize = dataSource.collectionView(collectionView, sizeForFooterInSection: localSection)
-                if footerSize.height == 0 {
-                    return .zero
+        if sectionInset != .zero {
+            let numberOfItemsInSection = dataSource.collectionView(collectionView, numberOfItemsInSection: localSection)
+            if numberOfItemsInSection == 0 {
+                let headerSize = dataSource.collectionView(collectionView, sizeForHeaderInSection: localSection)
+                if headerSize.height == 0 {
+                    let footerSize = dataSource.collectionView(collectionView, sizeForFooterInSection: localSection)
+                    if footerSize.height == 0 {
+                        return .zero
+                    }
                 }
             }
         }
 
-        return dataSource.collectionView(collectionView, insetForSectionAt: localSection)
+        return sectionInset
     }
 
     open override func collectionView(_ collectionView: UICollectionView, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

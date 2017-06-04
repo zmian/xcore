@@ -35,9 +35,9 @@ extension AVPlayer {
     public func currentTime(_ block: @escaping (_ seconds: Int, _ formattedTime: String) -> Void) -> Any {
         let interval = CMTime(value: 1, timescale: 1)
         return addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { [weak self] time in
-            if let weakSelf = self {
-                let normalizedTime = Double(weakSelf.currentTime().value) / Double(weakSelf.currentTime().timescale)
-                block(Int(normalizedTime), weakSelf.format(seconds: Int(normalizedTime)))
+            if let strongSelf = self {
+                let normalizedTime = Double(strongSelf.currentTime().value) / Double(strongSelf.currentTime().timescale)
+                block(Int(normalizedTime), strongSelf.format(seconds: Int(normalizedTime)))
             }
         }
     }

@@ -149,13 +149,13 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
         let gestureRecognizer = UILongPressGestureRecognizer()
 
         gestureRecognizer.addAction {[weak self, weak gestureRecognizer] in
-            guard let weakSelf = self, let gestureRecognizer = gestureRecognizer else { return }
+            guard let strongSelf = self, let gestureRecognizer = gestureRecognizer else { return }
 
             guard gestureRecognizer.state == .began,
-                let _ = weakSelf.indexPathForItem(at: gestureRecognizer.location(in: weakSelf))
+                let _ = strongSelf.indexPathForItem(at: gestureRecognizer.location(in: strongSelf))
                 else { return }
 
-            weakSelf.isEditing = !weakSelf.isEditing
+            strongSelf.isEditing = !strongSelf.isEditing
         }
 
         return gestureRecognizer
@@ -230,8 +230,8 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
         performBatchUpdates({ [weak self] in
             self?.deleteItems(at: indexPaths)
         }, completion: { [weak self] isFinished in
-            guard let weakSelf = self else { return }
-            weakSelf.reloadItems(at: weakSelf.indexPathsForVisibleItems)
+            guard let strongSelf = self else { return }
+            strongSelf.reloadItems(at: strongSelf.indexPathsForVisibleItems)
         })
     }
 

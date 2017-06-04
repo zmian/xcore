@@ -309,36 +309,36 @@ open class ReorderTableView: UITableView {
 
             // animate the drag view to the newly hovered cell
             UIView.animate(withDuration: 0.3, animations: { [weak self] in
-                guard let weakSelf = self else { return }
-                let rect = weakSelf.rectForRow(at: indexPath)
+                guard let strongSelf = self else { return }
+                let rect = strongSelf.rectForRow(at: indexPath)
                 draggingView.transform = .identity
                 draggingView.frame = draggingView.bounds.offsetBy(dx: rect.origin.x, dy: rect.origin.y)
             }, completion: { [weak self] _ in
-                guard let weakSelf = self else { return }
+                guard let strongSelf = self else { return }
 
                 draggingView.setHiddenAnimated(true, duration: 0.3) {
                     draggingView.removeFromSuperview()
                 }
 
-                weakSelf.beginUpdates()
-                weakSelf.deleteRows(at: [indexPath], with: .none)
-                weakSelf.insertRows(at: [indexPath], with: .none)
+                strongSelf.beginUpdates()
+                strongSelf.deleteRows(at: [indexPath], with: .none)
+                strongSelf.insertRows(at: [indexPath], with: .none)
 
-                if let reorderDelegate = weakSelf.reorderDelegate, let savedObject = weakSelf.savedObject, let initialIndexPath = weakSelf.initialIndexPath {
+                if let reorderDelegate = strongSelf.reorderDelegate, let savedObject = strongSelf.savedObject, let initialIndexPath = strongSelf.initialIndexPath {
                     reorderDelegate.finishedDragging(fromIndexPath: initialIndexPath, toIndexPath: indexPath, withObject: savedObject)
                 } else {
                     print("finishedDragging:fromIndexPath:toIndexPath:withObject: is not implemented")
                 }
 
-                weakSelf.endUpdates()
+                strongSelf.endUpdates()
 
                 // reload the rows that were affected just to be safe
-                var visibleRows = weakSelf.indexPathsForVisibleRows ?? []
+                var visibleRows = strongSelf.indexPathsForVisibleRows ?? []
                 visibleRows.remove(indexPath)
-                weakSelf.reloadRows(at: visibleRows, with: .none)
+                strongSelf.reloadRows(at: visibleRows, with: .none)
 
-                weakSelf.currentLocationIndexPath = nil
-                weakSelf.draggingView = nil
+                strongSelf.currentLocationIndexPath = nil
+                strongSelf.draggingView = nil
             })
         }
     }

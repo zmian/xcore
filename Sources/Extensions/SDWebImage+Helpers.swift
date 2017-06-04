@@ -49,16 +49,16 @@ extension UIImageView {
                     }
                 }
 
-                if let weakSelf = self, (alwaysAnimate || cacheType != SDImageCacheType.memory) {
-                    weakSelf.alpha = 0
+                if let strongSelf = self, (alwaysAnimate || cacheType != SDImageCacheType.memory) {
+                    strongSelf.alpha = 0
                     UIView.animate(withDuration: animationDuration) {
-                        weakSelf.alpha = 1
+                        strongSelf.alpha = 1
                     }
                 }
             }
         } else {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                guard let weakSelf = self, let image = UIImage(named: named) else {
+                guard let strongSelf = self, let image = UIImage(named: named) else {
                     DispatchQueue.main.async {
                         callback?(nil)
                     }
@@ -69,13 +69,13 @@ extension UIImageView {
                     defer { callback?(image) }
 
                     if alwaysAnimate {
-                        weakSelf.alpha = 0
-                        weakSelf.image = image
+                        strongSelf.alpha = 0
+                        strongSelf.image = image
                         UIView.animate(withDuration: animationDuration) {
-                            weakSelf.alpha = 1
+                            strongSelf.alpha = 1
                         }
                     } else {
-                        weakSelf.image = image
+                        strongSelf.image = image
                     }
                 }
             }

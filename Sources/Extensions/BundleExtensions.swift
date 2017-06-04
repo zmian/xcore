@@ -25,6 +25,11 @@
 import UIKit
 
 extension Bundle {
+    /// The identifier string for the bundle extracted from `CFBundleIdentifier`.
+    public var identifier: String {
+        return infoDictionary?["CFBundleIdentifier"] as? String ?? ""
+    }
+
     /// The release-version-number string for the bundle extracted from `CFBundleShortVersionString`.
     public var versionNumber: String {
         return infoDictionary?["CFBundleShortVersionString"] as? String ?? ""

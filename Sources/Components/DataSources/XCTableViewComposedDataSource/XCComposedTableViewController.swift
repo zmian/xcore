@@ -109,8 +109,8 @@ extension XCComposedTableViewController: UITableViewDelegate {
 
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         DispatchQueue.main.async { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.composedDataSource.tableView(tableView, didSelectRowAt: indexPath)
+            guard let strongSelf = self else { return }
+            strongSelf.composedDataSource.tableView(tableView, didSelectRowAt: indexPath)
         }
     }
 

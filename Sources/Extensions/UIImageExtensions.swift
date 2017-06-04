@@ -89,9 +89,9 @@ extension UIImage {
 
     public func resize(to newSize: CGSize, tintColor: UIColor? = nil, completionHandler: @escaping (_ resizedImage: UIImage) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let weakSelf = self else { return }
+            guard let strongSelf = self else { return }
             UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
-            weakSelf.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+            strongSelf.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
 
             guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else {
                 return
