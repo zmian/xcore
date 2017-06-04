@@ -1,5 +1,5 @@
 # xcore.swift
-Cocoa Touch Classes
+Cocoa Touch Toolbox
 
 ## Installation
 You have two options to include the `xcore.swift` in your project:

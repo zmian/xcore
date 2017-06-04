@@ -30,13 +30,13 @@ extension UIFont {
 
         public var rawValue: String {
             switch self {
-                case .title1:      if #available(iOS 9.0, *) { return UIFontTextStyle.title1.rawValue } else { return UIFontTextStyle.headline.rawValue }
-                case .title2:      if #available(iOS 9.0, *) { return UIFontTextStyle.title2.rawValue } else { return UIFontTextStyle.headline.rawValue }
-                case .title3:      if #available(iOS 9.0, *) { return UIFontTextStyle.title3.rawValue } else { return UIFontTextStyle.headline.rawValue }
+                case .title1:      return UIFontTextStyle.title1.rawValue
+                case .title2:      return UIFontTextStyle.title2.rawValue
+                case .title3:      return UIFontTextStyle.title3.rawValue
                 case .headline:    return UIFontTextStyle.headline.rawValue
                 case .subheadline: return UIFontTextStyle.subheadline.rawValue
                 case .body:        return UIFontTextStyle.body.rawValue
-                case .callout:     if #available(iOS 9.0, *) { return UIFontTextStyle.callout.rawValue } else { return UIFontTextStyle.subheadline.rawValue }
+                case .callout:     return UIFontTextStyle.callout.rawValue
                 case .footnote:    return UIFontTextStyle.footnote.rawValue
                 case .caption1:    return UIFontTextStyle.caption1.rawValue
                 case .caption2:    return UIFontTextStyle.caption2.rawValue
@@ -44,30 +44,18 @@ extension UIFont {
         }
 
         public init?(rawValue: String) {
-            if #available(iOS 9.0, *) {
-                switch rawValue {
-                    case UIFontTextStyle.title1.rawValue:      self = .title1
-                    case UIFontTextStyle.title2.rawValue:      self = .title2
-                    case UIFontTextStyle.title3.rawValue:      self = .title3
-                    case UIFontTextStyle.headline.rawValue:    self = .headline
-                    case UIFontTextStyle.subheadline.rawValue: self = .subheadline
-                    case UIFontTextStyle.body.rawValue:        self = .body
-                    case UIFontTextStyle.callout.rawValue:     self = .callout
-                    case UIFontTextStyle.footnote.rawValue:    self = .footnote
-                    case UIFontTextStyle.caption1.rawValue:    self = .caption1
-                    case UIFontTextStyle.caption2.rawValue:    self = .caption2
-                    default: fatalError("Unsupported `TextStyle`")
-                }
-            } else {
-                switch rawValue {
-                    case UIFontTextStyle.headline.rawValue:    self = .headline
-                    case UIFontTextStyle.subheadline.rawValue: self = .subheadline
-                    case UIFontTextStyle.body.rawValue:        self = .body
-                    case UIFontTextStyle.footnote.rawValue:    self = .footnote
-                    case UIFontTextStyle.caption1.rawValue:    self = .caption1
-                    case UIFontTextStyle.caption2.rawValue:    self = .caption2
-                    default: fatalError("Unsupported `TextStyle`")
-                }
+            switch rawValue {
+                case UIFontTextStyle.title1.rawValue:      self = .title1
+                case UIFontTextStyle.title2.rawValue:      self = .title2
+                case UIFontTextStyle.title3.rawValue:      self = .title3
+                case UIFontTextStyle.headline.rawValue:    self = .headline
+                case UIFontTextStyle.subheadline.rawValue: self = .subheadline
+                case UIFontTextStyle.body.rawValue:        self = .body
+                case UIFontTextStyle.callout.rawValue:     self = .callout
+                case UIFontTextStyle.footnote.rawValue:    self = .footnote
+                case UIFontTextStyle.caption1.rawValue:    self = .caption1
+                case UIFontTextStyle.caption2.rawValue:    self = .caption2
+                default: fatalError("Unsupported `TextStyle`")
             }
         }
     }
@@ -99,55 +87,34 @@ extension UIFont {
     public static func systemFont(_ size: CGFloat, style: Style = .normal, weight: Weight = .regular) -> UIFont {
         let fontWeight: CGFloat
 
-        if #available(iOS 8.2, *) {
-            switch weight {
-                case .ultralight:
-                    fontWeight = UIFontWeightUltraLight
-                case .thin:
-                    fontWeight = UIFontWeightThin
-                case .light:
-                    fontWeight = UIFontWeightLight
-                case .regular:
-                    fontWeight = UIFontWeightRegular
-                case .medium:
-                    fontWeight = UIFontWeightMedium
-                case .semibold:
-                    fontWeight = UIFontWeightSemibold
-                case .bold:
-                    fontWeight = UIFontWeightBold
-                case .heavy:
-                    fontWeight = UIFontWeightHeavy
-                case .black:
-                    fontWeight = UIFontWeightBlack
-            }
-        } else {
-            fontWeight = 0
+        switch weight {
+            case .ultralight:
+                fontWeight = UIFontWeightUltraLight
+            case .thin:
+                fontWeight = UIFontWeightThin
+            case .light:
+                fontWeight = UIFontWeightLight
+            case .regular:
+                fontWeight = UIFontWeightRegular
+            case .medium:
+                fontWeight = UIFontWeightMedium
+            case .semibold:
+                fontWeight = UIFontWeightSemibold
+            case .bold:
+                fontWeight = UIFontWeightBold
+            case .heavy:
+                fontWeight = UIFontWeightHeavy
+            case .black:
+                fontWeight = UIFontWeightBlack
         }
 
         switch style {
             case .normal:
-                return _systemFontOfSize(size, weight: fontWeight, weightType: weight)
+                return systemFont(ofSize: size, weight: fontWeight)
             case .italic:
                 return italicSystemFont(ofSize: size)
             case .monospace:
-                if #available(iOS 9.0, *) {
-                    return monospacedDigitSystemFont(ofSize: size, weight: fontWeight)
-                } else {
-                    return _systemFontOfSize(size, weight: fontWeight, weightType: weight).monospacedDigitFont
-                }
-        }
-    }
-
-    fileprivate static func _systemFontOfSize(_ size: CGFloat, weight: CGFloat, weightType: Weight) -> UIFont {
-        if #available(iOS 8.2, *) {
-            return self.systemFont(ofSize: size, weight: weight)
-        } else {
-            switch weightType {
-                case .bold, .heavy, .black:
-                    return boldSystemFont(ofSize: size)
-                default:
-                    return self.systemFont(ofSize: size)
-            }
+                return monospacedDigitSystemFont(ofSize: size, weight: fontWeight)
         }
     }
 }

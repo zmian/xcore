@@ -34,12 +34,8 @@ import ObjectiveC
 /// - parameter url:  The url to open.
 /// - parameter from: A view controller that wants to open the url.
 public func open(url: URL, from viewController: UIViewController) {
-    if #available(iOS 9.0, *) {
-        let svc = SFSafariViewController(url: url)
-        viewController.present(svc, animated: true, completion: nil)
-    } else {
-        UIApplication.shared.openURL(url)
-    }
+    let svc = SFSafariViewController(url: url)
+    viewController.present(svc, animated: true, completion: nil)
 }
 
 // MARK: UIApplication Extension
