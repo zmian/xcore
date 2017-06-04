@@ -24,8 +24,7 @@
 
 import UIKit
 
-open class DynamicTableViewCell: BaseTableViewCell {
-    open override class var reuseIdentifier: String { return "DynamicTableViewCellIdentifier" }
+open class DynamicTableViewCell: XCTableViewCell {
     fileprivate var data: DynamicTableModel!
     fileprivate let padding: CGFloat = 15
     fileprivate var imageAndTitleSpacingConstraint: NSLayoutConstraint?
@@ -291,7 +290,7 @@ open class DynamicTableViewCell: BaseTableViewCell {
 
 // MARK: UIAppearance Properties
 
-public extension DynamicTableViewCell {
+extension DynamicTableViewCell {
     public dynamic var avatarBorderColor: UIColor? {
         get {
             if let borderColor = avatarView.layer.borderColor {

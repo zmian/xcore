@@ -63,13 +63,13 @@ public struct JSONHelpers {
 
     /// Parse NSData to JSON.
     public static func parse(_ data: Data) -> Any? {
-        return try! JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+        return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
     }
 
     /// Parse String to JSON.
     public static func parse(jsonString: String) -> Any? {
         if let data = jsonString.data(using: .utf8) {
-            return try! JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+            return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
         } else {
             return nil
         }

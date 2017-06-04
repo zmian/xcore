@@ -25,7 +25,7 @@
 
 import UIKit
 
-private class ReorderTableDraggingView: BaseView {
+private class ReorderTableDraggingView: XCView {
     fileprivate let imageView             = UIImageView()
     fileprivate let topShadowImage        = UIImageView(assetIdentifier: .ReorderTableViewCellShadowTop)
     fileprivate let bottomShadowImage     = UIImageView(assetIdentifier: .ReorderTableViewCellShadowBottom)
@@ -95,8 +95,8 @@ open class ReorderTableView: UITableView {
 
     open weak var reorderDelegate: ReorderTableViewDelegate?
     /// The default value is `true`.
-    open var canReorder: Bool = true {
-        didSet { longPressGestureRecognizer.isEnabled = canReorder }
+    open var isReorderingEnabled: Bool = true {
+        didSet { longPressGestureRecognizer.isEnabled = isReorderingEnabled }
     }
     open var draggingRowHeight: CGFloat = 0
     open dynamic var draggingViewOpacity: CGFloat = 0.8
@@ -308,12 +308,12 @@ open class ReorderTableView: UITableView {
             scrollRate = 0
 
             // animate the drag view to the newly hovered cell
-            UIView.animate(withDuration: 0.3, animations: {[weak self] in
+            UIView.animate(withDuration: 0.3, animations: { [weak self] in
                 guard let weakSelf = self else { return }
                 let rect = weakSelf.rectForRow(at: indexPath)
                 draggingView.transform = .identity
                 draggingView.frame = draggingView.bounds.offsetBy(dx: rect.origin.x, dy: rect.origin.y)
-            }, completion: {[weak self] _ in
+            }, completion: { [weak self] _ in
                 guard let weakSelf = self else { return }
 
                 draggingView.setHiddenAnimated(true, duration: 0.3) {

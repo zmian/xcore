@@ -25,7 +25,6 @@
 import UIKit
 
 open class IconLabelCollectionViewCell: UICollectionViewCell {
-    open class var reuseIdentifier: String { return "IconLabelCollectionViewCellIdentifier" }
     open let iconLabelView = IconLabelView()
     let deleteButton = UIButton()
 

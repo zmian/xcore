@@ -34,8 +34,8 @@ public protocol ImageRepresentable {
     var url: String? { get }
 }
 
-public extension ImageRepresentable {
-    var url: String? { return nil }
+extension ImageRepresentable {
+    public var url: String? { return nil }
 }
 
 extension String: ImageRepresentable {
@@ -52,7 +52,7 @@ extension UIImage: ImageRepresentable {
     public var imageSourceType: ImageSourceType { return .uiImage }
 }
 
-public extension UIImageView {
+extension UIImageView {
     public func setImage(_ image: ImageRepresentable?) {
         guard let image = image else {
             self.image = nil
@@ -86,7 +86,7 @@ extension NSAttributedString: StringRepresentable {
     open override var description: String { return string }
 }
 
-public extension UILabel {
+extension UILabel {
     public func setText(_ string: StringRepresentable?) {
         guard let string = string else {
             text = nil
@@ -111,6 +111,6 @@ public protocol ImageTitleDisplayable {
     var image:    ImageRepresentable?  { get }
 }
 
-public extension ImageTitleDisplayable {
-    var subtitle: StringRepresentable? { return nil }
+extension ImageTitleDisplayable {
+    public var subtitle: StringRepresentable? { return nil }
 }

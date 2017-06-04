@@ -26,12 +26,11 @@ import UIKit
 import BEMCheckBox
 
 open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewDataSource {
-    fileprivate let reuseIdentifier = DynamicTableViewCell.reuseIdentifier
     fileprivate var allowReordering: Bool { return cellOptions.contains(.movable) }
     fileprivate var allowDeletion: Bool   { return cellOptions.contains(.deletable) }
     open var sections: [Section<DynamicTableModel>] = []
     open var cellOptions: DynamicTableCellOptions = [] {
-        didSet { canReorder = allowReordering }
+        didSet { isReorderingEnabled = allowReordering }
     }
     open dynamic var rowActionDeleteColor: UIColor?
     /// Text to display in the swipe to delete row action. The default value is **"Delete"**.
@@ -183,18 +182,17 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     open func setupSubviews() {}
 
     fileprivate func setupTableView() {
-        super.delegate     = self
-        dataSource         = self
-        reorderDelegate    = self
-        backgroundColor    = .clear
-        estimatedRowHeight = 44
-        rowHeight          = UITableViewAutomaticDimension
-        canReorder         = allowReordering
-        register(DynamicTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        super.delegate      = self
+        dataSource          = self
+        reorderDelegate     = self
+        backgroundColor     = .clear
+        estimatedRowHeight  = 44
+        rowHeight           = UITableViewAutomaticDimension
+        isReorderingEnabled = allowReordering
     }
 
-    open func overrideRegisteredClass(_ cellClass: DynamicTableViewCell.Type) {
-        register(cellClass, forCellReuseIdentifier: reuseIdentifier)
+    open func overrideRegisteredClass(_ cell: DynamicTableViewCell.Type) {
+        register(cell, forCellReuseIdentifier: cell.reuseIdentifier)
     }
 
     // MARK: UITableViewDataSource
@@ -208,7 +206,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     }
 
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! DynamicTableViewCell
+        let cell = tableView.dequeueReusableCell(for: indexPath) as DynamicTableViewCell
         let item = sections[indexPath]
         cell.setData(item)
         configureAccessoryView(cell, type: item.accessory, indexPath: indexPath)
@@ -326,7 +324,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         var actions: [UITableViewRowAction] = []
 
         if allowDeletion {
-            let delete = UITableViewRowAction(style: .default, title: rowActionDeleteTitle) {[weak self] action, index in
+            let delete = UITableViewRowAction(style: .default, title: rowActionDeleteTitle) { [weak self] action, index in
                 self?.removeItems([indexPath])
             }
             actions.append(delete)
@@ -352,7 +350,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         let items = indexPaths.map { (indexPath: $0, item: sections.remove(at: $0)) }
         CATransaction.animationTransaction({
             deleteRows(at: indexPaths, with: animation)
-        }, completionHandler: {[weak self] in
+        }, completionHandler: { [weak self] in
             guard let weakSelf = self else { return }
             items.forEach { indexPath, item in
                 weakSelf.didRemoveItem?(indexPath, item)
@@ -376,7 +374,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     open dynamic var footerTextColor                = UIColor.darkGray
     open dynamic var accessoryFont                  = UIFont.systemFont(.subheadline)
     open dynamic var accessoryTextColor             = UIColor.gray
-    open dynamic var accessoryTintColor             = UIColor.defaultSystemTintColor()
+    open dynamic var accessoryTintColor             = UIColor.systemTint
     open dynamic var accessoryTextMaxWidth: CGFloat = 0
     open dynamic var disclosureIndicatorTintColor   = UIColor.gray
 
@@ -403,7 +401,7 @@ extension DynamicTableView: BEMCheckBoxDelegate {
                 cell.selectionStyle  = .none
                 let accessorySwitch  = UISwitch()
                 accessorySwitch.isOn = isOn
-                accessorySwitch.addAction(.valueChanged) {[weak self] sender in
+                accessorySwitch.addAction(.valueChanged) { [weak self] sender in
                     guard let weakSelf = self else { return }
                     let accessory = weakSelf.sections[indexPath].accessory
                     if case .`switch`(_, let callback) = accessory {

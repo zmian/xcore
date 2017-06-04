@@ -24,28 +24,87 @@
 
 import UIKit
 
+// MARK: Hex Support
+
 extension UIColor {
-    public convenience init(hex: Int, alpha: CGFloat = 1) {
-        let red   = CGFloat((hex & 0xFF0000) >> 16) / 255.0
-        let green = CGFloat((hex & 0xFF00) >> 8) / 255.0
-        let blue  = CGFloat((hex & 0xFF)) / 255.0
-        self.init(red: red, green: green, blue: blue, alpha: alpha)
+    public convenience init(hex: Int64) {
+        let (r, g, b, a) = UIColor.components(hex: hex)
+        self.init(red: r, green: g, blue: b, alpha: a)
+    }
+
+    public convenience init(hex: Int64, alpha: CGFloat) {
+        let (r, g, b, a) = UIColor.components(hex: hex, alpha: alpha)
+        self.init(red: r, green: g, blue: b, alpha: a)
     }
 
     @nonobjc
-    public convenience init(hex: String, alpha: CGFloat = 1) {
+    public convenience init(hex: String) {
+        self.init(hex: UIColor.components(hex: hex))
+    }
+
+    @nonobjc
+    public convenience init(hex: String, alpha: CGFloat) {
+        self.init(hex: UIColor.components(hex: hex), alpha: alpha)
+    }
+
+    public var hex: String {
+        var red: CGFloat   = 0
+        var green: CGFloat = 0
+        var blue: CGFloat  = 0
+        var alpha: CGFloat = 0
+
+        guard getRed(&red, green: &green, blue: &blue, alpha: &alpha) else {
+            return "#000000"
+        }
+
+        func round(_ value: CGFloat) -> Int {
+            return lround(Double(value) * 255)
+        }
+
+        if alpha == 1 {
+            return String(format: "#%02lX%02lX%02lX", round(red), round(green), round(blue))
+        } else {
+            return String(format: "#%02lX%02lX%02lX%02lX", round(red), round(green), round(blue), round(alpha))
+        }
+    }
+
+    private static func components(hex: Int64, alpha: CGFloat? = nil) -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
+        let preferredAlpha = alpha
+
+        let red: CGFloat
+        let green: CGFloat
+        let blue: CGFloat
+        let alpha: CGFloat
+
+        let isRGBA =  CGFloat(hex & 0xFF000000) != 0
+
+        if isRGBA {
+            red   = CGFloat((hex & 0xFF000000) >> 24) / 255
+            green = CGFloat((hex & 0xFF0000)   >> 16) / 255
+            blue  = CGFloat((hex & 0xFF00)     >>  8) / 255
+            alpha = preferredAlpha ?? CGFloat((hex & 0xFF)) / 255
+        } else {
+            red   = CGFloat((hex & 0xFF0000)   >> 16) / 255
+            green = CGFloat((hex & 0xFF00)     >>  8) / 255
+            blue  = CGFloat((hex & 0xFF)            ) / 255
+            alpha = preferredAlpha ?? 1
+        }
+
+        return (red, green, blue, alpha)
+    }
+
+    private static func components(hex: String) -> Int64 {
         var hexString = hex
+
         if hexString.hasPrefix("#"), let cleanString = hexString.stripPrefix("#") {
             hexString = cleanString
         }
 
-        if let hex = Int(hexString, radix: 16) {
-            self.init(hex: hex, alpha: alpha)
-        } else {
-            self.init(hex: 0x000000, alpha: alpha)
-        }
+        return Int64(hexString, radix: 16) ?? 0x000000
     }
+}
 
+extension UIColor {
     public var alpha: CGFloat {
         get { return cgColor.alpha }
         set { withAlphaComponent(newValue) }
@@ -81,12 +140,12 @@ extension UIColor {
     /// A convenience method to return default system tint color.
     ///
     /// - returns: The default tint color.
-    public static func defaultSystemTintColor() -> UIColor {
+    public static var systemTint: UIColor {
         struct Static {
-            static let tintColor = UIView().tintColor
+            static let tintColor = UIView().tintColor ?? .blue
         }
 
-        return Static.tintColor!
+        return Static.tintColor
     }
 
     public static func randomColor() -> UIColor {

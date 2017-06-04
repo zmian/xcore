@@ -29,7 +29,7 @@ public protocol Serializable {
     var serialize: Data? { get }
 }
 
-public extension Serializable where Self: NSCoding {
+extension Serializable where Self: NSCoding {
     public init?(serialize: Data) {
         guard let object = NSKeyedUnarchiver.unarchiveObject(with: serialize) as? Self else { return nil }
         self = object
@@ -45,7 +45,7 @@ public protocol DictionaryInitializable: CustomStringConvertible, Serializable {
     func dictionary() -> [AnyHashable: Any]
 }
 
-public extension DictionaryInitializable {
+extension DictionaryInitializable {
     public init?(serialize: Data) {
         guard
             let dictionary = NSKeyedUnarchiver.unarchiveObject(with: serialize) as? [AnyHashable: Any],

@@ -66,7 +66,7 @@ open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     /// - parameter bundle:   The bundle containing the specified file name. If you specify nil,
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
     open func setText(_ filename: String, bundle: Bundle? = nil) {
-        dispatch.async.bg(.userInitiated) {[weak self] in
+        dispatch.async.bg(.userInitiated) { [weak self] in
             guard let weakSelf = self else { return }
 
             let name   = filename.lastPathComponent.stringByDeletingPathExtension
@@ -106,7 +106,7 @@ open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
         }
     }
 
-    open func htmlLabel(_ label: MDHTMLLabel, didSelectLinkWith URL: Foundation.URL) {
-        open(url: URL, presentingViewController: self)
+    open func htmlLabel(_ label: MDHTMLLabel, didSelectLinkWith URL: URL) {
+        open(url: URL, from: self)
     }
 }

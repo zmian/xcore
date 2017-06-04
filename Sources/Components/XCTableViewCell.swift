@@ -1,5 +1,5 @@
 //
-// BaseTableViewCell.swift
+// XCTableViewCell.swift
 //
 // Copyright © 2015 Zeeshan Mian
 //
@@ -24,11 +24,7 @@
 
 import UIKit
 
-open class BaseTableViewCell: UITableViewCell {
-
-    // MARK: Public Interface
-
-    open class var reuseIdentifier: String { return "BaseTableViewCellIdentifier" }
+open class XCTableViewCell: UITableViewCell {
 
     // MARK: Init Methods
 

@@ -1,5 +1,5 @@
 //
-// BaseToolbar.swift
+// XCToolbar.swift
 //
 // Copyright © 2016 Zeeshan Mian
 //
@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class BaseToolbar: UIToolbar {
+open class XCToolbar: UIToolbar {
     /// The default value is `44` (system's standard).
     open var preferredHeight: CGFloat = 44
 

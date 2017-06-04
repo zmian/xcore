@@ -166,6 +166,20 @@ extension Int {
     }
 }
 
+extension SignedInteger {
+    public var digitsCount: Self {
+        return numberOfDigits(in: self)
+    }
+
+    private func numberOfDigits(in number: Self) -> Self {
+        if abs(number) < 10 {
+            return 1
+        } else {
+            return 1 + numberOfDigits(in: number / 10)
+        }
+    }
+}
+
 /*
 extension IntervalType {
     /// Returns a random element from `self`.

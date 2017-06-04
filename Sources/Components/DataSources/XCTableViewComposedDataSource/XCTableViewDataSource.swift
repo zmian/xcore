@@ -33,13 +33,21 @@ open class XCTableViewDataSource: NSObject, UITableViewDataSource {
     /// Global section index.
     open var globalSection = 0
 
-    // MARK: Register Classes
+    /// The table view of the data source.
+    open weak var tableView: UITableView?
 
-    /// Registers class(es) to use in creating new table cells for this data source.
-    ///
-    /// This method is called in `XCComposedTableViewController.viewDidLoad()`
-    /// before loading any table view data.
-    open func registerClasses(for tableView: UITableView) {
+    /// A convenience property to access data source's navigation controller.
+    open var navigationController: UINavigationController? {
+        return tableView?.viewController?.navigationController
+    }
+
+    override init() {
+        super.init()
+    }
+
+    public init(tableView: UITableView) {
+        self.tableView = tableView
+        super.init()
     }
 }
 

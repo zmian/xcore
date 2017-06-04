@@ -46,10 +46,25 @@ open class XCButton: UIButton {
         if animated {
             self.isEnabled = enabled
         } else {
-            UIView.performWithoutAnimation {[weak self] in
+            UIView.performWithoutAnimation { [weak self] in
                 self?.isEnabled = enabled
             }
         }
+    }
+
+    open override var backgroundColor: UIColor? {
+        get { return backgroundColor(for: .normal) }
+        set { setBackgroundColor(newValue, for: .normal) }
+    }
+
+    @nonobjc open var highlightedBackgroundColor: UIColor? {
+        get { return backgroundColor(for: .highlighted) }
+        set { setBackgroundColor(newValue, for: .highlighted) }
+    }
+
+    @nonobjc open var disabledBackgroundColor: UIColor? {
+        get { return backgroundColor(for: .disabled) }
+        set { setBackgroundColor(newValue, for: .disabled) }
     }
 }
 
@@ -70,21 +85,6 @@ extension XCButton {
         }
 
         return color
-    }
-
-    @nonobjc open var highlightedBackgroundColor: UIColor? {
-        get { return backgroundColor(for: .highlighted) }
-        set { setBackgroundColor(newValue, for: .highlighted) }
-    }
-
-    @nonobjc open var disabledBackgroundColor: UIColor? {
-        get { return backgroundColor(for: .disabled) }
-        set { setBackgroundColor(newValue, for: .disabled) }
-    }
-
-    open override var backgroundColor: UIColor? {
-        get { return backgroundColor(for: .normal) }
-        set { setBackgroundColor(newValue, for: .normal) }
     }
 
     open override func setHighlightedBackgroundColor(_ color: UIColor?) {

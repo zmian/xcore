@@ -37,7 +37,7 @@ public class XCUserDefault<T> {
         self.defaultValue             = defaultValue
         self.shouldCacheValueInMemory = shouldCacheValueInMemory
 
-        onApplicationMemoryWarning {[weak self] in
+        onApplicationMemoryWarning { [weak self] in
             self?.cachedValueInMemory = nil
         }
     }

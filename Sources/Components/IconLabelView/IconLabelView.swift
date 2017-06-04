@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class IconLabelView: BaseView {
+open class IconLabelView: XCView {
     public enum Style { case topBottom, leftRight }
 
     fileprivate var imagePaddingConstraints: [NSLayoutConstraint] = []
@@ -257,7 +257,7 @@ open class IconLabelView: BaseView {
 
 // MARK: UIAppearance Properties
 
-public extension IconLabelView {
+extension IconLabelView {
     public dynamic var titleColor: UIColor? {
         get { return titleLabel.textColor }
         set { titleLabel.textColor = newValue }

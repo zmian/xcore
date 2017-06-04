@@ -34,7 +34,6 @@ public struct IconLabelCollectionCellOptions: OptionSet {
 }
 
 open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
-    fileprivate let reuseIdentifier = IconLabelCollectionViewCell.reuseIdentifier
     fileprivate var allowReordering: Bool { return cellOptions.contains(.movable) }
     fileprivate var allowDeletion: Bool   { return cellOptions.contains(.deletable) }
     fileprivate var hasLongPressGestureRecognizer = false
@@ -128,7 +127,6 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
         dataSource           = self
         backgroundColor      = .clear
         alwaysBounceVertical = true
-        register(IconLabelCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         let itemSpacing: CGFloat        = 8
         layout?.itemSize                = CGSize(width: 60, height: 74)
@@ -167,7 +165,7 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
         let gestureRecognizer = UITapGestureRecognizer()
         gestureRecognizer.isEnabled = false
 
-        gestureRecognizer.addAction {[weak self] in
+        gestureRecognizer.addAction { [weak self] in
             self?.isEditing = false
         }
 
@@ -185,11 +183,11 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
     }
 
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! IconLabelCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(for: indexPath) as IconLabelCollectionViewCell
         let item = sections[indexPath]
         cell.setData(item)
         cell.setDeleteButtonHidden(!isEditing, animated: false)
-        cell.deleteButton.addAction(.touchUpInside) {[weak self] sender in
+        cell.deleteButton.addAction(.touchUpInside) { [weak self] sender in
             self?.removeItems([indexPath])
         }
         configureCell?(indexPath, cell, item)
@@ -229,9 +227,9 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
             didRemoveItem?($0, item)
         }
 
-        performBatchUpdates({[weak self] in
+        performBatchUpdates({ [weak self] in
             self?.deleteItems(at: indexPaths)
-        }, completion: {[weak self] isFinished in
+        }, completion: { [weak self] isFinished in
             guard let weakSelf = self else { return }
             weakSelf.reloadItems(at: weakSelf.indexPathsForVisibleItems)
         })

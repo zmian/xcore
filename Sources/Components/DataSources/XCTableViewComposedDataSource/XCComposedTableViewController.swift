@@ -25,7 +25,7 @@
 import UIKit
 
 open class XCComposedTableViewController: UIViewController {
-    fileprivate var tableViewConstraints = [NSLayoutConstraint]()
+    public fileprivate(set) var tableViewConstraints = [NSLayoutConstraint]()
 
     /// There is UIKit bug that causes `UITableView` to jump when using `estimatedRowHeight`
     /// and reloading cells/sections or the entire table view.
@@ -68,7 +68,10 @@ open class XCComposedTableViewController: UIViewController {
 
     // MARK: DataSources
 
-    public let composedDataSource = XCTableViewComposedDataSource()
+    private let _composedDataSource = XCTableViewComposedDataSource()
+    open var composedDataSource: XCTableViewComposedDataSource {
+        return _composedDataSource
+    }
 
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,7 +95,6 @@ open class XCComposedTableViewController: UIViewController {
 extension XCComposedTableViewController {
     fileprivate func setupTableView(forTableView tableView: UITableView) {
         composedDataSource.dataSources = dataSources(for: tableView)
-        composedDataSource.registerClasses(for: tableView)
         tableView.dataSource = composedDataSource
         tableView.delegate = self
     }
@@ -106,7 +108,7 @@ extension XCComposedTableViewController: UITableViewDelegate {
     }
 
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        dispatch.async.main {[weak self] in
+        dispatch.async.main { [weak self] in
             guard let weakSelf = self else { return }
             weakSelf.composedDataSource.tableView(tableView, didSelectRowAt: indexPath)
         }

@@ -45,7 +45,7 @@ public protocol EnumIteratable {
     static var rawValues: [EnumType.RawValue] { get }
 }
 
-public extension EnumIteratable {
+extension EnumIteratable {
     /// Return `AnyGenerator` to iterate over all cases of `self`:
     ///
     ///     enum CompassPoint: Int, EnumIteratable {
@@ -76,12 +76,12 @@ public extension EnumIteratable {
     }
 
     /// Return an array containing all cases of `self`.
-    static var allValues: [EnumType] {
+    public static var allValues: [EnumType] {
         return enumerated().map { $0 }
     }
 
     /// Return an array containing all corresponding `rawValue`s of `self`.
-    static var rawValues: [EnumType.RawValue] {
+    public static var rawValues: [EnumType.RawValue] {
         return allValues.map { $0.rawValue }
     }
 }

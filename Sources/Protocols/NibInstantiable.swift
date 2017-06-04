@@ -29,11 +29,11 @@ import UIKit
 /// It also eliminates casting as `initFromNib()` method automatically
 /// returns the correct `UIView`'s subclass.
 ///
-/// The default `nibName` value is `UIView`'s class name.
+/// The default `nibIdentifier` value is `UIView`'s class name.
 /// ```
 /// class ProfileView: UIView { }
 ///
-/// print(ProfileView.nibName)
+/// print(ProfileView.nibIdentifier)
 ///
 /// "ProfileView"
 ///
@@ -41,26 +41,36 @@ import UIKit
 /// addSubview(view)
 ///
 /// ```
-/// If you want to provide your own custom `nibName` you can do so like:
+/// If you want to provide your own custom `nibIdentifier` you can do so like:
 /// ```
 /// class ProfileView: UIView {
-///     override class var nibName: String { return "Profile" }
+///     class var nibIdentifier: String { return "Profile" }
 /// }
 ///
 /// let view = ProfileView.initFromNib()
 /// addSubview(view)
 /// ```
 public protocol NibInstantiable {
-    static var nibName: String { get }
+    static var nibIdentifier: String { get }
 }
 
-extension UIView: NibInstantiable {
-    public class var nibName: String { return "\(self)" }
+extension NibInstantiable {
+    public static var nibIdentifier: String {
+        return String(describing: self)
+    }
 }
 
 extension NibInstantiable where Self: UIView {
+    /// Instantiates and returns the nib of type `Self`.
+    ///
+    /// - parameter bundle: The bundle containing the nib file and its related resources. If `nil`, then
+    ///                     this method looks in the main bundle of the current application. The default value is `nil`.
+    ///
+    /// - returns: The nib of type `Self`.
     public static func initFromNib(bundle: Bundle? = nil) -> Self {
         let bundle = bundle ?? Bundle(for: Self.self)
-        return bundle.loadNibNamed(nibName, owner: nil, options: nil)!.first as! Self
+        return bundle.loadNibNamed(nibIdentifier, owner: nil, options: nil)!.first as! Self
     }
 }
+
+extension UIView: NibInstantiable { }

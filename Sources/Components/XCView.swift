@@ -1,5 +1,5 @@
 //
-// BaseView.swift
+// XCView.swift
 //
 // Copyright © 2015 Zeeshan Mian
 //
@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class BaseView: UIView {
+open class XCView: UIView {
 
     // MARK: Init Methods
 
