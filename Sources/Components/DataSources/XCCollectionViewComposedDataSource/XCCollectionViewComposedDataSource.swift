@@ -182,13 +182,11 @@ extension XCCollectionViewComposedDataSource {
 
     open override func collectionView(_ collectionView: UICollectionView, sizeForHeaderInSection section: Int) -> CGSize {
         let (dataSource, localSection) = dataSourceIndex[section]
-        let localIndexPath = IndexPath(item: 0, section: localSection)
         return dataSource.collectionView(collectionView, sizeForHeaderInSection: localSection)
     }
 
     open override func collectionView(_ collectionView: UICollectionView, sizeForFooterInSection section: Int) -> CGSize {
         let (dataSource, localSection) = dataSourceIndex[section]
-        let localIndexPath = IndexPath(item: 0, section: localSection)
         return dataSource.collectionView(collectionView, sizeForFooterInSection: localSection)
     }
 

@@ -37,14 +37,14 @@ extension UIImageView {
         if let url = URL(string: named), url.host != nil {
             self.sd_setImage(with: url) { [weak self] (image, _, cacheType, _) in
                 guard let image = image else {
-                    dispatch.async.main {
+                    DispatchQueue.main.async {
                         callback?(nil)
                     }
                     return
                 }
 
                 defer {
-                    dispatch.async.main {
+                    DispatchQueue.main.async {
                         callback?(image)
                     }
                 }
@@ -57,15 +57,15 @@ extension UIImageView {
                 }
             }
         } else {
-            dispatch.async.bg(.userInitiated) { [weak self] in
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 guard let weakSelf = self, let image = UIImage(named: named) else {
-                    dispatch.async.main {
+                    DispatchQueue.main.async {
                         callback?(nil)
                     }
                     return
                 }
 
-                dispatch.async.main {
+                DispatchQueue.main.async {
                     defer { callback?(image) }
 
                     if alwaysAnimate {
@@ -98,25 +98,25 @@ extension UIImage {
                 },
                 completed: { image, data, error, finished in
                     guard let image = image, finished else {
-                        dispatch.async.main {
+                        DispatchQueue.main.async {
                             callback(nil)
                         }
                         return
                     }
-                    dispatch.async.main {
+                    DispatchQueue.main.async {
                         callback(image)
                     }
                 }
             )
         } else {
-            dispatch.async.bg(.userInitiated) {
+            DispatchQueue.global(qos: .userInitiated).async {
                 guard let image = UIImage(named: named, in: bundle, compatibleWith: nil) else {
-                    dispatch.async.main {
+                    DispatchQueue.main.async {
                         callback(nil)
                     }
                     return
                 }
-                dispatch.async.main {
+                DispatchQueue.main.async {
                     callback(image)
                 }
             }
@@ -145,7 +145,7 @@ extension UIImage {
 
                     if downloadedImages == urls.count {
                         let imagesAndUrls = orderedObjects.filter { $0.image != nil }.flatMap { (url: $0.url, image: $0.image!) }
-                        dispatch.async.main {
+                        DispatchQueue.main.async {
                             callback(imagesAndUrls)
                         }
                     }
