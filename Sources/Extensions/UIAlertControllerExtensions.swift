@@ -40,9 +40,8 @@ extension UIAlertController {
         // `UIAlertController` and wrapping the `presentViewController:` call in `DispatchQueue.main.async` fixes it.
         //
         // http://openradar.appspot.com/19285091
-        DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else { return }
-            presentingViewController.present(strongSelf, animated: true)
+        DispatchQueue.main.async { [weak presentingViewController] in
+            presentingViewController?.present(self, animated: true)
         }
     }
 }
