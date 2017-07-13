@@ -180,6 +180,16 @@ extension SignedInteger {
     }
 }
 
+extension FloatingPoint {
+    public static var pi2: Self {
+        return .pi / 2
+    }
+
+    public static var pi4: Self {
+        return .pi / 4
+    }
+}
+
 /*
 extension IntervalType {
     /// Returns a random element from `self`.

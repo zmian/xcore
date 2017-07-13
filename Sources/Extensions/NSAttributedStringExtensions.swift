@@ -32,6 +32,19 @@ extension NSAttributedString {
     }
 }
 
+extension NSAttributedString {
+    public var attributesDescription: String {
+        let range = NSRange(location: 0, length: length)
+
+        var result = ""
+        enumerateAttributes(in: range) { attributes, range, _ in
+            result += "range: \(NSStringFromRange(range)) attributes: \(attributes)\n\n"
+        }
+
+        return result
+    }
+}
+
 // MARK: NSMutableAttributedString Extension
 
 extension NSMutableAttributedString {

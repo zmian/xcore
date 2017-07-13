@@ -32,6 +32,46 @@ extension UIEdgeInsets {
     public init(horizontal: CGFloat, vertical: CGFloat) {
         self = UIEdgeInsets(top: vertical, left: horizontal, bottom: vertical, right: horizontal)
     }
+
+    public init(horizontal: CGFloat) {
+        self = UIEdgeInsets(top: 0, left: horizontal, bottom: 0, right: horizontal)
+    }
+
+    public init(horizontal: CGFloat, top: CGFloat) {
+        self = UIEdgeInsets(top: top, left: horizontal, bottom: 0, right: horizontal)
+    }
+
+    public init(horizontal: CGFloat, bottom: CGFloat) {
+        self = UIEdgeInsets(top: 0, left: horizontal, bottom: bottom, right: horizontal)
+    }
+
+    public init(vertical: CGFloat) {
+        self = UIEdgeInsets(top: vertical, left: 0, bottom: vertical, right: 0)
+    }
+
+    public init(vertical: CGFloat, left: CGFloat) {
+        self = UIEdgeInsets(top: vertical, left: left, bottom: vertical, right: 0)
+    }
+
+    public init(vertical: CGFloat, right: CGFloat) {
+        self = UIEdgeInsets(top: vertical, left: 0, bottom: vertical, right: right)
+    }
+
+    public var horizontal: CGFloat {
+        get { return left + right }
+        set {
+            left = newValue
+            right = newValue
+        }
+    }
+
+    public var vertical: CGFloat {
+        get { return top + bottom }
+        set {
+            top = newValue
+            bottom = newValue
+        }
+    }
 }
 
 /// The value of `π` as a `CGFloat`.

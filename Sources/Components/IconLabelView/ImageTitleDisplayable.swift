@@ -45,7 +45,7 @@ extension String: ImageRepresentable {
 
 extension URL: ImageRepresentable {
     public var imageSourceType: ImageSourceType { return .url }
-    public var url: String? { return self.absoluteString }
+    public var url: String? { return absoluteString }
 }
 
 extension UIImage: ImageRepresentable {
@@ -86,7 +86,9 @@ extension NSAttributedString: StringRepresentable {
     open override var description: String { return string }
 }
 
-extension UILabel {
+extension UILabel: TextAttributedTextRepresentable { }
+extension UITextField: TextAttributedTextRepresentable { }
+extension UITextView {
     public func setText(_ string: StringRepresentable?) {
         guard let string = string else {
             text = nil
@@ -113,4 +115,29 @@ public protocol ImageTitleDisplayable {
 
 extension ImageTitleDisplayable {
     public var subtitle: StringRepresentable? { return nil }
+}
+
+// MARK: TextAttributedTextRepresentable
+
+public protocol TextAttributedTextRepresentable: class {
+    var text: String? { get set }
+    var attributedText: NSAttributedString? { get set }
+    func setText(_ string: StringRepresentable?)
+}
+
+extension TextAttributedTextRepresentable {
+    public func setText(_ string: StringRepresentable?) {
+        guard let string = string else {
+            text = nil
+            attributedText = nil
+            return
+        }
+
+        switch string.stringSourceType {
+            case .string:
+                text = string as? String
+            case .attributedString:
+                attributedText = string as? NSAttributedString
+        }
+    }
 }
