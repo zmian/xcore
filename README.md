@@ -1,8 +1,7 @@
 # xcore.swift
-Cocoa Touch Toolbox
+A collection of Cocoa Touch classes, extensions and modules to fast track iOS development.
 
 ## Installation
-You have two options to include the `xcore.swift` in your project:
 
 ### [CocoaPods](http://cocoapods.org)
 
@@ -12,8 +11,13 @@ You have two options to include the `xcore.swift` in your project:
 pod 'Xcore', '~> 1.0'
 ```
 
-### Manual Installation
-Drag the classes from the *Sources* folder directly into your project.
+#### Latest version
+```ruby
+pod 'Xcore', :git => 'https://github.com/zmian/xcore.swift'
+```
+
+### Documentation
+The documentation can be found at <a href="https://zmian.github.io/xcore.swift" target="_blank">https://zmian.github.io/xcore.swift</a>
 
 ## Author
 

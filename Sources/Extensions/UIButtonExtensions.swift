@@ -166,7 +166,7 @@ extension UIButton {
 
     /// Increase button touch area.
     ///
-    /// ```
+    /// ```swift
     /// let button = UIButton()
     /// button.touchAreaEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
     /// ```

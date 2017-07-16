@@ -39,7 +39,7 @@ private func format(seconds: TimeInterval) -> String {
 /// - parameter block: Call `finish` block to measure test.
 ///
 /// **Asynchronous code:**
-/// ```
+/// ```swift
 /// measure(label: "some title") { finish in
 ///     myAsyncCall {
 ///         finish()
@@ -48,7 +48,7 @@ private func format(seconds: TimeInterval) -> String {
 /// }
 /// ```
 /// **Synchronous code:**
-/// ```
+/// ```swift
 /// measure(label: "some title") { finish in
 ///     // code to benchmark
 ///     finish()

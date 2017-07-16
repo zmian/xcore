@@ -83,7 +83,7 @@ extension UIImageView {
     /// The default rendering mode is `UIImageRenderingModeAutomatic`.
     ///
     /// `Int` is workaround since `@IBInspectable` doesn't support enums.
-    /// ```
+    /// ```swift
     /// Possible Values:
     ///
     /// UIImageRenderingMode.automatic      // 0

@@ -48,7 +48,7 @@ extension UITableView {
     /// A convenience property for the index paths representing the selected rows.
     /// This simply return empty array when there are no selected rows instead of `nil`.
     ///
-    /// ```
+    /// ```swift
     /// return indexPathsForSelectedRows ?? []
     /// ```
     public var selectedIndexPaths: [IndexPath] {
@@ -105,7 +105,7 @@ extension UITableView {
     /// Adjust target offset so that cells are snapped to top.
     ///
     /// Call this method in scroll view delegate:
-    ///```
+    ///```swift
     /// func scrollViewWillEndDragging(scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     ///     snapRowsToTop(targetContentOffset, cellHeight: cellHeight, headerHeight: headerHeight)
     /// }
