@@ -147,7 +147,7 @@ extension UIViewController {
     ///
     /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
     /// And, any of its view controllers can override this on as needed basis.
-    /// ```
+    /// ```swift
     /// let vc = UIImagePickerController()
     /// vc.preferredInterfaceOrientations = .AllButUpsideDown
     /// ```
@@ -170,7 +170,7 @@ extension UIViewController {
     ///
     /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
     /// And, any of its view controllers can override this on as needed basis.
-    /// ```
+    /// ```swift
     /// let vc = UIImagePickerController()
     /// vc.interfaceOrientationForPresentation = .Portrait
     /// ```
@@ -195,7 +195,7 @@ extension UIViewController {
     /// And, any of its view controllers can override this on as needed basis.
     /// This enables `info.plist`'s `View controller-based status bar appearance: NO` like behavior
     /// but allowing any of its view controllers to override the value.
-    /// ```
+    /// ```swift
     /// let vc = UIImagePickerController()
     /// vc.statusBarStyle = .LightContent
     /// ```
@@ -221,7 +221,7 @@ extension UIViewController {
     ///
     /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
     /// And, any of its view controllers can override this on as needed basis.
-    /// ```
+    /// ```swift
     /// let vc = UIImagePickerController()
     /// vc.statusBarUpdateAnimation = .Fade
     /// ```
@@ -244,7 +244,7 @@ extension UIViewController {
     ///
     /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
     /// And, any of its view controllers can override this on as needed basis.
-    /// ```
+    /// ```swift
     /// let vc = UIImagePickerController()
     /// vc.isStatusBarHidden = false
     /// ```
@@ -264,7 +264,7 @@ extension UIViewController {
     ///
     /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
     /// And, any of its view controllers can override this on as needed basis.
-    /// ```
+    /// ```swift
     /// let vc = UIImagePickerController()
     /// vc.enableAutorotate = false
     /// ```

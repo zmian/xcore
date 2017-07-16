@@ -26,17 +26,22 @@
 
 /// A type that makes conforming `Enum` cases iteratable.
 ///
-///     enum CompassPoint: Int, EnumIteratable {
-///         case north, south, east, west
-///     }
+/// ```swift
+/// enum CompassPoint: Int, EnumIteratable {
+///     case north
+///     case south
+///     case east
+///     case west
+/// }
 ///
-///     for point in CompassPoint.allValues {
-///         // point [north, south, east, west]
-///     }
+/// for point in CompassPoint.allValues {
+///     // point [north, south, east, west]
+/// }
 ///
-///     for point in CompassPoint.rawValues {
-///         // point [0, 1, 2, 3]
-///     }
+/// for point in CompassPoint.rawValues {
+///     // point [0, 1, 2, 3]
+/// }
+/// ```
 ///
 /// `EnumIteratable` requires conforming enums types to be `RawRepresentable`.
 public protocol EnumIteratable {
@@ -48,18 +53,20 @@ public protocol EnumIteratable {
 extension EnumIteratable {
     /// Return `AnyGenerator` to iterate over all cases of `self`:
     ///
-    ///     enum CompassPoint: Int, EnumIteratable {
-    ///         case north, south, east, west
-    ///     }
+    /// ```swift
+    /// enum CompassPoint: Int, EnumIteratable {
+    ///     case north, south, east, west
+    /// }
     ///
-    ///     > for point in CompassPoint.enumerated() {
-    ///         print("\(point): '\(point.rawValue)'")
-    ///     }
+    /// for point in CompassPoint.enumerated() {
+    ///     print("\(point): '\(point.rawValue)'")
+    /// }
     ///
-    ///     north: '0'
-    ///     south: '1'
-    ///     wast: '2'
-    ///     west: '3'
+    /// north: '0'
+    /// south: '1'
+    /// wast: '2'
+    /// west: '3'
+    /// ```
     fileprivate static func enumerated() -> AnyIterator<EnumType> {
         var i = 0
         return AnyIterator {

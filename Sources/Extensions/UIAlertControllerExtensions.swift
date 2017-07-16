@@ -113,7 +113,10 @@ extension UIAlertController {
     ///
     /// ```swift
     /// enum CompassPoint: Int, EnumIteratable, OptionsRepresentable {
-    ///     case north, south, east, west
+    ///     case north
+    ///     case south
+    ///     case east
+    ///     case west
     /// }
     ///
     /// UIAlertController.present(sourceView: button) { (option: CompassPoint) -> Void in

@@ -30,7 +30,7 @@ import UIKit
 /// returns the correct `UIView`'s subclass.
 ///
 /// The default `nibIdentifier` value is `UIView`'s class name.
-/// ```
+/// ```swift
 /// class ProfileView: UIView { }
 ///
 /// print(ProfileView.nibIdentifier)
@@ -42,7 +42,7 @@ import UIKit
 ///
 /// ```
 /// If you want to provide your own custom `nibIdentifier` you can do so like:
-/// ```
+/// ```swift
 /// class ProfileView: UIView {
 ///     class var nibIdentifier: String { return "Profile" }
 /// }

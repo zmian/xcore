@@ -194,7 +194,7 @@ extension FloatingPoint {
 extension IntervalType {
     /// Returns a random element from `self`.
     ///
-    /// ```
+    /// ```swift
     /// (0.0...1.0).random()   // 0.112358
     /// (-1.0..<68.5).random() // 26.42
     /// ```
@@ -218,7 +218,7 @@ extension Int {
     ///
     /// - complexity: O(N).
     ///
-    /// ```
+    /// ```swift
     /// let values = 10.map { $0 * 2 }
     /// print(values)
     ///
@@ -256,7 +256,7 @@ extension Array {
 
     /// Split array by chunks of given size.
     ///
-    /// ```
+    /// ```swift
     /// let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     /// let chunks = arr.splitBy(5)
     /// print(chunks) // [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12]]
@@ -421,7 +421,7 @@ extension Double {
 
     /// Abbreviate `self` to smaller format.
     ///
-    /// ```
+    /// ```swift
     /// 987     // -> 987
     /// 1200    // -> 1.2K
     /// 12000   // -> 12K
@@ -456,7 +456,7 @@ extension Double {
 }
 
 extension Sequence where Iterator.Element == Double {
-    /// ```
+    /// ```swift
     /// [1, 1, 1, 1, 1, 1].runningSum() // -> [1, 2, 3, 4, 5, 6]
     /// ```
     public func runningSum() -> [Iterator.Element] {

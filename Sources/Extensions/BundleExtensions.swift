@@ -43,7 +43,7 @@ extension Bundle {
     /// Returns common bundle information.
     ///
     /// Sample output:
-    /// ```
+    /// ```swift
     /// iOS 9.2.1         // OS Version
     /// iPhone 6s         // Device
     /// Version 1.0 (300) // App Version and Build number

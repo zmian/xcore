@@ -236,7 +236,7 @@ extension UIDevice {
 
     /// A strongly typed model type of the current device.
     ///
-    /// ```
+    /// ```swift
     /// // Strongly typed model type
     /// UIDevice.current.modelType // e.g., ModelType.iPhone7Plus
     ///

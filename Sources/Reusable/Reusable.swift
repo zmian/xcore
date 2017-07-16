@@ -24,13 +24,13 @@
 
 import UIKit
 
-/// A type that all `UICollectionViewCell` and `UITableViewCell` subclasses conform to.
+/// A type that all `UICollectionViewCell`, `UICollectionReusableView`,
+/// `UITableViewCell`, and `UITableViewHeaderFooterView` subclasses conform to.
 /// It provides a safe way to register and dequeue cells.
 ///
-/// The default `reuseIdentifier` value is `UICollectionViewCell` or `UITableViewCell`
-/// subclasses class name.
+/// The default `reuseIdentifier` value is conforming class name.
 ///
-/// ```
+/// ```swift
 /// class ProfileCollectionViewCell: UICollectionViewCell { }
 ///
 /// print(ProfileCollectionViewCell.reuseIdentifier)
@@ -39,7 +39,7 @@ import UIKit
 ///
 /// ```
 /// If you want to provide your own custom `reuseIdentifier` you can do so like:
-/// ```
+/// ```swift
 /// class ProfileCollectionViewCell: UICollectionViewCell {
 ///     class var reuseIdentifier: String { return "ProfileCell" }
 /// }

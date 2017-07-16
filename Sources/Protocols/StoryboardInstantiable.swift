@@ -30,7 +30,7 @@ import UIKit
 /// returns the correct `UIViewController`'s subclass.
 ///
 /// The default `storyboardIdentifier` value is `UIViewController`'s class name.
-/// ```
+/// ```swift
 /// class SettingsViewController: UIViewController { }
 ///
 /// print(SettingsViewController.storyboardIdentifier)
@@ -42,7 +42,7 @@ import UIKit
 ///
 /// ```
 /// If you want to provide your own custom `storyboardIdentifier` you can do so like:
-/// ```
+/// ```swift
 /// class SettingsViewController: UIViewController {
 ///     class var storyboardIdentifier: String { return "Settings" }
 /// }

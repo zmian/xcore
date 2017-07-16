@@ -29,7 +29,7 @@ import UIKit
 /// configuration driven views.
 ///
 /// **Style Declaration**
-/// ```
+/// ```swift
 /// extension XCConfiguration where Type: UILabel {
 ///     static func app(text: String? = nil, font: UIFont? = nil, textColor: UIColor? = nil, numberOfLines: Int? = nil, alignment: NSTextAlignment? = nil) -> XCConfiguration {
 ///         return XCConfiguration { label in
@@ -47,7 +47,7 @@ import UIKit
 /// }
 /// ```
 /// **Usage**
-/// ```
+/// ```swift
 /// let headerLabel = UILabel(style: .header)
 /// ```
 public struct XCConfiguration<Type> {

@@ -56,7 +56,7 @@ open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
 
     /// Sets text from the specified file name.
     ///
-    /// ```
+    /// ```swift
     /// let vc = TextViewController()
     /// vc.setText("Terms.txt")
     /// navigationController.pushViewController(vc, animated: true)
