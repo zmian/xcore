@@ -63,7 +63,7 @@ extension String {
 
     /// Determine whether the string is a valid url.
     public var isValidUrl: Bool {
-        if let url = URL(string: self) , url.host != nil {
+        if let url = URL(string: self), url.host != nil {
             return true
         }
 

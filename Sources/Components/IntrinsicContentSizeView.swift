@@ -25,8 +25,7 @@
 import UIKit
 
 open class IntrinsicContentSizeView: UIView {
-
-    open var contentSize: CGSize {
+    open var contentSize: CGSize = .zero {
         didSet {
             invalidateIntrinsicContentSize()
         }
@@ -42,7 +41,7 @@ open class IntrinsicContentSizeView: UIView {
     }
 
     public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
 
     open override var intrinsicContentSize: CGSize {
@@ -51,8 +50,7 @@ open class IntrinsicContentSizeView: UIView {
 }
 
 open class IntrinsicContentSizeImageView: UIImageView {
-
-    open var contentSize: CGSize {
+    open var contentSize: CGSize = .zero {
         didSet {
             invalidateIntrinsicContentSize()
         }
@@ -68,7 +66,7 @@ open class IntrinsicContentSizeImageView: UIImageView {
     }
 
     public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
 
     open override var intrinsicContentSize: CGSize {
