@@ -166,6 +166,8 @@ extension Int {
     }
 }
 
+// TODO: Swift 4
+// SignedInteger -> Numeric
 extension SignedInteger {
     public var digitsCount: Self {
         return numberOfDigits(in: self)
@@ -177,6 +179,26 @@ extension SignedInteger {
         } else {
             return 1 + numberOfDigits(in: number / 10)
         }
+    }
+}
+
+// TODO: Swift 4
+// SignedNumber -> SignedNumeric
+extension SignedNumber {
+    /// Replaces the sign to its inverse.
+    ///
+    /// ```swift
+    /// var x = 21.5
+    /// x.invertSign()
+    /// // x == -21.5
+    ///
+    /// var x = -21.5
+    /// x.invertSign()
+    /// // x == 21.5
+    ///
+    /// ```
+    public func invertSign() -> Self {
+        return self < 0 ? abs(self) : -self
     }
 }
 
