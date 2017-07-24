@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>UITabBar Extension Reference</title>
+    <title>SignedNumber Extension Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Extension/UITabBar" class="dashAnchor"></a>
-    <a title="UITabBar Extension Reference"></a>
+    <a name="//apple_ref/swift/Extension/SignedNumber" class="dashAnchor"></a>
+    <a title="SignedNumber Extension Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">Xcore Docs</a> (26% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">Xcore Reference</a>
         <img id="carat" src="../img/carat.png" />
-        UITabBar Extension Reference
+        SignedNumber Extension Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -525,7 +525,13 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>UITabBar</h1>
+            <h1>SignedNumber</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">SignedNumber</span> <span class="p">:</span> <span class="kt">Comparable</span><span class="p">,</span> <span class="kt">ExpressibleByIntegerLiteral</span></code></pre>
+
+                </div>
+              </div>
             
           </section>
           <section class="section task-group-section">
@@ -534,9 +540,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vE5XcoreCSo8UITabBar13isTransparentSb"></a>
-                    <a name="//apple_ref/swift/Property/isTransparent" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vE5XcoreCSo8UITabBar13isTransparentSb">isTransparent</a>
+                    <a name="/s:FE5XcorePs12SignedNumber10invertSignFT_x"></a>
+                    <a name="//apple_ref/swift/Method/invertSign()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:FE5XcorePs12SignedNumber10invertSignFT_x">invertSign()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -544,55 +550,28 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Replaces the sign to its inverse.</p>
+<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">x</span> <span class="o">=</span> <span class="mf">21.5</span>
+<span class="n">x</span><span class="o">.</span><span class="nf">invertSign</span><span class="p">()</span>
+<span class="c1">// x == -21.5</span>
+
+<span class="k">var</span> <span class="nv">x</span> <span class="o">=</span> <span class="o">-</span><span class="mf">21.5</span>
+<span class="n">x</span><span class="o">.</span><span class="nf">invertSign</span><span class="p">()</span>
+<span class="c1">// x == 21.5</span>
+
+</code></pre>
 
                       </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIBarExtensions.swift#L83-L98">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vE5XcoreCSo8UITabBar14isBorderHiddenSb"></a>
-                    <a name="//apple_ref/swift/Property/isBorderHidden" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vE5XcoreCSo8UITabBar14isBorderHiddenSb">isBorderHidden</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">invertSign</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
 
+                        </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIBarExtensions.swift#L100-L103">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FE5XcoreCSo8UITabBar9setBorderFT5colorCSo7UIColor9thicknessV12CoreGraphics7CGFloat_T_"></a>
-                    <a name="//apple_ref/swift/Method/setBorder(color:thickness:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE5XcoreCSo8UITabBar9setBorderFT5colorCSo7UIColor9thicknessV12CoreGraphics7CGFloat_T_">setBorder(color:thickness:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIBarExtensions.swift#L105-L108">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/SwiftExtensions.swift#L200-L202">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
