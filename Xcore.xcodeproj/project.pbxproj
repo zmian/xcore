@@ -100,6 +100,7 @@
 		689869EA1E9992E600CE7B77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 689869E31E9992E600CE7B77 /* Main.storyboard */; };
 		689D0D1B1D8DBE6400145E0B /* XcoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0D181D8DBE5C00145E0B /* XcoreTests.swift */; };
 		68C392FE1E99D327009D8D58 /* PredicateQueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */; };
+		68C539471F2813E3004E817F /* Colorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C539451F2813DD004E817F /* Colorable.swift */; };
 		975C9436F0C35B14D6B8FFF0 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C773C4D476BF4309831EDE03 /* Pods_Example.framework */; };
 		CDE69BBCB1B78A0EB89C5FCD /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F555E9FA859A59DB03B60C /* Pods_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -218,6 +219,7 @@
 		689D0D171D8DBE5C00145E0B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		689D0D181D8DBE5C00145E0B /* XcoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XcoreTests.swift; sourceTree = "<group>"; };
 		68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredicateQueryTests.swift; sourceTree = "<group>"; };
+		68C539451F2813DD004E817F /* Colorable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colorable.swift; sourceTree = "<group>"; };
 		84F555E9FA859A59DB03B60C /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C773C4D476BF4309831EDE03 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -434,6 +436,7 @@
 				689056281F1C1E4000443BDB /* NibInstantiable.swift */,
 				689056291F1C1E4000443BDB /* OptionsRepresentable.swift */,
 				6890562A1F1C1E4000443BDB /* Serializable.swift */,
+				68C539451F2813DD004E817F /* Colorable.swift */,
 				6890562B1F1C1E4000443BDB /* StoryboardInstantiable.swift */,
 			);
 			path = Protocols;
@@ -713,7 +716,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		5BE9722313574F744C1C0FDB /* [CP] Copy Pods Resources */ = {
@@ -758,7 +761,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		CC127E2582880FEC5AAA2FED /* [CP] Copy Pods Resources */ = {
@@ -793,6 +796,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				689056821F1C1E4000443BDB /* OptionsRepresentable.swift in Sources */,
+				68C539471F2813E3004E817F /* Colorable.swift in Sources */,
 				689056701F1C1E4000443BDB /* UIDevice+Model.swift in Sources */,
 				689056731F1C1E4000443BDB /* UIGeometryExtensions.swift in Sources */,
 				689056751F1C1E4000443BDB /* UIImageViewExtensions.swift in Sources */,
