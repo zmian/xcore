@@ -30,7 +30,7 @@ extension UIImageView {
     /// - parameter named:  The name of the image.
     /// - parameter bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the main bundle.
     public func image(named: String, bundle: Bundle? = nil) {
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .userInteractive).async {
             let image = UIImage(named: named, in: bundle, compatibleWith: nil)
             DispatchQueue.main.async { [weak self] in
                 self?.image = image

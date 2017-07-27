@@ -57,7 +57,7 @@ extension UIImageView {
                 }
             }
         } else {
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            DispatchQueue.global(qos: .userInteractive).async { [weak self] in
                 guard let strongSelf = self, let image = UIImage(named: named) else {
                     DispatchQueue.main.async {
                         callback?(nil)
@@ -109,7 +109,7 @@ extension UIImage {
                 }
             )
         } else {
-            DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.global(qos: .userInteractive).async {
                 guard let image = UIImage(named: named, in: bundle, compatibleWith: nil) else {
                     DispatchQueue.main.async {
                         callback(nil)
