@@ -26,9 +26,23 @@ import UIKit
 
 extension UIScrollView {
     public enum ScrollDirection {
-        case none, up, down, left, right, unknown
+        case none
+        case up
+        case down
+        case left
+        case right
+        case unknown
+
+        var isVertical: Bool {
+            return self == .up || self == .down
+        }
+
+        var isHorizontal: Bool {
+            return self == .left || self == .right
+        }
     }
 
+    /// The scroll direction of the scroll view.
     public var scrollDirection: ScrollDirection {
         let translation = panGestureRecognizer.translation(in: superview)
 
