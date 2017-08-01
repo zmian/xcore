@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		68646A001F30A3C700212A05 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686469FF1F30A3C700212A05 /* Observer.swift */; };
 		689056361F1C1E4000443BDB /* Benchmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689055D41F1C1E4000443BDB /* Benchmark.swift */; };
 		689056371F1C1E4000443BDB /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689055D51F1C1E4000443BDB /* Console.swift */; };
 		689056381F1C1E4000443BDB /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689055D61F1C1E4000443BDB /* Debugger.swift */; };
@@ -121,6 +122,7 @@
 		4F7DCE5F8350BCAF06C38805 /* Pods_Xcore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Xcore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		56D96A853E1B0EC4E75E0691 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		5D3CFC269887586363462B4B /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
+		686469FF1F30A3C700212A05 /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		689055D41F1C1E4000443BDB /* Benchmark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Benchmark.swift; sourceTree = "<group>"; };
 		689055D51F1C1E4000443BDB /* Console.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		689055D61F1C1E4000443BDB /* Debugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				689055DA1F1C1E4000443BDB /* Request.swift */,
 				689055DB1F1C1E4000443BDB /* XCConfiguration.swift */,
 				689055DC1F1C1E4000443BDB /* XCUserDefault.swift */,
+				686469FF1F30A3C700212A05 /* Observer.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -801,6 +804,7 @@
 				689056731F1C1E4000443BDB /* UIGeometryExtensions.swift in Sources */,
 				689056751F1C1E4000443BDB /* UIImageViewExtensions.swift in Sources */,
 				689056661F1C1E4000443BDB /* FoundationExtensions.swift in Sources */,
+				68646A001F30A3C700212A05 /* Observer.swift in Sources */,
 				689056411F1C1E4000443BDB /* XCCollectionViewDataSource.swift in Sources */,
 				689056401F1C1E4000443BDB /* XCCollectionViewComposedDataSource.swift in Sources */,
 				689056581F1C1E4000443BDB /* UIImage+AssetIdentifier.swift in Sources */,
