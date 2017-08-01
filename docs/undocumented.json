@@ -155,6 +155,62 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 34,
+      "symbol": "Weak.value",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 36,
+      "symbol": "Weak.init(value:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 45,
+      "symbol": "Observer",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 46,
+      "symbol": "Observer.owner",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 47,
+      "symbol": "Observer.handler",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 49,
+      "symbol": "Observer.init(owner:handler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 55,
+      "symbol": "Observers",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 59,
+      "symbol": "Observers.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/PredicateQuery.swift",
       "line": 85,
       "symbol": "PredicateQuery",
@@ -5456,50 +5512,43 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIScrollViewExtensions.swift",
       "line": 29,
-      "symbol": "UIScrollView.ScrollDirection.down",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIScrollViewExtensions.swift",
-      "line": 29,
-      "symbol": "UIScrollView.ScrollDirection.left",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIScrollViewExtensions.swift",
-      "line": 29,
       "symbol": "UIScrollView.ScrollDirection.none",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIScrollViewExtensions.swift",
-      "line": 29,
-      "symbol": "UIScrollView.ScrollDirection.right",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIScrollViewExtensions.swift",
-      "line": 29,
-      "symbol": "UIScrollView.ScrollDirection.unknown",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIScrollViewExtensions.swift",
-      "line": 29,
+      "line": 30,
       "symbol": "UIScrollView.ScrollDirection.up",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIScrollViewExtensions.swift",
+      "line": 31,
+      "symbol": "UIScrollView.ScrollDirection.down",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIScrollViewExtensions.swift",
       "line": 32,
-      "symbol": "UIScrollView.scrollDirection",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "UIScrollView.ScrollDirection.left",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIScrollViewExtensions.swift",
+      "line": 33,
+      "symbol": "UIScrollView.ScrollDirection.right",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIScrollViewExtensions.swift",
+      "line": 34,
+      "symbol": "UIScrollView.ScrollDirection.unknown",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
