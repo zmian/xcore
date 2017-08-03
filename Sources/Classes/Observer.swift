@@ -66,6 +66,11 @@ open class Observers {
 
     // MARK: Notify API
 
+    /// A boolean property to suppress notifications and This flag value is checked
+    /// before firing any notification calls to the registered observers.
+    /// The default value is `false`, meaning all notifications will be fired.
+    open var suppressNotifications: Bool = false
+
     /// Invokes each registered observer if `oldValue` is different than `newValue`.
     open func notifyIfNeeded<T: Equatable>(_ oldValue: T, newValue: T) {
         guard oldValue != newValue else { return }
@@ -87,6 +92,7 @@ open class Observers {
     /// Invokes each registered observer.
     open func notify() {
         flatten()
+        guard !suppressNotifications else { return }
         observers.forEach { $0.handler?() }
     }
 }
@@ -133,6 +139,6 @@ public func ==<T: Equatable>(lhs: Observer?, rhs: T) -> Bool where T: AnyObject 
     guard let lhs = lhs else {
         return false
     }
-    
+
     return lhs.equals(rhs)
 }
