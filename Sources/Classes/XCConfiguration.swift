@@ -67,6 +67,12 @@ public struct XCConfiguration<Type> {
     }
 }
 
+extension XCConfiguration: Equatable {
+    public static func ==(lhs: XCConfiguration, rhs: XCConfiguration) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+}
+
 extension UILabel {
     public convenience init(text: String? = nil, style: XCConfiguration<UILabel>) {
         self.init()
