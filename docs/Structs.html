@@ -415,6 +415,9 @@
                 <a href="Functions.html#/s:F5Xcoreoi2peFTRVSC6CGSizeV12CoreGraphics7CGFloat_T_">+=(_:_:)</a>
               </li>
               <li class="nav-group-task">
+                <a href="Functions.html#/s:F5Xcoreoi2eeuRxs9AnyObjectxs9EquatablerFTGSqCS_8Observer_x_Sb">==(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Functions.html#/s:F5Xcore4TODOFSST_">TODO(_:)</a>
               </li>
               <li class="nav-group-task">
@@ -454,6 +457,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/EnumIteratable.html">EnumIteratable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/EquatableByPointer.html">EquatableByPointer</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/FadeAnimatorBounceable.html">FadeAnimatorBounceable</a>
@@ -496,6 +502,9 @@
           <li class="nav-group-name">
             <a href="Structs.html">Structs</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/AnyEquatable.html">AnyEquatable</a>
+              </li>
               <li class="nav-group-task">
                 <a href="Structs/ArrayIterator.html">ArrayIterator</a>
               </li>
@@ -541,6 +550,64 @@
 
           </section>
           <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:V5Xcore12AnyEquatable"></a>
+                    <a name="//apple_ref/swift/Struct/AnyEquatable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:V5Xcore12AnyEquatable">AnyEquatable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type-erased equatable value.</p>
+
+<p>The <code>AnyEquatable</code> type forwards equality comparisons operations
+to an underlying equatable value, hiding its specific underlying type.</p>
+
+<p>You can store mixed-type keys in dictionaries and other collections that
+require <code>Equatable</code> conformance by wrapping mixed-type keys in
+<code>AnyEquatable</code> instances:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">descriptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">AnyEquatable</span><span class="p">(</span><span class="s">"😄"</span><span class="p">):</span> <span class="s">"emoji"</span><span class="p">,</span>
+    <span class="kt">AnyEquatable</span><span class="p">(</span><span class="mi">42</span><span class="p">):</span> <span class="s">"an Int"</span><span class="p">,</span>
+    <span class="kt">AnyEquatable</span><span class="p">(</span><span class="kt">Int8</span><span class="p">(</span><span class="mi">43</span><span class="p">)):</span> <span class="s">"an Int8"</span><span class="p">,</span>
+    <span class="kt">AnyEquatable</span><span class="p">(</span><span class="kt">Set</span><span class="p">([</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">])):</span> <span class="s">"a set of strings"</span>
+<span class="p">]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">descriptions</span><span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="mi">42</span><span class="p">)]</span><span class="o">!</span><span class="p">)</span>      <span class="c1">// prints "an Int"</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">descriptions</span><span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="mi">43</span><span class="p">)])</span>       <span class="c1">// prints "nil"</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">descriptions</span><span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="kt">Int8</span><span class="p">(</span><span class="mi">43</span><span class="p">))]</span><span class="o">!</span><span class="p">)</span> <span class="c1">// prints "an Int8"</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">descriptions</span><span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="kt">Set</span><span class="p">([</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">]))]</span><span class="o">!</span><span class="p">)</span> <span class="c1">// prints "a set of strings"</span>
+
+<span class="k">let</span> <span class="nv">arr</span> <span class="o">=</span> <span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="n">😄</span><span class="p">),</span> <span class="kt">AnyEquatable</span><span class="p">(</span><span class="s">"cat"</span><span class="p">),</span> <span class="kt">AnyEquatable</span><span class="p">(</span><span class="mi">42</span><span class="p">)]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="n">😄</span><span class="p">)))</span> <span class="c1">// -&gt; true</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="s">"dog"</span><span class="p">)))</span> <span class="c1">// -&gt; false</span>
+</code></pre>
+
+                        <a href="Structs/AnyEquatable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">AnyEquatable</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Classes/AnyEquatable.swift#L53-L61">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
             <div class="task-group">
               <ul>
                 <li class="item">

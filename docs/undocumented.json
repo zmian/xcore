@@ -1,6 +1,20 @@
 {
   "warnings": [
     {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/AnyEquatable.swift",
+      "line": 54,
+      "symbol": "AnyEquatable.base",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/AnyEquatable.swift",
+      "line": 57,
+      "symbol": "AnyEquatable.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Console.swift",
       "line": 27,
       "symbol": "console",
@@ -156,58 +170,79 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 34,
-      "symbol": "Weak.value",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 36,
-      "symbol": "Weak.init(value:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 45,
+      "line": null,
       "symbol": "Observer",
-      "symbol_kind": "source.lang.swift.decl.class",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 46,
-      "symbol": "Observer.owner",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 47,
-      "symbol": "Observer.handler",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 49,
-      "symbol": "Observer.init(owner:handler:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 59,
+      "line": 27,
       "symbol": "Observers",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 63,
+      "line": 31,
       "symbol": "Observers.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 94,
+      "symbol": "Observer",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 96,
+      "symbol": "Observer.owner",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 97,
+      "symbol": "Observer.handler",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 99,
+      "symbol": "Observer.init(owner:handler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 115,
+      "symbol": "Observer.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 119,
+      "symbol": "Observer.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 123,
+      "symbol": "Observer.==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
+      "line": 132,
+      "symbol": "==(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
     },
     {
@@ -536,6 +571,20 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Request.swift",
       "line": 150,
       "symbol": "URL.init(string:queryParameters:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Weak.swift",
+      "line": 34,
+      "symbol": "Weak.value",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Weak.swift",
+      "line": 36,
+      "symbol": "Weak.init(value:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -5696,6 +5745,20 @@
       "line": 50,
       "symbol": "EnumIteratable.rawValues",
       "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Protocols/EquatableByPointer.swift",
+      "line": null,
+      "symbol": "EquatableByPointer",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Protocols/EquatableByPointer.swift",
+      "line": 25,
+      "symbol": "EquatableByPointer",
+      "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
