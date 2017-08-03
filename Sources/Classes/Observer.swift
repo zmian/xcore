@@ -42,7 +42,7 @@ open class Weak<T: AnyObject>: Equatable {
     }
 }
 
-public struct Observer<T: AnyObject> {
+public class Observer<T: AnyObject>: Equatable where T: Equatable {
     public weak var owner: T?
     public var handler: (() -> Void)?
 
@@ -50,9 +50,13 @@ public struct Observer<T: AnyObject> {
         self.owner = owner
         self.handler = handler
     }
+
+    open static func ==<T>(lhs: Observer<T>, rhs: Observer<T>) -> Bool {
+        return lhs.owner === rhs.owner
+    }
 }
 
-open class Observers<T: AnyObject> {
+open class Observers<T: AnyObject> where T: Equatable {
     /// A list of all observers.
     open var observers = [Observer<T>]()
 
@@ -63,8 +67,19 @@ open class Observers<T: AnyObject> {
     // MARK: Observer API
 
     /// Register an observer.
-    open func observe(owner: T, _ handler: @escaping () -> Void) {
-        observers.append(Observer(owner: owner, handler: handler))
+    open func addObserver(_ owner: T, _ handler: @escaping () -> Void) {
+        if let existingObserverIndex = observers.index(where: { $0.owner == owner }) {
+            observers[existingObserverIndex].handler = handler
+        } else {
+            observers.append(Observer(owner: owner, handler: handler))
+        }
+    }
+
+    /// Remove given observer.
+    open func removeObserver(_ owner: T) {
+        if let existingObserverIndex = observers.index(where: { $0.owner == owner }) {
+            observers.remove(at: existingObserverIndex)
+        }
     }
 
     /// Remove all observers.
