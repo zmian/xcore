@@ -24,41 +24,9 @@
 
 import Foundation
 
-/// A generic class to hold a weak reference to a type `T`.
-/// This is useful for holding a reference to nullable object.
-///
-/// ```swift
-/// let views = [Weak<UIView>]()
-/// ```
-open class Weak<T: AnyObject>: Equatable {
-    open weak var value: T?
-
-    public init (value: T) {
-        self.value = value
-    }
-
-    open static func ==<T>(lhs: Weak<T>, rhs: Weak<T>) -> Bool {
-        return lhs.value === rhs.value
-    }
-}
-
-public class Observer<T: AnyObject>: Equatable where T: Equatable {
-    public weak var owner: T?
-    public var handler: (() -> Void)?
-
-    public init(owner: T, handler: @escaping () -> Void) {
-        self.owner = owner
-        self.handler = handler
-    }
-
-    open static func ==<T>(lhs: Observer<T>, rhs: Observer<T>) -> Bool {
-        return lhs.owner === rhs.owner
-    }
-}
-
-open class Observers<T: AnyObject> where T: Equatable {
+open class Observers {
     /// A list of all observers.
-    open var observers = [Observer<T>]()
+    open var observers = [Observer]()
 
     public init() {
         // Must have a public init for client code to initialize this class.
@@ -67,17 +35,17 @@ open class Observers<T: AnyObject> where T: Equatable {
     // MARK: Observer API
 
     /// Register an observer.
-    open func addObserver(_ owner: T, _ handler: @escaping () -> Void) {
-        if let existingObserverIndex = observers.index(where: { $0.owner == owner }) {
+    open func addObserver<T: AnyObject>(_ owner: T, _ handler: @escaping () -> Void) where T: Equatable {
+        if let existingObserverIndex = observers.index(where: { $0 == owner }) {
             observers[existingObserverIndex].handler = handler
         } else {
             observers.append(Observer(owner: owner, handler: handler))
         }
     }
 
-    /// Remove given observer.
-    open func removeObserver(_ owner: T) {
-        if let existingObserverIndex = observers.index(where: { $0.owner == owner }) {
+    /// Remove given observers.
+    open func removeObserver<T: AnyObject>(_ owner: T) where T: Equatable {
+        if let existingObserverIndex = observers.index(where: { $0 == owner }) {
             observers.remove(at: existingObserverIndex)
         }
     }
@@ -121,4 +89,50 @@ open class Observers<T: AnyObject> where T: Equatable {
         flatten()
         observers.forEach { $0.handler?() }
     }
+}
+
+public class Observer {
+    fileprivate let equals: (AnyObject) -> Bool
+    public weak var owner: AnyObject?
+    public var handler: (() -> Void)?
+
+    public init<T: Equatable>(owner: T, handler: @escaping () -> Void) where T: AnyObject {
+        self.owner = owner
+        self.handler = handler
+        self.equals = { $0 as? T == owner }
+    }
+}
+
+extension Observer: Equatable {
+    public static func ==(lhs: Observer, rhs: Observer) -> Bool {
+        guard let _ = lhs.owner, let rhsOwner = rhs.owner else {
+            return false
+        }
+
+        return lhs.equals(rhsOwner)
+    }
+
+    public static func ==<T: Equatable>(lhs: T, rhs: Observer) -> Bool where T: AnyObject {
+        return rhs.equals(lhs)
+    }
+
+    public static func ==<T: Equatable>(lhs: Observer, rhs: T) -> Bool where T: AnyObject {
+        return lhs.equals(rhs)
+    }
+
+    public static func ==<T: Equatable>(lhs: T?, rhs: Observer) -> Bool where T: AnyObject {
+        guard let lhs = lhs else {
+            return false
+        }
+
+        return rhs.equals(lhs)
+    }
+}
+
+public func ==<T: Equatable>(lhs: Observer?, rhs: T) -> Bool where T: AnyObject {
+    guard let lhs = lhs else {
+        return false
+    }
+    
+    return lhs.equals(rhs)
 }
