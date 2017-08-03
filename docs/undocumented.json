@@ -172,7 +172,7 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
       "line": 45,
       "symbol": "Observer",
-      "symbol_kind": "source.lang.swift.decl.struct",
+      "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
@@ -198,14 +198,14 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 55,
+      "line": 59,
       "symbol": "Observers",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 59,
+      "line": 63,
       "symbol": "Observers.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

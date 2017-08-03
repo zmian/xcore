@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Observer Struct Reference</title>
+    <title>Observer Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Struct/Observer" class="dashAnchor"></a>
-    <a title="Observer Struct Reference"></a>
+    <a name="//apple_ref/swift/Class/Observer" class="dashAnchor"></a>
+    <a title="Observer Class Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">Xcore Docs</a> (27% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">Xcore Reference</a>
         <img id="carat" src="../img/carat.png" />
-        Observer Struct Reference
+        Observer Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -70,6 +70,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/IntrinsicContentSizeView.html">IntrinsicContentSizeView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Observer.html">Observer</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/Observers.html">Observers</a>
@@ -513,9 +516,6 @@
                 <a href="../Structs/LayoutGuideOptions.html">LayoutGuideOptions</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/Observer.html">Observer</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Structs/PredicateQuery.html">PredicateQuery</a>
               </li>
               <li class="nav-group-task">
@@ -547,9 +547,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV5Xcore8Observer5ownerXwGSqx_"></a>
+                    <a name="/s:vC5Xcore8Observer5ownerXwGSqx_"></a>
                     <a name="//apple_ref/swift/Property/owner" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV5Xcore8Observer5ownerXwGSqx_">owner</a>
+                    <a class="token" href="#/s:vC5Xcore8Observer5ownerXwGSqx_">owner</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -569,9 +569,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV5Xcore8Observer7handlerGSqFT_T__"></a>
+                    <a name="/s:vC5Xcore8Observer7handlerGSqFT_T__"></a>
                     <a name="//apple_ref/swift/Property/handler" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV5Xcore8Observer7handlerGSqFT_T__">handler</a>
+                    <a class="token" href="#/s:vC5Xcore8Observer7handlerGSqFT_T__">handler</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -591,9 +591,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV5Xcore8ObservercFT5ownerx7handlerFT_T__GS0_x_"></a>
+                    <a name="/s:FC5Xcore8ObservercFT5ownerx7handlerFT_T__GS0_x_"></a>
                     <a name="//apple_ref/swift/Method/init(owner:handler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV5Xcore8ObservercFT5ownerx7handlerFT_T__GS0_x_">init(owner:handler:)</a>
+                    <a class="token" href="#/s:FC5Xcore8ObservercFT5ownerx7handlerFT_T__GS0_x_">init(owner:handler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -610,12 +610,72 @@
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFPs9Equatableoi2eeFTxx_Sb"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFPs9Equatableoi2eeFTxx_Sb">==(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Observer</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Observer</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rhs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Classes/Observer.swift#L54-L56">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2017-08-01)</p>
+          <p>&copy; 2017 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2017-08-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
