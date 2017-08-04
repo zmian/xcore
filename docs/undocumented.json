@@ -1,6 +1,125 @@
 {
   "warnings": [
     {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/MFMailComposeViewController+Blocks.swift",
+      "line": 48,
+      "symbol": "MFMailComposeViewController.shouldAutoDismiss",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/MFMailComposeViewController+Blocks.swift",
+      "line": 56,
+      "symbol": "MFMailComposeViewController.mailComposeController(_:didFinishWith:error:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/MFMailComposeViewController+Blocks.swift",
+      "line": 66,
+      "symbol": "MFMailComposeViewController.didFinishWithResult(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/TargetActionBlockRepresentable.swift",
+      "line": null,
+      "symbol": "TargetActionBlockRepresentable",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/TargetActionBlockRepresentable.swift",
+      "line": null,
+      "symbol": "TargetActionBlockRepresentable",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/TargetActionBlockRepresentable.swift",
+      "line": 28,
+      "symbol": "TargetActionBlockRepresentable",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/UIBarButtonItem+Blocks.swift",
+      "line": 80,
+      "symbol": "TargetActionBlockRepresentable.init(image:landscapeImagePhone:style:handler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/UIBarButtonItem+Blocks.swift",
+      "line": 85,
+      "symbol": "TargetActionBlockRepresentable.init(title:style:handler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/UIBarButtonItem+Blocks.swift",
+      "line": 90,
+      "symbol": "TargetActionBlockRepresentable.init(barButtonSystemItem:handler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/UIControl+Blocks.swift",
+      "line": null,
+      "symbol": "ControlTargetActionBlockRepresentable",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/UIControl+Blocks.swift",
+      "line": null,
+      "symbol": "ControlTargetActionBlockRepresentable",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/UIControl+Blocks.swift",
+      "line": 59,
+      "symbol": "ControlTargetActionBlockRepresentable",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/UIControl+Blocks.swift",
+      "line": 61,
+      "symbol": "ControlTargetActionBlockRepresentable.addAction(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/UIControl+Blocks.swift",
+      "line": 62,
+      "symbol": "ControlTargetActionBlockRepresentable.removeAction(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/UIControl+Blocks.swift",
+      "line": 66,
+      "symbol": "ControlTargetActionBlockRepresentable.addAction(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/UIControl+Blocks.swift",
+      "line": 81,
+      "symbol": "ControlTargetActionBlockRepresentable.removeAction(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/UIGestureRecognizer+Blocks.swift",
+      "line": 78,
+      "symbol": "TargetActionBlockRepresentable.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/AnyEquatable.swift",
       "line": 54,
       "symbol": "AnyEquatable.base",
@@ -191,56 +310,56 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 94,
+      "line": 100,
       "symbol": "Observer",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 96,
+      "line": 102,
       "symbol": "Observer.owner",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 97,
+      "line": 103,
       "symbol": "Observer.handler",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 99,
+      "line": 105,
       "symbol": "Observer.init(owner:handler:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 115,
+      "line": 121,
       "symbol": "Observer.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 119,
+      "line": 125,
       "symbol": "Observer.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 123,
+      "line": 129,
       "symbol": "Observer.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 132,
+      "line": 138,
       "symbol": "==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
@@ -618,14 +737,14 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/XCConfiguration.swift",
-      "line": 71,
+      "line": 77,
       "symbol": "UILabel.init(text:style:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/XCConfiguration.swift",
-      "line": 77,
+      "line": 83,
       "symbol": "UILabel.init(text:attributes:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -2508,49 +2627,49 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 177,
+      "line": 173,
       "symbol": "IconLabelCollectionView.numberOfSections(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 181,
+      "line": 177,
       "symbol": "IconLabelCollectionView.collectionView(_:numberOfItemsInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 185,
+      "line": 181,
       "symbol": "IconLabelCollectionView.collectionView(_:cellForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 197,
+      "line": 193,
       "symbol": "IconLabelCollectionView.collectionView(_:didSelectItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 203,
+      "line": 199,
       "symbol": "IconLabelCollectionView.collectionView(_:willDisplay:forItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 210,
+      "line": 206,
       "symbol": "IconLabelCollectionView.collectionView(_:canMoveItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 214,
+      "line": 210,
       "symbol": "IconLabelCollectionView.collectionView(_:moveItemAt:to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -4342,7 +4461,21 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIAlertControllerExtensions.swift",
-      "line": 36,
+      "line": 27,
+      "symbol": "PopoverPresentationSourceView",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIAlertControllerExtensions.swift",
+      "line": 35,
+      "symbol": "UIPopoverPresentationController.setSourceView(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIAlertControllerExtensions.swift",
+      "line": 55,
       "symbol": "UIAlertController.show(presentingViewController:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -4405,7 +4538,7 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIButtonExtensions.swift",
-      "line": 191,
+      "line": 193,
       "symbol": "UIButton.point(inside:with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -5317,97 +5450,6 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIImageExtensions.swift",
       "line": 90,
       "symbol": "UIImage.resize(to:tintColor:completionHandler:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitBlocks.swift",
-      "line": null,
-      "symbol": "XCUIControlEventsBlockRepresentable",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitBlocks.swift",
-      "line": 84,
-      "symbol": "UIBarButtonItem.init(image:landscapeImagePhone:style:handler:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitBlocks.swift",
-      "line": 89,
-      "symbol": "UIBarButtonItem.init(title:style:handler:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitBlocks.swift",
-      "line": 94,
-      "symbol": "UIBarButtonItem.init(barButtonSystemItem:handler:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitBlocks.swift",
-      "line": 133,
-      "symbol": "XCUIControlEventsBlockRepresentable",
-      "symbol_kind": "source.lang.swift.decl.protocol",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitBlocks.swift",
-      "line": 136,
-      "symbol": "XCUIControlEventsBlockRepresentable.addAction(_:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitBlocks.swift",
-      "line": 137,
-      "symbol": "XCUIControlEventsBlockRepresentable.removeAction(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitBlocks.swift",
-      "line": 141,
-      "symbol": "XCUIControlEventsBlockRepresentable.addAction(_:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitBlocks.swift",
-      "line": 156,
-      "symbol": "XCUIControlEventsBlockRepresentable.removeAction(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitBlocks.swift",
-      "line": 184,
-      "symbol": "MFMailComposeViewController.shouldAutoDismiss",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitBlocks.swift",
-      "line": 192,
-      "symbol": "MFMailComposeViewController.mailComposeController(_:didFinishWith:error:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitBlocks.swift",
-      "line": 202,
-      "symbol": "MFMailComposeViewController.didFinishWithResult(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitBlocks.swift",
-      "line": 235,
-      "symbol": "UIGestureRecognizer.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
