@@ -124,7 +124,9 @@ extension UIButton {
         }
         setBackgroundImage(image, for: .disabled)
     }
+}
 
+extension ControlTargetActionBlockRepresentable where Self: UIButton {
     /// Creates and returns a new button of the specified type with action handler.
     ///
     /// - parameter image:            The image to use for the normal state.
@@ -132,7 +134,7 @@ extension UIButton {
     /// - parameter handler:          The block to invoke when the button is tapped.
     ///
     /// - returns: A newly created button.
-    public convenience init(image: UIImage?, highlightedImage: UIImage? = nil, handler: ((_ sender: UIButton) -> Void)? = nil) {
+    public init(image: UIImage?, highlightedImage: UIImage? = nil, handler: ((_ sender: Self) -> Void)? = nil) {
         self.init(type: .custom)
         setImage(image, for: .normal)
         setImage(highlightedImage, for: .highlighted)
@@ -149,7 +151,7 @@ extension UIButton {
     /// - parameter handler:    The block to invoke when the button is tapped.
     ///
     /// - returns: A newly created button.
-    public convenience init(imageNamed: String, handler: ((_ sender: UIButton) -> Void)? = nil) {
+    public init(imageNamed: String, handler: ((_ sender: Self) -> Void)? = nil) {
         self.init(image: nil, handler: handler)
         imageView?.remoteOrLocalImage(imageNamed) { [weak self] image in
             self?.setImage(image, for: .normal)
