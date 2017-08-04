@@ -105,7 +105,13 @@ public class Observer {
     public init<T: Equatable>(owner: T, handler: @escaping () -> Void) where T: AnyObject {
         self.owner = owner
         self.handler = handler
-        self.equals = { $0 as? T == owner }
+        self.equals = { [weak owner] otherOwner in
+            guard let owner = owner else {
+                return false
+            }
+
+            return otherOwner as? T == owner
+        }
     }
 }
 
