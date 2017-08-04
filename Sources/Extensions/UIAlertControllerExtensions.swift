@@ -24,6 +24,25 @@
 
 import UIKit
 
+public protocol PopoverPresentationSourceView {
+
+}
+
+extension UIView: PopoverPresentationSourceView { }
+extension UIBarButtonItem: PopoverPresentationSourceView { }
+
+extension UIPopoverPresentationController {
+    public func setSourceView(_ sourceView: PopoverPresentationSourceView) {
+        // For iPad support
+        if let sourceView = sourceView as? UIView {
+            self.sourceView = sourceView
+            self.sourceRect = sourceView.bounds
+        } else if let sourceView = sourceView as? UIBarButtonItem {
+            self.barButtonItem = sourceView
+        }
+    }
+}
+
 /// Displays an instance of `UIAlertController` with the given `title` and `message`, and an OK button to dismiss it.
 public func alert(title: String = "", message: String = "") {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -59,12 +78,11 @@ extension UIAlertController {
     /// - parameter automaticallyAppendCancelAction: An option to automatically append cancel action in addition to the provided array of actions.
     ///                                              The default value is `true`.
     @discardableResult
-    open static func present(actions: [UIAlertAction], title: String? = nil, message: String? = nil, sourceView: UIView, style: UIAlertControllerStyle = .actionSheet, automaticallyAppendCancelAction: Bool = true) -> UIAlertController {
+    open static func present(actions: [UIAlertAction], title: String? = nil, message: String? = nil, sourceView: PopoverPresentationSourceView, style: UIAlertControllerStyle = .actionSheet, automaticallyAppendCancelAction: Bool = true) -> UIAlertController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
 
         // For iPad support
-        alertController.popoverPresentationController?.sourceView = sourceView
-        alertController.popoverPresentationController?.sourceRect = sourceView.bounds
+        alertController.popoverPresentationController?.setSourceView(sourceView)
 
         for action in actions {
             alertController.addAction(action)
@@ -96,7 +114,7 @@ extension UIAlertController {
     /// - parameter sourceView: A source view that presented the alert. A required property for iPad support.
     /// - parameter handler:    A block to invoke when an option is selected.
     @discardableResult
-    open static func present(options: [String], title: String? = nil, message: String? = nil, sourceView: UIView, _ handler: @escaping (_ option: String) -> Void) -> UIAlertController {
+    open static func present(options: [String], title: String? = nil, message: String? = nil, sourceView: PopoverPresentationSourceView, _ handler: @escaping (_ option: String) -> Void) -> UIAlertController {
         let actions = options.map { option in
             UIAlertAction(title: option, style: .default) { _ in
                 handler(option)
@@ -127,7 +145,7 @@ extension UIAlertController {
     /// - parameter sourceView: A source view that presented the alert. A required property for iPad support.
     /// - parameter handler:    A block to invoke when an option is selected.
     @discardableResult
-    open static func present<T: OptionsRepresentable>(sourceView: UIView, _ handler: @escaping (_ option: T) -> Void) -> UIAlertController {
+    open static func present<T: OptionsRepresentable>(sourceView: PopoverPresentationSourceView, _ handler: @escaping (_ option: T) -> Void) -> UIAlertController {
         let options = T.allValues
         let actions = options.map { option in
             UIAlertAction(title: option.description, style: .default) { _ in

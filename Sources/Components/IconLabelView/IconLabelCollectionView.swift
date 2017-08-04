@@ -146,26 +146,22 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
     // MARK: UILongPressGestureRecognizer
 
     fileprivate lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
-        let gestureRecognizer = UILongPressGestureRecognizer()
-
-        gestureRecognizer.addAction {[weak self, weak gestureRecognizer] in
-            guard let strongSelf = self, let gestureRecognizer = gestureRecognizer else { return }
-
-            guard gestureRecognizer.state == .began,
-                let _ = strongSelf.indexPathForItem(at: gestureRecognizer.location(in: strongSelf))
-                else { return }
+        return UILongPressGestureRecognizer { [weak self] sender in
+            guard
+                let strongSelf = self,
+                sender.state == .began,
+                let _ = strongSelf.indexPathForItem(at: sender.location(in: strongSelf))
+            else { return }
 
             strongSelf.isEditing = !strongSelf.isEditing
         }
-
-        return gestureRecognizer
     }()
 
     fileprivate lazy var tapGestureRecognizer: UITapGestureRecognizer = {
         let gestureRecognizer = UITapGestureRecognizer()
         gestureRecognizer.isEnabled = false
 
-        gestureRecognizer.addAction { [weak self] in
+        gestureRecognizer.addAction { [weak self] _ in
             self?.isEditing = false
         }
 

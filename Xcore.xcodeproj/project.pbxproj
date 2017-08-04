@@ -72,7 +72,6 @@
 		689056731F1C1E4000443BDB /* UIGeometryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689056181F1C1E4000443BDB /* UIGeometryExtensions.swift */; };
 		689056741F1C1E4000443BDB /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689056191F1C1E4000443BDB /* UIImageExtensions.swift */; };
 		689056751F1C1E4000443BDB /* UIImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6890561A1F1C1E4000443BDB /* UIImageViewExtensions.swift */; };
-		689056761F1C1E4000443BDB /* UIKitBlocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6890561B1F1C1E4000443BDB /* UIKitBlocks.swift */; };
 		689056771F1C1E4000443BDB /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6890561C1F1C1E4000443BDB /* UIKitExtensions.swift */; };
 		689056781F1C1E4000443BDB /* UILabelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6890561D1F1C1E4000443BDB /* UILabelExtensions.swift */; };
 		689056791F1C1E4000443BDB /* UINavigationControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6890561E1F1C1E4000443BDB /* UINavigationControllerExtensions.swift */; };
@@ -103,6 +102,11 @@
 		68AD836B1F32D1B200A3F7DA /* AnyEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68AD83691F32D1B200A3F7DA /* AnyEquatable.swift */; };
 		68AD836C1F32D1B200A3F7DA /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68AD836A1F32D1B200A3F7DA /* Weak.swift */; };
 		68AD836E1F32D54500A3F7DA /* EquatableByPointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68AD836D1F32D54500A3F7DA /* EquatableByPointer.swift */; };
+		68BCFEDC1F33EE0700492271 /* MFMailComposeViewController+Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BCFED81F33EE0700492271 /* MFMailComposeViewController+Blocks.swift */; };
+		68BCFEDD1F33EE0700492271 /* UIBarButtonItem+Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BCFED91F33EE0700492271 /* UIBarButtonItem+Blocks.swift */; };
+		68BCFEDE1F33EE0700492271 /* UIControl+Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BCFEDA1F33EE0700492271 /* UIControl+Blocks.swift */; };
+		68BCFEDF1F33EE0700492271 /* UIGestureRecognizer+Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BCFEDB1F33EE0700492271 /* UIGestureRecognizer+Blocks.swift */; };
+		68BCFEE11F33F13C00492271 /* TargetActionBlockRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BCFEE01F33F13C00492271 /* TargetActionBlockRepresentable.swift */; };
 		68C392FE1E99D327009D8D58 /* PredicateQueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */; };
 		68C539471F2813E3004E817F /* Colorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C539451F2813DD004E817F /* Colorable.swift */; };
 		975C9436F0C35B14D6B8FFF0 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C773C4D476BF4309831EDE03 /* Pods_Example.framework */; };
@@ -190,7 +194,6 @@
 		689056181F1C1E4000443BDB /* UIGeometryExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIGeometryExtensions.swift; sourceTree = "<group>"; };
 		689056191F1C1E4000443BDB /* UIImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		6890561A1F1C1E4000443BDB /* UIImageViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewExtensions.swift; sourceTree = "<group>"; };
-		6890561B1F1C1E4000443BDB /* UIKitBlocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitBlocks.swift; sourceTree = "<group>"; };
 		6890561C1F1C1E4000443BDB /* UIKitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitExtensions.swift; sourceTree = "<group>"; };
 		6890561D1F1C1E4000443BDB /* UILabelExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabelExtensions.swift; sourceTree = "<group>"; };
 		6890561E1F1C1E4000443BDB /* UINavigationControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationControllerExtensions.swift; sourceTree = "<group>"; };
@@ -226,6 +229,11 @@
 		68AD83691F32D1B200A3F7DA /* AnyEquatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyEquatable.swift; sourceTree = "<group>"; };
 		68AD836A1F32D1B200A3F7DA /* Weak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
 		68AD836D1F32D54500A3F7DA /* EquatableByPointer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquatableByPointer.swift; sourceTree = "<group>"; };
+		68BCFED81F33EE0700492271 /* MFMailComposeViewController+Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MFMailComposeViewController+Blocks.swift"; sourceTree = "<group>"; };
+		68BCFED91F33EE0700492271 /* UIBarButtonItem+Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Blocks.swift"; sourceTree = "<group>"; };
+		68BCFEDA1F33EE0700492271 /* UIControl+Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Blocks.swift"; sourceTree = "<group>"; };
+		68BCFEDB1F33EE0700492271 /* UIGestureRecognizer+Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIGestureRecognizer+Blocks.swift"; sourceTree = "<group>"; };
+		68BCFEE01F33F13C00492271 /* TargetActionBlockRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetActionBlockRepresentable.swift; sourceTree = "<group>"; };
 		68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredicateQueryTests.swift; sourceTree = "<group>"; };
 		68C539451F2813DD004E817F /* Colorable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colorable.swift; sourceTree = "<group>"; };
 		84F555E9FA859A59DB03B60C /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -283,6 +291,7 @@
 		689055D21F1C1E4000443BDB /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				68BCFED71F33EE0700492271 /* Blocks */,
 				689055D31F1C1E4000443BDB /* Classes */,
 				689055DD1F1C1E4000443BDB /* Components */,
 				689056051F1C1E4000443BDB /* Extensions */,
@@ -419,7 +428,6 @@
 				689056181F1C1E4000443BDB /* UIGeometryExtensions.swift */,
 				689056191F1C1E4000443BDB /* UIImageExtensions.swift */,
 				6890561A1F1C1E4000443BDB /* UIImageViewExtensions.swift */,
-				6890561B1F1C1E4000443BDB /* UIKitBlocks.swift */,
 				6890561C1F1C1E4000443BDB /* UIKitExtensions.swift */,
 				6890561D1F1C1E4000443BDB /* UILabelExtensions.swift */,
 				6890561E1F1C1E4000443BDB /* UINavigationControllerExtensions.swift */,
@@ -549,6 +557,18 @@
 				68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		68BCFED71F33EE0700492271 /* Blocks */ = {
+			isa = PBXGroup;
+			children = (
+				68BCFEE01F33F13C00492271 /* TargetActionBlockRepresentable.swift */,
+				68BCFED81F33EE0700492271 /* MFMailComposeViewController+Blocks.swift */,
+				68BCFED91F33EE0700492271 /* UIBarButtonItem+Blocks.swift */,
+				68BCFEDA1F33EE0700492271 /* UIControl+Blocks.swift */,
+				68BCFEDB1F33EE0700492271 /* UIGestureRecognizer+Blocks.swift */,
+			);
+			path = Blocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -808,6 +828,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				689056821F1C1E4000443BDB /* OptionsRepresentable.swift in Sources */,
+				68BCFEDF1F33EE0700492271 /* UIGestureRecognizer+Blocks.swift in Sources */,
 				68C539471F2813E3004E817F /* Colorable.swift in Sources */,
 				689056701F1C1E4000443BDB /* UIDevice+Model.swift in Sources */,
 				689056731F1C1E4000443BDB /* UIGeometryExtensions.swift in Sources */,
@@ -825,7 +846,6 @@
 				6890564A1F1C1E4000443BDB /* TestDynamicTableViewController.swift in Sources */,
 				689056741F1C1E4000443BDB /* UIImageExtensions.swift in Sources */,
 				6890566C1F1C1E4000443BDB /* UIAlertControllerExtensions.swift in Sources */,
-				689056761F1C1E4000443BDB /* UIKitBlocks.swift in Sources */,
 				6890565E1F1C1E4000443BDB /* XCTextField.swift in Sources */,
 				689056601F1C1E4000443BDB /* XCView.swift in Sources */,
 				6890564D1F1C1E4000443BDB /* IconLabelCollectionViewCell.swift in Sources */,
@@ -834,6 +854,7 @@
 				6890564E1F1C1E4000443BDB /* IconLabelCollectionViewController.swift in Sources */,
 				689056391F1C1E4000443BDB /* Environment.swift in Sources */,
 				689056771F1C1E4000443BDB /* UIKitExtensions.swift in Sources */,
+				68BCFEDD1F33EE0700492271 /* UIBarButtonItem+Blocks.swift in Sources */,
 				689056481F1C1E4000443BDB /* DynamicTableViewController.swift in Sources */,
 				689056621F1C1E4000443BDB /* BundleExtensions.swift in Sources */,
 				6890566A1F1C1E4000443BDB /* SDWebImage+Helpers.swift in Sources */,
@@ -871,6 +892,7 @@
 				689056641F1C1E4000443BDB /* DateExtensions.swift in Sources */,
 				6890565F1F1C1E4000443BDB /* XCToolbar.swift in Sources */,
 				689056571F1C1E4000443BDB /* TransitionAnimator.swift in Sources */,
+				68BCFEDC1F33EE0700492271 /* MFMailComposeViewController+Blocks.swift in Sources */,
 				689056441F1C1E4000443BDB /* XCTableViewComposedDataSource.swift in Sources */,
 				689056531F1C1E4000443BDB /* ReorderTableView.swift in Sources */,
 				6890565D1F1C1E4000443BDB /* XCTableViewCell.swift in Sources */,
@@ -880,7 +902,9 @@
 				6890568B1F1C1E4000443BDB /* Timer+Closure.swift in Sources */,
 				689056371F1C1E4000443BDB /* Console.swift in Sources */,
 				689056711F1C1E4000443BDB /* UIDeviceExtensions.swift in Sources */,
+				68BCFEE11F33F13C00492271 /* TargetActionBlockRepresentable.swift in Sources */,
 				689056811F1C1E4000443BDB /* NibInstantiable.swift in Sources */,
+				68BCFEDE1F33EE0700492271 /* UIControl+Blocks.swift in Sources */,
 				689056841F1C1E4000443BDB /* StoryboardInstantiable.swift in Sources */,
 				689056501F1C1E4000443BDB /* ImageTitleDisplayable.swift in Sources */,
 				6890566F1F1C1E4000443BDB /* UIColorExtensions.swift in Sources */,
