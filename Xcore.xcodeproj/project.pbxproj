@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		68646A001F30A3C700212A05 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686469FF1F30A3C700212A05 /* Observer.swift */; };
+		68728ECD1F3A91C200A0C1D0 /* UICollectionViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68728ECC1F3A91C200A0C1D0 /* UICollectionViewExtensions.swift */; };
 		689056361F1C1E4000443BDB /* Benchmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689055D41F1C1E4000443BDB /* Benchmark.swift */; };
 		689056371F1C1E4000443BDB /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689055D51F1C1E4000443BDB /* Console.swift */; };
 		689056381F1C1E4000443BDB /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689055D61F1C1E4000443BDB /* Debugger.swift */; };
@@ -130,6 +131,7 @@
 		56D96A853E1B0EC4E75E0691 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		5D3CFC269887586363462B4B /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		686469FF1F30A3C700212A05 /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
+		68728ECC1F3A91C200A0C1D0 /* UICollectionViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtensions.swift; sourceTree = "<group>"; };
 		689055D41F1C1E4000443BDB /* Benchmark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Benchmark.swift; sourceTree = "<group>"; };
 		689055D51F1C1E4000443BDB /* Console.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
 		689055D61F1C1E4000443BDB /* Debugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 				689056111F1C1E4000443BDB /* UIAlertControllerExtensions.swift */,
 				689056121F1C1E4000443BDB /* UIBarExtensions.swift */,
 				689056131F1C1E4000443BDB /* UIButtonExtensions.swift */,
+				68728ECC1F3A91C200A0C1D0 /* UICollectionViewExtensions.swift */,
 				689056141F1C1E4000443BDB /* UIColorExtensions.swift */,
 				689056151F1C1E4000443BDB /* UIDevice+Model.swift */,
 				689056161F1C1E4000443BDB /* UIDeviceExtensions.swift */,
@@ -903,6 +906,7 @@
 				689056371F1C1E4000443BDB /* Console.swift in Sources */,
 				689056711F1C1E4000443BDB /* UIDeviceExtensions.swift in Sources */,
 				68BCFEE11F33F13C00492271 /* TargetActionBlockRepresentable.swift in Sources */,
+				68728ECD1F3A91C200A0C1D0 /* UICollectionViewExtensions.swift in Sources */,
 				689056811F1C1E4000443BDB /* NibInstantiable.swift in Sources */,
 				68BCFEDE1F33EE0700492271 /* UIControl+Blocks.swift in Sources */,
 				689056841F1C1E4000443BDB /* StoryboardInstantiable.swift in Sources */,

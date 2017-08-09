@@ -338,28 +338,28 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 121,
+      "line": 127,
       "symbol": "Observer.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 125,
+      "line": 131,
       "symbol": "Observer.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 129,
+      "line": 135,
       "symbol": "Observer.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Classes/Observer.swift",
-      "line": 138,
+      "line": 144,
       "symbol": "==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
@@ -5498,13 +5498,20 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitExtensions.swift",
       "line": 127,
+      "symbol": "IndexPath.zero",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitExtensions.swift",
+      "line": 131,
       "symbol": "IndexPath.with(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitExtensions.swift",
-      "line": 133,
+      "line": 137,
       "symbol": "UIStackView.moveArrangedSubviews(_:at:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
