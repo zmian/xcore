@@ -157,3 +157,17 @@ extension URL {
         }
     }
 }
+
+extension URL {
+    /// Returns a URL constructed by removing the fragment from self.
+    ///
+    /// If the URL has no fragment (e.g., `http://www.example.com`), then this function will return the URL unchanged.
+    public func deletingFragment() -> URL {
+        if let fragment = fragment {
+            let urlString = absoluteString.replace("#\(fragment)", with: "")
+            return URL(string: urlString) ?? self
+        }
+
+        return self
+    }
+}
