@@ -243,3 +243,25 @@ extension UIView {
         }
     }
 }
+
+// MARK: Snapshot
+
+extension UIView {
+    open func snapshotImage() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        let snapshot = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return snapshot
+    }
+
+    open func snapshotImageView() -> UIImageView {
+        let imageView = UIImageView(image: snapshotImage())
+        imageView.clipsToBounds = true
+        imageView.borderColor = borderColor
+        imageView.borderWidth = borderWidth
+        imageView.cornerRadius = cornerRadius
+        imageView.contentMode = contentMode
+        return imageView
+    }
+}
