@@ -25,7 +25,7 @@
 
 import UIKit
 
-public final class ZoomAnimatorInteractiveTransition: UIPercentDrivenInteractiveTransition {
+final class ZoomAnimatorInteractiveTransition: UIPercentDrivenInteractiveTransition {
     weak var navigationController: UINavigationController?
     weak var zoomPopGestureRecognizer: UIScreenEdgePanGestureRecognizer?
     fileprivate weak var viewController: UIViewController?
@@ -71,7 +71,7 @@ public final class ZoomAnimatorInteractiveTransition: UIPercentDrivenInteractive
 // MARK: UIGestureRecognizerDelegate
 
 extension ZoomAnimatorInteractiveTransition: UIGestureRecognizerDelegate {
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let navigationController = navigationController, navigationController.viewControllers.count > 1 else {
             return false
         }
@@ -97,7 +97,7 @@ extension ZoomAnimatorInteractiveTransition: UIGestureRecognizerDelegate {
         return false
     }
 
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return otherGestureRecognizer === navigationController?.interactivePopGestureRecognizer
     }
 }

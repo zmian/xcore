@@ -43,8 +43,8 @@ open class TransitionContext {
 
     public init?(transitionContext: UIViewControllerContextTransitioning) {
         guard
-            let to = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to),
-            let from = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
+            let to = transitionContext.viewController(forKey: .to),
+            let from = transitionContext.viewController(forKey: .from)
         else { return nil }
 
         self.context       = transitionContext
