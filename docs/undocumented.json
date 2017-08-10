@@ -239,34 +239,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorInteractiveTransition.swift",
-      "line": null,
-      "symbol": "ZoomAnimatorInteractiveTransition",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorInteractiveTransition.swift",
-      "line": 28,
-      "symbol": "ZoomAnimatorInteractiveTransition",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorInteractiveTransition.swift",
-      "line": 74,
-      "symbol": "ZoomAnimatorInteractiveTransition.gestureRecognizerShouldBegin(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorInteractiveTransition.swift",
-      "line": 100,
-      "symbol": "ZoomAnimatorInteractiveTransition.gestureRecognizer(_:shouldBeRequiredToFailBy:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorNavigationControllerDelegate.swift",
       "line": null,
       "symbol": "ZoomAnimatorNavigationControllerDelegate",
