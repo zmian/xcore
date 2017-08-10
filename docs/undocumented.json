@@ -1,6 +1,447 @@
 {
   "warnings": [
     {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/FadeAnimator.swift",
+      "line": 27,
+      "symbol": "FadeAnimatorBounceable",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/FadeAnimator.swift",
+      "line": 28,
+      "symbol": "FadeAnimatorBounceable.fadeAnimatorBounceContainerView()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/FadeAnimator.swift",
+      "line": 31,
+      "symbol": "FadeAnimator",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/FadeAnimator.swift",
+      "line": 32,
+      "symbol": "FadeAnimator.fadeInDuration",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/FadeAnimator.swift",
+      "line": 33,
+      "symbol": "FadeAnimator.fadeOutDuration",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/FadeAnimator.swift",
+      "line": 34,
+      "symbol": "FadeAnimator.fadeIn",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/FadeAnimator.swift",
+      "line": 35,
+      "symbol": "FadeAnimator.fadeOut",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/FadeAnimator.swift",
+      "line": 37,
+      "symbol": "FadeAnimator.transitionDuration(using:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/FadeAnimator.swift",
+      "line": 41,
+      "symbol": "FadeAnimator.transition(context:direction:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 27,
+      "symbol": "AnimationDirection",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 28,
+      "symbol": "AnimationDirection.in",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 29,
+      "symbol": "AnimationDirection.out",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 32,
+      "symbol": "AnimationState",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 33,
+      "symbol": "AnimationState.began",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 34,
+      "symbol": "AnimationState.cancelled",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 35,
+      "symbol": "AnimationState.ended",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 38,
+      "symbol": "TransitionContext",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 39,
+      "symbol": "TransitionContext.context",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 40,
+      "symbol": "TransitionContext.to",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 41,
+      "symbol": "TransitionContext.from",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 42,
+      "symbol": "TransitionContext.containerView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 44,
+      "symbol": "TransitionContext.init(transitionContext:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 56,
+      "symbol": "TransitionContext.completeTransition()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 61,
+      "symbol": "TransitionAnimator",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 62,
+      "symbol": "TransitionAnimator.direction",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 66,
+      "symbol": "TransitionAnimator.animationController(forPresented:presenting:source:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 71,
+      "symbol": "TransitionAnimator.animationController(forDismissed:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 78,
+      "symbol": "TransitionAnimator.animateTransition(using:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 96,
+      "symbol": "TransitionAnimator.transitionDuration(using:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/TransitionAnimator.swift",
+      "line": 100,
+      "symbol": "TransitionAnimator.transition(context:direction:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimator.swift",
+      "line": 27,
+      "symbol": "ZoomAnimator",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimator.swift",
+      "line": 31,
+      "symbol": "ZoomAnimator.init(source:destination:direction:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimator.swift",
+      "line": 38,
+      "symbol": "ZoomAnimator.transitionDuration(using:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimator.swift",
+      "line": 42,
+      "symbol": "ZoomAnimator.transition(context:direction:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorInteractiveTransition.swift",
+      "line": null,
+      "symbol": "ZoomAnimatorInteractiveTransition",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorInteractiveTransition.swift",
+      "line": 28,
+      "symbol": "ZoomAnimatorInteractiveTransition",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorInteractiveTransition.swift",
+      "line": 74,
+      "symbol": "ZoomAnimatorInteractiveTransition.gestureRecognizerShouldBegin(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorInteractiveTransition.swift",
+      "line": 100,
+      "symbol": "ZoomAnimatorInteractiveTransition.gestureRecognizer(_:shouldBeRequiredToFailBy:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorNavigationControllerDelegate.swift",
+      "line": null,
+      "symbol": "ZoomAnimatorNavigationControllerDelegate",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorNavigationControllerDelegate.swift",
+      "line": 28,
+      "symbol": "ZoomAnimatorNavigationControllerDelegate",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorNavigationControllerDelegate.swift",
+      "line": 36,
+      "symbol": "ZoomAnimatorNavigationControllerDelegate.navigationController(_:didShow:animated:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorNavigationControllerDelegate.swift",
+      "line": 51,
+      "symbol": "ZoomAnimatorNavigationControllerDelegate.navigationController(_:interactionControllerFor:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorNavigationControllerDelegate.swift",
+      "line": 55,
+      "symbol": "ZoomAnimatorNavigationControllerDelegate.navigationController(_:animationControllerFor:from:to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": null,
+      "symbol": "ZoomAnimatorDestination",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": null,
+      "symbol": "ZoomAnimatorSource",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": null,
+      "symbol": "ZoomAnimatorSource",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 29,
+      "symbol": "ZoomAnimatorSource",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 30,
+      "symbol": "ZoomAnimatorSource.zoomAnimatorSourceView()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 31,
+      "symbol": "ZoomAnimatorSource.zoomAnimatorSourceViewFrame(direction:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 32,
+      "symbol": "ZoomAnimatorSource.zoomAnimatorSourceStateChanged(state:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 33,
+      "symbol": "ZoomAnimatorSource.zoomAnimatorSourceAnimation(animations:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 34,
+      "symbol": "ZoomAnimatorSource.zoomAnimatorSourceDuration",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 38,
+      "symbol": "ZoomAnimatorSource.zoomAnimatorSourceDuration",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 42,
+      "symbol": "ZoomAnimatorSource.zoomAnimatorSourceAnimation(animations:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 52,
+      "symbol": "ZoomAnimatorSource.zoomAnimatorSourceViewFrame(direction:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 57,
+      "symbol": "ZoomAnimatorSource.zoomAnimatorSourceStateChanged(state:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 69,
+      "symbol": "ZoomAnimatorDestination",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 70,
+      "symbol": "ZoomAnimatorDestination.zoomAnimatorDestinationViewFrame(direction:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 71,
+      "symbol": "ZoomAnimatorDestination.zoomAnimatorDestinationStateChanged(state:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 72,
+      "symbol": "ZoomAnimatorDestination.zoomAnimatorDestinationAnimation(animations:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 73,
+      "symbol": "ZoomAnimatorDestination.zoomAnimatorDestinationDuration",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 77,
+      "symbol": "ZoomAnimatorDestination.zoomAnimatorDestinationDuration",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
+      "line": 81,
+      "symbol": "ZoomAnimatorDestination.zoomAnimatorDestinationAnimation(animations:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Blocks/MFMailComposeViewController+Blocks.swift",
       "line": 48,
       "symbol": "MFMailComposeViewController.shouldAutoDismiss",
@@ -2437,69 +2878,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/FadeAnimator.swift",
-      "line": 27,
-      "symbol": "FadeAnimatorBounceable",
-      "symbol_kind": "source.lang.swift.decl.protocol",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/FadeAnimator.swift",
-      "line": 28,
-      "symbol": "FadeAnimatorBounceable.fadeAnimatorBounceContainerView()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/FadeAnimator.swift",
-      "line": 31,
-      "symbol": "FadeAnimator",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/FadeAnimator.swift",
-      "line": 32,
-      "symbol": "FadeAnimator.fadeInDuration",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/FadeAnimator.swift",
-      "line": 33,
-      "symbol": "FadeAnimator.fadeOutDuration",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/FadeAnimator.swift",
-      "line": 34,
-      "symbol": "FadeAnimator.fadeIn",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/FadeAnimator.swift",
-      "line": 35,
-      "symbol": "FadeAnimator.fadeOut",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/FadeAnimator.swift",
-      "line": 37,
-      "symbol": "FadeAnimator.transitionDuration(using:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/FadeAnimator.swift",
-      "line": 41,
-      "symbol": "FadeAnimator.transition(context:direction:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/IconLabelView/IconLabelCollectionView.swift",
       "line": 27,
       "symbol": "IconLabelCollectionCellOptions",
@@ -3399,125 +3777,6 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TextViewController.swift",
       "line": 107,
       "symbol": "TextViewController.htmlLabel(_:didSelectLinkWith:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 27,
-      "symbol": "AnimationDirection",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 28,
-      "symbol": "AnimationDirection.in",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 29,
-      "symbol": "AnimationDirection.out",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 32,
-      "symbol": "TransitionContext",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 33,
-      "symbol": "TransitionContext.context",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 34,
-      "symbol": "TransitionContext.to",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 35,
-      "symbol": "TransitionContext.from",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 36,
-      "symbol": "TransitionContext.containerView",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 38,
-      "symbol": "TransitionContext.init(transitionContext:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 50,
-      "symbol": "TransitionContext.completeTransition()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 55,
-      "symbol": "TransitionAnimator",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 56,
-      "symbol": "TransitionAnimator.direction",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 60,
-      "symbol": "TransitionAnimator.animationController(forPresented:presenting:source:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 65,
-      "symbol": "TransitionAnimator.animationController(forDismissed:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 72,
-      "symbol": "TransitionAnimator.animateTransition(using:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 90,
-      "symbol": "TransitionAnimator.transitionDuration(using:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Components/TransitionAnimator.swift",
-      "line": 94,
-      "symbol": "TransitionAnimator.transition(context:direction:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -5758,6 +6017,20 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIViewExtensions.swift",
       "line": 234,
       "symbol": "UIView.resizeToFitSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIViewExtensions.swift",
+      "line": 250,
+      "symbol": "UIView.snapshotImage()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIViewExtensions.swift",
+      "line": 258,
+      "symbol": "UIView.snapshotImageView()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
