@@ -29,6 +29,12 @@ public enum AnimationDirection {
     case out
 }
 
+public enum AnimationState {
+    case began
+    case cancelled
+    case ended
+}
+
 open class TransitionContext {
     public let context: UIViewControllerContextTransitioning
     public let to: UIViewController
