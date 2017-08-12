@@ -30,7 +30,7 @@ public protocol Colorable {
 
 extension UIScrollView {
     /// A convenience function to cross fade between two color in given items.
-    open func crossFadeColor(previousPageIndex: Int, items: [Colorable]) -> UIColor {
+    open func crossFadeColor(previousIndex: Int, items: [Colorable]) -> UIColor {
         var span = scrollDirection.isHorizontal ? frame.width : frame.height
         var offset = scrollDirection.isHorizontal ? contentOffset.x : contentOffset.y
 
@@ -39,9 +39,9 @@ extension UIScrollView {
             offset = flowLayout.scrollDirection == .horizontal ? contentOffset.x : contentOffset.y
         }
 
-        let delta = (offset - CGFloat(previousPageIndex) * span) / span
-        let fromColor = items.at(previousPageIndex)?.color ?? .black
-        let toColor = items.at(delta > 0 ? previousPageIndex + 1 : previousPageIndex - 1)?.color ?? fromColor
+        let delta = (offset - CGFloat(previousIndex) * span) / span
+        let fromColor = items.at(previousIndex)?.color ?? .black
+        let toColor = items.at(delta > 0 ? previousIndex + 1 : previousIndex - 1)?.color ?? fromColor
         return .crossFade(from: fromColor, to: toColor, delta: abs(delta))
     }
 }
