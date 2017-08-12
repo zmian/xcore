@@ -26,11 +26,13 @@ import UIKit
 
 public struct LayoutGuideOptions: OptionSet {
     public let rawValue: UInt
-    public init(rawValue: UInt) { self.rawValue = rawValue }
+    public init(rawValue: UInt) {
+        self.rawValue = rawValue
+    }
 
-    public static let TopLayoutGuide                       = LayoutGuideOptions(rawValue: 1)
-    public static let BottomLayoutGuide                    = LayoutGuideOptions(rawValue: 2)
-    public static let BothLayoutGuides: LayoutGuideOptions = [TopLayoutGuide, BottomLayoutGuide]
+    public static let top                       = LayoutGuideOptions(rawValue: 1)
+    public static let bottom                    = LayoutGuideOptions(rawValue: 2)
+    public static let both: LayoutGuideOptions = [top, bottom]
 }
 
 extension NSLayoutConstraint {
@@ -123,8 +125,8 @@ extension UIViewController {
     public func constraintsForViewToFillSuperviewVertical(_ viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, constraintToLayoutGuideOptions: LayoutGuideOptions = [], priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
 
-        let isTopLayoutGuide    = constraintToLayoutGuideOptions.contains(.TopLayoutGuide)
-        let isBottomLayoutGuide = constraintToLayoutGuideOptions.contains(.BottomLayoutGuide)
+        let isTopLayoutGuide    = constraintToLayoutGuideOptions.contains(.top)
+        let isBottomLayoutGuide = constraintToLayoutGuideOptions.contains(.bottom)
 
         return [
             NSLayoutConstraint(
