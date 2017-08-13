@@ -1,5 +1,5 @@
 //
-// Weak.swift
+// UITabBarControllerExtensions.swift
 //
 // Copyright © 2017 Zeeshan Mian
 //
@@ -22,40 +22,32 @@
 // THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
-/// A generic class to hold a weak reference to a type `T`.
-/// This is useful for holding a reference to nullable object.
-///
-/// ```swift
-/// let views = [Weak<UIView>]()
-/// ```
-open class Weak<T: AnyObject>: Equatable, Hashable {
-    open weak var value: T?
-
-    public init (value: T) {
-        self.value = value
+extension UITabBarController {
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return selectedViewController?.supportedInterfaceOrientations ?? super.supportedInterfaceOrientations
     }
 
-    public var hashValue: Int {
-        guard let value = value else {
-            return Unmanaged<AnyObject>.passUnretained(self).toOpaque().hashValue
-        }
-
-        if let value = value as? AnyHashable {
-            return value.hashValue
-        }
-
-        return Unmanaged<AnyObject>.passUnretained(value).toOpaque().hashValue
-    }
-
-    open static func ==<T>(lhs: Weak<T>, rhs: Weak<T>) -> Bool {
-        return lhs.value === rhs.value
+    open override var shouldAutorotate: Bool {
+        return selectedViewController?.shouldAutorotate ?? super.shouldAutorotate
     }
 }
 
-extension NSObject {
-    var memoryAddress: String {
-        return String(describing: Unmanaged<NSObject>.passUnretained(self).toOpaque())
+extension UITabBarController {
+    open func setTabBarHidden(_ hidden: Bool, animated: Bool) {
+        let frame = tabBar.frame
+        let offsetY = hidden ? frame.size.height : -frame.size.height
+        var newFrame = frame
+        newFrame.origin.y = view.frame.maxY + offsetY
+        tabBar.isHidden = false
+
+        UIView.animate(withDuration: animated ? 0.35 : 0.0, delay: 0, options: .beginFromCurrentState, animations: {
+            self.tabBar.frame = newFrame
+        }, completion: { complete in
+            if complete {
+                self.tabBar.isHidden = hidden
+            }
+        })
     }
 }
