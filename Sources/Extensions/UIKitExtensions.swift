@@ -69,18 +69,6 @@ extension UIWindow {
     }
 }
 
-// MARK: UITabBarController Extension
-
-extension UITabBarController {
-    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return selectedViewController?.supportedInterfaceOrientations ?? super.supportedInterfaceOrientations
-    }
-
-    open override var shouldAutorotate: Bool {
-        return selectedViewController?.shouldAutorotate ?? super.shouldAutorotate
-    }
-}
-
 extension UINib {
     public convenience init?(named: String, bundle: Bundle? = nil) {
         let bundle = bundle ?? .main

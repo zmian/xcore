@@ -30,8 +30,8 @@ public struct LayoutGuideOptions: OptionSet {
         self.rawValue = rawValue
     }
 
-    public static let top                       = LayoutGuideOptions(rawValue: 1)
-    public static let bottom                    = LayoutGuideOptions(rawValue: 2)
+    public static let top                      = LayoutGuideOptions(rawValue: 1)
+    public static let bottom                   = LayoutGuideOptions(rawValue: 2)
     public static let both: LayoutGuideOptions = [top, bottom]
 }
 
