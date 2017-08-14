@@ -40,3 +40,14 @@ extension UILabel {
         attributedText = NSMutableAttributedString(string: text).setLineSpacing(spacing)
     }
 }
+
+extension UILabel {
+    /// A height of the label.
+    open var boundingHeight: CGFloat {
+        guard let font = font else {
+            return 0
+        }
+
+        return "Sphinx".sizeWithFont(font).height * CGFloat(numberOfLines)
+    }
+}
