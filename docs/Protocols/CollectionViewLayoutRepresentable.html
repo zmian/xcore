@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>SignedNumber Extension Reference</title>
+    <title>CollectionViewLayoutRepresentable Protocol Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Extension/SignedNumber" class="dashAnchor"></a>
-    <a title="SignedNumber Extension Reference"></a>
+    <a name="//apple_ref/swift/Protocol/CollectionViewLayoutRepresentable" class="dashAnchor"></a>
+    <a title="CollectionViewLayoutRepresentable Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">Xcore Docs</a> (26% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">Xcore Reference</a>
         <img id="carat" src="../img/carat.png" />
-        SignedNumber Extension Reference
+        CollectionViewLayoutRepresentable Protocol Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -279,9 +279,6 @@
                 <a href="../Extensions/SignedInteger.html">SignedInteger</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Extensions/SignedNumber.html">SignedNumber</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Extensions/String.html">String</a>
               </li>
               <li class="nav-group-task">
@@ -318,9 +315,6 @@
                 <a href="../Extensions/UIDevice.html">UIDevice</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Extensions/UIDevice/ModelType.html">– ModelType</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Extensions/UIDevice/ScreenSize.html">– ScreenSize</a>
               </li>
               <li class="nav-group-task">
@@ -328,6 +322,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/UIDevice/SystemVersion.html">– SystemVersion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIDevice/ModelType.html">– ModelType</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/UIEdgeInsets.html">UIEdgeInsets</a>
@@ -452,6 +449,9 @@
                 <a href="../Functions.html#/s:F5Xcore4openFT3urlV10Foundation3URL4fromCSo16UIViewController_T_">open(url:from:)</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Functions.html#/s:F5Xcore7swizzleFTPMPs9AnyObject_16originalSelectorV10ObjectiveC8Selector16swizzledSelectorS2__T_">swizzle(_:originalSelector:swizzledSelector:)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Functions.html#/s:F5Xcore12synchronizedurFzTPs9AnyObject_FzT_x_x">synchronized(_:_:)</a>
               </li>
             </ul>
@@ -459,6 +459,9 @@
           <li class="nav-group-name">
             <a href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/CollectionViewLayoutRepresentable.html">CollectionViewLayoutRepresentable</a>
+              </li>
               <li class="nav-group-task">
                 <a href="../Protocols/Colorable.html">Colorable</a>
               </li>
@@ -567,14 +570,9 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>SignedNumber</h1>
-              <div class="declaration">
-                <div class="language">
-                  <pre class="highlight"><code><span class="kd">protocol</span> <span class="kt">SignedNumber</span> <span class="p">:</span> <span class="kt">Comparable</span><span class="p">,</span> <span class="kt">ExpressibleByIntegerLiteral</span></code></pre>
+            <h1>CollectionViewLayoutRepresentable</h1>
+            <p>Undocumented</p>
 
-                </div>
-              </div>
-            
           </section>
           <section class="section task-group-section">
             <div class="task-group">
@@ -582,9 +580,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FE5XcorePs12SignedNumber10invertSignFT_x"></a>
-                    <a name="//apple_ref/swift/Method/invertSign()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FE5XcorePs12SignedNumber10invertSignFT_x">invertSign()</a>
+                    <a name="/s:vP5Xcore33CollectionViewLayoutRepresentable8itemSizeVSC6CGSize"></a>
+                    <a name="//apple_ref/swift/Property/itemSize" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP5Xcore33CollectionViewLayoutRepresentable8itemSizeVSC6CGSize">itemSize</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -592,28 +590,33 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Replaces the sign to its inverse.</p>
-<pre class="highlight swift"><code><span class="k">var</span> <span class="nv">x</span> <span class="o">=</span> <span class="mf">21.5</span>
-<span class="n">x</span><span class="o">.</span><span class="nf">invertSign</span><span class="p">()</span>
-<span class="c1">// x == -21.5</span>
+                        <p>Undocumented</p>
 
-<span class="k">var</span> <span class="nv">x</span> <span class="o">=</span> <span class="o">-</span><span class="mf">21.5</span>
-<span class="n">x</span><span class="o">.</span><span class="nf">invertSign</span><span class="p">()</span>
-<span class="c1">// x == 21.5</span>
-
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">invertSign</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
-
-                        </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/SwiftExtensions.swift#L200-L202">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/Colorable.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:vP5Xcore33CollectionViewLayoutRepresentable15scrollDirectionOSC31UICollectionViewScrollDirection"></a>
+                    <a name="//apple_ref/swift/Property/scrollDirection" class="dashAnchor"></a>
+                    <a class="token" href="#/s:vP5Xcore33CollectionViewLayoutRepresentable15scrollDirectionOSC31UICollectionViewScrollDirection">scrollDirection</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/Colorable.swift#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -623,7 +626,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2017-08-10)</p>
+          <p>&copy; 2017 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2017-08-16)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

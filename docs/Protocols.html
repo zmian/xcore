@@ -278,9 +278,6 @@
                 <a href="Extensions/SignedInteger.html">SignedInteger</a>
               </li>
               <li class="nav-group-task">
-                <a href="Extensions/SignedNumber.html">SignedNumber</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Extensions/String.html">String</a>
               </li>
               <li class="nav-group-task">
@@ -317,9 +314,6 @@
                 <a href="Extensions/UIDevice.html">UIDevice</a>
               </li>
               <li class="nav-group-task">
-                <a href="Extensions/UIDevice/ModelType.html">– ModelType</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Extensions/UIDevice/ScreenSize.html">– ScreenSize</a>
               </li>
               <li class="nav-group-task">
@@ -327,6 +321,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/UIDevice/SystemVersion.html">– SystemVersion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UIDevice/ModelType.html">– ModelType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/UIEdgeInsets.html">UIEdgeInsets</a>
@@ -451,6 +448,9 @@
                 <a href="Functions.html#/s:F5Xcore4openFT3urlV10Foundation3URL4fromCSo16UIViewController_T_">open(url:from:)</a>
               </li>
               <li class="nav-group-task">
+                <a href="Functions.html#/s:F5Xcore7swizzleFTPMPs9AnyObject_16originalSelectorV10ObjectiveC8Selector16swizzledSelectorS2__T_">swizzle(_:originalSelector:swizzledSelector:)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Functions.html#/s:F5Xcore12synchronizedurFzTPs9AnyObject_FzT_x_x">synchronized(_:_:)</a>
               </li>
             </ul>
@@ -458,6 +458,9 @@
           <li class="nav-group-name">
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/CollectionViewLayoutRepresentable.html">CollectionViewLayoutRepresentable</a>
+              </li>
               <li class="nav-group-task">
                 <a href="Protocols/Colorable.html">Colorable</a>
               </li>
@@ -576,173 +579,6 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:P5Xcore22StoryboardInstantiable"></a>
-                    <a name="//apple_ref/swift/Protocol/StoryboardInstantiable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:P5Xcore22StoryboardInstantiable">StoryboardInstantiable</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A type that all <code>UIViewController</code> subclasses conform to.
-It provides a safe way to init view controllers from Storyboard.
-It also eliminates casting as <code>initFromStoryboard()</code> method automatically
-returns the correct <code>UIViewController</code>&lsquo;s subclass.</p>
-
-<p>The default <code>storyboardIdentifier</code> value is <code>UIViewController</code>&rsquo;s class name.</p>
-<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">SettingsViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span> <span class="p">}</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="kt">SettingsViewController</span><span class="o">.</span><span class="n">storyboardIdentifier</span><span class="p">)</span>
-
-<span class="s">"SettingsViewController"</span>
-
-<span class="k">let</span> <span class="nv">vc</span> <span class="o">=</span> <span class="kt">SettingsViewController</span><span class="o">.</span><span class="nf">initFromStoryboard</span><span class="p">()</span>
-<span class="n">navigationController</span><span class="o">.</span><span class="nf">pushViewController</span><span class="p">(</span><span class="n">vc</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-
-</code></pre>
-
-<p>If you want to provide your own custom <code>storyboardIdentifier</code> you can do so like:</p>
-<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">SettingsViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
-    <span class="kd">class</span> <span class="k">var</span> <span class="nv">storyboardIdentifier</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">return</span> <span class="s">"Settings"</span> <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">let</span> <span class="nv">vc</span> <span class="o">=</span> <span class="kt">SettingsViewController</span><span class="o">.</span><span class="nf">initFromStoryboard</span><span class="p">()</span>
-<span class="n">navigationController</span><span class="o">.</span><span class="nf">pushViewController</span><span class="p">(</span><span class="n">vc</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-</code></pre>
-
-                        <a href="Protocols/StoryboardInstantiable.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">StoryboardInstantiable</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/StoryboardInstantiable.swift#L53-L55">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:P5Xcore24ReorderTableViewDelegate"></a>
-                    <a name="//apple_ref/swift/Protocol/ReorderTableViewDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/s:P5Xcore24ReorderTableViewDelegate">ReorderTableViewDelegate</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Protocols/ReorderTableViewDelegate.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Components/ReorderTableView.swift#L69-L83">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:P5Xcore18EquatableByPointer"></a>
-                    <a name="//apple_ref/swift/Protocol/EquatableByPointer" class="dashAnchor"></a>
-                    <a class="token" href="#/s:P5Xcore18EquatableByPointer">EquatableByPointer</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Protocols/EquatableByPointer.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/EquatableByPointer.swift#L25-L26">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:P5Xcore22FadeAnimatorBounceable"></a>
-                    <a name="//apple_ref/swift/Protocol/FadeAnimatorBounceable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:P5Xcore22FadeAnimatorBounceable">FadeAnimatorBounceable</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Protocols/FadeAnimatorBounceable.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Animations/FadeAnimator.swift#L27-L29">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:P5Xcore30TargetActionBlockRepresentable"></a>
-                    <a name="//apple_ref/swift/Protocol/TargetActionBlockRepresentable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:P5Xcore30TargetActionBlockRepresentable">TargetActionBlockRepresentable</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Protocols/TargetActionBlockRepresentable.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Blocks/TargetActionBlockRepresentable.swift#L28-L38">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:P5Xcore8Reusable"></a>
                     <a name="//apple_ref/swift/Protocol/Reusable" class="dashAnchor"></a>
                     <a class="token" href="#/s:P5Xcore8Reusable">Reusable</a>
@@ -795,9 +631,9 @@ It provides a safe way to register and dequeue cells.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:P5Xcore20OptionsRepresentable"></a>
-                    <a name="//apple_ref/swift/Protocol/OptionsRepresentable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:P5Xcore20OptionsRepresentable">OptionsRepresentable</a>
+                    <a name="/s:P5Xcore9Colorable"></a>
+                    <a name="//apple_ref/swift/Protocol/Colorable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P5Xcore9Colorable">Colorable</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -805,20 +641,87 @@ It provides a safe way to register and dequeue cells.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A type to present list of options in a type safe manner.</p>
+                        <p>Undocumented</p>
 
-                        <a href="Protocols/OptionsRepresentable.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/Colorable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/Colorable.swift#L27-L29">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P5Xcore33CollectionViewLayoutRepresentable"></a>
+                    <a name="//apple_ref/swift/Protocol/CollectionViewLayoutRepresentable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P5Xcore33CollectionViewLayoutRepresentable">CollectionViewLayoutRepresentable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Protocols/CollectionViewLayoutRepresentable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/Colorable.swift#L31-L34">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P5Xcore14EnumIteratable"></a>
+                    <a name="//apple_ref/swift/Protocol/EnumIteratable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P5Xcore14EnumIteratable">EnumIteratable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type that makes conforming <code>Enum</code> cases iteratable.</p>
+<pre class="highlight swift"><code><span class="kd">enum</span> <span class="kt">CompassPoint</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="kt">EnumIteratable</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">north</span>
+    <span class="k">case</span> <span class="n">south</span>
+    <span class="k">case</span> <span class="n">east</span>
+    <span class="k">case</span> <span class="n">west</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="n">point</span> <span class="k">in</span> <span class="kt">CompassPoint</span><span class="o">.</span><span class="n">allValues</span> <span class="p">{</span>
+    <span class="c1">// point [north, south, east, west]</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="n">point</span> <span class="k">in</span> <span class="kt">CompassPoint</span><span class="o">.</span><span class="n">rawValues</span> <span class="p">{</span>
+    <span class="c1">// point [0, 1, 2, 3]</span>
+<span class="p">}</span>
+</code></pre>
+
+<p><code>EnumIteratable</code> requires conforming enums types to be <code>RawRepresentable</code>.</p>
+
+                        <a href="Protocols/EnumIteratable.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">OptionsRepresentable</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span><span class="p">,</span> <span class="kt">Equatable</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EnumIteratable</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/OptionsRepresentable.swift#L28-L33">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/EnumIteratable.swift#L47-L51">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -856,6 +759,164 @@ It provides a safe way to register and dequeue cells.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:P5Xcore22FadeAnimatorBounceable"></a>
+                    <a name="//apple_ref/swift/Protocol/FadeAnimatorBounceable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P5Xcore22FadeAnimatorBounceable">FadeAnimatorBounceable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Protocols/FadeAnimatorBounceable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Animations/FadeAnimator.swift#L27-L29">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P5Xcore18EquatableByPointer"></a>
+                    <a name="//apple_ref/swift/Protocol/EquatableByPointer" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P5Xcore18EquatableByPointer">EquatableByPointer</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Protocols/EquatableByPointer.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/EquatableByPointer.swift#L25-L26">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P5Xcore12Serializable"></a>
+                    <a name="//apple_ref/swift/Protocol/Serializable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P5Xcore12Serializable">Serializable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Protocols/Serializable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/Serializable.swift#L27-L30">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P5Xcore23DictionaryInitializable"></a>
+                    <a name="//apple_ref/swift/Protocol/DictionaryInitializable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P5Xcore23DictionaryInitializable">DictionaryInitializable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Protocols/DictionaryInitializable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/Serializable.swift#L43-L46">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P5Xcore30TargetActionBlockRepresentable"></a>
+                    <a name="//apple_ref/swift/Protocol/TargetActionBlockRepresentable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P5Xcore30TargetActionBlockRepresentable">TargetActionBlockRepresentable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Protocols/TargetActionBlockRepresentable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Blocks/TargetActionBlockRepresentable.swift#L28-L38">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P5Xcore24ReorderTableViewDelegate"></a>
+                    <a name="//apple_ref/swift/Protocol/ReorderTableViewDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P5Xcore24ReorderTableViewDelegate">ReorderTableViewDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Protocols/ReorderTableViewDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Components/ReorderTableView.swift#L69-L83">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:P5Xcore37ControlTargetActionBlockRepresentable"></a>
                     <a name="//apple_ref/swift/Protocol/ControlTargetActionBlockRepresentable" class="dashAnchor"></a>
                     <a class="token" href="#/s:P5Xcore37ControlTargetActionBlockRepresentable">ControlTargetActionBlockRepresentable</a>
@@ -872,6 +933,100 @@ It provides a safe way to register and dequeue cells.</p>
                       </div>
                       <div class="slightly-smaller">
                         <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Blocks/UIControl+Blocks.swift#L59-L63">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P5Xcore15NibInstantiable"></a>
+                    <a name="//apple_ref/swift/Protocol/NibInstantiable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P5Xcore15NibInstantiable">NibInstantiable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type that all <code>UIView</code> subclasses conform to.
+It provides a safe way to load views from nibs.
+It also eliminates casting as <code>initFromNib()</code> method automatically
+returns the correct <code>UIView</code>&lsquo;s subclass.</p>
+
+<p>The default <code>nibIdentifier</code> value is <code>UIView</code>&rsquo;s class name.</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">ProfileView</span><span class="p">:</span> <span class="kt">UIView</span> <span class="p">{</span> <span class="p">}</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="kt">ProfileView</span><span class="o">.</span><span class="n">nibIdentifier</span><span class="p">)</span>
+
+<span class="s">"ProfileView"</span>
+
+<span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="kt">ProfileView</span><span class="o">.</span><span class="nf">initFromNib</span><span class="p">()</span>
+<span class="nf">addSubview</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+
+</code></pre>
+
+<p>If you want to provide your own custom <code>nibIdentifier</code> you can do so like:</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">ProfileView</span><span class="p">:</span> <span class="kt">UIView</span> <span class="p">{</span>
+    <span class="kd">class</span> <span class="k">var</span> <span class="nv">nibIdentifier</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">return</span> <span class="s">"Profile"</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="kt">ProfileView</span><span class="o">.</span><span class="nf">initFromNib</span><span class="p">()</span>
+<span class="nf">addSubview</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+</code></pre>
+
+                        <a href="Protocols/NibInstantiable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NibInstantiable</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/NibInstantiable.swift#L53-L55">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:P5Xcore20OptionsRepresentable"></a>
+                    <a name="//apple_ref/swift/Protocol/OptionsRepresentable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P5Xcore20OptionsRepresentable">OptionsRepresentable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type to present list of options in a type safe manner.</p>
+
+                        <a href="Protocols/OptionsRepresentable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">OptionsRepresentable</span><span class="p">:</span> <span class="kt">CustomStringConvertible</span><span class="p">,</span> <span class="kt">Equatable</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/OptionsRepresentable.swift#L28-L33">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1015,65 +1170,6 @@ It provides a safe way to register and dequeue cells.</p>
               </ul>
             </div>
             <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:P5Xcore15NibInstantiable"></a>
-                    <a name="//apple_ref/swift/Protocol/NibInstantiable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:P5Xcore15NibInstantiable">NibInstantiable</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A type that all <code>UIView</code> subclasses conform to.
-It provides a safe way to load views from nibs.
-It also eliminates casting as <code>initFromNib()</code> method automatically
-returns the correct <code>UIView</code>&lsquo;s subclass.</p>
-
-<p>The default <code>nibIdentifier</code> value is <code>UIView</code>&rsquo;s class name.</p>
-<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">ProfileView</span><span class="p">:</span> <span class="kt">UIView</span> <span class="p">{</span> <span class="p">}</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="kt">ProfileView</span><span class="o">.</span><span class="n">nibIdentifier</span><span class="p">)</span>
-
-<span class="s">"ProfileView"</span>
-
-<span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="kt">ProfileView</span><span class="o">.</span><span class="nf">initFromNib</span><span class="p">()</span>
-<span class="nf">addSubview</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
-
-</code></pre>
-
-<p>If you want to provide your own custom <code>nibIdentifier</code> you can do so like:</p>
-<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">ProfileView</span><span class="p">:</span> <span class="kt">UIView</span> <span class="p">{</span>
-    <span class="kd">class</span> <span class="k">var</span> <span class="nv">nibIdentifier</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">return</span> <span class="s">"Profile"</span> <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">let</span> <span class="nv">view</span> <span class="o">=</span> <span class="kt">ProfileView</span><span class="o">.</span><span class="nf">initFromNib</span><span class="p">()</span>
-<span class="nf">addSubview</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
-</code></pre>
-
-                        <a href="Protocols/NibInstantiable.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">NibInstantiable</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/NibInstantiable.swift#L53-L55">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
               <div class="task-name-container">
                 <a name="/ZoomAnimatorSource"></a>
                 <a name="//apple_ref/swift/Section/ZoomAnimatorSource" class="dashAnchor"></a>
@@ -1146,9 +1242,9 @@ returns the correct <code>UIView</code>&lsquo;s subclass.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:P5Xcore14EnumIteratable"></a>
-                    <a name="//apple_ref/swift/Protocol/EnumIteratable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:P5Xcore14EnumIteratable">EnumIteratable</a>
+                    <a name="/s:P5Xcore22StoryboardInstantiable"></a>
+                    <a name="//apple_ref/swift/Protocol/StoryboardInstantiable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:P5Xcore22StoryboardInstantiable">StoryboardInstantiable</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1156,114 +1252,44 @@ returns the correct <code>UIView</code>&lsquo;s subclass.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A type that makes conforming <code>Enum</code> cases iteratable.</p>
-<pre class="highlight swift"><code><span class="kd">enum</span> <span class="kt">CompassPoint</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="kt">EnumIteratable</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="n">north</span>
-    <span class="k">case</span> <span class="n">south</span>
-    <span class="k">case</span> <span class="n">east</span>
-    <span class="k">case</span> <span class="n">west</span>
-<span class="p">}</span>
+                        <p>A type that all <code>UIViewController</code> subclasses conform to.
+It provides a safe way to init view controllers from Storyboard.
+It also eliminates casting as <code>initFromStoryboard()</code> method automatically
+returns the correct <code>UIViewController</code>&lsquo;s subclass.</p>
 
-<span class="k">for</span> <span class="n">point</span> <span class="k">in</span> <span class="kt">CompassPoint</span><span class="o">.</span><span class="n">allValues</span> <span class="p">{</span>
-    <span class="c1">// point [north, south, east, west]</span>
-<span class="p">}</span>
+<p>The default <code>storyboardIdentifier</code> value is <code>UIViewController</code>&rsquo;s class name.</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">SettingsViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span> <span class="p">}</span>
 
-<span class="k">for</span> <span class="n">point</span> <span class="k">in</span> <span class="kt">CompassPoint</span><span class="o">.</span><span class="n">rawValues</span> <span class="p">{</span>
-    <span class="c1">// point [0, 1, 2, 3]</span>
-<span class="p">}</span>
+<span class="nf">print</span><span class="p">(</span><span class="kt">SettingsViewController</span><span class="o">.</span><span class="n">storyboardIdentifier</span><span class="p">)</span>
+
+<span class="s">"SettingsViewController"</span>
+
+<span class="k">let</span> <span class="nv">vc</span> <span class="o">=</span> <span class="kt">SettingsViewController</span><span class="o">.</span><span class="nf">initFromStoryboard</span><span class="p">()</span>
+<span class="n">navigationController</span><span class="o">.</span><span class="nf">pushViewController</span><span class="p">(</span><span class="n">vc</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+
 </code></pre>
 
-<p><code>EnumIteratable</code> requires conforming enums types to be <code>RawRepresentable</code>.</p>
+<p>If you want to provide your own custom <code>storyboardIdentifier</code> you can do so like:</p>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">SettingsViewController</span><span class="p">:</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+    <span class="kd">class</span> <span class="k">var</span> <span class="nv">storyboardIdentifier</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">return</span> <span class="s">"Settings"</span> <span class="p">}</span>
+<span class="p">}</span>
 
-                        <a href="Protocols/EnumIteratable.html" class="slightly-smaller">See more</a>
+<span class="k">let</span> <span class="nv">vc</span> <span class="o">=</span> <span class="kt">SettingsViewController</span><span class="o">.</span><span class="nf">initFromStoryboard</span><span class="p">()</span>
+<span class="n">navigationController</span><span class="o">.</span><span class="nf">pushViewController</span><span class="p">(</span><span class="n">vc</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+</code></pre>
+
+                        <a href="Protocols/StoryboardInstantiable.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">EnumIteratable</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">StoryboardInstantiable</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/EnumIteratable.swift#L47-L51">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:P5Xcore12Serializable"></a>
-                    <a name="//apple_ref/swift/Protocol/Serializable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:P5Xcore12Serializable">Serializable</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Protocols/Serializable.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/Serializable.swift#L27-L30">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:P5Xcore23DictionaryInitializable"></a>
-                    <a name="//apple_ref/swift/Protocol/DictionaryInitializable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:P5Xcore23DictionaryInitializable">DictionaryInitializable</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Protocols/DictionaryInitializable.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/Serializable.swift#L43-L46">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:P5Xcore9Colorable"></a>
-                    <a name="//apple_ref/swift/Protocol/Colorable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:P5Xcore9Colorable">Colorable</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Protocols/Colorable.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/Colorable.swift#L27-L29">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Protocols/StoryboardInstantiable.swift#L53-L55">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1273,7 +1299,7 @@ returns the correct <code>UIView</code>&lsquo;s subclass.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2017-08-10)</p>
+          <p>&copy; 2017 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2017-08-16)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

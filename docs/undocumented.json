@@ -4475,112 +4475,112 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 31,
-      "symbol": "LayoutGuideOptions.TopLayoutGuide",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 32,
-      "symbol": "LayoutGuideOptions.BottomLayoutGuide",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
       "line": 33,
-      "symbol": "LayoutGuideOptions.BothLayoutGuides",
+      "symbol": "LayoutGuideOptions.top",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 40,
+      "line": 34,
+      "symbol": "LayoutGuideOptions.bottom",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
+      "line": 35,
+      "symbol": "LayoutGuideOptions.both",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
+      "line": 42,
       "symbol": "NSLayoutConstraint.init(item:attribute:relatedBy:toItem:attribute:multiplier:constant:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 46,
+      "line": 48,
       "symbol": "NSLayoutConstraint.init(item:aspectRatio:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 51,
+      "line": 53,
       "symbol": "NSLayoutConstraint.init(item:width:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 56,
+      "line": 58,
       "symbol": "NSLayoutConstraint.init(item:height:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 63,
+      "line": 65,
       "symbol": "NSLayoutConstraint.size(_:size:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 71,
+      "line": 73,
       "symbol": "NSLayoutConstraint.centerX(_:relatedBy:toView:offset:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 77,
+      "line": 79,
       "symbol": "NSLayoutConstraint.centerY(_:relatedBy:toView:offset:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 83,
+      "line": 85,
       "symbol": "NSLayoutConstraint.centerXY(_:relatedBy:toView:offset:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 90,
+      "line": 92,
       "symbol": "NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(_:paddingLeft:paddingRight:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 97,
+      "line": 99,
       "symbol": "NSLayoutConstraint.constraintsForViewToFillSuperviewVertical(_:paddingTop:paddingBottom:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 104,
+      "line": 106,
       "symbol": "NSLayoutConstraint.constraintsForViewToFillSuperview(_:padding:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 117,
+      "line": 119,
       "symbol": "UIViewController.constraintsForViewToFillSuperview(_:padding:constraintToLayoutGuideOptions:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/NSLayoutConstraintExtensions.swift",
-      "line": 123,
+      "line": 125,
       "symbol": "UIViewController.constraintsForViewToFillSuperviewVertical(_:paddingTop:paddingBottom:constraintToLayoutGuideOptions:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -4657,35 +4657,35 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/SwiftExtensions.swift",
-      "line": 172,
+      "line": 185,
       "symbol": "SignedInteger.digitsCount",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/SwiftExtensions.swift",
-      "line": 206,
+      "line": 200,
       "symbol": "FloatingPoint.pi2",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/SwiftExtensions.swift",
-      "line": 210,
+      "line": 204,
       "symbol": "FloatingPoint.pi4",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/SwiftExtensions.swift",
-      "line": 413,
+      "line": 407,
       "symbol": "Dictionary.unionInPlace(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/SwiftExtensions.swift",
-      "line": 417,
+      "line": 411,
       "symbol": "Dictionary.union(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -5693,56 +5693,42 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitExtensions.swift",
-      "line": 75,
-      "symbol": "UITabBarController.supportedInterfaceOrientations",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitExtensions.swift",
-      "line": 79,
-      "symbol": "UITabBarController.shouldAutorotate",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitExtensions.swift",
-      "line": 85,
+      "line": 73,
       "symbol": "UINib.init(named:bundle:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitExtensions.swift",
-      "line": 100,
+      "line": 88,
       "symbol": "UIDatePicker.textColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitExtensions.swift",
-      "line": 116,
+      "line": 104,
       "symbol": "UIRefreshControl.refreshingTimeout(after:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitExtensions.swift",
-      "line": 127,
+      "line": 115,
       "symbol": "IndexPath.zero",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitExtensions.swift",
-      "line": 131,
+      "line": 119,
       "symbol": "IndexPath.with(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIKitExtensions.swift",
-      "line": 137,
+      "line": 125,
       "symbol": "UIStackView.moveArrangedSubviews(_:at:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -5878,6 +5864,41 @@
       "line": 34,
       "symbol": "UIScrollView.ScrollDirection.unknown",
       "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIScrollViewExtensions.swift",
+      "line": 36,
+      "symbol": "UIScrollView.ScrollDirection.isVertical",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UIScrollViewExtensions.swift",
+      "line": 40,
+      "symbol": "UIScrollView.ScrollDirection.isHorizontal",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UITabBarControllerExtensions.swift",
+      "line": 28,
+      "symbol": "UITabBarController.supportedInterfaceOrientations",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UITabBarControllerExtensions.swift",
+      "line": 32,
+      "symbol": "UITabBarController.shouldAutorotate",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Extensions/UITabBarControllerExtensions.swift",
+      "line": 38,
+      "symbol": "UITabBarController.setTabBarHidden(_:animated:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -6024,6 +6045,27 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Protocols/Colorable.swift",
       "line": 28,
       "symbol": "Colorable.color",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Protocols/Colorable.swift",
+      "line": 31,
+      "symbol": "CollectionViewLayoutRepresentable",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Protocols/Colorable.swift",
+      "line": 32,
+      "symbol": "CollectionViewLayoutRepresentable.itemSize",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Protocols/Colorable.swift",
+      "line": 33,
+      "symbol": "CollectionViewLayoutRepresentable.scrollDirection",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },

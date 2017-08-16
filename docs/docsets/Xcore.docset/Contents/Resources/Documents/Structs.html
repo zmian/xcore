@@ -278,9 +278,6 @@
                 <a href="Extensions/SignedInteger.html">SignedInteger</a>
               </li>
               <li class="nav-group-task">
-                <a href="Extensions/SignedNumber.html">SignedNumber</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Extensions/String.html">String</a>
               </li>
               <li class="nav-group-task">
@@ -317,9 +314,6 @@
                 <a href="Extensions/UIDevice.html">UIDevice</a>
               </li>
               <li class="nav-group-task">
-                <a href="Extensions/UIDevice/ModelType.html">– ModelType</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Extensions/UIDevice/ScreenSize.html">– ScreenSize</a>
               </li>
               <li class="nav-group-task">
@@ -327,6 +321,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/UIDevice/SystemVersion.html">– SystemVersion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UIDevice/ModelType.html">– ModelType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/UIEdgeInsets.html">UIEdgeInsets</a>
@@ -451,6 +448,9 @@
                 <a href="Functions.html#/s:F5Xcore4openFT3urlV10Foundation3URL4fromCSo16UIViewController_T_">open(url:from:)</a>
               </li>
               <li class="nav-group-task">
+                <a href="Functions.html#/s:F5Xcore7swizzleFTPMPs9AnyObject_16originalSelectorV10ObjectiveC8Selector16swizzledSelectorS2__T_">swizzle(_:originalSelector:swizzledSelector:)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Functions.html#/s:F5Xcore12synchronizedurFzTPs9AnyObject_FzT_x_x">synchronized(_:_:)</a>
               </li>
             </ul>
@@ -458,6 +458,9 @@
           <li class="nav-group-name">
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/CollectionViewLayoutRepresentable.html">CollectionViewLayoutRepresentable</a>
+              </li>
               <li class="nav-group-task">
                 <a href="Protocols/Colorable.html">Colorable</a>
               </li>
@@ -576,9 +579,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:V5Xcore12AnyEquatable"></a>
-                    <a name="//apple_ref/swift/Struct/AnyEquatable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:V5Xcore12AnyEquatable">AnyEquatable</a>
+                    <a name="/s:V5Xcore13ArrayIterator"></a>
+                    <a name="//apple_ref/swift/Struct/ArrayIterator" class="dashAnchor"></a>
+                    <a class="token" href="#/s:V5Xcore13ArrayIterator">ArrayIterator</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -586,43 +589,35 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A type-erased equatable value.</p>
+                        <p>Undocumented</p>
 
-<p>The <code>AnyEquatable</code> type forwards equality comparisons operations
-to an underlying equatable value, hiding its specific underlying type.</p>
-
-<p>You can store mixed-type keys in dictionaries and other collections that
-require <code>Equatable</code> conformance by wrapping mixed-type keys in
-<code>AnyEquatable</code> instances:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">descriptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="kt">AnyEquatable</span><span class="p">(</span><span class="s">"😄"</span><span class="p">):</span> <span class="s">"emoji"</span><span class="p">,</span>
-    <span class="kt">AnyEquatable</span><span class="p">(</span><span class="mi">42</span><span class="p">):</span> <span class="s">"an Int"</span><span class="p">,</span>
-    <span class="kt">AnyEquatable</span><span class="p">(</span><span class="kt">Int8</span><span class="p">(</span><span class="mi">43</span><span class="p">)):</span> <span class="s">"an Int8"</span><span class="p">,</span>
-    <span class="kt">AnyEquatable</span><span class="p">(</span><span class="kt">Set</span><span class="p">([</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">])):</span> <span class="s">"a set of strings"</span>
-<span class="p">]</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="n">descriptions</span><span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="mi">42</span><span class="p">)]</span><span class="o">!</span><span class="p">)</span>      <span class="c1">// prints "an Int"</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">descriptions</span><span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="mi">43</span><span class="p">)])</span>       <span class="c1">// prints "nil"</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">descriptions</span><span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="kt">Int8</span><span class="p">(</span><span class="mi">43</span><span class="p">))]</span><span class="o">!</span><span class="p">)</span> <span class="c1">// prints "an Int8"</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">descriptions</span><span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="kt">Set</span><span class="p">([</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">]))]</span><span class="o">!</span><span class="p">)</span> <span class="c1">// prints "a set of strings"</span>
-
-<span class="k">let</span> <span class="nv">arr</span> <span class="o">=</span> <span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="n">😄</span><span class="p">),</span> <span class="kt">AnyEquatable</span><span class="p">(</span><span class="s">"cat"</span><span class="p">),</span> <span class="kt">AnyEquatable</span><span class="p">(</span><span class="mi">42</span><span class="p">)]</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="n">😄</span><span class="p">)))</span> <span class="c1">// -&gt; true</span>
-<span class="nf">print</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="s">"dog"</span><span class="p">)))</span> <span class="c1">// -&gt; false</span>
-</code></pre>
-
-                        <a href="Structs/AnyEquatable.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">AnyEquatable</span></code></pre>
-
-                        </div>
+                        <a href="Structs/ArrayIterator.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Classes/AnyEquatable.swift#L53-L61">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Components/Section.swift#L29-L42">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:V5Xcore7Section"></a>
+                    <a name="//apple_ref/swift/Struct/Section" class="dashAnchor"></a>
+                    <a class="token" href="#/s:V5Xcore7Section">Section</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Structs/Section.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Components/Section.swift#L44-L90">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -684,6 +679,64 @@ require <code>Equatable</code> conformance by wrapping mixed-type keys in
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:V5Xcore12AnyEquatable"></a>
+                    <a name="//apple_ref/swift/Struct/AnyEquatable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:V5Xcore12AnyEquatable">AnyEquatable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type-erased equatable value.</p>
+
+<p>The <code>AnyEquatable</code> type forwards equality comparisons operations
+to an underlying equatable value, hiding its specific underlying type.</p>
+
+<p>You can store mixed-type keys in dictionaries and other collections that
+require <code>Equatable</code> conformance by wrapping mixed-type keys in
+<code>AnyEquatable</code> instances:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">descriptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="kt">AnyEquatable</span><span class="p">(</span><span class="s">"😄"</span><span class="p">):</span> <span class="s">"emoji"</span><span class="p">,</span>
+    <span class="kt">AnyEquatable</span><span class="p">(</span><span class="mi">42</span><span class="p">):</span> <span class="s">"an Int"</span><span class="p">,</span>
+    <span class="kt">AnyEquatable</span><span class="p">(</span><span class="kt">Int8</span><span class="p">(</span><span class="mi">43</span><span class="p">)):</span> <span class="s">"an Int8"</span><span class="p">,</span>
+    <span class="kt">AnyEquatable</span><span class="p">(</span><span class="kt">Set</span><span class="p">([</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">])):</span> <span class="s">"a set of strings"</span>
+<span class="p">]</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">descriptions</span><span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="mi">42</span><span class="p">)]</span><span class="o">!</span><span class="p">)</span>      <span class="c1">// prints "an Int"</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">descriptions</span><span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="mi">43</span><span class="p">)])</span>       <span class="c1">// prints "nil"</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">descriptions</span><span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="kt">Int8</span><span class="p">(</span><span class="mi">43</span><span class="p">))]</span><span class="o">!</span><span class="p">)</span> <span class="c1">// prints "an Int8"</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">descriptions</span><span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="kt">Set</span><span class="p">([</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">]))]</span><span class="o">!</span><span class="p">)</span> <span class="c1">// prints "a set of strings"</span>
+
+<span class="k">let</span> <span class="nv">arr</span> <span class="o">=</span> <span class="p">[</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="n">😄</span><span class="p">),</span> <span class="kt">AnyEquatable</span><span class="p">(</span><span class="s">"cat"</span><span class="p">),</span> <span class="kt">AnyEquatable</span><span class="p">(</span><span class="mi">42</span><span class="p">)]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="n">😄</span><span class="p">)))</span> <span class="c1">// -&gt; true</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="kt">AnyEquatable</span><span class="p">(</span><span class="s">"dog"</span><span class="p">)))</span> <span class="c1">// -&gt; false</span>
+</code></pre>
+
+                        <a href="Structs/AnyEquatable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">AnyEquatable</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Classes/AnyEquatable.swift#L53-L61">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:V5Xcore7console"></a>
                     <a name="//apple_ref/swift/Struct/console" class="dashAnchor"></a>
                     <a class="token" href="#/s:V5Xcore7console">console</a>
@@ -700,6 +753,60 @@ require <code>Equatable</code> conformance by wrapping mixed-type keys in
                       </div>
                       <div class="slightly-smaller">
                         <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Classes/Console.swift#L27-L101">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:V5Xcore18LayoutGuideOptions"></a>
+                    <a name="//apple_ref/swift/Struct/LayoutGuideOptions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:V5Xcore18LayoutGuideOptions">LayoutGuideOptions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Structs/LayoutGuideOptions.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/NSLayoutConstraintExtensions.swift#L27-L36">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:V5Xcore30IconLabelCollectionCellOptions"></a>
+                    <a name="//apple_ref/swift/Struct/IconLabelCollectionCellOptions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:V5Xcore30IconLabelCollectionCellOptions">IconLabelCollectionCellOptions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Structs/IconLabelCollectionCellOptions.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Components/IconLabelView/IconLabelCollectionView.swift#L27-L34">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -824,33 +931,6 @@ configuration driven views.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:V5Xcore18LayoutGuideOptions"></a>
-                    <a name="//apple_ref/swift/Struct/LayoutGuideOptions" class="dashAnchor"></a>
-                    <a class="token" href="#/s:V5Xcore18LayoutGuideOptions">LayoutGuideOptions</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Structs/LayoutGuideOptions.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/NSLayoutConstraintExtensions.swift#L27-L34">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:V5Xcore8Response"></a>
                     <a name="//apple_ref/swift/Struct/Response" class="dashAnchor"></a>
                     <a class="token" href="#/s:V5Xcore8Response">Response</a>
@@ -873,87 +953,10 @@ configuration driven views.</p>
                 </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:V5Xcore13ArrayIterator"></a>
-                    <a name="//apple_ref/swift/Struct/ArrayIterator" class="dashAnchor"></a>
-                    <a class="token" href="#/s:V5Xcore13ArrayIterator">ArrayIterator</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Structs/ArrayIterator.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Components/Section.swift#L29-L42">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:V5Xcore7Section"></a>
-                    <a name="//apple_ref/swift/Struct/Section" class="dashAnchor"></a>
-                    <a class="token" href="#/s:V5Xcore7Section">Section</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Structs/Section.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Components/Section.swift#L44-L90">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:V5Xcore30IconLabelCollectionCellOptions"></a>
-                    <a name="//apple_ref/swift/Struct/IconLabelCollectionCellOptions" class="dashAnchor"></a>
-                    <a class="token" href="#/s:V5Xcore30IconLabelCollectionCellOptions">IconLabelCollectionCellOptions</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Structs/IconLabelCollectionCellOptions.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Components/IconLabelView/IconLabelCollectionView.swift#L27-L34">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2017-08-10)</p>
+          <p>&copy; 2017 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2017-08-16)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

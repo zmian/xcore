@@ -278,9 +278,6 @@
                 <a href="Extensions/SignedInteger.html">SignedInteger</a>
               </li>
               <li class="nav-group-task">
-                <a href="Extensions/SignedNumber.html">SignedNumber</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Extensions/String.html">String</a>
               </li>
               <li class="nav-group-task">
@@ -317,9 +314,6 @@
                 <a href="Extensions/UIDevice.html">UIDevice</a>
               </li>
               <li class="nav-group-task">
-                <a href="Extensions/UIDevice/ModelType.html">– ModelType</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Extensions/UIDevice/ScreenSize.html">– ScreenSize</a>
               </li>
               <li class="nav-group-task">
@@ -327,6 +321,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/UIDevice/SystemVersion.html">– SystemVersion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UIDevice/ModelType.html">– ModelType</a>
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/UIEdgeInsets.html">UIEdgeInsets</a>
@@ -451,6 +448,9 @@
                 <a href="Functions.html#/s:F5Xcore4openFT3urlV10Foundation3URL4fromCSo16UIViewController_T_">open(url:from:)</a>
               </li>
               <li class="nav-group-task">
+                <a href="Functions.html#/s:F5Xcore7swizzleFTPMPs9AnyObject_16originalSelectorV10ObjectiveC8Selector16swizzledSelectorS2__T_">swizzle(_:originalSelector:swizzledSelector:)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Functions.html#/s:F5Xcore12synchronizedurFzTPs9AnyObject_FzT_x_x">synchronized(_:_:)</a>
               </li>
             </ul>
@@ -458,6 +458,9 @@
           <li class="nav-group-name">
             <a href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/CollectionViewLayoutRepresentable.html">CollectionViewLayoutRepresentable</a>
+              </li>
               <li class="nav-group-task">
                 <a href="Protocols/Colorable.html">Colorable</a>
               </li>
@@ -576,6 +579,32 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:F5Xcoreoi2eeuRxs9AnyObjectxs9EquatablerFTGSqCS_8Observer_x_Sb"></a>
+                    <a name="//apple_ref/swift/Function/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:F5Xcoreoi2eeuRxs9AnyObjectxs9EquatablerFTGSqCS_8Observer_x_Sb">==(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Classes/Observer.swift#L144-L150">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:F5Xcore5delayFT2bySdFT_T__T_"></a>
                     <a name="//apple_ref/swift/Function/delay(by:_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:F5Xcore5delayFT2bySdFT_T__T_">delay(by:_:)</a>
@@ -602,77 +631,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:F5Xcore4openFT3urlV10Foundation3URL4fromCSo16UIViewController_T_"></a>
-                    <a name="//apple_ref/swift/Function/open(url:from:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:F5Xcore4openFT3urlV10Foundation3URL4fromCSo16UIViewController_T_">open(url:from:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Attempts to open the resource at the specified URL.</p>
-
-<p>Requests are made using <code>SafariViewController</code> if available;
-otherwise it uses <code>UIApplication:openURL</code>.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">open</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="n">from</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>url</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The url to open.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>from</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>A view controller that wants to open the url.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIKitExtensions.swift#L36-L39">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:F5Xcoreoi2eeuRxs9AnyObjectxs9EquatablerFTGSqCS_8Observer_x_Sb"></a>
-                    <a name="//apple_ref/swift/Function/==(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:F5Xcoreoi2eeuRxs9AnyObjectxs9EquatablerFTGSqCS_8Observer_x_Sb">==(_:_:)</a>
+                    <a name="/s:F5Xcoreoi2peFTRVSC6CGSizeS0__T_"></a>
+                    <a name="//apple_ref/swift/Function/+=(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:F5Xcoreoi2peFTRVSC6CGSizeS0__T_">+=(_:_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -684,7 +645,133 @@ otherwise it uses <code>UIApplication:openURL</code>.</p>
 
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Classes/Observer.swift#L144-L150">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIGeometryExtensions.swift#L96-L99">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:F5Xcoreoi1pFTVSC6CGSizeS0__S0_"></a>
+                    <a name="//apple_ref/swift/Function/+(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:F5Xcoreoi1pFTVSC6CGSizeS0__S0_">+(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIGeometryExtensions.swift#L101-L103">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:F5Xcoreoi1pFTVSC6CGSizeV12CoreGraphics7CGFloat_S0_"></a>
+                    <a name="//apple_ref/swift/Function/+(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:F5Xcoreoi1pFTVSC6CGSizeV12CoreGraphics7CGFloat_S0_">+(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIGeometryExtensions.swift#L105-L107">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:F5Xcoreoi2peFTRVSC6CGSizeV12CoreGraphics7CGFloat_T_"></a>
+                    <a name="//apple_ref/swift/Function/+=(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:F5Xcoreoi2peFTRVSC6CGSizeV12CoreGraphics7CGFloat_T_">+=(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIGeometryExtensions.swift#L109-L111">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:F5Xcore5alertFT5titleSS7messageSS_T_"></a>
+                    <a name="//apple_ref/swift/Function/alert(title:message:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:F5Xcore5alertFT5titleSS7messageSS_T_">alert(title:message:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Displays an instance of <code>UIAlertController</code> with the given <code>title</code> and <code>message</code>, and an OK button to dismiss it.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">alert</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">""</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">""</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIAlertControllerExtensions.swift#L47-L52">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:F5Xcore12synchronizedurFzTPs9AnyObject_FzT_x_x"></a>
+                    <a name="//apple_ref/swift/Function/synchronized(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:F5Xcore12synchronizedurFzTPs9AnyObject_FzT_x_x">synchronized(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Classes/Debugger.swift#L39-L43">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -932,9 +1019,9 @@ by splitting fetching size to <code>splitSize</code>.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:F5Xcoreoi2peFTRVSC6CGSizeS0__T_"></a>
-                    <a name="//apple_ref/swift/Function/+=(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:F5Xcoreoi2peFTRVSC6CGSizeS0__T_">+=(_:_:)</a>
+                    <a name="/s:F5Xcore7swizzleFTPMPs9AnyObject_16originalSelectorV10ObjectiveC8Selector16swizzledSelectorS2__T_"></a>
+                    <a name="//apple_ref/swift/Function/swizzle(_:originalSelector:swizzledSelector:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:F5Xcore7swizzleFTPMPs9AnyObject_16originalSelectorV10ObjectiveC8Selector16swizzledSelectorS2__T_">swizzle(_:originalSelector:swizzledSelector:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -942,137 +1029,113 @@ by splitting fetching size to <code>splitSize</code>.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Swizzle selector for the given class.</p>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">UIApplication</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">runOnce</span><span class="p">:</span> <span class="kt">Void</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="kt">UIViewController</span><span class="o">.</span><span class="nf">runOnceSwapViewWillAppear</span><span class="p">()</span>
+    <span class="p">}()</span>
 
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIGeometryExtensions.swift#L96-L99">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:F5Xcoreoi1pFTVSC6CGSizeS0__S0_"></a>
-                    <a name="//apple_ref/swift/Function/+(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:F5Xcoreoi1pFTVSC6CGSizeS0__S0_">+(_:_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
+    <span class="k">override</span> <span class="n">open</span> <span class="k">var</span> <span class="nv">next</span><span class="p">:</span> <span class="kt">UIResponder</span><span class="p">?</span> <span class="p">{</span>
+        <span class="c1">// Called before applicationDidFinishLaunching</span>
+        <span class="kt">UIApplication</span><span class="o">.</span><span class="n">runOnce</span>
+        <span class="k">return</span> <span class="k">super</span><span class="o">.</span><span class="n">next</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIGeometryExtensions.swift#L101-L103">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:F5Xcoreoi1pFTVSC6CGSizeV12CoreGraphics7CGFloat_S0_"></a>
-                    <a name="//apple_ref/swift/Function/+(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:F5Xcoreoi1pFTVSC6CGSizeV12CoreGraphics7CGFloat_S0_">+(_:_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
+<span class="kd">extension</span> <span class="kt">UIViewController</span> <span class="p">{</span>
+    <span class="n">fileprivate</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">runOnceSwapViewWillAppear</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nf">swizzle</span><span class="p">(</span>
+            <span class="kt">UIViewController</span><span class="o">.</span><span class="k">self</span><span class="p">,</span>
+            <span class="nv">originalSelector</span><span class="p">:</span> <span class="kd">#selector(</span><span class="nf">UIViewController.viewWillAppear(_:)</span><span class="kd">)</span><span class="p">,</span>
+            <span class="nv">swizzledSelector</span><span class="p">:</span> <span class="kd">#selector(</span><span class="nf">UIViewController.swizzled_viewWillAppear(_:)</span><span class="kd">)</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
 
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIGeometryExtensions.swift#L105-L107">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:F5Xcoreoi2peFTRVSC6CGSizeV12CoreGraphics7CGFloat_T_"></a>
-                    <a name="//apple_ref/swift/Function/+=(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:F5Xcoreoi2peFTRVSC6CGSizeV12CoreGraphics7CGFloat_T_">+=(_:_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIGeometryExtensions.swift#L109-L111">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:F5Xcore12synchronizedurFzTPs9AnyObject_FzT_x_x"></a>
-                    <a name="//apple_ref/swift/Function/synchronized(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:F5Xcore12synchronizedurFzTPs9AnyObject_FzT_x_x">synchronized(_:_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Classes/Debugger.swift#L39-L43">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:F5Xcore5alertFT5titleSS7messageSS_T_"></a>
-                    <a name="//apple_ref/swift/Function/alert(title:message:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:F5Xcore5alertFT5titleSS7messageSS_T_">alert(title:message:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Displays an instance of <code>UIAlertController</code> with the given <code>title</code> and <code>message</code>, and an OK button to dismiss it.</p>
+    <span class="kd">@objc</span> <span class="n">fileprivate</span> <span class="kd">func</span> <span class="nf">swizzled_viewWillAppear</span><span class="p">(</span><span class="n">_</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="nf">swizzled_viewWillAppear</span><span class="p">(</span><span class="n">animated</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">alert</span><span class="p">(</span><span class="nv">title</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">""</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">""</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">swizzle</span><span class="p">(</span><span class="n">_</span> <span class="nv">forClass</span><span class="p">:</span> <span class="kt">AnyClass</span><span class="p">,</span> <span class="nv">originalSelector</span><span class="p">:</span> <span class="kt">Selector</span><span class="p">,</span> <span class="nv">swizzledSelector</span><span class="p">:</span> <span class="kt">Selector</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIAlertControllerExtensions.swift#L47-L52">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Classes/Swizzle.swift#L56-L77">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:F5Xcore4openFT3urlV10Foundation3URL4fromCSo16UIViewController_T_"></a>
+                    <a name="//apple_ref/swift/Function/open(url:from:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:F5Xcore4openFT3urlV10Foundation3URL4fromCSo16UIViewController_T_">open(url:from:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Attempts to open the resource at the specified URL.</p>
+
+<p>Requests are made using <code>SafariViewController</code> if available;
+otherwise it uses <code>UIApplication:openURL</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">open</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="n">from</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The url to open.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>from</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A view controller that wants to open the url.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Extensions/UIKitExtensions.swift#L36-L39">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1190,7 +1253,7 @@ by splitting fetching size to <code>splitSize</code>.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2017-08-10)</p>
+          <p>&copy; 2017 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2017-08-16)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
