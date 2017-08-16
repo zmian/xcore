@@ -33,11 +33,11 @@ extension UIScrollView {
         case right
         case unknown
 
-        var isVertical: Bool {
+        public var isVertical: Bool {
             return self == .up || self == .down
         }
 
-        var isHorizontal: Bool {
+        public var isHorizontal: Bool {
             return self == .left || self == .right
         }
     }
