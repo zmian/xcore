@@ -28,5 +28,6 @@ private var didStart = false
 public func xcoreSwizzle() {
     guard !didStart else { return }
     didStart = true
+    UIViewController.runOnceSwapSelectors()
     WKUserContentController.runOnceSwapSelectors()
 }
