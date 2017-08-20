@@ -120,6 +120,7 @@
 		689869EA1E9992E600CE7B77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 689869E31E9992E600CE7B77 /* Main.storyboard */; };
 		689D0D1B1D8DBE6400145E0B /* XcoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0D181D8DBE5C00145E0B /* XcoreTests.swift */; };
 		68C392FE1E99D327009D8D58 /* PredicateQueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */; };
+		68FE39221F4A3D140015CB92 /* IndexPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FE39211F4A3D140015CB92 /* IndexPathExtensions.swift */; };
 		975C9436F0C35B14D6B8FFF0 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C773C4D476BF4309831EDE03 /* Pods_Example.framework */; };
 		CDE69BBCB1B78A0EB89C5FCD /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F555E9FA859A59DB03B60C /* Pods_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -258,6 +259,7 @@
 		689D0D171D8DBE5C00145E0B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		689D0D181D8DBE5C00145E0B /* XcoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XcoreTests.swift; sourceTree = "<group>"; };
 		68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredicateQueryTests.swift; sourceTree = "<group>"; };
+		68FE39211F4A3D140015CB92 /* IndexPathExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexPathExtensions.swift; sourceTree = "<group>"; };
 		84F555E9FA859A59DB03B60C /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C773C4D476BF4309831EDE03 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -468,6 +470,7 @@
 				680E84F31F49438C00924B68 /* UITableViewExtensions.swift */,
 				680E84F41F49438C00924B68 /* UIViewControllerExtensions.swift */,
 				680E84F51F49438C00924B68 /* UIViewExtensions.swift */,
+				68FE39211F4A3D140015CB92 /* IndexPathExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -988,6 +991,7 @@
 				680E850B1F49438C00924B68 /* ZoomAnimatorInteractiveTransition.swift in Sources */,
 				680E856E1F49438D00924B68 /* Timer+Closure.swift in Sources */,
 				680E85581F49438D00924B68 /* UIKitExtensions.swift in Sources */,
+				68FE39221F4A3D140015CB92 /* IndexPathExtensions.swift in Sources */,
 				680E852B1F49438C00924B68 /* DynamicTableViewController.swift in Sources */,
 				680E85471F49438D00924B68 /* FoundationExtensions.swift in Sources */,
 				680E850D1F49438C00924B68 /* ZoomAnimatorSourceDestination.swift in Sources */,
