@@ -4,7 +4,7 @@ PODS:
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - Xcore (1.0.4):
+  - Xcore (1.0.5):
     - BEMCheckBox (~> 1.0)
     - MDHTMLLabel (~> 1.0)
     - SDWebImage (~> 3.7)
@@ -20,7 +20,7 @@ SPEC CHECKSUMS:
   BEMCheckBox: e18e4a148905b290bd03d98b767651c104f4eda3
   MDHTMLLabel: 18bf09ec7d6c1ae396497345c005857c0493ee0a
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  Xcore: 8846a10ef7df4e60a75d6ba9ea9d336896a4d85c
+  Xcore: fa11d1a92994df594150fe7aa936821ba9fb8ca6
 
 PODFILE CHECKSUM: 77bb6a6259b6f2a9b20438f3dccb8161c34ad68f
 
