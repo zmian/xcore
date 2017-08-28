@@ -1,5 +1,5 @@
 //
-// UINavigationController+HidesBottomBarWhenPushed.swift
+// UIViewController+HidesBottomBarWhenPushed.swift
 //
 // Copyright © 2017 Zeeshan Mian
 //
