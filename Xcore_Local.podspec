@@ -12,6 +12,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '9.0'
   s.pod_target_xcconfig   = {
     'SWIFT_VERSION' => '3.2',
+    'OTHER_SWIFT_FLAGS' => '-DXCORE_ENVIRONMENT_${CONFIGURATION}'
   }
   s.dependency 'SDWebImage', '~> 3.7'
   s.dependency 'BEMCheckBox', '~> 1.0'
