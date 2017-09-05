@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = 'Xcore'
-  s.version               = '1.0.4'
+  s.version               = '1.0.5'
   s.license               = 'MIT'
   s.summary               = 'Cocoa Touch Classes + Extensions'
   s.homepage              = 'https://github.com/zmian/xcore.swift'
@@ -11,8 +11,7 @@ Pod::Spec.new do |s|
   s.requires_arc          = true
   s.ios.deployment_target = '9.0'
   s.pod_target_xcconfig   = {
-    'SWIFT_VERSION' => '3.0',
-    'OTHER_SWIFT_FLAGS' => '-DXCORE_ENVIRONMENT_${CONFIGURATION}'
+    'SWIFT_VERSION' => '3.2',
   }
   s.dependency 'SDWebImage', '~> 3.7'
   s.dependency 'BEMCheckBox', '~> 1.0'
