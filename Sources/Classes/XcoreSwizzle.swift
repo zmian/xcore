@@ -22,12 +22,14 @@
 // THE SOFTWARE.
 //
 
+import UIKit
 import WebKit
 
 private var didStart = false
 public func xcoreSwizzle() {
     guard !didStart else { return }
     didStart = true
+    UIImageView.runOnceSwapSelectors()
     UIViewController.runOnceSwapSelectors()
     WKUserContentController.runOnceSwapSelectors()
 }
