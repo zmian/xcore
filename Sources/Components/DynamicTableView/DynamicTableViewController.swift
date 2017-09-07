@@ -43,7 +43,7 @@ open class DynamicTableViewController: UIViewController {
 
     /// The distance that the tableView is inset from the enclosing view.
     /// The default value is `UIEdgeInsets.zero`.
-    open dynamic var contentInset = UIEdgeInsets.zero {
+    @objc open dynamic var contentInset = UIEdgeInsets.zero {
         didSet {
             tableViewConstraints.at(0)?.constant = contentInset.left
             tableViewConstraints.at(1)?.constant = contentInset.right

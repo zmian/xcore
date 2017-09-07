@@ -111,20 +111,32 @@ extension UITabBar {
 // MARK: UIBarButtonItem Extension
 
 extension UIBarButtonItem {
-    open dynamic var textColor: UIColor? {
-        get { return titleTextAttributes(for: .normal)?[NSForegroundColorAttributeName] as? UIColor }
+    fileprivate func _titleTextAttributes(for state: UIControlState) -> [NSAttributedStringKey: Any] {
+        var oldAttributes = titleTextAttributes(for: state) ?? [:]
+
+        var newAttributes = [NSAttributedStringKey: Any]()
+
+        for (key, value) in oldAttributes {
+            newAttributes[NSAttributedStringKey(rawValue: key)] = value
+        }
+
+        return newAttributes
+    }
+
+    @objc open dynamic var textColor: UIColor? {
+        get { return titleTextAttributes(for: .normal)?[NSAttributedStringKey.foregroundColor.rawValue] as? UIColor }
         set {
-            var attributes = titleTextAttributes(for: .normal) ?? [:]
-            attributes[NSForegroundColorAttributeName] = newValue
+            var attributes = _titleTextAttributes(for: .normal) ?? [:]
+            attributes[.foregroundColor] = newValue
             setTitleTextAttributes(attributes, for: .normal)
         }
     }
 
-    open dynamic var font: UIFont? {
-        get { return titleTextAttributes(for: .normal)?[NSFontAttributeName] as? UIFont }
+    @objc open dynamic var font: UIFont? {
+        get { return titleTextAttributes(for: .normal)?[NSAttributedStringKey.font.rawValue] as? UIFont }
         set {
-            var attributes = titleTextAttributes(for: .normal) ?? [:]
-            attributes[NSFontAttributeName] = newValue
+            var attributes = _titleTextAttributes(for: .normal) ?? [:]
+            attributes[.font] = newValue
             setTitleTextAttributes(attributes, for: .normal)
         }
     }

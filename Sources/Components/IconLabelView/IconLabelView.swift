@@ -50,7 +50,7 @@ open class IconLabelView: XCView {
     }
 
     /// The default size is `55,55`.
-    open dynamic var imageSize = CGSize(width: 55, height: 55) {
+    @objc open dynamic var imageSize = CGSize(width: 55, height: 55) {
         didSet {
             imageSizeConstraints.width?.constant  = imageSize.width
             imageSizeConstraints.height?.constant = imageSize.height
@@ -58,14 +58,14 @@ open class IconLabelView: XCView {
     }
 
     /// The space between image and text. The default value is `0`.
-    open dynamic var textImageSpacing: CGFloat = 0 {
+    @objc open dynamic var textImageSpacing: CGFloat = 0 {
         didSet {
             updateTextImageSpacingIfNeeded()
         }
     }
 
     /// The default value is `0` which means size to fit.
-    open dynamic var labelsWidth: CGFloat = 0 {
+    @objc open dynamic var labelsWidth: CGFloat = 0 {
         didSet {
             guard oldValue != labelsWidth else { return }
 
@@ -86,7 +86,7 @@ open class IconLabelView: XCView {
     }
 
     /// The default value is `8`.
-    open dynamic var imagePadding: CGFloat = 8 {
+    @objc open dynamic var imagePadding: CGFloat = 8 {
         didSet {
             imageInset = UIEdgeInsets(all: imagePadding)
             imageView.cornerRadius = imageCornerRadius - imagePadding
@@ -95,7 +95,7 @@ open class IconLabelView: XCView {
 
     /// The distance that the view is inset from the enclosing content view.
     /// The default value is `UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)`.
-    open dynamic var imageInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8) {
+    @objc open dynamic var imageInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8) {
         didSet {
             imagePaddingConstraints.at(0)?.constant = imageInset.top
             imagePaddingConstraints.at(1)?.constant = imageInset.bottom
@@ -105,28 +105,28 @@ open class IconLabelView: XCView {
     }
 
     /// The default value is `13`.
-    open dynamic var imageCornerRadius: CGFloat = 13 {
+    @objc open dynamic var imageCornerRadius: CGFloat = 13 {
         didSet {
             imageViewContainer.cornerRadius = imageCornerRadius
         }
     }
 
     /// The default value is `false`.
-    open dynamic var isRoundImageView = false {
+    @objc open dynamic var isRoundImageView = false {
         didSet {
             imageCornerRadius = isRoundImageView ? imageSize.height / 2 : 0
         }
     }
 
     /// The default value is `nil`, which results in a transparent background color.
-    open dynamic var imageBackgroundColor: UIColor? = nil {
+    @objc open dynamic var imageBackgroundColor: UIColor? = nil {
         didSet {
             imageViewContainer.backgroundColor = imageBackgroundColor
         }
     }
 
     /// The default value is `false`.
-    open dynamic var isImageViewHidden: Bool = false {
+    @objc open dynamic var isImageViewHidden: Bool = false {
         didSet {
             guard oldValue != isImageViewHidden else { return }
 
@@ -142,7 +142,7 @@ open class IconLabelView: XCView {
     }
 
     /// The default value is `true`.
-    open dynamic var isSubtitleLabelHidden: Bool = true {
+    @objc open dynamic var isSubtitleLabelHidden: Bool = true {
         didSet {
             guard oldValue != isSubtitleLabelHidden else { return }
 
@@ -174,13 +174,13 @@ open class IconLabelView: XCView {
     }
 
     /// The default value is `5`.
-    open dynamic var spacing: CGFloat {
+    @objc open dynamic var spacing: CGFloat {
         get { return stackView.spacing }
         set { stackView.spacing = newValue }
     }
 
     /// The default insets is `UIEdgeInsets.zero`.
-    open dynamic var contentInset: UIEdgeInsets {
+    @objc open dynamic var contentInset: UIEdgeInsets {
         get { return stackView.layoutMargins }
         set { stackView.layoutMargins = newValue }
     }
@@ -204,7 +204,7 @@ open class IconLabelView: XCView {
     open override func setupSubviews() {
         addSubview(stackView)
 
-        NSLayoutConstraint.centerXY(stackView, priority: UILayoutPriorityDefaultLow).activate()
+        NSLayoutConstraint.centerXY(stackView, priority: .defaultLow).activate()
         NSLayoutConstraint(item: stackView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: self).activate()
         NSLayoutConstraint(item: stackView, attribute: .bottom, relatedBy: .lessThanOrEqual, toItem: self).activate()
 
@@ -258,22 +258,22 @@ open class IconLabelView: XCView {
 // MARK: UIAppearance Properties
 
 extension IconLabelView {
-    public dynamic var titleColor: UIColor? {
+    @objc public dynamic var titleColor: UIColor? {
         get { return titleLabel.textColor }
         set { titleLabel.textColor = newValue }
     }
 
-    public dynamic var titleFont: UIFont {
+    @objc public dynamic var titleFont: UIFont {
         get { return titleLabel.font }
         set { titleLabel.font = newValue }
     }
 
-    public dynamic var subtitleColor: UIColor? {
+    @objc public dynamic var subtitleColor: UIColor? {
         get { return subtitleLabel.textColor }
         set { subtitleLabel.textColor = newValue }
     }
 
-    public dynamic var subtitleFont: UIFont {
+    @objc public dynamic var subtitleFont: UIFont {
         get { return subtitleLabel.font }
         set { subtitleLabel.font = newValue }
     }

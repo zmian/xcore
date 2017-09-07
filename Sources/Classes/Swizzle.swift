@@ -54,8 +54,10 @@ import UIKit
 /// }
 /// ```
 public func swizzle(_ forClass: AnyClass, originalSelector: Selector, swizzledSelector: Selector) {
-    let originalMethod = class_getInstanceMethod(forClass, originalSelector)
-    let swizzledMethod = class_getInstanceMethod(forClass, swizzledSelector)
+    guard
+        let originalMethod = class_getInstanceMethod(forClass, originalSelector),
+        let swizzledMethod = class_getInstanceMethod(forClass, swizzledSelector)
+    else { return }
 
     let didAddMethod = class_addMethod(
         forClass,

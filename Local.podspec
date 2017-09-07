@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.requires_arc          = true
   s.ios.deployment_target = '9.0'
   s.pod_target_xcconfig   = {
-    'SWIFT_VERSION' => '3.0',
+    'SWIFT_VERSION' => '4.0',
     'OTHER_SWIFT_FLAGS' => '-DXCORE_ENVIRONMENT_${CONFIGURATION}'
   }
   s.dependency 'SDWebImage', '~> 3.7'

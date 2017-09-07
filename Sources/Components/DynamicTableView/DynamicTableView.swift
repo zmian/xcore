@@ -32,15 +32,15 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     open var cellOptions: DynamicTableCellOptions = [] {
         didSet { isReorderingEnabled = allowReordering }
     }
-    open dynamic var rowActionDeleteColor: UIColor?
+    @objc open dynamic var rowActionDeleteColor: UIColor?
     /// Text to display in the swipe to delete row action. The default value is **"Delete"**.
-    open dynamic var rowActionDeleteTitle = "Delete"
+    @objc open dynamic var rowActionDeleteTitle = "Delete"
     /// A boolean value to determine whether the content is centered in the table view. The default value is `false`.
-    open dynamic var isContentCentered = false
+    @objc open dynamic var isContentCentered = false
     /// A boolean value to determine whether the last table view cell separator is hidden. The default value is `false`.
-    open dynamic var isLastCellSeparatorHidden = false
+    @objc open dynamic var isLastCellSeparatorHidden = false
     /// A boolean value to determine whether the empty table view cells are hidden. The default value is `false`.
-    open dynamic var emptyCellsHidden = false {
+    @objc open dynamic var emptyCellsHidden = false {
         didSet { tableFooterView = emptyCellsHidden ? UIView(frame: .zero) : nil }
     }
 
@@ -368,19 +368,19 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     // MARK: UIAppearance Properties
 
-    open dynamic var headerFont                     = UIFont.systemFont(.footnote)
-    open dynamic var headerTextColor                = UIColor.black
-    open dynamic var footerFont                     = UIFont.systemFont(.footnote)
-    open dynamic var footerTextColor                = UIColor.darkGray
-    open dynamic var accessoryFont                  = UIFont.systemFont(.subheadline)
-    open dynamic var accessoryTextColor             = UIColor.gray
-    open dynamic var accessoryTintColor             = UIColor.systemTint
-    open dynamic var accessoryTextMaxWidth: CGFloat = 0
-    open dynamic var disclosureIndicatorTintColor   = UIColor.gray
+    @objc open dynamic var headerFont                     = UIFont.systemFont(.footnote)
+    @objc open dynamic var headerTextColor                = UIColor.black
+    @objc open dynamic var footerFont                     = UIFont.systemFont(.footnote)
+    @objc open dynamic var footerTextColor                = UIColor.darkGray
+    @objc open dynamic var accessoryFont                  = UIFont.systemFont(.subheadline)
+    @objc open dynamic var accessoryTextColor             = UIColor.gray
+    @objc open dynamic var accessoryTintColor             = UIColor.systemTint
+    @objc open dynamic var accessoryTextMaxWidth: CGFloat = 0
+    @objc open dynamic var disclosureIndicatorTintColor   = UIColor.gray
 
     /// The color of the check box ring when the checkbox is Off.
     /// The default value is `UIColor.blackColor().alpha(0.13)`.
-    open dynamic var checkboxOffTintColor = UIColor.black.alpha(0.13)
+    @objc open dynamic var checkboxOffTintColor = UIColor.black.alpha(0.13)
 }
 
 // MARK: AccessoryView

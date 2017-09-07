@@ -225,7 +225,7 @@ extension UIView {
     }
 
     open func sizeFitting(width: CGFloat) -> CGSize {
-        let layoutSize = systemLayoutSizeFitting(CGSize(width: width, height: 0), withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        let layoutSize = systemLayoutSizeFitting(CGSize(width: width, height: 0), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
         return CGSize(width: width, height: ceil(layoutSize.height))
     }
 }

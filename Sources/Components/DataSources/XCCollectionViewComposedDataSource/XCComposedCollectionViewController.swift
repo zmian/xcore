@@ -55,7 +55,7 @@ open class XCComposedCollectionViewController: UIViewController {
 
     /// The distance that the collectionView is inset from the enclosing view.
     /// The default value is `UIEdgeInsets.zero`.
-    open dynamic var contentInset = UIEdgeInsets.zero {
+    @objc open dynamic var contentInset = UIEdgeInsets.zero {
         didSet {
             collectionViewConstraints.at(0)?.constant = contentInset.left
             collectionViewConstraints.at(1)?.constant = contentInset.right

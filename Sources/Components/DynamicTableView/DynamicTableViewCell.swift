@@ -35,7 +35,7 @@ open class DynamicTableViewCell: XCTableViewCell {
 
     /// The distance that the view is inset from the enclosing content view.
     /// The default value is `UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15)`.
-    open dynamic var contentInset = UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15) {
+    @objc open dynamic var contentInset = UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15) {
         didSet {
             contentConstraints.top?.constant    = contentInset.top
             contentConstraints.left?.constant   = contentInset.left
@@ -49,34 +49,34 @@ open class DynamicTableViewCell: XCTableViewCell {
     }
 
     /// The default value is `44`.
-    open dynamic var minimumContentHeight: CGFloat = 44 {
+    @objc open dynamic var minimumContentHeight: CGFloat = 44 {
         didSet {
             minimumContentHeightConstraint?.constant = minimumContentHeight
         }
     }
 
     /// The default size is `55,55`.
-    open dynamic var imageSize = CGSize(width: 55, height: 55) {
+    @objc open dynamic var imageSize = CGSize(width: 55, height: 55) {
         didSet {
             updateImageSizeIfNeeded()
         }
     }
 
     /// The space between image and text. The default value is `8`.
-    open dynamic var textImageSpacing: CGFloat = 8 {
+    @objc open dynamic var textImageSpacing: CGFloat = 8 {
         didSet {
             updateTextImageSpacingIfNeeded()
         }
     }
 
     /// The space between `title` and `subtitle` labels. The default value is `3`.
-    open dynamic var interLabelSpacing: CGFloat {
+    @objc open dynamic var interLabelSpacing: CGFloat {
         get { return labelsStackView.spacing }
         set { labelsStackView.spacing = newValue }
     }
 
     /// The default value is `false`.
-    open dynamic var isImageViewHidden: Bool = false {
+    @objc open dynamic var isImageViewHidden: Bool = false {
         didSet {
             guard oldValue != isImageViewHidden else { return }
             avatarView.isHidden = isImageViewHidden
@@ -86,7 +86,7 @@ open class DynamicTableViewCell: XCTableViewCell {
     }
 
     /// The default value is `false`.
-    open dynamic var isSubtitleLabelHidden: Bool = false {
+    @objc open dynamic var isSubtitleLabelHidden: Bool = false {
         didSet {
             guard oldValue != isSubtitleLabelHidden else { return }
             if isSubtitleLabelHidden {
@@ -99,12 +99,12 @@ open class DynamicTableViewCell: XCTableViewCell {
     }
 
     /// The default value is `true`.
-    open dynamic var isRoundImageView = true {
+    @objc open dynamic var isRoundImageView = true {
         didSet { roundAvatarViewCornersIfNeeded() }
     }
 
     /// The background color of the cell when it is highlighted.
-    open dynamic var highlightedBackgroundColor: UIColor?
+    @objc open dynamic var highlightedBackgroundColor: UIColor?
     fileprivate var regularBackgroundColor: UIColor?
     fileprivate var observeBackgroundColorSetter = true
     open override var backgroundColor: UIColor? {
@@ -262,10 +262,10 @@ open class DynamicTableViewCell: XCTableViewCell {
         // Content Constraints
         contentConstraints.left   = NSLayoutConstraint(item: avatarView, attribute: .leading, toItem: contentView, constant: contentInset.left).activate()
         contentConstraints.right  = NSLayoutConstraint(item: contentView, attribute: .trailing, toItem: labelsStackView, constant: contentInset.right).activate()
-        contentConstraints.top    = NSLayoutConstraint(item: avatarView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: contentView, constant: contentInset.top, priority: UILayoutPriorityDefaultHigh).activate()
-        contentConstraints.bottom = NSLayoutConstraint(item: contentView, attribute: .bottom, relatedBy: .greaterThanOrEqual, toItem: avatarView, constant: contentInset.bottom, priority: UILayoutPriorityDefaultHigh).activate()
+        contentConstraints.top    = NSLayoutConstraint(item: avatarView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: contentView, constant: contentInset.top, priority: .defaultHigh).activate()
+        contentConstraints.bottom = NSLayoutConstraint(item: contentView, attribute: .bottom, relatedBy: .greaterThanOrEqual, toItem: avatarView, constant: contentInset.bottom, priority: .defaultHigh).activate()
 
-        minimumContentHeightConstraint = NSLayoutConstraint(item: contentView, height: minimumContentHeight, priority: UILayoutPriorityDefaultLow).activate()
+        minimumContentHeightConstraint = NSLayoutConstraint(item: contentView, height: minimumContentHeight, priority: .defaultLow).activate()
     }
 
     // MARK: Helpers
@@ -291,7 +291,7 @@ open class DynamicTableViewCell: XCTableViewCell {
 // MARK: UIAppearance Properties
 
 extension DynamicTableViewCell {
-    public dynamic var avatarBorderColor: UIColor? {
+    @objc public dynamic var avatarBorderColor: UIColor? {
         get {
             if let borderColor = avatarView.layer.borderColor {
                 return UIColor(cgColor: borderColor)
@@ -301,32 +301,32 @@ extension DynamicTableViewCell {
         set { avatarView.layer.borderColor = newValue?.cgColor }
     }
 
-    public dynamic var avatarBorderWidth: CGFloat {
+    @objc public dynamic var avatarBorderWidth: CGFloat {
         get { return avatarView.layer.borderWidth }
         set { avatarView.layer.borderWidth = newValue }
     }
 
-    public dynamic var avatarCornerRadius: CGFloat {
+    @objc public dynamic var avatarCornerRadius: CGFloat {
         get { return avatarView.layer.cornerRadius }
         set { avatarView.layer.cornerRadius = newValue }
     }
 
-    public dynamic var titleColor: UIColor? {
+    @objc public dynamic var titleColor: UIColor? {
         get { return titleLabel.textColor }
         set { titleLabel.textColor = newValue }
     }
 
-    public dynamic var titleFont: UIFont {
+    @objc public dynamic var titleFont: UIFont {
         get { return titleLabel.font }
         set { titleLabel.font = newValue }
     }
 
-    public dynamic var subtitleColor: UIColor? {
+    @objc public dynamic var subtitleColor: UIColor? {
         get { return subtitleLabel.textColor }
         set { subtitleLabel.textColor = newValue }
     }
 
-    public dynamic var subtitleFont: UIFont {
+    @objc public dynamic var subtitleFont: UIFont {
         get { return subtitleLabel.font }
         set { subtitleLabel.font = newValue }
     }
