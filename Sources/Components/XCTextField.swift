@@ -56,8 +56,8 @@ open class XCTextField: UITextField {
             }
 
             attributedPlaceholder = NSAttributedString(string: newValue, attributes: [
-                NSForegroundColorAttributeName: placeholderTextColor ?? textColor ?? UIColor.black,
-                NSFontAttributeName: placeholderFont ?? font ?? UIFont.systemFont(.body)
+                .foregroundColor: placeholderTextColor ?? textColor ?? UIColor.black,
+                .font: placeholderFont ?? font ?? UIFont.systemFont(.body)
             ])
         }
     }

@@ -116,17 +116,17 @@ extension String {
 
 extension String {
     public func sizeWithFont(_ font: UIFont) -> CGSize {
-        return (self as NSString).size(attributes: [NSFontAttributeName: font])
+        return (self as NSString).size(withAttributes: [.font: font])
     }
 
     public func sizeWithFont(_ font: UIFont, constrainedToSize: CGSize) -> CGSize {
-        let expectedRect = (self as NSString).boundingRect(with: constrainedToSize, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+        let expectedRect = (self as NSString).boundingRect(with: constrainedToSize, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
         return expectedRect.size
     }
 
     /// - seealso: http://stackoverflow.com/a/30040937
     public func numberOfLines(_ font: UIFont, constrainedToSize: CGSize) -> (size: CGSize, numberOfLines: Int) {
-        let textStorage = NSTextStorage(string: self, attributes: [NSFontAttributeName: font])
+        let textStorage = NSTextStorage(string: self, attributes: [.font: font])
 
         let textContainer                  = NSTextContainer(size: constrainedToSize)
         textContainer.lineBreakMode        = .byWordWrapping
@@ -166,35 +166,19 @@ extension Int {
     }
 }
 
-#if swift(>=4)
-    extension Numeric {
-        public var digitsCount: Self {
-            return numberOfDigits(in: self)
-        }
+extension SignedInteger {
+    public var digitsCount: Self {
+        return numberOfDigits(in: self)
+    }
 
-        private func numberOfDigits(in number: Self) -> Self {
-            if abs(number) < 10 {
-                return 1
-            } else {
-                return 1 + numberOfDigits(in: number / 10)
-            }
+    private func numberOfDigits(in number: Self) -> Self {
+        if abs(number) < 10 {
+            return 1
+        } else {
+            return 1 + numberOfDigits(in: number / 10)
         }
     }
-#else
-    extension SignedInteger {
-        public var digitsCount: Self {
-            return numberOfDigits(in: self)
-        }
-
-        private func numberOfDigits(in number: Self) -> Self {
-            if abs(number) < 10 {
-                return 1
-            } else {
-                return 1 + numberOfDigits(in: number / 10)
-            }
-        }
-    }
-#endif
+}
 
 extension FloatingPoint {
     public static var pi2: Self {

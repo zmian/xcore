@@ -99,8 +99,8 @@ open class ReorderTableView: UITableView {
         didSet { longPressGestureRecognizer.isEnabled = isReorderingEnabled }
     }
     open var draggingRowHeight: CGFloat = 0
-    open dynamic var draggingViewOpacity: CGFloat = 0.8
-    open dynamic var draggingViewBackgroundColor  = UIColor.clear
+    @objc open dynamic var draggingViewOpacity: CGFloat = 0.8
+    @objc open dynamic var draggingViewBackgroundColor  = UIColor.clear
 
     // MARK: Init Methods
 

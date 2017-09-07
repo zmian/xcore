@@ -33,8 +33,8 @@ open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
         textLabel.textColor            = .darkGray
         textLabel.lineBreakMode        = .byWordWrapping
         textLabel.numberOfLines        = 0
-        textLabel.linkAttributes       = [NSForegroundColorAttributeName: textLabel.tintColor]
-        textLabel.activeLinkAttributes = [NSForegroundColorAttributeName: textLabel.tintColor]
+        textLabel.linkAttributes       = [NSAttributedStringKey.foregroundColor: textLabel.tintColor]
+        textLabel.activeLinkAttributes = [NSAttributedStringKey.foregroundColor: textLabel.tintColor]
         textLabel.lineHeightMultiple   = 1.1
         return textLabel
     }()

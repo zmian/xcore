@@ -27,7 +27,7 @@ import UIKit
 // MARK: NSAttributedString Extension
 
 extension NSAttributedString {
-    public func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
+    @objc public func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
          return NSMutableAttributedString(attributedString: self).setLineSpacing(spacing)
     }
 }
@@ -51,36 +51,36 @@ extension NSMutableAttributedString {
     public override func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = spacing
-        addAttributes([NSParagraphStyleAttributeName: paragraphStyle], range: NSRange(location: 0, length: string.count))
+        addAttributes([.paragraphStyle: paragraphStyle], range: NSRange(location: 0, length: string.count))
         return self
     }
 }
 
 extension NSMutableAttributedString {
     open func underline(_ text: String) -> NSMutableAttributedString {
-        addAttribute(NSUnderlineStyleAttributeName, value: NSUnderlineStyle.styleSingle.rawValue, range: range(of: text))
+        addAttribute(.underlineStyle, value: NSUnderlineStyle.styleSingle.rawValue, range: range(of: text))
         return self
     }
 
     open func color(_ color: UIColor, for text: String? = nil) -> NSMutableAttributedString {
-        addAttribute(NSForegroundColorAttributeName, value: color, range: range(of: text))
+        addAttribute(.foregroundColor, value: color, range: range(of: text))
         return self
     }
 
     open func backgroundColor(_ color: UIColor, for text: String? = nil) -> NSMutableAttributedString {
-        addAttribute(NSForegroundColorAttributeName, value: color, range: range(of: text))
+        addAttribute(.foregroundColor, value: color, range: range(of: text))
         return self
     }
 
     open func font(_ font: UIFont, for text: String? = nil) -> NSMutableAttributedString {
-        addAttribute(NSFontAttributeName, value: font, range: range(of: text))
+        addAttribute(.font, value: font, range: range(of: text))
         return self
     }
 
     open func textAlignment(_ textAlignment: NSTextAlignment, for text: String? = nil) -> NSMutableAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = textAlignment
-        addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: range(of: text))
+        addAttribute(.paragraphStyle, value: paragraphStyle, range: range(of: text))
         return self
     }
 
@@ -89,7 +89,7 @@ extension NSMutableAttributedString {
             return self
         }
 
-        addAttribute(NSLinkAttributeName, value: url, range: range(of: text))
+        addAttribute(.link, value: url, range: range(of: text))
         return self
     }
 
@@ -107,7 +107,7 @@ extension NSMutableAttributedString {
 }
 
 extension NSMutableAttributedString {
-    open func replaceAttribute(_ name: String, value: Any, range: NSRange) {
+    open func replaceAttribute(_ name: NSAttributedStringKey, value: Any, range: NSRange) {
         removeAttribute(name, range: range)
         addAttribute(name, value: value, range: range)
     }

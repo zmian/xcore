@@ -53,7 +53,7 @@ open class SplitScreenViewController: UIViewController {
 
     fileprivate func setupConstraints() {
         let headerContainerViewAspectRatio: CGFloat = 16/9.1 // Set to 9.1 to ensure iPhone 5S landscape view doesn't have 1px gap below
-        let priority = UILayoutPriorityDefaultHigh
+        let priority = UILayoutPriority.defaultHigh
 
         // Setup constraints: headerContainerView
         NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(headerContainerView).activate()
