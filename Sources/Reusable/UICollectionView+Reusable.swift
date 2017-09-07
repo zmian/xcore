@@ -40,7 +40,7 @@ extension UICollectionView {
         set { objc_setAssociatedObject(self, &AssociatedKey.registeredSupplementaryViews, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
-    fileprivate func register<T: UICollectionViewCell>(_ cell: T.Type) where T: Reusable {
+    fileprivate func register<T: UICollectionViewCell>(_ cell: T.Type) {
         guard let nib = UINib(named: String(describing: cell), bundle: Bundle(for: T.self)) else {
             register(cell, forCellWithReuseIdentifier: T.reuseIdentifier)
             return
@@ -49,7 +49,7 @@ extension UICollectionView {
         register(nib, forCellWithReuseIdentifier: T.reuseIdentifier)
     }
 
-    fileprivate func registerSupplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, view: T.Type) where T: Reusable {
+    fileprivate func registerSupplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, view: T.Type) {
         guard let nib = UINib(named: String(describing: view), bundle: Bundle(for: T.self)) else {
             register(view, forSupplementaryViewOfKind: kind.identifier, withReuseIdentifier: T.reuseIdentifier)
             return
@@ -58,13 +58,13 @@ extension UICollectionView {
         register(nib, forSupplementaryViewOfKind: kind.identifier, withReuseIdentifier: T.reuseIdentifier)
     }
 
-    fileprivate func registerIfNeeded<T: UICollectionViewCell>(_ cell: T.Type) where T: Reusable {
+    fileprivate func registerIfNeeded<T: UICollectionViewCell>(_ cell: T.Type) {
         guard !registeredCells.contains(T.reuseIdentifier) else { return }
         registeredCells.insert(T.reuseIdentifier)
         register(cell)
     }
 
-    fileprivate func registerSupplementaryViewIfNeeded<T: UICollectionReusableView>(kind: SupplementaryViewKind, view: T.Type) where T: Reusable {
+    fileprivate func registerSupplementaryViewIfNeeded<T: UICollectionReusableView>(kind: SupplementaryViewKind, view: T.Type) {
         guard !registeredSupplementaryViews.contains(T.reuseIdentifier) else { return }
         registeredSupplementaryViews.insert(T.reuseIdentifier)
         registerSupplementaryView(kind: kind, view: view)
@@ -105,7 +105,7 @@ extension UICollectionView {
     /// - parameter indexPath: The index path specifying the location of the supplementary view in the collection view.
     ///
     /// - returns: A reusable `UICollectionReusableView` instance.
-    public func dequeueReusableSupplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, for indexPath: IndexPath) -> T where T: Reusable {
+    public func dequeueReusableSupplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, for indexPath: IndexPath) -> T {
         registerSupplementaryViewIfNeeded(kind: kind, view: T.self)
 
         guard let view = dequeueReusableSupplementaryView(ofKind: kind.identifier, withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
@@ -120,7 +120,7 @@ extension UICollectionView {
     /// - parameter indexPath: The index path specifying the location of the cell in the collection view.
     ///
     /// - returns: A reusable `UICollectionViewCell` instance.
-    public func dequeueReusableCell<T: UICollectionViewCell>(for indexPath: IndexPath) -> T where T: Reusable {
+    public func dequeueReusableCell<T: UICollectionViewCell>(for indexPath: IndexPath) -> T {
         registerIfNeeded(T.self)
 
         guard let cell = dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
