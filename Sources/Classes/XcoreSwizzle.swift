@@ -26,10 +26,33 @@ import UIKit
 import WebKit
 
 private var didStart = false
-public func xcoreSwizzle() {
+public func xcoreSwizzle(_ options: SwizzleOptions = .all) {
     guard !didStart else { return }
     didStart = true
-    UIImageView.runOnceSwapSelectors()
-    UIViewController.runOnceSwapSelectors()
-    WKUserContentController.runOnceSwapSelectors()
+
+    if options.contains(.imageView) {
+        UIImageView.runOnceSwapSelectors()
+    }
+
+    if options.contains(.viewController) {
+        UIViewController.runOnceSwapSelectors()
+    }
+
+    if options.contains(.userContentController) {
+        WKUserContentController.runOnceSwapSelectors()
+    }
+}
+
+/// A list of features available to swizzle.
+public struct SwizzleOptions: OptionSet {
+    public let rawValue: Int
+
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+
+    public static let imageView = SwizzleOptions(rawValue: 1 << 0)
+    public static let viewController = SwizzleOptions(rawValue: 1 << 1)
+    public static let userContentController = SwizzleOptions(rawValue: 1 << 2)
+    public static let all: SwizzleOptions = [imageView, viewController, userContentController]
 }
