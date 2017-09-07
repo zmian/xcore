@@ -55,6 +55,6 @@ extension CALayer {
         let context = CGContext(data: UnsafeMutablePointer(mutating: pixel), width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
         context.translateBy(x: -point.x, y: -point.y)
         render(in: context)
-        return UIColor(colorLiteralRed: Float(pixel[0])/255, green: Float(pixel[1])/255, blue: Float(pixel[2])/255, alpha: Float(pixel[3])/255)
+        return UIColor(red: CGFloat(pixel[0])/255, green: CGFloat(pixel[1])/255, blue: CGFloat(pixel[2])/255, alpha: CGFloat(pixel[3])/255)
     }
 }
