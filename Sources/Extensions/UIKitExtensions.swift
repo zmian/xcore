@@ -81,9 +81,7 @@ extension UINib {
     }
 }
 
-@IBDesignable
 extension UIDatePicker {
-    @IBInspectable
     @nonobjc
     open var textColor: UIColor? {
         get { return value(forKey: "textColor") as? UIColor }
