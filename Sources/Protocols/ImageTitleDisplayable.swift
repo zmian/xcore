@@ -1,7 +1,7 @@
 //
-// UILabelExtensions.swift
+// ImageTitleDisplayable.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2015 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,30 +24,14 @@
 
 import UIKit
 
-extension UILabel {
-    open func setText(_ text: String, animated: Bool, duration: TimeInterval = .slow) {
-        if animated && text != self.text {
-            UIView.transition(with: self, duration: duration, options: .transitionCrossDissolve, animations: { [weak self] in
-                self?.text = text
-            }, completion: nil)
-        } else {
-            self.text = text
-        }
-    }
-
-    open func setLineSpacing(_ spacing: CGFloat, text: String? = nil) {
-        guard let text = text ?? self.text else { return }
-        attributedText = NSMutableAttributedString(string: text).setLineSpacing(spacing)
-    }
+public protocol ImageTitleDisplayable {
+    var title: StringRepresentable  { get }
+    var subtitle: StringRepresentable? { get }
+    var image: ImageRepresentable?  { get }
 }
 
-extension UILabel {
-    /// A height of the label.
-    open var boundingHeight: CGFloat {
-        guard let font = font else {
-            return 0
-        }
-
-        return "Sphinx".sizeWithFont(font).height * CGFloat(numberOfLines)
+extension ImageTitleDisplayable {
+    public var subtitle: StringRepresentable? {
+        return nil
     }
 }
