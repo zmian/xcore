@@ -1,5 +1,5 @@
 //
-// ImageTitleDisplayable.swift
+// ImageRepresentable.swift
 //
 // Copyright © 2015 Zeeshan Mian
 //
@@ -24,8 +24,10 @@
 
 import UIKit
 
-public enum ImageSourceType  { case url, uiImage }
-public enum StringSourceType { case attributedString, string }
+public enum ImageSourceType  {
+    case url
+    case uiImage
+}
 
 // MARK: ImageRepresentable
 
@@ -35,21 +37,35 @@ public protocol ImageRepresentable {
 }
 
 extension ImageRepresentable {
-    public var url: String? { return nil }
-}
-
-extension String: ImageRepresentable {
-    public var imageSourceType: ImageSourceType { return .url }
-    public var url: String? { return self }
-}
-
-extension URL: ImageRepresentable {
-    public var imageSourceType: ImageSourceType { return .url }
-    public var url: String? { return absoluteString }
+    public var url: String? {
+        return nil
+    }
 }
 
 extension UIImage: ImageRepresentable {
-    public var imageSourceType: ImageSourceType { return .uiImage }
+    public var imageSourceType: ImageSourceType {
+        return .uiImage
+    }
+}
+
+extension URL: ImageRepresentable {
+    public var imageSourceType: ImageSourceType {
+        return .url
+    }
+
+    public var url: String? {
+        return absoluteString
+    }
+}
+
+extension String: ImageRepresentable {
+    public var imageSourceType: ImageSourceType {
+        return .url
+    }
+
+    public var url: String? {
+        return self
+    }
 }
 
 extension UIImageView {
@@ -80,78 +96,6 @@ extension UIImageView {
                     self.alpha = 1
                 }
                 callback?(self.image)
-        }
-    }
-}
-
-// MARK: StringRepresentable
-
-public protocol StringRepresentable: CustomStringConvertible {
-    var stringSourceType: StringSourceType { get }
-}
-
-extension String: StringRepresentable {
-    public var stringSourceType: StringSourceType { return .string }
-    public var description: String { return self }
-}
-
-extension NSAttributedString: StringRepresentable {
-    public var stringSourceType: StringSourceType { return .attributedString }
-    open override var description: String { return string }
-}
-
-extension UILabel: TextAttributedTextRepresentable { }
-extension UITextField: TextAttributedTextRepresentable { }
-extension UITextView {
-    public func setText(_ string: StringRepresentable?) {
-        guard let string = string else {
-            text = nil
-            attributedText = nil
-            return
-        }
-
-        switch string.stringSourceType {
-            case .string:
-                text = string as? String
-            case .attributedString:
-                attributedText = string as? NSAttributedString
-        }
-    }
-}
-
-// MARK: ImageTitleDisplayable
-
-public protocol ImageTitleDisplayable {
-    var title:    StringRepresentable  { get }
-    var subtitle: StringRepresentable? { get }
-    var image:    ImageRepresentable?  { get }
-}
-
-extension ImageTitleDisplayable {
-    public var subtitle: StringRepresentable? { return nil }
-}
-
-// MARK: TextAttributedTextRepresentable
-
-public protocol TextAttributedTextRepresentable: class {
-    var text: String? { get set }
-    var attributedText: NSAttributedString? { get set }
-    func setText(_ string: StringRepresentable?)
-}
-
-extension TextAttributedTextRepresentable {
-    public func setText(_ string: StringRepresentable?) {
-        guard let string = string else {
-            text = nil
-            attributedText = nil
-            return
-        }
-
-        switch string.stringSourceType {
-            case .string:
-                text = string as? String
-            case .attributedString:
-                attributedText = string as? NSAttributedString
         }
     }
 }

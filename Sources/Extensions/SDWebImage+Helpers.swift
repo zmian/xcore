@@ -27,7 +27,9 @@ import SDWebImage
 
 extension UIImageView {
     /// Automatically detect and load the image from local or a remote url.
-    public func remoteOrLocalImage(_ named: String, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
+    ///
+    /// - seealso: `setImage(_:alwaysAnimate:animationDuration:callback:)`
+    func remoteOrLocalImage(_ named: String, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
         guard !named.isBlank else {
             image = nil
             callback?(nil)
