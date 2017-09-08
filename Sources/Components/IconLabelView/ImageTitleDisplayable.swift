@@ -53,19 +53,21 @@ extension UIImage: ImageRepresentable {
 }
 
 extension UIImageView {
-    public func setImage(_ image: ImageRepresentable?) {
+    public func setImage(_ image: ImageRepresentable?, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
         guard let image = image else {
             self.image = nil
+            callback?(nil)
             return
         }
 
         switch image.imageSourceType {
             case .url:
                 if let url = image.url {
-                    remoteOrLocalImage(url)
+                    remoteOrLocalImage(url, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
                 }
             case .uiImage:
-                self.image = image as? UIImage
+                setImage(image as? UIImage, animationDuration: alwaysAnimate ? animationDuration: 0)
+                callback?(self.image)
         }
     }
 }
