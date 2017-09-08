@@ -53,6 +53,13 @@ extension UIImage: ImageRepresentable {
 }
 
 extension UIImageView {
+    /// Automatically detect and load the image from local or a remote url.
+    ///
+    /// - parameter image:             The image to display.
+    /// - parameter alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
+    ///                                The image will only fade in when fetched from a remote url and not in memory cache.
+    /// - parameter animationDuration: The total duration of the animation. If the specified value is negative or 0, the image is set without animation. The default value is `0.5`.
+    /// - parameter callback:          A block to invoke when finished setting the image.
     public func setImage(_ image: ImageRepresentable?, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
         guard let image = image else {
             self.image = nil
@@ -66,7 +73,12 @@ extension UIImageView {
                     remoteOrLocalImage(url, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
                 }
             case .uiImage:
-                setImage(image as? UIImage, animationDuration: alwaysAnimate ? animationDuration: 0)
+                let duration = alwaysAnimate ? animationDuration : 0
+                alpha = duration > 0 ? 0 : 1
+                self.image = image as? UIImage
+                UIView.animate(withDuration: duration) {
+                    self.alpha = 1
+                }
                 callback?(self.image)
         }
     }
