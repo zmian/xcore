@@ -25,18 +25,6 @@
 import UIKit
 
 extension UIImageView {
-    /// Set image with animation.
-    ///
-    /// - parameter image:             The image to display.
-    /// - parameter animationDuration: The total duration of the animation. If the specified value is negative or 0, the image is set without animation.
-    public func setImage(_ image: UIImage?, animationDuration: TimeInterval) {
-        alpha = animationDuration > 0 ? 0 : 1
-        self.image = image
-        UIView.animate(withDuration: animationDuration) {
-            self.alpha = 1
-        }
-    }
-
     /// Load the specified named image on **background thread**.
     ///
     /// - parameter named:  The name of the image.
