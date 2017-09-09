@@ -25,46 +25,31 @@
 import UIKit
 
 public enum ImageSourceType  {
-    case url
+    case url(String)
     case uiImage
 }
 
 // MARK: ImageRepresentable
 
 public protocol ImageRepresentable {
-    var imageSourceType: ImageSourceType { get }
-    var url: String? { get }
-}
-
-extension ImageRepresentable {
-    public var url: String? {
-        return nil
-    }
+    var imageSource: ImageSourceType { get }
 }
 
 extension UIImage: ImageRepresentable {
-    public var imageSourceType: ImageSourceType {
+    public var imageSource: ImageSourceType {
         return .uiImage
     }
 }
 
 extension URL: ImageRepresentable {
-    public var imageSourceType: ImageSourceType {
-        return .url
-    }
-
-    public var url: String? {
-        return absoluteString
+    public var imageSource: ImageSourceType {
+        return .url(absoluteString)
     }
 }
 
 extension String: ImageRepresentable {
-    public var imageSourceType: ImageSourceType {
-        return .url
-    }
-
-    public var url: String? {
-        return self
+    public var imageSource: ImageSourceType {
+        return .url(self)
     }
 }
 
@@ -83,11 +68,9 @@ extension UIImageView {
             return
         }
 
-        switch image.imageSourceType {
-            case .url:
-                if let url = image.url {
-                    remoteOrLocalImage(url, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
-                }
+        switch image.imageSource {
+            case .url(let url):
+                remoteOrLocalImage(url, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
             case .uiImage:
                 let duration = alwaysAnimate ? animationDuration : 0
                 alpha = duration > 0 ? 0 : 1
