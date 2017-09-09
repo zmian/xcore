@@ -32,11 +32,11 @@ public enum StringSourceType {
 // MARK: StringRepresentable
 
 public protocol StringRepresentable: CustomStringConvertible {
-    var stringSourceType: StringSourceType { get }
+    var stringSource: StringSourceType { get }
 }
 
 extension String: StringRepresentable {
-    public var stringSourceType: StringSourceType {
+    public var stringSource: StringSourceType {
         return .string
     }
 
@@ -46,7 +46,7 @@ extension String: StringRepresentable {
 }
 
 extension NSAttributedString: StringRepresentable {
-    public var stringSourceType: StringSourceType {
+    public var stringSource: StringSourceType {
         return .attributedString
     }
 
@@ -71,7 +71,7 @@ extension TextAttributedTextRepresentable {
             return
         }
 
-        switch string.stringSourceType {
+        switch string.stringSource {
             case .string:
                 text = string as? String
             case .attributedString:
@@ -90,7 +90,7 @@ extension UITextView {
             return
         }
 
-        switch string.stringSourceType {
+        switch string.stringSource {
             case .string:
                 text = string as? String
             case .attributedString:
