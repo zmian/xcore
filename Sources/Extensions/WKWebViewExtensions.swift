@@ -1,5 +1,5 @@
 //
-// DataSourceIndex.swift
+// WKWebViewExtensions.swift
 //
 // Copyright © 2017 Zeeshan Mian
 //
@@ -22,22 +22,33 @@
 // THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
+import WebKit
 
-/// A helper struct to store composed data source sections and data sources.
-struct DataSourceIndex<DataSourceType> {
-    private typealias GlobalSection = Int
-    private typealias DataSource = (dataSource: DataSourceType, localSection: Int)
-    private var index = [GlobalSection: DataSource]()
+extension WKWebView {
+    /// Navigates to the first item in the back-forward list.
+    /// A new navigation to the requested item, or nil if there is no back
+    /// item in the back-forward list.
+    @discardableResult
+    public func goToFirstItem() -> WKNavigation? {
+        guard let firstItem = backForwardList.backList.at(0) else {
+            return nil
+        }
 
-    subscript(_ section: Int) -> (dataSource: DataSourceType, localSection: Int) {
-        get { return index[section]! }
-        set { index[section] = newValue }
+        return go(to: firstItem)
     }
-}
 
-public struct DataSource<DataSourceType> {
-    public let dataSource: DataSourceType
-    public let globalSection: Int
-    public let localSection: Int
+    /// Navigates to the last item in the back-forward list.
+    /// A new navigation to the requested item, or nil if there is no back
+    /// item in the back-forward list.
+    @discardableResult
+    public func goToLastItem() -> WKNavigation? {
+        let forwardList = backForwardList.forwardList
+
+        guard let lastItem = forwardList.at(forwardList.count - 1) else {
+            return nil
+        }
+
+        return go(to: lastItem)
+    }
 }

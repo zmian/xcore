@@ -48,24 +48,56 @@ extension UINavigationController {
             setViewControllers(rvc, animated: false)
         }
     }
+}
 
+extension UINavigationController {
     /// A convenience method to pop to view controller of specified subclass of `UIViewController` type.
     ///
     /// - parameter type:            The View controller type to pop to.
-    /// - parameter animated:        Set this value to true to animate the transition.
+    /// - parameter animated:        Set this value to `true` to animate the transition.
     ///                              Pass `false` if you are setting up a navigation controller
     ///                              before its view is displayed.
     /// - parameter isReversedOrder: If multiple view controllers of specified type exists it
     ///                              pop the latest of type by default. Pass `false` to reverse the behavior.
-    open func popToViewController(ofClassType type: UIViewController.Type, animated: Bool, isReversedOrder: Bool = true) {
+    ///
+    /// - returns: An array containing the view controllers that were popped from the stack.
+    @discardableResult
+    open func popToViewController(_ type: UIViewController.Type, animated: Bool, isReversedOrder: Bool = true) -> [UIViewController]? {
         let viewControllers = isReversedOrder ? self.viewControllers.reversed() : self.viewControllers
 
         for viewController in viewControllers {
             if viewController.isKind(of: type) {
-                popToViewController(viewController, animated: animated)
-                break
+                return popToViewController(viewController, animated: animated)
             }
         }
+
+        return nil
+    }
+
+    /// A convenience method to pop view controllers until the one at specified index is on top. Returns the popped controllers.
+    ///
+    /// - parameter index:    The View controller type to pop to.
+    /// - parameter animated: Set this value to `true` to animate the transition.
+    ///                       Pass `false` if you are setting up a navigation controller
+    ///                       before its view is displayed.
+    ///
+    /// - returns: An array containing the view controllers that were popped from the stack.
+    @discardableResult
+    open func popToViewController(at index: Int, animated: Bool) -> [UIViewController]? {
+        guard let viewController = viewControllers.at(index) else {
+            return nil
+        }
+
+        return popToViewController(viewController, animated: animated)
+    }
+
+    open func pushOnFirstViewController(_ viewController: UIViewController, animated: Bool = true) {
+        var vcs = [UIViewController]()
+        if let firstViewController = viewControllers.first {
+            vcs.append(firstViewController)
+        }
+        vcs.append(viewController)
+        setViewControllers(vcs, animated: animated)
     }
 }
 
@@ -113,26 +145,5 @@ extension UINavigationController {
 
     open override var prefersStatusBarHidden: Bool {
         return topViewController?.isStatusBarHidden ?? isStatusBarHidden ?? topViewController?.prefersStatusBarHidden ?? super.prefersStatusBarHidden
-    }
-}
-
-extension UINavigationController {
-    open func get<T>(viewController: T.Type) -> T? {
-        for vc in viewControllers {
-            if let vc = vc as? T {
-                return vc
-            }
-        }
-
-        return nil
-    }
-
-    open func pushOnFirstViewController(_ viewController: UIViewController, animated: Bool = true) {
-        var vcs = [UIViewController]()
-        if let firstViewController = viewControllers.first {
-            vcs.append(firstViewController)
-        }
-        vcs.append(viewController)
-        setViewControllers(vcs, animated: animated)
     }
 }
