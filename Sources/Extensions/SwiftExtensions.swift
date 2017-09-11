@@ -268,6 +268,16 @@ extension Array {
             return Array(self[startIndex..<endIndex])
         }
     }
+
+    public func get<T>(_ type: T.Type) -> T? {
+        for element in self {
+            if let element = element as? T {
+                return element
+            }
+        }
+
+        return nil
+    }
 }
 
 extension Array where Element: Equatable {
@@ -293,14 +303,38 @@ extension Array where Element: Equatable {
     /// Move an element in `self` to a specific index.
     ///
     /// - parameter element: The element in `self` to move.
-    /// - parameter toIndex: An index locating the new location of the element in `self`.
+    /// - parameter to:      An index locating the new location of the element in `self`.
     ///
     /// - returns: true if moved; false otherwise.
     @discardableResult
-    public mutating func move(_ element: Element, toIndex index: Int) -> Bool {
+    public mutating func move(_ element: Element, to index: Int) -> Bool {
         guard remove(element) else { return false }
         insert(element, at: index)
         return true
+    }
+}
+
+extension Array where Element: NSObjectProtocol {
+    /// Returns the first index where the specified value appears in the
+    /// collection.
+    ///
+    /// After using `index(of:)` to find the position of a particular element in
+    /// a collection, you can use it to access the element by subscripting. This
+    /// example shows how you can modify one of the names in an array of
+    /// students.
+    ///
+    /// ```swift
+    /// let navigationController = UINavigationController()
+    /// if let index = navigationController.viewControllers.index(of: SearchViewController.self) {
+    ///     navigationController.popToViewController(at: index, animated: true)
+    /// }
+    /// ```
+    ///
+    /// - parameter element: An element to search for in the collection.
+    /// - returns: The first index where `element` is found. If `element` is not
+    ///   found in the collection, returns `nil`.
+    public func index(of elementType: Element.Type) -> Int? {
+        return index(where: { $0.isKind(of: elementType) })
     }
 }
 
