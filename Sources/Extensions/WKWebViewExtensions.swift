@@ -31,7 +31,7 @@ extension WKWebView {
     /// item in the back-forward list.
     @discardableResult
     public func goToFirstItem() -> WKNavigation? {
-        guard let firstItem = backForwardList.item(at: 0) else {
+        guard let firstItem = backForwardList.backList.at(0) else {
             return nil
         }
 
