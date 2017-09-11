@@ -35,3 +35,9 @@ struct DataSourceIndex<DataSourceType> {
         set { index[section] = newValue }
     }
 }
+
+public struct DataSource<DataSourceType> {
+    public let dataSource: DataSourceType
+    public let globalSection: Int
+    public let localSection: Int
+}

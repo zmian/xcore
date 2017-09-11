@@ -83,10 +83,11 @@ extension XCCollectionViewComposedDataSource {
 
 open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource {
     fileprivate let sizeCollectionView = XCFakeCollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-
     fileprivate var dataSourceIndex = DataSourceIndex<XCCollectionViewDataSource>()
-    private func index(for section: Int) -> (dataSource: XCCollectionViewDataSource, localSection: Int) {
-        return dataSourceIndex[section]
+
+    open func index(for section: Int) -> DataSource<XCCollectionViewDataSource> {
+        let ds = dataSourceIndex[section]
+        return DataSource(dataSource: ds.dataSource, globalSection: section, localSection: ds.localSection)
     }
 
     open var dataSources = [XCCollectionViewDataSource]() {
