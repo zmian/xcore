@@ -41,7 +41,7 @@ public func open(url: URL, from viewController: UIViewController) {
 // MARK: UIApplication Extension
 
 extension UIApplication {
-    open class func topViewController(_ base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+    open class func topViewController(_ base: UIViewController? = UIApplication.sharedOrNil?.keyWindow?.rootViewController) -> UIViewController? {
         if let nav = base as? UINavigationController {
             return topViewController(nav.visibleViewController)
         }
