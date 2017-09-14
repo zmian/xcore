@@ -95,7 +95,7 @@ extension UIViewController {
 
     /// True iff `isDeviceLandscape` and `isInterfaceLandscape` both are true; false otherwise.
     public var isLandscape: Bool          { return isDeviceLandscape && isInterfaceLandscape }
-    public var isInterfaceLandscape: Bool { return UIApplication.shared.statusBarOrientation.isLandscape }
+    public var isInterfaceLandscape: Bool { return UIApplication.sharedOrNil?.statusBarOrientation.isLandscape ?? false }
     /// Returns the physical orientation of the device.
     public var isDeviceLandscape: Bool    { return UIDevice.current.orientation.isLandscape }
     /// This value represents the physical orientation of the device and may be different from the current orientation
