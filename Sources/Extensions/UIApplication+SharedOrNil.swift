@@ -34,7 +34,7 @@ extension UIApplication {
     /// and cause problems. It seems that as of now, marking API as unavailable
     /// for extensions in Swift still doesn’t let you compile for App extensions.
     static var sharedOrNil: UIApplication? {
-        let sharedApplicationSelector = NSSelectorFromString("UIApplication.shared")
+        let sharedApplicationSelector = NSSelectorFromString("sharedApplication")
 
         guard UIApplication.responds(to: sharedApplicationSelector) else {
             return nil
