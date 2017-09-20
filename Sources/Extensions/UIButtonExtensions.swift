@@ -108,7 +108,7 @@ extension UIButton {
     }
 
     /// The background color to used for the highlighted state.
-    open func setHighlightedBackgroundColor(_ color: UIColor?) {
+    @objc open func setHighlightedBackgroundColor(_ color: UIColor?) {
         var image: UIImage?
         if let color = color {
             image = UIImage(color: color, size: CGSize(width: 1, height: 1))
@@ -117,7 +117,7 @@ extension UIButton {
     }
 
     /// The background color to used for the disabled state.
-    open func setDisabledBackgroundColor(_ color: UIColor?) {
+    @objc open func setDisabledBackgroundColor(_ color: UIColor?) {
         var image: UIImage?
         if let color = color {
             image = UIImage(color: color, size: CGSize(width: 1, height: 1))

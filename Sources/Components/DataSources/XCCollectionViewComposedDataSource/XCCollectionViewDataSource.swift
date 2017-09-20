@@ -24,6 +24,7 @@
 
 import UIKit
 
+@objcMembers
 open class XCCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     /// An internal property to reference `UICollectionView` that `XCCollectionViewDataSource`
     /// use to implement auto-resizing cells, header, and footer. This is automatically
