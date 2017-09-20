@@ -25,6 +25,7 @@
 
 import UIKit
 
+@objcMembers
 open class XCTableViewDataSource: NSObject, UITableViewDataSource {
     /// UITableView has bug that ignored zero when sent as the `heightForFooterInSection`
     /// It has to be number greater then zero. Hence, this declaration.
