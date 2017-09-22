@@ -26,14 +26,7 @@ import UIKit
 
 extension UIView {
     open var viewController: UIViewController? {
-        var responder: UIResponder = self
-        while let nextResponder = responder.next {
-            responder = nextResponder
-            if responder is UIViewController {
-                return responder as? UIViewController
-            }
-        }
-        return nil
+        return responder()
     }
 
     /// Performs a view animation using a timing curve corresponding to the motion of a physical spring.
