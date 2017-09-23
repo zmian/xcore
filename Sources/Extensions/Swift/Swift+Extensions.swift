@@ -1,5 +1,5 @@
 //
-// SwiftExtensions.swift
+// Swift+Extensions.swift
 //
 // Copyright © 2014 Zeeshan Mian
 //

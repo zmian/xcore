@@ -1,5 +1,5 @@
 //
-// CoreAnimationExtensions.swift
+// CoreAnimation+Extensions.swift
 //
 // Copyright © 2016 Zeeshan Mian
 //

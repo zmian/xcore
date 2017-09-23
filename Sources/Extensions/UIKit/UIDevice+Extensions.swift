@@ -1,5 +1,5 @@
 //
-// UIDeviceExtensions.swift
+// UIDevice+Extensions.swift
 //
 // Copyright © 2014 Zeeshan Mian
 //

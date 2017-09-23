@@ -1,5 +1,5 @@
 //
-// InternalExtensions.swift
+// Internal+Extensions.swift
 //
 // Copyright © 2016 Zeeshan Mian
 //

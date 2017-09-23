@@ -1,7 +1,7 @@
 //
-// UILabelExtensions.swift
+// WKWebView+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2017 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,31 +23,32 @@
 //
 
 import UIKit
+import WebKit
 
-extension UILabel {
-    open func setText(_ text: String, animated: Bool, duration: TimeInterval = .slow) {
-        if animated && text != self.text {
-            UIView.transition(with: self, duration: duration, options: .transitionCrossDissolve, animations: { [weak self] in
-                self?.text = text
-            }, completion: nil)
-        } else {
-            self.text = text
-        }
-    }
-
-    open func setLineSpacing(_ spacing: CGFloat, text: String? = nil) {
-        guard let text = text ?? self.text else { return }
-        attributedText = NSMutableAttributedString(string: text).setLineSpacing(spacing)
-    }
-}
-
-extension UILabel {
-    /// A height of the label.
-    open var boundingHeight: CGFloat {
-        guard let font = font else {
-            return 0
+extension WKWebView {
+    /// Navigates to the first item in the back-forward list.
+    /// A new navigation to the requested item, or nil if there is no back
+    /// item in the back-forward list.
+    @discardableResult
+    public func goToFirstItem() -> WKNavigation? {
+        guard let firstItem = backForwardList.backList.at(0) else {
+            return nil
         }
 
-        return "Sphinx".sizeWithFont(font).height * CGFloat(numberOfLines)
+        return go(to: firstItem)
+    }
+
+    /// Navigates to the last item in the back-forward list.
+    /// A new navigation to the requested item, or nil if there is no back
+    /// item in the back-forward list.
+    @discardableResult
+    public func goToLastItem() -> WKNavigation? {
+        let forwardList = backForwardList.forwardList
+
+        guard let lastItem = forwardList.at(forwardList.count - 1) else {
+            return nil
+        }
+
+        return go(to: lastItem)
     }
 }
