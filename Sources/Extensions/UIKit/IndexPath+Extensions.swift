@@ -1,5 +1,5 @@
 //
-// DispatchQueueExtensions.swift
+// IndexPath+Extensions.swift
 //
 // Copyright © 2017 Zeeshan Mian
 //
@@ -22,16 +22,44 @@
 // THE SOFTWARE.
 //
 
-import Foundation
-import Dispatch
+import UIKit
 
-extension DispatchTime {
-    /// A convenience method to convert `TimeInterval` to `DispatchTime`.
-    ///
-    /// - parameter interval: The time interval, in seconds.
-    ///
-    /// - returns: A new `DispatchTime` from specified seconds.
-    public static func seconds(_ interval: TimeInterval) -> DispatchTime {
-        return .now() + Double(Int64(interval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+extension IndexPath {
+    public static var zero: IndexPath {
+        return IndexPath(item: 0, section: 0)
+    }
+
+    public func with(_ globalSection: Int) -> IndexPath {
+        return IndexPath(row: row, section: globalSection + section)
+    }
+}
+
+extension IndexPath {
+    public func previous() -> IndexPath? {
+        guard item > 0 else {
+            return nil
+        }
+
+        return IndexPath(row: item - 1, section: section)
+    }
+
+    public func next(in collectionView: UICollectionView) -> IndexPath? {
+        let itemsInSection = collectionView.numberOfItems(inSection: section)
+
+        guard item + 1 < itemsInSection else {
+            return nil
+        }
+
+        return IndexPath(row: item + 1, section: section)
+    }
+
+    public func next(in tableView: UITableView) -> IndexPath? {
+        let rowsInSection = tableView.numberOfRows(inSection: section)
+
+        guard row + 1 < rowsInSection else {
+            return nil
+        }
+
+        return IndexPath(row: row + 1, section: section)
     }
 }

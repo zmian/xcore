@@ -1,7 +1,7 @@
 //
-// IndexPathExtensions.swift
+// UILabel+Extensions.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2014 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,42 +24,30 @@
 
 import UIKit
 
-extension IndexPath {
-    public static var zero: IndexPath {
-        return IndexPath(item: 0, section: 0)
+extension UILabel {
+    open func setText(_ text: String, animated: Bool, duration: TimeInterval = .slow) {
+        if animated && text != self.text {
+            UIView.transition(with: self, duration: duration, options: .transitionCrossDissolve, animations: { [weak self] in
+                self?.text = text
+            }, completion: nil)
+        } else {
+            self.text = text
+        }
     }
 
-    public func with(_ globalSection: Int) -> IndexPath {
-        return IndexPath(row: row, section: globalSection + section)
+    open func setLineSpacing(_ spacing: CGFloat, text: String? = nil) {
+        guard let text = text ?? self.text else { return }
+        attributedText = NSMutableAttributedString(string: text).setLineSpacing(spacing)
     }
 }
 
-extension IndexPath {
-    public func previous() -> IndexPath? {
-        guard item > 0 else {
-            return nil
+extension UILabel {
+    /// A height of the label.
+    open var boundingHeight: CGFloat {
+        guard let font = font else {
+            return 0
         }
 
-        return IndexPath(row: item - 1, section: section)
-    }
-
-    public func next(in collectionView: UICollectionView) -> IndexPath? {
-        let itemsInSection = collectionView.numberOfItems(inSection: section)
-
-        guard item + 1 < itemsInSection else {
-            return nil
-        }
-
-        return IndexPath(row: item + 1, section: section)
-    }
-
-    public func next(in tableView: UITableView) -> IndexPath? {
-        let rowsInSection = tableView.numberOfRows(inSection: section)
-
-        guard row + 1 < rowsInSection else {
-            return nil
-        }
-
-        return IndexPath(row: row + 1, section: section)
+        return "Sphinx".sizeWithFont(font).height * CGFloat(numberOfLines)
     }
 }

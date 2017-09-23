@@ -1,7 +1,7 @@
 //
-// UITabBarControllerExtensions.swift
+// UIResponder+Extensions.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2016 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,30 +24,26 @@
 
 import UIKit
 
-extension UITabBarController {
-    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return selectedViewController?.supportedInterfaceOrientations ?? super.supportedInterfaceOrientations
-    }
-
-    open override var shouldAutorotate: Bool {
-        return selectedViewController?.shouldAutorotate ?? super.shouldAutorotate
-    }
-}
-
-extension UITabBarController {
-    open func setTabBarHidden(_ hidden: Bool, animated: Bool) {
-        let frame = tabBar.frame
-        let offsetY = hidden ? frame.size.height : -frame.size.height
-        var newFrame = frame
-        newFrame.origin.y = view.frame.maxY + offsetY
-        tabBar.isHidden = false
-
-        UIView.animate(withDuration: animated ? 0.35 : 0.0, delay: 0, options: .beginFromCurrentState, animations: {
-            self.tabBar.frame = newFrame
-        }, completion: { complete in
-            if complete {
-                self.tabBar.isHidden = hidden
+extension UIResponder {
+    /// A convenience function to find the response of type `T`.
+    ///
+    /// ```swift
+    /// extension UICollectionViewCell {
+    ///     func configure() {
+    ///         if let collectionView = responder() as? UICollectionView {
+    ///
+    ///         }
+    ///     }
+    /// }
+    /// ```
+    open func responder<T: UIResponder>() -> T? {
+        var responder: UIResponder = self
+        while let nextResponder = responder.next {
+            responder = nextResponder
+            if responder is T {
+                return responder as? T
             }
-        })
+        }
+        return nil
     }
 }

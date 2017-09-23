@@ -1,5 +1,5 @@
 //
-// UIImageExtensions.swift
+// UIImage+Extensions.swift
 //
 // Copyright © 2014 Zeeshan Mian
 //

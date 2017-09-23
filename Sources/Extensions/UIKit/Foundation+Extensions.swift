@@ -1,7 +1,7 @@
 //
-// UIResponderExtensions.swift
+// Foundation+Extensions.swift
 //
-// Copyright © 2016 Zeeshan Mian
+// Copyright © 2014 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +24,21 @@
 
 import UIKit
 
-extension UIResponder {
-    /// A convenience function to find the response of type `T`.
+// MARK: Data Extension
+
+extension Data {
+    /// A convenience method to append string to `Data` using specified encoding.
     ///
-    /// ```swift
-    /// extension UICollectionViewCell {
-    ///     func configure() {
-    ///         if let collectionView = responder() as? UICollectionView {
-    ///
-    ///         }
-    ///     }
-    /// }
-    /// ```
-    open func responder<T: UIResponder>() -> T? {
-        var responder: UIResponder = self
-        while let nextResponder = responder.next {
-            responder = nextResponder
-            if responder is T {
-                return responder as? T
-            }
+    /// - parameter string:               The string to be added to the `Data`.
+    /// - parameter encoding:             The encoding to use for representing the specified string. The default value is `.utf8`.
+    /// - parameter allowLossyConversion: A boolean value to determine lossy conversion. The default value is `false`.
+    public mutating func append(_ string: String, encoding: String.Encoding = .utf8, allowLossyConversion: Bool = false) {
+        if let newData = string.data(using: encoding, allowLossyConversion: allowLossyConversion) {
+            append(newData)
         }
-        return nil
+    }
+
+    public var hexString: String {
+        return String(format: "%@", self as CVarArg)
     }
 }

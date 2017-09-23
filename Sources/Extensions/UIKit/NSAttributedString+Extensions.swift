@@ -1,5 +1,5 @@
 //
-// NSAttributedStringExtensions.swift
+// NSAttributedString+Extensions.swift
 //
 // Copyright © 2017 Zeeshan Mian
 //

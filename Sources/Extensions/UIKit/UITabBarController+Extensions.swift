@@ -1,7 +1,7 @@
 //
-// FoundationExtensions.swift
+// UITabBarController+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2017 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +24,30 @@
 
 import UIKit
 
-// MARK: Data Extension
-
-extension Data {
-    /// A convenience method to append string to `Data` using specified encoding.
-    ///
-    /// - parameter string:               The string to be added to the `Data`.
-    /// - parameter encoding:             The encoding to use for representing the specified string. The default value is `.utf8`.
-    /// - parameter allowLossyConversion: A boolean value to determine lossy conversion. The default value is `false`.
-    public mutating func append(_ string: String, encoding: String.Encoding = .utf8, allowLossyConversion: Bool = false) {
-        if let newData = string.data(using: encoding, allowLossyConversion: allowLossyConversion) {
-            append(newData)
-        }
+extension UITabBarController {
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return selectedViewController?.supportedInterfaceOrientations ?? super.supportedInterfaceOrientations
     }
 
-    public var hexString: String {
-        return String(format: "%@", self as CVarArg)
+    open override var shouldAutorotate: Bool {
+        return selectedViewController?.shouldAutorotate ?? super.shouldAutorotate
+    }
+}
+
+extension UITabBarController {
+    open func setTabBarHidden(_ hidden: Bool, animated: Bool) {
+        let frame = tabBar.frame
+        let offsetY = hidden ? frame.size.height : -frame.size.height
+        var newFrame = frame
+        newFrame.origin.y = view.frame.maxY + offsetY
+        tabBar.isHidden = false
+
+        UIView.animate(withDuration: animated ? 0.35 : 0.0, delay: 0, options: .beginFromCurrentState, animations: {
+            self.tabBar.frame = newFrame
+        }, completion: { complete in
+            if complete {
+                self.tabBar.isHidden = hidden
+            }
+        })
     }
 }

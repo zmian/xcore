@@ -1,5 +1,5 @@
 //
-// UIKitExtensions.swift
+// UIKit+Extensions.swift
 //
 // Copyright © 2014 Zeeshan Mian
 //

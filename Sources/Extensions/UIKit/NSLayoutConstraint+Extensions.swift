@@ -1,5 +1,5 @@
 //
-// NSLayoutConstraintExtensions.swift
+// NSLayoutConstraint+Extensions.swift
 //
 // Copyright © 2014 Zeeshan Mian
 //

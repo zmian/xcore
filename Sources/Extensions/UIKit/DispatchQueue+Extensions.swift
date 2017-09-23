@@ -1,5 +1,5 @@
 //
-// WKWebViewExtensions.swift
+// DispatchQueue+Extensions.swift
 //
 // Copyright © 2017 Zeeshan Mian
 //
@@ -22,33 +22,16 @@
 // THE SOFTWARE.
 //
 
-import UIKit
-import WebKit
+import Foundation
+import Dispatch
 
-extension WKWebView {
-    /// Navigates to the first item in the back-forward list.
-    /// A new navigation to the requested item, or nil if there is no back
-    /// item in the back-forward list.
-    @discardableResult
-    public func goToFirstItem() -> WKNavigation? {
-        guard let firstItem = backForwardList.backList.at(0) else {
-            return nil
-        }
-
-        return go(to: firstItem)
-    }
-
-    /// Navigates to the last item in the back-forward list.
-    /// A new navigation to the requested item, or nil if there is no back
-    /// item in the back-forward list.
-    @discardableResult
-    public func goToLastItem() -> WKNavigation? {
-        let forwardList = backForwardList.forwardList
-
-        guard let lastItem = forwardList.at(forwardList.count - 1) else {
-            return nil
-        }
-
-        return go(to: lastItem)
+extension DispatchTime {
+    /// A convenience method to convert `TimeInterval` to `DispatchTime`.
+    ///
+    /// - parameter interval: The time interval, in seconds.
+    ///
+    /// - returns: A new `DispatchTime` from specified seconds.
+    public static func seconds(_ interval: TimeInterval) -> DispatchTime {
+        return .now() + Double(Int64(interval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
     }
 }

@@ -1,5 +1,5 @@
 //
-// UIFontExtensions.swift
+// UIFont+Extensions.swift
 //
 // Copyright © 2015 Zeeshan Mian
 //
