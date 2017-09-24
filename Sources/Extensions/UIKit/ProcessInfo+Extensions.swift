@@ -1,7 +1,7 @@
 //
-// UILabel+Extensions.swift
+// ProcessInfo+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2017 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,32 +22,20 @@
 // THE SOFTWARE.
 //
 
-import UIKit
+import Foundation
 
-extension UILabel {
-    open func setText(_ text: String, animated: Bool, duration: TimeInterval = .slow) {
-        if animated && text != self.text {
-            UIView.transition(with: self, duration: duration, options: .transitionCrossDissolve, animations: { [weak self] in
-                self?.text = text
-            }, completion: nil)
-        } else {
-            self.text = text
-        }
+extension ProcessInfo {
+    /// Returns the process information agent for the process.
+    ///
+    /// An `ProcessInfo` object is created the first time this method is invoked,
+    /// and that same object is returned on each subsequent invocation.
+    ///
+    /// - returns: Shared process information agent for the process.
+    public static var shared: ProcessInfo {
+        return processInfo
     }
 
-    open func setLineSpacing(_ spacing: CGFloat, text: String? = nil) {
-        guard let text = text ?? self.text else { return }
-        attributedText = NSMutableAttributedString(string: text).setLineSpacing(spacing)
-    }
-}
-
-extension UILabel {
-    /// A height of the label.
-    open var boundingHeight: CGFloat {
-        guard let font = font else {
-            return 0
-        }
-
-        return "Sphinx".size(withFont: font).height * CGFloat(numberOfLines)
+    public func contains(key: String) -> Bool {
+        return environment[key] != nil
     }
 }

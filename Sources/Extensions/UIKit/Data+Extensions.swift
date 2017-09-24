@@ -1,5 +1,5 @@
 //
-// Foundation+Extensions.swift
+// Data+Extensions.swift
 //
 // Copyright © 2014 Zeeshan Mian
 //
@@ -22,9 +22,7 @@
 // THE SOFTWARE.
 //
 
-import UIKit
-
-// MARK: Data Extension
+import Foundation
 
 extension Data {
     /// A convenience method to append string to `Data` using specified encoding.
