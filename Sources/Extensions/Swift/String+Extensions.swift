@@ -119,12 +119,18 @@ extension String {
 }
 
 extension String {
-    public func sizeWithFont(_ font: UIFont) -> CGSize {
+    public func size(withFont font: UIFont) -> CGSize {
         return (self as NSString).size(attributes: [NSFontAttributeName: font])
     }
 
-    public func sizeWithFont(_ font: UIFont, constrainedToSize: CGSize) -> CGSize {
-        let expectedRect = (self as NSString).boundingRect(with: constrainedToSize, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+    public func size(withFont font: UIFont, constrainedToSize: CGSize) -> CGSize {
+        let expectedRect = (self as NSString).boundingRect(
+            with: constrainedToSize,
+            options: .usesLineFragmentOrigin,
+            attributes: [NSFontAttributeName: font],
+            context: nil
+        )
+
         return expectedRect.size
     }
 
