@@ -74,12 +74,12 @@ public protocol ReorderTableViewDelegate: NSObjectProtocol {
     // This method is called when the selected row is dragged to a new position. You simply update your
     // data source to reflect that the rows have switched places. This can be called multiple times
     // during the reordering process.
-    func draggedRow(fromIndexPath: IndexPath, toIndexPath: IndexPath)
+    func draggedRow(from indexPath: IndexPath, toIndexPath: IndexPath)
 
     // This method is called when the selected row is released to its new position. The object is the same
     // object you returned in `saveObjectAndInsertBlankRow:atIndexPath:`. Simply update the data source so the
     // object is in its new position. You should do any saving/cleanup here.
-    func finishedDragging(fromIndexPath: IndexPath, toIndexPath: IndexPath, withObject object: Any)
+    func finishedDragging(from indexPath: IndexPath, toIndexPath: IndexPath, with object: Any)
 }
 
 open class ReorderTableView: UITableView {
@@ -149,9 +149,9 @@ open class ReorderTableView: UITableView {
             insertRows(at: [indexPath], with: .automatic)
 
             if let reorderDelegate = reorderDelegate {
-                reorderDelegate.draggedRow(fromIndexPath: currentLocationIndexPath, toIndexPath: indexPath)
+                reorderDelegate.draggedRow(from: currentLocationIndexPath, toIndexPath: indexPath)
             } else {
-                print("draggedRow:fromIndexPath:toIndexPath: is not implemented")
+                print("draggedRow:from:toIndexPath: is not implemented")
             }
 
             self.currentLocationIndexPath = indexPath
@@ -325,9 +325,9 @@ open class ReorderTableView: UITableView {
                 strongSelf.insertRows(at: [indexPath], with: .none)
 
                 if let reorderDelegate = strongSelf.reorderDelegate, let savedObject = strongSelf.savedObject, let initialIndexPath = strongSelf.initialIndexPath {
-                    reorderDelegate.finishedDragging(fromIndexPath: initialIndexPath, toIndexPath: indexPath, withObject: savedObject)
+                    reorderDelegate.finishedDragging(from: initialIndexPath, toIndexPath: indexPath, with: savedObject)
                 } else {
-                    print("finishedDragging:fromIndexPath:toIndexPath:withObject: is not implemented")
+                    print("finishedDragging:from:toIndexPath:with: is not implemented")
                 }
 
                 strongSelf.endUpdates()

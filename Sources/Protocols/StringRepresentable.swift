@@ -25,33 +25,34 @@
 import UIKit
 
 public enum StringSourceType {
-    case string
-    case attributedString
+    case string(String)
+    case attributedString(NSAttributedString)
+
+    public var rawValue: String {
+        switch self {
+            case .string(let value):
+                return value
+            case .attributedString(let value):
+                return value.string
+        }
+    }
 }
 
 // MARK: StringRepresentable
 
-public protocol StringRepresentable: CustomStringConvertible {
+public protocol StringRepresentable {
     var stringSource: StringSourceType { get }
 }
 
 extension String: StringRepresentable {
     public var stringSource: StringSourceType {
-        return .string
-    }
-
-    public var description: String {
-        return self
+        return .string(self)
     }
 }
 
 extension NSAttributedString: StringRepresentable {
     public var stringSource: StringSourceType {
-        return .attributedString
-    }
-
-    open override var description: String {
-        return string
+        return .attributedString(self)
     }
 }
 
