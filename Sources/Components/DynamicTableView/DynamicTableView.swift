@@ -507,16 +507,16 @@ extension DynamicTableView: ReorderTableViewDelegate {
     // This method is called when the selected row is dragged to a new position. You simply update your
     // data source to reflect that the rows have switched places. This can be called multiple times
     // during the reordering process.
-    open func draggedRow(fromIndexPath: IndexPath, toIndexPath: IndexPath) {
-        sections.moveElement(from: fromIndexPath, to: toIndexPath)
+    open func draggedRow(from indexPath: IndexPath, toIndexPath: IndexPath) {
+        sections.moveElement(from: indexPath, to: toIndexPath)
     }
 
     // This method is called when the selected row is released to its new position. The object is the same
     // object you returned in `saveObjectAndInsertBlankRow:atIndexPath:`. Simply update the data source so the
     // object is in its new position. You should do any saving/cleanup here.
-    open func finishedDragging(fromIndexPath: IndexPath, toIndexPath: IndexPath, withObject object: Any) {
+    open func finishedDragging(from indexPath: IndexPath, toIndexPath: IndexPath, with object: Any) {
         items[toIndexPath.row] = object as! DynamicTableModel
-        didMoveItem?(fromIndexPath, toIndexPath, items[toIndexPath.row])
+        didMoveItem?(indexPath, toIndexPath, items[toIndexPath.row])
     }
 }
 

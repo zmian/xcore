@@ -80,11 +80,11 @@ private class TestDynamicTableViewController: DynamicTableViewController {
         }
 
         tableView.didSelectItem { indexPath, item in
-            print("DidSelectItemAt: \(item.title != nil ? item.title!.description : "")")
+            print("DidSelectItemAt: \(item.title != nil ? item.title!.stringSource.rawValue : "")")
         }
 
         tableView.didRemoveItem { indexPath, item in
-            print("DidRemoveItemAt: \(item.title != nil ? item.title!.description : "")")
+            print("DidRemoveItemAt: \(item.title != nil ? item.title!.stringSource.rawValue : "")")
         }
     }
 }
