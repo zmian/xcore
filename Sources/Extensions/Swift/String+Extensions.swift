@@ -104,17 +104,16 @@ extension String {
 extension String {
     /// Decode specified `Base64` string
     public init?(base64: String) {
-        if let decodedData   = Data(base64Encoded: base64, options: Data.Base64DecodingOptions(rawValue: 0)),
-           let decodedString = String(data: decodedData, encoding: .utf8) {
-            self = decodedString
-        } else {
-            return nil
-        }
+        guard
+            let decodedData = Data(base64Encoded: base64),
+            let decodedString = String(data: decodedData, encoding: .utf8)
+        else { return nil }
+        self = decodedString
     }
 
     /// Returns `Base64` representation of `self`.
     public var base64: String? {
-        return data(using: .utf8)?.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
+        return data(using: .utf8)?.base64EncodedString()
     }
 }
 
