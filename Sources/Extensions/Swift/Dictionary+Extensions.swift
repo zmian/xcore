@@ -25,13 +25,13 @@
 import Foundation
 
 extension Dictionary {
-    public mutating func union(_ other: Dictionary) {
+    public mutating func combine(_ other: Dictionary) {
         other.forEach { updateValue($1, forKey: $0) }
     }
 
-    public func unioned(_ other: Dictionary) -> Dictionary {
+    public func combined(_ other: Dictionary) -> Dictionary {
         var dictionary = self
-        dictionary.union(other)
+        dictionary.combine(other)
         return dictionary
     }
 }

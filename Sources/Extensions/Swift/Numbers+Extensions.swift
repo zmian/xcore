@@ -62,35 +62,19 @@ extension Int {
     }
 }
 
-#if swift(>=4)
-    extension Numeric {
-        public var digitsCount: Self {
-            return numberOfDigits(in: self)
-        }
+extension SignedInteger {
+    public var digitsCount: Self {
+        return numberOfDigits(in: self)
+    }
 
-        private func numberOfDigits(in number: Self) -> Self {
-            if abs(number) < 10 {
-                return 1
-            } else {
-                return 1 + numberOfDigits(in: number / 10)
-            }
+    private func numberOfDigits(in number: Self) -> Self {
+        if abs(number) < 10 {
+            return 1
+        } else {
+            return 1 + numberOfDigits(in: number / 10)
         }
     }
-#else
-    extension SignedInteger {
-        public var digitsCount: Self {
-            return numberOfDigits(in: self)
-        }
-
-        private func numberOfDigits(in number: Self) -> Self {
-            if abs(number) < 10 {
-                return 1
-            } else {
-                return 1 + numberOfDigits(in: number / 10)
-            }
-        }
-    }
-#endif
+}
 
 extension FloatingPoint {
     public static var pi2: Self {
