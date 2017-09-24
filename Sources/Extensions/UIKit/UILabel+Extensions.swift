@@ -48,6 +48,6 @@ extension UILabel {
             return 0
         }
 
-        return "Sphinx".sizeWithFont(font).height * CGFloat(numberOfLines)
+        return "Sphinx".size(withFont: font).height * CGFloat(numberOfLines)
     }
 }

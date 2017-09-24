@@ -120,14 +120,14 @@ extension String {
 
 extension String {
     public func size(withFont font: UIFont) -> CGSize {
-        return (self as NSString).size(attributes: [NSFontAttributeName: font])
+        return (self as NSString).size(withAttributes: [.font: font])
     }
 
     public func size(withFont font: UIFont, constrainedToSize: CGSize) -> CGSize {
         let expectedRect = (self as NSString).boundingRect(
             with: constrainedToSize,
             options: .usesLineFragmentOrigin,
-            attributes: [NSFontAttributeName: font],
+            attributes: [.font: font],
             context: nil
         )
 
@@ -136,7 +136,7 @@ extension String {
 
     /// - seealso: http://stackoverflow.com/a/30040937
     public func numberOfLines(_ font: UIFont, constrainedToSize: CGSize) -> (size: CGSize, numberOfLines: Int) {
-        let textStorage = NSTextStorage(string: self, attributes: [NSFontAttributeName: font])
+        let textStorage = NSTextStorage(string: self, attributes: [.font: font])
 
         let textContainer                  = NSTextContainer(size: constrainedToSize)
         textContainer.lineBreakMode        = .byWordWrapping
