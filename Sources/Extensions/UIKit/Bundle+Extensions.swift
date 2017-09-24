@@ -60,3 +60,17 @@ extension Bundle {
                "Version \(versionNumber) (\(buildNumber))"
     }
 }
+
+extension Bundle {
+    /// Returns the first URL for the specified common directory in the user domain.
+    public static func url(for directory: FileManager.SearchPathDirectory) -> URL? {
+        return FileManager.default.url(for: directory)
+    }
+}
+
+extension FileManager {
+    /// Returns the first URL for the specified common directory in the user domain.
+    open func url(for directory: SearchPathDirectory) -> URL? {
+        return urls(for: directory, in: .userDomainMask).first
+    }
+}
