@@ -125,6 +125,7 @@
 		6843F44E1F77515A00B42ECB /* ProcessInfo+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F44D1F77515A00B42ECB /* ProcessInfo+Extensions.swift */; };
 		6872908F1F3C1F3100A0C1D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6872902A1F3C1F3000A0C1D0 /* Assets.xcassets */; };
 		687290911F3C1F3100A0C1D0 /* Xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = 6872902C1F3C1F3000A0C1D0 /* Xcore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		68857A2A1F79FFDE004915D7 /* Range+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68857A291F79FFDD004915D7 /* Range+Extensions.swift */; };
 		689869E61E9992E600CE7B77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689869DD1E9992E600CE7B77 /* ViewController.swift */; };
 		689869E71E9992E600CE7B77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689869DF1E9992E600CE7B77 /* AppDelegate.swift */; };
 		689869E81E9992E600CE7B77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 689869E01E9992E600CE7B77 /* Assets.xcassets */; };
@@ -271,6 +272,7 @@
 		6872902A1F3C1F3000A0C1D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6872902B1F3C1F3000A0C1D0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6872902C1F3C1F3000A0C1D0 /* Xcore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Xcore.h; sourceTree = "<group>"; };
+		68857A291F79FFDD004915D7 /* Range+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Range+Extensions.swift"; sourceTree = "<group>"; };
 		689869C81E99926100CE7B77 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		689869DB1E9992E600CE7B77 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		689869DD1E9992E600CE7B77 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 			isa = PBXGroup;
 			children = (
 				6843F3AF1F771CB700B42ECB /* Collection+Extensions.swift */,
+				68857A291F79FFDD004915D7 /* Range+Extensions.swift */,
 				6843F44A1F771FE200B42ECB /* Array+Extensions.swift */,
 				6843F4491F771FE200B42ECB /* Dictionary+Extensions.swift */,
 				6843F4431F771E1100B42ECB /* Numbers+Extensions.swift */,
@@ -1052,6 +1055,7 @@
 				6843F4081F771D1500B42ECB /* XCPageViewController.swift in Sources */,
 				6843F3F41F771D1500B42ECB /* XCTableViewComposedDataSource.swift in Sources */,
 				6843F41F1F771D1500B42ECB /* UIColor+Extensions.swift in Sources */,
+				68857A2A1F79FFDE004915D7 /* Range+Extensions.swift in Sources */,
 				6843F3D71F771D1500B42ECB /* ZoomAnimatorInteractiveTransition.swift in Sources */,
 				6843F4061F771D1500B42ECB /* XCButton.swift in Sources */,
 				6843F4361F771D1500B42ECB /* EnumIteratable.swift in Sources */,
