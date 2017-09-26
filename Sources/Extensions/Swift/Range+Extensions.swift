@@ -1,7 +1,7 @@
 //
-// Dictionary+Extensions.swift
+// Range+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2017 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,42 +24,9 @@
 
 import Foundation
 
-extension Dictionary {
-    public mutating func combine(_ other: Dictionary) {
-        other.forEach { updateValue($1, forKey: $0) }
+extension ClosedRange where Bound: FloatingPoint {
+    public func random() -> Bound {
+        let range = upperBound - lowerBound
+        return ((Bound(arc4random_uniform(UInt32.max)) / Bound(UInt32.max)) * range + lowerBound)
     }
-
-    public func combined(_ other: Dictionary) -> Dictionary {
-        var dictionary = self
-        dictionary.combine(other)
-        return dictionary
-    }
-}
-
-// MARK: Operators
-
-public func +<Key, Value> (lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
-    return lhs.combined(rhs)
-}
-
-public func +<Key, Value> (lhs: [Key: Value], rhs: [Key: Value]?) -> [Key: Value] {
-    guard let rhs = rhs else {
-        return lhs
-    }
-
-    return lhs + rhs
-}
-
-public func +=<Key, Value>(lhs: inout [Key: Value], rhs: [Key: Value]) {
-    lhs.combine(rhs)
-}
-
-// MARK: Equatable
-
-public func ==<Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
-    guard let lhs = lhs as? [Key: Value], let rhs = rhs as? [Key: Value] else {
-        return false
-    }
-
-    return NSDictionary(dictionary: lhs).isEqual(to: rhs)
 }
