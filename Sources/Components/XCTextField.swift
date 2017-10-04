@@ -26,18 +26,18 @@ import UIKit
 
 open class XCTextField: UITextField {
     /// The default value is `UIEdgeInsets.zero`.
-    open var edgeInsets = UIEdgeInsets.zero
+    open var contentInset = UIEdgeInsets.zero
     /// The default value is `nil`. Uses `font`.
     open var placeholderFont: UIFont?
     /// The default value is `nil`. Uses `textColor`.
     open var placeholderTextColor: UIColor?
 
     open override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return super.textRect(forBounds: UIEdgeInsetsInsetRect(bounds, edgeInsets))
+        return super.textRect(forBounds: UIEdgeInsetsInsetRect(bounds, contentInset))
     }
 
     open override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return super.editingRect(forBounds: UIEdgeInsetsInsetRect(bounds, edgeInsets))
+        return super.editingRect(forBounds: UIEdgeInsetsInsetRect(bounds, contentInset))
     }
 
     // Fixes text jumping
