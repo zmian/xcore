@@ -40,8 +40,8 @@ open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     }()
 
     /// The distance that the text is inset from the enclosing scroll view.
-    /// The default value is `UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)`.
-    open var contentInset = UIEdgeInsets(all: 15)
+    /// The default value is `UIEdgeInsets(15)`.
+    open var contentInset = UIEdgeInsets(15)
 
     /// A convenience property to set view’s background image.
     /// The default value is `nil`, which means apply view's background color.
