@@ -25,8 +25,8 @@
 import UIKit
 
 extension UIEdgeInsets {
-    public init(all: CGFloat) {
-        self = UIEdgeInsets(top: all, left: all, bottom: all, right: all)
+    public init(_ value: CGFloat) {
+        self = UIEdgeInsets(top: value, left: value, bottom: value, right: value)
     }
 
     public init(horizontal: CGFloat, vertical: CGFloat) {
@@ -74,6 +74,72 @@ extension UIEdgeInsets {
     }
 }
 
+extension UIEdgeInsets {
+    public static func +=(lhs: inout UIEdgeInsets, rhs: UIEdgeInsets) {
+        lhs.top    += rhs.top
+        lhs.left   += rhs.left
+        lhs.bottom += rhs.bottom
+        lhs.right  += rhs.right
+    }
+
+    public static func +=(lhs: inout UIEdgeInsets, rhs: CGFloat) {
+        lhs.horizontal = rhs
+        lhs.vertical = rhs
+    }
+
+    public static func +(lhs: UIEdgeInsets, rhs: UIEdgeInsets) -> UIEdgeInsets {
+        return UIEdgeInsets(
+            top: lhs.top + rhs.top,
+            left: lhs.left + rhs.left,
+            bottom: lhs.bottom + rhs.bottom,
+            right: lhs.right + rhs.right
+        )
+    }
+
+    public static func +(lhs: UIEdgeInsets, rhs: CGFloat) -> UIEdgeInsets {
+        return UIEdgeInsets(
+            top: lhs.top + rhs,
+            left: lhs.left + rhs,
+            bottom: lhs.bottom + rhs,
+            right: lhs.right + rhs
+        )
+    }
+}
+
+extension UIEdgeInsets {
+    public static func -=(lhs: inout UIEdgeInsets, rhs: UIEdgeInsets) {
+        lhs.top    -= rhs.top
+        lhs.left   -= rhs.left
+        lhs.bottom -= rhs.bottom
+        lhs.right  -= rhs.right
+    }
+
+    public static func -=(lhs: inout UIEdgeInsets, rhs: CGFloat) {
+        lhs.top    -= rhs
+        lhs.left   -= rhs
+        lhs.bottom -= rhs
+        lhs.right  -= rhs
+    }
+
+    public static func -(lhs: UIEdgeInsets, rhs: UIEdgeInsets) -> UIEdgeInsets {
+        return UIEdgeInsets(
+            top: lhs.top - rhs.top,
+            left: lhs.left - rhs.left,
+            bottom: lhs.bottom - rhs.bottom,
+            right: lhs.right - rhs.right
+        )
+    }
+
+    public static func -(lhs: UIEdgeInsets, rhs: CGFloat) -> UIEdgeInsets {
+        return UIEdgeInsets(
+            top: lhs.top - rhs,
+            left: lhs.left - rhs,
+            bottom: lhs.bottom - rhs,
+            right: lhs.right - rhs
+        )
+    }
+}
+
 /// The value of `π` as a `CGFloat`.
 public let π = CGFloat.pi
 
@@ -93,19 +159,56 @@ extension CGFloat {
     }
 }
 
-public func +=(lhs: inout CGSize, rhs: CGSize) {
-    lhs.width  += rhs.width
-    lhs.height += rhs.height
+extension CGSize {
+    public init(_ value: CGFloat) {
+        self = CGSize(width: value, height: value)
+    }
+
+    public static func +=(lhs: inout CGSize, rhs: CGSize) {
+        lhs.width  += rhs.width
+        lhs.height += rhs.height
+    }
+
+    public static func +=(lhs: inout CGSize, rhs: CGFloat) {
+        lhs = lhs + rhs
+    }
+
+    public static func +(lhs: CGSize, rhs: CGSize) -> CGSize {
+        return CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
+    }
+
+    public static func +(lhs: CGSize, rhs: CGFloat) -> CGSize {
+        return CGSize(width: lhs.width + rhs, height: lhs.height + rhs)
+    }
 }
 
-public func +(lhs: CGSize, rhs: CGSize) -> CGSize {
-    return CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
+extension CGSize {
+    public static func -=(lhs: inout CGSize, rhs: CGSize) {
+        lhs.width  -= rhs.width
+        lhs.height -= rhs.height
+    }
+
+    public static func -=(lhs: inout CGSize, rhs: CGFloat) {
+        lhs = lhs - rhs
+    }
+
+    public static func -(lhs: CGSize, rhs: CGSize) -> CGSize {
+        return CGSize(width: lhs.width - rhs.width, height: lhs.height - rhs.height)
+    }
+
+    public static func -(lhs: CGSize, rhs: CGFloat) -> CGSize {
+        return CGSize(width: lhs.width - rhs, height: lhs.height - rhs)
+    }
 }
 
-public func +(lhs: CGSize, rhs: CGFloat) -> CGSize {
-    return CGSize(width: lhs.width + rhs, height: lhs.height + rhs)
-}
+#if swift(>=4)
+extension UILayoutPriority {
+    public static func +(lhs: UILayoutPriority, rhs: Float) -> UILayoutPriority {
+        return UILayoutPriority(lhs.rawValue + rhs)
+    }
 
-public func +=(lhs: inout CGSize, rhs: CGFloat) {
-    lhs = lhs + rhs
+    public static func -(lhs: UILayoutPriority, rhs: Float) -> UILayoutPriority {
+        return UILayoutPriority(lhs.rawValue - rhs)
+    }
 }
+#endif
