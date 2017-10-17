@@ -88,7 +88,7 @@ open class IconLabelView: XCView {
     /// The default value is `8`.
     open dynamic var imagePadding: CGFloat = 8 {
         didSet {
-            imageInset = UIEdgeInsets(all: imagePadding)
+            imageInset = UIEdgeInsets(imagePadding)
             imageView.cornerRadius = imageCornerRadius - imagePadding
         }
     }
