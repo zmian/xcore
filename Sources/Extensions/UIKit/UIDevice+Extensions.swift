@@ -61,9 +61,3 @@ extension UIDevice {
         }
     }
 }
-
-extension UIDevice {
-    public var hasTouchID: Bool {
-        return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-    }
-}
