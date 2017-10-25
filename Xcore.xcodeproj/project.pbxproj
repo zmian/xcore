@@ -133,6 +133,7 @@
 		689869EA1E9992E600CE7B77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 689869E31E9992E600CE7B77 /* Main.storyboard */; };
 		689D0D1B1D8DBE6400145E0B /* XcoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0D181D8DBE5C00145E0B /* XcoreTests.swift */; };
 		68C392FE1E99D327009D8D58 /* PredicateQueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */; };
+		68DA9F921FA120CB00E5C585 /* UIDevice+Biometrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DA9F911FA120CA00E5C585 /* UIDevice+Biometrics.swift */; };
 		975C9436F0C35B14D6B8FFF0 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C773C4D476BF4309831EDE03 /* Pods_Example.framework */; };
 		CDE69BBCB1B78A0EB89C5FCD /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84F555E9FA859A59DB03B60C /* Pods_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -285,6 +286,7 @@
 		689D0D171D8DBE5C00145E0B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		689D0D181D8DBE5C00145E0B /* XcoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XcoreTests.swift; sourceTree = "<group>"; };
 		68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredicateQueryTests.swift; sourceTree = "<group>"; };
+		68DA9F911FA120CA00E5C585 /* UIDevice+Biometrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Biometrics.swift"; sourceTree = "<group>"; };
 		84F555E9FA859A59DB03B60C /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C773C4D476BF4309831EDE03 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -560,6 +562,7 @@
 				6843F3C01F771CB700B42ECB /* UICollectionView+Extensions.swift */,
 				6843F3C11F771CB700B42ECB /* UIColor+Extensions.swift */,
 				6843F3C21F771CB700B42ECB /* UIDevice+Extensions.swift */,
+				68DA9F911FA120CA00E5C585 /* UIDevice+Biometrics.swift */,
 				6843F3C31F771CB700B42ECB /* UIDevice+Model.swift */,
 				6843F3C41F771CB700B42ECB /* UIFont+Extensions.swift */,
 				6843F3C51F771CB700B42ECB /* UIGeometry+Extensions.swift */,
@@ -1022,6 +1025,7 @@
 				6843F3E91F771D1500B42ECB /* Swizzle.swift in Sources */,
 				6843F3E41F771D1500B42ECB /* JSONHelpers.swift in Sources */,
 				6843F44E1F77515A00B42ECB /* ProcessInfo+Extensions.swift in Sources */,
+				68DA9F921FA120CB00E5C585 /* UIDevice+Biometrics.swift in Sources */,
 				6843F3E61F771D1500B42ECB /* Observer.swift in Sources */,
 				6843F4411F771D1500B42ECB /* UITableView+Reusable.swift in Sources */,
 				6843F4461F771E1300B42ECB /* Numbers+Extensions.swift in Sources */,
