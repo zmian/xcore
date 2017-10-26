@@ -27,11 +27,11 @@ import LocalAuthentication
 
 extension UIDevice {
     /// Indicates that the device owner can authenticate using biometry, Touch ID or Face ID.
-    public var hasBiometricsSupport: Bool {
+    public var isBiometricsIDAvailable: Bool {
         return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
 
-    /// The name of the biometry authentication. "Touch ID" or "Face ID"; otherwise, an empty string.
+    /// The name of the biometry authentication, "Touch ID" or "Face ID"; otherwise, an empty string.
     public var biometryName: String {
         if #available(iOS 11.0, *) {
             switch biometryType {
@@ -43,12 +43,12 @@ extension UIDevice {
                     return "Face ID"
             }
         } else {
-            guard hasBiometricsSupport else { return "" }
+            guard isBiometricsIDAvailable else { return "" }
             return "Touch ID"
         }
     }
 
-    /// The name of the biometry type authentication. "Touch ID" or "Face ID"; otherwise, an empty string.
+    /// The types of biometric authentication supported.
     @available(iOS 11.0, *)
     public var biometryType: LABiometryType {
         let context = LAContext()
