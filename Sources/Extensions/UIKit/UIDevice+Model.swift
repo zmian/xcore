@@ -141,9 +141,9 @@ extension UIDevice {
                     self = .iPadMini4
                 case "iPad6,3", "iPad6,4":
                     self = .iPadPro97
-                case "iPad6,11", "iPad6,12",
+                case "iPad6,11", "iPad6,12":
                      self = .iPad5
-                case "iPad7,3", "iPad7,4",
+                case "iPad7,3", "iPad7,4":
                      self = .iPadPro10
                 case "iPad6,7", "iPad6,8", "iPad7,1", "iPad7,2":
                     self = .iPadPro12
@@ -225,7 +225,7 @@ extension UIDevice {
                 case .iPadMini2:    return "iPad Mini 2"
                 case .iPadMini3:    return "iPad Mini 3"
                 case .iPadMini4:    return "iPad Mini 4"
-                case .ipad5:        return "iPad 5"
+                case .iPad5:        return "iPad 5"
                 case .iPadPro97:    return "iPad Pro 9.7"
                 case .iPadPro10:    return "iPad Pro 10.5"
                 case .iPadPro12:    return "iPad Pro 12.9"
