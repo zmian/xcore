@@ -132,7 +132,7 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
         layout?.itemSize                = CGSize(width: 60, height: 74)
         layout?.minimumLineSpacing      = 15
         layout?.minimumInteritemSpacing = itemSpacing
-        layout?.sectionInset            = UIEdgeInsets(15)
+        layout?.sectionInset            = 15
         layout?.scrollDirection         = .vertical
 
         updateCellOptionsIfNeeded()
