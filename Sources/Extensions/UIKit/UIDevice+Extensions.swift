@@ -39,6 +39,7 @@ extension UIDevice {
         public static var iPhone5: Bool       { return iPhone && ScreenSize.maxLength == 568 }
         public static var iPhone6: Bool       { return iPhone && ScreenSize.maxLength == 667 }
         public static var iPhone6Plus: Bool   { return iPhone && ScreenSize.maxLength == 736 }
+        public static var iPhoneX: Bool       { return iPhone && ScreenSize.minLength == 375 && ScreenSize.maxLength == 812 }
         public static var Simulator: Bool     { return TARGET_IPHONE_SIMULATOR == 1 }
         public static var iPhone: Bool        { return UIDevice.current.userInterfaceIdiom == .phone }
         public static var iPad: Bool          { return UIDevice.current.userInterfaceIdiom == .pad }
