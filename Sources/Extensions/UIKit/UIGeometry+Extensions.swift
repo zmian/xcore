@@ -24,6 +24,26 @@
 
 import UIKit
 
+// MARK: UIEdgeInsets - ExpressibleByFloatLiteral
+
+extension UIEdgeInsets: ExpressibleByFloatLiteral {
+    public init(floatLiteral value: FloatLiteralType) {
+        let value = CGFloat(value)
+        self = UIEdgeInsets(top: value, left: value, bottom: value, right: value)
+    }
+}
+
+// MARK: UIEdgeInsets - ExpressibleByIntegerLiteral
+
+extension UIEdgeInsets: ExpressibleByIntegerLiteral {
+    public init(integerLiteral value: IntegerLiteralType) {
+        let value = CGFloat(value)
+        self = UIEdgeInsets(top: value, left: value, bottom: value, right: value)
+    }
+}
+
+// MARK: UIEdgeInsets - Extensions
+
 extension UIEdgeInsets {
     public init(_ value: CGFloat) {
         self = UIEdgeInsets(top: value, left: value, bottom: value, right: value)
@@ -140,6 +160,8 @@ extension UIEdgeInsets {
     }
 }
 
+// MARK: CGFloat - Extensions
+
 /// The value of `π` as a `CGFloat`.
 public let π = CGFloat.pi
 
@@ -158,6 +180,26 @@ extension CGFloat {
         return self * 180 / π
     }
 }
+
+// MARK: CGSize - ExpressibleByFloatLiteral
+
+extension CGSize: ExpressibleByFloatLiteral {
+    public init(floatLiteral value: FloatLiteralType) {
+        let value = CGFloat(value)
+        self = CGSize(width: value, height: value)
+    }
+}
+
+// MARK: CGSize - ExpressibleByIntegerLiteral
+
+extension CGSize: ExpressibleByIntegerLiteral {
+    public init(integerLiteral value: IntegerLiteralType) {
+        let value = CGFloat(value)
+        self = CGSize(width: value, height: value)
+    }
+}
+
+// MARK: CGSize - Extensions
 
 extension CGSize {
     public init(_ value: CGFloat) {
@@ -200,6 +242,8 @@ extension CGSize {
         return CGSize(width: lhs.width - rhs, height: lhs.height - rhs)
     }
 }
+
+// MARK: UILayoutPriority - Extensions
 
 #if swift(>=4)
 extension UILayoutPriority {
