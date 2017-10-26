@@ -39,13 +39,17 @@ extension UIDevice {
         case iPhone6, iPhone6Plus
         case iPhone6s, iPhone6sPlus
         case iPhone7, iPhone7Plus
+        case iPhone8, iPhone8Plus
+        case iPhoneX
 
         // iPad
         case iPad1
         case iPad2, iPad3, iPad4
         case iPadMini, iPadMini2, iPadMini3, iPadMini4
         case iPadAir, iPadAir2
+        case iPad5
         case iPadPro97
+        case iPadPro10
         case iPadPro12
 
         // Apple Watch
@@ -106,6 +110,12 @@ extension UIDevice {
                     self = .iPhone7
                 case "iPhone9,2", "iPhone9,4":
                     self = .iPhone7Plus
+                case "iPhone10,1", "iPhone10,4":
+                    self = .iPhone8
+                case "iPhone10,2", "iPhone10,5":
+                    self = .iPhone8Plus
+                case "iPhone10,3", "iPhone10,6":
+                    self = .iPhoneX
 
                 // iPad
 
@@ -131,7 +141,11 @@ extension UIDevice {
                     self = .iPadMini4
                 case "iPad6,3", "iPad6,4":
                     self = .iPadPro97
-                case "iPad6,7", "iPad6,8":
+                case "iPad6,11", "iPad6,12",
+                     self = .iPad5
+                case "iPad7,3", "iPad7,4",
+                     self = .iPadPro10
+                case "iPad6,7", "iPad6,8", "iPad7,1", "iPad7,2":
                     self = .iPadPro12
 
                 // Apple Watch
@@ -197,6 +211,9 @@ extension UIDevice {
                 case .iPhone6sPlus: return "iPhone 6s Plus"
                 case .iPhone7:      return "iPhone 7"
                 case .iPhone7Plus:  return "iPhone 7 Plus"
+                case .iPhone8:      return "iPhone 8"
+                case .iPhone8Plus:  return "iPhone 8 Plus"
+                case .iPhoneX:      return "iPhone X"
 
                 case .iPad1:        return "iPad 1"
                 case .iPad2:        return "iPad 2"
@@ -208,8 +225,10 @@ extension UIDevice {
                 case .iPadMini2:    return "iPad Mini 2"
                 case .iPadMini3:    return "iPad Mini 3"
                 case .iPadMini4:    return "iPad Mini 4"
+                case .ipad5:        return "iPad 5"
                 case .iPadPro97:    return "iPad Pro 9.7"
-                case .iPadPro12:    return "iPad Pro 12"
+                case .iPadPro10:    return "iPad Pro 10.5"
+                case .iPadPro12:    return "iPad Pro 12.9"
 
                 case .appleWatch38: return "Apple Watch 38"
                 case .appleWatch42: return "Apple Watch 42"
