@@ -113,6 +113,23 @@ extension NSLayoutConstraint {
         constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|-paddingLeft@priority-[view]-paddingRight@priority-|", metrics: metrics, views: views)
         return constraints
     }
+
+    public static func constraintsForViewToFillLayoutGuide(_ viewToSize: UIView, guide: UILayoutGuide, padding: UIEdgeInsets = .zero, priority: Float = UILayoutPriorityRequired) -> [NSLayoutConstraint] {
+        viewToSize.translatesAutoresizingMaskIntoConstraints = false
+
+        let constraints = [
+            viewToSize.topAnchor.constraint(equalTo: guide.topAnchor, constant: padding.top),
+            viewToSize.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: padding.bottom),
+            viewToSize.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: padding.left),
+            viewToSize.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: padding.right)
+        ]
+
+        constraints.forEach {
+            $0.priority = priority
+        }
+
+        return constraints
+    }
 }
 
 extension UIViewController {

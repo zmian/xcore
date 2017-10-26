@@ -27,15 +27,15 @@ import MDHTMLLabel
 
 open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     open fileprivate(set) lazy var textLabel: MDHTMLLabel = {
-        let textLabel                  = MDHTMLLabel()
-        textLabel.delegate             = self
-        textLabel.font                 = .systemFont(.footnote)
-        textLabel.textColor            = .darkGray
-        textLabel.lineBreakMode        = .byWordWrapping
-        textLabel.numberOfLines        = 0
-        textLabel.linkAttributes       = [NSForegroundColorAttributeName: textLabel.tintColor]
+        let textLabel = MDHTMLLabel()
+        textLabel.delegate = self
+        textLabel.font = .systemFont(.footnote)
+        textLabel.textColor = .darkGray
+        textLabel.lineBreakMode = .byWordWrapping
+        textLabel.numberOfLines = 0
+        textLabel.linkAttributes = [NSForegroundColorAttributeName: textLabel.tintColor]
         textLabel.activeLinkAttributes = [NSForegroundColorAttributeName: textLabel.tintColor]
-        textLabel.lineHeightMultiple   = 1.1
+        textLabel.lineHeightMultiple = 1.1
         return textLabel
     }()
 
@@ -67,8 +67,8 @@ open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
     open func setText(_ filename: String, bundle: Bundle? = nil) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            let name   = filename.lastPathComponent.stringByDeletingPathExtension
-            let ext    = filename.pathExtension
+            let name = filename.lastPathComponent.stringByDeletingPathExtension
+            let ext = filename.pathExtension
             let bundle = bundle ?? Bundle.main
 
             if let path = bundle.path(forResource: name, ofType: ext), let content = try? String(contentsOfFile: path, encoding: String.Encoding.utf8) {
@@ -92,10 +92,10 @@ open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     // MARK: Setup Methods
 
     fileprivate func setupTextLabel() {
-        textLabel.htmlText              = text
+        textLabel.htmlText = text
         scrollView.alwaysBounceVertical = true
         scrollView.addSubview(textLabel)
-        NSLayoutConstraint.constraintsForViewToFillSuperview(textLabel, padding: contentInset).activate()
+        NSLayoutConstraint.constraintsForViewToFillSuperview(textLabel, padding: contentInset, priority: UILayoutPriorityDefaultHigh).activate()
 
         if let backgroundImage = backgroundImage?.cgImage {
             view.layer.contents = backgroundImage
