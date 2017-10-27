@@ -31,6 +31,16 @@ extension UIDevice {
         return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
 
+    /// The types of biometric authentication supported.
+    @available(iOS 11.0, *)
+    public var biometryType: LABiometryType {
+        let context = LAContext()
+        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) else {
+            return .none
+        }
+        return context.biometryType
+    }
+
     /// The name of the biometry authentication, "Touch ID" or "Face ID"; otherwise, an empty string.
     public var biometryName: String {
         if #available(iOS 11.0, *) {
@@ -48,13 +58,28 @@ extension UIDevice {
         }
     }
 
-    /// The types of biometric authentication supported.
+    /// Face ID requires permission prompt. If user denies
+    /// the permission, then `biometryType` returns `.none`.
+    /// This property returns the actual capability of the device
+    /// regardless of the permission status.
     @available(iOS 11.0, *)
-    public var biometryType: LABiometryType {
-        let context = LAContext()
-        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) else {
-            return .none
+    public var biometryCapabilityType: LABiometryType {
+        guard biometryType == .none else {
+            return biometryType
         }
-        return context.biometryType
+
+        return DeviceType.iPhoneX ? .typeFaceID : .typeTouchID
+    }
+
+    /// Face ID requires permission prompt. If user denies
+    /// the permission, then `biometryName` returns an empty string.
+    /// This property returns the actual capability name of the device
+    /// regardless of the permission status.
+    public var biometryCapabilityName: String {
+        guard biometryName.isEmpty else {
+            return biometryName
+        }
+
+        return DeviceType.iPhoneX ? "Face ID" : "Touch ID"
     }
 }
