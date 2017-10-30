@@ -39,9 +39,14 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     open dynamic var isContentCentered = false
     /// A boolean value to determine whether the last table view cell separator is hidden. The default value is `false`.
     open dynamic var isLastCellSeparatorHidden = false
+
+    private var emptyTableFooterView = UIView()
     /// A boolean value to determine whether the empty table view cells are hidden. The default value is `false`.
     open dynamic var emptyCellsHidden = false {
-        didSet { tableFooterView = emptyCellsHidden ? UIView(frame: .zero) : nil }
+        didSet {
+            guard tableFooterView == emptyTableFooterView else { return }
+            tableFooterView = emptyCellsHidden ? emptyTableFooterView : nil
+        }
     }
 
     fileprivate var configureCell: ((_ indexPath: IndexPath, _ cell: DynamicTableViewCell, _ item: DynamicTableModel) -> Void)?
