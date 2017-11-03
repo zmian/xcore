@@ -112,7 +112,9 @@ extension UITabBar {
 
 extension UIBarButtonItem {
     fileprivate func _titleTextAttributes(for state: UIControlState) -> [NSAttributedStringKey: Any] {
-        var oldAttributes = titleTextAttributes(for: state) ?? [:]
+        guard let oldAttributes = titleTextAttributes(for: state) else {
+            return [:]
+        }
 
         var newAttributes = [NSAttributedStringKey: Any]()
 
@@ -126,7 +128,7 @@ extension UIBarButtonItem {
     @objc open dynamic var textColor: UIColor? {
         get { return titleTextAttributes(for: .normal)?[NSAttributedStringKey.foregroundColor.rawValue] as? UIColor }
         set {
-            var attributes = _titleTextAttributes(for: .normal) ?? [:]
+            var attributes = _titleTextAttributes(for: .normal)
             attributes[.foregroundColor] = newValue
             setTitleTextAttributes(attributes, for: .normal)
         }
@@ -135,7 +137,7 @@ extension UIBarButtonItem {
     @objc open dynamic var font: UIFont? {
         get { return titleTextAttributes(for: .normal)?[NSAttributedStringKey.font.rawValue] as? UIFont }
         set {
-            var attributes = _titleTextAttributes(for: .normal) ?? [:]
+            var attributes = _titleTextAttributes(for: .normal)
             attributes[.font] = newValue
             setTitleTextAttributes(attributes, for: .normal)
         }
