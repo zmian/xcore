@@ -25,22 +25,6 @@
 import Foundation
 
 extension String {
-    /// Allows us to use String[index] notation
-    public subscript(index: Int) -> String? {
-        let array = Array(characters)
-        return array.indices ~= index ? String(array[index]) : nil
-    }
-
-    /// var string = "abcde"[0...2] // string equals "abc"
-    /// var string2 = "fghij"[2..<4] // string2 equals "hi"
-    public subscript (r: Range<Int>) -> String {
-        let start = characters.index(startIndex, offsetBy: r.lowerBound)
-        let end   = characters.index(startIndex, offsetBy: r.upperBound)
-        return substring(with: Range(start..<end))
-    }
-
-    public var count: Int { return characters.count }
-
     /// Returns an array of strings at new lines.
     public var lines: [String] {
         return components(separatedBy: .newlines)
