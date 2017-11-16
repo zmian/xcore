@@ -121,11 +121,27 @@ extension UIBarButtonItem {
     }
 
     open dynamic var font: UIFont? {
-        get { return titleTextAttributes(for: .normal)?[NSFontAttributeName] as? UIFont }
+        get { return titleTextFont(for: .normal) }
         set {
-            var attributes = titleTextAttributes(for: .normal) ?? [:]
-            attributes[NSFontAttributeName] = newValue
-            setTitleTextAttributes(attributes, for: .normal)
+            UIControlState.applicationStates.forEach {
+                setTitleTextFont(newValue, for: $0)
+            }
         }
+    }
+
+    open func setTitleTextFont(_ font: UIFont?, for state: UIControlState) {
+        var attributes = titleTextAttributes(for: state) ?? [:]
+        attributes[NSFontAttributeName] = font
+        setTitleTextAttributes(attributes, for: state)
+    }
+
+    open func titleTextFont(for state: UIControlState) -> UIFont? {
+        return titleTextAttributes(for: state)?[NSFontAttributeName] as? UIFont
+    }
+}
+
+extension UIControlState {
+    fileprivate static var applicationStates: [UIControlState] {
+        return [.normal, .highlighted, .disabled, .selected, .focused, .application]
     }
 }
