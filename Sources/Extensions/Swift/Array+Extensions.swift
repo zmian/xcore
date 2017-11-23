@@ -110,8 +110,7 @@ extension Array where Element: NSObjectProtocol {
     ///
     /// After using `index(of:)` to find the position of a particular element in
     /// a collection, you can use it to access the element by subscripting. This
-    /// example shows how you can modify one of the names in an array of
-    /// students.
+    /// example shows how you can pop one of the view controller from the `UINavigationController`.
     ///
     /// ```swift
     /// let navigationController = UINavigationController()
@@ -125,5 +124,27 @@ extension Array where Element: NSObjectProtocol {
     ///   found in the collection, returns `nil`.
     public func index(of elementType: Element.Type) -> Int? {
         return index(where: { $0.isKind(of: elementType) })
+    }
+
+    /// Returns a boolean value indicating whether the sequence contains an element
+    /// that exists in the given parameter.
+    ///
+    /// ```swift
+    /// let navigationController = UINavigationController()
+    /// if navigationController.viewControllers.contains(any: [SearchViewController.self, HomeViewController.self]) {
+    ///     _ = navigationController?.popToRootViewController(animated: true)
+    /// }
+    /// ```
+    ///
+    /// - parameter any: An array of element types to search for in the collection.
+    /// - returns: `true` if the sequence contains an element; otherwise, `false`.
+    public func contains(any elementTypes: [Element.Type]) -> Bool {
+        for element in self {
+            if elementTypes.contains(where: { element.isKind(of: $0) }) {
+                return true
+            }
+        }
+
+        return false
     }
 }
