@@ -37,33 +37,33 @@ final class ZoomAnimatorInteractiveTransition: UIPercentDrivenInteractiveTransit
 
     @objc func handle(recognizer: UIScreenEdgePanGestureRecognizer) {
         switch recognizer.state {
-        case .changed:
-            guard let view = recognizer.view else { return }
-            let progress = recognizer.translation(in: view).x / view.bounds.width
-            update(progress)
-        case .cancelled, .ended:
-            guard let view = recognizer.view else { return }
-            let progress = recognizer.translation(in: view).x / view.bounds.width
-            let velocity = recognizer.velocity(in: view).x
-            if progress > 0.33 || velocity > 1000.0 {
-                finish()
-            } else {
-                if #available(iOS 10.0, *), let viewController = viewController {
-                    navigationController?.viewControllers.append(viewController)
-                    update(0.0)
+            case .changed:
+                guard let view = recognizer.view else { return }
+                let progress = recognizer.translation(in: view).x / view.bounds.width
+                update(progress)
+            case .cancelled, .ended:
+                guard let view = recognizer.view else { return }
+                let progress = recognizer.translation(in: view).x / view.bounds.width
+                let velocity = recognizer.velocity(in: view).x
+                if progress > 0.33 || velocity > 1000.0 {
+                    finish()
+                } else {
+                    if #available(iOS 10.0, *), let viewController = viewController {
+                        navigationController?.viewControllers.append(viewController)
+                        update(0.0)
+                    }
+                    cancel()
+
+                    if let viewController = viewController as? ZoomAnimatorDestination {
+                        viewController.zoomAnimatorDestinationStateChanged(state: .cancelled)
+                    }
+                    if let viewController = navigationController?.viewControllers.last as? ZoomAnimatorSource {
+                        viewController.zoomAnimatorSourceStateChanged(state: .cancelled)
+                    }
                 }
-                cancel()
-                
-                if let viewController = viewController as? ZoomAnimatorDestination {
-                    viewController.zoomAnimatorDestinationStateChanged(state: .cancelled)
-                }
-                if let viewController = navigationController?.viewControllers.last as? ZoomAnimatorSource {
-                    viewController.zoomAnimatorSourceStateChanged(state: .cancelled)
-                }
-            }
-            interactive = false
-        default:
-            break
+                interactive = false
+            default:
+                break
         }
     }
 }
