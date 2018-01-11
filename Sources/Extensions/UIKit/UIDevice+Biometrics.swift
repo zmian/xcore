@@ -38,12 +38,17 @@ extension UIDevice {
             }
 
             switch context.biometryType {
-                case .none:
-                    self = .none
                 case .touchID:
                     self = .touchID
                 case .faceID:
                     self = .faceID
+                default:
+                    /// The device does not support biometry.
+                    /// `LABiometryNone` introduced in `11.0` and was deprecated in `11.2`
+                    /// and renamed to be `LABiometryType.none`.
+                    /// This default case allows us to handle both of those cases without
+                    /// resorting to hacks or explicit checks.
+                    self = .none
             }
         }
 
