@@ -75,14 +75,6 @@ extension String {
         return trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
-    public var localized: String {
-        return NSLocalizedString(self, tableName: nil, bundle: .main, value: "", comment: "")
-    }
-
-    public func localized(_ comment: String) -> String {
-        return NSLocalizedString(self, tableName: nil, bundle: .main, value: "", comment: comment)
-    }
-
     /// Drops the given `prefix` from `self`.
     ///
     /// - returns: String without the specified `prefix` or nil if `prefix` doesn't exists.
@@ -97,6 +89,19 @@ extension String {
     public var stringByDeletingLastPathComponent: String { return (self as NSString).deletingLastPathComponent }
     public var stringByDeletingPathExtension: String { return (self as NSString).deletingPathExtension }
     public var pathExtension: String { return (self as NSString).pathExtension }
+}
+
+// MARK: Localization
+
+extension String {
+    // TODO: Add more customization to use these methods instead of secondary library
+    fileprivate var localized: String {
+        return NSLocalizedString(self, tableName: nil, bundle: .main, value: "", comment: "")
+    }
+
+    fileprivate func localized(_ comment: String) -> String {
+        return NSLocalizedString(self, tableName: nil, bundle: .main, value: "", comment: comment)
+    }
 }
 
 // MARK: Base64 Support
