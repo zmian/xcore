@@ -42,12 +42,12 @@ open class XCButton: UIButton {
         }
     }
 
-    open func setEnabled(enabled: Bool, animated: Bool) {
+    open func setEnabled(_ enable: Bool, animated: Bool) {
         if animated {
-            self.isEnabled = enabled
+            self.isEnabled = enable
         } else {
             UIView.performWithoutAnimation { [weak self] in
-                self?.isEnabled = enabled
+                self?.isEnabled = enable
             }
         }
     }
