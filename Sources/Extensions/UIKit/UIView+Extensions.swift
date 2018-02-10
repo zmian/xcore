@@ -212,6 +212,28 @@ extension UIView {
     }
 }
 
+// MARK: Snapshot
+
+extension UIView {
+    open func snapshotImage() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        let snapshot = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return snapshot
+    }
+
+    open func snapshotImageView() -> UIImageView {
+        let imageView = UIImageView(image: snapshotImage())
+        imageView.clipsToBounds = true
+        imageView.borderColor = borderColor
+        imageView.borderWidth = borderWidth
+        imageView.cornerRadius = cornerRadius
+        imageView.contentMode = contentMode
+        return imageView
+    }
+}
+
 extension UIView {
     open var sizeFittingScreenWidth: CGSize {
         return sizeFitting(width: UIScreen.main.bounds.width)
@@ -237,24 +259,36 @@ extension UIView {
     }
 }
 
-// MARK: Snapshot
+// MARK: Resistance And Hugging
 
 extension UIView {
-    open func snapshotImage() -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
-        drawHierarchy(in: bounds, afterScreenUpdates: true)
-        let snapshot = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return snapshot
+    open func resistsSizeChange() {
+        sizeChangeResistance(UILayoutPriorityRequired, axis: .vertical)
+        sizeChangeResistance(UILayoutPriorityDefaultLow, axis: .horizontal)
     }
 
-    open func snapshotImageView() -> UIImageView {
-        let imageView = UIImageView(image: snapshotImage())
-        imageView.clipsToBounds = true
-        imageView.borderColor = borderColor
-        imageView.borderWidth = borderWidth
-        imageView.cornerRadius = cornerRadius
-        imageView.contentMode = contentMode
-        return imageView
+    open func resistsSizeChange(axis: UILayoutConstraintAxis) {
+        sizeChangeResistance(UILayoutPriorityRequired, axis: axis)
+    }
+
+    open func sizeChangeResistance(_ priority: UILayoutPriority, axis: UILayoutConstraintAxis...) {
+        for element in axis {
+            setContentHuggingPriority(priority, for: element)
+            setContentCompressionResistancePriority(priority, for: element)
+        }
+    }
+}
+
+extension Array where Element == UIView {
+    public func resistsSizeChange() {
+        forEach { $0.resistsSizeChange() }
+    }
+
+    public func resistsSizeChange(axis: UILayoutConstraintAxis) {
+        forEach { $0.resistsSizeChange(axis: axis) }
+    }
+
+    public func sizeChangeResistance(_ priority: UILayoutPriority, axis: UILayoutConstraintAxis) {
+        forEach { $0.sizeChangeResistance(priority, axis: axis) }
     }
 }

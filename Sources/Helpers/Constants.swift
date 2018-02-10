@@ -58,3 +58,21 @@ extension TimeInterval {
         return 0.5
     }
 }
+
+extension CGAffineTransform {
+    /// The default transform scale to use for animations when providing visual feedback when elements are highlighted.
+    ///
+    /// ```swift
+    /// var isHighlighted = false {
+    ///     didSet {
+    ///         let transform: CGAffineTransform = isHighlighted ? .defaultScale : .identity
+    ///         UIView.animateFromCurrentState {
+    ///             self.transform = transform
+    ///         }
+    ///     }
+    /// }
+    /// ```
+    public static var defaultScale: CGAffineTransform {
+        return CGAffineTransform(scaleX: 0.95, y: 0.95)
+    }
+}

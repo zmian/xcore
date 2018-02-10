@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6816C776202F9494005CAEAC /* DebounceThrottle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6816C775202F9493005CAEAC /* DebounceThrottle.swift */; };
 		6843F3D41F771D1500B42ECB /* FadeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F3771F771AAC00B42ECB /* FadeAnimator.swift */; };
 		6843F3D51F771D1500B42ECB /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F3781F771AAC00B42ECB /* TransitionAnimator.swift */; };
 		6843F3D61F771D1500B42ECB /* ZoomAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F37A1F771AAC00B42ECB /* ZoomAnimator.swift */; };
@@ -154,6 +155,7 @@
 		4F7DCE5F8350BCAF06C38805 /* Pods_Xcore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Xcore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		56D96A853E1B0EC4E75E0691 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		5D3CFC269887586363462B4B /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
+		6816C775202F9493005CAEAC /* DebounceThrottle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebounceThrottle.swift; sourceTree = "<group>"; };
 		6843F32E1F771AAB00B42ECB /* AnyEquatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyEquatable.swift; sourceTree = "<group>"; };
 		6843F32F1F771AAB00B42ECB /* Benchmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Benchmark.swift; sourceTree = "<group>"; };
 		6843F3301F771AAB00B42ECB /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
@@ -493,6 +495,7 @@
 		6843F3A31F771AAC00B42ECB /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				6816C775202F9493005CAEAC /* DebounceThrottle.swift */,
 				6843F3A41F771AAC00B42ECB /* Timer+Closure.swift */,
 			);
 			path = ThirdParty;
@@ -1026,6 +1029,7 @@
 				6843F3E41F771D1500B42ECB /* JSONHelpers.swift in Sources */,
 				6843F44E1F77515A00B42ECB /* ProcessInfo+Extensions.swift in Sources */,
 				68DA9F921FA120CB00E5C585 /* UIDevice+Biometrics.swift in Sources */,
+				6816C776202F9494005CAEAC /* DebounceThrottle.swift in Sources */,
 				6843F3E61F771D1500B42ECB /* Observer.swift in Sources */,
 				6843F4411F771D1500B42ECB /* UITableView+Reusable.swift in Sources */,
 				6843F4461F771E1300B42ECB /* Numbers+Extensions.swift in Sources */,
