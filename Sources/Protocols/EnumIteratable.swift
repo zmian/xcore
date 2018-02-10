@@ -91,4 +91,9 @@ extension EnumIteratable {
     public static var rawValues: [EnumType.RawValue] {
         return allValues.map { $0.rawValue }
     }
+
+    /// Count of all enum cases.
+    public static var count: Int {
+        return allValues.count
+    }
 }
