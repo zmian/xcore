@@ -34,19 +34,25 @@ extension String {
     /// var string = "abcde"[0...2] // string equals "abc"
     /// var string2 = "fghij"[2..<4] // string2 equals "hi"
     public subscript (r: Range<Int>) -> String {
-        let start = characters.index(startIndex, offsetBy: r.lowerBound)
-        let end   = characters.index(startIndex, offsetBy: r.upperBound)
+        let start = index(startIndex, offsetBy: r.lowerBound)
+        let end   = index(startIndex, offsetBy: r.upperBound)
         return substring(with: Range(start..<end))
     }
 
-    public var count: Int { return characters.count }
+    public var capitalizeFirstCharacter: String {
+        return String(prefix(1).capitalized + dropFirst())
+    }
+
+    public var urlEscaped: String? {
+        return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+    }
 
     /// Returns an array of strings at new lines.
     public var lines: [String] {
         return components(separatedBy: .newlines)
     }
 
-    /// Trims white space and new line characters in `self`.
+    /// Normalize multiple whitespaces and trim whitespaces and new line characters in `self`.
     public func trimmed() -> String {
         return replace("[ ]+", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
     }
@@ -54,6 +60,11 @@ extension String {
     /// Searches for pattern matches in the string and replaces them with replacement.
     public func replace(_ pattern: String, with: String, options: NSString.CompareOptions = .regularExpression) -> String {
         return replacingOccurrences(of: pattern, with: with, options: options, range: nil)
+    }
+
+    /// Trim whitespaces from start and end and normalize multiple whitespaces into one and then replace them with the given string.
+    public func replaceWhitespaces(with string: String) -> String {
+        return trimmingCharacters(in: .whitespaces).replace("[ ]+", with: string)
     }
 
     /// Returns `true` iff `value` is in `self`.
@@ -85,10 +96,63 @@ extension String {
         return attributeString
     }
 
-    public var lastPathComponent: String { return (self as NSString).lastPathComponent }
-    public var stringByDeletingLastPathComponent: String { return (self as NSString).deletingLastPathComponent }
-    public var stringByDeletingPathExtension: String { return (self as NSString).deletingPathExtension }
-    public var pathExtension: String { return (self as NSString).pathExtension }
+    /// Take last `x` characters from `self`.
+    public func take(last: Int) -> String {
+        guard count >= last else {
+            return self
+        }
+
+        return String(dropFirst(count - last))
+    }
+}
+
+// MARK: NSString
+
+extension String {
+    private var nsString: NSString {
+        return self as NSString
+    }
+
+    public var lastPathComponent: String {
+        return nsString.lastPathComponent
+    }
+
+    public var stringByDeletingLastPathComponent: String {
+        return nsString.deletingLastPathComponent
+    }
+
+    public var stringByDeletingPathExtension: String {
+        return nsString.deletingPathExtension
+    }
+
+    public var pathExtension: String {
+        return nsString.pathExtension
+    }
+}
+
+extension String {
+    // Credit: https://stackoverflow.com/a/27880748
+
+    /// Returns an array of strings matching the given regular expression.
+    public func regex(_ pattern: String) -> [String] {
+        do {
+            let regex = try NSRegularExpression(pattern: pattern, options: [])
+            let results = regex.matches(in: self, range: NSRange(startIndex..., in: self))
+            let nsString = self as NSString
+            return results.map {
+                nsString.substring(with: $0.range)
+            }
+        } catch let error {
+            #if DEBUG
+            print("Invalid regex: \(error.localizedDescription)")
+            #endif
+            return []
+        }
+    }
+
+    public func isMatch(_ pattern: String) -> Bool {
+        return !regex(pattern).isEmpty
+    }
 }
 
 // MARK: Localization

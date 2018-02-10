@@ -148,3 +148,10 @@ extension Array where Element: NSObjectProtocol {
         return false
     }
 }
+
+extension Array where Element: RawRepresentable {
+    /// Return an array containing all corresponding `rawValue`s of `self`.
+    public var rawValues: [Element.RawValue] {
+        return map { $0.rawValue }
+    }
+}
