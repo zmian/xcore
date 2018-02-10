@@ -34,6 +34,23 @@ extension Dictionary {
         dictionary.combine(other)
         return dictionary
     }
+
+    public mutating func combine(_ other: Dictionary?) {
+        guard let otherDictionary = other else { return }
+        combine(otherDictionary)
+    }
+
+    public func combined(_ other: Dictionary?) -> Dictionary {
+        var dictionary = self
+        dictionary.combine(other)
+        return dictionary
+    }
+}
+
+extension Dictionary where Value: Equatable {
+    public func keys(forValue value: Value) -> [Key] {
+        return filter { $1 == value }.map { $0.0 }
+    }
 }
 
 // MARK: Operators
