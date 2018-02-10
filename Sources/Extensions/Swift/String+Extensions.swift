@@ -25,9 +25,9 @@
 import Foundation
 
 extension String {
-    /// var string = "abcde"[0...2] // string equals "abc"
-    /// var string2 = "fghij"[2..<4] // string2 equals "hi"
-    public subscript (r: Range<Int>) -> String {
+    /// var string = "abcde"[r: 0...2] // string equals "abc"
+    /// var string2 = "fghij"[r: 2..<4] // string2 equals "hi"
+    public subscript(r: Range<Int>) -> String {
         let start = index(startIndex, offsetBy: r.lowerBound)
         let end = index(startIndex, offsetBy: r.upperBound)
         return substring(with: Range(start..<end))
@@ -85,7 +85,7 @@ extension String {
     /// - returns: String without the specified `prefix` or nil if `prefix` doesn't exists.
     public func stripPrefix(_ prefix: String) -> String? {
         guard let prefixRange = range(of: prefix) else { return nil }
-        let attributeRange  = Range(prefixRange.upperBound..<endIndex)
+        let attributeRange = Range(prefixRange.upperBound..<endIndex)
         let attributeString = substring(with: attributeRange)
         return attributeString
     }
@@ -200,19 +200,19 @@ extension String {
     public func numberOfLines(_ font: UIFont, constrainedToSize: CGSize) -> (size: CGSize, numberOfLines: Int) {
         let textStorage = NSTextStorage(string: self, attributes: [.font: font])
 
-        let textContainer                  = NSTextContainer(size: constrainedToSize)
-        textContainer.lineBreakMode        = .byWordWrapping
+        let textContainer = NSTextContainer(size: constrainedToSize)
+        textContainer.lineBreakMode = .byWordWrapping
         textContainer.maximumNumberOfLines = 0
-        textContainer.lineFragmentPadding  = 0
+        textContainer.lineFragmentPadding = 0
 
         let layoutManager = NSLayoutManager()
         layoutManager.textStorage = textStorage
         layoutManager.addTextContainer(textContainer)
 
         var numberOfLines = 0
-        var index         = 0
-        var lineRange     = NSRange(location: 0, length: 0)
-        var size          = CGSize.zero
+        var index = 0
+        var lineRange = NSRange(location: 0, length: 0)
+        var size = CGSize.zero
 
         while index < layoutManager.numberOfGlyphs {
             numberOfLines += 1
