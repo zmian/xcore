@@ -25,14 +25,14 @@
 import Foundation
 
 extension Collection {
-    /// Returns the element at the specified index iff it is within bounds, otherwise nil.
+    /// Returns the element at the specified index iff it is within bounds, otherwise `nil`.
     public func at(_ index: Index) -> Iterator.Element? {
         return indices.contains(index) ? self[index] : nil
     }
 }
 
 extension Collection {
-    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise nil.
+    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise `nil`.
     public func at(_ range: Range<Index>) -> SubSequence? {
         return hasIndex(range) ? self[range] : nil
     }
@@ -44,7 +44,7 @@ extension Collection {
 }
 
 extension RandomAccessCollection where Index == Int {
-    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise nil.
+    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise `nil`.
     public func at(_ range: CountableRange<Index>) -> SubSequence? {
         return hasIndex(range) ? self[range] : nil
     }
@@ -54,7 +54,7 @@ extension RandomAccessCollection where Index == Int {
         return range.lowerBound >= startIndex && range.upperBound <= endIndex
     }
 
-    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise nil.
+    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise `nil`.
     public func at(_ range: CountableClosedRange<Index>) -> SubSequence? {
         return hasIndex(range) ? self[range] : nil
     }
