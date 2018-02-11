@@ -16,6 +16,8 @@ extension TimeInterval {
     }
 }
 
+// MARK: Debounce
+
 /// Wraps a function in a new function that will only execute the wrapped
 /// function if `delay` has passed without this function being called.
 ///
@@ -69,6 +71,8 @@ public func debounce<T, U>(delay: DispatchTimeInterval, queue: DispatchQueue = .
         queue.asyncAfter(deadline: .now() + delay, execute: currentWorkItem!)
     }
 }
+
+// MARK: Throttle
 
 /// Wraps a function in a new function that will throttle the execution to once in every `delay` seconds.
 ///
