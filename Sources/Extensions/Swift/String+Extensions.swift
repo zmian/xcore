@@ -25,14 +25,6 @@
 import Foundation
 
 extension String {
-    /// var string = "abcde"[r: 0...2] // string equals "abc"
-    /// var string2 = "fghij"[r: 2..<4] // string2 equals "hi"
-    public subscript(r: Range<Int>) -> String {
-        let start = index(startIndex, offsetBy: r.lowerBound)
-        let end = index(startIndex, offsetBy: r.upperBound)
-        return substring(with: Range(start..<end))
-    }
-
     public var capitalizeFirstCharacter: String {
         return String(prefix(1).capitalized + dropFirst())
     }
@@ -221,5 +213,119 @@ extension String {
         }
 
         return (size, numberOfLines)
+    }
+}
+
+// MARK: Range Expressions
+
+extension StringProtocol {
+    public func index(from: IndexDistance) -> Index? {
+        guard from > -1, let index = self.index(startIndex, offsetBy: from, limitedBy: endIndex) else {
+            return nil
+        }
+
+        return index
+    }
+
+    /// Returns the element at the specified index iff it is within bounds, otherwise nil.
+    public func at(_ index: IndexDistance) -> String? {
+        guard let index = self.index(from: index), let character = at(index) else {
+            return nil
+        }
+
+        return String(character)
+    }
+}
+
+extension String {
+    /// e.g., `"Hello world"[..<5] // → "Hello"`
+    fileprivate subscript(range: PartialRangeUpTo<Int>) -> Substring {
+        return self[..<index(startIndex, offsetBy: range.upperBound)]
+    }
+
+    /// e.g., `"Hello world"[...4] // → "Hello"`
+    fileprivate subscript(range: PartialRangeThrough<Int>) -> Substring {
+        return self[...index(startIndex, offsetBy: range.upperBound)]
+    }
+
+    /// e.g., `"Hello world"[0...] // → "Hello world"`
+    fileprivate subscript(range: PartialRangeFrom<Int>) -> Substring {
+        return self[index(startIndex, offsetBy: range.lowerBound)...]
+    }
+
+    /// e.g., `"Hello world"[0..<5] // → "Hello"`
+    fileprivate subscript(range: CountableRange<Int>) -> Substring {
+        let start = index(startIndex, offsetBy: range.lowerBound)
+        let end = index(startIndex, offsetBy: range.upperBound)
+        return self[start..<end]
+    }
+
+    /// e.g., `"Hello world"[0...4] // → "Hello"`
+    fileprivate subscript(range: CountableClosedRange<Int>) -> Substring {
+        let start = index(startIndex, offsetBy: range.lowerBound)
+        let end = index(startIndex, offsetBy: range.upperBound)
+        return self[start...end]
+    }
+}
+
+extension String {
+    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
+    ///
+    /// e.g., `"Hello world"[..<5] // → "Hello"`
+    public func at(_ range: PartialRangeUpTo<Int>) -> Substring? {
+        return hasIndex(range) ? self[range] : nil
+    }
+
+    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
+    ///
+    /// e.g., `"Hello world"[...4] // → "Hello"`
+    public func at(_ range: PartialRangeThrough<Int>) -> Substring? {
+        return hasIndex(range) ? self[range] : nil
+    }
+
+    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
+    ///
+    /// e.g., `"Hello world"[0...] // → "Hello world"`
+    public func at(_ range: PartialRangeFrom<Int>) -> Substring? {
+        return hasIndex(range) ? self[range] : nil
+    }
+
+    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
+    ///
+    /// e.g., `"Hello world"[0..<5] // → "Hello"`
+    public func at(_ range: CountableRange<Int>) -> Substring? {
+        return hasIndex(range) ? self[range] : nil
+    }
+
+    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
+    ///
+    /// e.g., `"Hello world"[0...4] // → "Hello"`
+    public func at(range: CountableClosedRange<Int>) -> Substring? {
+        return hasIndex(range) ? self[range] : nil
+    }
+
+    /// Return true iff range is in `self`.
+    private func hasIndex(_ range: PartialRangeUpTo<Int>) -> Bool {
+        return range.upperBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
+    }
+
+    /// Return true iff range is in `self`.
+    private func hasIndex(_ range: PartialRangeThrough<Int>) -> Bool {
+        return range.upperBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
+    }
+
+    /// Return true iff range is in `self`.
+    private func hasIndex(_ range: PartialRangeFrom<Int>) -> Bool {
+        return range.lowerBound >= startIndex.encodedOffset && range.lowerBound < endIndex.encodedOffset
+    }
+
+    /// Return true iff range is in `self`.
+    private func hasIndex(_ range: CountableRange<Int>) -> Bool {
+        return range.lowerBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
+    }
+
+    /// Return true iff range is in `self`.
+    private func hasIndex(_ range: CountableClosedRange<Int>) -> Bool {
+        return range.lowerBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
     }
 }
