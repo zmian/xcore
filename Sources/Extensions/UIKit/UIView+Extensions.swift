@@ -292,3 +292,72 @@ extension Array where Element == UIView {
         forEach { $0.sizeChangeResistance(priority, axis: axis) }
     }
 }
+
+// MARK: Utilities
+
+extension UIView {
+    /// Get a child view by class name.
+    ///
+    /// - parameter className: The class name of the child view (e.g., `UIImageView`).
+    ///
+    /// - returns: The child view if exists; otherwise nil.
+    open func subview(withClassName className: String) -> UIView? {
+        if NSClassFromString(className) == type(of: self) {
+            return self
+        }
+
+        for view in subviews {
+            if let subview = view.subview(withClassName: className) {
+                return subview
+            }
+        }
+
+        return nil
+    }
+
+    /// Get a child views by class name.
+    ///
+    /// - parameter className: The class name of the child views (e.g., `UIImageView`).
+    ///
+    /// - returns: The child views if exists; otherwise empty array.
+    open func subviews(withClassName className: String) -> [UIView] {
+        var result = [UIView]()
+
+        if NSClassFromString(className) == type(of: self) {
+            result.append(self)
+        }
+
+        for view in subviews {
+            if let subview = view.subview(withClassName: className) {
+                result.append(subview)
+            }
+        }
+
+        return result
+    }
+
+    /// Prints `self` child view hierarchy.
+    open func printDebugSubviewsDescription() {
+        debugSubviews()
+    }
+
+    private func debugSubviews(_ count: Int = 0) {
+        if count == 0 {
+            print("\n\n\n")
+        }
+
+        for _ in 0...count {
+            print("--")
+        }
+
+        print("\(type(of: self))")
+
+        for view in subviews {
+            view.debugSubviews(count + 1)
+        }
+
+        if count == 0 {
+            print("\n\n\n")
+        }
+    }
+}
