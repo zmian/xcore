@@ -26,7 +26,6 @@ import UIKit
 import Xcore
 
 final class ViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
     }

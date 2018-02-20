@@ -54,17 +54,17 @@ extension UIView {
         UIView.animate(withDuration: duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: nil)
     }
 
-    open func setHiddenAnimated(_ hidden: Bool, duration: TimeInterval = .normal, _ completion: (() -> Void)? = nil) {
-        guard isHidden != hidden else { return }
-        alpha  = hidden ? 1 : 0
-        isHidden = false
-
-        UIView.animate(withDuration: duration, animations: {
-            self.alpha = hidden ? 0 : 1
-        }, completion: { _ in
-            self.isHidden = hidden
-            completion?()
-        })
+    open func setHiddenAnimated(_ hide: Bool, duration: TimeInterval = .normal, _ completion: (() -> Void)? = nil) {
+        UIView.transition(
+            with: self,
+            duration: duration,
+            options: .transitionCrossDissolve,
+            animations: {
+                isHidden = hide
+            }, completion: { _ in
+                completion?()
+            }
+        )
     }
 
     @IBInspectable open var borderWidth: CGFloat {
