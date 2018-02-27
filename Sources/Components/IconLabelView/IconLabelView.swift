@@ -155,6 +155,27 @@ open class IconLabelView: XCView {
         }
     }
 
+    /// The default value is `true`.
+    open var isImageViewPrepended: Bool = true {
+        didSet {
+            guard oldValue != isImageViewPrepended else { return }
+
+            if isImageViewPrepended {
+                stackView.moveArrangedSubviews(imageView, at: 0)
+                stackView.moveArrangedSubviews(textImageSpacerView, at: 1)
+                stackView.moveArrangedSubviews(titleLabel, at: 2)
+                if !isSubtitleLabelHidden {
+                    stackView.moveArrangedSubviews(subtitleLabel, at: 3)
+                }
+            } else {
+                stackView.moveArrangedSubviews(titleLabel, at: 0)
+                stackView.moveArrangedSubviews(subtitleLabel, at: 1)
+                stackView.moveArrangedSubviews(textImageSpacerView, at: 2)
+                stackView.moveArrangedSubviews(imageView, at: 3)
+            }
+        }
+    }
+
     /// The default value is `.Vertical`.
     fileprivate var axis: UILayoutConstraintAxis {
         get { return stackView.axis }
@@ -223,12 +244,14 @@ open class IconLabelView: XCView {
         titleLabel.textColor     = .black
         titleLabel.numberOfLines = 2
         titleLabel.sizeToFit()
+        titleLabel.resistsSizeChange()
 
         subtitleLabel.font          = .systemFont(.footnote)
         subtitleLabel.textAlignment = .center
         subtitleLabel.textColor     = .lightGray
         subtitleLabel.numberOfLines = 1
         subtitleLabel.sizeToFit()
+        subtitleLabel.resistsSizeChange()
 
         imageViewContainer.backgroundColor = imageBackgroundColor
         imageViewContainer.cornerRadius    = imageCornerRadius
