@@ -163,15 +163,12 @@ open class IconLabelView: XCView {
             if isImageViewPrepended {
                 stackView.moveArrangedSubviews(imageView, at: 0)
                 stackView.moveArrangedSubviews(textImageSpacerView, at: 1)
-                stackView.moveArrangedSubviews(titleLabel, at: 2)
-                if !isSubtitleLabelHidden {
-                    stackView.moveArrangedSubviews(subtitleLabel, at: 3)
-                }
             } else {
                 stackView.moveArrangedSubviews(titleLabel, at: 0)
-                stackView.moveArrangedSubviews(subtitleLabel, at: 1)
-                stackView.moveArrangedSubviews(textImageSpacerView, at: 2)
-                stackView.moveArrangedSubviews(imageView, at: 3)
+                if !isSubtitleLabelHidden {
+                    stackView.moveArrangedSubviews(subtitleLabel, at: 1)
+                }
+                stackView.moveArrangedSubviews(textImageSpacerView, at: isSubtitleLabelHidden ? 1 : 2)
             }
         }
     }
