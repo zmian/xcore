@@ -60,7 +60,7 @@ extension UIView {
             duration: duration,
             options: .transitionCrossDissolve,
             animations: {
-                isHidden = hide
+                self.isHidden = hide
             }, completion: { _ in
                 completion?()
             }
