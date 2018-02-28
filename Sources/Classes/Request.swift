@@ -170,4 +170,13 @@ extension URL {
 
         return self
     }
+
+    /// A boolean value to determine whether the url is an email link (i.e., `mailto`).
+    open var isEmailLink: Bool {
+        guard let scheme = scheme else {
+            return false
+        }
+
+        return scheme == "mailto"
+    }
 }
