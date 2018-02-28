@@ -125,6 +125,24 @@ open class IconLabelView: XCView {
         }
     }
 
+    /// The default value is `true`.
+    open dynamic var isImageViewPrepended: Bool = true {
+        didSet {
+            guard oldValue != isImageViewPrepended, !isImageViewHidden else { return }
+
+            if isImageViewPrepended {
+                stackView.moveArrangedSubviews(imageViewContainer, at: 0)
+                stackView.moveArrangedSubviews(textImageSpacerView, at: 1)
+            } else {
+                var lastIndex: Int { return stackView.arrangedSubviews.count - 1 }
+                stackView.moveArrangedSubviews(textImageSpacerView, at: lastIndex)
+                stackView.moveArrangedSubviews(imageViewContainer, at: lastIndex)
+            }
+
+            updateTextImageSpacingIfNeeded()
+        }
+    }
+
     /// The default value is `false`.
     @objc open dynamic var isImageViewHidden: Bool = false {
         didSet {
@@ -134,7 +152,14 @@ open class IconLabelView: XCView {
                 stackView.removeArrangedSubview(imageViewContainer)
                 imageViewContainer.removeFromSuperview()
             } else {
-                stackView.insertArrangedSubview(imageViewContainer, at: 0)
+                if isImageViewPrepended {
+                    stackView.insertArrangedSubview(imageViewContainer, at: 0)
+                    stackView.moveArrangedSubviews(textImageSpacerView, at: 1)
+                } else {
+                    var lastIndex: Int { return stackView.arrangedSubviews.count - 1 }
+                    stackView.moveArrangedSubviews(textImageSpacerView, at: lastIndex)
+                    stackView.insertArrangedSubview(imageViewContainer, at: lastIndex)
+                }
             }
 
             updateTextImageSpacingIfNeeded()
