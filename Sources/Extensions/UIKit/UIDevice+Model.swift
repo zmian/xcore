@@ -129,7 +129,7 @@ extension UIDevice {
                     self = .iPad4
                 case "iPad4,1", "iPad4,2", "iPad4,3":
                     self = .iPadAir
-                case "iPad5,1", "iPad5,3", "iPad5,4":
+                case "iPad5,3", "iPad5,4":
                     self = .iPadAir2
                 case "iPad2,5", "iPad2,6", "iPad2,7":
                     self = .iPadMini
