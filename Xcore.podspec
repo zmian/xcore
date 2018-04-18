@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.requires_arc          = true
   s.ios.deployment_target = '9.0'
   s.pod_target_xcconfig   = {
-    'SWIFT_VERSION' => '4.0',
+    'SWIFT_VERSION' => '4.1',
     # This flag is required by `Xcore.Environment` class to
     # invoke appropriate methods for different environments.
     # 'OTHER_SWIFT_FLAGS' => '-DXCORE_ENVIRONMENT_${CONFIGURATION}'
