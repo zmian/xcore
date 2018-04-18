@@ -126,7 +126,7 @@ open class IconLabelView: XCView {
     }
 
     /// The default value is `true`.
-    open dynamic var isImageViewPrepended: Bool = true {
+    @objc open dynamic var isImageViewPrepended: Bool = true {
         didSet {
             guard oldValue != isImageViewPrepended, !isImageViewHidden else { return }
 
