@@ -219,7 +219,7 @@ extension String {
 // MARK: Range Expressions
 
 extension StringProtocol {
-    public func index(from: IndexDistance) -> Index? {
+    public func index(from: Int) -> Index? {
         guard from > -1, let index = self.index(startIndex, offsetBy: from, limitedBy: endIndex) else {
             return nil
         }
@@ -228,7 +228,7 @@ extension StringProtocol {
     }
 
     /// Returns the element at the specified index iff it is within bounds, otherwise nil.
-    public func at(_ index: IndexDistance) -> String? {
+    public func at(_ index: Int) -> String? {
         guard let index = self.index(from: index), let character = at(index) else {
             return nil
         }
