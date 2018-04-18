@@ -155,3 +155,10 @@ extension UIColor {
         return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
     }
 }
+
+extension Array where Element: UIColor {
+    /// The Quartz color reference that corresponds to the receiver’s color.
+    public var cgColor: [CGColor] {
+        return map { $0.cgColor }
+    }
+}
