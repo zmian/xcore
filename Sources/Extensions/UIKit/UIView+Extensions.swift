@@ -263,12 +263,12 @@ extension UIView {
 
 extension UIView {
     open func resistsSizeChange() {
-        sizeChangeResistance(UILayoutPriorityRequired, axis: .vertical)
-        sizeChangeResistance(UILayoutPriorityDefaultLow, axis: .horizontal)
+        sizeChangeResistance(.required, axis: .vertical)
+        sizeChangeResistance(.defaultLow, axis: .horizontal)
     }
 
     open func resistsSizeChange(axis: UILayoutConstraintAxis) {
-        sizeChangeResistance(UILayoutPriorityRequired, axis: axis)
+        sizeChangeResistance(.required, axis: axis)
     }
 
     open func sizeChangeResistance(_ priority: UILayoutPriority, axis: UILayoutConstraintAxis...) {

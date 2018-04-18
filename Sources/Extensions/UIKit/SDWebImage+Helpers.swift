@@ -95,7 +95,7 @@ extension UIImage {
 
         if let url = URL(string: named), url.host != nil {
             SDWebImageDownloader.shared().downloadImage(with: url, options: [],
-                progress: { _ in
+                progress: { receivedSize, expectedSize, targetUrl in
 
                 },
                 completed: { image, data, error, finished in
@@ -134,7 +134,7 @@ extension UIImage {
 
         orderedObjects.forEach { object in
             SDWebImageDownloader.shared().downloadImage(with: object.url, options: [],
-                progress: { _ in
+                progress: { receivedSize, expectedSize, targetUrl in
 
                 }, completed: { image, data, error, finished in
                     downloadedImages += 1
