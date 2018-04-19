@@ -245,7 +245,6 @@ extension CGSize {
 
 // MARK: UILayoutPriority - Extensions
 
-#if swift(>=4)
 extension UILayoutPriority {
     public static func +(lhs: UILayoutPriority, rhs: Float) -> UILayoutPriority {
         return UILayoutPriority(lhs.rawValue + rhs)
@@ -255,4 +254,3 @@ extension UILayoutPriority {
         return UILayoutPriority(lhs.rawValue - rhs)
     }
 }
-#endif
