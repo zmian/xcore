@@ -41,7 +41,7 @@ open class Environment {
     open var isStaging: Bool     { return type == .staging }
     open var isProduction: Bool  { return type == .production }
 
-    open fileprivate(set) var type = EnvironmentType.production // Safest default
+    open private(set) var type = EnvironmentType.production // Safest default
 
     public init() {
         #if XCORE_ENVIRONMENT_Release
