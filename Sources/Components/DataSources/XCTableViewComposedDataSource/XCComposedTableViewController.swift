@@ -25,7 +25,7 @@
 import UIKit
 
 open class XCComposedTableViewController: UIViewController {
-    public fileprivate(set) var tableViewConstraints = [NSLayoutConstraint]()
+    public private(set) var tableViewConstraints = [NSLayoutConstraint]()
 
     /// There is UIKit bug that causes `UITableView` to jump when using `estimatedRowHeight`
     /// and reloading cells/sections or the entire table view.

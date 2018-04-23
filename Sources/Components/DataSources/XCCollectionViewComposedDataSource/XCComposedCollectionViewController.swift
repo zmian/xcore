@@ -33,7 +33,7 @@ public let XCCollectionViewFlowLayoutAutomaticSize: CGSize = {
 }()
 
 open class XCComposedCollectionViewController: UIViewController {
-    public fileprivate(set) var collectionViewConstraints = [NSLayoutConstraint]()
+    public private(set) var collectionViewConstraints = [NSLayoutConstraint]()
 
     /// The layout object `UICollectionView` uses to render itself.
     /// The layout can be changed to any subclass of `UICollectionViewLayout`.

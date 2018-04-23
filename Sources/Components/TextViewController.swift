@@ -26,7 +26,7 @@ import UIKit
 import MDHTMLLabel
 
 open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
-    open fileprivate(set) lazy var textLabel: MDHTMLLabel = {
+    open private(set) lazy var textLabel: MDHTMLLabel = {
         let textLabel = MDHTMLLabel()
         textLabel.delegate = self
         textLabel.font = .systemFont(.footnote)
