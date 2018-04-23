@@ -64,7 +64,7 @@ open class XCGradientLayer: CALayer {
         }
     }
 
-    fileprivate func updateGradient(direction: GradientDirection) {
+    private func updateGradient(direction: GradientDirection) {
         (gradient.startPoint, gradient.endPoint) = direction.points
     }
 }

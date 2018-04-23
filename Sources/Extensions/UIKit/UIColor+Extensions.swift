@@ -124,7 +124,7 @@ extension UIColor {
         return hueColorWithBrightness(1 - amount)
     }
 
-    fileprivate func hueColorWithBrightness(_ amount: CGFloat) -> UIColor {
+    private func hueColorWithBrightness(_ amount: CGFloat) -> UIColor {
         var hue: CGFloat        = 0
         var saturation: CGFloat = 0
         var brightness: CGFloat = 0

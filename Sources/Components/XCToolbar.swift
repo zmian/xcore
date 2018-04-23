@@ -46,7 +46,7 @@ open class XCToolbar: UIToolbar {
 
     // MARK: Setup Methods
 
-    fileprivate func commonInit() {
+    private func commonInit() {
         setupSubviews()
     }
 

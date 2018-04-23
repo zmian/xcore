@@ -160,7 +160,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
 }
 
 @objc extension UIButton {
-    fileprivate struct AssociatedKey {
+    private struct AssociatedKey {
         static var touchAreaEdgeInsets = "XcoreTouchAreaEdgeInsets"
     }
 

@@ -57,7 +57,7 @@ open class FadeAnimator: TransitionAnimator {
 
     // MARK: FadeIn
 
-    fileprivate func animateBounceFadeInOrFadeIn(context: TransitionContext) {
+    private func animateBounceFadeInOrFadeIn(context: TransitionContext) {
         guard let bounceContainerView = (context.to as? FadeAnimatorBounceable)?.fadeAnimatorBounceContainerView() else {
             animateFadeIn(context: context)
             return
@@ -77,7 +77,7 @@ open class FadeAnimator: TransitionAnimator {
         })
     }
 
-    fileprivate func animateFadeIn(context: TransitionContext) {
+    private func animateFadeIn(context: TransitionContext) {
         context.to.view.alpha = 0
         UIView.animate(withDuration: fadeInDuration, animations: {
             context.to.view.alpha = 1
@@ -88,7 +88,7 @@ open class FadeAnimator: TransitionAnimator {
 
     // MARK: FadeOut
 
-    fileprivate func animateBounceFadeOutOrFadeOut(context: TransitionContext) {
+    private func animateBounceFadeOutOrFadeOut(context: TransitionContext) {
         guard let bounceContainerView = (context.from as? FadeAnimatorBounceable)?.fadeAnimatorBounceContainerView() else {
             animateFadeOut(context: context)
             return
@@ -102,7 +102,7 @@ open class FadeAnimator: TransitionAnimator {
         })
     }
 
-    fileprivate func animateFadeOut(context: TransitionContext) {
+    private func animateFadeOut(context: TransitionContext) {
         UIView.animate(withDuration: fadeOutDuration, animations: {
             context.from.view.alpha = 0
         }, completion: { _ in

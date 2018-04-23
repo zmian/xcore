@@ -90,7 +90,7 @@ open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
 
     // MARK: Setup Methods
 
-    fileprivate func setupTextLabel() {
+    private func setupTextLabel() {
         textLabel.htmlText = text
         scrollView.alwaysBounceVertical = true
         scrollView.addSubview(textLabel)

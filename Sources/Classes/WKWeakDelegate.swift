@@ -27,8 +27,8 @@ import WebKit
 
 /// `WKUserContentController` retains `WKScriptMessageHandler` so this object
 /// exists to break that retain cycle.
-fileprivate class WKWeakDelegate: NSObject, WKScriptMessageHandler {
-    fileprivate weak var delegate: WKScriptMessageHandler?
+private class WKWeakDelegate: NSObject, WKScriptMessageHandler {
+    private weak var delegate: WKScriptMessageHandler?
 
     init(_ delegate: WKScriptMessageHandler) {
         self.delegate = delegate
@@ -51,7 +51,7 @@ extension WKUserContentController {
         )
     }
 
-    @objc fileprivate func swizzled_add(_ scriptMessageHandler: WKScriptMessageHandler, name: String) {
+    @objc private func swizzled_add(_ scriptMessageHandler: WKScriptMessageHandler, name: String) {
         self.swizzled_add(WKWeakDelegate(scriptMessageHandler), name: name)
     }
 }

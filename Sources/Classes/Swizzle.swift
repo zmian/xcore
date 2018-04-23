@@ -40,7 +40,7 @@ import UIKit
 /// }
 ///
 /// extension UIViewController {
-///     fileprivate static func runOnceSwapViewWillAppear() {
+///     private static func runOnceSwapViewWillAppear() {
 ///         swizzle(
 ///             UIViewController.self,
 ///             originalSelector: #selector(UIViewController.viewWillAppear(_:)),
@@ -48,7 +48,7 @@ import UIKit
 ///         )
 ///     }
 ///
-///     @objc fileprivate func swizzled_viewWillAppear(_ animated: Bool) {
+///     @objc private func swizzled_viewWillAppear(_ animated: Bool) {
 ///         self.swizzled_viewWillAppear(animated)
 ///     }
 /// }

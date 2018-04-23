@@ -44,7 +44,7 @@ open class XCView: UIView {
 
     // MARK: Setup Methods
 
-    fileprivate func commonInit() {
+    private func commonInit() {
         setupSubviews()
     }
 
