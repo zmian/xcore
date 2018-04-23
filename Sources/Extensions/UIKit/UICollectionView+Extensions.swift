@@ -33,6 +33,6 @@ extension UICollectionView {
             return []
         }
 
-        return indexPaths.flatMap(cellForItem)
+        return indexPaths.compactMap(cellForItem)
     }
 }

@@ -78,8 +78,8 @@ extension String {
     public func stripPrefix(_ prefix: String) -> String? {
         guard let prefixRange = range(of: prefix) else { return nil }
         let attributeRange = Range(prefixRange.upperBound..<endIndex)
-        let attributeString = substring(with: attributeRange)
-        return attributeString
+        let attributeString = self[attributeRange]
+        return String(attributeString)
     }
 
     /// Take last `x` characters from `self`.
