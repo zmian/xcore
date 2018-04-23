@@ -25,7 +25,7 @@
 import UIKit
 import ObjectiveC
 
-extension UIButton {
+@objc extension UIButton {
     // Increase button touch area to be 44 points
     // See: http://stackoverflow.com/a/27683614
     open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -159,7 +159,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
     }
 }
 
-extension UIButton {
+@objc extension UIButton {
     fileprivate struct AssociatedKey {
         static var touchAreaEdgeInsets = "XcoreTouchAreaEdgeInsets"
     }

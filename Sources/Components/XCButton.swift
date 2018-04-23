@@ -156,7 +156,7 @@ extension XCButton {
     }
 }
 
-extension UIView {
+@objc extension UIView {
     fileprivate static func animateFromCurrentState(_ animations: @escaping () -> Void) {
         UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {
             animations()
