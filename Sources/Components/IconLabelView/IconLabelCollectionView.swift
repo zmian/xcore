@@ -247,7 +247,7 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
     }
 
     fileprivate func toggleVisibleCellsDeleteButtons() {
-        visibleCells.flatMap { $0 as? IconLabelCollectionViewCell }.forEach { $0.setDeleteButtonHidden(!isEditing) }
+        visibleCells.compactMap { $0 as? IconLabelCollectionViewCell }.forEach { $0.setDeleteButtonHidden(!isEditing) }
     }
 
     // MARK: Convenience API
