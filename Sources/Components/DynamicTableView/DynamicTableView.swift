@@ -549,12 +549,12 @@ extension DynamicTableView {
 
 import ObjectiveC
 
-private struct AssociatedKey {
-    static var bemCheckBoxIndexPath = "BEMCheckBoxIndexPath"
-}
+extension BEMCheckBox {
+    private struct AssociatedKey {
+        static var bemCheckBoxIndexPath = "BEMCheckBoxIndexPath"
+    }
 
-private extension BEMCheckBox {
-    var indexPath: IndexPath? {
+    fileprivate var indexPath: IndexPath? {
         get { return objc_getAssociatedObject(self, &AssociatedKey.bemCheckBoxIndexPath) as? IndexPath }
         set { objc_setAssociatedObject(self, &AssociatedKey.bemCheckBoxIndexPath, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }

@@ -304,7 +304,7 @@ extension IconLabelView {
     }
 }
 
-private extension IconLabelView {
+extension IconLabelView {
     private func apply(style: Style) {
         switch style {
             case .topBottom:
