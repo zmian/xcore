@@ -118,7 +118,7 @@ extension UITableView {
 
     // TODO: This can be use to handles a table view with varying row and section heights
     // Still needs testing
-    fileprivate func snapRowsToTop(_ targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    private func snapRowsToTop(_ targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         // Find the indexPath where the animation will currently end.
         let indexPath = indexPathForRow(at: targetContentOffset.pointee) ?? IndexPath(row: 0, section: 0)
 

@@ -86,7 +86,7 @@ open class XCComposedCollectionViewController: UIViewController {
 // MARK: Setup Methods
 
 extension XCComposedCollectionViewController {
-    fileprivate func setup(collectionView: UICollectionView) {
+    private func setup(collectionView: UICollectionView) {
         composedDataSource.dataSources = dataSources(for: collectionView)
         collectionView.dataSource = composedDataSource
         collectionView.delegate = self

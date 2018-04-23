@@ -147,7 +147,7 @@ extension UIViewController {
 }
 
 extension UIViewController {
-    fileprivate struct AssociatedKey {
+    private struct AssociatedKey {
         static var supportedInterfaceOrientations               = "XcoreSupportedInterfaceOrientations"
         static var preferredInterfaceOrientationForPresentation = "XcorePreferredInterfaceOrientationForPresentation"
         static var preferredStatusBarStyle                      = "XcorePreferredStatusBarStyle"

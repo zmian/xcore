@@ -27,15 +27,15 @@ import UIKit
 open class IconLabelView: XCView {
     public enum Style { case topBottom, leftRight }
 
-    fileprivate var imagePaddingConstraints: [NSLayoutConstraint] = []
-    fileprivate var imageSizeConstraints: (width: NSLayoutConstraint?, height: NSLayoutConstraint?)
-    fileprivate var labelsWidthConstraints: [NSLayoutConstraint] = []
-    fileprivate var stackViewConstraints: (topBottom: [NSLayoutConstraint]?, leftRight: [NSLayoutConstraint]?)
+    private var imagePaddingConstraints: [NSLayoutConstraint] = []
+    private var imageSizeConstraints: (width: NSLayoutConstraint?, height: NSLayoutConstraint?)
+    private var labelsWidthConstraints: [NSLayoutConstraint] = []
+    private var stackViewConstraints: (topBottom: [NSLayoutConstraint]?, leftRight: [NSLayoutConstraint]?)
 
     // MARK: Subviews
 
-    fileprivate let stackView           = UIStackView()
-    fileprivate let textImageSpacerView = IntrinsicContentSizeView()
+    private let stackView           = UIStackView()
+    private let textImageSpacerView = IntrinsicContentSizeView()
     public let imageViewContainer       = UIView()
     public let imageView                = UIImageView()
     public let titleLabel               = UILabel()
@@ -181,13 +181,13 @@ open class IconLabelView: XCView {
     }
 
     /// The default value is `.Vertical`.
-    fileprivate var axis: UILayoutConstraintAxis {
+    private var axis: UILayoutConstraintAxis {
         get { return stackView.axis }
         set { stackView.axis = newValue }
     }
 
     /// The default value is `.Fill`.
-    fileprivate var distribution: UIStackViewDistribution {
+    private var distribution: UIStackViewDistribution {
         get { return stackView.distribution }
         set { stackView.distribution = newValue }
     }
@@ -304,8 +304,8 @@ extension IconLabelView {
     }
 }
 
-fileprivate extension IconLabelView {
-    fileprivate func apply(style: Style) {
+private extension IconLabelView {
+    private func apply(style: Style) {
         switch style {
             case .topBottom:
                 axis = .vertical
@@ -326,7 +326,7 @@ fileprivate extension IconLabelView {
         }
     }
 
-    fileprivate func updateTextImageSpacingIfNeeded() {
+    private func updateTextImageSpacingIfNeeded() {
         let spacing = isImageViewHidden ? 0 : textImageSpacing
         textImageSpacerView.contentSize = CGSize(width: 0, height: spacing)
     }

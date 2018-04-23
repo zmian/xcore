@@ -25,13 +25,13 @@
 import UIKit
 
 open class DynamicTableViewCell: XCTableViewCell {
-    fileprivate var data: DynamicTableModel!
-    fileprivate let padding: CGFloat = 15
-    fileprivate var imageAndTitleSpacingConstraint: NSLayoutConstraint?
-    fileprivate var imageSizeConstraints: (width: NSLayoutConstraint?,  height: NSLayoutConstraint?)
-    fileprivate var contentConstraints: (top: NSLayoutConstraint?, left: NSLayoutConstraint?, bottom: NSLayoutConstraint?, right: NSLayoutConstraint?)
-    fileprivate var minimumContentHeightConstraint: NSLayoutConstraint?
-    fileprivate var labelsStackViewConstraints: (top: NSLayoutConstraint?, bottom: NSLayoutConstraint?)
+    private var data: DynamicTableModel!
+    private let padding: CGFloat = 15
+    private var imageAndTitleSpacingConstraint: NSLayoutConstraint?
+    private var imageSizeConstraints: (width: NSLayoutConstraint?,  height: NSLayoutConstraint?)
+    private var contentConstraints: (top: NSLayoutConstraint?, left: NSLayoutConstraint?, bottom: NSLayoutConstraint?, right: NSLayoutConstraint?)
+    private var minimumContentHeightConstraint: NSLayoutConstraint?
+    private var labelsStackViewConstraints: (top: NSLayoutConstraint?, bottom: NSLayoutConstraint?)
 
     /// The distance that the view is inset from the enclosing content view.
     /// The default value is `UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15)`.
@@ -105,8 +105,8 @@ open class DynamicTableViewCell: XCTableViewCell {
 
     /// The background color of the cell when it is highlighted.
     @objc open dynamic var highlightedBackgroundColor: UIColor?
-    fileprivate var regularBackgroundColor: UIColor?
-    fileprivate var observeBackgroundColorSetter = true
+    private var regularBackgroundColor: UIColor?
+    private var observeBackgroundColorSetter = true
     open override var backgroundColor: UIColor? {
         didSet {
             if observeBackgroundColorSetter {
@@ -115,12 +115,12 @@ open class DynamicTableViewCell: XCTableViewCell {
         }
     }
 
-    fileprivate var onHighlight: ((_ highlighted: Bool, _ animated: Bool) -> Void)?
+    private var onHighlight: ((_ highlighted: Bool, _ animated: Bool) -> Void)?
     open func onHighlight(_ callback: @escaping (_ highlighted: Bool, _ animated: Bool) -> Void) {
         onHighlight = callback
     }
 
-    fileprivate var onSelect: ((_ selected: Bool, _ animated: Bool) -> Void)?
+    private var onSelect: ((_ selected: Bool, _ animated: Bool) -> Void)?
     open func onSelect(_ callback: @escaping (_ selected: Bool, _ animated: Bool) -> Void) {
         onSelect = callback
     }
@@ -143,7 +143,7 @@ open class DynamicTableViewCell: XCTableViewCell {
 
     // MARK: UITableViewCellStateMask
 
-    fileprivate var willTransitionToState: ((_ state: UITableViewCellStateMask) -> Void)?
+    private var willTransitionToState: ((_ state: UITableViewCellStateMask) -> Void)?
     @nonobjc open func willTransitionToState(_ callback: @escaping (_ state: UITableViewCellStateMask) -> Void) {
         willTransitionToState = callback
     }
@@ -152,7 +152,7 @@ open class DynamicTableViewCell: XCTableViewCell {
         willTransitionToState?(state)
     }
 
-    fileprivate var didTransitionToState: ((_ state: UITableViewCellStateMask) -> Void)?
+    private var didTransitionToState: ((_ state: UITableViewCellStateMask) -> Void)?
     @nonobjc open func didTransitionToState(_ callback: @escaping (_ state: UITableViewCellStateMask) -> Void) {
         didTransitionToState = callback
     }
@@ -163,7 +163,7 @@ open class DynamicTableViewCell: XCTableViewCell {
 
     // MARK: Subviews
 
-    fileprivate let labelsStackView = UIStackView()
+    private let labelsStackView = UIStackView()
     open let avatarView             = UIImageView()
     open let titleLabel             = UILabel()
     open let subtitleLabel          = UILabel()
@@ -201,7 +201,7 @@ open class DynamicTableViewCell: XCTableViewCell {
         setupConstraints()
     }
 
-    fileprivate func setupAvatarView() {
+    private func setupAvatarView() {
         contentView.addSubview(avatarView)
         avatarView.backgroundColor = UIColor(white: 1, alpha: 0.2)
         avatarView.contentMode     = .scaleAspectFill
@@ -218,7 +218,7 @@ open class DynamicTableViewCell: XCTableViewCell {
         avatarView.layer.minificationFilter = kCAFilterTrilinear
     }
 
-    fileprivate func setupLabels() {
+    private func setupLabels() {
         contentView.addSubview(labelsStackView)
 
         labelsStackView.axis    = .vertical
@@ -240,7 +240,7 @@ open class DynamicTableViewCell: XCTableViewCell {
         subtitleLabel.numberOfLines = 0
     }
 
-    fileprivate func setupConstraints() {
+    private func setupConstraints() {
         avatarView.translatesAutoresizingMaskIntoConstraints      = false
         labelsStackView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -270,7 +270,7 @@ open class DynamicTableViewCell: XCTableViewCell {
 
     // MARK: Helpers
 
-    fileprivate func updateImageSizeIfNeeded() {
+    private func updateImageSizeIfNeeded() {
         let size = isImageViewHidden ? .zero : imageSize
         imageSizeConstraints.width?.constant  = size.width
         imageSizeConstraints.height?.constant = size.height
@@ -278,12 +278,12 @@ open class DynamicTableViewCell: XCTableViewCell {
         roundAvatarViewCornersIfNeeded()
     }
 
-    fileprivate func updateTextImageSpacingIfNeeded() {
+    private func updateTextImageSpacingIfNeeded() {
         let spacing = isImageViewHidden ? 0 : textImageSpacing
         imageAndTitleSpacingConstraint?.constant = spacing
     }
 
-    fileprivate func roundAvatarViewCornersIfNeeded() {
+    private func roundAvatarViewCornersIfNeeded() {
         avatarView.layer.cornerRadius = isRoundImageView ? imageSize.height / 2 : 0
     }
 }

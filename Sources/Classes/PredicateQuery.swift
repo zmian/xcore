@@ -83,7 +83,7 @@ private enum PredicateQueryBuilder {
 }
 
 public struct PredicateQuery: CustomStringConvertible, CustomDebugStringConvertible {
-    fileprivate let builder: PredicateQueryBuilder
+    private let builder: PredicateQueryBuilder
 
     public init(field: String, equal: Any, caseInsensitive: Bool) {
         builder = PredicateQueryBuilder.equal(field: field, values: [equal], caseInsensitive: caseInsensitive)

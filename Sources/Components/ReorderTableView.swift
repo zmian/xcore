@@ -26,10 +26,10 @@
 import UIKit
 
 private class ReorderTableDraggingView: XCView {
-    fileprivate let imageView             = UIImageView()
-    fileprivate let topShadowImage        = UIImageView(assetIdentifier: .ReorderTableViewCellShadowTop)
-    fileprivate let bottomShadowImage     = UIImageView(assetIdentifier: .ReorderTableViewCellShadowBottom)
-    fileprivate let shadowHeight: CGFloat = 19
+    private let imageView             = UIImageView()
+    private let topShadowImage        = UIImageView(assetIdentifier: .ReorderTableViewCellShadowTop)
+    private let bottomShadowImage     = UIImageView(assetIdentifier: .ReorderTableViewCellShadowBottom)
+    private let shadowHeight: CGFloat = 19
 
     var image: UIImage? {
         get { return imageView.image }
@@ -83,13 +83,13 @@ public protocol ReorderTableViewDelegate: NSObjectProtocol {
 }
 
 open class ReorderTableView: UITableView {
-    fileprivate var scrollRate: CGFloat = 0
-    fileprivate var scrollDisplayLink: CADisplayLink?
-    fileprivate var draggingView: ReorderTableDraggingView?
-    fileprivate var currentLocationIndexPath: IndexPath?
-    fileprivate var initialIndexPath: IndexPath?
-    fileprivate var savedObject: Any?
-    fileprivate lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
+    private var scrollRate: CGFloat = 0
+    private var scrollDisplayLink: CADisplayLink?
+    private var draggingView: ReorderTableDraggingView?
+    private var currentLocationIndexPath: IndexPath?
+    private var initialIndexPath: IndexPath?
+    private var savedObject: Any?
+    private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
         return UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
     }()
 
@@ -122,11 +122,11 @@ open class ReorderTableView: UITableView {
         commonInit()
     }
 
-    fileprivate func commonInit() {
+    private func commonInit() {
         addGestureRecognizer(longPressGestureRecognizer)
     }
 
-    fileprivate func updateCurrentLocation(_ gesture: UILongPressGestureRecognizer) {
+    private func updateCurrentLocation(_ gesture: UILongPressGestureRecognizer) {
         let location = gesture.location(in: self)
 
         guard
@@ -159,7 +159,7 @@ open class ReorderTableView: UITableView {
         }
     }
 
-    @objc fileprivate func scrollTableWithCell(_ timer: Timer) {
+    @objc private func scrollTableWithCell(_ timer: Timer) {
         guard let draggingView = draggingView else {
             cancelGesture()
             return
@@ -187,12 +187,12 @@ open class ReorderTableView: UITableView {
         updateCurrentLocation(gesture)
     }
 
-    fileprivate func cancelGesture() {
+    private func cancelGesture() {
         longPressGestureRecognizer.isEnabled = false
         longPressGestureRecognizer.isEnabled = true
     }
 
-    @objc fileprivate func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+    @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         let location = gesture.location(in: self)
         let rows     = numberOfRowsInAllSections
 
@@ -346,7 +346,7 @@ open class ReorderTableView: UITableView {
 
 // MARK: Helpers
 
-fileprivate extension UITableView {
+extension UITableView {
     /// The total number of rows in all the sections.
     fileprivate var numberOfRowsInAllSections: Int {
         var rows = 0

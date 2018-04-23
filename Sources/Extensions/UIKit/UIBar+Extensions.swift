@@ -27,7 +27,7 @@ import UIKit
 // MARK: UINavigationBar Extension
 
 extension UINavigationBar {
-    fileprivate struct AssociatedKey {
+    private struct AssociatedKey {
         static var isTransparent = "XcoreIsTransparent"
     }
 
@@ -52,7 +52,7 @@ extension UINavigationBar {
 // MARK: UIToolbar Extension
 
 extension UIToolbar {
-    fileprivate struct AssociatedKey {
+    private struct AssociatedKey {
         static var isTransparent = "XcoreIsTransparent"
     }
 
@@ -76,7 +76,7 @@ extension UIToolbar {
 // MARK: UITabBar Extension
 
 extension UITabBar {
-    fileprivate struct AssociatedKey {
+    private struct AssociatedKey {
         static var isTransparent = "XcoreIsTransparent"
     }
 
@@ -111,7 +111,7 @@ extension UITabBar {
 // MARK: UIBarButtonItem Extension
 
 extension UIBarButtonItem {
-    fileprivate func _titleTextAttributes(for state: UIControlState) -> [NSAttributedStringKey: Any] {
+    private func _titleTextAttributes(for state: UIControlState) -> [NSAttributedStringKey: Any] {
         guard let oldAttributes = titleTextAttributes(for: state) else {
             return [:]
         }

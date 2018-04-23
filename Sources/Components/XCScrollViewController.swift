@@ -36,13 +36,13 @@ open class XCScrollViewController: UIViewController {
         setupContentView()
     }
 
-    fileprivate func setupContentView() {
+    private func setupContentView() {
         view.addSubview(scrollView)
         constraintsForViewToFillSuperview(scrollView, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
         resolveContentSize()
     }
 
-    fileprivate func resolveContentSize() {
+    private func resolveContentSize() {
         let scrollViewWidthResolver = UIView()
         scrollViewWidthResolver.isHidden = true
         scrollView.addSubview(scrollViewWidthResolver)

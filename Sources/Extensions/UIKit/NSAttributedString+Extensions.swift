@@ -93,7 +93,7 @@ extension NSMutableAttributedString {
         return self
     }
 
-    fileprivate func range(of text: String?) -> NSRange {
+    private func range(of text: String?) -> NSRange {
         let range: NSRange
 
         if let text = text {
