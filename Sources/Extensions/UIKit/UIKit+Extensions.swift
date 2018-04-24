@@ -101,7 +101,7 @@ extension UIRefreshControl {
 
     open func refreshingTimeout(after timeoutInterval: TimeInterval, completion: (() -> Void)? = nil) {
         timeoutTimer?.invalidate()
-        timeoutTimer = Timer.schedule(delay: timeoutInterval) { [weak self] _ in
+        timeoutTimer = Timer.schedule(delay: timeoutInterval) { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.endRefreshing()
             completion?()

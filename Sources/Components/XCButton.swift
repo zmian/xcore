@@ -26,9 +26,9 @@ import UIKit
 
 @IBDesignable
 open class XCButton: UIButton {
-    fileprivate typealias State = UInt
-    fileprivate var backgroundColors = [State: UIColor?]()
-    fileprivate var borderColors = [State: UIColor?]()
+    private typealias State = UInt
+    private var backgroundColors = [State: UIColor?]()
+    private var borderColors = [State: UIColor?]()
 
     open override var isHighlighted: Bool {
         didSet {
@@ -95,7 +95,7 @@ extension XCButton {
         disabledBackgroundColor = color
     }
 
-    fileprivate func changeBackgroundColor(to state: UIControlState) {
+    private func changeBackgroundColor(to state: UIControlState) {
         var newBackgroundColor = backgroundColor(for: state)
 
         if newBackgroundColor == nil {
@@ -135,7 +135,7 @@ extension XCButton {
         return color
     }
 
-    fileprivate func changeBorderColor(to state: UIControlState) {
+    private func changeBorderColor(to state: UIControlState) {
         var newBorderColor = borderColor(for: state)
 
         if newBorderColor == nil {
@@ -156,7 +156,7 @@ extension XCButton {
     }
 }
 
-extension UIView {
+@objc extension UIView {
     fileprivate static func animateFromCurrentState(_ animations: @escaping () -> Void) {
         UIView.animate(withDuration: 0.25, delay: 0, options: .beginFromCurrentState, animations: {
             animations()

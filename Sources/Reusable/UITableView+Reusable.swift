@@ -40,7 +40,7 @@ extension UITableView {
         set { objc_setAssociatedObject(self, &AssociatedKey.registeredHeaderFooterViews, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
-    fileprivate func register<T: UITableViewCell>(_ cell: T.Type) {
+    private func register<T: UITableViewCell>(_ cell: T.Type) {
         guard let nib = UINib(named: String(describing: cell), bundle: Bundle(for: T.self)) else {
             register(cell, forCellReuseIdentifier: T.reuseIdentifier)
             return
@@ -49,7 +49,7 @@ extension UITableView {
         register(nib, forCellReuseIdentifier: T.reuseIdentifier)
     }
 
-    fileprivate func registerHeaderFooterView<T: UITableViewHeaderFooterView>(_ view: T.Type) {
+    private func registerHeaderFooterView<T: UITableViewHeaderFooterView>(_ view: T.Type) {
         guard let nib = UINib(named: String(describing: view), bundle: Bundle(for: T.self)) else {
             register(view, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
             return
@@ -58,13 +58,13 @@ extension UITableView {
         register(nib, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
     }
 
-    fileprivate func registerIfNeeded<T: UITableViewCell>(_ cell: T.Type) {
+    private func registerIfNeeded<T: UITableViewCell>(_ cell: T.Type) {
         guard !registeredCells.contains(T.reuseIdentifier) else { return }
         registeredCells.insert(T.reuseIdentifier)
         register(cell)
     }
 
-    fileprivate func registerHeaderFooterViewIfNeeded<T: UITableViewHeaderFooterView>(_ view: T.Type) {
+    private func registerHeaderFooterViewIfNeeded<T: UITableViewHeaderFooterView>(_ view: T.Type) {
         guard !registeredHeaderFooterViews.contains(T.reuseIdentifier) else { return }
         registeredHeaderFooterViews.insert(T.reuseIdentifier)
         registerHeaderFooterView(view)

@@ -52,7 +52,7 @@ open class IconLabelCollectionViewCell: UICollectionViewCell {
 
     // MARK: Setup Method
 
-    fileprivate func setupSubviews() {
+    private func setupSubviews() {
         contentView.addSubview(iconLabelView)
         NSLayoutConstraint.constraintsForViewToFillSuperview(iconLabelView).activate()
         iconLabelView.isUserInteractionEnabled = false
@@ -69,7 +69,7 @@ open class IconLabelCollectionViewCell: UICollectionViewCell {
 
     // MARK: Delete Button
 
-    fileprivate func setupDeleteButton() {
+    private func setupDeleteButton() {
         let buttonSize: CGFloat = 44
         let offset = iconLabelView.isRoundImageView ? buttonSize / 4 : buttonSize / 2
         contentView.addSubview(deleteButton)
@@ -103,7 +103,7 @@ open class IconLabelCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    fileprivate func deleteButtonZoomIn() {
+    private func deleteButtonZoomIn() {
         deleteButton.isHidden    = false
         deleteButton.alpha     = 0
         deleteButton.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
@@ -117,7 +117,7 @@ open class IconLabelCollectionViewCell: UICollectionViewCell {
         })
     }
 
-    fileprivate func deleteButtonZoomOut() {
+    private func deleteButtonZoomOut() {
         UIView.animate(withDuration: 0.2, animations: {
             self.deleteButton.alpha     = 0
             self.deleteButton.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)

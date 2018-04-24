@@ -67,7 +67,7 @@ extension EnumIteratable {
     /// wast: '2'
     /// west: '3'
     /// ```
-    fileprivate static func enumerated() -> AnyIterator<EnumType> {
+    private static func enumerated() -> AnyIterator<EnumType> {
         var i = 0
         return AnyIterator {
             let next = withUnsafePointer(to: &i) {

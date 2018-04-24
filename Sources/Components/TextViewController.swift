@@ -26,15 +26,15 @@ import UIKit
 import MDHTMLLabel
 
 open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
-    open fileprivate(set) lazy var textLabel: MDHTMLLabel = {
+    open private(set) lazy var textLabel: MDHTMLLabel = {
         let textLabel = MDHTMLLabel()
         textLabel.delegate = self
         textLabel.font = .systemFont(.footnote)
         textLabel.textColor = .darkGray
         textLabel.lineBreakMode = .byWordWrapping
         textLabel.numberOfLines = 0
-        textLabel.linkAttributes = [NSForegroundColorAttributeName: textLabel.tintColor]
-        textLabel.activeLinkAttributes = [NSForegroundColorAttributeName: textLabel.tintColor]
+        textLabel.linkAttributes = [NSAttributedStringKey.foregroundColor: textLabel.tintColor]
+        textLabel.activeLinkAttributes = [NSAttributedStringKey.foregroundColor: textLabel.tintColor]
         textLabel.lineHeightMultiple = 1.1
         return textLabel
     }()
@@ -90,11 +90,11 @@ open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
 
     // MARK: Setup Methods
 
-    fileprivate func setupTextLabel() {
+    private func setupTextLabel() {
         textLabel.htmlText = text
         scrollView.alwaysBounceVertical = true
         scrollView.addSubview(textLabel)
-        NSLayoutConstraint.constraintsForViewToFillSuperview(textLabel, padding: contentInset, priority: UILayoutPriorityDefaultHigh).activate()
+        NSLayoutConstraint.constraintsForViewToFillSuperview(textLabel, padding: contentInset, priority: .defaultHigh).activate()
 
         if let backgroundImage = backgroundImage?.cgImage {
             view.layer.contents = backgroundImage

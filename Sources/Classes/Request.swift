@@ -96,7 +96,7 @@ public final class Request {
         request(.DELETE, url: url, body: parameters, accessToken: accessToken, callback: callback)
     }
 
-    fileprivate static func request(_ method: Method, url: URL, body: [String: Any]? = nil, accessToken: String? = nil, headers: [String: String]? = nil, callback: @escaping (_ response: Response) -> Void) {
+    private static func request(_ method: Method, url: URL, body: [String: Any]? = nil, accessToken: String? = nil, headers: [String: String]? = nil, callback: @escaping (_ response: Response) -> Void) {
         var headers = headers ?? [:]
         if let accessToken = accessToken , headers["Authorization"] == nil {
             headers["Authorization"] = "Bearer \(accessToken)"
@@ -115,7 +115,7 @@ public final class Request {
     }
 }
 
-fileprivate extension URLSession {
+extension URLSession {
     fileprivate func dataTaskWithRequest(_ request: URLRequest, callback: @escaping (_ response: Response) -> Void) -> URLSessionDataTask {
         return dataTask(with: request) { data, response, error in
             callback(Response(request: request, response: response, data: data, error: error))
@@ -123,7 +123,7 @@ fileprivate extension URLSession {
     }
 }
 
-fileprivate extension URLRequest {
+extension URLRequest {
     fileprivate init(method: Request.Method, url: URL, body: Data? = nil, headers: [String: String]? = nil) {
         self.init(url: url)
         httpMethod = method.rawValue

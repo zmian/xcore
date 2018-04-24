@@ -25,8 +25,8 @@
 import UIKit
 
 open class DynamicTableViewController: UIViewController {
-    fileprivate var tableViewConstraints = [NSLayoutConstraint]()
-    open fileprivate(set) lazy var tableView: DynamicTableView = DynamicTableView(style: self.style, options: self.cellOptions)
+    private var tableViewConstraints = [NSLayoutConstraint]()
+    open private(set) lazy var tableView: DynamicTableView = DynamicTableView(style: self.style, options: self.cellOptions)
     /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
     open var style: UITableViewStyle = .plain
     open var cellOptions: DynamicTableCellOptions = [] {
@@ -43,7 +43,7 @@ open class DynamicTableViewController: UIViewController {
 
     /// The distance that the tableView is inset from the enclosing view.
     /// The default value is `UIEdgeInsets.zero`.
-    open dynamic var contentInset = UIEdgeInsets.zero {
+    @objc open dynamic var contentInset = UIEdgeInsets.zero {
         didSet {
             tableViewConstraints.at(0)?.constant = contentInset.left
             tableViewConstraints.at(1)?.constant = contentInset.right
@@ -73,7 +73,7 @@ open class DynamicTableViewController: UIViewController {
         setupDynamicTableView()
     }
 
-    fileprivate func setupDynamicTableView() {
+    private func setupDynamicTableView() {
         if !cellOptions.isEmpty && tableView.cellOptions.isEmpty {
             tableView.cellOptions = cellOptions
         }

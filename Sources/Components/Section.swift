@@ -27,8 +27,8 @@
 import Foundation
 
 public struct ArrayIterator<Element>: IteratorProtocol {
-    fileprivate let array: [Element]
-    fileprivate var currentIndex = 0
+    private let array: [Element]
+    private var currentIndex = 0
 
     public init(_ array: [Element]) {
         self.array = array

@@ -75,7 +75,7 @@ public struct DynamicTableModel {
 //    var handler: ((indexPath: IndexPath, item: Model) -> Void)? { get }
 //}
 //
-//private extension DynamicTableModelDisplayable {
+//extension DynamicTableModelDisplayable {
 //    var title: StringRepresentable? { return nil }
 //    var subtitle: StringRepresentable? { return nil }
 //    var image: ImageRepresentable? { return nil }

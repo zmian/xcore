@@ -40,7 +40,7 @@ import UIKit
 /// }
 ///
 /// extension UIViewController {
-///     fileprivate static func runOnceSwapViewWillAppear() {
+///     private static func runOnceSwapViewWillAppear() {
 ///         swizzle(
 ///             UIViewController.self,
 ///             originalSelector: #selector(UIViewController.viewWillAppear(_:)),
@@ -48,14 +48,16 @@ import UIKit
 ///         )
 ///     }
 ///
-///     @objc fileprivate func swizzled_viewWillAppear(_ animated: Bool) {
+///     @objc private func swizzled_viewWillAppear(_ animated: Bool) {
 ///         self.swizzled_viewWillAppear(animated)
 ///     }
 /// }
 /// ```
 public func swizzle(_ forClass: AnyClass, originalSelector: Selector, swizzledSelector: Selector) {
-    let originalMethod = class_getInstanceMethod(forClass, originalSelector)
-    let swizzledMethod = class_getInstanceMethod(forClass, swizzledSelector)
+    guard
+        let originalMethod = class_getInstanceMethod(forClass, originalSelector),
+        let swizzledMethod = class_getInstanceMethod(forClass, swizzledSelector)
+    else { return }
 
     let didAddMethod = class_addMethod(
         forClass,

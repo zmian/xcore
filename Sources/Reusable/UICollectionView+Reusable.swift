@@ -40,7 +40,7 @@ extension UICollectionView {
         set { objc_setAssociatedObject(self, &AssociatedKey.registeredSupplementaryViews, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
-    fileprivate func register<T: UICollectionViewCell>(_ cell: T.Type) {
+    private func register<T: UICollectionViewCell>(_ cell: T.Type) {
         guard let nib = UINib(named: String(describing: cell), bundle: Bundle(for: T.self)) else {
             register(cell, forCellWithReuseIdentifier: T.reuseIdentifier)
             return
@@ -49,7 +49,7 @@ extension UICollectionView {
         register(nib, forCellWithReuseIdentifier: T.reuseIdentifier)
     }
 
-    fileprivate func registerSupplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, view: T.Type) {
+    private func registerSupplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, view: T.Type) {
         guard let nib = UINib(named: String(describing: view), bundle: Bundle(for: T.self)) else {
             register(view, forSupplementaryViewOfKind: kind.identifier, withReuseIdentifier: T.reuseIdentifier)
             return
@@ -58,13 +58,13 @@ extension UICollectionView {
         register(nib, forSupplementaryViewOfKind: kind.identifier, withReuseIdentifier: T.reuseIdentifier)
     }
 
-    fileprivate func registerIfNeeded<T: UICollectionViewCell>(_ cell: T.Type) {
+    private func registerIfNeeded<T: UICollectionViewCell>(_ cell: T.Type) {
         guard !registeredCells.contains(T.reuseIdentifier) else { return }
         registeredCells.insert(T.reuseIdentifier)
         register(cell)
     }
 
-    fileprivate func registerSupplementaryViewIfNeeded<T: UICollectionReusableView>(kind: SupplementaryViewKind, view: T.Type) {
+    private func registerSupplementaryViewIfNeeded<T: UICollectionReusableView>(kind: SupplementaryViewKind, view: T.Type) {
         guard !registeredSupplementaryViews.contains(T.reuseIdentifier) else { return }
         registeredSupplementaryViews.insert(T.reuseIdentifier)
         registerSupplementaryView(kind: kind, view: view)

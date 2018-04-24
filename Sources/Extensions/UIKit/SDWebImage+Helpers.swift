@@ -95,7 +95,7 @@ extension UIImage {
 
         if let url = URL(string: named), url.host != nil {
             SDWebImageDownloader.shared().downloadImage(with: url, options: [],
-                progress: { _ in
+                progress: { receivedSize, expectedSize, targetUrl in
 
                 },
                 completed: { image, data, error, finished in
@@ -129,12 +129,12 @@ extension UIImage {
     public class func downloadImages(_ urls: [String], callback: @escaping (_ images: [(url: URL, image: UIImage)]) -> Void) {
         guard !urls.isEmpty else { return }
 
-        var orderedObjects: [(url: URL, image: UIImage?)] = urls.flatMap(URL.init).filter { $0.host != nil }.flatMap { ($0, nil) }
+        var orderedObjects: [(url: URL, image: UIImage?)] = urls.compactMap(URL.init).filter { $0.host != nil }.compactMap { ($0, nil) }
         var downloadedImages = 0
 
         orderedObjects.forEach { object in
             SDWebImageDownloader.shared().downloadImage(with: object.url, options: [],
-                progress: { _ in
+                progress: { receivedSize, expectedSize, targetUrl in
 
                 }, completed: { image, data, error, finished in
                     downloadedImages += 1
@@ -146,7 +146,7 @@ extension UIImage {
                     }
 
                     if downloadedImages == urls.count {
-                        let imagesAndUrls = orderedObjects.filter { $0.image != nil }.flatMap { (url: $0.url, image: $0.image!) }
+                        let imagesAndUrls = orderedObjects.filter { $0.image != nil }.compactMap { (url: $0.url, image: $0.image!) }
                         DispatchQueue.main.async {
                             callback(imagesAndUrls)
                         }

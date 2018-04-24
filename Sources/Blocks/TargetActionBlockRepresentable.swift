@@ -37,6 +37,7 @@ public protocol TargetActionBlockRepresentable: class {
     func removeAction()
 }
 
+@objcMembers
 class ClosureWrapper: NSObject {
     var closure: (() -> Void)?
 
@@ -49,6 +50,7 @@ class ClosureWrapper: NSObject {
     }
 }
 
+@objcMembers
 class SenderClosureWrapper: NSObject {
     var closure: ((_ sender: AnyObject) -> Void)?
 

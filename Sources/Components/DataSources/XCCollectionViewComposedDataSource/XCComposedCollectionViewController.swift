@@ -33,7 +33,7 @@ public let XCCollectionViewFlowLayoutAutomaticSize: CGSize = {
 }()
 
 open class XCComposedCollectionViewController: UIViewController {
-    public fileprivate(set) var collectionViewConstraints = [NSLayoutConstraint]()
+    public private(set) var collectionViewConstraints = [NSLayoutConstraint]()
 
     /// The layout object `UICollectionView` uses to render itself.
     /// The layout can be changed to any subclass of `UICollectionViewLayout`.
@@ -55,7 +55,7 @@ open class XCComposedCollectionViewController: UIViewController {
 
     /// The distance that the collectionView is inset from the enclosing view.
     /// The default value is `UIEdgeInsets.zero`.
-    open dynamic var contentInset = UIEdgeInsets.zero {
+    @objc open dynamic var contentInset = UIEdgeInsets.zero {
         didSet {
             collectionViewConstraints.at(0)?.constant = contentInset.left
             collectionViewConstraints.at(1)?.constant = contentInset.right
@@ -86,7 +86,7 @@ open class XCComposedCollectionViewController: UIViewController {
 // MARK: Setup Methods
 
 extension XCComposedCollectionViewController {
-    fileprivate func setup(collectionView: UICollectionView) {
+    private func setup(collectionView: UICollectionView) {
         composedDataSource.dataSources = dataSources(for: collectionView)
         collectionView.dataSource = composedDataSource
         collectionView.delegate = self

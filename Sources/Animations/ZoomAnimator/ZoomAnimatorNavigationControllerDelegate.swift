@@ -26,8 +26,8 @@
 import UIKit
 
 public final class ZoomAnimatorNavigationControllerDelegate: NSObject {
-    fileprivate let zoomInteractiveTransition = ZoomAnimatorInteractiveTransition()
-    fileprivate let zoomPopGestureRecognizer = UIScreenEdgePanGestureRecognizer()
+    private let zoomInteractiveTransition = ZoomAnimatorInteractiveTransition()
+    private let zoomPopGestureRecognizer = UIScreenEdgePanGestureRecognizer()
 }
 
 // MARK: UINavigationControllerDelegate

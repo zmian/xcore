@@ -26,70 +26,70 @@ import UIKit
 import BEMCheckBox
 
 open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewDataSource {
-    fileprivate var allowReordering: Bool { return cellOptions.contains(.movable) }
-    fileprivate var allowDeletion: Bool   { return cellOptions.contains(.deletable) }
+    private var allowReordering: Bool { return cellOptions.contains(.movable) }
+    private var allowDeletion: Bool   { return cellOptions.contains(.deletable) }
     open var sections: [Section<DynamicTableModel>] = []
     open var cellOptions: DynamicTableCellOptions = [] {
         didSet { isReorderingEnabled = allowReordering }
     }
-    open dynamic var rowActionDeleteColor: UIColor?
+    @objc open dynamic var rowActionDeleteColor: UIColor?
     /// Text to display in the swipe to delete row action. The default value is **"Delete"**.
-    open dynamic var rowActionDeleteTitle = "Delete"
+    @objc open dynamic var rowActionDeleteTitle = "Delete"
     /// A boolean value to determine whether the content is centered in the table view. The default value is `false`.
-    open dynamic var isContentCentered = false
+    @objc open dynamic var isContentCentered = false
     /// A boolean value to determine whether the last table view cell separator is hidden. The default value is `false`.
-    open dynamic var isLastCellSeparatorHidden = false
+    @objc open dynamic var isLastCellSeparatorHidden = false
 
     private var emptyTableFooterView = UIView()
     /// A boolean value to determine whether the empty table view cells are hidden. The default value is `false`.
-    open dynamic var emptyCellsHidden = false {
+    @objc open dynamic var emptyCellsHidden = false {
         didSet {
             guard tableFooterView == emptyTableFooterView else { return }
             tableFooterView = emptyCellsHidden ? emptyTableFooterView : nil
         }
     }
 
-    fileprivate var configureCell: ((_ indexPath: IndexPath, _ cell: DynamicTableViewCell, _ item: DynamicTableModel) -> Void)?
+    private var configureCell: ((_ indexPath: IndexPath, _ cell: DynamicTableViewCell, _ item: DynamicTableModel) -> Void)?
     open func configureCell(_ callback: @escaping (_ indexPath: IndexPath, _ cell: DynamicTableViewCell, _ item: DynamicTableModel) -> Void) {
         configureCell = callback
     }
 
-    fileprivate var willDisplayCell: ((_ indexPath: IndexPath, _ cell: DynamicTableViewCell, _ item: DynamicTableModel) -> Void)?
+    private var willDisplayCell: ((_ indexPath: IndexPath, _ cell: DynamicTableViewCell, _ item: DynamicTableModel) -> Void)?
     open func willDisplayCell(_ callback: @escaping (_ indexPath: IndexPath, _ cell: DynamicTableViewCell, _ item: DynamicTableModel) -> Void) {
         willDisplayCell = callback
     }
 
-    fileprivate var configureHeader: ((_ section: Int, _ header: UITableViewHeaderFooterView, _ text: String?) -> Void)?
+    private var configureHeader: ((_ section: Int, _ header: UITableViewHeaderFooterView, _ text: String?) -> Void)?
     open func configureHeader(_ callback: @escaping (_ section: Int, _ header: UITableViewHeaderFooterView, _ text: String?) -> Void) {
         configureHeader = callback
     }
 
-    fileprivate var configureFooter: ((_ section: Int, _ footer: UITableViewHeaderFooterView, _ text: String?) -> Void)?
+    private var configureFooter: ((_ section: Int, _ footer: UITableViewHeaderFooterView, _ text: String?) -> Void)?
     open func configureFooter(_ callback: @escaping (_ section: Int, _ footer: UITableViewHeaderFooterView, _ text: String?) -> Void) {
         configureFooter = callback
     }
 
-    fileprivate var didSelectItem: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)?
+    private var didSelectItem: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)?
     open func didSelectItem(_ callback: @escaping (_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void) {
         didSelectItem = callback
     }
 
-    fileprivate var didDeselectItem: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)?
+    private var didDeselectItem: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)?
     open func didDeselectItem(_ callback: @escaping (_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void) {
         didDeselectItem = callback
     }
 
-    fileprivate var didRemoveItem: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)?
+    private var didRemoveItem: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)?
     open func didRemoveItem(_ callback: @escaping (_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void) {
         didRemoveItem = callback
     }
 
-    fileprivate var didMoveItem: ((_ sourceIndexPath: IndexPath, _ destinationIndexPath: IndexPath, _ item: DynamicTableModel) -> Void)?
+    private var didMoveItem: ((_ sourceIndexPath: IndexPath, _ destinationIndexPath: IndexPath, _ item: DynamicTableModel) -> Void)?
     open func didMoveItem(_ callback: @escaping (_ sourceIndexPath: IndexPath, _ destinationIndexPath: IndexPath, _ item: DynamicTableModel) -> Void) {
         didMoveItem = callback
     }
 
-    fileprivate var editActionsForCell: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> [UITableViewRowAction]?)?
+    private var editActionsForCell: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> [UITableViewRowAction]?)?
     open func editActionsForCell(_ callback: @escaping (_ indexPath: IndexPath, _ item: DynamicTableModel) -> [UITableViewRowAction]?) {
         editActionsForCell = callback
     }
@@ -100,7 +100,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     ///
     /// 1. This class needs to be it's own delegate to provide default implementation using data source.
     /// 2. Outside client/classes can also become delegate to do further customizations.
-    fileprivate weak var _delegate: UITableViewDelegate?
+    private weak var _delegate: UITableViewDelegate?
     open var tableViewDelegate: UITableViewDelegate? {
         get { return _delegate }
         set { self._delegate = newValue }
@@ -137,8 +137,8 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     // MARK: isContentCentered
 
-    fileprivate var shouldUpdateActualContentInset = true
-    fileprivate var actualContentInset = UIEdgeInsets.zero
+    private var shouldUpdateActualContentInset = true
+    private var actualContentInset = UIEdgeInsets.zero
     open override var contentInset: UIEdgeInsets {
         didSet {
             guard shouldUpdateActualContentInset else { return }
@@ -156,7 +156,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         centerContentIfNeeded()
     }
 
-    fileprivate func centerContentIfNeeded() {
+    private func centerContentIfNeeded() {
         guard isContentCentered else { return }
 
         let totalHeight          = bounds.height
@@ -174,7 +174,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     // MARK: Setup Methods
 
-    fileprivate func commonInit() {
+    private func commonInit() {
         setupTableView()
         setupSubviews()
     }
@@ -186,7 +186,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     /// This method is called when self is initialized using any of the relevant `init` methods.
     open func setupSubviews() {}
 
-    fileprivate func setupTableView() {
+    private func setupTableView() {
         super.delegate      = self
         dataSource          = self
         reorderDelegate     = self
@@ -351,7 +351,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     ///
     /// - parameter indexPaths: An array of `IndexPath` objects identifying the rows to delete.
     /// - parameter animation:  A constant that indicates how the deletion is to be animated.
-    fileprivate func removeItems(_ indexPaths: [IndexPath], animation: UITableViewRowAnimation = .automatic) {
+    private func removeItems(_ indexPaths: [IndexPath], animation: UITableViewRowAnimation = .automatic) {
         let items = indexPaths.map { (indexPath: $0, item: sections.remove(at: $0)) }
         CATransaction.animationTransaction({
             deleteRows(at: indexPaths, with: animation)
@@ -373,25 +373,25 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     // MARK: UIAppearance Properties
 
-    open dynamic var headerFont                     = UIFont.systemFont(.footnote)
-    open dynamic var headerTextColor                = UIColor.black
-    open dynamic var footerFont                     = UIFont.systemFont(.footnote)
-    open dynamic var footerTextColor                = UIColor.darkGray
-    open dynamic var accessoryFont                  = UIFont.systemFont(.subheadline)
-    open dynamic var accessoryTextColor             = UIColor.gray
-    open dynamic var accessoryTintColor             = UIColor.systemTint
-    open dynamic var accessoryTextMaxWidth: CGFloat = 0
-    open dynamic var disclosureIndicatorTintColor   = UIColor.gray
+    @objc open dynamic var headerFont                     = UIFont.systemFont(.footnote)
+    @objc open dynamic var headerTextColor                = UIColor.black
+    @objc open dynamic var footerFont                     = UIFont.systemFont(.footnote)
+    @objc open dynamic var footerTextColor                = UIColor.darkGray
+    @objc open dynamic var accessoryFont                  = UIFont.systemFont(.subheadline)
+    @objc open dynamic var accessoryTextColor             = UIColor.gray
+    @objc open dynamic var accessoryTintColor             = UIColor.systemTint
+    @objc open dynamic var accessoryTextMaxWidth: CGFloat = 0
+    @objc open dynamic var disclosureIndicatorTintColor   = UIColor.gray
 
     /// The color of the check box ring when the checkbox is Off.
     /// The default value is `UIColor.blackColor().alpha(0.13)`.
-    open dynamic var checkboxOffTintColor = UIColor.black.alpha(0.13)
+    @objc open dynamic var checkboxOffTintColor = UIColor.black.alpha(0.13)
 }
 
 // MARK: AccessoryView
 
 extension DynamicTableView: BEMCheckBoxDelegate {
-    fileprivate func configureAccessoryView(_ cell: DynamicTableViewCell, type: DynamicTableAccessoryType, indexPath: IndexPath) {
+    private func configureAccessoryView(_ cell: DynamicTableViewCell, type: DynamicTableAccessoryType, indexPath: IndexPath) {
         cell.accessoryType  = .none
         cell.selectionStyle = .default
         cell.accessoryView  = nil
@@ -499,7 +499,7 @@ extension DynamicTableView {
 // MARK: ReorderTableViewDelegate
 
 extension DynamicTableView: ReorderTableViewDelegate {
-    fileprivate static let ReorderTableViewDummyItemIdentifier = "_Xcore_ReorderTableView_Dummy_Item_Identifier_"
+    private static let ReorderTableViewDummyItemIdentifier = "_Xcore_ReorderTableView_Dummy_Item_Identifier_"
 
     // This method is called when starting the re-ording process. You insert a blank row object into your
     // data source and return the object you want to save for later. This method is only called once.
@@ -549,12 +549,12 @@ extension DynamicTableView {
 
 import ObjectiveC
 
-private struct AssociatedKey {
-    static var bemCheckBoxIndexPath = "BEMCheckBoxIndexPath"
-}
+extension BEMCheckBox {
+    private struct AssociatedKey {
+        static var bemCheckBoxIndexPath = "BEMCheckBoxIndexPath"
+    }
 
-private extension BEMCheckBox {
-    var indexPath: IndexPath? {
+    fileprivate var indexPath: IndexPath? {
         get { return objc_getAssociatedObject(self, &AssociatedKey.bemCheckBoxIndexPath) as? IndexPath }
         set { objc_setAssociatedObject(self, &AssociatedKey.bemCheckBoxIndexPath, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }

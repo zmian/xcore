@@ -27,7 +27,7 @@ import UIKit
 // MARK: UINavigationBar Extension
 
 extension UINavigationBar {
-    fileprivate struct AssociatedKey {
+    private struct AssociatedKey {
         static var isTransparent = "XcoreIsTransparent"
     }
 
@@ -52,7 +52,7 @@ extension UINavigationBar {
 // MARK: UIToolbar Extension
 
 extension UIToolbar {
-    fileprivate struct AssociatedKey {
+    private struct AssociatedKey {
         static var isTransparent = "XcoreIsTransparent"
     }
 
@@ -76,7 +76,7 @@ extension UIToolbar {
 // MARK: UITabBar Extension
 
 extension UITabBar {
-    fileprivate struct AssociatedKey {
+    private struct AssociatedKey {
         static var isTransparent = "XcoreIsTransparent"
     }
 
@@ -111,16 +111,30 @@ extension UITabBar {
 // MARK: UIBarButtonItem Extension
 
 extension UIBarButtonItem {
-    open dynamic var textColor: UIColor? {
-        get { return titleTextAttributes(for: .normal)?[NSForegroundColorAttributeName] as? UIColor }
+    private func _titleTextAttributes(for state: UIControlState) -> [NSAttributedStringKey: Any] {
+        guard let oldAttributes = titleTextAttributes(for: state) else {
+            return [:]
+        }
+
+        var newAttributes = [NSAttributedStringKey: Any]()
+
+        for (key, value) in oldAttributes {
+            newAttributes[NSAttributedStringKey(rawValue: key)] = value
+        }
+
+        return newAttributes
+    }
+
+    @objc open dynamic var textColor: UIColor? {
+        get { return titleTextAttributes(for: .normal)?[NSAttributedStringKey.foregroundColor.rawValue] as? UIColor }
         set {
-            var attributes = titleTextAttributes(for: .normal) ?? [:]
-            attributes[NSForegroundColorAttributeName] = newValue
+            var attributes = _titleTextAttributes(for: .normal)
+            attributes[.foregroundColor] = newValue
             setTitleTextAttributes(attributes, for: .normal)
         }
     }
 
-    open dynamic var font: UIFont? {
+    @objc open dynamic var font: UIFont? {
         get { return titleTextFont(for: .normal) }
         set {
             UIControlState.applicationStates.forEach {
@@ -130,13 +144,13 @@ extension UIBarButtonItem {
     }
 
     open func setTitleTextFont(_ font: UIFont?, for state: UIControlState) {
-        var attributes = titleTextAttributes(for: state) ?? [:]
-        attributes[NSFontAttributeName] = font
-        setTitleTextAttributes(attributes, for: state)
+        var attributes = _titleTextAttributes(for: .normal)
+        attributes[.font] = font
+        setTitleTextAttributes(attributes, for: .normal)
     }
 
     open func titleTextFont(for state: UIControlState) -> UIFont? {
-        return titleTextAttributes(for: state)?[NSFontAttributeName] as? UIFont
+        return titleTextAttributes(for: state)?[NSAttributedStringKey.font.rawValue] as? UIFont
     }
 }
 

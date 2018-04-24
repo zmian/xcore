@@ -25,8 +25,8 @@
 import UIKit
 
 open class ZoomAnimator: TransitionAnimator {
-    fileprivate let source: ZoomAnimatorSource
-    fileprivate let destination: ZoomAnimatorDestination
+    private let source: ZoomAnimatorSource
+    private let destination: ZoomAnimatorDestination
 
     public required init(source: ZoomAnimatorSource, destination: ZoomAnimatorDestination, direction: AnimationDirection) {
         self.source = source

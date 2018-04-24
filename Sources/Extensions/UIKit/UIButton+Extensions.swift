@@ -25,7 +25,7 @@
 import UIKit
 import ObjectiveC
 
-extension UIButton {
+@objc extension UIButton {
     // Increase button touch area to be 44 points
     // See: http://stackoverflow.com/a/27683614
     open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -108,7 +108,7 @@ extension UIButton {
     }
 
     /// The background color to used for the highlighted state.
-    open func setHighlightedBackgroundColor(_ color: UIColor?) {
+    @objc open func setHighlightedBackgroundColor(_ color: UIColor?) {
         var image: UIImage?
         if let color = color {
             image = UIImage(color: color, size: CGSize(width: 1, height: 1))
@@ -117,7 +117,7 @@ extension UIButton {
     }
 
     /// The background color to used for the disabled state.
-    open func setDisabledBackgroundColor(_ color: UIColor?) {
+    @objc open func setDisabledBackgroundColor(_ color: UIColor?) {
         var image: UIImage?
         if let color = color {
             image = UIImage(color: color, size: CGSize(width: 1, height: 1))
@@ -159,8 +159,8 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
     }
 }
 
-extension UIButton {
-    fileprivate struct AssociatedKey {
+@objc extension UIButton {
+    private struct AssociatedKey {
         static var touchAreaEdgeInsets = "XcoreTouchAreaEdgeInsets"
     }
 

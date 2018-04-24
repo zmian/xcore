@@ -24,7 +24,7 @@
 
 import UIKit
 
-extension UIView {
+@objc extension UIView {
     open var viewController: UIViewController? {
         return responder()
     }
@@ -214,7 +214,7 @@ extension UIView {
 
 // MARK: Snapshot
 
-extension UIView {
+@objc extension UIView {
     open func snapshotImage() -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
         drawHierarchy(in: bounds, afterScreenUpdates: true)
@@ -234,18 +234,18 @@ extension UIView {
     }
 }
 
-extension UIView {
+@objc extension UIView {
     open var sizeFittingScreenWidth: CGSize {
         return sizeFitting(width: UIScreen.main.bounds.width)
     }
 
     open func sizeFitting(width: CGFloat) -> CGSize {
-        let layoutSize = systemLayoutSizeFitting(CGSize(width: width, height: 0), withHorizontalFittingPriority: UILayoutPriorityRequired, verticalFittingPriority: UILayoutPriorityFittingSizeLevel)
+        let layoutSize = systemLayoutSizeFitting(CGSize(width: width, height: 0), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
         return CGSize(width: width, height: ceil(layoutSize.height))
     }
 }
 
-extension UIView {
+@objc extension UIView {
     open func resizeToFitSubviews() {
         var height: CGFloat = 0
 
@@ -262,13 +262,13 @@ extension UIView {
 // MARK: Resistance And Hugging
 
 extension UIView {
-    open func resistsSizeChange() {
-        sizeChangeResistance(UILayoutPriorityRequired, axis: .vertical)
-        sizeChangeResistance(UILayoutPriorityDefaultLow, axis: .horizontal)
+    @objc open func resistsSizeChange() {
+        sizeChangeResistance(.required, axis: .vertical)
+        sizeChangeResistance(.defaultLow, axis: .horizontal)
     }
 
-    open func resistsSizeChange(axis: UILayoutConstraintAxis) {
-        sizeChangeResistance(UILayoutPriorityRequired, axis: axis)
+    @objc open func resistsSizeChange(axis: UILayoutConstraintAxis) {
+        sizeChangeResistance(.required, axis: axis)
     }
 
     open func sizeChangeResistance(_ priority: UILayoutPriority, axis: UILayoutConstraintAxis...) {
@@ -295,7 +295,7 @@ extension Array where Element == UIView {
 
 // MARK: Utilities
 
-extension UIView {
+@objc extension UIView {
     /// Get a child view by class name.
     ///
     /// - parameter className: The class name of the child view (e.g., `UIImageView`).

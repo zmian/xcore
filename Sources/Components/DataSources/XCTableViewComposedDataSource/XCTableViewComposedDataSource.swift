@@ -26,7 +26,7 @@
 import UIKit
 
 open class XCTableViewComposedDataSource: XCTableViewDataSource {
-    fileprivate var dataSourceIndex = DataSourceIndex<XCTableViewDataSource>()
+    private var dataSourceIndex = DataSourceIndex<XCTableViewDataSource>()
 
     open var dataSources: [XCTableViewDataSource] = []
 

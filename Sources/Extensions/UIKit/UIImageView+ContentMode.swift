@@ -46,7 +46,7 @@ extension UIImageView {
         }
     }
 
-    fileprivate func adjustContentModeIfNeeded() {
+    private func adjustContentModeIfNeeded() {
         guard isContentModeAutomaticallyAdjusted else { return }
         adjustContentMode()
     }
@@ -84,12 +84,12 @@ extension UIImageView {
         )
     }
 
-    @objc fileprivate func swizzled_layoutSubviews() {
+    @objc private func swizzled_layoutSubviews() {
         self.swizzled_layoutSubviews()
         adjustContentModeIfNeeded()
     }
 
-    @objc fileprivate func swizzled_setImage(_ image: UIImage?) {
+    @objc private func swizzled_setImage(_ image: UIImage?) {
         self.swizzled_setImage(image)
         adjustContentModeIfNeeded()
     }

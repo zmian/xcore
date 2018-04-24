@@ -70,10 +70,6 @@ extension UIFont {
         case normal, italic, monospace
     }
 
-    public enum Weight {
-        case ultralight, thin, light, regular, medium, semibold, bold, heavy, black
-    }
-
     public struct Size {
         public static let headline: CGFloat    = 16
         public static let subheadline: CGFloat = 14
@@ -85,36 +81,13 @@ extension UIFont {
     }
 
     public static func systemFont(_ size: CGFloat, style: Style = .normal, weight: Weight = .regular) -> UIFont {
-        let fontWeight: CGFloat
-
-        switch weight {
-            case .ultralight:
-                fontWeight = UIFontWeightUltraLight
-            case .thin:
-                fontWeight = UIFontWeightThin
-            case .light:
-                fontWeight = UIFontWeightLight
-            case .regular:
-                fontWeight = UIFontWeightRegular
-            case .medium:
-                fontWeight = UIFontWeightMedium
-            case .semibold:
-                fontWeight = UIFontWeightSemibold
-            case .bold:
-                fontWeight = UIFontWeightBold
-            case .heavy:
-                fontWeight = UIFontWeightHeavy
-            case .black:
-                fontWeight = UIFontWeightBlack
-        }
-
         switch style {
             case .normal:
-                return systemFont(ofSize: size, weight: fontWeight)
+                return systemFont(ofSize: size, weight: weight)
             case .italic:
                 return italicSystemFont(ofSize: size)
             case .monospace:
-                return monospacedDigitSystemFont(ofSize: size, weight: fontWeight)
+                return monospacedDigitSystemFont(ofSize: size, weight: weight)
         }
     }
 }
@@ -141,8 +114,8 @@ extension UIFont {
     }
 
     public var monospacedDigitFont: UIFont {
-        let featureSettings = [[UIFontFeatureTypeIdentifierKey: kNumberSpacingType, UIFontFeatureSelectorIdentifierKey: kMonospacedNumbersSelector]]
-        let attributes      = [UIFontDescriptorFeatureSettingsAttribute: featureSettings]
+        let featureSettings = [[UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType, UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector]]
+        let attributes      = [UIFontDescriptor.AttributeName.featureSettings: featureSettings]
         let oldDescriptor   = fontDescriptor
         let newDescriptor   = oldDescriptor.addingAttributes(attributes)
         return UIFont(descriptor: newDescriptor, size: 0)
