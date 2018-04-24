@@ -174,7 +174,7 @@ extension UIImage {
     }
 
     /// Modified Image Context, apply modification on image
-    fileprivate func modifiedImage(_ draw: (CGContext, CGRect) -> ()) -> UIImage {
+    private func modifiedImage(_ draw: (CGContext, CGRect) -> ()) -> UIImage {
         // using scale correctly preserves retina images
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
         let context = UIGraphicsGetCurrentContext()!

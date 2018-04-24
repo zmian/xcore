@@ -110,7 +110,7 @@ extension IntervalType {
 
 extension Double {
     // Adopted from: http://stackoverflow.com/a/35504720
-    fileprivate static let abbrevationNumberFormatter: NumberFormatter = {
+    private static let abbrevationNumberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         numberFormatter.allowsFloats = true
         numberFormatter.minimumIntegerDigits = 1
@@ -118,8 +118,8 @@ extension Double {
         numberFormatter.maximumFractionDigits = 1
         return numberFormatter
     }()
-    fileprivate typealias Abbrevation = (suffix: String, threshold: Double, divisor: Double)
-    fileprivate static let abbreviations: [Abbrevation] = [
+    private typealias Abbrevation = (suffix: String, threshold: Double, divisor: Double)
+    private static let abbreviations: [Abbrevation] = [
                                        ("",                0,              1),
                                        ("K",           1_000,          1_000),
                                        ("K",         100_000,          1_000),
@@ -161,7 +161,7 @@ extension Double {
         return Double.abbrevationNumberFormatter.string(from: NSNumber(value: value)) ?? "\(self)"
     }
 
-    fileprivate static let testValues: [Double] = [598, -999, 1000, -1284, 9940, 9980, 39900, 99880, 399880, 999898, 999999, 1456384, 12383474, 987, 1200, 12000, 120000, 1200000, 1340, 132456, 9_000_000_000, 16_000_000, 160_000_000, 999_000_000]
+    private static let testValues: [Double] = [598, -999, 1000, -1284, 9940, 9980, 39900, 99880, 399880, 999898, 999999, 1456384, 12383474, 987, 1200, 12000, 120000, 1200000, 1340, 132456, 9_000_000_000, 16_000_000, 160_000_000, 999_000_000]
 }
 
 extension Sequence where Iterator.Element == Double {

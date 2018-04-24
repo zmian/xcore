@@ -80,7 +80,7 @@ extension UILabel {
         style.configure?(self)
     }
 
-    public convenience init(text: String, attributes: [String: AnyObject]) {
+    public convenience init(text: String, attributes: [NSAttributedStringKey: Any]) {
         self.init()
         attributedText = NSAttributedString(string: text, attributes: attributes)
     }

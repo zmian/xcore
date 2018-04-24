@@ -31,7 +31,7 @@ final class XCCollectionView: UICollectionView {
     }
 
     @objc
-    fileprivate func xcReloadData() {
+    private func xcReloadData() {
         super.reloadData()
         collectionViewLayout.invalidateLayout()
     }
@@ -82,8 +82,8 @@ extension XCCollectionViewComposedDataSource {
 }
 
 open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource {
-    fileprivate let sizeCollectionView = XCFakeCollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-    fileprivate var dataSourceIndex = DataSourceIndex<XCCollectionViewDataSource>()
+    private let sizeCollectionView = XCFakeCollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    private var dataSourceIndex = DataSourceIndex<XCCollectionViewDataSource>()
 
     open func index(for section: Int) -> DataSource<XCCollectionViewDataSource> {
         let ds = dataSourceIndex[section]

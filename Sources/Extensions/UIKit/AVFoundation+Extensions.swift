@@ -42,7 +42,7 @@ extension AVPlayer {
         }
     }
 
-    fileprivate func format(seconds: Int) -> String {
+    private func format(seconds: Int) -> String {
         let sec = seconds % 60
         let min = seconds / 60
         let hrs = seconds / 3600
@@ -56,7 +56,7 @@ extension AVPlayer {
 }
 
 extension AVPlayer {
-    fileprivate struct AssociatedKey {
+    private struct AssociatedKey {
         static var playerRepeat = "XcoreAVPlayerRepeat"
     }
 

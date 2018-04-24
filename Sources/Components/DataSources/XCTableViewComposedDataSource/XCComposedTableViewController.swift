@@ -25,7 +25,7 @@
 import UIKit
 
 open class XCComposedTableViewController: UIViewController {
-    public fileprivate(set) var tableViewConstraints = [NSLayoutConstraint]()
+    public private(set) var tableViewConstraints = [NSLayoutConstraint]()
 
     /// There is UIKit bug that causes `UITableView` to jump when using `estimatedRowHeight`
     /// and reloading cells/sections or the entire table view.
@@ -33,7 +33,7 @@ open class XCComposedTableViewController: UIViewController {
     /// This solution patches the said bug of `UITableView` by caching
     /// heights and automatically switching to those when `reloadData`, `reloadCells`,
     /// or `reloadSection` methods are invoked.
-    fileprivate var estimatedRowHeightCache = IndexPathCache<CGFloat>(defaultValue: UITableViewAutomaticDimension)
+    private var estimatedRowHeightCache = IndexPathCache<CGFloat>(defaultValue: UITableViewAutomaticDimension)
 
     /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
     /// The default value is `.grouped`.
@@ -57,7 +57,7 @@ open class XCComposedTableViewController: UIViewController {
 
     /// The distance that the tableView is inset from the enclosing view.
     /// The default value is `UIEdgeInsets.zero`.
-    open dynamic var contentInset = UIEdgeInsets.zero {
+    @objc open dynamic var contentInset = UIEdgeInsets.zero {
         didSet {
             tableViewConstraints.at(0)?.constant = contentInset.left
             tableViewConstraints.at(1)?.constant = contentInset.right
@@ -93,7 +93,7 @@ open class XCComposedTableViewController: UIViewController {
 // MARK: Setup Methods
 
 extension XCComposedTableViewController {
-    fileprivate func setupTableView(forTableView tableView: UITableView) {
+    private func setupTableView(forTableView tableView: UITableView) {
         composedDataSource.dataSources = dataSources(for: tableView)
         tableView.dataSource = composedDataSource
         tableView.delegate = self

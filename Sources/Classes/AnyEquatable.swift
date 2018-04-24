@@ -52,7 +52,7 @@ import Foundation
 /// ```
 public struct AnyEquatable {
     public let base: Any
-    fileprivate let equals: (Any) -> Bool
+    private let equals: (Any) -> Bool
 
     public init<E: Equatable>(_ base: E) {
         self.base = base

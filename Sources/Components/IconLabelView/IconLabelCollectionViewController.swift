@@ -39,7 +39,7 @@ open class IconLabelCollectionViewController: UIViewController {
         setupIconLabelCollectionView()
     }
 
-    fileprivate func setupIconLabelCollectionView() {
+    private func setupIconLabelCollectionView() {
         view.addSubview(collectionView)
         NSLayoutConstraint.constraintsForViewToFillSuperview(collectionView).activate()
     }

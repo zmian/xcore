@@ -33,7 +33,7 @@ extension UIApplication {
     /// https://bugs.swift.org/browse/SR-1226 is still unresolved
     /// and cause problems. It seems that as of now, marking API as unavailable
     /// for extensions in Swift still doesn’t let you compile for App extensions.
-    static var sharedOrNil: UIApplication? {
+    public static var sharedOrNil: UIApplication? {
         let sharedApplicationSelector = NSSelectorFromString("sharedApplication")
 
         guard UIApplication.responds(to: sharedApplicationSelector) else {
@@ -47,4 +47,3 @@ extension UIApplication {
         return unmanagedSharedApplication.takeUnretainedValue() as? UIApplication
     }
 }
-

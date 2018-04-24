@@ -34,9 +34,9 @@ public struct IconLabelCollectionCellOptions: OptionSet {
 }
 
 open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
-    fileprivate var allowReordering: Bool { return cellOptions.contains(.movable) }
-    fileprivate var allowDeletion: Bool   { return cellOptions.contains(.deletable) }
-    fileprivate var hasLongPressGestureRecognizer = false
+    private var allowReordering: Bool { return cellOptions.contains(.movable) }
+    private var allowDeletion: Bool   { return cellOptions.contains(.deletable) }
+    private var hasLongPressGestureRecognizer = false
     open var sections: [Section<ImageTitleDisplayable>] = []
     /// The layout used to organize the collection view’s items.
     open var layout: UICollectionViewFlowLayout? {
@@ -63,22 +63,22 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
         }
     }
 
-    fileprivate var configureCell: ((_ indexPath: IndexPath, _ cell: IconLabelCollectionViewCell, _ item: ImageTitleDisplayable) -> Void)?
+    private var configureCell: ((_ indexPath: IndexPath, _ cell: IconLabelCollectionViewCell, _ item: ImageTitleDisplayable) -> Void)?
     open func configureCell(_ callback: @escaping (_ indexPath: IndexPath, _ cell: IconLabelCollectionViewCell, _ item: ImageTitleDisplayable) -> Void) {
         configureCell = callback
     }
 
-    fileprivate var didSelectItem: ((_ indexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void)?
+    private var didSelectItem: ((_ indexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void)?
     open func didSelectItem(_ callback: @escaping (_ indexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void) {
         didSelectItem = callback
     }
 
-    fileprivate var didRemoveItem: ((_ indexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void)?
+    private var didRemoveItem: ((_ indexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void)?
     open func didRemoveItem(_ callback: @escaping (_ indexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void) {
         didRemoveItem = callback
     }
 
-    fileprivate var didMoveItem: ((_ sourceIndexPath: IndexPath, _ destinationIndexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void)?
+    private var didMoveItem: ((_ sourceIndexPath: IndexPath, _ destinationIndexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void)?
     open func didMoveItem(_ callback: @escaping (_ sourceIndexPath: IndexPath, _ destinationIndexPath: IndexPath, _ item: ImageTitleDisplayable) -> Void) {
         didMoveItem = callback
     }
@@ -110,7 +110,7 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
 
     // MARK: Setup Methods
 
-    fileprivate func commonInit() {
+    private func commonInit() {
         setupCollectionView()
         setupSubviews()
     }
@@ -122,7 +122,7 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
     /// This method is called when self is initialized using any of the relevant `init` methods.
     open func setupSubviews() {}
 
-    fileprivate func setupCollectionView() {
+    private func setupCollectionView() {
         delegate             = self
         dataSource           = self
         backgroundColor      = .clear
@@ -145,7 +145,7 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
 
     // MARK: UILongPressGestureRecognizer
 
-    fileprivate lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
+    private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
         return UILongPressGestureRecognizer { [weak self] sender in
             guard
                 let strongSelf = self,
@@ -157,7 +157,7 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
         }
     }()
 
-    fileprivate lazy var tapGestureRecognizer: UITapGestureRecognizer = {
+    private lazy var tapGestureRecognizer: UITapGestureRecognizer = {
         let gestureRecognizer = UITapGestureRecognizer()
         gestureRecognizer.isEnabled = false
 
@@ -233,7 +233,7 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
 
     // MARK: Helpers
 
-    fileprivate func updateCellOptionsIfNeeded() {
+    private func updateCellOptionsIfNeeded() {
         if allowDeletion && !hasLongPressGestureRecognizer {
             addGestureRecognizer(tapGestureRecognizer)
             addGestureRecognizer(longPressGestureRecognizer)
@@ -246,8 +246,8 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
         }
     }
 
-    fileprivate func toggleVisibleCellsDeleteButtons() {
-        visibleCells.flatMap { $0 as? IconLabelCollectionViewCell }.forEach { $0.setDeleteButtonHidden(!isEditing) }
+    private func toggleVisibleCellsDeleteButtons() {
+        visibleCells.compactMap { $0 as? IconLabelCollectionViewCell }.forEach { $0.setDeleteButtonHidden(!isEditing) }
     }
 
     // MARK: Convenience API

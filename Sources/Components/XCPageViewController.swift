@@ -33,7 +33,7 @@ private class XCUIPageViewController: UIPageViewController {
     // as view controller count stays at one when we are disabling
     // bounce.
     var disableBounceForSinglePage = false
-    fileprivate var scrollView: UIScrollView? {
+    private var scrollView: UIScrollView? {
         didSet {
             scrollView?.bounces       = !disableBounceForSinglePage
             scrollView?.isScrollEnabled = swipeEnabled
@@ -70,7 +70,7 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
     open var transitionStyle = UIPageViewControllerTransitionStyle.scroll
     open var navigationOrientation = UIPageViewControllerNavigationOrientation.horizontal
 
-    fileprivate var didChangeCurrentPage: ((_ index: Int) -> Void)?
+    private var didChangeCurrentPage: ((_ index: Int) -> Void)?
     /// Closure for listening page change events in subclasses
     open func didChangeCurrentPage(_ callback: ((_ index: Int) -> Void)? = nil) {
         didChangeCurrentPage = callback
@@ -88,7 +88,7 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
         setupPageViewController()
     }
 
-    fileprivate func setupPageViewController() {
+    private func setupPageViewController() {
         pageViewController            = XCUIPageViewController(transitionStyle: transitionStyle, navigationOrientation: navigationOrientation, options: [UIPageViewControllerOptionInterPageSpacingKey: pageSpacing])
         pageViewController.delegate   = self
         pageViewController.dataSource = self
@@ -110,7 +110,7 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
         (pageViewController as? XCUIPageViewController)?.swipeEnabled = swipeEnabled
     }
 
-    fileprivate func setupConstraints() {
+    private func setupConstraints() {
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: pageControl, height: pageControlHeight).activate()
         NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(pageControl).activate()
@@ -175,7 +175,7 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
 
     // MARK: Helpers
 
-    fileprivate func indexOf(_ viewController: UIViewController) -> Int {
+    private func indexOf(_ viewController: UIViewController) -> Int {
         return viewControllers.index(of: viewController) ?? 0
     }
 
@@ -183,7 +183,7 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
         setCurrentPage(pageControl.currentPage)
     }
 
-    fileprivate func updateStatusBar(forIndex index: Int) {
+    private func updateStatusBar(forIndex index: Int) {
         guard let vc = viewControllers.at(index) else { return }
         if let nvc = vc as? UINavigationController {
             statusBarStyle = nvc.preferredStatusBarStyle

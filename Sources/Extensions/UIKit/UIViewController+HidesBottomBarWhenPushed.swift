@@ -40,7 +40,7 @@ extension UIViewController {
     /// any subsequent view controllers that are pushed on to the stack.
     ///
     /// According to the documentation: **If true, the bottom bar remains hidden until the view controller is popped from the stack.**
-    @objc fileprivate var swizzled_hidesBottomBarWhenPushed: Bool {
+    @objc private var swizzled_hidesBottomBarWhenPushed: Bool {
         let value = self.swizzled_hidesBottomBarWhenPushed
 
         if value, navigationController?.topViewController != self {
