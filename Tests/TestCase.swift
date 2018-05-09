@@ -1,5 +1,5 @@
 //
-// XcoreTests.swift
+// TestCase.swift
 //
 // Copyright © 2016 Zeeshan Mian
 //
@@ -25,7 +25,7 @@
 import XCTest
 @testable import Xcore
 
-class XcoreTests: XCTestCase {
+class TestCase: XCTestCase {
 
 }
 
