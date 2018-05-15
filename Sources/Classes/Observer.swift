@@ -35,7 +35,7 @@ open class Observers {
     // MARK: Observer API
 
     /// Register an observer.
-    open func addObserver<T: AnyObject>(_ owner: T, _ handler: @escaping () -> Void) where T: Equatable {
+    open func observe<T: AnyObject>(owner: T, _ handler: @escaping () -> Void) where T: Equatable {
         if let existingObserverIndex = observers.index(where: { $0 == owner }) {
             observers[existingObserverIndex].handler = handler
         } else {
@@ -44,14 +44,14 @@ open class Observers {
     }
 
     /// Remove given observers.
-    open func removeObserver<T: AnyObject>(_ owner: T) where T: Equatable {
+    open func remove<T: AnyObject>(_ owner: T) where T: Equatable {
         if let existingObserverIndex = observers.index(where: { $0 == owner }) {
             observers.remove(at: existingObserverIndex)
         }
     }
 
     /// Remove all observers.
-    open func removeObservers() {
+    open func removeAll() {
         observers.removeAll(keepingCapacity: false)
     }
 
@@ -66,10 +66,10 @@ open class Observers {
 
     // MARK: Notify API
 
-    /// A boolean property to suppress notifications and This flag value is checked
-    /// before firing any notification calls to the registered observers.
-    /// The default value is `false`, meaning all notifications will be fired.
-    open var suppressNotifications: Bool = false
+    /// A boolean value to determine whether the notifications should be sent.
+    /// This flag is checked before firing any notification calls to the registered
+    /// observers. The default value is `true`.
+    open var isNotificationEnabled = true
 
     /// Invokes each registered observer if `oldValue` is different than `newValue`.
     open func notifyIfNeeded<T: Equatable>(_ oldValue: T, newValue: T) {
@@ -92,7 +92,7 @@ open class Observers {
     /// Invokes each registered observer.
     open func notify() {
         flatten()
-        guard !suppressNotifications else { return }
+        guard isNotificationEnabled else { return }
         observers.forEach { $0.handler?() }
     }
 }
