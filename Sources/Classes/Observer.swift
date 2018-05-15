@@ -26,7 +26,7 @@ import Foundation
 
 open class Observers {
     /// A list of all observers.
-    open var observers = [Observer]()
+    private var observers = [Observer]()
 
     public init() {
         // Must have a public init for client code to initialize this class.
@@ -35,7 +35,7 @@ open class Observers {
     // MARK: Observer API
 
     /// Register an observer.
-    open func observe<T: AnyObject>(owner: T, _ handler: @escaping () -> Void) where T: Equatable {
+    open func observe<T>(owner: T, _ handler: @escaping () -> Void) where T: AnyObject, T: Equatable {
         if let existingObserverIndex = observers.index(where: { $0 == owner }) {
             observers[existingObserverIndex].handler = handler
         } else {
@@ -44,10 +44,12 @@ open class Observers {
     }
 
     /// Remove given observers.
-    open func remove<T: AnyObject>(_ owner: T) where T: Equatable {
-        if let existingObserverIndex = observers.index(where: { $0 == owner }) {
-            observers.remove(at: existingObserverIndex)
+    open func remove<T>(_ owner: T) where T: AnyObject, T: Equatable {
+        guard let index = observers.index(where: { $0 == owner }) else {
+            return
         }
+
+        observers.remove(at: index)
     }
 
     /// Remove all observers.
@@ -57,10 +59,8 @@ open class Observers {
 
     /// Removes all observers where the `owner` is deallocated.
     open func flatten() {
-        for (index, observer) in observers.enumerated().reversed() {
-            if observer.owner == nil {
-                observers.remove(at: index)
-            }
+        for (index, observer) in observers.enumerated().reversed() where observer.owner == nil {
+            observers.remove(at: index)
         }
     }
 
@@ -72,19 +72,19 @@ open class Observers {
     open var isNotificationEnabled = true
 
     /// Invokes each registered observer if `oldValue` is different than `newValue`.
-    open func notifyIfNeeded<T: Equatable>(_ oldValue: T, newValue: T) {
+    open func notifyIfNeeded<T>(_ oldValue: T, newValue: T) where T: Equatable {
         guard oldValue != newValue else { return }
         notify()
     }
 
     /// Invokes each registered observer if `oldValue` is different than `newValue`.
-    open func notifyIfNeeded<T: Equatable>(_ oldValue: T?, newValue: T?) {
+    open func notifyIfNeeded<T>(_ oldValue: T?, newValue: T?) where T: Equatable {
         guard oldValue != newValue else { return }
         notify()
     }
 
     /// Invokes each registered observer if `oldValue` is different than `newValue`.
-    open func notifyIfNeeded<T: Equatable>(_ oldValue: [T], newValue: [T]) {
+    open func notifyIfNeeded<T>(_ oldValue: [T], newValue: [T]) where T: Equatable {
         guard oldValue != newValue else { return }
         notify()
     }
@@ -97,12 +97,14 @@ open class Observers {
     }
 }
 
-public class Observer {
+// MARK: Observer
+
+private final class Observer {
     fileprivate let equals: (AnyObject) -> Bool
     public weak var owner: AnyObject?
     public var handler: (() -> Void)?
 
-    public init<T: Equatable>(owner: T, handler: @escaping () -> Void) where T: AnyObject {
+    public init<T>(owner: T, handler: @escaping () -> Void) where T: AnyObject, T: Equatable {
         self.owner = owner
         self.handler = handler
         self.equals = { [weak owner] otherOwner in
@@ -115,8 +117,10 @@ public class Observer {
     }
 }
 
+// MARK: Observer: Equatable
+
 extension Observer: Equatable {
-    public static func ==(lhs: Observer, rhs: Observer) -> Bool {
+    static func ==(lhs: Observer, rhs: Observer) -> Bool {
         guard let _ = lhs.owner, let rhsOwner = rhs.owner else {
             return false
         }
@@ -124,15 +128,15 @@ extension Observer: Equatable {
         return lhs.equals(rhsOwner)
     }
 
-    public static func ==<T: Equatable>(lhs: T, rhs: Observer) -> Bool where T: AnyObject {
+    static func ==<T>(lhs: T, rhs: Observer) -> Bool where T: Equatable, T: Equatable {
         return rhs.equals(lhs)
     }
 
-    public static func ==<T: Equatable>(lhs: Observer, rhs: T) -> Bool where T: AnyObject {
+    static func ==<T>(lhs: Observer, rhs: T) -> Bool where T: AnyObject, T: Equatable {
         return lhs.equals(rhs)
     }
 
-    public static func ==<T: Equatable>(lhs: T?, rhs: Observer) -> Bool where T: AnyObject {
+    static func ==<T>(lhs: T?, rhs: Observer) -> Bool where T: AnyObject, T: Equatable {
         guard let lhs = lhs else {
             return false
         }
@@ -141,7 +145,7 @@ extension Observer: Equatable {
     }
 }
 
-public func ==<T: Equatable>(lhs: Observer?, rhs: T) -> Bool where T: AnyObject {
+func ==<T>(lhs: Observer?, rhs: T) -> Bool where T: AnyObject, T: Equatable {
     guard let lhs = lhs else {
         return false
     }
