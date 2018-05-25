@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6804A9FD20B78F0E00B39183 /* NSObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6804A9FC20B78F0E00B39183 /* NSObject+Extensions.swift */; };
 		6816C776202F9494005CAEAC /* DebounceThrottle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6816C775202F9493005CAEAC /* DebounceThrottle.swift */; };
 		6843F3D41F771D1500B42ECB /* FadeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F3771F771AAC00B42ECB /* FadeAnimator.swift */; };
 		6843F3D51F771D1500B42ECB /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F3781F771AAC00B42ECB /* TransitionAnimator.swift */; };
@@ -155,6 +156,7 @@
 		4F7DCE5F8350BCAF06C38805 /* Pods_Xcore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Xcore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		56D96A853E1B0EC4E75E0691 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		5D3CFC269887586363462B4B /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
+		6804A9FC20B78F0E00B39183 /* NSObject+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+Extensions.swift"; sourceTree = "<group>"; };
 		6816C775202F9493005CAEAC /* DebounceThrottle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebounceThrottle.swift; sourceTree = "<group>"; };
 		6843F32E1F771AAB00B42ECB /* AnyEquatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyEquatable.swift; sourceTree = "<group>"; };
 		6843F32F1F771AAB00B42ECB /* Benchmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Benchmark.swift; sourceTree = "<group>"; };
@@ -557,6 +559,7 @@
 				6843F3B81F771CB700B42ECB /* Internal+Extensions.swift */,
 				6843F3B91F771CB700B42ECB /* NSAttributedString+Extensions.swift */,
 				6843F3BA1F771CB700B42ECB /* NSLayoutConstraint+Extensions.swift */,
+				6804A9FC20B78F0E00B39183 /* NSObject+Extensions.swift */,
 				6843F3BB1F771CB700B42ECB /* SDWebImage+Helpers.swift */,
 				6843F3BC1F771CB700B42ECB /* UIAlertController+Extensions.swift */,
 				6843F3BD1F771CB700B42ECB /* UIApplication+SharedOrNil.swift */,
@@ -921,6 +924,7 @@
 				6843F43F1F771D1500B42ECB /* Reusable.swift in Sources */,
 				6843F3E71F771D1500B42ECB /* PredicateQuery.swift in Sources */,
 				6843F4231F771D1500B42ECB /* UIGeometry+Extensions.swift in Sources */,
+				6804A9FD20B78F0E00B39183 /* NSObject+Extensions.swift in Sources */,
 				6843F4181F771D1500B42ECB /* NSLayoutConstraint+Extensions.swift in Sources */,
 				6843F4041F771D1500B42ECB /* TextViewController.swift in Sources */,
 				6843F4271F771D1500B42ECB /* UIKit+Extensions.swift in Sources */,
