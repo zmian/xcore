@@ -91,7 +91,7 @@ extension UIImage {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let strongSelf = self else { return }
             UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
-            strongSelf.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+            strongSelf.draw(in: CGRect(origin: .zero, size: newSize))
 
             guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else {
                 return
