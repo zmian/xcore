@@ -215,16 +215,40 @@ import UIKit
 // MARK: Snapshot
 
 @objc extension UIView {
-    open func snapshotImage() -> UIImage? {
+    /// Takes a snapshot of the complete view hierarchy as visible onscreen.
+    ///
+    /// - parameter afterScreenUpdates:
+    ///     A boolean value that indicates whether the snapshot should be rendered
+    ///     after recent changes have been incorporated. Specify the value false if
+    ///     you want to render a snapshot in the view hierarchy’s current state, which
+    ///     might not include recent changes. A Boolean value that indicates whether the
+    ///     snapshot should be rendered after recent changes have been incorporated.
+    ///     Specify the value `false` if you want to render a snapshot in the view hierarchy’s
+    ///     current state, which might not include recent changes. The default value is `false`.
+    ///
+    /// - returns: `UIImage` of the snapshot.
+    open func snapshotImage(afterScreenUpdates: Bool = false) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
-        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        drawHierarchy(in: bounds, afterScreenUpdates: afterScreenUpdates)
         let snapshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return snapshot
     }
 
-    open func snapshotImageView() -> UIImageView {
-        let imageView = UIImageView(image: snapshotImage())
+    /// Takes a snapshot of the complete view hierarchy as visible onscreen.
+    ///
+    /// - parameter afterScreenUpdates:
+    ///     A boolean value that indicates whether the snapshot should be rendered
+    ///     after recent changes have been incorporated. Specify the value false if
+    ///     you want to render a snapshot in the view hierarchy’s current state, which
+    ///     might not include recent changes. A Boolean value that indicates whether the
+    ///     snapshot should be rendered after recent changes have been incorporated.
+    ///     Specify the value `false` if you want to render a snapshot in the view hierarchy’s
+    ///     current state, which might not include recent changes. The default value is `false`.
+    ///
+    /// - returns: `UIImageView` of the snapshot.
+    open func snapshotImageView(afterScreenUpdates: Bool = false) -> UIImageView {
+        let imageView = UIImageView(image: snapshotImage(afterScreenUpdates: afterScreenUpdates))
         imageView.clipsToBounds = true
         imageView.borderColor = borderColor
         imageView.borderWidth = borderWidth
