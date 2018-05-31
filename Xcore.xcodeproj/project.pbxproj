@@ -1204,7 +1204,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.Example;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1220,7 +1220,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.Example;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1362,7 +1362,7 @@
 					"@loader_path/Frameworks",
 				);
 				OTHER_LDFLAGS = " $(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.Xcore;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.framework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1384,7 +1384,7 @@
 					"@loader_path/Frameworks",
 				);
 				OTHER_LDFLAGS = " $(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.Xcore;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.framework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
