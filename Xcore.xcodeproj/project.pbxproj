@@ -63,7 +63,6 @@
 		6843F4081F771D1500B42ECB /* XCPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F39D1F771AAC00B42ECB /* XCPageViewController.swift */; };
 		6843F4091F771D1500B42ECB /* XCScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F39E1F771AAC00B42ECB /* XCScrollViewController.swift */; };
 		6843F40A1F771D1500B42ECB /* XCTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F39F1F771AAC00B42ECB /* XCTableViewCell.swift */; };
-		6843F40B1F771D1500B42ECB /* XCTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F3A01F771AAC00B42ECB /* XCTextField.swift */; };
 		6843F40C1F771D1500B42ECB /* XCToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F3A11F771AAC00B42ECB /* XCToolbar.swift */; };
 		6843F40D1F771D1500B42ECB /* XCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F3A21F771AAC00B42ECB /* XCView.swift */; };
 		6843F4321F771D1500B42ECB /* Collectionify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F3AA1F771AAC00B42ECB /* Collectionify.swift */; };
@@ -224,7 +223,6 @@
 		6843F39D1F771AAC00B42ECB /* XCPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCPageViewController.swift; sourceTree = "<group>"; };
 		6843F39E1F771AAC00B42ECB /* XCScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCScrollViewController.swift; sourceTree = "<group>"; };
 		6843F39F1F771AAC00B42ECB /* XCTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTableViewCell.swift; sourceTree = "<group>"; };
-		6843F3A01F771AAC00B42ECB /* XCTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTextField.swift; sourceTree = "<group>"; };
 		6843F3A11F771AAC00B42ECB /* XCToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCToolbar.swift; sourceTree = "<group>"; };
 		6843F3A21F771AAC00B42ECB /* XCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCView.swift; sourceTree = "<group>"; };
 		6843F3A41F771AAC00B42ECB /* Timer+Closure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+Closure.swift"; sourceTree = "<group>"; };
@@ -438,7 +436,6 @@
 				6843F39D1F771AAC00B42ECB /* XCPageViewController.swift */,
 				6843F39E1F771AAC00B42ECB /* XCScrollViewController.swift */,
 				6843F39F1F771AAC00B42ECB /* XCTableViewCell.swift */,
-				6843F3A01F771AAC00B42ECB /* XCTextField.swift */,
 				6843F3A11F771AAC00B42ECB /* XCToolbar.swift */,
 				6843F3A21F771AAC00B42ECB /* XCView.swift */,
 			);
@@ -937,7 +934,6 @@
 				68B3D06920BF536000B60AA6 /* UIKit+Extensions.swift in Sources */,
 				68B3D06D20BF536000B60AA6 /* UIImage+Extensions.swift in Sources */,
 				68B3D08420BF536100B60AA6 /* Date+Extensions.swift in Sources */,
-				6843F40B1F771D1500B42ECB /* XCTextField.swift in Sources */,
 				68B3D08E20BF536100B60AA6 /* Numbers+Extensions.swift in Sources */,
 				6843F3DF1F771D1500B42ECB /* AnyEquatable.swift in Sources */,
 				68B3D07A20BF536100B60AA6 /* ProcessInfo+Extensions.swift in Sources */,
