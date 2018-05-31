@@ -387,10 +387,10 @@ extension UIView {
     /// Get a child view by class name.
     ///
     /// - parameter className: The class name of the child view (e.g., `UIImageView`).
-    /// - parameter comparison: The comparison option to use when looking for the subview. The default value is `.typeOf`.
+    /// - parameter comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
     ///
     /// - returns: The child view if exists; otherwise nil.
-    open func subview(withClassName className: String, comparison: LookupComparison = .typeOf) -> UIView? {
+    open func subview(withClassName className: String, comparison: LookupComparison = .kindOf) -> UIView? {
         guard let aClass = NSClassFromString(className) else {
             return nil
         }
@@ -401,10 +401,10 @@ extension UIView {
     /// Get a child views by class name.
     ///
     /// - parameter className: The class name of the child views (e.g., `UIImageView`).
-    /// - parameter comparison: The comparison option to use when looking for the subview. The default value is `.typeOf`.
+    /// - parameter comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
     ///
     /// - returns: The child views if exists; otherwise empty array.
-    open func subviews(withClassName className: String, comparison: LookupComparison = .typeOf) -> [UIView] {
+    open func subviews(withClassName className: String, comparison: LookupComparison = .kindOf) -> [UIView] {
         guard let aClass = NSClassFromString(className) else {
             return []
         }
@@ -427,10 +427,10 @@ extension UIView {
     /// Get a child view by class.
     ///
     /// - parameter aClass: The class name of the child view (e.g., `UIImageView`).
-    /// - parameter comparison: The comparison option to use when looking for the subview. The default value is `.typeOf`.
+    /// - parameter comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
     ///
     /// - returns: The child view if exists; otherwise nil.
-    open func subview<T: UIView>(withClass aClass: T.Type, comparison: LookupComparison = .typeOf) -> T? {
+    open func subview<T: UIView>(withClass aClass: T.Type, comparison: LookupComparison = .kindOf) -> T? {
         return internalSubview(withClass: aClass, comparison: comparison) as? T
     }
 

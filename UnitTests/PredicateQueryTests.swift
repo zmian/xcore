@@ -25,7 +25,7 @@
 import XCTest
 @testable import Xcore
 
-final class PredicateQueryTests: XCTestCase {
+final class PredicateQueryTests: TestCase {
     private typealias TestData<OutputType> = (input: String, output: OutputType)
 
     private func testData(comparator: String) -> [TestData<String>] {
