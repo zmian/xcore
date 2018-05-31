@@ -255,7 +255,7 @@
 		689869E21E9992E600CE7B77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		689869E41E9992E600CE7B77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		689D0C751D8DBB9500145E0B /* Xcore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Xcore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		689D0C7E1D8DBB9600145E0B /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		689D0C7E1D8DBB9600145E0B /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		689D0D181D8DBE5C00145E0B /* TestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
 		68B3D03320BF536000B60AA6 /* UIGeometry+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIGeometry+Extensions.swift"; sourceTree = "<group>"; };
 		68B3D03420BF536000B60AA6 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
@@ -636,7 +636,7 @@
 			children = (
 				689869C91E99926100CE7B77 /* Example */,
 				68728FBA1F3C1F3000A0C1D0 /* Sources */,
-				689D0D161D8DBE5C00145E0B /* Tests */,
+				689D0D161D8DBE5C00145E0B /* UnitTests */,
 				6872189120C07A9F00BFEA98 /* UITests */,
 				689D0C761D8DBB9500145E0B /* Products */,
 				681BD58B1D8DD5C7008E68C3 /* Frameworks */,
@@ -648,21 +648,21 @@
 			isa = PBXGroup;
 			children = (
 				689D0C751D8DBB9500145E0B /* Xcore.framework */,
-				689D0C7E1D8DBB9600145E0B /* Tests.xctest */,
+				689D0C7E1D8DBB9600145E0B /* UnitTests.xctest */,
 				689869C81E99926100CE7B77 /* Example.app */,
 				6872189020C07A9F00BFEA98 /* UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		689D0D161D8DBE5C00145E0B /* Tests */ = {
+		689D0D161D8DBE5C00145E0B /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
 				689D0D181D8DBE5C00145E0B /* TestCase.swift */,
 				68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */,
 				6872189D20C07B8300BFEA98 /* Supporting Files */,
 			);
-			path = Tests;
+			path = UnitTests;
 			sourceTree = "<group>";
 		};
 		68B3D03120BF536000B60AA6 /* Extensions */ = {
@@ -803,9 +803,9 @@
 			productReference = 689D0C751D8DBB9500145E0B /* Xcore.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		689D0C7D1D8DBB9600145E0B /* Tests */ = {
+		689D0C7D1D8DBB9600145E0B /* UnitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 689D0C8C1D8DBB9600145E0B /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildConfigurationList = 689D0C8C1D8DBB9600145E0B /* Build configuration list for PBXNativeTarget "UnitTests" */;
 			buildPhases = (
 				AA8AF57F04C008D6385F7344 /* [CP] Check Pods Manifest.lock */,
 				689D0C7A1D8DBB9600145E0B /* Sources */,
@@ -817,9 +817,9 @@
 			dependencies = (
 				68B1DB2D1E999C10007CD621 /* PBXTargetDependency */,
 			);
-			name = Tests;
+			name = UnitTests;
 			productName = XcoreTests;
-			productReference = 689D0C7E1D8DBB9600145E0B /* Tests.xctest */;
+			productReference = 689D0C7E1D8DBB9600145E0B /* UnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -869,7 +869,7 @@
 			targets = (
 				689869C71E99926100CE7B77 /* Example */,
 				689D0C741D8DBB9500145E0B /* Xcore */,
-				689D0C7D1D8DBB9600145E0B /* Tests */,
+				689D0C7D1D8DBB9600145E0B /* UnitTests */,
 				6872188F20C07A9F00BFEA98 /* UITests */,
 			);
 		};
@@ -1396,13 +1396,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = "Tests/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "UnitTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.unittests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
@@ -1414,13 +1414,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = "Tests/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "UnitTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.unittests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
@@ -1465,7 +1465,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		689D0C8C1D8DBB9600145E0B /* Build configuration list for PBXNativeTarget "Tests" */ = {
+		689D0C8C1D8DBB9600145E0B /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				689D0C8D1D8DBB9600145E0B /* Debug */,
