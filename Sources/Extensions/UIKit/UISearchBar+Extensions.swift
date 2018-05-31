@@ -26,7 +26,7 @@ import UIKit
 
 extension UISearchBar {
     open var textField: UITextField? {
-        return subview(withClass: UITextField.self, comparison: .kindOf)
+        return subview(withClass: UITextField.self)
     }
 
     open var searchFieldBackgroundColor: UIColor? {

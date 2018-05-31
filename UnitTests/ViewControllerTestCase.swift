@@ -1,5 +1,5 @@
 //
-// TestCase.swift
+// ViewControllerTestCase.swift
 //
 // Copyright © 2018 Zeeshan Mian
 //
@@ -26,14 +26,15 @@ import XCTest
 import UIKit
 @testable import Example
 
-class TestCase: XCTestCase {
-    let application = XCUIApplication()
+class ViewControllerTestCase: TestCase {
+    let viewController = UIViewController()
+    var view: UIView {
+        return viewController.view
+    }
 
     override func setUp() {
         super.setUp()
-        continueAfterFailure = false
-        application.launchArguments.append("--uitesting")
-        application.launch()
+        viewController.loadViewIfNeeded()
     }
 
     override func tearDown() {

@@ -83,6 +83,8 @@
 		6843F4411F771D1500B42ECB /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F3A81F771AAC00B42ECB /* UITableView+Reusable.swift */; };
 		6843F4421F771D1500B42ECB /* Timer+Closure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6843F3A41F771AAC00B42ECB /* Timer+Closure.swift */; };
 		6872189320C07A9F00BFEA98 /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6872189220C07A9F00BFEA98 /* TestCase.swift */; };
+		687218A120C0824900BFEA98 /* SubviewLookupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687218A020C0824900BFEA98 /* SubviewLookupTests.swift */; };
+		687218A520C0841100BFEA98 /* ViewControllerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687218A420C0841000BFEA98 /* ViewControllerTestCase.swift */; };
 		6872908F1F3C1F3100A0C1D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6872902A1F3C1F3000A0C1D0 /* Assets.xcassets */; };
 		687290911F3C1F3100A0C1D0 /* Xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = 6872902C1F3C1F3000A0C1D0 /* Xcore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		689869E61E9992E600CE7B77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689869DD1E9992E600CE7B77 /* ViewController.swift */; };
@@ -244,6 +246,8 @@
 		6872189220C07A9F00BFEA98 /* TestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
 		6872189B20C07B6E00BFEA98 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6872189E20C07B8300BFEA98 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		687218A020C0824900BFEA98 /* SubviewLookupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubviewLookupTests.swift; sourceTree = "<group>"; };
+		687218A420C0841000BFEA98 /* ViewControllerTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTestCase.swift; sourceTree = "<group>"; };
 		6872902A1F3C1F3000A0C1D0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6872902B1F3C1F3000A0C1D0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6872902C1F3C1F3000A0C1D0 /* Xcore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Xcore.h; sourceTree = "<group>"; };
@@ -659,7 +663,9 @@
 			isa = PBXGroup;
 			children = (
 				689D0D181D8DBE5C00145E0B /* TestCase.swift */,
+				687218A420C0841000BFEA98 /* ViewControllerTestCase.swift */,
 				68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */,
+				687218A020C0824900BFEA98 /* SubviewLookupTests.swift */,
 				6872189D20C07B8300BFEA98 /* Supporting Files */,
 			);
 			path = UnitTests;
@@ -1123,7 +1129,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				687218A120C0824900BFEA98 /* SubviewLookupTests.swift in Sources */,
 				68C392FE1E99D327009D8D58 /* PredicateQueryTests.swift in Sources */,
+				687218A520C0841100BFEA98 /* ViewControllerTestCase.swift in Sources */,
 				689D0D1B1D8DBE6400145E0B /* TestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

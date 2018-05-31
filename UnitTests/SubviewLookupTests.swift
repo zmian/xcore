@@ -1,5 +1,5 @@
 //
-// TestCase.swift
+// SubviewLookupTests.swift
 //
 // Copyright © 2018 Zeeshan Mian
 //
@@ -23,20 +23,19 @@
 //
 
 import XCTest
-import UIKit
-@testable import Example
+@testable import Xcore
 
-class TestCase: XCTestCase {
-    let application = XCUIApplication()
+final class SubviewLookupTests: ViewControllerTestCase {
+    func testSubview() {
+        let searchbar = UISearchBar()
+        view.addSubview(searchbar)
 
-    override func setUp() {
-        super.setUp()
-        continueAfterFailure = false
-        application.launchArguments.append("--uitesting")
-        application.launch()
-    }
+        XCTAssertNotNil(searchbar.subview(withClass: UITextField.self))
+        XCTAssertNotNil(searchbar.subview(withClassName: "UISearchBarTextField"))
 
-    override func tearDown() {
-        super.tearDown()
+        XCTAssertNil(searchbar.subview(withClass: UITextField.self, comparison: .typeOf))
+        XCTAssertNotNil(searchbar.subview(withClass: UITextField.self, comparison: .kindOf))
+        XCTAssertNotNil(searchbar.subview(withClassName: "UISearchBarTextField", comparison: .typeOf))
+        XCTAssertNotNil(searchbar.subview(withClassName: "UISearchBarTextField", comparison: .kindOf))
     }
 }
