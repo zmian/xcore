@@ -286,12 +286,12 @@ import UIKit
 // MARK: Resistance And Hugging
 
 extension UIView {
-    @objc open func resistsSizeChange() {
+    open func resistsSizeChange() {
         sizeChangeResistance(.required, axis: .vertical)
         sizeChangeResistance(.defaultLow, axis: .horizontal)
     }
 
-    @objc open func resistsSizeChange(axis: UILayoutConstraintAxis) {
+    open func resistsSizeChange(axis: UILayoutConstraintAxis) {
         sizeChangeResistance(.required, axis: axis)
     }
 
@@ -317,21 +317,33 @@ extension Array where Element == UIView {
     }
 }
 
-// MARK: Utilities
+// MARK: Lookup
 
-@objc extension UIView {
-    /// Get a child view by class name.
+extension UIView {
+    /// Returns the first subview of the `self` that satisfies the given
+    /// predicate.
     ///
-    /// - parameter className: The class name of the child view (e.g., `UIImageView`).
+    /// The following example uses the `subview(where:)` method to find the first
+    /// subview with tag less than 10:
     ///
-    /// - returns: The child view if exists; otherwise nil.
-    open func subview(withClassName className: String) -> UIView? {
-        if NSClassFromString(className) == type(of: self) {
+    ///     let stackView = UIStackView()
+    ///     if let subview = stackView.subview(where: { $0.tag < 10 }) {
+    ///         ...
+    ///     }
+    ///
+    /// - parameter predicate: A closure that takes a subview in `self` as
+    ///   its argument and returns a boolean value indicating whether the
+    ///   subview is a match.
+    ///
+    /// - returns: The first subview of the `self` that satisfies `predicate`,
+    ///   or `nil` if there is no subview that satisfies `predicate`.
+    open func subview(where predicate: (UIView) throws -> Bool) rethrows -> UIView? {
+        if try predicate(self) {
             return self
         }
 
         for view in subviews {
-            if let subview = view.subview(withClassName: className) {
+            if let subview = try view.subview(where: predicate) {
                 return subview
             }
         }
@@ -339,20 +351,32 @@ extension Array where Element == UIView {
         return nil
     }
 
-    /// Get a child views by class name.
+    /// Returns the subviews of the `self` that satisfies the given
+    /// predicate.
     ///
-    /// - parameter className: The class name of the child views (e.g., `UIImageView`).
+    /// The following example uses the `subviews(where:)` method to find the
+    /// subviews with tag less than 10:
     ///
-    /// - returns: The child views if exists; otherwise empty array.
-    open func subviews(withClassName className: String) -> [UIView] {
+    ///     let stackView = UIStackView()
+    ///     if let subviews = stackView.subview(where: { $0.tag < 10 }) {
+    ///         ...
+    ///     }
+    ///
+    /// - parameter predicate: A closure that takes a subview in `self` as
+    ///   its argument and returns a boolean value indicating whether the
+    ///   subview is a match.
+    ///
+    /// - returns: An array of subviews that satisfies `predicate`,
+    ///   or `[]` if there is no subview that satisfies `predicate`.
+    open func subviews(where predicate: (UIView) throws -> Bool) rethrows -> [UIView] {
         var result = [UIView]()
 
-        if NSClassFromString(className) == type(of: self) {
+        if try predicate(self) {
             result.append(self)
         }
 
         for view in subviews {
-            if let subview = view.subview(withClassName: className) {
+            if let subview = try view.subview(where: predicate) {
                 result.append(subview)
             }
         }
@@ -360,6 +384,80 @@ extension Array where Element == UIView {
         return result
     }
 
+    /// Get a child view by class name.
+    ///
+    /// - parameter className: The class name of the child view (e.g., `UIImageView`).
+    /// - parameter comparison: The comparison option to use when looking for the subview. The default value is `.typeOf`.
+    ///
+    /// - returns: The child view if exists; otherwise nil.
+    open func subview(withClassName className: String, comparison: LookupComparison = .typeOf) -> UIView? {
+        guard let aClass = NSClassFromString(className) else {
+            return nil
+        }
+
+        return internalSubview(withClass: aClass, comparison: comparison)
+    }
+
+    /// Get a child views by class name.
+    ///
+    /// - parameter className: The class name of the child views (e.g., `UIImageView`).
+    /// - parameter comparison: The comparison option to use when looking for the subview. The default value is `.typeOf`.
+    ///
+    /// - returns: The child views if exists; otherwise empty array.
+    open func subviews(withClassName className: String, comparison: LookupComparison = .typeOf) -> [UIView] {
+        guard let aClass = NSClassFromString(className) else {
+            return []
+        }
+
+        var result = [UIView]()
+
+        if isType(of: aClass, comparison: comparison) {
+            result.append(self)
+        }
+
+        for view in subviews {
+            if let subview = view.internalSubview(withClass: aClass, comparison: comparison) {
+                result.append(subview)
+            }
+        }
+
+        return result
+    }
+
+    /// Get a child view by class.
+    ///
+    /// - parameter aClass: The class name of the child view (e.g., `UIImageView`).
+    /// - parameter comparison: The comparison option to use when looking for the subview. The default value is `.typeOf`.
+    ///
+    /// - returns: The child view if exists; otherwise nil.
+    open func subview<T: UIView>(withClass aClass: T.Type, comparison: LookupComparison = .typeOf) -> T? {
+        return internalSubview(withClass: aClass, comparison: comparison) as? T
+    }
+
+    /// Get a child view by class name.
+    ///
+    /// - parameter aClass: The class name of the child view (e.g., `UIImageView`).
+    /// - parameter comparison: The comparison option to use when looking for the subview.
+    ///
+    /// - returns: The child view if exists; otherwise nil.
+    private func internalSubview(withClass aClass: AnyClass, comparison: LookupComparison) -> UIView? {
+        if isType(of: aClass, comparison: comparison) {
+            return self
+        }
+
+        for view in subviews {
+            if let subview = view.internalSubview(withClass: aClass, comparison: comparison) {
+                return subview
+            }
+        }
+
+        return nil
+    }
+}
+
+// MARK: Utilities
+
+extension UIView {
     /// Prints `self` child view hierarchy.
     open func printDebugSubviewsDescription() {
         debugSubviews()

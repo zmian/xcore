@@ -47,3 +47,28 @@ extension NSObject {
         return safeValue(forKey: name) != nil
     }
 }
+
+extension NSObject {
+    public enum LookupComparison {
+        /// Indicates whether the receiver is an instance of given class or an
+        /// instance of any class that inherits from that class.
+        case kindOf
+
+        /// The dynamic type.
+        case typeOf
+    }
+
+    /// - parameter aClass: A class object representing the Objective-C class to be tested.
+    /// - parameter comparison: The comparison option to use when comparing `self` to `aClass`.
+    ///
+    /// - returns: When option is `.kindOf` then this method returns true if `aClass` is a Class object of the same type.
+    ///            Otherwise, `.typeOf` does direct check to ensure `aClass` is the same object and not a subclass.
+    public func isType(of aClass: Swift.AnyClass, comparison: LookupComparison) -> Bool {
+        switch comparison {
+            case .kindOf:
+                return isKind(of: aClass)
+            case .typeOf:
+                return aClass.self == type(of: self)
+        }
+    }
+}
