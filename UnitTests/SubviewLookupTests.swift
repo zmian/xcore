@@ -27,15 +27,23 @@ import XCTest
 
 final class SubviewLookupTests: ViewControllerTestCase {
     func testSubview() {
-        let searchbar = UISearchBar()
-        view.addSubview(searchbar)
+        let searchBar = UISearchBar()
+        view.addSubview(searchBar)
 
-        XCTAssertNotNil(searchbar.subview(withClass: UITextField.self))
-        XCTAssertNotNil(searchbar.subview(withClassName: "UISearchBarTextField"))
+        XCTAssertNotNil(searchBar.subview(withClass: UITextField.self))
+        XCTAssertNotNil(searchBar.subview(withClassName: "UISearchBarTextField"))
 
-        XCTAssertNil(searchbar.subview(withClass: UITextField.self, comparison: .typeOf))
-        XCTAssertNotNil(searchbar.subview(withClass: UITextField.self, comparison: .kindOf))
-        XCTAssertNotNil(searchbar.subview(withClassName: "UISearchBarTextField", comparison: .typeOf))
-        XCTAssertNotNil(searchbar.subview(withClassName: "UISearchBarTextField", comparison: .kindOf))
+        XCTAssertNil(searchBar.subview(withClass: UITextField.self, comparison: .typeOf))
+        XCTAssertNotNil(searchBar.subview(withClass: UITextField.self, comparison: .kindOf))
+        XCTAssertNotNil(searchBar.subview(withClassName: "UISearchBarTextField", comparison: .typeOf))
+        XCTAssertNotNil(searchBar.subview(withClassName: "UISearchBarTextField", comparison: .kindOf))
+    }
+
+    func testSearchBar() {
+        let searchBar = UISearchBar()
+        view.addSubview(searchBar)
+        XCTAssertNotNil(searchBar.textField)
+        searchBar.placeholder = "Hello, World!"
+        XCTAssertEqual(searchBar.placeholder, "Hello, World!")
     }
 }
