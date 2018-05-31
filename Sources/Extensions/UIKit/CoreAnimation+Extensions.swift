@@ -58,3 +58,9 @@ extension CALayer {
         return UIColor(red: CGFloat(pixel[0])/255, green: CGFloat(pixel[1])/255, blue: CGFloat(pixel[2])/255, alpha: CGFloat(pixel[3])/255)
     }
 }
+
+extension CGColor {
+    public var uiColor: UIColor {
+        return UIColor(cgColor: self)
+    }
+}

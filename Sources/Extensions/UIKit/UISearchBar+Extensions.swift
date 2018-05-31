@@ -29,8 +29,86 @@ extension UISearchBar {
         return subview(withClass: UITextField.self, comparison: .kindOf)
     }
 
-    open var placeholderTextColor: UIColor {
-        get { return textField?.placeholderLabel?.textColor ?? .lightGray }
-        set { textField?.placeholderLabel?.textColor = newValue }
+    open var searchFieldBackgroundColor: UIColor? {
+        get {
+            switch searchBarStyle {
+                case .minimal:
+                    return textField?.layer.backgroundColor?.uiColor
+                default:
+                    return textField?.backgroundColor
+            }
+        }
+        set {
+            guard let newValue = newValue else { return }
+
+            switch searchBarStyle {
+                case .minimal:
+                    textField?.layer.backgroundColor = newValue.cgColor
+                    textField?.clipsToBounds = true
+                    textField?.layer.cornerRadius = 8
+                default:
+                    textField?.backgroundColor = newValue
+            }
+        }
+    }
+}
+
+extension UISearchBar {
+    private struct AssociatedKey {
+        static var placeholderTextColor = "placeholderTextColor"
+    }
+
+    /// The default value is `nil`. Uses `UISearchBar` default gray color.
+    open var placeholderTextColor: UIColor? {
+        /// Unfortunately, when the `searchBarStyle == .minimal` then
+        /// `textField?.placeholderLabel?.textColor` doesn't work. Hence, this workaround.
+        get { return associatedObject(&AssociatedKey.placeholderTextColor) }
+        set {
+            setAssociatedObject(&AssociatedKey.placeholderTextColor, value: newValue)
+
+            // Redraw placeholder text on color change
+            let placeholderText = placeholder
+            placeholder = placeholderText
+        }
+    }
+
+    @objc private var swizzled_placeholder: String? {
+        get { return textField?.attributedPlaceholder?.string }
+        set {
+            guard let textField = textField else {
+                return
+            }
+
+            guard let newValue = newValue else {
+                textField.attributedPlaceholder = nil
+                return
+            }
+
+            if let placeholderTextColor = placeholderTextColor {
+                textField.attributedPlaceholder = NSAttributedString(string: newValue, attributes: [
+                    .foregroundColor: placeholderTextColor,
+                ])
+            } else {
+                textField.attributedPlaceholder = NSAttributedString(string: newValue)
+            }
+        }
+    }
+}
+
+// MARK: Swizzle
+
+extension UISearchBar {
+    static func runOnceSwapSelectors() {
+        swizzle(
+            UISearchBar.self,
+            originalSelector: #selector(getter: UISearchBar.placeholder),
+            swizzledSelector: #selector(getter: UISearchBar.swizzled_placeholder)
+        )
+
+        swizzle(
+            UISearchBar.self,
+            originalSelector: #selector(setter: UISearchBar.placeholder),
+            swizzledSelector: #selector(setter: UISearchBar.swizzled_placeholder)
+        )
     }
 }

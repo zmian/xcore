@@ -38,6 +38,10 @@ public func xcoreSwizzle(_ options: SwizzleOptions = .all) {
         UITextField.runOnceSwapSelectors()
     }
 
+    if options.contains(.searchBar) {
+        UISearchBar.runOnceSwapSelectors()
+    }
+
     if options.contains(.viewController) {
         UIViewController.runOnceSwapSelectors()
     }
@@ -57,7 +61,8 @@ public struct SwizzleOptions: OptionSet {
 
     public static let imageView             = SwizzleOptions(rawValue: 1 << 0)
     public static let textField             = SwizzleOptions(rawValue: 1 << 1)
-    public static let viewController        = SwizzleOptions(rawValue: 1 << 2)
-    public static let userContentController = SwizzleOptions(rawValue: 1 << 3)
-    public static let all: SwizzleOptions = [imageView, textField, viewController, userContentController]
+    public static let searchBar             = SwizzleOptions(rawValue: 1 << 2)
+    public static let viewController        = SwizzleOptions(rawValue: 1 << 3)
+    public static let userContentController = SwizzleOptions(rawValue: 1 << 4)
+    public static let all: SwizzleOptions = [imageView, textField, searchBar, viewController, userContentController]
 }
