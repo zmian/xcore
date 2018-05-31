@@ -29,8 +29,6 @@ open class XCTextField: UITextField {
     open var contentInset = UIEdgeInsets.zero
     /// The default value is `nil`. Uses `font`.
     open var placeholderFont: UIFont?
-    /// The default value is `nil`. Uses `textColor`.
-    open var placeholderTextColor: UIColor?
 
     open override func textRect(forBounds bounds: CGRect) -> CGRect {
         return super.textRect(forBounds: UIEdgeInsetsInsetRect(bounds, contentInset))
@@ -47,18 +45,18 @@ open class XCTextField: UITextField {
         return resigned
     }
 
-    open override var placeholder: String? {
-        get { return attributedPlaceholder?.string }
-        set {
-            guard let newValue = newValue else {
-                attributedPlaceholder = nil
-                return
-            }
-
-            attributedPlaceholder = NSAttributedString(string: newValue, attributes: [
-                .foregroundColor: placeholderTextColor ?? textColor ?? UIColor.black,
-                .font: placeholderFont ?? font ?? UIFont.systemFont(.body)
-            ])
-        }
-    }
+//    open override var placeholder: String? {
+//        get { return attributedPlaceholder?.string }
+//        set {
+//            guard let newValue = newValue else {
+//                attributedPlaceholder = nil
+//                return
+//            }
+//
+//            attributedPlaceholder = NSAttributedString(string: newValue, attributes: [
+//                .foregroundColor: placeholderTextColor ?? textColor ?? UIColor.black,
+//                .font: placeholderFont ?? font ?? UIFont.systemFont(.body)
+//            ])
+//        }
+//    }
 }
