@@ -48,6 +48,8 @@ extension NSObject {
     }
 }
 
+// MARK: LookupComparison
+
 extension NSObject {
     public enum LookupComparison {
         /// Indicates whether the receiver is an instance of given class or an
@@ -70,5 +72,40 @@ extension NSObject {
             case .typeOf:
                 return aClass.self == type(of: self)
         }
+    }
+}
+
+// MARK: AssociatedObject
+
+extension NSObject {
+    /// Returns the value associated with a given object for a given key.
+    ///
+    /// - parameter key: The key for the association.
+    ///
+    /// - returns: The value associated with the key for object.
+    public func associatedObject<T>(_ key: UnsafeRawPointer) -> T? {
+        return objc_getAssociatedObject(self, key) as? T
+    }
+
+    /// Returns the value associated with a given object for a given key.
+    ///
+    /// - parameter key: The key for the association.
+    /// - parameter defaultValue: The default value to return if the no associated value is found.
+    ///
+    /// - returns: The value associated with the key for object.
+    public func associatedObject<T>(_ key: UnsafeRawPointer, defaultValue: T) -> T {
+        guard let value = objc_getAssociatedObject(self, key) as? T else {
+            return defaultValue
+        }
+        return value
+    }
+
+    /// Sets an associated value for a given object using a given key and association policy.
+    ///
+    /// - parameter key: The key for the association.
+    /// - parameter value: The value to associate with the key for object. Pass `nil` to clear an existing association.
+    /// - parameter policy: The policy for the association. The default value is `.OBJC_ASSOCIATION_RETAIN_NONATOMIC`.
+    public func setAssociatedObject<T>(_ key: UnsafeRawPointer, value: T?, policy: objc_AssociationPolicy = .OBJC_ASSOCIATION_RETAIN_NONATOMIC) {
+        objc_setAssociatedObject(self, key, value, policy)
     }
 }
