@@ -86,28 +86,6 @@ extension FloatingPoint {
     }
 }
 
-/*
-extension IntervalType {
-    /// Returns a random element from `self`.
-    ///
-    /// ```swift
-    /// (0.0...1.0).random()   // 0.112358
-    /// (-1.0..<68.5).random() // 26.42
-    /// ```
-    public func random() -> Bound {
-        guard
-            let start = self.start as? Double,
-            let end = self.end as? Double
-        else {
-            return self.start
-        }
-
-        let range = end - start
-        return ((Double(arc4random_uniform(UInt32.max)) / Double(UInt32.max)) * range + start) as! Bound
-    }
-}
-*/
-
 extension Double {
     // Adopted from: http://stackoverflow.com/a/35504720
     private static let abbrevationNumberFormatter: NumberFormatter = {
@@ -118,15 +96,18 @@ extension Double {
         numberFormatter.maximumFractionDigits = 1
         return numberFormatter
     }()
+
     private typealias Abbrevation = (suffix: String, threshold: Double, divisor: Double)
+
     private static let abbreviations: [Abbrevation] = [
-                                       ("",                0,              1),
-                                       ("K",           1_000,          1_000),
-                                       ("K",         100_000,          1_000),
-                                       ("M",         499_000,      1_000_000),
-                                       ("M",     999_999_999,     10_000_000),
-                                       ("B",   1_000_000_000,  1_000_000_000),
-                                       ("B", 999_999_999_999, 10_000_000_000)]
+       ("",                0,              1),
+       ("K",           1_000,          1_000),
+       ("K",         100_000,          1_000),
+       ("M",         499_000,      1_000_000),
+       ("M",     999_999_999,     10_000_000),
+       ("B",   1_000_000_000,  1_000_000_000),
+       ("B", 999_999_999_999, 10_000_000_000)
+    ]
 
     /// Abbreviate `self` to smaller format.
     ///
@@ -139,8 +120,17 @@ extension Double {
     /// 1340    // -> 1.3K
     /// 132456  // -> 132.5K
     /// ```
+    ///
+    /// - parameter threshold: An optional property to only apply abbreviation
+    ///                        if `self` is greater then given threshold.
+    ///                        The default value is `nil`.
+    ///
     /// - returns: Abbreviated version of `self`.
-    public func abbreviate() -> String {
+    public func abbreviate(threshold: Double? = nil) -> String {
+        if let threshold = threshold, self <= threshold {
+            return "\(self)"
+        }
+
         let startValue = abs(self)
 
         let abbreviation: Abbrevation = {
