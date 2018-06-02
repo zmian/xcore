@@ -80,3 +80,32 @@ public func ==<Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
 
     return NSDictionary(dictionary: lhs).isEqual(to: rhs)
 }
+
+// MARK: OptionalType
+
+// Credit: https://stackoverflow.com/a/45462046
+
+public protocol OptionalType {
+    associatedtype Wrapped
+    var wrapped: Wrapped? { get }
+}
+
+extension Optional: OptionalType {
+    public var wrapped: Wrapped? {
+        return self
+    }
+}
+
+extension Dictionary where Value: OptionalType {
+    /// Removes `nil` values from `self`.
+    public func flatten() -> [Key: Value.Wrapped] {
+        var result: [Key: Value.Wrapped] = [:]
+        for (key, value) in self {
+            guard let value = value.wrapped else {
+                continue
+            }
+            result[key] = value
+        }
+        return result
+    }
+}
