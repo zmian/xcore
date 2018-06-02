@@ -54,8 +54,8 @@ open class XCComposedCollectionViewController: UIViewController {
     open var constraintToLayoutGuideOptions: LayoutGuideOptions = []
 
     /// The distance that the collectionView is inset from the enclosing view.
-    /// The default value is `UIEdgeInsets.zero`.
-    @objc open dynamic var contentInset = UIEdgeInsets.zero {
+    /// The default value is `.zero`.
+    @objc open dynamic var contentInset: UIEdgeInsets = .zero {
         didSet {
             collectionViewConstraints.at(0)?.constant = contentInset.left
             collectionViewConstraints.at(1)?.constant = contentInset.right
@@ -80,6 +80,16 @@ open class XCComposedCollectionViewController: UIViewController {
 
     open func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
         return []
+    }
+
+    open func scrollToTop(animated: Bool = true) {
+        collectionView.scrollToTop(animated: animated)
+    }
+
+    deinit {
+        #if DEBUG
+        console.info("\(self) deinit")
+        #endif
     }
 }
 

@@ -25,10 +25,25 @@
 import UIKit
 
 extension UIImage {
+    /// Identical to `UIImage:named` but does not cache images in memory.
+    /// This is great for animations to quickly discard images after use.
+    public convenience init?(fileName: String) {
+        let name = fileName.stringByDeletingPathExtension
+        let ext  = fileName.pathExtension == "" ? "png" : fileName.pathExtension
+
+        guard let path = Bundle.main.path(forResource: name, ofType: ext) else {
+            return nil
+        }
+
+        self.init(contentsOfFile: path)
+    }
+
     /// Creates an image from specified color and size.
     ///
-    /// The default size is `50,50`.
-    public convenience init(color: UIColor, size: CGSize = CGSize(width: 50, height: 50)) {
+    /// - Parameters:
+    ///   - color: The color used to create the image.
+    ///   - size: The size of the image. The default size is `CGSize(50)`.
+    public convenience init(color: UIColor, size: CGSize = CGSize(50)) {
         let rect = CGRect(origin: .zero, size: size)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
@@ -41,31 +56,20 @@ extension UIImage {
         }
         UIGraphicsEndImageContext()
     }
-
-    /// Identical to `UIImage:named` but does not cache images in memory.
-    /// This is great for animations to quickly discard images after use.
-    public convenience init?(fileName: String) {
-        let name = fileName.stringByDeletingPathExtension
-        let ext  = fileName.pathExtension == "" ? "png" : fileName.pathExtension
-        if let path = Bundle.main.path(forResource: name, ofType: ext) {
-            self.init(contentsOfFile: path)
-        } else {
-            return nil
-        }
-    }
 }
 
 extension UIImage {
     /// Creating arbitrarily-colored icons from a black-with-alpha master image.
     public func tintColor(_ color: UIColor) -> UIImage {
         let image = self
-        let rect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+        let rect = CGRect(origin: .zero, size: image.size)
+
         UIGraphicsBeginImageContextWithOptions(rect.size, false, image.scale)
-        let ctx = UIGraphicsGetCurrentContext()!
+        let context = UIGraphicsGetCurrentContext()!
         image.draw(in: rect)
-        ctx.setFillColor(color.cgColor)
-        ctx.setBlendMode(.sourceAtop)
-        ctx.fill(rect)
+        context.setFillColor(color.cgColor)
+        context.setBlendMode(.sourceAtop)
+        context.fill(rect)
         return UIGraphicsGetImageFromCurrentImageContext()!
     }
 
@@ -85,31 +89,6 @@ extension UIImage {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage
-    }
-
-    public func resize(to newSize: CGSize, tintColor: UIColor? = nil, completionHandler: @escaping (_ resizedImage: UIImage) -> Void) {
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            guard let strongSelf = self else { return }
-            UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
-            strongSelf.draw(in: CGRect(origin: .zero, size: newSize))
-
-            guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else {
-                return
-            }
-
-            UIGraphicsEndImageContext()
-            let tintedImage: UIImage
-
-            if let tintColor = tintColor {
-                tintedImage = newImage.tintColor(tintColor)
-            } else {
-                tintedImage = newImage
-            }
-
-            DispatchQueue.main.async {
-                completionHandler(tintedImage)
-            }
-        }
     }
 
     // Credit: http://stackoverflow.com/a/34547445
@@ -133,27 +112,27 @@ extension UIImage {
         guard let cgImage = cgImage else { return self }
 
         return modifiedImage { context, rect in
-            // draw black background - workaround to preserve color of partially transparent pixels
+            // Draw black background - workaround to preserve color of partially transparent pixels
             context.setBlendMode(.normal)
             UIColor.black.setFill()
             context.fill(rect)
 
-            // draw original image
+            // Draw original image
             context.setBlendMode(.normal)
             context.draw(cgImage, in: rect)
 
-            // tint image (loosing alpha) - the luminosity of the original image is preserved
+            // Tint image (loosing alpha) - the luminosity of the original image is preserved
             context.setBlendMode(.color)
             tintColor.setFill()
             context.fill(rect)
 
-            // mask by alpha values of original image
+            // Mask by alpha values of original image
             context.setBlendMode(.destinationIn)
             context.draw(cgImage, in: rect)
         }
     }
 
-    /// Tint Picto to color
+    /// Tint Picto to color.
     ///
     /// - parameter fillColor: UIColor
     ///
@@ -162,23 +141,23 @@ extension UIImage {
         guard let cgImage = cgImage else { return self }
 
         return modifiedImage { context, rect in
-            // draw tint color
+            // Draw tint color
             context.setBlendMode(.normal)
             fillColor.setFill()
             context.fill(rect)
 
-            // mask by alpha values of original image
+            // Mask by alpha values of original image
             context.setBlendMode(.destinationIn)
             context.draw(cgImage, in: rect)
         }
     }
 
-    /// Modified Image Context, apply modification on image
-    private func modifiedImage(_ draw: (CGContext, CGRect) -> ()) -> UIImage {
-        // using scale correctly preserves retina images
+    /// Modified Image Context, apply modification on image.
+    private func modifiedImage(_ draw: (CGContext, CGRect) -> Void) -> UIImage {
+        // Using scale correctly preserves retina images
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
         let context = UIGraphicsGetCurrentContext()!
-        // correctly rotate image
+        // Correctly rotate image
         context.translateBy(x: 0, y: size.height)
         context.scaleBy(x: 1, y: -1)
         let rect = CGRect(origin: .zero, size: size)
@@ -186,5 +165,38 @@ extension UIImage {
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!
+    }
+}
+
+extension UIImage {
+    public func background(color: UIColor, preferredSize: CGSize, alignment: UIControlContentHorizontalAlignment = .center) -> UIImage? {
+        let finalSize = CGSize(
+            width: max(size.width, preferredSize.width),
+            height: max(size.height, preferredSize.width)
+        )
+
+        var drawingPosition = CGPoint(x: 0, y: (finalSize.height - size.height) / 2)
+
+        switch alignment {
+            case .center, .fill:
+                drawingPosition.x = (finalSize.width - size.width) / 2
+            case .left, .leading:
+                break
+            case .right, .trailing:
+                drawingPosition.x = finalSize.width - size.width
+        }
+
+        UIGraphicsBeginImageContextWithOptions(finalSize, false, scale)
+
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+
+        context.setFillColor(color.cgColor)
+        context.fill(CGRect(origin: .zero, size: finalSize))
+        draw(at: drawingPosition)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
     }
 }

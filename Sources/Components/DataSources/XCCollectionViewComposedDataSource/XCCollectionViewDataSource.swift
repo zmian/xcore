@@ -185,3 +185,42 @@ extension XCCollectionViewDataSource {
         }
     }
 }
+
+// MARK: Frame
+
+extension XCCollectionViewDataSource {
+    /// Returns the frame of the first valid item in the datasource.
+    /// If there is no content to show returns `nil`.
+    open var frameInCollectionView: CGRect? {
+        guard let collectionView = collectionView else { return nil }
+        var attributes: UICollectionViewLayoutAttributes?
+        if let globalHeader = firstHeaderGlobalIndexPath {
+            attributes = collectionView.layoutAttributesForSupplementaryElement(ofKind: UICollectionView.SupplementaryViewKind.header.identifier, at: globalHeader)
+        } else if let indexPath = firstRowGlobalIndexPath {
+            attributes = collectionView.layoutAttributesForItem(at: indexPath)
+        }
+        return attributes?.frame
+    }
+
+    private var firstHeaderGlobalIndexPath: IndexPath? {
+        guard let collectionView = collectionView else { return nil }
+        let numberOfSections = self.numberOfSections(in: collectionView)
+        for section in 0..<numberOfSections {
+            if self.collectionView(collectionView, sizeForHeaderInSection: section).height > 0 {
+                return IndexPath(row: 0, section: section + globalSection)
+            }
+        }
+        return nil
+    }
+
+    private var firstRowGlobalIndexPath: IndexPath? {
+        guard let collectionView = collectionView else { return nil }
+        let numberOfSections = self.numberOfSections(in: collectionView)
+        for section in 0..<numberOfSections {
+            if self.collectionView(collectionView, numberOfItemsInSection: section) > 0 {
+                return IndexPath(row: 0, section: section + globalSection)
+            }
+        }
+        return nil
+    }
+}
