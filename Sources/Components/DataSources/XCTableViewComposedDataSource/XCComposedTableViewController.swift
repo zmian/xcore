@@ -88,6 +88,16 @@ open class XCComposedTableViewController: UIViewController {
     open func dataSources(for tableView: UITableView) -> [XCTableViewDataSource] {
         return []
     }
+
+    open func scrollToTop(animated: Bool = true) {
+        tableView.scrollToTop(animated: animated)
+    }
+
+    deinit {
+        #if DEBUG
+        console.info("\(self) deinit")
+        #endif
+    }
 }
 
 // MARK: Setup Methods
