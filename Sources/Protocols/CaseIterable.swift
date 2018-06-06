@@ -1,5 +1,5 @@
 //
-// EnumIteratable.swift
+// CaseIterable.swift
 //
 // Copyright © 2015 Zeeshan Mian
 //
@@ -22,19 +22,21 @@
 // THE SOFTWARE.
 //
 
+#if swift(>=4.2)
+#else
 // Credit: http://stackoverflow.com/a/33598988
 
 /// A type that makes conforming `Enum` cases iteratable.
 ///
 /// ```swift
-/// enum CompassPoint: Int, EnumIteratable {
+/// enum CompassPoint: Int, CaseIterable {
 ///     case north
 ///     case south
 ///     case east
 ///     case west
 /// }
 ///
-/// for point in CompassPoint.allValues {
+/// for point in CompassPoint.allCases {
 ///     // point [north, south, east, west]
 /// }
 ///
@@ -43,18 +45,18 @@
 /// }
 /// ```
 ///
-/// `EnumIteratable` requires conforming enums types to be `RawRepresentable`.
-public protocol EnumIteratable {
+/// `CaseIterable` requires conforming enums types to be `RawRepresentable`.
+public protocol CaseIterable {
     associatedtype EnumType: Hashable, RawRepresentable = Self
-    static var allValues: [EnumType] { get }
+    static var allCases: [EnumType] { get }
     static var rawValues: [EnumType.RawValue] { get }
 }
 
-extension EnumIteratable {
+extension CaseIterable {
     /// Return `AnyGenerator` to iterate over all cases of `self`:
     ///
     /// ```swift
-    /// enum CompassPoint: Int, EnumIteratable {
+    /// enum CompassPoint: Int, CaseIterable {
     ///     case north, south, east, west
     /// }
     ///
@@ -83,11 +85,11 @@ extension EnumIteratable {
     }
 
     /// Return an array containing all cases of `self`.
-    public static var allValues: [EnumType] {
+    public static var allCases: [EnumType] {
         // Swift based enums always have a fixed size of `1` whereas `@objc` enums size is `8`.
         guard MemoryLayout<Self>.size == 1 else {
             #if DEBUG
-                fatalError("Unsupported type of enum detected. `EnumIteratable` does not support enums marked with `@objc` as it can hang and eventually crash the app in the Release mode.")
+                fatalError("Unsupported type of enum detected. `CaseIterable` does not support enums marked with `@objc` as it can hang and eventually crash the app in the Release mode.")
             #else
                 return []
             #endif
@@ -95,14 +97,17 @@ extension EnumIteratable {
 
         return enumerated().map { $0 }
     }
+}
 
+extension CaseIterable {
     /// Return an array containing all corresponding `rawValue`s of `self`.
     public static var rawValues: [EnumType.RawValue] {
-        return allValues.map { $0.rawValue }
+        return allCases.map { $0.rawValue }
     }
 
     /// Count of all enum cases.
     public static var count: Int {
-        return allValues.count
+        return allCases.count
     }
 }
+#endif

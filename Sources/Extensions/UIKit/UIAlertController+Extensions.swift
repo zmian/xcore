@@ -132,7 +132,7 @@ extension UIAlertController {
     /// **Example:**
     ///
     /// ```swift
-    /// enum CompassPoint: Int, EnumIteratable, OptionsRepresentable {
+    /// enum CompassPoint: Int, CaseIterable, OptionsRepresentable {
     ///     case north
     ///     case south
     ///     case east
@@ -148,7 +148,7 @@ extension UIAlertController {
     /// - parameter handler:    A block to invoke when an option is selected.
     @discardableResult
     open static func present<T: OptionsRepresentable>(sourceView: PopoverPresentationSourceView, _ handler: @escaping (_ option: T) -> Void) -> UIAlertController {
-        let options = T.allValues
+        let options = T.allCases
         let actions = options.map { option in
             UIAlertAction(title: option.description, style: .default) { _ in
                 handler(option)
