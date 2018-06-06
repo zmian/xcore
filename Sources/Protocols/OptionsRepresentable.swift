@@ -26,7 +26,7 @@ import UIKit
 
 /// A type to present list of options in a type safe manner.
 public protocol OptionsRepresentable: CustomStringConvertible, Equatable {
-    static var allValues: [Self] { get }
+    static var allCases: [Self] { get }
     static var title: String? { get }
     static var message: String? { get }
     var image: ImageRepresentable? { get }
