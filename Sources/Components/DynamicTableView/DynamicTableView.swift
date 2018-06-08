@@ -349,8 +349,9 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     /// Deletes the rows specified by an array of index paths, with an option to animate the deletion.
     ///
-    /// - parameter indexPaths: An array of `IndexPath` objects identifying the rows to delete.
-    /// - parameter animation:  A constant that indicates how the deletion is to be animated.
+    /// - Parameters:
+    ///   - indexPaths: An array of `IndexPath` objects identifying the rows to delete.
+    ///   - animation:  A constant that indicates how the deletion is to be animated.
     private func removeItems(_ indexPaths: [IndexPath], animation: UITableViewRowAnimation = .automatic) {
         let items = indexPaths.map { (indexPath: $0, item: sections.remove(at: $0)) }
         CATransaction.animationTransaction({

@@ -30,7 +30,7 @@ public protocol TargetActionBlockRepresentable: class {
 
     /// Add action handler when the item is selected.
     ///
-    /// - parameter handler: The block to invoke when the item is selected.
+    /// - Parameter handler: The block to invoke when the item is selected.
     func addAction(_ handler: @escaping (_ sender: Sender) -> Void)
 
     /// Removes action handler from `self`.

@@ -35,9 +35,6 @@ private func format(seconds: TimeInterval) -> String {
 
 /// A convenience function to measure code execution.
 ///
-/// - parameter label: Measure block name
-/// - parameter block: Call `finish` block to measure test.
-///
 /// **Asynchronous code:**
 /// ```swift
 /// measure(label: "some title") { finish in
@@ -55,6 +52,10 @@ private func format(seconds: TimeInterval) -> String {
 ///     // ...
 /// }
 /// ```
+///
+/// - Parameters:
+///   - label: Measure block name.
+///   - block: Call `finish` block to measure test.
 public func measure(label: String, block: (_ finish: () -> Void) -> Void) {
     let startTime = CFAbsoluteTimeGetCurrent()
 

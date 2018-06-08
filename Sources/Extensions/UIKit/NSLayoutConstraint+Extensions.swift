@@ -175,7 +175,7 @@ extension NSLayoutConstraint {
     /// that is the closest common ancestor of the items managed by this constraint.
     /// Use this property instead of calling `addConstraint:` or `removeConstraint:` directly.
     ///
-    /// - returns: `self`
+    /// - Returns: `self`
     @discardableResult
     public func activate() -> NSLayoutConstraint {
         isActive = true
@@ -190,7 +190,7 @@ extension NSLayoutConstraint {
     /// that is the closest common ancestor of the items managed by this constraint.
     /// Use this property instead of calling `addConstraint:` or `removeConstraint:` directly.
     ///
-    /// - returns: `self`
+    /// - Returns: `self`
     @discardableResult
     public func deactivate() -> NSLayoutConstraint {
         isActive = false
@@ -205,7 +205,7 @@ extension Array where Element: NSLayoutConstraint {
     /// The effect of this method is the same as setting the `active` property of each constraint to `true`.
     /// Typically, using this method is more efficient than activating each constraint individually.
     ///
-    /// - returns: `self`
+    /// - Returns: `self`
     @discardableResult
     public func activate() -> Array {
         NSLayoutConstraint.activate(self)
@@ -218,7 +218,7 @@ extension Array where Element: NSLayoutConstraint {
     /// The effect of this method is the same as setting the `active` property of each constraint to `false`.
     /// Typically, using this method is more efficient than deactivating each constraint individually.
     ///
-    /// - returns: `self`
+    /// - Returns: `self`
     @discardableResult
     public func deactivate() -> Array {
         NSLayoutConstraint.deactivate(self)

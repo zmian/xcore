@@ -74,7 +74,7 @@ extension String {
 
     /// Drops the given `prefix` from `self`.
     ///
-    /// - returns: String without the specified `prefix` or nil if `prefix` doesn't exists.
+    /// - Returns: String without the specified `prefix` or nil if `prefix` doesn't exists.
     public func stripPrefix(_ prefix: String) -> String? {
         guard let prefixRange = range(of: prefix) else { return nil }
         let attributeRange = Range(prefixRange.upperBound..<endIndex)

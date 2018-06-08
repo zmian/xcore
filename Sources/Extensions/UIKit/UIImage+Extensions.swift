@@ -105,9 +105,8 @@ extension UIImage {
     ///
     /// <img src="http://yannickstephan.com/easyhelper/tint2.png" height="70" width="120"/>
     ///
-    /// - parameter tintColor: The color used to colorize `self`.
-    ///
-    /// - returns: Colorize image.
+    /// - Parameter tintColor: The color used to colorize `self`.
+    /// - Returns: A colorized image.
     public func colorize(_ tintColor: UIColor) -> UIImage {
         guard let cgImage = cgImage else { return self }
 
@@ -134,9 +133,8 @@ extension UIImage {
 
     /// Tint Picto to color.
     ///
-    /// - parameter fillColor: UIColor
-    ///
-    /// - returns: UIImage
+    /// - Parameter fillColor: The color to use to tint the image.
+    /// - Returns: A new `UIImage` with tint applied.
     public func tintPicto(_ fillColor: UIColor) -> UIImage {
         guard let cgImage = cgImage else { return self }
 

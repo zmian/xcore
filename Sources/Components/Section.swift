@@ -74,8 +74,8 @@ public struct Section<Element>: RangeReplaceableCollection, MutableCollection, E
 
     /// Returns the position immediately after the given index.
     ///
-    /// - parameter i: A valid index of the collection. `i` must be less than `endIndex`.
-    /// - returns: The index value immediately after `i`.
+    /// - Parameter i: A valid index of the collection. `i` must be less than `endIndex`.
+    /// - Returns: The index value immediately after `i`.
     public func index(after i: Int) -> Int {
         return i + 1
     }
@@ -92,9 +92,8 @@ public struct Section<Element>: RangeReplaceableCollection, MutableCollection, E
 extension Array where Element: MutableCollection, Element.Index == Int {
     /// A convenience subscript to return the element at the specified index path.
     ///
-    /// - parameter indexPath: The index path for the element.
-    ///
-    /// - returns: The element at the specified index path iff it is within bounds, otherwise fatalError.
+    /// - Parameter indexPath: The index path for the element.
+    /// - Returns: The element at the specified index path iff it is within bounds, otherwise fatalError.
     public subscript(indexPath: IndexPath) -> Element.Iterator.Element {
         get { return self[indexPath.section][indexPath.item] }
         set { self[indexPath.section][indexPath.item] = newValue }
@@ -104,9 +103,8 @@ extension Array where Element: MutableCollection, Element.Index == Int {
 extension Array where Element: RangeReplaceableCollection, Element.Index == Int {
     /// Remove the element at the specified index path.
     ///
-    /// - parameter indexPath: The index path for the element to remove.
-    ///
-    /// - returns: The removed element.
+    /// - Parameter indexPath: The index path for the element to remove.
+    /// - Returns: The removed element.
     @discardableResult
     public mutating func remove(at indexPath: IndexPath) -> Element.Iterator.Element {
         return self[indexPath.section].remove(at: indexPath.item)
@@ -114,18 +112,19 @@ extension Array where Element: RangeReplaceableCollection, Element.Index == Int 
 
     /// Insert newElement at the specified index path.
     ///
-    /// - parameter newElement: The new element to insert.
-    /// - parameter indexPath:  The index path to insert the element at.
+    /// - Parameters:
+    ///   - newElement: The new element to insert.
+    ///   - indexPath:  The index path to insert the element at.
     public mutating func insert(_ newElement: Element.Iterator.Element, at indexPath: IndexPath) {
         self[indexPath.section].insert(newElement, at: indexPath.item)
     }
 
     /// Move an element at a specific location in the `self` to another location.
     ///
-    /// - parameter from: An index path locating the element to be moved in `self`.
-    /// - parameter to:   An index path locating the element in `self` that is the destination of the move.
-    ///
-    /// - returns: The moved element.
+    /// - Parameters:
+    ///   - from: An index path locating the element to be moved in `self`.
+    ///   - to:   An index path locating the element in `self` that is the destination of the move.
+    /// - Returns: The moved element.
     @discardableResult
     public mutating func moveElement(from indexPath: IndexPath, to theIndexPath: IndexPath) -> Element.Iterator.Element {
         let elementToMove = remove(at: indexPath)

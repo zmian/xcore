@@ -8,11 +8,10 @@ import Foundation
 extension Timer {
     /// Creates and schedules a one-time `NSTimer` instance.
     ///
-    /// - parameters:
+    /// - Parameters:
     ///    - delay: The delay before execution.
     ///    - handler: A closure to execute after `delay`.
-    ///
-    /// - returns: The newly-created `NSTimer` instance.
+    /// - Returns: The newly-created `NSTimer` instance.
     @discardableResult
     public class func schedule(delay: TimeInterval, _ handler: @escaping () -> Void) -> Timer {
         let fireDate = delay + CFAbsoluteTimeGetCurrent()
@@ -25,13 +24,12 @@ extension Timer {
 
     /// Creates and schedules a repeating `NSTimer` instance.
     ///
-    /// - parameters:
+    /// - Parameters:
     ///     - repeatInterval: The interval (in seconds) between each execution of
     ///       `handler`. Note that individual calls may be delayed; subsequent calls
     ///       to `handler` will be based on the time the timer was created.
     ///     - handler: A closure to execute at each `repeatInterval`.
-    ///
-    /// - returns: The newly-created `NSTimer` instance.
+    /// - Returns: The newly-created `NSTimer` instance.
     public class func schedule(repeatInterval interval: TimeInterval, _ handler: @escaping () -> Void) -> Timer {
         let fireDate = interval + CFAbsoluteTimeGetCurrent()
         let timer = CFRunLoopTimerCreateWithHandler(kCFAllocatorDefault, fireDate, interval, 0, 0) { _ in

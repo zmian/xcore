@@ -60,7 +60,7 @@ extension TargetActionBlockRepresentable where Self: UIGestureRecognizer {
 
     /// Add action handler when the item is selected.
     ///
-    /// - parameter handler: The block to invoke when the item is selected.
+    /// - Parameter handler: The block to invoke when the item is selected.
     public func addAction(_ handler: @escaping (_ sender: Self) -> Void) {
         setActionHandler(handler)
     }

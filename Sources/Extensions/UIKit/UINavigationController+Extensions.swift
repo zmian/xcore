@@ -27,11 +27,11 @@ import UIKit
 extension UINavigationController {
     /// Initializes and returns a newly created navigation controller that uses your custom bar subclasses.
     ///
-    /// - parameter rootViewController: The view controller that resides at the bottom of the navigation stack. This object cannot be an instance of the `UITabBarController` class.
-    /// - parameter navigationBarClass: Specify the custom `UINavigationBar` subclass you want to use, or specify `nil` to use the standard `UINavigationBar` class.
-    /// - parameter toolbarClass:       Specify the custom `UIToolbar` subclass you want to use, or specify `nil` to use the standard `UIToolbar` class.
-    ///
-    /// - returns: The initialized navigation controller object.
+    /// - Parameters:
+    ///   - rootViewController: The view controller that resides at the bottom of the navigation stack. This object cannot be an instance of the `UITabBarController` class.
+    ///   - navigationBarClass: Specify the custom `UINavigationBar` subclass you want to use, or specify `nil` to use the standard `UINavigationBar` class.
+    ///   - toolbarClass:       Specify the custom `UIToolbar` subclass you want to use, or specify `nil` to use the standard `UIToolbar` class.
+    /// - Returns: The initialized navigation controller object.
     public convenience init(rootViewController: UIViewController, navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
         self.init(navigationBarClass: navigationBarClass, toolbarClass: toolbarClass)
         self.rootViewController = rootViewController
@@ -53,14 +53,14 @@ extension UINavigationController {
 extension UINavigationController {
     /// A convenience method to pop to view controller of specified subclass of `UIViewController` type.
     ///
-    /// - parameter type:            The View controller type to pop to.
-    /// - parameter animated:        Set this value to `true` to animate the transition.
-    ///                              Pass `false` if you are setting up a navigation controller
-    ///                              before its view is displayed.
-    /// - parameter isReversedOrder: If multiple view controllers of specified type exists it
-    ///                              pop the latest of type by default. Pass `false` to reverse the behavior.
-    ///
-    /// - returns: An array containing the view controllers that were popped from the stack.
+    /// - Parameters:
+    ///   - type:            The View controller type to pop to.
+    ///   - animated:        Set this value to `true` to animate the transition.
+    ///                      Pass `false` if you are setting up a navigation controller
+    ///                      before its view is displayed.
+    ///   - isReversedOrder: If multiple view controllers of specified type exists it
+    ///                      pop the latest of type by default. Pass `false` to reverse the behavior.
+    /// - Returns: An array containing the view controllers that were popped from the stack.
     @discardableResult
     open func popToViewController(_ type: UIViewController.Type, animated: Bool, isReversedOrder: Bool = true) -> [UIViewController]? {
         let viewControllers = isReversedOrder ? self.viewControllers.reversed() : self.viewControllers
@@ -76,12 +76,12 @@ extension UINavigationController {
 
     /// A convenience method to pop view controllers until the one at specified index is on top. Returns the popped controllers.
     ///
-    /// - parameter index:    The View controller type to pop to.
-    /// - parameter animated: Set this value to `true` to animate the transition.
-    ///                       Pass `false` if you are setting up a navigation controller
-    ///                       before its view is displayed.
-    ///
-    /// - returns: An array containing the view controllers that were popped from the stack.
+    /// - Parameters:
+    ///   - index:    The View controller type to pop to.
+    ///   - animated: Set this value to `true` to animate the transition.
+    ///               Pass `false` if you are setting up a navigation controller
+    ///               before its view is displayed.
+    /// - Returns: An array containing the view controllers that were popped from the stack.
     @discardableResult
     open func popToViewController(at index: Int, animated: Bool) -> [UIViewController]? {
         guard let viewController = viewControllers.at(index) else {

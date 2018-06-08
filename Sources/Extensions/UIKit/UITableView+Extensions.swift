@@ -65,11 +65,12 @@ extension UITableView {
     /// To scroll to the newly selected row with minimum scrolling, select the row using this method with `UITableViewScrollPositionNone`,
     /// then call `scrollToRowAtIndexPath:atScrollPosition:animated:` with `UITableViewScrollPositionNone`.
     ///
-    /// - parameter indexPaths:     An array of index paths identifying rows in the table view.
-    /// - parameter animated:       Pass `true` if you want to animate the selection and any change in position;
-    ///                             Pass `false` if the change should be immediate.
-    /// - parameter scrollPosition: A constant that identifies a relative position in the table view (top, middle, bottom)
-    ///                             for the row when scrolling concludes. The default value is `UITableViewScrollPositionNone`.
+    /// - Parameters:
+    ///   - indexPaths:     An array of index paths identifying rows in the table view.
+    ///   - animated:       Pass `true` if you want to animate the selection and any change in position;
+    ///                     Pass `false` if the change should be immediate.
+    ///   - scrollPosition: A constant that identifies a relative position in the table view (top, middle, bottom)
+    ///                     for the row when scrolling concludes. The default value is `UITableViewScrollPositionNone`.
     public func selectRows(at indexPaths: [IndexPath], animated: Bool, scrollPosition: UITableViewScrollPosition = .none) {
         indexPaths.forEach {
             selectRow(at: $0, animated: animated, scrollPosition: scrollPosition)
@@ -82,7 +83,7 @@ extension UITableView {
     /// or `tableView:didDeselectRowAtIndexPath:` message, nor does it send `UITableViewSelectionDidChangeNotification`
     /// notifications to observers.
     ///
-    /// - parameter animated: true if you want to animate the deselection, and false if the change should be immediate.
+    /// - Parameter animated: true if you want to animate the deselection, and false if the change should be immediate.
     public func deselectAllRows(animated: Bool) {
         indexPathsForSelectedRows?.forEach {
             deselectRow(at: $0, animated: animated)
@@ -91,9 +92,10 @@ extension UITableView {
 
     /// Toggles the table view into and out of editing mode with completion handler when animation is completed.
     ///
-    /// - parameter editing:           `true` to enter editing mode; `false` to leave it. The default value is `false`.
-    /// - parameter animated:          `true` to animate the transition to editing mode; `false` to make the transition immediate.
-    /// - parameter completionHandler: A block object called when animation is completed.
+    /// - Parameters:
+    ///   - editing:           `true` to enter editing mode; `false` to leave it. The default value is `false`.
+    ///   - animated:          `true` to animate the transition to editing mode; `false` to make the transition immediate.
+    ///   - completionHandler: A block object called when animation is completed.
     public func setEditing(_ editing: Bool, animated: Bool, completionHandler: @escaping () -> Void) {
         CATransaction.animationTransaction({
             setEditing(editing, animated: animated)

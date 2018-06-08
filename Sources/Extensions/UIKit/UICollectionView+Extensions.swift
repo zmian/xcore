@@ -27,7 +27,7 @@ import UIKit
 extension UICollectionView {
     /// Returns an array of selected cells in the collection view.
     ///
-    /// - returns: An array of `UICollectionViewCell` objects.
+    /// - Returns: An array of `UICollectionViewCell` objects.
     open var selectedCells: [UICollectionViewCell] {
         guard let indexPaths = indexPathsForSelectedItems else {
             return []

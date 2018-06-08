@@ -28,8 +28,9 @@ import ObjectiveC
 extension UIViewController {
     /// A convenience method to easily add child view controller.
     ///
-    /// - parameter childController: The view controller to add as a child view controller.
-    /// - parameter containerView:   A container view where this child view controller will be added. The default value is view controller's view.
+    /// - Parameters:
+    ///   - childController: The view controller to add as a child view controller.
+    ///   - containerView:   A container view where this child view controller will be added. The default value is view controller's view.
     open func addContainerViewController(_ childController: UIViewController, containerView: UIView? = nil, enableConstraints: Bool = false, padding: UIEdgeInsets = .zero) {
         guard let containerView = containerView ?? view else { return }
 
@@ -48,7 +49,7 @@ extension UIViewController {
 
     /// A convenience method to easily remove child view controller.
     ///
-    /// - parameter childController: The view controller to remove from its parent's children controllers.
+    /// - Parameter childController: The view controller to remove from its parent's children controllers.
     open func removeContainerViewController(_ childController: UIViewController) {
         guard childViewControllers.contains(childController) else { return }
 
@@ -135,10 +136,11 @@ extension UIViewController {
 
     /// Presents a view controller modally using a custom transition.
     ///
-    /// - parameter viewControllerToPresent: The view controller to display over the current view controller's content.
-    /// - parameter transitioningDelegate:   The delegate object that provides transition animator and interactive controller objects.
-    /// - parameter animated:                Pass `true` to animate the presentation; otherwise, pass `false`.
-    /// - parameter completion:              The block to execute after the presentation finishes.
+    /// - Parameters:
+    ///   - viewControllerToPresent: The view controller to display over the current view controller's content.
+    ///   - transitioningDelegate:   The delegate object that provides transition animator and interactive controller objects.
+    ///   - animated:                Pass `true` to animate the presentation; otherwise, pass `false`.
+    ///   - completion:              The block to execute after the presentation finishes.
     open func presentViewControllerWithTransition(_ viewControllerToPresent: UIViewController, modalPresentationStyle: UIModalPresentationStyle = .custom, transitioningDelegate: UIViewControllerTransitioningDelegate, animated: Bool = true, completion: (() -> Void)? = nil) {
         viewControllerToPresent.transitioningDelegate  = transitioningDelegate
         viewControllerToPresent.modalPresentationStyle = modalPresentationStyle
@@ -164,6 +166,7 @@ extension UIViewController {
     ///
     /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
     /// And, any of its view controllers can override this on as needed basis.
+    ///
     /// ```swift
     /// let vc = UIImagePickerController()
     /// vc.preferredInterfaceOrientations = .AllButUpsideDown
@@ -187,6 +190,7 @@ extension UIViewController {
     ///
     /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
     /// And, any of its view controllers can override this on as needed basis.
+    ///
     /// ```swift
     /// let vc = UIImagePickerController()
     /// vc.interfaceOrientationForPresentation = .Portrait
@@ -212,6 +216,7 @@ extension UIViewController {
     /// And, any of its view controllers can override this on as needed basis.
     /// This enables `info.plist`'s `View controller-based status bar appearance: NO` like behavior
     /// but allowing any of its view controllers to override the value.
+    ///
     /// ```swift
     /// let vc = UIImagePickerController()
     /// vc.statusBarStyle = .LightContent
@@ -238,6 +243,7 @@ extension UIViewController {
     ///
     /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
     /// And, any of its view controllers can override this on as needed basis.
+    ///
     /// ```swift
     /// let vc = UIImagePickerController()
     /// vc.statusBarUpdateAnimation = .Fade
@@ -261,6 +267,7 @@ extension UIViewController {
     ///
     /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
     /// And, any of its view controllers can override this on as needed basis.
+    ///
     /// ```swift
     /// let vc = UIImagePickerController()
     /// vc.isStatusBarHidden = false
@@ -281,6 +288,7 @@ extension UIViewController {
     ///
     /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
     /// And, any of its view controllers can override this on as needed basis.
+    ///
     /// ```swift
     /// let vc = UIImagePickerController()
     /// vc.enableAutorotate = false

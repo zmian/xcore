@@ -62,9 +62,10 @@ import ObjectiveC
 
     /// Sets the image on **background thread** to use for the specified state.
     ///
-    /// - parameter named:  The remote image url or local image name to use for the specified state.
-    /// - parameter state:  The state that uses the specified image.
-    /// - parameter bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the main bundle.
+    /// - Parameters:
+    ///   - named:  The remote image url or local image name to use for the specified state.
+    ///   - state:  The state that uses the specified image.
+    ///   - bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the `main` bundle.
     open func image(_ remoteOrLocalImage: String, for state: UIControlState, bundle: Bundle? = nil) {
         UIImage.remoteOrLocalImage(remoteOrLocalImage, bundle: bundle) { [weak self] image in
             self?.setImage(image, for: state)
@@ -129,11 +130,11 @@ import ObjectiveC
 extension ControlTargetActionBlockRepresentable where Self: UIButton {
     /// Creates and returns a new button of the specified type with action handler.
     ///
-    /// - parameter image:            The image to use for the normal state.
-    /// - parameter highlightedImage: The image to use for the highlighted state.
-    /// - parameter handler:          The block to invoke when the button is tapped.
-    ///
-    /// - returns: A newly created button.
+    /// - Parameters:
+    ///   - image:            The image to use for the normal state.
+    ///   - highlightedImage: The image to use for the highlighted state.
+    ///   - handler:          The block to invoke when the button is tapped.
+    /// - Returns: A newly created button.
     public init(image: UIImage?, highlightedImage: UIImage? = nil, handler: ((_ sender: Self) -> Void)? = nil) {
         self.init(type: .custom)
         setImage(image, for: .normal)
@@ -147,10 +148,10 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
 
     /// Creates and returns a new button of the specified type with action handler.
     ///
-    /// - parameter imageNamed: A string to identify a local or a remote image.
-    /// - parameter handler:    The block to invoke when the button is tapped.
-    ///
-    /// - returns: A newly created button.
+    /// - Parameters:
+    ///   - imageNamed: A string to identify a local or a remote image.
+    ///   - handler:    The block to invoke when the button is tapped.
+    /// - Returns: A newly created button.
     public init(imageNamed: String, handler: ((_ sender: Self) -> Void)? = nil) {
         self.init(image: nil, handler: handler)
         imageView?.remoteOrLocalImage(imageNamed) { [weak self] image in

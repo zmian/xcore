@@ -24,9 +24,10 @@
 
 /// A convenience wrapper to turn single object fetcher into collection fetcher.
 ///
-/// - parameter fetcher:    A fetcher function that is executed with each of the `param`.
-/// - parameter parameters: An array of parameters to pass to the fetcher.
-/// - parameter callback:   The block to invoked when we have the results of all the `parameters` by calling `fetcher`.
+/// - Parameters:
+///   - fetcher:    A fetcher function that is executed with each of the `param`.
+///   - parameters: An array of parameters to pass to the fetcher.
+///   - callback:   The block to invoked when we have the results of all the `parameters` by calling `fetcher`.
 public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ parameters: Parameter, _ callback: @escaping (_ object: Result?) -> Void) -> Void, parameters: [Parameter], callback: @escaping (_ objects: [Result]) -> Void) {
     var objects = [Result]()
     var fetchedCount = 0
@@ -48,9 +49,10 @@ public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ parameters:
 
 /// A convenience wrapper to turn single object fetcher into collection fetcher.
 ///
-/// - parameter fetcher:    A fetcher function that is executed with each of the `param`.
-/// - parameter parameters: An array of parameters to pass to the fetcher.
-/// - parameter callback:   The block to invoked when we have the results of all the `parameters` by calling `fetcher`.
+/// - Parameters:
+///   - fetcher:    A fetcher function that is executed with each of the `param`.
+///   - parameters: An array of parameters to pass to the fetcher.
+///   - callback:   The block to invoked when we have the results of all the `parameters` by calling `fetcher`.
 public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ parameters: Parameter, _ callback: @escaping (_ object: Result) -> Void) -> Void, parameters: [Parameter], callback: @escaping (_ objects: [Result]) -> Void) {
     var objects = [Result]()
     var fetchedCount = 0
@@ -69,10 +71,11 @@ public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ parameters:
 /// A convenience wrapper to turn rate limiting multiple object fetcher into collection fetcher
 /// by splitting fetching size to `splitSize`.
 ///
-/// - parameter fetcher:    A fetcher function that is executed with each of the `parameters`.
-/// - parameter splitSize:  The maximum number of requests allowed in the fetcher.
-/// - parameter parameters: An array of parameters to pass to the fetcher.
-/// - parameter callback:   The block to invoked when we have the results of all the `parameters` by calling `fetcher`.
+/// - Parameters:
+///   - fetcher:    A fetcher function that is executed with each of the `parameters`.
+///   - splitSize:  The maximum number of requests allowed in the fetcher.
+///   - parameters: An array of parameters to pass to the fetcher.
+///   - callback:   The block to invoked when we have the results of all the `parameters` by calling `fetcher`.
 public func collectionify<Parameter, Result>(_ fetcher: @escaping (_ parameters: [Parameter], _ callback: @escaping (_ object: [Result]) -> Void) -> Void, splitSize: Int, parameters: [Parameter], callback: @escaping (_ objects: [Result]) -> Void) {
     let pages            = parameters.splitBy(splitSize)
     var allObjects       = [Result]()

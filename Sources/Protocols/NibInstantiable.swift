@@ -63,10 +63,10 @@ extension NibInstantiable {
 extension NibInstantiable where Self: UIView {
     /// Instantiates and returns the nib of type `Self`.
     ///
-    /// - parameter bundle: The bundle containing the nib file and its related resources. If `nil`, then
-    ///                     this method looks in the main bundle of the current application. The default value is `nil`.
-    ///
-    /// - returns: The nib of type `Self`.
+    /// - Parameter bundle: The bundle containing the nib file and its related resources.
+    ///                     If `nil`, then this method looks in the main bundle of the current
+    ///                     application. The default value is `nil`.
+    /// - Returns: The nib of type `Self`.
     public static func initFromNib(bundle: Bundle? = nil) -> Self {
         let bundle = bundle ?? Bundle(for: Self.self)
         return bundle.loadNibNamed(nibIdentifier, owner: nil, options: nil)!.first as! Self

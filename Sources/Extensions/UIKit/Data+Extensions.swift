@@ -27,13 +27,13 @@ import Foundation
 extension Data {
     /// A convenience method to append string to `Data` using specified encoding.
     ///
-    /// - parameter string:               The string to be added to the `Data`.
-    /// - parameter encoding:             The encoding to use for representing the specified string. The default value is `.utf8`.
-    /// - parameter allowLossyConversion: A boolean value to determine lossy conversion. The default value is `false`.
+    /// - Parameters:
+    ///   - string:               The string to be added to the `Data`.
+    ///   - encoding:             The encoding to use for representing the specified string. The default value is `.utf8`.
+    ///   - allowLossyConversion: A boolean value to determine lossy conversion. The default value is `false`.
     public mutating func append(_ string: String, encoding: String.Encoding = .utf8, allowLossyConversion: Bool = false) {
-        if let newData = string.data(using: encoding, allowLossyConversion: allowLossyConversion) {
-            append(newData)
-        }
+        guard let newData = string.data(using: encoding, allowLossyConversion: allowLossyConversion) else { return }
+        append(newData)
     }
 
     public var hexString: String {

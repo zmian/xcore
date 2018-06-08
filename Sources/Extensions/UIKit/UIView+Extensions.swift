@@ -31,25 +31,27 @@ import UIKit
 
     /// Performs a view animation using a timing curve corresponding to the motion of a physical spring.
     ///
-    /// - parameter duration:   The total duration of the animations, measured in seconds. If you specify a negative value or `0`, the changes are made without animating them. The default value is `0.6`.
-    /// - parameter delay:      The amount of time (measured in seconds) to wait before beginning the animations. The default value is `0`.
-    /// - parameter damping:    The damping ratio for the spring animation as it approaches its quiescent state. The default value is `0.7`.
-    /// - parameter velocity:   The initial spring velocity. For smooth start to the animation, match this value to the view’s velocity as it was prior to attachment. The default value is `0`.
-    /// - parameter options:    A mask of options indicating how you want to perform the animations. The default value is `UIViewAnimationOptions.AllowUserInteraction`.
-    /// - parameter animations: A block object containing the changes to commit to the views.
-    /// - parameter completion: A block object to be executed when the animation sequence ends.
+    /// - Parameters:
+    ///   - duration:   The total duration of the animations, measured in seconds. If you specify a negative value or `0`, the changes are made without animating them. The default value is `0.6`.
+    ///   - delay:      The amount of time (measured in seconds) to wait before beginning the animations. The default value is `0`.
+    ///   - damping:    The damping ratio for the spring animation as it approaches its quiescent state. The default value is `0.7`.
+    ///   - velocity:   The initial spring velocity. For smooth start to the animation, match this value to the view’s velocity as it was prior to attachment. The default value is `0`.
+    ///   - options:    A mask of options indicating how you want to perform the animations. The default value is `UIViewAnimationOptions.AllowUserInteraction`.
+    ///   - animations: A block object containing the changes to commit to the views.
+    ///   - completion: A block object to be executed when the animation sequence ends.
     public static func animate(_ duration: TimeInterval = 0.6, delay: TimeInterval = 0, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: UIViewAnimationOptions = .allowUserInteraction, animations: @escaping (() -> Void), completion: ((Bool) -> Void)?) {
         UIView.animate(withDuration: duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: completion)
     }
 
     /// Performs a view animation using a timing curve corresponding to the motion of a physical spring.
     ///
-    /// - parameter duration:   The total duration of the animations, measured in seconds. If you specify a negative value or `0`, the changes are made without animating them. The default value is `0.6`.
-    /// - parameter delay:      The amount of time (measured in seconds) to wait before beginning the animations. The default value is `0`.
-    /// - parameter damping:    The damping ratio for the spring animation as it approaches its quiescent state. The default value is `0.7`.
-    /// - parameter velocity:   The initial spring velocity. For smooth start to the animation, match this value to the view’s velocity as it was prior to attachment. The default value is `0`.
-    /// - parameter options:    A mask of options indicating how you want to perform the animations. The default value is `UIViewAnimationOptions.AllowUserInteraction`.
-    /// - parameter animations: A block object containing the changes to commit to the views.
+    /// - Parameters:
+    ///   - duration:   The total duration of the animations, measured in seconds. If you specify a negative value or `0`, the changes are made without animating them. The default value is `0.6`.
+    ///   - delay:      The amount of time (measured in seconds) to wait before beginning the animations. The default value is `0`.
+    ///   - damping:    The damping ratio for the spring animation as it approaches its quiescent state. The default value is `0.7`.
+    ///   - velocity:   The initial spring velocity. For smooth start to the animation, match this value to the view’s velocity as it was prior to attachment. The default value is `0`.
+    ///   - options:    A mask of options indicating how you want to perform the animations. The default value is `UIViewAnimationOptions.AllowUserInteraction`.
+    ///   - animations: A block object containing the changes to commit to the views.
     public static func animate(_ duration: TimeInterval = 0.6, delay: TimeInterval = 0, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: UIViewAnimationOptions = .allowUserInteraction, animations: @escaping (() -> Void)) {
         UIView.animate(withDuration: duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: nil)
     }
@@ -217,7 +219,7 @@ import UIKit
 @objc extension UIView {
     /// Takes a snapshot of the complete view hierarchy as visible onscreen.
     ///
-    /// - parameter afterScreenUpdates:
+    /// - Parameter afterScreenUpdates:
     ///     A boolean value that indicates whether the snapshot should be rendered
     ///     after recent changes have been incorporated. Specify the value false if
     ///     you want to render a snapshot in the view hierarchy’s current state, which
@@ -225,8 +227,7 @@ import UIKit
     ///     snapshot should be rendered after recent changes have been incorporated.
     ///     Specify the value `false` if you want to render a snapshot in the view hierarchy’s
     ///     current state, which might not include recent changes. The default value is `false`.
-    ///
-    /// - returns: `UIImage` of the snapshot.
+    /// - Returns: `UIImage` of the snapshot.
     open func snapshotImage(afterScreenUpdates: Bool = false) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
         drawHierarchy(in: bounds, afterScreenUpdates: afterScreenUpdates)
@@ -237,7 +238,7 @@ import UIKit
 
     /// Takes a snapshot of the complete view hierarchy as visible onscreen.
     ///
-    /// - parameter afterScreenUpdates:
+    /// - Parameter afterScreenUpdates:
     ///     A boolean value that indicates whether the snapshot should be rendered
     ///     after recent changes have been incorporated. Specify the value false if
     ///     you want to render a snapshot in the view hierarchy’s current state, which
@@ -245,8 +246,7 @@ import UIKit
     ///     snapshot should be rendered after recent changes have been incorporated.
     ///     Specify the value `false` if you want to render a snapshot in the view hierarchy’s
     ///     current state, which might not include recent changes. The default value is `false`.
-    ///
-    /// - returns: `UIImageView` of the snapshot.
+    /// - Returns: `UIImageView` of the snapshot.
     open func snapshotImageView(afterScreenUpdates: Bool = false) -> UIImageView {
         let imageView = UIImageView(image: snapshotImage(afterScreenUpdates: afterScreenUpdates))
         imageView.clipsToBounds = true
