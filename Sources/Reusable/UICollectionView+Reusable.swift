@@ -91,20 +91,20 @@ extension UICollectionView {
 
     /// Returns a reusable `UICollectionReusableView` instance for the class inferred by the return type.
     ///
-    /// - parameter kind:      The kind of supplementary view to locate.
-    /// - parameter indexPath: The index path specifying the location of the supplementary view in the collection view.
-    ///
-    /// - returns: The specified supplementary view or nil if the view could not be found.
+    /// - Parameters:
+    ///   - kind:      The kind of supplementary view to locate.
+    ///   - indexPath: The index path specifying the location of the supplementary view in the collection view.
+    /// - Returns: The specified supplementary view or nil if the view could not be found.
     public func supplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, at indexPath: IndexPath) -> T? {
         return supplementaryView(forElementKind: kind.identifier, at: indexPath) as? T
     }
 
     /// Returns a reusable `UICollectionReusableView` instance for the class inferred by the return type.
     ///
-    /// - parameter kind:      The kind of supplementary view to retrieve.
-    /// - parameter indexPath: The index path specifying the location of the supplementary view in the collection view.
-    ///
-    /// - returns: A reusable `UICollectionReusableView` instance.
+    /// - Parameters:
+    ///   - kind:      The kind of supplementary view to retrieve.
+    ///   - indexPath: The index path specifying the location of the supplementary view in the collection view.
+    /// - Returns: A reusable `UICollectionReusableView` instance.
     public func dequeueReusableSupplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, for indexPath: IndexPath) -> T {
         registerSupplementaryViewIfNeeded(kind: kind, view: T.self)
 
@@ -117,9 +117,8 @@ extension UICollectionView {
 
     /// Returns a reusable `UICollectionViewCell` instance for the class inferred by the return type.
     ///
-    /// - parameter indexPath: The index path specifying the location of the cell in the collection view.
-    ///
-    /// - returns: A reusable `UICollectionViewCell` instance.
+    /// - Parameter indexPath: The index path specifying the location of the cell in the collection view.
+    /// - Returns: A reusable `UICollectionViewCell` instance.
     public func dequeueReusableCell<T: UICollectionViewCell>(for indexPath: IndexPath) -> T {
         registerIfNeeded(T.self)
 

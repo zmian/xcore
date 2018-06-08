@@ -39,17 +39,17 @@ struct IndexPathCache<Value> {
 
     /// Set estimated cell value to cache.
     ///
-    /// - parameter value:         The value to cache for the given index path.
-    /// - parameter for indexPath: The index path to cache
+    /// - Parameters:
+    ///   - value: The value to cache for the given index path.
+    ///   - indexPath: The index path to cache.
     private mutating func set(value: Value, for indexPath: IndexPath) {
         dictionary[key(for: indexPath)] = value
     }
 
     /// Get estimated cell value from cache.
     ///
-    /// - parameter indexPath: The index path to get the cached value for.
-    ///
-    /// - returns: The cached value if exists; otherwise, `defaultValue`.
+    /// - Parameter indexPath: The index path to get the cached value for.
+    /// - Returns: The cached value if exists; otherwise, `defaultValue`.
     private func get(indexPath: IndexPath) -> Value {
         guard let estimatedValue = dictionary[key(for: indexPath)] else {
             return defaultValue

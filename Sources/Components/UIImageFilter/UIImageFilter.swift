@@ -72,11 +72,10 @@ extension UIImage {
 
         /// Calculates the aspect ratio between two sizes.
         ///
-        /// - parameters:
+        /// - Parameters:
         ///   - size: The first size used to calculate the ratio.
         ///   - otherSize: The second size used to calculate the ratio.
-        ///
-        /// - returns: the aspect ratio between the two sizes.
+        /// - Returns: the aspect ratio between the two sizes.
         private func aspectRatio(between size: CGSize, and otherSize: CGSize) -> CGFloat {
             let aspectWidth = size.width / otherSize.width
             let aspectHeight = size.height / otherSize.height

@@ -30,8 +30,8 @@ extension NSObject {
     /// The search pattern that `valueForKey:` uses to find the correct value
     /// to return is described in **Accessor Search Patterns** in **Key-Value Coding Programming Guide**.
     ///
-    /// - parameter key: The name of one of the receiver's properties.
-    /// - returns: The value for the property identified by key.
+    /// - Parameter key: The name of one of the receiver's properties.
+    /// - Returns: The value for the property identified by key.
     open func safeValue(forKey key: String) -> Any? {
         let mirror = Mirror(reflecting: self)
 
@@ -60,10 +60,12 @@ extension NSObject {
         case typeOf
     }
 
-    /// - parameter aClass: A class object representing the Objective-C class to be tested.
-    /// - parameter comparison: The comparison option to use when comparing `self` to `aClass`.
+
+    /// - Parameters:
+    ///   - aClass: A class object representing the Objective-C class to be tested.
+    ///   - comparison: The comparison option to use when comparing `self` to `aClass`.
     ///
-    /// - returns: When option is `.kindOf` then this method returns true if `aClass` is a Class object of the same type.
+    /// - Returns: When option is `.kindOf` then this method returns true if `aClass` is a Class object of the same type.
     ///            Otherwise, `.typeOf` does direct check to ensure `aClass` is the same object and not a subclass.
     public func isType(of aClass: Swift.AnyClass, comparison: LookupComparison) -> Bool {
         switch comparison {
@@ -80,19 +82,18 @@ extension NSObject {
 extension NSObject {
     /// Returns the value associated with a given object for a given key.
     ///
-    /// - parameter key: The key for the association.
-    ///
-    /// - returns: The value associated with the key for object.
+    /// - Parameter key: The key for the association.
+    /// - Returns: The value associated with the key for object.
     public func associatedObject<T>(_ key: UnsafeRawPointer) -> T? {
         return objc_getAssociatedObject(self, key) as? T
     }
 
     /// Returns the value associated with a given object for a given key.
     ///
-    /// - parameter key: The key for the association.
-    /// - parameter defaultValue: The default value to return if the no associated value is found.
-    ///
-    /// - returns: The value associated with the key for object.
+    /// - Parameters:
+    ///   - key: The key for the association.
+    ///   - defaultValue: The default value to return if the no associated value is found.
+    /// - Returns: The value associated with the key for object.
     public func associatedObject<T>(_ key: UnsafeRawPointer, defaultValue: T) -> T {
         guard let value = objc_getAssociatedObject(self, key) as? T else {
             return defaultValue
@@ -102,9 +103,10 @@ extension NSObject {
 
     /// Sets an associated value for a given object using a given key and association policy.
     ///
-    /// - parameter key: The key for the association.
-    /// - parameter value: The value to associate with the key for object. Pass `nil` to clear an existing association.
-    /// - parameter policy: The policy for the association. The default value is `.OBJC_ASSOCIATION_RETAIN_NONATOMIC`.
+    /// - Parameters:
+    ///   - key: The key for the association.
+    ///   - value: The value to associate with the key for object. Pass `nil` to clear an existing association.
+    ///   - policy: The policy for the association. The default value is `.OBJC_ASSOCIATION_RETAIN_NONATOMIC`.
     public func setAssociatedObject<T>(_ key: UnsafeRawPointer, value: T?, policy: objc_AssociationPolicy = .OBJC_ASSOCIATION_RETAIN_NONATOMIC) {
         objc_setAssociatedObject(self, key, value, policy)
     }

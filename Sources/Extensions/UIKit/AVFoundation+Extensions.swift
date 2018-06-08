@@ -107,9 +107,8 @@ extension AVPlayer {
     ///
     /// Implicitly creates an AVPlayerItem. Clients can obtain the AVPlayerItem as it becomes the player's currentItem.
     ///
-    /// - parameter remoteOrLocalName: The local file name from `NSBundle.mainBundle()` or remote url
-    ///
-    /// - returns:            An instance of AVPlayer
+    /// - Parameter remoteOrLocalName: The local file name from `NSBundle.mainBundle()` or remote url.
+    /// - Returns: An instance of AVPlayer.
     public convenience init?(remoteOrLocalName: String) {
         if let playerItem = AVPlayerItem(remoteOrLocalName: remoteOrLocalName) {
             self.init(playerItem: playerItem)
@@ -122,11 +121,11 @@ extension AVPlayer {
 extension AVPlayerItem {
     /// Initializes an AVPlayerItem with local resource referenced file name.
     ///
-    /// - parameter filename: The local file name.
-    /// - parameter bundle:   The bundle containing the specified file name. If you specify nil,
+    /// - Parameters:
+    ///   - filename: The local file name.
+    ///   - bundle: The bundle containing the specified file name. If you specify `nil`,
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
-    ///
-    /// - returns:            An instance of AVPlayerItem.
+    /// - Returns: An instance of AVPlayerItem.
     public convenience init?(filename: String, bundle: Bundle? = nil) {
         let name   = ((filename as NSString).lastPathComponent as NSString).deletingPathExtension
         let ext    = (filename as NSString).pathExtension
@@ -152,11 +151,12 @@ extension AVPlayerItem {
 extension AVAsset {
     /// Initializes an AVAsset with local resource referenced file name.
     ///
-    /// - parameter filename: The local file name.
-    /// - parameter bundle:   The bundle containing the specified file name. If you specify nil,
-    ///   this method looks in the main bundle of the current application. The default value is `nil`.
-    ///
-    /// - returns:            An instance of AVAsset.
+    /// - Parameters:
+    ///   - filename: The local file name.
+    ///   - bundle: The bundle containing the specified file name. If you specify `nil`,
+    ///             this method looks in the main bundle of the current application.
+    ///             The default value is `nil`.
+    /// - Returns: An instance of AVAsset.
     public convenience init?(filename: String, bundle: Bundle? = nil) {
         let name   = ((filename as NSString).lastPathComponent as NSString).deletingPathExtension
         let ext    = (filename as NSString).pathExtension

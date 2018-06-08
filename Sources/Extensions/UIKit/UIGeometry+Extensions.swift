@@ -168,14 +168,14 @@ public let π = CGFloat.pi
 extension CGFloat {
     /// A convenience method to convert an angle from degrees to radians.
     ///
-    /// - returns: `self` value in radians.
+    /// - Returns: `self` value in radians.
     public func degreesToRadians() -> CGFloat {
         return π * self / 180
     }
 
     /// A convenience method to convert an angle from radians to degrees.
     ///
-    /// - returns: `self` value in degrees.
+    /// - Returns: `self` value in degrees.
     public func radiansToDegrees() -> CGFloat {
         return self * 180 / π
     }

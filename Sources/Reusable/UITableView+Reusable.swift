@@ -74,25 +74,23 @@ extension UITableView {
 extension UITableView {
     /// Returns a reusable `UITableViewHeaderFooterView` instance for the class inferred by the return type.
     ///
-    /// - parameter indexPath: An index number that identifies a section of the table.
-    ///
-    /// - returns: The header view associated with the section, or `nil` if the section does not have a header view.
+    /// - Parameter indexPath: An index number that identifies a section of the table.
+    /// - Returns: The header view associated with the section, or `nil` if the section does not have a header view.
     public func headerView<T: UITableViewHeaderFooterView>(forSection section: Int) -> T? {
         return headerView(forSection: section) as? T
     }
 
     /// Returns a reusable `UITableViewHeaderFooterView` instance for the class inferred by the return type.
     ///
-    /// - parameter indexPath: An index number that identifies a section of the table.
-    ///
-    /// - returns: The header view associated with the section, or `nil` if the section does not have a header view.
+    /// - Parameter indexPath: An index number that identifies a section of the table.
+    /// - Returns: The header view associated with the section, or `nil` if the section does not have a header view.
     public func footerView<T: UITableViewHeaderFooterView>(forSection section: Int) -> T? {
         return footerView(forSection: section) as? T
     }
 
     /// Returns a reusable header or footer view instance for the class inferred by the return type.
     ///
-    /// - returns: A reusable `UITableViewHeaderFooterView` instance.
+    /// - Returns: A reusable `UITableViewHeaderFooterView` instance.
     public func dequeueReusableHeaderFooterView<T: UITableViewHeaderFooterView>() -> T {
         registerHeaderFooterViewIfNeeded(T.self)
 
@@ -105,9 +103,8 @@ extension UITableView {
 
     /// Returns a reusable `UITableViewCell` instance for the class inferred by the return type.
     ///
-    /// - parameter indexPath: The index path specifying the location of the cell in the table view.
-    ///
-    /// - returns: A reusable `UITableViewCell` instance.
+    /// - Parameter indexPath: The index path specifying the location of the cell in the table view.
+    /// - Returns: A reusable `UITableViewCell` instance.
     public func dequeueReusableCell<T: UITableViewCell>(for indexPath: IndexPath) -> T {
         registerIfNeeded(T.self)
 

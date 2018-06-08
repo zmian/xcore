@@ -139,7 +139,7 @@ extension UIColor {
 
     /// A convenience method to return default system tint color.
     ///
-    /// - returns: The default tint color.
+    /// - Returns: The default tint color.
     public static var systemTint: UIColor {
         struct Static {
             static let tintColor = UIView().tintColor ?? .blue

@@ -85,8 +85,10 @@ extension AnyEquatable: Equatable {
     /// // Prints "true"
     /// ```
     ///
-    /// - parameter lhs: A type-erased equatable value.
-    /// - parameter rhs: Another type-erased equatable value.
+    /// - Parameters:
+    ///   - lhs: A type-erased equatable value.
+    ///   - rhs: Another type-erased equatable value.
+    /// - Returns: `true` if they are equal; otherwise, `false`.
     public static func ==(lhs: AnyEquatable, rhs: AnyEquatable) -> Bool {
         return lhs.equals(rhs.base)
     }

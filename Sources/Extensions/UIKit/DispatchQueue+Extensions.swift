@@ -28,9 +28,8 @@ import Dispatch
 extension DispatchTime {
     /// A convenience method to convert `TimeInterval` to `DispatchTime`.
     ///
-    /// - parameter interval: The time interval, in seconds.
-    ///
-    /// - returns: A new `DispatchTime` from specified seconds.
+    /// - Parameter interval: The time interval, in seconds.
+    /// - Returns: A new `DispatchTime` from specified seconds.
     public static func seconds(_ interval: TimeInterval) -> DispatchTime {
         return .now() + Double(Int64(interval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
     }

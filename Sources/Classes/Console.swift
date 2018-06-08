@@ -33,13 +33,14 @@ public final class console {
     /// Writes the textual representations of debug message, separated by separator
     /// and terminated by terminator, into the standard output.
     ///
-    /// - parameter items:        Items to write to standard output.
-    /// - parameter condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
-    /// - parameter separator:    The separator to use between items. The default value is `" "`.
-    /// - parameter terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
-    /// - parameter className:    The name of the class where this log is executed. The default value is extracted from `#file`.
-    /// - parameter functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
-    /// - parameter lineNumber:   The line number where this log is executed. The default value is of `#line`.
+    /// - Parameters:
+    ///   - items:        Items to write to standard output.
+    ///   - condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
+    ///   - separator:    The separator to use between items. The default value is `" "`.
+    ///   - terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
+    ///   - className:    The name of the class where this log is executed. The default value is extracted from `#file`.
+    ///   - functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
+    ///   - lineNumber:   The line number where this log is executed. The default value is of `#line`.
     public static func log(_ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, functionName: String = #function, lineNumber: Int = #line) {
         internalPrint(level: .debug, items: items, condition: condition, separator: separator, terminator: terminator, className: className, functionName: functionName, lineNumber: lineNumber)
     }
@@ -47,13 +48,14 @@ public final class console {
     /// Writes the textual representations of info message, separated by separator
     /// and terminated by terminator, into the standard output.
     ///
-    /// - parameter items:        Items to write to standard output.
-    /// - parameter condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
-    /// - parameter separator:    The separator to use between items. The default value is `" "`.
-    /// - parameter terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
-    /// - parameter className:    The name of the class where this log is executed. The default value is extracted from `#file`.
-    /// - parameter functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
-    /// - parameter lineNumber:   The line number where this log is executed. The default value is of `#line`.
+    /// - Parameters:
+    ///   - items:        Items to write to standard output.
+    ///   - condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
+    ///   - separator:    The separator to use between items. The default value is `" "`.
+    ///   - terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
+    ///   - className:    The name of the class where this log is executed. The default value is extracted from `#file`.
+    ///   - functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
+    ///   - lineNumber:   The line number where this log is executed. The default value is of `#line`.
     public static func info(_ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, functionName: String = #function, lineNumber: Int = #line) {
         internalPrint(level: .info, items: items, condition: condition, separator: separator, terminator: terminator, className: className, functionName: functionName, lineNumber: lineNumber)
     }
@@ -61,13 +63,14 @@ public final class console {
     /// Writes the textual representations of warning message, separated by separator
     /// and terminated by terminator, into the standard output.
     ///
-    /// - parameter items:        Items to write to standard output.
-    /// - parameter condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
-    /// - parameter separator:    The separator to use between items. The default value is `" "`.
-    /// - parameter terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
-    /// - parameter className:    The name of the class where this log is executed. The default value is extracted from `#file`.
-    /// - parameter functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
-    /// - parameter lineNumber:   The line number where this log is executed. The default value is of `#line`.
+    /// - Parameters:
+    ///   - items:        Items to write to standard output.
+    ///   - condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
+    ///   - separator:    The separator to use between items. The default value is `" "`.
+    ///   - terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
+    ///   - className:    The name of the class where this log is executed. The default value is extracted from `#file`.
+    ///   - functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
+    ///   - lineNumber:   The line number where this log is executed. The default value is of `#line`.
     public static func warn(_ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, functionName: String = #function, lineNumber: Int = #line) {
         internalPrint(level: .warn, items: items, condition: condition, separator: separator, terminator: terminator, className: className, functionName: functionName, lineNumber: lineNumber)
     }
@@ -75,13 +78,14 @@ public final class console {
     /// Writes the textual representations of error message, separated by separator
     /// and terminated by terminator, into the standard output.
     ///
-    /// - parameter items:        Items to write to standard output.
-    /// - parameter condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
-    /// - parameter separator:    The separator to use between items. The default value is `" "`.
-    /// - parameter terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
-    /// - parameter className:    The name of the class where this log is executed. The default value is extracted from `#file`.
-    /// - parameter functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
-    /// - parameter lineNumber:   The line number where this log is executed. The default value is of `#line`.
+    /// - Parameters:
+    ///   - items:        Items to write to standard output.
+    ///   - condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
+    ///   - separator:    The separator to use between items. The default value is `" "`.
+    ///   - terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
+    ///   - className:    The name of the class where this log is executed. The default value is extracted from `#file`.
+    ///   - functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
+    ///   - lineNumber:   The line number where this log is executed. The default value is of `#line`.
     public static func error(_ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, functionName: String = #function, lineNumber: Int = #line) {
         internalPrint(level: .error, items: items, condition: condition, separator: separator, terminator: terminator, className: className, functionName: functionName, lineNumber: lineNumber)
     }
@@ -89,14 +93,15 @@ public final class console {
     /// Writes the textual representations of items, separated by separator and terminated by terminator,
     /// into the standard output.
     ///
-    /// - parameter level:        The log level option. The default value is `.debug`.
-    /// - parameter items:        Items to write to standard output.
-    /// - parameter condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
-    /// - parameter separator:    The separator to use between items. The default value is `" "`.
-    /// - parameter terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
-    /// - parameter className:    The name of the class where this log is executed. The default value is extracted from `#file`.
-    /// - parameter functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
-    /// - parameter lineNumber:   The line number where this log is executed. The default value is of `#line`.
+    /// - Parameters:
+    ///   - level:        The log level option. The default value is `.debug`.
+    ///   - items:        Items to write to standard output.
+    ///   - condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
+    ///   - separator:    The separator to use between items. The default value is `" "`.
+    ///   - terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
+    ///   - className:    The name of the class where this log is executed. The default value is extracted from `#file`.
+    ///   - functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
+    ///   - lineNumber:   The line number where this log is executed. The default value is of `#line`.
     public static func print(level: LevelOptions = .debug, _ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, functionName: String = #function, lineNumber: Int = #line) {
         internalPrint(level: level, items: items, condition: condition, separator: separator, terminator: terminator, className: className, functionName: functionName, lineNumber: lineNumber)
     }
@@ -106,14 +111,15 @@ extension console {
     /// Writes the textual representations of items, separated by separator and terminated by terminator,
     /// into the standard output.
     ///
-    /// - parameter level:        The log level option.
-    /// - parameter items:        Items to write to standard output.
-    /// - parameter condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
-    /// - parameter separator:    The separator to use between items. The default value is `" "`.
-    /// - parameter terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
-    /// - parameter className:    The name of the class where this log is executed. The default value is extracted from `#file`.
-    /// - parameter functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
-    /// - parameter lineNumber:   The line number where this log is executed. The default value is of `#line`.
+    /// - Parameters:
+    ///   - level:        The log level option.
+    ///   - items:        Items to write to standard output.
+    ///   - condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
+    ///   - separator:    The separator to use between items. The default value is `" "`.
+    ///   - terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
+    ///   - className:    The name of the class where this log is executed. The default value is extracted from `#file`.
+    ///   - functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
+    ///   - lineNumber:   The line number where this log is executed. The default value is of `#line`.
     private static func internalPrint(level: LevelOptions, items: [Any], condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, functionName: String = #function, lineNumber: Int = #line) {
         guard levelOptions.contains(level) && condition else { return }
 

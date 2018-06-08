@@ -30,7 +30,7 @@ extension ProcessInfo {
     /// An `ProcessInfo` object is created the first time this method is invoked,
     /// and that same object is returned on each subsequent invocation.
     ///
-    /// - returns: Shared process information agent for the process.
+    /// - Returns: Shared process information agent for the process.
     public static var shared: ProcessInfo {
         return processInfo
     }

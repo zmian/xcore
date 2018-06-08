@@ -28,8 +28,9 @@ import QuartzCore
 extension CATransaction {
     /// A helper function to group animation transactions and call completion handler when animations for this transaction group are completed.
     ///
-    /// - parameter animateBlock:      The block that have animations that must be completed before completion handler is called.
-    /// - parameter completionHandler: A block object called when animations for this transaction group are completed.
+    /// - Parameters:
+    ///   - animateBlock: The block that have animations that must be completed before completion handler is called.
+    ///   - completionHandler: A block object called when animations for this transaction group are completed.
     public static func animationTransaction(_ animateBlock: () -> Void, completionHandler: (() -> Void)?) {
         CATransaction.begin()
         CATransaction.setCompletionBlock(completionHandler)
@@ -41,9 +42,8 @@ extension CATransaction {
 extension CALayer {
     /// A convenience method to return the color at given point in `self`.
     ///
-    /// - parameter point: The point to use to detect color.
-    ///
-    /// - returns: UIColor at the specified point.
+    /// - Parameter point: The point to use to detect color.
+    /// - Returns: `UIColor` at the specified point.
     public func color(at point: CGPoint) -> UIColor {
         let width = 1
         let height = 1

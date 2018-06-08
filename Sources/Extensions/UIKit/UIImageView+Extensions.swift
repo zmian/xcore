@@ -27,8 +27,9 @@ import UIKit
 extension UIImageView {
     /// Load the specified named image on **background thread**.
     ///
-    /// - parameter named:  The name of the image.
-    /// - parameter bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the main bundle.
+    /// - Parameters:
+    ///   - named:  The name of the image.
+    ///   - bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the `main` bundle.
     public func image(named: String, bundle: Bundle? = nil) {
         DispatchQueue.global(qos: .userInteractive).async {
             let image = UIImage(named: named, in: bundle, compatibleWith: nil)
@@ -41,9 +42,10 @@ extension UIImageView {
     /// Create animated images. This does not cache the images in memory.
     /// Thus, less memory consumption for one of images.
     ///
-    /// - parameter name:     The name of the pattern (e.g., `"AnimationImage.png"`).
-    /// - parameter range:    Images range (e.g., `0..<30` This will create: `"AnimationImage0.png"..."AnimationImage29.png"`).
-    /// - parameter duration: The animation duration.
+    /// - Parameters:
+    ///   - name:     The name of the pattern (e.g., `"AnimationImage.png"`).
+    ///   - range:    Images range (e.g., `0..<30` This will create: `"AnimationImage0.png"..."AnimationImage29.png"`).
+    ///   - duration: The animation duration.
     public func createAnimatedImages(_ name: String, _ range: Range<Int>, _ duration: TimeInterval) {
         let prefix = name.stringByDeletingPathExtension
         let ext = name.pathExtension == "" ? "png" : name.pathExtension
@@ -63,8 +65,9 @@ extension UIImageView {
 
     /// A convenience method to start animation with completion handler.
     ///
-    /// - parameter endImage:   Image to set when the animation finishes.
-    /// - parameter completion: The block to execute after the animation finishes.
+    /// - Parameters:
+    ///   - endImage:   Image to set when the animation finishes.
+    ///   - completion: The block to execute after the animation finishes.
     public func startAnimating(endImage: UIImage? = nil, completion: (() -> Void)?) {
         if endImage != nil {
             image = endImage

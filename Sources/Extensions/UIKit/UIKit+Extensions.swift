@@ -31,8 +31,9 @@ import ObjectiveC
 /// Requests are made using `SafariViewController` if available;
 /// otherwise it uses `UIApplication:openURL`.
 ///
-/// - parameter url:  The url to open.
-/// - parameter from: A view controller that wants to open the url.
+/// - Parameters:
+///   - url:  The url to open.
+///   - from: A view controller that wants to open the url.
 public func open(url: URL, from viewController: UIViewController) {
     let svc = SFSafariViewController(url: url)
     viewController.present(svc, animated: true, completion: nil)

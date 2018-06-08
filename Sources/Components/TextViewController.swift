@@ -62,8 +62,9 @@ open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     /// navigationController.pushViewController(vc, animated: true)
     /// ```
     ///
-    /// - parameter filename: The file name.
-    /// - parameter bundle:   The bundle containing the specified file name. If you specify nil,
+    /// - Parameters:
+    ///   - filename: The file name.
+    ///   - bundle: The bundle containing the specified file name. If you specify `nil`,
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
     open func setText(_ filename: String, bundle: Bundle? = nil) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in

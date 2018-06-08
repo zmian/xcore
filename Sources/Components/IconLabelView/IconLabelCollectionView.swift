@@ -216,7 +216,7 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
 
     /// Deletes the items at the specified index paths.
     ///
-    /// - parameter indexPaths: An array of `IndexPath` objects identifying the items to delete.
+    /// - Parameter indexPaths: An array of `IndexPath` objects identifying the items to delete.
     open func removeItems(_ indexPaths: [IndexPath]) {
         indexPaths.forEach {
             let item = sections.remove(at: $0)

@@ -70,17 +70,18 @@ extension UIAlertController {
 extension UIAlertController {
     /// A convenience method to present multiple actions using `UIAlertController`.
     ///
-    /// - parameter actions:                         A an array of `UIAlertAction` to display.
-    /// - parameter title:                           The title of the alert. Use this string to get the user’s attention and communicate the reason for the alert.
-    /// - parameter message:                         Descriptive text that provides additional details about the reason for the alert.
-    /// - parameter sourceView:                      A source view that presented the alert. A required property for iPad support.
-    /// - parameter style:                           The style to use when presenting the alert controller.
-    ///                                              Use this parameter to configure the alert controller as an action sheet or as a modal alert.
-    ///                                              The default value is `.actionSheet`.
-    /// - parameter automaticallyAppendCancelAction: An option to automatically append cancel action in addition to the provided array of actions.
-    ///                                              The default value is `true`.
+    /// - Parameters:
+    ///   - actions:             A an array of `UIAlertAction` to display.
+    ///   - title:               The title of the alert. Use this string to get the user’s attention and communicate the reason for the alert.
+    ///   - message:             Descriptive text that provides additional details about the reason for the alert.
+    ///   - sourceView:          A source view that presented the alert. A required property for iPad support.
+    ///   - style:               The style to use when presenting the alert controller.
+    ///                          Use this parameter to configure the alert controller as an action sheet or as a modal alert.
+    ///                          The default value is `.actionSheet`.
+    ///   - appendsCancelAction: An option to automatically append cancel action in addition to the provided array of actions.
+    ///                          The default value is `true`.
     @discardableResult
-    open static func present(actions: [UIAlertAction], title: String? = nil, message: String? = nil, sourceView: PopoverPresentationSourceView, style: UIAlertControllerStyle = .actionSheet, automaticallyAppendCancelAction: Bool = true) -> UIAlertController {
+    open static func present(actions: [UIAlertAction], title: String? = nil, message: String? = nil, sourceView: PopoverPresentationSourceView, style: UIAlertControllerStyle = .actionSheet, appendsCancelAction: Bool = true) -> UIAlertController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
 
         // For iPad support
@@ -90,7 +91,7 @@ extension UIAlertController {
             alertController.addAction(action)
         }
 
-        if automaticallyAppendCancelAction {
+        if appendsCancelAction {
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { [weak alertController] action in
                 alertController?.dismiss(animated: true)
             })
@@ -113,8 +114,9 @@ extension UIAlertController {
     /// }
     /// ```
     ///
-    /// - parameter sourceView: A source view that presented the alert. A required property for iPad support.
-    /// - parameter handler:    A block to invoke when an option is selected.
+    /// - Parameters:
+    ///   - sourceView: A source view that presented the alert. A required property for iPad support.
+    ///   - handler: A block to invoke when an option is selected.
     @discardableResult
     open static func present(options: [String], title: String? = nil, message: String? = nil, sourceView: PopoverPresentationSourceView, _ handler: @escaping (_ option: String) -> Void) -> UIAlertController {
         let actions = options.map { option in
@@ -144,8 +146,9 @@ extension UIAlertController {
     /// }
     /// ```
     ///
-    /// - parameter sourceView: A source view that presented the alert. A required property for iPad support.
-    /// - parameter handler:    A block to invoke when an option is selected.
+    /// - Parameters:
+    ///   - sourceView: A source view that presented the alert. A required property for iPad support.
+    ///   - handler: A block to invoke when an option is selected.
     @discardableResult
     open static func present<T: OptionsRepresentable>(sourceView: PopoverPresentationSourceView, _ handler: @escaping (_ option: T) -> Void) -> UIAlertController {
         let options = T.allCases

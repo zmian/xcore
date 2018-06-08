@@ -63,12 +63,12 @@ extension StoryboardInstantiable {
 extension StoryboardInstantiable where Self: UIViewController {
     /// Instantiates and returns the view controller of type `Self`.
     ///
-    /// - parameter identifier: An identifier string that uniquely identifies the view controller in the storyboard file.
-    /// - parameter named:      The name of the storyboard file without the file extension. The default value is `Main`.
-    /// - parameter bundle:     The bundle containing the storyboard file and its related resources. If `nil`, then
-    ///                         this method looks in the main bundle of the current application. The default value is `nil`.
-    ///
-    /// - returns: The view controller of type `Self`.
+    /// - Parameters:
+    ///   - identifier: An identifier string that uniquely identifies the view controller in the storyboard file.
+    ///   - named:      The name of the storyboard file without the file extension. The default value is `Main`.
+    ///   - bundle:     The bundle containing the storyboard file and its related resources. If `nil`, then
+    ///                 this method looks in the main bundle of the current application. The default value is `nil`.
+    /// - Returns: The view controller of type `Self`.
     public static func initFromStoryboard(named: String = "Main", bundle: Bundle? = nil) -> Self {
         let bundle = bundle ?? Bundle(for: Self.self)
         return UIStoryboard(name: named, bundle: bundle).instantiateViewController(withIdentifier: storyboardIdentifier) as! Self

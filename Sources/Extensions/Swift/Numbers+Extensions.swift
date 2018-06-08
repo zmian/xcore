@@ -121,11 +121,10 @@ extension Double {
     /// 132456  // -> 132.5K
     /// ```
     ///
-    /// - parameter threshold: An optional property to only apply abbreviation
+    /// - Parameter threshold: An optional property to only apply abbreviation
     ///                        if `self` is greater then given threshold.
     ///                        The default value is `nil`.
-    ///
-    /// - returns: Abbreviated version of `self`.
+    /// - Returns: Abbreviated version of `self`.
     public func abbreviate(threshold: Double? = nil) -> String {
         if let threshold = threshold, self <= threshold {
             return "\(self)"

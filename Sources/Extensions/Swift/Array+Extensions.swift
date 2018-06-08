@@ -27,8 +27,8 @@ import Foundation
 extension Array {
     /// Returns a random subarray of given length.
     ///
-    /// - parameter size: Length
-    /// - returns:        Random subarray of length n.
+    /// - Parameter size: Length
+    /// - Returns: Random subarray of length n.
     public func randomElements(_ size: Int = 1) -> Array {
         if size >= count {
             return self
@@ -73,7 +73,7 @@ extension Array {
 extension Array where Element: Equatable {
     /// Remove element by value.
     ///
-    /// - returns: true if removed; false otherwise
+    /// - Returns: true if removed; false otherwise
     @discardableResult
     public mutating func remove(_ element: Element) -> Bool {
         for (index, elementToCompare) in enumerated() {
@@ -92,10 +92,10 @@ extension Array where Element: Equatable {
 
     /// Move an element in `self` to a specific index.
     ///
-    /// - parameter element: The element in `self` to move.
-    /// - parameter to:      An index locating the new location of the element in `self`.
-    ///
-    /// - returns: true if moved; false otherwise.
+    /// - Parameters:
+    ///   - element: The element in `self` to move.
+    ///   - index: An index locating the new location of the element in `self`.
+    /// - Returns: `true` if moved; otherwise, `false`.
     @discardableResult
     public mutating func move(_ element: Element, to index: Int) -> Bool {
         guard remove(element) else { return false }
@@ -119,8 +119,8 @@ extension Array where Element: NSObjectProtocol {
     /// }
     /// ```
     ///
-    /// - parameter element: An element to search for in the collection.
-    /// - returns: The first index where `element` is found. If `element` is not
+    /// - Parameter element: An element to search for in the collection.
+    /// - Returns: The first index where `element` is found. If `element` is not
     ///   found in the collection, returns `nil`.
     public func index(of elementType: Element.Type) -> Int? {
         return index(where: { $0.isKind(of: elementType) })
@@ -136,8 +136,8 @@ extension Array where Element: NSObjectProtocol {
     /// }
     /// ```
     ///
-    /// - parameter any: An array of element types to search for in the collection.
-    /// - returns: `true` if the sequence contains an element; otherwise, `false`.
+    /// - Parameter any: An array of element types to search for in the collection.
+    /// - Returns: `true` if the sequence contains an element; otherwise, `false`.
     public func contains(any elementTypes: [Element.Type]) -> Bool {
         for element in self {
             if elementTypes.contains(where: { element.isKind(of: $0) }) {
