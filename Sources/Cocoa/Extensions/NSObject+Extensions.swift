@@ -111,3 +111,35 @@ extension NSObject {
         objc_setAssociatedObject(self, key, value, policy)
     }
 }
+
+// MARK: Property List
+
+extension NSObject {
+    /// Returns a dictionary of the properties declared by the object.
+    public func propertyList() -> [String: String] {
+        var count: UInt32 = 0
+
+        guard let properties = class_copyPropertyList(object_getClass(self), &count) else {
+            return [:]
+        }
+
+        var result = [String: String]()
+
+        for i in 0..<count {
+            let property = properties.advanced(by: Int(i)).pointee
+
+            guard
+                let cAttributes = property_getAttributes(property),
+                let attributes = String(cString: cAttributes).components(separatedBy: ",").first
+            else {
+                continue
+            }
+
+            let name = String(cString: property_getName(property))
+            result[name] = attributes.replace("[\"T@]+", with: "")
+        }
+
+        free(properties)
+        return result
+    }
+}
