@@ -31,13 +31,13 @@ extension UICollectionView {
     }
 
     private var registeredCells: Set<String> {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.registeredCells) as? Set<String> ?? Set<String>() }
-        set { objc_setAssociatedObject(self, &AssociatedKey.registeredCells, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { return associatedObject(&AssociatedKey.registeredCells, defaultValue: Set<String>()) }
+        set { setAssociatedObject(&AssociatedKey.registeredCells, value: newValue) }
     }
 
     private var registeredSupplementaryViews: Set<String> {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.registeredSupplementaryViews) as? Set<String> ?? Set<String>() }
-        set { objc_setAssociatedObject(self, &AssociatedKey.registeredSupplementaryViews, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { return associatedObject(&AssociatedKey.registeredSupplementaryViews, defaultValue: Set<String>()) }
+        set { setAssociatedObject(&AssociatedKey.registeredSupplementaryViews, value: newValue) }
     }
 
     private func register<T: UICollectionViewCell>(_ cell: T.Type) {

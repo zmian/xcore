@@ -31,13 +31,13 @@ extension UITableView {
     }
 
     private var registeredCells: Set<String> {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.registeredCells) as? Set<String> ?? Set<String>() }
-        set { objc_setAssociatedObject(self, &AssociatedKey.registeredCells, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { return associatedObject(&AssociatedKey.registeredCells, defaultValue: Set<String>()) }
+        set { setAssociatedObject(&AssociatedKey.registeredCells, value: newValue) }
     }
 
     private var registeredHeaderFooterViews: Set<String> {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.registeredHeaderFooterViews) as? Set<String> ?? Set<String>() }
-        set { objc_setAssociatedObject(self, &AssociatedKey.registeredHeaderFooterViews, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { return associatedObject(&AssociatedKey.registeredHeaderFooterViews, defaultValue: Set<String>()) }
+        set { setAssociatedObject(&AssociatedKey.registeredHeaderFooterViews, value: newValue) }
     }
 
     private func register<T: UITableViewCell>(_ cell: T.Type) {

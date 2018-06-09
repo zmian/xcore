@@ -169,17 +169,17 @@ extension UIViewController {
     ///
     /// ```swift
     /// let vc = UIImagePickerController()
-    /// vc.preferredInterfaceOrientations = .AllButUpsideDown
+    /// vc.preferredInterfaceOrientations = .allButUpsideDown
     /// ```
     open var preferredInterfaceOrientations: UIInterfaceOrientationMask? {
         get {
-            if let intValue = objc_getAssociatedObject(self, &AssociatedKey.supportedInterfaceOrientations) as? UInt {
-                return UIInterfaceOrientationMask(rawValue: intValue)
-            } else {
+            guard let intValue: UInt = associatedObject(&AssociatedKey.supportedInterfaceOrientations) else {
                 return nil
             }
+
+            return UIInterfaceOrientationMask(rawValue: intValue)
         }
-        set { objc_setAssociatedObject(self, &AssociatedKey.supportedInterfaceOrientations, newValue?.rawValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        set { setAssociatedObject(&AssociatedKey.supportedInterfaceOrientations, value: newValue?.rawValue) }
     }
 
     /// A convenience property to set `preferredInterfaceOrientationForPresentation` without subclassing.
@@ -193,17 +193,17 @@ extension UIViewController {
     ///
     /// ```swift
     /// let vc = UIImagePickerController()
-    /// vc.interfaceOrientationForPresentation = .Portrait
+    /// vc.interfaceOrientationForPresentation = .portrait
     /// ```
     open var interfaceOrientationForPresentation: UIInterfaceOrientation? {
         get {
-            if let intValue = objc_getAssociatedObject(self, &AssociatedKey.preferredInterfaceOrientationForPresentation) as? Int {
-                return UIInterfaceOrientation(rawValue: intValue)
-            } else {
+            guard let intValue: Int = associatedObject(&AssociatedKey.preferredInterfaceOrientationForPresentation) else {
                 return nil
             }
+
+            return UIInterfaceOrientation(rawValue: intValue)
         }
-        set { objc_setAssociatedObject(self, &AssociatedKey.preferredInterfaceOrientationForPresentation, newValue?.rawValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        set { setAssociatedObject(&AssociatedKey.preferredInterfaceOrientationForPresentation, value: newValue?.rawValue) }
     }
 
     /// A convenience property to set `preferredStatusBarStyle` without subclassing.
@@ -219,18 +219,18 @@ extension UIViewController {
     ///
     /// ```swift
     /// let vc = UIImagePickerController()
-    /// vc.statusBarStyle = .LightContent
+    /// vc.statusBarStyle = .lightContent
     /// ```
     open var statusBarStyle: UIStatusBarStyle? {
         get {
-            if let intValue = objc_getAssociatedObject(self, &AssociatedKey.preferredStatusBarStyle) as? Int {
-                return UIStatusBarStyle(rawValue: intValue)
-            } else {
+            guard let intValue: Int = associatedObject(&AssociatedKey.preferredStatusBarStyle) else {
                 return nil
             }
+
+            return UIStatusBarStyle(rawValue: intValue)
         }
         set {
-            objc_setAssociatedObject(self, &AssociatedKey.preferredStatusBarStyle, newValue?.rawValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            setAssociatedObject(&AssociatedKey.preferredStatusBarStyle, value: newValue?.rawValue)
             setNeedsStatusBarAppearanceUpdate()
         }
     }
@@ -246,17 +246,17 @@ extension UIViewController {
     ///
     /// ```swift
     /// let vc = UIImagePickerController()
-    /// vc.statusBarUpdateAnimation = .Fade
+    /// vc.statusBarUpdateAnimation = .fade
     /// ```
     open var statusBarUpdateAnimation: UIStatusBarAnimation? {
         get {
-            if let intValue = objc_getAssociatedObject(self, &AssociatedKey.preferredStatusBarUpdateAnimation) as? Int {
-                return UIStatusBarAnimation(rawValue: intValue)
-            } else {
+            guard let intValue: Int = associatedObject(&AssociatedKey.preferredStatusBarUpdateAnimation) else {
                 return nil
             }
+
+            return UIStatusBarAnimation(rawValue: intValue)
         }
-        set { objc_setAssociatedObject(self, &AssociatedKey.preferredStatusBarUpdateAnimation, newValue?.rawValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        set { setAssociatedObject(&AssociatedKey.preferredStatusBarUpdateAnimation, value: newValue?.rawValue) }
     }
 
     /// A convenience property to set `prefersStatusBarHidden` without subclassing.
@@ -273,9 +273,9 @@ extension UIViewController {
     /// vc.isStatusBarHidden = false
     /// ```
     open var isStatusBarHidden: Bool? {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.prefersStatusBarHidden) as? Bool }
+        get { return associatedObject(&AssociatedKey.prefersStatusBarHidden) }
         set {
-            objc_setAssociatedObject(self, &AssociatedKey.prefersStatusBarHidden, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            setAssociatedObject(&AssociatedKey.prefersStatusBarHidden, value: newValue)
             setNeedsStatusBarAppearanceUpdate()
         }
     }
@@ -291,10 +291,10 @@ extension UIViewController {
     ///
     /// ```swift
     /// let vc = UIImagePickerController()
-    /// vc.enableAutorotate = false
+    /// vc.isAutorotateEnabled = false
     /// ```
-    open var enableAutorotate: Bool? {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.shouldAutorotate) as? Bool }
-        set { objc_setAssociatedObject(self, &AssociatedKey.shouldAutorotate, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+    open var isAutorotateEnabled: Bool? {
+        get { return associatedObject(&AssociatedKey.shouldAutorotate) }
+        set { setAssociatedObject(&AssociatedKey.shouldAutorotate, value: newValue) }
     }
 }

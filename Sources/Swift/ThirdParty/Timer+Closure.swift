@@ -47,13 +47,13 @@ extension Timer {
     }
 
     private var pauseDate: Date? {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.timerPauseDate) as? Date }
-        set { objc_setAssociatedObject(self, &AssociatedKey.timerPauseDate, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { return associatedObject(&AssociatedKey.timerPauseDate) }
+        set { setAssociatedObject(&AssociatedKey.timerPauseDate, value: newValue) }
     }
 
     private var previousFireDate: Date? {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.timerPreviousFireDate) as? Date }
-        set { objc_setAssociatedObject(self, &AssociatedKey.timerPreviousFireDate, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { return associatedObject(&AssociatedKey.timerPreviousFireDate) }
+        set { setAssociatedObject(&AssociatedKey.timerPreviousFireDate, value: newValue) }
     }
 
     public func pause() {

@@ -51,8 +51,8 @@ extension UIControl: ControlTargetActionBlockRepresentable {
     }
 
     fileprivate var actionEvents: [UInt: ControlClosureWrapper]? {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.actionHandler) as? [UInt: ControlClosureWrapper] }
-        set { objc_setAssociatedObject(self, &AssociatedKey.actionHandler, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { return associatedObject(&AssociatedKey.actionHandler) }
+        set { setAssociatedObject(&AssociatedKey.actionHandler, value: newValue) }
     }
 }
 

@@ -41,15 +41,15 @@ extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
     }
 
     private var actionHandlerWrapper: MailClosureWrapper? {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.actionHandler) as? MailClosureWrapper }
-        set { objc_setAssociatedObject(self, &AssociatedKey.actionHandler, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { return associatedObject(&AssociatedKey.actionHandler) }
+        set { setAssociatedObject(&AssociatedKey.actionHandler, value: newValue) }
     }
 
     public var shouldAutoDismiss: Bool {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.shouldAutoDismiss) as? Bool ?? false }
+        get { return associatedObject(&AssociatedKey.shouldAutoDismiss, defaultValue: false) }
         set {
             mailComposeDelegate = self
-            objc_setAssociatedObject(self, &AssociatedKey.shouldAutoDismiss, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            setAssociatedObject(&AssociatedKey.shouldAutoDismiss, value: newValue)
         }
     }
 

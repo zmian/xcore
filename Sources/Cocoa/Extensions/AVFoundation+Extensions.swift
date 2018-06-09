@@ -62,10 +62,10 @@ extension AVPlayer {
 
     /// Indicates whether to repeat playback of the current item.
     public var `repeat`: Bool {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.playerRepeat) as? Bool ?? false }
+        get { return associatedObject(&AssociatedKey.playerRepeat, defaultValue: false) }
         set {
             guard newValue != `repeat` else { return }
-            objc_setAssociatedObject(self, &AssociatedKey.playerRepeat, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            setAssociatedObject(&AssociatedKey.playerRepeat, value: newValue)
 
             if newValue {
                 NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: currentItem, queue: nil) { [weak self] notification in
