@@ -204,7 +204,7 @@ open class IconLabelView: XCView {
         set { stackView.spacing = newValue }
     }
 
-    /// The default insets is `UIEdgeInsets.zero`.
+    /// The default value is `.zero`.
     @objc open dynamic var contentInset: UIEdgeInsets {
         get { return stackView.layoutMargins }
         set { stackView.layoutMargins = newValue }

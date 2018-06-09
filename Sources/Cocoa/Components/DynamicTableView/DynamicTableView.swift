@@ -138,7 +138,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     // MARK: isContentCentered
 
     private var shouldUpdateActualContentInset = true
-    private var actualContentInset = UIEdgeInsets.zero
+    private var actualContentInset: UIEdgeInsets = .zero
     open override var contentInset: UIEdgeInsets {
         didSet {
             guard shouldUpdateActualContentInset else { return }
@@ -374,15 +374,15 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     // MARK: UIAppearance Properties
 
-    @objc open dynamic var headerFont                     = UIFont.systemFont(.footnote)
-    @objc open dynamic var headerTextColor                = UIColor.black
-    @objc open dynamic var footerFont                     = UIFont.systemFont(.footnote)
-    @objc open dynamic var footerTextColor                = UIColor.darkGray
-    @objc open dynamic var accessoryFont                  = UIFont.systemFont(.subheadline)
-    @objc open dynamic var accessoryTextColor             = UIColor.gray
-    @objc open dynamic var accessoryTintColor             = UIColor.systemTint
-    @objc open dynamic var accessoryTextMaxWidth: CGFloat = 0
-    @objc open dynamic var disclosureIndicatorTintColor   = UIColor.gray
+    @objc open dynamic var headerFont: UIFont                    = .systemFont(.footnote)
+    @objc open dynamic var headerTextColor: UIColor              = .black
+    @objc open dynamic var footerFont: UIFont                    = .systemFont(.footnote)
+    @objc open dynamic var footerTextColor: UIColor              = .darkGray
+    @objc open dynamic var accessoryFont: UIFont                 = .systemFont(.subheadline)
+    @objc open dynamic var accessoryTextColor: UIColor           = .gray
+    @objc open dynamic var accessoryTintColor: UIColor           = .systemTint
+    @objc open dynamic var accessoryTextMaxWidth: CGFloat        = 0
+    @objc open dynamic var disclosureIndicatorTintColor: UIColor = .gray
 
     /// The color of the check box ring when the checkbox is Off.
     /// The default value is `UIColor.blackColor().alpha(0.13)`.
@@ -401,7 +401,7 @@ extension DynamicTableView: BEMCheckBoxDelegate {
             case .none:
                 break
             case .disclosureIndicator:
-                cell.accessoryView = UIImageView(assetIdentifier: .DisclosureIndicator)
+                cell.accessoryView = UIImageView(assetIdentifier: UIImage.AssetIdentifier.disclosureIndicator)
                 cell.accessoryView?.tintColor = disclosureIndicatorTintColor
             case .`switch`(let isOn, _):
                 cell.selectionStyle  = .none

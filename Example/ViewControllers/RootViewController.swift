@@ -1,5 +1,5 @@
 //
-// ViewController.swift
+// RootViewController.swift
 //
 // Copyright © 2014 Zeeshan Mian
 //
@@ -25,8 +25,21 @@
 import UIKit
 import Xcore
 
-final class ViewController: UIViewController {
+final class RootViewController: DynamicTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tableView.sections = [
+            Section(
+                title:  "Components",
+                detail: "A demonstration of components included in Xcore.",
+                items:  [
+                    DynamicTableModel(title: "DynamicTableViewController", subtitle: "Data-driven table view") { [weak self] _, _ in
+                        let vc = ExampleDynamicTableViewController()
+                        self?.navigationController?.pushViewController(vc, animated: true)
+                    }
+                ]
+            )
+        ]
     }
 }
