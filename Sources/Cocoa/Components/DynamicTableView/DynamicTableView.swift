@@ -556,7 +556,7 @@ extension BEMCheckBox {
     }
 
     fileprivate var indexPath: IndexPath? {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.bemCheckBoxIndexPath) as? IndexPath }
-        set { objc_setAssociatedObject(self, &AssociatedKey.bemCheckBoxIndexPath, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { return associatedObject(&AssociatedKey.bemCheckBoxIndexPath) }
+        set { setAssociatedObject(&AssociatedKey.bemCheckBoxIndexPath, value: newValue) }
     }
 }

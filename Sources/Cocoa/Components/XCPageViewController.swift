@@ -203,7 +203,7 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
     }
 
     open override var shouldAutorotate: Bool {
-        return enableAutorotate ?? super.shouldAutorotate
+        return isAutorotateEnabled ?? super.shouldAutorotate
     }
 
     open override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {

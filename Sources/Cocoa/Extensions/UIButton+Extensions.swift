@@ -175,7 +175,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
     /// ```
     open var touchAreaEdgeInsets: UIEdgeInsets {
         get {
-            guard let value = objc_getAssociatedObject(self, &AssociatedKey.touchAreaEdgeInsets) as? NSValue else {
+            guard let value: NSValue = associatedObject(&AssociatedKey.touchAreaEdgeInsets) else {
                 return .zero
             }
 
@@ -187,7 +187,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
             var newValueCopy = newValue
             let objCType = NSValue(uiEdgeInsets: .zero).objCType
             let value = NSValue(&newValueCopy, withObjCType: objCType)
-            objc_setAssociatedObject(self, &AssociatedKey.touchAreaEdgeInsets, value, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            setAssociatedObject(&AssociatedKey.touchAreaEdgeInsets, value: value)
         }
     }
 

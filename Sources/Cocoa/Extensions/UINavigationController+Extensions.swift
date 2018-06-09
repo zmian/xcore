@@ -132,7 +132,7 @@ extension UINavigationController {
     }
 
     open override var shouldAutorotate: Bool {
-        return topViewController?.enableAutorotate ?? enableAutorotate ?? topViewController?.shouldAutorotate ?? super.shouldAutorotate
+        return topViewController?.isAutorotateEnabled ?? isAutorotateEnabled ?? topViewController?.shouldAutorotate ?? super.shouldAutorotate
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {

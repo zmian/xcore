@@ -32,10 +32,10 @@ extension UINavigationBar {
     }
 
     open var isTransparent: Bool {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.isTransparent) as? Bool ?? false }
+        get { return associatedObject(&AssociatedKey.isTransparent, defaultValue: false) }
         set {
             guard newValue != isTransparent else { return }
-            objc_setAssociatedObject(self, &AssociatedKey.isTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            setAssociatedObject(&AssociatedKey.isTransparent, value: newValue)
 
             if newValue {
                 setBackgroundImage(UIImage(), for: .default)
@@ -57,10 +57,10 @@ extension UIToolbar {
     }
 
     open var isTransparent: Bool {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.isTransparent) as? Bool ?? false }
+        get { return associatedObject(&AssociatedKey.isTransparent, defaultValue: false) }
         set {
             guard newValue != isTransparent else { return }
-            objc_setAssociatedObject(self, &AssociatedKey.isTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            setAssociatedObject(&AssociatedKey.isTransparent, value: newValue)
 
             if newValue {
                 setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
@@ -81,10 +81,10 @@ extension UITabBar {
     }
 
     open var isTransparent: Bool {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.isTransparent) as? Bool ?? false }
+        get { return associatedObject(&AssociatedKey.isTransparent, defaultValue: false) }
         set {
             guard newValue != isTransparent else { return }
-            objc_setAssociatedObject(self, &AssociatedKey.isTransparent, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            setAssociatedObject(&AssociatedKey.isTransparent, value: newValue)
 
             if newValue {
                 backgroundImage = UIImage()

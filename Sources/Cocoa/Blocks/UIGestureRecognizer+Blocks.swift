@@ -33,8 +33,8 @@ extension UIGestureRecognizer: TargetActionBlockRepresentable {
     }
 
     fileprivate var actionHandler: SenderClosureWrapper? {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.actionHandler) as? SenderClosureWrapper }
-        set { objc_setAssociatedObject(self, &AssociatedKey.actionHandler, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { return associatedObject(&AssociatedKey.actionHandler) }
+        set { setAssociatedObject(&AssociatedKey.actionHandler, value: newValue) }
     }
 }
 

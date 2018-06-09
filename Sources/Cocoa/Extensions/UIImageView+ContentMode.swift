@@ -34,8 +34,8 @@ extension UIImageView {
     /// `.scaleAspectFit` if the `image` is large or `.center` when the `image` is small
     /// or same size as `self`.
     open var isContentModeAutomaticallyAdjusted: Bool {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.isContentModeAutomaticallyAdjusted) as? Bool ?? false }
-        set { objc_setAssociatedObject(self, &AssociatedKey.isContentModeAutomaticallyAdjusted, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { return associatedObject(&AssociatedKey.isContentModeAutomaticallyAdjusted, defaultValue: false) }
+        set { setAssociatedObject(&AssociatedKey.isContentModeAutomaticallyAdjusted, value: newValue) }
     }
 }
 

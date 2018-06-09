@@ -96,8 +96,8 @@ extension UIRefreshControl {
     }
 
     private var timeoutTimer: Timer? {
-        get { return objc_getAssociatedObject(self, &AssociatedKey.timeoutTimer) as? Timer }
-        set { objc_setAssociatedObject(self, &AssociatedKey.timeoutTimer, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { return associatedObject(&AssociatedKey.timeoutTimer) }
+        set { setAssociatedObject(&AssociatedKey.timeoutTimer, value: newValue) }
     }
 
     open func refreshingTimeout(after timeoutInterval: TimeInterval, completion: (() -> Void)? = nil) {
