@@ -26,8 +26,8 @@ import Foundation
 
 extension Dictionary {
     public enum MergingStrategy {
-        case keepExisting
         case replaceExisting
+        case keepExisting
     }
 
     /// Merges the given dictionary into this dictionary, using the given
@@ -43,10 +43,10 @@ extension Dictionary {
     ///   - strategy: The strategy to use when duplicate keys are encountered. The default value is `.replaceExisting`.
     public mutating func merge(_ other: Dictionary, strategy: MergingStrategy = .replaceExisting) {
         switch strategy {
-            case .keepExisting:
-                merge(other) { (current, _) in current }
             case .replaceExisting:
                 merge(other) { (_, new) in new }
+            case .keepExisting:
+                merge(other) { (current, _) in current }
         }
     }
 
@@ -64,10 +64,10 @@ extension Dictionary {
     /// - Returns: A new dictionary with the combined keys and values of this dictionary and other.
     public func merging(_ other: Dictionary, strategy: MergingStrategy = .replaceExisting) -> Dictionary {
         switch strategy {
-            case .keepExisting:
-                return merging(other) { (current, _) in current }
             case .replaceExisting:
                 return merging(other) { (_, new) in new }
+            case .keepExisting:
+                return merging(other) { (current, _) in current }
         }
     }
 
