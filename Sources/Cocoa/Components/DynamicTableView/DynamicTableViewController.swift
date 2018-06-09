@@ -31,9 +31,8 @@ open class DynamicTableViewController: UIViewController {
     open var style: UITableViewStyle = .plain
     open var cellOptions: DynamicTableCellOptions = [] {
         didSet {
-            if isViewLoaded {
-                tableView.cellOptions = cellOptions
-            }
+            guard isViewLoaded else { return }
+            tableView.cellOptions = cellOptions
         }
     }
 
@@ -42,8 +41,8 @@ open class DynamicTableViewController: UIViewController {
     open var constraintToLayoutGuideOptions: LayoutGuideOptions = []
 
     /// The distance that the tableView is inset from the enclosing view.
-    /// The default value is `UIEdgeInsets.zero`.
-    @objc open dynamic var contentInset = UIEdgeInsets.zero {
+    /// The default value is `.zero`.
+    @objc open dynamic var contentInset: UIEdgeInsets = .zero {
         didSet {
             tableViewConstraints.at(0)?.constant = contentInset.left
             tableViewConstraints.at(1)?.constant = contentInset.right
@@ -70,6 +69,7 @@ open class DynamicTableViewController: UIViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setupDynamicTableView()
     }
 

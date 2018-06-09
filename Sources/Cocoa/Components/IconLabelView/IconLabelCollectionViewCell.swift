@@ -61,8 +61,8 @@ open class IconLabelCollectionViewCell: UICollectionViewCell {
         iconLabelView.imageBackgroundColor     = UIColor.black.alpha(0.1)
         iconLabelView.imageView.borderColor    = UIColor.black.alpha(0.1)
         iconLabelView.titleLabel.numberOfLines = 1
-        iconLabelView.titleLabel.textColor     = UIColor.lightGray
-        iconLabelView.subtitleLabel.textColor  = UIColor.lightGray
+        iconLabelView.titleLabel.textColor     = .lightGray
+        iconLabelView.subtitleLabel.textColor  = .lightGray
 
         setupDeleteButton()
     }
@@ -77,9 +77,9 @@ open class IconLabelCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint(item: deleteButton, attribute: .top, toItem: contentView, constant: -offset).activate()
         NSLayoutConstraint(item: contentView, attribute: .trailing, toItem: deleteButton, constant: -offset).activate()
 
-        deleteButton.image(R(.CollectionViewCellDeleteIcon), for: .normal, bundle: .xcore)
+        deleteButton.image(R(.collectionViewCellDeleteIcon), for: .normal, bundle: .xcore)
         deleteButton.imageView?.cornerRadius    = 24/2
-        deleteButton.imageView?.backgroundColor = UIColor.white
+        deleteButton.imageView?.backgroundColor = .white
 
         deleteButton.layer.shadowColor   = UIColor.black.cgColor
         deleteButton.layer.shadowOffset  = .zero

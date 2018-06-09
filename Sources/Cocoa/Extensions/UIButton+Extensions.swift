@@ -179,7 +179,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
                 return .zero
             }
 
-            var edgeInsets = UIEdgeInsets.zero
+            var edgeInsets: UIEdgeInsets = .zero
             value.getValue(&edgeInsets)
             return edgeInsets
         }

@@ -1,7 +1,7 @@
 //
 // UIImage+AssetIdentifier.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2014 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,44 +23,12 @@
 //
 
 import UIKit
-
-extension Bundle {
-    // Methods for creating or retrieving bundle instances.
-    static var xcore: Bundle {
-        return Bundle(for: DynamicTableView.self)
-    }
-}
+import Xcore
 
 /// Extension to get compile time checks for asset identifiers
 extension UIImage {
-    enum AssetIdentifier: String {
-        case DisclosureIndicator
-        case CollectionViewCellDeleteIcon
-        case ReorderTableViewCellShadowTop
-        case ReorderTableViewCellShadowBottom
-        case BlueJay
-    }
-
-    convenience init(assetIdentifier: AssetIdentifier) {
-        self.init(named: assetIdentifier.rawValue, in: .xcore, compatibleWith: nil)!
-    }
-}
-
-extension UIImageView {
-    convenience init(assetIdentifier: UIImage.AssetIdentifier) {
-        self.init(image: UIImage(assetIdentifier: assetIdentifier))
-    }
-}
-
-extension UIButton {
-    convenience init(assetIdentifier: UIImage.AssetIdentifier, highlightedImage: UIImage.AssetIdentifier? = nil) {
-        self.init(type: .custom)
-        setImage(UIImage(assetIdentifier: assetIdentifier), for: .normal)
-        if let highlightedImage = highlightedImage {
-            setImage(UIImage(assetIdentifier: highlightedImage), for: .highlighted)
-        }
-        imageView?.contentMode = .scaleAspectFit
-        imageView?.tintColor   = tintColor
+    enum AssetIdentifier: String, ImageAssetIdentifiable {
+        case blueJay
     }
 }
 

@@ -27,8 +27,8 @@ import UIKit
 
 private class ReorderTableDraggingView: XCView {
     private let imageView             = UIImageView()
-    private let topShadowImage        = UIImageView(assetIdentifier: .ReorderTableViewCellShadowTop)
-    private let bottomShadowImage     = UIImageView(assetIdentifier: .ReorderTableViewCellShadowBottom)
+    private let topShadowImage        = UIImageView(assetIdentifier: UIImage.AssetIdentifier.reorderTableViewCellShadowTop)
+    private let bottomShadowImage     = UIImageView(assetIdentifier: UIImage.AssetIdentifier.reorderTableViewCellShadowBottom)
     private let shadowHeight: CGFloat = 19
 
     var image: UIImage? {
@@ -100,7 +100,7 @@ open class ReorderTableView: UITableView {
     }
     open var draggingRowHeight: CGFloat = 0
     @objc open dynamic var draggingViewOpacity: CGFloat = 0.8
-    @objc open dynamic var draggingViewBackgroundColor  = UIColor.clear
+    @objc open dynamic var draggingViewBackgroundColor: UIColor = .clear
 
     // MARK: Init Methods
 

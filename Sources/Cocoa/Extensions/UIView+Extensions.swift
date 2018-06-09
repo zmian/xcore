@@ -75,7 +75,7 @@ import UIKit
     }
 
     @IBInspectable open var borderColor: UIColor {
-        get { return layer.borderColor != nil ? UIColor(cgColor: layer.borderColor!) : UIColor.black }
+        get { return layer.borderColor != nil ? UIColor(cgColor: layer.borderColor!) : .black }
         set { layer.borderColor = newValue.cgColor }
     }
 
@@ -88,7 +88,7 @@ import UIKit
     }
 
     open func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
-        let path            = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let path            = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(radius))
         let mask            = CAShapeLayer()
         mask.path           = path.cgPath
         layer.mask          = mask
