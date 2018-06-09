@@ -461,3 +461,44 @@ extension UIView {
         }
     }
 }
+
+// MARK: NSLayoutAttribute
+
+extension UIView {
+    /// Returns constraint for the given attribute.
+    ///
+    /// - Parameters:
+    ///   - attribute: The attribute to use to find the constraint.
+    ///   - onlyActive: An option to determine if should find only the active constraint. The default value is `true`.
+    /// - Returns: A constraint if exists for the specified attribute.
+    public func constraint(forAttribute attribute: NSLayoutAttribute, onlyActive: Bool = true) -> NSLayoutConstraint? {
+        return constraints.first { constraint in
+            if onlyActive, !constraint.isActive {
+                return false
+            }
+
+            if constraint.firstAttribute == attribute, constraint.firstItem == self {
+                return true
+            }
+
+            if constraint.secondAttribute == attribute, constraint.secondItem == self {
+                return true
+            }
+
+            return false
+        }
+    }
+
+    /// Returns constraint for the given identifier.
+    ///
+    /// - Parameter identifier: The identifier to use to find the constraint.
+    /// - Returns: A constraint if exists for the specified identifier.
+    public func constraint(identifier: String) -> NSLayoutConstraint? {
+        return constraints.first { $0.identifier == identifier }
+    }
+}
+
+public func ==(lhs: AnyObject?, rhs: UIView) -> Bool {
+    guard let lhs = lhs as? UIView else { return false }
+    return lhs == rhs
+}
