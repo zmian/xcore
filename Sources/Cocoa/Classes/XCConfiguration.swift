@@ -29,6 +29,7 @@ import UIKit
 /// configuration driven views.
 ///
 /// **Style Declaration**
+///
 /// ```swift
 /// extension XCConfiguration where Type: UILabel {
 ///     static func app(text: String? = nil, font: UIFont? = nil, textColor: UIColor? = nil, numberOfLines: Int? = nil, alignment: NSTextAlignment? = nil) -> XCConfiguration {
@@ -46,7 +47,9 @@ import UIKit
 ///     }
 /// }
 /// ```
+///
 /// **Usage**
+///
 /// ```swift
 /// let headerLabel = UILabel(style: .header)
 /// ```
@@ -74,7 +77,7 @@ extension XCConfiguration: Equatable {
 }
 
 extension UILabel {
-    public convenience init(text: String? = nil, style: XCConfiguration<UILabel>) {
+    public convenience init(style: XCConfiguration<UILabel>, text: String? = nil) {
         self.init()
         self.text = text
         style.configure?(self)

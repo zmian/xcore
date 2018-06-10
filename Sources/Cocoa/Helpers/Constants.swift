@@ -32,9 +32,7 @@ extension TimeInterval {
     ///     ...
     /// }
     /// ```
-    public static var fast: TimeInterval {
-        return 0.25
-    }
+    public static var fast: TimeInterval = 0.25
 
     /// The normal duration to use for animations when the desired interval is between `0.3...0.5` seconds.
     ///
@@ -43,9 +41,7 @@ extension TimeInterval {
     ///     ...
     /// }
     /// ```
-    public static var normal: TimeInterval {
-        return 0.35
-    }
+    public static var normal: TimeInterval = 0.35
 
     /// The slow duration to use for animations when the desired interval is between `> 0.5` seconds.
     ///
@@ -54,9 +50,7 @@ extension TimeInterval {
     ///     ...
     /// }
     /// ```
-    public static var slow: TimeInterval {
-        return 0.5
-    }
+    public static var slow: TimeInterval = 0.5
 }
 
 extension CGAffineTransform {
@@ -75,4 +69,10 @@ extension CGAffineTransform {
     public static var defaultScale: CGAffineTransform {
         return CGAffineTransform(scaleX: 0.95, y: 0.95)
     }
+}
+
+extension CGFloat {
+    public static let minimumPadding: CGFloat = 8
+    public static let defaultPadding: CGFloat = 15
+    public static let maximumPadding: CGFloat = 30
 }

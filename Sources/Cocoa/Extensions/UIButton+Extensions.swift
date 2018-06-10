@@ -25,62 +25,308 @@
 import UIKit
 import ObjectiveC
 
-@objc extension UIButton {
-    // Increase button touch area to be 44 points
-    // See: http://stackoverflow.com/a/27683614
-    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        if !isUserInteractionEnabled || !isEnabled || isHidden {
-            return super.hitTest(point, with: event)
+extension UIButton {
+    /// This configuration exists to allow some of the properties
+    /// to be configured to match app's appearance style.
+    /// The `UIAppearance` protocol doesn't work when the stored properites
+    /// are set using associated object.
+    ///
+    /// **For example:**
+    ///
+    /// ```swift
+    /// // Doesn't work:
+    /// UIButton.appearance().isHeightSetAutomatically = true
+    ///
+    /// // Works as expected:
+    /// UIButton.defaultAppearance.isHeightSetAutomatically = true
+    /// ```
+    @objc public final class DefaultAppearance: NSObject {
+        public let style: Style
+        public let height: CGFloat
+        public let isHeightSetAutomatically: Bool
+        public let highlightAnimation: HighlightAnimationOptions
+
+        public init(
+            style: Style,
+            height: CGFloat,
+            isHeightSetAutomatically: Bool,
+            highlightAnimation: HighlightAnimationOptions
+        ) {
+            self.style = style
+            self.height = height
+            self.isHeightSetAutomatically = isHeightSetAutomatically
+            self.highlightAnimation = highlightAnimation
         }
 
-        let buttonSize  = frame.size
-        let widthToAdd  = (44 - buttonSize.width  > 0) ? 44 - buttonSize.width  : 0
-        let heightToAdd = (44 - buttonSize.height > 0) ? 44 - buttonSize.height : 0
-        let largerFrame = CGRect(x: 0 - (widthToAdd / 2), y: 0 - (heightToAdd / 2), width: buttonSize.width + widthToAdd, height: buttonSize.height + heightToAdd)
-        return largerFrame.contains(point) ? self : nil
+        public static let `default` = DefaultAppearance(
+            style: .none,
+            height: 50,
+            isHeightSetAutomatically: false,
+            highlightAnimation: []
+        )
+    }
+}
+
+extension UIButton {
+    fileprivate struct AssociatedKey {
+        static var touchAreaEdgeInsets = "touchAreaEdgeInsets"
+        static var backgroundColors = "backgroundColors"
+        static var borderColors = "borderColors"
+        static var didSelect = "didSelect"
+        static var didHighlight = "didHighlight"
+        static var didEnable = "didEnable"
+        static var highlightAnimation = "highlightAnimation"
+        static var isHighlightedBackgroundColorSetAutomatically = "isHighlightedBackgroundColorSetAutomatically"
+        static var style = "style"
+        static var heightConstraint = "heightConstraint"
+        static var initialText = "initialText"
+        static var isHeightSetAutomatically = "isHeightSetAutomatically"
     }
 
-    /// Add space between `text` and `image` while preserving the `intrinsicContentSize` and respecting `sizeToFit`.
-    @IBInspectable public var textImageSpacing: CGFloat {
-        get {
-            let (left, right) = (imageEdgeInsets.left, imageEdgeInsets.right)
+    private typealias State = UInt
 
-            if left + right == 0 {
-                return right * 2
-            } else {
-                return 0
+    private var backgroundColors: [State: UIColor] {
+        get { return associatedObject(&AssociatedKey.backgroundColors, defaultValue: [:]) }
+        set { setAssociatedObject(&AssociatedKey.backgroundColors, value: newValue) }
+    }
+
+    private var borderColors: [State: UIColor] {
+        get { return associatedObject(&AssociatedKey.borderColors, defaultValue: [:]) }
+        set { setAssociatedObject(&AssociatedKey.borderColors, value: newValue) }
+    }
+
+    /// A boolean property to provide visual feedback when the
+    /// button is highlighted. The default value is `[]`.
+    open var highlightAnimation: HighlightAnimationOptions {
+        get { return associatedObject(&AssociatedKey.highlightAnimation, defaultValue: UIButton.defaultAppearance.highlightAnimation) }
+        set { setAssociatedObject(&AssociatedKey.highlightAnimation, value: newValue) }
+    }
+
+    /// A property to automatically set `highlightedBackgroundColor` whenever `backgroundColor` is updated.
+    /// The default value is `true`.
+    @objc open dynamic var isHighlightedBackgroundColorSetAutomatically: Bool {
+        get { return associatedObject(&AssociatedKey.isHighlightedBackgroundColorSetAutomatically, defaultValue: true) }
+        set { setAssociatedObject(&AssociatedKey.isHighlightedBackgroundColorSetAutomatically, value: newValue) }
+    }
+}
+
+extension UIButton {
+    // MARK: Height
+
+    @objc open dynamic static var defaultAppearance: DefaultAppearance = .default
+
+    @objc open dynamic static var height: CGFloat {
+        return defaultAppearance.height
+    }
+
+    /// A property to set the height of the button automatically.
+    /// The default value is `false`.
+    @objc open dynamic var isHeightSetAutomatically: Bool {
+        get { return associatedObject(&AssociatedKey.isHeightSetAutomatically, defaultValue: UIButton.defaultAppearance.isHeightSetAutomatically) }
+        set {
+            setAssociatedObject(&AssociatedKey.isHeightSetAutomatically, value: newValue)
+            updateHeightConstraintIfNeeded()
+        }
+    }
+
+    private var heightConstraint: NSLayoutConstraint? {
+        get { return associatedObject(&AssociatedKey.heightConstraint) }
+        set { setAssociatedObject(&AssociatedKey.heightConstraint, value: newValue) }
+    }
+
+    private func updateHeightConstraintIfNeeded() {
+        guard isHeightSetAutomatically else {
+            heightConstraint?.deactivate()
+            return
+        }
+
+        if heightConstraint == nil {
+            heightConstraint = heightAnchor.constraint(equalToConstant: UIButton.height)
+            heightConstraint?.priority = .required - 1
+        }
+
+        heightConstraint?.activate()
+    }
+
+    public typealias Style = XCConfiguration<UIButton>
+
+    /// The style of the button. The default value is `.none`.
+    open var style: Style {
+        get { return associatedObject(&AssociatedKey.style, defaultValue: UIButton.defaultAppearance.style) }
+        set {
+            setAssociatedObject(&AssociatedKey.style, value: newValue)
+            updateStyleIfNeeded()
+        }
+    }
+
+    private var initialText: String? {
+        get { return associatedObject(&AssociatedKey.initialText) }
+        set { setAssociatedObject(&AssociatedKey.initialText, value: newValue) }
+    }
+
+    public convenience init(style: Style, title: String? = nil) {
+        self.init(frame: .zero)
+        self.style = style
+        self.initialText = title
+        commonInit()
+    }
+
+    private func commonInit() {
+        updateStyleIfNeeded()
+        if let initialText = initialText {
+            self.text = initialText
+        }
+    }
+
+    private func updateStyleIfNeeded() {
+        contentEdgeInsets = UIEdgeInsets(horizontal: .defaultPadding)
+        prepareForReuse()
+        style.configure?(self)
+        updateHeightConstraintIfNeeded()
+    }
+
+    @objc open func prepareForReuse() {
+        setAttributedTitle(nil, for: .normal)
+        setTitleColor(nil, for: .highlighted)
+        backgroundColor = nil
+        highlightAnimation = UIButton.defaultAppearance.highlightAnimation
+        isHeightSetAutomatically = UIButton.defaultAppearance.isHeightSetAutomatically
+    }
+}
+
+extension UIButton {
+    // MARK: Lifecycle Events
+
+    @objc open override var isSelected: Bool {
+        didSet {
+            guard oldValue != isSelected else { return }
+            didSelect?(self)
+        }
+    }
+
+    @objc open override var isHighlighted: Bool {
+        didSet {
+            guard oldValue != isHighlighted else { return }
+            changeBackgroundColor(to: isHighlighted ? .highlighted : .normal)
+            changeBorderColor(to: isHighlighted ? .highlighted : .normal)
+            didHighlight?(self)
+            highlightAnimation.animate(self)
+        }
+    }
+
+    @objc open override var isEnabled: Bool {
+        didSet {
+            guard oldValue != isEnabled else { return }
+            changeBackgroundColor(to: isEnabled ? .normal : .disabled)
+            changeBorderColor(to: isEnabled ? .normal : .disabled)
+            didEnable?(self)
+        }
+    }
+
+    @objc open func setEnabled(_ enable: Bool, animated: Bool) {
+        guard !animated else {
+            self.isEnabled = enable
+            return
+        }
+
+        UIView.performWithoutAnimation { [weak self] in
+            self?.isEnabled = enable
+        }
+    }
+
+    // MARK: Background Color
+
+    @objc open func backgroundColor(for state: UIControlState) -> UIColor? {
+        guard let color = backgroundColors[state.rawValue] else {
+            return nil
+        }
+
+        return color
+    }
+
+    @objc open func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControlState) {
+        backgroundColors[state.rawValue] = backgroundColor
+
+        if state == .normal {
+            super.backgroundColor = backgroundColor
+
+            if isHighlightedBackgroundColorSetAutomatically {
+                highlightedBackgroundColor = backgroundColor?.darker(0.1)
+            }
+        }
+    }
+
+    private func changeBackgroundColor(to state: UIControlState) {
+        var newBackgroundColor = backgroundColor(for: state)
+
+        if newBackgroundColor == nil {
+            if state == .highlighted {
+                newBackgroundColor = backgroundColor(for: .normal)?.darker(0.1)
+            } else if state == .disabled {
+                newBackgroundColor = backgroundColor(for: .normal)?.lighter(0.1)
             }
         }
 
-        set(spacing) {
-            let insetAmount   = spacing / 2
-            imageEdgeInsets   = UIEdgeInsets(top: 0, left: -insetAmount, bottom: 0, right: insetAmount)
-            titleEdgeInsets   = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: -insetAmount)
-            contentEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
+        guard let finalBackgroundColor = newBackgroundColor, super.backgroundColor != finalBackgroundColor else {
+            return
+        }
+
+        UIView.animateFromCurrentState {
+            super.backgroundColor = finalBackgroundColor
         }
     }
 
-    /// Sets the image on **background thread** to use for the specified state.
-    ///
-    /// - Parameters:
-    ///   - named:  The remote image url or local image name to use for the specified state.
-    ///   - state:  The state that uses the specified image.
-    ///   - bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the `main` bundle.
-    open func image(_ remoteOrLocalImage: String, for state: UIControlState, bundle: Bundle? = nil) {
-        UIImage.remoteOrLocalImage(remoteOrLocalImage, bundle: bundle) { [weak self] image in
-            self?.setImage(image, for: state)
+    // MARK: Border Color
+
+    @objc open func borderColor(for state: UIControlState) -> UIColor? {
+        guard let color = borderColors[state.rawValue] else {
+            return nil
+        }
+
+        return color
+    }
+
+    @objc open func setBorderColor(_ borderColor: UIColor?, for state: UIControlState) {
+        borderColors[state.rawValue] = borderColor
+
+        if state == .normal {
+            super.layer.borderColor = borderColor?.cgColor
         }
     }
+
+    private func changeBorderColor(to state: UIControlState) {
+        var newBorderColor = borderColor(for: state)
+
+        if newBorderColor == nil {
+            if state == .highlighted {
+                newBorderColor = borderColor(for: state)?.darker(0.1)
+            } else if state == .disabled {
+                newBorderColor = borderColor(for: state)?.lighter(0.1)
+            }
+        }
+
+        guard let finalBorderColor = newBorderColor, super.layer.borderColor != finalBorderColor.cgColor else {
+            return
+        }
+
+        UIView.animateFromCurrentState {
+            super.layer.borderColor = finalBorderColor.cgColor
+        }
+    }
+}
+
+extension UIButton {
+    // MARK: Convenience Aliases
 
     /// The image used for the normal state.
     open var image: UIImage? {
-        get { return self.image(for: .normal) }
+        get { return image(for: .normal) }
         set { setImage(newValue, for: .normal) }
     }
 
     /// The image used for the highlighted state.
     open var highlightedImage: UIImage? {
-        get { return self.image(for: .highlighted) }
+        get { return image(for: .highlighted) }
         set { setImage(newValue, for: .highlighted) }
     }
 
@@ -108,22 +354,122 @@ import ObjectiveC
         set { setTitleColor(newValue, for: .highlighted) }
     }
 
-    /// The background color to used for the highlighted state.
-    @objc open func setHighlightedBackgroundColor(_ color: UIColor?) {
-        var image: UIImage?
-        if let color = color {
-            image = UIImage(color: color, size: CGSize(width: 1, height: 1))
-        }
-        setBackgroundImage(image, for: .highlighted)
+    /// The background color for the normal state.
+    @objc open override var backgroundColor: UIColor? {
+        get { return backgroundColor(for: .normal) }
+        set { setBackgroundColor(newValue, for: .normal) }
     }
 
-    /// The background color to used for the disabled state.
-    @objc open func setDisabledBackgroundColor(_ color: UIColor?) {
-        var image: UIImage?
-        if let color = color {
-            image = UIImage(color: color, size: CGSize(width: 1, height: 1))
+    /// The background color for the highlighted state.
+    @nonobjc open var highlightedBackgroundColor: UIColor? {
+        get { return backgroundColor(for: .highlighted) }
+        set { setBackgroundColor(newValue, for: .highlighted) }
+    }
+
+    /// The background color for the disabled state.
+    @nonobjc open var disabledBackgroundColor: UIColor? {
+        get { return backgroundColor(for: .disabled) }
+        set { setBackgroundColor(newValue, for: .disabled) }
+    }
+
+    /// Add space between `text` and `image` while preserving the `intrinsicContentSize` and respecting `sizeToFit`.
+    @IBInspectable
+    @objc public var textImageSpacing: CGFloat {
+        get {
+            let (left, right) = (imageEdgeInsets.left, imageEdgeInsets.right)
+
+            if left + right == 0 {
+                return right * 2
+            } else {
+                return 0
+            }
         }
-        setBackgroundImage(image, for: .disabled)
+        set {
+            let insetAmount   = newValue / 2
+            imageEdgeInsets   = UIEdgeInsets(top: 0, left: -insetAmount, bottom: 0, right: insetAmount)
+            titleEdgeInsets   = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: -insetAmount)
+            contentEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
+        }
+    }
+
+    /// Sets the image on **background thread** to use for the specified state.
+    ///
+    /// - Parameters:
+    ///   - named:  The remote image url or local image name to use for the specified state.
+    ///   - state:  The state that uses the specified image.
+    ///   - bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the `main` bundle.
+    @objc open func image(_ remoteOrLocalImage: String, for state: UIControlState, bundle: Bundle? = nil) {
+        UIImage.remoteOrLocalImage(remoteOrLocalImage, bundle: bundle) { [weak self] image in
+            self?.setImage(image, for: state)
+        }
+    }
+
+    // MARK: Hit Area
+
+    /// Increase button touch area.
+    ///
+    /// ```swift
+    /// let button = UIButton()
+    /// button.touchAreaEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
+    /// ```
+    /// See: http://stackoverflow.com/a/32002161
+    @objc open var touchAreaEdgeInsets: UIEdgeInsets {
+        get {
+            guard let value: NSValue = associatedObject(&AssociatedKey.touchAreaEdgeInsets) else {
+                return .zero
+            }
+
+            var edgeInsets: UIEdgeInsets = .zero
+            value.getValue(&edgeInsets)
+            return edgeInsets
+        }
+        set {
+            var newValueCopy = newValue
+            let objCType = NSValue(uiEdgeInsets: .zero).objCType
+            let value = NSValue(&newValueCopy, withObjCType: objCType)
+            setAssociatedObject(&AssociatedKey.touchAreaEdgeInsets, value: value)
+        }
+    }
+
+    @objc open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        if UIEdgeInsetsEqualToEdgeInsets(touchAreaEdgeInsets, .zero) || !isUserInteractionEnabled || !isEnabled || isHidden {
+            return super.point(inside: point, with: event)
+        }
+
+        let hitFrame = UIEdgeInsetsInsetRect(bounds, touchAreaEdgeInsets)
+        return hitFrame.contains(point)
+    }
+
+    // Increase button touch area to be 44 points
+    // See: http://stackoverflow.com/a/27683614
+    @objc open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if !isUserInteractionEnabled || !isEnabled || isHidden {
+            return super.hitTest(point, with: event)
+        }
+
+        let buttonSize  = frame.size
+        let widthToAdd  = (44 - buttonSize.width  > 0) ? 44 - buttonSize.width  : 0
+        let heightToAdd = (44 - buttonSize.height > 0) ? 44 - buttonSize.height : 0
+        let largerFrame = CGRect(x: 0 - (widthToAdd / 2), y: 0 - (heightToAdd / 2), width: buttonSize.width + widthToAdd, height: buttonSize.height + heightToAdd)
+        return largerFrame.contains(point) ? self : nil
+    }
+
+    // MARK: Underline
+
+    @objc open func underline() {
+        if let attributedText = titleLabel?.attributedText {
+            setAttributedTitle(NSMutableAttributedString(attributedString: attributedText).underline(attributedText.string), for: .normal)
+        } else if let text = titleLabel?.text {
+            setAttributedTitle(NSMutableAttributedString(string: text).underline(text), for: .normal)
+        }
+    }
+
+    // MARK: Reset
+
+    @objc open func removeInsets() {
+        contentEdgeInsets = .zero
+        titleEdgeInsets = .zero
+        imageEdgeInsets = .zero
     }
 }
 
@@ -158,45 +504,44 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
             self?.setImage(image, for: .normal)
         }
     }
+
+    // MARK: Lifecycle Callbacks
+
+    public func didSelect(_ callback: @escaping (_ sender: Self) -> Void) {
+        didSelect = { sender in
+            guard let sender = sender as? Self else { return }
+            callback(sender)
+        }
+    }
+
+    public func didHighlight(_ callback: @escaping (_ sender: Self) -> Void) {
+        didHighlight = { sender in
+            guard let sender = sender as? Self else { return }
+            callback(sender)
+        }
+    }
+
+    public func didEnable(_ callback: @escaping (_ sender: Self) -> Void) {
+        didEnable = { sender in
+            guard let sender = sender as? Self else { return }
+            callback(sender)
+        }
+    }
 }
 
-@objc extension UIButton {
-    private struct AssociatedKey {
-        static var touchAreaEdgeInsets = "XcoreTouchAreaEdgeInsets"
+extension UIButton {
+    fileprivate var didSelect: ((_ sender: UIButton) -> Void)? {
+        get { return associatedObject(&AssociatedKey.didSelect) }
+        set { setAssociatedObject(&AssociatedKey.didSelect, value: newValue) }
     }
 
-    // http://stackoverflow.com/a/32002161
-
-    /// Increase button touch area.
-    ///
-    /// ```swift
-    /// let button = UIButton()
-    /// button.touchAreaEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
-    /// ```
-    open var touchAreaEdgeInsets: UIEdgeInsets {
-        get {
-            guard let value: NSValue = associatedObject(&AssociatedKey.touchAreaEdgeInsets) else {
-                return .zero
-            }
-
-            var edgeInsets: UIEdgeInsets = .zero
-            value.getValue(&edgeInsets)
-            return edgeInsets
-        }
-        set {
-            var newValueCopy = newValue
-            let objCType = NSValue(uiEdgeInsets: .zero).objCType
-            let value = NSValue(&newValueCopy, withObjCType: objCType)
-            setAssociatedObject(&AssociatedKey.touchAreaEdgeInsets, value: value)
-        }
+    fileprivate var didHighlight: ((_ sender: UIButton) -> Void)? {
+        get { return associatedObject(&AssociatedKey.didHighlight) }
+        set { setAssociatedObject(&AssociatedKey.didHighlight, value: newValue) }
     }
 
-    open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        if UIEdgeInsetsEqualToEdgeInsets(touchAreaEdgeInsets, .zero) || !isUserInteractionEnabled || !isEnabled || isHidden {
-            return super.point(inside: point, with: event)
-        }
-
-        let hitFrame = UIEdgeInsetsInsetRect(bounds, touchAreaEdgeInsets)
-        return hitFrame.contains(point)
+    fileprivate var didEnable: ((_ sender: UIButton) -> Void)? {
+        get { return associatedObject(&AssociatedKey.didEnable) }
+        set { setAssociatedObject(&AssociatedKey.didEnable, value: newValue) }
     }
 }
