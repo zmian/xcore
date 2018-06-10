@@ -56,7 +56,7 @@ extension UIControl: ControlTargetActionBlockRepresentable {
     }
 }
 
-public protocol ControlTargetActionBlockRepresentable {
+public protocol ControlTargetActionBlockRepresentable: class {
     associatedtype Sender
     func addAction(_ events: UIControlEvents, _ handler: @escaping (_ sender: Sender) -> Void)
     func removeAction(_ events: UIControlEvents)
@@ -68,9 +68,8 @@ extension ControlTargetActionBlockRepresentable where Self: UIControl {
         let wrapper = actionEvents[events.rawValue] ?? ControlClosureWrapper(events: events, closure: nil)
 
         wrapper.closure = { sender in
-            if let sender = sender as? Self {
-                handler(sender)
-            }
+            guard let sender = sender as? Self else { return }
+            handler(sender)
         }
 
         actionEvents[events.rawValue] = wrapper

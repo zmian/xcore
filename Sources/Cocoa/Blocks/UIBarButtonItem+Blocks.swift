@@ -50,9 +50,8 @@ extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
         let wrapper = SenderClosureWrapper(nil)
 
         wrapper.closure = { sender in
-            if let sender = sender as? Self {
-                handler(sender)
-            }
+            guard let sender = sender as? Self else { return }
+            handler(sender)
         }
 
         actionHandler = wrapper

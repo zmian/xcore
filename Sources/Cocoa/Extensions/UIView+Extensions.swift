@@ -56,6 +56,18 @@ import UIKit
         UIView.animate(withDuration: duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: nil)
     }
 
+    public static func animateFromCurrentState(_ animations: @escaping () -> Void) {
+        animateFromCurrentState(animations: animations, completion: {})
+    }
+
+    public static func animateFromCurrentState(animations: @escaping () -> Void, completion: @escaping () -> Void) {
+        UIView.animate(withDuration: .fast, delay: 0, options: .beginFromCurrentState, animations: {
+            animations()
+        }, completion: { _ in
+            completion()
+        })
+    }
+
     open func setHiddenAnimated(_ hide: Bool, duration: TimeInterval = .normal, _ completion: (() -> Void)? = nil) {
         UIView.transition(
             with: self,
