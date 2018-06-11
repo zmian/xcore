@@ -1,7 +1,7 @@
 //
-// RootViewController.swift
+// ButtonsViewController.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2018 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,25 +25,38 @@
 import UIKit
 import Xcore
 
-final class RootViewController: DynamicTableViewController {
+final class ButtonsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        exampleButtonType()
+        examplePlainButton()
+    }
 
-        tableView.sections = [
-            Section(
-                title:  "Components",
-                detail: "A demonstration of components included in Xcore.",
-                items:  [
-                    DynamicTableModel(title: "Dynamic Table View", subtitle: "Data-driven table view") { [weak self] _, _ in
-                        let vc = ExampleDynamicTableViewController()
-                        self?.navigationController?.pushViewController(vc, animated: true)
-                    },
-                    DynamicTableModel(title: "Buttons", subtitle: "UIButton extensions demonstration") { [weak self] _, _ in
-                        let vc = ButtonsViewController()
-                        self?.navigationController?.pushViewController(vc, animated: true)
-                    }
-                ]
-            )
-        ]
+    private func examplePlainButton() {
+        let button = UIButton()
+        button.text = "Hello World"
+        button.textColor = .red
+        button.sizeToFit()
+        view.addSubview(button)
+
+        button.addAction(.touchUpInside) { _ in
+            print("plain button tapped")
+        }
+
+        button.center = CGPoint(x: 100, y: 300)
+    }
+
+    private func exampleButtonType() {
+        // UIButtonType when the button is .contactAdd then don't apply any of the custom background color etc
+
+        let button = UIButton(type: .contactAdd)
+        view.addSubview(button)
+
+        button.addAction(.touchUpInside) { _ in
+            print("Contact add button tapped")
+        }
+
+        button.center = CGPoint(x: 100, y: 400)
     }
 }
