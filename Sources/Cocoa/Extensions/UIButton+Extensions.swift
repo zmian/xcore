@@ -76,7 +76,7 @@ extension UIButton {
         static var didHighlight = "didHighlight"
         static var didEnable = "didEnable"
         static var highlightAnimation = "highlightAnimation"
-        static var isHighlightedBackgroundColorSetAutomatically = "isHighlightedBackgroundColorSetAutomatically"
+        static var adjustsBackgroundColorWhenHighlighted = "adjustsBackgroundColorWhenHighlighted"
         static var style = "style"
         static var heightConstraint = "heightConstraint"
         static var initialText = "initialText"
@@ -102,11 +102,12 @@ extension UIButton {
         set { setAssociatedObject(&AssociatedKey.highlightAnimation, value: newValue) }
     }
 
-    /// A property to automatically set `highlightedBackgroundColor` whenever `backgroundColor` is updated.
-    /// The default value is `true`.
-    @objc open dynamic var isHighlightedBackgroundColorSetAutomatically: Bool {
-        get { return associatedObject(&AssociatedKey.isHighlightedBackgroundColorSetAutomatically, defaultValue: true) }
-        set { setAssociatedObject(&AssociatedKey.isHighlightedBackgroundColorSetAutomatically, value: newValue) }
+    /// A boolean value that determines whether the `backgroundColor` changes when the button is highlighted.
+    ///
+    /// If true, the `backgroundColor` is drawn darker when the button is highlighted. The default value is `true`.
+    @objc open dynamic var adjustsBackgroundColorWhenHighlighted: Bool {
+        get { return associatedObject(&AssociatedKey.adjustsBackgroundColorWhenHighlighted, defaultValue: true) }
+        set { setAssociatedObject(&AssociatedKey.adjustsBackgroundColorWhenHighlighted, value: newValue) }
     }
 }
 
@@ -250,7 +251,7 @@ extension UIButton {
         if state == .normal {
             super.backgroundColor = backgroundColor
 
-            if isHighlightedBackgroundColorSetAutomatically {
+            if adjustsBackgroundColorWhenHighlighted {
                 highlightedBackgroundColor = backgroundColor?.darker(0.1)
             }
         }

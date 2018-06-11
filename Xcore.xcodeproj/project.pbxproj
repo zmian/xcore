@@ -14,6 +14,7 @@
 		687218A120C0824900BFEA98 /* SubviewLookupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687218A020C0824900BFEA98 /* SubviewLookupTests.swift */; };
 		687218A520C0841100BFEA98 /* ViewControllerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687218A420C0841000BFEA98 /* ViewControllerTestCase.swift */; };
 		6884E5A320C9716A009C043F /* CaseIterableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6884E5A220C9716A009C043F /* CaseIterableTests.swift */; };
+		688FE04120CE40600081A027 /* ButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688FE04020CE40600081A027 /* ButtonsViewController.swift */; };
 		689869E61E9992E600CE7B77 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689869DD1E9992E600CE7B77 /* RootViewController.swift */; };
 		689869E71E9992E600CE7B77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689869DF1E9992E600CE7B77 /* AppDelegate.swift */; };
 		689869E81E9992E600CE7B77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 689869E01E9992E600CE7B77 /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		687218A020C0824900BFEA98 /* SubviewLookupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubviewLookupTests.swift; sourceTree = "<group>"; };
 		687218A420C0841000BFEA98 /* ViewControllerTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTestCase.swift; sourceTree = "<group>"; };
 		6884E5A220C9716A009C043F /* CaseIterableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseIterableTests.swift; sourceTree = "<group>"; };
+		688FE04020CE40600081A027 /* ButtonsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsViewController.swift; sourceTree = "<group>"; };
 		689869C81E99926100CE7B77 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		689869DB1E9992E600CE7B77 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		689869DD1E9992E600CE7B77 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			children = (
 				689869DD1E9992E600CE7B77 /* RootViewController.swift */,
 				68414F1720CC42AC00C547EC /* ExampleDynamicTableViewController.swift */,
+				688FE04020CE40600081A027 /* ButtonsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 			files = (
 				68414F1820CC42AC00C547EC /* ExampleDynamicTableViewController.swift in Sources */,
 				689869E71E9992E600CE7B77 /* AppDelegate.swift in Sources */,
+				688FE04120CE40600081A027 /* ButtonsViewController.swift in Sources */,
 				689869E61E9992E600CE7B77 /* RootViewController.swift in Sources */,
 				68414F1B20CC4E9C00C547EC /* UIImage+AssetIdentifier.swift in Sources */,
 			);
