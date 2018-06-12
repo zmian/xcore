@@ -62,7 +62,7 @@ extension AVPlayer {
 
     /// Indicates whether to repeat playback of the current item.
     public var `repeat`: Bool {
-        get { return associatedObject(&AssociatedKey.playerRepeat, defaultValue: false) }
+        get { return associatedObject(&AssociatedKey.playerRepeat, default: false) }
         set {
             guard newValue != `repeat` else { return }
             setAssociatedObject(&AssociatedKey.playerRepeat, value: newValue)

@@ -31,12 +31,12 @@ extension UICollectionView {
     }
 
     private var registeredCells: Set<String> {
-        get { return associatedObject(&AssociatedKey.registeredCells, defaultValue: Set<String>()) }
+        get { return associatedObject(&AssociatedKey.registeredCells, default: Set<String>()) }
         set { setAssociatedObject(&AssociatedKey.registeredCells, value: newValue) }
     }
 
     private var registeredSupplementaryViews: Set<String> {
-        get { return associatedObject(&AssociatedKey.registeredSupplementaryViews, defaultValue: Set<String>()) }
+        get { return associatedObject(&AssociatedKey.registeredSupplementaryViews, default: Set<String>()) }
         set { setAssociatedObject(&AssociatedKey.registeredSupplementaryViews, value: newValue) }
     }
 

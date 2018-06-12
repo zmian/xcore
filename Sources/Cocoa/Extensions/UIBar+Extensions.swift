@@ -32,7 +32,7 @@ extension UINavigationBar {
     }
 
     open var isTransparent: Bool {
-        get { return associatedObject(&AssociatedKey.isTransparent, defaultValue: false) }
+        get { return associatedObject(&AssociatedKey.isTransparent, default: false) }
         set {
             guard newValue != isTransparent else { return }
             setAssociatedObject(&AssociatedKey.isTransparent, value: newValue)
@@ -57,7 +57,7 @@ extension UIToolbar {
     }
 
     open var isTransparent: Bool {
-        get { return associatedObject(&AssociatedKey.isTransparent, defaultValue: false) }
+        get { return associatedObject(&AssociatedKey.isTransparent, default: false) }
         set {
             guard newValue != isTransparent else { return }
             setAssociatedObject(&AssociatedKey.isTransparent, value: newValue)
@@ -81,7 +81,7 @@ extension UITabBar {
     }
 
     open var isTransparent: Bool {
-        get { return associatedObject(&AssociatedKey.isTransparent, defaultValue: false) }
+        get { return associatedObject(&AssociatedKey.isTransparent, default: false) }
         set {
             guard newValue != isTransparent else { return }
             setAssociatedObject(&AssociatedKey.isTransparent, value: newValue)

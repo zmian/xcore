@@ -47,13 +47,13 @@ extension UITextField {
 
     /// The default value is `.zero`.
     open var contentInset: UIEdgeInsets {
-        get { return associatedObject(&AssociatedKey.contentInset, defaultValue: .zero) }
+        get { return associatedObject(&AssociatedKey.contentInset, default: .zero) }
         set { setAssociatedObject(&AssociatedKey.contentInset, value: newValue) }
     }
 
     /// The default value is `true`.
     open var isInsertionCursorEnabled: Bool {
-        get { return associatedObject(&AssociatedKey.isInsertionCursorEnabled, defaultValue: true) }
+        get { return associatedObject(&AssociatedKey.isInsertionCursorEnabled, default: true) }
         set { setAssociatedObject(&AssociatedKey.isInsertionCursorEnabled, value: newValue) }
     }
 }
