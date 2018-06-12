@@ -46,7 +46,7 @@ extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
     }
 
     public var shouldAutoDismiss: Bool {
-        get { return associatedObject(&AssociatedKey.shouldAutoDismiss, defaultValue: false) }
+        get { return associatedObject(&AssociatedKey.shouldAutoDismiss, default: false) }
         set {
             mailComposeDelegate = self
             setAssociatedObject(&AssociatedKey.shouldAutoDismiss, value: newValue)

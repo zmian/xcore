@@ -31,12 +31,12 @@ extension UITableView {
     }
 
     private var registeredCells: Set<String> {
-        get { return associatedObject(&AssociatedKey.registeredCells, defaultValue: Set<String>()) }
+        get { return associatedObject(&AssociatedKey.registeredCells, default: Set<String>()) }
         set { setAssociatedObject(&AssociatedKey.registeredCells, value: newValue) }
     }
 
     private var registeredHeaderFooterViews: Set<String> {
-        get { return associatedObject(&AssociatedKey.registeredHeaderFooterViews, defaultValue: Set<String>()) }
+        get { return associatedObject(&AssociatedKey.registeredHeaderFooterViews, default: Set<String>()) }
         set { setAssociatedObject(&AssociatedKey.registeredHeaderFooterViews, value: newValue) }
     }
 

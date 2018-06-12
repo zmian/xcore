@@ -86,19 +86,19 @@ extension UIButton {
     private typealias State = UInt
 
     private var backgroundColors: [State: UIColor] {
-        get { return associatedObject(&AssociatedKey.backgroundColors, defaultValue: [:]) }
+        get { return associatedObject(&AssociatedKey.backgroundColors, default: [:]) }
         set { setAssociatedObject(&AssociatedKey.backgroundColors, value: newValue) }
     }
 
     private var borderColors: [State: UIColor] {
-        get { return associatedObject(&AssociatedKey.borderColors, defaultValue: [:]) }
+        get { return associatedObject(&AssociatedKey.borderColors, default: [:]) }
         set { setAssociatedObject(&AssociatedKey.borderColors, value: newValue) }
     }
 
     /// A boolean property to provide visual feedback when the
     /// button is highlighted. The default value is `[]`.
     open var highlightAnimation: HighlightAnimationOptions {
-        get { return associatedObject(&AssociatedKey.highlightAnimation, defaultValue: UIButton.defaultAppearance.highlightAnimation) }
+        get { return associatedObject(&AssociatedKey.highlightAnimation, default: UIButton.defaultAppearance.highlightAnimation) }
         set { setAssociatedObject(&AssociatedKey.highlightAnimation, value: newValue) }
     }
 
@@ -106,7 +106,7 @@ extension UIButton {
     ///
     /// If true, the `backgroundColor` is drawn darker when the button is highlighted. The default value is `true`.
     @objc open dynamic var adjustsBackgroundColorWhenHighlighted: Bool {
-        get { return associatedObject(&AssociatedKey.adjustsBackgroundColorWhenHighlighted, defaultValue: true) }
+        get { return associatedObject(&AssociatedKey.adjustsBackgroundColorWhenHighlighted, default: true) }
         set { setAssociatedObject(&AssociatedKey.adjustsBackgroundColorWhenHighlighted, value: newValue) }
     }
 }
@@ -123,7 +123,7 @@ extension UIButton {
     /// A property to set the height of the button automatically.
     /// The default value is `false`.
     @objc open dynamic var isHeightSetAutomatically: Bool {
-        get { return associatedObject(&AssociatedKey.isHeightSetAutomatically, defaultValue: UIButton.defaultAppearance.isHeightSetAutomatically) }
+        get { return associatedObject(&AssociatedKey.isHeightSetAutomatically, default: UIButton.defaultAppearance.isHeightSetAutomatically) }
         set {
             setAssociatedObject(&AssociatedKey.isHeightSetAutomatically, value: newValue)
             updateHeightConstraintIfNeeded()
@@ -153,7 +153,7 @@ extension UIButton {
 
     /// The style of the button. The default value is `.none`.
     open var style: Style {
-        get { return associatedObject(&AssociatedKey.style, defaultValue: UIButton.defaultAppearance.style) }
+        get { return associatedObject(&AssociatedKey.style, default: UIButton.defaultAppearance.style) }
         set {
             setAssociatedObject(&AssociatedKey.style, value: newValue)
             updateStyleIfNeeded()

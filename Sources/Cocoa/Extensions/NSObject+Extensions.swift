@@ -94,9 +94,9 @@ extension NSObject {
     ///   - key: The key for the association.
     ///   - defaultValue: The default value to return if the no associated value is found.
     /// - Returns: The value associated with the key for object.
-    public func associatedObject<T>(_ key: UnsafeRawPointer, defaultValue: T) -> T {
+    public func associatedObject<T>(_ key: UnsafeRawPointer, default defaultValue: @autoclosure () -> T) -> T {
         guard let value = objc_getAssociatedObject(self, key) as? T else {
-            return defaultValue
+            return defaultValue()
         }
         return value
     }
