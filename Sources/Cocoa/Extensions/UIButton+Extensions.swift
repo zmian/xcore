@@ -35,34 +35,34 @@ extension UIButton {
     ///
     /// ```swift
     /// // Doesn't work:
-    /// UIButton.appearance().isHeightSetAutomatically = true
+    /// UIButton.appearance().highlightedAnimation = .scale
     ///
     /// // Works as expected:
-    /// UIButton.defaultAppearance.isHeightSetAutomatically = true
+    /// UIButton.defaultAppearance.highlightedAnimation = .scale
     /// ```
     @objc public final class DefaultAppearance: NSObject {
         public let style: Style
         public let height: CGFloat
         public let isHeightSetAutomatically: Bool
-        public let highlightAnimation: HighlightAnimationOptions
+        public let highlightedAnimation: HighlightedAnimationOptions
 
         public init(
             style: Style,
             height: CGFloat,
             isHeightSetAutomatically: Bool,
-            highlightAnimation: HighlightAnimationOptions
+            highlightedAnimation: HighlightedAnimationOptions
         ) {
             self.style = style
             self.height = height
             self.isHeightSetAutomatically = isHeightSetAutomatically
-            self.highlightAnimation = highlightAnimation
+            self.highlightedAnimation = highlightedAnimation
         }
 
         public static let `default` = DefaultAppearance(
             style: .none,
             height: 50,
             isHeightSetAutomatically: false,
-            highlightAnimation: []
+            highlightedAnimation: .none
         )
     }
 }
@@ -75,7 +75,7 @@ extension UIButton {
         static var didSelect = "didSelect"
         static var didHighlight = "didHighlight"
         static var didEnable = "didEnable"
-        static var highlightAnimation = "highlightAnimation"
+        static var highlightedAnimation = "highlightedAnimation"
         static var adjustsBackgroundColorWhenHighlighted = "adjustsBackgroundColorWhenHighlighted"
         static var style = "style"
         static var heightConstraint = "heightConstraint"
@@ -96,10 +96,10 @@ extension UIButton {
     }
 
     /// A boolean property to provide visual feedback when the
-    /// button is highlighted. The default value is `[]`.
-    open var highlightAnimation: HighlightAnimationOptions {
-        get { return associatedObject(&AssociatedKey.highlightAnimation, default: UIButton.defaultAppearance.highlightAnimation) }
-        set { setAssociatedObject(&AssociatedKey.highlightAnimation, value: newValue) }
+    /// button is highlighted. The default value is `.none`.
+    open var highlightedAnimation: HighlightedAnimationOptions {
+        get { return associatedObject(&AssociatedKey.highlightedAnimation, default: UIButton.defaultAppearance.highlightedAnimation) }
+        set { setAssociatedObject(&AssociatedKey.highlightedAnimation, value: newValue) }
     }
 
     /// A boolean value that determines whether the `backgroundColor` changes when the button is highlighted.
@@ -190,7 +190,7 @@ extension UIButton {
         setAttributedTitle(nil, for: .normal)
         setTitleColor(nil, for: .highlighted)
         backgroundColor = nil
-        highlightAnimation = UIButton.defaultAppearance.highlightAnimation
+        highlightedAnimation = UIButton.defaultAppearance.highlightedAnimation
         isHeightSetAutomatically = UIButton.defaultAppearance.isHeightSetAutomatically
     }
 }
@@ -211,7 +211,7 @@ extension UIButton {
             changeBackgroundColor(to: isHighlighted ? .highlighted : .normal)
             changeBorderColor(to: isHighlighted ? .highlighted : .normal)
             didHighlight?(self)
-            highlightAnimation.animate(self)
+            highlightedAnimation.animate(self)
         }
     }
 

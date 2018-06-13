@@ -24,25 +24,9 @@
 
 import UIKit
 
-open class IconLabelCollectionViewCell: UICollectionViewCell {
+open class IconLabelCollectionViewCell: XCCollectionViewCell {
     open let iconLabelView = IconLabelView()
     let deleteButton = UIButton()
-
-    // MARK: Init Methods
-
-    public convenience init() {
-        self.init(frame: .zero)
-    }
-
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupSubviews()
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupSubviews()
-    }
 
     // MARK: Setters
 
@@ -52,7 +36,7 @@ open class IconLabelCollectionViewCell: UICollectionViewCell {
 
     // MARK: Setup Method
 
-    private func setupSubviews() {
+    open override func commonInit() {
         contentView.addSubview(iconLabelView)
         NSLayoutConstraint.constraintsForViewToFillSuperview(iconLabelView).activate()
         iconLabelView.isUserInteractionEnabled = false

@@ -56,12 +56,12 @@ import UIKit
         UIView.animate(withDuration: duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: nil)
     }
 
-    public static func animateFromCurrentState(_ animations: @escaping () -> Void) {
-        animateFromCurrentState(animations: animations, completion: {})
+    public static func animateFromCurrentState(withDuration duration: TimeInterval = .fast, _ animations: @escaping () -> Void) {
+        animateFromCurrentState(withDuration: duration, animations: animations, completion: {})
     }
 
-    public static func animateFromCurrentState(animations: @escaping () -> Void, completion: @escaping () -> Void) {
-        UIView.animate(withDuration: .fast, delay: 0, options: .beginFromCurrentState, animations: {
+    public static func animateFromCurrentState(withDuration duration: TimeInterval = .fast, animations: @escaping () -> Void, completion: @escaping () -> Void) {
+        UIView.animate(withDuration: duration, delay: 0, options: .beginFromCurrentState, animations: {
             animations()
         }, completion: { _ in
             completion()

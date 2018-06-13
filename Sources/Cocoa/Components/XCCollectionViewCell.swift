@@ -1,5 +1,5 @@
 //
-// XCTableViewCell.swift
+// XCCollectionViewCell.swift
 //
 // Copyright © 2015 Zeeshan Mian
 //
@@ -24,33 +24,25 @@
 
 import UIKit
 
-open class XCTableViewCell: UITableViewCell {
+open class XCCollectionViewCell: UICollectionViewCell {
 
     // MARK: Init Methods
 
     public convenience init() {
-        self.init(style: .default, reuseIdentifier: nil)
+        self.init(frame: .zero)
     }
 
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        internalCommonInit()
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        internalCommonInit()
+        commonInit()
     }
 
     // MARK: Setup Methods
-
-    open override func setSelected(_ selected: Bool, animated: Bool) {}
-    open override func setHighlighted(_ highlighted: Bool, animated: Bool) {}
-
-    private func internalCommonInit() {
-        backgroundColor = .clear
-        commonInit()
-    }
 
     /// The default implementation of this method does nothing.
     ///

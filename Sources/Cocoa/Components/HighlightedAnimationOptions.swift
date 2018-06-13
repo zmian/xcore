@@ -1,7 +1,7 @@
 //
-// XCTableViewCell.swift
+// HighlightedAnimationOptions.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2018 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,38 +24,30 @@
 
 import UIKit
 
-open class XCTableViewCell: UITableViewCell {
-
-    // MARK: Init Methods
-
-    public convenience init() {
-        self.init(style: .default, reuseIdentifier: nil)
+public struct HighlightedAnimationOptions: OptionSet {
+    public let rawValue: UInt
+    public init(rawValue: UInt) {
+        self.rawValue = rawValue
     }
 
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        internalCommonInit()
+    public static let scale = HighlightedAnimationOptions(rawValue: 1 << 0)
+    public static let alpha = HighlightedAnimationOptions(rawValue: 1 << 1)
+    public static let all: HighlightedAnimationOptions = [scale, alpha]
+    public static let none: HighlightedAnimationOptions = []
+
+    func animate(_ button: UIButton) {
+        animate(button, isHighlighted: button.isHighlighted)
     }
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        internalCommonInit()
+    public func animate(_ transitionView: UIView, isHighlighted: Bool) {
+        guard !isEmpty else { return }
+
+        let transform: CGAffineTransform = contains(.scale) ? (isHighlighted ? .defaultScale : .identity) : transitionView.transform
+        let alpha: CGFloat = contains(.alpha) ? (isHighlighted ? 0.9 : 1) : transitionView.alpha
+
+        UIView.animateFromCurrentState {
+            transitionView.transform = transform
+            transitionView.alpha = alpha
+        }
     }
-
-    // MARK: Setup Methods
-
-    open override func setSelected(_ selected: Bool, animated: Bool) {}
-    open override func setHighlighted(_ highlighted: Bool, animated: Bool) {}
-
-    private func internalCommonInit() {
-        backgroundColor = .clear
-        commonInit()
-    }
-
-    /// The default implementation of this method does nothing.
-    ///
-    /// Subclasses can override it to perform additional actions,
-    /// for example, add new subviews or configure properties.
-    /// This method is called when self is initialized using any of the relevant `init` methods.
-    open func commonInit() {}
 }
