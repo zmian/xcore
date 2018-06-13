@@ -56,6 +56,8 @@ extension UISearchBar {
 extension UISearchBar {
     private struct AssociatedKey {
         static var placeholderTextColor = "placeholderTextColor"
+        static var initialPlaceholderText = "initialPlaceholderText"
+        static var didSetInitialPlaceholderText = "didSetInitialPlaceholderText"
     }
 
     /// The default value is `nil`. Uses `UISearchBar` default gray color.
@@ -72,9 +74,24 @@ extension UISearchBar {
         }
     }
 
+    private var didSetInitialPlaceholderText: Bool {
+        get { return associatedObject(&AssociatedKey.didSetInitialPlaceholderText, default: false) }
+        set { setAssociatedObject(&AssociatedKey.didSetInitialPlaceholderText, value: newValue) }
+    }
+
+    private var initialPlaceholderText: String? {
+        get { return associatedObject(&AssociatedKey.initialPlaceholderText) }
+        set { setAssociatedObject(&AssociatedKey.initialPlaceholderText, value: newValue) }
+    }
+
     @objc private var swizzled_placeholder: String? {
         get { return textField?.attributedPlaceholder?.string }
         set {
+            if superview == nil, let newValue = newValue {
+                initialPlaceholderText = newValue
+                return
+            }
+
             guard let textField = textField else {
                 return
             }
@@ -92,6 +109,18 @@ extension UISearchBar {
                 textField.attributedPlaceholder = NSAttributedString(string: newValue)
             }
         }
+    }
+
+    open override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        guard superview != nil, !didSetInitialPlaceholderText else { return }
+
+        if let placeholderText = initialPlaceholderText {
+            placeholder = placeholderText
+            initialPlaceholderText = nil
+        }
+
+        didSetInitialPlaceholderText = true
     }
 }
 
