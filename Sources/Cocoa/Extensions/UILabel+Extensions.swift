@@ -51,3 +51,15 @@ extension UILabel {
         return "Sphinx".size(withFont: font).height * CGFloat(numberOfLines)
     }
 }
+
+// MARK: Underline
+
+extension UILabel {
+    @objc open func underline() {
+        if let attributedText = attributedText {
+            self.attributedText = NSMutableAttributedString(attributedString: attributedText).underline(attributedText.string)
+        } else if let text = text {
+            self.attributedText = NSMutableAttributedString(string: text).underline(text)
+        }
+    }
+}
