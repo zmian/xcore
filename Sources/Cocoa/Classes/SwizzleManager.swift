@@ -91,6 +91,10 @@ public final class SwizzleManager {
             UITextField.runOnceSwapSelectors()
         }
 
+        if options.contains(.button) {
+            UIButton.runOnceSwapSelectors()
+        }
+
         if options.contains(.searchBar) {
             UISearchBar.runOnceSwapSelectors()
         }
@@ -120,12 +124,13 @@ extension SwizzleManager {
 
         public static let imageView             = SwizzleOptions(rawValue: 1 << 0)
         public static let textField             = SwizzleOptions(rawValue: 1 << 1)
-        public static let searchBar             = SwizzleOptions(rawValue: 1 << 2)
-        public static let collectionViewCell    = SwizzleOptions(rawValue: 1 << 3)
-        public static let viewController        = SwizzleOptions(rawValue: 1 << 4)
-        public static let userContentController = SwizzleOptions(rawValue: 1 << 5)
+        public static let button                = SwizzleOptions(rawValue: 1 << 2)
+        public static let searchBar             = SwizzleOptions(rawValue: 1 << 3)
+        public static let collectionViewCell    = SwizzleOptions(rawValue: 1 << 4)
+        public static let viewController        = SwizzleOptions(rawValue: 1 << 5)
+        public static let userContentController = SwizzleOptions(rawValue: 1 << 6)
         public static let all: SwizzleOptions = [
-            imageView, textField, searchBar, collectionViewCell, viewController, userContentController
+            imageView, textField, button, searchBar, collectionViewCell, viewController, userContentController
         ]
     }
 }

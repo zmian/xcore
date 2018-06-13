@@ -30,4 +30,25 @@ extension XCConfiguration where Type: UIButton {
     public static var none: XCConfiguration {
         return XCConfiguration(identifier: "none") { _ in }
     }
+
+    public static func checkbox(normalColor: UIColor, selectedColor: UIColor, textColor: UIColor, font: UIFont) -> XCConfiguration {
+        return XCConfiguration(identifier: "checkbox") { button in
+            button.accessibilityIdentifier = "checkboxButton"
+            button.textColor = textColor
+            button.titleLabel?.font = font
+            button.titleLabel?.numberOfLines = 0
+            button.textImageSpacing = .minimumPadding
+            button.contentHorizontalAlignment = .left
+            button.adjustsImageWhenHighlighted = false
+            button.adjustsBackgroundColorWhenHighlighted = false
+            button.highlightedBackgroundColor = .clear
+            button.highlightedAnimation = .none
+            button.contentEdgeInsets = .zero
+
+            let unfilledImage = UIImage(assetIdentifier: UIImage.AssetIdentifier.checkmarkIconUnfilled)
+            let filledImage = UIImage(assetIdentifier: UIImage.AssetIdentifier.checkmarkIconFilled)
+            button.setImage(unfilledImage.tintColor(normalColor), for: .normal)
+            button.setImage(filledImage.tintColor(selectedColor), for: .selected)
+        }
+    }
 }

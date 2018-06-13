@@ -43,7 +43,7 @@ extension ImageAssetIdentifiable {
 
 extension UIImage {
     public convenience init<AssetIdentifier: ImageAssetIdentifiable>(assetIdentifier: AssetIdentifier) {
-        self.init(named: assetIdentifier.rawValue)!
+        self.init(named: assetIdentifier.rawValue, in: assetIdentifier.bundle, compatibleWith: nil)!
     }
 }
 
@@ -83,7 +83,13 @@ extension UIImage {
         case collectionViewCellDeleteIcon
         case reorderTableViewCellShadowTop
         case reorderTableViewCellShadowBottom
-        case blueJay
+        case checkmarkIcon
+        case checkmarkIconFilled
+        case checkmarkIconUnfilled
+
+        var bundle: Bundle? {
+            return .xcore
+        }
     }
 }
 

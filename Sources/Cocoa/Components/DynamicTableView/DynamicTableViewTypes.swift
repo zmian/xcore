@@ -23,7 +23,6 @@
 //
 
 import UIKit
-import BEMCheckBox
 
 public enum DynamicTableAccessoryType {
     case none
@@ -31,7 +30,7 @@ public enum DynamicTableAccessoryType {
     case text(String)
     case custom(UIView)
     case `switch`(isOn: Bool, callback: ((_ sender: UISwitch) -> Void)?)
-    case checkbox(isOn: Bool, callback: ((_ sender: BEMCheckBox) -> Void)?)
+    case checkbox(isSelected: Bool, callback: ((_ sender: UIButton) -> Void)?)
 }
 
 public struct DynamicTableCellOptions: OptionSet {
