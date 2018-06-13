@@ -17,6 +17,5 @@ Pod::Spec.new do |s|
     # 'OTHER_SWIFT_FLAGS' => '-DXCORE_ENVIRONMENT_${CONFIGURATION}'
   }
   s.dependency 'SDWebImage'
-  s.dependency 'BEMCheckBox'
   s.dependency 'MDHTMLLabel'
 end

@@ -1,11 +1,9 @@
 PODS:
-  - BEMCheckBox (1.4.1)
   - MDHTMLLabel (1.0.2)
-  - SDWebImage (4.3.3):
-    - SDWebImage/Core (= 4.3.3)
-  - SDWebImage/Core (4.3.3)
+  - SDWebImage (4.4.1):
+    - SDWebImage/Core (= 4.4.1)
+  - SDWebImage/Core (4.4.1)
   - Xcore (1.0.4):
-    - BEMCheckBox
     - MDHTMLLabel
     - SDWebImage
 
@@ -14,7 +12,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - BEMCheckBox
     - MDHTMLLabel
     - SDWebImage
 
@@ -23,10 +20,9 @@ EXTERNAL SOURCES:
     :path: "./Local.podspec"
 
 SPEC CHECKSUMS:
-  BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
   MDHTMLLabel: 18bf09ec7d6c1ae396497345c005857c0493ee0a
-  SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
-  Xcore: e89861dd136b5e7dfd1bfd9e7d520368fa64820b
+  SDWebImage: 47e9b5b925cbce75946c23f0c42dd19464189af4
+  Xcore: 7193d99b4350cfc6f285bf4a876f233302ab32f5
 
 PODFILE CHECKSUM: 7343b9d7db86d8542441c83b240c214628908c99
 

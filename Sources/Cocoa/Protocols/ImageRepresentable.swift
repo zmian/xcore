@@ -33,6 +33,13 @@ public enum ImageSourceType  {
 
 public protocol ImageRepresentable {
     var imageSource: ImageSourceType { get }
+    var bundle: Bundle? { get }
+}
+
+extension ImageRepresentable {
+    public var bundle: Bundle? {
+        return nil
+    }
 }
 
 extension UIImage: ImageRepresentable {
@@ -71,7 +78,7 @@ extension UIImageView {
 
         switch image.imageSource {
             case .url(let url):
-                remoteOrLocalImage(url, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
+                remoteOrLocalImage(url, in: image.bundle, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
             case .uiImage:
                 let duration = alwaysAnimate ? animationDuration : 0
                 alpha = duration > 0 ? 0 : 1

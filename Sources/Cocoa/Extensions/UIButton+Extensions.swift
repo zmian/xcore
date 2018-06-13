@@ -196,45 +196,6 @@ extension UIButton {
 }
 
 extension UIButton {
-    // MARK: Lifecycle Events
-
-    @objc open override var isSelected: Bool {
-        didSet {
-            guard oldValue != isSelected else { return }
-            didSelect?(self)
-        }
-    }
-
-    @objc open override var isHighlighted: Bool {
-        didSet {
-            guard oldValue != isHighlighted else { return }
-            changeBackgroundColor(to: isHighlighted ? .highlighted : .normal)
-            changeBorderColor(to: isHighlighted ? .highlighted : .normal)
-            didHighlight?(self)
-            highlightedAnimation.animate(self)
-        }
-    }
-
-    @objc open override var isEnabled: Bool {
-        didSet {
-            guard oldValue != isEnabled else { return }
-            changeBackgroundColor(to: isEnabled ? .normal : .disabled)
-            changeBorderColor(to: isEnabled ? .normal : .disabled)
-            didEnable?(self)
-        }
-    }
-
-    @objc open func setEnabled(_ enable: Bool, animated: Bool) {
-        guard !animated else {
-            self.isEnabled = enable
-            return
-        }
-
-        UIView.performWithoutAnimation { [weak self] in
-            self?.isEnabled = enable
-        }
-    }
-
     // MARK: Background Color
 
     @objc open func backgroundColor(for state: UIControlState) -> UIColor? {
@@ -397,10 +358,10 @@ extension UIButton {
     ///
     /// - Parameters:
     ///   - named:  The remote image url or local image name to use for the specified state.
-    ///   - state:  The state that uses the specified image.
     ///   - bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the `main` bundle.
-    @objc open func image(_ remoteOrLocalImage: String, for state: UIControlState, bundle: Bundle? = nil) {
-        UIImage.remoteOrLocalImage(remoteOrLocalImage, bundle: bundle) { [weak self] image in
+    ///   - state:  The state that uses the specified image.
+    @objc open func image(_ remoteOrLocalImage: String, in bundle: Bundle? = nil, for state: UIControlState) {
+        UIImage.remoteOrLocalImage(remoteOrLocalImage, in: bundle) { [weak self] image in
             self?.setImage(image, for: state)
         }
     }
@@ -544,5 +505,70 @@ extension UIButton {
     fileprivate var didEnable: ((_ sender: UIButton) -> Void)? {
         get { return associatedObject(&AssociatedKey.didEnable) }
         set { setAssociatedObject(&AssociatedKey.didEnable, value: newValue) }
+    }
+}
+
+// MARK: Lifecycle Events
+
+extension UIButton {
+    @objc private func swizzled_isSelectedSetter(newValue: Bool) {
+        let oldValue = isSelected
+        self.swizzled_isSelectedSetter(newValue: newValue)
+        guard oldValue != isSelected else { return }
+        didSelect?(self)
+    }
+
+    @objc private func swizzled_isHighlightedSetter(newValue: Bool) {
+        let oldValue = isHighlighted
+        self.swizzled_isHighlightedSetter(newValue: newValue)
+        guard oldValue != isHighlighted else { return }
+        changeBackgroundColor(to: isHighlighted ? .highlighted : .normal)
+        changeBorderColor(to: isHighlighted ? .highlighted : .normal)
+        didHighlight?(self)
+        highlightedAnimation.animate(self)
+    }
+
+    @objc private func swizzled_isEnabledSetter(newValue: Bool) {
+        let oldValue = isEnabled
+        self.swizzled_isEnabledSetter(newValue: newValue)
+        guard oldValue != isEnabled else { return }
+        changeBackgroundColor(to: isEnabled ? .normal : .disabled)
+        changeBorderColor(to: isEnabled ? .normal : .disabled)
+        didEnable?(self)
+    }
+
+    @objc open func setEnabled(_ enable: Bool, animated: Bool) {
+        guard !animated else {
+            self.isEnabled = enable
+            return
+        }
+
+        UIView.performWithoutAnimation { [weak self] in
+            self?.isEnabled = enable
+        }
+    }
+}
+
+// MARK: Swizzle
+
+extension UIButton {
+    static func runOnceSwapSelectors() {
+        swizzle(
+            UIButton.self,
+            originalSelector: #selector(setter: UIButton.isSelected),
+            swizzledSelector: #selector(UIButton.swizzled_isSelectedSetter(newValue:))
+        )
+
+        swizzle(
+            UIButton.self,
+            originalSelector: #selector(setter: UIButton.isHighlighted),
+            swizzledSelector: #selector(UIButton.swizzled_isHighlightedSetter(newValue:))
+        )
+
+        swizzle(
+            UIButton.self,
+            originalSelector: #selector(setter: UIButton.isEnabled),
+            swizzledSelector: #selector(UIButton.swizzled_isEnabledSetter(newValue:))
+        )
     }
 }

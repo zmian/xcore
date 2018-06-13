@@ -52,12 +52,12 @@ final class ExampleDynamicTableViewController: DynamicTableViewController {
                     DynamicTableModel(title: "Woodpecker", accessory: .disclosureIndicator),
                     DynamicTableModel(title: "Blue Jay", accessory: .text("462")),
                     DynamicTableModel(title: "1,223", subtitle: "Globally, 1,223 species of birds", image: R(.blueJay), accessory: .text("5m")),
-                    DynamicTableModel(title: "American Goldfinch", subtitle: "Spinus tristis", image: R(.blueJay), accessory: DynamicTableAccessoryType.checkbox(isOn: true) { sender -> Void in
-                        let choice = sender.on ? "On" : "Off"
+                    DynamicTableModel(title: "American Goldfinch", subtitle: "Spinus tristis", image: R(.blueJay), accessory: DynamicTableAccessoryType.checkbox(isSelected: true) { sender -> Void in
+                        let choice = sender.isSelected ? "On" : "Off"
                         print("American Goldfinch \(choice)")
                     }),
-                    DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: DynamicTableAccessoryType.checkbox(isOn: true) { sender -> Void in
-                        let choice = sender.on ? "On" : "Off"
+                    DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: DynamicTableAccessoryType.checkbox(isSelected: true) { sender -> Void in
+                        let choice = sender.isSelected ? "On" : "Off"
                         print("Woodpecker \(choice)")
                     }),
                     DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: DynamicTableAccessoryType.switch(isOn: true) { sender -> Void in

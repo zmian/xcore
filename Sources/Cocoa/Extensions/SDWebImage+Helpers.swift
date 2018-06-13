@@ -29,7 +29,7 @@ extension UIImageView {
     /// Automatically detect and load the image from local or a remote url.
     ///
     /// - seealso: `setImage(_:alwaysAnimate:animationDuration:callback:)`
-    func remoteOrLocalImage(_ named: String, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
+    func remoteOrLocalImage(_ named: String, in bundle: Bundle? = nil, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
         guard !named.isBlank else {
             image = nil
             callback?(nil)
@@ -60,7 +60,7 @@ extension UIImageView {
             }
         } else {
             DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-                guard let strongSelf = self, let image = UIImage(named: named) else {
+                guard let strongSelf = self, let image = UIImage(named: named, in: bundle, compatibleWith: nil) else {
                     DispatchQueue.main.async {
                         callback?(nil)
                     }
@@ -87,7 +87,7 @@ extension UIImageView {
 
 extension UIImage {
     /// Automatically detect and load the image from local or a remote url.
-    public class func remoteOrLocalImage(_ named: String, bundle: Bundle? = nil, callback: @escaping (_ image: UIImage?) -> Void) {
+    public class func remoteOrLocalImage(_ named: String, in bundle: Bundle? = nil, callback: @escaping (_ image: UIImage?) -> Void) {
         guard !named.isBlank else {
             callback(nil)
             return

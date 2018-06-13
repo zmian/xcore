@@ -23,7 +23,6 @@
 //
 
 import UIKit
-import BEMCheckBox
 
 open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewDataSource {
     private var allowReordering: Bool { return cellOptions.contains(.movable) }
@@ -253,14 +252,14 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = sections[indexPath]
         if case .checkbox(_, let callback) = item.accessory {
-            if let checkboxView = tableView.cellForRow(at: indexPath)?.accessoryView as? BEMCheckBox {
-                if checkboxView.on && (indexPathsForSelectedRows ?? []).contains(indexPath) {
+            if let checkboxButton = tableView.cellForRow(at: indexPath)?.accessoryView as? UIButton {
+                if checkboxButton.isSelected && (indexPathsForSelectedRows ?? []).contains(indexPath) {
                     deselectRow(at: indexPath, animated: true)
                     self.tableView(tableView, didDeselectRowAt: indexPath)
                     return
                 }
-                checkboxView.setOn(true, animated: true)
-                callback?(checkboxView)
+                checkboxButton.isSelected = true
+                callback?(checkboxButton)
             }
         }
         didSelectItem?(indexPath, item)
@@ -270,9 +269,9 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     open func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let item = sections[indexPath]
         if case .checkbox(_, let callback) = item.accessory {
-            if let checkboxView = tableView.cellForRow(at: indexPath)?.accessoryView as? BEMCheckBox {
-                checkboxView.setOn(false, animated: true)
-                callback?(checkboxView)
+            if let checkboxButton = tableView.cellForRow(at: indexPath)?.accessoryView as? UIButton {
+                checkboxButton.isSelected = false
+                callback?(checkboxButton)
             }
         }
         didDeselectItem?(indexPath, item)
@@ -368,7 +367,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         super.deselectRow(at: indexPath, animated: animated)
         let item = sections[indexPath]
         if case .checkbox = item.accessory {
-            checkboxAccessoryView(at: indexPath)?.setOn(false, animated: animated)
+            checkboxAccessoryView(at: indexPath)?.isSelected = false
         }
     }
 
@@ -391,7 +390,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
 // MARK: AccessoryView
 
-extension DynamicTableView: BEMCheckBoxDelegate {
+extension DynamicTableView {
     private func configureAccessoryView(_ cell: DynamicTableViewCell, type: DynamicTableAccessoryType, indexPath: IndexPath) {
         cell.accessoryType  = .none
         cell.selectionStyle = .default
@@ -403,34 +402,21 @@ extension DynamicTableView: BEMCheckBoxDelegate {
             case .disclosureIndicator:
                 cell.accessoryView = UIImageView(assetIdentifier: UIImage.AssetIdentifier.disclosureIndicator)
                 cell.accessoryView?.tintColor = disclosureIndicatorTintColor
-            case .`switch`(let isOn, _):
+            case .switch(let (isOn, callback)):
                 cell.selectionStyle  = .none
                 let accessorySwitch  = UISwitch()
                 accessorySwitch.isOn = isOn
-                accessorySwitch.addAction(.valueChanged) { [weak self] sender in
-                    guard let strongSelf = self else { return }
-                    let accessory = strongSelf.sections[indexPath].accessory
-                    if case .`switch`(_, let callback) = accessory {
-                        callback?(sender)
-                    }
+                accessorySwitch.addAction(.valueChanged) { sender in
+                    callback?(sender)
                 }
                 cell.accessoryView = accessorySwitch
-            case .checkbox(let isOn, _):
-                cell.selectionStyle               = .none
-                let checkbox                      = BEMCheckBox(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-                checkbox.on                       = isOn
-                checkbox.lineWidth                = 1
-                checkbox.tintColor                = checkboxOffTintColor
-                checkbox.onTintColor              = accessoryTintColor
-                checkbox.onFillColor              = accessoryTintColor
-                checkbox.onCheckColor             = .white
-                checkbox.onAnimationType          = .fill
-                checkbox.offAnimationType         = .fill
-                checkbox.animationDuration        = 0.4
-                checkbox.delegate                 = self
-                checkbox.indexPath                = indexPath
-                checkbox.isUserInteractionEnabled = false
-                cell.accessoryView                = checkbox
+            case .checkbox(let (isSelected, _)):
+                cell.selectionStyle                        = .none
+                let accessoryCheckbox                      = UIButton(style: .checkbox(normalColor: checkboxOffTintColor, selectedColor: accessoryTintColor, textColor: footerTextColor, font: footerFont))
+                accessoryCheckbox.frame                    = CGRect(x: 0, y: 0, width: 24, height: 24)
+                accessoryCheckbox.isSelected               = isSelected
+                accessoryCheckbox.isUserInteractionEnabled = false
+                cell.accessoryView                         = accessoryCheckbox
             case .text(let text):
                 let label           = UILabel()
                 label.text          = text
@@ -447,17 +433,6 @@ extension DynamicTableView: BEMCheckBoxDelegate {
                 cell.accessoryView = view
         }
     }
-
-    // MARK: Handle Switch changes
-
-    public func didTap(_ checkBox: BEMCheckBox) {
-        if let indexPath = checkBox.indexPath {
-            let accessory = sections[indexPath].accessory
-            if case .checkbox(_, let callback) = accessory {
-                callback?(checkBox)
-            }
-        }
-    }
 }
 
 // MARK: Convenience API
@@ -471,20 +446,12 @@ extension DynamicTableView {
 
     /// A convenience method to access `UISwitch` at the specified index path.
     public func switchAccessoryView(at indexPath: IndexPath) -> UISwitch? {
-        if let switchAccessoryView = cellForRow(at: indexPath)?.accessoryView as? UISwitch {
-            return switchAccessoryView
-        }
-
-        return nil
+        return accessoryView(at: indexPath) as? UISwitch
     }
 
-    /// A convenience method to access `BEMCheckBox` at the specified index path.
-    public func checkboxAccessoryView(at indexPath: IndexPath) -> BEMCheckBox? {
-        if let checkboxAccessoryView = cellForRow(at: indexPath)?.accessoryView as? BEMCheckBox {
-            return checkboxAccessoryView
-        }
-
-        return nil
+    /// A convenience method to access `UIButton` at the specified index path.
+    public func checkboxAccessoryView(at indexPath: IndexPath) -> UIButton? {
+        return accessoryView(at: indexPath) as? UIButton
     }
 
     /// A convenience method to access `accessoryView` at the specified index path.
@@ -543,20 +510,5 @@ extension DynamicTableView {
         }
 
         return super.forwardingTarget(for: aSelector)
-    }
-}
-
-// MARK: Helper Extensions
-
-import ObjectiveC
-
-extension BEMCheckBox {
-    private struct AssociatedKey {
-        static var bemCheckBoxIndexPath = "BEMCheckBoxIndexPath"
-    }
-
-    fileprivate var indexPath: IndexPath? {
-        get { return associatedObject(&AssociatedKey.bemCheckBoxIndexPath) }
-        set { setAssociatedObject(&AssociatedKey.bemCheckBoxIndexPath, value: newValue) }
     }
 }
