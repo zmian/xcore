@@ -35,14 +35,18 @@ public struct HighlightAnimationOptions: OptionSet {
     public static let all: HighlightAnimationOptions = [scale, alpha]
 
     func animate(_ button: UIButton) {
+        animate(button, isHighlighted: button.isHighlighted)
+    }
+
+    public func animate(_ transitionView: UIView, isHighlighted: Bool) {
         guard !isEmpty else { return }
 
-        let transform: CGAffineTransform = contains(.scale) ? (button.isHighlighted ? .defaultScale : .identity) : button.transform
-        let alpha: CGFloat = contains(.alpha) ? (button.isHighlighted ? 0.9 : 1) : button.alpha
+        let transform: CGAffineTransform = contains(.scale) ? (isHighlighted ? .defaultScale : .identity) : transitionView.transform
+        let alpha: CGFloat = contains(.alpha) ? (isHighlighted ? 0.9 : 1) : transitionView.alpha
 
         UIView.animateFromCurrentState {
-            button.transform = transform
-            button.alpha = alpha
+            transitionView.transform = transform
+            transitionView.alpha = alpha
         }
     }
 }
