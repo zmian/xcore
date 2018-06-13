@@ -100,19 +100,19 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
 
     public override init(frame: CGRect, collectionViewLayout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: collectionViewLayout)
-        commonInit()
+        internalCommonInit()
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit()
+        internalCommonInit()
     }
 
     // MARK: Setup Methods
 
-    private func commonInit() {
+    private func internalCommonInit() {
         setupCollectionView()
-        setupSubviews()
+        commonInit()
     }
 
     /// The default implementation of this method does nothing.
@@ -120,7 +120,7 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
     /// Subclasses can override it to perform additional actions,
     /// for example, add new subviews or configure properties.
     /// This method is called when self is initialized using any of the relevant `init` methods.
-    open func setupSubviews() {}
+    open func commonInit() {}
 
     private func setupCollectionView() {
         delegate             = self

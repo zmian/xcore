@@ -1,5 +1,5 @@
 //
-// HighlightAnimationOptions.swift
+// UICollectionReusableView+Extensions.swift
 //
 // Copyright © 2018 Zeeshan Mian
 //
@@ -24,29 +24,25 @@
 
 import UIKit
 
-public struct HighlightAnimationOptions: OptionSet {
-    public let rawValue: UInt
-    public init(rawValue: UInt) {
-        self.rawValue = rawValue
+// MARK: Background Color Storage
+
+extension UICollectionReusableView {
+    private struct AssociatedKey {
+        static var backgroundColors = "backgroundColors"
     }
 
-    public static let scale = HighlightAnimationOptions(rawValue: 1 << 0)
-    public static let alpha = HighlightAnimationOptions(rawValue: 1 << 1)
-    public static let all: HighlightAnimationOptions = [scale, alpha]
+    private typealias State = UInt
 
-    func animate(_ button: UIButton) {
-        animate(button, isHighlighted: button.isHighlighted)
+    private var backgroundColors: [State: UIColor] {
+        get { return associatedObject(&AssociatedKey.backgroundColors, default: [:]) }
+        set { setAssociatedObject(&AssociatedKey.backgroundColors, value: newValue) }
     }
 
-    public func animate(_ transitionView: UIView, isHighlighted: Bool) {
-        guard !isEmpty else { return }
+    func backgroundColor(for state: UIControlState) -> UIColor? {
+        return backgroundColors[state.rawValue]
+    }
 
-        let transform: CGAffineTransform = contains(.scale) ? (isHighlighted ? .defaultScale : .identity) : transitionView.transform
-        let alpha: CGFloat = contains(.alpha) ? (isHighlighted ? 0.9 : 1) : transitionView.alpha
-
-        UIView.animateFromCurrentState {
-            transitionView.transform = transform
-            transitionView.alpha = alpha
-        }
+    func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControlState) {
+        backgroundColors[state.rawValue] = backgroundColor
     }
 }

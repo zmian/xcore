@@ -127,12 +127,12 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     public override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
-        commonInit()
+        internalCommonInit()
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit()
+        internalCommonInit()
     }
 
     // MARK: isContentCentered
@@ -174,9 +174,9 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     // MARK: Setup Methods
 
-    private func commonInit() {
+    private func internalCommonInit() {
         setupTableView()
-        setupSubviews()
+        commonInit()
     }
 
     /// The default implementation of this method does nothing.
@@ -184,7 +184,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     /// Subclasses can override it to perform additional actions,
     /// for example, add new subviews or configure properties.
     /// This method is called when self is initialized using any of the relevant `init` methods.
-    open func setupSubviews() {}
+    open func commonInit() {}
 
     private func setupTableView() {
         super.delegate      = self

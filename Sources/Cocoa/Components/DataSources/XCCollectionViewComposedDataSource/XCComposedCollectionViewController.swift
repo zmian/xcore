@@ -28,7 +28,7 @@ public let XCCollectionViewFlowLayoutAutomaticSize: CGSize = {
     if #available(iOS 10.0, *) {
         return UICollectionViewFlowLayoutAutomaticSize
     } else {
-        return CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        return CGSize(.greatestFiniteMagnitude)
     }
 }()
 

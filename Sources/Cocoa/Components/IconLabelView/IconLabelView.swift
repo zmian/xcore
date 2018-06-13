@@ -226,7 +226,7 @@ open class IconLabelView: XCView {
 
     // MARK: Setup Methods
 
-    open override func setupSubviews() {
+    open override func commonInit() {
         addSubview(stackView)
 
         NSLayoutConstraint.centerXY(stackView, priority: .defaultLow).activate()

@@ -43,7 +43,7 @@ private class ReorderTableDraggingView: XCView {
         }
     }
 
-    override func setupSubviews() {
+    override func commonInit() {
         isUserInteractionEnabled = false
         addSubview(topShadowImage)
         addSubview(imageView)

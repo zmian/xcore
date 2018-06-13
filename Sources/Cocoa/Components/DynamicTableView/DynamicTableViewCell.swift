@@ -105,12 +105,12 @@ open class DynamicTableViewCell: XCTableViewCell {
 
     /// The background color of the cell when it is highlighted.
     @objc open dynamic var highlightedBackgroundColor: UIColor?
-    private var regularBackgroundColor: UIColor?
+    private var normalBackgroundColor: UIColor?
     private var observeBackgroundColorSetter = true
     open override var backgroundColor: UIColor? {
         didSet {
             if observeBackgroundColorSetter {
-                regularBackgroundColor = backgroundColor
+                normalBackgroundColor = backgroundColor
             }
         }
     }
@@ -133,7 +133,7 @@ open class DynamicTableViewCell: XCTableViewCell {
         if let highlightedBackgroundColor = highlightedBackgroundColor {
             observeBackgroundColorSetter = false
             UIView.animate(withDuration: 0.25, animations: {
-                self.backgroundColor = highlighted ? highlightedBackgroundColor : self.regularBackgroundColor
+                self.backgroundColor = highlighted ? highlightedBackgroundColor : self.normalBackgroundColor
             }, completion: { _ in
                 self.observeBackgroundColorSetter = true
             })
@@ -192,7 +192,7 @@ open class DynamicTableViewCell: XCTableViewCell {
 
     // MARK: Setup Methods
 
-    open override func setupSubviews() {
+    open override func commonInit() {
         clipsToBounds   = true
         backgroundColor = .clear
         separatorInset  = UIEdgeInsets(top: 0, left: padding, bottom: 0, right: 0)
