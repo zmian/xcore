@@ -28,6 +28,7 @@ import Xcore
 final class ButtonsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Buttons"
         view.backgroundColor = .white
         exampleButtonType()
         examplePlainButton()
@@ -48,8 +49,6 @@ final class ButtonsViewController: UIViewController {
     }
 
     private func exampleButtonType() {
-        // UIButtonType when the button is .contactAdd then don't apply any of the custom background color etc
-
         let button = UIButton(type: .contactAdd)
         view.addSubview(button)
 
