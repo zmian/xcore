@@ -51,26 +51,34 @@ extension UIScrollView {
         let delta = (offset - CGFloat(previousIndex) * span) / span
         let fromColor = items.at(previousIndex)?.color ?? .black
         let toColor = items.at(delta > 0 ? previousIndex + 1 : previousIndex - 1)?.color ?? fromColor
-        return .crossFade(from: fromColor, to: toColor, delta: abs(delta))
+        return fromColor.crossFade(to: toColor, delta: abs(delta))
     }
 }
 
 extension UIColor {
-    /// A convenience function to cross fade between two color at given delta.
-    open static func crossFade(from color: UIColor, to theColor: UIColor, delta percentage: CGFloat) -> UIColor {
-        var fromRed: CGFloat = 0.0
-        var fromGreen: CGFloat = 0.0
-        var fromBlue: CGFloat = 0.0
-        var fromAlpha: CGFloat = 0.0
+    /// A convenience function to cross fade to the given color by the specified delta.
+    ///
+    /// - Parameters:
+    ///   - color: The color to which self should cross fade.
+    ///   - percentage: The delta of the cross fade.
+    /// - Returns: An instance of cross faded `UIColor`.
+    open func crossFade(to color: UIColor, delta percentage: CGFloat) -> UIColor {
+        let fromColor = self
+        let toColor = color
 
-        color.getRed(&fromRed, green: &fromGreen, blue: &fromBlue, alpha: &fromAlpha)
+        var fromRed: CGFloat = 0
+        var fromGreen: CGFloat = 0
+        var fromBlue: CGFloat = 0
+        var fromAlpha: CGFloat = 0
 
-        var toRed: CGFloat = 0.0
-        var toGreen: CGFloat = 0.0
-        var toBlue: CGFloat = 0.0
-        var toAlpha: CGFloat = 0.0
+        fromColor.getRed(&fromRed, green: &fromGreen, blue: &fromBlue, alpha: &fromAlpha)
 
-        theColor.getRed(&toRed, green: &toGreen, blue: &toBlue, alpha: &toAlpha)
+        var toRed: CGFloat = 0
+        var toGreen: CGFloat = 0
+        var toBlue: CGFloat = 0
+        var toAlpha: CGFloat = 0
+
+        toColor.getRed(&toRed, green: &toGreen, blue: &toBlue, alpha: &toAlpha)
 
         // Calculate the actual RGBA values of the fade colour
         let red = (toRed - fromRed) * percentage + fromRed;
