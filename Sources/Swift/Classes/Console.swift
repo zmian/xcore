@@ -24,7 +24,7 @@
 
 import Foundation
 
-// swiftlint:disable type_name
+// swiftlint:disable:next type_name
 public final class console {
     /// The default value is `.all`.
     public static var levelOptions: LevelOptions = .all
