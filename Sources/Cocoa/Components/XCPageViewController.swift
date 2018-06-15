@@ -132,7 +132,7 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
         return indexOfCurrentVC < viewControllers.count - 1 ? viewControllers[indexOfCurrentVC + 1] : nil
     }
 
-    open func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController?  {
+    open func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         let indexOfCurrentVC = indexOf(viewController)
         return indexOfCurrentVC > 0 ? viewControllers[indexOfCurrentVC - 1] : nil
     }

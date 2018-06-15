@@ -44,9 +44,9 @@ extension Dictionary {
     public mutating func merge(_ other: Dictionary, strategy: MergingStrategy = .replaceExisting) {
         switch strategy {
             case .replaceExisting:
-                merge(other) { (_, new) in new }
+                merge(other) { _, new in new }
             case .keepExisting:
-                merge(other) { (current, _) in current }
+                merge(other) { current, _ in current }
         }
     }
 
@@ -65,9 +65,9 @@ extension Dictionary {
     public func merging(_ other: Dictionary, strategy: MergingStrategy = .replaceExisting) -> Dictionary {
         switch strategy {
             case .replaceExisting:
-                return merging(other) { (_, new) in new }
+                return merging(other) { _, new in new }
             case .keepExisting:
-                return merging(other) { (current, _) in current }
+                return merging(other) { current, _ in current }
         }
     }
 

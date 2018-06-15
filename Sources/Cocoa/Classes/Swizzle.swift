@@ -32,7 +32,7 @@ import UIKit
 ///         UIViewController.runOnceSwapViewWillAppear()
 ///     }()
 ///
-///     override open var next: UIResponder? {
+///     open override var next: UIResponder? {
 ///         // Called before applicationDidFinishLaunching
 ///         UIApplication.runOnce
 ///         return super.next

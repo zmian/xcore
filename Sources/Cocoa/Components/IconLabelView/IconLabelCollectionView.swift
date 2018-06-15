@@ -25,17 +25,20 @@
 import UIKit
 
 public struct IconLabelCollectionCellOptions: OptionSet {
-    public let rawValue: UInt
-    public init(rawValue: UInt) { self.rawValue = rawValue }
+    public let rawValue: Int
 
-    public static let movable                             = IconLabelCollectionCellOptions(rawValue: 1)
-    public static let deletable                           = IconLabelCollectionCellOptions(rawValue: 2)
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+
+    public static let movable = IconLabelCollectionCellOptions(rawValue: 1 << 0)
+    public static let deletable = IconLabelCollectionCellOptions(rawValue: 1 << 1)
     public static let all: IconLabelCollectionCellOptions = [movable, deletable]
 }
 
 open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
     private var allowReordering: Bool { return cellOptions.contains(.movable) }
-    private var allowDeletion: Bool   { return cellOptions.contains(.deletable) }
+    private var allowDeletion: Bool { return cellOptions.contains(.deletable) }
     private var hasLongPressGestureRecognizer = false
     open var sections: [Section<ImageTitleDisplayable>] = []
     /// The layout used to organize the collection view’s items.
@@ -146,11 +149,11 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
     // MARK: UILongPressGestureRecognizer
 
     private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
-        return UILongPressGestureRecognizer { [weak self] sender in
+        UILongPressGestureRecognizer { [weak self] sender in
             guard
                 let strongSelf = self,
                 sender.state == .began,
-                let _ = strongSelf.indexPathForItem(at: sender.location(in: strongSelf))
+                strongSelf.indexPathForItem(at: sender.location(in: strongSelf)) != nil
             else { return }
 
             strongSelf.isEditing = !strongSelf.isEditing

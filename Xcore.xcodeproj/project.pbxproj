@@ -865,6 +865,7 @@
 				689869C51E99926100CE7B77 /* Frameworks */,
 				689869C61E99926100CE7B77 /* Resources */,
 				A2011E0EF9E7BBCFC1BB51B5 /* [CP] Embed Pods Frameworks */,
+				682098BC20D378D0003B6E8A /* Run SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -1018,6 +1019,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		682098BC20D378D0003B6E8A /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# If SwiftLint isn't installed then exit early.\nif ! which swiftlint >/dev/null; then\n    echo \"error: SwiftLint is not installed, Run 'brew install swiftlint'\"\n    exit 1\nfi\n\n# SwiftLint should have minimum version\ncurrentver=\"$(swiftlint version)\"\nminrequiredver=\"0.25.1\"\n\nif [ \"$(printf '%s\\n' \"$minrequiredver\" \"$currentver\" | sort -V | head -n1)\" = \"$minrequiredver\" ]; then\n    swiftlint\nelse\n    echo \"error: Your SwiftLint version $currentver is outdated. Requires at least version $minrequiredver, Run 'brew upgrade swiftlint'\"\n    exit 1\nfi\n";
 		};
 		A2011E0EF9E7BBCFC1BB51B5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -81,10 +81,10 @@ extension UIColor {
         toColor.getRed(&toRed, green: &toGreen, blue: &toBlue, alpha: &toAlpha)
 
         // Calculate the actual RGBA values of the fade colour
-        let red = (toRed - fromRed) * percentage + fromRed;
-        let green = (toGreen - fromGreen) * percentage + fromGreen;
-        let blue = (toBlue - fromBlue) * percentage + fromBlue;
-        let alpha = (toAlpha - fromAlpha) * percentage + fromAlpha;
+        let red = (toRed - fromRed) * percentage + fromRed
+        let green = (toGreen - fromGreen) * percentage + fromGreen
+        let blue = (toBlue - fromBlue) * percentage + fromBlue
+        let alpha = (toAlpha - fromAlpha) * percentage + fromAlpha
 
         return UIColor(red: red, green: green, blue: blue, alpha: alpha)
     }

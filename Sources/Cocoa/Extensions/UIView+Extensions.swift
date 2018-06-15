@@ -57,7 +57,7 @@ import UIKit
     }
 
     public static func animateFromCurrentState(withDuration duration: TimeInterval = .fast, _ animations: @escaping () -> Void) {
-        animateFromCurrentState(withDuration: duration, animations: animations, completion: {})
+        animateFromCurrentState(withDuration: duration, animations: animations) {}
     }
 
     public static func animateFromCurrentState(withDuration duration: TimeInterval = .fast, animations: @escaping () -> Void, completion: @escaping () -> Void) {

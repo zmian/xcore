@@ -76,11 +76,9 @@ extension Array where Element: Equatable {
     /// - Returns: true if removed; false otherwise
     @discardableResult
     public mutating func remove(_ element: Element) -> Bool {
-        for (index, elementToCompare) in enumerated() {
-            if element == elementToCompare {
-                remove(at: index)
-                return true
-            }
+        for (index, elementToCompare) in enumerated() where element == elementToCompare {
+            remove(at: index)
+            return true
         }
         return false
     }
@@ -123,7 +121,7 @@ extension Array where Element: NSObjectProtocol {
     /// - Returns: The first index where `element` is found. If `element` is not
     ///   found in the collection, returns `nil`.
     public func index(of elementType: Element.Type) -> Int? {
-        return index(where: { $0.isKind(of: elementType) })
+        return index { $0.isKind(of: elementType) }
     }
 
     /// Returns a boolean value indicating whether the sequence contains an element

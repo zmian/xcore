@@ -60,7 +60,6 @@ extension NSObject {
         case typeOf
     }
 
-
     /// - Parameters:
     ///   - aClass: A class object representing the Objective-C class to be tested.
     ///   - comparison: The comparison option to use when comparing `self` to `aClass`.

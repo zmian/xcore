@@ -29,7 +29,7 @@ extension UIImage {
     /// This is great for animations to quickly discard images after use.
     public convenience init?(fileName: String) {
         let name = fileName.stringByDeletingPathExtension
-        let ext  = fileName.pathExtension == "" ? "png" : fileName.pathExtension
+        let ext  = fileName.pathExtension.isEmpty ? "png" : fileName.pathExtension
 
         guard let path = Bundle.main.path(forResource: name, ofType: ext) else {
             return nil

@@ -30,18 +30,29 @@ open class Environment {
 
         public var description: String {
             switch self {
-                case .development: return "Development"
-                case .staging:     return "Staging"
-                case .production:  return "Production"
+                case .development:
+                    return "Development"
+                case .staging:
+                    return "Staging"
+                case .production:
+                    return "Production"
             }
         }
     }
 
-    open var isDevelopment: Bool { return type == .development }
-    open var isStaging: Bool     { return type == .staging }
-    open var isProduction: Bool  { return type == .production }
+    open var isDevelopment: Bool {
+        return type == .development
+    }
 
-    open private(set) var type = EnvironmentType.production // Safest default
+    open var isStaging: Bool {
+        return type == .staging
+    }
+
+    open var isProduction: Bool {
+        return type == .production
+    }
+
+    open private(set) var type: EnvironmentType = .production // Safest default
 
     public init() {
         #if XCORE_ENVIRONMENT_Release

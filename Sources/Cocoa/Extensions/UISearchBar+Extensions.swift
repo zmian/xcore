@@ -103,7 +103,7 @@ extension UISearchBar {
 
             if let placeholderTextColor = placeholderTextColor {
                 textField.attributedPlaceholder = NSAttributedString(string: newValue, attributes: [
-                    .foregroundColor: placeholderTextColor,
+                    .foregroundColor: placeholderTextColor
                 ])
             } else {
                 textField.attributedPlaceholder = NSAttributedString(string: newValue)

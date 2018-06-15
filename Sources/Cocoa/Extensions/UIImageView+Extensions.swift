@@ -48,7 +48,7 @@ extension UIImageView {
     ///   - duration: The animation duration.
     public func createAnimatedImages(_ name: String, _ range: Range<Int>, _ duration: TimeInterval) {
         let prefix = name.stringByDeletingPathExtension
-        let ext = name.pathExtension == "" ? "png" : name.pathExtension
+        let ext = name.pathExtension.isEmpty ? "png" : name.pathExtension
 
         var images: [UIImage] = []
         for i in range.lowerBound..<range.upperBound {

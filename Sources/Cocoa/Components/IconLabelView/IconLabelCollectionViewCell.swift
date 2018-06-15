@@ -95,9 +95,9 @@ open class IconLabelCollectionViewCell: XCCollectionViewCell {
             self.deleteButton.alpha     = 1
             self.deleteButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         }, completion: { _ in
-            UIView.animate(withDuration: 0.2, animations: {
+            UIView.animate(withDuration: 0.2) {
                 self.deleteButton.transform = .identity
-            }) 
+            }
         })
     }
 

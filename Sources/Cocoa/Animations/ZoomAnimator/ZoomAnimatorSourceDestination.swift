@@ -39,10 +39,8 @@ extension ZoomAnimatorSource {
         return 0.35
     }
 
-    public func zoomAnimatorSourceAnimation(animations: @escaping () -> Swift.Void, completion: @escaping (() -> Swift.Void)) {
-        UIView.animate(withDuration: zoomAnimatorSourceDuration, delay: 0, options: .curveEaseInOut, animations: {
-            animations()
-        }) { _ in
+    public func zoomAnimatorSourceAnimation(animations: @escaping () -> Void, completion: @escaping (() -> Void)) {
+        UIView.animate(withDuration: zoomAnimatorSourceDuration, delay: 0, options: .curveEaseInOut, animations: animations) { _ in
             completion()
         }
     }
@@ -78,10 +76,8 @@ extension ZoomAnimatorDestination {
         return 0.35
     }
 
-    public func zoomAnimatorDestinationAnimation(animations: @escaping () -> Swift.Void, completion: @escaping (() -> Swift.Void)) {
-        UIView.animate(withDuration: zoomAnimatorDestinationDuration, delay: 0, options: .curveEaseInOut, animations: {
-            animations()
-        }) { _ in
+    public func zoomAnimatorDestinationAnimation(animations: @escaping () -> Void, completion: @escaping (() -> Void)) {
+        UIView.animate(withDuration: zoomAnimatorDestinationDuration, delay: 0, options: .curveEaseInOut, animations: animations) { _ in
             completion()
         }
     }

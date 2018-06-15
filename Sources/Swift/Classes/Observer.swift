@@ -121,7 +121,7 @@ private final class Observer {
 
 extension Observer: Equatable {
     static func ==(lhs: Observer, rhs: Observer) -> Bool {
-        guard let _ = lhs.owner, let rhsOwner = rhs.owner else {
+        guard lhs.owner != nil, let rhsOwner = rhs.owner else {
             return false
         }
 
