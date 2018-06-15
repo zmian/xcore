@@ -27,17 +27,13 @@ import UIKit
 open class XCCollectionReusableView: UICollectionReusableView {
     private var didTap: (() -> Void)?
 
-    /// A boolean property to provide visual feedback when the
-    /// cell is highlighted. The default value is `.none`.
-    open var highlightedAnimation: HighlightedAnimationOptions = .none
-
     // MARK: Highlighted Background Color
 
-    open var isHighlighted = false {
-        didSet {
-            guard oldValue != isHighlighted else { return }
-            setHighlighted(isHighlighted, animated: true)
-        }
+    open var isHighlighted = false
+
+    @objc open override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        isHighlighted = highlighted
+        super.setHighlighted(highlighted, animated: animated)
     }
 
     // MARK: Init Methods
@@ -66,53 +62,6 @@ open class XCCollectionReusableView: UICollectionReusableView {
     open func commonInit() {}
 }
 
-// MARK: Highlighted Background Color
-
-extension XCCollectionReusableView {
-    /// The background color of the cell for the highlighted state.
-    @objc open dynamic var highlightedBackgroundColor: UIColor? {
-        get { return backgroundColor(for: .highlighted) }
-        set { setBackgroundColor(newValue, for: .highlighted) }
-    }
-
-    /// The background color of the cell for the normal state.
-    private var normalBackgroundColor: UIColor? {
-        get { return backgroundColor(for: .normal) }
-        set { setBackgroundColor(newValue, for: .normal) }
-    }
-
-    private func setHighlighted(_ highlighted: Bool, animated: Bool) {
-        highlightedAnimation.animate(highlightedAnimationView, isHighlighted: highlighted)
-
-        guard let highlightedBackgroundColor = highlightedBackgroundColor else {
-            return
-        }
-
-        // Make sure we always store unhighlighted background color so we can later restore it.
-        if highlightedBackgroundColor != highlightedBackgroundColorView.backgroundColor {
-            normalBackgroundColor = highlightedBackgroundColorView.backgroundColor
-        }
-
-        let newBackgroundColor = highlighted ? highlightedBackgroundColor : normalBackgroundColor
-
-        UIView.animateFromCurrentState(withDuration: animated ? 0.15 : 0) {
-            self.highlightedBackgroundColorView.backgroundColor = newBackgroundColor
-        }
-    }
-
-    /// The view to which the `highlightedBackgroundColor` is applied.
-    /// The default value is `self`.
-    @objc open var highlightedBackgroundColorView: UIView {
-        return self
-    }
-
-    /// The view to which the `highlightedAnimation` is applied.
-    /// The default value is `self`.
-    @objc open var highlightedAnimationView: UIView {
-        return self
-    }
-}
-
 // MARK: Touches
 
 extension XCCollectionReusableView {
@@ -124,16 +73,8 @@ extension XCCollectionReusableView {
         didTap = callback
     }
 
-    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        isHighlighted = true
-    }
-
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        isHighlighted = false
+        super.touchesEnded(touches, with: event)
         didTap?()
-    }
-
-    open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        isHighlighted = false
     }
 }
