@@ -26,7 +26,7 @@ import UIKit
 
 open class DynamicTableViewController: UIViewController {
     private var tableViewConstraints = [NSLayoutConstraint]()
-    open private(set) lazy var tableView: DynamicTableView = DynamicTableView(style: self.style, options: self.cellOptions)
+    open private(set) lazy var tableView = DynamicTableView(style: self.style, options: self.cellOptions)
     /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
     open var style: UITableViewStyle = .plain
     open var cellOptions: DynamicTableCellOptions = [] {

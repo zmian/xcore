@@ -98,7 +98,7 @@ public final class Request {
 
     private static func request(_ method: Method, url: URL, body: [String: Any]? = nil, accessToken: String? = nil, headers: [String: String]? = nil, callback: @escaping (_ response: Response) -> Void) {
         var headers = headers ?? [:]
-        if let accessToken = accessToken , headers["Authorization"] == nil {
+        if let accessToken = accessToken, headers["Authorization"] == nil {
             headers["Authorization"] = "Bearer \(accessToken)"
         }
         let request = URLRequest.jsonRequest(method, url: url, body: body, headers: headers)
@@ -107,7 +107,7 @@ public final class Request {
 
     public static func request(_ method: Method, url: URL, body: Data? = nil, accessToken: String? = nil, headers: [String: String]? = nil, callback: @escaping (_ response: Response) -> Void) {
         var headers = headers ?? [:]
-        if let accessToken = accessToken , headers["Authorization"] == nil {
+        if let accessToken = accessToken, headers["Authorization"] == nil {
             headers["Authorization"] = "Bearer \(accessToken)"
         }
         let request = URLRequest(method: method, url: url, body: body, headers: headers)

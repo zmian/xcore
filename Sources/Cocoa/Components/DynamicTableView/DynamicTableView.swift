@@ -26,7 +26,7 @@ import UIKit
 
 open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewDataSource {
     private var allowReordering: Bool { return cellOptions.contains(.movable) }
-    private var allowDeletion: Bool   { return cellOptions.contains(.deletable) }
+    private var allowDeletion: Bool { return cellOptions.contains(.deletable) }
     open var sections: [Section<DynamicTableModel>] = []
     open var cellOptions: DynamicTableCellOptions = [] {
         didSet { isReorderingEnabled = allowReordering }

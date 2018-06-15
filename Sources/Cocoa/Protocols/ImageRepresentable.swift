@@ -24,7 +24,7 @@
 
 import UIKit
 
-public enum ImageSourceType  {
+public enum ImageSourceType {
     case url(String)
     case uiImage
 }

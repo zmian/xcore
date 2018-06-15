@@ -28,7 +28,7 @@ open class DynamicTableViewCell: XCTableViewCell {
     private var data: DynamicTableModel!
     private let padding: CGFloat = 15
     private var imageAndTitleSpacingConstraint: NSLayoutConstraint?
-    private var imageSizeConstraints: (width: NSLayoutConstraint?,  height: NSLayoutConstraint?)
+    private var imageSizeConstraints: (width: NSLayoutConstraint?, height: NSLayoutConstraint?)
     private var contentConstraints: (top: NSLayoutConstraint?, left: NSLayoutConstraint?, bottom: NSLayoutConstraint?, right: NSLayoutConstraint?)
     private var minimumContentHeightConstraint: NSLayoutConstraint?
     private var labelsStackViewConstraints: (top: NSLayoutConstraint?, bottom: NSLayoutConstraint?)

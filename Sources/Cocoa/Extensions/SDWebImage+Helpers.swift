@@ -37,7 +37,7 @@ extension UIImageView {
         }
 
         if let url = URL(string: named), url.host != nil {
-            self.sd_setImage(with: url) { [weak self] (image, _, cacheType, _) in
+            self.sd_setImage(with: url) { [weak self] image, _, cacheType, _ in
                 guard let image = image else {
                     DispatchQueue.main.async {
                         callback?(nil)

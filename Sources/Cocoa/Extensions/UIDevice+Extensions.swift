@@ -26,6 +26,7 @@ import UIKit
 import LocalAuthentication
 
 extension UIDevice {
+    // swiftlint:disable opening_brace
     public struct ScreenSize {
         public static var width: CGFloat     { return UIScreen.main.bounds.width }
         public static var height: CGFloat    { return UIScreen.main.bounds.height }
@@ -44,13 +45,14 @@ extension UIDevice {
         public static var iPhone: Bool        { return UIDevice.current.userInterfaceIdiom == .phone }
         public static var iPad: Bool          { return UIDevice.current.userInterfaceIdiom == .pad }
     }
+    // swiftlint:enable opening_brace
 
     public struct SystemVersion {
         public static let iOS8OrGreater = floor(NSFoundationVersionNumber) > floor(NSFoundationVersionNumber_iOS_7_0)
         public static let iOS7OrLess    = floor(NSFoundationVersionNumber) <= floor(NSFoundationVersionNumber_iOS_7_0)
 
         public static func lessThanOrEqual(_ string: String) -> Bool {
-            return  UIDevice.current.systemVersion.compare(string, options: .numeric) == .orderedAscending
+            return UIDevice.current.systemVersion.compare(string, options: .numeric) == .orderedAscending
         }
 
         public static func greaterThanOrEqual(_ string: String) -> Bool {
@@ -58,7 +60,7 @@ extension UIDevice {
         }
 
         public static func equal(_ string: String) -> Bool {
-            return  UIDevice.current.systemVersion.compare(string, options: .numeric) == .orderedSame
+            return UIDevice.current.systemVersion.compare(string, options: .numeric) == .orderedSame
         }
     }
 }

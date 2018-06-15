@@ -25,9 +25,9 @@
 import UIKit
 
 public protocol ImageTitleDisplayable {
-    var title: StringRepresentable  { get }
+    var title: StringRepresentable { get }
     var subtitle: StringRepresentable? { get }
-    var image: ImageRepresentable?  { get }
+    var image: ImageRepresentable? { get }
 }
 
 extension ImageTitleDisplayable {

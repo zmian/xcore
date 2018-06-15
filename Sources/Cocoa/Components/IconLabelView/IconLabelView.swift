@@ -74,7 +74,7 @@ open class IconLabelView: XCView {
                 labelsWidthConstraints.deactivate()
             } else {
                 if labelsWidthConstraints.isEmpty {
-                    labelsWidthConstraints.append(NSLayoutConstraint(item: titleLabel,    width: labelsWidth))
+                    labelsWidthConstraints.append(NSLayoutConstraint(item: titleLabel, width: labelsWidth))
                     labelsWidthConstraints.append(NSLayoutConstraint(item: subtitleLabel, width: labelsWidth))
                 }
                 labelsWidthConstraints.forEach {

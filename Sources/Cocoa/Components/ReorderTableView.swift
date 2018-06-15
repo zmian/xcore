@@ -59,8 +59,8 @@ private class ReorderTableDraggingView: XCView {
         NSLayoutConstraint(item: bottomShadowImage, height: shadowHeight).activate()
 
         NSLayoutConstraint.constraints(withVisualFormat: "V:[topShadowImage][imageView]-(-1)-[bottomShadowImage]", options: [], metrics: nil, views: [
-            "topShadowImage":    topShadowImage,
-            "imageView":         imageView,
+            "topShadowImage": topShadowImage,
+            "imageView": imageView,
             "bottomShadowImage": bottomShadowImage
         ]).activate()
     }
@@ -90,7 +90,7 @@ open class ReorderTableView: UITableView {
     private var initialIndexPath: IndexPath?
     private var savedObject: Any?
     private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
-        return UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
     }()
 
     open weak var reorderDelegate: ReorderTableViewDelegate?
@@ -143,7 +143,7 @@ open class ReorderTableView: UITableView {
         let newHeight    = rectForRow(at: indexPath).size.height
         let cellLocation = gesture.location(in: cellForRow(at: indexPath))
 
-        if (indexPath != currentLocationIndexPath && cellLocation.y > newHeight - oldHeight) {
+        if indexPath != currentLocationIndexPath && cellLocation.y > newHeight - oldHeight {
             beginUpdates()
             deleteRows(at: [currentLocationIndexPath], with: .automatic)
             insertRows(at: [indexPath], with: .automatic)
@@ -174,13 +174,13 @@ open class ReorderTableView: UITableView {
             newOffset.y = -contentInset.top
         } else if contentSize.height + contentInset.bottom < frame.size.height {
             newOffset = currentOffset
-        } else if (newOffset.y > (contentSize.height + contentInset.bottom) - frame.size.height) {
+        } else if newOffset.y > (contentSize.height + contentInset.bottom) - frame.size.height {
             newOffset.y = (contentSize.height + contentInset.bottom) - frame.size.height
         }
 
         contentOffset = newOffset
 
-        if (location.y >= 0 && location.y <= contentSize.height + 50) {
+        if location.y >= 0 && location.y <= contentSize.height + 50 {
             draggingView.center = CGPoint(x: center.x, y: location.y)
         }
 
@@ -255,7 +255,7 @@ open class ReorderTableView: UITableView {
             self.initialIndexPath = indexPath
             endUpdates()
 
-            // enable scrolling for cell
+            // Enable scrolling for cell
             scrollDisplayLink = CADisplayLink(target: self, selector: #selector(scrollTableWithCell(_:)))
             scrollDisplayLink?.add(to: .main, forMode: .defaultRunLoopMode)
         }
@@ -267,31 +267,30 @@ open class ReorderTableView: UITableView {
                 return
             }
 
-            // update position of the drag view
+            // Update position of the drag view
             // don't let it go past the top or the bottom too far
-            if (location.y >= 0 && location.y <= contentSize.height + 50) {
+            if location.y >= 0 && location.y <= contentSize.height + 50 {
                 draggingView.center = CGPoint(x: center.x, y: location.y)
             }
 
-            // adjust rect for content inset as we will use it below for calculating scroll zones
+            // Adjust rect for content inset as we will use it below for calculating scroll zones
             var rect = bounds
             rect.size.height -= contentInset.top
             updateCurrentLocation(gesture)
 
-            // tell us if we should scroll and which direction
+            // Tell us if we should scroll and which direction
             let scrollZoneHeight = rect.size.height / 6
             let bottomScrollBeginning = contentOffset.y + contentInset.top + rect.size.height - scrollZoneHeight
             let topScrollBeginning = contentOffset.y + contentInset.top  + scrollZoneHeight
 
-            // we're in the bottom zone
-            if (location.y >= bottomScrollBeginning) {
+            // We're in the bottom zone
+            if location.y >= bottomScrollBeginning {
                 scrollRate = (location.y - bottomScrollBeginning) / scrollZoneHeight
             }
-            // we're in the top zone
-            else if (location.y <= topScrollBeginning) {
+            // We're in the top zone
+            else if location.y <= topScrollBeginning {
                 scrollRate = (location.y - topScrollBeginning) / scrollZoneHeight
-            }
-            else {
+            } else {
                 scrollRate = 0
             }
         }
@@ -302,12 +301,12 @@ open class ReorderTableView: UITableView {
                 return
             }
 
-            // remove scrolling CADisplayLink
+            // Remove scrolling CADisplayLink
             scrollDisplayLink?.invalidate()
             scrollDisplayLink = nil
             scrollRate = 0
 
-            // animate the drag view to the newly hovered cell
+            // Animate the drag view to the newly hovered cell
             UIView.animate(withDuration: 0.3, animations: { [weak self] in
                 guard let strongSelf = self else { return }
                 let rect = strongSelf.rectForRow(at: indexPath)

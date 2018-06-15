@@ -34,21 +34,24 @@ public enum DynamicTableAccessoryType {
 }
 
 public struct DynamicTableCellOptions: OptionSet {
-    public let rawValue: UInt
-    public init(rawValue: UInt) { self.rawValue = rawValue }
+    public let rawValue: Int
 
-    public static let movable                      = DynamicTableCellOptions(rawValue: 1)
-    public static let deletable                    = DynamicTableCellOptions(rawValue: 2)
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+
+    public static let movable = DynamicTableCellOptions(rawValue: 0 << 1)
+    public static let deletable = DynamicTableCellOptions(rawValue: 2)
     public static let all: DynamicTableCellOptions = [movable, deletable]
 }
 
 public struct DynamicTableModel {
-    public var title: StringRepresentable?          = nil
-    public var subtitle: StringRepresentable?       = nil
-    public var image: ImageRepresentable?           = nil
+    public var title: StringRepresentable?
+    public var subtitle: StringRepresentable?
+    public var image: ImageRepresentable?
     public var accessory: DynamicTableAccessoryType = .none
-    public var userInfo: [AnyHashable: Any]         = [:]
-    public var handler: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)? = nil
+    public var userInfo: [AnyHashable: Any] = [:]
+    public var handler: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)?
 
     public init(title: StringRepresentable? = nil, subtitle: StringRepresentable? = nil, image: ImageRepresentable? = nil, accessory: DynamicTableAccessoryType = .none, userInfo: [AnyHashable: Any] = [:], handler: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)? = nil) {
         self.title     = title
@@ -63,7 +66,7 @@ public struct DynamicTableModel {
 // MARK: DynamicTableModelDisplayable
 // TODO: WIP Make the model genric so any class can conform to it.
 
-//private protocol DynamicTableModelDisplayable {
+// private protocol DynamicTableModelDisplayable {
 //    typealias Model: DynamicTableModelDisplayable
 //
 //    var title: StringRepresentable? { get }
@@ -74,7 +77,7 @@ public struct DynamicTableModel {
 //    var handler: ((indexPath: IndexPath, item: Model) -> Void)? { get }
 //}
 //
-//extension DynamicTableModelDisplayable {
+// extension DynamicTableModelDisplayable {
 //    var title: StringRepresentable? { return nil }
 //    var subtitle: StringRepresentable? { return nil }
 //    var image: ImageRepresentable? { return nil }

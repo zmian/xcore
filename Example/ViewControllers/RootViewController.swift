@@ -31,9 +31,9 @@ final class RootViewController: DynamicTableViewController {
 
         tableView.sections = [
             Section(
-                title:  "Components",
+                title: "Components",
                 detail: "A demonstration of components included in Xcore.",
-                items:  [
+                items: [
                     DynamicTableModel(title: "Dynamic Table View", subtitle: "Data-driven table view") { [weak self] _, _ in
                         let vc = ExampleDynamicTableViewController()
                         self?.navigationController?.pushViewController(vc, animated: true)

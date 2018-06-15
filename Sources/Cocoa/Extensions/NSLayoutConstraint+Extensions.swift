@@ -25,13 +25,14 @@
 import UIKit
 
 public struct LayoutGuideOptions: OptionSet {
-    public let rawValue: UInt
-    public init(rawValue: UInt) {
+    public let rawValue: Int
+
+    public init(rawValue: Int) {
         self.rawValue = rawValue
     }
 
-    public static let top                      = LayoutGuideOptions(rawValue: 1)
-    public static let bottom                   = LayoutGuideOptions(rawValue: 2)
+    public static let top = LayoutGuideOptions(rawValue: 1 << 0)
+    public static let bottom = LayoutGuideOptions(rawValue: 1 << 1)
     public static let both: LayoutGuideOptions = [top, bottom]
 }
 
@@ -147,20 +148,20 @@ extension UIViewController {
 
         return [
             NSLayoutConstraint(
-                item:      viewToSize,
+                item: viewToSize,
                 attribute: .top,
-                toItem:    isTopLayoutGuide ? topLayoutGuide : view,
+                toItem: isTopLayoutGuide ? topLayoutGuide : view,
                 attribute: isTopLayoutGuide ? .bottom : .top,
-                constant:  paddingTop,
-                priority:  priority
+                constant: paddingTop,
+                priority: priority
             ),
             NSLayoutConstraint(
-                item:      isBottomLayoutGuide ? bottomLayoutGuide : view,
+                item: isBottomLayoutGuide ? bottomLayoutGuide : view,
                 attribute: isBottomLayoutGuide ? .top : .bottom,
-                toItem:    viewToSize,
+                toItem: viewToSize,
                 attribute: .bottom,
-                constant:  paddingBottom,
-                priority:  priority
+                constant: paddingBottom,
+                priority: priority
             )
         ]
     }

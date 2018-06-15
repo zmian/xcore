@@ -39,7 +39,7 @@ public final class SwizzleManager {
     /// **Usage 1**
     /// ```swift
     /// extension UIApplication {
-    ///     override open var next: UIResponder? {
+    ///     open override var next: UIResponder? {
     ///         // Called before applicationDidFinishLaunching
     ///         SwizzleManager.start()
     ///         return super.next
@@ -51,7 +51,7 @@ public final class SwizzleManager {
     /// With an option to provide additional selectors.
     /// ```swift
     /// extension UIApplication {
-    ///     override open var next: UIResponder? {
+    ///     open override var next: UIResponder? {
     ///         // Called before applicationDidFinishLaunching
     ///         SwizzleManager.start([
     ///             UIViewController.runOnceSwapSelectors

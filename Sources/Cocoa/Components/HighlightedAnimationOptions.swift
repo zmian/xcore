@@ -25,8 +25,9 @@
 import UIKit
 
 public struct HighlightedAnimationOptions: OptionSet {
-    public let rawValue: UInt
-    public init(rawValue: UInt) {
+    public let rawValue: Int
+
+    public init(rawValue: Int) {
         self.rawValue = rawValue
     }
 

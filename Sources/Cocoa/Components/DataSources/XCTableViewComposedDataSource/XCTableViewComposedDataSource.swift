@@ -83,7 +83,7 @@ extension XCTableViewComposedDataSource {
 
     open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.tableView(tableView, numberOfRowsInSection:localSection)
+        return dataSource.tableView(tableView, numberOfRowsInSection: localSection)
     }
 
     open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -40,7 +40,7 @@ extension UIImageView {
 }
 
 extension UIImageView {
-    override open var bounds: CGRect {
+    open override var bounds: CGRect {
         didSet {
             adjustContentModeIfNeeded()
         }
