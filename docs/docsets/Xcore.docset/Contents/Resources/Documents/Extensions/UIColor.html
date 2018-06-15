@@ -14,7 +14,7 @@
     <a title="UIColor Extension Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Xcore Docs</a> (30% documented)</p>
+        <p><a href="../index.html">Xcore Docs</a> (31% documented)</p>
         <p class="header-right"><a href="https://github.com/zmian/xcore.swift"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fzmian%2Fdocsets%2FXcore%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -1043,9 +1043,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:So7UIColorC5XcoreE9crossFadeA2B4from_AB2to12CoreGraphics7CGFloatV5deltatFZ"></a>
-                    <a name="//apple_ref/swift/Method/crossFade(from:to:delta:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:So7UIColorC5XcoreE9crossFadeA2B4from_AB2to12CoreGraphics7CGFloatV5deltatFZ">crossFade(from:to:delta:)</a>
+                    <a name="/s:So7UIColorC5XcoreE9crossFadeA2B2to_12CoreGraphics7CGFloatV5deltatF"></a>
+                    <a name="//apple_ref/swift/Method/crossFade(to:delta:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So7UIColorC5XcoreE9crossFadeA2B2to_12CoreGraphics7CGFloatV5deltatF">crossFade(to:delta:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1053,19 +1053,54 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A convenience function to cross fade between two color at given delta.</p>
+                        <p>A convenience function to cross fade to the given color by the specified delta.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">crossFade</span><span class="p">(</span><span class="n">from</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">,</span> <span class="n">to</span> <span class="nv">theColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">,</span> <span class="n">delta</span> <span class="nv">percentage</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIColor</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">crossFade</span><span class="p">(</span><span class="n">to</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">,</span> <span class="n">delta</span> <span class="nv">percentage</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIColor</span></code></pre>
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>color</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The color to which self should cross fade.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>percentage</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The delta of the cross fade.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An instance of cross faded <code>UIColor</code>.</p>
+                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Protocols/Colorable.swift#L60-L82">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Protocols/Colorable.swift#L65-L90">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1075,7 +1110,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-06-13)</p>
+          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-06-15)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

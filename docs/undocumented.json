@@ -6211,14 +6211,7 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIViewController+Extensions.swift",
-      "line": 97,
-      "symbol": "UIViewController.isPresented",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIViewController+Extensions.swift",
-      "line": 106,
+      "line": 108,
       "symbol": "UIViewController.isInterfaceLandscape",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
