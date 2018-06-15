@@ -249,9 +249,6 @@
                 <a href="../Extensions/CGFloat.html">CGFloat</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Extensions/CGFloat.html">CGFloat</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Extensions/CGSize.html">CGSize</a>
               </li>
               <li class="nav-group-task">
@@ -718,7 +715,7 @@ Place any one of the snippet in your app:</p>
 
 <p><strong>Usage 1</strong></p>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">UIApplication</span> <span class="p">{</span>
-    <span class="k">override</span> <span class="kd">open</span> <span class="k">var</span> <span class="nv">next</span><span class="p">:</span> <span class="kt">UIResponder</span><span class="p">?</span> <span class="p">{</span>
+    <span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">next</span><span class="p">:</span> <span class="kt">UIResponder</span><span class="p">?</span> <span class="p">{</span>
         <span class="c1">// Called before applicationDidFinishLaunching</span>
         <span class="kt">SwizzleManager</span><span class="o">.</span><span class="nf">start</span><span class="p">()</span>
         <span class="k">return</span> <span class="k">super</span><span class="o">.</span><span class="n">next</span>
@@ -729,7 +726,7 @@ Place any one of the snippet in your app:</p>
 <p><strong>Usage 2</strong>
 With an option to provide additional selectors.</p>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">UIApplication</span> <span class="p">{</span>
-    <span class="k">override</span> <span class="kd">open</span> <span class="k">var</span> <span class="nv">next</span><span class="p">:</span> <span class="kt">UIResponder</span><span class="p">?</span> <span class="p">{</span>
+    <span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">next</span><span class="p">:</span> <span class="kt">UIResponder</span><span class="p">?</span> <span class="p">{</span>
         <span class="c1">// Called before applicationDidFinishLaunching</span>
         <span class="kt">SwizzleManager</span><span class="o">.</span><span class="nf">start</span><span class="p">([</span>
             <span class="kt">UIViewController</span><span class="o">.</span><span class="n">runOnceSwapSelectors</span>

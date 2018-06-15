@@ -352,63 +352,63 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
-      "line": 52,
+      "line": 50,
       "symbol": "ZoomAnimatorSource.zoomAnimatorSourceViewFrame(direction:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
-      "line": 57,
+      "line": 55,
       "symbol": "ZoomAnimatorSource.zoomAnimatorSourceStateChanged(state:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
-      "line": 69,
+      "line": 67,
       "symbol": "ZoomAnimatorDestination",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
-      "line": 70,
+      "line": 68,
       "symbol": "ZoomAnimatorDestination.zoomAnimatorDestinationViewFrame(direction:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
-      "line": 71,
+      "line": 69,
       "symbol": "ZoomAnimatorDestination.zoomAnimatorDestinationStateChanged(state:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
-      "line": 72,
+      "line": 70,
       "symbol": "ZoomAnimatorDestination.zoomAnimatorDestinationAnimation(animations:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
-      "line": 73,
+      "line": 71,
       "symbol": "ZoomAnimatorDestination.zoomAnimatorDestinationDuration",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
-      "line": 77,
+      "line": 75,
       "symbol": "ZoomAnimatorDestination.zoomAnimatorDestinationDuration",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Animations/ZoomAnimator/ZoomAnimatorSourceDestination.swift",
-      "line": 81,
+      "line": 79,
       "symbol": "ZoomAnimatorDestination.zoomAnimatorDestinationAnimation(animations:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -625,63 +625,63 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/Environment.swift",
-      "line": 40,
+      "line": 43,
       "symbol": "Environment.isDevelopment",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/Environment.swift",
-      "line": 41,
+      "line": 47,
       "symbol": "Environment.isStaging",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/Environment.swift",
-      "line": 42,
+      "line": 51,
       "symbol": "Environment.isProduction",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/Environment.swift",
-      "line": 44,
+      "line": 55,
       "symbol": "Environment.type",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/Environment.swift",
-      "line": 46,
+      "line": 57,
       "symbol": "Environment.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/Environment.swift",
-      "line": 67,
+      "line": 78,
       "symbol": "Environment.setupSharedEnvironment()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/Environment.swift",
-      "line": 68,
+      "line": 79,
       "symbol": "Environment.setupDevelopment()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/Environment.swift",
-      "line": 69,
+      "line": 80,
       "symbol": "Environment.setupStaging()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/Environment.swift",
-      "line": 70,
+      "line": 81,
       "symbol": "Environment.setupProduction()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -2816,77 +2816,77 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewTypes.swift",
-      "line": 40,
+      "line": 43,
       "symbol": "DynamicTableCellOptions.movable",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewTypes.swift",
-      "line": 41,
+      "line": 44,
       "symbol": "DynamicTableCellOptions.deletable",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewTypes.swift",
-      "line": 42,
+      "line": 45,
       "symbol": "DynamicTableCellOptions.all",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewTypes.swift",
-      "line": 45,
+      "line": 48,
       "symbol": "DynamicTableModel",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewTypes.swift",
-      "line": 46,
+      "line": 49,
       "symbol": "DynamicTableModel.title",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewTypes.swift",
-      "line": 47,
+      "line": 50,
       "symbol": "DynamicTableModel.subtitle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewTypes.swift",
-      "line": 48,
+      "line": 51,
       "symbol": "DynamicTableModel.image",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewTypes.swift",
-      "line": 49,
+      "line": 52,
       "symbol": "DynamicTableModel.accessory",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewTypes.swift",
-      "line": 50,
+      "line": 53,
       "symbol": "DynamicTableModel.userInfo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewTypes.swift",
-      "line": 51,
+      "line": 54,
       "symbol": "DynamicTableModel.handler",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewTypes.swift",
-      "line": 53,
+      "line": 56,
       "symbol": "DynamicTableModel.init(title:subtitle:image:accessory:userInfo:handler:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -2900,35 +2900,35 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HighlightedAnimationOptions.swift",
-      "line": 33,
+      "line": 34,
       "symbol": "HighlightedAnimationOptions.scale",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HighlightedAnimationOptions.swift",
-      "line": 34,
+      "line": 35,
       "symbol": "HighlightedAnimationOptions.alpha",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HighlightedAnimationOptions.swift",
-      "line": 35,
+      "line": 36,
       "symbol": "HighlightedAnimationOptions.all",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HighlightedAnimationOptions.swift",
-      "line": 36,
+      "line": 37,
       "symbol": "HighlightedAnimationOptions.none",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HighlightedAnimationOptions.swift",
-      "line": 42,
+      "line": 43,
       "symbol": "HighlightedAnimationOptions.animate(_:isHighlighted:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -2942,168 +2942,168 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 31,
+      "line": 34,
       "symbol": "IconLabelCollectionCellOptions.movable",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 32,
+      "line": 35,
       "symbol": "IconLabelCollectionCellOptions.deletable",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 33,
+      "line": 36,
       "symbol": "IconLabelCollectionCellOptions.all",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 36,
+      "line": 39,
       "symbol": "IconLabelCollectionView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 40,
+      "line": 43,
       "symbol": "IconLabelCollectionView.sections",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 45,
+      "line": 48,
       "symbol": "IconLabelCollectionView.cellOptions",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 49,
+      "line": 52,
       "symbol": "IconLabelCollectionView.isEditing",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 67,
+      "line": 70,
       "symbol": "IconLabelCollectionView.configureCell(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 72,
+      "line": 75,
       "symbol": "IconLabelCollectionView.didSelectItem(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 77,
+      "line": 80,
       "symbol": "IconLabelCollectionView.didRemoveItem(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 82,
+      "line": 85,
       "symbol": "IconLabelCollectionView.didMoveItem(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 88,
+      "line": 91,
       "symbol": "IconLabelCollectionView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 92,
+      "line": 95,
       "symbol": "IconLabelCollectionView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 96,
+      "line": 99,
       "symbol": "IconLabelCollectionView.init(frame:collectionViewLayout:options:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 101,
+      "line": 104,
       "symbol": "IconLabelCollectionView.init(frame:collectionViewLayout:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 106,
+      "line": 109,
       "symbol": "IconLabelCollectionView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 141,
+      "line": 144,
       "symbol": "IconLabelCollectionView.reloadData()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 173,
+      "line": 176,
       "symbol": "IconLabelCollectionView.numberOfSections(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 177,
+      "line": 180,
       "symbol": "IconLabelCollectionView.collectionView(_:numberOfItemsInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 181,
+      "line": 184,
       "symbol": "IconLabelCollectionView.collectionView(_:cellForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 193,
+      "line": 196,
       "symbol": "IconLabelCollectionView.collectionView(_:didSelectItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 199,
+      "line": 202,
       "symbol": "IconLabelCollectionView.collectionView(_:willDisplay:forItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 206,
+      "line": 209,
       "symbol": "IconLabelCollectionView.collectionView(_:canMoveItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionView.swift",
-      "line": 210,
+      "line": 213,
       "symbol": "IconLabelCollectionView.collectionView(_:moveItemAt:to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -3145,7 +3145,7 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelCollectionViewController.swift",
-      "line": 37,
+      "line": 35,
       "symbol": "IconLabelCollectionViewController.viewDidLoad()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -4405,119 +4405,119 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 33,
+      "line": 34,
       "symbol": "LayoutGuideOptions.top",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 34,
+      "line": 35,
       "symbol": "LayoutGuideOptions.bottom",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 35,
+      "line": 36,
       "symbol": "LayoutGuideOptions.both",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 42,
+      "line": 43,
       "symbol": "NSLayoutConstraint.init(item:attribute:relatedBy:toItem:attribute:multiplier:constant:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 48,
+      "line": 49,
       "symbol": "NSLayoutConstraint.init(item:aspectRatio:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 53,
+      "line": 54,
       "symbol": "NSLayoutConstraint.init(item:width:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 58,
+      "line": 59,
       "symbol": "NSLayoutConstraint.init(item:height:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 65,
+      "line": 66,
       "symbol": "NSLayoutConstraint.size(_:size:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 73,
+      "line": 74,
       "symbol": "NSLayoutConstraint.centerX(_:relatedBy:toView:offset:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 79,
+      "line": 80,
       "symbol": "NSLayoutConstraint.centerY(_:relatedBy:toView:offset:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 85,
+      "line": 86,
       "symbol": "NSLayoutConstraint.centerXY(_:relatedBy:toView:offset:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 92,
+      "line": 93,
       "symbol": "NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(_:paddingLeft:paddingRight:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 99,
+      "line": 100,
       "symbol": "NSLayoutConstraint.constraintsForViewToFillSuperviewVertical(_:paddingTop:paddingBottom:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 106,
+      "line": 107,
       "symbol": "NSLayoutConstraint.constraintsForViewToFillSuperview(_:padding:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 117,
+      "line": 118,
       "symbol": "NSLayoutConstraint.constraintsForViewToFillLayoutGuide(_:guide:padding:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 136,
+      "line": 137,
       "symbol": "UIViewController.constraintsForViewToFillSuperview(_:padding:constraintToLayoutGuideOptions:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSLayoutConstraint+Extensions.swift",
-      "line": 142,
+      "line": 143,
       "symbol": "UIViewController.constraintsForViewToFillSuperviewVertical(_:paddingTop:paddingBottom:constraintToLayoutGuideOptions:priority:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -4881,147 +4881,147 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 29,
+      "line": 30,
       "symbol": "UIDevice.ScreenSize",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 30,
+      "line": 31,
       "symbol": "UIDevice.ScreenSize.width",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 31,
+      "line": 32,
       "symbol": "UIDevice.ScreenSize.height",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 32,
+      "line": 33,
       "symbol": "UIDevice.ScreenSize.minLength",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 33,
+      "line": 34,
       "symbol": "UIDevice.ScreenSize.maxLength",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 36,
+      "line": 37,
       "symbol": "UIDevice.DeviceType",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 37,
+      "line": 38,
       "symbol": "UIDevice.DeviceType.iPhone4OrLess",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 38,
+      "line": 39,
       "symbol": "UIDevice.DeviceType.iPhone5OrLess",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 39,
+      "line": 40,
       "symbol": "UIDevice.DeviceType.iPhone5",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 40,
+      "line": 41,
       "symbol": "UIDevice.DeviceType.iPhone6",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 41,
+      "line": 42,
       "symbol": "UIDevice.DeviceType.iPhone6Plus",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 42,
+      "line": 43,
       "symbol": "UIDevice.DeviceType.iPhoneX",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 43,
+      "line": 44,
       "symbol": "UIDevice.DeviceType.Simulator",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 44,
+      "line": 45,
       "symbol": "UIDevice.DeviceType.iPhone",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 45,
+      "line": 46,
       "symbol": "UIDevice.DeviceType.iPad",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 48,
+      "line": 50,
       "symbol": "UIDevice.SystemVersion",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 49,
+      "line": 51,
       "symbol": "UIDevice.SystemVersion.iOS8OrGreater",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 50,
+      "line": 52,
       "symbol": "UIDevice.SystemVersion.iOS7OrLess",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 52,
+      "line": 54,
       "symbol": "UIDevice.SystemVersion.lessThanOrEqual(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 56,
+      "line": 58,
       "symbol": "UIDevice.SystemVersion.greaterThanOrEqual(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Extensions.swift",
-      "line": 60,
+      "line": 62,
       "symbol": "UIDevice.SystemVersion.equal(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
@@ -6715,98 +6715,98 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 27,
+      "line": 28,
       "symbol": "console",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 188,
+      "line": 189,
       "symbol": "console.LevelOptions.debug",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 189,
+      "line": 190,
       "symbol": "console.LevelOptions.info",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 190,
+      "line": 191,
       "symbol": "console.LevelOptions.warn",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 191,
+      "line": 192,
       "symbol": "console.LevelOptions.error",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 192,
+      "line": 193,
       "symbol": "console.LevelOptions.none",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 193,
+      "line": 194,
       "symbol": "console.LevelOptions.all",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 219,
+      "line": 220,
       "symbol": "console.PrefixOptions.className",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 220,
+      "line": 221,
       "symbol": "console.PrefixOptions.functionName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 221,
+      "line": 222,
       "symbol": "console.PrefixOptions.lineNumber",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 222,
+      "line": 223,
       "symbol": "console.PrefixOptions.date",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 223,
+      "line": 224,
       "symbol": "console.PrefixOptions.none",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 224,
+      "line": 225,
       "symbol": "console.PrefixOptions.all",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 225,
+      "line": 226,
       "symbol": "console.PrefixOptions.basic",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
