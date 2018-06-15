@@ -3663,13 +3663,6 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCCollectionReusableView.swift",
-      "line": null,
-      "symbol": "XCCollectionReusableView",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCCollectionReusableView.swift",
       "line": 27,
       "symbol": "XCCollectionReusableView",
       "symbol_kind": "source.lang.swift.decl.class",
@@ -3677,64 +3670,57 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCCollectionReusableView.swift",
-      "line": 36,
+      "line": 32,
       "symbol": "XCCollectionReusableView.isHighlighted",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCCollectionReusableView.swift",
-      "line": 45,
+      "line": 34,
+      "symbol": "XCCollectionReusableView.setHighlighted(_:animated:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCCollectionReusableView.swift",
+      "line": 41,
       "symbol": "XCCollectionReusableView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCCollectionReusableView.swift",
-      "line": 49,
+      "line": 45,
       "symbol": "XCCollectionReusableView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCCollectionReusableView.swift",
-      "line": 54,
+      "line": 50,
       "symbol": "XCCollectionReusableView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCCollectionReusableView.swift",
-      "line": 119,
+      "line": 68,
       "symbol": "XCCollectionReusableView.triggerDidTap()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCCollectionReusableView.swift",
-      "line": 123,
+      "line": 72,
       "symbol": "XCCollectionReusableView.didTap(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCCollectionReusableView.swift",
-      "line": 127,
-      "symbol": "XCCollectionReusableView.touchesBegan(_:with:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCCollectionReusableView.swift",
-      "line": 131,
+      "line": 76,
       "symbol": "XCCollectionReusableView.touchesEnded(_:with:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCCollectionReusableView.swift",
-      "line": 136,
-      "symbol": "XCCollectionReusableView.touchesCancelled(_:with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -4778,6 +4764,34 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton+Extensions.swift",
       "line": 540,
       "symbol": "UIButton.setEnabled(_:animated:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UICollectionReusableView+Extensions.swift",
+      "line": 56,
+      "symbol": "UICollectionReusableView.setHighlighted(_:animated:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UICollectionReusableView+Extensions.swift",
+      "line": 110,
+      "symbol": "UICollectionReusableView.touchesBegan(_:with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UICollectionReusableView+Extensions.swift",
+      "line": 115,
+      "symbol": "UICollectionReusableView.touchesEnded(_:with:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UICollectionReusableView+Extensions.swift",
+      "line": 120,
+      "symbol": "UICollectionReusableView.touchesCancelled(_:with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
