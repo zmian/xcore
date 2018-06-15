@@ -1,4 +1,9 @@
 # xcore.swift
+[![Build Status](https://travis-ci.org/zmian/xcore.swift.svg?branch=master)](https://travis-ci.org/zmian/xcore.swift)
+[![Version](https://img.shields.io/cocoapods/v/Xcore.svg?style=flat)](http://cocoapods.org/pods/Xcore)
+[![Platform](https://img.shields.io/cocoapods/p/Xcore.svg?style=flat)](http://cocoapods.org/pods/Xcore)
+[![License](https://img.shields.io/cocoapods/l/Xcore.svg?style=flat)](http://cocoapods.org/pods/Xcore)
+
 A collection of Cocoa Touch classes, extensions and modules to fast track iOS development.
 
 ## Installation
