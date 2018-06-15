@@ -119,7 +119,6 @@
 		6822FF8320D217880037E780 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEFB20D217880037E780 /* UITableView+Reusable.swift */; };
 		6822FF8420D217880037E780 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6822FEFD20D217880037E780 /* Assets.xcassets */; };
 		6822FF8520D217880037E780 /* Xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = 6822FEFE20D217880037E780 /* Xcore.h */; };
-		6822FF8620D217880037E780 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6822FEFF20D217880037E780 /* Info.plist */; };
 		6822FF8720D217880037E780 /* Benchmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0220D217880037E780 /* Benchmark.swift */; };
 		6822FF8820D217880037E780 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0320D217880037E780 /* Observer.swift */; };
 		6822FF8920D217880037E780 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0420D217880037E780 /* Console.swift */; };
@@ -920,7 +919,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Xcore;
 				TargetAttributes = {
 					6872188F20C07A9F00BFEA98 = {
@@ -988,7 +987,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6822FF8620D217880037E780 /* Info.plist in Resources */,
 				6822FF8420D217880037E780 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

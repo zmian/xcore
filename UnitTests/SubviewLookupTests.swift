@@ -29,6 +29,7 @@ final class SubviewLookupTests: ViewControllerTestCase {
     func testSubview() {
         let searchBar = UISearchBar()
         view.addSubview(searchBar)
+        searchBar.layoutIfNeeded()
 
         XCTAssertNotNil(searchBar.subview(withClass: UITextField.self))
         XCTAssertNotNil(searchBar.subview(withClassName: "UISearchBarTextField"))
@@ -42,6 +43,8 @@ final class SubviewLookupTests: ViewControllerTestCase {
     func testSearchBar() {
         let searchBar = UISearchBar()
         view.addSubview(searchBar)
+        searchBar.layoutIfNeeded()
+
         XCTAssertNotNil(searchBar.textField)
         searchBar.placeholder = "Hello, World!"
         XCTAssertEqual(searchBar.placeholder, "Hello, World!")
