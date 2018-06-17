@@ -14,7 +14,7 @@
     <a title="UIRefreshControl Extension Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Xcore Docs</a> (30% documented)</p>
+        <p><a href="../index.html">Xcore Docs</a> (31% documented)</p>
         <p class="header-right"><a href="https://github.com/zmian/xcore.swift"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fzmian%2Fdocsets%2FXcore%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -244,9 +244,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/CGColor.html">CGColor</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Extensions/CGFloat.html">CGFloat</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Extensions/CGFloat.html">CGFloat</a>
@@ -702,9 +699,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:So16UIRefreshControlC5XcoreE17refreshingTimeoutySd5after_yycSg10completiontF"></a>
-                    <a name="//apple_ref/swift/Method/refreshingTimeout(after:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:So16UIRefreshControlC5XcoreE17refreshingTimeoutySd5after_yycSg10completiontF">refreshingTimeout(after:completion:)</a>
+                    <a name="/s:So16UIRefreshControlC5XcoreE13endRefreshingySd5after_yycSg10completiontF"></a>
+                    <a name="//apple_ref/swift/Method/endRefreshing(after:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So16UIRefreshControlC5XcoreE13endRefreshingySd5after_yycSg10completiontF">endRefreshing(after:completion:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -712,19 +709,55 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Tells the control that a refresh operation has ended.</p>
+
+<p>Call this method at the end of any refresh operation (whether it was initiated
+programmatically or by the user) to return the refresh control to its default state.
+If the refresh control is at least partially visible, calling this method also hides
+it. If animations are also enabled, the control is hidden using an animation.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">refreshingTimeout</span><span class="p">(</span><span class="n">after</span> <span class="nv">timeoutInterval</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">endRefreshing</span><span class="p">(</span><span class="n">after</span> <span class="nv">timeoutInterval</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">(()</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>timeoutInterval</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The delay before end refreshing.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to execute after end refreshing.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIKit+Extensions.swift#L103-L110">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIRefreshControl+Extensions.swift#L47-L54">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -734,7 +767,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-06-15)</p>
+          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-06-16)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
