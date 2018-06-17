@@ -180,6 +180,7 @@
 		4F7DCE5F8350BCAF06C38805 /* Pods_Xcore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Xcore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D3CFC269887586363462B4B /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		63FA92F065206A727FCD2B3D /* Pods_UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		681363B120D63D1700F1B36A /* XcodeWarnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = XcodeWarnings.xcconfig; sourceTree = "<group>"; };
 		6822FE8120D217880037E780 /* TargetActionBlockRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetActionBlockRepresentable.swift; sourceTree = "<group>"; };
 		6822FE8220D217880037E780 /* UIBarButtonItem+Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Blocks.swift"; sourceTree = "<group>"; };
 		6822FE8320D217880037E780 /* UIControl+Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+Blocks.swift"; sourceTree = "<group>"; };
@@ -769,6 +770,7 @@
 		689869DA1E9992E600CE7B77 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				681363B120D63D1700F1B36A /* XcodeWarnings.xcconfig */,
 				689869DB1E9992E600CE7B77 /* Info.plist */,
 			);
 			path = "Supporting Files";
@@ -1490,6 +1492,7 @@
 		};
 		689D0C8A1D8DBB9600145E0B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 681363B120D63D1700F1B36A /* XcodeWarnings.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1511,6 +1514,7 @@
 		};
 		689D0C8B1D8DBB9600145E0B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 681363B120D63D1700F1B36A /* XcodeWarnings.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
