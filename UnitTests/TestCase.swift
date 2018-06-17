@@ -26,7 +26,6 @@ import XCTest
 @testable import Xcore
 
 class TestCase: XCTestCase {
-
 }
 
 func expect<T>(_ input: T, _ comparator: (T, T) -> Bool, _ output: T) {

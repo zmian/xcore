@@ -25,7 +25,6 @@
 import UIKit
 
 public protocol PopoverPresentationSourceView {
-
 }
 
 extension UIView: PopoverPresentationSourceView { }

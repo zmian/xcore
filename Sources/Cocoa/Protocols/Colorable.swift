@@ -34,7 +34,6 @@ public protocol CollectionViewLayoutRepresentable {
 }
 
 extension UICollectionViewFlowLayout: CollectionViewLayoutRepresentable {
-
 }
 
 extension UIScrollView {

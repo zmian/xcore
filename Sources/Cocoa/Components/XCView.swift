@@ -25,7 +25,6 @@
 import UIKit
 
 open class XCView: UIView {
-
     // MARK: Init Methods
 
     public convenience init() {
