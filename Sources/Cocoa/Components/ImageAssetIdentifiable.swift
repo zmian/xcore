@@ -32,7 +32,6 @@ extension Bundle {
 }
 
 public protocol ImageAssetIdentifiable: ImageRepresentable, RawRepresentable where RawValue == String {
-
 }
 
 extension ImageAssetIdentifiable {

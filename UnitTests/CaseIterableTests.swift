@@ -34,7 +34,6 @@ final class CaseIterableTests: TestCase {
 }
 
 private final class SomeClass {
-
 }
 
 extension SomeClass {
@@ -56,7 +55,6 @@ extension SomeClass {
 }
 
 private struct SomeStruct {
-
 }
 
 extension SomeStruct {

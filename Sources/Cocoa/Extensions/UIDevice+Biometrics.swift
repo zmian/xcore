@@ -73,6 +73,7 @@ extension UIDevice {
     /// The types of biometric authentication supported.
     public var biometryType: BiometryType {
         let context = LAContext()
+
         guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) else {
             return .none
         }

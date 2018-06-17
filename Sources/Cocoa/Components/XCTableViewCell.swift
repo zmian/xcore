@@ -25,7 +25,6 @@
 import UIKit
 
 open class XCTableViewCell: UITableViewCell {
-
     // MARK: Init Methods
 
     public convenience init() {

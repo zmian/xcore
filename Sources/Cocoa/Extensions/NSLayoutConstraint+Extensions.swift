@@ -37,7 +37,6 @@ public struct LayoutGuideOptions: OptionSet {
 }
 
 extension NSLayoutConstraint {
-
     // MARK: Convenience Methods
 
     public convenience init(item view1: AnyObject, attribute attr1: NSLayoutAttribute, relatedBy relation: NSLayoutRelation = .equal, toItem view2: AnyObject? = nil, attribute attr2: NSLayoutAttribute? = nil, multiplier: CGFloat = 1, constant c: CGFloat = 0, priority: UILayoutPriority = .required) {

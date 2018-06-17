@@ -25,7 +25,6 @@
 import UIKit
 
 open class XCCollectionViewCell: UICollectionViewCell {
-
     // MARK: Init Methods
 
     public convenience init() {
