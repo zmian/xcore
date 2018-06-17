@@ -54,12 +54,12 @@ public struct DynamicTableModel {
     public var handler: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)?
 
     public init(title: StringRepresentable? = nil, subtitle: StringRepresentable? = nil, image: ImageRepresentable? = nil, accessory: DynamicTableAccessoryType = .none, userInfo: [AnyHashable: Any] = [:], handler: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)? = nil) {
-        self.title     = title
-        self.subtitle  = subtitle
-        self.image     = image
+        self.title = title
+        self.subtitle = subtitle
+        self.image = image
         self.accessory = accessory
-        self.userInfo  = userInfo
-        self.handler   = handler
+        self.userInfo = userInfo
+        self.handler = handler
     }
 }
 

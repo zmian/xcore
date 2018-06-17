@@ -40,13 +40,13 @@ open class IconLabelCollectionViewCell: XCCollectionViewCell {
         contentView.addSubview(iconLabelView)
         NSLayoutConstraint.constraintsForViewToFillSuperview(iconLabelView).activate()
         iconLabelView.isUserInteractionEnabled = false
-        iconLabelView.isRoundImageView         = true
-        iconLabelView.imagePadding             = 0
-        iconLabelView.imageBackgroundColor     = UIColor.black.alpha(0.1)
-        iconLabelView.imageView.borderColor    = UIColor.black.alpha(0.1)
+        iconLabelView.isRoundImageView = true
+        iconLabelView.imagePadding = 0
+        iconLabelView.imageBackgroundColor = UIColor.black.alpha(0.1)
+        iconLabelView.imageView.borderColor = UIColor.black.alpha(0.1)
         iconLabelView.titleLabel.numberOfLines = 1
-        iconLabelView.titleLabel.textColor     = .lightGray
-        iconLabelView.subtitleLabel.textColor  = .lightGray
+        iconLabelView.titleLabel.textColor = .lightGray
+        iconLabelView.subtitleLabel.textColor = .lightGray
 
         setupDeleteButton()
     }
@@ -62,13 +62,13 @@ open class IconLabelCollectionViewCell: XCCollectionViewCell {
         NSLayoutConstraint(item: contentView, attribute: .trailing, toItem: deleteButton, constant: -offset).activate()
 
         deleteButton.image(R(.collectionViewCellDeleteIcon), in: .xcore, for: .normal)
-        deleteButton.imageView?.cornerRadius    = 24/2
+        deleteButton.imageView?.cornerRadius = 24/2
         deleteButton.imageView?.backgroundColor = .white
 
-        deleteButton.layer.shadowColor   = UIColor.black.cgColor
-        deleteButton.layer.shadowOffset  = .zero
+        deleteButton.layer.shadowColor = UIColor.black.cgColor
+        deleteButton.layer.shadowOffset = .zero
         deleteButton.layer.shadowOpacity = 0.3
-        deleteButton.layer.shadowRadius  = 5
+        deleteButton.layer.shadowRadius = 5
 
         deleteButton.isHidden = true
     }
@@ -88,11 +88,12 @@ open class IconLabelCollectionViewCell: XCCollectionViewCell {
     }
 
     private func deleteButtonZoomIn() {
-        deleteButton.isHidden    = false
-        deleteButton.alpha     = 0
+        deleteButton.isHidden = false
+        deleteButton.alpha = 0
         deleteButton.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
+
         UIView.animate(withDuration: 0.2, animations: {
-            self.deleteButton.alpha     = 1
+            self.deleteButton.alpha = 1
             self.deleteButton.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
         }, completion: { _ in
             UIView.animate(withDuration: 0.2) {
@@ -103,7 +104,7 @@ open class IconLabelCollectionViewCell: XCCollectionViewCell {
 
     private func deleteButtonZoomOut() {
         UIView.animate(withDuration: 0.2, animations: {
-            self.deleteButton.alpha     = 0
+            self.deleteButton.alpha = 0
             self.deleteButton.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
         }, completion: { _ in
             self.deleteButton.isHidden = true

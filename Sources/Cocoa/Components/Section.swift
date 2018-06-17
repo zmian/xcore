@@ -47,9 +47,9 @@ public struct Section<Element>: RangeReplaceableCollection, MutableCollection, E
     public var items: [Element]
 
     public init() {
-        self.title  = nil
+        self.title = nil
         self.detail = nil
-        self.items  = []
+        self.items = []
     }
 
     public init(arrayLiteral elements: Element...) {
@@ -57,9 +57,9 @@ public struct Section<Element>: RangeReplaceableCollection, MutableCollection, E
     }
 
     public init(title: String? = nil, detail: String? = nil, items: [Element]) {
-        self.title  = title
+        self.title = title
         self.detail = detail
-        self.items  = items
+        self.items = items
     }
 
     public let startIndex = 0

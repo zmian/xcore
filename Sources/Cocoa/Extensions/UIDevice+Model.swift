@@ -277,7 +277,7 @@ extension UIDevice {
         uname(&systemInfo)
 
         let machine = systemInfo.machine
-        let mirror  = Mirror(reflecting: machine)
+        let mirror = Mirror(reflecting: machine)
         var identifier = ""
 
         for child in mirror.children {

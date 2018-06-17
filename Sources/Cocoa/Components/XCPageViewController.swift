@@ -35,7 +35,7 @@ private class XCUIPageViewController: UIPageViewController {
     var disableBounceForSinglePage = false
     private var scrollView: UIScrollView? {
         didSet {
-            scrollView?.bounces       = !disableBounceForSinglePage
+            scrollView?.bounces = !disableBounceForSinglePage
             scrollView?.isScrollEnabled = swipeEnabled
         }
     }
@@ -79,7 +79,7 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
     public convenience init(viewControllers: [UIViewController], pageSpacing: CGFloat = 0) {
         self.init(nibName: nil, bundle: nil)
         self.viewControllers = viewControllers
-        self.pageSpacing     = pageSpacing
+        self.pageSpacing = pageSpacing
     }
 
     open override func viewDidLoad() {
@@ -89,8 +89,8 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
     }
 
     private func setupPageViewController() {
-        pageViewController            = XCUIPageViewController(transitionStyle: transitionStyle, navigationOrientation: navigationOrientation, options: [UIPageViewControllerOptionInterPageSpacingKey: pageSpacing])
-        pageViewController.delegate   = self
+        pageViewController = XCUIPageViewController(transitionStyle: transitionStyle, navigationOrientation: navigationOrientation, options: [UIPageViewControllerOptionInterPageSpacingKey: pageSpacing])
+        pageViewController.delegate = self
         pageViewController.dataSource = self
         pageViewController.view.frame = view.frame
         if !viewControllers.isEmpty {
@@ -99,7 +99,7 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
         addContainerViewController(pageViewController, enableConstraints: true)
 
         pageControl.isUserInteractionEnabled = false
-        pageControl.numberOfPages          = viewControllers.count
+        pageControl.numberOfPages = viewControllers.count
         view.addSubview(pageControl)
         setupConstraints()
 

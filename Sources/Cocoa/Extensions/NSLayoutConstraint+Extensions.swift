@@ -83,7 +83,7 @@ extension NSLayoutConstraint {
         return NSLayoutConstraint(item: viewToCenter, attribute: .centerY, relatedBy: relation, toItem: toView, constant: offset, priority: priority)
     }
 
-    public static func centerXY(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGPoint = .zero, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
+    public static func center(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGPoint = .zero, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
         return [
             NSLayoutConstraint.centerX(viewToCenter, relatedBy: relation, toView: toView, offset: offset.x, priority: priority),
             NSLayoutConstraint.centerY(viewToCenter, relatedBy: relation, toView: toView, offset: offset.y, priority: priority)
@@ -91,21 +91,21 @@ extension NSLayoutConstraint {
     }
 
     public static func constraintsForViewToFillSuperviewHorizontal(_ viewToSize: UIView, paddingLeft: CGFloat = 0, paddingRight: CGFloat = 0, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
-        let views   = ["view": viewToSize]
+        let views = ["view": viewToSize]
         let metrics = ["priority": CGFloat(priority.rawValue), "paddingLeft": paddingLeft, "paddingRight": paddingRight]
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
         return NSLayoutConstraint.constraints(withVisualFormat: "H:|-paddingLeft@priority-[view]-paddingRight@priority-|", options: [], metrics: metrics, views: views)
     }
 
     public static func constraintsForViewToFillSuperviewVertical(_ viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
-        let views   = ["view": viewToSize]
+        let views = ["view": viewToSize]
         let metrics = ["priority": CGFloat(priority.rawValue), "paddingTop": paddingTop, "paddingBottom": paddingBottom]
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
         return NSLayoutConstraint.constraints(withVisualFormat: "V:|-paddingTop@priority-[view]-paddingBottom@priority-|", metrics: metrics, views: views)
     }
 
     public static func constraintsForViewToFillSuperview(_ viewToSize: UIView, padding: UIEdgeInsets = .zero, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
-        let views   = ["view": viewToSize]
+        let views = ["view": viewToSize]
         let metrics = ["priority": CGFloat(priority.rawValue), "paddingTop": padding.top, "paddingLeft": padding.left, "paddingBottom": padding.bottom, "paddingRight": padding.right]
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
 
@@ -143,7 +143,7 @@ extension UIViewController {
     public func constraintsForViewToFillSuperviewVertical(_ viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, constraintToLayoutGuideOptions: LayoutGuideOptions = [], priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
 
-        let isTopLayoutGuide    = constraintToLayoutGuideOptions.contains(.top)
+        let isTopLayoutGuide = constraintToLayoutGuideOptions.contains(.top)
         let isBottomLayoutGuide = constraintToLayoutGuideOptions.contains(.bottom)
 
         return [

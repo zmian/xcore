@@ -144,7 +144,7 @@ extension UIViewController {
     ///   - animated:                Pass `true` to animate the presentation; otherwise, pass `false`.
     ///   - completion:              The block to execute after the presentation finishes.
     open func presentViewControllerWithTransition(_ viewControllerToPresent: UIViewController, modalPresentationStyle: UIModalPresentationStyle = .custom, transitioningDelegate: UIViewControllerTransitioningDelegate, animated: Bool = true, completion: (() -> Void)? = nil) {
-        viewControllerToPresent.transitioningDelegate  = transitioningDelegate
+        viewControllerToPresent.transitioningDelegate = transitioningDelegate
         viewControllerToPresent.modalPresentationStyle = modalPresentationStyle
         present(viewControllerToPresent, animated: animated, completion: completion)
     }
@@ -152,12 +152,12 @@ extension UIViewController {
 
 extension UIViewController {
     private struct AssociatedKey {
-        static var supportedInterfaceOrientations               = "XcoreSupportedInterfaceOrientations"
-        static var preferredInterfaceOrientationForPresentation = "XcorePreferredInterfaceOrientationForPresentation"
-        static var preferredStatusBarStyle                      = "XcorePreferredStatusBarStyle"
-        static var preferredStatusBarUpdateAnimation            = "XcorePreferredStatusBarUpdateAnimation"
-        static var prefersStatusBarHidden                       = "XcorePrefersStatusBarHidden"
-        static var shouldAutorotate                             = "XcoreShouldAutorotate"
+        static var supportedInterfaceOrientations = "supportedInterfaceOrientations"
+        static var preferredInterfaceOrientationForPresentation = "preferredInterfaceOrientationForPresentation"
+        static var preferredStatusBarStyle = "preferredStatusBarStyle"
+        static var preferredStatusBarUpdateAnimation = "preferredStatusBarUpdateAnimation"
+        static var prefersStatusBarHidden = "prefersStatusBarHidden"
+        static var shouldAutorotate = "shouldAutorotate"
     }
 
     /// A convenience property to set `supportedInterfaceOrientations` without subclassing.

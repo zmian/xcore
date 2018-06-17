@@ -29,9 +29,9 @@ public protocol FadeAnimatorBounceable {
 }
 
 open class FadeAnimator: TransitionAnimator {
-    open var fadeInDuration: TimeInterval  = 0.3
+    open var fadeInDuration: TimeInterval = 0.3
     open var fadeOutDuration: TimeInterval = 0.25
-    open var fadeIn  = true
+    open var fadeIn = true
     open var fadeOut = true
 
     open override func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {

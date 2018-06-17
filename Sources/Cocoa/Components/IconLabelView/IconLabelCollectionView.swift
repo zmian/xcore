@@ -126,17 +126,17 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
     open func commonInit() {}
 
     private func setupCollectionView() {
-        delegate             = self
-        dataSource           = self
-        backgroundColor      = .clear
+        delegate = self
+        dataSource = self
+        backgroundColor = .clear
         alwaysBounceVertical = true
 
-        let itemSpacing: CGFloat        = 8
-        layout?.itemSize                = CGSize(width: 60, height: 74)
-        layout?.minimumLineSpacing      = 15
+        let itemSpacing: CGFloat = 8
+        layout?.itemSize = CGSize(width: 60, height: 74)
+        layout?.minimumLineSpacing = 15
         layout?.minimumInteritemSpacing = itemSpacing
-        layout?.sectionInset            = 15
-        layout?.scrollDirection         = .vertical
+        layout?.sectionInset = 15
+        layout?.scrollDirection = .vertical
 
         updateCellOptionsIfNeeded()
     }

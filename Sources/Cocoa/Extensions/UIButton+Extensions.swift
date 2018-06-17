@@ -347,9 +347,9 @@ extension UIButton {
             }
         }
         set {
-            let insetAmount   = newValue / 2
-            imageEdgeInsets   = UIEdgeInsets(top: 0, left: -insetAmount, bottom: 0, right: insetAmount)
-            titleEdgeInsets   = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: -insetAmount)
+            let insetAmount = newValue / 2
+            imageEdgeInsets = UIEdgeInsets(top: 0, left: -insetAmount, bottom: 0, right: insetAmount)
+            titleEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: -insetAmount)
             contentEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
         }
     }
@@ -409,8 +409,8 @@ extension UIButton {
             return super.hitTest(point, with: event)
         }
 
-        let buttonSize  = frame.size
-        let widthToAdd  = (44 - buttonSize.width  > 0) ? 44 - buttonSize.width  : 0
+        let buttonSize = frame.size
+        let widthToAdd = (44 - buttonSize.width  > 0) ? 44 - buttonSize.width  : 0
         let heightToAdd = (44 - buttonSize.height > 0) ? 44 - buttonSize.height : 0
         let largerFrame = CGRect(x: 0 - (widthToAdd / 2), y: 0 - (heightToAdd / 2), width: buttonSize.width + widthToAdd, height: buttonSize.height + heightToAdd)
         return largerFrame.contains(point) ? self : nil
@@ -448,7 +448,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
         setImage(image, for: .normal)
         setImage(highlightedImage, for: .highlighted)
         imageView?.contentMode = .scaleAspectFit
-        imageView?.tintColor   = tintColor
+        imageView?.tintColor = tintColor
         if let handler = handler {
             addAction(.touchUpInside, handler)
         }

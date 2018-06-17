@@ -34,12 +34,12 @@ open class IconLabelView: XCView {
 
     // MARK: Subviews
 
-    private let stackView           = UIStackView()
+    private let stackView = UIStackView()
     private let textImageSpacerView = IntrinsicContentSizeView()
-    public let imageViewContainer       = UIView()
-    public let imageView                = UIImageView()
-    public let titleLabel               = UILabel()
-    public let subtitleLabel            = UILabel()
+    public let imageViewContainer = UIView()
+    public let imageView = UIImageView()
+    public let titleLabel = UILabel()
+    public let subtitleLabel = UILabel()
 
     /// The default value is `Style.topBottom`.
     open var style = Style.topBottom {
@@ -52,7 +52,7 @@ open class IconLabelView: XCView {
     /// The default size is `55,55`.
     @objc open dynamic var imageSize = CGSize(width: 55, height: 55) {
         didSet {
-            imageSizeConstraints.width?.constant  = imageSize.width
+            imageSizeConstraints.width?.constant = imageSize.width
             imageSizeConstraints.height?.constant = imageSize.height
         }
     }
@@ -131,12 +131,12 @@ open class IconLabelView: XCView {
             guard oldValue != isImageViewPrepended, !isImageViewHidden else { return }
 
             if isImageViewPrepended {
-                stackView.moveArrangedSubviews(imageViewContainer, at: 0)
-                stackView.moveArrangedSubviews(textImageSpacerView, at: 1)
+                stackView.moveArrangedSubview(imageViewContainer, at: 0)
+                stackView.moveArrangedSubview(textImageSpacerView, at: 1)
             } else {
                 var lastIndex: Int { return stackView.arrangedSubviews.count - 1 }
-                stackView.moveArrangedSubviews(textImageSpacerView, at: lastIndex)
-                stackView.moveArrangedSubviews(imageViewContainer, at: lastIndex)
+                stackView.moveArrangedSubview(textImageSpacerView, at: lastIndex)
+                stackView.moveArrangedSubview(imageViewContainer, at: lastIndex)
             }
 
             updateTextImageSpacingIfNeeded()
@@ -154,10 +154,10 @@ open class IconLabelView: XCView {
             } else {
                 if isImageViewPrepended {
                     stackView.insertArrangedSubview(imageViewContainer, at: 0)
-                    stackView.moveArrangedSubviews(textImageSpacerView, at: 1)
+                    stackView.moveArrangedSubview(textImageSpacerView, at: 1)
                 } else {
                     var lastIndex: Int { return stackView.arrangedSubviews.count - 1 }
-                    stackView.moveArrangedSubviews(textImageSpacerView, at: lastIndex)
+                    stackView.moveArrangedSubview(textImageSpacerView, at: lastIndex)
                     stackView.insertArrangedSubview(imageViewContainer, at: lastIndex)
                 }
             }
@@ -214,7 +214,7 @@ open class IconLabelView: XCView {
 
     open func setData(_ image: ImageRepresentable? = nil, title: StringRepresentable?, subtitle: StringRepresentable? = nil) {
         isSubtitleLabelHidden = subtitle == nil
-        isImageViewHidden     = image == nil
+        isImageViewHidden = image == nil
         imageView.setImage(image)
         titleLabel.setText(title)
         subtitleLabel.setText(subtitle)
@@ -229,37 +229,37 @@ open class IconLabelView: XCView {
     open override func commonInit() {
         addSubview(stackView)
 
-        NSLayoutConstraint.centerXY(stackView, priority: .defaultLow).activate()
+        NSLayoutConstraint.center(stackView, priority: .defaultLow).activate()
         NSLayoutConstraint(item: stackView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: self).activate()
         NSLayoutConstraint(item: stackView, attribute: .bottom, relatedBy: .lessThanOrEqual, toItem: self).activate()
 
         apply(style: style)
         distribution = .fill
-        alignment    = .center
-        spacing      = 5
+        alignment = .center
+        spacing = 5
 
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.addArrangedSubview(imageViewContainer)
         stackView.addArrangedSubview(textImageSpacerView)
         stackView.addArrangedSubview(titleLabel)
 
-        titleLabel.font          = .systemFont(.footnote)
+        titleLabel.font = .systemFont(.footnote)
         titleLabel.textAlignment = .center
-        titleLabel.textColor     = .black
+        titleLabel.textColor = .black
         titleLabel.numberOfLines = 2
         titleLabel.sizeToFit()
 
-        subtitleLabel.font          = .systemFont(.footnote)
+        subtitleLabel.font = .systemFont(.footnote)
         subtitleLabel.textAlignment = .center
-        subtitleLabel.textColor     = .lightGray
+        subtitleLabel.textColor = .lightGray
         subtitleLabel.numberOfLines = 1
         subtitleLabel.sizeToFit()
 
         imageViewContainer.backgroundColor = imageBackgroundColor
-        imageViewContainer.cornerRadius    = imageCornerRadius
+        imageViewContainer.cornerRadius = imageCornerRadius
         imageViewContainer.addSubview(imageView)
         let size = NSLayoutConstraint.size(imageViewContainer, size: imageSize).activate()
-        imageSizeConstraints.width  = size[0]
+        imageSizeConstraints.width = size[0]
         imageSizeConstraints.height = size[1]
         imagePaddingConstraints = NSLayoutConstraint.constraintsForViewToFillSuperview(imageView, padding: imageInset).activate()
 

@@ -37,13 +37,13 @@ open class DynamicTableViewCell: XCTableViewCell {
     /// The default value is `UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15)`.
     @objc open dynamic var contentInset = UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15) {
         didSet {
-            contentConstraints.top?.constant    = contentInset.top
-            contentConstraints.left?.constant   = contentInset.left
+            contentConstraints.top?.constant = contentInset.top
+            contentConstraints.left?.constant = contentInset.left
             contentConstraints.bottom?.constant = contentInset.bottom
-            contentConstraints.right?.constant  = contentInset.right
+            contentConstraints.right?.constant = contentInset.right
 
             // Update stack view constraints
-            labelsStackViewConstraints.top?.constant    = contentInset.top
+            labelsStackViewConstraints.top?.constant = contentInset.top
             labelsStackViewConstraints.bottom?.constant = contentInset.bottom
         }
     }
@@ -164,15 +164,15 @@ open class DynamicTableViewCell: XCTableViewCell {
     // MARK: Subviews
 
     private let labelsStackView = UIStackView()
-    open let avatarView             = UIImageView()
-    open let titleLabel             = UILabel()
-    open let subtitleLabel          = UILabel()
+    open let avatarView = UIImageView()
+    open let titleLabel = UILabel()
+    open let subtitleLabel = UILabel()
 
     // MARK: Setters
 
     open func setData(_ data: DynamicTableModel) {
-        self.data             = data
-        isImageViewHidden     = data.image == nil
+        self.data = data
+        isImageViewHidden = data.image == nil
         isSubtitleLabelHidden = data.subtitle == nil
         titleLabel.setText(data.title)
         subtitleLabel.setText(data.subtitle)
@@ -193,9 +193,9 @@ open class DynamicTableViewCell: XCTableViewCell {
     // MARK: Setup Methods
 
     open override func commonInit() {
-        clipsToBounds   = true
+        clipsToBounds = true
         backgroundColor = .clear
-        separatorInset  = UIEdgeInsets(top: 0, left: padding, bottom: 0, right: 0)
+        separatorInset = UIEdgeInsets(top: 0, left: padding, bottom: 0, right: 0)
         setupAvatarView()
         setupLabels()
         setupConstraints()
@@ -204,13 +204,13 @@ open class DynamicTableViewCell: XCTableViewCell {
     private func setupAvatarView() {
         contentView.addSubview(avatarView)
         avatarView.backgroundColor = UIColor(white: 1, alpha: 0.2)
-        avatarView.contentMode     = .scaleAspectFill
-        avatarView.clipsToBounds   = true
+        avatarView.contentMode = .scaleAspectFill
+        avatarView.clipsToBounds = true
 
         // Border
         avatarView.layer.masksToBounds = true
-        avatarView.layer.borderWidth   = 1
-        avatarView.layer.borderColor   = UIColor.black.alpha(0.08).cgColor
+        avatarView.layer.borderWidth = 1
+        avatarView.layer.borderColor = UIColor.black.alpha(0.08).cgColor
 
         roundAvatarViewCornersIfNeeded()
 
@@ -221,37 +221,37 @@ open class DynamicTableViewCell: XCTableViewCell {
     private func setupLabels() {
         contentView.addSubview(labelsStackView)
 
-        labelsStackView.axis    = .vertical
+        labelsStackView.axis = .vertical
         labelsStackView.spacing = 3
 
         labelsStackView.addArrangedSubview(titleLabel)
         labelsStackView.addArrangedSubview(subtitleLabel)
 
         // TitleLabel
-        titleLabel.font          = .systemFont(.body)
+        titleLabel.font = .systemFont(.body)
         titleLabel.textAlignment = .left
-        titleLabel.textColor     = .black
+        titleLabel.textColor = .black
         titleLabel.numberOfLines = 0
 
         // SubtitleLabel
-        subtitleLabel.font          = .systemFont(.subheadline)
+        subtitleLabel.font = .systemFont(.subheadline)
         subtitleLabel.textAlignment = .left
-        subtitleLabel.textColor     = .lightGray // This is ignored if NSAttributedText declares it's own color
+        subtitleLabel.textColor = .lightGray // This is ignored if NSAttributedText declares it's own color
         subtitleLabel.numberOfLines = 0
     }
 
     private func setupConstraints() {
-        avatarView.translatesAutoresizingMaskIntoConstraints      = false
+        avatarView.translatesAutoresizingMaskIntoConstraints = false
         labelsStackView.translatesAutoresizingMaskIntoConstraints = false
 
         // Constraints for Labels Stack View
-        labelsStackViewConstraints.top    = NSLayoutConstraint(item: labelsStackView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: contentView, constant: contentInset.top).activate()
+        labelsStackViewConstraints.top = NSLayoutConstraint(item: labelsStackView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: contentView, constant: contentInset.top).activate()
         labelsStackViewConstraints.bottom = NSLayoutConstraint(item: contentView, attribute: .bottom, relatedBy: .greaterThanOrEqual, toItem: labelsStackView, constant: contentInset.bottom).activate()
         NSLayoutConstraint.centerY(labelsStackView).activate()
 
         // Avatar size
         let size = NSLayoutConstraint.size(avatarView, size: imageSize).activate()
-        imageSizeConstraints.width  = size[0]
+        imageSizeConstraints.width = size[0]
         imageSizeConstraints.height = size[1]
 
         // Avatar Center
@@ -260,9 +260,9 @@ open class DynamicTableViewCell: XCTableViewCell {
         imageAndTitleSpacingConstraint = NSLayoutConstraint(item: labelsStackView, attribute: .leading, toItem: avatarView, attribute: .trailing, constant: textImageSpacing).activate()
 
         // Content Constraints
-        contentConstraints.left   = NSLayoutConstraint(item: avatarView, attribute: .leading, toItem: contentView, constant: contentInset.left).activate()
-        contentConstraints.right  = NSLayoutConstraint(item: contentView, attribute: .trailing, toItem: labelsStackView, constant: contentInset.right).activate()
-        contentConstraints.top    = NSLayoutConstraint(item: avatarView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: contentView, constant: contentInset.top, priority: .defaultHigh).activate()
+        contentConstraints.left = NSLayoutConstraint(item: avatarView, attribute: .leading, toItem: contentView, constant: contentInset.left).activate()
+        contentConstraints.right = NSLayoutConstraint(item: contentView, attribute: .trailing, toItem: labelsStackView, constant: contentInset.right).activate()
+        contentConstraints.top = NSLayoutConstraint(item: avatarView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: contentView, constant: contentInset.top, priority: .defaultHigh).activate()
         contentConstraints.bottom = NSLayoutConstraint(item: contentView, attribute: .bottom, relatedBy: .greaterThanOrEqual, toItem: avatarView, constant: contentInset.bottom, priority: .defaultHigh).activate()
 
         minimumContentHeightConstraint = NSLayoutConstraint(item: contentView, height: minimumContentHeight, priority: .defaultLow).activate()
@@ -272,7 +272,7 @@ open class DynamicTableViewCell: XCTableViewCell {
 
     private func updateImageSizeIfNeeded() {
         let size = isImageViewHidden ? .zero : imageSize
-        imageSizeConstraints.width?.constant  = size.width
+        imageSizeConstraints.width?.constant = size.width
         imageSizeConstraints.height?.constant = size.height
 
         roundAvatarViewCornersIfNeeded()

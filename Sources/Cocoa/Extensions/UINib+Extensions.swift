@@ -1,7 +1,7 @@
 //
-// UIApplication+SharedOrNil.swift
+// UINib+Extensions.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2015 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +24,21 @@
 
 import UIKit
 
-extension UIApplication {
-    /// Swift doesn't allow marking parts of Swift framework unavailable for the App Extension target.
-    /// This solution let's us overcome this limitation for now.
+extension UINib {
+    /// A optional initializer to return a `UINib` object initialized to the
+    /// nib file in the specified bundle or in `main` bundle if no bundle is provided.
     ///
-    /// `UIApplication.shared` is marked as unavailable for these for App Extension target.
-    ///
-    /// https://bugs.swift.org/browse/SR-1226 is still unresolved
-    /// and cause problems. It seems that as of now, marking API as unavailable
-    /// for extensions in Swift still doesn’t let you compile for App extensions.
-    public static var sharedOrNil: UIApplication? {
-        let sharedApplicationSelector = NSSelectorFromString("sharedApplication")
+    /// - Parameters:
+    ///   - named: The name of the nib file, without any leading path information.
+    ///   - bundle: The bundle in which to search for the nib file. If you specify `nil`,
+    ///             this method looks for the nib file in the `main` bundle.
+    public convenience init?(named: String, bundle: Bundle? = nil) {
+        let bundle = bundle ?? .main
 
-        guard UIApplication.responds(to: sharedApplicationSelector) else {
+        guard bundle.path(forResource: named, ofType: "nib") != nil else {
             return nil
         }
 
-        guard let unmanagedSharedApplication = UIApplication.perform(sharedApplicationSelector) else {
-            return nil
-        }
-
-        return unmanagedSharedApplication.takeUnretainedValue() as? UIApplication
+        self.init(nibName: named, bundle: bundle)
     }
 }
