@@ -94,16 +94,16 @@ import UIKit
     @IBInspectable open var cornerRadius: CGFloat {
         get { return layer.cornerRadius }
         set {
-            layer.cornerRadius  = newValue
+            layer.cornerRadius = newValue
             layer.masksToBounds = newValue > 0
         }
     }
 
     open func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
-        let path            = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(radius))
-        let mask            = CAShapeLayer()
-        mask.path           = path.cgPath
-        layer.mask          = mask
+        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        layer.mask = mask
         layer.masksToBounds = true
     }
 
@@ -111,34 +111,34 @@ import UIKit
 
     @discardableResult
     open func fadeHead(rect: CGRect, startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 0.03)) -> CAGradientLayer {
-        let gradientLayer        = CAGradientLayer()
-        gradientLayer.frame      = rect
-        gradientLayer.colors     = [UIColor.clear.cgColor, UIColor.white.cgColor]
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = rect
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.white.cgColor]
         gradientLayer.startPoint = startPoint
-        gradientLayer.endPoint   = endPoint
-        layer.mask               = gradientLayer
+        gradientLayer.endPoint = endPoint
+        layer.mask = gradientLayer
         return gradientLayer
     }
 
     @discardableResult
     open func fadeTail(rect: CGRect, startPoint: CGPoint = CGPoint(x: 0.5, y: 0.93), endPoint: CGPoint = CGPoint(x: 0.5, y: 1)) -> CAGradientLayer {
-        let gradientLayer        = CAGradientLayer()
-        gradientLayer.frame      = rect
-        gradientLayer.colors     = [UIColor.white.cgColor, UIColor.clear.cgColor]
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = rect
+        gradientLayer.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
         gradientLayer.startPoint = startPoint
-        gradientLayer.endPoint   = endPoint
-        layer.mask               = gradientLayer
+        gradientLayer.endPoint = endPoint
+        layer.mask = gradientLayer
         return gradientLayer
     }
 
     @discardableResult
     open func addGradient(_ colors: [UIColor], startPoint: CGPoint = CGPoint(x: 0, y: 1), endPoint: CGPoint = CGPoint(x: 1, y: 1), locations: [Int] = [0, 1]) -> CAGradientLayer {
-        let gradientLayer          = CAGradientLayer()
-        gradientLayer.colors       = colors.map { $0.cgColor }
-        gradientLayer.startPoint   = startPoint
-        gradientLayer.endPoint     = endPoint
-        gradientLayer.locations    = locations.map { NSNumber(value: $0) }
-        gradientLayer.frame.size   = frame.size
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colors.map { $0.cgColor }
+        gradientLayer.startPoint = startPoint
+        gradientLayer.endPoint = endPoint
+        gradientLayer.locations = locations.map { NSNumber(value: $0) }
+        gradientLayer.frame.size = frame.size
         gradientLayer.cornerRadius = layer.cornerRadius
         layer.insertSublayer(gradientLayer, at: 0)
         return gradientLayer

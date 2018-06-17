@@ -49,7 +49,7 @@ extension UIDevice {
 
     public struct SystemVersion {
         public static let iOS8OrGreater = floor(NSFoundationVersionNumber) > floor(NSFoundationVersionNumber_iOS_7_0)
-        public static let iOS7OrLess    = floor(NSFoundationVersionNumber) <= floor(NSFoundationVersionNumber_iOS_7_0)
+        public static let iOS7OrLess = floor(NSFoundationVersionNumber) <= floor(NSFoundationVersionNumber_iOS_7_0)
 
         public static func lessThanOrEqual(_ string: String) -> Bool {
             return UIDevice.current.systemVersion.compare(string, options: .numeric) == .orderedAscending

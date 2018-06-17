@@ -30,32 +30,53 @@ extension UIFont {
 
         public var rawValue: String {
             switch self {
-                case .title1:      return UIFontTextStyle.title1.rawValue
-                case .title2:      return UIFontTextStyle.title2.rawValue
-                case .title3:      return UIFontTextStyle.title3.rawValue
-                case .headline:    return UIFontTextStyle.headline.rawValue
-                case .subheadline: return UIFontTextStyle.subheadline.rawValue
-                case .body:        return UIFontTextStyle.body.rawValue
-                case .callout:     return UIFontTextStyle.callout.rawValue
-                case .footnote:    return UIFontTextStyle.footnote.rawValue
-                case .caption1:    return UIFontTextStyle.caption1.rawValue
-                case .caption2:    return UIFontTextStyle.caption2.rawValue
+                case .title1:
+                    return UIFontTextStyle.title1.rawValue
+                case .title2:
+                    return UIFontTextStyle.title2.rawValue
+                case .title3:
+                    return UIFontTextStyle.title3.rawValue
+                case .headline:
+                    return UIFontTextStyle.headline.rawValue
+                case .subheadline:
+                    return UIFontTextStyle.subheadline.rawValue
+                case .body:
+                    return UIFontTextStyle.body.rawValue
+                case .callout:
+                    return UIFontTextStyle.callout.rawValue
+                case .footnote:
+                    return UIFontTextStyle.footnote.rawValue
+                case .caption1:
+                    return UIFontTextStyle.caption1.rawValue
+                case .caption2:
+                    return UIFontTextStyle.caption2.rawValue
             }
         }
 
         public init?(rawValue: String) {
             switch rawValue {
-                case UIFontTextStyle.title1.rawValue:      self = .title1
-                case UIFontTextStyle.title2.rawValue:      self = .title2
-                case UIFontTextStyle.title3.rawValue:      self = .title3
-                case UIFontTextStyle.headline.rawValue:    self = .headline
-                case UIFontTextStyle.subheadline.rawValue: self = .subheadline
-                case UIFontTextStyle.body.rawValue:        self = .body
-                case UIFontTextStyle.callout.rawValue:     self = .callout
-                case UIFontTextStyle.footnote.rawValue:    self = .footnote
-                case UIFontTextStyle.caption1.rawValue:    self = .caption1
-                case UIFontTextStyle.caption2.rawValue:    self = .caption2
-                default: fatalError("Unsupported `TextStyle`")
+                case TextStyle.title1.rawValue:
+                    self = .title1
+                case TextStyle.title2.rawValue:
+                    self = .title2
+                case TextStyle.title3.rawValue:
+                    self = .title3
+                case TextStyle.headline.rawValue:
+                    self = .headline
+                case TextStyle.subheadline.rawValue:
+                    self = .subheadline
+                case TextStyle.body.rawValue:
+                    self = .body
+                case TextStyle.callout.rawValue:
+                    self = .callout
+                case TextStyle.footnote.rawValue:
+                    self = .footnote
+                case TextStyle.caption1.rawValue:
+                    self = .caption1
+                case TextStyle.caption2.rawValue:
+                    self = .caption2
+                default:
+                    fatalError("Unsupported `TextStyle`")
             }
         }
     }
@@ -67,17 +88,19 @@ extension UIFont {
 
 extension UIFont {
     public enum Style {
-        case normal, italic, monospace
+        case normal
+        case italic
+        case monospace
     }
 
     public struct Size {
-        public static let headline: CGFloat    = 16
+        public static let headline: CGFloat = 16
         public static let subheadline: CGFloat = 14
-        public static let body: CGFloat        = 16
-        public static let label                = UIFont.labelFontSize
-        public static let button               = UIFont.buttonFontSize
-        public static let small                = UIFont.smallSystemFontSize
-        public static let system               = UIFont.systemFontSize
+        public static let body: CGFloat = 16
+        public static let label = UIFont.labelFontSize
+        public static let button = UIFont.buttonFontSize
+        public static let small = UIFont.smallSystemFontSize
+        public static let system = UIFont.systemFontSize
     }
 
     public static func systemFont(_ size: CGFloat, style: Style = .normal, weight: Weight = .regular) -> UIFont {
@@ -97,6 +120,7 @@ extension UIFont {
         for family in familyNames {
             let count = fontNames(forFamilyName: family).count
             print("▿ \(family) (\(count) \(count == 1 ? "font" : "fonts"))")
+
             for name in fontNames(forFamilyName: family) {
                 print("  - \(name)")
             }
@@ -114,9 +138,9 @@ extension UIFont {
 
     public var monospacedDigitFont: UIFont {
         let featureSettings = [[UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType, UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector]]
-        let attributes      = [UIFontDescriptor.AttributeName.featureSettings: featureSettings]
-        let oldDescriptor   = fontDescriptor
-        let newDescriptor   = oldDescriptor.addingAttributes(attributes)
+        let attributes = [UIFontDescriptor.AttributeName.featureSettings: featureSettings]
+        let oldDescriptor = fontDescriptor
+        let newDescriptor = oldDescriptor.addingAttributes(attributes)
         return UIFont(descriptor: newDescriptor, size: 0)
     }
 }

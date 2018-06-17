@@ -57,10 +57,10 @@ extension UIImageView {
             }
         }
 
-        animationImages      = images
-        animationDuration    = duration
+        animationImages = images
+        animationDuration = duration
         animationRepeatCount = 1
-        image                = images.first
+        image = images.first
     }
 
     /// A convenience method to start animation with completion handler.

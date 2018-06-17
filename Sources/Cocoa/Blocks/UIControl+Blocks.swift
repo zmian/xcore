@@ -47,7 +47,7 @@ extension UIControl: ControlTargetActionBlockRepresentable {
     public typealias Sender = UIControl
 
     private struct AssociatedKey {
-        static var actionHandler = "XcoreActionHandler"
+        static var actionHandler = "actionHandler"
     }
 
     fileprivate var actionEvents: [UInt: ControlClosureWrapper]? {

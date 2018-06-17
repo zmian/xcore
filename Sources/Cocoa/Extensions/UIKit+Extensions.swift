@@ -39,81 +39,10 @@ public func open(url: URL, from viewController: UIViewController) {
     viewController.present(svc, animated: true, completion: nil)
 }
 
-// MARK: UIApplication Extension
-
-extension UIApplication {
-    open class func topViewController(_ base: UIViewController? = UIApplication.sharedOrNil?.keyWindow?.rootViewController) -> UIViewController? {
-        if let nav = base as? UINavigationController {
-            return topViewController(nav.visibleViewController)
-        }
-
-        if let tab = base as? UITabBarController {
-            if let selected = tab.selectedViewController {
-                return topViewController(selected)
-            }
-        }
-
-        if let presented = base?.presentedViewController {
-            return topViewController(presented)
-        }
-
-        return base
-    }
-}
-
-// MARK: UIWindow Extension
-
-extension UIWindow {
-    /// The view controller at the top of the window's `rootViewController` stack.
-    open var topViewController: UIViewController? {
-        return UIApplication.topViewController(rootViewController)
-    }
-}
-
-extension UINib {
-    public convenience init?(named: String, bundle: Bundle? = nil) {
-        let bundle = bundle ?? .main
-
-        guard bundle.path(forResource: named, ofType: "nib") != nil else {
-            return nil
-        }
-
-        self.init(nibName: named, bundle: bundle)
-    }
-}
-
 extension UIDatePicker {
     @nonobjc
     open var textColor: UIColor? {
         get { return value(forKey: "textColor") as? UIColor }
         set { setValue(newValue, forKey: "textColor") }
-    }
-}
-
-extension UIRefreshControl {
-    private struct AssociatedKey {
-        static var timeoutTimer = "timeoutTimer"
-    }
-
-    private var timeoutTimer: Timer? {
-        get { return associatedObject(&AssociatedKey.timeoutTimer) }
-        set { setAssociatedObject(&AssociatedKey.timeoutTimer, value: newValue) }
-    }
-
-    open func refreshingTimeout(after timeoutInterval: TimeInterval, completion: (() -> Void)? = nil) {
-        timeoutTimer?.invalidate()
-        timeoutTimer = Timer.schedule(delay: timeoutInterval) { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.endRefreshing()
-            completion?()
-        }
-    }
-}
-
-extension UIStackView {
-    open func moveArrangedSubviews(_ view: UIView, at stackIndex: Int) {
-        guard arrangedSubviews.at(stackIndex) != view else { return }
-        removeArrangedSubview(view)
-        insertArrangedSubview(view, at: stackIndex)
     }
 }

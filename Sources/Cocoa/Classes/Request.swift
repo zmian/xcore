@@ -50,18 +50,18 @@ public struct Response {
     }
 
     public var responseString: String? {
-        if let data = data {
-            return String(data: data, encoding: .utf8)
-        } else {
+        guard let data = data else {
             return nil
         }
+
+        return String(data: data, encoding: .utf8)
     }
 
     public init(request: URLRequest, response: URLResponse? = nil, data: Data? = nil, error: Error? = nil) {
-        self.request  = request
+        self.request = request
         self.response = response
-        self.data     = data
-        self.error    = error
+        self.data = data
+        self.error = error
     }
 }
 
@@ -127,21 +127,24 @@ extension URLRequest {
     fileprivate init(method: Request.Method, url: URL, body: Data? = nil, headers: [String: String]? = nil) {
         self.init(url: url)
         httpMethod = method.rawValue
-        httpBody   = body
+        httpBody = body
         headers?.forEach { addValue($0.1, forHTTPHeaderField: $0.0) }
     }
 
     fileprivate static func jsonRequest(_ method: Request.Method, url: URL, body: [String: Any]? = nil, headers: [String: String]? = nil) -> URLRequest {
         var headers = headers ?? [:]
+
         if headers["Accept"] == nil {
             headers["Accept"] = "application/json"
         }
+
         var request = URLRequest(method: method, url: url, headers: headers)
 
         if let body = body {
             request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
             request.addValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
         }
+
         return request
     }
 }
@@ -150,25 +153,27 @@ extension URL {
     public init?(string: String, queryParameters: [String: String]) {
         var components = URLComponents(string: string)
         components?.queryItems = queryParameters.map(URLQueryItem.init)
-        if let string = components?.url?.absoluteString {
-            self.init(string: string)
-        } else {
+
+        guard let string = components?.url?.absoluteString else {
             return nil
         }
+
+        self.init(string: string)
     }
 }
 
 extension URL {
     /// Returns a URL constructed by removing the fragment from self.
     ///
-    /// If the URL has no fragment (e.g., `http://www.example.com`), then this function will return the URL unchanged.
+    /// If the URL has no fragment (e.g., `http://www.example.com`),
+    /// then this function will return the URL unchanged.
     public func deletingFragment() -> URL {
-        if let fragment = fragment {
-            let urlString = absoluteString.replace("#\(fragment)", with: "")
-            return URL(string: urlString) ?? self
+        guard let fragment = fragment else {
+            return self
         }
 
-        return self
+        let urlString = absoluteString.replace("#\(fragment)", with: "")
+        return URL(string: urlString) ?? self
     }
 
     /// A boolean value to determine whether the url is an email link (i.e., `mailto`).

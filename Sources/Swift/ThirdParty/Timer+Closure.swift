@@ -42,8 +42,8 @@ extension Timer {
 
 extension Timer {
     private struct AssociatedKey {
-        static var timerPauseDate        = "XcoreTimerPauseDate"
-        static var timerPreviousFireDate = "XcoreTimerPreviousFireDate"
+        static var timerPauseDate = "timerPauseDate"
+        static var timerPreviousFireDate = "timerPreviousFireDate"
     }
 
     private var pauseDate: Date? {
@@ -57,9 +57,9 @@ extension Timer {
     }
 
     public func pause() {
-        pauseDate        = Date()
+        pauseDate = Date()
         previousFireDate = fireDate
-        fireDate         = Date.distantFuture
+        fireDate = Date.distantFuture
     }
 
     public func resume() {

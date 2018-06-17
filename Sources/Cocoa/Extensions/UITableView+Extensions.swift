@@ -28,7 +28,7 @@ extension UITableView {
     /// Compares the top two visible rows to the current content offset
     /// and returns the best index path that is visible on the top.
     public var visibleTopIndexPath: IndexPath? {
-        let visibleRows  = indexPathsForVisibleRows ?? []
+        let visibleRows = indexPathsForVisibleRows ?? []
         let firstPath: IndexPath
         let secondPath: IndexPath
 
@@ -37,7 +37,7 @@ extension UITableView {
         } else if visibleRows.count == 1 {
             return visibleRows.first
         } else {
-            firstPath  = visibleRows[0]
+            firstPath = visibleRows[0]
             secondPath = visibleRows[1]
         }
 
@@ -53,6 +53,15 @@ extension UITableView {
     /// ```
     public var selectedIndexPaths: [IndexPath] {
         return indexPathsForSelectedRows ?? []
+    }
+
+    /// The total number of rows in all the sections.
+    public var numberOfRowsInAllSections: Int {
+        var rows = 0
+        for i in 0..<numberOfSections {
+            rows += numberOfRows(inSection: i)
+        }
+        return rows
     }
 
     /// Selects a row in the table view identified by index path, optionally scrolling the row to a location in the table view.
@@ -127,14 +136,14 @@ extension UITableView {
         var offsetY: CGFloat = 0
         for s in 0..<indexPath.section {
             for r in 0..<indexPath.row {
-                let indexPath           = IndexPath(row: r, section: s)
-                var rowHeight           = self.delegate?.tableView?(self, heightForRowAt: indexPath) ?? 0
-                var sectionHeaderHeight = self.delegate?.tableView?(self, heightForHeaderInSection: s) ?? 0
-                var sectionFooterHeight = self.delegate?.tableView?(self, heightForFooterInSection: s) ?? 0
-                rowHeight               = rowHeight == 0 ? self.rowHeight : rowHeight
-                sectionFooterHeight     = sectionFooterHeight == 0 ? self.sectionFooterHeight : sectionFooterHeight
-                sectionHeaderHeight     = sectionHeaderHeight == 0 ? self.sectionHeaderHeight : sectionHeaderHeight
-                offsetY                += rowHeight + sectionHeaderHeight + sectionFooterHeight
+                let indexPath = IndexPath(row: r, section: s)
+                var rowHeight = delegate?.tableView?(self, heightForRowAt: indexPath) ?? 0
+                var sectionHeaderHeight = delegate?.tableView?(self, heightForHeaderInSection: s) ?? 0
+                var sectionFooterHeight = delegate?.tableView?(self, heightForFooterInSection: s) ?? 0
+                rowHeight = rowHeight == 0 ? self.rowHeight : rowHeight
+                sectionFooterHeight = sectionFooterHeight == 0 ? self.sectionFooterHeight : sectionFooterHeight
+                sectionHeaderHeight = sectionHeaderHeight == 0 ? self.sectionHeaderHeight : sectionHeaderHeight
+                offsetY += rowHeight + sectionHeaderHeight + sectionFooterHeight
             }
         }
 

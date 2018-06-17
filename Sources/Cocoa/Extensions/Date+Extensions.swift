@@ -28,10 +28,10 @@ import UIKit
 
 extension Date {
     public func fromNow(style: DateComponentsFormatter.UnitsStyle = .abbreviated, format: String = "%@") -> String? {
-        let formatter              = DateComponentsFormatter()
-        formatter.unitsStyle       = style
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = style
         formatter.maximumUnitCount = 1
-        formatter.allowedUnits     = [.year, .month, .day, .hour, .minute, .second]
+        formatter.allowedUnits = [.year, .month, .day, .hour, .minute, .second]
 
         guard let timeString = formatter.string(from: self, to: Date()) else {
             return nil

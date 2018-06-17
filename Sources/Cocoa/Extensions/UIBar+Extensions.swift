@@ -28,7 +28,7 @@ import UIKit
 
 extension UINavigationBar {
     private struct AssociatedKey {
-        static var isTransparent = "XcoreIsTransparent"
+        static var isTransparent = "isTransparent"
     }
 
     open var isTransparent: Bool {
@@ -37,14 +37,15 @@ extension UINavigationBar {
             guard newValue != isTransparent else { return }
             setAssociatedObject(&AssociatedKey.isTransparent, value: newValue)
 
-            if newValue {
-                setBackgroundImage(UIImage(), for: .default)
-                shadowImage     = UIImage()
-                isTranslucent   = true
-                backgroundColor = .clear
-            } else {
+            guard newValue else {
                 setBackgroundImage(nil, for: .default)
+                return
             }
+
+            setBackgroundImage(UIImage(), for: .default)
+            shadowImage = UIImage()
+            isTranslucent = true
+            backgroundColor = .clear
         }
     }
 }
@@ -53,7 +54,7 @@ extension UINavigationBar {
 
 extension UIToolbar {
     private struct AssociatedKey {
-        static var isTransparent = "XcoreIsTransparent"
+        static var isTransparent = "isTransparent"
     }
 
     open var isTransparent: Bool {
@@ -62,13 +63,14 @@ extension UIToolbar {
             guard newValue != isTransparent else { return }
             setAssociatedObject(&AssociatedKey.isTransparent, value: newValue)
 
-            if newValue {
-                setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
-                isTranslucent   = true
-                backgroundColor = .clear
-            } else {
+            guard newValue else {
                 setBackgroundImage(nil, forToolbarPosition: .any, barMetrics: .default)
+                return
             }
+
+            setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+            isTranslucent = true
+            backgroundColor = .clear
         }
     }
 }
@@ -77,7 +79,7 @@ extension UIToolbar {
 
 extension UITabBar {
     private struct AssociatedKey {
-        static var isTransparent = "XcoreIsTransparent"
+        static var isTransparent = "isTransparent"
     }
 
     open var isTransparent: Bool {
@@ -86,14 +88,15 @@ extension UITabBar {
             guard newValue != isTransparent else { return }
             setAssociatedObject(&AssociatedKey.isTransparent, value: newValue)
 
-            if newValue {
-                backgroundImage = UIImage()
-                shadowImage     = UIImage()
-                isTranslucent   = true
-                backgroundColor = .clear
-            } else {
+            guard newValue else {
                 backgroundImage = nil
+                return
             }
+
+            backgroundImage = UIImage()
+            shadowImage = UIImage()
+            isTranslucent = true
+            backgroundColor = .clear
         }
     }
 

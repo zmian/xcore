@@ -37,6 +37,10 @@ excluded:
   - Pods
   - Carthage
 custom_rules:
+  equal_space:
+    regex: "(?:([ ]{2,}=)|(=[ ]{2,}))"
+    message: "Expected only one space before and after ="
+
   comma_space:
     regex: ",[ ]{2,}"
     message: "Expected only one space after ',"

@@ -29,7 +29,7 @@ extension UIGestureRecognizer: TargetActionBlockRepresentable {
     public typealias Sender = UIGestureRecognizer
 
     private struct AssociatedKey {
-        static var actionHandler = "XcoreActionHandler"
+        static var actionHandler = "actionHandler"
     }
 
     fileprivate var actionHandler: SenderClosureWrapper? {

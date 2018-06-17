@@ -46,18 +46,22 @@ public struct JSONHelpers {
 
     /// Parse local JSON file from `Bundle.main`.
     public static func parse(fileName: String) -> Any? {
-        if let filePath = Bundle.main.path(forResource: (fileName as NSString).deletingPathExtension, ofType: "json") {
-            if let data = try? Data(contentsOf: URL(fileURLWithPath: filePath)) {
-                return parse(data)
-            }
+        guard
+            let filePath = Bundle.main.path(forResource: fileName.stringByDeletingPathExtension, ofType: "json"),
+            let data = try? Data(contentsOf: URL(fileURLWithPath: filePath))
+        else {
+            return nil
         }
 
-        return nil
+        return parse(data)
     }
 
     /// Parse remote JSON file.
     public static func parse(_ url: URL) -> Any? {
-        guard let data = try? Data(contentsOf: url) else { return nil }
+        guard let data = try? Data(contentsOf: url) else {
+            return nil
+        }
+
         return parse(data)
     }
 
@@ -68,19 +72,22 @@ public struct JSONHelpers {
 
     /// Parse String to JSON.
     public static func parse(jsonString: String) -> Any? {
-        if let data = jsonString.data(using: .utf8) {
-            return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-        } else {
+        guard let data = jsonString.data(using: .utf8) else {
             return nil
         }
+
+        return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
     }
 
     /// Convert value to a JSON string.
     public static func stringify(_ value: Any, prettyPrinted: Bool = false) -> String {
         guard
-            let data   = serialize(value, prettyPrinted: prettyPrinted),
+            let data = serialize(value, prettyPrinted: prettyPrinted),
             let string = String(data: data, encoding: .utf8)
-        else { return "" }
+        else {
+            return ""
+        }
+
         return string
     }
 

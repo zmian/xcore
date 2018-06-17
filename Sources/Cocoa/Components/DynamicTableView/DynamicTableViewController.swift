@@ -63,7 +63,7 @@ open class DynamicTableViewController: UIViewController {
 
     public convenience init(style: UITableViewStyle = .plain, options: DynamicTableCellOptions) {
         self.init(nibName: nil, bundle: nil)
-        self.style       = style
+        self.style = style
         self.cellOptions = options
     }
 

@@ -158,8 +158,8 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     private func centerContentIfNeeded() {
         guard isContentCentered else { return }
 
-        let totalHeight          = bounds.height
-        let contentHeight        = contentSize.height
+        let totalHeight = bounds.height
+        let contentHeight = contentSize.height
         let contentCanBeCentered = contentHeight < totalHeight
 
         shouldUpdateActualContentInset = false
@@ -186,12 +186,12 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     open func commonInit() {}
 
     private func setupTableView() {
-        super.delegate      = self
-        dataSource          = self
-        reorderDelegate     = self
-        backgroundColor     = .clear
-        estimatedRowHeight  = 44
-        rowHeight           = UITableViewAutomaticDimension
+        super.delegate = self
+        dataSource = self
+        reorderDelegate = self
+        backgroundColor = .clear
+        estimatedRowHeight = 44
+        rowHeight = UITableViewAutomaticDimension
         isReorderingEnabled = allowReordering
     }
 
@@ -278,19 +278,23 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     }
 
     open func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        if let header = view as? UITableViewHeaderFooterView {
-            header.textLabel?.font      = headerFont
-            header.textLabel?.textColor = headerTextColor
-            configureHeader?(section, header, sections[section].title)
+        guard let headerView = view as? UITableViewHeaderFooterView else {
+            return
         }
+
+        headerView.textLabel?.font = headerFont
+        headerView.textLabel?.textColor = headerTextColor
+        configureHeader?(section, headerView, sections[section].title)
     }
 
     open func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        if let footer = view as? UITableViewHeaderFooterView {
-            footer.textLabel?.font      = footerFont
-            footer.textLabel?.textColor = footerTextColor
-            configureFooter?(section, footer, sections[section].detail)
+        guard let footerView = view as? UITableViewHeaderFooterView else {
+            return
         }
+
+        footerView.textLabel?.font = footerFont
+        footerView.textLabel?.textColor = footerTextColor
+        configureFooter?(section, footerView, sections[section].detail)
     }
 
     // MARK: Reordering
@@ -373,14 +377,14 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     // MARK: UIAppearance Properties
 
-    @objc open dynamic var headerFont: UIFont                    = .systemFont(.footnote)
-    @objc open dynamic var headerTextColor: UIColor              = .black
-    @objc open dynamic var footerFont: UIFont                    = .systemFont(.footnote)
-    @objc open dynamic var footerTextColor: UIColor              = .darkGray
-    @objc open dynamic var accessoryFont: UIFont                 = .systemFont(.subheadline)
-    @objc open dynamic var accessoryTextColor: UIColor           = .gray
-    @objc open dynamic var accessoryTintColor: UIColor           = .systemTint
-    @objc open dynamic var accessoryTextMaxWidth: CGFloat        = 0
+    @objc open dynamic var headerFont: UIFont = .systemFont(.footnote)
+    @objc open dynamic var headerTextColor: UIColor = .black
+    @objc open dynamic var footerFont: UIFont = .systemFont(.footnote)
+    @objc open dynamic var footerTextColor: UIColor = .darkGray
+    @objc open dynamic var accessoryFont: UIFont = .systemFont(.subheadline)
+    @objc open dynamic var accessoryTextColor: UIColor = .gray
+    @objc open dynamic var accessoryTintColor: UIColor = .systemTint
+    @objc open dynamic var accessoryTextMaxWidth: CGFloat = 0
     @objc open dynamic var disclosureIndicatorTintColor: UIColor = .gray
 
     /// The color of the check box ring when the checkbox is Off.
@@ -392,9 +396,9 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
 extension DynamicTableView {
     private func configureAccessoryView(_ cell: DynamicTableViewCell, type: DynamicTableAccessoryType, indexPath: IndexPath) {
-        cell.accessoryType  = .none
+        cell.accessoryType = .none
         cell.selectionStyle = .default
-        cell.accessoryView  = nil
+        cell.accessoryView = nil
 
         switch type {
             case .none:
@@ -403,32 +407,32 @@ extension DynamicTableView {
                 cell.accessoryView = UIImageView(assetIdentifier: UIImage.AssetIdentifier.disclosureIndicator)
                 cell.accessoryView?.tintColor = disclosureIndicatorTintColor
             case .switch(let (isOn, callback)):
-                cell.selectionStyle  = .none
-                let accessorySwitch  = UISwitch()
+                cell.selectionStyle = .none
+                let accessorySwitch = UISwitch()
                 accessorySwitch.isOn = isOn
                 accessorySwitch.addAction(.valueChanged) { sender in
                     callback?(sender)
                 }
                 cell.accessoryView = accessorySwitch
             case .checkbox(let (isSelected, _)):
-                cell.selectionStyle                        = .none
-                let accessoryCheckbox                      = UIButton(style: .checkbox(normalColor: checkboxOffTintColor, selectedColor: accessoryTintColor, textColor: footerTextColor, font: footerFont))
-                accessoryCheckbox.frame                    = CGRect(x: 0, y: 0, width: 24, height: 24)
-                accessoryCheckbox.isSelected               = isSelected
+                cell.selectionStyle = .none
+                let accessoryCheckbox = UIButton(style: .checkbox(normalColor: checkboxOffTintColor, selectedColor: accessoryTintColor, textColor: footerTextColor, font: footerFont))
+                accessoryCheckbox.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+                accessoryCheckbox.isSelected = isSelected
                 accessoryCheckbox.isUserInteractionEnabled = false
-                cell.accessoryView                         = accessoryCheckbox
+                cell.accessoryView = accessoryCheckbox
             case .text(let text):
-                let label           = UILabel()
-                label.text          = text
-                label.font          = accessoryFont
+                let label = UILabel()
+                label.text = text
+                label.font = accessoryFont
                 label.textAlignment = .right
-                label.textColor     = accessoryTextColor
+                label.textColor = accessoryTextColor
                 label.numberOfLines = 0
                 label.sizeToFit()
                 if accessoryTextMaxWidth != 0, label.frame.width > accessoryTextMaxWidth {
                     label.frame.size.width = accessoryTextMaxWidth
                 }
-                cell.accessoryView  = label
+                cell.accessoryView = label
             case .custom(let view):
                 cell.accessoryView = view
         }

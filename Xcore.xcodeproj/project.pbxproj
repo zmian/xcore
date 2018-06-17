@@ -38,7 +38,6 @@
 		6822FF3220D217880037E780 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FE9E20D217880037E780 /* UIImage+Extensions.swift */; };
 		6822FF3320D217880037E780 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FE9F20D217880037E780 /* UIDevice+Extensions.swift */; };
 		6822FF3420D217880037E780 /* UISearchBar+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEA020D217880037E780 /* UISearchBar+Extensions.swift */; };
-		6822FF3520D217880037E780 /* UIApplication+SharedOrNil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEA120D217880037E780 /* UIApplication+SharedOrNil.swift */; };
 		6822FF3620D217880037E780 /* UIResponder+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEA220D217880037E780 /* UIResponder+Extensions.swift */; };
 		6822FF3720D217880037E780 /* UIDevice+Biometrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEA320D217880037E780 /* UIDevice+Biometrics.swift */; };
 		6822FF3820D217880037E780 /* UIAlertController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEA420D217880037E780 /* UIAlertController+Extensions.swift */; };
@@ -141,6 +140,10 @@
 		6872189320C07A9F00BFEA98 /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6872189220C07A9F00BFEA98 /* TestCase.swift */; };
 		687218A120C0824900BFEA98 /* SubviewLookupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687218A020C0824900BFEA98 /* SubviewLookupTests.swift */; };
 		687218A520C0841100BFEA98 /* ViewControllerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687218A420C0841000BFEA98 /* ViewControllerTestCase.swift */; };
+		687C338320D5D56A00F632DC /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687C338220D5D56A00F632DC /* UIStackView+Extensions.swift */; };
+		687C338520D5D71600F632DC /* UIRefreshControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687C338420D5D71600F632DC /* UIRefreshControl+Extensions.swift */; };
+		687C338720D5D80F00F632DC /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687C338620D5D80F00F632DC /* UIApplication+Extensions.swift */; };
+		687C338920D5D91700F632DC /* UINib+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687C338820D5D91700F632DC /* UINib+Extensions.swift */; };
 		6884E5A320C9716A009C043F /* CaseIterableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6884E5A220C9716A009C043F /* CaseIterableTests.swift */; };
 		688FE04120CE40600081A027 /* ButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688FE04020CE40600081A027 /* ButtonsViewController.swift */; };
 		689869E61E9992E600CE7B77 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689869DD1E9992E600CE7B77 /* RootViewController.swift */; };
@@ -207,7 +210,6 @@
 		6822FE9E20D217880037E780 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		6822FE9F20D217880037E780 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		6822FEA020D217880037E780 /* UISearchBar+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extensions.swift"; sourceTree = "<group>"; };
-		6822FEA120D217880037E780 /* UIApplication+SharedOrNil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+SharedOrNil.swift"; sourceTree = "<group>"; };
 		6822FEA220D217880037E780 /* UIResponder+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+Extensions.swift"; sourceTree = "<group>"; };
 		6822FEA320D217880037E780 /* UIDevice+Biometrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Biometrics.swift"; sourceTree = "<group>"; };
 		6822FEA420D217880037E780 /* UIAlertController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extensions.swift"; sourceTree = "<group>"; };
@@ -314,6 +316,10 @@
 		6872189E20C07B8300BFEA98 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		687218A020C0824900BFEA98 /* SubviewLookupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubviewLookupTests.swift; sourceTree = "<group>"; };
 		687218A420C0841000BFEA98 /* ViewControllerTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerTestCase.swift; sourceTree = "<group>"; };
+		687C338220D5D56A00F632DC /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
+		687C338420D5D71600F632DC /* UIRefreshControl+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+Extensions.swift"; sourceTree = "<group>"; };
+		687C338620D5D80F00F632DC /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
+		687C338820D5D91700F632DC /* UINib+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINib+Extensions.swift"; sourceTree = "<group>"; };
 		6884E5A220C9716A009C043F /* CaseIterableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseIterableTests.swift; sourceTree = "<group>"; };
 		688FE04020CE40600081A027 /* ButtonsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsViewController.swift; sourceTree = "<group>"; };
 		689869C81E99926100CE7B77 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -459,13 +465,16 @@
 				6822FE9820D217880037E780 /* UIButton+Extensions.swift */,
 				6822FE9920D217880037E780 /* UIView+Extensions.swift */,
 				6822FE9A20D217880037E780 /* UIKit+Extensions.swift */,
+				687C338220D5D56A00F632DC /* UIStackView+Extensions.swift */,
+				687C338820D5D91700F632DC /* UINib+Extensions.swift */,
+				687C338620D5D80F00F632DC /* UIApplication+Extensions.swift */,
+				687C338420D5D71600F632DC /* UIRefreshControl+Extensions.swift */,
 				6822FE9B20D217880037E780 /* UIFont+Extensions.swift */,
 				6822FE9C20D217880037E780 /* UITabBarController+Extensions.swift */,
 				6822FE9D20D217880037E780 /* UIColor+Extensions.swift */,
 				6822FE9E20D217880037E780 /* UIImage+Extensions.swift */,
 				6822FE9F20D217880037E780 /* UIDevice+Extensions.swift */,
 				6822FEA020D217880037E780 /* UISearchBar+Extensions.swift */,
-				6822FEA120D217880037E780 /* UIApplication+SharedOrNil.swift */,
 				6822FEA220D217880037E780 /* UIResponder+Extensions.swift */,
 				6822FEA320D217880037E780 /* UIDevice+Biometrics.swift */,
 				6822FEA420D217880037E780 /* UIAlertController+Extensions.swift */,
@@ -1141,7 +1150,6 @@
 				6822FF7620D217880037E780 /* OptionsRepresentable.swift in Sources */,
 				6822FF4820D217880037E780 /* UILabel+Extensions.swift in Sources */,
 				6822FF5B20D217880037E780 /* IconLabelView.swift in Sources */,
-				6822FF3520D217880037E780 /* UIApplication+SharedOrNil.swift in Sources */,
 				6822FF3220D217880037E780 /* UIImage+Extensions.swift in Sources */,
 				6822FF2220D217880037E780 /* Request.swift in Sources */,
 				6822FF2420D217880037E780 /* XCUserDefault.swift in Sources */,
@@ -1157,6 +1165,7 @@
 				6822FF4320D217880037E780 /* UIImageView+ContentMode.swift in Sources */,
 				6822FF3E20D217880037E780 /* NSLayoutConstraint+Extensions.swift in Sources */,
 				6822FF8A20D217880037E780 /* AnyEquatable.swift in Sources */,
+				687C338720D5D80F00F632DC /* UIApplication+Extensions.swift in Sources */,
 				6822FF3920D217880037E780 /* SDWebImage+Helpers.swift in Sources */,
 				6822FF6A20D217880037E780 /* XCToolbar.swift in Sources */,
 				6822FF2920D217880037E780 /* UIViewController+Extensions.swift in Sources */,
@@ -1199,6 +1208,7 @@
 				6822FF6E20D217880037E780 /* DynamicTableView.swift in Sources */,
 				6822FF4A20D217880037E780 /* UIDevice+Model.swift in Sources */,
 				6822FF3720D217880037E780 /* UIDevice+Biometrics.swift in Sources */,
+				687C338320D5D56A00F632DC /* UIStackView+Extensions.swift in Sources */,
 				6822FF4620D217880037E780 /* UIScrollView+Extensions.swift in Sources */,
 				6822FF8720D217880037E780 /* Benchmark.swift in Sources */,
 				6822FF7D20D217880037E780 /* ZoomAnimator.swift in Sources */,
@@ -1229,10 +1239,12 @@
 				6822FF2520D217880037E780 /* XCConfiguration.swift in Sources */,
 				6822FF7F20D217880037E780 /* TransitionAnimator.swift in Sources */,
 				6822FF8320D217880037E780 /* UITableView+Reusable.swift in Sources */,
+				687C338520D5D71600F632DC /* UIRefreshControl+Extensions.swift in Sources */,
 				6822FF9320D217880037E780 /* EquatableByPointer.swift in Sources */,
 				6822FF3B20D217880037E780 /* NSAttributedString+Extensions.swift in Sources */,
 				6822FF2820D217880037E780 /* UIImageView+Extensions.swift in Sources */,
 				6822FF1720D217880037E780 /* TargetActionBlockRepresentable.swift in Sources */,
+				687C338920D5D91700F632DC /* UINib+Extensions.swift in Sources */,
 				6822FF1B20D217880037E780 /* UIGestureRecognizer+Blocks.swift in Sources */,
 				6822FF8E20D217880037E780 /* Range+Extensions.swift in Sources */,
 				6822FF1A20D217880037E780 /* MFMailComposeViewController+Blocks.swift in Sources */,

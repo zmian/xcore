@@ -49,7 +49,7 @@ extension DictionaryInitializable {
     public init?(serialize: Data) {
         guard
             let dictionary = NSKeyedUnarchiver.unarchiveObject(with: serialize) as? [AnyHashable: Any],
-            let object     = Self(dictionary: dictionary)
+            let object = Self(dictionary: dictionary)
         else { return nil }
         self = object
     }

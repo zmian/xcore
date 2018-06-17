@@ -36,8 +36,8 @@ private class MailClosureWrapper: NSObject {
 
 extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
     private struct AssociatedKey {
-        static var actionHandler = "XcoreActionHandler"
-        static var shouldAutoDismiss = "XcoreShouldAutoDismiss"
+        static var actionHandler = "actionHandler"
+        static var shouldAutoDismiss = "shouldAutoDismiss"
     }
 
     private var actionHandlerWrapper: MailClosureWrapper? {

@@ -27,7 +27,7 @@
 import Foundation
 
 private func format(seconds: TimeInterval) -> String {
-    let value   = Int(seconds)
+    let value = Int(seconds)
     let seconds = value % 60
     let minutes = value / 60
     return String(format: "%02d:%02d", minutes, seconds)
@@ -36,6 +36,7 @@ private func format(seconds: TimeInterval) -> String {
 /// A convenience function to measure code execution.
 ///
 /// **Asynchronous code:**
+///
 /// ```swift
 /// measure(label: "some title") { finish in
 ///     myAsyncCall {
@@ -44,7 +45,9 @@ private func format(seconds: TimeInterval) -> String {
 ///     // ...
 /// }
 /// ```
+///
 /// **Synchronous code:**
+///
 /// ```swift
 /// measure(label: "some title") { finish in
 ///     // code to benchmark

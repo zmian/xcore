@@ -45,11 +45,13 @@ open class TransitionContext {
         guard
             let to = transitionContext.viewController(forKey: .to),
             let from = transitionContext.viewController(forKey: .from)
-        else { return nil }
+        else {
+            return nil
+        }
 
-        self.context       = transitionContext
-        self.to            = to
-        self.from          = from
+        self.context = transitionContext
+        self.to = to
+        self.from = from
         self.containerView = transitionContext.containerView
     }
 
@@ -83,7 +85,7 @@ open class TransitionAnimator: NSObject, UIViewControllerTransitioningDelegate, 
         // Orientation bug fix
         // See: http://stackoverflow.com/a/20061872/351305
         context.from.view.frame = context.containerView.bounds
-        context.to.view.frame   = context.containerView.bounds
+        context.to.view.frame = context.containerView.bounds
 
         if direction == .in {
             // Add destination view to container

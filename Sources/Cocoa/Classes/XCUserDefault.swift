@@ -33,8 +33,8 @@ public class XCUserDefault<T> {
     private let shouldCacheValueInMemory: Bool
 
     public init(key: String, defaultValue: T? = nil, shouldCacheValueInMemory: Bool = true) {
-        self.key                      = key
-        self.defaultValue             = defaultValue
+        self.key = key
+        self.defaultValue = defaultValue
         self.shouldCacheValueInMemory = shouldCacheValueInMemory
 
         onApplicationMemoryWarning { [weak self] in

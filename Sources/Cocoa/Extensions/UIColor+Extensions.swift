@@ -48,9 +48,9 @@ extension UIColor {
     }
 
     public var hex: String {
-        var red: CGFloat   = 0
+        var red: CGFloat = 0
         var green: CGFloat = 0
-        var blue: CGFloat  = 0
+        var blue: CGFloat = 0
         var alpha: CGFloat = 0
 
         guard getRed(&red, green: &green, blue: &blue, alpha: &alpha) else {
@@ -71,26 +71,26 @@ extension UIColor {
     private static func components(hex: Int64, alpha: CGFloat? = nil) -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
         let preferredAlpha = alpha
 
-        let red: CGFloat
-        let green: CGFloat
-        let blue: CGFloat
-        let alpha: CGFloat
+        let r: CGFloat
+        let g: CGFloat
+        let b: CGFloat
+        let a: CGFloat
 
-        let isRGBA =  CGFloat(hex & 0xFF000000) != 0
+        let isRGBA = CGFloat(hex & 0xFF000000) != 0
 
         if isRGBA {
-            red   = CGFloat((hex & 0xFF000000) >> 24) / 255
-            green = CGFloat((hex & 0xFF0000)   >> 16) / 255
-            blue  = CGFloat((hex & 0xFF00)     >>  8) / 255
-            alpha = preferredAlpha ?? CGFloat((hex & 0xFF)) / 255
+            r = CGFloat((hex & 0xFF000000) >> 24) / 255
+            g = CGFloat((hex & 0xFF0000)   >> 16) / 255
+            b = CGFloat((hex & 0xFF00)     >>  8) / 255
+            a = preferredAlpha ?? CGFloat((hex & 0xFF)) / 255
         } else {
-            red   = CGFloat((hex & 0xFF0000)   >> 16) / 255
-            green = CGFloat((hex & 0xFF00)     >>  8) / 255
-            blue  = CGFloat((hex & 0xFF)            ) / 255
-            alpha = preferredAlpha ?? 1
+            r = CGFloat((hex & 0xFF0000)   >> 16) / 255
+            g = CGFloat((hex & 0xFF00)     >>  8) / 255
+            b = CGFloat((hex & 0xFF)            ) / 255
+            a = preferredAlpha ?? 1
         }
 
-        return (red, green, blue, alpha)
+        return (r, g, b, a)
     }
 
     private static func components(hex: String) -> Int64 {
@@ -125,10 +125,10 @@ extension UIColor {
     }
 
     private func hueColorWithBrightness(_ amount: CGFloat) -> UIColor {
-        var hue: CGFloat        = 0
+        var hue: CGFloat = 0
         var saturation: CGFloat = 0
         var brightness: CGFloat = 0
-        var alpha: CGFloat      = 0
+        var alpha: CGFloat = 0
 
         if getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) {
             return UIColor(hue: hue, saturation: saturation, brightness: brightness * amount, alpha: alpha)
@@ -149,7 +149,7 @@ extension UIColor {
     }
 
     public static func randomColor() -> UIColor {
-        let hue        = CGFloat(arc4random() % 256) / 256
+        let hue = CGFloat(arc4random() % 256) / 256
         let saturation = CGFloat(arc4random() % 128) / 256 + 0.5
         let brightness = CGFloat(arc4random() % 128) / 256 + 0.5
         return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)

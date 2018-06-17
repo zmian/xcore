@@ -29,7 +29,7 @@ extension UIBarButtonItem: TargetActionBlockRepresentable {
     public typealias Sender = UIBarButtonItem
 
     private struct AssociatedKey {
-        static var actionHandler = "XcoreActionHandler"
+        static var actionHandler = "actionHandler"
     }
 
     fileprivate var actionHandler: SenderClosureWrapper? {
