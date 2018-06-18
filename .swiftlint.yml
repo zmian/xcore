@@ -18,7 +18,7 @@ disabled_rules:
   - operator_whitespace
   - shorthand_operator
 opt_in_rules:
-  # - switch_case_on_newline
+  - switch_case_on_newline
   - unneeded_parentheses_in_closure_argument
   - trailing_closure
   - closure_spacing
@@ -100,10 +100,6 @@ custom_rules:
     regex: '\n[ \t]*\n[ \t]*[)}\]]'
     name: "Vertical Whitespace before Closing Braces"
     message: "Don't include vertical whitespace (empty line) before closing braces."
-
-  case_return_new_line:
-    regex: ": return"
-    message: "Expected `return` to be on a new line"
 
   # braces_space:
   #   regex: "[^ ]\\{"
