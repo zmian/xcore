@@ -193,7 +193,7 @@ extension UIDevice {
         }
 
         public var description: String {
-            // swiftlint:disable case_return_new_line
+            // swiftlint:disable switch_case_on_newline
             switch self {
                 case .simulator:    return "Simulator"
 
@@ -251,7 +251,7 @@ extension UIDevice {
 
                 case .unknown(let identifier): return identifier
             }
-            // swiftlint:enable case_return_new_line
+            // swiftlint:enable switch_case_on_newline
         }
     }
 

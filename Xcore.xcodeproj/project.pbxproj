@@ -137,6 +137,7 @@
 		6822FF9720D217880037E780 /* DebounceThrottle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF1620D217880037E780 /* DebounceThrottle.swift */; };
 		68414F1820CC42AC00C547EC /* ExampleDynamicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68414F1720CC42AC00C547EC /* ExampleDynamicTableViewController.swift */; };
 		68414F1B20CC4E9C00C547EC /* UIImage+AssetIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68414F1A20CC4E9C00C547EC /* UIImage+AssetIdentifier.swift */; };
+		6856E9F920D856B0005CFBD4 /* ElementPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6856E9F820D856AF005CFBD4 /* ElementPosition.swift */; };
 		6872189320C07A9F00BFEA98 /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6872189220C07A9F00BFEA98 /* TestCase.swift */; };
 		687218A120C0824900BFEA98 /* SubviewLookupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687218A020C0824900BFEA98 /* SubviewLookupTests.swift */; };
 		687218A520C0841100BFEA98 /* ViewControllerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687218A420C0841000BFEA98 /* ViewControllerTestCase.swift */; };
@@ -311,6 +312,7 @@
 		6822FF1620D217880037E780 /* DebounceThrottle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebounceThrottle.swift; sourceTree = "<group>"; };
 		68414F1720CC42AC00C547EC /* ExampleDynamicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleDynamicTableViewController.swift; sourceTree = "<group>"; };
 		68414F1A20CC4E9C00C547EC /* UIImage+AssetIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+AssetIdentifier.swift"; sourceTree = "<group>"; };
+		6856E9F820D856AF005CFBD4 /* ElementPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementPosition.swift; sourceTree = "<group>"; };
 		6872189020C07A9F00BFEA98 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6872189220C07A9F00BFEA98 /* TestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
 		6872189B20C07B6E00BFEA98 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -529,6 +531,7 @@
 				6822FEDC20D217880037E780 /* XCToolbar.swift */,
 				6822FEDD20D217880037E780 /* TextViewController.swift */,
 				6822FEDE20D217880037E780 /* XCCollectionReusableView.swift */,
+				6856E9F820D856AF005CFBD4 /* ElementPosition.swift */,
 				6822FEDF20D217880037E780 /* UIButton+Styles.swift */,
 				6822FEE020D217880037E780 /* DynamicTableView */,
 			);
@@ -1147,6 +1150,7 @@
 				6822FF8220D217880037E780 /* Reusable.swift in Sources */,
 				6822FF9520D217880037E780 /* TODO.swift in Sources */,
 				6822FF2E20D217880037E780 /* UIKit+Extensions.swift in Sources */,
+				6856E9F920D856B0005CFBD4 /* ElementPosition.swift in Sources */,
 				6822FF9020D217880037E780 /* Numbers+Extensions.swift in Sources */,
 				6822FF4D20D217880037E780 /* UIBar+Extensions.swift in Sources */,
 				6822FF7620D217880037E780 /* OptionsRepresentable.swift in Sources */,
