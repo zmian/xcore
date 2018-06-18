@@ -39,4 +39,4 @@ Documentation is generated with [jazzy](https://github.com/realm/jazzy) and host
 
 ## License
 
-xcore is released under the MIT license. [See LICENSE](https://github.com/zmian/xcore.swift/blob/master/LICENSE) for details.
+Xcore is released under the MIT license. [See LICENSE](https://github.com/zmian/xcore.swift/blob/master/LICENSE) for details.
