@@ -577,6 +577,9 @@
                 <a href="../Protocols/ControlTargetActionBlockRepresentable.html">ControlTargetActionBlockRepresentable</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Protocols/CurrencySymbolsProvider.html">CurrencySymbolsProvider</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Protocols/DictionaryInitializable.html">DictionaryInitializable</a>
               </li>
               <li class="nav-group-task">
@@ -645,6 +648,15 @@
                 <a href="../Structs/ArrayIterator.html">ArrayIterator</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/CurrencyAmount.html">CurrencyAmount</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CurrencyAmount/FormattingStyle.html">– FormattingStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/CurrencySymbolsOptions.html">CurrencySymbolsOptions</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/DataSource.html">DataSource</a>
               </li>
               <li class="nav-group-task">
@@ -652,6 +664,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/DynamicTableModel.html">DynamicTableModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ElementPosition.html">ElementPosition</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/HighlightedAnimationOptions.html">HighlightedAnimationOptions</a>
@@ -694,6 +709,87 @@
             
           </section>
           <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SS5XcoreE23trimmingCurrencySymbolsSSAA0cD7OptionsV_AA0cD8Provider_p8providertF"></a>
+                    <a name="//apple_ref/swift/Method/trimmingCurrencySymbols(_:provider:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SS5XcoreE23trimmingCurrencySymbolsSSAA0cD7OptionsV_AA0cD8Provider_p8providertF">trimmingCurrencySymbols(_:provider:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A function to remove specified currency symbols (<code>$ , .</code>) from <code>self</code>.</p>
+<pre class="highlight swift"><code><span class="nv">$2</span><span class="p">,</span><span class="mf">000.88</span> <span class="o">-&gt;</span> <span class="mi">200088</span>   <span class="c1">// "$2,000.8".trimmingCurrencySymbols(.all)</span>
+<span class="nv">$2</span><span class="p">,</span><span class="mf">000.88</span> <span class="o">-&gt;</span> <span class="mi">2</span><span class="p">,</span><span class="mf">000.88</span> <span class="c1">// "$2,000.8".trimmingCurrencySymbols(.currencySymbol)</span>
+<span class="nv">$2</span><span class="p">,</span><span class="mf">000.88</span> <span class="o">-&gt;</span> <span class="nv">$2000</span><span class="o">.</span><span class="mi">88</span> <span class="c1">// "$2,000.8".trimmingCurrencySymbols(.groupingSeparator)</span>
+<span class="nv">$2</span><span class="p">,</span><span class="mf">000.88</span> <span class="o">-&gt;</span> <span class="nv">$2</span><span class="p">,</span><span class="mo">000</span><span class="mi">88</span> <span class="c1">// "$2,000.8".trimmingCurrencySymbols(.decimalSeparator)</span>
+<span class="nv">$2</span><span class="p">,</span><span class="mf">000.88</span> <span class="o">-&gt;</span> <span class="mf">2000.88</span>  <span class="c1">// "$2,000.8".trimmingCurrencySymbols([.currencySymbol, .groupingSeparator])</span>
+<span class="nv">$2</span><span class="p">,</span><span class="mf">000.88</span> <span class="o">-&gt;</span> <span class="mf">2000.88</span>  <span class="c1">// "$2,000.8".trimmingCurrencySymbols(.specialCharacters)</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">trimmingCurrencySymbols</span><span class="p">(</span><span class="n">_</span> <span class="nv">options</span><span class="p">:</span> <span class="kt"><a href="../Structs/CurrencySymbolsOptions.html">CurrencySymbolsOptions</a></span><span class="p">,</span> <span class="nv">provider</span><span class="p">:</span> <span class="kt"><a href="../Protocols/CurrencySymbolsProvider.html">CurrencySymbolsProvider</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/Currency/CurrencySymbolsOptions.swift#L68-L86">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SS5XcoreE8containsSbAA22CurrencySymbolsOptionsV_AA0cD8Provider_p8providertF"></a>
+                    <a name="//apple_ref/swift/Method/contains(_:provider:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SS5XcoreE8containsSbAA22CurrencySymbolsOptionsV_AA0cD8Provider_p8providertF">contains(_:provider:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns true iff other is non-empty and contained within <code>self</code> by case-sensitive, non-literal search.</p>
+<pre class="highlight swift"><code><span class="kc">true</span>  <span class="o">-&gt;</span> <span class="p">(</span><span class="s">"$2,000.88"</span><span class="p">)</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="o">.</span><span class="n">all</span><span class="p">),</span>
+<span class="kc">true</span>  <span class="o">-&gt;</span> <span class="p">(</span><span class="s">"$2,000.88"</span><span class="p">)</span><span class="o">.</span><span class="nf">contains</span><span class="p">([</span><span class="o">.</span><span class="n">currencySymbol</span><span class="p">,</span> <span class="o">.</span><span class="n">groupingSeparator</span><span class="p">,</span> <span class="o">.</span><span class="n">decimalSeparator</span><span class="p">]),</span>
+<span class="kc">true</span>  <span class="o">-&gt;</span> <span class="p">(</span><span class="s">"$2,000.88"</span><span class="p">)</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="o">.</span><span class="n">currencySymbol</span><span class="p">),</span>
+<span class="kc">true</span>  <span class="o">-&gt;</span> <span class="p">(</span><span class="s">"$2,000.88"</span><span class="p">)</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="o">.</span><span class="n">groupingSeparator</span><span class="p">),</span>
+<span class="kc">true</span>  <span class="o">-&gt;</span> <span class="p">(</span><span class="s">"$2,000.88"</span><span class="p">)</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="o">.</span><span class="n">decimalSeparator</span><span class="p">),</span>
+<span class="kc">true</span>  <span class="o">-&gt;</span> <span class="p">(</span><span class="s">"$2,000.88"</span><span class="p">)</span><span class="o">.</span><span class="nf">contains</span><span class="p">([</span><span class="o">.</span><span class="n">currencySymbol</span><span class="p">,</span> <span class="o">.</span><span class="n">groupingSeparator</span><span class="p">]),</span>
+<span class="kc">true</span>  <span class="o">-&gt;</span> <span class="p">(</span><span class="s">"$2,000.88"</span><span class="p">)</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="o">.</span><span class="n">specialCharacters</span><span class="p">),</span>
+<span class="kc">false</span> <span class="o">-&gt;</span>   <span class="p">(</span><span class="s">"2000.88"</span><span class="p">)</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="o">.</span><span class="n">specialCharacters</span><span class="p">),</span>
+<span class="kc">false</span> <span class="o">-&gt;</span>    <span class="p">(</span><span class="s">"200088"</span><span class="p">)</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="o">.</span><span class="n">all</span><span class="p">)</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">contains</span><span class="p">(</span><span class="n">_</span> <span class="nv">other</span><span class="p">:</span> <span class="kt"><a href="../Structs/CurrencySymbolsOptions.html">CurrencySymbolsOptions</a></span><span class="p">,</span> <span class="nv">provider</span><span class="p">:</span> <span class="kt"><a href="../Protocols/CurrencySymbolsProvider.html">CurrencySymbolsProvider</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/Currency/CurrencySymbolsOptions.swift#L101-L119">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
             <div class="task-group">
               <ul>
                 <li class="item">
@@ -1617,7 +1713,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-06-16)</p>
+          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-06-22)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
