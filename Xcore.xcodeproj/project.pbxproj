@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2E0CEC745C3B56374E928CA6 /* Pods_UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FA92F065206A727FCD2B3D /* Pods_UITests.framework */; };
+		681245FE20DCA9C60016AC2F /* CurrencySymbolsOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681245FD20DCA9C60016AC2F /* CurrencySymbolsOptionsTests.swift */; };
+		6812460120DCAB1C0016AC2F /* CurrencySymbolsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812460020DCAB1C0016AC2F /* CurrencySymbolsOptions.swift */; };
+		6812460520DCAF920016AC2F /* CurrencyAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812460420DCAF920016AC2F /* CurrencyAmount.swift */; };
 		6822FF1720D217880037E780 /* TargetActionBlockRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FE8120D217880037E780 /* TargetActionBlockRepresentable.swift */; };
 		6822FF1820D217880037E780 /* UIBarButtonItem+Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FE8220D217880037E780 /* UIBarButtonItem+Blocks.swift */; };
 		6822FF1920D217880037E780 /* UIControl+Blocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FE8320D217880037E780 /* UIControl+Blocks.swift */; };
@@ -181,6 +184,9 @@
 		4F7DCE5F8350BCAF06C38805 /* Pods_Xcore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Xcore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D3CFC269887586363462B4B /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		63FA92F065206A727FCD2B3D /* Pods_UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		681245FD20DCA9C60016AC2F /* CurrencySymbolsOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySymbolsOptionsTests.swift; sourceTree = "<group>"; };
+		6812460020DCAB1C0016AC2F /* CurrencySymbolsOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencySymbolsOptions.swift; sourceTree = "<group>"; };
+		6812460420DCAF920016AC2F /* CurrencyAmount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyAmount.swift; sourceTree = "<group>"; };
 		681363B120D63D1700F1B36A /* XcodeWarnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = XcodeWarnings.xcconfig; sourceTree = "<group>"; };
 		6822FE8120D217880037E780 /* TargetActionBlockRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetActionBlockRepresentable.swift; sourceTree = "<group>"; };
 		6822FE8220D217880037E780 /* UIBarButtonItem+Blocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Blocks.swift"; sourceTree = "<group>"; };
@@ -391,6 +397,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		681245FF20DCAB1C0016AC2F /* Currency */ = {
+			isa = PBXGroup;
+			children = (
+				6812460420DCAF920016AC2F /* CurrencyAmount.swift */,
+				6812460020DCAB1C0016AC2F /* CurrencySymbolsOptions.swift */,
+			);
+			path = Currency;
+			sourceTree = "<group>";
+		};
 		681BD58B1D8DD5C7008E68C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,6 +530,7 @@
 				6822FEBE20D217880037E780 /* DataSources */,
 				6822FEC820D217880037E780 /* IconLabelView */,
 				6822FECD20D217880037E780 /* UIImageFilter */,
+				681245FF20DCAB1C0016AC2F /* Currency */,
 				6822FECF20D217880037E780 /* XCScrollViewController.swift */,
 				6822FED020D217880037E780 /* XCCollectionViewCell.swift */,
 				6822FED120D217880037E780 /* SplitScreenViewController.swift */,
@@ -832,6 +848,7 @@
 				68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */,
 				687218A020C0824900BFEA98 /* SubviewLookupTests.swift */,
 				6884E5A220C9716A009C043F /* CaseIterableTests.swift */,
+				681245FD20DCA9C60016AC2F /* CurrencySymbolsOptionsTests.swift */,
 				6872189D20C07B8300BFEA98 /* Supporting Files */,
 			);
 			path = UnitTests;
@@ -1173,6 +1190,7 @@
 				6822FF8A20D217880037E780 /* AnyEquatable.swift in Sources */,
 				687C338720D5D80F00F632DC /* UIApplication+Extensions.swift in Sources */,
 				6822FF3920D217880037E780 /* SDWebImage+Helpers.swift in Sources */,
+				6812460120DCAB1C0016AC2F /* CurrencySymbolsOptions.swift in Sources */,
 				6822FF6A20D217880037E780 /* XCToolbar.swift in Sources */,
 				6822FF2920D217880037E780 /* UIViewController+Extensions.swift in Sources */,
 				6822FF7E20D217880037E780 /* ZoomAnimatorNavigationControllerDelegate.swift in Sources */,
@@ -1250,6 +1268,7 @@
 				6822FF3B20D217880037E780 /* NSAttributedString+Extensions.swift in Sources */,
 				6822FF2820D217880037E780 /* UIImageView+Extensions.swift in Sources */,
 				6822FF1720D217880037E780 /* TargetActionBlockRepresentable.swift in Sources */,
+				6812460520DCAF920016AC2F /* CurrencyAmount.swift in Sources */,
 				687C338920D5D91700F632DC /* UINib+Extensions.swift in Sources */,
 				6822FF1B20D217880037E780 /* UIGestureRecognizer+Blocks.swift in Sources */,
 				6822FF8E20D217880037E780 /* Range+Extensions.swift in Sources */,
@@ -1274,6 +1293,7 @@
 				6884E5A320C9716A009C043F /* CaseIterableTests.swift in Sources */,
 				68C392FE1E99D327009D8D58 /* PredicateQueryTests.swift in Sources */,
 				687218A520C0841100BFEA98 /* ViewControllerTestCase.swift in Sources */,
+				681245FE20DCA9C60016AC2F /* CurrencySymbolsOptionsTests.swift in Sources */,
 				689D0D1B1D8DBE6400145E0B /* TestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
