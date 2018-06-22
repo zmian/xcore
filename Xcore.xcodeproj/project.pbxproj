@@ -1518,6 +1518,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 681363B120D63D1700F1B36A /* XcodeWarnings.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1540,6 +1541,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 681363B120D63D1700F1B36A /* XcodeWarnings.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
