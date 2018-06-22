@@ -88,3 +88,9 @@ extension UILabel {
         attributedText = NSAttributedString(string: text, attributes: attributes)
     }
 }
+
+extension NSObjectProtocol {
+    public func apply(style: XCConfiguration<Self>) {
+        style.configure?(self)
+    }
+}
