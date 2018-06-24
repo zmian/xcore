@@ -31,17 +31,9 @@ open class IntrinsicContentSizeView: UIView {
         }
     }
 
-    public convenience init() {
-        self.init(intrinsicContentSize: .zero)
-    }
-
-    public init(intrinsicContentSize: CGSize) {
+    public convenience init(intrinsicContentSize: CGSize) {
+        self.init(frame: .zero)
         self.contentSize = intrinsicContentSize
-        super.init(frame: .zero)
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
 
     open override var intrinsicContentSize: CGSize {
@@ -56,17 +48,9 @@ open class IntrinsicContentSizeImageView: UIImageView {
         }
     }
 
-    public convenience init() {
-        self.init(intrinsicContentSize: .zero)
-    }
-
-    public init(intrinsicContentSize: CGSize) {
+    public convenience init(intrinsicContentSize: CGSize) {
+        self.init(frame: .zero)
         self.contentSize = intrinsicContentSize
-        super.init(frame: .zero)
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
 
     open override var intrinsicContentSize: CGSize {

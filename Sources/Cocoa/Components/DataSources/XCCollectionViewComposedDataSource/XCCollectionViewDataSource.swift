@@ -136,8 +136,8 @@ extension XCCollectionViewDataSource {
 extension XCCollectionViewDataSource {
     internal func availableWidth(for collectionView: UICollectionView, section: Int) -> CGFloat {
         let sectionInset = self.collectionView(collectionView, insetForSectionAt: section)
-        let sectionInsetHorizontal = sectionInset.left + sectionInset.right
-        let contentInsetHorizontal = collectionView.contentInset.left + collectionView.contentInset.right
+        let sectionInsetHorizontal = sectionInset.horizontal
+        let contentInsetHorizontal = collectionView.contentInset.horizontal
         let finalWidth = collectionView.bounds.width - sectionInsetHorizontal - contentInsetHorizontal - 0.01
         return finalWidth
     }
@@ -159,8 +159,8 @@ extension XCCollectionViewDataSource {
 
         let availableWidth = self.availableWidth(for: collectionView, section: section)
 
-        if let header = self.collectionView(sizeCollectionView, viewForHeaderInSectionAt: IndexPath(item: 0, section: section)) {
-            return header.sizeFitting(width: availableWidth)
+        if let headerView = self.collectionView(sizeCollectionView, viewForHeaderInSectionAt: IndexPath(item: 0, section: section)) {
+            return headerView.sizeFitting(width: availableWidth)
         } else {
             return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.headerReferenceSize ?? .zero
         }
@@ -173,8 +173,8 @@ extension XCCollectionViewDataSource {
 
         let availableWidth = self.availableWidth(for: collectionView, section: section)
 
-        if let footer = self.collectionView(sizeCollectionView, viewForFooterInSectionAt: IndexPath(item: 0, section: section)) {
-            return footer.sizeFitting(width: availableWidth)
+        if let footerView = self.collectionView(sizeCollectionView, viewForFooterInSectionAt: IndexPath(item: 0, section: section)) {
+            return footerView.sizeFitting(width: availableWidth)
         } else {
             return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize ?? .zero
         }

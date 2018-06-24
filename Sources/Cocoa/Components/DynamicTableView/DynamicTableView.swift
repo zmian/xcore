@@ -58,13 +58,13 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         willDisplayCell = callback
     }
 
-    private var configureHeader: ((_ section: Int, _ header: UITableViewHeaderFooterView, _ text: String?) -> Void)?
-    open func configureHeader(_ callback: @escaping (_ section: Int, _ header: UITableViewHeaderFooterView, _ text: String?) -> Void) {
+    private var configureHeader: ((_ section: Int, _ headerView: UITableViewHeaderFooterView, _ text: String?) -> Void)?
+    open func configureHeader(_ callback: @escaping (_ section: Int, _ headerView: UITableViewHeaderFooterView, _ text: String?) -> Void) {
         configureHeader = callback
     }
 
-    private var configureFooter: ((_ section: Int, _ footer: UITableViewHeaderFooterView, _ text: String?) -> Void)?
-    open func configureFooter(_ callback: @escaping (_ section: Int, _ footer: UITableViewHeaderFooterView, _ text: String?) -> Void) {
+    private var configureFooter: ((_ section: Int, _ footerView: UITableViewHeaderFooterView, _ text: String?) -> Void)?
+    open func configureFooter(_ callback: @escaping (_ section: Int, _ footerView: UITableViewHeaderFooterView, _ text: String?) -> Void) {
         configureFooter = callback
     }
 
