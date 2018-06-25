@@ -81,9 +81,20 @@ custom_rules:
     regex: "\\{\\[weak"
     message: "Expected a space between [{"
 
-  weak_self:
+  inconsistent_naming_weak_self:
+    name: "Inconsistent Naming"
     regex: "weakSelf"
-    message: "Use `strongSelf` instead"
+    message: "Rename `weakSelf` to be `strongSelf` to follow codebase naming convention."
+
+  inconsistent_naming_header_view:
+    name: "Inconsistent Naming"
+    regex: "(let|var) header = (.*)View"
+    message: "Rename `header` to be `headerView` to follow codebase naming convention."
+
+  inconsistent_naming_footer_view:
+    name: "Inconsistent Naming"
+    regex: "(let|var) footer = (.*)View"
+    message: "Rename `footer` to be `footerView` to follow codebase naming convention."
 
   override_func:
     regex: "override (open|public|private|internal|fileprivate)"
