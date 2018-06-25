@@ -770,6 +770,8 @@
 		6872189D20C07B8300BFEA98 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				689D0D181D8DBE5C00145E0B /* TestCase.swift */,
+				687218A420C0841000BFEA98 /* ViewControllerTestCase.swift */,
 				6872189E20C07B8300BFEA98 /* Info.plist */,
 			);
 			path = "Supporting Files";
@@ -843,8 +845,6 @@
 		689D0D161D8DBE5C00145E0B /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				689D0D181D8DBE5C00145E0B /* TestCase.swift */,
-				687218A420C0841000BFEA98 /* ViewControllerTestCase.swift */,
 				68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */,
 				687218A020C0824900BFEA98 /* SubviewLookupTests.swift */,
 				6884E5A220C9716A009C043F /* CaseIterableTests.swift */,
