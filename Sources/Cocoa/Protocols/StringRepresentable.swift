@@ -73,10 +73,10 @@ extension TextAttributedTextRepresentable {
         }
 
         switch string.stringSource {
-            case .string:
-                text = string as? String
-            case .attributedString:
-                attributedText = string as? NSAttributedString
+            case .string(let string):
+                text = string
+            case .attributedString(let attributedString):
+                attributedText = attributedString
         }
     }
 }
@@ -108,10 +108,10 @@ extension UITextView {
         }
 
         switch string.stringSource {
-            case .string:
-                text = string as? String
-            case .attributedString:
-                attributedText = string as? NSAttributedString
+            case .string(let string):
+                text = string
+            case .attributedString(let attributedString):
+                attributedText = attributedString
         }
     }
 }
