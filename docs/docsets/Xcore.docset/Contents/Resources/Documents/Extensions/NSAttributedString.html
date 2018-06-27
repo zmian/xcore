@@ -300,6 +300,9 @@
                 <a href="../Extensions/NSAttributedString.html">NSAttributedString</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Extensions/NSAttributedString/CaretDirection.html">– CaretDirection</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Extensions/NSLayoutConstraint.html">NSLayoutConstraint</a>
               </li>
               <li class="nav-group-task">
@@ -745,10 +748,6 @@
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -774,7 +773,169 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift#L36-L45">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift#L34-L43">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:So18NSAttributedStringC5XcoreEABSSSg6string_So7UIImageC5image12CoreGraphics7CGFloatV14baselineOffsets10DictionaryVySC0aB3KeyVypGSg10attributestcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(string:image:baselineOffset:attributes:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So18NSAttributedStringC5XcoreEABSSSg6string_So7UIImageC5image12CoreGraphics7CGFloatV14baselineOffsets10DictionaryVySC0aB3KeyVypGSg10attributestcfc">init(string:image:baselineOffset:attributes:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns an <code>NSAttributedString</code> object initialized with a given <code>string</code> and <code>attributes</code>.</p>
+
+<p>Returns an <code>NSAttributedString</code> object initialized with the characters of <code>aString</code>
+and the attributes of <code>attributes</code>. The returned object might be different from the original receiver.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">image</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">,</span> <span class="nv">baselineOffset</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">attributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedStringKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>string</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The string for the new attributed string.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>image</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The image for the new attributed string.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>baselineOffset</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The value indicating the <code>image</code> offset from the baseline. The default value is <code>0</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>attributes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The attributes for the new attributed string. For a list of attributes that you can include in this
+        dictionary, see <code>Character Attributes</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift#L124-L136">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:So18NSAttributedStringC5XcoreE14attributedTextABSS_SS6spacerSo6UIFontC4fontSo7UIColorC5colorSC14UIControlStateV3forAbCE14CaretDirectionO9directiontFZ"></a>
+                    <a name="//apple_ref/swift/Method/attributedText(_:spacer:font:color:for:direction:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So18NSAttributedStringC5XcoreE14attributedTextABSS_SS6spacerSo6UIFontC4fontSo7UIColorC5colorSC14UIControlStateV3forAbCE14CaretDirectionO9directiontFZ">attributedText(_:spacer:font:color:for:direction:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">attributedText</span><span class="p">(</span><span class="n">_</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">spacer</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"  "</span><span class="p">,</span> <span class="nv">font</span><span class="p">:</span> <span class="kt">UIFont</span><span class="p">,</span> <span class="nv">color</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">,</span> <span class="k">for</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">UIControlState</span><span class="p">,</span> <span class="nv">direction</span><span class="p">:</span> <span class="kt"><a href="../Extensions/NSAttributedString/CaretDirection.html">CaretDirection</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">forward</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">NSAttributedString</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift#L156-L177">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:So18NSAttributedStringC5XcoreE14CaretDirectionO"></a>
+                    <a name="//apple_ref/swift/Enum/CaretDirection" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So18NSAttributedStringC5XcoreE14CaretDirectionO">CaretDirection</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="../Extensions/NSAttributedString/CaretDirection.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CaretDirection</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift#L181-L202">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -818,7 +979,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-06-26)</p>
+          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-06-27)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

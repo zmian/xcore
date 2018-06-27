@@ -4426,65 +4426,93 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
-      "line": 36,
+      "line": 34,
       "symbol": "NSAttributedString.attributesDescription",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
-      "line": 51,
+      "line": 49,
       "symbol": "NSMutableAttributedString.setLineSpacing(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
-      "line": 60,
+      "line": 56,
+      "symbol": "NSMutableAttributedString.replaceAttribute(_:value:range:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
+      "line": 63,
       "symbol": "NSMutableAttributedString.underline(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
-      "line": 65,
+      "line": 68,
       "symbol": "NSMutableAttributedString.color(_:for:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
-      "line": 70,
+      "line": 73,
       "symbol": "NSMutableAttributedString.backgroundColor(_:for:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
-      "line": 75,
+      "line": 78,
       "symbol": "NSMutableAttributedString.font(_:for:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
-      "line": 80,
+      "line": 83,
       "symbol": "NSMutableAttributedString.textAlignment(_:for:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
-      "line": 87,
+      "line": 90,
       "symbol": "NSMutableAttributedString.link(url:text:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
-      "line": 110,
-      "symbol": "NSMutableAttributedString.replaceAttribute(_:value:range:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "line": 156,
+      "symbol": "NSAttributedString.attributedText(_:spacer:font:color:for:direction:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
+      "line": 181,
+      "symbol": "NSAttributedString.CaretDirection",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
+      "line": 182,
+      "symbol": "NSAttributedString.CaretDirection.down",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
+      "line": 183,
+      "symbol": "NSAttributedString.CaretDirection.forward",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
@@ -6330,14 +6358,14 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIViewController+Extensions.swift",
-      "line": 77,
+      "line": 71,
       "symbol": "UIViewController.isModal",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIViewController+Extensions.swift",
-      "line": 108,
+      "line": 102,
       "symbol": "UIViewController.isInterfaceLandscape",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
