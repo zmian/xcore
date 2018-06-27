@@ -35,11 +35,11 @@ open class SplitScreenViewController: UIViewController {
     }
 
     open func addViewController(toHeaderContainerView vc: UIViewController, enableConstraints: Bool = true, padding: UIEdgeInsets = .zero) {
-        addContainerViewController(vc, containerView: headerContainerView, enableConstraints: enableConstraints, padding: padding)
+        addViewController(vc, containerView: headerContainerView, enableConstraints: enableConstraints, padding: padding)
     }
 
     open func addViewController(toBodyContainerView vc: UIViewController, enableConstraints: Bool = true, padding: UIEdgeInsets = .zero) {
-        addContainerViewController(vc, containerView: bodyContainerView, enableConstraints: enableConstraints, padding: padding)
+        addViewController(vc, containerView: bodyContainerView, enableConstraints: enableConstraints, padding: padding)
     }
 
     // MARK: Setup Methods: Container Views

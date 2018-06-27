@@ -29,36 +29,30 @@ extension UIViewController {
     /// A convenience method to easily add child view controller.
     ///
     /// - Parameters:
-    ///   - childController: The view controller to add as a child view controller.
+    ///   - childViewController: The view controller to add as a child view controller.
     ///   - containerView:   A container view where this child view controller will be added. The default value is view controller's view.
-    open func addContainerViewController(_ childController: UIViewController, containerView: UIView? = nil, enableConstraints: Bool = false, padding: UIEdgeInsets = .zero) {
+    open func addViewController(_ childViewController: UIViewController, containerView: UIView? = nil, enableConstraints: Bool = false, padding: UIEdgeInsets = .zero) {
         guard let containerView = containerView ?? view else { return }
 
-        childController.beginAppearanceTransition(true, animated: false)
-        childController.willMove(toParentViewController: self)
-        addChildViewController(childController)
-        containerView.addSubview(childController.view)
-        childController.view.frame = containerView.bounds
-        childController.didMove(toParentViewController: self)
-        childController.endAppearanceTransition()
+        addChildViewController(childViewController)
+        containerView.addSubview(childViewController.view)
+        childViewController.view.frame = containerView.bounds
+        childViewController.didMove(toParentViewController: self)
 
         if enableConstraints {
-            NSLayoutConstraint.constraintsForViewToFillSuperview(childController.view, padding: padding).activate()
+            NSLayoutConstraint.constraintsForViewToFillSuperview(childViewController.view, padding: padding).activate()
         }
     }
 
-    /// A convenience method to easily remove child view controller.
-    ///
-    /// - Parameter childController: The view controller to remove from its parent's children controllers.
-    open func removeContainerViewController(_ childController: UIViewController) {
-        guard childViewControllers.contains(childController) else { return }
+    /// Removes the view controller from its parent.
+    open func removeFromContainerViewController() {
+        guard parent != nil else {
+            return
+        }
 
-        childController.beginAppearanceTransition(false, animated: false)
-        childController.willMove(toParentViewController: nil)
-        childController.view.removeFromSuperview()
-        childController.removeFromParentViewController()
-        childController.didMove(toParentViewController: nil)
-        childController.endAppearanceTransition()
+        willMove(toParentViewController: nil)
+        removeFromParentViewController()
+        view.removeFromSuperview()
     }
 
     /// A boolean value to determine whether the view controller is being popped or is showing a subview controller.
