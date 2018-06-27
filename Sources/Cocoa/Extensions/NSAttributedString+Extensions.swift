@@ -157,7 +157,7 @@ extension NSAttributedString {
     ///
     /// - Parameters:
     ///   - string: The string for the new attributed string.
-    ///   - spacer: The spacer between the caret `direction` and the `string`. The default value is two spaces `  `.
+    ///   - spacer: The spacer between the caret `direction` and the `string`. The default value is two spaces `"  "`.
     ///   - font: The font for the `string`.
     ///   - color: The color for the caret and the `string`.
     ///   - direction: The caret direction to use. The default value is `.forward`.
