@@ -25,16 +25,6 @@
 import UIKit
 
 extension UILabel {
-    open func setText(_ text: String, animated: Bool, duration: TimeInterval = .slow) {
-        if animated && text != self.text {
-            UIView.transition(with: self, duration: duration, options: .transitionCrossDissolve, animations: { [weak self] in
-                self?.text = text
-            }, completion: nil)
-        } else {
-            self.text = text
-        }
-    }
-
     open func setLineSpacing(_ spacing: CGFloat, text: String? = nil) {
         guard let text = text ?? self.text else { return }
         attributedText = NSMutableAttributedString(string: text).setLineSpacing(spacing)

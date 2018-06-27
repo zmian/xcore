@@ -81,7 +81,23 @@ extension TextAttributedTextRepresentable {
     }
 }
 
+extension TextAttributedTextRepresentable where Self: UIView {
+    public func setText(_ string: StringRepresentable?, animated: Bool, duration: TimeInterval = .slow, completion: (() -> Void)? = nil) {
+        guard animated else {
+            setText(string)
+            return
+        }
+
+        UIView.transition(with: self, duration: duration, options: .transitionCrossDissolve, animations: { [weak self] in
+            self?.setText(string)
+        }, completion: { _ in
+            completion?()
+        })
+    }
+}
+
 extension UILabel: TextAttributedTextRepresentable { }
+extension UIButton: TextAttributedTextRepresentable { }
 extension UITextField: TextAttributedTextRepresentable { }
 extension UITextView {
     public func setText(_ string: StringRepresentable?) {
