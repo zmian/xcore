@@ -85,6 +85,8 @@ extension UIImage {
         case checkmarkIcon
         case checkmarkIconFilled
         case checkmarkIconUnfilled
+        case caretDirectionDown
+        case caretDirectionForward
 
         var bundle: Bundle? {
             return .xcore
