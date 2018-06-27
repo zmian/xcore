@@ -304,6 +304,18 @@ extension UIButton {
         set { setTitle(newValue, for: .highlighted) }
     }
 
+    /// The attributed text used for the normal state.
+    open var attributedText: NSAttributedString? {
+        get { return attributedTitle(for: .normal) }
+        set { setAttributedTitle(newValue, for: .normal) }
+    }
+
+    /// The attributed text used for the highlighted state.
+    open var highlightedAttributedText: NSAttributedString? {
+        get { return attributedTitle(for: .highlighted) }
+        set { setAttributedTitle(newValue, for: .highlighted) }
+    }
+
     /// The color of the title used for the normal state.
     open var textColor: UIColor? {
         get { return titleColor(for: .normal) }
