@@ -96,7 +96,7 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
         if !viewControllers.isEmpty {
             pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: false)
         }
-        addContainerViewController(pageViewController, enableConstraints: true)
+        addViewController(pageViewController, enableConstraints: true)
 
         pageControl.isUserInteractionEnabled = false
         pageControl.numberOfPages = viewControllers.count
