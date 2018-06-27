@@ -30,9 +30,7 @@ extension NSAttributedString {
     @objc public func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
          return NSMutableAttributedString(attributedString: self).setLineSpacing(spacing)
     }
-}
 
-extension NSAttributedString {
     public var attributesDescription: String {
         let range = NSRange(location: 0, length: length)
 
@@ -53,6 +51,11 @@ extension NSMutableAttributedString {
         paragraphStyle.lineSpacing = spacing
         addAttributes([.paragraphStyle: paragraphStyle], range: NSRange(location: 0, length: string.count))
         return self
+    }
+
+    open func replaceAttribute(_ name: NSAttributedStringKey, value: Any, range: NSRange) {
+        removeAttribute(name, range: range)
+        addAttribute(name, value: value, range: range)
     }
 }
 
@@ -106,9 +109,95 @@ extension NSMutableAttributedString {
     }
 }
 
-extension NSMutableAttributedString {
-    open func replaceAttribute(_ name: NSAttributedStringKey, value: Any, range: NSRange) {
-        removeAttribute(name, range: range)
-        addAttribute(name, value: value, range: range)
+extension NSAttributedString {
+    /// Returns an `NSAttributedString` object initialized with a given `string` and `attributes`.
+    ///
+    /// Returns an `NSAttributedString` object initialized with the characters of `aString`
+    /// and the attributes of `attributes`. The returned object might be different from the original receiver.
+    ///
+    /// - Parameters:
+    ///   - string: The string for the new attributed string.
+    ///   - image: The image for the new attributed string.
+    ///   - baselineOffset: The value indicating the `image` offset from the baseline. The default value is `0`.
+    ///   - attributes: The attributes for the new attributed string. For a list of attributes that you can include in this
+    ///                 dictionary, see `Character Attributes`.
+    public convenience init(string: String? = nil, image: UIImage, baselineOffset: CGFloat = 0, attributes: [NSAttributedStringKey: Any]? = nil) {
+        let attachment = NSAttributedString.attachmentAttributes(for: image, baselineOffset: baselineOffset)
+
+        guard let string = string else {
+            self.init(string: attachment.string, attributes: attachment.attributes)
+            return
+        }
+
+        let attachmentAttributedString = NSAttributedString(string: attachment.string, attributes: attachment.attributes)
+        let attributedString = NSMutableAttributedString(string: string, attributes: attributes)
+        attributedString.append(attachmentAttributedString)
+        self.init(attributedString: attributedString)
+    }
+
+    private static func attachmentAttributes(for image: UIImage, baselineOffset: CGFloat) -> (string: String, attributes: [NSAttributedStringKey: Any]) {
+        let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        paragraphStyle.lineHeightMultiple = 0.9
+
+        let attachment = NSTextAttachment(data: nil, ofType: nil)
+        attachment.image = image
+
+        let attachmentCharacterString = String(Character(UnicodeScalar(NSAttachmentCharacter)!))
+
+        return (string: attachmentCharacterString, attributes: [
+            .attachment: attachment,
+            .baselineOffset: baselineOffset,
+            .paragraphStyle: paragraphStyle
+        ])
+    }
+}
+
+extension NSAttributedString {
+    open static func attributedText(_ text: String, spacer: String = "  ", font: UIFont, color: UIColor, for state: UIControlState, direction: CaretDirection = .forward) -> NSAttributedString {
+        let imageTintColor = color
+        var textColor = imageTintColor
+        let alpha: CGFloat = textColor.alpha * 0.5
+
+        if state == .highlighted {
+            textColor = textColor.alpha(alpha)
+        }
+
+        let attributes: [NSAttributedStringKey: Any] = [
+            .font: font,
+            .foregroundColor: textColor
+        ]
+
+        var image = UIImage(assetIdentifier: direction.assetIdentifier).tintColor(imageTintColor)
+
+        if state == .highlighted, let highlightedImage = image.alpha(alpha) {
+            image = highlightedImage
+        }
+
+        return NSAttributedString(string: text + spacer, image: image, baselineOffset: direction.imageBaselineOffset, attributes: attributes)
+    }
+}
+
+extension NSAttributedString {
+    public enum CaretDirection {
+        case down
+        case forward
+
+        var assetIdentifier: UIImage.AssetIdentifier  {
+            switch self {
+                case .down:
+                    return .caretDirectionDown
+                case .forward:
+                    return .caretDirectionForward
+            }
+        }
+
+        var imageBaselineOffset: CGFloat {
+            switch self {
+                case .down:
+                    return 2
+                case .forward:
+                    return 0
+            }
+        }
     }
 }
