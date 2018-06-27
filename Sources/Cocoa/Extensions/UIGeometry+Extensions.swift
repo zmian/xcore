@@ -49,6 +49,22 @@ extension UIEdgeInsets {
         self = UIEdgeInsets(top: value, left: value, bottom: value, right: value)
     }
 
+    public init(top: CGFloat) {
+        self = UIEdgeInsets(top: top, left: 0, bottom: 0, right: 0)
+    }
+
+    public init(left: CGFloat) {
+        self = UIEdgeInsets(top: 0, left: left, bottom: 0, right: 0)
+    }
+
+    public init(bottom: CGFloat) {
+        self = UIEdgeInsets(top: 0, left: 0, bottom: bottom, right: 0)
+    }
+
+    public init(right: CGFloat) {
+        self = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: right)
+    }
+
     public init(horizontal: CGFloat, vertical: CGFloat) {
         self = UIEdgeInsets(top: vertical, left: horizontal, bottom: vertical, right: horizontal)
     }
