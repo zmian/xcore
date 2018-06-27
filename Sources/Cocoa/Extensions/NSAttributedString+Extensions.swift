@@ -153,7 +153,16 @@ extension NSAttributedString {
 }
 
 extension NSAttributedString {
-    open static func attributedText(_ text: String, spacer: String = "  ", font: UIFont, color: UIColor, for state: UIControlState, direction: CaretDirection = .forward) -> NSAttributedString {
+    /// Returns an `NSAttributedString` object initialized with a given attributes.
+    ///
+    /// - Parameters:
+    ///   - string: The string for the new attributed string.
+    ///   - spacer: The spacer between the caret `direction` and the `string`. The default value is two spaces `  `.
+    ///   - font: The font for the `string`.
+    ///   - color: The color for the caret and the `string`.
+    ///   - direction: The caret direction to use. The default value is `.forward`.
+    ///   - state: The state for which to generate the new attributed string. The default value is `.normal`.
+    public convenience init(string: String, spacer: String = "  ", font: UIFont, color: UIColor, direction: CaretDirection = .forward, for state: UIControlState = .normal) {
         let imageTintColor = color
         var textColor = imageTintColor
         let alpha: CGFloat = textColor.alpha * 0.5
@@ -167,23 +176,31 @@ extension NSAttributedString {
             .foregroundColor: textColor
         ]
 
-        var image = UIImage(assetIdentifier: direction.assetIdentifier).tintColor(imageTintColor)
+        guard let assetIdentifier = direction.assetIdentifier else {
+            self.init(string: string, attributes: attributes)
+            return
+        }
+
+        var image = UIImage(assetIdentifier: assetIdentifier).tintColor(imageTintColor)
 
         if state == .highlighted, let highlightedImage = image.alpha(alpha) {
             image = highlightedImage
         }
 
-        return NSAttributedString(string: text + spacer, image: image, baselineOffset: direction.imageBaselineOffset, attributes: attributes)
+        self.init(string: string + spacer, image: image, baselineOffset: direction.imageBaselineOffset, attributes: attributes)
     }
 }
 
 extension NSAttributedString {
     public enum CaretDirection {
+        case none
         case down
         case forward
 
-        var assetIdentifier: UIImage.AssetIdentifier  {
+        var assetIdentifier: UIImage.AssetIdentifier? {
             switch self {
+                case .none:
+                    return nil
                 case .down:
                     return .caretDirectionDown
                 case .forward:
@@ -193,6 +210,8 @@ extension NSAttributedString {
 
         var imageBaselineOffset: CGFloat {
             switch self {
+                case .none:
+                    return 0
                 case .down:
                     return 2
                 case .forward:
