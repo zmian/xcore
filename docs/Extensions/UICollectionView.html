@@ -312,6 +312,9 @@
                 <a href="../Extensions/NSObject/LookupComparison.html">– LookupComparison</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Extensions/NSObjectProtocol.html">NSObjectProtocol</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Extensions/Optional.html">Optional</a>
               </li>
               <li class="nav-group-task">
@@ -752,6 +755,182 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@CM@Xcore@@objc(cs)UICollectionView(im)selectItemAt:animated:scrollPosition:shouldNotifyDelegate:"></a>
+                    <a name="//apple_ref/swift/Method/selectItem(at:animated:scrollPosition:shouldNotifyDelegate:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@Xcore@@objc(cs)UICollectionView(im)selectItemAt:animated:scrollPosition:shouldNotifyDelegate:">selectItem(at:animated:scrollPosition:shouldNotifyDelegate:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Selects the item at the specified index path and optionally scrolls it into view.</p>
+
+<p>If the <code>allowsSelection</code> property is <code>false</code>, calling this method has no effect.
+If there is an existing selection with a different index path and the <code>allowsMultipleSelection</code>
+property is <code>false</code>, calling this method replaces the previous selection.</p>
+
+<p>This method can cause selection-related delegate methods to be called based on the
+<code>shouldNotifyDelegate</code> parameter value.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">selectItem</span><span class="p">(</span><span class="n">at</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">scrollPosition</span><span class="p">:</span> <span class="kt">UICollectionViewScrollPosition</span><span class="p">,</span> <span class="nv">shouldNotifyDelegate</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indexPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index path of the item to select.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Specify <code>true</code> to animate the change in the selection or <code>false</code> to make the change without animating it.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>scrollPosition</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An option that specifies where the item should be positioned when scrolling finishes. For a list of possible values, see <code>UICollectionViewScrollPosition</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>shouldNotifyDelegate</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An option to specify whether the delegate methods to be called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UICollectionView+Extensions.swift#L55-L74">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@CM@Xcore@@objc(cs)UICollectionView(im)deselectItemAt:animated:shouldNotifyDelegate:"></a>
+                    <a name="//apple_ref/swift/Method/deselectItem(at:animated:shouldNotifyDelegate:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@Xcore@@objc(cs)UICollectionView(im)deselectItemAt:animated:shouldNotifyDelegate:">deselectItem(at:animated:shouldNotifyDelegate:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Deselects the item at the specified index.</p>
+
+<p>If the <code>allowsSelection</code> property is <code>false</code>, calling this method has no effect.</p>
+
+<p>This method can cause selection-related delegate methods to be called based on the
+<code>shouldNotifyDelegate</code> parameter value.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">deselectItem</span><span class="p">(</span><span class="n">at</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">shouldNotifyDelegate</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indexPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index path of the item to deselect.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Specify <code>true</code> to animate the change in the selection or <code>false</code> to make the change without animating it.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>shouldNotifyDelegate</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An option to specify whether the delegate methods to be called.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UICollectionView+Extensions.swift#L87-L106">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:So16UICollectionViewC5XcoreE013SupplementaryB4KindO"></a>
                     <a name="//apple_ref/swift/Enum/SupplementaryViewKind" class="dashAnchor"></a>
                     <a class="token" href="#/s:So16UICollectionViewC5XcoreE013SupplementaryB4KindO">SupplementaryViewKind</a>
@@ -968,7 +1147,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-06-22)</p>
+          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-06-26)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

@@ -1163,6 +1163,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
+      "line": 93,
+      "symbol": "NSObjectProtocol.apply(style:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCUserDefault.swift",
       "line": 27,
       "symbol": "XCUserDefault",
@@ -3489,69 +3496,41 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IntrinsicContentSizeView.swift",
       "line": 34,
-      "symbol": "IntrinsicContentSizeView.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IntrinsicContentSizeView.swift",
-      "line": 38,
       "symbol": "IntrinsicContentSizeView.init(intrinsicContentSize:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IntrinsicContentSizeView.swift",
-      "line": 43,
-      "symbol": "IntrinsicContentSizeView.init(coder:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IntrinsicContentSizeView.swift",
-      "line": 47,
+      "line": 39,
       "symbol": "IntrinsicContentSizeView.intrinsicContentSize",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IntrinsicContentSizeView.swift",
-      "line": 52,
+      "line": 44,
       "symbol": "IntrinsicContentSizeImageView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IntrinsicContentSizeView.swift",
-      "line": 53,
+      "line": 45,
       "symbol": "IntrinsicContentSizeImageView.contentSize",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IntrinsicContentSizeView.swift",
-      "line": 59,
-      "symbol": "IntrinsicContentSizeImageView.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IntrinsicContentSizeView.swift",
-      "line": 63,
+      "line": 51,
       "symbol": "IntrinsicContentSizeImageView.init(intrinsicContentSize:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IntrinsicContentSizeView.swift",
-      "line": 68,
-      "symbol": "IntrinsicContentSizeImageView.init(coder:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IntrinsicContentSizeView.swift",
-      "line": 72,
+      "line": 56,
       "symbol": "IntrinsicContentSizeImageView.intrinsicContentSize",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -5722,195 +5701,223 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
       "line": 52,
-      "symbol": "UIEdgeInsets.init(horizontal:vertical:)",
+      "symbol": "UIEdgeInsets.init(top:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
       "line": 56,
-      "symbol": "UIEdgeInsets.init(horizontal:)",
+      "symbol": "UIEdgeInsets.init(left:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
       "line": 60,
-      "symbol": "UIEdgeInsets.init(horizontal:top:)",
+      "symbol": "UIEdgeInsets.init(bottom:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
       "line": 64,
-      "symbol": "UIEdgeInsets.init(horizontal:bottom:)",
+      "symbol": "UIEdgeInsets.init(right:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
       "line": 68,
-      "symbol": "UIEdgeInsets.init(vertical:)",
+      "symbol": "UIEdgeInsets.init(horizontal:vertical:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
       "line": 72,
-      "symbol": "UIEdgeInsets.init(vertical:left:)",
+      "symbol": "UIEdgeInsets.init(horizontal:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
       "line": 76,
-      "symbol": "UIEdgeInsets.init(vertical:right:)",
+      "symbol": "UIEdgeInsets.init(horizontal:top:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
       "line": 80,
+      "symbol": "UIEdgeInsets.init(horizontal:bottom:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
+      "line": 84,
+      "symbol": "UIEdgeInsets.init(vertical:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
+      "line": 88,
+      "symbol": "UIEdgeInsets.init(vertical:left:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
+      "line": 92,
+      "symbol": "UIEdgeInsets.init(vertical:right:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
+      "line": 96,
       "symbol": "UIEdgeInsets.horizontal",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 88,
+      "line": 104,
       "symbol": "UIEdgeInsets.vertical",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 98,
+      "line": 114,
       "symbol": "UIEdgeInsets.+=(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 105,
+      "line": 121,
       "symbol": "UIEdgeInsets.+=(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 110,
+      "line": 126,
       "symbol": "UIEdgeInsets.+(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 119,
+      "line": 135,
       "symbol": "UIEdgeInsets.+(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 130,
+      "line": 146,
       "symbol": "UIEdgeInsets.-=(_:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 137,
-      "symbol": "UIEdgeInsets.-=(_:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 144,
-      "symbol": "UIEdgeInsets.-(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
       "line": 153,
+      "symbol": "UIEdgeInsets.-=(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
+      "line": 160,
       "symbol": "UIEdgeInsets.-(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 205,
+      "line": 169,
+      "symbol": "UIEdgeInsets.-(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
+      "line": 221,
       "symbol": "CGSize.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 209,
+      "line": 225,
       "symbol": "CGSize.+=(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 214,
+      "line": 230,
       "symbol": "CGSize.+=(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 218,
+      "line": 234,
       "symbol": "CGSize.+(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 222,
+      "line": 238,
       "symbol": "CGSize.+(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 228,
+      "line": 244,
       "symbol": "CGSize.-=(_:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 233,
-      "symbol": "CGSize.-=(_:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 237,
-      "symbol": "CGSize.-(_:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
-      "line": 241,
-      "symbol": "CGSize.-(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
       "line": 249,
-      "symbol": "UILayoutPriority.+(_:_:)",
+      "symbol": "CGSize.-=(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
       "line": 253,
+      "symbol": "CGSize.-(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
+      "line": 257,
+      "symbol": "CGSize.-(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
+      "line": 265,
+      "symbol": "UILayoutPriority.+(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIGeometry+Extensions.swift",
+      "line": 269,
       "symbol": "UILayoutPriority.-(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
