@@ -26,18 +26,16 @@ import UIKit
 import MDHTMLLabel
 
 open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
-    open private(set) lazy var textLabel: MDHTMLLabel = {
-        let textLabel = MDHTMLLabel()
-        textLabel.delegate = self
-        textLabel.font = .systemFont(.footnote)
-        textLabel.textColor = .darkGray
-        textLabel.lineBreakMode = .byWordWrapping
-        textLabel.numberOfLines = 0
-        textLabel.linkAttributes = [NSAttributedStringKey.foregroundColor: textLabel.tintColor]
-        textLabel.activeLinkAttributes = [NSAttributedStringKey.foregroundColor: textLabel.tintColor]
-        textLabel.lineHeightMultiple = 1.1
-        return textLabel
-    }()
+    open private(set) lazy var textLabel = MDHTMLLabel().apply {
+        $0.delegate = self
+        $0.font = .systemFont(.footnote)
+        $0.textColor = .darkGray
+        $0.lineBreakMode = .byWordWrapping
+        $0.numberOfLines = 0
+        $0.linkAttributes = [NSAttributedStringKey.foregroundColor: $0.tintColor]
+        $0.activeLinkAttributes = [NSAttributedStringKey.foregroundColor: $0.tintColor]
+        $0.lineHeightMultiple = 1.1
+    }
 
     /// The distance that the text is inset from the enclosing scroll view.
     /// The default value is `UIEdgeInsets(15)`.

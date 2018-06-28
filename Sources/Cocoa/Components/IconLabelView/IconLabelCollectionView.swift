@@ -160,16 +160,12 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
         }
     }()
 
-    private lazy var tapGestureRecognizer: UITapGestureRecognizer = {
-        let gestureRecognizer = UITapGestureRecognizer()
-        gestureRecognizer.isEnabled = false
-
-        gestureRecognizer.addAction { [weak self] _ in
+    private lazy var tapGestureRecognizer = UITapGestureRecognizer().apply {
+        $0.isEnabled = false
+        $0.addAction { [weak self] _ in
             self?.isEditing = false
         }
-
-        return gestureRecognizer
-    }()
+    }
 
     // MARK: UICollectionViewDataSource
 

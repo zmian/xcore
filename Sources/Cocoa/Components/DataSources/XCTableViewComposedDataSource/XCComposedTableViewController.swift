@@ -39,17 +39,15 @@ open class XCComposedTableViewController: UIViewController {
     /// The default value is `.grouped`.
     public var style: UITableViewStyle = .grouped
 
-    open lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: self.style)
-        tableView.separatorStyle = .none
-        tableView.estimatedRowHeight = 44
-        tableView.estimatedSectionHeaderHeight = 0
-        tableView.estimatedSectionFooterHeight = 0
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.sectionHeaderHeight = UITableViewAutomaticDimension
-        tableView.sectionFooterHeight = UITableViewAutomaticDimension
-        return tableView
-    }()
+    open lazy var tableView = UITableView(frame: .zero, style: self.style).apply {
+        $0.separatorStyle = .none
+        $0.estimatedRowHeight = 44
+        $0.estimatedSectionHeaderHeight = 0
+        $0.estimatedSectionFooterHeight = 0
+        $0.rowHeight = UITableViewAutomaticDimension
+        $0.sectionHeaderHeight = UITableViewAutomaticDimension
+        $0.sectionFooterHeight = UITableViewAutomaticDimension
+    }
 
     /// An option to determine whether the `scrollView`'s `top` and `bottom` is constrained
     /// to `topLayoutGuide` and `bottomLayoutGuide`. The default value is `[]`.
