@@ -4511,13 +4511,27 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
       "line": 197,
-      "symbol": "NSAttributedString.CaretDirection.down",
+      "symbol": "NSAttributedString.CaretDirection.up",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
       "line": 198,
+      "symbol": "NSAttributedString.CaretDirection.down",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
+      "line": 199,
+      "symbol": "NSAttributedString.CaretDirection.back",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
+      "line": 200,
       "symbol": "NSAttributedString.CaretDirection.forward",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
