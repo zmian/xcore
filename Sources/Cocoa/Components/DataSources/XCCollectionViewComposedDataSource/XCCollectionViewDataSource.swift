@@ -68,17 +68,14 @@ extension XCCollectionViewDataSource {
     }
 
     open func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        var supplementaryView: UICollectionReusableView?
-
         switch kind {
             case UICollectionElementKindSectionHeader:
-                supplementaryView = self.collectionView(collectionView, viewForHeaderInSectionAt: indexPath) ?? collectionView.dequeueReusableSupplementaryView(kind: .header, for: indexPath)
+                return self.collectionView(collectionView, viewForHeaderInSectionAt: indexPath) ?? collectionView.dequeueReusableSupplementaryView(kind: .header, for: indexPath)
             case UICollectionElementKindSectionFooter:
-                supplementaryView = self.collectionView(collectionView, viewForFooterInSectionAt: indexPath) ?? collectionView.dequeueReusableSupplementaryView(kind: .footer, for: indexPath)
+                return self.collectionView(collectionView, viewForFooterInSectionAt: indexPath) ?? collectionView.dequeueReusableSupplementaryView(kind: .footer, for: indexPath)
             default:
-                break
+                fatalError("Failed to dequeue UICollectionReusableView for kind: \(kind) at indexPath(\(indexPath.section), \(indexPath.item))")
         }
-        return supplementaryView ?? UICollectionReusableView()
     }
 }
 
