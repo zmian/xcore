@@ -194,15 +194,21 @@ extension NSAttributedString {
 extension NSAttributedString {
     public enum CaretDirection {
         case none
+        case up
         case down
+        case back
         case forward
 
         var assetIdentifier: UIImage.AssetIdentifier? {
             switch self {
                 case .none:
                     return nil
+                case .up:
+                    return .caretDirectionUp
                 case .down:
                     return .caretDirectionDown
+                case .back:
+                    return .caretDirectionBack
                 case .forward:
                     return .caretDirectionForward
             }
@@ -212,9 +218,9 @@ extension NSAttributedString {
             switch self {
                 case .none:
                     return 0
-                case .down:
+                case .up, .down:
                     return 2
-                case .forward:
+                case .back, .forward:
                     return 0
             }
         }
