@@ -78,6 +78,17 @@ extension XCCollectionViewDataSource {
             default:
                 break
         }
+
+        if supplementaryView == nil {
+            switch kind {
+                case UICollectionElementKindSectionHeader:
+                    supplementaryView = collectionView.dequeueReusableSupplementaryView(kind: .header, for: indexPath)
+                case UICollectionElementKindSectionFooter:
+                    supplementaryView = collectionView.dequeueReusableSupplementaryView(kind: .footer, for: indexPath)
+                default:
+                    break
+            }
+        }
         return supplementaryView ?? UICollectionReusableView()
     }
 }
