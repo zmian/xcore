@@ -303,14 +303,27 @@ extension UIView {
         sizeChangeResistance(.defaultLow, axis: .horizontal)
     }
 
-    open func resistsSizeChange(axis: UILayoutConstraintAxis) {
+    open func resistsSizeChange(axis: UILayoutConstraintAxis...) {
         sizeChangeResistance(.required, axis: axis)
     }
 
     open func sizeChangeResistance(_ priority: UILayoutPriority, axis: UILayoutConstraintAxis...) {
-        for element in axis {
-            setContentHuggingPriority(priority, for: element)
-            setContentCompressionResistancePriority(priority, for: element)
+        axis.forEach {
+            setContentHuggingPriority(priority, for: $0)
+            setContentCompressionResistancePriority(priority, for: $0)
+        }
+    }
+
+    // Arrays and variadic parameters don't play well.
+
+    open func resistsSizeChange(axis: [UILayoutConstraintAxis]) {
+        sizeChangeResistance(.required, axis: axis)
+    }
+
+    open func sizeChangeResistance(_ priority: UILayoutPriority, axis: [UILayoutConstraintAxis]) {
+        axis.forEach {
+            setContentHuggingPriority(priority, for: $0)
+            setContentCompressionResistancePriority(priority, for: $0)
         }
     }
 }
@@ -320,11 +333,11 @@ extension Array where Element == UIView {
         forEach { $0.resistsSizeChange() }
     }
 
-    public func resistsSizeChange(axis: UILayoutConstraintAxis) {
+    public func resistsSizeChange(axis: UILayoutConstraintAxis...) {
         forEach { $0.resistsSizeChange(axis: axis) }
     }
 
-    public func sizeChangeResistance(_ priority: UILayoutPriority, axis: UILayoutConstraintAxis) {
+    public func sizeChangeResistance(_ priority: UILayoutPriority, axis: UILayoutConstraintAxis...) {
         forEach { $0.sizeChangeResistance(priority, axis: axis) }
     }
 }
