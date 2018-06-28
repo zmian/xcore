@@ -78,7 +78,18 @@ extension XCCollectionViewDataSource {
             default:
                 break
         }
-        return supplementaryView ?? UICollectionReusableView()
+
+        guard let reusableSupplementaryView = supplementaryView else {
+            #if DEBUG
+            fatalError("Failed to dequeue UICollectionReusableView for kind: \(kind) at indexPath(\(indexPath.section), \(indexPath.item))")
+            #else
+            // Return a dummy cell
+            // In some cases collection view queries and crash if no valid view is found.
+            return collectionView.dequeueReusableSupplementaryView(kind: .custom(kind), for: indexPath)
+            #endif
+        }
+
+        return reusableSupplementaryView
     }
 }
 
