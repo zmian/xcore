@@ -110,11 +110,18 @@ extension NSObjectProtocol {
     /// label.apply {
     ///     $0.textColor = .blue
     /// }
+    ///
+    /// // or
+    /// let button = UIButton().apply {
+    ///     $0.setTitle("Hello, world!", for: .normal)
+    /// }
     /// ```
     ///
     /// - Parameter configure: The configuration block to apply.
-    public func apply(_ configure: ((Self) -> Void)) {
-        configure(self)
+    @discardableResult
+    public func apply(_ configure: (Self) throws -> Void) rethrows -> Self {
+        try configure(self)
+        return self
     }
 }
 
@@ -129,12 +136,20 @@ extension Array where Element: NSObjectProtocol {
     /// [label, button].apply {
     ///     $0.isUserInteractionEnabled = false
     /// }
+    ///
+    /// // or
+    /// let components = [UILabel(), UIButton()].apply {
+    ///     $0.isUserInteractionEnabled = false
+    /// }
     /// ```
     ///
     /// - Parameter configure: The configuration block to apply.
-    public func apply(_ configure: ((Element) -> Void)) {
-        forEach {
-            $0.apply(configure)
+    @discardableResult
+    public func apply(_ configure: (Element) throws -> Void) rethrows -> Array {
+        try forEach {
+            try $0.apply(configure)
         }
+
+        return self
     }
 }
