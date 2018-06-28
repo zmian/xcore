@@ -182,7 +182,7 @@ extension UIButton {
     private func updateStyleIfNeeded() {
         contentEdgeInsets = UIEdgeInsets(horizontal: .defaultPadding)
         prepareForReuse()
-        style.configure?(self)
+        style.configure(self)
         updateHeightConstraintIfNeeded()
     }
 
@@ -517,6 +517,25 @@ extension UIButton {
     fileprivate var didEnable: ((_ sender: UIButton) -> Void)? {
         get { return associatedObject(&AssociatedKey.didEnable) }
         set { setAssociatedObject(&AssociatedKey.didEnable, value: newValue) }
+    }
+}
+
+extension UIButton {
+    /// A convenience method to pass the `touchUpInside` event to the
+    /// `UICollectionViewDelegate.didSelectItemAt` method.
+    ///
+    /// This convenience method omits the need to create a callback for
+    /// the button and have the cell listen for it and then manually call the
+    /// `didSelectItemAt` logic in multiple places.
+    @objc open func forwardTouchUpInsideActionToCollectionViewDelegate() {
+        addAction(.touchUpInside) { [weak self] _ in
+            guard let strongSelf = self, let cell = strongSelf.collectionViewCell else { return }
+            cell.select(animated: false, shouldNotifyDelegate: true)
+        }
+    }
+
+    private var collectionViewCell: UICollectionViewCell? {
+        return responder()
     }
 }
 

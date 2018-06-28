@@ -55,17 +55,17 @@ import UIKit
 /// ```
 public struct XCConfiguration<Type> {
     public var identifier: String
-    public var configure: ((Type) -> Void)?
+    public var configure: ((Type) -> Void)
 
-    public init(identifier: String? = nil, _ configure: ((Type) -> Void)?) {
+    public init(identifier: String? = nil, _ configure: @escaping ((Type) -> Void)) {
         self.identifier = identifier ?? "_defaultIdentifier_"
         self.configure = configure
     }
 
-    public func extend(identifier: String? = nil, _ configure: ((Type) -> Void)?) -> XCConfiguration<Type> {
+    public func extend(identifier: String? = nil, _ configure: @escaping ((Type) -> Void)) -> XCConfiguration<Type> {
         return XCConfiguration(identifier: identifier) { type in
-            self.configure?(type)
-            configure?(type)
+            self.configure(type)
+            configure(type)
         }
     }
 }
@@ -80,7 +80,7 @@ extension UILabel {
     public convenience init(style: XCConfiguration<UILabel>, text: String? = nil) {
         self.init()
         self.text = text
-        style.configure?(self)
+        style.configure(self)
     }
 
     public convenience init(text: String, attributes: [NSAttributedStringKey: Any]) {
@@ -89,8 +89,52 @@ extension UILabel {
     }
 }
 
+extension UIImageView {
+    public convenience init(style: XCConfiguration<UIImageView>) {
+        self.init()
+        style.configure(self)
+    }
+}
+
 extension NSObjectProtocol {
     public func apply(style: XCConfiguration<Self>) {
-        style.configure?(self)
+        style.configure(self)
+    }
+
+    /// A convenience function to apply styles using block based api.
+    ///
+    /// ```swift
+    /// let label = UILabel()
+    ///
+    /// // later somewhere in the code
+    /// label.apply {
+    ///     $0.textColor = .blue
+    /// }
+    /// ```
+    ///
+    /// - Parameter configure: The configuration block to apply.
+    public func apply(_ configure: ((Self) -> Void)) {
+        configure(self)
+    }
+}
+
+extension Array where Element: NSObjectProtocol {
+    /// A convenience function to apply styles using block based api.
+    ///
+    /// ```swift
+    /// let label = UILabel()
+    /// let button = UIButton()
+    ///
+    /// // later somewhere in the code
+    /// [label, button].apply {
+    ///     $0.isUserInteractionEnabled = false
+    /// }
+    /// ```
+    ///
+    /// - Parameter configure: The configuration block to apply.
+    public func apply(_ configure: ((Element) -> Void)) {
+        forEach {
+            $0.apply(configure)
+        }
     }
 }
