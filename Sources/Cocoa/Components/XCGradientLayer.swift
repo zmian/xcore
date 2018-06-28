@@ -26,11 +26,9 @@ import UIKit
 import CoreGraphics
 
 open class XCGradientLayer: CALayer {
-    open lazy var gradient: CAGradientLayer = {
-        let gradient = CAGradientLayer()
-        gradient.frame = self.bounds
-        return gradient
-    }()
+    open lazy var gradient = CAGradientLayer().apply {
+        $0.frame = self.bounds
+    }
 
     public override init() {
         super.init()

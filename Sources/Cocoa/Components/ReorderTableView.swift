@@ -89,10 +89,7 @@ open class ReorderTableView: UITableView {
     private var currentLocationIndexPath: IndexPath?
     private var initialIndexPath: IndexPath?
     private var savedObject: Any?
-    private lazy var longPressGestureRecognizer: UILongPressGestureRecognizer = {
-        UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-    }()
-
+    private lazy var longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
     open weak var reorderDelegate: ReorderTableViewDelegate?
     /// The default value is `true`.
     open var isReorderingEnabled: Bool = true {
