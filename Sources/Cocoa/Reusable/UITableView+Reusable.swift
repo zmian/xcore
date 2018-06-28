@@ -65,9 +65,8 @@ extension UITableView {
     }
 
     private func registerHeaderFooterViewIfNeeded<T: UITableViewHeaderFooterView>(_ view: T.Type) {
-        let identifier = T.reuseIdentifier + kind.identifier
-        guard !registeredHeaderFooterViews.contains(identifier) else { return }
-        registeredHeaderFooterViews.insert(identifier)
+        guard !registeredHeaderFooterViews.contains(T.reuseIdentifier) else { return }
+        registeredHeaderFooterViews.insert(T.reuseIdentifier)
         registerHeaderFooterView(view)
     }
 }
