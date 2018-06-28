@@ -37,6 +37,7 @@ public final class SwizzleManager {
     /// Place any one of the snippet in your app:
     ///
     /// **Usage 1**
+    ///
     /// ```swift
     /// extension UIApplication {
     ///     open override var next: UIResponder? {
@@ -49,6 +50,7 @@ public final class SwizzleManager {
     ///
     /// **Usage 2**
     /// With an option to provide additional selectors.
+    ///
     /// ```swift
     /// extension UIApplication {
     ///     open override var next: UIResponder? {
@@ -59,9 +61,11 @@ public final class SwizzleManager {
     ///         return super.next
     ///     }
     /// }
+    /// ```
     ///
     /// **Usage 3**
     /// Or in the `AppDelegate` class
+    ///
     /// ```swift
     /// func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     ///     SwizzleManager.start()
