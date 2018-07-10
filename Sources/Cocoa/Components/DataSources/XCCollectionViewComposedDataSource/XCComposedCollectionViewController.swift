@@ -88,7 +88,7 @@ open class XCComposedCollectionViewController: UIViewController {
 
     deinit {
         #if DEBUG
-        console.info("\(self) deinit")
+        Console.info("\(self) deinit")
         #endif
     }
 }

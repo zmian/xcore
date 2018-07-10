@@ -99,7 +99,7 @@ extension XCTableViewDataSource {
 
     @objc(tableView:cellForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        fatalError("[XCTableViewDataSource] Should be implemented by subclasses.")
+        fatalError(because: .subclassMustImplement)
     }
 
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

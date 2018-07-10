@@ -24,8 +24,7 @@
 
 import Foundation
 
-// swiftlint:disable:next type_name
-public final class console {
+public final class Console {
     /// The default value is `.all`.
     public static var levelOptions: LevelOptions = .all
     /// The default value is `.basic`.
@@ -108,7 +107,7 @@ public final class console {
     }
 }
 
-extension console {
+extension Console {
     /// Writes the textual representations of items, separated by separator and terminated by terminator,
     /// into the standard output.
     ///
@@ -177,7 +176,7 @@ extension console {
     }
 }
 
-extension console {
+extension Console {
     /// A list of log levels available.
     public struct LevelOptions: OptionSet {
         public let rawValue: Int

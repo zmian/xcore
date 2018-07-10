@@ -94,7 +94,7 @@ public struct JSONHelpers {
     /// Serialize value to `Data`.
     public static func serialize(_ value: Any, prettyPrinted: Bool = false) -> Data? {
         guard JSONSerialization.isValidJSONObject(value) else {
-            console.error("Invalid JSON Object.")
+            Console.error("Invalid JSON Object.")
             return nil
         }
 

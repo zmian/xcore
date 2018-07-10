@@ -93,7 +93,7 @@ extension Array where Element: MutableCollection, Element.Index == Int {
     /// A convenience subscript to return the element at the specified index path.
     ///
     /// - Parameter indexPath: The index path for the element.
-    /// - Returns: The element at the specified index path iff it is within bounds, otherwise fatalError.
+    /// - Returns: The element at the specified index path iff it is within bounds, otherwise `fatalError`.
     public subscript(indexPath: IndexPath) -> Element.Iterator.Element {
         get { return self[indexPath.section][indexPath.item] }
         set { self[indexPath.section][indexPath.item] = newValue }
