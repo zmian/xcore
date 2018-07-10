@@ -96,10 +96,10 @@ open class TransitionAnimator: NSObject, UIViewControllerTransitioningDelegate, 
     }
 
     open func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        fatalError("Should be implemented by subclasses")
+        fatalError(because: .subclassMustImplement)
     }
 
     open func transition(context: TransitionContext, direction: AnimationDirection) {
-        fatalError("Should be implemented by subclasses")
+        fatalError(because: .subclassMustImplement)
     }
 }

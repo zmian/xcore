@@ -25,53 +25,59 @@
 import UIKit
 
 private class XCUIPageViewController: UIPageViewController {
-    var swipeEnabled = true {
-        didSet { scrollView?.isScrollEnabled = swipeEnabled }
+    var isScrollEnabled = true {
+        didSet { scrollView?.isScrollEnabled = isScrollEnabled }
     }
 
     // Subclasses have to be responsible when using this setting
-    // as view controller count stays at one when we are disabling
-    // bounce.
-    var disableBounceForSinglePage = false
+    // as view controller count stays at one when the bounce is disabled.
+    var isBounceForSinglePageEnabled = true
+
     private var scrollView: UIScrollView? {
         didSet {
-            scrollView?.bounces = !disableBounceForSinglePage
-            scrollView?.isScrollEnabled = swipeEnabled
+            scrollView?.bounces = isBounceForSinglePageEnabled
+            scrollView?.isScrollEnabled = isScrollEnabled
         }
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        if scrollView == nil {
-            for v in view.subviews {
-                if let sv = v as? UIScrollView {
-                    scrollView = sv
-                }
+        guard scrollView == nil else { return }
+
+        for view in view.subviews {
+            if let aScrollView = view as? UIScrollView {
+                scrollView = aScrollView
             }
         }
     }
 }
 
-open class XCPageViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-    public enum PageControlPosition { case top, center, bottom }
+open class XCPageViewController: UIViewController {
+    public enum PageControlPosition {
+        case top
+        case center
+        case bottom
+    }
+
     open var pageViewController: UIPageViewController!
     open let pageControl = UIPageControl()
     open let pageControlHeight: CGFloat = 40
-    open var pageControlPosition = PageControlPosition.bottom
+    open var pageControlPosition: PageControlPosition = .bottom
     open var viewControllers: [UIViewController] = []
-    open var disableBounceForSinglePage = true
-    open var swipeEnabled = true {
-        didSet { (pageViewController as? XCUIPageViewController)?.swipeEnabled = swipeEnabled }
+    /// The default value is `false`.
+    open var isBounceForSinglePageEnabled = false
+    open var isScrollEnabled = true {
+        didSet { (pageViewController as? XCUIPageViewController)?.isScrollEnabled = isScrollEnabled }
     }
-    /// Spacing between between pages. Default is `0`.
-    /// Page spacing is only valid if the transition style is `UIPageViewControllerTransitionStyle.Scroll`.
+    /// Spacing between between pages. The default value is `0`.
+    /// Page spacing is only valid if the transition style is `.scroll`.
     open var pageSpacing: CGFloat = 0
-    open var transitionStyle = UIPageViewControllerTransitionStyle.scroll
-    open var navigationOrientation = UIPageViewControllerNavigationOrientation.horizontal
+    open var transitionStyle: UIPageViewControllerTransitionStyle = .scroll
+    open var navigationOrientation: UIPageViewControllerNavigationOrientation = .horizontal
 
     private var didChangeCurrentPage: ((_ index: Int) -> Void)?
-    /// Closure for listening page change events in subclasses
+    /// A callback for listening to page change events.
     open func didChangeCurrentPage(_ callback: ((_ index: Int) -> Void)? = nil) {
         didChangeCurrentPage = callback
     }
@@ -103,11 +109,11 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
         view.addSubview(pageControl)
         setupConstraints()
 
-        if viewControllers.count == 1 && disableBounceForSinglePage {
-            (pageViewController as? XCUIPageViewController)?.disableBounceForSinglePage = true
+        if viewControllers.count == 1 {
+            (pageViewController as? XCUIPageViewController)?.isBounceForSinglePageEnabled = isBounceForSinglePageEnabled
         }
 
-        (pageViewController as? XCUIPageViewController)?.swipeEnabled = swipeEnabled
+        (pageViewController as? XCUIPageViewController)?.isScrollEnabled = isScrollEnabled
     }
 
     private func setupConstraints() {
@@ -124,9 +130,11 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
                 NSLayoutConstraint(item: pageControl, attribute: .bottom, toItem: view).activate()
         }
     }
+}
 
-    // MARK: UIPageViewControllerDataSource
+// MARK: UIPageViewControllerDataSource & UIPageViewControllerDelegate
 
+extension XCPageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     open func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         let indexOfCurrentVC = indexOf(viewController)
         return indexOfCurrentVC < viewControllers.count - 1 ? viewControllers[indexOfCurrentVC + 1] : nil
@@ -137,63 +145,72 @@ open class XCPageViewController: UIViewController, UIPageViewControllerDataSourc
         return indexOfCurrentVC > 0 ? viewControllers[indexOfCurrentVC - 1] : nil
     }
 
-    // MARK: UIPageViewControllerDelegate
-
     open func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if completed, let newViewController = pageViewController.viewControllers?.first {
-            let index = indexOf(newViewController)
-            pageControl.currentPage = index
-            updateStatusBar(forIndex: index)
-            didChangeCurrentPage?(pageControl.currentPage)
-        }
+        guard completed, let newViewController = pageViewController.viewControllers?.first else { return }
+        let index = indexOf(newViewController)
+        pageControl.currentPage = index
+        updateStatusBar(for: index)
+        didChangeCurrentPage?(pageControl.currentPage)
     }
+}
 
-    // MARK: Navigation
+// MARK: Navigation API
 
+extension XCPageViewController {
+    /// Set current view controller index to be displayed.
+    ///
+    /// - Parameters:
+    ///   - index: The index of the view controller to be displayed.
+    ///   - direction: The navigation direction. The default value is `.forward`.
+    ///   - animated: A boolean value that indicates whether the transition is to be animated. The default value is `false`.
+    ///   - completion: A block to be called when setting the current view controller animation completes. The default value is `nil`.
     open func setCurrentPage(_ index: Int, direction: UIPageViewControllerNavigationDirection = .forward, animated: Bool = false, completion: ((Bool) -> Void)? = nil) {
         guard viewControllers.count > index else { return }
         let viewControllerAtIndex = viewControllers[index]
         pageViewController.setViewControllers([viewControllerAtIndex], direction: direction, animated: animated, completion: completion)
         pageControl.currentPage = index
-        updateStatusBar(forIndex: index)
+        updateStatusBar(for: index)
     }
 
     open func removeViewController(_ viewController: UIViewController) {
-        if let index = viewControllers.index(of: viewController) {
-            viewControllers.remove(at: index)
-            reloadData()
-        }
+        guard let index = viewControllers.index(of: viewController) else { return }
+        viewControllers.remove(at: index)
+        reloadData()
     }
 
     open func replaceViewController(_ viewControllerToReplace: UIViewController, withViewControllers: [UIViewController]) {
-        if let index = viewControllers.index(of: viewControllerToReplace) {
-            viewControllers.remove(at: index)
-            viewControllers.insert(contentsOf: withViewControllers, at: index)
-            reloadData()
-        }
-    }
-
-    // MARK: Helpers
-
-    private func indexOf(_ viewController: UIViewController) -> Int {
-        return viewControllers.index(of: viewController) ?? 0
+        guard let index = viewControllers.index(of: viewControllerToReplace) else { return }
+        viewControllers.remove(at: index)
+        viewControllers.insert(contentsOf: withViewControllers, at: index)
+        reloadData()
     }
 
     open func reloadData() {
         setCurrentPage(pageControl.currentPage)
     }
+}
 
-    private func updateStatusBar(forIndex index: Int) {
+// MARK: Helpers
+
+extension XCPageViewController {
+    private func indexOf(_ viewController: UIViewController) -> Int {
+        return viewControllers.index(of: viewController) ?? 0
+    }
+
+    private func updateStatusBar(for index: Int) {
         guard let vc = viewControllers.at(index) else { return }
+
         if let nvc = vc as? UINavigationController {
             statusBarStyle = nvc.preferredStatusBarStyle
         } else {
             statusBarStyle = vc.statusBarStyle ?? vc.preferredStatusBarStyle
         }
     }
+}
 
-    // MARK: Statusbar and Orientation
+// MARK: Statusbar and Orientation
 
+extension XCPageViewController {
     open override var prefersStatusBarHidden: Bool {
         return isStatusBarHidden ?? super.prefersStatusBarHidden
     }

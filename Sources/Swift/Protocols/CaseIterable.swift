@@ -89,7 +89,7 @@ extension CaseIterable {
         // Swift based enums always have a fixed size of `1` whereas `@objc` enums size is `8`.
         guard MemoryLayout<Self>.size == 1 else {
             #if DEBUG
-                fatalError("Unsupported type of enum detected. `CaseIterable` does not support enums marked with `@objc` as it can hang and eventually crash the app in the Release mode.")
+                fatalError(because: .unsupportedEnum)
             #else
                 return []
             #endif

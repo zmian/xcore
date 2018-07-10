@@ -84,7 +84,7 @@ open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     }
 
     deinit {
-        console.info("deinit")
+        Console.info("deinit")
     }
 
     // MARK: Setup Methods

@@ -93,7 +93,7 @@ open class XCComposedTableViewController: UIViewController {
 
     deinit {
         #if DEBUG
-        console.info("\(self) deinit")
+        Console.info("\(self) deinit")
         #endif
     }
 }

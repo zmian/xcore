@@ -36,14 +36,14 @@ public struct Response {
 
     public var responseJSON: Any? {
         guard let data = data else {
-            console.error("`data` is `nil`.")
+            Console.error("`data` is `nil`.")
             return nil
         }
 
         do {
             return try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
         } catch let error {
-            console.error("Failed to parse JSON:", error)
+            Console.error("Failed to parse JSON:", error)
         }
 
         return nil

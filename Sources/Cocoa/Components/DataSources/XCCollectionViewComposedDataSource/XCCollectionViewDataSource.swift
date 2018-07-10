@@ -64,7 +64,7 @@ extension XCCollectionViewDataSource {
     }
 
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        fatalError("[XCCollectionViewDataSource] Should be implemented by subclasses.")
+        fatalError(because: .subclassMustImplement)
     }
 
     open func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -81,7 +81,7 @@ extension XCCollectionViewDataSource {
 
         guard let reusableSupplementaryView = supplementaryView else {
             #if DEBUG
-            fatalError("Failed to dequeue UICollectionReusableView for kind: \(kind) at indexPath(\(indexPath.section), \(indexPath.item))")
+            fatalError(because: .dequeueFailed(for: "UICollectionReusableView", kind: kind, indexPath: indexPath))
             #else
             // Return a dummy cell
             // In some cases collection view queries and crash if no valid view is found.

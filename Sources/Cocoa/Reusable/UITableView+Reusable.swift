@@ -95,7 +95,7 @@ extension UITableView {
         registerHeaderFooterViewIfNeeded(T.self)
 
         guard let view = dequeueReusableHeaderFooterView(withIdentifier: T.reuseIdentifier) as? T else {
-            fatalError("Failed to dequeue UITableViewHeaderFooterView with identifier: \(T.reuseIdentifier)")
+            fatalError(because: .dequeueFailed(for: "UITableViewHeaderFooterView", identifier: T.reuseIdentifier))
         }
 
         return view
@@ -109,7 +109,7 @@ extension UITableView {
         registerIfNeeded(T.self)
 
         guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
-            fatalError("Failed to dequeue UITableViewCell with identifier: \(T.reuseIdentifier)")
+            fatalError(because: .dequeueFailed(for: "UITableViewCell", identifier: T.reuseIdentifier))
         }
 
         return cell

@@ -76,7 +76,7 @@ extension UIFont {
                 case TextStyle.caption2.rawValue:
                     self = .caption2
                 default:
-                    fatalError("Unsupported `TextStyle`")
+                    fatalError(because: .unsupportedTextStyle(rawValue))
             }
         }
     }

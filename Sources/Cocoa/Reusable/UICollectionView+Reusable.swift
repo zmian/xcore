@@ -65,9 +65,8 @@ extension UICollectionView {
     }
 
     private func registerSupplementaryViewIfNeeded<T: UICollectionReusableView>(kind: SupplementaryViewKind, view: T.Type) {
-        let identifier = T.reuseIdentifier + kind.identifier
-        guard !registeredSupplementaryViews.contains(identifier) else { return }
-        registeredSupplementaryViews.insert(identifier)
+        guard !registeredSupplementaryViews.contains(T.reuseIdentifier) else { return }
+        registeredSupplementaryViews.insert(T.reuseIdentifier)
         registerSupplementaryView(kind: kind, view: view)
     }
 }
@@ -110,7 +109,7 @@ extension UICollectionView {
         registerSupplementaryViewIfNeeded(kind: kind, view: T.self)
 
         guard let view = dequeueReusableSupplementaryView(ofKind: kind.identifier, withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
-            fatalError("Failed to dequeue UICollectionReusableView with identifier: \(T.reuseIdentifier)")
+            fatalError(because: .dequeueFailed(for: "UICollectionReusableView", identifier: T.reuseIdentifier))
         }
 
         return view
@@ -124,7 +123,7 @@ extension UICollectionView {
         registerIfNeeded(T.self)
 
         guard let cell = dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
-            fatalError("Failed to dequeue UICollectionViewCell with identifier: \(T.reuseIdentifier)")
+            fatalError(because: .dequeueFailed(for: "UICollectionViewCell", identifier: T.reuseIdentifier))
         }
 
         return cell
