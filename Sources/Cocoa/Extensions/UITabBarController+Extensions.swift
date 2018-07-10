@@ -25,19 +25,26 @@
 import UIKit
 
 extension UITabBarController {
+    // Autorotation Fix. Simply override `supportedInterfaceOrientations`
+    // method in any view controller and it would respect that orientation
+    // setting per view controller.
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return selectedViewController?.supportedInterfaceOrientations ?? super.supportedInterfaceOrientations
+        return selectedViewController?.preferredInterfaceOrientations ?? preferredInterfaceOrientations ?? selectedViewController?.supportedInterfaceOrientations ?? super.supportedInterfaceOrientations
+    }
+
+    open override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return selectedViewController?.interfaceOrientationForPresentation ?? interfaceOrientationForPresentation ?? selectedViewController?.preferredInterfaceOrientationForPresentation ?? super.preferredInterfaceOrientationForPresentation
     }
 
     open override var shouldAutorotate: Bool {
-        return selectedViewController?.shouldAutorotate ?? super.shouldAutorotate
+        return selectedViewController?.isAutorotateEnabled ?? isAutorotateEnabled ?? selectedViewController?.shouldAutorotate ?? super.shouldAutorotate
     }
 }
 
 extension UITabBarController {
-    open func setTabBarHidden(_ hidden: Bool, animated: Bool) {
+    open func setTabBarHidden(_ hide: Bool, animated: Bool) {
         let frame = tabBar.frame
-        let offsetY = hidden ? frame.size.height : -frame.size.height
+        let offsetY = hide ? frame.size.height : -frame.size.height
         var newFrame = frame
         newFrame.origin.y = view.frame.maxY + offsetY
         tabBar.isHidden = false
@@ -46,7 +53,7 @@ extension UITabBarController {
             self.tabBar.frame = newFrame
         }, completion: { complete in
             if complete {
-                self.tabBar.isHidden = hidden
+                self.tabBar.isHidden = hide
             }
         })
     }
