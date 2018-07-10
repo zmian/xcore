@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>console Class Reference</title>
+    <title>Console Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,11 +10,11 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/console" class="dashAnchor"></a>
-    <a title="console Class Reference"></a>
+    <a name="//apple_ref/swift/Class/Console" class="dashAnchor"></a>
+    <a title="Console Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Xcore Docs</a> (31% documented)</p>
+        <p><a href="../index.html">Xcore Docs</a> (32% documented)</p>
         <p class="header-right"><a href="https://github.com/zmian/xcore.swift"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fzmian%2Fdocsets%2FXcore%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">Xcore Reference</a>
         <img id="carat" src="../img/carat.png" />
-        console Class Reference
+        Console Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -32,6 +32,21 @@
           <li class="nav-group-name">
             <a href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/BlurView.html">BlurView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Console.html">Console</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Console/LevelOptions.html">– LevelOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Console/PrefixOptions.html">– PrefixOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContainerViewController.html">ContainerViewController</a>
+              </li>
               <li class="nav-group-task">
                 <a href="../Classes/DynamicTableView.html">DynamicTableView</a>
               </li>
@@ -163,15 +178,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/ZoomAnimatorNavigationControllerDelegate.html">ZoomAnimatorNavigationControllerDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/console.html">console</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/console/LevelOptions.html">– LevelOptions</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/console/PrefixOptions.html">– PrefixOptions</a>
               </li>
             </ul>
           </li>
@@ -545,6 +551,9 @@
                 <a href="../Functions.html#/s:5Xcore5delayySd2by_yyctF">delay(by:_:)</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Functions.html#/s:5Xcore10fatalErrors5NeverOAA11FatalReasonV7because_s12StaticStringV8functionAI4fileSu4linetF">fatalError(because:function:file:line:)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Functions.html#/s:5Xcore7measureySS5label_yyycc5blocktF">measure(label:block:)</a>
               </li>
               <li class="nav-group-task">
@@ -675,6 +684,9 @@
                 <a href="../Structs/ElementPosition.html">ElementPosition</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/FatalReason.html">FatalReason</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/HighlightedAnimationOptions.html">HighlightedAnimationOptions</a>
               </li>
               <li class="nav-group-task">
@@ -705,10 +717,10 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>console</h1>
+            <h1>Console</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="n">console</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">Console</span></code></pre>
 
                 </div>
               </div>
@@ -721,9 +733,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore7consoleC12levelOptionsAC05LevelD0VvpZ"></a>
+                    <a name="/s:5Xcore7ConsoleC12levelOptionsAC05LevelD0VvpZ"></a>
                     <a name="//apple_ref/swift/Variable/levelOptions" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore7consoleC12levelOptionsAC05LevelD0VvpZ">levelOptions</a>
+                    <a class="token" href="#/s:5Xcore7ConsoleC12levelOptionsAC05LevelD0VvpZ">levelOptions</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -738,12 +750,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">levelOptions</span><span class="p">:</span> <span class="n">console</span><span class="o">.</span><span class="kt"><a href="../Classes/console/LevelOptions.html">LevelOptions</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">levelOptions</span><span class="p">:</span> <span class="kt">Console</span><span class="o">.</span><span class="kt"><a href="../Classes/Console/LevelOptions.html">LevelOptions</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L30">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L29">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -751,9 +763,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore7consoleC13prefixOptionsAC06PrefixD0VvpZ"></a>
+                    <a name="/s:5Xcore7ConsoleC13prefixOptionsAC06PrefixD0VvpZ"></a>
                     <a name="//apple_ref/swift/Variable/prefixOptions" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore7consoleC13prefixOptionsAC06PrefixD0VvpZ">prefixOptions</a>
+                    <a class="token" href="#/s:5Xcore7ConsoleC13prefixOptionsAC06PrefixD0VvpZ">prefixOptions</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -768,12 +780,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">prefixOptions</span><span class="p">:</span> <span class="n">console</span><span class="o">.</span><span class="kt"><a href="../Classes/console/PrefixOptions.html">PrefixOptions</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">prefixOptions</span><span class="p">:</span> <span class="kt">Console</span><span class="o">.</span><span class="kt"><a href="../Classes/Console/PrefixOptions.html">PrefixOptions</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L32">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L31">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -781,9 +793,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore7consoleC3logyypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ"></a>
+                    <a name="/s:5Xcore7ConsoleC3logyypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ"></a>
                     <a name="//apple_ref/swift/Method/log(_:condition:separator:terminator:className:functionName:lineNumber:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore7consoleC3logyypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ">log(_:condition:separator:terminator:className:functionName:lineNumber:)</a>
+                    <a class="token" href="#/s:5Xcore7ConsoleC3logyypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ">log(_:condition:separator:terminator:className:functionName:lineNumber:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -895,7 +907,7 @@ and terminated by terminator, into the standard output.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L45-L47">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L44-L46">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -903,9 +915,9 @@ and terminated by terminator, into the standard output.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore7consoleC4infoyypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ"></a>
+                    <a name="/s:5Xcore7ConsoleC4infoyypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ"></a>
                     <a name="//apple_ref/swift/Method/info(_:condition:separator:terminator:className:functionName:lineNumber:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore7consoleC4infoyypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ">info(_:condition:separator:terminator:className:functionName:lineNumber:)</a>
+                    <a class="token" href="#/s:5Xcore7ConsoleC4infoyypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ">info(_:condition:separator:terminator:className:functionName:lineNumber:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1017,7 +1029,7 @@ and terminated by terminator, into the standard output.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L60-L62">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L59-L61">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1025,9 +1037,9 @@ and terminated by terminator, into the standard output.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore7consoleC4warnyypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ"></a>
+                    <a name="/s:5Xcore7ConsoleC4warnyypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ"></a>
                     <a name="//apple_ref/swift/Method/warn(_:condition:separator:terminator:className:functionName:lineNumber:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore7consoleC4warnyypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ">warn(_:condition:separator:terminator:className:functionName:lineNumber:)</a>
+                    <a class="token" href="#/s:5Xcore7ConsoleC4warnyypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ">warn(_:condition:separator:terminator:className:functionName:lineNumber:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1139,7 +1151,7 @@ and terminated by terminator, into the standard output.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L75-L77">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L74-L76">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1147,9 +1159,9 @@ and terminated by terminator, into the standard output.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore7consoleC5erroryypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ"></a>
+                    <a name="/s:5Xcore7ConsoleC5erroryypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ"></a>
                     <a name="//apple_ref/swift/Method/error(_:condition:separator:terminator:className:functionName:lineNumber:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore7consoleC5erroryypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ">error(_:condition:separator:terminator:className:functionName:lineNumber:)</a>
+                    <a class="token" href="#/s:5Xcore7ConsoleC5erroryypd_Sb9conditionSS9separatorSS10terminatorSS9classNameSS08functionH0Si10lineNumbertFZ">error(_:condition:separator:terminator:className:functionName:lineNumber:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1261,7 +1273,7 @@ and terminated by terminator, into the standard output.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L90-L92">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L89-L91">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1269,9 +1281,9 @@ and terminated by terminator, into the standard output.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore7consoleC5printyAC12LevelOptionsV5level_ypdSb9conditionSS9separatorSS10terminatorSS9classNameSS08functionK0Si10lineNumbertFZ"></a>
+                    <a name="/s:5Xcore7ConsoleC5printyAC12LevelOptionsV5level_ypdSb9conditionSS9separatorSS10terminatorSS9classNameSS08functionK0Si10lineNumbertFZ"></a>
                     <a name="//apple_ref/swift/Method/print(level:_:condition:separator:terminator:className:functionName:lineNumber:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore7consoleC5printyAC12LevelOptionsV5level_ypdSb9conditionSS9separatorSS10terminatorSS9classNameSS08functionK0Si10lineNumbertFZ">print(level:_:condition:separator:terminator:className:functionName:lineNumber:)</a>
+                    <a class="token" href="#/s:5Xcore7ConsoleC5printyAC12LevelOptionsV5level_ypdSb9conditionSS9separatorSS10terminatorSS9classNameSS08functionK0Si10lineNumbertFZ">print(level:_:condition:separator:terminator:className:functionName:lineNumber:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1287,7 +1299,7 @@ into the standard output.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">print</span><span class="p">(</span><span class="nv">level</span><span class="p">:</span> <span class="kt"><a href="../Classes/console/LevelOptions.html">LevelOptions</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">debug</span><span class="p">,</span> <span class="n">_</span> <span class="nv">items</span><span class="p">:</span> <span class="kt">Any</span><span class="o">...</span><span class="p">,</span> <span class="nv">condition</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">separator</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">" "</span><span class="p">,</span> <span class="nv">terminator</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nv">className</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">functionName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">,</span> <span class="nv">lineNumber</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">print</span><span class="p">(</span><span class="nv">level</span><span class="p">:</span> <span class="kt"><a href="../Classes/Console/LevelOptions.html">LevelOptions</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">debug</span><span class="p">,</span> <span class="n">_</span> <span class="nv">items</span><span class="p">:</span> <span class="kt">Any</span><span class="o">...</span><span class="p">,</span> <span class="nv">condition</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">separator</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">" "</span><span class="p">,</span> <span class="nv">terminator</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nv">className</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#file</span><span class="p">,</span> <span class="nv">functionName</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kd">#function</span><span class="p">,</span> <span class="nv">lineNumber</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="kd">#line</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1395,7 +1407,7 @@ into the standard output.</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L106-L108">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L105-L107">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1407,9 +1419,9 @@ into the standard output.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore7consoleC12LevelOptionsV"></a>
+                    <a name="/s:5Xcore7ConsoleC12LevelOptionsV"></a>
                     <a name="//apple_ref/swift/Struct/LevelOptions" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore7consoleC12LevelOptionsV">LevelOptions</a>
+                    <a class="token" href="#/s:5Xcore7ConsoleC12LevelOptionsV">LevelOptions</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1419,7 +1431,7 @@ into the standard output.</p>
                       <div class="abstract">
                         <p>A list of log levels available.</p>
 
-                        <a href="../Classes/console/LevelOptions.html" class="slightly-smaller">See more</a>
+                        <a href="../Classes/Console/LevelOptions.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -1430,7 +1442,7 @@ into the standard output.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L182-L210">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L181-L209">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1438,9 +1450,9 @@ into the standard output.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore7consoleC13PrefixOptionsV"></a>
+                    <a name="/s:5Xcore7ConsoleC13PrefixOptionsV"></a>
                     <a name="//apple_ref/swift/Struct/PrefixOptions" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore7consoleC13PrefixOptionsV">PrefixOptions</a>
+                    <a class="token" href="#/s:5Xcore7ConsoleC13PrefixOptionsV">PrefixOptions</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1450,7 +1462,7 @@ into the standard output.</p>
                       <div class="abstract">
                         <p>A list of log prefix available.</p>
 
-                        <a href="../Classes/console/PrefixOptions.html" class="slightly-smaller">See more</a>
+                        <a href="../Classes/Console/PrefixOptions.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -1461,7 +1473,7 @@ into the standard output.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L213-L227">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/Console.swift#L212-L226">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1471,7 +1483,7 @@ into the standard output.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-06-28)</p>
+          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-07-10)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

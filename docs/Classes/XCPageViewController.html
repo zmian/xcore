@@ -14,7 +14,7 @@
     <a title="XCPageViewController Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Xcore Docs</a> (31% documented)</p>
+        <p><a href="../index.html">Xcore Docs</a> (32% documented)</p>
         <p class="header-right"><a href="https://github.com/zmian/xcore.swift"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fzmian%2Fdocsets%2FXcore%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -32,6 +32,21 @@
           <li class="nav-group-name">
             <a href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/BlurView.html">BlurView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Console.html">Console</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Console/LevelOptions.html">– LevelOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Console/PrefixOptions.html">– PrefixOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ContainerViewController.html">ContainerViewController</a>
+              </li>
               <li class="nav-group-task">
                 <a href="../Classes/DynamicTableView.html">DynamicTableView</a>
               </li>
@@ -163,15 +178,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/ZoomAnimatorNavigationControllerDelegate.html">ZoomAnimatorNavigationControllerDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/console.html">console</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/console/LevelOptions.html">– LevelOptions</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/console/PrefixOptions.html">– PrefixOptions</a>
               </li>
             </ul>
           </li>
@@ -545,6 +551,9 @@
                 <a href="../Functions.html#/s:5Xcore5delayySd2by_yyctF">delay(by:_:)</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Functions.html#/s:5Xcore10fatalErrors5NeverOAA11FatalReasonV7because_s12StaticStringV8functionAI4fileSu4linetF">fatalError(because:function:file:line:)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Functions.html#/s:5Xcore7measureySS5label_yyycc5blocktF">measure(label:block:)</a>
               </li>
               <li class="nav-group-task">
@@ -675,6 +684,9 @@
                 <a href="../Structs/ElementPosition.html">ElementPosition</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/FatalReason.html">FatalReason</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/HighlightedAnimationOptions.html">HighlightedAnimationOptions</a>
               </li>
               <li class="nav-group-task">
@@ -708,7 +720,7 @@
             <h1>XCPageViewController</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">XCPageViewController</span> <span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">UIPageViewControllerDataSource</span><span class="p">,</span> <span class="kt">UIPageViewControllerDelegate</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">XCPageViewController</span> <span class="p">:</span> <span class="kt">UIViewController</span></code></pre>
 
                 </div>
               </div>
@@ -744,7 +756,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L57-L61">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -902,9 +914,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore20XCPageViewControllerC26disableBounceForSinglePageSbvp"></a>
-                    <a name="//apple_ref/swift/Property/disableBounceForSinglePage" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore20XCPageViewControllerC26disableBounceForSinglePageSbvp">disableBounceForSinglePage</a>
+                    <a name="/s:5Xcore20XCPageViewControllerC28isBounceForSinglePageEnabledSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isBounceForSinglePageEnabled" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Xcore20XCPageViewControllerC28isBounceForSinglePageEnabledSbvp">isBounceForSinglePageEnabled</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -912,19 +924,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The default value is <code>false</code>.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">disableBounceForSinglePage</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">isBounceForSinglePageEnabled</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L69">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -932,9 +944,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore20XCPageViewControllerC12swipeEnabledSbvp"></a>
-                    <a name="//apple_ref/swift/Property/swipeEnabled" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore20XCPageViewControllerC12swipeEnabledSbvp">swipeEnabled</a>
+                    <a name="/s:5Xcore20XCPageViewControllerC15isScrollEnabledSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isScrollEnabled" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Xcore20XCPageViewControllerC15isScrollEnabledSbvp">isScrollEnabled</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -949,12 +961,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">swipeEnabled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">isScrollEnabled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L64-L66">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L70-L72">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -972,8 +984,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Spacing between between pages. Default is <code>0</code>.
-Page spacing is only valid if the transition style is <code>UIPageViewControllerTransitionStyle.Scroll</code>.</p>
+                        <p>Spacing between between pages. The default value is <code>0</code>.
+Page spacing is only valid if the transition style is <code>.scroll</code>.</p>
 
                       </div>
                       <div class="declaration">
@@ -985,7 +997,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L69">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L75">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1063,7 +1075,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Closure for listening page change events in subclasses</p>
+                        <p>A callback for listening to page change events.</p>
 
                       </div>
                       <div class="declaration">
@@ -1075,7 +1087,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L75-L77">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L81-L83">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1105,7 +1117,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L79-L83">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L85-L89">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1135,7 +1147,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L85-L89">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L91-L95">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1144,19 +1156,19 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/UIPageViewControllerDataSource"></a>
-                <a name="//apple_ref/swift/Section/UIPageViewControllerDataSource" class="dashAnchor"></a>
-                <a href="#/UIPageViewControllerDataSource">
-                  <h3 class="section-name">UIPageViewControllerDataSource</h3>
+                <a name="/UIPageViewControllerDataSource%20&amp;%20UIPageViewControllerDelegate"></a>
+                <a name="//apple_ref/swift/Section/UIPageViewControllerDataSource &amp; UIPageViewControllerDelegate" class="dashAnchor"></a>
+                <a href="#/UIPageViewControllerDataSource%20&amp;%20UIPageViewControllerDelegate">
+                  <h3 class="section-name">UIPageViewControllerDataSource &amp; UIPageViewControllerDelegate</h3>
                 </a>
               </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@Xcore@objc(cs)XCPageViewController(im)pageViewController:viewControllerAfterViewController:"></a>
+                    <a name="/c:@CM@Xcore@objc(cs)XCPageViewController(im)pageViewController:viewControllerAfterViewController:"></a>
                     <a name="//apple_ref/swift/Method/pageViewController(_:viewControllerAfter:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@Xcore@objc(cs)XCPageViewController(im)pageViewController:viewControllerAfterViewController:">pageViewController(_:viewControllerAfter:)</a>
+                    <a class="token" href="#/c:@CM@Xcore@objc(cs)XCPageViewController(im)pageViewController:viewControllerAfterViewController:">pageViewController(_:viewControllerAfter:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1176,7 +1188,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L130-L133">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L138-L141">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1184,9 +1196,9 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@Xcore@objc(cs)XCPageViewController(im)pageViewController:viewControllerBeforeViewController:"></a>
+                    <a name="/c:@CM@Xcore@objc(cs)XCPageViewController(im)pageViewController:viewControllerBeforeViewController:"></a>
                     <a name="//apple_ref/swift/Method/pageViewController(_:viewControllerBefore:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@Xcore@objc(cs)XCPageViewController(im)pageViewController:viewControllerBeforeViewController:">pageViewController(_:viewControllerBefore:)</a>
+                    <a class="token" href="#/c:@CM@Xcore@objc(cs)XCPageViewController(im)pageViewController:viewControllerBeforeViewController:">pageViewController(_:viewControllerBefore:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1206,28 +1218,17 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L135-L138">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L143-L146">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/UIPageViewControllerDelegate"></a>
-                <a name="//apple_ref/swift/Section/UIPageViewControllerDelegate" class="dashAnchor"></a>
-                <a href="#/UIPageViewControllerDelegate">
-                  <h3 class="section-name">UIPageViewControllerDelegate</h3>
-                </a>
-              </div>
-              <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@Xcore@objc(cs)XCPageViewController(im)pageViewController:didFinishAnimating:previousViewControllers:transitionCompleted:"></a>
+                    <a name="/c:@CM@Xcore@objc(cs)XCPageViewController(im)pageViewController:didFinishAnimating:previousViewControllers:transitionCompleted:"></a>
                     <a name="//apple_ref/swift/Method/pageViewController(_:didFinishAnimating:previousViewControllers:transitionCompleted:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@Xcore@objc(cs)XCPageViewController(im)pageViewController:didFinishAnimating:previousViewControllers:transitionCompleted:">pageViewController(_:didFinishAnimating:previousViewControllers:transitionCompleted:)</a>
+                    <a class="token" href="#/c:@CM@Xcore@objc(cs)XCPageViewController(im)pageViewController:didFinishAnimating:previousViewControllers:transitionCompleted:">pageViewController(_:didFinishAnimating:previousViewControllers:transitionCompleted:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1247,7 +1248,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L142-L149">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L148-L154">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1256,10 +1257,10 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Navigation"></a>
-                <a name="//apple_ref/swift/Section/Navigation" class="dashAnchor"></a>
-                <a href="#/Navigation">
-                  <h3 class="section-name">Navigation</h3>
+                <a name="/Navigation%20API"></a>
+                <a name="//apple_ref/swift/Section/Navigation API" class="dashAnchor"></a>
+                <a href="#/Navigation%20API">
+                  <h3 class="section-name">Navigation API</h3>
                 </a>
               </div>
               <ul>
@@ -1276,7 +1277,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Set current view controller index to be displayed.</p>
 
                       </div>
                       <div class="declaration">
@@ -1287,8 +1288,63 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index of the view controller to be displayed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>direction</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The navigation direction. The default value is <code>.forward</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A boolean value that indicates whether the transition is to be animated. The default value is <code>false</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A block to be called when setting the current view controller animation completes. The default value is <code>nil</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L153-L159">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L167-L173">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1318,7 +1374,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L161-L166">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L175-L179">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1348,22 +1404,11 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L168-L174">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L181-L186">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Helpers"></a>
-                <a name="//apple_ref/swift/Section/Helpers" class="dashAnchor"></a>
-                <a href="#/Helpers">
-                  <h3 class="section-name">Helpers</h3>
-                </a>
-              </div>
-              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -1389,7 +1434,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L182-L184">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L188-L190">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1408,9 +1453,9 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@Xcore@objc(cs)XCPageViewController(py)prefersStatusBarHidden"></a>
+                    <a name="/c:@CM@Xcore@objc(cs)XCPageViewController(py)prefersStatusBarHidden"></a>
                     <a name="//apple_ref/swift/Property/prefersStatusBarHidden" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@Xcore@objc(cs)XCPageViewController(py)prefersStatusBarHidden">prefersStatusBarHidden</a>
+                    <a class="token" href="#/c:@CM@Xcore@objc(cs)XCPageViewController(py)prefersStatusBarHidden">prefersStatusBarHidden</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1430,7 +1475,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L197-L199">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L214-L216">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1438,9 +1483,9 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@Xcore@objc(cs)XCPageViewController(py)preferredStatusBarStyle"></a>
+                    <a name="/c:@CM@Xcore@objc(cs)XCPageViewController(py)preferredStatusBarStyle"></a>
                     <a name="//apple_ref/swift/Property/preferredStatusBarStyle" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@Xcore@objc(cs)XCPageViewController(py)preferredStatusBarStyle">preferredStatusBarStyle</a>
+                    <a class="token" href="#/c:@CM@Xcore@objc(cs)XCPageViewController(py)preferredStatusBarStyle">preferredStatusBarStyle</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1460,7 +1505,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L201-L203">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L218-L220">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1468,9 +1513,9 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@Xcore@objc(cs)XCPageViewController(py)shouldAutorotate"></a>
+                    <a name="/c:@CM@Xcore@objc(cs)XCPageViewController(py)shouldAutorotate"></a>
                     <a name="//apple_ref/swift/Property/shouldAutorotate" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@Xcore@objc(cs)XCPageViewController(py)shouldAutorotate">shouldAutorotate</a>
+                    <a class="token" href="#/c:@CM@Xcore@objc(cs)XCPageViewController(py)shouldAutorotate">shouldAutorotate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1490,7 +1535,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L205-L207">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L222-L224">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1498,9 +1543,9 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@Xcore@objc(cs)XCPageViewController(py)preferredStatusBarUpdateAnimation"></a>
+                    <a name="/c:@CM@Xcore@objc(cs)XCPageViewController(py)preferredStatusBarUpdateAnimation"></a>
                     <a name="//apple_ref/swift/Property/preferredStatusBarUpdateAnimation" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@Xcore@objc(cs)XCPageViewController(py)preferredStatusBarUpdateAnimation">preferredStatusBarUpdateAnimation</a>
+                    <a class="token" href="#/c:@CM@Xcore@objc(cs)XCPageViewController(py)preferredStatusBarUpdateAnimation">preferredStatusBarUpdateAnimation</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1520,7 +1565,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L209-L211">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/XCPageViewController.swift#L226-L228">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1530,7 +1575,7 @@ Page spacing is only valid if the transition style is <code>UIPageViewController
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-06-28)</p>
+          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-07-10)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

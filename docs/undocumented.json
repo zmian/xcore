@@ -1205,6 +1205,83 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/BlurView.swift",
+      "line": null,
+      "symbol": "BlurView",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/BlurView.swift",
+      "line": 27,
+      "symbol": "BlurView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/BlurView.swift",
+      "line": 91,
+      "symbol": "BlurView.addSubview(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/BlurView.swift",
+      "line": 99,
+      "symbol": "BlurView.bringSubview(toFront:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/BlurView.swift",
+      "line": 107,
+      "symbol": "BlurView.sendSubview(toBack:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ContainerViewController.swift",
+      "line": 42,
+      "symbol": "ContainerViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ContainerViewController.swift",
+      "line": 50,
+      "symbol": "ContainerViewController.viewWillAppear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ContainerViewController.swift",
+      "line": 57,
+      "symbol": "ContainerViewController.viewDidAppear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ContainerViewController.swift",
+      "line": 64,
+      "symbol": "ContainerViewController.viewWillDisappear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ContainerViewController.swift",
+      "line": 78,
+      "symbol": "ContainerViewController.viewDidDisappear(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ContainerViewController.swift",
+      "line": 92,
+      "symbol": "ContainerViewController.shouldAutomaticallyForwardAppearanceMethods",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
       "line": null,
       "symbol": "CurrencyAmount",
@@ -1661,91 +1738,91 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DataSources/XCCollectionViewComposedDataSource/XCCollectionViewDataSource.swift",
-      "line": 88,
+      "line": 99,
       "symbol": "XCCollectionViewDataSource.collectionView(_:didSelectItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DataSources/XCCollectionViewComposedDataSource/XCCollectionViewDataSource.swift",
-      "line": 95,
+      "line": 106,
       "symbol": "XCCollectionViewDataSource.collectionView(_:insetForSectionAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DataSources/XCCollectionViewComposedDataSource/XCCollectionViewDataSource.swift",
-      "line": 99,
+      "line": 110,
       "symbol": "XCCollectionViewDataSource.collectionView(_:minimumLineSpacingForSectionAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DataSources/XCCollectionViewComposedDataSource/XCCollectionViewDataSource.swift",
-      "line": 103,
+      "line": 114,
       "symbol": "XCCollectionViewDataSource.collectionView(_:minimumInteritemSpacingForSectionAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DataSources/XCCollectionViewComposedDataSource/XCCollectionViewDataSource.swift",
-      "line": 109,
+      "line": 120,
       "symbol": "XCCollectionViewDataSource.collectionView(_:willDisplay:forItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DataSources/XCCollectionViewComposedDataSource/XCCollectionViewDataSource.swift",
-      "line": 112,
+      "line": 123,
       "symbol": "XCCollectionViewDataSource.collectionView(_:willDisplaySupplementaryView:forElementKind:at:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DataSources/XCCollectionViewComposedDataSource/XCCollectionViewDataSource.swift",
-      "line": 115,
+      "line": 126,
       "symbol": "XCCollectionViewDataSource.collectionView(_:didEndDisplaying:forItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DataSources/XCCollectionViewComposedDataSource/XCCollectionViewDataSource.swift",
-      "line": 118,
+      "line": 129,
       "symbol": "XCCollectionViewDataSource.collectionView(_:didEndDisplayingSupplementaryView:forElementOfKind:at:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DataSources/XCCollectionViewComposedDataSource/XCCollectionViewDataSource.swift",
-      "line": 125,
+      "line": 136,
       "symbol": "XCCollectionViewDataSource.collectionView(_:viewForHeaderInSectionAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DataSources/XCCollectionViewComposedDataSource/XCCollectionViewDataSource.swift",
-      "line": 129,
+      "line": 140,
       "symbol": "XCCollectionViewDataSource.collectionView(_:viewForFooterInSectionAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DataSources/XCCollectionViewComposedDataSource/XCCollectionViewDataSource.swift",
-      "line": 145,
+      "line": 156,
       "symbol": "XCCollectionViewDataSource.collectionView(_:sizeForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DataSources/XCCollectionViewComposedDataSource/XCCollectionViewDataSource.swift",
-      "line": 155,
+      "line": 166,
       "symbol": "XCCollectionViewDataSource.collectionView(_:sizeForHeaderInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DataSources/XCCollectionViewComposedDataSource/XCCollectionViewDataSource.swift",
-      "line": 169,
+      "line": 180,
       "symbol": "XCCollectionViewDataSource.collectionView(_:sizeForFooterInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -3992,6 +4069,27 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
+      "line": null,
+      "symbol": "XCPageViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
+      "line": null,
+      "symbol": "XCPageViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
+      "line": null,
+      "symbol": "XCPageViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
       "line": 56,
       "symbol": "XCPageViewController",
       "symbol_kind": "source.lang.swift.decl.class",
@@ -4006,175 +4104,161 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 57,
-      "symbol": "XCPageViewController.PageControlPosition.bottom",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 57,
-      "symbol": "XCPageViewController.PageControlPosition.center",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 57,
+      "line": 58,
       "symbol": "XCPageViewController.PageControlPosition.top",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 58,
+      "line": 59,
+      "symbol": "XCPageViewController.PageControlPosition.center",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
+      "line": 60,
+      "symbol": "XCPageViewController.PageControlPosition.bottom",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
+      "line": 63,
       "symbol": "XCPageViewController.pageViewController",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 59,
+      "line": 64,
       "symbol": "XCPageViewController.pageControl",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 60,
+      "line": 65,
       "symbol": "XCPageViewController.pageControlHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 61,
+      "line": 66,
       "symbol": "XCPageViewController.pageControlPosition",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 62,
+      "line": 67,
       "symbol": "XCPageViewController.viewControllers",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 63,
-      "symbol": "XCPageViewController.disableBounceForSinglePage",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 64,
-      "symbol": "XCPageViewController.swipeEnabled",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
       "line": 70,
+      "symbol": "XCPageViewController.isScrollEnabled",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
+      "line": 76,
       "symbol": "XCPageViewController.transitionStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 71,
+      "line": 77,
       "symbol": "XCPageViewController.navigationOrientation",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 79,
+      "line": 85,
       "symbol": "XCPageViewController.init(viewControllers:pageSpacing:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 85,
+      "line": 91,
       "symbol": "XCPageViewController.viewDidLoad()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 130,
+      "line": 138,
       "symbol": "XCPageViewController.pageViewController(_:viewControllerAfter:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 135,
+      "line": 143,
       "symbol": "XCPageViewController.pageViewController(_:viewControllerBefore:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 142,
+      "line": 148,
       "symbol": "XCPageViewController.pageViewController(_:didFinishAnimating:previousViewControllers:transitionCompleted:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 153,
-      "symbol": "XCPageViewController.setCurrentPage(_:direction:animated:completion:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 161,
+      "line": 175,
       "symbol": "XCPageViewController.removeViewController(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 168,
+      "line": 181,
       "symbol": "XCPageViewController.replaceViewController(_:withViewControllers:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 182,
+      "line": 188,
       "symbol": "XCPageViewController.reloadData()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 197,
+      "line": 214,
       "symbol": "XCPageViewController.prefersStatusBarHidden",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 201,
+      "line": 218,
       "symbol": "XCPageViewController.preferredStatusBarStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 205,
+      "line": 222,
       "symbol": "XCPageViewController.shouldAutorotate",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/XCPageViewController.swift",
-      "line": 209,
+      "line": 226,
       "symbol": "XCPageViewController.preferredStatusBarUpdateAnimation",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -6176,21 +6260,28 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UITabBarController+Extensions.swift",
-      "line": 28,
+      "line": 31,
       "symbol": "UITabBarController.supportedInterfaceOrientations",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UITabBarController+Extensions.swift",
-      "line": 32,
+      "line": 35,
+      "symbol": "UITabBarController.preferredInterfaceOrientationForPresentation",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UITabBarController+Extensions.swift",
+      "line": 39,
       "symbol": "UITabBarController.shouldAutorotate",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UITabBarController+Extensions.swift",
-      "line": 38,
+      "line": 45,
       "symbol": "UITabBarController.setTabBarHidden(_:animated:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -6905,105 +6996,105 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
       "line": null,
-      "symbol": "console",
+      "symbol": "Console",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 28,
-      "symbol": "console",
+      "line": 27,
+      "symbol": "Console",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "line": 188,
+      "symbol": "Console.LevelOptions.debug",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
       "line": 189,
-      "symbol": "console.LevelOptions.debug",
+      "symbol": "Console.LevelOptions.info",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
       "line": 190,
-      "symbol": "console.LevelOptions.info",
+      "symbol": "Console.LevelOptions.warn",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
       "line": 191,
-      "symbol": "console.LevelOptions.warn",
+      "symbol": "Console.LevelOptions.error",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
       "line": 192,
-      "symbol": "console.LevelOptions.error",
+      "symbol": "Console.LevelOptions.none",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
       "line": 193,
-      "symbol": "console.LevelOptions.none",
+      "symbol": "Console.LevelOptions.all",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 194,
-      "symbol": "console.LevelOptions.all",
+      "line": 219,
+      "symbol": "Console.PrefixOptions.className",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
       "line": 220,
-      "symbol": "console.PrefixOptions.className",
+      "symbol": "Console.PrefixOptions.functionName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
       "line": 221,
-      "symbol": "console.PrefixOptions.functionName",
+      "symbol": "Console.PrefixOptions.lineNumber",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
       "line": 222,
-      "symbol": "console.PrefixOptions.lineNumber",
+      "symbol": "Console.PrefixOptions.date",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
       "line": 223,
-      "symbol": "console.PrefixOptions.date",
+      "symbol": "Console.PrefixOptions.none",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
       "line": 224,
-      "symbol": "console.PrefixOptions.none",
+      "symbol": "Console.PrefixOptions.all",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
       "line": 225,
-      "symbol": "console.PrefixOptions.all",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
-      "line": 226,
-      "symbol": "console.PrefixOptions.basic",
+      "symbol": "Console.PrefixOptions.basic",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
@@ -7229,6 +7320,27 @@
       "line": 222,
       "symbol": "StringProtocol.index(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Helpers/FatalReason.swift",
+      "line": 31,
+      "symbol": "FatalReason.subclassMustImplement",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Helpers/FatalReason.swift",
+      "line": 33,
+      "symbol": "FatalReason.dequeueFailed(for:identifier:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Helpers/FatalReason.swift",
+      "line": 37,
+      "symbol": "FatalReason.dequeueFailed(for:kind:indexPath:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
