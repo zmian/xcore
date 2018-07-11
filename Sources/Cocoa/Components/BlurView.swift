@@ -26,7 +26,16 @@ import UIKit
 
 public class BlurView: XCView {
     private var observer: NSObjectProtocol?
-    private let blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+    private var style: UIBlurEffectStyle = .light
+    private lazy var blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: self.style))
+    private lazy var blurBackView = UIView().apply {
+        $0.backgroundColor = self.blurColor
+        $0.alpha = 1 - self.blurOpacity
+    }
+
+    /// Returns a boolean value indicating whether reduce transparency is enabled.
+    ///
+    /// `true` if the user has enabled Reduce Transparency in **Settings**; otherwise, `false`.
     private var isReduceTransparencyEnabled: Bool {
         return UIAccessibilityIsReduceTransparencyEnabled()
     }
@@ -46,19 +55,67 @@ public class BlurView: XCView {
         }
     }
 
-    /// The background color to use when `UIAccessibilityIsReduceTransparencyEnabled()` is `true`.
+    /// A property to determine opacity for the blur effect.
+    /// Use this property to soften the blur effect if needed.
+    ///
+    /// The default value is `1`.
+    ///
+    /// - Note:
+    /// This property is only used when `isSmartBlurEffectEnabled` is `true`
+    /// and `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
+    @objc public dynamic var blurOpacity: CGFloat = 1 {
+        didSet {
+            blurBackView.alpha = 1 - blurOpacity
+        }
+    }
+
+    /// A property to determine color for the blur effect.
+    ///
     /// The default value is `.white`.
-    public var blurEffectDisabledBackgroundColor: UIColor = .white
+    ///
+    /// - Note:
+    /// This property is only used when `isSmartBlurEffectEnabled` is `true`
+    /// and `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
+    @objc public dynamic var blurColor: UIColor = .white {
+        didSet {
+            blurBackView.backgroundColor = blurColor
+        }
+    }
+
+    /// The background color to use when `UIAccessibilityIsReduceTransparencyEnabled()` is `true`.
+    ///
+    /// The default value is `.white`.
+    ///
+    /// - Note:
+    /// This property is only used when `isSmartBlurEffectEnabled` is `true`
+    /// and `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
+    @objc public dynamic var blurEffectDisabledBackgroundColor: UIColor = .white
 
     /// The `UIVisualEffect` to use when `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
+    ///
     /// The default value is `.light`.
-    public var effect: UIVisualEffect? {
+    ///
+    /// - Note:
+    /// This property is only used when `isSmartBlurEffectEnabled` is `true`
+    /// and `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
+    @objc public dynamic var effect: UIVisualEffect? {
         get { return blurEffectView.effect }
         set { blurEffectView.effect = newValue }
     }
 
+    public init(style: UIBlurEffectStyle = .light) {
+        self.style = style
+        super.init(frame: .zero)
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
     public override func commonInit() {
+        super.addSubview(blurBackView)
         super.addSubview(blurEffectView)
+        NSLayoutConstraint.constraintsForViewToFillSuperview(blurBackView).activate()
         NSLayoutConstraint.constraintsForViewToFillSuperview(blurEffectView).activate()
 
         observer = NotificationCenter.default.addObserver(forName: .UIAccessibilityReduceTransparencyStatusDidChange, object: nil, queue: .main) { [weak self] _ in
@@ -78,10 +135,12 @@ public class BlurView: XCView {
 
     private func accessibilityReduceTransparencyStatusDidChange() {
         guard isSmartBlurEffectEnabled else {
+            blurBackView.isHidden = true
             blurEffectView.isHidden = true
             return
         }
 
+        blurBackView.isHidden = isReduceTransparencyEnabled
         blurEffectView.isHidden = isReduceTransparencyEnabled
         backgroundColor = isReduceTransparencyEnabled ? blurEffectDisabledBackgroundColor : .clear
     }
