@@ -102,6 +102,81 @@ extension UINavigationController {
 }
 
 extension UINavigationController {
+    /// The type of animation when view controller is push.
+    public enum AnimationStyle {
+        case `default`
+        case fade
+
+        private var transitionType: String {
+            switch self {
+                case .default:
+                    return "default"
+                case .fade:
+                    return kCATransitionFade
+            }
+        }
+
+        fileprivate var transition: CATransition {
+            return CATransition().apply {
+                $0.duration = .slow
+                $0.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                $0.type = transitionType
+            }
+        }
+    }
+
+    /// Pushes a view controller onto the receiver’s stack and updates the
+    /// display.
+    ///
+    /// The object in the `viewController` parameter becomes the top view
+    /// controller on the navigation stack. Pushing a view controller causes its
+    /// view to be embedded in the navigation interface. If the animated parameter
+    /// is `true`, the view is animated into position; otherwise, the view is simply
+    /// displayed in its final location.
+    ///
+    /// In addition to displaying the view associated with the new view controller at
+    /// the top of the stack, this method also updates the navigation bar and tool bar
+    /// accordingly. For information on how the navigation bar is updated.
+    ///
+    /// - Parameters:
+    ///   - viewController: The view controller to push onto the stack. This object cannot be a tab bar controller.
+    ///                     If the view controller is already on the navigation stack, this method throws an exception.
+    ///   - animation: A property that indicates how the push animation is to be animated, for example, fade in or slide in from right.
+    open func pushViewController(_ viewController: UIViewController, with animation: AnimationStyle) {
+        guard animation != .default else {
+            return pushViewController(viewController, animated: true)
+        }
+
+        view.layer.add(animation.transition, forKey: nil)
+        pushViewController(viewController, animated: false)
+    }
+
+    /// Pops the top view controller from the navigation stack and updates the
+    /// display.
+    ///
+    /// This method removes the top view controller from the stack and makes
+    /// the new top of the stack the active view controller. If the view controller
+    /// at the top of the stack is the root view controller, this method does nothing.
+    /// In other words, you cannot pop the last item on the stack.
+    ///
+    /// In addition to displaying the view associated with the new view controller at
+    /// the top of the stack, this method also updates the navigation bar and tool bar
+    /// accordingly. For information on how the navigation bar is updated.
+    ///
+    /// - Parameter animation: A property that indicates how the pop animation is to be animated, for example, fade out or slide out to right.
+    /// - Returns: The view controller that was popped from the stack.
+    @discardableResult
+    open func popViewController(with animation: AnimationStyle) -> UIViewController? {
+        guard animation != .default else {
+            return popViewController(animated: true)
+        }
+
+        view.layer.add(animation.transition, forKey: nil)
+        return popViewController(animated: false)
+    }
+}
+
+extension UINavigationController {
     // Autorotation Fix. Simply override `supportedInterfaceOrientations`
     // method in any view controller and it would respect that orientation
     // setting per view controller.
