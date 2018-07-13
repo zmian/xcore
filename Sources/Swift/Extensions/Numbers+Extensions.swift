@@ -197,11 +197,6 @@ extension Double {
             return
         }
 
-        if let float80 = value as? Float80 {
-            self.init(float80)
-            return
-        }
-
         if let int64 = value as? Int64 {
             self.init(int64)
             return
