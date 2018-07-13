@@ -46,18 +46,13 @@ extension UIImageView {
         }
     }
 
-    private func adjustContentModeIfNeeded() {
-        guard isContentModeAutomaticallyAdjusted else { return }
-        adjustContentMode()
-    }
-
     /// A convenience method to adjust content mode to be
     /// `.scaleAspectFit` if the image is large or `.center` when the image is small
     /// or same size as `self`.
     ///
     /// This should method will only take into effect if the frame is correct for `self`.
-    private func adjustContentMode() {
-        guard let image = image else {
+    private func adjustContentModeIfNeeded() {
+        guard isContentModeAutomaticallyAdjusted, let image = image else {
             return
         }
 
@@ -70,6 +65,16 @@ extension UIImageView {
 }
 
 extension UIImageView {
+    @objc private func swizzled_layoutSubviews() {
+        self.swizzled_layoutSubviews()
+        adjustContentModeIfNeeded()
+    }
+
+    @objc private func swizzled_setImage(_ image: UIImage?) {
+        self.swizzled_setImage(image)
+        adjustContentModeIfNeeded()
+    }
+
     static func runOnceSwapSelectors() {
         swizzle(
             UIImageView.self,
@@ -82,15 +87,5 @@ extension UIImageView {
             originalSelector: #selector(UIImageView.layoutSubviews),
             swizzledSelector: #selector(UIImageView.swizzled_layoutSubviews)
         )
-    }
-
-    @objc private func swizzled_layoutSubviews() {
-        self.swizzled_layoutSubviews()
-        adjustContentModeIfNeeded()
-    }
-
-    @objc private func swizzled_setImage(_ image: UIImage?) {
-        self.swizzled_setImage(image)
-        adjustContentModeIfNeeded()
     }
 }
