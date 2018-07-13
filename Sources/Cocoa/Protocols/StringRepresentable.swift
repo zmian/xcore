@@ -62,9 +62,14 @@ public protocol TextAttributedTextRepresentable: class {
     var text: String? { get set }
     var attributedText: NSAttributedString? { get set }
     func setText(_ string: StringRepresentable?)
+    var hasText: Bool { get }
 }
 
 extension TextAttributedTextRepresentable {
+    public var hasText: Bool {
+        return text != nil || attributedText != nil
+    }
+
     public func setText(_ string: StringRepresentable?) {
         guard let string = string else {
             text = nil
