@@ -447,6 +447,9 @@
                 <a href="../Extensions/UINavigationController.html">UINavigationController</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Extensions/UINavigationController/AnimationStyle.html">– AnimationStyle</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Extensions/UINib.html">UINib</a>
               </li>
               <li class="nav-group-task">
@@ -1026,6 +1029,178 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:So22UINavigationControllerC5XcoreE14AnimationStyleO"></a>
+                    <a name="//apple_ref/swift/Enum/AnimationStyle" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So22UINavigationControllerC5XcoreE14AnimationStyleO">AnimationStyle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The type of animation when view controller is push.</p>
+
+                        <a href="../Extensions/UINavigationController/AnimationStyle.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">AnimationStyle</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L106-L126">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:So22UINavigationControllerC5XcoreE08pushViewB0ySo06UIViewB0C_AbCE14AnimationStyleO4withtF"></a>
+                    <a name="//apple_ref/swift/Method/pushViewController(_:with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So22UINavigationControllerC5XcoreE08pushViewB0ySo06UIViewB0C_AbCE14AnimationStyleO4withtF">pushViewController(_:with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Pushes a view controller onto the receiver’s stack and updates the
+display.</p>
+
+<p>The object in the <code>viewController</code> parameter becomes the top view
+controller on the navigation stack. Pushing a view controller causes its
+view to be embedded in the navigation interface. If the animated parameter
+is <code>true</code>, the view is animated into position; otherwise, the view is simply
+displayed in its final location.</p>
+
+<p>In addition to displaying the view associated with the new view controller at
+the top of the stack, this method also updates the navigation bar and tool bar
+accordingly. For information on how the navigation bar is updated.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">pushViewController</span><span class="p">(</span><span class="n">_</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="n">with</span> <span class="nv">animation</span><span class="p">:</span> <span class="kt"><a href="../Extensions/UINavigationController/AnimationStyle.html">AnimationStyle</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>viewController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The view controller to push onto the stack. This object cannot be a tab bar controller.
+            If the view controller is already on the navigation stack, this method throws an exception.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animation</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A property that indicates how the push animation is to be animated, for example, fade in or slide in from right.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L145-L152">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:So22UINavigationControllerC5XcoreE07popViewB0So06UIViewB0CSgAbCE14AnimationStyleO4with_tF"></a>
+                    <a name="//apple_ref/swift/Method/popViewController(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So22UINavigationControllerC5XcoreE07popViewB0So06UIViewB0CSgAbCE14AnimationStyleO4with_tF">popViewController(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Pops the top view controller from the navigation stack and updates the
+display.</p>
+
+<p>This method removes the top view controller from the stack and makes
+the new top of the stack the active view controller. If the view controller
+at the top of the stack is the root view controller, this method does nothing.
+In other words, you cannot pop the last item on the stack.</p>
+
+<p>In addition to displaying the view associated with the new view controller at
+the top of the stack, this method also updates the navigation bar and tool bar
+accordingly. For information on how the navigation bar is updated.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">popViewController</span><span class="p">(</span><span class="n">with</span> <span class="nv">animation</span><span class="p">:</span> <span class="kt"><a href="../Extensions/UINavigationController/AnimationStyle.html">AnimationStyle</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIViewController</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animation</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A property that indicates how the pop animation is to be animated, for example, fade out or slide out to right.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The view controller that was popped from the stack.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L169-L176">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:@CM@Xcore@@objc(cs)UINavigationController(py)supportedInterfaceOrientations"></a>
                     <a name="//apple_ref/swift/Property/supportedInterfaceOrientations" class="dashAnchor"></a>
                     <a class="token" href="#/c:@CM@Xcore@@objc(cs)UINavigationController(py)supportedInterfaceOrientations">supportedInterfaceOrientations</a>
@@ -1048,7 +1223,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L108-L110">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L183-L185">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1078,7 +1253,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L112-L114">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L187-L189">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1108,7 +1283,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L117-L123">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L192-L198">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1138,7 +1313,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L126-L132">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L201-L207">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1168,7 +1343,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L134-L136">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L209-L211">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1198,7 +1373,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L138-L140">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L213-L215">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1228,7 +1403,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L142-L144">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L217-L219">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1258,7 +1433,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L146-L148">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift#L221-L223">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1268,7 +1443,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-07-10)</p>
+          <p>&copy; 2018 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2018-07-12)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
