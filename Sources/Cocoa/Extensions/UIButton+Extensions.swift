@@ -542,10 +542,15 @@ extension UIButton {
 // MARK: Lifecycle Events
 
 extension UIButton {
+    // A method that is called when the state changes.
+    @objc open func stateDidChange(_ state: UIControlState) {
+    }
+
     @objc private func swizzled_isSelectedSetter(newValue: Bool) {
         let oldValue = isSelected
         self.swizzled_isSelectedSetter(newValue: newValue)
         guard oldValue != isSelected else { return }
+        stateDidChange(isSelected ? .selected : .normal)
         didSelect?(self)
     }
 
@@ -553,8 +558,10 @@ extension UIButton {
         let oldValue = isHighlighted
         self.swizzled_isHighlightedSetter(newValue: newValue)
         guard oldValue != isHighlighted else { return }
-        changeBackgroundColor(to: isHighlighted ? .highlighted : .normal)
-        changeBorderColor(to: isHighlighted ? .highlighted : .normal)
+        let state: UIControlState = isHighlighted ? .highlighted : .normal
+        changeBackgroundColor(to: state)
+        changeBorderColor(to: state)
+        stateDidChange(state)
         didHighlight?(self)
         highlightedAnimation.animate(self)
     }
@@ -563,8 +570,9 @@ extension UIButton {
         let oldValue = isEnabled
         self.swizzled_isEnabledSetter(newValue: newValue)
         guard oldValue != isEnabled else { return }
-        changeBackgroundColor(to: isEnabled ? .normal : .disabled)
-        changeBorderColor(to: isEnabled ? .normal : .disabled)
+        let state: UIControlState = isEnabled ? .normal : .disabled
+        changeBackgroundColor(to: state)
+        changeBorderColor(to: state)
         didEnable?(self)
     }
 
