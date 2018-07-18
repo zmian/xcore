@@ -32,14 +32,25 @@ extension NSAttributedString {
     }
 
     public var attributesDescription: String {
+        let text = string as NSString
         let range = NSRange(location: 0, length: length)
+        var result: [String] = []
 
-        var result = ""
         enumerateAttributes(in: range) { attributes, range, _ in
-            result += "range: \(NSStringFromRange(range)) attributes: \(attributes)\n\n"
+            result.append("\nstring: \(text.substring(with: range))")
+            result.append("range: \(NSStringFromRange(range))")
+            attributes.forEach {
+                var value = $0.value
+
+                if $0.key == .foregroundColor, let color = value as? UIColor {
+                    value = color.hex
+                }
+
+                result.append("\($0.key.rawValue): \(value)")
+            }
         }
 
-        return result
+        return result.joined(separator: "\n")
     }
 }
 
