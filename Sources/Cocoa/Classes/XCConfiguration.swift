@@ -96,7 +96,9 @@ extension UIImageView {
     }
 }
 
-extension NSObjectProtocol {
+public protocol With {}
+
+extension With {
     public func apply(style: XCConfiguration<Self>) {
         style.configure(self)
     }
@@ -125,7 +127,7 @@ extension NSObjectProtocol {
     }
 }
 
-extension Array where Element: NSObjectProtocol {
+extension Array where Element: With {
     /// A convenience function to apply styles using block based api.
     ///
     /// ```swift
@@ -153,3 +155,5 @@ extension Array where Element: NSObjectProtocol {
         return self
     }
 }
+
+extension NSObject: With { }
