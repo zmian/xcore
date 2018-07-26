@@ -41,10 +41,10 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     private var emptyTableFooterView = UIView()
     /// A boolean value to determine whether the empty table view cells are hidden. The default value is `false`.
-    @objc open dynamic var emptyCellsHidden = false {
+    @objc open dynamic var isEmptyCellsHidden = false {
         didSet {
             guard tableFooterView == emptyTableFooterView else { return }
-            tableFooterView = emptyCellsHidden ? emptyTableFooterView : nil
+            tableFooterView = isEmptyCellsHidden ? emptyTableFooterView : nil
         }
     }
 
