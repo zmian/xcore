@@ -26,7 +26,13 @@ import UIKit
 
 open class XCToolbar: UIToolbar {
     /// The default value is `44` (system's standard).
-    open var preferredHeight: CGFloat = 44
+    open var preferredHeight: CGFloat = 44 {
+        didSet {
+            guard oldValue != preferredHeight else { return }
+            invalidateIntrinsicContentSize()
+            setNeedsLayout()
+        }
+    }
 
     // MARK: Init Methods
 
@@ -64,5 +70,9 @@ open class XCToolbar: UIToolbar {
         var size = super.sizeThatFits(size)
         size.height = preferredHeight
         return size
+    }
+
+    open override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIViewNoIntrinsicMetric, height: preferredHeight)
     }
 }
