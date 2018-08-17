@@ -137,6 +137,7 @@ public class BlurView: XCView {
         guard isSmartBlurEffectEnabled else {
             blurBackView.isHidden = true
             blurEffectView.isHidden = true
+            backgroundColor = .clear
             return
         }
 
@@ -148,26 +149,29 @@ public class BlurView: XCView {
 
 extension BlurView {
     public override func addSubview(_ view: UIView) {
-        if isSmartBlurEffectEnabled {
-            blurEffectView.contentView.addSubview(view)
-        } else {
+        guard isSmartBlurEffectEnabled && !isReduceTransparencyEnabled else {
             super.addSubview(view)
+            return
         }
+
+        blurEffectView.contentView.addSubview(view)
     }
 
     public override func bringSubview(toFront view: UIView) {
-        if isSmartBlurEffectEnabled {
-            blurEffectView.contentView.bringSubview(toFront: view)
-        } else {
+        guard isSmartBlurEffectEnabled && !isReduceTransparencyEnabled else {
             super.bringSubview(toFront: view)
+            return
         }
+
+        blurEffectView.contentView.bringSubview(toFront: view)
     }
 
     public override func sendSubview(toBack view: UIView) {
-        if isSmartBlurEffectEnabled {
-            blurEffectView.contentView.sendSubview(toBack: view)
-        } else {
+        guard isSmartBlurEffectEnabled && !isReduceTransparencyEnabled else {
             super.sendSubview(toBack: view)
+            return
         }
+
+        blurEffectView.contentView.sendSubview(toBack: view)
     }
 }
