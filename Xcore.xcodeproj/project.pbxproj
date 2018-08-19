@@ -91,7 +91,6 @@
 		6822FF8F20D217880037E780 /* Dictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0B20D217880037E780 /* Dictionary+Extensions.swift */; };
 		6822FF9020D217880037E780 /* Numbers+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0C20D217880037E780 /* Numbers+Extensions.swift */; };
 		6822FF9120D217880037E780 /* Collection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0D20D217880037E780 /* Collection+Extensions.swift */; };
-		6822FF9220D217880037E780 /* CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0F20D217880037E780 /* CaseIterable.swift */; };
 		6822FF9320D217880037E780 /* EquatableByPointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF1020D217880037E780 /* EquatableByPointer.swift */; };
 		6822FF9420D217880037E780 /* Collectionify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF1220D217880037E780 /* Collectionify.swift */; };
 		6822FF9520D217880037E780 /* TODO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF1320D217880037E780 /* TODO.swift */; };
@@ -274,7 +273,6 @@
 		6822FF0B20D217880037E780 /* Dictionary+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extensions.swift"; sourceTree = "<group>"; };
 		6822FF0C20D217880037E780 /* Numbers+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Numbers+Extensions.swift"; sourceTree = "<group>"; };
 		6822FF0D20D217880037E780 /* Collection+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Extensions.swift"; sourceTree = "<group>"; };
-		6822FF0F20D217880037E780 /* CaseIterable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaseIterable.swift; sourceTree = "<group>"; };
 		6822FF1020D217880037E780 /* EquatableByPointer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquatableByPointer.swift; sourceTree = "<group>"; };
 		6822FF1220D217880037E780 /* Collectionify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collectionify.swift; sourceTree = "<group>"; };
 		6822FF1320D217880037E780 /* TODO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TODO.swift; sourceTree = "<group>"; };
@@ -283,6 +281,7 @@
 		68414F1720CC42AC00C547EC /* ExampleDynamicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleDynamicTableViewController.swift; sourceTree = "<group>"; };
 		68414F1A20CC4E9C00C547EC /* UIImage+AssetIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+AssetIdentifier.swift"; sourceTree = "<group>"; };
 		6856E9F820D856AF005CFBD4 /* ElementPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementPosition.swift; sourceTree = "<group>"; };
+		6864F4F62128EDFD002132DC /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = ../../../../Downloads/MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		6872189020C07A9F00BFEA98 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6872189220C07A9F00BFEA98 /* TestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
 		6872189B20C07B6E00BFEA98 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -732,7 +731,6 @@
 		6822FF0E20D217880037E780 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				6822FF0F20D217880037E780 /* CaseIterable.swift */,
 				6822FF1020D217880037E780 /* EquatableByPointer.swift */,
 			);
 			path = Protocols;
@@ -836,6 +834,7 @@
 		689D0C6B1D8DBB9500145E0B = {
 			isa = PBXGroup;
 			children = (
+				6864F4F62128EDFD002132DC /* MyPlayground.playground */,
 				689869C91E99926100CE7B77 /* Example */,
 				6822FE7E20D217880037E780 /* Sources */,
 				689D0D161D8DBE5C00145E0B /* UnitTests */,
@@ -1227,7 +1226,6 @@
 				6822FF5420D217880037E780 /* DataSourceIndex.swift in Sources */,
 				6822FF7420D217880037E780 /* NibInstantiable.swift in Sources */,
 				68E5729B20F82ADD002FEC39 /* UIColor+Extensions.swift in Sources */,
-				6822FF9220D217880037E780 /* CaseIterable.swift in Sources */,
 				6822FF6520D217880037E780 /* ImageAssetIdentifiable.swift in Sources */,
 				6822FF7520D217880037E780 /* ImageTitleDisplayable.swift in Sources */,
 				68E572AA20F82ADD002FEC39 /* UIStackView+Extensions.swift in Sources */,
@@ -1465,7 +1463,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=100 -Xfrontend -warn-long-expression-type-checking=100";
@@ -1522,7 +1520,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
