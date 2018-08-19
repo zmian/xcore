@@ -93,7 +93,6 @@
 		6822FF9120D217880037E780 /* Collection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0D20D217880037E780 /* Collection+Extensions.swift */; };
 		6822FF9320D217880037E780 /* EquatableByPointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF1020D217880037E780 /* EquatableByPointer.swift */; };
 		6822FF9420D217880037E780 /* Collectionify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF1220D217880037E780 /* Collectionify.swift */; };
-		6822FF9520D217880037E780 /* TODO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF1320D217880037E780 /* TODO.swift */; };
 		6822FF9620D217880037E780 /* Timer+Closure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF1520D217880037E780 /* Timer+Closure.swift */; };
 		6822FF9720D217880037E780 /* DebounceThrottle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF1620D217880037E780 /* DebounceThrottle.swift */; };
 		68414F1820CC42AC00C547EC /* ExampleDynamicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68414F1720CC42AC00C547EC /* ExampleDynamicTableViewController.swift */; };
@@ -275,7 +274,6 @@
 		6822FF0D20D217880037E780 /* Collection+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Extensions.swift"; sourceTree = "<group>"; };
 		6822FF1020D217880037E780 /* EquatableByPointer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquatableByPointer.swift; sourceTree = "<group>"; };
 		6822FF1220D217880037E780 /* Collectionify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collectionify.swift; sourceTree = "<group>"; };
-		6822FF1320D217880037E780 /* TODO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TODO.swift; sourceTree = "<group>"; };
 		6822FF1520D217880037E780 /* Timer+Closure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Timer+Closure.swift"; sourceTree = "<group>"; };
 		6822FF1620D217880037E780 /* DebounceThrottle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebounceThrottle.swift; sourceTree = "<group>"; };
 		68414F1720CC42AC00C547EC /* ExampleDynamicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleDynamicTableViewController.swift; sourceTree = "<group>"; };
@@ -740,7 +738,6 @@
 			children = (
 				6822FF1220D217880037E780 /* Collectionify.swift */,
 				68E3CD2320F4ED0E00B0F835 /* FatalReason.swift */,
-				6822FF1320D217880037E780 /* TODO.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1178,7 +1175,6 @@
 				6822FF5120D217880037E780 /* XCComposedTableViewController.swift in Sources */,
 				6822FF8220D217880037E780 /* Reusable.swift in Sources */,
 				68E572B820F82ADD002FEC39 /* ProcessInfo+Extensions.swift in Sources */,
-				6822FF9520D217880037E780 /* TODO.swift in Sources */,
 				6856E9F920D856B0005CFBD4 /* ElementPosition.swift in Sources */,
 				6822FF9020D217880037E780 /* Numbers+Extensions.swift in Sources */,
 				68E572A120F82ADD002FEC39 /* UIFont+Extensions.swift in Sources */,

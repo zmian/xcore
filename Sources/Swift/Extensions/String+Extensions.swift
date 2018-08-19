@@ -142,8 +142,8 @@ extension String {
 // MARK: Localization
 
 extension String {
-    // TODO: Add more customization to use these methods instead of secondary library
     private var localized: String {
+        #warning("TODO: Add more customization to use these methods instead of secondary library")
         return NSLocalizedString(self, tableName: nil, bundle: .main, value: "", comment: "")
     }
 
