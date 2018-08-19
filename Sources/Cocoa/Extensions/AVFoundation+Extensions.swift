@@ -29,17 +29,17 @@ import ObjectiveC
 
 extension AVPlayer {
     public var isPlaying: Bool {
-        return rate != 0 && error == nil
+        return timeControlStatus == .playing
     }
 
     public func currentTime(_ block: @escaping (_ seconds: Int, _ formattedTime: String) -> Void) -> Any {
         let interval = CMTime(value: 1, timescale: 1)
 
-        return addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { [weak self] time in
-            if let strongSelf = self {
-                let normalizedTime = Double(strongSelf.currentTime().value) / Double(strongSelf.currentTime().timescale)
-                block(Int(normalizedTime), strongSelf.format(seconds: Int(normalizedTime)))
-            }
+        return addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+            guard let strongSelf = self else { return }
+            let currentTime = strongSelf.currentTime()
+            let normalizedTime = Double(currentTime.value) / Double(currentTime.timescale)
+            block(Int(normalizedTime), strongSelf.format(seconds: Int(normalizedTime)))
         }
     }
 

@@ -24,29 +24,21 @@
 
 import UIKit
 
-public struct IconLabelCollectionCellOptions: OptionSet {
-    public let rawValue: Int
-
-    public init(rawValue: Int) {
-        self.rawValue = rawValue
-    }
-
-    public static let movable = IconLabelCollectionCellOptions(rawValue: 1 << 0)
-    public static let deletable = IconLabelCollectionCellOptions(rawValue: 1 << 1)
-    public static let all: IconLabelCollectionCellOptions = [movable, deletable]
-}
-
-open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, UICollectionViewDataSource {
-    private var allowReordering: Bool { return cellOptions.contains(.movable) }
-    private var allowDeletion: Bool { return cellOptions.contains(.deletable) }
+open class IconLabelCollectionView: UICollectionView {
+    private var allowsReordering: Bool { return cellOptions.contains(.move) }
+    private var allowsDeletion: Bool { return cellOptions.contains(.delete) }
     private var hasLongPressGestureRecognizer = false
     open var sections: [Section<ImageTitleDisplayable>] = []
+
     /// The layout used to organize the collection view’s items.
     open var layout: UICollectionViewFlowLayout? {
         return collectionViewLayout as? UICollectionViewFlowLayout
     }
-    open var cellOptions: IconLabelCollectionCellOptions = [] {
-        didSet { updateCellOptionsIfNeeded() }
+
+    open var cellOptions: CellOptions = .none {
+        didSet {
+            updateCellOptionsIfNeeded()
+        }
     }
 
     open var isEditing = false {
@@ -57,17 +49,17 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
         }
     }
 
-    /// A boolean value to determine whether the content is centered in the collection view. The default value is `false`.
+    /// A boolean value to determine whether the content is centered in the collection view.
+    /// The default value is `false`.
     open var isContentCentered = false {
         didSet {
-            if isContentCentered {
-                layout?.minimumInteritemSpacing = bounds.height
-            }
+            guard isContentCentered else { return }
+            layout?.minimumInteritemSpacing = bounds.height
         }
     }
 
-    private var configureCell: ((_ indexPath: IndexPath, _ cell: IconLabelCollectionViewCell, _ item: ImageTitleDisplayable) -> Void)?
-    open func configureCell(_ callback: @escaping (_ indexPath: IndexPath, _ cell: IconLabelCollectionViewCell, _ item: ImageTitleDisplayable) -> Void) {
+    private var configureCell: ((_ indexPath: IndexPath, _ cell: Cell, _ item: ImageTitleDisplayable) -> Void)?
+    open func configureCell(_ callback: @escaping (_ indexPath: IndexPath, _ cell: Cell, _ item: ImageTitleDisplayable) -> Void) {
         configureCell = callback
     }
 
@@ -96,7 +88,7 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
         self.init(frame: frame, options: [])
     }
 
-    public convenience init(frame: CGRect = .zero, collectionViewLayout: UICollectionViewLayout? = nil, options: IconLabelCollectionCellOptions) {
+    public convenience init(frame: CGRect = .zero, collectionViewLayout: UICollectionViewLayout? = nil, options: CellOptions) {
         self.init(frame: frame, collectionViewLayout: collectionViewLayout ?? UICollectionViewFlowLayout())
         cellOptions = options
     }
@@ -131,12 +123,13 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
         backgroundColor = .clear
         alwaysBounceVertical = true
 
-        let itemSpacing: CGFloat = 8
-        layout?.itemSize = CGSize(width: 60, height: 74)
-        layout?.minimumLineSpacing = 15
-        layout?.minimumInteritemSpacing = itemSpacing
-        layout?.sectionInset = 15
-        layout?.scrollDirection = .vertical
+        layout?.apply {
+            $0.itemSize = CGSize(width: 60, height: 74)
+            $0.minimumLineSpacing = .defaultPadding
+            $0.minimumInteritemSpacing = .minimumPadding
+            $0.sectionInset = .defaultPadding
+            $0.scrollDirection = .vertical
+        }
 
         updateCellOptionsIfNeeded()
     }
@@ -155,7 +148,7 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
             strongSelf.indexPathForItem(at: sender.location(in: strongSelf)) != nil
         else { return }
 
-        strongSelf.isEditing = !strongSelf.isEditing
+        strongSelf.isEditing.toggle()
     }
 
     private lazy var tapGestureRecognizer = UITapGestureRecognizer().apply {
@@ -164,9 +157,11 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
             self?.isEditing = false
         }
     }
+}
 
-    // MARK: UICollectionViewDataSource
+// MARK: UICollectionViewDelegate & UICollectionViewDataSource
 
+extension IconLabelCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sections.count
     }
@@ -176,13 +171,9 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
     }
 
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(for: indexPath) as IconLabelCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(for: indexPath) as Cell
         let item = sections[indexPath]
-        cell.setData(item)
-        cell.setDeleteButtonHidden(!isEditing, animated: false)
-        cell.deleteButton.addAction(.touchUpInside) { [weak self] sender in
-            self?.removeItems([indexPath])
-        }
+        cell.configure(item, at: indexPath, collectionView: self)
         configureCell?(indexPath, cell, item)
         return cell
     }
@@ -194,23 +185,25 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
     }
 
     open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard allowDeletion, let cell = cell as? IconLabelCollectionViewCell else { return }
+        guard allowsDeletion, let cell = cell as? Cell else { return }
         cell.setDeleteButtonHidden(!isEditing)
     }
 
     // MARK: Reordering
 
     open func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return allowReordering
+        return allowsReordering
     }
 
     open func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let movedItem = sections.moveElement(from: sourceIndexPath, to: destinationIndexPath)
         didMoveItem?(sourceIndexPath, destinationIndexPath, movedItem)
     }
+}
 
-    // MARK: Deletion
+// MARK: Deletion
 
+extension IconLabelCollectionView {
     /// Deletes the items at the specified index paths.
     ///
     /// - Parameter indexPaths: An array of `IndexPath` objects identifying the items to delete.
@@ -227,15 +220,27 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
             strongSelf.reloadItems(at: strongSelf.indexPathsForVisibleItems)
         })
     }
+}
 
-    // MARK: Helpers
+// MARK: Convenience API
 
+extension IconLabelCollectionView {
+    /// A convenience property to create a single section collection view.
+    open var items: [ImageTitleDisplayable] {
+        get { return sections.first?.items ?? [] }
+        set { sections = [Section(items: newValue)] }
+    }
+}
+
+// MARK: Helpers
+
+extension IconLabelCollectionView {
     private func updateCellOptionsIfNeeded() {
-        if allowDeletion && !hasLongPressGestureRecognizer {
+        if allowsDeletion && !hasLongPressGestureRecognizer {
             addGestureRecognizer(tapGestureRecognizer)
             addGestureRecognizer(longPressGestureRecognizer)
             hasLongPressGestureRecognizer = true
-        } else if !allowDeletion && hasLongPressGestureRecognizer {
+        } else if !allowsDeletion && hasLongPressGestureRecognizer {
             isEditing = false
             removeGestureRecognizer(tapGestureRecognizer)
             removeGestureRecognizer(longPressGestureRecognizer)
@@ -244,17 +249,8 @@ open class IconLabelCollectionView: UICollectionView, UICollectionViewDelegate, 
     }
 
     private func toggleVisibleCellsDeleteButtons() {
-        visibleCells.compactMap { $0 as? IconLabelCollectionViewCell }.forEach { $0.setDeleteButtonHidden(!isEditing) }
-    }
-
-    // MARK: Convenience API
-
-    // Note: This is here instead of separate extension because Swift doesn't allow us to `override`
-    // property declared in an extension.
-
-    /// A convenience property to create a single section collection view.
-    open var items: [ImageTitleDisplayable] {
-        get { return sections.first?.items ?? [] }
-        set { sections = [Section(items: newValue)] }
+        visibleCells.compactMap { $0 as? Cell }.forEach {
+            $0.setDeleteButtonHidden(!isEditing)
+        }
     }
 }

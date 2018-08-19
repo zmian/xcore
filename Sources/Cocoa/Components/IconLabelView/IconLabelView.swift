@@ -25,35 +25,65 @@
 import UIKit
 
 open class IconLabelView: XCView {
-    public enum Style { case topBottom, leftRight }
-
-    private var imagePaddingConstraints: [NSLayoutConstraint] = []
-    private var imageSizeConstraints: (width: NSLayoutConstraint?, height: NSLayoutConstraint?)
+    private var imagePaddingConstraints: NSLayoutConstraint.Edges!
+    private var imageSizeConstraints: NSLayoutConstraint.Size!
     private var labelsWidthConstraints: [NSLayoutConstraint] = []
-    private var stackViewConstraints: (topBottom: [NSLayoutConstraint]?, leftRight: [NSLayoutConstraint]?)
+    private var stackViewConstraints: (vertical: [NSLayoutConstraint]?, horizontal: [NSLayoutConstraint]?)
 
     // MARK: Subviews
 
-    private let stackView = UIStackView()
-    private let textImageSpacerView = IntrinsicContentSizeView()
-    public let imageViewContainer = UIView()
-    public let imageView = UIImageView()
-    public let titleLabel = UILabel()
-    public let subtitleLabel = UILabel()
+    private lazy var stackView = UIStackView(arrangedSubviews: [
+        imageViewContainer,
+        textImageSpacerView,
+        titleLabel
+    ]).apply {
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.distribution = .fill
+        $0.alignment = .center
+        $0.spacing = .minimumPadding / 2
+    }
 
-    /// The default value is `Style.topBottom`.
-    open var style = Style.topBottom {
+    private let textImageSpacerView = IntrinsicContentSizeView()
+
+    public lazy var imageViewContainer = UIView().apply {
+        $0.backgroundColor = imageBackgroundColor
+        $0.cornerRadius = imageCornerRadius
+        $0.addSubview(imageView)
+    }
+
+    public let imageView = UIImageView().apply {
+        $0.contentMode = .scaleAspectFill
+        $0.enableSmoothScaling()
+    }
+
+    public let titleLabel = UILabel().apply {
+        $0.font = .preferredFont(forTextStyle: .footnote)
+        $0.textAlignment = .center
+        $0.textColor = .black
+        $0.numberOfLines = 2
+        $0.sizeToFit()
+    }
+
+    public let subtitleLabel = UILabel().apply {
+        $0.font = .preferredFont(forTextStyle: .footnote)
+        $0.textAlignment = .center
+        $0.textColor = .lightGray
+        $0.numberOfLines = 1
+        $0.sizeToFit()
+    }
+
+    /// The default value is `.vertical`.
+    open var axis: NSLayoutConstraint.Axis = .vertical {
         didSet {
-            guard oldValue != style else { return }
-            apply(style: style)
+            guard oldValue != axis else { return }
+            updateAxis()
         }
     }
 
-    /// The default size is `55,55`.
-    @objc open dynamic var imageSize = CGSize(width: 55, height: 55) {
+    /// The default size is `55`.
+    @objc open dynamic var imageSize = CGSize(55) {
         didSet {
-            imageSizeConstraints.width?.constant = imageSize.width
-            imageSizeConstraints.height?.constant = imageSize.height
+            imageSizeConstraints.update(from: imageSize)
         }
     }
 
@@ -64,7 +94,7 @@ open class IconLabelView: XCView {
         }
     }
 
-    /// The default value is `0` which means size to fit.
+    /// The default value is `0`, which means size to fit.
     @objc open dynamic var labelsWidth: CGFloat = 0 {
         didSet {
             guard oldValue != labelsWidth else { return }
@@ -85,8 +115,8 @@ open class IconLabelView: XCView {
         }
     }
 
-    /// The default value is `8`.
-    @objc open dynamic var imagePadding: CGFloat = 8 {
+    /// The default value is `.minimumPadding`.
+    @objc open dynamic var imagePadding: CGFloat = .minimumPadding {
         didSet {
             imageInset = UIEdgeInsets(imagePadding)
             imageView.cornerRadius = imageCornerRadius - imagePadding
@@ -94,13 +124,17 @@ open class IconLabelView: XCView {
     }
 
     /// The distance that the view is inset from the enclosing content view.
-    /// The default value is `UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)`.
-    @objc open dynamic var imageInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8) {
+    /// The default value is `.minimumPadding`.
+    @objc open dynamic var imageInset: UIEdgeInsets = .minimumPadding {
         didSet {
-            imagePaddingConstraints.at(0)?.constant = imageInset.top
-            imagePaddingConstraints.at(1)?.constant = imageInset.bottom
-            imagePaddingConstraints.at(2)?.constant = imageInset.left
-            imagePaddingConstraints.at(3)?.constant = imageInset.right
+            imagePaddingConstraints.update(from: imageInset)
+        }
+    }
+
+    /// The default value is `nil`, which results in a transparent background color.
+    @objc open dynamic var imageBackgroundColor: UIColor? = nil {
+        didSet {
+            imageViewContainer.backgroundColor = imageBackgroundColor
         }
     }
 
@@ -112,16 +146,9 @@ open class IconLabelView: XCView {
     }
 
     /// The default value is `false`.
-    @objc open dynamic var isRoundImageView = false {
+    @objc open dynamic var isImageViewRounded = false {
         didSet {
-            imageCornerRadius = isRoundImageView ? imageSize.height / 2 : 0
-        }
-    }
-
-    /// The default value is `nil`, which results in a transparent background color.
-    @objc open dynamic var imageBackgroundColor: UIColor? = nil {
-        didSet {
-            imageViewContainer.backgroundColor = imageBackgroundColor
+            imageCornerRadius = isImageViewRounded ? imageSize.height / 2 : 0
         }
     }
 
@@ -180,26 +207,14 @@ open class IconLabelView: XCView {
         }
     }
 
-    /// The default value is `.Vertical`.
-    private var axis: NSLayoutConstraint.Axis {
-        get { return stackView.axis }
-        set { stackView.axis = newValue }
-    }
-
-    /// The default value is `.Fill`.
-    private var distribution: UIStackView.Distribution {
-        get { return stackView.distribution }
-        set { stackView.distribution = newValue }
-    }
-
-    /// The default value is `.Center`.
-    open var alignment: UIStackView.Alignment {
+    /// The default value is `.center`.
+    open var contentAlignment: UIStackView.Alignment {
         get { return stackView.alignment }
         set { stackView.alignment = newValue }
     }
 
-    /// The default value is `5`.
-    @objc open dynamic var spacing: CGFloat {
+    /// The default value is `.minimumPadding / 2`.
+    @objc open dynamic var contentPadding: CGFloat {
         get { return stackView.spacing }
         set { stackView.spacing = newValue }
     }
@@ -208,20 +223,6 @@ open class IconLabelView: XCView {
     @objc open dynamic var contentInset: UIEdgeInsets {
         get { return stackView.layoutMargins }
         set { stackView.layoutMargins = newValue }
-    }
-
-    // MARK: Setters
-
-    open func setData(_ image: ImageRepresentable? = nil, title: StringRepresentable?, subtitle: StringRepresentable? = nil) {
-        isSubtitleLabelHidden = subtitle == nil
-        isImageViewHidden = image == nil
-        imageView.setImage(image)
-        titleLabel.setText(title)
-        subtitleLabel.setText(subtitle)
-    }
-
-    open func setData(_ data: ImageTitleDisplayable) {
-        setData(data.image, title: data.title, subtitle: data.subtitle)
     }
 
     // MARK: Setup Methods
@@ -233,38 +234,10 @@ open class IconLabelView: XCView {
         NSLayoutConstraint(item: stackView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: self).activate()
         NSLayoutConstraint(item: stackView, attribute: .bottom, relatedBy: .lessThanOrEqual, toItem: self).activate()
 
-        apply(style: style)
-        distribution = .fill
-        alignment = .center
-        spacing = 5
+        updateAxis()
 
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.addArrangedSubview(imageViewContainer)
-        stackView.addArrangedSubview(textImageSpacerView)
-        stackView.addArrangedSubview(titleLabel)
-
-        titleLabel.font = .preferredFont(forTextStyle: .footnote)
-        titleLabel.textAlignment = .center
-        titleLabel.textColor = .black
-        titleLabel.numberOfLines = 2
-        titleLabel.sizeToFit()
-
-        subtitleLabel.font = .preferredFont(forTextStyle: .footnote)
-        subtitleLabel.textAlignment = .center
-        subtitleLabel.textColor = .lightGray
-        subtitleLabel.numberOfLines = 1
-        subtitleLabel.sizeToFit()
-
-        imageViewContainer.backgroundColor = imageBackgroundColor
-        imageViewContainer.cornerRadius = imageCornerRadius
-        imageViewContainer.addSubview(imageView)
-        let size = NSLayoutConstraint.size(imageViewContainer, size: imageSize).activate()
-        imageSizeConstraints.width = size[0]
-        imageSizeConstraints.height = size[1]
-        imagePaddingConstraints = NSLayoutConstraint.constraintsForViewToFillSuperview(imageView, padding: imageInset).activate()
-
-        imageView.enableSmoothScaling()
-        imageView.contentMode = .scaleAspectFill
+        imageSizeConstraints = NSLayoutConstraint.Size(NSLayoutConstraint.size(imageViewContainer, size: imageSize).activate())
+        imagePaddingConstraints = NSLayoutConstraint.Edges(NSLayoutConstraint.constraintsForViewToFillSuperview(imageView, padding: imageInset).activate())
     }
 
     open override func setNeedsLayout() {
@@ -275,6 +248,22 @@ open class IconLabelView: XCView {
     open override func layoutIfNeeded() {
         stackView.layoutIfNeeded()
         super.layoutIfNeeded()
+    }
+}
+
+// MARK: Configure
+
+extension IconLabelView {
+    open func configure(_ image: ImageRepresentable? = nil, title: StringRepresentable?, subtitle: StringRepresentable? = nil) {
+        isSubtitleLabelHidden = subtitle == nil
+        isImageViewHidden = image == nil
+        imageView.setImage(image)
+        titleLabel.setText(title)
+        subtitleLabel.setText(subtitle)
+    }
+
+    open func configure(_ data: ImageTitleDisplayable) {
+        configure(data.image, title: data.title, subtitle: data.subtitle)
     }
 }
 
@@ -303,24 +292,24 @@ extension IconLabelView {
 }
 
 extension IconLabelView {
-    private func apply(style: Style) {
-        switch style {
-            case .topBottom:
-                axis = .vertical
-                // Deactivate `LeftRight` and activate `TopBottom` constraints.
-                stackViewConstraints.leftRight?.deactivate()
-                if stackViewConstraints.topBottom == nil {
-                    stackViewConstraints.topBottom = NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(stackView)
+    private func updateAxis() {
+        switch axis {
+            case .vertical:
+                stackView.axis = .vertical
+                // Deactivate `horizontal` and activate `vertical` constraints.
+                stackViewConstraints.horizontal?.deactivate()
+                if stackViewConstraints.vertical == nil {
+                    stackViewConstraints.vertical = NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(stackView)
                 }
-                stackViewConstraints.topBottom?.activate()
-            case .leftRight:
-                axis = .horizontal
-                // Deactivate `TopBottom` and activate `LeftRight` constraints.
-                stackViewConstraints.topBottom?.deactivate()
-                if stackViewConstraints.leftRight == nil {
-                    stackViewConstraints.leftRight = NSLayoutConstraint.constraintsForViewToFillSuperviewVertical(stackView)
+                stackViewConstraints.vertical?.activate()
+            case .horizontal:
+                stackView.axis = .horizontal
+                // Deactivate `vertical` and activate `horizontal` constraints.
+                stackViewConstraints.vertical?.deactivate()
+                if stackViewConstraints.horizontal == nil {
+                    stackViewConstraints.horizontal = NSLayoutConstraint.constraintsForViewToFillSuperviewVertical(stackView)
                 }
-                stackViewConstraints.leftRight?.activate()
+                stackViewConstraints.horizontal?.activate()
         }
     }
 

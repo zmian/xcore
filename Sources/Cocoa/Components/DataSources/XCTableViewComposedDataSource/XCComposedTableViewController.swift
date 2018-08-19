@@ -25,7 +25,7 @@
 import UIKit
 
 open class XCComposedTableViewController: UIViewController {
-    public private(set) var tableViewConstraints = [NSLayoutConstraint]()
+    public private(set) var tableViewConstraints: NSLayoutConstraint.Edges!
 
     /// There is UIKit bug that causes `UITableView` to jump when using `estimatedRowHeight`
     /// and reloading cells/sections or the entire table view.
@@ -57,10 +57,7 @@ open class XCComposedTableViewController: UIViewController {
     /// The default value is `.zero`.
     @objc open dynamic var contentInset: UIEdgeInsets = .zero {
         didSet {
-            tableViewConstraints.at(0)?.constant = contentInset.left
-            tableViewConstraints.at(1)?.constant = contentInset.right
-            tableViewConstraints.at(2)?.constant = contentInset.top
-            tableViewConstraints.at(3)?.constant = contentInset.bottom
+            tableViewConstraints.update(from: contentInset)
         }
     }
 
@@ -74,8 +71,12 @@ open class XCComposedTableViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
-        tableViewConstraints = constraintsForViewToFillSuperview(tableView, padding: contentInset, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
-        setupTableView(forTableView: tableView)
+        tableViewConstraints = NSLayoutConstraint.Edges(constraintsForViewToFillSuperview(tableView, padding: contentInset, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate())
+        tableView.apply {
+            composedDataSource.dataSources = dataSources(for: $0)
+            $0.dataSource = composedDataSource
+            $0.delegate = self
+        }
     }
 
     open override func viewDidDisappear(_ animated: Bool) {
@@ -95,16 +96,6 @@ open class XCComposedTableViewController: UIViewController {
         #if DEBUG
         Console.info("\(self) deinit")
         #endif
-    }
-}
-
-// MARK: Setup Methods
-
-extension XCComposedTableViewController {
-    private func setupTableView(forTableView tableView: UITableView) {
-        composedDataSource.dataSources = dataSources(for: tableView)
-        tableView.dataSource = composedDataSource
-        tableView.delegate = self
     }
 }
 

@@ -25,12 +25,15 @@
 import UIKit
 
 open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewDataSource {
-    private var allowReordering: Bool { return cellOptions.contains(.movable) }
-    private var allowDeletion: Bool { return cellOptions.contains(.deletable) }
+    private var allowsReordering: Bool { return cellOptions.contains(.move) }
+    private var allowsDeletion: Bool { return cellOptions.contains(.delete) }
     open var sections: [Section<DynamicTableModel>] = []
-    open var cellOptions: DynamicTableCellOptions = [] {
-        didSet { isReorderingEnabled = allowReordering }
+    open var cellOptions: CellOptions = .none {
+        didSet {
+            isReorderingEnabled = allowsReordering
+        }
     }
+
     @objc open dynamic var rowActionDeleteColor: UIColor?
     /// Text to display in the swipe to delete row action. The default value is **"Delete"**.
     @objc open dynamic var rowActionDeleteTitle = "Delete"
@@ -119,7 +122,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         self.init(style: style, options: [])
     }
 
-    public convenience init(frame: CGRect = .zero, style: Style = .plain, options: DynamicTableCellOptions) {
+    public convenience init(frame: CGRect = .zero, style: Style = .plain, options: CellOptions) {
         self.init(frame: frame, style: style)
         cellOptions = options
     }
@@ -192,7 +195,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         backgroundColor = .clear
         estimatedRowHeight = 44
         rowHeight = UITableView.automaticDimension
-        isReorderingEnabled = allowReordering
+        isReorderingEnabled = allowsReordering
     }
 
     open func overrideRegisteredClass(_ cell: DynamicTableViewCell.Type) {
@@ -212,7 +215,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath) as DynamicTableViewCell
         let item = sections[indexPath]
-        cell.setData(item)
+        cell.configure(item)
         configureAccessoryView(cell, type: item.accessory, indexPath: indexPath)
 
         if isLastCellSeparatorHidden {
@@ -300,7 +303,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     // MARK: Reordering
 
     open func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return allowReordering
+        return allowsReordering
     }
 
     open func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -311,27 +314,26 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     // MARK: Deletion
 
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return allowReordering || allowDeletion || editActionsForCell != nil
+        return allowsReordering || allowsDeletion || editActionsForCell != nil
     }
 
     open func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return allowDeletion
+        return allowsDeletion
     }
 
     open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return (allowDeletion || editActionsForCell != nil) ? .delete : .none
+        return (allowsDeletion || editActionsForCell != nil) ? .delete : .none
     }
 
     open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if allowDeletion && editingStyle == .delete {
-            removeItems([indexPath])
-        }
+        guard allowsDeletion && editingStyle == .delete else { return }
+        removeItems([indexPath])
     }
 
     open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         var actions: [UITableViewRowAction] = []
 
-        if allowDeletion {
+        if allowsDeletion {
             let delete = UITableViewRowAction(style: .default, title: rowActionDeleteTitle) { [weak self] action, index in
                 self?.removeItems([indexPath])
             }
