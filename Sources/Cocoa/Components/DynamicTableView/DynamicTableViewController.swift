@@ -28,7 +28,7 @@ open class DynamicTableViewController: UIViewController {
     private var tableViewConstraints = [NSLayoutConstraint]()
     open private(set) lazy var tableView = DynamicTableView(style: self.style, options: self.cellOptions)
     /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
-    open var style: UITableViewStyle = .plain
+    open var style: UITableView.Style = .plain
     open var cellOptions: DynamicTableCellOptions = [] {
         didSet {
             guard isViewLoaded else { return }
@@ -57,11 +57,11 @@ open class DynamicTableViewController: UIViewController {
         self.init(options: [])
     }
 
-    public convenience init(style: UITableViewStyle) {
+    public convenience init(style: UITableView.Style) {
         self.init(style: style, options: [])
     }
 
-    public convenience init(style: UITableViewStyle = .plain, options: DynamicTableCellOptions) {
+    public convenience init(style: UITableView.Style = .plain, options: DynamicTableCellOptions) {
         self.init(nibName: nil, bundle: nil)
         self.style = style
         self.cellOptions = options

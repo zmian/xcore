@@ -144,19 +144,19 @@ extension UINavigationController {
         case `default`
         case fade
 
-        private var transitionType: String {
+        private var transitionType: CATransitionType {
             switch self {
                 case .default:
-                    return "default"
+                    return .none
                 case .fade:
-                    return kCATransitionFade
+                    return .fade
             }
         }
 
         fileprivate var transition: CATransition {
             return CATransition().apply {
                 $0.duration = .slow
-                $0.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                $0.timingFunction = .easeInEaseOut
                 $0.type = transitionType
             }
         }
@@ -226,7 +226,7 @@ extension UINavigationController {
     }
 
     // Setting `preferredStatusBarStyle` works.
-    open override var childViewControllerForStatusBarStyle: UIViewController? {
+    open override var childForStatusBarStyle: UIViewController? {
         if topViewController?.statusBarStyle != nil || statusBarStyle != nil {
             return nil
         } else {
@@ -235,7 +235,7 @@ extension UINavigationController {
     }
 
     // Setting `prefersStatusBarHidden` works.
-    open override var childViewControllerForStatusBarHidden: UIViewController? {
+    open override var childForStatusBarHidden: UIViewController? {
         if topViewController?.isStatusBarHidden != nil || isStatusBarHidden != nil {
             return nil
         } else {

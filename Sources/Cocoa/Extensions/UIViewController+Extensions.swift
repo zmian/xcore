@@ -34,10 +34,10 @@ extension UIViewController {
     open func addViewController(_ childViewController: UIViewController, containerView: UIView? = nil, enableConstraints: Bool = false, padding: UIEdgeInsets = .zero) {
         guard let containerView = containerView ?? view else { return }
 
-        addChildViewController(childViewController)
+        addChild(childViewController)
         containerView.addSubview(childViewController.view)
         childViewController.view.frame = containerView.bounds
-        childViewController.didMove(toParentViewController: self)
+        childViewController.didMove(toParent: self)
 
         if enableConstraints {
             NSLayoutConstraint.constraintsForViewToFillSuperview(childViewController.view, padding: padding).activate()
@@ -50,14 +50,14 @@ extension UIViewController {
             return
         }
 
-        willMove(toParentViewController: nil)
-        removeFromParentViewController()
+        willMove(toParent: nil)
+        removeFromParent()
         view.removeFromSuperview()
     }
 
     /// A boolean value to determine whether the view controller is being popped or is showing a subview controller.
     open var isBeingPopped: Bool {
-        if isMovingFromParentViewController || isBeingDismissed {
+        if isMovingFromParent || isBeingDismissed {
             return true
         }
 

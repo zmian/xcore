@@ -66,34 +66,43 @@ public struct Response {
 }
 
 public final class Request {
-    public enum Method: String { case GET, POST, PUT, DELETE }
-    public enum Body { case json(NSDictionary), data(Data) }
+    public enum Method: String {
+        case get
+        case post
+        case put
+        case delete
+    }
+
+    public enum Body {
+        case json(NSDictionary)
+        case data(Data)
+    }
 
     public static let session = URLSession(configuration: URLSessionConfiguration.default)
 
-    public static func GET(_ request: URLRequest, callback: @escaping (_ response: Response) -> Void) {
+    public static func get(_ request: URLRequest, callback: @escaping (_ response: Response) -> Void) {
         session.dataTaskWithRequest(request, callback: callback).resume()
     }
 
-    public static func GET(_ url: URL, parameters: [String: Any]? = nil, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
-        request(.GET, url: url, body: parameters, accessToken: accessToken, callback: callback)
+    public static func get(_ url: URL, parameters: [String: Any]? = nil, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
+        request(.get, url: url, body: parameters, accessToken: accessToken, callback: callback)
     }
 
-    public static func POST(_ url: URL, parameters: [String: Any]? = nil, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
-        request(.POST, url: url, body: parameters, accessToken: accessToken, callback: callback)
+    public static func post(_ url: URL, parameters: [String: Any]? = nil, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
+        request(.post, url: url, body: parameters, accessToken: accessToken, callback: callback)
     }
 
-    public static func POST(_ url: URL, image: UIImage, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
+    public static func post(_ url: URL, image: UIImage, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
         let headers = ["Content-Type": "image/jpeg"]
-        request(.POST, url: url, body: UIImageJPEGRepresentation(image, 1), accessToken: accessToken, headers: headers, callback: callback)
+        request(.post, url: url, body: image.jpegData(compressionQuality: 1), accessToken: accessToken, headers: headers, callback: callback)
     }
 
-    public static func PUT(_ url: URL, parameters: [String: Any]? = nil, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
-        request(.PUT, url: url, body: parameters, accessToken: accessToken, callback: callback)
+    public static func put(_ url: URL, parameters: [String: Any]? = nil, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
+        request(.put, url: url, body: parameters, accessToken: accessToken, callback: callback)
     }
 
-    public static func DELETE(_ url: URL, parameters: [String: Any]? = nil, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
-        request(.DELETE, url: url, body: parameters, accessToken: accessToken, callback: callback)
+    public static func delete(_ url: URL, parameters: [String: Any]? = nil, accessToken: String? = nil, callback: @escaping (_ response: Response) -> Void) {
+        request(.delete, url: url, body: parameters, accessToken: accessToken, callback: callback)
     }
 
     private static func request(_ method: Method, url: URL, body: [String: Any]? = nil, accessToken: String? = nil, headers: [String: String]? = nil, callback: @escaping (_ response: Response) -> Void) {
@@ -175,13 +184,34 @@ extension URL {
         let urlString = absoluteString.replace("#\(fragment)", with: "")
         return URL(string: urlString) ?? self
     }
+}
 
-    /// A boolean value to determine whether the url is an email link (i.e., `mailto`).
-    public var isEmailLink: Bool {
+// MARK: Scheme
+
+extension URL {
+    public struct Scheme: Hashable, Equatable, RawRepresentable {
+        public let rawValue: String
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
+    }
+
+    /// The scheme of the `URL`.
+    public var schemeType: Scheme {
         guard let scheme = scheme else {
-            return false
+            return .none
         }
 
-        return scheme == "mailto"
+        return Scheme(rawValue: scheme)
     }
+}
+
+extension URL.Scheme {
+    public static let none = URL.Scheme(rawValue: "")
+    public static let https = URL.Scheme(rawValue: "https")
+    public static let http = URL.Scheme(rawValue: "http")
+    public static let file = URL.Scheme(rawValue: "file")
+    public static let tel = URL.Scheme(rawValue: "tel")
+    public static let sms = URL.Scheme(rawValue: "sms")
+    public static let email = URL.Scheme(rawValue: "mailto")
 }

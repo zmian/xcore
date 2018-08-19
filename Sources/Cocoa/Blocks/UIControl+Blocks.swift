@@ -27,15 +27,15 @@ import ObjectiveC
 
 private class ControlClosureWrapper: NSObject, NSCopying {
     var closure: ((_ sender: AnyObject) -> Void)?
-    var events: UIControlEvents
+    var event: UIControl.Event
 
-    init(events: UIControlEvents, closure: ((_ sender: AnyObject) -> Void)?) {
+    init(event: UIControl.Event, closure: ((_ sender: AnyObject) -> Void)?) {
         self.closure = closure
-        self.events = events
+        self.event = event
     }
 
     @objc func copy(with zone: NSZone?) -> Any {
-        return ControlClosureWrapper(events: events, closure: closure)
+        return ControlClosureWrapper(event: event, closure: closure)
     }
 
     @objc func invoke(_ sender: AnyObject) {
@@ -50,7 +50,7 @@ extension UIControl: ControlTargetActionBlockRepresentable {
         static var actionHandler = "actionHandler"
     }
 
-    fileprivate var actionEvents: [UInt: ControlClosureWrapper]? {
+    fileprivate var actionEvent: [UInt: ControlClosureWrapper]? {
         get { return associatedObject(&AssociatedKey.actionHandler) }
         set { setAssociatedObject(&AssociatedKey.actionHandler, value: newValue) }
     }
@@ -58,28 +58,28 @@ extension UIControl: ControlTargetActionBlockRepresentable {
 
 public protocol ControlTargetActionBlockRepresentable: class {
     associatedtype Sender
-    func addAction(_ events: UIControlEvents, _ handler: @escaping (_ sender: Sender) -> Void)
-    func removeAction(_ events: UIControlEvents)
+    func addAction(_ event: UIControl.Event, _ handler: @escaping (_ sender: Sender) -> Void)
+    func removeAction(_ event: UIControl.Event)
 }
 
 extension ControlTargetActionBlockRepresentable where Self: UIControl {
-    public func addAction(_ events: UIControlEvents, _ handler: @escaping (_ sender: Self) -> Void) {
-        var actionEvents = self.actionEvents ?? [:]
-        let wrapper = actionEvents[events.rawValue] ?? ControlClosureWrapper(events: events, closure: nil)
+    public func addAction(_ event: UIControl.Event, _ handler: @escaping (_ sender: Self) -> Void) {
+        var actionEvent = self.actionEvent ?? [:]
+        let wrapper = actionEvent[event.rawValue] ?? ControlClosureWrapper(event: event, closure: nil)
 
         wrapper.closure = { sender in
             guard let sender = sender as? Self else { return }
             handler(sender)
         }
 
-        actionEvents[events.rawValue] = wrapper
-        self.actionEvents = actionEvents
-        addTarget(wrapper, action: #selector(wrapper.invoke(_:)), for: events)
+        actionEvent[event.rawValue] = wrapper
+        self.actionEvent = actionEvent
+        addTarget(wrapper, action: #selector(wrapper.invoke(_:)), for: event)
     }
 
-    public func removeAction(_ events: UIControlEvents) {
-        guard let actionEvents = actionEvents, let wrapper = actionEvents[events.rawValue] else { return }
-        removeTarget(wrapper, action: nil, for: events)
-        _ = self.actionEvents?.removeValue(forKey: events.rawValue)
+    public func removeAction(_ event: UIControl.Event) {
+        guard let actionEvent = actionEvent, let wrapper = actionEvent[event.rawValue] else { return }
+        removeTarget(wrapper, action: nil, for: event)
+        _ = self.actionEvent?.removeValue(forKey: event.rawValue)
     }
 }

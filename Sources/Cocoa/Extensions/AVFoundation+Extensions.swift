@@ -79,7 +79,7 @@ extension AVPlayer {
                 }
 
                 strongSelf.actionAtItemEnd = .none
-                currentItem.seek(to: kCMTimeZero) { [weak self] _ in
+                currentItem.seek(to: .zero) { [weak self] _ in
                     self?.play()
                 }
             }

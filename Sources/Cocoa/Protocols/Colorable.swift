@@ -30,7 +30,7 @@ public protocol Colorable {
 
 public protocol CollectionViewLayoutRepresentable {
     var itemSize: CGSize { get set }
-    var scrollDirection: UICollectionViewScrollDirection { get }
+    var scrollDirection: UICollectionView.ScrollDirection { get }
 }
 
 extension UICollectionViewFlowLayout: CollectionViewLayoutRepresentable {

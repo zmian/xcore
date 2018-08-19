@@ -56,15 +56,15 @@ open class XCTableViewDataSource: NSObject, UITableViewDataSource {
 
 extension XCTableViewDataSource {
     open func heightForRow(at indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
 
     open func heightForHeaderInSection(_ section: Int) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
 
     open func heightForFooterInSection(_ section: Int) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
 
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
