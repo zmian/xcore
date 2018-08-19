@@ -181,19 +181,19 @@ open class IconLabelView: XCView {
     }
 
     /// The default value is `.Vertical`.
-    private var axis: UILayoutConstraintAxis {
+    private var axis: NSLayoutConstraint.Axis {
         get { return stackView.axis }
         set { stackView.axis = newValue }
     }
 
     /// The default value is `.Fill`.
-    private var distribution: UIStackViewDistribution {
+    private var distribution: UIStackView.Distribution {
         get { return stackView.distribution }
         set { stackView.distribution = newValue }
     }
 
     /// The default value is `.Center`.
-    open var alignment: UIStackViewAlignment {
+    open var alignment: UIStackView.Alignment {
         get { return stackView.alignment }
         set { stackView.alignment = newValue }
     }
@@ -263,9 +263,7 @@ open class IconLabelView: XCView {
         imageSizeConstraints.height = size[1]
         imagePaddingConstraints = NSLayoutConstraint.constraintsForViewToFillSuperview(imageView, padding: imageInset).activate()
 
-        // Ensures smooth scaling quality
-        imageView.layer.minificationFilter = kCAFilterTrilinear
-
+        imageView.enableSmoothScaling()
         imageView.contentMode = .scaleAspectFill
     }
 

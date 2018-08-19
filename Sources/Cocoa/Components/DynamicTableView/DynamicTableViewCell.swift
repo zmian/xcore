@@ -143,20 +143,20 @@ open class DynamicTableViewCell: XCTableViewCell {
 
     // MARK: UITableViewCellStateMask
 
-    private var willTransitionToState: ((_ state: UITableViewCellStateMask) -> Void)?
-    @nonobjc open func willTransitionToState(_ callback: @escaping (_ state: UITableViewCellStateMask) -> Void) {
+    private var willTransitionToState: ((_ state: UITableViewCell.StateMask) -> Void)?
+    @nonobjc open func willTransitionToState(_ callback: @escaping (_ state: UITableViewCell.StateMask) -> Void) {
         willTransitionToState = callback
     }
-    open override func willTransition(to state: UITableViewCellStateMask) {
+    open override func willTransition(to state: UITableViewCell.StateMask) {
         super.willTransition(to: state)
         willTransitionToState?(state)
     }
 
-    private var didTransitionToState: ((_ state: UITableViewCellStateMask) -> Void)?
-    @nonobjc open func didTransitionToState(_ callback: @escaping (_ state: UITableViewCellStateMask) -> Void) {
+    private var didTransitionToState: ((_ state: UITableViewCell.StateMask) -> Void)?
+    @nonobjc open func didTransitionToState(_ callback: @escaping (_ state: UITableViewCell.StateMask) -> Void) {
         didTransitionToState = callback
     }
-    open override func didTransition(to state: UITableViewCellStateMask) {
+    open override func didTransition(to state: UITableViewCell.StateMask) {
         super.didTransition(to: state)
         didTransitionToState?(state)
     }
@@ -213,9 +213,7 @@ open class DynamicTableViewCell: XCTableViewCell {
         avatarView.layer.borderColor = UIColor.black.alpha(0.08).cgColor
 
         roundAvatarViewCornersIfNeeded()
-
-        // Ensures smooth scaling quality
-        avatarView.layer.minificationFilter = kCAFilterTrilinear
+        avatarView.enableSmoothScaling()
     }
 
     private func setupLabels() {

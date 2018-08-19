@@ -39,7 +39,7 @@ public struct LayoutGuideOptions: OptionSet {
 extension NSLayoutConstraint {
     // MARK: Convenience Methods
 
-    public convenience init(item view1: AnyObject, attribute attr1: NSLayoutAttribute, relatedBy relation: NSLayoutRelation = .equal, toItem view2: AnyObject? = nil, attribute attr2: NSLayoutAttribute? = nil, multiplier: CGFloat = 1, constant c: CGFloat = 0, priority: UILayoutPriority = .required) {
+    public convenience init(item view1: AnyObject, attribute attr1: Attribute, relatedBy relation: Relation = .equal, toItem view2: AnyObject? = nil, attribute attr2: Attribute? = nil, multiplier: CGFloat = 1, constant c: CGFloat = 0, priority: UILayoutPriority = .required) {
         let attr2 = attr2 ?? attr1
         self.init(item: view1, attribute: attr1, relatedBy: relation, toItem: view2, attribute: attr2, multiplier: multiplier, constant: c)
         self.priority = priority
@@ -70,19 +70,19 @@ extension NSLayoutConstraint {
         ]
     }
 
-    public static func centerX(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGFloat = 0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+    public static func centerX(_ viewToCenter: UIView, relatedBy relation: Relation = .equal, toView: UIView? = nil, offset: CGFloat = 0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         let toView = toView ?? viewToCenter.superview
         viewToCenter.translatesAutoresizingMaskIntoConstraints = false
         return NSLayoutConstraint(item: viewToCenter, attribute: .centerX, relatedBy: relation, toItem: toView, constant: offset, priority: priority)
     }
 
-    public static func centerY(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGFloat = 0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+    public static func centerY(_ viewToCenter: UIView, relatedBy relation: Relation = .equal, toView: UIView? = nil, offset: CGFloat = 0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         let toView = toView ?? viewToCenter.superview
         viewToCenter.translatesAutoresizingMaskIntoConstraints = false
         return NSLayoutConstraint(item: viewToCenter, attribute: .centerY, relatedBy: relation, toItem: toView, constant: offset, priority: priority)
     }
 
-    public static func center(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGPoint = .zero, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
+    public static func center(_ viewToCenter: UIView, relatedBy relation: Relation = .equal, toView: UIView? = nil, offset: CGPoint = .zero, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
         return [
             NSLayoutConstraint.centerX(viewToCenter, relatedBy: relation, toView: toView, offset: offset.x, priority: priority),
             NSLayoutConstraint.centerY(viewToCenter, relatedBy: relation, toView: toView, offset: offset.y, priority: priority)

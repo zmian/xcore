@@ -69,8 +69,8 @@ extension UIFont {
     ///
     /// - Parameter traits: The new symbolic traits.
     /// - Returns: The new font matching the given font descriptor.
-    public func traits(_ traits: UIFontDescriptorSymbolicTraits...) -> UIFont {
-        let descriptor = fontDescriptor.withSymbolicTraits(UIFontDescriptorSymbolicTraits(traits))!
+    public func traits(_ traits: UIFontDescriptor.SymbolicTraits...) -> UIFont {
+        let descriptor = fontDescriptor.withSymbolicTraits(UIFontDescriptor.SymbolicTraits(traits))!
         return UIFont(descriptor: descriptor, size: 0)
     }
 

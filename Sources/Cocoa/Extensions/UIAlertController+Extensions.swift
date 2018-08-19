@@ -80,7 +80,7 @@ extension UIAlertController {
     ///   - appendsCancelAction: An option to automatically append cancel action in addition to the provided array of actions.
     ///                          The default value is `true`.
     @discardableResult
-    public static func present(actions: [UIAlertAction], title: String? = nil, message: String? = nil, sourceView: PopoverPresentationSourceView, style: UIAlertControllerStyle = .actionSheet, appendsCancelAction: Bool = true) -> UIAlertController {
+    public static func present(actions: [UIAlertAction], title: String? = nil, message: String? = nil, sourceView: PopoverPresentationSourceView, style: Style = .actionSheet, appendsCancelAction: Bool = true) -> UIAlertController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
 
         // For iPad support

@@ -66,7 +66,7 @@ open class ContainerViewController: UIViewController {
 
         if isBeingPopped {
             viewController.forEach {
-                $0.willMove(toParentViewController: nil)
+                $0.willMove(toParent: nil)
             }
         }
 
@@ -99,7 +99,7 @@ open class ContainerViewController: UIViewController {
             return
         }
 
-        childViewController.removeFromParentViewController()
+        childViewController.removeFromParent()
         childViewController.view.removeFromSuperview()
     }
 }

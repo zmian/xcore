@@ -33,20 +33,20 @@ open class XCComposedTableViewController: UIViewController {
     /// This solution patches the said bug of `UITableView` by caching
     /// heights and automatically switching to those when `reloadData`, `reloadCells`,
     /// or `reloadSection` methods are invoked.
-    private var estimatedRowHeightCache = IndexPathCache<CGFloat>(defaultValue: UITableViewAutomaticDimension)
+    private var estimatedRowHeightCache = IndexPathCache<CGFloat>(defaultValue: UITableView.automaticDimension)
 
     /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
     /// The default value is `.grouped`.
-    public var style: UITableViewStyle = .grouped
+    public var style: UITableView.Style = .grouped
 
     open lazy var tableView = UITableView(frame: .zero, style: self.style).apply {
         $0.separatorStyle = .none
         $0.estimatedRowHeight = 44
         $0.estimatedSectionHeaderHeight = 0
         $0.estimatedSectionFooterHeight = 0
-        $0.rowHeight = UITableViewAutomaticDimension
-        $0.sectionHeaderHeight = UITableViewAutomaticDimension
-        $0.sectionFooterHeight = UITableViewAutomaticDimension
+        $0.rowHeight = UITableView.automaticDimension
+        $0.sectionHeaderHeight = UITableView.automaticDimension
+        $0.sectionFooterHeight = UITableView.automaticDimension
     }
 
     /// An option to determine whether the `scrollView`'s `top` and `bottom` is constrained

@@ -109,7 +109,7 @@ open class ReorderTableView: UITableView {
         self.init(frame: frame, style: .plain)
     }
 
-    public override init(frame: CGRect, style: UITableViewStyle) {
+    public override init(frame: CGRect, style: Style) {
         super.init(frame: frame, style: style)
         commonInit()
     }
@@ -254,7 +254,7 @@ open class ReorderTableView: UITableView {
 
             // Enable scrolling for cell
             scrollDisplayLink = CADisplayLink(target: self, selector: #selector(scrollTableWithCell(_:)))
-            scrollDisplayLink?.add(to: .main, forMode: .defaultRunLoopMode)
+            scrollDisplayLink?.add(to: .main, forMode: .default)
         }
 
         // Dragging

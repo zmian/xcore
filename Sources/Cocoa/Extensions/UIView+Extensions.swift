@@ -39,7 +39,7 @@ import UIKit
     ///   - options:    A mask of options indicating how you want to perform the animations. The default value is `UIViewAnimationOptions.AllowUserInteraction`.
     ///   - animations: A block object containing the changes to commit to the views.
     ///   - completion: A block object to be executed when the animation sequence ends.
-    public static func animate(_ duration: TimeInterval = 0.6, delay: TimeInterval = 0, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: UIViewAnimationOptions = .allowUserInteraction, animations: @escaping (() -> Void), completion: ((Bool) -> Void)?) {
+    public static func animate(_ duration: TimeInterval = 0.6, delay: TimeInterval = 0, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: AnimationOptions = .allowUserInteraction, animations: @escaping (() -> Void), completion: ((Bool) -> Void)?) {
         UIView.animate(withDuration: duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: completion)
     }
 
@@ -52,7 +52,7 @@ import UIKit
     ///   - velocity:   The initial spring velocity. For smooth start to the animation, match this value to the view’s velocity as it was prior to attachment. The default value is `0`.
     ///   - options:    A mask of options indicating how you want to perform the animations. The default value is `UIViewAnimationOptions.AllowUserInteraction`.
     ///   - animations: A block object containing the changes to commit to the views.
-    public static func animate(_ duration: TimeInterval = 0.6, delay: TimeInterval = 0, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: UIViewAnimationOptions = .allowUserInteraction, animations: @escaping (() -> Void)) {
+    public static func animate(_ duration: TimeInterval = 0.6, delay: TimeInterval = 0, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: AnimationOptions = .allowUserInteraction, animations: @escaping (() -> Void)) {
         UIView.animate(withDuration: duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: nil)
     }
 
@@ -303,11 +303,11 @@ extension UIView {
         sizeChangeResistance(.defaultLow, axis: .horizontal)
     }
 
-    open func resistsSizeChange(axis: UILayoutConstraintAxis...) {
+    open func resistsSizeChange(axis: NSLayoutConstraint.Axis...) {
         sizeChangeResistance(.required, axis: axis)
     }
 
-    open func sizeChangeResistance(_ priority: UILayoutPriority, axis: UILayoutConstraintAxis...) {
+    open func sizeChangeResistance(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis...) {
         axis.forEach {
             setContentHuggingPriority(priority, for: $0)
             setContentCompressionResistancePriority(priority, for: $0)
@@ -316,11 +316,11 @@ extension UIView {
 
     // Arrays and variadic parameters don't play well.
 
-    open func resistsSizeChange(axis: [UILayoutConstraintAxis]) {
+    open func resistsSizeChange(axis: [NSLayoutConstraint.Axis]) {
         sizeChangeResistance(.required, axis: axis)
     }
 
-    open func sizeChangeResistance(_ priority: UILayoutPriority, axis: [UILayoutConstraintAxis]) {
+    open func sizeChangeResistance(_ priority: UILayoutPriority, axis: [NSLayoutConstraint.Axis]) {
         axis.forEach {
             setContentHuggingPriority(priority, for: $0)
             setContentCompressionResistancePriority(priority, for: $0)
@@ -333,11 +333,11 @@ extension Array where Element == UIView {
         forEach { $0.resistsSizeChange() }
     }
 
-    public func resistsSizeChange(axis: UILayoutConstraintAxis...) {
+    public func resistsSizeChange(axis: NSLayoutConstraint.Axis...) {
         forEach { $0.resistsSizeChange(axis: axis) }
     }
 
-    public func sizeChangeResistance(_ priority: UILayoutPriority, axis: UILayoutConstraintAxis...) {
+    public func sizeChangeResistance(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis...) {
         forEach { $0.sizeChangeResistance(priority, axis: axis) }
     }
 }
@@ -496,7 +496,7 @@ extension UIView {
     ///   - attribute: The attribute to use to find the constraint.
     ///   - onlyActive: An option to determine if should find only the active constraint. The default value is `true`.
     /// - Returns: A constraint if exists for the specified attribute.
-    public func constraint(forAttribute attribute: NSLayoutAttribute, onlyActive: Bool = true) -> NSLayoutConstraint? {
+    public func constraint(forAttribute attribute: NSLayoutConstraint.Attribute, onlyActive: Bool = true) -> NSLayoutConstraint? {
         return constraints.first { constraint in
             if onlyActive, !constraint.isActive {
                 return false

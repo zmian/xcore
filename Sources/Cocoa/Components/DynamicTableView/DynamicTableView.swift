@@ -115,16 +115,16 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         self.init(frame: frame, options: [])
     }
 
-    public convenience init(style: UITableViewStyle) {
+    public convenience init(style: Style) {
         self.init(style: style, options: [])
     }
 
-    public convenience init(frame: CGRect = .zero, style: UITableViewStyle = .plain, options: DynamicTableCellOptions) {
+    public convenience init(frame: CGRect = .zero, style: Style = .plain, options: DynamicTableCellOptions) {
         self.init(frame: frame, style: style)
         cellOptions = options
     }
 
-    public override init(frame: CGRect, style: UITableViewStyle) {
+    public override init(frame: CGRect, style: Style) {
         super.init(frame: frame, style: style)
         internalCommonInit()
     }
@@ -191,7 +191,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         reorderDelegate = self
         backgroundColor = .clear
         estimatedRowHeight = 44
-        rowHeight = UITableViewAutomaticDimension
+        rowHeight = UITableView.automaticDimension
         isReorderingEnabled = allowReordering
     }
 
@@ -318,11 +318,11 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         return allowDeletion
     }
 
-    open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return (allowDeletion || editActionsForCell != nil) ? .delete : .none
     }
 
-    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if allowDeletion && editingStyle == .delete {
             removeItems([indexPath])
         }
@@ -355,7 +355,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     /// - Parameters:
     ///   - indexPaths: An array of `IndexPath` objects identifying the rows to delete.
     ///   - animation:  A constant that indicates how the deletion is to be animated.
-    private func removeItems(_ indexPaths: [IndexPath], animation: UITableViewRowAnimation = .automatic) {
+    private func removeItems(_ indexPaths: [IndexPath], animation: RowAnimation = .automatic) {
         let items = indexPaths.map { (indexPath: $0, item: sections.remove(at: $0)) }
         CATransaction.animationTransaction({
             deleteRows(at: indexPaths, with: animation)
