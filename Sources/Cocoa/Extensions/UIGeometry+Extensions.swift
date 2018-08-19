@@ -28,8 +28,7 @@ import UIKit
 
 extension UIEdgeInsets: ExpressibleByFloatLiteral {
     public init(floatLiteral value: FloatLiteralType) {
-        let value = CGFloat(value)
-        self = UIEdgeInsets(top: value, left: value, bottom: value, right: value)
+        self = UIEdgeInsets(CGFloat(value))
     }
 }
 
@@ -37,8 +36,7 @@ extension UIEdgeInsets: ExpressibleByFloatLiteral {
 
 extension UIEdgeInsets: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: IntegerLiteralType) {
-        let value = CGFloat(value)
-        self = UIEdgeInsets(top: value, left: value, bottom: value, right: value)
+        self = UIEdgeInsets(CGFloat(value))
     }
 }
 

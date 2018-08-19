@@ -30,7 +30,7 @@ final class ExampleDynamicTableViewController: DynamicTableViewController {
         super.viewDidLoad()
         title = "\(DynamicTableView.self)"
 
-        tableView.cellOptions = [.deletable]
+        tableView.cellOptions = [.delete]
 
         tableView.sections = [
             Section(
@@ -72,7 +72,7 @@ final class ExampleDynamicTableViewController: DynamicTableViewController {
 
         tableView.configureCell { indexPath, cell, item in
             if indexPath.row == 1 {
-                cell.isRoundImageView = true
+                cell.isImageViewRounded = true
             }
 
             if indexPath.row == 5 {

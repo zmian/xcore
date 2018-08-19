@@ -33,18 +33,6 @@ public enum DynamicTableAccessoryType {
     case checkbox(isSelected: Bool, callback: ((_ sender: UIButton) -> Void)?)
 }
 
-public struct DynamicTableCellOptions: OptionSet {
-    public let rawValue: Int
-
-    public init(rawValue: Int) {
-        self.rawValue = rawValue
-    }
-
-    public static let movable = DynamicTableCellOptions(rawValue: 0 << 1)
-    public static let deletable = DynamicTableCellOptions(rawValue: 2)
-    public static let all: DynamicTableCellOptions = [movable, deletable]
-}
-
 public struct DynamicTableModel {
     public var title: StringRepresentable?
     public var subtitle: StringRepresentable?

@@ -25,11 +25,11 @@
 import UIKit
 
 open class DynamicTableViewController: UIViewController {
-    private var tableViewConstraints = [NSLayoutConstraint]()
+    private var tableViewConstraints: NSLayoutConstraint.Edges!
     open private(set) lazy var tableView = DynamicTableView(style: self.style, options: self.cellOptions)
     /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
     open var style: UITableView.Style = .plain
-    open var cellOptions: DynamicTableCellOptions = [] {
+    open var cellOptions: CellOptions = .none {
         didSet {
             guard isViewLoaded else { return }
             tableView.cellOptions = cellOptions
@@ -44,10 +44,7 @@ open class DynamicTableViewController: UIViewController {
     /// The default value is `.zero`.
     @objc open dynamic var contentInset: UIEdgeInsets = .zero {
         didSet {
-            tableViewConstraints.at(0)?.constant = contentInset.left
-            tableViewConstraints.at(1)?.constant = contentInset.right
-            tableViewConstraints.at(2)?.constant = contentInset.top
-            tableViewConstraints.at(3)?.constant = contentInset.bottom
+            tableViewConstraints.update(from: contentInset)
         }
     }
 
@@ -58,10 +55,10 @@ open class DynamicTableViewController: UIViewController {
     }
 
     public convenience init(style: UITableView.Style) {
-        self.init(style: style, options: [])
+        self.init(style: style, options: .none)
     }
 
-    public convenience init(style: UITableView.Style = .plain, options: DynamicTableCellOptions) {
+    public convenience init(style: UITableView.Style = .plain, options: CellOptions) {
         self.init(nibName: nil, bundle: nil)
         self.style = style
         self.cellOptions = options
@@ -79,6 +76,6 @@ open class DynamicTableViewController: UIViewController {
         }
 
         view.addSubview(tableView)
-        tableViewConstraints = constraintsForViewToFillSuperview(tableView, padding: contentInset, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
+        tableViewConstraints = NSLayoutConstraint.Edges(constraintsForViewToFillSuperview(tableView, padding: contentInset, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate())
     }
 }

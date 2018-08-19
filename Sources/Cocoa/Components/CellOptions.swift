@@ -1,5 +1,5 @@
 //
-// IconLabelCollectionViewController.swift
+// CellOptions.swift
 //
 // Copyright © 2015 Zeeshan Mian
 //
@@ -22,23 +22,15 @@
 // THE SOFTWARE.
 //
 
-import UIKit
+public struct CellOptions: OptionSet {
+    public let rawValue: Int
 
-open class IconLabelCollectionViewController: UIViewController {
-    public private(set) lazy var collectionView = IconLabelCollectionView(options: [.move, .delete])
-
-    /// The layout used to organize the collection view’s items.
-    public var layout: UICollectionViewFlowLayout? {
-        return collectionView.layout
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
     }
 
-    open override func viewDidLoad() {
-        super.viewDidLoad()
-        setupIconLabelCollectionView()
-    }
-
-    private func setupIconLabelCollectionView() {
-        view.addSubview(collectionView)
-        NSLayoutConstraint.constraintsForViewToFillSuperview(collectionView).activate()
-    }
+    public static let move = CellOptions(rawValue: 1 << 0)
+    public static let delete = CellOptions(rawValue: 1 << 1)
+    public static let none: CellOptions = []
+    public static let all: CellOptions = [move, delete]
 }
