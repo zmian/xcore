@@ -24,14 +24,6 @@
 
 import UIKit
 
-public let XCCollectionViewFlowLayoutAutomaticSize: CGSize = {
-    if #available(iOS 10.0, *) {
-        return UICollectionViewFlowLayoutAutomaticSize
-    } else {
-        return CGSize(.greatestFiniteMagnitude)
-    }
-}()
-
 open class XCComposedCollectionViewController: UIViewController {
     public private(set) var collectionViewConstraints = [NSLayoutConstraint]()
 

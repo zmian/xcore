@@ -80,7 +80,7 @@ extension UIAlertController {
     ///   - appendsCancelAction: An option to automatically append cancel action in addition to the provided array of actions.
     ///                          The default value is `true`.
     @discardableResult
-    open static func present(actions: [UIAlertAction], title: String? = nil, message: String? = nil, sourceView: PopoverPresentationSourceView, style: UIAlertControllerStyle = .actionSheet, appendsCancelAction: Bool = true) -> UIAlertController {
+    public static func present(actions: [UIAlertAction], title: String? = nil, message: String? = nil, sourceView: PopoverPresentationSourceView, style: UIAlertControllerStyle = .actionSheet, appendsCancelAction: Bool = true) -> UIAlertController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
 
         // For iPad support
@@ -117,7 +117,7 @@ extension UIAlertController {
     ///   - sourceView: A source view that presented the alert. A required property for iPad support.
     ///   - handler: A block to invoke when an option is selected.
     @discardableResult
-    open static func present(options: [String], title: String? = nil, message: String? = nil, sourceView: PopoverPresentationSourceView, _ handler: @escaping (_ option: String) -> Void) -> UIAlertController {
+    public static func present(options: [String], title: String? = nil, message: String? = nil, sourceView: PopoverPresentationSourceView, _ handler: @escaping (_ option: String) -> Void) -> UIAlertController {
         let actions = options.map { option in
             UIAlertAction(title: option, style: .default) { _ in
                 handler(option)
@@ -149,7 +149,7 @@ extension UIAlertController {
     ///   - sourceView: A source view that presented the alert. A required property for iPad support.
     ///   - handler: A block to invoke when an option is selected.
     @discardableResult
-    open static func present<T: OptionsRepresentable>(sourceView: PopoverPresentationSourceView, _ handler: @escaping (_ option: T) -> Void) -> UIAlertController {
+    public static func present<T: OptionsRepresentable>(sourceView: PopoverPresentationSourceView, _ handler: @escaping (_ option: T) -> Void) -> UIAlertController {
         let options = T.allCases
         let actions = options.map { option in
             UIAlertAction(title: option.description, style: .default) { _ in

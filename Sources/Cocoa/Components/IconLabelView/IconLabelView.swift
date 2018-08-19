@@ -243,13 +243,13 @@ open class IconLabelView: XCView {
         stackView.addArrangedSubview(textImageSpacerView)
         stackView.addArrangedSubview(titleLabel)
 
-        titleLabel.font = .systemFont(.footnote)
+        titleLabel.font = .preferredFont(forTextStyle: .footnote)
         titleLabel.textAlignment = .center
         titleLabel.textColor = .black
         titleLabel.numberOfLines = 2
         titleLabel.sizeToFit()
 
-        subtitleLabel.font = .systemFont(.footnote)
+        subtitleLabel.font = .preferredFont(forTextStyle: .footnote)
         subtitleLabel.textAlignment = .center
         subtitleLabel.textColor = .lightGray
         subtitleLabel.numberOfLines = 1

@@ -377,11 +377,11 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     // MARK: UIAppearance Properties
 
-    @objc open dynamic var headerFont: UIFont = .systemFont(.footnote)
+    @objc open dynamic var headerFont: UIFont = .preferredFont(forTextStyle: .footnote)
     @objc open dynamic var headerTextColor: UIColor = .black
-    @objc open dynamic var footerFont: UIFont = .systemFont(.footnote)
+    @objc open dynamic var footerFont: UIFont = .preferredFont(forTextStyle: .footnote)
     @objc open dynamic var footerTextColor: UIColor = .darkGray
-    @objc open dynamic var accessoryFont: UIFont = .systemFont(.subheadline)
+    @objc open dynamic var accessoryFont: UIFont = .preferredFont(forTextStyle: .subheadline)
     @objc open dynamic var accessoryTextColor: UIColor = .gray
     @objc open dynamic var accessoryTintColor: UIColor = .systemTint
     @objc open dynamic var accessoryTextMaxWidth: CGFloat = 0

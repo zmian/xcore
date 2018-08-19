@@ -83,14 +83,14 @@ extension UIButton {
         static var isHeightSetAutomatically = "isHeightSetAutomatically"
     }
 
-    private typealias State = UInt
+    private typealias StateType = UInt
 
-    private var backgroundColors: [State: UIColor] {
+    private var backgroundColors: [StateType: UIColor] {
         get { return associatedObject(&AssociatedKey.backgroundColors, default: [:]) }
         set { setAssociatedObject(&AssociatedKey.backgroundColors, value: newValue) }
     }
 
-    private var borderColors: [State: UIColor] {
+    private var borderColors: [StateType: UIColor] {
         get { return associatedObject(&AssociatedKey.borderColors, default: [:]) }
         set { setAssociatedObject(&AssociatedKey.borderColors, value: newValue) }
     }
@@ -114,9 +114,9 @@ extension UIButton {
 extension UIButton {
     // MARK: Height
 
-    @objc open dynamic static var defaultAppearance: DefaultAppearance = .default
+    @objc public dynamic static var defaultAppearance: DefaultAppearance = .default
 
-    @objc open dynamic static var height: CGFloat {
+    @objc public dynamic static var height: CGFloat {
         return defaultAppearance.height
     }
 

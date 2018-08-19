@@ -25,8 +25,8 @@
 import UIKit
 
 open class SplitScreenViewController: UIViewController {
-    open let headerContainerView = UIView()
-    open let bodyContainerView = UIView()
+    public let headerContainerView = UIView()
+    public let bodyContainerView = UIView()
 
     open override func viewDidLoad() {
         super.viewDidLoad()

@@ -149,13 +149,13 @@ extension UIViewController {
             NSLayoutConstraint(
                 item: viewToSize,
                 attribute: .top,
-                toItem: isTopLayoutGuide ? topLayoutGuide : view,
+                toItem: isTopLayoutGuide ? view.safeAreaLayoutGuide.topAnchor : view,
                 attribute: isTopLayoutGuide ? .bottom : .top,
                 constant: paddingTop,
                 priority: priority
             ),
             NSLayoutConstraint(
-                item: isBottomLayoutGuide ? bottomLayoutGuide : view,
+                item: isBottomLayoutGuide ? view.safeAreaLayoutGuide.bottomAnchor : view,
                 attribute: isBottomLayoutGuide ? .top : .bottom,
                 toItem: viewToSize,
                 attribute: .bottom,
