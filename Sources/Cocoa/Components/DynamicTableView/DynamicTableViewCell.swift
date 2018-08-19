@@ -143,20 +143,20 @@ open class DynamicTableViewCell: XCTableViewCell {
 
     // MARK: UITableViewCellStateMask
 
-    private var willTransitionToState: ((_ state: UITableViewCell.StateMask) -> Void)?
-    @nonobjc open func willTransitionToState(_ callback: @escaping (_ state: UITableViewCell.StateMask) -> Void) {
+    private var willTransitionToState: ((_ state: StateMask) -> Void)?
+    @nonobjc open func willTransitionToState(_ callback: @escaping (_ state: StateMask) -> Void) {
         willTransitionToState = callback
     }
-    open override func willTransition(to state: UITableViewCell.StateMask) {
+    open override func willTransition(to state: StateMask) {
         super.willTransition(to: state)
         willTransitionToState?(state)
     }
 
-    private var didTransitionToState: ((_ state: UITableViewCell.StateMask) -> Void)?
-    @nonobjc open func didTransitionToState(_ callback: @escaping (_ state: UITableViewCell.StateMask) -> Void) {
+    private var didTransitionToState: ((_ state: StateMask) -> Void)?
+    @nonobjc open func didTransitionToState(_ callback: @escaping (_ state: StateMask) -> Void) {
         didTransitionToState = callback
     }
-    open override func didTransition(to state: UITableViewCell.StateMask) {
+    open override func didTransition(to state: StateMask) {
         super.didTransition(to: state)
         didTransitionToState?(state)
     }

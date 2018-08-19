@@ -42,8 +42,8 @@ extension UIScrollView {
         }
     }
 
-    /// The scrolling direction of the scroll view.
-    public var scrollDirection: ScrollingDirection {
+    /// The current scrolling direction of the scroll view.
+    public var currentScrollingDirection: ScrollingDirection {
         let translation = panGestureRecognizer.translation(in: superview)
 
         if translation.y > 0 {
