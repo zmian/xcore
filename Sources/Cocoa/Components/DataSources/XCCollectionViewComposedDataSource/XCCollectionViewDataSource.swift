@@ -86,7 +86,7 @@ extension XCCollectionViewDataSource {
             #else
             // Return a dummy cell
             // In some cases collection view queries and crash if no valid view is found.
-            return collectionView.dequeueReusableSupplementaryView(kind: .custom(kind), for: indexPath)
+            return collectionView.dequeueReusableSupplementaryView(kind: kind, for: indexPath)
             #endif
         }
 
