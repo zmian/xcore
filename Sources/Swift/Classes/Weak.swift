@@ -49,7 +49,7 @@ open class Weak<T: AnyObject>: Equatable, Hashable {
         return Unmanaged<AnyObject>.passUnretained(value).toOpaque().hashValue
     }
 
-    open static func ==<T>(lhs: Weak<T>, rhs: Weak<T>) -> Bool {
+    public static func ==<T>(lhs: Weak<T>, rhs: Weak<T>) -> Bool {
         return lhs.value === rhs.value
     }
 }

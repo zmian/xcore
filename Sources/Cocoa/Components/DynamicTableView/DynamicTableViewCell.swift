@@ -164,9 +164,9 @@ open class DynamicTableViewCell: XCTableViewCell {
     // MARK: Subviews
 
     private let labelsStackView = UIStackView()
-    open let avatarView = UIImageView()
-    open let titleLabel = UILabel()
-    open let subtitleLabel = UILabel()
+    public let avatarView = UIImageView()
+    public let titleLabel = UILabel()
+    public let subtitleLabel = UILabel()
 
     // MARK: Setters
 
@@ -228,13 +228,13 @@ open class DynamicTableViewCell: XCTableViewCell {
         labelsStackView.addArrangedSubview(subtitleLabel)
 
         // TitleLabel
-        titleLabel.font = .systemFont(.body)
+        titleLabel.font = .preferredFont(forTextStyle: .body)
         titleLabel.textAlignment = .left
         titleLabel.textColor = .black
         titleLabel.numberOfLines = 0
 
         // SubtitleLabel
-        subtitleLabel.font = .systemFont(.subheadline)
+        subtitleLabel.font = .preferredFont(forTextStyle: .subheadline)
         subtitleLabel.textAlignment = .left
         subtitleLabel.textColor = .lightGray // This is ignored if NSAttributedText declares it's own color
         subtitleLabel.numberOfLines = 0

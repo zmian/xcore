@@ -61,8 +61,8 @@ open class XCPageViewController: UIViewController {
     }
 
     open var pageViewController: UIPageViewController!
-    open let pageControl = UIPageControl()
-    open let pageControlHeight: CGFloat = 40
+    public let pageControl = UIPageControl()
+    public let pageControlHeight: CGFloat = 40
     open var pageControlPosition: PageControlPosition = .bottom
     open var viewControllers: [UIViewController] = []
     /// The default value is `false`.

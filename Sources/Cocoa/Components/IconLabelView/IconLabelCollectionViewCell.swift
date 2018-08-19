@@ -25,7 +25,7 @@
 import UIKit
 
 open class IconLabelCollectionViewCell: XCCollectionViewCell {
-    open let iconLabelView = IconLabelView()
+    public let iconLabelView = IconLabelView()
     let deleteButton = UIButton()
 
     // MARK: Setters
