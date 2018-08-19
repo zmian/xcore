@@ -58,14 +58,16 @@ open class DynamicTableViewCell: XCTableViewCell {
         }
     }
 
-    /// The space between image and text. The default value is `minimumPadding`.
+    /// The space between image and text.
+    /// The default value is `.minimumPadding`.
     @objc open dynamic var textImageSpacing: CGFloat = .minimumPadding {
         didSet {
             updateTextImageSpacingIfNeeded()
         }
     }
 
-    /// The space between `title` and `subtitle` labels. The default value is `3`.
+    /// The space between `title` and `subtitle` labels.
+    /// The default value is `.minimumPadding / 2`.
     @objc open dynamic var interLabelSpacing: CGFloat {
         get { return labelsStackView.spacing }
         set { labelsStackView.spacing = newValue }
