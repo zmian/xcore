@@ -142,3 +142,15 @@ extension UICollectionView {
         return cell
     }
 }
+
+extension UICollectionViewLayout {
+    /// A convenience method to return the layout attributes for the specified supplementary view.
+    ///
+    /// - Parameters:
+    ///   - kind: A string that identifies the type of the supplementary view.
+    ///   - indexPath: The index path of the view.
+    /// - Returns: A layout attributes object containing the information to apply to the supplementary view.
+    public func layoutAttributesForSupplementaryView(ofKind kind: UICollectionView.SupplementaryViewKind, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return layoutAttributesForSupplementaryView(ofKind: kind.rawValue, at: indexPath)
+    }
+}
