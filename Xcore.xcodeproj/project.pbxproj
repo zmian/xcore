@@ -97,6 +97,7 @@
 		6822FF9720D217880037E780 /* DebounceThrottle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF1620D217880037E780 /* DebounceThrottle.swift */; };
 		68414F1820CC42AC00C547EC /* ExampleDynamicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68414F1720CC42AC00C547EC /* ExampleDynamicTableViewController.swift */; };
 		68414F1B20CC4E9C00C547EC /* UIImage+AssetIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68414F1A20CC4E9C00C547EC /* UIImage+AssetIdentifier.swift */; };
+		684DA734212CCD4100A7A10B /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684DA732212CC51900A7A10B /* HapticFeedback.swift */; };
 		6856E9F920D856B0005CFBD4 /* ElementPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6856E9F820D856AF005CFBD4 /* ElementPosition.swift */; };
 		6872189320C07A9F00BFEA98 /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6872189220C07A9F00BFEA98 /* TestCase.swift */; };
 		687218A120C0824900BFEA98 /* SubviewLookupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687218A020C0824900BFEA98 /* SubviewLookupTests.swift */; };
@@ -280,6 +281,7 @@
 		6822FF1620D217880037E780 /* DebounceThrottle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebounceThrottle.swift; sourceTree = "<group>"; };
 		68414F1720CC42AC00C547EC /* ExampleDynamicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleDynamicTableViewController.swift; sourceTree = "<group>"; };
 		68414F1A20CC4E9C00C547EC /* UIImage+AssetIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+AssetIdentifier.swift"; sourceTree = "<group>"; };
+		684DA732212CC51900A7A10B /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		6856E9F820D856AF005CFBD4 /* ElementPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementPosition.swift; sourceTree = "<group>"; };
 		6872189020C07A9F00BFEA98 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6872189220C07A9F00BFEA98 /* TestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 				68E3CD2720F524B800B0F835 /* BlurView.swift */,
 				6822FECF20D217880037E780 /* XCScrollViewController.swift */,
 				6822FED020D217880037E780 /* XCCollectionViewCell.swift */,
+				684DA732212CC51900A7A10B /* HapticFeedback.swift */,
 				6822FED120D217880037E780 /* SplitScreenViewController.swift */,
 				6822FED220D217880037E780 /* IndexPathCache.swift */,
 				6822FED320D217880037E780 /* XCTableViewCell.swift */,
@@ -1266,6 +1269,7 @@
 				6822FF2020D217880037E780 /* WKWeakDelegate.swift in Sources */,
 				6822FF5D20D217880037E780 /* XCScrollViewController.swift in Sources */,
 				68E3CD2420F4ED0E00B0F835 /* FatalReason.swift in Sources */,
+				684DA734212CCD4100A7A10B /* HapticFeedback.swift in Sources */,
 				6822FF2120D217880037E780 /* SwizzleManager.swift in Sources */,
 				6822FF7020D217880037E780 /* DynamicTableViewCell.swift in Sources */,
 				6822FF7C20D217880037E780 /* ZoomAnimatorInteractiveTransition.swift in Sources */,
