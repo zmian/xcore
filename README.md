@@ -1,15 +1,20 @@
-# Xcore
-[![Build Status](https://travis-ci.org/zmian/xcore.swift.svg?branch=master)](https://travis-ci.org/zmian/xcore.swift)
-[![Version](https://img.shields.io/cocoapods/v/Xcore.svg?style=flat)](http://cocoapods.org/pods/Xcore)
-[![Platform](https://img.shields.io/cocoapods/p/Xcore.svg?style=flat)](http://cocoapods.org/pods/Xcore)
-[![License](https://img.shields.io/cocoapods/l/Xcore.svg?style=flat)](http://cocoapods.org/pods/Xcore)
+<p align="center">
+<img src="Resources/xcoreLogo.svg" alt="Xcore logo" height=100>
+</p>
+<p align="center">
+    <a href="https://travis-ci.org/zmian/xcore.swift"><img src="https://travis-ci.org/zmian/xcore.swift.svg?branch=master" alt="Master Branch Build Status"></a>
+  <a href="http://cocoapods.org/pods/Xcore"><img src="https://img.shields.io/cocoapods/v/Xcore.svg?style=flat" alt="CocoaPods Version Number"></a>
+  <a href="http://cocoapods.org/pods/Xcore"><img src="https://img.shields.io/cocoapods/p/Xcore.svg?style=flat" alt="Supported Platform"></a>
+    <a href="http://cocoapods.org/pods/Xcore"><img src="https://img.shields.io/cocoapods/l/Xcore.svg?style=flat" alt="License"></a>
+</p>
+<h1></h1>
 
 Xcore is a collection of pure Swift and Cocoa Touch classes, extensions and components for rapid and safe iOS development. It provides a vast library of customizations and extensions to get tasks done with ease and bugs free. Check out the included example project and [documentation](https://zmian.github.io/xcore.swift) to see how.
 
 ## Requirements
-* iOS 9.0+
-* Xcode 9.0+
-* Swift 4.1+
+* iOS 11.0+
+* Xcode 10.0+
+* Swift 4.2+
 
 ## Installation
 
