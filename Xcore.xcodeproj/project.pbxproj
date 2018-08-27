@@ -1370,7 +1370,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = Example;
 			};
 			name = Debug;
@@ -1387,7 +1386,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = Example;
 			};
 			name = Release;
@@ -1405,7 +1403,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1422,7 +1419,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1482,7 +1478,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1536,7 +1532,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1604,7 +1600,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.unittests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Debug;
@@ -1623,7 +1618,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.unittests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Release;
