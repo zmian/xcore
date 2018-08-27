@@ -974,6 +974,7 @@
 				TargetAttributes = {
 					6872188F20C07A9F00BFEA98 = {
 						CreatedOnToolsVersion = 9.3.1;
+						LastSwiftMigration = 1000;
 						TestTargetID = 689869C71E99926100CE7B77;
 					};
 					689869C71E99926100CE7B77 = {
@@ -988,7 +989,7 @@
 					};
 					689D0C7D1D8DBB9600145E0B = {
 						CreatedOnToolsVersion = 8.0;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 689869C71E99926100CE7B77;
 					};
@@ -1369,6 +1370,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = Example;
 			};
 			name = Debug;
@@ -1385,6 +1387,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = Example;
 			};
 			name = Release;
@@ -1601,6 +1604,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.unittests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Debug;
@@ -1619,6 +1623,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.unittests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Release;
