@@ -28,27 +28,59 @@ import Intents
 public protocol ShortcutsDonationHandling {
     associatedtype IntentType: INIntent
 
-    /// The donation shortcut interaction.
+    /// The donation shortcut interaction intent.
     ///
-    /// Converts `self` into appropriate intent and donates it as an interaction
-    /// to the system so that the intent can be suggested in the future or turned
-    /// into a voice shortcut for quickly running the task in the future.
+    /// Converts `self` into an appropriate intent.
     var intent: IntentType { get }
 
     /// Donates shortcut to the system.
     ///
-    /// Converts `self` into appropriate intent and donates it as an interaction
-    /// to the system so that the intent can be suggested in the future or turned
-    /// into a voice shortcut for quickly running the task in the future.
+    /// Donates interaction to the system so that the intent can be suggested
+    /// in the future or turned into a voice shortcut for quickly running it
+    /// in the future.
     func donateShortcut()
+
+    /// The identifier used to create grouped interactions.
+    static var groupIdentifier: String { get }
 }
 
 @available(iOS 12.0, *)
 extension ShortcutsDonationHandling {
+    public static var groupIdentifier: String {
+        return "\(Self.self)"
+    }
+
     public func donateShortcut() {
-        intent.interaction.donate { error in
+        let interaction = intent.interaction
+        interaction.groupIdentifier = Self.groupIdentifier
+        interaction.donate { error in
             guard let error = error else { return }
             Console.error("[\(Self.self)]", "Interaction donation failed: \(error)")
+        }
+    }
+}
+
+@available(iOS 12.0, *)
+extension ShortcutsDonationHandling {
+    /// Remove interaction using the intent custom identifier.
+    public func removeShortcutDonation(completion: ((Error?) -> Void)? = nil) {
+        guard let customIdentifier = intent.customIdentifier else {
+            return
+        }
+
+        INInteraction.delete(with: [customIdentifier]) { error in
+            completion?(error)
+            guard let error = error else { return }
+            Console.error("[\(Self.self)]", "Interaction donation deletion failed: \(error)")
+        }
+    }
+
+    /// Remove all interactions using the interaction group identifier.
+    public static func removeAllShortcutDonations(completion: ((Error?) -> Void)? = nil) {
+        INInteraction.delete(with: groupIdentifier) { error in
+            completion?(error)
+            guard let error = error else { return }
+            Console.error("[\(Self.self)]", "Failed to delete interactions: \(error)")
         }
     }
 }
