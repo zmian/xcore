@@ -28,7 +28,7 @@ import Intents
 public protocol SiriShortcutsConvertible {
     associatedtype IntentType: INIntent
 
-    /// The donation shortcut interaction intent.
+    /// The Siri Shortcuts intent.
     ///
     /// Converts `self` into an appropriate intent.
     var intent: IntentType { get }

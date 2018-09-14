@@ -125,3 +125,18 @@ extension SiriDomain {
         }
     }
 }
+
+// MARK: Suggestions
+
+@available(iOS 12.0, *)
+extension SiriDomain {
+    /// Prepares and removes any outdate intents in `SiriDomain.SuggestionsService` for
+    /// this domain.
+    ///
+    /// - Note:
+    /// You must call `SiriDomain.SuggestionsService.update()` to register the
+    /// newly replaced suggestions with Siri.
+    func prepareSuggestions() {
+        SiriDomain.SuggestionsService.replace(intents: intents(), groupIdentifier: identifier)
+    }
+}
