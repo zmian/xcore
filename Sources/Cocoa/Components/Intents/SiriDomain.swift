@@ -28,7 +28,7 @@ import Intents
 open class SiriDomain: Hashable, With {
     private var didUpdateDonations = false
     public let identifier: String
-    private var dynamicIntents: (() -> [INIntent])? = nil
+    private var dynamicIntents: (() -> [INIntent])?
     /// A list of intents managed by the domain.
     private var staticIntents: [INIntent] {
         didSet {
