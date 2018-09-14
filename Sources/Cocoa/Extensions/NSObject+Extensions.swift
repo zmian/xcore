@@ -76,41 +76,6 @@ extension NSObject {
     }
 }
 
-// MARK: AssociatedObject
-
-extension NSObject {
-    /// Returns the value associated with a given object for a given key.
-    ///
-    /// - Parameter key: The key for the association.
-    /// - Returns: The value associated with the key for object.
-    public func associatedObject<T>(_ key: UnsafeRawPointer) -> T? {
-        return objc_getAssociatedObject(self, key) as? T
-    }
-
-    /// Returns the value associated with a given object for a given key.
-    ///
-    /// - Parameters:
-    ///   - key: The key for the association.
-    ///   - defaultValue: The default value to return if the no associated value is found.
-    /// - Returns: The value associated with the key for object.
-    public func associatedObject<T>(_ key: UnsafeRawPointer, default defaultValue: @autoclosure () -> T) -> T {
-        guard let value = objc_getAssociatedObject(self, key) as? T else {
-            return defaultValue()
-        }
-        return value
-    }
-
-    /// Sets an associated value for a given object using a given key and association policy.
-    ///
-    /// - Parameters:
-    ///   - key: The key for the association.
-    ///   - value: The value to associate with the key for object. Pass `nil` to clear an existing association.
-    ///   - policy: The policy for the association. The default value is `.OBJC_ASSOCIATION_RETAIN_NONATOMIC`.
-    public func setAssociatedObject<T>(_ key: UnsafeRawPointer, value: T?, policy: objc_AssociationPolicy = .OBJC_ASSOCIATION_RETAIN_NONATOMIC) {
-        objc_setAssociatedObject(self, key, value, policy)
-    }
-}
-
 // MARK: Property List
 
 extension NSObject {
