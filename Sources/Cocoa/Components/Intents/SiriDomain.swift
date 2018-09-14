@@ -123,7 +123,7 @@ open class SiriDomain: Hashable, With {
         hasher.combine(identifier)
     }
 
-    open static func == (lhs: SiriDomain, rhs: SiriDomain) -> Bool {
+    public static func == (lhs: SiriDomain, rhs: SiriDomain) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
 }
