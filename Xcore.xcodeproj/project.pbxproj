@@ -99,6 +99,9 @@
 		68414F1B20CC4E9C00C547EC /* UIImage+AssetIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68414F1A20CC4E9C00C547EC /* UIImage+AssetIdentifier.swift */; };
 		684DA734212CCD4100A7A10B /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684DA732212CC51900A7A10B /* HapticFeedback.swift */; };
 		6856E9F920D856B0005CFBD4 /* ElementPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6856E9F820D856AF005CFBD4 /* ElementPosition.swift */; };
+		6862D45C214B5D5C008B202A /* SiriDomain+SuggestionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6862D45A214B5D5C008B202A /* SiriDomain+SuggestionsService.swift */; };
+		6862D45D214B5D5C008B202A /* SiriDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6862D45B214B5D5C008B202A /* SiriDomain.swift */; };
+		6862D45F214B5E63008B202A /* SiriShortcutsConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6862D45E214B5E63008B202A /* SiriShortcutsConvertible.swift */; };
 		6872189320C07A9F00BFEA98 /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6872189220C07A9F00BFEA98 /* TestCase.swift */; };
 		687218A120C0824900BFEA98 /* SubviewLookupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687218A020C0824900BFEA98 /* SubviewLookupTests.swift */; };
 		687218A520C0841100BFEA98 /* ViewControllerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687218A420C0841000BFEA98 /* ViewControllerTestCase.swift */; };
@@ -114,7 +117,6 @@
 		689D0D1B1D8DBE6400145E0B /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689D0D181D8DBE5C00145E0B /* TestCase.swift */; };
 		68C392FE1E99D327009D8D58 /* PredicateQueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */; };
 		68DA34202140B65D007439FB /* Intents+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DA341F2140B65D007439FB /* Intents+Extensions.swift */; };
-		68DA34232140B66C007439FB /* ShortcutsDonationHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DA34222140B66C007439FB /* ShortcutsDonationHandling.swift */; };
 		68E3CD2420F4ED0E00B0F835 /* FatalReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E3CD2320F4ED0E00B0F835 /* FatalReason.swift */; };
 		68E3CD2820F524B900B0F835 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E3CD2720F524B800B0F835 /* BlurView.swift */; };
 		68E5728C20F82ADC002FEC39 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E5725C20F82AD3002FEC39 /* UIImage+Extensions.swift */; };
@@ -285,6 +287,9 @@
 		68414F1A20CC4E9C00C547EC /* UIImage+AssetIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+AssetIdentifier.swift"; sourceTree = "<group>"; };
 		684DA732212CC51900A7A10B /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		6856E9F820D856AF005CFBD4 /* ElementPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementPosition.swift; sourceTree = "<group>"; };
+		6862D45A214B5D5C008B202A /* SiriDomain+SuggestionsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SiriDomain+SuggestionsService.swift"; sourceTree = "<group>"; };
+		6862D45B214B5D5C008B202A /* SiriDomain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiriDomain.swift; sourceTree = "<group>"; };
+		6862D45E214B5E63008B202A /* SiriShortcutsConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiriShortcutsConvertible.swift; sourceTree = "<group>"; };
 		6872189020C07A9F00BFEA98 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6872189220C07A9F00BFEA98 /* TestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
 		6872189B20C07B6E00BFEA98 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -307,7 +312,6 @@
 		689D0D181D8DBE5C00145E0B /* TestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
 		68C392FD1E99D327009D8D58 /* PredicateQueryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredicateQueryTests.swift; sourceTree = "<group>"; };
 		68DA341F2140B65D007439FB /* Intents+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Intents+Extensions.swift"; sourceTree = "<group>"; };
-		68DA34222140B66C007439FB /* ShortcutsDonationHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutsDonationHandling.swift; sourceTree = "<group>"; };
 		68E3CD2320F4ED0E00B0F835 /* FatalReason.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FatalReason.swift; sourceTree = "<group>"; };
 		68E3CD2720F524B800B0F835 /* BlurView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		68E5725C20F82AD3002FEC39 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
@@ -881,7 +885,9 @@
 		68DA34212140B66C007439FB /* Intents */ = {
 			isa = PBXGroup;
 			children = (
-				68DA34222140B66C007439FB /* ShortcutsDonationHandling.swift */,
+				6862D45B214B5D5C008B202A /* SiriDomain.swift */,
+				6862D45A214B5D5C008B202A /* SiriDomain+SuggestionsService.swift */,
+				6862D45E214B5E63008B202A /* SiriShortcutsConvertible.swift */,
 			);
 			path = Intents;
 			sourceTree = "<group>";
@@ -1221,7 +1227,6 @@
 				6822FF6A20D217880037E780 /* XCToolbar.swift in Sources */,
 				68E572AF20F82ADD002FEC39 /* Bundle+Extensions.swift in Sources */,
 				68E572A820F82ADD002FEC39 /* UINavigationController+Extensions.swift in Sources */,
-				68DA34232140B66C007439FB /* ShortcutsDonationHandling.swift in Sources */,
 				68E572A020F82ADD002FEC39 /* AVFoundation+Extensions.swift in Sources */,
 				68E5729C20F82ADD002FEC39 /* DispatchQueue+Extensions.swift in Sources */,
 				68E3CD2820F524B900B0F835 /* BlurView.swift in Sources */,
@@ -1249,6 +1254,7 @@
 				6822FF7420D217880037E780 /* NibInstantiable.swift in Sources */,
 				68E5729B20F82ADD002FEC39 /* UIColor+Extensions.swift in Sources */,
 				6822FF6520D217880037E780 /* ImageAssetIdentifiable.swift in Sources */,
+				6862D45F214B5E63008B202A /* SiriShortcutsConvertible.swift in Sources */,
 				6822FF7520D217880037E780 /* ImageTitleDisplayable.swift in Sources */,
 				68E572AA20F82ADD002FEC39 /* UIStackView+Extensions.swift in Sources */,
 				68E572B420F82ADD002FEC39 /* Internal+Extensions.swift in Sources */,
@@ -1293,6 +1299,7 @@
 				6822FF1F20D217880037E780 /* Environment.swift in Sources */,
 				6822FF6F20D217880037E780 /* DynamicTableViewController.swift in Sources */,
 				68E5728F20F82ADD002FEC39 /* UITableView+Extensions.swift in Sources */,
+				6862D45D214B5D5C008B202A /* SiriDomain.swift in Sources */,
 				6822FF7920D217880037E780 /* StoryboardInstantiable.swift in Sources */,
 				6822FF2520D217880037E780 /* XCConfiguration.swift in Sources */,
 				6822FF7F20D217880037E780 /* TransitionAnimator.swift in Sources */,
@@ -1300,6 +1307,7 @@
 				68E572A720F82ADD002FEC39 /* UIKit+Extensions.swift in Sources */,
 				6822FF9320D217880037E780 /* EquatableByPointer.swift in Sources */,
 				6822FF1720D217880037E780 /* TargetActionBlockRepresentable.swift in Sources */,
+				6862D45C214B5D5C008B202A /* SiriDomain+SuggestionsService.swift in Sources */,
 				6812460520DCAF920016AC2F /* CurrencyAmount.swift in Sources */,
 				68E5728E20F82ADD002FEC39 /* UIRefreshControl+Extensions.swift in Sources */,
 				6822FF1B20D217880037E780 /* UIGestureRecognizer+Blocks.swift in Sources */,
