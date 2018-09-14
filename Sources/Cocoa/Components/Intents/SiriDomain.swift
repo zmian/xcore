@@ -27,8 +27,6 @@ import Intents
 @available(iOS 10.0, *)
 open class SiriDomain: Hashable, With {
     private var didUpdateDonations = false
-    private var didUpdateSuggestions = false
-    private var updateDonationsWhenIntentsUpdated = true
     public let identifier: String
     private var dynamicIntents: (() -> [INIntent])? = nil
     /// A list of intents managed by the domain.
