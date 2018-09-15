@@ -1,5 +1,5 @@
 //
-// SiriDomain+SuggestionsService.swift
+// SiriShortcuts+Suggestions.swift
 //
 // Copyright © 2018 Zeeshan Mian
 //
@@ -41,12 +41,11 @@ import Intents
 /// search, Lock Screen, and the Siri watch face.
 ///
 /// - SeeAlso: https://developer.apple.com/documentation/sirikit/shortcut_management/suggesting_shortcuts_to_users
-@available(iOS 10.0, *)
-extension SiriDomain {
+extension SiriShortcuts {
     @available(iOS 12.0, *)
-    final public class SuggestionsService: With {
-        private static var didUpdate = false
-        public static var intents: [INIntent] = [] {
+    final public class Suggestions: With {
+        private var didUpdate = false
+        public var intents: [INIntent] = [] {
             didSet {
                 guard oldValue != intents else { return }
                 didUpdate = false
@@ -55,7 +54,7 @@ extension SiriDomain {
 
         /// Suggest a shortcut to an action that the user hasn't
         /// performed but may want to add to Siri.
-        public static func suggest() {
+        public func suggest() {
             let suggestions = intents.compactMap {
                 INShortcut(intent: $0)
             }
@@ -63,41 +62,41 @@ extension SiriDomain {
             INVoiceShortcutCenter.shared.setShortcutSuggestions(suggestions)
         }
 
-        public static func updateIfNeeded() {
+        public func updateIfNeeded() {
             guard !didUpdate else { return }
             update()
         }
 
-        public static func update() {
+        public func update() {
             didUpdate = true
             suggest()
         }
 
         /// Replace given intents for the intent group identifier.
-        public static func replace(intents: [INIntent], groupIdentifier: String) {
+        public func replace(intents: [INIntent], groupIdentifier: String) {
             remove(groupIdentifier: groupIdentifier)
             self.intents.append(contentsOf: intents)
         }
 
         /// Replace given intents for the intent custom identifier.
-        public static func replace(intents: [INIntent], identifiers: [String]) {
+        public func replace(intents: [INIntent], identifiers: [String]) {
             remove(identifiers: identifiers)
             self.intents.append(contentsOf: intents)
         }
 
         /// Replace given intent for the intent custom identifier.
-        public static func replace(intent: INIntent, identifier: String) {
+        public func replace(intent: INIntent, identifier: String) {
             remove(identifier: identifier)
             self.intents.append(contentsOf: intents)
         }
 
         /// Remove shortcuts using the intent custom identifier.
-        public static func remove(identifier: String) {
+        public func remove(identifier: String) {
             remove(identifiers: [identifier])
         }
 
         /// Remove shortcuts using the intent custom identifiers.
-        public static func remove(identifiers: [String]) {
+        public func remove(identifiers: [String]) {
             intents.removeAll { (intent) -> Bool in
                 if let customIdentifier = intent.customIdentifier, identifiers.contains(customIdentifier) {
                     return true
@@ -108,7 +107,7 @@ extension SiriDomain {
         }
 
         /// Remove shortcuts using the intent group identifier.
-        public static func remove(groupIdentifier: String) {
+        public func remove(groupIdentifier: String) {
             intents.removeAll { (intent) -> Bool in
                 if let intentGroupIdentifier = intent.groupIdentifier, intentGroupIdentifier == groupIdentifier {
                     return true
@@ -119,7 +118,7 @@ extension SiriDomain {
         }
 
         /// Remove all shortcuts suggestions.
-        public static func removeAll() {
+        public func removeAll() {
             intents = []
             INVoiceShortcutCenter.shared.setShortcutSuggestions([])
         }
