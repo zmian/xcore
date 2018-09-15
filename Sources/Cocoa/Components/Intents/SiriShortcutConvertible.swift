@@ -1,5 +1,5 @@
 //
-// SiriShortcutsConvertible.swift
+// SiriShortcutConvertible.swift
 //
 // Copyright © 2018 Zeeshan Mian
 //
@@ -25,7 +25,7 @@
 import Intents
 
 @available(iOS 12.0, *)
-public protocol SiriShortcutsConvertible {
+public protocol SiriShortcutConvertible {
     associatedtype IntentType: INIntent
 
     /// The Siri Shortcuts intent.
