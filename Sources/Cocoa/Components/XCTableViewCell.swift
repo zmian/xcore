@@ -31,7 +31,7 @@ open class XCTableViewCell: UITableViewCell {
         self.init(style: .default, reuseIdentifier: nil)
     }
 
-    public override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    public override init(style: CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         internalCommonInit()
     }

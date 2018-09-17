@@ -25,7 +25,7 @@
 import UIKit
 
 extension UIScrollView {
-    public enum ScrollDirection {
+    public enum ScrollingDirection {
         case none
         case up
         case down
@@ -42,8 +42,8 @@ extension UIScrollView {
         }
     }
 
-    /// The scroll direction of the scroll view.
-    public var scrollDirection: ScrollDirection {
+    /// The current scrolling direction of the scroll view.
+    public var currentScrollingDirection: ScrollingDirection {
         let translation = panGestureRecognizer.translation(in: superview)
 
         if translation.y > 0 {
@@ -64,10 +64,6 @@ extension UIScrollView {
 
 extension UIScrollView {
     open func scrollToTop(animated: Bool) {
-        if #available(iOS 11.0, *) {
-            setContentOffset(CGPoint(x: 0, y: -adjustedContentInset.top), animated: animated)
-        } else {
-            setContentOffset(CGPoint(x: 0, y: -contentInset.top), animated: animated)
-        }
+        setContentOffset(CGPoint(x: 0, y: -adjustedContentInset.top), animated: animated)
     }
 }

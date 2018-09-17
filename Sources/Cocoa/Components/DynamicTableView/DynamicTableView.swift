@@ -25,12 +25,15 @@
 import UIKit
 
 open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewDataSource {
-    private var allowReordering: Bool { return cellOptions.contains(.movable) }
-    private var allowDeletion: Bool { return cellOptions.contains(.deletable) }
+    private var allowsReordering: Bool { return cellOptions.contains(.move) }
+    private var allowsDeletion: Bool { return cellOptions.contains(.delete) }
     open var sections: [Section<DynamicTableModel>] = []
-    open var cellOptions: DynamicTableCellOptions = [] {
-        didSet { isReorderingEnabled = allowReordering }
+    open var cellOptions: CellOptions = .none {
+        didSet {
+            isReorderingEnabled = allowsReordering
+        }
     }
+
     @objc open dynamic var rowActionDeleteColor: UIColor?
     /// Text to display in the swipe to delete row action. The default value is **"Delete"**.
     @objc open dynamic var rowActionDeleteTitle = "Delete"
@@ -115,16 +118,16 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         self.init(frame: frame, options: [])
     }
 
-    public convenience init(style: UITableViewStyle) {
+    public convenience init(style: Style) {
         self.init(style: style, options: [])
     }
 
-    public convenience init(frame: CGRect = .zero, style: UITableViewStyle = .plain, options: DynamicTableCellOptions) {
+    public convenience init(frame: CGRect = .zero, style: Style = .plain, options: CellOptions) {
         self.init(frame: frame, style: style)
         cellOptions = options
     }
 
-    public override init(frame: CGRect, style: UITableViewStyle) {
+    public override init(frame: CGRect, style: Style) {
         super.init(frame: frame, style: style)
         internalCommonInit()
     }
@@ -191,8 +194,8 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         reorderDelegate = self
         backgroundColor = .clear
         estimatedRowHeight = 44
-        rowHeight = UITableViewAutomaticDimension
-        isReorderingEnabled = allowReordering
+        rowHeight = UITableView.automaticDimension
+        isReorderingEnabled = allowsReordering
     }
 
     open func overrideRegisteredClass(_ cell: DynamicTableViewCell.Type) {
@@ -212,7 +215,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath) as DynamicTableViewCell
         let item = sections[indexPath]
-        cell.setData(item)
+        cell.configure(item)
         configureAccessoryView(cell, type: item.accessory, indexPath: indexPath)
 
         if isLastCellSeparatorHidden {
@@ -300,7 +303,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     // MARK: Reordering
 
     open func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return allowReordering
+        return allowsReordering
     }
 
     open func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -311,27 +314,26 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     // MARK: Deletion
 
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return allowReordering || allowDeletion || editActionsForCell != nil
+        return allowsReordering || allowsDeletion || editActionsForCell != nil
     }
 
     open func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return allowDeletion
+        return allowsDeletion
     }
 
-    open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        return (allowDeletion || editActionsForCell != nil) ? .delete : .none
+    open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return (allowsDeletion || editActionsForCell != nil) ? .delete : .none
     }
 
-    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if allowDeletion && editingStyle == .delete {
-            removeItems([indexPath])
-        }
+    open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard allowsDeletion && editingStyle == .delete else { return }
+        removeItems([indexPath])
     }
 
     open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         var actions: [UITableViewRowAction] = []
 
-        if allowDeletion {
+        if allowsDeletion {
             let delete = UITableViewRowAction(style: .default, title: rowActionDeleteTitle) { [weak self] action, index in
                 self?.removeItems([indexPath])
             }
@@ -355,7 +357,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     /// - Parameters:
     ///   - indexPaths: An array of `IndexPath` objects identifying the rows to delete.
     ///   - animation:  A constant that indicates how the deletion is to be animated.
-    private func removeItems(_ indexPaths: [IndexPath], animation: UITableViewRowAnimation = .automatic) {
+    private func removeItems(_ indexPaths: [IndexPath], animation: RowAnimation = .automatic) {
         let items = indexPaths.map { (indexPath: $0, item: sections.remove(at: $0)) }
         CATransaction.animationTransaction({
             deleteRows(at: indexPaths, with: animation)
@@ -377,11 +379,11 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     // MARK: UIAppearance Properties
 
-    @objc open dynamic var headerFont: UIFont = .systemFont(.footnote)
+    @objc open dynamic var headerFont: UIFont = .preferredFont(forTextStyle: .footnote)
     @objc open dynamic var headerTextColor: UIColor = .black
-    @objc open dynamic var footerFont: UIFont = .systemFont(.footnote)
+    @objc open dynamic var footerFont: UIFont = .preferredFont(forTextStyle: .footnote)
     @objc open dynamic var footerTextColor: UIColor = .darkGray
-    @objc open dynamic var accessoryFont: UIFont = .systemFont(.subheadline)
+    @objc open dynamic var accessoryFont: UIFont = .preferredFont(forTextStyle: .subheadline)
     @objc open dynamic var accessoryTextColor: UIColor = .gray
     @objc open dynamic var accessoryTintColor: UIColor = .systemTint
     @objc open dynamic var accessoryTextMaxWidth: CGFloat = 0

@@ -76,10 +76,8 @@ extension String {
     ///
     /// - Returns: String without the specified `prefix` or nil if `prefix` doesn't exists.
     public func stripPrefix(_ prefix: String) -> String? {
-        guard let prefixRange = range(of: prefix) else { return nil }
-        let attributeRange = Range(prefixRange.upperBound..<endIndex)
-        let attributeString = self[attributeRange]
-        return String(attributeString)
+        guard hasPrefix(prefix) else { return nil }
+        return String(dropFirst(prefix.count))
     }
 
     /// Take last `x` characters from `self`.
@@ -144,8 +142,8 @@ extension String {
 // MARK: Localization
 
 extension String {
-    // TODO: Add more customization to use these methods instead of secondary library
     private var localized: String {
+        #warning("TODO: Add more customization to use these methods instead of secondary library")
         return NSLocalizedString(self, tableName: nil, bundle: .main, value: "", comment: "")
     }
 

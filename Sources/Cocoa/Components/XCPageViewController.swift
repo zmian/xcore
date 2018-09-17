@@ -26,7 +26,9 @@ import UIKit
 
 private class XCUIPageViewController: UIPageViewController {
     var isScrollEnabled = true {
-        didSet { scrollView?.isScrollEnabled = isScrollEnabled }
+        didSet {
+            scrollView?.isScrollEnabled = isScrollEnabled
+        }
     }
 
     // Subclasses have to be responsible when using this setting
@@ -61,8 +63,8 @@ open class XCPageViewController: UIViewController {
     }
 
     open var pageViewController: UIPageViewController!
-    open let pageControl = UIPageControl()
-    open let pageControlHeight: CGFloat = 40
+    public let pageControl = UIPageControl()
+    public let pageControlHeight: CGFloat = 40
     open var pageControlPosition: PageControlPosition = .bottom
     open var viewControllers: [UIViewController] = []
     /// The default value is `false`.
@@ -73,8 +75,8 @@ open class XCPageViewController: UIViewController {
     /// Spacing between between pages. The default value is `0`.
     /// Page spacing is only valid if the transition style is `.scroll`.
     open var pageSpacing: CGFloat = 0
-    open var transitionStyle: UIPageViewControllerTransitionStyle = .scroll
-    open var navigationOrientation: UIPageViewControllerNavigationOrientation = .horizontal
+    open var transitionStyle: UIPageViewController.TransitionStyle = .scroll
+    open var navigationOrientation: UIPageViewController.NavigationOrientation = .horizontal
 
     private var didChangeCurrentPage: ((_ index: Int) -> Void)?
     /// A callback for listening to page change events.
@@ -95,7 +97,7 @@ open class XCPageViewController: UIViewController {
     }
 
     private func setupPageViewController() {
-        pageViewController = XCUIPageViewController(transitionStyle: transitionStyle, navigationOrientation: navigationOrientation, options: [UIPageViewControllerOptionInterPageSpacingKey: pageSpacing])
+        pageViewController = XCUIPageViewController(transitionStyle: transitionStyle, navigationOrientation: navigationOrientation, options: [.interPageSpacing: pageSpacing])
         pageViewController.delegate = self
         pageViewController.dataSource = self
         pageViewController.view.frame = view.frame
@@ -164,7 +166,7 @@ extension XCPageViewController {
     ///   - direction: The navigation direction. The default value is `.forward`.
     ///   - animated: A boolean value that indicates whether the transition is to be animated. The default value is `false`.
     ///   - completion: A block to be called when setting the current view controller animation completes. The default value is `nil`.
-    open func setCurrentPage(_ index: Int, direction: UIPageViewControllerNavigationDirection = .forward, animated: Bool = false, completion: ((Bool) -> Void)? = nil) {
+    open func setCurrentPage(_ index: Int, direction: UIPageViewController.NavigationDirection = .forward, animated: Bool = false, completion: ((Bool) -> Void)? = nil) {
         guard viewControllers.count > index else { return }
         let viewControllerAtIndex = viewControllers[index]
         pageViewController.setViewControllers([viewControllerAtIndex], direction: direction, animated: animated, completion: completion)

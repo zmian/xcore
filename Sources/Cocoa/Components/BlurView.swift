@@ -26,7 +26,7 @@ import UIKit
 
 public class BlurView: XCView {
     private var observer: NSObjectProtocol?
-    private var style: UIBlurEffectStyle = .light
+    private var style: UIBlurEffect.Style = .light
     private lazy var blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: self.style))
     private lazy var blurBackView = UIView().apply {
         $0.backgroundColor = self.blurColor
@@ -37,7 +37,7 @@ public class BlurView: XCView {
     ///
     /// `true` if the user has enabled Reduce Transparency in **Settings**; otherwise, `false`.
     private var isReduceTransparencyEnabled: Bool {
-        return UIAccessibilityIsReduceTransparencyEnabled()
+        return UIAccessibility.isReduceTransparencyEnabled
     }
 
     /// A boolean property to determine whether this view automatically enables blur effect.
@@ -103,7 +103,7 @@ public class BlurView: XCView {
         set { blurEffectView.effect = newValue }
     }
 
-    public init(style: UIBlurEffectStyle = .light) {
+    public init(style: UIBlurEffect.Style = .light) {
         self.style = style
         super.init(frame: .zero)
     }
@@ -118,7 +118,7 @@ public class BlurView: XCView {
         NSLayoutConstraint.constraintsForViewToFillSuperview(blurBackView).activate()
         NSLayoutConstraint.constraintsForViewToFillSuperview(blurEffectView).activate()
 
-        observer = NotificationCenter.default.addObserver(forName: .UIAccessibilityReduceTransparencyStatusDidChange, object: nil, queue: .main) { [weak self] _ in
+        observer = NotificationCenter.default.addObserver(forName: UIAccessibility.reduceTransparencyStatusDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
             self?.accessibilityReduceTransparencyStatusDidChange()
         }
 
@@ -157,21 +157,21 @@ extension BlurView {
         blurEffectView.contentView.addSubview(view)
     }
 
-    public override func bringSubview(toFront view: UIView) {
+    public override func bringSubviewToFront(_ view: UIView) {
         guard isSmartBlurEffectEnabled && !isReduceTransparencyEnabled else {
-            super.bringSubview(toFront: view)
+            super.bringSubviewToFront(view)
             return
         }
 
-        blurEffectView.contentView.bringSubview(toFront: view)
+        blurEffectView.contentView.bringSubviewToFront(view)
     }
 
-    public override func sendSubview(toBack view: UIView) {
+    public override func sendSubviewToBack(_ view: UIView) {
         guard isSmartBlurEffectEnabled && !isReduceTransparencyEnabled else {
-            super.sendSubview(toBack: view)
+            super.sendSubviewToBack(view)
             return
         }
 
-        blurEffectView.contentView.sendSubview(toBack: view)
+        blurEffectView.contentView.sendSubviewToBack(view)
     }
 }

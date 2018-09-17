@@ -52,7 +52,7 @@ extension ZoomAnimatorNavigationControllerDelegate: UINavigationControllerDelega
         return zoomInteractiveTransition.interactionController
     }
 
-    public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if let source = fromVC as? ZoomAnimatorSource, let destination = toVC as? ZoomAnimatorDestination, operation == .push {
             return ZoomAnimator(source: source, destination: destination, direction: .in)
         } else if let source = toVC as? ZoomAnimatorSource, let destination = fromVC as? ZoomAnimatorDestination, operation == .pop {

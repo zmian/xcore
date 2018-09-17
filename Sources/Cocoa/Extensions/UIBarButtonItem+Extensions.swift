@@ -24,52 +24,60 @@
 
 import UIKit
 
+// MARK: TextColor
+
 extension UIBarButtonItem {
     @objc open dynamic var textColor: UIColor? {
-        get { return titleTextAttributes(for: .normal)?[NSAttributedStringKey.foregroundColor.rawValue] as? UIColor }
-        set {
-            var attributes = _titleTextAttributes(for: .normal)
-            attributes[.foregroundColor] = newValue
-            setTitleTextAttributes(attributes, for: .normal)
-        }
+        get { return titleTextColor(for: .normal) }
+        set { setTitleTextColor(newValue, for: .normal) }
     }
 
+    open func titleTextColor(for state: UIControl.State) -> UIColor? {
+        return titleTextAttribute(.foregroundColor, for: state)
+    }
+
+    open func setTitleTextColor(_ color: UIColor?, for state: UIControl.State) {
+        setTitleTextAttribute(.foregroundColor, value: color, for: state)
+    }
+}
+
+// MARK: Font
+
+extension UIBarButtonItem {
     @objc open dynamic var font: UIFont? {
         get { return titleTextFont(for: .normal) }
         set {
-            UIControlState.applicationStates.forEach {
+            UIControl.State.applicationStates.forEach {
                 setTitleTextFont(newValue, for: $0)
             }
         }
     }
 
-    open func titleTextFont(for state: UIControlState) -> UIFont? {
-        return titleTextAttributes(for: state)?[NSAttributedStringKey.font.rawValue] as? UIFont
+    open func titleTextFont(for state: UIControl.State) -> UIFont? {
+        return titleTextAttribute(.font, for: state)
     }
 
-    open func setTitleTextFont(_ font: UIFont?, for state: UIControlState) {
-        var attributes = _titleTextAttributes(for: .normal)
-        attributes[.font] = font
-        setTitleTextAttributes(attributes, for: .normal)
-    }
-
-    private func _titleTextAttributes(for state: UIControlState) -> [NSAttributedStringKey: Any] {
-        guard let oldAttributes = titleTextAttributes(for: state) else {
-            return [:]
-        }
-
-        var newAttributes = [NSAttributedStringKey: Any]()
-
-        for (key, value) in oldAttributes {
-            newAttributes[NSAttributedStringKey(rawValue: key)] = value
-        }
-
-        return newAttributes
+    open func setTitleTextFont(_ font: UIFont?, for state: UIControl.State) {
+        setTitleTextAttribute(.font, value: font, for: state)
     }
 }
 
-extension UIControlState {
-    fileprivate static var applicationStates: [UIControlState] {
+// MARK: Helpers
+
+extension UIBarButtonItem {
+    private func titleTextAttribute<T>(_ key: NSAttributedString.Key, for state: UIControl.State) -> T? {
+        return titleTextAttributes(for: state)?[key] as? T
+    }
+
+    private func setTitleTextAttribute(_ key: NSAttributedString.Key, value: Any?, for state: UIControl.State) {
+        var attributes = titleTextAttributes(for: state) ?? [:]
+        attributes[key] = value
+        setTitleTextAttributes(attributes, for: state)
+    }
+}
+
+extension UIControl.State {
+    fileprivate static var applicationStates: [UIControl.State] {
         return [.normal, .highlighted, .disabled, .selected, .focused, .application]
     }
 }

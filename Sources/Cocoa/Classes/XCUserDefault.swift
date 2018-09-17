@@ -79,7 +79,7 @@ public class XCUserDefault<T> {
     }
 
     private func onApplicationMemoryWarning(callback: @escaping () -> Void) {
-        NotificationCenter.default.addObserver(forName: .UIApplicationDidReceiveMemoryWarning, object: nil, queue: nil) { _ in
+        NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { _ in
             callback()
         }
     }

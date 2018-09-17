@@ -95,11 +95,11 @@ extension UICollectionReusableView {
         set { setAssociatedObject(&AssociatedKey.backgroundColors, value: newValue) }
     }
 
-    func backgroundColor(for state: UIControlState) -> UIColor? {
+    func backgroundColor(for state: UIControl.State) -> UIColor? {
         return backgroundColors[state.rawValue]
     }
 
-    func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControlState) {
+    func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControl.State) {
         backgroundColors[state.rawValue] = backgroundColor
     }
 }

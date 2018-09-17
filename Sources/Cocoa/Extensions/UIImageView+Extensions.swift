@@ -94,15 +94,15 @@ extension UIImageView {
     /// UIImageRenderingMode.alwaysTemplate // 2
     /// ```
     @IBInspectable public var renderingMode: Int {
-        get { return image?.renderingMode.rawValue ?? UIImageRenderingMode.automatic.rawValue }
+        get { return image?.renderingMode.rawValue ?? UIImage.RenderingMode.automatic.rawValue }
         set {
-            guard let renderingMode = UIImageRenderingMode(rawValue: newValue) else { return }
+            guard let renderingMode = UIImage.RenderingMode(rawValue: newValue) else { return }
             image?.withRenderingMode(renderingMode)
         }
     }
 
     /// Ensures smooth scaling quality.
     public func enableSmoothScaling() {
-        layer.minificationFilter = kCAFilterTrilinear
+        layer.minificationFilter = .trilinear
     }
 }

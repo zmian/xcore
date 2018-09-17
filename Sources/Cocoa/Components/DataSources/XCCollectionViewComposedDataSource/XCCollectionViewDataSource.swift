@@ -68,12 +68,13 @@ extension XCCollectionViewDataSource {
     }
 
     open func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let kind = UICollectionView.SupplementaryViewKind(rawValue: kind)
         var supplementaryView: UICollectionReusableView?
 
         switch kind {
-            case UICollectionElementKindSectionHeader:
+            case .header:
                 supplementaryView = self.collectionView(collectionView, viewForHeaderInSectionAt: indexPath)
-            case UICollectionElementKindSectionFooter:
+            case .footer:
                 supplementaryView = self.collectionView(collectionView, viewForFooterInSectionAt: indexPath)
             default:
                 break
@@ -81,11 +82,11 @@ extension XCCollectionViewDataSource {
 
         guard let reusableSupplementaryView = supplementaryView else {
             #if DEBUG
-            fatalError(because: .dequeueFailed(for: "UICollectionReusableView", kind: kind, indexPath: indexPath))
+            fatalError(because: .dequeueFailed(for: "UICollectionReusableView", kind: kind.rawValue, indexPath: indexPath))
             #else
             // Return a dummy cell
             // In some cases collection view queries and crash if no valid view is found.
-            return collectionView.dequeueReusableSupplementaryView(kind: .custom(kind), for: indexPath)
+            return collectionView.dequeueReusableSupplementaryView(kind: kind, for: indexPath)
             #endif
         }
 
@@ -201,7 +202,7 @@ extension XCCollectionViewDataSource {
         guard let collectionView = collectionView else { return nil }
         var attributes: UICollectionViewLayoutAttributes?
         if let globalHeader = firstHeaderGlobalIndexPath {
-            attributes = collectionView.layoutAttributesForSupplementaryElement(ofKind: UICollectionView.SupplementaryViewKind.header.identifier, at: globalHeader)
+            attributes = collectionView.layoutAttributesForSupplementaryElement(ofKind: .header, at: globalHeader)
         } else if let indexPath = firstRowGlobalIndexPath {
             attributes = collectionView.layoutAttributesForItem(at: indexPath)
         }

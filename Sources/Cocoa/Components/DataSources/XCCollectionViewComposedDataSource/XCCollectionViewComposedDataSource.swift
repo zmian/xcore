@@ -75,7 +75,7 @@ private final class XCFakeCollectionView: UICollectionView {
 }
 
 extension XCCollectionViewComposedDataSource {
-    open static func clearCellCache() {
+    public static func clearCellCache() {
         XCFakeCollectionView.cellCache.removeAll(keepingCapacity: false)
         XCFakeCollectionView.supplementaryViewCache.removeAll(keepingCapacity: false)
     }

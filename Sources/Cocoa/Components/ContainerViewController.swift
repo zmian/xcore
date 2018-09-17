@@ -31,7 +31,7 @@ import UIKit
 /// `UIViewController.shouldAutomaticallyForwardAppearanceMethods` automatically
 /// handles most of the lifecycle events. However, there are few shortcoming to
 /// that property. For example, it doesn't correctly update the value of
-/// `isMovingFromParentViewController` property to reflect it's proper state based
+/// `isMovingFromParent` property to reflect it's proper state based
 /// on the parent view controller.
 open class ContainerViewController: UIViewController {
     /// The view controllers currently being managed the container view.
@@ -66,7 +66,7 @@ open class ContainerViewController: UIViewController {
 
         if isBeingPopped {
             viewController.forEach {
-                $0.willMove(toParentViewController: nil)
+                $0.willMove(toParent: nil)
             }
         }
 
@@ -99,7 +99,7 @@ open class ContainerViewController: UIViewController {
             return
         }
 
-        childViewController.removeFromParentViewController()
+        childViewController.removeFromParent()
         childViewController.view.removeFromSuperview()
     }
 }

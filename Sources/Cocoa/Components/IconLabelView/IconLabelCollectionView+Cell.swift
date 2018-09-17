@@ -1,5 +1,5 @@
 //
-// IconLabelCollectionViewCell.swift
+// IconLabelCollectionView+Cell.swift
 //
 // Copyright © 2015 Zeeshan Mian
 //
@@ -24,53 +24,60 @@
 
 import UIKit
 
-open class IconLabelCollectionViewCell: XCCollectionViewCell {
-    open let iconLabelView = IconLabelView()
-    let deleteButton = UIButton()
+extension IconLabelCollectionView {
+    open class Cell: XCCollectionViewCell {
+        public let iconLabelView = IconLabelView().apply {
+            $0.isUserInteractionEnabled = false
+            $0.isImageViewRounded = true
+            $0.imagePadding = 0
+            $0.imageBackgroundColor = UIColor.black.alpha(0.1)
+            $0.imageView.borderColor = UIColor.black.alpha(0.1)
+            $0.titleLabel.numberOfLines = 1
+            $0.titleLabel.textColor = .lightGray
+            $0.subtitleLabel.textColor = .lightGray
+        }
 
-    // MARK: Setters
+        private let deleteButton = UIButton().apply {
+            $0.isHidden = true
 
-    open func setData(_ data: ImageTitleDisplayable) {
-        iconLabelView.setData(data)
+            $0.image(R(.collectionViewCellDeleteIcon), in: .xcore, for: .normal)
+            $0.imageView?.cornerRadius = 24/2
+            $0.imageView?.backgroundColor = .white
+
+            $0.layer.shadowColor = UIColor.black.cgColor
+            $0.layer.shadowOffset = .zero
+            $0.layer.shadowOpacity = 0.3
+            $0.layer.shadowRadius = 5
+        }
+
+        // MARK: Setup Method
+
+        open override func commonInit() {
+            contentView.addSubview(iconLabelView)
+            NSLayoutConstraint.constraintsForViewToFillSuperview(iconLabelView).activate()
+            setupDeleteButton()
+        }
+
+        // MARK: Delete Button
+
+        private func setupDeleteButton() {
+            contentView.addSubview(deleteButton)
+            let buttonSize: CGFloat = 44
+            let offset = iconLabelView.isImageViewRounded ? buttonSize / 4 : buttonSize / 2
+            NSLayoutConstraint.size(deleteButton, size: CGSize(width: buttonSize, height: buttonSize)).activate()
+            NSLayoutConstraint(item: deleteButton, attribute: .top, toItem: contentView, constant: -offset).activate()
+            NSLayoutConstraint(item: contentView, attribute: .trailing, toItem: deleteButton, constant: -offset).activate()
+        }
     }
+}
 
-    // MARK: Setup Method
-
-    open override func commonInit() {
-        contentView.addSubview(iconLabelView)
-        NSLayoutConstraint.constraintsForViewToFillSuperview(iconLabelView).activate()
-        iconLabelView.isUserInteractionEnabled = false
-        iconLabelView.isRoundImageView = true
-        iconLabelView.imagePadding = 0
-        iconLabelView.imageBackgroundColor = UIColor.black.alpha(0.1)
-        iconLabelView.imageView.borderColor = UIColor.black.alpha(0.1)
-        iconLabelView.titleLabel.numberOfLines = 1
-        iconLabelView.titleLabel.textColor = .lightGray
-        iconLabelView.subtitleLabel.textColor = .lightGray
-
-        setupDeleteButton()
-    }
-
-    // MARK: Delete Button
-
-    private func setupDeleteButton() {
-        let buttonSize: CGFloat = 44
-        let offset = iconLabelView.isRoundImageView ? buttonSize / 4 : buttonSize / 2
-        contentView.addSubview(deleteButton)
-        NSLayoutConstraint.size(deleteButton, size: CGSize(width: buttonSize, height: buttonSize)).activate()
-        NSLayoutConstraint(item: deleteButton, attribute: .top, toItem: contentView, constant: -offset).activate()
-        NSLayoutConstraint(item: contentView, attribute: .trailing, toItem: deleteButton, constant: -offset).activate()
-
-        deleteButton.image(R(.collectionViewCellDeleteIcon), in: .xcore, for: .normal)
-        deleteButton.imageView?.cornerRadius = 24/2
-        deleteButton.imageView?.backgroundColor = .white
-
-        deleteButton.layer.shadowColor = UIColor.black.cgColor
-        deleteButton.layer.shadowOffset = .zero
-        deleteButton.layer.shadowOpacity = 0.3
-        deleteButton.layer.shadowRadius = 5
-
-        deleteButton.isHidden = true
+extension IconLabelCollectionView.Cell {
+    open func configure(_ data: ImageTitleDisplayable, at indexPath: IndexPath, collectionView: IconLabelCollectionView) {
+        iconLabelView.configure(data)
+        setDeleteButtonHidden(!collectionView.isEditing, animated: false)
+        deleteButton.addAction(.touchUpInside) { [weak collectionView] sender in
+            collectionView?.removeItems([indexPath])
+        }
     }
 
     func setDeleteButtonHidden(_ hide: Bool, animated: Bool = true) {

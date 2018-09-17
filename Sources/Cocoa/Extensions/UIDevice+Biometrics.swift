@@ -36,7 +36,7 @@ extension UIDevice {
             // when accessing `LAContext.biometryType`. Guarding using `context.responds`
             // is a workaround for the devices running older iOS 11 versions.
             // This is fixed in the later version of iOS 11.
-            guard #available(iOS 11.0, *), context.responds(to: #selector(getter: LAContext.biometryType)) else {
+            guard context.responds(to: #selector(getter: LAContext.biometryType)) else {
                 self = UIDevice.current.isBiometricsIDAvailable ? .touchID : .none
                 return
             }
