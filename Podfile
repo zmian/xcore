@@ -1,5 +1,4 @@
-platform :ios, '9.0'
-inhibit_all_warnings! # ignore all warnings from all pods
+platform :ios, '11.0'
 use_frameworks!
 
 target 'Example' do

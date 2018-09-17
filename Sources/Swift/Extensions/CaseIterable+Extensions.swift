@@ -1,7 +1,7 @@
 //
-// TODO.swift
+// CaseIterable+Extensions.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2018 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,23 @@
 // THE SOFTWARE.
 //
 
-@available(*, deprecated, message: "TODO")
-public func TODO(_ message: String = "") {
-    debugPrint("⚠️ TODO: \(message)")
+extension CaseIterable {
+    /// The number of elements in the collection.
+    ///
+    /// To check whether a collection is empty, use its `allCases.isEmpty` property instead of
+    /// comparing count to zero. Unless the collection guarantees random-access performance,
+    /// calculating count can be an O(`n`) operation.
+    ///
+    /// Complexity: O(`1`) if the collection conforms to `RandomAccessCollection`; otherwise,
+    /// O(`n`), where `n` is the length of the collection.
+    public static var count: Int {
+        return allCases.count
+    }
+}
+
+extension CaseIterable where Self: RawRepresentable {
+    /// A collection of all corresponding raw values of this type.
+    public static var rawValues: [RawValue] {
+        return allCases.map { $0.rawValue }
+    }
 }

@@ -167,7 +167,7 @@ extension UIImage {
 }
 
 extension UIImage {
-    public func background(color: UIColor, preferredSize: CGSize, alignment: UIControlContentHorizontalAlignment = .center) -> UIImage? {
+    public func background(color: UIColor, preferredSize: CGSize, alignment: UIControl.ContentHorizontalAlignment = .center) -> UIImage? {
         let finalSize = CGSize(
             width: max(size.width, preferredSize.width),
             height: max(size.height, preferredSize.width)

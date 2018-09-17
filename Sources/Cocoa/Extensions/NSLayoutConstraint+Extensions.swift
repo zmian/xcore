@@ -39,7 +39,7 @@ public struct LayoutGuideOptions: OptionSet {
 extension NSLayoutConstraint {
     // MARK: Convenience Methods
 
-    public convenience init(item view1: AnyObject, attribute attr1: NSLayoutAttribute, relatedBy relation: NSLayoutRelation = .equal, toItem view2: AnyObject? = nil, attribute attr2: NSLayoutAttribute? = nil, multiplier: CGFloat = 1, constant c: CGFloat = 0, priority: UILayoutPriority = .required) {
+    public convenience init(item view1: AnyObject, attribute attr1: Attribute, relatedBy relation: Relation = .equal, toItem view2: AnyObject? = nil, attribute attr2: Attribute? = nil, multiplier: CGFloat = 1, constant c: CGFloat = 0, priority: UILayoutPriority = .required) {
         let attr2 = attr2 ?? attr1
         self.init(item: view1, attribute: attr1, relatedBy: relation, toItem: view2, attribute: attr2, multiplier: multiplier, constant: c)
         self.priority = priority
@@ -70,19 +70,19 @@ extension NSLayoutConstraint {
         ]
     }
 
-    public static func centerX(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGFloat = 0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+    public static func centerX(_ viewToCenter: UIView, relatedBy relation: Relation = .equal, toView: UIView? = nil, offset: CGFloat = 0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         let toView = toView ?? viewToCenter.superview
         viewToCenter.translatesAutoresizingMaskIntoConstraints = false
         return NSLayoutConstraint(item: viewToCenter, attribute: .centerX, relatedBy: relation, toItem: toView, constant: offset, priority: priority)
     }
 
-    public static func centerY(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGFloat = 0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+    public static func centerY(_ viewToCenter: UIView, relatedBy relation: Relation = .equal, toView: UIView? = nil, offset: CGFloat = 0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         let toView = toView ?? viewToCenter.superview
         viewToCenter.translatesAutoresizingMaskIntoConstraints = false
         return NSLayoutConstraint(item: viewToCenter, attribute: .centerY, relatedBy: relation, toItem: toView, constant: offset, priority: priority)
     }
 
-    public static func center(_ viewToCenter: UIView, relatedBy relation: NSLayoutRelation = .equal, toView: UIView? = nil, offset: CGPoint = .zero, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
+    public static func center(_ viewToCenter: UIView, relatedBy relation: Relation = .equal, toView: UIView? = nil, offset: CGPoint = .zero, priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
         return [
             NSLayoutConstraint.centerX(viewToCenter, relatedBy: relation, toView: toView, offset: offset.x, priority: priority),
             NSLayoutConstraint.centerY(viewToCenter, relatedBy: relation, toView: toView, offset: offset.y, priority: priority)
@@ -109,8 +109,8 @@ extension NSLayoutConstraint {
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
 
         var constraints: [NSLayoutConstraint] = []
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|-paddingTop@priority-[view]-paddingBottom@priority-|", metrics: metrics, views: views)
         constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|-paddingLeft@priority-[view]-paddingRight@priority-|", metrics: metrics, views: views)
+        constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|-paddingTop@priority-[view]-paddingBottom@priority-|", metrics: metrics, views: views)
         return constraints
     }
 
@@ -149,13 +149,13 @@ extension UIViewController {
             NSLayoutConstraint(
                 item: viewToSize,
                 attribute: .top,
-                toItem: isTopLayoutGuide ? topLayoutGuide : view,
+                toItem: isTopLayoutGuide ? view.safeAreaLayoutGuide.topAnchor : view,
                 attribute: isTopLayoutGuide ? .bottom : .top,
                 constant: paddingTop,
                 priority: priority
             ),
             NSLayoutConstraint(
-                item: isBottomLayoutGuide ? bottomLayoutGuide : view,
+                item: isBottomLayoutGuide ? view.safeAreaLayoutGuide.bottomAnchor : view,
                 attribute: isBottomLayoutGuide ? .top : .bottom,
                 toItem: viewToSize,
                 attribute: .bottom,
@@ -223,5 +223,91 @@ extension Array where Element: NSLayoutConstraint {
     public func deactivate() -> Array {
         NSLayoutConstraint.deactivate(self)
         return self
+    }
+}
+
+extension NSLayoutConstraint {
+    public struct Edges {
+        public let top: NSLayoutConstraint
+        public let bottom: NSLayoutConstraint
+        public let leading: NSLayoutConstraint
+        public let trailing: NSLayoutConstraint
+
+        private var constraints: [NSLayoutConstraint] {
+            return [top, bottom, leading, trailing]
+        }
+
+        init(_ constraints: [NSLayoutConstraint]) {
+            leading = constraints[0]
+            trailing = constraints[1]
+            top = constraints[2]
+            bottom = constraints[3]
+        }
+
+        public init(top: NSLayoutConstraint, bottom: NSLayoutConstraint, leading: NSLayoutConstraint, trailing: NSLayoutConstraint) {
+            self.top = top
+            self.bottom = bottom
+            self.leading = leading
+            self.trailing = trailing
+        }
+
+        public mutating func update(from insets: UIEdgeInsets) {
+            top.constant = insets.top
+            bottom.constant = insets.bottom
+            leading.constant = insets.left
+            trailing.constant = insets.right
+        }
+
+        public mutating func update(from value: CGFloat) {
+            top.constant = value
+            bottom.constant = value
+            leading.constant = value
+            trailing.constant = value
+        }
+
+        public func activate() {
+            constraints.activate()
+        }
+
+        public func deactivate() {
+            constraints.deactivate()
+        }
+    }
+
+    public struct Size {
+        public let width: NSLayoutConstraint
+        public let height: NSLayoutConstraint
+
+        private var constraints: [NSLayoutConstraint] {
+            return [width, height]
+        }
+
+        init(_ constraints: [NSLayoutConstraint]) {
+            width = constraints[0]
+            height = constraints[1]
+        }
+
+        public init(width: NSLayoutConstraint, height: NSLayoutConstraint) {
+            self.width = width
+            self.height = height
+        }
+
+        public mutating func update(from size: CGSize) {
+            width.constant = size.width
+            height.constant = size.height
+        }
+
+        public mutating func update(from value: CGFloat) {
+            width.constant = value
+            height.constant = value
+        }
+
+        public func activate() {
+            constraints.activate()
+        }
+
+        public func deactivate() {
+            constraints.deactivate()
+        }
     }
 }

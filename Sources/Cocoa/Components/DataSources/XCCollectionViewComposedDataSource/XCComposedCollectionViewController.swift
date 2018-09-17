@@ -24,16 +24,8 @@
 
 import UIKit
 
-public let XCCollectionViewFlowLayoutAutomaticSize: CGSize = {
-    if #available(iOS 10.0, *) {
-        return UICollectionViewFlowLayoutAutomaticSize
-    } else {
-        return CGSize(.greatestFiniteMagnitude)
-    }
-}()
-
 open class XCComposedCollectionViewController: UIViewController {
-    public private(set) var collectionViewConstraints = [NSLayoutConstraint]()
+    public private(set) var collectionViewConstraints: NSLayoutConstraint.Edges!
 
     /// The layout object `UICollectionView` uses to render itself.
     /// The layout can be changed to any subclass of `UICollectionViewLayout`.
@@ -57,10 +49,7 @@ open class XCComposedCollectionViewController: UIViewController {
     /// The default value is `.zero`.
     @objc open dynamic var contentInset: UIEdgeInsets = .zero {
         didSet {
-            collectionViewConstraints.at(0)?.constant = contentInset.left
-            collectionViewConstraints.at(1)?.constant = contentInset.right
-            collectionViewConstraints.at(2)?.constant = contentInset.top
-            collectionViewConstraints.at(3)?.constant = contentInset.bottom
+            collectionViewConstraints.update(from: contentInset)
         }
     }
 
@@ -74,8 +63,12 @@ open class XCComposedCollectionViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
-        collectionViewConstraints = constraintsForViewToFillSuperview(collectionView, padding: contentInset, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
-        setup(collectionView: collectionView)
+        collectionViewConstraints = NSLayoutConstraint.Edges(constraintsForViewToFillSuperview(collectionView, padding: contentInset, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate())
+        collectionView.apply {
+            composedDataSource.dataSources = dataSources(for: $0)
+            $0.dataSource = composedDataSource
+            $0.delegate = self
+        }
     }
 
     open func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
@@ -90,16 +83,6 @@ open class XCComposedCollectionViewController: UIViewController {
         #if DEBUG
         Console.info("\(self) deinit")
         #endif
-    }
-}
-
-// MARK: Setup Methods
-
-extension XCComposedCollectionViewController {
-    private func setup(collectionView: UICollectionView) {
-        composedDataSource.dataSources = dataSources(for: collectionView)
-        collectionView.dataSource = composedDataSource
-        collectionView.delegate = self
     }
 }
 

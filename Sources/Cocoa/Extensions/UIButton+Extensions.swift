@@ -83,14 +83,14 @@ extension UIButton {
         static var isHeightSetAutomatically = "isHeightSetAutomatically"
     }
 
-    private typealias State = UInt
+    private typealias StateType = UInt
 
-    private var backgroundColors: [State: UIColor] {
+    private var backgroundColors: [StateType: UIColor] {
         get { return associatedObject(&AssociatedKey.backgroundColors, default: [:]) }
         set { setAssociatedObject(&AssociatedKey.backgroundColors, value: newValue) }
     }
 
-    private var borderColors: [State: UIColor] {
+    private var borderColors: [StateType: UIColor] {
         get { return associatedObject(&AssociatedKey.borderColors, default: [:]) }
         set { setAssociatedObject(&AssociatedKey.borderColors, value: newValue) }
     }
@@ -114,9 +114,9 @@ extension UIButton {
 extension UIButton {
     // MARK: Height
 
-    @objc open dynamic static var defaultAppearance: DefaultAppearance = .default
+    @objc public dynamic static var defaultAppearance: DefaultAppearance = .default
 
-    @objc open dynamic static var height: CGFloat {
+    @objc public dynamic static var height: CGFloat {
         return defaultAppearance.height
     }
 
@@ -198,7 +198,7 @@ extension UIButton {
 extension UIButton {
     // MARK: Background Color
 
-    @objc open func backgroundColor(for state: UIControlState) -> UIColor? {
+    @objc open func backgroundColor(for state: UIControl.State) -> UIColor? {
         guard let color = backgroundColors[state.rawValue] else {
             return nil
         }
@@ -206,7 +206,7 @@ extension UIButton {
         return color
     }
 
-    @objc open func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControlState) {
+    @objc open func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControl.State) {
         backgroundColors[state.rawValue] = backgroundColor
 
         if state == .normal {
@@ -218,7 +218,7 @@ extension UIButton {
         }
     }
 
-    private func changeBackgroundColor(to state: UIControlState) {
+    private func changeBackgroundColor(to state: UIControl.State) {
         var newBackgroundColor = backgroundColor(for: state)
 
         if newBackgroundColor == nil {
@@ -240,7 +240,7 @@ extension UIButton {
 
     // MARK: Border Color
 
-    @objc open func borderColor(for state: UIControlState) -> UIColor? {
+    @objc open func borderColor(for state: UIControl.State) -> UIColor? {
         guard let color = borderColors[state.rawValue] else {
             return nil
         }
@@ -248,7 +248,7 @@ extension UIButton {
         return color
     }
 
-    @objc open func setBorderColor(_ borderColor: UIColor?, for state: UIControlState) {
+    @objc open func setBorderColor(_ borderColor: UIColor?, for state: UIControl.State) {
         borderColors[state.rawValue] = borderColor
 
         if state == .normal {
@@ -256,7 +256,7 @@ extension UIButton {
         }
     }
 
-    private func changeBorderColor(to state: UIControlState) {
+    private func changeBorderColor(to state: UIControl.State) {
         var newBorderColor = borderColor(for: state)
 
         if newBorderColor == nil {
@@ -372,7 +372,7 @@ extension UIButton {
     ///   - named:  The remote image url or local image name to use for the specified state.
     ///   - bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the `main` bundle.
     ///   - state:  The state that uses the specified image.
-    @objc open func image(_ remoteOrLocalImage: String, in bundle: Bundle? = nil, for state: UIControlState) {
+    @objc open func image(_ remoteOrLocalImage: String, in bundle: Bundle? = nil, for state: UIControl.State) {
         UIImage.remoteOrLocalImage(remoteOrLocalImage, in: bundle) { [weak self] image in
             self?.setImage(image, for: state)
         }
@@ -406,11 +406,11 @@ extension UIButton {
     }
 
     @objc open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        if UIEdgeInsetsEqualToEdgeInsets(touchAreaEdgeInsets, .zero) || !isUserInteractionEnabled || !isEnabled || isHidden {
+        if touchAreaEdgeInsets == .zero || !isUserInteractionEnabled || !isEnabled || isHidden {
             return super.point(inside: point, with: event)
         }
 
-        let hitFrame = UIEdgeInsetsInsetRect(bounds, touchAreaEdgeInsets)
+        let hitFrame = bounds.inset(by: touchAreaEdgeInsets)
         return hitFrame.contains(point)
     }
 
@@ -543,7 +543,7 @@ extension UIButton {
 
 extension UIButton {
     // A method that is called when the state changes.
-    @objc open func stateDidChange(_ state: UIControlState) {
+    @objc open func stateDidChange(_ state: UIControl.State) {
     }
 
     @objc private func swizzled_isSelectedSetter(newValue: Bool) {
@@ -558,7 +558,7 @@ extension UIButton {
         let oldValue = isHighlighted
         self.swizzled_isHighlightedSetter(newValue: newValue)
         guard oldValue != isHighlighted else { return }
-        let state: UIControlState = isHighlighted ? .highlighted : .normal
+        let state: UIControl.State = isHighlighted ? .highlighted : .normal
         changeBackgroundColor(to: state)
         changeBorderColor(to: state)
         stateDidChange(state)
@@ -570,7 +570,7 @@ extension UIButton {
         let oldValue = isEnabled
         self.swizzled_isEnabledSetter(newValue: newValue)
         guard oldValue != isEnabled else { return }
-        let state: UIControlState = isEnabled ? .normal : .disabled
+        let state: UIControl.State = isEnabled ? .normal : .disabled
         changeBackgroundColor(to: state)
         changeBorderColor(to: state)
         didEnable?(self)

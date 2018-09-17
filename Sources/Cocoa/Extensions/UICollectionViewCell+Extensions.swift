@@ -38,7 +38,7 @@ extension UICollectionViewCell {
     ///   - animated: Specify `true` to animate the change in the selection or `false` to make the change without animating it.
     ///   - scrollPosition: An option that specifies where the item should be positioned when scrolling finishes. The default value is `[]`.
     ///   - shouldNotifyDelegate: An option to specify whether the delegate methods to be called.
-    @objc open func select(animated: Bool, scrollPosition: UICollectionViewScrollPosition = [], shouldNotifyDelegate: Bool) {
+    @objc open func select(animated: Bool, scrollPosition: UICollectionView.ScrollPosition = [], shouldNotifyDelegate: Bool) {
         guard
             let collectionView = collectionView,
             let indexPath = collectionView.indexPath(for: self)

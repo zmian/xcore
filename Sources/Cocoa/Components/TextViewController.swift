@@ -28,12 +28,12 @@ import MDHTMLLabel
 open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     open private(set) lazy var textLabel = MDHTMLLabel().apply {
         $0.delegate = self
-        $0.font = .systemFont(.footnote)
+        $0.font = .preferredFont(forTextStyle: .footnote)
         $0.textColor = .darkGray
         $0.lineBreakMode = .byWordWrapping
         $0.numberOfLines = 0
-        $0.linkAttributes = [NSAttributedStringKey.foregroundColor: $0.tintColor]
-        $0.activeLinkAttributes = [NSAttributedStringKey.foregroundColor: $0.tintColor]
+        $0.linkAttributes = [NSAttributedString.Key.foregroundColor.rawValue: $0.tintColor]
+        $0.activeLinkAttributes = [NSAttributedString.Key.foregroundColor.rawValue: $0.tintColor]
         $0.lineHeightMultiple = 1.1
     }
 

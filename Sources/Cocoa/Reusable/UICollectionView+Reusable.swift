@@ -51,11 +51,11 @@ extension UICollectionView {
 
     private func registerSupplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, view: T.Type) {
         guard let nib = UINib(named: String(describing: view), bundle: Bundle(for: T.self)) else {
-            register(view, forSupplementaryViewOfKind: kind.identifier, withReuseIdentifier: T.reuseIdentifier)
+            register(view, forSupplementaryViewOfKind: kind.rawValue, withReuseIdentifier: T.reuseIdentifier)
             return
         }
 
-        register(nib, forSupplementaryViewOfKind: kind.identifier, withReuseIdentifier: T.reuseIdentifier)
+        register(nib, forSupplementaryViewOfKind: kind.rawValue, withReuseIdentifier: T.reuseIdentifier)
     }
 
     private func registerIfNeeded<T: UICollectionViewCell>(_ cell: T.Type) {
@@ -72,21 +72,34 @@ extension UICollectionView {
 }
 
 extension UICollectionView {
-    public enum SupplementaryViewKind {
-        case header
-        case footer
-        case custom(String)
-
-        public var identifier: String {
-            switch self {
-                case .header:
-                    return UICollectionElementKindSectionHeader
-                case .footer:
-                    return UICollectionElementKindSectionFooter
-                case .custom(let type):
-                    return type
-            }
+    public struct SupplementaryViewKind: Hashable, Equatable, RawRepresentable {
+        public let rawValue: String
+        public init(rawValue: String) {
+            self.rawValue = rawValue
         }
+
+        // swiftlint:disable inconsistent_naming_header_view inconsistent_naming_footer_view
+        public static let header = SupplementaryViewKind(rawValue: UICollectionView.elementKindSectionHeader)
+        public static let footer = SupplementaryViewKind(rawValue: UICollectionView.elementKindSectionFooter)
+        // swiftlint:enable inconsistent_naming_header_view inconsistent_naming_footer_view
+    }
+
+    /// Returns the layout information for the specified supplementary view.
+    ///
+    /// Use this method to retrieve the layout information for a particular supplementary view.
+    /// You should always use this method instead of querying the layout object directly.
+    ///
+    /// - Parameters:
+    ///   - kind: A string specifying the kind of supplementary view whose layout
+    ///           attributes you want. Layout classes are responsible for defining the
+    ///           kinds of supplementary views they support.
+    ///   - indexPath: The index path of the supplementary view. The interpretation of this
+    ///                value depends on how the layout implements the view. For example, a
+    ///                view associated with a section might contain just a section value.
+    /// - Returns: The layout attributes of the supplementary view or `nil` if the specified supplementary
+    ///            view does not exist.
+    open func layoutAttributesForSupplementaryElement(ofKind kind: SupplementaryViewKind, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return layoutAttributesForSupplementaryElement(ofKind: kind.rawValue, at: indexPath)
     }
 
     /// Returns a reusable `UICollectionReusableView` instance for the class inferred by the return type.
@@ -95,8 +108,8 @@ extension UICollectionView {
     ///   - kind:      The kind of supplementary view to locate.
     ///   - indexPath: The index path specifying the location of the supplementary view in the collection view.
     /// - Returns: The specified supplementary view or nil if the view could not be found.
-    public func supplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, at indexPath: IndexPath) -> T? {
-        return supplementaryView(forElementKind: kind.identifier, at: indexPath) as? T
+    open func supplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, at indexPath: IndexPath) -> T? {
+        return supplementaryView(forElementKind: kind.rawValue, at: indexPath) as? T
     }
 
     /// Returns a reusable `UICollectionReusableView` instance for the class inferred by the return type.
@@ -105,10 +118,10 @@ extension UICollectionView {
     ///   - kind:      The kind of supplementary view to retrieve.
     ///   - indexPath: The index path specifying the location of the supplementary view in the collection view.
     /// - Returns: A reusable `UICollectionReusableView` instance.
-    public func dequeueReusableSupplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, for indexPath: IndexPath) -> T {
+    open func dequeueReusableSupplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, for indexPath: IndexPath) -> T {
         registerSupplementaryViewIfNeeded(kind: kind, view: T.self)
 
-        guard let view = dequeueReusableSupplementaryView(ofKind: kind.identifier, withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
+        guard let view = dequeueReusableSupplementaryView(ofKind: kind.rawValue, withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
             fatalError(because: .dequeueFailed(for: "UICollectionReusableView", identifier: T.reuseIdentifier))
         }
 
@@ -119,7 +132,7 @@ extension UICollectionView {
     ///
     /// - Parameter indexPath: The index path specifying the location of the cell in the collection view.
     /// - Returns: A reusable `UICollectionViewCell` instance.
-    public func dequeueReusableCell<T: UICollectionViewCell>(for indexPath: IndexPath) -> T {
+    open func dequeueReusableCell<T: UICollectionViewCell>(for indexPath: IndexPath) -> T {
         registerIfNeeded(T.self)
 
         guard let cell = dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
@@ -127,5 +140,17 @@ extension UICollectionView {
         }
 
         return cell
+    }
+}
+
+extension UICollectionViewLayout {
+    /// A convenience method to return the layout attributes for the specified supplementary view.
+    ///
+    /// - Parameters:
+    ///   - kind: A string that identifies the type of the supplementary view.
+    ///   - indexPath: The index path of the view.
+    /// - Returns: A layout attributes object containing the information to apply to the supplementary view.
+    public func layoutAttributesForSupplementaryView(ofKind kind: UICollectionView.SupplementaryViewKind, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return layoutAttributesForSupplementaryView(ofKind: kind.rawValue, at: indexPath)
     }
 }

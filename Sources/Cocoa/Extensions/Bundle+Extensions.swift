@@ -63,8 +63,8 @@ extension Bundle {
     ///
     /// Sample output:
     /// ```swift
-    /// iOS 9.2.1         // OS Version
-    /// iPhone 6s         // Device
+    /// iOS 12.1.0        // OS Version
+    /// iPhone X          // Device
     /// Version 1.0 (300) // App Version and Build number
     /// ```
     public var info: String {

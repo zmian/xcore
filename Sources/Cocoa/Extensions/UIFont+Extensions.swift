@@ -25,68 +25,6 @@
 import UIKit
 
 extension UIFont {
-    public enum TextStyle: RawRepresentable {
-        case title1, title2, title3, headline, subheadline, body, callout, footnote, caption1, caption2
-
-        public var rawValue: String {
-            switch self {
-                case .title1:
-                    return UIFontTextStyle.title1.rawValue
-                case .title2:
-                    return UIFontTextStyle.title2.rawValue
-                case .title3:
-                    return UIFontTextStyle.title3.rawValue
-                case .headline:
-                    return UIFontTextStyle.headline.rawValue
-                case .subheadline:
-                    return UIFontTextStyle.subheadline.rawValue
-                case .body:
-                    return UIFontTextStyle.body.rawValue
-                case .callout:
-                    return UIFontTextStyle.callout.rawValue
-                case .footnote:
-                    return UIFontTextStyle.footnote.rawValue
-                case .caption1:
-                    return UIFontTextStyle.caption1.rawValue
-                case .caption2:
-                    return UIFontTextStyle.caption2.rawValue
-            }
-        }
-
-        public init?(rawValue: String) {
-            switch rawValue {
-                case TextStyle.title1.rawValue:
-                    self = .title1
-                case TextStyle.title2.rawValue:
-                    self = .title2
-                case TextStyle.title3.rawValue:
-                    self = .title3
-                case TextStyle.headline.rawValue:
-                    self = .headline
-                case TextStyle.subheadline.rawValue:
-                    self = .subheadline
-                case TextStyle.body.rawValue:
-                    self = .body
-                case TextStyle.callout.rawValue:
-                    self = .callout
-                case TextStyle.footnote.rawValue:
-                    self = .footnote
-                case TextStyle.caption1.rawValue:
-                    self = .caption1
-                case TextStyle.caption2.rawValue:
-                    self = .caption2
-                default:
-                    fatalError(because: .unsupportedTextStyle(rawValue))
-            }
-        }
-    }
-
-    public static func systemFont(_ style: TextStyle) -> UIFont {
-        return preferredFont(forTextStyle: UIFontTextStyle(rawValue: style.rawValue))
-    }
-}
-
-extension UIFont {
     public enum Style {
         case normal
         case italic
@@ -131,9 +69,9 @@ extension UIFont {
     ///
     /// - Parameter traits: The new symbolic traits.
     /// - Returns: The new font matching the given font descriptor.
-    public func traits(_ traits: UIFontDescriptorSymbolicTraits...) -> UIFont {
-        let descriptor = fontDescriptor.withSymbolicTraits(UIFontDescriptorSymbolicTraits(traits))
-        return UIFont(descriptor: descriptor!, size: 0)
+    public func traits(_ traits: UIFontDescriptor.SymbolicTraits...) -> UIFont {
+        let descriptor = fontDescriptor.withSymbolicTraits(UIFontDescriptor.SymbolicTraits(traits))!
+        return UIFont(descriptor: descriptor, size: 0)
     }
 
     public var monospacedDigitFont: UIFont {

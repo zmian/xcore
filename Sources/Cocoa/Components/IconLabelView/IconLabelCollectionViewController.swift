@@ -25,7 +25,7 @@
 import UIKit
 
 open class IconLabelCollectionViewController: UIViewController {
-    public private(set) lazy var collectionView = IconLabelCollectionView(options: [.movable, .deletable])
+    public private(set) lazy var collectionView = IconLabelCollectionView(options: [.move, .delete])
 
     /// The layout used to organize the collection view’s items.
     public var layout: UICollectionViewFlowLayout? {

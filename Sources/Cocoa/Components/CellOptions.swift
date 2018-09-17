@@ -1,7 +1,7 @@
 //
-// AppDelegate.swift
+// CellOptions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2015 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,15 @@
 // THE SOFTWARE.
 //
 
-import UIKit
+public struct CellOptions: OptionSet {
+    public let rawValue: Int
 
-@UIApplicationMain
-final class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        return true
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
     }
+
+    public static let move = CellOptions(rawValue: 1 << 0)
+    public static let delete = CellOptions(rawValue: 1 << 1)
+    public static let none: CellOptions = []
+    public static let all: CellOptions = [move, delete]
 }

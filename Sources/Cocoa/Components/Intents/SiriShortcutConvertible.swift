@@ -1,7 +1,7 @@
 //
-// AppDelegate.swift
+// SiriShortcutConvertible.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2018 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,14 @@
 // THE SOFTWARE.
 //
 
-import UIKit
+import Intents
 
-@UIApplicationMain
-final class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
+@available(iOS 12.0, *)
+public protocol SiriShortcutConvertible {
+    associatedtype IntentType: INIntent
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        return true
-    }
+    /// The Siri Shortcuts intent.
+    ///
+    /// Converts `self` into an appropriate intent.
+    var intent: IntentType { get }
 }

@@ -64,15 +64,15 @@ extension NSMutableAttributedString {
         return self
     }
 
-    open func replaceAttribute(_ name: NSAttributedStringKey, value: Any, range: NSRange) {
+    open func replaceAttribute(_ name: Key, value: Any, range: NSRange) {
         removeAttribute(name, range: range)
         addAttribute(name, value: value, range: range)
     }
 }
 
 extension NSMutableAttributedString {
-    open func underline(_ text: String) -> NSMutableAttributedString {
-        addAttribute(.underlineStyle, value: NSUnderlineStyle.styleSingle.rawValue, range: range(of: text))
+    open func underline(_ text: String, style: NSUnderlineStyle = .single) -> NSMutableAttributedString {
+        addAttribute(.underlineStyle, value: style.rawValue, range: range(of: text))
         return self
     }
 
@@ -132,7 +132,7 @@ extension NSAttributedString {
     ///   - baselineOffset: The value indicating the `image` offset from the baseline. The default value is `0`.
     ///   - attributes: The attributes for the new attributed string. For a list of attributes that you can include in this
     ///                 dictionary, see `Character Attributes`.
-    public convenience init(string: String? = nil, image: UIImage, baselineOffset: CGFloat = 0, attributes: [NSAttributedStringKey: Any]? = nil) {
+    public convenience init(string: String? = nil, image: UIImage, baselineOffset: CGFloat = 0, attributes: [Key: Any]? = nil) {
         let attachment = NSAttributedString.attachmentAttributes(for: image, baselineOffset: baselineOffset)
 
         guard let string = string else {
@@ -146,14 +146,14 @@ extension NSAttributedString {
         self.init(attributedString: attributedString)
     }
 
-    private static func attachmentAttributes(for image: UIImage, baselineOffset: CGFloat) -> (string: String, attributes: [NSAttributedStringKey: Any]) {
+    private static func attachmentAttributes(for image: UIImage, baselineOffset: CGFloat) -> (string: String, attributes: [Key: Any]) {
         let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
         paragraphStyle.lineHeightMultiple = 0.9
 
         let attachment = NSTextAttachment(data: nil, ofType: nil)
         attachment.image = image
 
-        let attachmentCharacterString = String(Character(UnicodeScalar(NSAttachmentCharacter)!))
+        let attachmentCharacterString = String(Character(UnicodeScalar(NSTextAttachment.character)!))
 
         return (string: attachmentCharacterString, attributes: [
             .attachment: attachment,
@@ -173,7 +173,7 @@ extension NSAttributedString {
     ///   - color: The color for the caret and the `string`.
     ///   - direction: The caret direction to use. The default value is `.forward`.
     ///   - state: The state for which to generate the new attributed string. The default value is `.normal`.
-    public convenience init(string: String, spacer: String = "  ", font: UIFont, color: UIColor, direction: CaretDirection = .forward, for state: UIControlState = .normal) {
+    public convenience init(string: String, spacer: String = "  ", font: UIFont, color: UIColor, direction: CaretDirection = .forward, for state: UIControl.State = .normal) {
         let imageTintColor = color
         var textColor = imageTintColor
         let alpha: CGFloat = textColor.alpha * 0.5
@@ -182,7 +182,7 @@ extension NSAttributedString {
             textColor = textColor.alpha(alpha)
         }
 
-        let attributes: [NSAttributedStringKey: Any] = [
+        let attributes: [Key: Any] = [
             .font: font,
             .foregroundColor: textColor
         ]

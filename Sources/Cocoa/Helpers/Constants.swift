@@ -76,3 +76,9 @@ extension CGFloat {
     public static let defaultPadding: CGFloat = 15
     public static let maximumPadding: CGFloat = 30
 }
+
+extension UIEdgeInsets {
+    public static let minimumPadding = UIEdgeInsets(.minimumPadding)
+    public static let defaultPadding = UIEdgeInsets(.defaultPadding)
+    public static let maximumPadding = UIEdgeInsets(.maximumPadding)
+}
