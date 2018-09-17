@@ -103,6 +103,6 @@ extension UIImageView {
 
     /// Ensures smooth scaling quality.
     public func enableSmoothScaling() {
-        layer.minificationFilter = CALayerContentsFilter.trilinear
+        layer.minificationFilter = .trilinear
     }
 }

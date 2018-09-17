@@ -78,7 +78,7 @@ public final class Request {
         case data(Data)
     }
 
-    public static let session = URLSession(configuration: URLSessionConfiguration.default)
+    public static let session = URLSession(configuration: .default)
 
     public static func get(_ request: URLRequest, callback: @escaping (_ response: Response) -> Void) {
         session.dataTaskWithRequest(request, callback: callback).resume()
