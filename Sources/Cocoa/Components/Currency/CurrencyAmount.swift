@@ -25,14 +25,45 @@
 import Foundation
 
 extension CurrencyAmount {
-    public enum FormattingStyle {
+    public indirect enum FormattingStyle: Equatable {
         case none
         case removeCentsIfZero
         case removeCents
+        case abbreviationWith(threshold: Double, fallback: FormattingStyle)
+
+        /// Abbreviate `self` to smaller format.
+        ///
+        /// ```swift
+        /// 987     // -> 987
+        /// 1200    // -> 1.2K
+        /// 12000   // -> 12K
+        /// 120000  // -> 120K
+        /// 1200000 // -> 1.2M
+        /// 1340    // -> 1.3K
+        /// 132456  // -> 132.5K
+        /// ```
+        ///
+        /// - Parameters:
+        ///   - threshold: A property to only apply abbreviation
+        ///                if `self` is greater then given threshold.
+        ///   - fallback: The formatting style to use when threshold isn't reached.
+        /// - Returns: Abbreviated version of `self`.
+        public static func abbreviation(threshold: Double, fallback: FormattingStyle = .none) -> FormattingStyle {
+            var fallback = fallback
+            if case .abbreviationWith = fallback {
+                #if DEBUG
+                fatalError(because: .unsupportedFallbackFormattingStyle)
+                #else
+                fallback = .none
+                #endif
+            }
+            return .abbreviationWith(threshold: threshold, fallback: fallback)
+        }
     }
 }
 
 public struct CurrencyAmount: CustomStringConvertible {
+    public let amount: Double
     public let dollars: String
     public let cents: String
     public let currencySymbol: String
@@ -47,7 +78,8 @@ public struct CurrencyAmount: CustomStringConvertible {
         return joined(style: .none)
     }
 
-    public init(dollars: String, cents: String, currencySymbol: String, groupingSeparator: String, decimalSeparator: String) {
+    public init(amount: Double, dollars: String, cents: String, currencySymbol: String, groupingSeparator: String, decimalSeparator: String) {
+        self.amount = amount
         self.dollars = dollars
         self.cents = cents
         self.currencySymbol = currencySymbol
@@ -62,6 +94,12 @@ public struct CurrencyAmount: CustomStringConvertible {
     /// - Returns: The joined string based on the given style.
     public func joined(style: FormattingStyle = .none) -> String {
         switch style {
+            case .abbreviationWith(let (threshold, fallback)):
+                guard amount >= threshold else {
+                    return joined(style: fallback)
+                }
+
+                return currencySymbol + amount.rounded(places: 2).abbreviate(threshold: threshold)
             case .none:
                 return "\(dollars)\(decimalSeparator)\(cents)"
             case .removeCentsIfZero:
@@ -80,6 +118,10 @@ public struct CurrencyAmount: CustomStringConvertible {
     /// - Parameter style: The formatting style to us when determining the ranges.
     /// - Returns: The tuple with range for each components.
     public func range(style: FormattingStyle = .none) -> (dollars: NSRange?, cents: NSRange?) {
+        if case .abbreviationWith(let (threshold, fallback)) = style, amount < threshold {
+            return range(style: fallback)
+        }
+
         let dollarsAndDecimalSeparator = "\(dollars)\(decimalSeparator)"
         let dollarsRange = NSRange(location: 0, length: dollarsAndDecimalSeparator.count)
         let centsRange = NSRange(location: dollarsRange.length, length: cents.count)
@@ -88,6 +130,8 @@ public struct CurrencyAmount: CustomStringConvertible {
         let finalCentsRange = centsRange.location == NSNotFound ? nil : centsRange
 
         switch style {
+            case .abbreviationWith:
+                return (nil, nil)
             case .none:
                 return (finalDollarsRange, finalCentsRange)
             case .removeCentsIfZero:
