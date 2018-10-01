@@ -55,6 +55,7 @@ public struct FatalReason: CustomStringConvertible {
 // MARK: Xcore Fatal Reasons
 
 extension FatalReason {
+    static let unsupportedFallbackFormattingStyle = FatalReason("Fallback style shouldn't be of type `abbreviationWith`.")
     static let unsupportedEnum = FatalReason("Unsupported type of enum detected. `CaseIterable` does not support enums marked with `@objc` as it can hang and eventually crash the app in the Release mode.")
     static func unsupportedTextStyle(_ name: String) -> FatalReason {
         return FatalReason("Unsupported text style: \(name)")
