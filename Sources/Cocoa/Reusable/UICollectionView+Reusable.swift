@@ -65,7 +65,7 @@ extension UICollectionView {
     }
 
     private func registerSupplementaryViewIfNeeded<T: UICollectionReusableView>(kind: SupplementaryViewKind, view: T.Type) {
-        let identifier = kind.identifier + T.reuseIdentifier
+        let identifier = kind.rawValue + T.reuseIdentifier
         guard !registeredSupplementaryViews.contains(identifier) else { return }
         registeredSupplementaryViews.insert(identifier)
         registerSupplementaryView(kind: kind, view: view)
