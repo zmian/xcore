@@ -37,7 +37,7 @@ extension UIImageView {
         }
 
         if let url = URL(string: named), url.host != nil {
-            self.sd_setImage(with: url) { [weak self] image, _, cacheType, _ in
+            sd_setImage(with: url) { [weak self] image, _, cacheType, _ in
                 guard let image = image else {
                     DispatchQueue.main.async {
                         callback?(nil)
@@ -60,14 +60,18 @@ extension UIImageView {
             }
         } else {
             DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-                guard let strongSelf = self, let image = UIImage(named: named, in: bundle, compatibleWith: nil) else {
+                guard let strongSelf = self, let image = strongSelf.imageFromLocalString(named: named, in: bundle) else {
                     DispatchQueue.main.async {
                         callback?(nil)
                     }
                     return
                 }
 
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [weak self] in
+                    guard let strongSelf = self else {
+                        return
+                    }
+
                     defer { callback?(image) }
 
                     if alwaysAnimate {
@@ -82,6 +86,18 @@ extension UIImageView {
                 }
             }
         }
+    }
+
+    private func imageFromLocalString(named: String, in bundle: Bundle?) -> UIImage? {
+        guard let url = URL(string: named), url.schemeType == .file else {
+            return UIImage(named: named, in: bundle, compatibleWith: nil)
+        }
+
+        guard let data = try? Data(contentsOf: url) else {
+            return nil
+        }
+
+        return UIImage(data: data)
     }
 }
 
