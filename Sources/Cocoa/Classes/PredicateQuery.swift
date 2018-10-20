@@ -157,15 +157,15 @@ public struct PredicateQuery: CustomStringConvertible, CustomDebugStringConverti
         builder = PredicateQueryBuilder.boolEqual(field: field, value: equal)
     }
 
-    public var predicate: NSPredicate {
+    public var rawValue: NSPredicate {
         return builder.rawValue
     }
 
     public var description: String {
-        return predicate.description
+        return rawValue.description
     }
 
     public var debugDescription: String {
-        return predicate.debugDescription
+        return rawValue.debugDescription
     }
 }
