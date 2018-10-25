@@ -24,6 +24,22 @@
 
 import UIKit
 
+public protocol ImageTransform {
+    func transform(_ image: UIImage) -> UIImage
+}
+
+public final class BlockImageTransform: ImageTransform {
+    private let block: (_ image: UIImage) -> UIImage
+
+    public init(block: @escaping (_ image: UIImage) -> UIImage) {
+        self.block = block
+    }
+
+    public func transform(_ image: UIImage) -> UIImage {
+        return block(image)
+    }
+}
+
 protocol UIImageFilterRepresentable {
     var outputImage: UIImage { get }
 }
