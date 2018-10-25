@@ -474,7 +474,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
     /// - Returns: A newly created button.
     public init(imageNamed: String, handler: ((_ sender: Self) -> Void)? = nil) {
         self.init(image: nil, handler: handler)
-        imageView?.remoteOrLocalImage(imageNamed) { [weak self] image in
+        imageView?.setImage(imageNamed) { [weak self] image in
             self?.setImage(image, for: .normal)
         }
     }

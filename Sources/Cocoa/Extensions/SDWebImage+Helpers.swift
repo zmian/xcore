@@ -29,65 +29,44 @@ extension UIImageView {
     /// Automatically detect and load the image from local or a remote url.
     ///
     /// - seealso: `setImage(_:alwaysAnimate:animationDuration:callback:)`
-    func remoteOrLocalImage(_ named: String, in bundle: Bundle? = nil, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
-        guard !named.isBlank else {
-            image = nil
+    func remoteOrLocalImage(_ image: ImageRepresentable?, transform: ImageTransform?, alwaysAnimate: Bool, animationDuration: TimeInterval, callback: ((_ image: UIImage?) -> Void)?) {
+        guard let image = image, image.imageSource.isValid else {
+            self.image = nil
             callback?(nil)
             return
         }
 
-        if let url = URL(string: named), url.host != nil {
-            sd_setImage(with: url) { [weak self] image, _, cacheType, _ in
-                guard let image = image else {
-                    DispatchQueue.main.async {
-                        callback?(nil)
+        switch image.imageSource {
+            case .uiImage(var image):
+                postProcess(image: image, transform: transform, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
+            case .url(let value):
+                guard let url = URL(string: value), url.host != nil else {
+                    DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+                        self?.postProcess(
+                            image: self?.imageFromLocalString(named: value, in: image.bundle),
+                            transform: transform,
+                            alwaysAnimate: alwaysAnimate,
+                            animationDuration: animationDuration,
+                            callback: callback
+                        )
                     }
                     return
                 }
 
-                defer {
-                    DispatchQueue.main.async {
-                        callback?(image)
-                    }
+                sd_setImage(with: url, placeholderImage: nil, options: [.avoidAutoSetImage]) { [weak self] image, _, cacheType, _ in
+                    self?.postProcess(
+                        image: image,
+                        transform: transform,
+                        alwaysAnimate: (alwaysAnimate || cacheType != SDImageCacheType.memory),
+                        animationDuration: animationDuration,
+                        callback: callback
+                    )
                 }
-
-                if let strongSelf = self, (alwaysAnimate || cacheType != SDImageCacheType.memory) {
-                    strongSelf.alpha = 0
-                    UIView.animate(withDuration: animationDuration) {
-                        strongSelf.alpha = 1
-                    }
-                }
-            }
-        } else {
-            DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-                guard let strongSelf = self, let image = strongSelf.imageFromLocalString(named: named, in: bundle) else {
-                    DispatchQueue.main.async {
-                        callback?(nil)
-                    }
-                    return
-                }
-
-                DispatchQueue.main.async { [weak self] in
-                    guard let strongSelf = self else {
-                        return
-                    }
-
-                    defer { callback?(image) }
-
-                    if alwaysAnimate {
-                        strongSelf.alpha = 0
-                        strongSelf.image = image
-                        UIView.animate(withDuration: animationDuration) {
-                            strongSelf.alpha = 1
-                        }
-                    } else {
-                        strongSelf.image = image
-                    }
-                }
-            }
         }
     }
+}
 
+extension UIImageView {
     private func imageFromLocalString(named: String, in bundle: Bundle?) -> UIImage? {
         guard let url = URL(string: named), url.schemeType == .file else {
             return UIImage(named: named, in: bundle, compatibleWith: nil)
@@ -98,6 +77,39 @@ extension UIImageView {
         }
 
         return UIImage(data: data)
+    }
+
+    func postProcess(image: UIImage?, transform: ImageTransform?, alwaysAnimate: Bool, animationDuration: TimeInterval, callback: ((_ image: UIImage?) -> Void)?) {
+        guard var image = image else {
+            DispatchQueue.main.async {
+                callback?(nil)
+            }
+            return
+        }
+
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            if let transform = transform {
+                image = transform.transform(image)
+            }
+
+            DispatchQueue.main.async { [weak self] in
+                guard let strongSelf = self else {
+                    return
+                }
+
+                defer { callback?(image) }
+
+                if alwaysAnimate {
+                    strongSelf.alpha = 0
+                    strongSelf.image = image
+                    UIView.animate(withDuration: animationDuration) {
+                        strongSelf.alpha = 1
+                    }
+                } else {
+                    strongSelf.image = image
+                }
+            }
+        }
     }
 }
 
