@@ -37,6 +37,16 @@ extension CATransaction {
         animateBlock()
         CATransaction.commit()
     }
+
+    /// Disables transition animation.
+    ///
+    /// - Parameter actionsWithoutAnimation: The transition code that you want to perform without animation.
+    public static func performWithoutAnimation(_ actionsWithoutAnimation: () -> Void) {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        actionsWithoutAnimation()
+        CATransaction.commit()
+    }
 }
 
 extension CATransitionType {
