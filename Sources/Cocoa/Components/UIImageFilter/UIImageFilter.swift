@@ -25,18 +25,24 @@
 import UIKit
 
 public protocol ImageTransform {
-    func transform(_ image: UIImage) -> UIImage
+    /// An option to transform the image.
+    ///
+    /// - Parameters:
+    ///   - image: The newly fetched image you want to transform.
+    ///   - source: The original source from which the `image` was constructed.
+    /// - Returns: The transformed image.
+    func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage
 }
 
 public final class BlockImageTransform: ImageTransform {
-    private let block: (_ image: UIImage) -> UIImage
+    private let block: (_ image: UIImage, _ source: ImageRepresentable) -> UIImage
 
-    public init(block: @escaping (_ image: UIImage) -> UIImage) {
+    public init(block: @escaping (_ image: UIImage, _ source: ImageRepresentable) -> UIImage) {
         self.block = block
     }
 
-    public func transform(_ image: UIImage) -> UIImage {
-        return block(image)
+    public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
+        return block(image, source)
     }
 }
 

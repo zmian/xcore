@@ -30,20 +30,28 @@ extension UIImageView {
     ///
     /// - seealso: `setImage(_:alwaysAnimate:animationDuration:callback:)`
     func remoteOrLocalImage(_ image: ImageRepresentable?, transform: ImageTransform?, alwaysAnimate: Bool, animationDuration: TimeInterval, callback: ((_ image: UIImage?) -> Void)?) {
-        guard let image = image, image.imageSource.isValid else {
+        guard let imageRepresentable = image, imageRepresentable.imageSource.isValid else {
             self.image = nil
             callback?(nil)
             return
         }
 
-        switch image.imageSource {
-            case .uiImage(var image):
-                postProcess(image: image, transform: transform, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
+        switch imageRepresentable.imageSource {
+            case .uiImage(let image):
+                postProcess(
+                    image: image,
+                    source: imageRepresentable,
+                    transform: transform,
+                    alwaysAnimate: alwaysAnimate,
+                    animationDuration: animationDuration,
+                    callback: callback
+                )
             case .url(let value):
                 guard let url = URL(string: value), url.host != nil else {
                     DispatchQueue.global(qos: .userInteractive).async { [weak self] in
                         self?.postProcess(
-                            image: self?.imageFromLocalString(named: value, in: image.bundle),
+                            image: self?.imageFromLocalString(named: value, in: imageRepresentable.bundle),
+                            source: imageRepresentable,
                             transform: transform,
                             alwaysAnimate: alwaysAnimate,
                             animationDuration: animationDuration,
@@ -56,6 +64,7 @@ extension UIImageView {
                 sd_setImage(with: url, placeholderImage: nil, options: [.avoidAutoSetImage]) { [weak self] image, _, cacheType, _ in
                     self?.postProcess(
                         image: image,
+                        source: imageRepresentable,
                         transform: transform,
                         alwaysAnimate: (alwaysAnimate || cacheType != SDImageCacheType.memory),
                         animationDuration: animationDuration,
@@ -79,7 +88,7 @@ extension UIImageView {
         return UIImage(data: data)
     }
 
-    func postProcess(image: UIImage?, transform: ImageTransform?, alwaysAnimate: Bool, animationDuration: TimeInterval, callback: ((_ image: UIImage?) -> Void)?) {
+    func postProcess(image: UIImage?, source: ImageRepresentable, transform: ImageTransform?, alwaysAnimate: Bool, animationDuration: TimeInterval, callback: ((_ image: UIImage?) -> Void)?) {
         guard var image = image else {
             DispatchQueue.main.async {
                 callback?(nil)
@@ -89,7 +98,7 @@ extension UIImageView {
 
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             if let transform = transform {
-                image = transform.transform(image)
+                image = transform.transform(image, source: source)
             }
 
             DispatchQueue.main.async { [weak self] in

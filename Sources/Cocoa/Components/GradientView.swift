@@ -56,7 +56,7 @@ open class GradientView: XCView {
         set { gradientLayer.colors = newValue }
     }
 
-    /// The direction the gradient when drawn in the layer’s coordinate space.
+    /// The direction of the gradient when drawn in the layer’s coordinate space.
     /// This property is animatable.
     ///
     /// The default value is `.topToBottom`.
@@ -119,7 +119,7 @@ open class GradientLayer: CALayer {
         }
     }
 
-    /// The direction the gradient when drawn in the layer’s coordinate space.
+    /// The direction of the gradient when drawn in the layer’s coordinate space.
     /// This property is animatable.
     ///
     /// The default value is `.topToBottom`.
