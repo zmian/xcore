@@ -167,6 +167,55 @@ extension UIImage {
 }
 
 extension UIImage {
+    /// Applies gradient color overlay to `self`.
+    ///
+    /// - Parameters:
+    ///   - type: The style of gradient drawn. The default value is `.axial`.
+    ///   - colors: An array of `UIColor` objects defining the color of each gradient stop.
+    ///   - direction: The direction of the gradient when drawn in the layer’s coordinate space.
+    ///                The default value is `.topToBottom`.
+    ///   - locations: An optional array of `Double` defining the location of each gradient stop.
+    ///                The default value is `nil`.
+    ///   - blendMode: The blend mode to use for gradient overlay. The default value is `.normal`.
+    /// - Returns: A new image with gradient color overlay.
+    public func gradient(
+        type: CAGradientLayerType = .axial,
+        colors: [UIColor],
+        direction: GradientDirection = .topToBottom,
+        locations: [Double]? = nil,
+        blendMode: CGBlendMode = .normal
+    ) -> UIImage {
+        let rect = CGRect(origin: .zero, size: size)
+
+        let layer = CAGradientLayer().apply {
+            $0.frame = rect
+            $0.type = type
+            $0.colors = colors.map { $0.cgColor }
+            $0.locations = locations?.map {
+                NSNumber(value: $0)
+            }
+            ($0.startPoint, $0.endPoint) = direction.points
+        }
+
+        let renderer = UIGraphicsImageRenderer(bounds: rect)
+
+        return renderer.image { rendererContext in
+            let context = rendererContext.cgContext
+            // Move and invert canvas by scaling to account for coordinate system
+            context.translateBy(x: 0, y: size.height)
+            context.scaleBy(x: 1, y: -1)
+            context.setBlendMode(blendMode)
+            context.draw(cgImage!, in: rect)
+            context.clip(to: rect, mask: cgImage!)
+            // The flip the image vertically to account for coordinate system
+            let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: rect.height)
+            context.concatenate(flipVertical)
+            layer.render(in: context)
+        }
+    }
+}
+
+extension UIImage {
     public func background(color: UIColor, preferredSize: CGSize, alignment: UIControl.ContentHorizontalAlignment = .center) -> UIImage? {
         let finalSize = CGSize(
             width: max(size.width, preferredSize.width),
