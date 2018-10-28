@@ -44,10 +44,11 @@ extension UIPopoverPresentationController {
 
 /// Displays an instance of `UIAlertController` with the given `title` and `message`, and an OK button to dismiss it.
 public func alert(title: String = "", message: String = "") {
-    let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-    alertController.addAction(cancelAction)
-    alertController.show()
+    UIAlertController(title: title, message: message, preferredStyle: .alert).apply {
+        let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        $0.addAction(cancelAction)
+        $0.show()
+    }
 }
 
 extension UIAlertController {

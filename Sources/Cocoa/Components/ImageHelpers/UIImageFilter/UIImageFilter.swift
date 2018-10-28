@@ -31,6 +31,8 @@ public protocol ImageTransform {
     ///   - image: The newly fetched image you want to transform.
     ///   - source: The original source from which the `image` was constructed.
     /// - Returns: The transformed image.
+    ///
+    /// - Note: This method is always called on a background thread.
     func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage
 }
 

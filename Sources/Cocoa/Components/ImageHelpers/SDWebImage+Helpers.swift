@@ -36,59 +36,22 @@ extension UIImageView {
             return
         }
 
-        switch imageRepresentable.imageSource {
-            case .uiImage(let image):
-                postProcess(
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            guard let strongSelf = self else { return }
+            GroupImageFetcher.fetch(imageRepresentable, in: strongSelf) { [weak self] image, cacheType in
+                self?.postProcess(
                     image: image,
                     source: imageRepresentable,
                     transform: transform,
-                    alwaysAnimate: alwaysAnimate,
+                    alwaysAnimate: (alwaysAnimate || cacheType != .memory),
                     animationDuration: animationDuration,
                     callback: callback
                 )
-            case .url(let value):
-                guard let url = URL(string: value), url.host != nil else {
-                    DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-                        self?.postProcess(
-                            image: self?.imageFromLocalString(named: value, in: imageRepresentable.bundle),
-                            source: imageRepresentable,
-                            transform: transform,
-                            alwaysAnimate: alwaysAnimate,
-                            animationDuration: animationDuration,
-                            callback: callback
-                        )
-                    }
-                    return
-                }
-
-                sd_setImage(with: url, placeholderImage: nil, options: [.avoidAutoSetImage]) { [weak self] image, _, cacheType, _ in
-                    self?.postProcess(
-                        image: image,
-                        source: imageRepresentable,
-                        transform: transform,
-                        alwaysAnimate: (alwaysAnimate || cacheType != SDImageCacheType.memory),
-                        animationDuration: animationDuration,
-                        callback: callback
-                    )
-                }
+            }
         }
     }
-}
 
-extension UIImageView {
-    private func imageFromLocalString(named: String, in bundle: Bundle?) -> UIImage? {
-        guard let url = URL(string: named), url.schemeType == .file else {
-            return UIImage(named: named, in: bundle, compatibleWith: nil)
-        }
-
-        guard let data = try? Data(contentsOf: url) else {
-            return nil
-        }
-
-        return UIImage(data: data)
-    }
-
-    func postProcess(image: UIImage?, source: ImageRepresentable, transform: ImageTransform?, alwaysAnimate: Bool, animationDuration: TimeInterval, callback: ((_ image: UIImage?) -> Void)?) {
+    private func postProcess(image: UIImage?, source: ImageRepresentable, transform: ImageTransform?, alwaysAnimate: Bool, animationDuration: TimeInterval, callback: ((_ image: UIImage?) -> Void)?) {
         guard var image = image else {
             DispatchQueue.main.async {
                 callback?(nil)
@@ -97,9 +60,7 @@ extension UIImageView {
         }
 
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            if let transform = transform {
-                image = transform.transform(image, source: source)
-            }
+            image = image.process(source, using: transform)
 
             DispatchQueue.main.async { [weak self] in
                 guard let strongSelf = self else {
@@ -124,38 +85,26 @@ extension UIImageView {
 
 extension UIImage {
     /// Automatically detect and load the image from local or a remote url.
-    public class func remoteOrLocalImage(_ named: String, in bundle: Bundle? = nil, callback: @escaping (_ image: UIImage?) -> Void) {
-        guard !named.isBlank else {
+    public class func remoteOrLocalImage(_ source: ImageRepresentable, transform: ImageTransform? = nil, callback: @escaping (_ image: UIImage?) -> Void) {
+        guard source.imageSource.isValid else {
             callback(nil)
             return
         }
 
-        if let url = URL(string: named), url.host != nil {
-            SDWebImageDownloader.shared().downloadImage(with: url, options: [],
-                progress: { receivedSize, expectedSize, targetUrl in
-                },
-                completed: { image, data, error, finished in
-                    guard let image = image, finished else {
-                        DispatchQueue.main.async {
-                            callback(nil)
-                        }
-                        return
-                    }
-                    DispatchQueue.main.async {
-                        callback(image)
-                    }
-                }
-            )
-        } else {
-            DispatchQueue.global(qos: .userInteractive).async {
-                guard let image = UIImage(named: named, in: bundle, compatibleWith: nil) else {
+        DispatchQueue.global(qos: .userInteractive).async {
+            GroupImageFetcher.fetch(source, in: nil) { image, _ in
+                guard let image = image else {
                     DispatchQueue.main.async {
                         callback(nil)
                     }
                     return
                 }
-                DispatchQueue.main.async {
-                    callback(image)
+
+                DispatchQueue.global(qos: .userInteractive).async {
+                    let image = image.process(source, using: transform)
+                    DispatchQueue.main.async {
+                        callback(image)
+                    }
                 }
             }
         }
@@ -169,9 +118,12 @@ extension UIImage {
         var downloadedImages = 0
 
         orderedObjects.forEach { object in
-            SDWebImageDownloader.shared().downloadImage(with: object.url, options: [],
+            SDWebImageDownloader.shared().downloadImage(
+                with: object.url,
+                options: [],
                 progress: { receivedSize, expectedSize, targetUrl in
-                }, completed: { image, data, error, finished in
+                },
+                completed: { image, data, error, finished in
                     downloadedImages += 1
 
                     if let image = image, finished {
@@ -189,5 +141,21 @@ extension UIImage {
                 }
             )
         }
+    }
+}
+
+extension UIImage {
+    /// Process the image using the given transform.
+    ///
+    /// - Parameters:
+    ///   - source: The original source from which the image was constructed.
+    ///   - transform: The transform to use.
+    /// - Returns: The transformed image.
+    fileprivate func process(_ source: ImageRepresentable, using transform: ImageTransform?) -> UIImage {
+        guard let transform = transform else {
+            return self
+        }
+
+        return transform.transform(self, source: source)
     }
 }

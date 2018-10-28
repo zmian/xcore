@@ -74,9 +74,11 @@ extension Bundle {
             systemName = "iOS"
         }
 
-        return "\(systemName) \(UIDevice.current.systemVersion)\n" +
-               "\(UIDevice.current.modelType.description)\n" +
-               "Version \(versionNumber) (\(buildNumber))"
+        return """
+        \(systemName) \(UIDevice.current.systemVersion)
+        \(UIDevice.current.model.description)
+        Version \(versionNumber) (\(buildNumber))"
+        """
     }
 }
 

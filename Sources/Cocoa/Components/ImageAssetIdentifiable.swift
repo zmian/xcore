@@ -89,14 +89,20 @@ extension UIImage {
         case caretDirectionDown
         case caretDirectionBack
         case caretDirectionForward
+    }
+}
 
-        var bundle: Bundle? {
-            return .xcore
-        }
+extension UIImage.AssetIdentifier: ImageRepresentable {
+    var imageSource: ImageSourceType {
+        return .url(rawValue)
+    }
+
+    var bundle: Bundle? {
+        return .xcore
     }
 }
 
 /// A convenience function to get image name from `xcassets`.
-func R(_ assetIdentifier: UIImage.AssetIdentifier) -> String {
-    return assetIdentifier.rawValue
+func R(_ assetIdentifier: UIImage.AssetIdentifier) -> ImageRepresentable {
+    return assetIdentifier
 }

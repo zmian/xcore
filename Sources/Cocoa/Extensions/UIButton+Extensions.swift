@@ -372,8 +372,8 @@ extension UIButton {
     ///   - named:  The remote image url or local image name to use for the specified state.
     ///   - bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the `main` bundle.
     ///   - state:  The state that uses the specified image.
-    @objc open func image(_ remoteOrLocalImage: String, in bundle: Bundle? = nil, for state: UIControl.State) {
-        UIImage.remoteOrLocalImage(remoteOrLocalImage, in: bundle) { [weak self] image in
+    public func image(_ named: ImageRepresentable, for state: UIControl.State) {
+        UIImage.remoteOrLocalImage(named) { [weak self] image in
             self?.setImage(image, for: state)
         }
     }

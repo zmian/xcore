@@ -28,16 +28,6 @@ import Foundation
 
 /// Reasons why code should abort at runtime
 public struct FatalReason: CustomStringConvertible {
-    public static let subclassMustImplement = FatalReason("Must be implemented by subclass.")
-
-    public static func dequeueFailed(for name: String, identifier: String) -> FatalReason {
-        return FatalReason("Failed to dequeue \(name) with identifier: \(identifier)")
-    }
-
-    public static func dequeueFailed(for name: String, kind: String, indexPath: IndexPath) -> FatalReason {
-        return FatalReason("Failed to dequeue \(name) for kind: \(kind) at indexPath(\(indexPath.section), \(indexPath.item))")
-    }
-
     /// An underlying string-based cause for a fatal error.
     public let reason: String
 
@@ -49,6 +39,18 @@ public struct FatalReason: CustomStringConvertible {
     /// Conforms to CustomStringConvertible, allowing reason to print directly to complaint.
     public var description: String {
         return reason
+    }
+}
+
+extension FatalReason {
+    public static let subclassMustImplement = FatalReason("Must be implemented by subclass.")
+
+    public static func dequeueFailed(for name: String, identifier: String) -> FatalReason {
+        return FatalReason("Failed to dequeue \(name) with identifier: \(identifier)")
+    }
+
+    public static func dequeueFailed(for name: String, kind: String, indexPath: IndexPath) -> FatalReason {
+        return FatalReason("Failed to dequeue \(name) for kind: \(kind) at indexPath(\(indexPath.section), \(indexPath.item))")
     }
 }
 

@@ -1,7 +1,7 @@
 //
-// UIDevice+Extensions.swift
+// GroupImageFetcher.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2018 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,23 +23,21 @@
 //
 
 import UIKit
-import LocalAuthentication
 
-extension UIDevice {
-    public struct SystemVersion {
-        public static let iOS8OrGreater = floor(NSFoundationVersionNumber) > floor(NSFoundationVersionNumber_iOS_7_0)
-        public static let iOS7OrLess = floor(NSFoundationVersionNumber) <= floor(NSFoundationVersionNumber_iOS_7_0)
+final class GroupImageFetcher: ImageFetcher {
+    static func canHandle(_ image: ImageRepresentable) -> Bool {
+        return true
+    }
 
-        public static func lessThanOrEqual(_ string: String) -> Bool {
-            return UIDevice.current.systemVersion.compare(string, options: .numeric) == .orderedAscending
+    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, callback: @escaping ResultBlock) {
+        // 1. Reverse fetchers so the third-party fecthers are always prioritized over built-in ones.
+        // 2. Find the first one that can handle the request.
+        // 3. Fetch the requested image.
+        guard let fetcher = UIImage.fetchers.reversed().first(where: { $0.canHandle(image) }) else {
+            callback(nil, .none)
+            return
         }
 
-        public static func greaterThanOrEqual(_ string: String) -> Bool {
-            return !lessThanOrEqual(string)
-        }
-
-        public static func equal(_ string: String) -> Bool {
-            return UIDevice.current.systemVersion.compare(string, options: .numeric) == .orderedSame
-        }
+        fetcher.fetch(image, in: imageView, callback: callback)
     }
 }

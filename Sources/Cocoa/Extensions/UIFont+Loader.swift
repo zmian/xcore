@@ -45,7 +45,7 @@ extension UIFont {
             return
         }
 
-        try load(url: fontUrl)
+        _ = try load(url: fontUrl)
     }
 
     /// Loads the font at given url into memory.

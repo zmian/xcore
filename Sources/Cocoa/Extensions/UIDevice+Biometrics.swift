@@ -68,7 +68,9 @@ extension UIDevice {
             }
         }
     }
+}
 
+extension UIDevice {
     /// Indicates that the device owner can authenticate using biometry, Touch ID or Face ID.
     public var isBiometricsIDAvailable: Bool {
         return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)

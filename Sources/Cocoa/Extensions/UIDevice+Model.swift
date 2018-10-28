@@ -25,6 +25,30 @@
 import UIKit
 
 extension UIDevice {
+    // swiftlint:disable opening_brace
+    public struct ScreenSize {
+        public static var width: CGFloat     { return UIScreen.main.bounds.width }
+        public static var height: CGFloat    { return UIScreen.main.bounds.height }
+        public static var minLength: CGFloat { return min(width, height) }
+        public static var maxLength: CGFloat { return max(width, height) }
+    }
+
+    public struct DeviceType {
+        private static var iPhone: Bool {
+            return UIDevice.current.modelType.family == .phone
+        }
+
+        public static var iPhone4OrLess: Bool { return iPhone && ScreenSize.maxLength < 568 }
+        public static var iPhone5OrLess: Bool { return iPhone && ScreenSize.maxLength <= 568 }
+        public static var iPhone5: Bool       { return iPhone && ScreenSize.maxLength == 568 }
+        public static var iPhone6: Bool       { return iPhone && ScreenSize.maxLength == 667 }
+        public static var iPhone6Plus: Bool   { return iPhone && ScreenSize.maxLength == 736 }
+        public static var iPhoneX: Bool       { return iPhone && ScreenSize.minLength == 375 && ScreenSize.maxLength == 812 }
+    }
+    // swiftlint:enable opening_brace
+}
+
+extension UIDevice {
     public enum ModelType: CustomStringConvertible {
         case unknown(String)
         case simulator
@@ -41,6 +65,9 @@ extension UIDevice {
         case iPhone7, iPhone7Plus
         case iPhone8, iPhone8Plus
         case iPhoneX
+        case iPhoneXS
+        case iPhoneXSMax
+        case iPhoneXR
 
         // iPad
         case iPad1
@@ -53,18 +80,23 @@ extension UIDevice {
         case iPadPro12
 
         // Apple Watch
-        case appleWatch38
-        case appleWatch42
-        case appleWatchSeries138
-        case appleWatchSeries142
-        case appleWatchSeries238
-        case appleWatchSeries242
+        case appleWatchSeries0_38mm
+        case appleWatchSeries0_42mm
+        case appleWatchSeries1_38mm
+        case appleWatchSeries1_42mm
+        case appleWatchSeries2_38mm
+        case appleWatchSeries2_42mm
+        case appleWatchSeries3_38mm
+        case appleWatchSeries3_42mm
+        case appleWatchSeries4_40mm
+        case appleWatchSeries4_44mm
 
         // Apple TV
         case appleTV1
         case appleTV2
         case appleTV3
         case appleTV4
+        case appleTV4K
 
         // iPod
         case iPodTouch1
@@ -72,8 +104,9 @@ extension UIDevice {
         case iPodTouch3
         case iPodTouch4
         case iPodTouch5
+        case iPodTouch6
 
-        fileprivate init(modelNumber identifier: String) {
+        fileprivate init(identifier: String) {
             switch identifier {
                 case "x86_64", "i386":
                     self = .simulator
@@ -116,6 +149,12 @@ extension UIDevice {
                     self = .iPhone8Plus
                 case "iPhone10,3", "iPhone10,6":
                     self = .iPhoneX
+                case "iPhone11,2":
+                    self = .iPhoneXS
+                case "iPhone11,4", "iPhone11,6":
+                    self = .iPhoneXSMax
+                case "iPhone11,8":
+                    self = .iPhoneXR
 
                 // iPad
 
@@ -151,17 +190,25 @@ extension UIDevice {
                 // Apple Watch
 
                 case "Watch1,1":
-                    self = .appleWatch38
+                    self = .appleWatchSeries0_38mm
                 case "Watch1,2":
-                    self = .appleWatch42
+                    self = .appleWatchSeries0_42mm
                 case "Watch2,6":
-                    self = .appleWatchSeries138
+                    self = .appleWatchSeries1_38mm
                 case "Watch2,7":
-                    self = .appleWatchSeries142
+                    self = .appleWatchSeries1_42mm
                 case "Watch2,3":
-                    self = .appleWatchSeries238
+                    self = .appleWatchSeries2_38mm
                 case "Watch2,4":
-                    self = .appleWatchSeries242
+                    self = .appleWatchSeries2_42mm
+                case "Watch3,1", "Watch3,3":
+                    self = .appleWatchSeries3_38mm
+                case "Watch3,2", "Watch3,4":
+                    self = .appleWatchSeries3_42mm
+                case "Watch4,1", "Watch4,3":
+                    self = .appleWatchSeries4_40mm
+                case "Watch4,2", "Watch4,4":
+                    self = .appleWatchSeries4_44mm
 
                 // Apple TV
 
@@ -173,6 +220,8 @@ extension UIDevice {
                     self = .appleTV3
                 case "AppleTV5,3":
                     self = .appleTV4
+                case "AppleTV6,2":
+                    self = .appleTV4K
 
                 // iPod
 
@@ -186,7 +235,8 @@ extension UIDevice {
                     self = .iPodTouch4
                 case "iPod5,1":
                     self = .iPodTouch5
-
+                case "iPod7,1":
+                    self = .iPodTouch6
                 default:
                     self = .unknown(identifier)
             }
@@ -215,6 +265,9 @@ extension UIDevice {
                 case .iPhone8:      return "iPhone 8"
                 case .iPhone8Plus:  return "iPhone 8 Plus"
                 case .iPhoneX:      return "iPhone X"
+                case .iPhoneXS:     return "iPhone XS"
+                case .iPhoneXSMax:  return "iPhone XS Max"
+                case .iPhoneXR:     return "iPhone XR"
 
                 case .iPad1:        return "iPad 1"
                 case .iPad2:        return "iPad 2"
@@ -231,30 +284,111 @@ extension UIDevice {
                 case .iPadPro10:    return "iPad Pro 10.5"
                 case .iPadPro12:    return "iPad Pro 12.9"
 
-                case .appleWatch38: return "Apple Watch 38"
-                case .appleWatch42: return "Apple Watch 42"
-                case .appleWatchSeries138: return "Apple Watch Series 1 38"
-                case .appleWatchSeries142: return "Apple Watch Series 1 42"
-                case .appleWatchSeries238: return "Apple Watch Series 2 38"
-                case .appleWatchSeries242: return "Apple Watch Series 2 42"
+                case .appleWatchSeries0_38mm: return "Apple Watch (1st generation) 38mm"
+                case .appleWatchSeries0_42mm: return "Apple Watch (1st generation) 42mm"
+                case .appleWatchSeries1_38mm: return "Apple Watch Series 1 38mm"
+                case .appleWatchSeries1_42mm: return "Apple Watch Series 1 42mm"
+                case .appleWatchSeries2_38mm: return "Apple Watch Series 2 38mm"
+                case .appleWatchSeries2_42mm: return "Apple Watch Series 2 42mm"
+                case .appleWatchSeries3_38mm: return "Apple Watch Series 3 38mm"
+                case .appleWatchSeries3_42mm: return "Apple Watch Series 3 42mm"
+                case .appleWatchSeries4_40mm: return "Apple Watch Series 4 40mm"
+                case .appleWatchSeries4_44mm: return "Apple Watch Series 4 44mm"
 
                 case .appleTV1:     return "Apple TV 1"
                 case .appleTV2:     return "Apple TV 2"
                 case .appleTV3:     return "Apple TV 3"
                 case .appleTV4:     return "Apple TV 4"
+                case .appleTV4K:    return "Apple TV 4K"
 
                 case .iPodTouch1:   return "iPod Touch 1"
                 case .iPodTouch2:   return "iPod Touch 2"
                 case .iPodTouch3:   return "iPod Touch 3"
                 case .iPodTouch4:   return "iPod Touch 4"
                 case .iPodTouch5:   return "iPod Touch 5"
+                case .iPodTouch6:   return "iPod Touch 6"
 
                 case .unknown(let identifier): return identifier
             }
             // swiftlint:enable switch_case_on_newline
         }
     }
+}
 
+extension UIDevice.ModelType {
+    public enum Family: Equatable, CustomStringConvertible {
+        case phone
+        case pad
+        case watch
+        case tv
+        case carPlay
+        case pod
+        case simulator
+        case unknown
+
+        fileprivate init(device: UIDevice, identifier: String) {
+            if TARGET_IPHONE_SIMULATOR == 1 {
+                self = .simulator
+            }
+
+            if identifier.starts(with: "Watch") {
+                self = .watch
+            }
+
+            if identifier.starts(with: "iPod") {
+                self = .pod
+            }
+
+            switch device.userInterfaceIdiom {
+                case .phone:
+                    self = .phone
+                case .pad:
+                    self = .pad
+                case .tv:
+                    self = .tv
+                case .carPlay:
+                    self = .carPlay
+                case .unspecified:
+                    self = .unknown
+            }
+        }
+
+        public var description: String {
+            switch self {
+                case .phone:
+                    return "iPhone"
+                case .pad:
+                    return "iPad"
+                case .watch:
+                    return "Apple Watch"
+                case .tv:
+                    return "Apple TV"
+                case .carPlay:
+                    return "CarPlay"
+                case .pod:
+                    return "iPod"
+                case .simulator:
+                    return "Simulator"
+                case .unknown:
+                    return "Unknown"
+            }
+        }
+    }
+}
+
+extension UIDevice.ModelType {
+    /// The model identifier of the current device (e.g., `iPhone9,2`).
+    public var identifier: String {
+        return UIDevice.identifier
+    }
+
+    /// The family name of the current device (e.g., iPhone or Apple TV).
+    public var family: Family {
+        return Family(device: UIDevice.current, identifier: identifier)
+    }
+}
+
+extension UIDevice {
     /// A strongly typed model type of the current device.
     ///
     /// ```swift
@@ -268,13 +402,20 @@ extension UIDevice {
     /// if UIDevice.current.modelType == .iPhone7Plus {
     ///     ...
     /// }
+    ///
+    /// print(UIDevice.current.modelType.family) // iPhone
+    ///
+    /// // Compile-time safe conditional check
+    /// if UIDevice.current.modelType.family == .phone {
+    ///     ...
+    /// }
     /// ```
     public var modelType: ModelType {
-        return ModelType(modelNumber: modelNumber)
+        return ModelType(identifier: UIDevice.identifier)
     }
 
-    /// The model number of the current device (e.g., `iPhone9,2`).
-    public var modelNumber: String {
+    /// The model identifier of the current device (e.g., `iPhone9,2`).
+    fileprivate static var identifier: String {
         var systemInfo = utsname()
         uname(&systemInfo)
 
@@ -289,25 +430,5 @@ extension UIDevice {
         }
 
         return identifier
-    }
-
-    /// The family name of the current device (e.g., Apple TV or iPhone).
-    public var modelFamilyName: String {
-        if UIDevice.DeviceType.Simulator {
-            return "Simulator"
-        }
-
-        switch UIDevice.current.userInterfaceIdiom {
-            case .phone:
-                return "iPhone"
-            case .pad:
-                return "iPad"
-            case .tv:
-                return "Apple TV"
-            case .carPlay:
-                return "CarPlay"
-            case .unspecified:
-                return "Unknown"
-        }
     }
 }
