@@ -23,6 +23,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 public enum ImageSourceType {
     case url(String)
@@ -48,6 +49,30 @@ public enum ImageSourceType {
         }
 
         return true
+    }
+}
+
+extension ImageSourceType {
+    public enum CacheType {
+        /// The image wasn't available in the cache, but was downloaded from the web.
+        case none
+
+        /// The image was obtained from the disk cache.
+        case disk
+
+        /// The image was obtained from the memory cache.
+        case memory
+
+        init(_ type: SDImageCacheType) {
+            switch type {
+                case .none:
+                    self = .none
+                case .disk:
+                    self = .disk
+                case .memory:
+                    self = .memory
+            }
+        }
     }
 }
 

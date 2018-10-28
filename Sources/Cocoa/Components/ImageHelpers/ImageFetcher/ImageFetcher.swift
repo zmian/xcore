@@ -1,7 +1,7 @@
 //
-// UIDevice+Extensions.swift
+// ImageFetcher.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2018 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,23 +23,25 @@
 //
 
 import UIKit
-import LocalAuthentication
 
-extension UIDevice {
-    public struct SystemVersion {
-        public static let iOS8OrGreater = floor(NSFoundationVersionNumber) > floor(NSFoundationVersionNumber_iOS_7_0)
-        public static let iOS7OrLess = floor(NSFoundationVersionNumber) <= floor(NSFoundationVersionNumber_iOS_7_0)
+public protocol ImageFetcher {
+    typealias ResultBlock = (_ image: UIImage?, _ cacheType: ImageSourceType.CacheType) -> Void
 
-        public static func lessThanOrEqual(_ string: String) -> Bool {
-            return UIDevice.current.systemVersion.compare(string, options: .numeric) == .orderedAscending
-        }
+    /// Fetch the image.
+    ///
+    /// - Parameters:
+    ///   - image: The image requested to be fetched.
+    ///   - imageView: An optional property if this image will be set on the image view.
+    ///   - callback: The callback to let the handler know when the image is fetched.
+    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, callback: @escaping ResultBlock)
 
-        public static func greaterThanOrEqual(_ string: String) -> Bool {
-            return !lessThanOrEqual(string)
-        }
+    static func canHandle(_ image: ImageRepresentable) -> Bool
+}
 
-        public static func equal(_ string: String) -> Bool {
-            return UIDevice.current.systemVersion.compare(string, options: .numeric) == .orderedSame
-        }
+extension UIImage {
+    static var fetchers: [ImageFetcher.Type] = [RemoteImageFetcher.self, LocalImageFetcher.self]
+
+    public static func register(fetcher: ImageFetcher.Type) {
+        fetchers.append(fetcher)
     }
 }

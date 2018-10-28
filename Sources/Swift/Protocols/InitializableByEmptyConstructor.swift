@@ -1,7 +1,7 @@
 //
-// UIDevice+Extensions.swift
+// InitializableByEmptyConstructor.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2018 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,24 +22,6 @@
 // THE SOFTWARE.
 //
 
-import UIKit
-import LocalAuthentication
-
-extension UIDevice {
-    public struct SystemVersion {
-        public static let iOS8OrGreater = floor(NSFoundationVersionNumber) > floor(NSFoundationVersionNumber_iOS_7_0)
-        public static let iOS7OrLess = floor(NSFoundationVersionNumber) <= floor(NSFoundationVersionNumber_iOS_7_0)
-
-        public static func lessThanOrEqual(_ string: String) -> Bool {
-            return UIDevice.current.systemVersion.compare(string, options: .numeric) == .orderedAscending
-        }
-
-        public static func greaterThanOrEqual(_ string: String) -> Bool {
-            return !lessThanOrEqual(string)
-        }
-
-        public static func equal(_ string: String) -> Bool {
-            return UIDevice.current.systemVersion.compare(string, options: .numeric) == .orderedSame
-        }
-    }
+public protocol InitializableByEmptyConstructor: class {
+    init()
 }
