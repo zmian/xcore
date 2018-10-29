@@ -38,6 +38,83 @@ extension UICollectionView {
 }
 
 extension UICollectionView {
+    /// Returns all the cells of the collection view in the given visible section.
+    ///
+    /// - Parameter section: The index of the section for which you want a count of the items.
+    /// - Returns: The cell objects at the corresponding section or nil if the section is not visible or indexPath is out of range.
+    ///
+    /// - Note: Only the visible cells are returned.
+    open func cells(inSection section: Int) -> [UICollectionViewCell] {
+        guard section < numberOfSections else {
+            return []
+        }
+
+        var cells: [UICollectionViewCell] = []
+
+        for item in 0..<numberOfItems(inSection: section) {
+            guard let cell = cellForItem(at: IndexPath(item: item, section: section)) else {
+                continue
+            }
+
+            cells.append(cell)
+        }
+
+        return cells
+    }
+
+    /// Returns the first cell of the collection view that satisfies the given
+    /// predicate.
+    ///
+    /// The following example uses the `cell(where:)` method to find the first
+    /// cell of class type `PhotoCell`:
+    ///
+    /// ```swift
+    /// if let cell = collectionView.cell(where: { $0.isKind(of: PhotoCell.self) }) {
+    ///     print("Found cell of type PhotoCell.")
+    /// }
+    /// ```
+    ///
+    /// - Parameter predicate: A closure that takes a cell of the collection view as
+    ///   its argument and returns a boolean value indicating whether the
+    ///   element is a match.
+    /// - Returns: The first cell of the collection view that satisfies `predicate`,
+    ///   or `nil` if there is no cell that satisfies `predicate`.
+    ///
+    /// - Note: Only the visible cells are queried.
+    open func cell(where predicate: (UICollectionViewCell) -> Bool) -> UICollectionViewCell? {
+        for section in 0..<numberOfSections {
+            for item in 0..<numberOfItems(inSection: section) {
+                guard let cell = cellForItem(at: IndexPath(item: item, section: section)) else {
+                    continue
+                }
+
+                if predicate(cell) {
+                    return cell
+                }
+            }
+        }
+
+        return nil
+    }
+
+    /// Returns the first cell of the collection view that satisfies the given
+    /// type `T`.
+    ///
+    /// ```swift
+    /// if let cell = collectionView.cell(kind: PhotoCell.self) {
+    ///     print("Found cell of type PhotoCell.")
+    /// }
+    /// ```
+    ///
+    /// - Parameter kind: The kind of cell to find.
+    /// - Returns: The first cell of the collection view that satisfies the given,
+    ///   type or `nil` if there is no cell that satisfies the type `T`.
+    open func cell<T: UICollectionViewCell>(kind: T.Type) -> T? {
+        return cell(where: { $0.isKind(of: kind) }) as? T
+    }
+}
+
+extension UICollectionView {
     /// Selects the item at the specified index path and optionally scrolls it into view.
     ///
     /// If the `allowsSelection` property is `false`, calling this method has no effect.
