@@ -73,6 +73,10 @@ extension ImageSourceType {
                     self = .memory
             }
         }
+
+        var isRemote: Bool {
+            return self == .none
+        }
     }
 }
 
