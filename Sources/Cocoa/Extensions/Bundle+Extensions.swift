@@ -76,7 +76,7 @@ extension Bundle {
 
         return """
         \(systemName) \(UIDevice.current.systemVersion)
-        \(UIDevice.current.model.description)
+        \(UIDevice.current.modelType)
         Version \(versionNumber) (\(buildNumber))"
         """
     }

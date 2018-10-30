@@ -43,7 +43,7 @@ extension UIImageView {
                     image: image,
                     source: imageRepresentable,
                     transform: transform,
-                    alwaysAnimate: (alwaysAnimate || cacheType != .memory),
+                    alwaysAnimate: (alwaysAnimate || cacheType.isRemote),
                     animationDuration: animationDuration,
                     callback: callback
                 )
