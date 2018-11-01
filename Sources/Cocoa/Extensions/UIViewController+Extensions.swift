@@ -55,6 +55,16 @@ extension UIViewController {
         view.removeFromSuperview()
     }
 
+    /// A boolean value to determine whether the view controller is the root view controller of
+    /// `UINavigationController` or `UITabBarController`.
+    open var isRootViewController: Bool {
+        if let rootViewController = navigationController?.rootViewController {
+            return rootViewController == self
+        }
+
+        return tabBarController?.isRootViewController(self) ?? false
+    }
+
     /// A boolean value to determine whether the view controller is being popped or is showing a subview controller.
     open var isBeingPopped: Bool {
         if isMovingFromParent || isBeingDismissed {
@@ -151,6 +161,7 @@ extension UIViewController {
         static var preferredStatusBarStyle = "preferredStatusBarStyle"
         static var preferredStatusBarUpdateAnimation = "preferredStatusBarUpdateAnimation"
         static var prefersStatusBarHidden = "prefersStatusBarHidden"
+        static var isTabBarHidden = "isTabBarHidden"
         static var shouldAutorotate = "shouldAutorotate"
     }
 
@@ -292,5 +303,28 @@ extension UIViewController {
     open var isAutorotateEnabled: Bool? {
         get { return associatedObject(&AssociatedKey.shouldAutorotate) }
         set { setAssociatedObject(&AssociatedKey.shouldAutorotate, value: newValue) }
+    }
+
+    /// A convenience property to set `prefersTabBarHidden` without subclassing.
+    /// This is useful when you don't have access to the actual class source code and need
+    /// to show/hide tab bar.
+    ///
+    /// The default value is `nil` which means use the `prefersTabBarHidden` value.
+    ///
+    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
+    /// And, any of its view controllers can override this on as needed basis.
+    ///
+    /// ```swift
+    /// let vc = UIImagePickerController()
+    /// vc.isTabBarHidden = false
+    /// ```
+    open var isTabBarHidden: Bool? {
+        get { return associatedObject(&AssociatedKey.isTabBarHidden) }
+        set { setAssociatedObject(&AssociatedKey.isTabBarHidden, value: newValue) }
+    }
+
+    /// The default value is of property `isTabBarHidden` if it's set, otherwise, `false`.
+    @objc dynamic open var prefersTabBarHidden: Bool {
+        return isTabBarHidden ?? false
     }
 }
