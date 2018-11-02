@@ -28,7 +28,6 @@ opt_in_rules:
   - first_where
   - implicit_return
   - joined_default_parameter
-  - modifier_order
   - no_extension_access_modifier
   - overridden_super_call
   - redundant_nil_coalescing

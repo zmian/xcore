@@ -194,8 +194,8 @@ extension NSAttributedString {
 
         var image = UIImage(assetIdentifier: assetIdentifier).tintColor(imageTintColor)
 
-        if state == .highlighted, let highlightedImage = image.alpha(alpha) {
-            image = highlightedImage
+        if state == .highlighted {
+            image = image.alpha(alpha)
         }
 
         self.init(string: string + spacer, image: image, baselineOffset: direction.imageBaselineOffset, attributes: attributes)

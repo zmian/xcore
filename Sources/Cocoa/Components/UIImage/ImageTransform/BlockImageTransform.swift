@@ -1,7 +1,7 @@
 //
-// ImageFetcher.swift
+// BlockImageTransform.swift
 //
-// Copyright © 2018 Zeeshan Mian
+// Copyright © 2017 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,24 +24,14 @@
 
 import UIKit
 
-public protocol ImageFetcher {
-    typealias ResultBlock = (_ image: UIImage?, _ cacheType: ImageSourceType.CacheType) -> Void
+public final class BlockImageTransform: ImageTransform {
+    private let block: (_ image: UIImage, _ source: ImageRepresentable) -> UIImage
 
-    /// Fetch the image.
-    ///
-    /// - Parameters:
-    ///   - image: The image requested to be fetched.
-    ///   - imageView: An optional property if this image will be set on the image view.
-    ///   - callback: The callback to let the handler know when the image is fetched.
-    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, callback: @escaping ResultBlock)
+    public init(block: @escaping (_ image: UIImage, _ source: ImageRepresentable) -> UIImage) {
+        self.block = block
+    }
 
-    static func canHandle(_ image: ImageRepresentable) -> Bool
-}
-
-extension UIImage {
-    static var fetchers: [ImageFetcher.Type] = [RemoteImageFetcher.self, LocalImageFetcher.self]
-
-    public static func register(fetcher: ImageFetcher.Type) {
-        fetchers.append(fetcher)
+    public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
+        return block(image, source)
     }
 }

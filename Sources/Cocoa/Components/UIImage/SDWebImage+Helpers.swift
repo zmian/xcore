@@ -38,7 +38,7 @@ extension UIImageView {
 
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let strongSelf = self else { return }
-            GroupImageFetcher.fetch(imageRepresentable, in: strongSelf) { [weak self] image, cacheType in
+            ComposedImageFetcher.fetch(imageRepresentable, in: strongSelf) { [weak self] image, cacheType in
                 self?.postProcess(
                     image: image,
                     source: imageRepresentable,
@@ -92,7 +92,7 @@ extension UIImage {
         }
 
         DispatchQueue.global(qos: .userInteractive).async {
-            GroupImageFetcher.fetch(source, in: nil) { image, _ in
+            ComposedImageFetcher.fetch(source, in: nil) { image, _ in
                 guard let image = image else {
                     DispatchQueue.main.async {
                         callback(nil)
