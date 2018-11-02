@@ -1,5 +1,5 @@
 //
-// UIImageFilter.swift
+// ResizeImageTransform.swift
 //
 // Copyright © 2017 Zeeshan Mian
 //
@@ -24,66 +24,20 @@
 
 import UIKit
 
-public protocol ImageTransform {
-    /// An option to transform the image.
-    ///
-    /// - Parameters:
-    ///   - image: The newly fetched image you want to transform.
-    ///   - source: The original source from which the `image` was constructed.
-    /// - Returns: The transformed image.
-    ///
-    /// - Note: This method is always called on a background thread.
-    func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage
-}
-
-public final class BlockImageTransform: ImageTransform {
-    private let block: (_ image: UIImage, _ source: ImageRepresentable) -> UIImage
-
-    public init(block: @escaping (_ image: UIImage, _ source: ImageRepresentable) -> UIImage) {
-        self.block = block
-    }
-
-    public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
-        return block(image, source)
-    }
-}
-
-protocol UIImageFilterRepresentable {
-    var outputImage: UIImage { get }
-}
-
-final class ResizeFilter: UIImageFilterRepresentable {
-    private let inputImage: UIImage
+final class ResizeImageTransform: ImageTransform {
     private let newSize: CGSize
     private let scalingMode: UIImage.ScalingMode
 
-    init(_ image: UIImage, to newSize: CGSize, scalingMode: UIImage.ScalingMode = .aspectFill) {
-        self.inputImage = image
+    init(to newSize: CGSize, scalingMode: UIImage.ScalingMode = .aspectFill) {
         self.newSize = newSize
         self.scalingMode = scalingMode
     }
 
-    var outputImage: UIImage {
-        let drawRect = scalingMode.drawRect(newSize: newSize, and: inputImage.size)
-        UIGraphicsBeginImageContextWithOptions(newSize, false, UIScreen.main.scale)
-        inputImage.draw(in: drawRect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage!
-    }
-}
-
-final class TintColorFilter: UIImageFilterRepresentable {
-    private let inputImage: UIImage
-    private let tintColor: UIColor
-
-    init(_ image: UIImage, tintColor: UIColor) {
-        self.inputImage = image
-        self.tintColor = tintColor
-    }
-
-    var outputImage: UIImage {
-        return inputImage.tintColor(tintColor)
+    func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
+        let rect = scalingMode.rect(newSize: newSize, and: image.size)
+        return UIGraphicsImageRenderer(bounds: rect).image { _ in
+            image.draw(in: rect)
+        }
     }
 }
 
@@ -114,7 +68,7 @@ extension UIImage {
             }
         }
 
-        fileprivate func drawRect(newSize: CGSize, and otherSize: CGSize) -> CGRect {
+        fileprivate func rect(newSize: CGSize, and otherSize: CGSize) -> CGRect {
             guard self != .fill else {
                 return CGRect(origin: .zero, size: newSize)
             }
@@ -142,17 +96,13 @@ extension UIImage {
     ///
     /// - Returns: A new scaled image.
     public func scaled(to newSize: CGSize, scalingMode: ScalingMode = .aspectFill, tintColor: UIColor? = nil) -> UIImage {
-        let resizedImage = ResizeFilter(self, to: newSize, scalingMode: scalingMode).outputImage
-
-        let finalImage: UIImage
+        let transforms: ComposedImageTransform = [ResizeImageTransform(to: newSize, scalingMode: scalingMode)]
 
         if let tintColor = tintColor {
-            finalImage = TintColorFilter(resizedImage, tintColor: tintColor).outputImage
-        } else {
-            finalImage = resizedImage
+            transforms.add(TintColorImageTransform(tintColor: tintColor))
         }
 
-        return finalImage
+        return transforms.transform(self)
     }
 
     /// Scales an image to fit within a bounds of the given size.

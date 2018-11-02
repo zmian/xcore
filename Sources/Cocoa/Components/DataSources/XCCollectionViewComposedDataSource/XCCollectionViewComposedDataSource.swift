@@ -81,21 +81,13 @@ extension XCCollectionViewComposedDataSource {
     }
 }
 
-open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource {
+open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, ExpressibleByArrayLiteral {
     private let sizeCollectionView = XCFakeCollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var dataSourceIndex = DataSourceIndex<XCCollectionViewDataSource>()
 
-    open func index(for section: Int) -> DataSource<XCCollectionViewDataSource> {
-        let ds = dataSourceIndex[section]
-        return DataSource(dataSource: ds.dataSource, globalSection: section, localSection: ds.localSection)
-    }
-
     open var dataSources = [XCCollectionViewDataSource]() {
         didSet {
-            // Attach `sizeCollectionView` to all data sources.
-            dataSources.forEach {
-                $0._sizeCollectionView = sizeCollectionView
-            }
+            attachSizeCollectionView()
         }
     }
 
@@ -106,17 +98,37 @@ open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource {
     public init(dataSources: [XCCollectionViewDataSource]) {
         super.init()
         self.dataSources = dataSources
+        attachSizeCollectionView()
+    }
+
+    public required convenience init(arrayLiteral elements: XCCollectionViewDataSource...) {
+        self.init(dataSources: elements)
     }
 
     // MARK: Public Interface
 
-    open func append(dataSource: XCCollectionViewDataSource) {
+    /// Adds a new data source at the end of the array.
+    open func add(_ dataSource: XCCollectionViewDataSource) {
         dataSources.append(dataSource)
     }
 
-    open func remove(dataSource: XCCollectionViewDataSource) {
-        if let index = dataSources.index(of: dataSource) {
-            dataSources.remove(at: index)
+    open func remove(_ dataSource: XCCollectionViewDataSource) {
+        guard let index = dataSources.index(of: dataSource) else {
+            return
+        }
+
+        dataSources.remove(at: index)
+    }
+
+    open func index(for section: Int) -> DataSource<XCCollectionViewDataSource> {
+        let ds = dataSourceIndex[section]
+        return DataSource(dataSource: ds.dataSource, globalSection: section, localSection: ds.localSection)
+    }
+
+    private func attachSizeCollectionView() {
+        // Attach `sizeCollectionView` to all data sources.
+        dataSources.forEach {
+            $0._sizeCollectionView = sizeCollectionView
         }
     }
 }

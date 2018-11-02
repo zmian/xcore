@@ -166,7 +166,7 @@ extension Sequence where Iterator.Element == Double {
     /// ```
     public func runningSum() -> [Iterator.Element] {
         return self.reduce([]) { sums, element in
-            return sums + [element + (sums.last ?? 0)]
+            sums + [element + (sums.last ?? 0)]
         }
     }
 }

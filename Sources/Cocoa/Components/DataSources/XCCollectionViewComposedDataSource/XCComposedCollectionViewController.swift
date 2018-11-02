@@ -32,13 +32,11 @@ open class XCComposedCollectionViewController: UIViewController {
     /// However, the layout must be set before accessing `collectionView` to ensure that it is applied correctly.
     /// The default value is `UICollectionViewFlowLayout`.
     open var layout: UICollectionViewLayout = {
-        let layout = UICollectionViewFlowLayout()
-        return layout
+        UICollectionViewFlowLayout()
     }()
 
     open lazy var collectionView: UICollectionView = {
-        let collectionView = XCCollectionView(frame: .zero, collectionViewLayout: self.layout)
-        return collectionView
+        XCCollectionView(frame: .zero, collectionViewLayout: self.layout)
     }()
 
     /// An option to determine whether the `scrollView`'s `top` and `bottom` is constrained

@@ -25,7 +25,7 @@
 
 import UIKit
 
-open class XCTableViewComposedDataSource: XCTableViewDataSource {
+open class XCTableViewComposedDataSource: XCTableViewDataSource, ExpressibleByArrayLiteral {
     private var dataSourceIndex = DataSourceIndex<XCTableViewDataSource>()
 
     open var dataSources: [XCTableViewDataSource] = []
@@ -39,16 +39,23 @@ open class XCTableViewComposedDataSource: XCTableViewDataSource {
         self.dataSources = dataSources
     }
 
+    public required convenience init(arrayLiteral elements: XCTableViewDataSource...) {
+        self.init(dataSources: elements)
+    }
+
     // MARK: Public Interface
 
-    open func append(dataSource: XCTableViewDataSource) {
+    /// Adds a new data source at the end of the array.
+    open func add(_ dataSource: XCTableViewDataSource) {
         dataSources.append(dataSource)
     }
 
-    open func remove(dataSource: XCTableViewDataSource) {
-        if let index = dataSources.index(of: dataSource) {
-            dataSources.remove(at: index)
+    open func remove(_ dataSource: XCTableViewDataSource) {
+        guard let index = dataSources.index(of: dataSource) else {
+            return
         }
+
+        dataSources.remove(at: index)
     }
 }
 

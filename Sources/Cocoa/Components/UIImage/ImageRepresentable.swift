@@ -137,9 +137,7 @@ extension UIImageView {
     public func setImage(_ image: ImageRepresentable?, tintColor: UIColor, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
         setImage(
             image,
-            transform: BlockImageTransform { (image, source) -> UIImage in
-                return image.tintColor(tintColor)
-            },
+            transform: TintColorImageTransform(tintColor: tintColor),
             alwaysAnimate: alwaysAnimate,
             animationDuration: animationDuration,
             callback: callback
@@ -187,9 +185,7 @@ extension UIImageView {
         setImage(
             image,
             defaultImage: defaultImage,
-            transform: BlockImageTransform { (image, source) -> UIImage in
-                return image.tintColor(tintColor)
-            },
+            transform: TintColorImageTransform(tintColor: tintColor),
             alwaysAnimate: alwaysAnimate,
             animationDuration: animationDuration,
             callback: callback

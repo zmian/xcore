@@ -24,6 +24,27 @@
 
 import UIKit
 
+// MARK: CGFloat - Extensions
+
+/// The value of `π` as a `CGFloat`.
+public let π = CGFloat.pi
+
+extension CGFloat {
+    /// A convenience method to convert an angle from degrees to radians.
+    ///
+    /// - Returns: `self` value in radians.
+    public func degreesToRadians() -> CGFloat {
+        return π * self / 180
+    }
+
+    /// A convenience method to convert an angle from radians to degrees.
+    ///
+    /// - Returns: `self` value in degrees.
+    public func radiansToDegrees() -> CGFloat {
+        return self * 180 / π
+    }
+}
+
 // MARK: UIEdgeInsets - ExpressibleByFloatLiteral
 
 extension UIEdgeInsets: ExpressibleByFloatLiteral {
@@ -174,27 +195,6 @@ extension UIEdgeInsets {
     }
 }
 
-// MARK: CGFloat - Extensions
-
-/// The value of `π` as a `CGFloat`.
-public let π = CGFloat.pi
-
-extension CGFloat {
-    /// A convenience method to convert an angle from degrees to radians.
-    ///
-    /// - Returns: `self` value in radians.
-    public func degreesToRadians() -> CGFloat {
-        return π * self / 180
-    }
-
-    /// A convenience method to convert an angle from radians to degrees.
-    ///
-    /// - Returns: `self` value in degrees.
-    public func radiansToDegrees() -> CGFloat {
-        return self * 180 / π
-    }
-}
-
 // MARK: CGSize - ExpressibleByFloatLiteral
 
 extension CGSize: ExpressibleByFloatLiteral {
@@ -221,7 +221,7 @@ extension CGSize {
     }
 
     public static func +=(lhs: inout CGSize, rhs: CGSize) {
-        lhs.width  += rhs.width
+        lhs.width += rhs.width
         lhs.height += rhs.height
     }
 
@@ -240,7 +240,7 @@ extension CGSize {
 
 extension CGSize {
     public static func -=(lhs: inout CGSize, rhs: CGSize) {
-        lhs.width  -= rhs.width
+        lhs.width -= rhs.width
         lhs.height -= rhs.height
     }
 
@@ -254,6 +254,33 @@ extension CGSize {
 
     public static func -(lhs: CGSize, rhs: CGFloat) -> CGSize {
         return CGSize(width: lhs.width - rhs, height: lhs.height - rhs)
+    }
+}
+
+extension CGSize {
+    public static func *=(lhs: inout CGSize, rhs: CGSize) {
+        lhs.width *= rhs.width
+        lhs.height *= rhs.height
+    }
+
+    public static func *=(lhs: inout CGSize, rhs: CGFloat) {
+        lhs = lhs * rhs
+    }
+
+    public static func *(lhs: CGSize, rhs: CGSize) -> CGSize {
+        return CGSize(width: lhs.width * rhs.width, height: lhs.height * rhs.height)
+    }
+
+    public static func *(lhs: CGSize, rhs: CGFloat) -> CGSize {
+        return CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
+    }
+}
+
+// MARK: CGRect - Extensions
+
+extension CGRect {
+    public init(_ size: CGSize) {
+        self = CGRect(origin: .zero, size: size)
     }
 }
 

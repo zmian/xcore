@@ -1,5 +1,5 @@
 //
-// GroupImageFetcher.swift
+// ImageFetcher.swift
 //
 // Copyright © 2018 Zeeshan Mian
 //
@@ -24,20 +24,16 @@
 
 import UIKit
 
-final class GroupImageFetcher: ImageFetcher {
-    static func canHandle(_ image: ImageRepresentable) -> Bool {
-        return true
-    }
+public protocol ImageFetcher {
+    typealias ResultBlock = (_ image: UIImage?, _ cacheType: ImageSourceType.CacheType) -> Void
 
-    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, callback: @escaping ResultBlock) {
-        // 1. Reverse fetchers so the third-party fecthers are always prioritized over built-in ones.
-        // 2. Find the first one that can handle the request.
-        // 3. Fetch the requested image.
-        guard let fetcher = UIImage.fetchers.reversed().first(where: { $0.canHandle(image) }) else {
-            callback(nil, .none)
-            return
-        }
+    static func canHandle(_ image: ImageRepresentable) -> Bool
 
-        fetcher.fetch(image, in: imageView, callback: callback)
-    }
+    /// Fetch the image.
+    ///
+    /// - Parameters:
+    ///   - image: The image requested to be fetched.
+    ///   - imageView: An optional property if this image will be set on the image view.
+    ///   - callback: The callback to let the handler know when the image is fetched.
+    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, callback: @escaping ResultBlock)
 }
