@@ -115,6 +115,46 @@ extension UICollectionView {
 }
 
 extension UICollectionView {
+    private struct AssociatedKey {
+        static var cellLookupTimers = "cellLookupTimers"
+    }
+
+    private var cellLookupTimers: [String: Timer] {
+        get { return associatedObject(&AssociatedKey.cellLookupTimers, default: [String: Timer]()) }
+        set { setAssociatedObject(&AssociatedKey.cellLookupTimers, value: newValue) }
+    }
+
+    /// Use this method to wait for the first cell to load that that satisfies the given
+    /// type `T`.
+    ///
+    /// ```swift
+    /// collectionView.cell(kind: PhotoCell.self) { cell in
+    ///     print("PhotoCell is available now.")
+    /// }
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - kind: The kind of cell to find.
+    ///   - block: The block to invoke when the first cell of the collection view that
+    ///     satisfies the given type becomes available.
+    ///
+    /// - Note: The block will be called only once when the cell is avaiable.
+    public func cell<T: UICollectionViewCell>(kind: T.Type, _ block: @escaping (T) -> Void) {
+        let key = NSStringFromClass(kind)
+
+        if let timer = cellLookupTimers[key] {
+            timer.invalidate()
+        }
+
+        cellLookupTimers[key] = Timer.schedule(repeatInterval: 0.1) { [weak self] in
+            guard let strongSelf = self, let cell = strongSelf.cell(kind: kind) else { return }
+            block(cell)
+            strongSelf.cellLookupTimers[key]?.invalidate()
+        }
+    }
+}
+
+extension UICollectionView {
     /// Selects the item at the specified index path and optionally scrolls it into view.
     ///
     /// If the `allowsSelection` property is `false`, calling this method has no effect.
