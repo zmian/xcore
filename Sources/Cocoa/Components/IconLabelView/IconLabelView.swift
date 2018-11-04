@@ -34,7 +34,6 @@ open class IconLabelView: XCView {
 
     private lazy var stackView = UIStackView(arrangedSubviews: [
         imageViewContainer,
-        textImageSpacerView,
         titleLabel
     ]).apply {
         $0.isLayoutMarginsRelativeArrangement = true
@@ -43,8 +42,6 @@ open class IconLabelView: XCView {
         $0.spacing = .minimumPadding / 2
     }
 
-    private let textImageSpacerView = IntrinsicContentSizeView()
-
     public lazy var imageViewContainer = UIView().apply {
         $0.backgroundColor = imageBackgroundColor
         $0.cornerRadius = imageCornerRadius
@@ -52,7 +49,7 @@ open class IconLabelView: XCView {
     }
 
     public let imageView = UIImageView().apply {
-        $0.contentMode = .scaleAspectFill
+        $0.isContentModeAutomaticallyAdjusted = true
         $0.enableSmoothScaling()
     }
 
@@ -81,7 +78,7 @@ open class IconLabelView: XCView {
     }
 
     /// The default size is `55`.
-    @objc open dynamic var imageSize = CGSize(55) {
+    @objc open dynamic var imageSize: CGSize = 55 {
         didSet {
             imageSizeConstraints.update(from: imageSize)
         }
@@ -159,10 +156,8 @@ open class IconLabelView: XCView {
 
             if isImageViewPrepended {
                 stackView.moveArrangedSubview(imageViewContainer, at: 0)
-                stackView.moveArrangedSubview(textImageSpacerView, at: 1)
             } else {
-                var lastIndex: Int { return stackView.arrangedSubviews.count - 1 }
-                stackView.moveArrangedSubview(textImageSpacerView, at: lastIndex)
+                let lastIndex = stackView.arrangedSubviews.count - 1
                 stackView.moveArrangedSubview(imageViewContainer, at: lastIndex)
             }
 
@@ -181,10 +176,8 @@ open class IconLabelView: XCView {
             } else {
                 if isImageViewPrepended {
                     stackView.insertArrangedSubview(imageViewContainer, at: 0)
-                    stackView.moveArrangedSubview(textImageSpacerView, at: 1)
                 } else {
-                    var lastIndex: Int { return stackView.arrangedSubviews.count - 1 }
-                    stackView.moveArrangedSubview(textImageSpacerView, at: lastIndex)
+                    let lastIndex = stackView.arrangedSubviews.count - 1
                     stackView.insertArrangedSubview(imageViewContainer, at: lastIndex)
                 }
             }
@@ -254,16 +247,20 @@ open class IconLabelView: XCView {
 // MARK: Configure
 
 extension IconLabelView {
-    open func configure(_ image: ImageRepresentable? = nil, title: StringRepresentable?, subtitle: StringRepresentable? = nil) {
+    open func configure(_ image: ImageRepresentable? = nil, transform: ImageTransform? = nil, title: StringRepresentable?, subtitle: StringRepresentable? = nil) {
         isSubtitleLabelHidden = subtitle == nil
         isImageViewHidden = image == nil
-        imageView.setImage(image)
+        imageView.setImage(image, transform: transform)
         titleLabel.setText(title)
         subtitleLabel.setText(subtitle)
     }
 
     open func configure(_ data: ImageTitleDisplayable) {
         configure(data.image, title: data.title, subtitle: data.subtitle)
+    }
+
+    open func clear() {
+        configure(title: nil)
     }
 }
 
@@ -314,7 +311,13 @@ extension IconLabelView {
     }
 
     private func updateTextImageSpacingIfNeeded() {
-        let spacing = isImageViewHidden ? 0 : textImageSpacing
-        textImageSpacerView.contentSize = CGSize(width: 0, height: spacing)
+        guard
+            stackView.arrangedSubviews.count == 2,
+            let firstView = stackView.arrangedSubviews.first
+        else {
+            return
+        }
+
+        stackView.setCustomSpacing(textImageSpacing, after: firstView)
     }
 }

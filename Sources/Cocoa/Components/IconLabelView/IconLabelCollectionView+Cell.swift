@@ -64,7 +64,7 @@ extension IconLabelCollectionView {
             contentView.addSubview(deleteButton)
             let buttonSize: CGFloat = 44
             let offset = iconLabelView.isImageViewRounded ? buttonSize / 4 : buttonSize / 2
-            NSLayoutConstraint.size(deleteButton, size: CGSize(width: buttonSize, height: buttonSize)).activate()
+            NSLayoutConstraint.size(deleteButton, size: CGSize(buttonSize)).activate()
             NSLayoutConstraint(item: deleteButton, attribute: .top, toItem: contentView, constant: -offset).activate()
             NSLayoutConstraint(item: contentView, attribute: .trailing, toItem: deleteButton, constant: -offset).activate()
         }
