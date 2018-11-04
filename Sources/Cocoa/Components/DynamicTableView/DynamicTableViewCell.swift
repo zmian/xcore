@@ -52,7 +52,7 @@ open class DynamicTableViewCell: XCTableViewCell {
     }
 
     /// The default size is `55`.
-    @objc open dynamic var imageSize = CGSize(55) {
+    @objc open dynamic var imageSize: CGSize = 55 {
         didSet {
             updateImageSizeIfNeeded()
         }
