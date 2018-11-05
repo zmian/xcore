@@ -311,7 +311,7 @@ open class ReorderTableView: UITableView {
             }, completion: { [weak self] _ in
                 guard let strongSelf = self else { return }
 
-                draggingView.setHiddenAnimated(true, duration: 0.3) {
+                draggingView.setHidden(true, animated: true, duration: 0.3) {
                     draggingView.removeFromSuperview()
                 }
 

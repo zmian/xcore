@@ -68,14 +68,21 @@ import UIKit
         })
     }
 
-    open func setHiddenAnimated(_ hide: Bool, duration: TimeInterval = .normal, _ completion: (() -> Void)? = nil) {
+    open func setHidden(_ hide: Bool, animated: Bool, duration: TimeInterval = .normal, _ completion: (() -> Void)? = nil) {
+        guard animated else {
+            isHidden = hide
+            completion?()
+            return
+        }
+
         UIView.transition(
             with: self,
             duration: duration,
-            options: .transitionCrossDissolve,
+            options: [.beginFromCurrentState, .transitionCrossDissolve],
             animations: {
                 self.isHidden = hide
-            }, completion: { _ in
+            },
+            completion: { _ in
                 completion?()
             }
         )
