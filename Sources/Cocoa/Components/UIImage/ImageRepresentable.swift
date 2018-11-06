@@ -154,7 +154,7 @@ extension UIImageView {
     ///                        The image will only fade in when fetched from a remote url and not in memory cache.
     ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0, the image is set without animation. The default value is `0.5`.
     ///   - callback:          A block to invoke when finished setting the image.
-    public func setImage(_ image: ImageRepresentable?, defaultImage: ImageRepresentable, transform: ImageTransform? = nil, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
+    public func setImage(_ image: ImageRepresentable?, default defaultImage: ImageRepresentable, transform: ImageTransform? = nil, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
         guard let image = image else {
             setImage(defaultImage, transform: transform, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
             return
@@ -181,10 +181,10 @@ extension UIImageView {
     ///                        The image will only fade in when fetched from a remote url and not in memory cache.
     ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0, the image is set without animation. The default value is `0.5`.
     ///   - callback:          A block to invoke when finished setting the image.
-    public func setImage(_ image: ImageRepresentable?, defaultImage: ImageRepresentable, tintColor: UIColor, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
+    public func setImage(_ image: ImageRepresentable?, default defaultImage: ImageRepresentable, tintColor: UIColor, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
         setImage(
             image,
-            defaultImage: defaultImage,
+            default: defaultImage,
             transform: TintColorImageTransform(tintColor: tintColor),
             alwaysAnimate: alwaysAnimate,
             animationDuration: animationDuration,
