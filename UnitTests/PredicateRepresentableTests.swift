@@ -1,5 +1,5 @@
 //
-// PredicateQueryTests.swift
+// PredicateRepresentableTests.swift
 //
 // Copyright © 2017 Zeeshan Mian
 //
@@ -25,7 +25,7 @@
 import XCTest
 @testable import Xcore
 
-final class PredicateQueryTests: TestCase {
+final class PredicateRepresentableTests: TestCase {
     private typealias TestData<OutputType> = (input: String, output: OutputType)
 
     private func testData(comparator: String) -> [TestData<String>] {
@@ -33,14 +33,14 @@ final class PredicateQueryTests: TestCase {
             ("Lowe's", "identifier \(comparator) \"Lowe\'s\""),
             ("Lowes", "identifier \(comparator) \"Lowes\""),
             ("görsel", "identifier \(comparator) \"görsel\""),
-            ("Can't Do i\t", "identifier \(comparator) \"Can\'t Do i\t\"")
+            ("Can't Do it", "identifier \(comparator) \"Can\'t Do it\"")
         ]
     }
 
     func testEqual() {
         for item in testData(comparator: "==") {
-            let testNative = NSPredicate(format: "identifier == %@", item.input).predicateFormat
-            let testEqual = PredicateQuery(field: "identifier", equal: item.input).predicate.predicateFormat
+            let testNative = NSPredicate(format: "%K == %@", "identifier", item.input).predicateFormat
+            let testEqual = NSPredicate(field: "identifier", equal: item.input).predicateFormat
             expect(testNative, ==, item.output)
             expect(testEqual, ==, item.output)
         }
@@ -49,7 +49,7 @@ final class PredicateQueryTests: TestCase {
     func testNotEqual() {
         for item in testData(comparator: "!=") {
             let testNative = NSPredicate(format: "identifier != %@", item.input).predicateFormat
-            let testNotEqual = PredicateQuery(field: "identifier", notEqual: item.input).predicate.predicateFormat
+            let testNotEqual = NSPredicate(field: "identifier", notEqual: item.input).predicateFormat
             expect(testNative, ==, item.output)
             expect(testNotEqual, ==, item.output)
         }
@@ -59,7 +59,7 @@ final class PredicateQueryTests: TestCase {
         let data = ("Can't Do i\t", "Lowe's")
         let expectedOutput = "identifier BETWEEN {\"Can\'t Do i\t\", \"Lowe\'s\"}"
 
-        let result = PredicateQuery(field: "identifier", between: data.0, and: data.1).predicate.predicateFormat
+        let result = NSPredicate(field: "identifier", between: data.0, and: data.1).predicateFormat
         expect(result, ==, expectedOutput)
     }
 }

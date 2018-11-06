@@ -1,0 +1,93 @@
+//
+// PredicateRepresentable.swift
+//
+// Copyright © 2016 Zeeshan Mian
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+
+import Foundation
+
+extension NSPredicate: PredicateRepresentable {}
+
+public protocol PredicateRepresentable {
+    init(format predicateFormat: String, argumentArray arguments: [Any]?)
+}
+
+extension PredicateRepresentable {
+    public init(field: String, equal value: Any, caseInsensitive: Bool = false) {
+        let caseInsensitiveModifier = caseInsensitive ? "[c]" : ""
+        self.init(format: "%K ==\(caseInsensitiveModifier) %@", argumentArray: [field, value])
+    }
+
+    public init(field: String, notEqual value: Any, caseInsensitive: Bool = false) {
+        let caseInsensitiveModifier = caseInsensitive ? "[c]" : ""
+        self.init(format: "%K !=\(caseInsensitiveModifier) %@", argumentArray: [field, value])
+    }
+
+    public init(field: String, any value: Any) {
+        self.init(format: "ANY %K = %@", argumentArray: [field, value])
+    }
+
+    public init(field: String, lessThan value: Any) {
+        self.init(format: "%K < %@", argumentArray: [field, value])
+    }
+
+    public init(field: String, lessThanOrEqual value: Any) {
+        self.init(format: "%K <= %@", argumentArray: [field, value])
+    }
+
+    public init(field: String, greaterThan value: Any) {
+        self.init(format: "%K > %@", argumentArray: [field, value])
+    }
+
+    public init(field: String, greaterThanOrEqual value: Any) {
+        self.init(format: "%K >= %@", argumentArray: [field, value])
+    }
+
+    public init(field: String, beginsWith value: Any) {
+        self.init(format: "%K BEGINSWITH[c] %@", argumentArray: [field, value])
+    }
+
+    public init(field: String, endsWith value: Any) {
+        self.init(format: "%K ENDSWITH[c] %@", argumentArray: [field, value])
+    }
+
+    public init(field: String, contains value: Any) {
+        self.init(format: "%K CONTAINS[c] %@", argumentArray: [field, value])
+    }
+
+    public init(field: String, like value: Any) {
+        self.init(format: "%K LIKE[c] %@", argumentArray: [field, value])
+    }
+
+    public init(field: String, between this: Any, and that: Any) {
+        self.init(format: "%K BETWEEN {%@, %@}", argumentArray: [field, this, that])
+    }
+
+    public init(field: String, in values: [Any], caseInsensitive: Bool = false) {
+        let caseInsensitiveModifier = caseInsensitive ? "[c]" : ""
+        self.init(format: "%K IN\(caseInsensitiveModifier) %@", argumentArray: [field, values])
+    }
+
+    public init(field: String, notIn values: [Any], caseInsensitive: Bool = false) {
+        let caseInsensitiveModifier = caseInsensitive ? "[c]" : ""
+        self.init(format: "NOT (%K IN\(caseInsensitiveModifier) %@)", argumentArray: [field, values])
+    }
+}
