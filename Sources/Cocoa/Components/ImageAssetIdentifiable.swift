@@ -57,15 +57,15 @@ extension UIImageView {
 }
 
 extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
-    public init<AssetIdentifier: ImageAssetIdentifiable>(assetIdentifier: AssetIdentifier, accessibilityIdentifier: String? = nil, handler: ((_ sender: Self) -> Void)? = nil) {
-        self.init(image: UIImage(assetIdentifier: assetIdentifier), handler: handler)
+    public init<AssetIdentifier: ImageAssetIdentifiable>(assetIdentifier: AssetIdentifier, accessibilityIdentifier: String? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
+        self.init(image: UIImage(assetIdentifier: assetIdentifier), handler)
         self.accessibilityIdentifier = accessibilityIdentifier
     }
 }
 
 extension ControlTargetActionBlockRepresentable where Self: UIButton {
-    public init<AssetIdentifier: ImageAssetIdentifiable>(assetIdentifier: AssetIdentifier, accessibilityIdentifier: String? = nil, handler: ((_ sender: Self) -> Void)? = nil) {
-        self.init(image: UIImage(assetIdentifier: assetIdentifier), handler: handler)
+    public init<AssetIdentifier: ImageAssetIdentifiable>(assetIdentifier: AssetIdentifier, accessibilityIdentifier: String? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
+        self.init(image: UIImage(assetIdentifier: assetIdentifier), handler)
         self.accessibilityIdentifier = accessibilityIdentifier
     }
 }
