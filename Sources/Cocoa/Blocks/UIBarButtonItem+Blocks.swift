@@ -76,17 +76,17 @@ extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
         return actionHandler != nil
     }
 
-    public init(image: UIImage?, landscapeImagePhone: UIImage? = nil, style: UIBarButtonItem.Style = .plain, handler: ((_ sender: Self) -> Void)? = nil) {
+    public init(image: UIImage?, landscapeImagePhone: UIImage? = nil, style: UIBarButtonItem.Style = .plain, _ handler: ((_ sender: Self) -> Void)? = nil) {
         self.init(image: image, landscapeImagePhone: landscapeImagePhone, style: style, target: nil, action: nil)
         setActionHandler(handler)
     }
 
-    public init(title: String?, style: UIBarButtonItem.Style = .plain, handler: ((_ sender: Self) -> Void)? = nil) {
+    public init(title: String?, style: UIBarButtonItem.Style = .plain, _ handler: ((_ sender: Self) -> Void)? = nil) {
         self.init(title: title, style: style, target: nil, action: nil)
         setActionHandler(handler)
     }
 
-    public init(barButtonSystemItem systemItem: UIBarButtonItem.SystemItem, handler: ((_ sender: Self) -> Void)? = nil) {
+    public init(barButtonSystemItem systemItem: UIBarButtonItem.SystemItem, _ handler: ((_ sender: Self) -> Void)? = nil) {
         self.init(barButtonSystemItem: systemItem, target: nil, action: nil)
         setActionHandler(handler)
     }

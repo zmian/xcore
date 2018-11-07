@@ -81,6 +81,7 @@ extension UIButton {
         static var heightConstraint = "heightConstraint"
         static var initialText = "initialText"
         static var isHeightSetAutomatically = "isHeightSetAutomatically"
+        static var suppressHeightSetAutomaticallyDidSet = "suppressHeightSetAutomaticallyDidSet"
     }
 
     private typealias StateType = UInt
@@ -126,8 +127,14 @@ extension UIButton {
         get { return associatedObject(&AssociatedKey.isHeightSetAutomatically, default: UIButton.defaultAppearance.isHeightSetAutomatically) }
         set {
             setAssociatedObject(&AssociatedKey.isHeightSetAutomatically, value: newValue)
+            guard !suppressHeightSetAutomaticallyDidSet else { return }
             updateHeightConstraintIfNeeded()
         }
+    }
+
+    private var suppressHeightSetAutomaticallyDidSet: Bool {
+        get { return associatedObject(&AssociatedKey.suppressHeightSetAutomaticallyDidSet, default: false) }
+        set { setAssociatedObject(&AssociatedKey.suppressHeightSetAutomaticallyDidSet, value: newValue) }
     }
 
     private var heightConstraint: NSLayoutConstraint? {
@@ -180,10 +187,12 @@ extension UIButton {
     }
 
     private func updateStyleIfNeeded() {
+        suppressHeightSetAutomaticallyDidSet = true
         contentEdgeInsets = UIEdgeInsets(horizontal: .defaultPadding)
         prepareForReuse()
         style.configure(self)
         updateHeightConstraintIfNeeded()
+        suppressHeightSetAutomaticallyDidSet = false
     }
 
     @objc open func prepareForReuse() {
@@ -277,9 +286,9 @@ extension UIButton {
     }
 }
 
-extension UIButton {
-    // MARK: Convenience Aliases
+// MARK: Convenience Aliases
 
+extension UIButton {
     /// The image used for the normal state.
     open var image: UIImage? {
         get { return image(for: .normal) }
@@ -370,62 +379,11 @@ extension UIButton {
     ///
     /// - Parameters:
     ///   - named:  The remote image url or local image name to use for the specified state.
-    ///   - bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the `main` bundle.
     ///   - state:  The state that uses the specified image.
     public func image(_ named: ImageRepresentable, for state: UIControl.State) {
         UIImage.remoteOrLocalImage(named) { [weak self] image in
             self?.setImage(image, for: state)
         }
-    }
-
-    // MARK: Hit Area
-
-    /// Increase button touch area.
-    ///
-    /// ```swift
-    /// let button = UIButton()
-    /// button.touchAreaEdgeInsets = UIEdgeInsets(top: -10, left: -10, bottom: -10, right: -10)
-    /// ```
-    /// See: http://stackoverflow.com/a/32002161
-    @objc open var touchAreaEdgeInsets: UIEdgeInsets {
-        get {
-            guard let value: NSValue = associatedObject(&AssociatedKey.touchAreaEdgeInsets) else {
-                return .zero
-            }
-
-            var edgeInsets: UIEdgeInsets = .zero
-            value.getValue(&edgeInsets)
-            return edgeInsets
-        }
-        set {
-            var newValueCopy = newValue
-            let objCType = NSValue(uiEdgeInsets: .zero).objCType
-            let value = NSValue(&newValueCopy, withObjCType: objCType)
-            setAssociatedObject(&AssociatedKey.touchAreaEdgeInsets, value: value)
-        }
-    }
-
-    @objc open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        if touchAreaEdgeInsets == .zero || !isUserInteractionEnabled || !isEnabled || isHidden {
-            return super.point(inside: point, with: event)
-        }
-
-        let hitFrame = bounds.inset(by: touchAreaEdgeInsets)
-        return hitFrame.contains(point)
-    }
-
-    // Increase button touch area to be 44 points
-    // See: http://stackoverflow.com/a/27683614
-    @objc open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        if !isUserInteractionEnabled || !isEnabled || isHidden {
-            return super.hitTest(point, with: event)
-        }
-
-        let buttonSize = frame.size
-        let widthToAdd = (44 - buttonSize.width  > 0) ? 44 - buttonSize.width  : 0
-        let heightToAdd = (44 - buttonSize.height > 0) ? 44 - buttonSize.height : 0
-        let largerFrame = CGRect(x: 0 - (widthToAdd / 2), y: 0 - (heightToAdd / 2), width: buttonSize.width + widthToAdd, height: buttonSize.height + heightToAdd)
-        return largerFrame.contains(point) ? self : nil
     }
 
     // MARK: Underline
@@ -455,7 +413,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
     ///   - highlightedImage: The image to use for the highlighted state.
     ///   - handler:          The block to invoke when the button is tapped.
     /// - Returns: A newly created button.
-    public init(image: UIImage?, highlightedImage: UIImage? = nil, handler: ((_ sender: Self) -> Void)? = nil) {
+    public init(image: UIImage?, highlightedImage: UIImage? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
         self.init(type: .custom)
         setImage(image, for: .normal)
         setImage(highlightedImage, for: .highlighted)
@@ -470,11 +428,12 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
     ///
     /// - Parameters:
     ///   - imageNamed: A string to identify a local or a remote image.
-    ///   - handler:    The block to invoke when the button is tapped.
+    ///   - transform: An optional property to transform the image before setting the image.
+    ///   - handler: The block to invoke when the button is tapped.
     /// - Returns: A newly created button.
-    public init(imageNamed: String, handler: ((_ sender: Self) -> Void)? = nil) {
-        self.init(image: nil, handler: handler)
-        imageView?.setImage(imageNamed) { [weak self] image in
+    public init(imageNamed: ImageRepresentable, transform: ImageTransform? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
+        self.init(image: nil, handler)
+        imageView?.setImage(imageNamed, transform: transform) { [weak self] image in
             self?.setImage(image, for: .normal)
         }
     }
@@ -539,6 +498,58 @@ extension UIButton {
     }
 }
 
+// MARK: Hit Area
+
+extension UIButton {
+    /// Increase button touch area.
+    ///
+    /// ```swift
+    /// let button = UIButton()
+    /// button.touchAreaEdgeInsets = UIEdgeInsets(-10)
+    /// ```
+    /// See: http://stackoverflow.com/a/32002161
+    @objc open var touchAreaEdgeInsets: UIEdgeInsets {
+        get {
+            guard let value: NSValue = associatedObject(&AssociatedKey.touchAreaEdgeInsets) else {
+                return .zero
+            }
+
+            var edgeInsets: UIEdgeInsets = .zero
+            value.getValue(&edgeInsets)
+            return edgeInsets
+        }
+        set {
+            var newValueCopy = newValue
+            let objCType = NSValue(uiEdgeInsets: .zero).objCType
+            let value = NSValue(&newValueCopy, withObjCType: objCType)
+            setAssociatedObject(&AssociatedKey.touchAreaEdgeInsets, value: value)
+        }
+    }
+
+    @objc open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        if touchAreaEdgeInsets == .zero || !isUserInteractionEnabled || !isEnabled || isHidden {
+            return super.point(inside: point, with: event)
+        }
+
+        let hitFrame = bounds.inset(by: touchAreaEdgeInsets)
+        return hitFrame.contains(point)
+    }
+
+    // Increase button touch area to be 44 points
+    // See: http://stackoverflow.com/a/27683614
+    @objc open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if !isUserInteractionEnabled || !isEnabled || isHidden {
+            return super.hitTest(point, with: event)
+        }
+
+        let buttonSize = frame.size
+        let widthToAdd = (44 - buttonSize.width  > 0) ? 44 - buttonSize.width  : 0
+        let heightToAdd = (44 - buttonSize.height > 0) ? 44 - buttonSize.height : 0
+        let largerFrame = CGRect(x: 0 - (widthToAdd / 2), y: 0 - (heightToAdd / 2), width: buttonSize.width + widthToAdd, height: buttonSize.height + heightToAdd)
+        return largerFrame.contains(point) ? self : nil
+    }
+}
+
 // MARK: Lifecycle Events
 
 extension UIButton {
@@ -573,6 +584,7 @@ extension UIButton {
         let state: UIControl.State = isEnabled ? .normal : .disabled
         changeBackgroundColor(to: state)
         changeBorderColor(to: state)
+        stateDidChange(state)
         didEnable?(self)
     }
 
