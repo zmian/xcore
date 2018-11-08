@@ -29,7 +29,7 @@ struct IndexPathCache<Value> {
     private var dictionary = [String: Value]()
     private let defaultValue: Value
 
-    init(defaultValue: Value) {
+    init(default defaultValue: Value) {
         self.defaultValue = defaultValue
     }
 
@@ -42,7 +42,7 @@ struct IndexPathCache<Value> {
     /// - Parameters:
     ///   - value: The value to cache for the given index path.
     ///   - indexPath: The index path to cache.
-    private mutating func set(value: Value, for indexPath: IndexPath) {
+    private mutating func set(_ value: Value, for indexPath: IndexPath) {
         dictionary[key(for: indexPath)] = value
     }
 
@@ -50,7 +50,7 @@ struct IndexPathCache<Value> {
     ///
     /// - Parameter indexPath: The index path to get the cached value for.
     /// - Returns: The cached value if exists; otherwise, `defaultValue`.
-    private func get(indexPath: IndexPath) -> Value {
+    private func get(_ indexPath: IndexPath) -> Value {
         guard let estimatedValue = dictionary[key(for: indexPath)] else {
             return defaultValue
         }
@@ -63,8 +63,8 @@ struct IndexPathCache<Value> {
     }
 
     subscript(indexPath: IndexPath) -> Value {
-        get { return get(indexPath: indexPath) }
-        set { set(value: newValue, for: indexPath) }
+        get { return get(indexPath) }
+        set { set(newValue, for: indexPath) }
     }
 
     mutating func removeAll() {

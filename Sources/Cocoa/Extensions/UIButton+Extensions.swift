@@ -81,7 +81,7 @@ extension UIButton {
         static var heightConstraint = "heightConstraint"
         static var initialText = "initialText"
         static var isHeightSetAutomatically = "isHeightSetAutomatically"
-        static var suppressHeightSetAutomaticallyDidSet = "suppressHeightSetAutomaticallyDidSet"
+        static var observeHeightSetAutomaticallySetter = "observeHeightSetAutomaticallySetter"
     }
 
     private typealias StateType = UInt
@@ -127,14 +127,14 @@ extension UIButton {
         get { return associatedObject(&AssociatedKey.isHeightSetAutomatically, default: UIButton.defaultAppearance.isHeightSetAutomatically) }
         set {
             setAssociatedObject(&AssociatedKey.isHeightSetAutomatically, value: newValue)
-            guard !suppressHeightSetAutomaticallyDidSet else { return }
+            guard observeHeightSetAutomaticallySetter else { return }
             updateHeightConstraintIfNeeded()
         }
     }
 
-    private var suppressHeightSetAutomaticallyDidSet: Bool {
-        get { return associatedObject(&AssociatedKey.suppressHeightSetAutomaticallyDidSet, default: false) }
-        set { setAssociatedObject(&AssociatedKey.suppressHeightSetAutomaticallyDidSet, value: newValue) }
+    private var observeHeightSetAutomaticallySetter: Bool {
+        get { return associatedObject(&AssociatedKey.observeHeightSetAutomaticallySetter, default: true) }
+        set { setAssociatedObject(&AssociatedKey.observeHeightSetAutomaticallySetter, value: newValue) }
     }
 
     private var heightConstraint: NSLayoutConstraint? {
@@ -187,12 +187,12 @@ extension UIButton {
     }
 
     private func updateStyleIfNeeded() {
-        suppressHeightSetAutomaticallyDidSet = true
+        observeHeightSetAutomaticallySetter = false
         contentEdgeInsets = UIEdgeInsets(horizontal: .defaultPadding)
         prepareForReuse()
         style.configure(self)
         updateHeightConstraintIfNeeded()
-        suppressHeightSetAutomaticallyDidSet = false
+        observeHeightSetAutomaticallySetter = true
     }
 
     @objc open func prepareForReuse() {

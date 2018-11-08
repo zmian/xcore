@@ -25,6 +25,7 @@
 import Foundation
 
 public class XCUserDefault<T> {
+    private var notificationToken: NSObjectProtocol?
     private let serializableObjectType = T.self as? Serializable.Type
     private let codingObjectType = T.self as? NSCoding.Type
     private let key: String
@@ -32,7 +33,7 @@ public class XCUserDefault<T> {
     private var cachedValueInMemory: T?
     private let shouldCacheValueInMemory: Bool
 
-    public init(key: String, defaultValue: T? = nil, shouldCacheValueInMemory: Bool = true) {
+    public init(key: String, default defaultValue: T? = nil, shouldCacheValueInMemory: Bool = true) {
         self.key = key
         self.defaultValue = defaultValue
         self.shouldCacheValueInMemory = shouldCacheValueInMemory
@@ -42,7 +43,7 @@ public class XCUserDefault<T> {
         }
     }
 
-    public func value(storage: UserDefaults = UserDefaults.standard) -> T? {
+    public func value(storage: UserDefaults = .standard) -> T? {
         if let cachedValueInMemory = cachedValueInMemory {
             return cachedValueInMemory
         }
@@ -59,13 +60,17 @@ public class XCUserDefault<T> {
             value = storage.object(forKey: key) as? T ?? defaultValue
         }
 
-        if shouldCacheValueInMemory { cachedValueInMemory = value }
+        if shouldCacheValueInMemory {
+            cachedValueInMemory = value
+        }
 
         return value
     }
 
-    public func save(_ newValue: T?, storage: UserDefaults = UserDefaults.standard) {
-        if shouldCacheValueInMemory { cachedValueInMemory = newValue }
+    public func save(_ newValue: T?, storage: UserDefaults = .standard) {
+        if shouldCacheValueInMemory {
+            cachedValueInMemory = newValue
+        }
 
         if let serializableValue = newValue as? Serializable {
             storage.set(serializableValue.serialize, forKey: key)
@@ -79,8 +84,13 @@ public class XCUserDefault<T> {
     }
 
     private func onApplicationMemoryWarning(callback: @escaping () -> Void) {
-        NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { _ in
+        notificationToken = NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { _ in
             callback()
         }
+    }
+
+    deinit {
+        guard let notificationToken = notificationToken else { return }
+        NotificationCenter.default.removeObserver(notificationToken)
     }
 }
