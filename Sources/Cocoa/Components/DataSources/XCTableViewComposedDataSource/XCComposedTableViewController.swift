@@ -33,7 +33,7 @@ open class XCComposedTableViewController: UIViewController {
     /// This solution patches the said bug of `UITableView` by caching
     /// heights and automatically switching to those when `reloadData`, `reloadCells`,
     /// or `reloadSection` methods are invoked.
-    private var estimatedRowHeightCache = IndexPathCache<CGFloat>(defaultValue: UITableView.automaticDimension)
+    private var estimatedRowHeightCache = IndexPathCache<CGFloat>(default: UITableView.automaticDimension)
 
     /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
     /// The default value is `.grouped`.
