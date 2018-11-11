@@ -1,5 +1,5 @@
 //
-// ImageRepresentable.swift
+// UIImageView+ImageRepresentable.swift
 //
 // Copyright © 2015 Zeeshan Mian
 //
@@ -23,93 +23,6 @@
 //
 
 import UIKit
-import SDWebImage
-
-public enum ImageSourceType {
-    case url(String)
-    case uiImage(UIImage)
-
-    var isValid: Bool {
-        switch self {
-            case .uiImage:
-                return true
-            case .url(let value):
-                return !value.isBlank
-        }
-    }
-
-    public var isRemoteUrl: Bool {
-        guard
-            case .url(let rawValue) = self,
-            let url = URL(string: rawValue),
-            url.host != nil,
-            url.schemeType != .file
-        else {
-            return false
-        }
-
-        return true
-    }
-}
-
-extension ImageSourceType {
-    public enum CacheType {
-        /// The image wasn't available in the cache, but was downloaded from the web.
-        case none
-
-        /// The image was obtained from the disk cache.
-        case disk
-
-        /// The image was obtained from the memory cache.
-        case memory
-
-        init(_ type: SDImageCacheType) {
-            switch type {
-                case .none:
-                    self = .none
-                case .disk:
-                    self = .disk
-                case .memory:
-                    self = .memory
-            }
-        }
-
-        var isRemote: Bool {
-            return self == .none
-        }
-    }
-}
-
-// MARK: ImageRepresentable
-
-public protocol ImageRepresentable {
-    var imageSource: ImageSourceType { get }
-    var bundle: Bundle? { get }
-}
-
-extension ImageRepresentable {
-    public var bundle: Bundle? {
-        return nil
-    }
-}
-
-extension UIImage: ImageRepresentable {
-    public var imageSource: ImageSourceType {
-        return .uiImage(self)
-    }
-}
-
-extension URL: ImageRepresentable {
-    public var imageSource: ImageSourceType {
-        return .url(absoluteString)
-    }
-}
-
-extension String: ImageRepresentable {
-    public var imageSource: ImageSourceType {
-        return .url(self)
-    }
-}
 
 extension UIImageView {
     /// Automatically detect and load the image from local or a remote url.
@@ -122,7 +35,25 @@ extension UIImageView {
     ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0, the image is set without animation. The default value is `0.5`.
     ///   - callback:          A block to invoke when finished setting the image.
     public func setImage(_ image: ImageRepresentable?, transform: ImageTransform? = nil, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
-        remoteOrLocalImage(image, transform: transform, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
+        guard let imageRepresentable = image, imageRepresentable.imageSource.isValid else {
+            self.image = nil
+            callback?(nil)
+            return
+        }
+
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            guard let strongSelf = self else { return }
+            CompositeImageFetcher.fetch(imageRepresentable, in: strongSelf) { [weak self] image, cacheType in
+                self?.postProcess(
+                    image: image,
+                    source: imageRepresentable,
+                    transform: transform,
+                    alwaysAnimate: (alwaysAnimate || cacheType.isRemote),
+                    animationDuration: animationDuration,
+                    callback: callback
+                )
+            }
+        }
     }
 
     /// Automatically detect and load the image from local or a remote url.
@@ -141,13 +72,47 @@ extension UIImageView {
             return
         }
 
-        self.image = nil
         setImage(image, transform: transform, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration) { [weak self] image in
             guard let strongSelf = self else { return }
-            if image == nil {
-                strongSelf.setImage(defaultImage, transform: transform, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
-            } else {
+
+            guard image == nil else {
                 callback?(image)
+                return
+            }
+
+            strongSelf.setImage(defaultImage, transform: transform, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
+        }
+    }
+}
+
+extension UIImageView {
+    private func postProcess(image: UIImage?, source: ImageRepresentable, transform: ImageTransform?, alwaysAnimate: Bool, animationDuration: TimeInterval, callback: ((_ image: UIImage?) -> Void)?) {
+        guard var image = image else {
+            DispatchQueue.main.async {
+                callback?(nil)
+            }
+            return
+        }
+
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            image = image.process(source, using: transform)
+
+            DispatchQueue.main.async { [weak self] in
+                guard let strongSelf = self else {
+                    return
+                }
+
+                defer { callback?(image) }
+
+                if alwaysAnimate {
+                    strongSelf.alpha = 0
+                    strongSelf.image = image
+                    UIView.animate(withDuration: animationDuration) {
+                        strongSelf.alpha = 1
+                    }
+                } else {
+                    strongSelf.image = image
+                }
             }
         }
     }

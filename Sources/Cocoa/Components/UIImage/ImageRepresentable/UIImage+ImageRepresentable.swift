@@ -1,5 +1,5 @@
 //
-// SDWebImage+Helpers.swift
+// UIImage+ImageRepresentable.swift
 //
 // Copyright © 2014 Zeeshan Mian
 //
@@ -24,64 +24,6 @@
 
 import UIKit
 import SDWebImage
-
-extension UIImageView {
-    /// Automatically detect and load the image from local or a remote url.
-    ///
-    /// - seealso: `setImage(_:alwaysAnimate:animationDuration:callback:)`
-    func remoteOrLocalImage(_ image: ImageRepresentable?, transform: ImageTransform?, alwaysAnimate: Bool, animationDuration: TimeInterval, callback: ((_ image: UIImage?) -> Void)?) {
-        guard let imageRepresentable = image, imageRepresentable.imageSource.isValid else {
-            self.image = nil
-            callback?(nil)
-            return
-        }
-
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            guard let strongSelf = self else { return }
-            CompositeImageFetcher.fetch(imageRepresentable, in: strongSelf) { [weak self] image, cacheType in
-                self?.postProcess(
-                    image: image,
-                    source: imageRepresentable,
-                    transform: transform,
-                    alwaysAnimate: (alwaysAnimate || cacheType.isRemote),
-                    animationDuration: animationDuration,
-                    callback: callback
-                )
-            }
-        }
-    }
-
-    private func postProcess(image: UIImage?, source: ImageRepresentable, transform: ImageTransform?, alwaysAnimate: Bool, animationDuration: TimeInterval, callback: ((_ image: UIImage?) -> Void)?) {
-        guard var image = image else {
-            DispatchQueue.main.async {
-                callback?(nil)
-            }
-            return
-        }
-
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            image = image.process(source, using: transform)
-
-            DispatchQueue.main.async { [weak self] in
-                guard let strongSelf = self else {
-                    return
-                }
-
-                defer { callback?(image) }
-
-                if alwaysAnimate {
-                    strongSelf.alpha = 0
-                    strongSelf.image = image
-                    UIView.animate(withDuration: animationDuration) {
-                        strongSelf.alpha = 1
-                    }
-                } else {
-                    strongSelf.image = image
-                }
-            }
-        }
-    }
-}
 
 extension UIImage {
     /// Automatically detect and load the image from local or a remote url.
@@ -151,7 +93,7 @@ extension UIImage {
     ///   - source: The original source from which the image was constructed.
     ///   - transform: The transform to use.
     /// - Returns: The transformed image.
-    fileprivate func process(_ source: ImageRepresentable, using transform: ImageTransform?) -> UIImage {
+    func process(_ source: ImageRepresentable, using transform: ImageTransform?) -> UIImage {
         guard let transform = transform else {
             return self
         }
