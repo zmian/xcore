@@ -25,7 +25,7 @@
 		6822FF2020D217880037E780 /* WKWeakDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FE8B20D217880037E780 /* WKWeakDelegate.swift */; };
 		6822FF2120D217880037E780 /* SwizzleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FE8C20D217880037E780 /* SwizzleManager.swift */; };
 		6822FF2220D217880037E780 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FE8D20D217880037E780 /* Request.swift */; };
-		6822FF2420D217880037E780 /* XCUserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FE8F20D217880037E780 /* XCUserDefault.swift */; };
+		6822FF2420D217880037E780 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FE8F20D217880037E780 /* UserDefault.swift */; };
 		6822FF2520D217880037E780 /* XCConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FE9020D217880037E780 /* XCConfiguration.swift */; };
 		6822FF2620D217880037E780 /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FE9120D217880037E780 /* Debugger.swift */; };
 		6822FF5120D217880037E780 /* XCComposedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEC020D217880037E780 /* XCComposedTableViewController.swift */; };
@@ -61,7 +61,6 @@
 		6822FF6F20D217880037E780 /* DynamicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEE220D217880037E780 /* DynamicTableViewController.swift */; };
 		6822FF7020D217880037E780 /* DynamicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEE320D217880037E780 /* DynamicTableViewCell.swift */; };
 		6822FF7120D217880037E780 /* DynamicTableViewTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEE420D217880037E780 /* DynamicTableViewTypes.swift */; };
-		6822FF7220D217880037E780 /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEE620D217880037E780 /* Serializable.swift */; };
 		6822FF7320D217880037E780 /* StringRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEE720D217880037E780 /* StringRepresentable.swift */; };
 		6822FF7420D217880037E780 /* NibInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEE820D217880037E780 /* NibInstantiable.swift */; };
 		6822FF7520D217880037E780 /* ImageTitleDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEE920D217880037E780 /* ImageTitleDisplayable.swift */; };
@@ -231,7 +230,7 @@
 		6822FE8B20D217880037E780 /* WKWeakDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WKWeakDelegate.swift; sourceTree = "<group>"; };
 		6822FE8C20D217880037E780 /* SwizzleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwizzleManager.swift; sourceTree = "<group>"; };
 		6822FE8D20D217880037E780 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		6822FE8F20D217880037E780 /* XCUserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCUserDefault.swift; sourceTree = "<group>"; };
+		6822FE8F20D217880037E780 /* UserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		6822FE9020D217880037E780 /* XCConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCConfiguration.swift; sourceTree = "<group>"; };
 		6822FE9120D217880037E780 /* Debugger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		6822FEC020D217880037E780 /* XCComposedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCComposedTableViewController.swift; sourceTree = "<group>"; };
@@ -267,7 +266,6 @@
 		6822FEE220D217880037E780 /* DynamicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTableViewController.swift; sourceTree = "<group>"; };
 		6822FEE320D217880037E780 /* DynamicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTableViewCell.swift; sourceTree = "<group>"; };
 		6822FEE420D217880037E780 /* DynamicTableViewTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicTableViewTypes.swift; sourceTree = "<group>"; };
-		6822FEE620D217880037E780 /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		6822FEE720D217880037E780 /* StringRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringRepresentable.swift; sourceTree = "<group>"; };
 		6822FEE820D217880037E780 /* NibInstantiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibInstantiable.swift; sourceTree = "<group>"; };
 		6822FEE920D217880037E780 /* ImageTitleDisplayable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTitleDisplayable.swift; sourceTree = "<group>"; };
@@ -533,7 +531,7 @@
 				6822FE8C20D217880037E780 /* SwizzleManager.swift */,
 				6822FE8D20D217880037E780 /* Request.swift */,
 				6801120721923E8600B5D7DD /* PredicateRepresentable.swift */,
-				6822FE8F20D217880037E780 /* XCUserDefault.swift */,
+				6822FE8F20D217880037E780 /* UserDefault.swift */,
 				6822FE9020D217880037E780 /* XCConfiguration.swift */,
 				6822FE9120D217880037E780 /* Debugger.swift */,
 			);
@@ -687,12 +685,11 @@
 		6822FEE520D217880037E780 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				6822FEE620D217880037E780 /* Serializable.swift */,
 				6822FEE720D217880037E780 /* StringRepresentable.swift */,
-				6822FEE820D217880037E780 /* NibInstantiable.swift */,
 				6822FEE920D217880037E780 /* ImageTitleDisplayable.swift */,
 				6822FEEA20D217880037E780 /* OptionsRepresentable.swift */,
 				6822FEEC20D217880037E780 /* Colorable.swift */,
+				6822FEE820D217880037E780 /* NibInstantiable.swift */,
 				6822FEED20D217880037E780 /* StoryboardInstantiable.swift */,
 				6862D460214B68EC008B202A /* ExtensibleByAssociatedObject.swift */,
 			);
@@ -1296,7 +1293,7 @@
 				684B3DC3218CF58200B0450E /* BlockImageTransform.swift in Sources */,
 				6822FF5B20D217880037E780 /* IconLabelView.swift in Sources */,
 				6822FF2220D217880037E780 /* Request.swift in Sources */,
-				6822FF2420D217880037E780 /* XCUserDefault.swift in Sources */,
+				6822FF2420D217880037E780 /* UserDefault.swift in Sources */,
 				6822FF1920D217880037E780 /* UIControl+Blocks.swift in Sources */,
 				684B3DB9218CDA1E00B0450E /* AlphaImageTransform.swift in Sources */,
 				6822FF8D20D217880037E780 /* String+Extensions.swift in Sources */,
@@ -1413,7 +1410,6 @@
 				6822FF1A20D217880037E780 /* MFMailComposeViewController+Blocks.swift in Sources */,
 				6822FF2620D217880037E780 /* Debugger.swift in Sources */,
 				68E5729220F82ADD002FEC39 /* UICollectionReusableView+Extensions.swift in Sources */,
-				6822FF7220D217880037E780 /* Serializable.swift in Sources */,
 				68E5729F20F82ADD002FEC39 /* UITextField+Extensions.swift in Sources */,
 				680626E52198B39600A5590B /* UIImageView+ImageRepresentable.swift in Sources */,
 				6822FF6020D217880037E780 /* IndexPathCache.swift in Sources */,

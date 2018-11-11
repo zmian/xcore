@@ -93,11 +93,17 @@ extension TextAttributedTextRepresentable where Self: UIView {
             return
         }
 
-        UIView.transition(with: self, duration: duration, options: .transitionCrossDissolve, animations: { [weak self] in
-            self?.setText(string)
-        }, completion: { _ in
-            completion?()
-        })
+        UIView.transition(
+            with: self,
+            duration: duration,
+            options: [.beginFromCurrentState, .transitionCrossDissolve],
+            animations: { [weak self] in
+                self?.setText(string)
+            },
+            completion: { _ in
+                completion?()
+            }
+        )
     }
 }
 
