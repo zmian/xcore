@@ -24,6 +24,13 @@
 
 import Foundation
 
+extension NSPredicate {
+    /// Creates and returns a predicate that never matches any result.
+    public static var noMatch: NSPredicate {
+        return NSPredicate(value: false)
+    }
+}
+
 extension NSPredicate: PredicateRepresentable {}
 
 public protocol PredicateRepresentable {
