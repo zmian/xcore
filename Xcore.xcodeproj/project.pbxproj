@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2E0CEC745C3B56374E928CA6 /* Pods_UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FA92F065206A727FCD2B3D /* Pods_UITests.framework */; };
 		6801120821923E8600B5D7DD /* PredicateRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6801120721923E8600B5D7DD /* PredicateRepresentable.swift */; };
+		680626E52198B39600A5590B /* UIImageView+ImageRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680626E42198B39600A5590B /* UIImageView+ImageRepresentable.swift */; };
 		681245FE20DCA9C60016AC2F /* CurrencySymbolsOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681245FD20DCA9C60016AC2F /* CurrencySymbolsOptionsTests.swift */; };
 		6812460120DCAB1C0016AC2F /* CurrencySymbolsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812460020DCAB1C0016AC2F /* CurrencySymbolsOptions.swift */; };
 		6812460520DCAF920016AC2F /* CurrencyAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6812460420DCAF920016AC2F /* CurrencyAmount.swift */; };
@@ -170,7 +171,7 @@
 		68E572AB20F82ADD002FEC39 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E5727B20F82AD9002FEC39 /* Data+Extensions.swift */; };
 		68E572AC20F82ADD002FEC39 /* WKWebView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E5727C20F82AD9002FEC39 /* WKWebView+Extensions.swift */; };
 		68E572AD20F82ADD002FEC39 /* UIGeometry+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E5727D20F82AD9002FEC39 /* UIGeometry+Extensions.swift */; };
-		68E572AE20F82ADD002FEC39 /* SDWebImage+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E5727E20F82ADA002FEC39 /* SDWebImage+Helpers.swift */; };
+		68E572AE20F82ADD002FEC39 /* UIImage+ImageRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E5727E20F82ADA002FEC39 /* UIImage+ImageRepresentable.swift */; };
 		68E572AF20F82ADD002FEC39 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E5727F20F82ADA002FEC39 /* Bundle+Extensions.swift */; };
 		68E572B020F82ADD002FEC39 /* UITabBarController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E5728020F82ADA002FEC39 /* UITabBarController+Extensions.swift */; };
 		68E572B120F82ADD002FEC39 /* UIScrollView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E5728120F82ADA002FEC39 /* UIScrollView+Extensions.swift */; };
@@ -213,6 +214,7 @@
 		5D3CFC269887586363462B4B /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		63FA92F065206A727FCD2B3D /* Pods_UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6801120721923E8600B5D7DD /* PredicateRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredicateRepresentable.swift; sourceTree = "<group>"; };
+		680626E42198B39600A5590B /* UIImageView+ImageRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageRepresentable.swift"; sourceTree = "<group>"; };
 		681245FD20DCA9C60016AC2F /* CurrencySymbolsOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySymbolsOptionsTests.swift; sourceTree = "<group>"; };
 		6812460020DCAB1C0016AC2F /* CurrencySymbolsOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencySymbolsOptions.swift; sourceTree = "<group>"; };
 		6812460420DCAF920016AC2F /* CurrencyAmount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyAmount.swift; sourceTree = "<group>"; };
@@ -383,7 +385,7 @@
 		68E5727B20F82AD9002FEC39 /* Data+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 		68E5727C20F82AD9002FEC39 /* WKWebView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WKWebView+Extensions.swift"; sourceTree = "<group>"; };
 		68E5727D20F82AD9002FEC39 /* UIGeometry+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIGeometry+Extensions.swift"; sourceTree = "<group>"; };
-		68E5727E20F82ADA002FEC39 /* SDWebImage+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SDWebImage+Helpers.swift"; sourceTree = "<group>"; };
+		68E5727E20F82ADA002FEC39 /* UIImage+ImageRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+ImageRepresentable.swift"; sourceTree = "<group>"; };
 		68E5727F20F82ADA002FEC39 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		68E5728020F82ADA002FEC39 /* UITabBarController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITabBarController+Extensions.swift"; sourceTree = "<group>"; };
 		68E5728120F82ADA002FEC39 /* UIScrollView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+Extensions.swift"; sourceTree = "<group>"; };
@@ -451,6 +453,16 @@
 				762F6CADAAB782F8D9499DA3 /* Pods-UnitTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		680626E62198B8B200A5590B /* ImageRepresentable */ = {
+			isa = PBXGroup;
+			children = (
+				6822FEEB20D217880037E780 /* ImageRepresentable.swift */,
+				680626E42198B39600A5590B /* UIImageView+ImageRepresentable.swift */,
+				68E5727E20F82ADA002FEC39 /* UIImage+ImageRepresentable.swift */,
+			);
+			path = ImageRepresentable;
 			sourceTree = "<group>";
 		};
 		681245FF20DCAB1C0016AC2F /* Currency */ = {
@@ -935,8 +947,7 @@
 			children = (
 				684B3DAF218CCE3500B0450E /* ImageTransform */,
 				68D204B52186842F008A64BE /* ImageFetcher */,
-				6822FEEB20D217880037E780 /* ImageRepresentable.swift */,
-				68E5727E20F82ADA002FEC39 /* SDWebImage+Helpers.swift */,
+				680626E62198B8B200A5590B /* ImageRepresentable */,
 			);
 			path = UIImage;
 			sourceTree = "<group>";
@@ -1318,7 +1329,7 @@
 				6822FF7720D217880037E780 /* ImageRepresentable.swift in Sources */,
 				68D204B7218684C4008A64BE /* LocalImageFetcher.swift in Sources */,
 				6822FF1D20D217880037E780 /* JSONHelpers.swift in Sources */,
-				68E572AE20F82ADD002FEC39 /* SDWebImage+Helpers.swift in Sources */,
+				68E572AE20F82ADD002FEC39 /* UIImage+ImageRepresentable.swift in Sources */,
 				68E572B320F82ADD002FEC39 /* UINib+Extensions.swift in Sources */,
 				68F3E39D218642A500B33245 /* InitializableByEmptyConstructor.swift in Sources */,
 				6822FF7820D217880037E780 /* Colorable.swift in Sources */,
@@ -1404,6 +1415,7 @@
 				68E5729220F82ADD002FEC39 /* UICollectionReusableView+Extensions.swift in Sources */,
 				6822FF7220D217880037E780 /* Serializable.swift in Sources */,
 				68E5729F20F82ADD002FEC39 /* UITextField+Extensions.swift in Sources */,
+				680626E52198B39600A5590B /* UIImageView+ImageRepresentable.swift in Sources */,
 				6822FF6020D217880037E780 /* IndexPathCache.swift in Sources */,
 				6822FF7320D217880037E780 /* StringRepresentable.swift in Sources */,
 				6822FF1C20D217880037E780 /* KeychainHelpers.swift in Sources */,
