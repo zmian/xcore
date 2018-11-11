@@ -1,5 +1,5 @@
 //
-// ComposedImageFetcher.swift
+// CompositeImageFetcher.swift
 //
 // Copyright © 2018 Zeeshan Mian
 //
@@ -24,7 +24,7 @@
 
 import UIKit
 
-final class ComposedImageFetcher: ImageFetcher {
+final class CompositeImageFetcher: ImageFetcher {
     static func canHandle(_ image: ImageRepresentable) -> Bool {
         return true
     }

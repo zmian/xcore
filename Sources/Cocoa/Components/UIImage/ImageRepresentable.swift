@@ -129,25 +129,6 @@ extension UIImageView {
     ///
     /// - Parameters:
     ///   - image:             The image to display.
-    ///   - tintColor:         The tint color to apply to the image.
-    ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
-    ///                        The image will only fade in when fetched from a remote url and not in memory cache.
-    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0, the image is set without animation. The default value is `0.5`.
-    ///   - callback:          A block to invoke when finished setting the image.
-    public func setImage(_ image: ImageRepresentable?, tintColor: UIColor, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
-        setImage(
-            image,
-            transform: TintColorImageTransform(tintColor: tintColor),
-            alwaysAnimate: alwaysAnimate,
-            animationDuration: animationDuration,
-            callback: callback
-        )
-    }
-
-    /// Automatically detect and load the image from local or a remote url.
-    ///
-    /// - Parameters:
-    ///   - image:             The image to display.
     ///   - defaultImage:      The fallback image to display if `image` can't be loaded.
     ///   - transform:         An optional property to transform the image before setting the image.
     ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
@@ -169,26 +150,5 @@ extension UIImageView {
                 callback?(image)
             }
         }
-    }
-
-    /// Automatically detect and load the image from local or a remote url.
-    ///
-    /// - Parameters:
-    ///   - image:             The image to display.
-    ///   - defaultImage:      The fallback image to display if `image` can't be loaded.
-    ///   - tintColor:         The tint color to apply to the image.
-    ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
-    ///                        The image will only fade in when fetched from a remote url and not in memory cache.
-    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0, the image is set without animation. The default value is `0.5`.
-    ///   - callback:          A block to invoke when finished setting the image.
-    public func setImage(_ image: ImageRepresentable?, default defaultImage: ImageRepresentable, tintColor: UIColor, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
-        setImage(
-            image,
-            default: defaultImage,
-            transform: TintColorImageTransform(tintColor: tintColor),
-            alwaysAnimate: alwaysAnimate,
-            animationDuration: animationDuration,
-            callback: callback
-        )
     }
 }
