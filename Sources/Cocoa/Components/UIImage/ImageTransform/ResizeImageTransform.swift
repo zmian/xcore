@@ -96,13 +96,13 @@ extension UIImage {
     ///
     /// - Returns: A new scaled image.
     public func scaled(to newSize: CGSize, scalingMode: ScalingMode = .aspectFill, tintColor: UIColor? = nil) -> UIImage {
-        let transforms: ComposedImageTransform = [ResizeImageTransform(to: newSize, scalingMode: scalingMode)]
+        let transformers: CompositeImageTransform = [ResizeImageTransform(to: newSize, scalingMode: scalingMode)]
 
         if let tintColor = tintColor {
-            transforms.add(TintColorImageTransform(tintColor: tintColor))
+            transformers.add(TintColorImageTransform(tintColor: tintColor))
         }
 
-        return transforms.transform(self)
+        return transformers.transform(self)
     }
 
     /// Scales an image to fit within a bounds of the given size.

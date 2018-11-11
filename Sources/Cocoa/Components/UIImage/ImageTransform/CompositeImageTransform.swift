@@ -1,5 +1,5 @@
 //
-// ComposedImageTransform.swift
+// CompositeImageTransform.swift
 //
 // Copyright © 2017 Zeeshan Mian
 //
@@ -24,7 +24,7 @@
 
 import UIKit
 
-final public class ComposedImageTransform: ImageTransform, ExpressibleByArrayLiteral {
+final public class CompositeImageTransform: ImageTransform, ExpressibleByArrayLiteral {
     private var transforms: [ImageTransform] = []
 
     public init(arrayLiteral elements: ImageTransform...) {
@@ -45,14 +45,14 @@ final public class ComposedImageTransform: ImageTransform, ExpressibleByArrayLit
         transforms.remove(at: index)
     }
 
-    public static func == (lhs: ComposedImageTransform, rhs: ComposedImageTransform) -> Bool {
+    public static func == (lhs: CompositeImageTransform, rhs: CompositeImageTransform) -> Bool {
         let lhs = lhs.transforms.map { $0.identifier }.joined()
         let rhs = rhs.transforms.map { $0.identifier }.joined()
         return lhs == rhs
     }
 }
 
-extension ComposedImageTransform {
+extension CompositeImageTransform {
     public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
         var inputImage = image
 
