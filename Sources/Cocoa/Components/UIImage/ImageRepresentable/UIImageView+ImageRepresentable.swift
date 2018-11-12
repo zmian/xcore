@@ -85,6 +85,37 @@ extension UIImageView {
     }
 }
 
+// Added an extension to expose `ImageTransformers`.
+
+extension UIImageView {
+    /// Automatically detect and load the image from local or a remote url.
+    ///
+    /// - Parameters:
+    ///   - image:             The image to display.
+    ///   - transform:         A property to transform the image before setting the image.
+    ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
+    ///                        The image will only fade in when fetched from a remote url and not in memory cache.
+    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0, the image is set without animation. The default value is `0.5`.
+    ///   - callback:          A block to invoke when finished setting the image.
+    public func setImage(_ image: ImageRepresentable?, transform: ImageTransformer, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
+        setImage(image, transform: transform.transform(), alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
+    }
+
+    /// Automatically detect and load the image from local or a remote url.
+    ///
+    /// - Parameters:
+    ///   - image:             The image to display.
+    ///   - defaultImage:      The fallback image to display if `image` can't be loaded.
+    ///   - transform:         A property to transform the image before setting the image.
+    ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
+    ///                        The image will only fade in when fetched from a remote url and not in memory cache.
+    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0, the image is set without animation. The default value is `0.5`.
+    ///   - callback:          A block to invoke when finished setting the image.
+    public func setImage(_ image: ImageRepresentable?, default defaultImage: ImageRepresentable, transform: ImageTransformer, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, callback: ((_ image: UIImage?) -> Void)? = nil) {
+        setImage(image, default: defaultImage, transform: transform.transform(), alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback: callback)
+    }
+}
+
 extension UIImageView {
     private func postProcess(image: UIImage?, source: ImageRepresentable, transform: ImageTransform?, alwaysAnimate: Bool, animationDuration: TimeInterval, callback: ((_ image: UIImage?) -> Void)?) {
         guard var image = image else {

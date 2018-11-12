@@ -25,14 +25,14 @@
 import UIKit
 
 /// Creating arbitrarily-colored icons from a black-with-alpha master image.
-final class TintColorImageTransform: ImageTransform {
+final public class TintColorImageTransform: ImageTransform {
     private let tintColor: UIColor
 
-    init(tintColor: UIColor) {
+    public init(tintColor: UIColor) {
         self.tintColor = tintColor
     }
 
-    func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
+    public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
         let rect = CGRect(image.size)
         return UIGraphicsImageRenderer(bounds: rect).image { rendererContext in
             let context = rendererContext.cgContext

@@ -24,18 +24,18 @@
 
 import UIKit
 
-final class BackgroundImageTransform: ImageTransform {
+final public class BackgroundImageTransform: ImageTransform {
     private let color: UIColor
     private let preferredSize: CGSize
     private let alignment: UIControl.ContentHorizontalAlignment
 
-    init(color: UIColor, preferredSize: CGSize, alignment: UIControl.ContentHorizontalAlignment = .center) {
+    public init(color: UIColor, preferredSize: CGSize, alignment: UIControl.ContentHorizontalAlignment = .center) {
         self.color = color
         self.preferredSize = preferredSize
         self.alignment = alignment
     }
 
-    func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
+    public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
         let size = image.size
         let finalSize = CGSize(
             width: max(size.width, preferredSize.width),

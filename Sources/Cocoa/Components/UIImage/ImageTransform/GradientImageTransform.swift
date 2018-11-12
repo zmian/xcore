@@ -24,7 +24,7 @@
 
 import UIKit
 
-final class GradientImageTransform: ImageTransform {
+final public class GradientImageTransform: ImageTransform {
     private let type: CAGradientLayerType
     private let colors: [UIColor]
     private let direction: GradientDirection
@@ -42,7 +42,7 @@ final class GradientImageTransform: ImageTransform {
     ///                The default value is `nil`.
     ///   - blendMode: The blend mode to use for gradient overlay. The default value is `.normal`.
     /// - Returns: A new image with gradient color overlay.
-    init(
+    public init(
         type: CAGradientLayerType = .axial,
         colors: [UIColor],
         direction: GradientDirection = .topToBottom,
@@ -56,7 +56,7 @@ final class GradientImageTransform: ImageTransform {
         self.blendMode = blendMode
     }
 
-    func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
+    public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
         let rect = CGRect(image.size)
 
         let layer = CAGradientLayer().apply {
