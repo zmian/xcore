@@ -100,3 +100,23 @@ extension Array where Element: Hashable {
         self = unique(uniqueProperty)
     }
 }
+
+extension Collection {
+    /// Returns the number of elements of the sequence that satisfy the given predicate.
+    ///
+    /// ```swift
+    /// let cast = ["Vivien", "Marlon", "Kim", "Karl"]
+    /// let shortNamesCount = cast.count { $0.count < 5 }
+    /// print(shortNamesCount)
+    /// // Prints "2"
+    /// ```
+    ///
+    /// - Parameter predicate: A closure that takes an element of the sequence as its argument
+    ///                        and returns a Boolean value indicating whether the element should
+    ///                        be included in the returned count.
+    /// - Returns: A count of elements that satisfy the given predicate.
+    /// - Complexity: O(_n_), where _n_ is the length of the sequence.
+    public func count(where predicate: (Element) throws -> Bool) rethrows -> Int {
+        return try filter(predicate).count
+    }
+}
