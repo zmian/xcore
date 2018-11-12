@@ -24,8 +24,8 @@
 
 import UIKit
 
-extension UIImage {
-    public enum ColorizeType {
+extension ColorizeImageTransform {
+    public enum Kind {
         /// Colorize image with given tint color.
         ///
         /// This is similar to Photoshop's **Color** layer blend mode.
@@ -40,17 +40,17 @@ extension UIImage {
     }
 }
 
-final class ColorizeImageTransform: ImageTransform {
+final public class ColorizeImageTransform: ImageTransform {
     private let color: UIColor
-    private let type: UIImage.ColorizeType
+    private let kind: Kind
 
-    init(color: UIColor, type: UIImage.ColorizeType) {
+    public init(color: UIColor, kind: Kind) {
         self.color = color
-        self.type = type
+        self.kind = kind
     }
 
-    func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
-        switch type {
+    public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
+        switch kind {
             case .colorize:
                 return colorize(image, tintColor: color)
             case .tintPicto:

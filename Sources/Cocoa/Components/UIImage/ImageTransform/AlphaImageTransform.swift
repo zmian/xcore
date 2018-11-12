@@ -24,14 +24,14 @@
 
 import UIKit
 
-final class AlphaImageTransform: ImageTransform {
+final public class AlphaImageTransform: ImageTransform {
     private let alpha: CGFloat
 
-    init(alpha: CGFloat) {
+    public init(alpha: CGFloat) {
         self.alpha = alpha
     }
 
-    func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
+    public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
         let rect = CGRect(image.size)
         return UIGraphicsImageRenderer(bounds: rect).image { rendererContext in
             image.draw(at: .zero, blendMode: .normal, alpha: alpha)

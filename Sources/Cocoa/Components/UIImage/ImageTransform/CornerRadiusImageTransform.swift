@@ -24,14 +24,14 @@
 
 import UIKit
 
-final class CornerRadiusImageTransform: ImageTransform {
+final public class CornerRadiusImageTransform: ImageTransform {
     private let cornerRadius: CGFloat
 
-    init(cornerRadius: CGFloat) {
+    public init(cornerRadius: CGFloat) {
         self.cornerRadius = cornerRadius
     }
 
-    func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
+    public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
         let rect = CGRect(image.size)
         return UIGraphicsImageRenderer(bounds: rect).image { rendererContext in
             UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius).addClip()
