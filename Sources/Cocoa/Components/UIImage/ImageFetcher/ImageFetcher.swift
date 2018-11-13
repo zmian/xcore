@@ -35,5 +35,5 @@ public protocol ImageFetcher {
     ///   - image: The image requested to be fetched.
     ///   - imageView: An optional property if this image will be set on the image view.
     ///   - callback: The callback to let the handler know when the image is fetched.
-    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, callback: @escaping ResultBlock)
+    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock)
 }
