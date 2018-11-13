@@ -193,7 +193,7 @@ public func ==<Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
         return false
     }
 
-    return lhs == rhs
+    return NSDictionary(dictionary: lhs).isEqual(to: rhs)
 }
 
 // MARK: OptionalType
