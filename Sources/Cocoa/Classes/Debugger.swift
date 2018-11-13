@@ -22,9 +22,9 @@
 // THE SOFTWARE.
 //
 
-// Credit http://stackoverflow.com/a/33177600
-
 import Foundation
+
+// Credit http://stackoverflow.com/a/33177600
 
 /// Detects if the app is being run from Xcode.
 public var isDebuggerAttached: Bool {

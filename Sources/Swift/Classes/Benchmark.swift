@@ -22,8 +22,6 @@
 // THE SOFTWARE.
 //
 
-// Credit http://stackoverflow.com/a/31412302
-
 import Foundation
 
 private func format(seconds: TimeInterval) -> String {
@@ -32,6 +30,8 @@ private func format(seconds: TimeInterval) -> String {
     let minutes = value / 60
     return String(format: "%02d:%02d", minutes, seconds)
 }
+
+// Credit: http://stackoverflow.com/a/31412302
 
 /// A convenience function to measure code execution.
 ///
