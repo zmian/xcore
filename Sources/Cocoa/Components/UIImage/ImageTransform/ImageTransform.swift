@@ -42,7 +42,7 @@ public protocol ImageTransform: class {
     ///   - image: The image to apply the transform.
     ///   - source: The original source from which the `image` was constructed.
     ///   - completionHandler: The completion handler to invoke on the `.main` thread when the transform operation completes.
-    func transform(_ image: UIImage, source: ImageRepresentable, completionHandler: @escaping (_ image: UIImage) -> Void)
+    func transform(_ image: UIImage, source: ImageRepresentable, _ completionHandler: @escaping (_ image: UIImage) -> Void)
 }
 
 extension ImageTransform {
@@ -63,7 +63,7 @@ extension ImageTransform {
         return transform(image, source: image)
     }
 
-    public func transform(_ image: UIImage, source: ImageRepresentable, completionHandler: @escaping (_ image: UIImage) -> Void) {
+    public func transform(_ image: UIImage, source: ImageRepresentable, _ completionHandler: @escaping (_ image: UIImage) -> Void) {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let strongSelf = self else { return }
 

@@ -26,8 +26,8 @@ import UIKit
 import SDWebImage
 
 extension UIImage {
-    /// Automatically detect and load the image from local or a remote url.
-    public class func remoteOrLocalImage(_ source: ImageRepresentable, transform: ImageTransform? = nil, callback: @escaping (_ image: UIImage?) -> Void) {
+    /// Fetch an image from the given source.
+    public class func fetch(_ source: ImageRepresentable, callback: @escaping (_ image: UIImage?) -> Void) {
         guard source.imageSource.isValid else {
             callback(nil)
             return
@@ -35,25 +35,15 @@ extension UIImage {
 
         DispatchQueue.global(qos: .userInteractive).async {
             CompositeImageFetcher.fetch(source, in: nil) { image, _ in
-                guard let image = image else {
-                    DispatchQueue.main.async {
-                        callback(nil)
-                    }
-                    return
-                }
-
-                DispatchQueue.global(qos: .userInteractive).async {
-                    let image = image.process(source, using: transform)
-                    DispatchQueue.main.async {
-                        callback(image)
-                    }
+                DispatchQueue.main.async {
+                    callback(image)
                 }
             }
         }
     }
 
     /// Download multiple remote images.
-    public class func downloadImages(_ urls: [String], callback: @escaping (_ images: [(url: URL, image: UIImage)]) -> Void) {
+    public class func fetch(_ urls: [String], callback: @escaping (_ images: [(url: URL, image: UIImage)]) -> Void) {
         guard !urls.isEmpty else { return }
 
         var orderedObjects: [(url: URL, image: UIImage?)] = urls.compactMap(URL.init).filter { $0.host != nil }.compactMap { ($0, nil) }
@@ -83,21 +73,5 @@ extension UIImage {
                 }
             )
         }
-    }
-}
-
-extension UIImage {
-    /// Process the image using the given transform.
-    ///
-    /// - Parameters:
-    ///   - source: The original source from which the image was constructed.
-    ///   - transform: The transform to use.
-    /// - Returns: The transformed image.
-    func process(_ source: ImageRepresentable, using transform: ImageTransform?) -> UIImage {
-        guard let transform = transform else {
-            return self
-        }
-
-        return transform.transform(self, source: source)
     }
 }

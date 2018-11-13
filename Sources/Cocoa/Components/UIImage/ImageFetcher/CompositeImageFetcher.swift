@@ -29,7 +29,7 @@ final class CompositeImageFetcher: ImageFetcher {
         return true
     }
 
-    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, callback: @escaping ResultBlock) {
+    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
         // 1. Reverse fetchers so the third-party fecthers are always prioritized over built-in ones.
         // 2. Find the first one that can handle the request.
         // 3. Fetch the requested image.
@@ -38,7 +38,7 @@ final class CompositeImageFetcher: ImageFetcher {
             return
         }
 
-        fetcher.fetch(image, in: imageView, callback: callback)
+        fetcher.fetch(image, in: imageView, callback)
     }
 }
 

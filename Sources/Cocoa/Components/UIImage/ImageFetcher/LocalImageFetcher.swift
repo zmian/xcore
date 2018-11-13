@@ -29,7 +29,7 @@ final class LocalImageFetcher: ImageFetcher {
         return !image.imageSource.isRemoteUrl
     }
 
-    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, callback: @escaping ResultBlock) {
+    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
         switch image.imageSource {
             case .uiImage(let image):
                 callback(image, .memory)
