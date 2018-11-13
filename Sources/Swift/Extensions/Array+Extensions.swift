@@ -153,3 +153,57 @@ extension Array where Element: RawRepresentable {
         return map { $0.rawValue }
     }
 }
+
+extension Array where Element: Equatable {
+    // Credit: https://stackoverflow.com/a/51683055
+
+    /// Returns the elements of the sequence, sorted using the given preferred order as the
+    /// comparison between elements.
+    ///
+    /// ```swift
+    /// let preferredOrder = ["Z", "A", "B", "C", "D"]
+    /// let alphabets = ["D", "C", "B", "A", "Z", "W"]
+    /// let sorted = alphabets.sorted(by: preferredOrder)
+    /// print(sorted)
+    /// // Prints ["Z", "A", "B", "C", "D", "W"]
+    /// ```
+    ///
+    /// - Parameter preferredOrder: The ordered elements, which will be used to sort the sequence’s elements.
+    /// - Returns: A sorted array of the sequence’s elements.
+    public func sorted(by preferredOrder: [Element]) -> [Element] {
+        return sorted { (a, b) -> Bool in
+            guard
+                let first = preferredOrder.index(of: a),
+                let second = preferredOrder.index(of: b)
+            else {
+                return false
+            }
+
+            return first < second
+        }
+    }
+
+    /// Sorts the collection in place, using the given preferred order as the comparison between elements.
+    ///
+    /// ```swift
+    /// let preferredOrder = ["Z", "A", "B", "C", "D"]
+    /// var alphabets = ["D", "C", "B", "A", "Z", "W"]
+    /// alphabets.sort(by: preferredOrder)
+    /// print(alphabets)
+    /// // Prints ["Z", "A", "B", "C", "D", "W"]
+    /// ```
+    ///
+    /// - Parameter preferredOrder: The ordered elements, which will be used to sort the sequence’s elements.
+    public mutating func sort(by preferredOrder: [Element]) {
+        return sort { (a, b) -> Bool in
+            guard
+                let first = preferredOrder.index(of: a),
+                let second = preferredOrder.index(of: b)
+            else {
+                return false
+            }
+
+            return first < second
+        }
+    }
+}
