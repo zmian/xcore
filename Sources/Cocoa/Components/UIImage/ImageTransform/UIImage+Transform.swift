@@ -32,6 +32,20 @@ extension UIImage {
     public func applying(_ transform: ImageTransformer) -> UIImage {
         return applying(transform.transform())
     }
+
+    /// Process the image using the given transform.
+    ///
+    /// - Parameters:
+    ///   - source:    The original source from which the image was constructed.
+    ///   - transform: The transform to use.
+    /// - Returns: The transformed image.
+    func applying(_ transform: ImageTransform?, source: ImageRepresentable) -> UIImage {
+        guard let transform = transform else {
+            return self
+        }
+
+        return transform.transform(self, source: source)
+    }
 }
 
 extension UIImage {

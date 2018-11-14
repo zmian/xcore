@@ -32,7 +32,8 @@ extension UIImageView {
     ///   - transform:         An optional property to transform the image before setting the image.
     ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
     ///                        The image will only fade in when fetched from a remote url and not in memory cache.
-    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0, the image is set without animation. The default value is `0.5`.
+    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0,
+    ///                        the image is set without animation. The default value is `.slow`.
     ///   - callback:          A block to invoke when finished setting the image.
     public func setImage(_ image: ImageRepresentable?, transform: ImageTransform? = nil, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, _ callback: ((_ image: UIImage?) -> Void)? = nil) {
         guard let imageRepresentable = image, imageRepresentable.imageSource.isValid else {
@@ -41,6 +42,7 @@ extension UIImageView {
             return
         }
 
+        cancelSetImageRequest()
         DispatchQueue.global(qos: .userInteractive).asyncSafe { [weak self] in
             guard let strongSelf = self else { return }
             CompositeImageFetcher.fetch(imageRepresentable, in: strongSelf) { [weak self] image, cacheType in
@@ -65,7 +67,8 @@ extension UIImageView {
     ///   - transform:         An optional property to transform the image before setting the image.
     ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
     ///                        The image will only fade in when fetched from a remote url and not in memory cache.
-    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0, the image is set without animation. The default value is `0.5`.
+    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0,
+    ///                        the image is set without animation. The default value is `.slow`.
     ///   - callback:          A block to invoke when finished setting the image.
     public func setImage(_ image: ImageRepresentable?, default defaultImage: ImageRepresentable, transform: ImageTransform? = nil, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, _ callback: ((_ image: UIImage?) -> Void)? = nil) {
         guard let image = image else {
@@ -96,7 +99,8 @@ extension UIImageView {
     ///   - transform:         A property to transform the image before setting the image.
     ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
     ///                        The image will only fade in when fetched from a remote url and not in memory cache.
-    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0, the image is set without animation. The default value is `0.5`.
+    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0,
+    ///                        the image is set without animation. The default value is `.slow`.
     ///   - callback:          A block to invoke when finished setting the image.
     public func setImage(_ image: ImageRepresentable?, transform: ImageTransformer, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, _ callback: ((_ image: UIImage?) -> Void)? = nil) {
         setImage(image, transform: transform.transform(), alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback)
@@ -110,7 +114,8 @@ extension UIImageView {
     ///   - transform:         A property to transform the image before setting the image.
     ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
     ///                        The image will only fade in when fetched from a remote url and not in memory cache.
-    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0, the image is set without animation. The default value is `0.5`.
+    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0,
+    ///                        the image is set without animation. The default value is `.slow`.
     ///   - callback:          A block to invoke when finished setting the image.
     public func setImage(_ image: ImageRepresentable?, default defaultImage: ImageRepresentable, transform: ImageTransformer, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, _ callback: ((_ image: UIImage?) -> Void)? = nil) {
         setImage(image, default: defaultImage, transform: transform.transform(), alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback)
@@ -129,45 +134,21 @@ extension UIImageView {
         DispatchQueue.global(qos: .userInteractive).asyncSafe { [weak self] in
             guard let strongSelf = self else { return }
 
-            image = image.process(source, using: transform)
+            image = image.applying(transform, source: source)
 
             DispatchQueue.main.asyncSafe { [weak self] in
-                guard let strongSelf = self else { return }
-
                 // Ensure that we are not setting image to the incorrect image view
                 // instance in case it's being reused (e.g., UICollectionViewCell).
-                if source.imageSource != strongSelf.imageRepresentableSource {
+                guard
+                    let strongSelf = self,
+                    source.imageSource == strongSelf.imageRepresentableSource
+                else {
                     return
                 }
 
-                defer { callback?(image) }
-
-                if animationDuration > 0 {
-                    strongSelf.alpha = 0
-                    strongSelf.image = image
-                    UIView.animate(withDuration: animationDuration) {
-                        strongSelf.alpha = 1
-                    }
-                } else {
-                    strongSelf.image = image
-                }
+                strongSelf.setImage(image, animationDuration: animationDuration)
+                callback?(image)
             }
         }
-    }
-}
-
-extension UIImage {
-    /// Process the image using the given transform.
-    ///
-    /// - Parameters:
-    ///   - source: The original source from which the image was constructed.
-    ///   - transform: The transform to use.
-    /// - Returns: The transformed image.
-    fileprivate func process(_ source: ImageRepresentable, using transform: ImageTransform?) -> UIImage {
-        guard let transform = transform else {
-            return self
-        }
-
-        return transform.transform(self, source: source)
     }
 }
