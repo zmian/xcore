@@ -38,6 +38,7 @@ final class CompositeImageFetcher: ImageFetcher {
             return
         }
 
+        imageView?.imageRepresentableSource = image.imageSource
         fetcher.fetch(image, in: imageView, callback)
     }
 }
@@ -52,7 +53,14 @@ extension UIImage {
 
 extension UIImageView {
     private struct AssociatedKey {
+        static var imageRepresentableSource = "imageRepresentableSource"
         static var imageFetcherCancelBlock = "imageFetcherCancelBlock"
+    }
+
+    /// The `ImageSourceType` object associated with the receiver.
+    var imageRepresentableSource: ImageSourceType? {
+        get { return associatedObject(&AssociatedKey.imageRepresentableSource) }
+        set { setAssociatedObject(&AssociatedKey.imageRepresentableSource, value: newValue) }
     }
 
     /// The image fetch cancel block for the current fetch request.

@@ -52,6 +52,19 @@ public enum ImageSourceType {
     }
 }
 
+extension ImageSourceType: Equatable {
+    public static func == (lhs: ImageSourceType, rhs: ImageSourceType) -> Bool {
+        switch (lhs, rhs) {
+            case (.uiImage(let lhsImage), .uiImage(let rhsImage)):
+                return lhsImage.isEqual(rhsImage)
+            case (.url(let lhsValue), .url(let rhsValue)):
+                return lhsValue == rhsValue
+            default:
+                return false
+        }
+    }
+}
+
 extension ImageSourceType {
     public enum CacheType {
         /// The image wasn't available in the cache, but was downloaded from the web.
