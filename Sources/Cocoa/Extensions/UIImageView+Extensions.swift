@@ -25,20 +25,6 @@
 import UIKit
 
 extension UIImageView {
-    /// Load the specified named image on **background thread**.
-    ///
-    /// - Parameters:
-    ///   - named:  The name of the image.
-    ///   - bundle: The bundle the image file or asset catalog is located in, pass `nil` to use the `main` bundle.
-    public func image(named: String, bundle: Bundle? = nil) {
-        DispatchQueue.global(qos: .userInteractive).async {
-            let image = UIImage(named: named, in: bundle, compatibleWith: nil)
-            DispatchQueue.main.async { [weak self] in
-                self?.image = image
-            }
-        }
-    }
-
     /// Create animated images. This does not cache the images in memory.
     /// Thus, less memory consumption for one of images.
     ///
@@ -79,25 +65,6 @@ extension UIImageView {
             delay(by: 0.5) {
                 completion?()
             }
-        }
-    }
-
-    /// Determines how the image is rendered.
-    /// The default rendering mode is `UIImageRenderingModeAutomatic`.
-    ///
-    /// `Int` is workaround since `@IBInspectable` doesn't support enums.
-    /// ```swift
-    /// Possible Values:
-    ///
-    /// UIImageRenderingMode.automatic      // 0
-    /// UIImageRenderingMode.alwaysOriginal // 1
-    /// UIImageRenderingMode.alwaysTemplate // 2
-    /// ```
-    @IBInspectable public var renderingMode: Int {
-        get { return image?.renderingMode.rawValue ?? UIImage.RenderingMode.automatic.rawValue }
-        set {
-            guard let renderingMode = UIImage.RenderingMode(rawValue: newValue) else { return }
-            image?.withRenderingMode(renderingMode)
         }
     }
 
