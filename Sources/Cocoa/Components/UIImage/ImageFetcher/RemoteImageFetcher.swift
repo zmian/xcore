@@ -47,12 +47,16 @@ final class RemoteImageFetcher: ImageFetcher {
             options: [.avoidAutoSetImage],
             progress: nil
         ) { image, data, error, cacheType, finished, url in
-                guard let image = image, finished else {
-                    callback(nil, .none)
-                    return
-                }
+            guard finished else {
+                return
+            }
 
-                callback(image, .init(cacheType))
+            guard let image = image else {
+                callback(nil, .none)
+                return
+            }
+
+            callback(image, .init(cacheType))
         }
 
         // Store the token cancel block so the request can be cancelled if needed.
