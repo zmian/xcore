@@ -127,10 +127,16 @@ extension UIImageView {
         }
 
         DispatchQueue.global(qos: .userInteractive).asyncSafe { [weak self] in
+            guard let strongSelf = self else { return }
+
             image = image.process(source, using: transform)
 
             DispatchQueue.main.asyncSafe { [weak self] in
-                guard let strongSelf = self else {
+                guard let strongSelf = self else { return }
+
+                // Ensure that we are not setting image to the incorrect image view
+                // instance in case it's being reused (e.g., UICollectionViewCell).
+                if source.imageSource != strongSelf.imageRepresentableSource {
                     return
                 }
 
