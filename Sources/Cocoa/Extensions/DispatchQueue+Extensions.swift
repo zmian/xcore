@@ -25,6 +25,25 @@
 import Foundation
 import Dispatch
 
+extension DispatchQueue {
+    private class var currentLabel: String? {
+        return OperationQueue.current?.underlyingQueue?.label
+    }
+
+    /// Submits a work item to a dispatch queue. If already on the dispatch queue then executes
+    /// the work item right away.
+    ///
+    /// - parameter execute: The work item to be invoked on the queue.
+    func asyncSafe(execute work: @escaping @convention(block) () -> Void) {
+        if DispatchQueue.currentLabel == label {
+            work()
+            return
+        }
+
+        async(execute: work)
+    }
+}
+
 extension DispatchTime {
     /// A convenience method to convert `TimeInterval` to `DispatchTime`.
     ///

@@ -41,16 +41,16 @@ extension UIImageView {
             return
         }
 
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+        DispatchQueue.global(qos: .userInteractive).asyncSafe { [weak self] in
             guard let strongSelf = self else { return }
             CompositeImageFetcher.fetch(imageRepresentable, in: strongSelf) { [weak self] image, cacheType in
                 guard let strongSelf = self else { return }
+                let animated = (alwaysAnimate || cacheType.possiblyDelayed)
                 strongSelf.postProcess(
                     image: image,
                     source: imageRepresentable,
                     transform: transform,
-                    alwaysAnimate: (alwaysAnimate || cacheType.isRemote),
-                    animationDuration: animationDuration,
+                    animationDuration: animated ? animationDuration : 0,
                     callback
                 )
             }
@@ -118,25 +118,25 @@ extension UIImageView {
 }
 
 extension UIImageView {
-    private func postProcess(image: UIImage?, source: ImageRepresentable, transform: ImageTransform?, alwaysAnimate: Bool, animationDuration: TimeInterval, _ callback: ((_ image: UIImage?) -> Void)?) {
+    private func postProcess(image: UIImage?, source: ImageRepresentable, transform: ImageTransform?, animationDuration: TimeInterval, _ callback: ((_ image: UIImage?) -> Void)?) {
         guard var image = image else {
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncSafe {
                 callback?(nil)
             }
             return
         }
 
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+        DispatchQueue.global(qos: .userInteractive).asyncSafe { [weak self] in
             image = image.process(source, using: transform)
 
-            DispatchQueue.main.async { [weak self] in
+            DispatchQueue.main.asyncSafe { [weak self] in
                 guard let strongSelf = self else {
                     return
                 }
 
                 defer { callback?(image) }
 
-                if alwaysAnimate {
+                if animationDuration > 0 {
                     strongSelf.alpha = 0
                     strongSelf.image = image
                     UIView.animate(withDuration: animationDuration) {

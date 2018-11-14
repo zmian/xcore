@@ -74,8 +74,8 @@ extension ImageSourceType {
             }
         }
 
-        var isRemote: Bool {
-            return self == .none
+        var possiblyDelayed: Bool {
+            return self != .memory
         }
     }
 }
