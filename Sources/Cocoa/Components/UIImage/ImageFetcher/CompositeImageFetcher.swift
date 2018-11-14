@@ -49,3 +49,24 @@ extension UIImage {
         fetchers.append(fetcher)
     }
 }
+
+extension UIImageView {
+    private struct AssociatedKey {
+        static var imageFetcherCancelBlock = "imageFetcherCancelBlock"
+    }
+
+    /// The image fetch cancel block for the current fetch request.
+    var _imageFetcherCancelBlock: (() -> Void)? {
+        get { return associatedObject(&AssociatedKey.imageFetcherCancelBlock) }
+        set { setAssociatedObject(&AssociatedKey.imageFetcherCancelBlock, value: newValue) }
+    }
+
+    /// Cancel any pending or in-flight image fetch/set request dispatched via
+    /// `setImage(_:transform:alwaysAnimate:animationDuration:_:)` method.
+    ///
+    /// - seealso: `setImage(_:transform:alwaysAnimate:animationDuration:_:)`
+    public func cancelSetImageRequest() {
+        sd_cancelCurrentImageLoad()
+        _imageFetcherCancelBlock?()
+    }
+}

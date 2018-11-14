@@ -49,7 +49,7 @@ final class LocalImageFetcher: ImageFetcher {
                     return
                 }
 
-                callback(image, .disk)
+                callback(image, .memory)
         }
     }
 }
