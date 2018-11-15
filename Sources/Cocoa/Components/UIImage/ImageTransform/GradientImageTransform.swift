@@ -34,7 +34,7 @@ final public class GradientImageTransform: ImageTransform {
     public var identifier: String {
         let hex = colors.map { $0.hex }.joined(separator: ",")
         let loc = locations?.map { "\($0)" }.joined(separator: ",") ?? "nil"
-        return "\(transformName)-type:(\(type.rawValue))-colors:(\(hex))-direction:(\(direction))-locations:(\(loc))-blendMode:(\(blendMode))"
+        return "\(transformName)-type:(\(type.rawValue))-colors:(\(hex))-direction:(\(direction))-locations:(\(loc))-blendMode:(\(blendMode.rawValue))"
     }
 
     /// Applies gradient color overlay to `self`.
