@@ -26,11 +26,19 @@ import UIKit
 
 final class CompositeImageFetcher: ImageFetcher {
     static func canHandle(_ image: ImageRepresentable) -> Bool {
-        return true
+        return image.imageSource.isValid
     }
 
     static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
-        // 1. Reverse fetchers so the third-party fecthers are always prioritized over built-in ones.
+        guard image.imageSource.isValid else {
+            #if DEBUG
+            Console.error("Unable to fetch image because of invalid image source.")
+            #endif
+            callback(nil, .none)
+            return
+        }
+
+        // 1. Reverse fetchers so the third-party fetchers are always prioritized over built-in ones.
         // 2. Find the first one that can handle the request.
         // 3. Fetch the requested image.
         guard let fetcher = UIImage.fetchers.reversed().first(where: { $0.canHandle(image) }) else {
