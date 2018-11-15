@@ -104,6 +104,16 @@ extension ImageRepresentable {
     public var bundle: Bundle? {
         return nil
     }
+
+    var cacheKey: String? {
+        switch imageSource {
+            case .uiImage:
+                return nil
+            case .url(let value):
+                let bundlePrefix = bundle?.bundleIdentifier ?? ""
+                return bundlePrefix + value
+        }
+    }
 }
 
 extension UIImage: ImageRepresentable {
