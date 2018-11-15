@@ -43,19 +43,16 @@ extension UIImageView {
         }
 
         cancelSetImageRequest()
-        DispatchQueue.global(qos: .userInteractive).asyncSafe { [weak self] in
+        CompositeImageFetcher.fetch(imageRepresentable, in: self) { [weak self] image, cacheType in
             guard let strongSelf = self else { return }
-            CompositeImageFetcher.fetch(imageRepresentable, in: strongSelf) { [weak self] image, cacheType in
-                guard let strongSelf = self else { return }
-                let animated = (alwaysAnimate || cacheType.possiblyDelayed)
-                strongSelf.postProcess(
-                    image: image,
-                    source: imageRepresentable,
-                    transform: transform,
-                    animationDuration: animated ? animationDuration : 0,
-                    callback
-                )
-            }
+            let animated = (alwaysAnimate || cacheType.possiblyDelayed)
+            strongSelf.postProcess(
+                image: image,
+                source: imageRepresentable,
+                transform: transform,
+                animationDuration: animated ? animationDuration : 0,
+                callback
+            )
         }
     }
 
@@ -131,24 +128,29 @@ extension UIImageView {
             return
         }
 
-        DispatchQueue.global(qos: .userInteractive).asyncSafe { [weak self] in
+        // Ensure that we are not setting image to the incorrect image view
+        // instance in case it's being reused (e.g., UICollectionViewCell).
+        if let imageSource = imageRepresentableSource, imageSource != source.imageSource {
+            return
+        }
+
+        guard let transform = transform else {
+            applyImage(image, animationDuration: animationDuration, callback)
+            return
+        }
+
+        DispatchQueue.global(qos: .userInteractive).syncSafe { [weak self] in
             guard let strongSelf = self else { return }
-
             image = image.applying(transform, source: source)
+            strongSelf.applyImage(image, animationDuration: animationDuration, callback)
+        }
+    }
 
-            DispatchQueue.main.asyncSafe { [weak self] in
-                // Ensure that we are not setting image to the incorrect image view
-                // instance in case it's being reused (e.g., UICollectionViewCell).
-                guard
-                    let strongSelf = self,
-                    source.imageSource == strongSelf.imageRepresentableSource
-                else {
-                    return
-                }
-
-                strongSelf.setImage(image, animationDuration: animationDuration)
-                callback?(image)
-            }
+    private func applyImage(_ image: UIImage, animationDuration: TimeInterval, _ callback: ((_ image: UIImage?) -> Void)?) {
+        DispatchQueue.main.asyncSafe { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.setImage(image, animationDuration: animationDuration)
+            callback?(image)
         }
     }
 }

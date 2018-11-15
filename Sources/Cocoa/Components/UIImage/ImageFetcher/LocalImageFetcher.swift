@@ -25,6 +25,8 @@
 import UIKit
 
 final class LocalImageFetcher: ImageFetcher {
+    private static let cache = NSCache<NSString, UIImage>()
+
     static func canHandle(_ image: ImageRepresentable) -> Bool {
         return !image.imageSource.isRemoteUrl
     }
@@ -39,17 +41,34 @@ final class LocalImageFetcher: ImageFetcher {
                     return
                 }
 
-                guard
-                    let url = URL(string: value),
-                    url.schemeType == .file,
-                    let data = try? Data(contentsOf: url),
-                    let image = UIImage(data: data)
-                else {
-                    callback(nil, .none)
+                let cacheKey = image.cacheKey as? NSString
+
+                if let cacheKey = cacheKey, let image = cache.object(forKey: cacheKey) {
+                    callback(image, .memory)
                     return
                 }
 
-                callback(image, .memory)
+                DispatchQueue.global(qos: .userInteractive).asyncSafe { [weak imageView] in
+                    guard
+                        let url = URL(string: value),
+                        url.schemeType == .file,
+                        let data = try? Data(contentsOf: url),
+                        let image = UIImage(data: data)
+                    else {
+                        DispatchQueue.main.asyncSafe {
+                            callback(nil, .none)
+                        }
+                        return
+                    }
+
+                    if let cacheKey = cacheKey {
+                        cache.setObject(image, forKey: cacheKey)
+                    }
+
+                    DispatchQueue.main.asyncSafe {
+                        callback(image, .disk)
+                    }
+                }
         }
     }
 }
