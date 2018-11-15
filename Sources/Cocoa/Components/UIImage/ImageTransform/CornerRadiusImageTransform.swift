@@ -27,6 +27,10 @@ import UIKit
 final public class CornerRadiusImageTransform: ImageTransform {
     private let cornerRadius: CGFloat
 
+    public var identifier: String {
+        return "\(transformName)-cornerRadius:(\(cornerRadius))"
+    }
+
     public init(cornerRadius: CGFloat) {
         self.cornerRadius = cornerRadius
     }

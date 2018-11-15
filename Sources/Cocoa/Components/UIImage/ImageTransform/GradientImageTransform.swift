@@ -31,6 +31,12 @@ final public class GradientImageTransform: ImageTransform {
     private let locations: [Double]?
     private let blendMode: CGBlendMode
 
+    public var identifier: String {
+        let hex = colors.map { $0.hex }.joined(separator: ",")
+        let loc = locations?.map { "\($0)" }.joined(separator: ",") ?? "nil"
+        return "\(transformName)-type:(\(type.rawValue))-colors:(\(hex))-direction:(\(direction))-locations:(\(loc))-blendMode:(\(blendMode))"
+    }
+
     /// Applies gradient color overlay to `self`.
     ///
     /// - Parameters:

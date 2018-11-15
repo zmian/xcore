@@ -47,6 +47,10 @@ public protocol ImageTransform: class {
 
 extension ImageTransform {
     public var identifier: String {
+        return transformName
+    }
+
+    var transformName: String {
         return NSStringFromClass(Self.self)
     }
 }

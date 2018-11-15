@@ -25,10 +25,12 @@
 import UIKit
 
 public final class BlockImageTransform: ImageTransform {
+    public let identifier: String
     private let block: (_ image: UIImage, _ source: ImageRepresentable) -> UIImage
 
-    public init(block: @escaping (_ image: UIImage, _ source: ImageRepresentable) -> UIImage) {
-        self.block = block
+    public init(identifier: String, _ transform: @escaping (_ image: UIImage, _ source: ImageRepresentable) -> UIImage) {
+        self.identifier = identifier
+        self.block = transform
     }
 
     public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
