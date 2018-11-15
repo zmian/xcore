@@ -28,16 +28,9 @@ import SDWebImage
 extension UIImage {
     /// Fetch an image from the given source.
     public class func fetch(_ source: ImageRepresentable, callback: @escaping (_ image: UIImage?) -> Void) {
-        guard source.imageSource.isValid else {
-            callback(nil)
-            return
-        }
-
-        DispatchQueue.global(qos: .userInteractive).async {
-            CompositeImageFetcher.fetch(source, in: nil) { image, _ in
-                DispatchQueue.main.async {
-                    callback(image)
-                }
+        CompositeImageFetcher.fetch(source, in: nil) { image, _ in
+            DispatchQueue.main.asyncSafe {
+                callback(image)
             }
         }
     }
@@ -53,25 +46,23 @@ extension UIImage {
             SDWebImageDownloader.shared().downloadImage(
                 with: object.url,
                 options: [],
-                progress: { receivedSize, expectedSize, targetUrl in
-                },
-                completed: { image, data, error, finished in
-                    downloadedImages += 1
+                progress: nil
+            ) { image, data, error, finished in
+                downloadedImages += 1
 
-                    if let image = image, finished {
-                        if let index = (orderedObjects.index { $0.url == object.url }) {
-                            orderedObjects[index].image = image
-                        }
-                    }
-
-                    if downloadedImages == urls.count {
-                        let imagesAndUrls = orderedObjects.filter { $0.image != nil }.compactMap { (url: $0.url, image: $0.image!) }
-                        DispatchQueue.main.async {
-                            callback(imagesAndUrls)
-                        }
+                if let image = image, finished {
+                    if let index = (orderedObjects.index { $0.url == object.url }) {
+                        orderedObjects[index].image = image
                     }
                 }
-            )
+
+                if downloadedImages == urls.count {
+                    let imagesAndUrls = orderedObjects.filter { $0.image != nil }.compactMap { (url: $0.url, image: $0.image!) }
+                    DispatchQueue.main.asyncSafe {
+                        callback(imagesAndUrls)
+                    }
+                }
+            }
         }
     }
 }

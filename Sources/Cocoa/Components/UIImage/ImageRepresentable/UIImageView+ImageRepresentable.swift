@@ -36,13 +36,14 @@ extension UIImageView {
     ///                        the image is set without animation. The default value is `.slow`.
     ///   - callback:          A block to invoke when finished setting the image.
     public func setImage(_ image: ImageRepresentable?, transform: ImageTransform? = nil, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, _ callback: ((_ image: UIImage?) -> Void)? = nil) {
+        cancelSetImageRequest()
+
         guard let imageRepresentable = image, imageRepresentable.imageSource.isValid else {
             self.image = nil
             callback?(nil)
             return
         }
 
-        cancelSetImageRequest()
         CompositeImageFetcher.fetch(imageRepresentable, in: self) { [weak self] image, cacheType in
             guard let strongSelf = self else { return }
             let animated = (alwaysAnimate || cacheType.possiblyDelayed)

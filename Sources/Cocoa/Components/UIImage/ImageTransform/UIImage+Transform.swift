@@ -88,25 +88,6 @@ extension UIImage {
         return applying(.scaled(to: newSize, scalingMode: scalingMode, tintColor: tintColor))
     }
 
-    /// Scales an image to fit within a bounds of the given size.
-    ///
-    /// - Parameters:
-    ///   - newSize: The size of the bounds the image must fit within.
-    ///   - scalingMode: The desired scaling mode. The default value is `.aspectFill`.
-    ///   - tintColor: An optional tint color to apply. The default value is `nil`.
-    ///   - completionHandler: The completion handler to invoke on the `.main` thread when the scaled operation completes.
-    public func scaled(to newSize: CGSize, scalingMode: ResizeImageTransform.ScalingMode = .aspectFill, tintColor: UIColor? = nil, completionHandler: @escaping (_ scaledImage: UIImage) -> Void) {
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            guard let strongSelf = self else { return }
-
-            let finalImage = strongSelf.scaled(to: newSize, scalingMode: scalingMode, tintColor: tintColor)
-
-            DispatchQueue.main.async {
-                completionHandler(finalImage)
-            }
-        }
-    }
-
     /// Applies gradient color overlay to `self`.
     ///
     /// - Parameters:
