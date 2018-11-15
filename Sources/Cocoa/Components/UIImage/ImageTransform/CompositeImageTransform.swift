@@ -44,22 +44,14 @@ final public class CompositeImageTransform: ImageTransform, ExpressibleByArrayLi
 
         transforms.remove(at: index)
     }
-
-    public static func == (lhs: CompositeImageTransform, rhs: CompositeImageTransform) -> Bool {
-        let lhs = lhs.transforms.map { $0.identifier }.joined()
-        let rhs = rhs.transforms.map { $0.identifier }.joined()
-        return lhs == rhs
-    }
 }
 
 extension CompositeImageTransform {
+    public var identifier: String {
+        return transforms.map { $0.identifier }.joined(separator: "_")
+    }
+
     public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
-        var inputImage = image
-
-        for transform in transforms {
-            inputImage = transform.transform(inputImage)
-        }
-
-        return inputImage
+        return transforms.reduce(image) { $1.transform($0, source: source) }
     }
 }

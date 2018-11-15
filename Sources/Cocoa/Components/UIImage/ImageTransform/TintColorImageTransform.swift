@@ -28,6 +28,10 @@ import UIKit
 final public class TintColorImageTransform: ImageTransform {
     private let tintColor: UIColor
 
+    public var identifier: String {
+        return "\(transformName)-tintColor:(\(tintColor.hex))"
+    }
+
     public init(tintColor: UIColor) {
         self.tintColor = tintColor
     }

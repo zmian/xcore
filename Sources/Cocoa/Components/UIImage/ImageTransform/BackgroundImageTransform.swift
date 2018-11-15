@@ -29,6 +29,10 @@ final public class BackgroundImageTransform: ImageTransform {
     private let preferredSize: CGSize
     private let alignment: UIControl.ContentHorizontalAlignment
 
+    public var identifier: String {
+        return "\(transformName)-color:(\(color.hex))-preferredSize:(\(preferredSize.width)x\(preferredSize.height))-alignment:(\(alignment))"
+    }
+
     public init(color: UIColor, preferredSize: CGSize, alignment: UIControl.ContentHorizontalAlignment = .center) {
         self.color = color
         self.preferredSize = preferredSize

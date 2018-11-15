@@ -41,14 +41,14 @@ final class LocalImageFetcher: ImageFetcher {
                     return
                 }
 
-                let cacheKey = image.cacheKey as? NSString
+                let cacheKey = image.cacheKey as NSString?
 
                 if let cacheKey = cacheKey, let image = cache.object(forKey: cacheKey) {
                     callback(image, .memory)
                     return
                 }
 
-                DispatchQueue.global(qos: .userInteractive).asyncSafe { [weak imageView] in
+                DispatchQueue.global(qos: .userInteractive).asyncSafe {
                     guard
                         let url = URL(string: value),
                         url.schemeType == .file,

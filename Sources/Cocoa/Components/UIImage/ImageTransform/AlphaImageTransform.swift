@@ -27,6 +27,10 @@ import UIKit
 final public class AlphaImageTransform: ImageTransform {
     private let alpha: CGFloat
 
+    public var identifier: String {
+        return "\(transformName)-alpha:(\(alpha))"
+    }
+
     public init(alpha: CGFloat) {
         self.alpha = alpha
     }

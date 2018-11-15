@@ -25,16 +25,20 @@
 import UIKit
 
 final public class ResizeImageTransform: ImageTransform {
-    private let newSize: CGSize
+    private let size: CGSize
     private let scalingMode: ScalingMode
 
-    public init(to newSize: CGSize, scalingMode: ScalingMode = .aspectFill) {
-        self.newSize = newSize
+    public var identifier: String {
+        return "\(transformName)-size:(\(size.width)x\(size.height))-scalingMode:(\(scalingMode))"
+    }
+
+    public init(to size: CGSize, scalingMode: ScalingMode = .aspectFill) {
+        self.size = size
         self.scalingMode = scalingMode
     }
 
     public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
-        let rect = scalingMode.rect(newSize: newSize, and: image.size)
+        let rect = scalingMode.rect(newSize: size, and: image.size)
         return UIGraphicsImageRenderer(bounds: rect).image { _ in
             image.draw(in: rect)
         }
