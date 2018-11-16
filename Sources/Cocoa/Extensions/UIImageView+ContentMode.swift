@@ -65,6 +65,20 @@ extension UIImageView {
 }
 
 extension UIImageView {
+    @objc private func swizzled_setHighlightedImage(_ image: UIImage?) {
+        self.swizzled_setHighlightedImage(image)
+        // Force update the highlighted image.
+        //
+        // The highlighted image doesn't change if it's changed after the
+        // `isHighlighted` property is already set to `true`.
+        if isHighlighted {
+            isHighlighted = false
+            isHighlighted = true
+        }
+    }
+}
+
+extension UIImageView {
     @objc private func swizzled_layoutSubviews() {
         self.swizzled_layoutSubviews()
         adjustContentModeIfNeeded()
@@ -86,6 +100,12 @@ extension UIImageView {
             UIImageView.self,
             originalSelector: #selector(UIImageView.layoutSubviews),
             swizzledSelector: #selector(UIImageView.swizzled_layoutSubviews)
+        )
+
+        swizzle(
+            UIImageView.self,
+            originalSelector: #selector(setter: UIImageView.highlightedImage),
+            swizzledSelector: #selector(UIImageView.swizzled_setHighlightedImage(_:))
         )
     }
 }
