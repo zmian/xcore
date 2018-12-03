@@ -59,8 +59,18 @@ extension Array {
         }
     }
 
-    public func get<T>(_ type: T.Type) -> T? {
+    public func firstElement<T>(type: T.Type) -> T? {
         for element in self {
+            if let element = element as? T {
+                return element
+            }
+        }
+
+        return nil
+    }
+
+    public func lastElement<T>(type: T.Type) -> T? {
+        for element in self.reversed() {
             if let element = element as? T {
                 return element
             }
@@ -96,7 +106,10 @@ extension Array where Element: Equatable {
     /// - Returns: `true` if moved; otherwise, `false`.
     @discardableResult
     public mutating func move(_ element: Element, to index: Int) -> Bool {
-        guard remove(element) else { return false }
+        guard remove(element) else {
+            return false
+        }
+
         insert(element, at: index)
         return true
     }
@@ -106,22 +119,43 @@ extension Array where Element: NSObjectProtocol {
     /// Returns the first index where the specified value appears in the
     /// collection.
     ///
-    /// After using `index(of:)` to find the position of a particular element in
+    /// After using `firstIndex(of:)` to find the position of a particular element in
     /// a collection, you can use it to access the element by subscripting. This
     /// example shows how you can pop one of the view controller from the `UINavigationController`.
     ///
     /// ```swift
     /// let navigationController = UINavigationController()
-    /// if let index = navigationController.viewControllers.index(of: SearchViewController.self) {
+    /// if let index = navigationController.viewControllers.firstIndex(of: SearchViewController.self) {
     ///     navigationController.popToViewController(at: index, animated: true)
     /// }
     /// ```
     ///
-    /// - Parameter element: An element to search for in the collection.
+    /// - Parameter elementType: An element type to search for in the collection.
     /// - Returns: The first index where `element` is found. If `element` is not
     ///   found in the collection, returns `nil`.
-    public func index(of elementType: Element.Type) -> Int? {
-        return index { $0.isKind(of: elementType) }
+    public func firstIndex(of elementType: Element.Type) -> Int? {
+        return firstIndex { $0.isKind(of: elementType) }
+    }
+
+    /// Returns the last index where the specified value appears in the
+    /// collection.
+    ///
+    /// After using `lastIndex(of:)` to find the position of a particular element in
+    /// a collection, you can use it to access the element by subscripting. This
+    /// example shows how you can pop one of the view controller from the `UINavigationController`.
+    ///
+    /// ```swift
+    /// let navigationController = UINavigationController()
+    /// if let index = navigationController.viewControllers.lastIndex(of: SearchViewController.self) {
+    ///     navigationController.popToViewController(at: index, animated: true)
+    /// }
+    /// ```
+    ///
+    /// - Parameter elementType: An element type to search for in the collection.
+    /// - Returns: The last index where `element` is found. If `element` is not
+    ///   found in the collection, returns `nil`.
+    public func lastIndex(of elementType: Element.Type) -> Int? {
+        return lastIndex { $0.isKind(of: elementType) }
     }
 
     /// Returns a boolean value indicating whether the sequence contains an element
@@ -147,14 +181,31 @@ extension Array where Element: NSObjectProtocol {
     }
 }
 
-extension Array where Element: RawRepresentable {
-    /// Return an array containing all corresponding `rawValue`s of `self`.
-    public var rawValues: [Element.RawValue] {
-        return map { $0.rawValue }
-    }
-}
-
 extension Array where Element: Equatable {
+    /// Sorts the collection in place, using the given preferred order as the comparison between elements.
+    ///
+    /// ```swift
+    /// let preferredOrder = ["Z", "A", "B", "C", "D"]
+    /// var alphabets = ["D", "C", "B", "A", "Z", "W"]
+    /// alphabets.sort(by: preferredOrder)
+    /// print(alphabets)
+    /// // Prints ["Z", "A", "B", "C", "D", "W"]
+    /// ```
+    ///
+    /// - Parameter preferredOrder: The ordered elements, which will be used to sort the sequence’s elements.
+    public mutating func sort(by preferredOrder: [Element]) {
+        return sort { (a, b) -> Bool in
+            guard
+                let first = preferredOrder.index(of: a),
+                let second = preferredOrder.index(of: b)
+            else {
+                return false
+            }
+
+            return first < second
+        }
+    }
+
     // Credit: https://stackoverflow.com/a/51683055
 
     /// Returns the elements of the sequence, sorted using the given preferred order as the
@@ -182,28 +233,34 @@ extension Array where Element: Equatable {
             return first < second
         }
     }
+}
 
-    /// Sorts the collection in place, using the given preferred order as the comparison between elements.
+extension Array {
+    /// Returns an array by removing all the elements that satisfy the given predicate.
     ///
-    /// ```swift
-    /// let preferredOrder = ["Z", "A", "B", "C", "D"]
-    /// var alphabets = ["D", "C", "B", "A", "Z", "W"]
-    /// alphabets.sort(by: preferredOrder)
-    /// print(alphabets)
-    /// // Prints ["Z", "A", "B", "C", "D", "W"]
-    /// ```
+    /// Use this method to remove every element in a collection that meets
+    /// particular criteria. This example removes all the odd values from an
+    /// array of numbers:
     ///
-    /// - Parameter preferredOrder: The ordered elements, which will be used to sort the sequence’s elements.
-    public mutating func sort(by preferredOrder: [Element]) {
-        return sort { (a, b) -> Bool in
-            guard
-                let first = preferredOrder.index(of: a),
-                let second = preferredOrder.index(of: b)
-            else {
-                return false
-            }
+    ///     var numbers = [5, 6, 7, 8, 9, 10, 11]
+    ///     let removedNumbers = numbers.removingAll(where: { $0 % 2 == 1 })
+    ///
+    ///     // numbers == [6, 8, 10]
+    ///     // removedNumbers == [5, 7, 9, 11]
+    ///
+    /// - Parameter predicate: A closure that takes an element of the
+    ///   sequence as its argument and returns a Boolean value indicating
+    ///   whether the element should be removed from the collection.
+    public mutating func removingAll(where predicate: (Element) throws -> Bool) rethrows -> [Element] {
+        let result = try filter(predicate)
+        try removeAll(where: predicate)
+        return result
+    }
+}
 
-            return first < second
-        }
+extension Array where Element: RawRepresentable {
+    /// Return an array containing all corresponding `rawValue`s of `self`.
+    public var rawValues: [Element.RawValue] {
+        return map { $0.rawValue }
     }
 }
