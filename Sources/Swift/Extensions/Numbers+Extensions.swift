@@ -27,12 +27,10 @@ import Foundation
 // MARK: Int
 
 extension Int {
-    private static let numberFormatter: NumberFormatter = {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.paddingPosition = .beforePrefix
-        numberFormatter.paddingCharacter = "0"
-        return numberFormatter
-    }()
+    private static let numberFormatter = NumberFormatter().apply {
+        $0.paddingPosition = .beforePrefix
+        $0.paddingCharacter = "0"
+    }
 
     public func pad(by amount: Int) -> String {
         Int.numberFormatter.minimumIntegerDigits = amount
@@ -93,14 +91,12 @@ extension Double {
     }
 
     // Adopted from: http://stackoverflow.com/a/35504720
-    private static let abbrevationNumberFormatter: NumberFormatter = {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.allowsFloats = true
-        numberFormatter.minimumIntegerDigits = 1
-        numberFormatter.minimumFractionDigits = 0
-        numberFormatter.maximumFractionDigits = 1
-        return numberFormatter
-    }()
+    private static let abbrevationNumberFormatter = NumberFormatter().apply {
+        $0.allowsFloats = true
+        $0.minimumIntegerDigits = 1
+        $0.minimumFractionDigits = 0
+        $0.maximumFractionDigits = 1
+    }
 
     private typealias Abbrevation = (suffix: String, threshold: Double, divisor: Double)
 

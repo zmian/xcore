@@ -50,12 +50,10 @@ extension Date {
 
     // MARK: UTC
 
-    private static let utcDateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = .utc
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter
-    }()
+    private static let utcDateFormatter = DateFormatter().apply {
+        $0.timeZone = .utc
+        $0.dateFormat = "yyyy-MM-dd"
+    }
 
     public var utc: Date {
         let dateString = Date.utcDateFormatter.string(from: self)
