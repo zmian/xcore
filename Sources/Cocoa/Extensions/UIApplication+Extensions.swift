@@ -48,6 +48,15 @@ extension UIApplication {
     }
 }
 
+extension UIApplication {
+    /// A property to determine whether it's the Main App or App Extension target.
+    ///
+    /// - [Creating an App Extension](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionCreation.html)
+    public static var isAppExtension: Bool {
+        return Bundle.main.bundlePath.hasSuffix(".appex")
+    }
+}
+
 // MARK: TopViewController
 
 extension UIApplication {
