@@ -108,56 +108,56 @@ import UIKit
 
     open func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
         let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(radius))
-        let mask = CAShapeLayer()
-        mask.path = path.cgPath
-        layer.mask = mask
         layer.masksToBounds = true
+        layer.mask = CAShapeLayer().apply {
+            $0.path = path.cgPath
+        }
     }
 
     // MARK: Fade Content
 
     @discardableResult
     open func fadeHead(rect: CGRect, startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 0.03)) -> CAGradientLayer {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = rect
-        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.white.cgColor]
-        gradientLayer.startPoint = startPoint
-        gradientLayer.endPoint = endPoint
-        layer.mask = gradientLayer
-        return gradientLayer
+        return CAGradientLayer().apply {
+            $0.frame = rect
+            $0.colors = [UIColor.clear.cgColor, UIColor.white.cgColor]
+            $0.startPoint = startPoint
+            $0.endPoint = endPoint
+            layer.mask = $0
+        }
     }
 
     @discardableResult
     open func fadeTail(rect: CGRect, startPoint: CGPoint = CGPoint(x: 0.5, y: 0.93), endPoint: CGPoint = CGPoint(x: 0.5, y: 1)) -> CAGradientLayer {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = rect
-        gradientLayer.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
-        gradientLayer.startPoint = startPoint
-        gradientLayer.endPoint = endPoint
-        layer.mask = gradientLayer
-        return gradientLayer
+        return CAGradientLayer().apply {
+            $0.frame = rect
+            $0.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
+            $0.startPoint = startPoint
+            $0.endPoint = endPoint
+            layer.mask = $0
+        }
     }
 
     @discardableResult
     open func addGradient(_ colors: [UIColor], startPoint: CGPoint = CGPoint(x: 0, y: 1), endPoint: CGPoint = CGPoint(x: 1, y: 1), locations: [Int] = [0, 1]) -> CAGradientLayer {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colors.map { $0.cgColor }
-        gradientLayer.startPoint = startPoint
-        gradientLayer.endPoint = endPoint
-        gradientLayer.locations = locations.map { NSNumber(value: $0) }
-        gradientLayer.frame.size = frame.size
-        gradientLayer.cornerRadius = layer.cornerRadius
-        layer.insertSublayer(gradientLayer, at: 0)
-        return gradientLayer
+        return CAGradientLayer().apply {
+            $0.colors = colors.map { $0.cgColor }
+            $0.startPoint = startPoint
+            $0.endPoint = endPoint
+            $0.locations = locations.map { NSNumber(value: $0) }
+            $0.frame.size = frame.size
+            $0.cornerRadius = layer.cornerRadius
+            layer.insertSublayer($0, at: 0)
+        }
     }
 
     @discardableResult
     open func addOverlay(color: UIColor) -> UIView {
-        let overlay = UIView()
-        overlay.backgroundColor = color
-        addSubview(overlay)
-        NSLayoutConstraint.constraintsForViewToFillSuperview(overlay).activate()
-        return overlay
+        return UIView().apply {
+            $0.backgroundColor = color
+            addSubview($0)
+            NSLayoutConstraint.constraintsForViewToFillSuperview($0).activate()
+        }
     }
 
     // Credit: http://stackoverflow.com/a/23157272
@@ -165,67 +165,76 @@ import UIKit
     open func addBorder(edges: UIRectEdge, color: UIColor = .white, thickness: CGFloat = 1, padding: UIEdgeInsets = .zero) -> [UIView] {
         var borders = [UIView]()
         let metrics = ["thickness": thickness, "paddingTop": padding.top, "paddingLeft": padding.left, "paddingBottom": padding.bottom, "paddingRight": padding.right]
+        let allEdges = edges.contains(.all)
 
         func border() -> UIView {
-            let border = UIView(frame: .zero)
-            border.backgroundColor = color
-            border.translatesAutoresizingMaskIntoConstraints = false
-            return border
+            return UIView().apply {
+                $0.backgroundColor = color
+                $0.translatesAutoresizingMaskIntoConstraints = false
+            }
         }
 
-        if edges.contains(.top) || edges.contains(.all) {
+        if edges.contains(.top) || allEdges {
             let top = border()
             addSubview(top)
             NSLayoutConstraint.constraints(withVisualFormat: "V:|-paddingTop-[top(==thickness)]",
                 options: [],
                 metrics: metrics,
-                views: ["top": top]).activate()
+                views: ["top": top]
+            ).activate()
             NSLayoutConstraint.constraints(withVisualFormat: "H:|-paddingLeft-[top]-paddingRight-|",
                 options: [],
                 metrics: metrics,
-                views: ["top": top]).activate()
+                views: ["top": top]
+            ).activate()
             borders.append(top)
         }
 
-        if edges.contains(.left) || edges.contains(.all) {
+        if edges.contains(.left) || allEdges {
             let left = border()
             addSubview(left)
             NSLayoutConstraint.constraints(withVisualFormat: "H:|-paddingLeft-[left(==thickness)]",
                 options: [],
                 metrics: metrics,
-                views: ["left": left]).activate()
+                views: ["left": left]
+            ).activate()
             NSLayoutConstraint.constraints(withVisualFormat: "V:|-paddingTop-[left]-paddingBottom-|",
                 options: [],
                 metrics: metrics,
-                views: ["left": left]).activate()
+                views: ["left": left]
+            ).activate()
             borders.append(left)
         }
 
-        if edges.contains(.right) || edges.contains(.all) {
+        if edges.contains(.right) || allEdges {
             let right = border()
             addSubview(right)
             NSLayoutConstraint.constraints(withVisualFormat: "H:[right(==thickness)]-paddingRight-|",
                 options: [],
                 metrics: metrics,
-                views: ["right": right]).activate()
+                views: ["right": right]
+            ).activate()
             NSLayoutConstraint.constraints(withVisualFormat: "V:|-paddingTop-[right]-paddingBottom-|",
                 options: [],
                 metrics: metrics,
-                views: ["right": right]).activate()
+                views: ["right": right]
+            ).activate()
             borders.append(right)
         }
 
-        if edges.contains(.bottom) || edges.contains(.all) {
+        if edges.contains(.bottom) || allEdges {
             let bottom = border()
             addSubview(bottom)
             NSLayoutConstraint.constraints(withVisualFormat: "V:[bottom(==thickness)]-paddingBottom-|",
                 options: [],
                 metrics: metrics,
-                views: ["bottom": bottom]).activate()
+                views: ["bottom": bottom]
+            ).activate()
             NSLayoutConstraint.constraints(withVisualFormat: "H:|-paddingLeft-[bottom]-paddingRight-|",
                 options: [],
                 metrics: metrics,
-                views: ["bottom": bottom]).activate()
+                views: ["bottom": bottom]
+            ).activate()
             borders.append(bottom)
         }
 
@@ -267,13 +276,14 @@ import UIKit
     ///     current state, which might not include recent changes. The default value is `false`.
     /// - Returns: `UIImageView` of the snapshot.
     open func snapshotImageView(afterScreenUpdates: Bool = false) -> UIImageView {
-        let imageView = UIImageView(image: snapshotImage(afterScreenUpdates: afterScreenUpdates))
-        imageView.clipsToBounds = true
-        imageView.borderColor = borderColor
-        imageView.borderWidth = borderWidth
-        imageView.cornerRadius = cornerRadius
-        imageView.contentMode = contentMode
-        return imageView
+        let image = snapshotImage(afterScreenUpdates: afterScreenUpdates)
+        return UIImageView(image: image).apply {
+            $0.clipsToBounds = true
+            $0.borderColor = borderColor
+            $0.borderWidth = borderWidth
+            $0.cornerRadius = cornerRadius
+            $0.contentMode = contentMode
+        }
     }
 }
 
@@ -531,6 +541,9 @@ extension UIView {
 }
 
 public func ==(lhs: AnyObject?, rhs: UIView) -> Bool {
-    guard let lhs = lhs as? UIView else { return false }
+    guard let lhs = lhs as? UIView else {
+        return false
+    }
+
     return lhs == rhs
 }
