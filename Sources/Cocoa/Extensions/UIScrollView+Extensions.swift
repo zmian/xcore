@@ -60,6 +60,15 @@ extension UIScrollView {
 
         return .unknown
     }
+
+    public var isScrolling: Bool {
+        switch currentScrollingDirection {
+            case .up, .down, .left, .right:
+                return true
+            case .none, .unknown:
+                return false
+        }
+    }
 }
 
 extension UIScrollView {
