@@ -97,7 +97,7 @@ extension SiriShortcuts {
 
         /// Remove shortcuts using the intent custom identifiers.
         public func remove(identifiers: [String]) {
-            intents.removeAll { (intent) -> Bool in
+            intents.removeAll { intent -> Bool in
                 if let customIdentifier = intent.customIdentifier, identifiers.contains(customIdentifier) {
                     return true
                 }
@@ -108,7 +108,7 @@ extension SiriShortcuts {
 
         /// Remove shortcuts using the intent group identifier.
         public func remove(groupIdentifier: String) {
-            intents.removeAll { (intent) -> Bool in
+            intents.removeAll { intent -> Bool in
                 if let intentGroupIdentifier = intent.groupIdentifier, intentGroupIdentifier == groupIdentifier {
                     return true
                 }

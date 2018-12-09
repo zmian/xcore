@@ -62,4 +62,12 @@ final class RemoteImageFetcher: ImageFetcher {
         // Store the token cancel block so the request can be cancelled if needed.
         imageView?._imageFetcherCancelBlock = token?.cancel
     }
+
+    static func removeCache() {
+        SDWebImageManager.shared().imageCache?.apply {
+            $0.clearMemory()
+            $0.clearDisk()
+            $0.deleteOldFiles()
+        }
+    }
 }
