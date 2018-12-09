@@ -41,48 +41,12 @@ final class CompositeImageFetcher: ImageFetcher {
         // 1. Reverse fetchers so the third-party fetchers are always prioritized over built-in ones.
         // 2. Find the first one that can handle the request.
         // 3. Fetch the requested image.
-        guard let fetcher = UIImage.fetchers.reversed().first(where: { $0.canHandle(image) }) else {
+        guard let fetcher = UIImage.Fetcher.registered.reversed().first(where: { $0.canHandle(image) }) else {
             callback(nil, .none)
             return
         }
 
         imageView?.imageRepresentableSource = image.imageSource
         fetcher.fetch(image, in: imageView, callback)
-    }
-}
-
-extension UIImage {
-    fileprivate static var fetchers: [ImageFetcher.Type] = [RemoteImageFetcher.self, LocalImageFetcher.self]
-
-    public static func register(_ fetcher: ImageFetcher.Type) {
-        fetchers.append(fetcher)
-    }
-}
-
-extension UIImageView {
-    private struct AssociatedKey {
-        static var imageRepresentableSource = "imageRepresentableSource"
-        static var imageFetcherCancelBlock = "imageFetcherCancelBlock"
-    }
-
-    /// The `ImageSourceType` object associated with the receiver.
-    var imageRepresentableSource: ImageSourceType? {
-        get { return associatedObject(&AssociatedKey.imageRepresentableSource) }
-        set { setAssociatedObject(&AssociatedKey.imageRepresentableSource, value: newValue) }
-    }
-
-    /// The image fetch cancel block for the current fetch request.
-    var _imageFetcherCancelBlock: (() -> Void)? {
-        get { return associatedObject(&AssociatedKey.imageFetcherCancelBlock) }
-        set { setAssociatedObject(&AssociatedKey.imageFetcherCancelBlock, value: newValue) }
-    }
-
-    /// Cancel any pending or in-flight image fetch/set request dispatched via
-    /// `setImage(_:transform:alwaysAnimate:animationDuration:_:)` method.
-    ///
-    /// - seealso: `setImage(_:transform:alwaysAnimate:animationDuration:_:)`
-    public func cancelSetImageRequest() {
-        sd_cancelCurrentImageLoad()
-        _imageFetcherCancelBlock?()
     }
 }
