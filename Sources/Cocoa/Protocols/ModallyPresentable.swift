@@ -30,11 +30,23 @@ public protocol ModallyPresentable {
     /// button item to `self`.
     ///
     /// The default value is `true`.
-    var addCancelButton: Bool { get }
+    var addCancelButtonWhenModallyPresented: Bool { get }
+
+    /// Returns the class used to create the `UINavigationController` instance
+    /// for this view controller.
+    ///
+    /// The default value is `UINavigationController.self`.
+    var navigationControllerClassWhenModallyPresented: UINavigationController.Type { get }
+}
+
+extension ModallyPresentable {
+    public var navigationControllerClassWhenModallyPresented: UINavigationController.Type {
+        return UINavigationController.self
+    }
 }
 
 extension ModallyPresentable where Self: UIViewController {
-    public var addCancelButton: Bool {
+    public var addCancelButtonWhenModallyPresented: Bool {
         return true
     }
 
@@ -48,16 +60,18 @@ extension ModallyPresentable where Self: UIViewController {
             return
         }
 
-        if addCancelButton {
+        if addCancelButtonWhenModallyPresented {
             navigationItem.leftBarButtonItem = cancelButtonItem()
         }
+
+        let NavigationController = navigationControllerClassWhenModallyPresented
 
         // There is bug in `tableView:didSelectRowAtIndexPath` that causes delay in presenting
         // `UIAlertController` and wrapping the `presentViewController:` call in `DispatchQueue.main.async` fixes it.
         //
         // http://openradar.appspot.com/19285091
         DispatchQueue.main.async { [weak presentingViewController] in
-            let nvc = UINavigationController(rootViewController: self)
+            let nvc = NavigationController.init(rootViewController: self)
             presentingViewController?.present(nvc, animated: true)
         }
     }
