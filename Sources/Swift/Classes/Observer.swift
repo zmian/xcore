@@ -64,6 +64,16 @@ open class Observers {
         }
     }
 
+    open var count: Int {
+        flatten()
+        return observers.count
+    }
+
+    open var isEmpty: Bool {
+        flatten()
+        return observers.isEmpty
+    }
+
     // MARK: Notify API
 
     /// A boolean value to determine whether the notifications should be sent.
