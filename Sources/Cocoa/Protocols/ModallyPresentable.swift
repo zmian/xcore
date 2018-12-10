@@ -26,11 +26,8 @@ import UIKit
 
 /// Presents a view controller modally.
 public protocol ModallyPresentable {
-    /// A boolean property to determine whether to add cancel bar
-    /// button item to `self`.
-    ///
-    /// The default value is `true`.
-    var addCancelButtonWhenModallyPresented: Bool { get }
+    /// Returns a bar button item that dismisses `self`.
+    func dismissBarButtonItem() -> UIBarButtonItem
 
     /// Returns the class used to create the `UINavigationController` instance
     /// for this view controller.
@@ -46,8 +43,14 @@ extension ModallyPresentable {
 }
 
 extension ModallyPresentable where Self: UIViewController {
-    public var addCancelButtonWhenModallyPresented: Bool {
-        return true
+    /// Returns a bar button item that dismisses `self`.
+    public func dismissBarButtonItem() -> UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .cancel).apply {
+            $0.accessibilityIdentifier = "dismissButton"
+            $0.addAction { [weak self] _ in
+                self?.dismiss(animated: true)
+            }
+        }
     }
 
     /// Presents a view controller modally.
@@ -60,9 +63,7 @@ extension ModallyPresentable where Self: UIViewController {
             return
         }
 
-        if addCancelButtonWhenModallyPresented {
-            navigationItem.leftBarButtonItem = cancelButtonItem()
-        }
+        navigationItem.leftBarButtonItem = dismissBarButtonItem()
 
         let NavigationController = navigationControllerClassWhenModallyPresented
 
@@ -73,16 +74,6 @@ extension ModallyPresentable where Self: UIViewController {
         DispatchQueue.main.async { [weak presentingViewController] in
             let nvc = NavigationController.init(rootViewController: self)
             presentingViewController?.present(nvc, animated: true)
-        }
-    }
-
-    /// Returns a bar button item that dismisses `self`.
-    private func cancelButtonItem() -> UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .cancel).apply {
-            $0.accessibilityIdentifier = "dismissButton"
-            $0.addAction { [weak self] _ in
-                self?.dismiss(animated: true)
-            }
         }
     }
 }
