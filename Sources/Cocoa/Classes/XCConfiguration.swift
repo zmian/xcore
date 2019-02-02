@@ -76,8 +76,12 @@ extension XCConfiguration: Equatable {
     }
 }
 
+// MARK: Convenience UIKit Initializers
+
 extension UILabel {
-    public convenience init(style: XCConfiguration<UILabel>, text: String? = nil) {
+    public typealias Style = XCConfiguration<UILabel>
+
+    public convenience init(style: Style, text: String? = nil) {
         self.init()
         self.text = text
         style.configure(self)
@@ -90,11 +94,31 @@ extension UILabel {
 }
 
 extension UIImageView {
-    public convenience init(style: XCConfiguration<UIImageView>) {
+    public typealias Style = XCConfiguration<UIImageView>
+
+    public convenience init(style: Style) {
         self.init()
         style.configure(self)
     }
 }
+
+extension UIBarButtonItem {
+    public convenience init(style: XCConfiguration<UIBarButtonItem>) {
+        self.init()
+        style.configure(self)
+    }
+}
+
+extension UIStackView {
+    public typealias Style = XCConfiguration<UIStackView>
+
+    public convenience init(style: Style) {
+        self.init()
+        style.configure(self)
+    }
+}
+
+// MARK: With
 
 public protocol With {}
 

@@ -216,6 +216,18 @@ extension CGSize: ExpressibleByIntegerLiteral {
 // MARK: CGSize - Extensions
 
 extension CGSize {
+    /// Returns the lesser of width and height.
+    public var min: CGFloat {
+        return Swift.min(width, height)
+    }
+
+    /// Returns the greater of width and height.
+    public var max: CGFloat {
+        return Swift.max(width, height)
+    }
+}
+
+extension CGSize {
     public init(_ value: CGFloat) {
         self = CGSize(width: value, height: value)
     }

@@ -96,6 +96,6 @@ extension UIDevice {
             return biometryType
         }
 
-        return DeviceType.iPhoneX ? .faceID : .touchID
+        return modelType.screenSize.iPhoneXSeries ? .faceID : .touchID
     }
 }

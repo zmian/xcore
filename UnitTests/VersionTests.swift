@@ -1,7 +1,7 @@
 //
-// UIDevice+Extensions.swift
+// VersionTests.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2019 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,24 +22,29 @@
 // THE SOFTWARE.
 //
 
-import UIKit
-import LocalAuthentication
+import XCTest
+@testable import Xcore
 
-extension UIDevice {
-    public struct SystemVersion {
-        public static let iOS8OrGreater = floor(NSFoundationVersionNumber) > floor(NSFoundationVersionNumber_iOS_7_0)
-        public static let iOS7OrLess = floor(NSFoundationVersionNumber) <= floor(NSFoundationVersionNumber_iOS_7_0)
+final class VersionTests: TestCase {
+    private var osVersion: Version = "12.1.3"
 
-        public static func lessThanOrEqual(_ string: String) -> Bool {
-            return UIDevice.current.systemVersion.compare(string, options: .numeric) == .orderedAscending
-        }
+    func testComparisonCases() {
+        XCTAssertTrue(osVersion > "12")
+        XCTAssertFalse(osVersion < "12")
+        XCTAssertFalse(osVersion == "12")
+        XCTAssertTrue(osVersion >= "12")
+        XCTAssertFalse(osVersion <= "12")
 
-        public static func greaterThanOrEqual(_ string: String) -> Bool {
-            return !lessThanOrEqual(string)
-        }
+        XCTAssertTrue(osVersion > "11")
+        XCTAssertFalse(osVersion < "11")
+        XCTAssertFalse(osVersion == "11")
+        XCTAssertTrue(osVersion >= "11")
+        XCTAssertFalse(osVersion <= "11")
 
-        public static func equal(_ string: String) -> Bool {
-            return UIDevice.current.systemVersion.compare(string, options: .numeric) == .orderedSame
-        }
+        XCTAssertFalse(osVersion > "12.1.3")
+        XCTAssertFalse(osVersion < "12.1.3")
+        XCTAssertTrue(osVersion == "12.1.3")
+        XCTAssertTrue(osVersion >= "12.1.3")
+        XCTAssertTrue(osVersion <= "12.1.3")
     }
 }
