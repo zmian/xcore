@@ -25,27 +25,37 @@
 import UIKit
 
 extension UIDevice {
-    // swiftlint:disable opening_brace
-    public struct ScreenSize {
-        public static var width: CGFloat     { return UIScreen.main.bounds.width }
-        public static var height: CGFloat    { return UIScreen.main.bounds.height }
-        public static var minLength: CGFloat { return min(width, height) }
-        public static var maxLength: CGFloat { return max(width, height) }
+    /// A strongly typed current version of the operating system.
+    ///
+    /// ```swift
+    /// // Strongly typed model type
+    /// UIDevice.current.osVersion // e.g., "12.1"
+    ///
+    /// // Accurate version checks.
+    /// if UIDevice.current.osVersion <= "7" {
+    ///     // Less than or equal to iOS 7
+    ///     ...
+    /// }
+    ///
+    /// if UIDevice.current.osVersion > "8" {
+    ///     // Greater than iOS 8
+    ///     ...
+    /// }
+    ///
+    /// // The current version of the operating system.
+    /// var lessThanOrEqualToiOS12_1_3: Bool {
+    ///     return UIDevice.current.osVersion <= "12.1.3"
+    /// }
+    ///
+    /// if lessThanOrEqualToiOS12_1_3 {
+    ///     // <= iOS 12.1.3
+    ///     // Permanently disable Group FaceTime ;)
+    ///     ...
+    /// }
+    /// ```
+    public var osVersion: Version {
+        return Version(rawValue: systemVersion)
     }
-
-    public struct DeviceType {
-        private static var iPhone: Bool {
-            return UIDevice.current.modelType.family == .phone
-        }
-
-        public static var iPhone4OrLess: Bool { return iPhone && ScreenSize.maxLength < 568 }
-        public static var iPhone5OrLess: Bool { return iPhone && ScreenSize.maxLength <= 568 }
-        public static var iPhone5: Bool       { return iPhone && ScreenSize.maxLength == 568 }
-        public static var iPhone6: Bool       { return iPhone && ScreenSize.maxLength == 667 }
-        public static var iPhone6Plus: Bool   { return iPhone && ScreenSize.maxLength == 736 }
-        public static var iPhoneX: Bool       { return iPhone && ScreenSize.minLength == 375 && ScreenSize.maxLength == 812 }
-    }
-    // swiftlint:enable opening_brace
 }
 
 extension UIDevice {
@@ -70,14 +80,23 @@ extension UIDevice {
         case iPhoneXR
 
         // iPad
-        case iPad1
-        case iPad2, iPad3, iPad4
-        case iPadMini, iPadMini2, iPadMini3, iPadMini4
-        case iPadAir, iPadAir2
-        case iPad5
-        case iPadPro97
-        case iPadPro10
-        case iPadPro12
+        case iPad_1
+        case iPad_2
+        case iPad_3
+        case iPad_4
+        case iPad_5
+        case iPadMini_1
+        case iPadMini_2
+        case iPadMini_3
+        case iPadMini_4
+        case iPadAir_1
+        case iPadAir_2
+        case iPadPro97Inch
+        case iPadPro10Inch
+        case iPadPro11Inch
+        case iPadPro12Inch_1
+        case iPadPro12Inch_2
+        case iPadPro12Inch_3
 
         // Apple Watch
         case appleWatchSeries0_38mm
@@ -105,6 +124,9 @@ extension UIDevice {
         case iPodTouch4
         case iPodTouch5
         case iPodTouch6
+
+        // HomePod
+        case homePod
 
         fileprivate init(identifier: String) {
             switch identifier {
@@ -159,33 +181,39 @@ extension UIDevice {
                 // iPad
 
                 case "iPad1,1", "iPad1,2":
-                    self = .iPad1
+                    self = .iPad_1
                 case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":
-                    self = .iPad2
+                    self = .iPad_2
                 case "iPad3,1", "iPad3,2", "iPad3,3":
-                    self = .iPad3
+                    self = .iPad_3
                 case "iPad3,4", "iPad3,5", "iPad3,6":
-                    self = .iPad4
-                case "iPad4,1", "iPad4,2", "iPad4,3":
-                    self = .iPadAir
-                case "iPad5,3", "iPad5,4":
-                    self = .iPadAir2
-                case "iPad2,5", "iPad2,6", "iPad2,7":
-                    self = .iPadMini
-                case "iPad4,4", "iPad4,5", "iPad4,6":
-                    self = .iPadMini2
-                case "iPad4,7", "iPad4,8", "iPad4,9":
-                    self = .iPadMini3
-                case "iPad5,1", "iPad5,2":
-                    self = .iPadMini4
-                case "iPad6,3", "iPad6,4":
-                    self = .iPadPro97
+                    self = .iPad_4
                 case "iPad6,11", "iPad6,12":
-                     self = .iPad5
+                    self = .iPad_5
+                case "iPad4,1", "iPad4,2", "iPad4,3":
+                    self = .iPadAir_1
+                case "iPad5,3", "iPad5,4":
+                    self = .iPadAir_2
+                case "iPad2,5", "iPad2,6", "iPad2,7":
+                    self = .iPadMini_1
+                case "iPad4,4", "iPad4,5", "iPad4,6":
+                    self = .iPadMini_2
+                case "iPad4,7", "iPad4,8", "iPad4,9":
+                    self = .iPadMini_3
+                case "iPad5,1", "iPad5,2":
+                    self = .iPadMini_4
+                case "iPad6,3", "iPad6,4":
+                    self = .iPadPro97Inch
                 case "iPad7,3", "iPad7,4":
-                     self = .iPadPro10
-                case "iPad6,7", "iPad6,8", "iPad7,1", "iPad7,2":
-                    self = .iPadPro12
+                     self = .iPadPro10Inch
+                case "iPad8,1", "iPad8,2", "iPad8,3", "iPad8,4":
+                    self = .iPadPro11Inch
+                case "iPad6,7", "iPad6,8":
+                    self = .iPadPro12Inch_1
+                case "iPad7,1", "iPad7,2":
+                    self = .iPadPro12Inch_2
+                case "iPad8,5", "iPad8,6", "iPad8,7", "iPad8,8":
+                    self = .iPadPro12Inch_3
 
                 // Apple Watch
 
@@ -237,6 +265,12 @@ extension UIDevice {
                     self = .iPodTouch5
                 case "iPod7,1":
                     self = .iPodTouch6
+
+                // HomePod
+
+                case "AudioAccessory1,1":
+                    self = .homePod
+
                 default:
                     self = .unknown(identifier)
             }
@@ -269,20 +303,23 @@ extension UIDevice {
                 case .iPhoneXSMax:  return "iPhone XS Max"
                 case .iPhoneXR:     return "iPhone XR"
 
-                case .iPad1:        return "iPad 1"
-                case .iPad2:        return "iPad 2"
-                case .iPad3:        return "iPad 3"
-                case .iPad4:        return "iPad 4"
-                case .iPadAir:      return "iPad Air"
-                case .iPadAir2:     return "iPad Air 2"
-                case .iPadMini:     return "iPad Mini"
-                case .iPadMini2:    return "iPad Mini 2"
-                case .iPadMini3:    return "iPad Mini 3"
-                case .iPadMini4:    return "iPad Mini 4"
-                case .iPad5:        return "iPad 5"
-                case .iPadPro97:    return "iPad Pro 9.7"
-                case .iPadPro10:    return "iPad Pro 10.5"
-                case .iPadPro12:    return "iPad Pro 12.9"
+                case .iPad_1:          return "iPad 1"
+                case .iPad_2:          return "iPad 2"
+                case .iPad_3:          return "iPad 3"
+                case .iPad_4:          return "iPad 4"
+                case .iPad_5:          return "iPad 5"
+                case .iPadAir_1:       return "iPad Air"
+                case .iPadAir_2:       return "iPad Air 2"
+                case .iPadMini_1:      return "iPad Mini"
+                case .iPadMini_2:      return "iPad Mini 2"
+                case .iPadMini_3:      return "iPad Mini 3"
+                case .iPadMini_4:      return "iPad Mini 4"
+                case .iPadPro97Inch:   return "iPad Pro 9.7"
+                case .iPadPro10Inch:   return "iPad Pro 10.5"
+                case .iPadPro11Inch:   return "iPad Pro 11"
+                case .iPadPro12Inch_1: return "iPad Pro 12.9"
+                case .iPadPro12Inch_2: return "iPad Pro 12.9 (2nd generation)"
+                case .iPadPro12Inch_3: return "iPad Pro 12.9 (3rd generation)"
 
                 case .appleWatchSeries0_38mm: return "Apple Watch (1st generation) 38mm"
                 case .appleWatchSeries0_42mm: return "Apple Watch (1st generation) 42mm"
@@ -308,6 +345,8 @@ extension UIDevice {
                 case .iPodTouch5:   return "iPod Touch 5"
                 case .iPodTouch6:   return "iPod Touch 6"
 
+                case .homePod: return "HomePod"
+
                 case .unknown(let identifier): return identifier
             }
             // swiftlint:enable switch_case_on_newline
@@ -327,9 +366,9 @@ extension UIDevice.ModelType {
         case unknown
 
         fileprivate init(device: UIDevice, identifier: String) {
-            if TARGET_IPHONE_SIMULATOR == 1 {
+            #if targetEnvironment(simulator)
                 self = .simulator
-            }
+            #endif
 
             if identifier.starts(with: "Watch") {
                 self = .watch
@@ -377,6 +416,84 @@ extension UIDevice.ModelType {
 }
 
 extension UIDevice.ModelType {
+    public enum ScreenSize {
+        case iPhone4
+        case iPhone5
+        case iPhone6
+        case iPhone6Plus
+        case iPhoneX
+        case iPhoneXSMax
+        case unknown
+
+        fileprivate init() {
+            // The width and height of the screen, measured in points.
+            let size = UIScreen.main.bounds.size
+
+            switch (size.min, size.max) {
+                case (_, 480):
+                    self = .iPhone4
+                case (_, 568):
+                    self = .iPhone5
+                case (_, 667):
+                    self = .iPhone6
+                case (_, 736):
+                    self = .iPhone6Plus
+                case (_, 812):
+                    self = .iPhoneX
+                case (_, 896):
+                    self = .iPhoneXSMax
+                default:
+                    self = .unknown
+            }
+        }
+
+        public var size: CGSize {
+            switch self {
+                case .iPhone4:
+                    return CGSize(width: 320, height: 480)
+                case .iPhone5:
+                    return CGSize(width: 320, height: 568)
+                case .iPhone6:
+                    return CGSize(width: 375, height: 667)
+                case .iPhone6Plus:
+                    return CGSize(width: 414, height: 736)
+                case .iPhoneX:
+                    return CGSize(width: 375, height: 812)
+                case .iPhoneXSMax:
+                    return CGSize(width: 414, height: 896)
+                case .unknown:
+                    return CGSize(width: -1, height: -1)
+            }
+        }
+
+        /// A property indicating if this screen size is associated with iPhone X Series
+        /// (e.g., iPhone X, iPhone XS, iPhone XS Max, iPhone XR).
+        public var iPhoneXSeries: Bool {
+            switch self {
+                case .iPhoneX, .iPhoneXSMax:
+                    return true
+                default:
+                    return false
+            }
+        }
+    }
+}
+
+extension UIDevice.ModelType.ScreenSize: Comparable {
+    private static var iPhone: Bool {
+        return UIDevice.current.modelType.family == .phone
+    }
+
+    public static func ==(lhs: UIDevice.ModelType.ScreenSize, rhs: UIDevice.ModelType.ScreenSize) -> Bool {
+        return iPhone && lhs.size.max == rhs.size.max && lhs.size.min == rhs.size.min
+    }
+
+    public static func <(lhs: UIDevice.ModelType.ScreenSize, rhs: UIDevice.ModelType.ScreenSize) -> Bool {
+        return iPhone && lhs.size.max < rhs.size.max && lhs.size.min < rhs.size.min
+    }
+}
+
+extension UIDevice.ModelType {
     /// The model identifier of the current device (e.g., `iPhone9,2`).
     public var identifier: String {
         return UIDevice.identifier
@@ -385,6 +502,15 @@ extension UIDevice.ModelType {
     /// The family name of the current device (e.g., iPhone or Apple TV).
     public var family: Family {
         return Family(device: UIDevice.current, identifier: identifier)
+    }
+
+    /// The screen size associated with the model.
+    ///
+    /// Sometime it is useful to know the screen size instead of a specific model
+    /// as multiple devices share the same screen sizes (e.g., iPhone X and
+    /// iPhone XS or iPhone 5, 5s, 5c & SE).
+    public var screenSize: ScreenSize {
+        return ScreenSize()
     }
 }
 

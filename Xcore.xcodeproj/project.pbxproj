@@ -112,6 +112,8 @@
 		684DA734212CCD4100A7A10B /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684DA732212CC51900A7A10B /* HapticFeedback.swift */; };
 		6856E9F920D856B0005CFBD4 /* ElementPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6856E9F820D856AF005CFBD4 /* ElementPosition.swift */; };
 		6862D461214B68EC008B202A /* ExtensibleByAssociatedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6862D460214B68EC008B202A /* ExtensibleByAssociatedObject.swift */; };
+		6863FA8C22062BCB00589F38 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6863FA8A22062A6600589F38 /* Version.swift */; };
+		6863FA8E220634CA00589F38 /* VersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6863FA8D220634CA00589F38 /* VersionTests.swift */; };
 		6872189320C07A9F00BFEA98 /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6872189220C07A9F00BFEA98 /* TestCase.swift */; };
 		687218A120C0824900BFEA98 /* SubviewLookupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687218A020C0824900BFEA98 /* SubviewLookupTests.swift */; };
 		687218A520C0841100BFEA98 /* ViewControllerTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687218A420C0841000BFEA98 /* ViewControllerTestCase.swift */; };
@@ -323,6 +325,8 @@
 		684DA732212CC51900A7A10B /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
 		6856E9F820D856AF005CFBD4 /* ElementPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementPosition.swift; sourceTree = "<group>"; };
 		6862D460214B68EC008B202A /* ExtensibleByAssociatedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensibleByAssociatedObject.swift; sourceTree = "<group>"; };
+		6863FA8A22062A6600589F38 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		6863FA8D220634CA00589F38 /* VersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionTests.swift; sourceTree = "<group>"; };
 		6872189020C07A9F00BFEA98 /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6872189220C07A9F00BFEA98 /* TestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
 		6872189B20C07B6E00BFEA98 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -543,6 +547,7 @@
 				6801120721923E8600B5D7DD /* PredicateRepresentable.swift */,
 				6822FE8F20D217880037E780 /* UserDefault.swift */,
 				6822FE9020D217880037E780 /* XCConfiguration.swift */,
+				6863FA8A22062A6600589F38 /* Version.swift */,
 				6822FE9120D217880037E780 /* Debugger.swift */,
 			);
 			path = Classes;
@@ -944,6 +949,7 @@
 			isa = PBXGroup;
 			children = (
 				68C392FD1E99D327009D8D58 /* PredicateRepresentableTests.swift */,
+				6863FA8D220634CA00589F38 /* VersionTests.swift */,
 				687218A020C0824900BFEA98 /* SubviewLookupTests.swift */,
 				6884E5A220C9716A009C043F /* CaseIterableTests.swift */,
 				681245FD20DCA9C60016AC2F /* CurrencySymbolsOptionsTests.swift */,
@@ -1358,6 +1364,7 @@
 				6822FF7420D217880037E780 /* NibInstantiable.swift in Sources */,
 				68E5729B20F82ADD002FEC39 /* UIColor+Extensions.swift in Sources */,
 				6822FF6520D217880037E780 /* ImageAssetIdentifiable.swift in Sources */,
+				6863FA8C22062BCB00589F38 /* Version.swift in Sources */,
 				6822FF7520D217880037E780 /* ImageTitleDisplayable.swift in Sources */,
 				68E572AA20F82ADD002FEC39 /* UIStackView+Extensions.swift in Sources */,
 				68E572B420F82ADD002FEC39 /* Internal+Extensions.swift in Sources */,
@@ -1459,6 +1466,7 @@
 				687218A520C0841100BFEA98 /* ViewControllerTestCase.swift in Sources */,
 				68B18EA6219D17B100B51F1F /* ImageTransformTests.swift in Sources */,
 				681245FE20DCA9C60016AC2F /* CurrencySymbolsOptionsTests.swift in Sources */,
+				6863FA8E220634CA00589F38 /* VersionTests.swift in Sources */,
 				689D0D1B1D8DBE6400145E0B /* TestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

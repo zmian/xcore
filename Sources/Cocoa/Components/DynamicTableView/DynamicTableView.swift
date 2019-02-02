@@ -220,7 +220,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
         if isLastCellSeparatorHidden {
             if indexPath.row == sections[indexPath.section].count - 1 {
-                cell.separatorInset.left = UIDevice.ScreenSize.maxLength
+                cell.separatorInset.left = UIScreen.main.bounds.size.max
             }
         }
 

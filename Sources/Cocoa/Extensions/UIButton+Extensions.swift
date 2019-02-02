@@ -357,7 +357,7 @@ extension UIButton {
 
     /// Add space between `text` and `image` while preserving the `intrinsicContentSize` and respecting `sizeToFit`.
     @IBInspectable
-    @objc public var textImageSpacing: CGFloat {
+    public var textImageSpacing: CGFloat {
         get {
             let (left, right) = (imageEdgeInsets.left, imageEdgeInsets.right)
 
