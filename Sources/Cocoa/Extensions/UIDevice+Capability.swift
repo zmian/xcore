@@ -69,12 +69,12 @@ extension UIDevice {
     private var hasTopNotch: Bool {
         // Notch: 44 on iPhone X, XS, XS Max, XR.
         // No Notch: 24 on iPad Pro 12.9" 3rd generation, 20 on iPhone 8
-        return UIApplication.shared.delegate?.window??.safeAreaInsets.top ?? 0 > 24
+        return UIApplication.sharedOrNil?.delegate?.window??.safeAreaInsets.top ?? 0 > 24
     }
 
     private var hasHomeIndicator: Bool {
         // Home indicator: 34 on iPhone X, XS, XS Max, XR.
         // Home indicator: 20 on iPad Pro 12.9" 3rd generation.
-        return UIApplication.shared.delegate?.window??.safeAreaInsets.bottom ?? 0 > 0
+        return UIApplication.sharedOrNil?.delegate?.window??.safeAreaInsets.bottom ?? 0 > 0
     }
 }
