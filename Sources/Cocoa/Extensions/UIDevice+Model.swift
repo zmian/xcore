@@ -426,21 +426,18 @@ extension UIDevice.ModelType {
         case unknown
 
         fileprivate init() {
-            // The width and height of the screen, measured in points.
-            let size = UIScreen.main.bounds.size
-
-            switch (size.min, size.max) {
-                case (_, 480):
+            switch UIScreen.main.bounds.size.max {
+                case 480:
                     self = .iPhone4
-                case (_, 568):
+                case 568:
                     self = .iPhone5
-                case (_, 667):
+                case 667:
                     self = .iPhone6
-                case (_, 736):
+                case 736:
                     self = .iPhone6Plus
-                case (_, 812):
+                case 812:
                     self = .iPhoneX
-                case (_, 896):
+                case 896:
                     self = .iPhoneXSMax
                 default:
                     self = .unknown
