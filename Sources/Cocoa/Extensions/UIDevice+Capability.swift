@@ -25,6 +25,11 @@
 import UIKit
 
 extension UIDevice {
+    /// A type to return the capabilities of the device.
+    ///
+    /// For example, Face ID requires permission prompt. If user denies the permission,
+    /// then `biometryType` returns `.none`. This property returns the actual capability
+    /// of the device regardless of the permission status.
     public struct Capability: OptionSet {
         public let rawValue: Int
 
@@ -32,9 +37,16 @@ extension UIDevice {
             self.rawValue = rawValue
         }
 
-        public static let notch = Capability(rawValue: 1 << 0)
+        /// Face ID requires permission prompt. If user denies the permission, then
+        /// `biometryType` returns `.none`. This property returns the actual capability
+        /// of the device regardless of the permission status.
+        public static let touchID = Capability(rawValue: 1 << 0)
+
+        /// Face ID requires permission prompt. If user denies the permission, then
+        /// `biometryType` returns `.none`. This property returns the actual capability
+        /// of the device regardless of the permission status.
         public static let faceID = Capability(rawValue: 1 << 1)
-        public static let touchID = Capability(rawValue: 1 << 2)
+        public static let notch = Capability(rawValue: 1 << 2)
         public static let homeIndicator = Capability(rawValue: 1 << 3)
         public static let iPhoneXSeries: Capability = [.notch, .faceID, .homeIndicator]
     }
@@ -76,5 +88,16 @@ extension UIDevice {
         // Home indicator: 34 on iPhone X, XS, XS Max, XR.
         // Home indicator: 20 on iPad Pro 12.9" 3rd generation.
         return UIApplication.sharedOrNil?.delegate?.window??.safeAreaInsets.bottom ?? 0 > 0
+    }
+
+    /// Face ID requires permission prompt. If user denies the permission, then
+    /// `biometryType` returns `.none`. This property returns the actual capability
+    /// of the device regardless of the permission status.
+    private var biometryCapabilityType: BiometryType {
+        guard biometryType == .none else {
+            return biometryType
+        }
+
+        return modelType.screenSize.iPhoneXSeries ? .faceID : .touchID
     }
 }
