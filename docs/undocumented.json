@@ -1235,69 +1235,48 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
       "line": 82,
-      "symbol": "UILabel.Style",
-      "symbol_kind": "source.lang.swift.decl.typealias",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
-      "line": 84,
       "symbol": "UILabel.init(style:text:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
-      "line": 90,
+      "line": 88,
       "symbol": "UILabel.init(text:attributes:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
-      "line": 97,
-      "symbol": "UIImageView.Style",
-      "symbol_kind": "source.lang.swift.decl.typealias",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
-      "line": 99,
+      "line": 95,
       "symbol": "UIImageView.init(style:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
-      "line": 106,
+      "line": 102,
       "symbol": "UIBarButtonItem.init(style:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
-      "line": 113,
-      "symbol": "UIStackView.Style",
-      "symbol_kind": "source.lang.swift.decl.typealias",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
-      "line": 115,
+      "line": 109,
       "symbol": "UIStackView.init(style:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
-      "line": 123,
+      "line": 117,
       "symbol": "With",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
-      "line": 126,
+      "line": 120,
       "symbol": "With.apply(style:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
