@@ -5994,49 +5994,28 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Capability.swift",
-      "line": 28,
-      "symbol": "UIDevice.Capability",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Capability.swift",
-      "line": 35,
+      "line": 49,
       "symbol": "UIDevice.Capability.notch",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Capability.swift",
-      "line": 36,
-      "symbol": "UIDevice.Capability.faceID",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Capability.swift",
-      "line": 37,
-      "symbol": "UIDevice.Capability.touchID",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Capability.swift",
-      "line": 38,
+      "line": 50,
       "symbol": "UIDevice.Capability.homeIndicator",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Capability.swift",
-      "line": 39,
+      "line": 51,
       "symbol": "UIDevice.Capability.iPhoneXSeries",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Capability.swift",
-      "line": 44,
+      "line": 56,
       "symbol": "UIDevice.capability",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -6631,7 +6610,7 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Model.swift",
-      "line": 450,
+      "line": 447,
       "symbol": "UIDevice.ModelType.ScreenSize.size",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"

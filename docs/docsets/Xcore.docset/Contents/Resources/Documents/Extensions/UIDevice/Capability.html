@@ -814,7 +814,11 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>A type to return the capabilities of the device.</p>
+
+<p>For example, Face ID requires permission prompt. If user denies the permission,
+then <code><a href="../../Extensions/UIDevice.html#/s:So8UIDeviceC5XcoreE12biometryTypeAbCE08BiometryD0Ovp">biometryType</a></code> returns <code>.none</code>. This property returns the actual capability
+of the device regardless of the permission status.</p>
 
           </section>
           <section class="section task-group-section">
@@ -873,7 +877,71 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Capability.swift#L31-L33">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Capability.swift#L36-L38">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:So8UIDeviceC5XcoreE10CapabilityV7touchIDAEvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/touchID" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So8UIDeviceC5XcoreE10CapabilityV7touchIDAEvpZ">touchID</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Face ID requires permission prompt. If user denies the permission, then
+<code><a href="../../Extensions/UIDevice.html#/s:So8UIDeviceC5XcoreE12biometryTypeAbCE08BiometryD0Ovp">biometryType</a></code> returns <code>.none</code>. This property returns the actual capability
+of the device regardless of the permission status.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">touchID</span><span class="p">:</span> <span class="kt">UIDevice</span><span class="o">.</span><span class="kt">Capability</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Capability.swift#L43">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:So8UIDeviceC5XcoreE10CapabilityV6faceIDAEvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/faceID" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So8UIDeviceC5XcoreE10CapabilityV6faceIDAEvpZ">faceID</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Face ID requires permission prompt. If user denies the permission, then
+<code><a href="../../Extensions/UIDevice.html#/s:So8UIDeviceC5XcoreE12biometryTypeAbCE08BiometryD0Ovp">biometryType</a></code> returns <code>.none</code>. This property returns the actual capability
+of the device regardless of the permission status.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">faceID</span><span class="p">:</span> <span class="kt">UIDevice</span><span class="o">.</span><span class="kt">Capability</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Capability.swift#L48">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -899,66 +967,6 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">notch</span><span class="p">:</span> <span class="kt">UIDevice</span><span class="o">.</span><span class="kt">Capability</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Capability.swift#L">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:So8UIDeviceC5XcoreE10CapabilityV6faceIDAEvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/faceID" class="dashAnchor"></a>
-                    <a class="token" href="#/s:So8UIDeviceC5XcoreE10CapabilityV6faceIDAEvpZ">faceID</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">faceID</span><span class="p">:</span> <span class="kt">UIDevice</span><span class="o">.</span><span class="kt">Capability</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Capability.swift#L">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:So8UIDeviceC5XcoreE10CapabilityV7touchIDAEvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/touchID" class="dashAnchor"></a>
-                    <a class="token" href="#/s:So8UIDeviceC5XcoreE10CapabilityV7touchIDAEvpZ">touchID</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">touchID</span><span class="p">:</span> <span class="kt">UIDevice</span><span class="o">.</span><span class="kt">Capability</span></code></pre>
 
                         </div>
                       </div>
@@ -1033,7 +1041,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2019-02-02)</p>
+          <p>&copy; 2019 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2019-02-03)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
