@@ -35,28 +35,28 @@ import UIKit
 /// on the parent view controller.
 open class ContainerViewController: UIViewController {
     /// The view controllers currently being managed the container view.
-    open var viewController: [UIViewController] {
+    open var viewControllers: [UIViewController] {
         return []
     }
 
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewController.forEach {
+        viewControllers.forEach {
             addViewController($0, enableConstraints: true)
         }
     }
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewController.forEach {
+        viewControllers.forEach {
             $0.beginAppearanceTransition(true, animated: animated)
         }
     }
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewController.forEach {
+        viewControllers.forEach {
             $0.endAppearanceTransition()
         }
     }
@@ -65,12 +65,12 @@ open class ContainerViewController: UIViewController {
         super.viewWillDisappear(animated)
 
         if isBeingPopped {
-            viewController.forEach {
+            viewControllers.forEach {
                 $0.willMove(toParent: nil)
             }
         }
 
-        viewController.forEach {
+        viewControllers.forEach {
             $0.beginAppearanceTransition(false, animated: animated)
         }
     }
@@ -79,12 +79,12 @@ open class ContainerViewController: UIViewController {
         super.viewDidDisappear(animated)
 
         if isBeingPopped {
-            viewController.forEach {
+            viewControllers.forEach {
                 removeViewController($0, animated: animated)
             }
         }
 
-        viewController.forEach {
+        viewControllers.forEach {
             $0.endAppearanceTransition()
         }
     }
