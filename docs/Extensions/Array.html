@@ -14,7 +14,7 @@
     <a title="Array Extension Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">Xcore Docs</a> (34% documented)</p>
+        <p><a href="../index.html">Xcore Docs</a> (35% documented)</p>
         <p class="header-right"><a href="https://github.com/zmian/xcore.swift"><img src="../img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fzmian%2Fdocsets%2FXcore%2Exml"><img src="../img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -786,6 +786,9 @@
                 <a href="../Structs/LayoutGuideOptions.html">LayoutGuideOptions</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/Percentage.html">Percentage</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/Response.html">Response</a>
               </li>
               <li class="nav-group-task">
@@ -875,248 +878,6 @@
                       </div>
                       <div class="slightly-smaller">
                         <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Classes/XCConfiguration.swift#L174-L180">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:Sa5XcoreSMRzSi5IndexRtzlEy7ElementQz10Foundation0B4PathVcip"></a>
-                    <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sa5XcoreSMRzSi5IndexRtzlEy7ElementQz10Foundation0B4PathVcip">subscript(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A convenience subscript to return the element at the specified index path.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">subscript</span><span class="p">(</span><span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Element</span><span class="o">.</span><span class="kt">Iterator</span><span class="o">.</span><span class="kt">Element</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>indexPath</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The index path for the element.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>The element at the specified index path iff it is within bounds, otherwise <code>fatalError</code>.</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/Section.swift#L97-L100">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:Sa5XcoreSmRzSi5IndexRtzlE6remove2at7ElementQz10Foundation0B4PathV_tF"></a>
-                    <a name="//apple_ref/swift/Method/remove(at:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sa5XcoreSmRzSi5IndexRtzlE6remove2at7ElementQz10Foundation0B4PathV_tF">remove(at:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Remove the element at the specified index path.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">remove</span><span class="p">(</span><span class="n">at</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Element</span><span class="o">.</span><span class="kt">Iterator</span><span class="o">.</span><span class="kt">Element</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>indexPath</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The index path for the element to remove.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>The removed element.</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/Section.swift#L109-L111">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:Sa5XcoreSmRzSi5IndexRtzlE6insert_2aty7ElementQz_10Foundation0B4PathVtF"></a>
-                    <a name="//apple_ref/swift/Method/insert(_:at:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sa5XcoreSmRzSi5IndexRtzlE6insert_2aty7ElementQz_10Foundation0B4PathVtF">insert(_:at:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Insert newElement at the specified index path.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">insert</span><span class="p">(</span><span class="n">_</span> <span class="nv">newElement</span><span class="p">:</span> <span class="kt">Element</span><span class="o">.</span><span class="kt">Iterator</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="n">at</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>newElement</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The new element to insert.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>indexPath</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The index path to insert the element at.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/Section.swift#L118-L120">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:Sa5XcoreSmRzSi5IndexRtzlE11moveElement4from2to0D0Qz10Foundation0B4PathV_AKtF"></a>
-                    <a name="//apple_ref/swift/Method/moveElement(from:to:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sa5XcoreSmRzSi5IndexRtzlE11moveElement4from2to0D0Qz10Foundation0B4PathV_AKtF">moveElement(from:to:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Move an element at a specific location in the <code>self</code> to another location.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
-<span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">moveElement</span><span class="p">(</span><span class="n">from</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">,</span> <span class="n">to</span> <span class="nv">theIndexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Element</span><span class="o">.</span><span class="kt">Iterator</span><span class="o">.</span><span class="kt">Element</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>from</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>An index path locating the element to be moved in <code>self</code>.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>to</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>An index path locating the element in <code>self</code> that is the destination of the move.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>The moved element.</p>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/Section.swift#L129-L133">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1327,6 +1088,248 @@ Typically, using this method is more efficient than deactivating each constraint
                       </div>
                       <div class="slightly-smaller">
                         <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIView+Extensions.swift#L357-L359">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:Sa5XcoreSMRzSi5IndexRtzlEy7ElementQz10Foundation0B4PathVcip"></a>
+                    <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:Sa5XcoreSMRzSi5IndexRtzlEy7ElementQz10Foundation0B4PathVcip">subscript(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A convenience subscript to return the element at the specified index path.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">subscript</span><span class="p">(</span><span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Element</span><span class="o">.</span><span class="kt">Iterator</span><span class="o">.</span><span class="kt">Element</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indexPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index path for the element.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The element at the specified index path iff it is within bounds, otherwise <code>fatalError</code>.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Section.swift#L97-L100">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:Sa5XcoreSmRzSi5IndexRtzlE6remove2at7ElementQz10Foundation0B4PathV_tF"></a>
+                    <a name="//apple_ref/swift/Method/remove(at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:Sa5XcoreSmRzSi5IndexRtzlE6remove2at7ElementQz10Foundation0B4PathV_tF">remove(at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Remove the element at the specified index path.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">remove</span><span class="p">(</span><span class="n">at</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Element</span><span class="o">.</span><span class="kt">Iterator</span><span class="o">.</span><span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indexPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index path for the element to remove.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The removed element.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Section.swift#L109-L111">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:Sa5XcoreSmRzSi5IndexRtzlE6insert_2aty7ElementQz_10Foundation0B4PathVtF"></a>
+                    <a name="//apple_ref/swift/Method/insert(_:at:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:Sa5XcoreSmRzSi5IndexRtzlE6insert_2aty7ElementQz_10Foundation0B4PathVtF">insert(_:at:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Insert newElement at the specified index path.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">insert</span><span class="p">(</span><span class="n">_</span> <span class="nv">newElement</span><span class="p">:</span> <span class="kt">Element</span><span class="o">.</span><span class="kt">Iterator</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="n">at</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>newElement</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The new element to insert.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>indexPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The index path to insert the element at.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Section.swift#L118-L120">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:Sa5XcoreSmRzSi5IndexRtzlE11moveElement4from2to0D0Qz10Foundation0B4PathV_AKtF"></a>
+                    <a name="//apple_ref/swift/Method/moveElement(from:to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:Sa5XcoreSmRzSi5IndexRtzlE11moveElement4from2to0D0Qz10Foundation0B4PathV_AKtF">moveElement(from:to:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Move an element at a specific location in the <code>self</code> to another location.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">moveElement</span><span class="p">(</span><span class="n">from</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">,</span> <span class="n">to</span> <span class="nv">theIndexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Element</span><span class="o">.</span><span class="kt">Iterator</span><span class="o">.</span><span class="kt">Element</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>from</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An index path locating the element to be moved in <code>self</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>to</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An index path locating the element in <code>self</code> that is the destination of the move.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The moved element.</p>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Section.swift#L129-L133">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

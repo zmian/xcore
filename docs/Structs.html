@@ -14,7 +14,7 @@
     <a title="Structures  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">Xcore Docs</a> (34% documented)</p>
+        <p><a href="index.html">Xcore Docs</a> (35% documented)</p>
         <p class="header-right"><a href="https://github.com/zmian/xcore.swift"><img src="img/gh.png"/>View on GitHub</a></p>
         <p class="header-right"><a href="dash-feed://https%3A%2F%2Fgithub%2Ecom%2Fzmian%2Fdocsets%2FXcore%2Exml"><img src="img/dash.png"/>Install in Dash</a></p>
       </div>
@@ -786,6 +786,9 @@
                 <a href="Structs/LayoutGuideOptions.html">LayoutGuideOptions</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/Percentage.html">Percentage</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/Response.html">Response</a>
               </li>
               <li class="nav-group-task">
@@ -873,66 +876,6 @@
                       </div>
                       <div class="slightly-smaller">
                         <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Classes/Request.swift#L27-L66">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:5Xcore7VersionV"></a>
-                    <a name="//apple_ref/swift/Struct/Version" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore7VersionV">Version</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A type that can be used to represent a version and compared using the
-relational operators <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, and <code>&gt;</code>.</p>
-<h1 id='example-usage' class='heading'>Example Usage</h1>
-<pre class="highlight swift"><code><span class="c1">// Sample code to add an extension to compare operating system version</span>
-<span class="c1">// using semantic versioning.</span>
-
-<span class="kd">extension</span> <span class="kt">UIDevice</span> <span class="p">{</span>
-    <span class="c1">/// A strongly typed current version of the operating system.</span>
-    <span class="c1">///</span>
-    <span class="c1">/// ```swift</span>
-    <span class="c1">/// // Accurate version checks.</span>
-    <span class="c1">/// if UIDevice.current.osVersion &lt;= "7" {</span>
-    <span class="c1">///     // Less than or equal to iOS 7</span>
-    <span class="c1">///     ...</span>
-    <span class="c1">/// }</span>
-    <span class="c1">///</span>
-    <span class="c1">/// if UIDevice.current.osVersion &gt; "8" {</span>
-    <span class="c1">///     // Greater than iOS 8</span>
-    <span class="c1">///     ...</span>
-    <span class="c1">/// }</span>
-    <span class="c1">/// ```</span>
-    <span class="kd">public</span> <span class="k">var</span> <span class="nv">osVersion</span><span class="p">:</span> <span class="kt">Version</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="kt">Version</span><span class="p">(</span><span class="nv">rawValue</span><span class="p">:</span> <span class="n">systemVersion</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
-
-                        <a href="Structs/Version.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Version</span> <span class="p">:</span> <span class="kt">RawRepresentable</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Classes/Version.swift#L56-L62">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -1248,72 +1191,6 @@ configuration driven views.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore13ArrayIteratorV"></a>
-                    <a name="//apple_ref/swift/Struct/ArrayIterator" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore13ArrayIteratorV">ArrayIterator</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Structs/ArrayIterator.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ArrayIterator</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">IteratorProtocol</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/Section.swift#L29-L42">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:5Xcore7SectionV"></a>
-                    <a name="//apple_ref/swift/Struct/Section" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore7SectionV">Section</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Structs/Section.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Section</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">RangeReplaceableCollection</span><span class="p">,</span> <span class="kt">MutableCollection</span><span class="p">,</span> <span class="kt">ExpressibleByArrayLiteral</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/Section.swift#L44-L90">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:5Xcore16ImageTransformerV"></a>
                     <a name="//apple_ref/swift/Struct/ImageTransformer" class="dashAnchor"></a>
                     <a class="token" href="#/s:5Xcore16ImageTransformerV">ImageTransformer</a>
@@ -1431,7 +1308,181 @@ require <code>Equatable</code> conformance by wrapping mixed-type keys in
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Classes/AnyEquatable.swift#L53-L61">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/AnyEquatable.swift#L53-L61">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5Xcore10PercentageV"></a>
+                    <a name="//apple_ref/swift/Struct/Percentage" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Xcore10PercentageV">Percentage</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type that can be used to represent percentage with bounds check to ensure
+the value is always between <code>0</code> and <code>100</code> and support for addition and
+subtraction.</p>
+<h1 id='example-usage' class='heading'>Example Usage</h1>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">sliderValue</span><span class="p">:</span> <span class="kt">Percentage</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="c1">// print(sliderValue) // 0.5%</span>
+
+<span class="c1">// Bounds check to ensure the value is between 0 &amp; 100.</span>
+<span class="k">var</span> <span class="nv">sliderValue</span><span class="p">:</span> <span class="kt">Percentage</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="c1">// print(sliderValue) // 100.0%</span>
+
+<span class="n">sliderValue</span> <span class="o">-=</span> <span class="mi">1</span>
+<span class="c1">// print(sliderValue) // 99.0%</span>
+</code></pre>
+
+                        <a href="Structs/Percentage.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Percentage</span> <span class="p">:</span> <span class="kt">RawRepresentable</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L44-L64">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5Xcore13ArrayIteratorV"></a>
+                    <a name="//apple_ref/swift/Struct/ArrayIterator" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Xcore13ArrayIteratorV">ArrayIterator</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Structs/ArrayIterator.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ArrayIterator</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">IteratorProtocol</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Section.swift#L29-L42">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5Xcore7SectionV"></a>
+                    <a name="//apple_ref/swift/Struct/Section" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Xcore7SectionV">Section</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Structs/Section.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Section</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">RangeReplaceableCollection</span><span class="p">,</span> <span class="kt">MutableCollection</span><span class="p">,</span> <span class="kt">ExpressibleByArrayLiteral</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Section.swift#L44-L90">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5Xcore7VersionV"></a>
+                    <a name="//apple_ref/swift/Struct/Version" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Xcore7VersionV">Version</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type that can be used to represent a version and compared using the
+relational operators <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, and <code>&gt;</code>.</p>
+<h1 id='example-usage' class='heading'>Example Usage</h1>
+<pre class="highlight swift"><code><span class="c1">// Sample code to add an extension to compare operating system version</span>
+<span class="c1">// using semantic versioning.</span>
+
+<span class="kd">extension</span> <span class="kt">UIDevice</span> <span class="p">{</span>
+    <span class="c1">/// A strongly typed current version of the operating system.</span>
+    <span class="c1">///</span>
+    <span class="c1">/// ```swift</span>
+    <span class="c1">/// // Accurate version checks.</span>
+    <span class="c1">/// if UIDevice.current.osVersion &lt;= "7" {</span>
+    <span class="c1">///     // Less than or equal to iOS 7</span>
+    <span class="c1">///     ...</span>
+    <span class="c1">/// }</span>
+    <span class="c1">///</span>
+    <span class="c1">/// if UIDevice.current.osVersion &gt; "8" {</span>
+    <span class="c1">///     // Greater than iOS 8</span>
+    <span class="c1">///     ...</span>
+    <span class="c1">/// }</span>
+    <span class="c1">/// ```</span>
+    <span class="kd">public</span> <span class="k">var</span> <span class="nv">osVersion</span><span class="p">:</span> <span class="kt">Version</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kt">Version</span><span class="p">(</span><span class="nv">rawValue</span><span class="p">:</span> <span class="n">systemVersion</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+                        <a href="Structs/Version.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Version</span> <span class="p">:</span> <span class="kt">RawRepresentable</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Version.swift#L56-L62">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

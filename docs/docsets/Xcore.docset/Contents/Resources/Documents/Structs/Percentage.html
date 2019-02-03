@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>CornerRadiusImageTransform Class Reference</title>
+    <title>Percentage Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -10,8 +10,8 @@
     
   </head>
   <body>
-    <a name="//apple_ref/swift/Class/CornerRadiusImageTransform" class="dashAnchor"></a>
-    <a title="CornerRadiusImageTransform Class Reference"></a>
+    <a name="//apple_ref/swift/Struct/Percentage" class="dashAnchor"></a>
+    <a title="Percentage Structure Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html">Xcore Docs</a> (35% documented)</p>
@@ -23,7 +23,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">Xcore Reference</a>
         <img id="carat" src="../img/carat.png" />
-        CornerRadiusImageTransform Class Reference
+        Percentage Structure Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -807,14 +807,27 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>CornerRadiusImageTransform</h1>
+            <h1>Percentage</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">final</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">CornerRadiusImageTransform</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/ImageTransform.html">ImageTransform</a></span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Percentage</span> <span class="p">:</span> <span class="kt">RawRepresentable</span></code></pre>
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>A type that can be used to represent percentage with bounds check to ensure
+the value is always between <code>0</code> and <code>100</code> and support for addition and
+subtraction.</p>
+<h1 id='example-usage' class='heading'>Example Usage</h1>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">sliderValue</span><span class="p">:</span> <span class="kt">Percentage</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="c1">// print(sliderValue) // 0.5%</span>
+
+<span class="c1">// Bounds check to ensure the value is between 0 &amp; 100.</span>
+<span class="k">var</span> <span class="nv">sliderValue</span><span class="p">:</span> <span class="kt">Percentage</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="c1">// print(sliderValue) // 100.0%</span>
+
+<span class="n">sliderValue</span> <span class="o">-=</span> <span class="mi">1</span>
+<span class="c1">// print(sliderValue) // 99.0%</span>
+</code></pre>
 
           </section>
           <section class="section task-group-section">
@@ -823,38 +836,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore14ImageTransformP10identifierSSvp"></a>
-                    <a name="//apple_ref/swift/Property/identifier" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore14ImageTransformP10identifierSSvp">identifier</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">identifier</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/UIImage/ImageTransform/CornerRadiusImageTransform.swift#L30-L32">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:5Xcore26CornerRadiusImageTransformC06cornerC0AC12CoreGraphics7CGFloatV_tcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(cornerRadius:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore26CornerRadiusImageTransformC06cornerC0AC12CoreGraphics7CGFloatV_tcfc">init(cornerRadius:)</a>
+                    <a name="/s:5Xcore10PercentageV3minACvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/min" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Xcore10PercentageV3minACvpZ">min</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -869,12 +853,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">cornerRadius</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">min</span><span class="p">:</span> <span class="kt">Percentage</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/UIImage/ImageTransform/CornerRadiusImageTransform.swift#L34-L36">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -882,9 +866,39 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:5Xcore14ImageTransformP9transform_6sourceSo7UIImageCAG_AA0B13Representable_ptF"></a>
-                    <a name="//apple_ref/swift/Method/transform(_:source:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:5Xcore14ImageTransformP9transform_6sourceSo7UIImageCAG_AA0B13Representable_ptF">transform(_:source:)</a>
+                    <a name="/s:5Xcore10PercentageV3maxACvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/max" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Xcore10PercentageV3maxACvpZ">max</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">max</span><span class="p">:</span> <span class="kt">Percentage</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SY8rawValue03RawB0Qzvp"></a>
+                    <a name="//apple_ref/swift/Property/rawValue" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SY8rawValue03RawB0Qzvp">rawValue</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -898,12 +912,392 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">transform</span><span class="p">(</span><span class="n">_</span> <span class="nv">image</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">,</span> <span class="nv">source</span><span class="p">:</span> <span class="kt"><a href="../Protocols/ImageRepresentable.html">ImageRepresentable</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIImage</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">rawValue</span><span class="p">:</span> <span class="kt">Double</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Components/UIImage/ImageTransform/CornerRadiusImageTransform.swift#L38-L44">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SY8rawValuexSg03RawB0Qz_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(rawValue:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SY8rawValuexSg03RawB0Qz_tcfc">init(rawValue:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">rawValue</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L50-L52">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s27ExpressibleByIntegerLiteralP07integerD0x0cD4TypeQz_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(integerLiteral:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s27ExpressibleByIntegerLiteralP07integerD0x0cD4TypeQz_tcfc">init(integerLiteral:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">integerLiteral</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">IntegerLiteralType</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L67-L69">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s25ExpressibleByFloatLiteralP05floatD0x0cD4TypeQz_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(floatLiteral:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s25ExpressibleByFloatLiteralP05floatD0x0cD4TypeQz_tcfc">init(floatLiteral:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">floatLiteral</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">FloatLiteralType</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L73-L75">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s23CustomStringConvertibleP11descriptionSSvp"></a>
+                    <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s23CustomStringConvertibleP11descriptionSSvp">description</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L79-L81">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:s34CustomPlaygroundDisplayConvertibleP21playgroundDescriptionypvp"></a>
+                    <a name="//apple_ref/swift/Property/playgroundDescription" class="dashAnchor"></a>
+                    <a class="token" href="#/s:s34CustomPlaygroundDisplayConvertibleP21playgroundDescriptionypvp">playgroundDescription</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">playgroundDescription</span><span class="p">:</span> <span class="kt">Any</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L85-L87">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SH4hash4intoys6HasherVz_tF"></a>
+                    <a name="//apple_ref/swift/Method/hash(into:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SH4hash4intoys6HasherVz_tF">hash(into:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">hash</span><span class="p">(</span><span class="n">into</span> <span class="nv">hasher</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Hasher</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L91-L93">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SQ2eeoiySbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Percentage</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Percentage</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L97-L99">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SL1loiySbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/&lt;(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SL1loiySbx_xtFZ">&lt;(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">&lt;</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Percentage</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Percentage</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L101-L103">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5Xcore10PercentageV1poiyA2C_ACtFZ"></a>
+                    <a name="//apple_ref/swift/Method/+(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Xcore10PercentageV1poiyA2C_ACtFZ">+(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">+</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Percentage</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Percentage</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Percentage</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L107-L109">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5Xcore10PercentageV1soiyA2C_ACtFZ"></a>
+                    <a name="//apple_ref/swift/Method/-(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Xcore10PercentageV1soiyA2C_ACtFZ">-(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">-</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Percentage</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Percentage</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Percentage</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L111-L113">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5Xcore10PercentageV2peoiyyACz_ACtFZ"></a>
+                    <a name="//apple_ref/swift/Method/+=(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Xcore10PercentageV2peoiyyACz_ACtFZ">+=(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">+=</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Percentage</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Percentage</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L115-L118">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:5Xcore10PercentageV2seoiyyACz_ACtFZ"></a>
+                    <a name="//apple_ref/swift/Method/-=(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Xcore10PercentageV2seoiyyACz_ACtFZ">-=(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">-=</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Percentage</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Percentage</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Swift/Components/Percentage.swift#L120-L123">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

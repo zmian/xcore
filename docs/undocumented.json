@@ -4117,55 +4117,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Section.swift",
-      "line": 29,
-      "symbol": "ArrayIterator",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Section.swift",
-      "line": 33,
-      "symbol": "ArrayIterator.init(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Section.swift",
-      "line": 44,
-      "symbol": "Section",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Section.swift",
-      "line": 45,
-      "symbol": "Section.title",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Section.swift",
-      "line": 46,
-      "symbol": "Section.detail",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Section.swift",
-      "line": 47,
-      "symbol": "Section.items",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Section.swift",
-      "line": 59,
-      "symbol": "Section.init(title:detail:items:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/SplitScreenViewController.swift",
       "line": 27,
       "symbol": "SplitScreenViewController",
@@ -7974,161 +7925,252 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/AnyEquatable.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/AnyEquatable.swift",
       "line": 54,
       "symbol": "AnyEquatable.base",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/AnyEquatable.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/AnyEquatable.swift",
       "line": 57,
       "symbol": "AnyEquatable.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": null,
       "symbol": "Console",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 27,
       "symbol": "Console",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 188,
       "symbol": "Console.LevelOptions.debug",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 189,
       "symbol": "Console.LevelOptions.info",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 190,
       "symbol": "Console.LevelOptions.warn",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 191,
       "symbol": "Console.LevelOptions.error",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 192,
       "symbol": "Console.LevelOptions.none",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 193,
       "symbol": "Console.LevelOptions.all",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 219,
       "symbol": "Console.PrefixOptions.className",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 220,
       "symbol": "Console.PrefixOptions.functionName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 221,
       "symbol": "Console.PrefixOptions.lineNumber",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 222,
       "symbol": "Console.PrefixOptions.date",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 223,
       "symbol": "Console.PrefixOptions.none",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 224,
       "symbol": "Console.PrefixOptions.all",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Console.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Console.swift",
       "line": 225,
       "symbol": "Console.PrefixOptions.basic",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Observer.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Observer.swift",
       "line": 27,
       "symbol": "Observers",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Observer.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Observer.swift",
       "line": 31,
       "symbol": "Observers.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Observer.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Observer.swift",
       "line": 67,
       "symbol": "Observers.count",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Observer.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Observer.swift",
       "line": 72,
       "symbol": "Observers.isEmpty",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Weak.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Percentage.swift",
+      "line": 45,
+      "symbol": "Percentage.min",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Percentage.swift",
+      "line": 46,
+      "symbol": "Percentage.max",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Percentage.swift",
+      "line": 107,
+      "symbol": "Percentage.+(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Percentage.swift",
+      "line": 111,
+      "symbol": "Percentage.-(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Percentage.swift",
+      "line": 115,
+      "symbol": "Percentage.+=(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Percentage.swift",
+      "line": 120,
+      "symbol": "Percentage.-=(_:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Section.swift",
+      "line": 29,
+      "symbol": "ArrayIterator",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Section.swift",
+      "line": 33,
+      "symbol": "ArrayIterator.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Section.swift",
+      "line": 44,
+      "symbol": "Section",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Section.swift",
+      "line": 45,
+      "symbol": "Section.title",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Section.swift",
+      "line": 46,
+      "symbol": "Section.detail",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Section.swift",
+      "line": 47,
+      "symbol": "Section.items",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Section.swift",
+      "line": 59,
+      "symbol": "Section.init(title:detail:items:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Weak.swift",
       "line": 34,
       "symbol": "Weak.value",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Classes/Weak.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Weak.swift",
       "line": 36,
       "symbol": "Weak.init(value:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
