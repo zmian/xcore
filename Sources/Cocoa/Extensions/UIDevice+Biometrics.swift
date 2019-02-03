@@ -31,18 +31,8 @@ extension UIDevice {
         case touchID
         case faceID
 
-        init(context: LAContext) {
-            // There is a bug in the earlier versions of iOS 11 that causes crash
-            // when accessing `LAContext.biometryType`. Guarding using `context.responds`
-            // is a workaround for the devices running older iOS 11 versions.
-            // This is fixed in the later version of iOS 11.
-            guard context.responds(to: #selector(getter: LAContext.biometryType)) else {
-                let isEnabled = LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-                self = isEnabled ? .touchID : .none
-                return
-            }
-
-            switch context.biometryType {
+        fileprivate init(biometryType: LABiometryType) {
+            switch biometryType {
                 case .touchID:
                     self = .touchID
                 case .faceID:
@@ -69,24 +59,47 @@ extension UIDevice {
                     return "Face ID"
             }
         }
-
-        /// Indicates that the device owner can authenticate using biometry,
-        /// Touch ID or Face ID.
-        public var isEnabled: Bool {
-            return self != .none
-        }
     }
 }
 
 extension UIDevice {
-    /// The types of biometric authentication supported.
-    public var biometryType: BiometryType {
-        let context = LAContext()
+    /// Indicates that the device owner can authenticate using biometry,
+    /// Touch ID or Face ID.
+    public var isBiometricsIDAvailable: Bool {
+        return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+    }
 
-        guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) else {
-            return .none
+    /// The type of biometric authentication supported.
+    ///
+    /// - Note: This property returns the actual capability of the device regardless
+    /// of the permission status. For example, Face ID requires permission prompt.
+    /// If user denies the permission, then the returned value is still `.faceID`.
+    /// If you need to check if biometrics authentication is available then use
+    /// `UIDevice.current.isBiometricsIDAvailable`.
+    public var biometryCapabilityType: BiometryType {
+        guard biometryType == .none else {
+            return biometryType
         }
 
-        return BiometryType(context: context)
+        return modelType.screenSize.iPhoneXSeries ? .faceID : .touchID
+    }
+
+    /// The types of biometric authentication supported.
+    private var biometryType: BiometryType {
+        let context = LAContext()
+        let isAvailable = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+
+        // There is a bug in the earlier versions of iOS 11 that causes crash
+        // when accessing `LAContext.biometryType`. Guarding using `context.responds`
+        // is a workaround for the devices running older iOS 11 versions.
+        // This is fixed in the later version of iOS 11.
+        guard context.responds(to: #selector(getter: LAContext.biometryType)) else {
+            // If it's `isAvailable` it will always be Touch ID as the first Face ID device
+            // shipped allows access to `LAContext.biometryType`. Thus, if it's Face ID
+            // this code path will never be executed.
+            return isAvailable ? .touchID : .none
+        }
+
+        return BiometryType(biometryType: context.biometryType)
     }
 }
