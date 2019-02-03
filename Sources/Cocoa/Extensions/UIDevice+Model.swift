@@ -465,7 +465,7 @@ extension UIDevice.ModelType {
 
         /// A property indicating if this screen size is associated with iPhone X Series
         /// (e.g., iPhone X, iPhone XS, iPhone XS Max, iPhone XR).
-        public var iPhoneXSeries: Bool {
+        var iPhoneXSeries: Bool {
             switch self {
                 case .iPhoneX, .iPhoneXSMax:
                     return true

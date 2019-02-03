@@ -37,7 +37,8 @@ extension UIDevice {
             // is a workaround for the devices running older iOS 11 versions.
             // This is fixed in the later version of iOS 11.
             guard context.responds(to: #selector(getter: LAContext.biometryType)) else {
-                self = UIDevice.current.isBiometricsIDAvailable ? .touchID : .none
+                let isEnabled = LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+                self = isEnabled ? .touchID : .none
                 return
             }
 
@@ -56,7 +57,8 @@ extension UIDevice {
             }
         }
 
-        /// The name of the biometry authentication, "Touch ID" or "Face ID"; otherwise, an empty string.
+        /// The name of the biometry authentication, "Touch ID" or "Face ID";
+        /// otherwise, an empty string.
         public var displayName: String {
             switch self {
                 case .none:
@@ -67,15 +69,16 @@ extension UIDevice {
                     return "Face ID"
             }
         }
+
+        /// Indicates that the device owner can authenticate using biometry,
+        /// Touch ID or Face ID.
+        public var isEnabled: Bool {
+            return self != .none
+        }
     }
 }
 
 extension UIDevice {
-    /// Indicates that the device owner can authenticate using biometry, Touch ID or Face ID.
-    public var isBiometricsIDAvailable: Bool {
-        return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-    }
-
     /// The types of biometric authentication supported.
     public var biometryType: BiometryType {
         let context = LAContext()
@@ -85,17 +88,5 @@ extension UIDevice {
         }
 
         return BiometryType(context: context)
-    }
-
-    /// Face ID requires permission prompt. If user denies
-    /// the permission, then `biometryType` returns `.none`.
-    /// This property returns the actual capability of the device
-    /// regardless of the permission status.
-    public var biometryCapabilityType: BiometryType {
-        guard biometryType == .none else {
-            return biometryType
-        }
-
-        return modelType.screenSize.iPhoneXSeries ? .faceID : .touchID
     }
 }
