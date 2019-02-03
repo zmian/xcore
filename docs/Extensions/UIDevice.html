@@ -845,7 +845,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Biometrics.swift#L29-L78">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Biometrics.swift#L29-L62">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -857,9 +857,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:So8UIDeviceC5XcoreE12biometryTypeAbCE08BiometryD0Ovp"></a>
-                    <a name="//apple_ref/swift/Property/biometryType" class="dashAnchor"></a>
-                    <a class="token" href="#/s:So8UIDeviceC5XcoreE12biometryTypeAbCE08BiometryD0Ovp">biometryType</a>
+                    <a name="/s:So8UIDeviceC5XcoreE23isBiometricsIDAvailableSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isBiometricsIDAvailable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So8UIDeviceC5XcoreE23isBiometricsIDAvailableSbvp">isBiometricsIDAvailable</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -867,19 +867,59 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The types of biometric authentication supported.</p>
+                        <p>Indicates that the device owner can authenticate using biometry,
+Touch ID or Face ID.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">biometryType</span><span class="p">:</span> <span class="kt"><a href="../Extensions/UIDevice/BiometryType.html">BiometryType</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">isBiometricsIDAvailable</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Biometrics.swift#L83-L91">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Biometrics.swift#L68-L70">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:So8UIDeviceC5XcoreE22biometryCapabilityTypeAbCE08BiometryE0Ovp"></a>
+                    <a name="//apple_ref/swift/Property/biometryCapabilityType" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So8UIDeviceC5XcoreE22biometryCapabilityTypeAbCE08BiometryE0Ovp">biometryCapabilityType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The type of biometric authentication supported.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This property returns the actual capability of the device regardless
+of the permission status. For example, Face ID requires permission prompt.
+If user denies the permission, then the returned value is still <code>.faceID</code>.
+If you need to check if biometrics authentication is available then use
+<code>UIDevice.current.isBiometricsIDAvailable</code>.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">biometryCapabilityType</span><span class="p">:</span> <span class="kt"><a href="../Extensions/UIDevice/BiometryType.html">BiometryType</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Biometrics.swift#L79-L85">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -903,10 +943,6 @@
                       <div class="abstract">
                         <p>A type to return the capabilities of the device.</p>
 
-<p>For example, Face ID requires permission prompt. If user denies the permission,
-then <code><a href="../Extensions/UIDevice.html#/s:So8UIDeviceC5XcoreE12biometryTypeAbCE08BiometryD0Ovp">biometryType</a></code> returns <code>.none</code>. This property returns the actual capability
-of the device regardless of the permission status.</p>
-
                         <a href="../Extensions/UIDevice/Capability.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
@@ -918,7 +954,7 @@ of the device regardless of the permission status.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Capability.swift#L33-L52">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Capability.swift#L29-L43">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -952,7 +988,7 @@ of the device regardless of the permission status.</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Capability.swift#L56-L77">Show on GitHub</a>
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Extensions/UIDevice+Capability.swift#L47-L68">Show on GitHub</a>
                       </div>
                     </section>
                   </div>

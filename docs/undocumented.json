@@ -5994,28 +5994,28 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Capability.swift",
-      "line": 49,
+      "line": 40,
       "symbol": "UIDevice.Capability.notch",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Capability.swift",
-      "line": 50,
+      "line": 41,
       "symbol": "UIDevice.Capability.homeIndicator",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Capability.swift",
-      "line": 51,
+      "line": 42,
       "symbol": "UIDevice.Capability.iPhoneXSeries",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIDevice+Capability.swift",
-      "line": 56,
+      "line": 47,
       "symbol": "UIDevice.capability",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
