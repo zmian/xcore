@@ -31,18 +31,33 @@ extension UIDevice {
         case touchID
         case faceID
 
-        fileprivate init(biometryType: LABiometryType) {
-            switch biometryType {
+        fileprivate init() {
+            let context = LAContext()
+            let isAvailable = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+
+            // There is a bug in the earlier versions of iOS 11 that causes crash
+            // when accessing `LAContext.biometryType`. Guarding using `context.responds`
+            // is a workaround for the devices running older iOS 11 versions.
+            // This is fixed in the later version of iOS 11.
+            guard context.responds(to: #selector(getter: LAContext.biometryType)) else {
+                // If it's is available it will always be Touch ID as the first Face ID device
+                // shipped allows access to `LAContext.biometryType`. Thus, if it's Face ID
+                // this code path will never be executed.
+                self = isAvailable ? .touchID : .none
+                return
+            }
+
+            switch context.biometryType {
                 case .touchID:
                     self = .touchID
                 case .faceID:
                     self = .faceID
                 default:
-                    /// The device does not support biometry.
-                    /// `LABiometryNone` introduced in `11.0` and was deprecated in `11.2`
-                    /// and renamed to be `LABiometryType.none`.
-                    /// This default case allows us to handle both of those cases without
-                    /// resorting to hacks or explicit checks.
+                    // The device does not support biometry.
+                    //
+                    // `LABiometryNone` introduced in `11.0` and was deprecated in `11.2` and
+                    // renamed to be `LABiometryType.none`. This default case allows us to handle
+                    // both of those cases without resorting to hacks or explicit checks.
                     self = .none
             }
         }
@@ -77,29 +92,12 @@ extension UIDevice {
     /// If you need to check if biometrics authentication is available then use
     /// `UIDevice.current.isBiometricsIDAvailable`.
     public var biometryCapabilityType: BiometryType {
+        let biometryType = BiometryType()
+
         guard biometryType == .none else {
             return biometryType
         }
 
         return modelType.screenSize.iPhoneXSeries ? .faceID : .touchID
-    }
-
-    /// The types of biometric authentication supported.
-    private var biometryType: BiometryType {
-        let context = LAContext()
-        let isAvailable = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
-
-        // There is a bug in the earlier versions of iOS 11 that causes crash
-        // when accessing `LAContext.biometryType`. Guarding using `context.responds`
-        // is a workaround for the devices running older iOS 11 versions.
-        // This is fixed in the later version of iOS 11.
-        guard context.responds(to: #selector(getter: LAContext.biometryType)) else {
-            // If it's `isAvailable` it will always be Touch ID as the first Face ID device
-            // shipped allows access to `LAContext.biometryType`. Thus, if it's Face ID
-            // this code path will never be executed.
-            return isAvailable ? .touchID : .none
-        }
-
-        return BiometryType(biometryType: context.biometryType)
     }
 }
