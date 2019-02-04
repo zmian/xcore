@@ -691,6 +691,9 @@
                 <a href="Protocols/InitializableByEmptyConstructor.html">InitializableByEmptyConstructor</a>
               </li>
               <li class="nav-group-task">
+                <a href="Protocols/KeyboardObservable.html">KeyboardObservable</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/ModallyPresentable.html">ModallyPresentable</a>
               </li>
               <li class="nav-group-task">
@@ -781,6 +784,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/JSONHelpers.html">JSONHelpers</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/KeyboardPayload.html">KeyboardPayload</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/LayoutGuideOptions.html">LayoutGuideOptions</a>
@@ -1505,6 +1511,56 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:5Xcore18KeyboardObservableP"></a>
+                    <a name="//apple_ref/swift/Protocol/KeyboardObservable" class="dashAnchor"></a>
+                    <a class="token" href="#/s:5Xcore18KeyboardObservableP">KeyboardObservable</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A protocol to observe keyboard frame changes.</p>
+<h1 id='example-usage' class='heading'>Example Usage:</h1>
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">MyViewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">,</span> <span class="kt">KeyboardObservable</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">keyboardFrameDidChange</span><span class="p">(</span><span class="n">_</span> <span class="nv">payload</span><span class="p">:</span> <span class="kt">KeyboardPayload</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// handle keyboard frame changes</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="kt">MyView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt">KeyboardObservable</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">keyboardFrameDidChange</span><span class="p">(</span><span class="n">_</span> <span class="nv">payload</span><span class="p">:</span> <span class="kt">KeyboardPayload</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// handle keyboard frame changes</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">payload</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+                        <a href="Protocols/KeyboardObservable.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">KeyboardObservable</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/zmian/xcore.swift/blob/master/Sources/Cocoa/Protocols/KeyboardObservable.swift#L46-L54">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:5Xcore18ModallyPresentableP"></a>
                     <a name="//apple_ref/swift/Protocol/ModallyPresentable" class="dashAnchor"></a>
                     <a class="token" href="#/s:5Xcore18ModallyPresentableP">ModallyPresentable</a>
@@ -1939,7 +1995,7 @@ It provides a safe way to register and dequeue cells.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2019-02-03)</p>
+          <p>&copy; 2019 <a class="link" href="https://zmian.me" target="_blank" rel="external">Zeeshan</a>. All rights reserved. (Last updated: 2019-02-04)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

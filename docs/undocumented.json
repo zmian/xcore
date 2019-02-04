@@ -1108,56 +1108,63 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/SwizzleManager.swift",
-      "line": 129,
-      "symbol": "SwizzleManager.SwizzleOptions.imageView",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/SwizzleManager.swift",
-      "line": 130,
-      "symbol": "SwizzleManager.SwizzleOptions.textField",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/SwizzleManager.swift",
-      "line": 131,
-      "symbol": "SwizzleManager.SwizzleOptions.button",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/SwizzleManager.swift",
-      "line": 132,
-      "symbol": "SwizzleManager.SwizzleOptions.searchBar",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/SwizzleManager.swift",
       "line": 133,
-      "symbol": "SwizzleManager.SwizzleOptions.collectionViewCell",
+      "symbol": "SwizzleManager.SwizzleOptions.view",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/SwizzleManager.swift",
       "line": 134,
-      "symbol": "SwizzleManager.SwizzleOptions.viewController",
+      "symbol": "SwizzleManager.SwizzleOptions.imageView",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/SwizzleManager.swift",
       "line": 135,
-      "symbol": "SwizzleManager.SwizzleOptions.userContentController",
+      "symbol": "SwizzleManager.SwizzleOptions.textField",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/SwizzleManager.swift",
       "line": 136,
+      "symbol": "SwizzleManager.SwizzleOptions.button",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/SwizzleManager.swift",
+      "line": 137,
+      "symbol": "SwizzleManager.SwizzleOptions.searchBar",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/SwizzleManager.swift",
+      "line": 138,
+      "symbol": "SwizzleManager.SwizzleOptions.collectionViewCell",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/SwizzleManager.swift",
+      "line": 139,
+      "symbol": "SwizzleManager.SwizzleOptions.viewController",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/SwizzleManager.swift",
+      "line": 140,
+      "symbol": "SwizzleManager.SwizzleOptions.userContentController",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/SwizzleManager.swift",
+      "line": 141,
       "symbol": "SwizzleManager.SwizzleOptions.all",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
