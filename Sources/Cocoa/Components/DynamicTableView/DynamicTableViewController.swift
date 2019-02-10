@@ -36,11 +36,16 @@ open class DynamicTableViewController: UIViewController {
         }
     }
 
-    /// An option to determine whether the `scrollView`'s `top` and `bottom` is constrained
-    /// to `topLayoutGuide` and `bottomLayoutGuide`. The default value is `[]`.
-    open var constraintToLayoutGuideOptions: LayoutGuideOptions = []
+    /// An option to determine whether the table view top and bottom
+    /// is constrained to top and bottom safe areas.
+    ///
+    /// The default value is `[]`.
+    open var pinnedToSafeAreaLayoutGuides: SafeAreaLayoutGuideOptions {
+        return []
+    }
 
     /// The distance that the tableView is inset from the enclosing view.
+    ///
     /// The default value is `.zero`.
     @objc open dynamic var contentInset: UIEdgeInsets = .zero {
         didSet {
@@ -76,6 +81,12 @@ open class DynamicTableViewController: UIViewController {
         }
 
         view.addSubview(tableView)
-        tableViewConstraints = NSLayoutConstraint.Edges(constraintsForViewToFillSuperview(tableView, padding: contentInset, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate())
+        tableViewConstraints = NSLayoutConstraint.Edges(
+            constraintsForViewToFillSuperview(
+                tableView,
+                padding: contentInset,
+                constraintToLayoutGuideOptions: pinnedToSafeAreaLayoutGuides
+            ).activate()
+        )
     }
 }

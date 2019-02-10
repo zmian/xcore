@@ -24,16 +24,16 @@
 
 import UIKit
 
-public struct LayoutGuideOptions: OptionSet {
+public struct SafeAreaLayoutGuideOptions: OptionSet {
     public let rawValue: Int
 
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
 
-    public static let top = LayoutGuideOptions(rawValue: 1 << 0)
-    public static let bottom = LayoutGuideOptions(rawValue: 1 << 1)
-    public static let both: LayoutGuideOptions = [top, bottom]
+    public static let top = SafeAreaLayoutGuideOptions(rawValue: 1 << 0)
+    public static let bottom = SafeAreaLayoutGuideOptions(rawValue: 1 << 1)
+    public static let vertical: SafeAreaLayoutGuideOptions = [top, bottom]
 }
 
 extension NSLayoutConstraint {
@@ -133,13 +133,13 @@ extension NSLayoutConstraint {
 }
 
 extension UIViewController {
-    public func constraintsForViewToFillSuperview(_ viewToSize: UIView, padding: UIEdgeInsets = .zero, constraintToLayoutGuideOptions: LayoutGuideOptions = [], priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
+    public func constraintsForViewToFillSuperview(_ viewToSize: UIView, padding: UIEdgeInsets = .zero, constraintToLayoutGuideOptions: SafeAreaLayoutGuideOptions = [], priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
         var constraints = NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(viewToSize, paddingLeft: padding.left, paddingRight: padding.right, priority: priority)
         constraints += constraintsForViewToFillSuperviewVertical(viewToSize, paddingTop: padding.top, paddingBottom: padding.bottom, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions, priority: priority)
         return constraints
     }
 
-    public func constraintsForViewToFillSuperviewVertical(_ viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, constraintToLayoutGuideOptions: LayoutGuideOptions = [], priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
+    public func constraintsForViewToFillSuperviewVertical(_ viewToSize: UIView, paddingTop: CGFloat = 0, paddingBottom: CGFloat = 0, constraintToLayoutGuideOptions: SafeAreaLayoutGuideOptions = [], priority: UILayoutPriority = .required) -> [NSLayoutConstraint] {
         viewToSize.translatesAutoresizingMaskIntoConstraints = false
 
         let isTopLayoutGuide = constraintToLayoutGuideOptions.contains(.top)
