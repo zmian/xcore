@@ -34,11 +34,9 @@ open class IconLabelCollectionViewController: UIViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        setupIconLabelCollectionView()
-    }
-
-    private func setupIconLabelCollectionView() {
-        view.addSubview(collectionView)
-        NSLayoutConstraint.constraintsForViewToFillSuperview(collectionView).activate()
+        collectionView.apply {
+            view.addSubview($0)
+            NSLayoutConstraint.constraintsForViewToFillSuperview($0).activate()
+        }
     }
 }
