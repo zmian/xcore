@@ -39,11 +39,16 @@ open class XCComposedCollectionViewController: UIViewController {
         XCCollectionView(frame: .zero, collectionViewLayout: self.layout)
     }()
 
-    /// An option to determine whether the `scrollView`'s `top` and `bottom` is constrained
-    /// to `topLayoutGuide` and `bottomLayoutGuide`. The default value is `[]`.
-    open var constraintToLayoutGuideOptions: LayoutGuideOptions = []
+    /// An option to determine whether the collection view top and bottom
+    /// is constrained to top and bottom safe areas.
+    ///
+    /// The default value is `[]`.
+    open var pinnedToSafeAreaLayoutGuides: SafeAreaLayoutGuideOptions {
+        return []
+    }
 
     /// The distance that the collectionView is inset from the enclosing view.
+    ///
     /// The default value is `.zero`.
     @objc open dynamic var contentInset: UIEdgeInsets = .zero {
         didSet {
@@ -61,7 +66,13 @@ open class XCComposedCollectionViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
-        collectionViewConstraints = NSLayoutConstraint.Edges(constraintsForViewToFillSuperview(collectionView, padding: contentInset, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate())
+        collectionViewConstraints = NSLayoutConstraint.Edges(
+            constraintsForViewToFillSuperview(
+                collectionView,
+                padding: contentInset,
+                constraintToLayoutGuideOptions: pinnedToSafeAreaLayoutGuides
+            ).activate()
+        )
         collectionView.apply {
             composedDataSource.dataSources = dataSources(for: $0)
             $0.dataSource = composedDataSource

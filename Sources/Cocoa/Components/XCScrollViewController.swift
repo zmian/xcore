@@ -27,18 +27,25 @@ import UIKit
 open class XCScrollViewController: UIViewController {
     public let scrollView = UIScrollView()
 
-    /// An option to determine whether the `scrollView`'s `top` and `bottom` is constrained
-    /// to `topLayoutGuide` and `bottomLayoutGuide`. The default value is `[]`.
-    open var constraintToLayoutGuideOptions: LayoutGuideOptions = []
-
     open override func viewDidLoad() {
         super.viewDidLoad()
         setupContentView()
     }
 
+    /// An option to determine whether the scroll view top and bottom
+    /// is constrained to top and bottom safe areas.
+    ///
+    /// The default value is `[]`.
+    open var pinnedToSafeAreaLayoutGuides: SafeAreaLayoutGuideOptions {
+        return []
+    }
+
     private func setupContentView() {
         view.addSubview(scrollView)
-        constraintsForViewToFillSuperview(scrollView, constraintToLayoutGuideOptions: constraintToLayoutGuideOptions).activate()
+        constraintsForViewToFillSuperview(
+            scrollView,
+            constraintToLayoutGuideOptions: pinnedToSafeAreaLayoutGuides
+        ).activate()
         resolveContentSize()
     }
 
