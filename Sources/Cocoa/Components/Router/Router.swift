@@ -31,17 +31,16 @@ public protocol RouteHandler {
 }
 
 private struct RouteHandlerAssociatedKey {
-    static var viewController = "viewController"
+    static var navigationController = "navigationController"
 }
 
 extension RouteHandler {
     public var navigationController: UINavigationController? {
-        return viewController?.navigationController
+        return objc_getAssociatedObject(self, &RouteHandlerAssociatedKey.navigationController) as? UINavigationController
     }
 
-    fileprivate var viewController: UIViewController? {
-        get { return objc_getAssociatedObject(self, &RouteHandlerAssociatedKey.viewController) as? UIViewController }
-        set { objc_setAssociatedObject(self, &RouteHandlerAssociatedKey.viewController, newValue, .OBJC_ASSOCIATION_ASSIGN) }
+    fileprivate func setNavigationController(_ navigationController: UINavigationController?) {
+        objc_setAssociatedObject(self, &RouteHandlerAssociatedKey.navigationController, navigationController, .OBJC_ASSOCIATION_ASSIGN)
     }
 }
 
@@ -73,35 +72,57 @@ extension RouteHandler {
 }
 
 public class Router {
-    private weak var viewController: UIViewController?
+    private weak var navigationController: UINavigationController?
+    private var routeHandlers: [String: Any] = [:]
 
-    fileprivate init(viewController: UIViewController) {
-        self.viewController = viewController
+    fileprivate init(navigationController: UINavigationController?) {
+        self.navigationController = navigationController
     }
 
-    public func configure<T: RouteHandler>(_ handler: T) -> T {
-        var handler = handler
-        handler.viewController = viewController
-        return handler
+    public func register<T: RouteHandler>(_ handler: @autoclosure () -> T) -> T {
+        let key = "\(T.self)"
+
+        guard let existingHandler = routeHandlers[key] as? T else {
+            var handler = handler()
+            handler.setNavigationController(navigationController)
+            routeHandlers[key] = handler
+            return handler
+        }
+
+        return existingHandler
     }
 }
 
 // MARK: Extensions
 
 extension UIViewController {
+    public var router: Router {
+        guard let navigationController = navigationController else {
+            if let navController = self as? UINavigationController {
+                return navController._navigationControllerRouter
+            }
+
+            fatalError("Router requires a navigation controller.")
+        }
+
+        return navigationController._navigationControllerRouter
+    }
+}
+
+extension UINavigationController {
     private struct AssociatedKey {
         static var router = "router"
     }
 
-    public var router: Router {
+    fileprivate var _navigationControllerRouter: Router {
         get {
             let router: Router
 
             if let existingRouter: Router = associatedObject(&AssociatedKey.router) {
                 router = existingRouter
             } else {
-                router = Router(viewController: self)
-                self.router = router
+                router = Router(navigationController: self)
+                self._navigationControllerRouter = router
             }
 
             return router
@@ -112,13 +133,17 @@ extension UIViewController {
 
 extension XCCollectionViewDataSource {
     public var router: Router {
-        guard let router = collectionView?.viewController?.router else {
+        guard let collectionView = collectionView else {
+            return Router(navigationController: nil)
+        }
+
+        guard let router = collectionView.viewController?.router else {
             #if DEBUG
             if isDebuggerAttached {
                 fatalError("Datasource doesn't have a view controller.")
             }
             #endif
-            return Router(viewController: UIViewController())
+            return Router(navigationController: nil)
         }
 
         return router
@@ -127,13 +152,17 @@ extension XCCollectionViewDataSource {
 
 extension XCTableViewDataSource {
     public var router: Router {
-        guard let router = tableView?.viewController?.router else {
+        guard let tableView = tableView else {
+            return Router(navigationController: nil)
+        }
+
+        guard let router = tableView.viewController?.router else {
             #if DEBUG
             if isDebuggerAttached {
                 fatalError("Datasource doesn't have a view controller.")
             }
             #endif
-            return Router(viewController: UIViewController())
+            return Router(navigationController: nil)
         }
 
         return router
