@@ -24,10 +24,37 @@
 
 import UIKit
 
-public protocol RouteHandler {
-    associatedtype Route
+// MARK: RouteRepresentable
 
-    func route(to route: Route)
+public protocol RouteRepresentable {
+    var routeSource: RouteSourceType { get }
+}
+
+public enum RouteSourceType {
+    case viewController(UIViewController)
+}
+
+extension UIViewController: RouteRepresentable {
+    public var routeSource: RouteSourceType {
+        return .viewController(self)
+    }
+}
+
+// MARK: RouteHandler
+
+public protocol RouteHandler: class {
+    func route(to route: Route<Self>)
+}
+
+extension RouteHandler {
+    public func route(to route: Route<Self>) {
+        let routeSource = route.configure(self).routeSource
+
+        switch routeSource {
+            case .viewController(let vc):
+               navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }
 
 private struct RouteHandlerAssociatedKey {
@@ -71,6 +98,97 @@ extension RouteHandler {
     }
 }
 
+// MARK: Route
+
+/// A routes configuration.
+///
+/// Simple and powerful way to create multiple routers and navigate from any
+/// where.
+///
+/// `UIViewController` has a router property (`UIViewController.router`) which
+/// should be used to navigate to routes.
+///
+/// **Routes Declaration**
+///
+/// ```swift
+/// final class AuthenticationRouter: RouteHandler { }
+///
+/// extension Route where Type == AuthenticationRouter {
+///     static var login: Route {
+///         return Route(LoginViewController())
+///     }
+/// }
+///
+/// final class MainRouter: RouteHandler { }
+///
+/// extension Route where Type == MainRouter {
+///     static var home: Route {
+///         return Route(HomeViewController())
+///     }
+///
+///     static var profile(user: User) -> Route {
+///         return Route(ProfileViewController(user: user))
+///     }
+///
+///     static var likes(user: User) -> Route {
+///         return Route { router in
+///             return LikesViewController(user: user).apply {
+///                 $0.didTapOnProfile {
+///                    router.route(to: .profile(user: user))
+///                 }
+///             }
+///         }
+///     }
+/// }
+/// ```
+///
+/// **Register the child routers with the parent Router**
+///
+/// ```
+/// extension Router {
+///     var main: MainRouter {
+///         return register(MainRouter())
+///     }
+///
+///    var auth: AuthenticationRouter {
+///        return register(AuthenticationRouter())
+///    }
+/// }
+/// ```
+///
+/// **Usage**
+///
+/// ```swift
+/// final class HomeViewController: UIViewController {
+///     private let user: User
+///
+///     private func showProfile() {
+///         router.main.route(to: .profile(user: user))
+///     }
+///
+///     private func showLogin() {
+///         router.auth.route(to: .login)
+///     }
+/// }
+/// ```
+public struct Route<Type: RouteHandler> {
+    public var identifier: String
+    public var configure: (Type) -> RouteRepresentable
+
+    public init(identifier: String? = nil, _ configure: @escaping ((Type) -> RouteRepresentable)) {
+        self.identifier = identifier ?? "___defaultIdentifier___"
+        self.configure = configure
+    }
+
+    public init(_ configure: @escaping @autoclosure () -> RouteRepresentable) {
+        self.init { _ -> RouteRepresentable in
+            configure()
+        }
+    }
+}
+
+// MARK: Route
+
 public class Router {
     private weak var navigationController: UINavigationController?
     private var routeHandlers: [String: Any] = [:]
@@ -80,7 +198,7 @@ public class Router {
     }
 
     public func register<T: RouteHandler>(_ handler: @autoclosure () -> T) -> T {
-        let key = "\(T.self)"
+        let key = NSStringFromClass(T.self)
 
         guard let existingHandler = routeHandlers[key] as? T else {
             var handler = handler()

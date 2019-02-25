@@ -44,7 +44,7 @@ extension String {
     }
 
     /// Searches for pattern matches in the string and replaces them with replacement.
-    public func replace(_ pattern: String, with: String, options: NSString.CompareOptions = .regularExpression) -> String {
+    public func replace(_ pattern: String, with: String, options: String.CompareOptions = .regularExpression) -> String {
         return replacingOccurrences(of: pattern, with: with, options: options, range: nil)
     }
 
@@ -54,7 +54,7 @@ extension String {
     }
 
     /// Returns `true` iff `value` is in `self`.
-    public func contains(_ value: String, options: NSString.CompareOptions = []) -> Bool {
+    public func contains(_ value: String, options: String.CompareOptions = []) -> Bool {
         return range(of: value, options: options) != nil
     }
 

@@ -25,8 +25,9 @@
 import UIKit
 
 /// A configuration pattern generic implementation.
-/// Simple and powerful way to extend any type to support
-/// configuration driven views.
+///
+/// Simple and powerful way to extend any type to support configuration driven
+/// views.
 ///
 /// **Style Declaration**
 ///
@@ -58,7 +59,7 @@ public struct XCConfiguration<Type> {
     public var configure: ((Type) -> Void)
 
     public init(identifier: String? = nil, _ configure: @escaping ((Type) -> Void)) {
-        self.identifier = identifier ?? "_defaultIdentifier_"
+        self.identifier = identifier ?? "___defaultIdentifier___"
         self.configure = configure
     }
 
