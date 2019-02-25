@@ -43,16 +43,23 @@ extension UIViewController: RouteRepresentable {
 // MARK: RouteHandler
 
 public protocol RouteHandler: class {
-    func route(to route: Route<Self>)
+    func route(to route: Route<Self>, animated: Bool)
 }
 
 extension RouteHandler {
-    public func route(to route: Route<Self>) {
+    public func route(to route: Route<Self>, animated: Bool = true) {
+        guard let navigationController = navigationController else {
+            #if DEBUG
+            Console.log("Unable to find \"navigationController\".")
+            #endif
+            return
+        }
+
         let routeSource = route.configure(self).routeSource
 
         switch routeSource {
             case .viewController(let vc):
-               navigationController?.pushViewController(vc, animated: true)
+               navigationController.pushViewController(vc, animated: animated)
         }
     }
 }
