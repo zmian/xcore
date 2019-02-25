@@ -24,20 +24,11 @@
 
 import UIKit
 
-// MARK: RouteRepresentable
+// MARK: RouteKind
 
-public protocol RouteRepresentable {
-    var routeSource: RouteSourceType { get }
-}
-
-public enum RouteSourceType {
+public enum RouteKind {
     case viewController(UIViewController)
-}
-
-extension UIViewController: RouteRepresentable {
-    public var routeSource: RouteSourceType {
-        return .viewController(self)
-    }
+    case custom
 }
 
 // MARK: RouteHandler
@@ -55,11 +46,13 @@ extension RouteHandler {
             return
         }
 
-        let routeSource = route.configure(self).routeSource
+        let routeKind = route.configure(self)
 
-        switch routeSource {
+        switch routeKind {
             case .viewController(let vc):
                navigationController.pushViewController(vc, animated: animated)
+            case .custom:
+                break
         }
     }
 }
@@ -180,16 +173,23 @@ extension RouteHandler {
 /// ```
 public struct Route<Type: RouteHandler> {
     public var identifier: String
-    public var configure: (Type) -> RouteRepresentable
+    public var configure: (Type) -> RouteKind
 
-    public init(identifier: String? = nil, _ configure: @escaping ((Type) -> RouteRepresentable)) {
+    public init(identifier: String? = nil, _ configure: @escaping ((Type) -> RouteKind)) {
         self.identifier = identifier ?? "___defaultIdentifier___"
         self.configure = configure
     }
 
-    public init(_ configure: @escaping @autoclosure () -> RouteRepresentable) {
-        self.init { _ -> RouteRepresentable in
-            configure()
+    public init(identifier: String? = nil, _ configure: @escaping ((Type) -> UIViewController)) {
+        self.identifier = identifier ?? "___defaultIdentifier___"
+        self.configure = { router -> RouteKind in
+            return .viewController(configure(router))
+        }
+    }
+
+    public init(_ configure: @escaping @autoclosure () -> UIViewController) {
+        self.init { _ -> RouteKind in
+            return .viewController(configure())
         }
     }
 }
