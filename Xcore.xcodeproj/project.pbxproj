@@ -124,6 +124,7 @@
 		6884E5A320C9716A009C043F /* CaseIterableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6884E5A220C9716A009C043F /* CaseIterableTests.swift */; };
 		6889635F2208C5B400E0320F /* KeyboardObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6889635E2208C5B400E0320F /* KeyboardObservable.swift */; };
 		688FE04120CE40600081A027 /* ButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688FE04020CE40600081A027 /* ButtonsViewController.swift */; };
+		68938473222EE147002AD3BB /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68938472222EE147002AD3BB /* UITextView+Extensions.swift */; };
 		689869E61E9992E600CE7B77 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689869DD1E9992E600CE7B77 /* RootViewController.swift */; };
 		689869E71E9992E600CE7B77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689869DF1E9992E600CE7B77 /* AppDelegate.swift */; };
 		689869E81E9992E600CE7B77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 689869E01E9992E600CE7B77 /* Assets.xcassets */; };
@@ -347,6 +348,7 @@
 		6884E5A220C9716A009C043F /* CaseIterableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseIterableTests.swift; sourceTree = "<group>"; };
 		6889635E2208C5B400E0320F /* KeyboardObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardObservable.swift; sourceTree = "<group>"; };
 		688FE04020CE40600081A027 /* ButtonsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsViewController.swift; sourceTree = "<group>"; };
+		68938472222EE147002AD3BB /* UITextView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		689869C81E99926100CE7B77 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		689869DB1E9992E600CE7B77 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		689869DD1E9992E600CE7B77 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -614,6 +616,7 @@
 				68E5728020F82ADA002FEC39 /* UITabBarController+Extensions.swift */,
 				68E5725F20F82AD4002FEC39 /* UITableView+Extensions.swift */,
 				68E5726F20F82AD6002FEC39 /* UITextField+Extensions.swift */,
+				68938472222EE147002AD3BB /* UITextView+Extensions.swift */,
 				68E5726520F82AD5002FEC39 /* UIToolbar+Extensions.swift */,
 				68E5726620F82AD5002FEC39 /* UIView+Extensions.swift */,
 				68E5727320F82AD7002FEC39 /* UIViewController+Extensions.swift */,
@@ -1489,6 +1492,7 @@
 				68E5729920F82ADD002FEC39 /* IndexPath+Extensions.swift in Sources */,
 				68E572A920F82ADD002FEC39 /* UIResponder+Extensions.swift in Sources */,
 				6822FF8820D217880037E780 /* Observer.swift in Sources */,
+				68938473222EE147002AD3BB /* UITextView+Extensions.swift in Sources */,
 				68E5728C20F82ADC002FEC39 /* UIImage+Extensions.swift in Sources */,
 				68E572AB20F82ADD002FEC39 /* Data+Extensions.swift in Sources */,
 				68E572B020F82ADD002FEC39 /* UITabBarController+Extensions.swift in Sources */,
