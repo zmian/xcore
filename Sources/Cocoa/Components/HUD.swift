@@ -90,14 +90,14 @@ open class HUD {
         window.rootViewController = viewController
     }
 
-    private lazy var adjustWindowLevel: (() -> Void)? = { [weak self] in
-        self?.setDefaultWindowLevel()
-    }
-
     private func setDefaultWindowLevel() {
         let windowLevel = UIApplication.sharedOrNil?.windows.last?.windowLevel ?? .normal
         let maxWinLevel = max(windowLevel, .normal)
         self.windowLevel = maxWinLevel + 1
+    }
+
+    private lazy var adjustWindowLevel: (() -> Void)? = { [weak self] in
+        self?.setDefaultWindowLevel()
     }
 
     /// A block to adjust window level so this HUD is displayed appropriately.
