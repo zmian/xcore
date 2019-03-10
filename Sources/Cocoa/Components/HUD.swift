@@ -45,13 +45,28 @@ extension HUD {
     }
 }
 
+extension HUD {
+    private final class ViewController: UIViewController {
+        override func viewDidLoad() {
+            view.backgroundColor = .white
+        }
+
+        override var preferredStatusBarStyle: UIStatusBarStyle {
+            return statusBarStyle ?? .default
+        }
+    }
+}
+
 /// A base class to create a HUD that sets up blank canvas that can be
 /// customized by subclasses to show anything in a fullscreen window.
 open class HUD {
     private let window = UIWindow(frame: UIScreen.main.bounds)
-    private let view = UIView()
+    private let viewController = ViewController()
     private var isEnabled = false
     private var temporaryUnavailable = false
+    private var view: UIView {
+        return viewController.view
+    }
 
     /// The default value is `.white`.
     open var backgroundColor: UIColor = .white {
@@ -72,17 +87,54 @@ open class HUD {
 
     public init() {
         window.backgroundColor = .clear
-        window.addSubview(view)
-        view.backgroundColor = .white
-        NSLayoutConstraint.constraintsForViewToFillSuperview(view).activate()
+        window.rootViewController = viewController
     }
 
-    open func moveWindowToFront() {
+    private lazy var adjustWindowLevel: (() -> Void)? = { [weak self] in
+        self?.setDefaultWindowLevel()
+    }
+
+    private func setDefaultWindowLevel() {
         let windowLevel = UIApplication.sharedOrNil?.windows.last?.windowLevel ?? .normal
         let maxWinLevel = max(windowLevel, .normal)
-        window.windowLevel = maxWinLevel + 1
+        self.windowLevel = maxWinLevel + 1
     }
 
+    /// A block to adjust window level so this HUD is displayed appropriately.
+    ///
+    /// For example, you can adjust the window level so this HUD is always shown
+    /// behind the passcode screen to ensure that this HUD is not shown before user
+    /// is fully authorized.
+    ///
+    /// - Note: By default, window level is set so it appears on the top of the
+    /// currently visible window.
+    open func adjustWindowLevel(_ callback: @escaping () -> Void) {
+        adjustWindowLevel = { [weak self] in
+            self?.setDefaultWindowLevel()
+            callback()
+        }
+    }
+
+    private func setNeedsStatusBarAppearanceUpdate() {
+        viewController.statusBarStyle = preferredStatusBarStyle
+    }
+
+    /// A property to set statusbar style when HUD is displayed.
+    ///
+    /// The default value is `.default`.
+    open var preferredStatusBarStyle: UIStatusBarStyle = .default
+
+    /// Adds a view to the end of the receiver’s list of subviews.
+    ///
+    /// This method establishes a strong reference to view and sets its next
+    /// responder to the receiver, which is its new `superview`.
+    ///
+    /// Views can have only one `superview`. If view already has a `superview` and
+    /// that view is not the receiver, this method removes the previous `superview`
+    /// before making the receiver its new `superview`.
+    ///
+    /// - Parameter view: The view to be added. After being added, this view appears
+    ///                   on top of any other subviews.
     open func addSubview(_ view: UIView) {
         self.view.addSubview(view)
     }
@@ -97,7 +149,9 @@ open class HUD {
         let duration = enabled ? self.duration.show : self.duration.hide
 
         isEnabled = enabled
-        moveWindowToFront()
+        adjustWindowLevel?()
+        setNeedsStatusBarAppearanceUpdate()
+
         if enabled {
             window.isHidden = false
             window.makeKey()
