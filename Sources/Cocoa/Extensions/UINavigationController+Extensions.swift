@@ -98,6 +98,27 @@ extension UINavigationController {
         return nil
     }
 
+    /// A convenience method to pop to specified subclass of `UIViewController` type.
+    /// If the given type of view controller is not found then it pops to the root
+    /// view controller.
+    ///
+    /// - Parameters:
+    ///   - type: The view controller type to pop to.
+    ///   - animated: Set this value to `true` to animate the transition.
+    ///               Pass `false` if you are setting up a navigation controller
+    ///               before its view is displayed.
+    /// - Returns: The view controller instance of the specified type `T`.
+    @discardableResult
+    public func popToViewControllerOrRootViewController<T: UIViewController>(_ type: T.Type, animated: Bool) -> T? {
+        guard let viewController = viewControllers.lastElement(type: type) else {
+            popToRootViewController(animated: animated)
+            return nil
+        }
+
+        popToViewController(viewController, animated: animated)
+        return viewController
+    }
+
     /// A convenience method to pop view controllers until the one at specified index is on top. Returns the popped controllers.
     ///
     /// - Parameters:

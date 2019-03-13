@@ -71,33 +71,6 @@ extension RouteHandler {
     }
 }
 
-extension RouteHandler {
-    /// A convenience method to pop to specified subclass of `UIViewController` type.
-    /// If the given type of view controller is not found then it pops to the root
-    /// view controller.
-    ///
-    /// - Parameters:
-    ///   - type: The view controller type to pop to.
-    ///   - animated: Set this value to `true` to animate the transition.
-    ///               Pass `false` if you are setting up a navigation controller
-    ///               before its view is displayed.
-    /// - Returns: The view controller instance of the specified type `T`.
-    @discardableResult
-    public func popToViewController<T: UIViewController>(_ type: T.Type, animated: Bool) -> T? {
-        guard let navigationController = navigationController else {
-            return nil
-        }
-
-        guard let viewController = navigationController.viewControllers.lastElement(type: type) else {
-            navigationController.popToRootViewController(animated: animated)
-            return nil
-        }
-
-        navigationController.popToViewController(viewController, animated: animated)
-        return viewController
-    }
-}
-
 // MARK: Route
 
 /// A routes configuration.
@@ -183,13 +156,13 @@ public struct Route<Type: RouteHandler> {
     public init(identifier: String? = nil, _ configure: @escaping ((Type) -> UIViewController)) {
         self.identifier = identifier ?? "___defaultIdentifier___"
         self.configure = { router -> RouteKind in
-            return .viewController(configure(router))
+            .viewController(configure(router))
         }
     }
 
     public init(_ configure: @escaping @autoclosure () -> UIViewController) {
         self.init { _ -> RouteKind in
-            return .viewController(configure())
+            .viewController(configure())
         }
     }
 }
@@ -208,7 +181,7 @@ public class Router {
         let key = NSStringFromClass(T.self)
 
         guard let existingHandler = routeHandlers[key] as? T else {
-            var handler = handler()
+            let handler = handler()
             handler.setNavigationController(navigationController)
             routeHandlers[key] = handler
             return handler
