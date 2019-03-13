@@ -96,7 +96,7 @@ open class HUD {
         self.windowLevel = maxWinLevel + 1
     }
 
-    private lazy var adjustWindowAttributes: ((_ window: UIWindow, _ willShow: Bool) -> Void)? = { [weak self] _, _ in
+    private lazy var adjustWindowAttributes: ((_ window: UIWindow) -> Void)? = { [weak self] _ in
         self?.setDefaultWindowLevel()
     }
 
@@ -109,10 +109,10 @@ open class HUD {
     ///
     /// - Note: By default, window level is set so it appears on the top of the
     /// currently visible window.
-    open func adjustWindowAttributes(_ callback: @escaping (_ window: UIWindow, _ willShow: Bool) -> Void) {
-        adjustWindowAttributes = { [weak self] window, willShow in
+    open func adjustWindowAttributes(_ callback: @escaping (_ window: UIWindow) -> Void) {
+        adjustWindowAttributes = { [weak self] window in
             self?.setDefaultWindowLevel()
-            callback(window, willShow)
+            callback(window)
         }
     }
 
@@ -150,10 +150,10 @@ open class HUD {
         let duration = enabled ? self.duration.show : self.duration.hide
 
         isEnabled = enabled
-        adjustWindowAttributes?(window, enabled)
-        setNeedsStatusBarAppearanceUpdate()
 
         if enabled {
+            adjustWindowAttributes?(window)
+            setNeedsStatusBarAppearanceUpdate()
             window.isHidden = false
 
             guard animated else {
