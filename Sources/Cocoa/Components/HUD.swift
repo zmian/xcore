@@ -96,11 +96,12 @@ open class HUD {
         self.windowLevel = maxWinLevel + 1
     }
 
-    private lazy var adjustWindowLevel: (() -> Void)? = { [weak self] in
+    private lazy var adjustWindowAttributes: ((_ window: UIWindow, _ willShow: Bool) -> Void)? = { [weak self] _, _ in
         self?.setDefaultWindowLevel()
     }
 
-    /// A block to adjust window level so this HUD is displayed appropriately.
+    /// A block to adjust window attributes (e.g., level or make it key) so this HUD
+    /// is displayed appropriately.
     ///
     /// For example, you can adjust the window level so this HUD is always shown
     /// behind the passcode screen to ensure that this HUD is not shown before user
@@ -108,10 +109,10 @@ open class HUD {
     ///
     /// - Note: By default, window level is set so it appears on the top of the
     /// currently visible window.
-    open func adjustWindowLevel(_ callback: @escaping () -> Void) {
-        adjustWindowLevel = { [weak self] in
+    open func adjustWindowAttributes(_ callback: @escaping (_ window: UIWindow, _ willShow: Bool) -> Void) {
+        adjustWindowAttributes = { [weak self] window, willShow in
             self?.setDefaultWindowLevel()
-            callback()
+            callback(window, willShow)
         }
     }
 
@@ -149,12 +150,11 @@ open class HUD {
         let duration = enabled ? self.duration.show : self.duration.hide
 
         isEnabled = enabled
-        adjustWindowLevel?()
+        adjustWindowAttributes?(window, enabled)
         setNeedsStatusBarAppearanceUpdate()
 
         if enabled {
             window.isHidden = false
-            window.makeKey()
 
             guard animated else {
                 view.alpha = 1
