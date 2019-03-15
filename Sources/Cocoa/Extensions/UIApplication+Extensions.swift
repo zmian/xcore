@@ -77,6 +77,20 @@ extension UIApplication {
 
         return base
     }
+
+    /// This function iterates through windows from top to bottom and returns the
+    /// visible or key window. Worst time complexity is O(n) where n represents
+    /// the number of windows in given application
+    /// - Returns: Returns an optional window object based on visibility or key.
+    public static func visibleWindow() -> UIWindow? {
+        let windows = UIApplication.shared.windows
+        for window in windows.reversed() {
+            if !window.isHidden || window.isKeyWindow {
+                return window
+            }
+        }
+        return nil
+    }
 }
 
 // MARK: UIWindow - TopViewController
