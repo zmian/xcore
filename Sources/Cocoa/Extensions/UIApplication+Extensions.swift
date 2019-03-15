@@ -87,12 +87,7 @@ extension UIApplication {
     /// - Returns: Returns an optional window object based on visibility or key.
     public static func visibleWindow() -> UIWindow? {
         let windows = UIApplication.shared.windows
-        for window in windows.reversed() {
-            if !window.isHidden {
-                return window
-            }
-        }
-        return nil
+        return windows.reversed().first { !$0.isHidden }
     }
 }
 
