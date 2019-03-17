@@ -49,14 +49,6 @@ open class XCComposedTableViewController: UIViewController {
         $0.sectionFooterHeight = UITableView.automaticDimension
     }
 
-    /// An option to determine whether the table view top and bottom
-    /// is constrained to top and bottom safe areas.
-    ///
-    /// The default value is `.none`.
-    open var pinnedToSafeAreaLayoutGuides: SafeAreaLayoutGuideOptions {
-        return .none
-    }
-
     /// The distance that the tableView is inset from the enclosing view.
     ///
     /// The default value is `0`.
@@ -83,7 +75,7 @@ open class XCComposedTableViewController: UIViewController {
 
             view.addSubview($0)
             tableViewConstraints = NSLayoutConstraint.Edges(
-                $0.anchor.edges.equalTo(pinnedToSafeAreaLayoutGuides).inset(contentInset).constraints
+                $0.anchor.edges.equalToSuperview().inset(contentInset).constraints
             )
         }
     }

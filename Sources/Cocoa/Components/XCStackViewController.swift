@@ -36,17 +36,9 @@ open class XCStackViewController: UIViewController {
         setupStackView()
     }
 
-    /// An option to determine whether the scroll view top and bottom
-    /// is constrained to top and bottom safe areas.
-    ///
-    /// The default value is `[]`.
-    open var pinnedToSafeAreaLayoutGuides: SafeAreaLayoutGuideOptions {
-        return []
-    }
-
     private func setupScrollView() {
         view.addSubview(scrollView)
-        scrollView.anchor.edges.equalTo(pinnedToSafeAreaLayoutGuides)
+        scrollView.anchor.edges.equalToSuperview()
     }
 
     private func setupStackView() {
@@ -54,8 +46,7 @@ open class XCStackViewController: UIViewController {
         stackView.anchor.make { anchor in
             anchor.edges.equalToSuperview()
             anchor.width.equalTo(view)
+            anchor.height.greaterThanOrEqualToSuperview()
         }
-
-        NSLayoutConstraint(item: stackView, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: scrollView).activate()
     }
 }

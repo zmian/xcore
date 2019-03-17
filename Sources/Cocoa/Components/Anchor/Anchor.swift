@@ -28,7 +28,7 @@ import UIKit
 
 extension Anchor {
     public class Axis<T> {
-        fileprivate let owningView: UIView
+        fileprivate unowned var owningView: UIView
         fileprivate var attribute: Attributes
 
         init(view: UIView, attribute: Attributes) {
@@ -159,7 +159,7 @@ extension Anchor.Axis {
 }
 
 public class Anchor {
-    private let view: UIView
+    private unowned var view: UIView
 
     fileprivate init(view: UIView) {
         self.view = view
