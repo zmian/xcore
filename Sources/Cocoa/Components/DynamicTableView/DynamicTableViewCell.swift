@@ -33,6 +33,7 @@ open class DynamicTableViewCell: XCTableViewCell {
     private var labelsStackViewConstraints: (top: NSLayoutConstraint?, bottom: NSLayoutConstraint?)
 
     /// The distance that the view is inset from the enclosing content view.
+    ///
     /// The default value is `UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15)`.
     @objc open dynamic var contentInset = UIEdgeInsets(top: 14, left: 15, bottom: 15, right: 15) {
         didSet {
@@ -59,6 +60,7 @@ open class DynamicTableViewCell: XCTableViewCell {
     }
 
     /// The space between image and text.
+    ///
     /// The default value is `.minimumPadding`.
     @objc open dynamic var textImageSpacing: CGFloat = .minimumPadding {
         didSet {
@@ -67,6 +69,7 @@ open class DynamicTableViewCell: XCTableViewCell {
     }
 
     /// The space between `title` and `subtitle` labels.
+    ///
     /// The default value is `.minimumPadding / 2`.
     @objc open dynamic var interLabelSpacing: CGFloat {
         get { return labelsStackView.spacing }
