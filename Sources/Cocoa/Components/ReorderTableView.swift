@@ -52,11 +52,17 @@ private class ReorderTableDraggingView: XCView {
         clipsToBounds = false
         layer.masksToBounds = false
 
-        NSLayoutConstraint.constraintsForViewToFillSuperview(imageView).activate()
-        NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(topShadowImage).activate()
-        NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(bottomShadowImage).activate()
-        NSLayoutConstraint(item: topShadowImage, height: shadowHeight).activate()
-        NSLayoutConstraint(item: bottomShadowImage, height: shadowHeight).activate()
+        imageView.anchor.edges.equalToSuperview()
+
+        topShadowImage.anchor.make { anchor in
+            anchor.horizontally.equalToSuperview()
+            anchor.height.equalTo(shadowHeight)
+        }
+
+        bottomShadowImage.anchor.make { anchor in
+            anchor.horizontally.equalToSuperview()
+            anchor.height.equalTo(shadowHeight)
+        }
 
         NSLayoutConstraint.constraints(withVisualFormat: "V:[topShadowImage][imageView]-(-1)-[bottomShadowImage]", options: [], metrics: nil, views: [
             "topShadowImage": topShadowImage,

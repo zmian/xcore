@@ -32,23 +32,23 @@ extension XCConfiguration where Type: UIButton {
     }
 
     public static func checkbox(normalColor: UIColor, selectedColor: UIColor, textColor: UIColor, font: UIFont) -> XCConfiguration {
-        return XCConfiguration(identifier: "checkbox") { button in
-            button.accessibilityIdentifier = "checkboxButton"
-            button.textColor = textColor
-            button.titleLabel?.font = font
-            button.titleLabel?.numberOfLines = 0
-            button.textImageSpacing = .minimumPadding
-            button.contentHorizontalAlignment = .left
-            button.adjustsImageWhenHighlighted = false
-            button.adjustsBackgroundColorWhenHighlighted = false
-            button.highlightedBackgroundColor = .clear
-            button.highlightedAnimation = .none
-            button.contentEdgeInsets = .zero
+        return XCConfiguration(identifier: "checkbox") {
+            $0.accessibilityIdentifier = "checkboxButton"
+            $0.textColor = textColor
+            $0.titleLabel?.font = font
+            $0.titleLabel?.numberOfLines = 0
+            $0.textImageSpacing = .minimumPadding
+            $0.contentHorizontalAlignment = .left
+            $0.adjustsImageWhenHighlighted = false
+            $0.adjustsBackgroundColorWhenHighlighted = false
+            $0.highlightedBackgroundColor = .clear
+            $0.highlightedAnimation = .none
+            $0.contentEdgeInsets = 0
 
             let unfilledImage = UIImage(assetIdentifier: UIImage.AssetIdentifier.checkmarkIconUnfilled)
             let filledImage = UIImage(assetIdentifier: UIImage.AssetIdentifier.checkmarkIconFilled)
-            button.setImage(unfilledImage.tintColor(normalColor), for: .normal)
-            button.setImage(filledImage.tintColor(selectedColor), for: .selected)
+            $0.setImage(unfilledImage.tintColor(normalColor), for: .normal)
+            $0.setImage(filledImage.tintColor(selectedColor), for: .selected)
         }
     }
 }

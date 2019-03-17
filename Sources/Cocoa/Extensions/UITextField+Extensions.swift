@@ -45,9 +45,9 @@ extension UITextField {
         static var isInsertionCursorEnabled = "isInsertionCursorEnabled"
     }
 
-    /// The default value is `.zero`.
+    /// The default value is `0`.
     open var contentInset: UIEdgeInsets {
-        get { return associatedObject(&AssociatedKey.contentInset, default: .zero) }
+        get { return associatedObject(&AssociatedKey.contentInset, default: 0) }
         set { setAssociatedObject(&AssociatedKey.contentInset, value: newValue) }
     }
 

@@ -88,7 +88,9 @@ public struct CurrencyAmount: CustomStringConvertible {
     }
 
     /// Returns a new string by concatenating the components,
-    /// using the given formatting style. The default value is `.zero`.
+    /// using the given formatting style.
+    ///
+    /// The default value is `.none`.
     ///
     /// - Parameter style: The formatting style to use when joining the components.
     /// - Returns: The joined string based on the given style.

@@ -200,7 +200,7 @@ open class DynamicTableViewCell: XCTableViewCell {
 
     open override func prepareForReuse() {
         super.prepareForReuse()
-        separatorInset = .zero
+        separatorInset = 0
     }
 
     /// The default implementation of this method does nothing.
@@ -226,14 +226,17 @@ open class DynamicTableViewCell: XCTableViewCell {
         labelsStackView.translatesAutoresizingMaskIntoConstraints = false
 
         // Constraints for Labels Stack View
-        labelsStackViewConstraints.top = NSLayoutConstraint(item: labelsStackView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: contentView, constant: contentInset.top).activate()
-        labelsStackViewConstraints.bottom = NSLayoutConstraint(item: contentView, attribute: .bottom, relatedBy: .greaterThanOrEqual, toItem: labelsStackView, constant: contentInset.bottom).activate()
-        NSLayoutConstraint.centerY(labelsStackView).activate()
+        labelsStackView.anchor.make {
+            $0.vertically.greaterThanOrEqualToSuperview().inset(contentInset)
+            $0.centerY.equalToSuperview()
+        }
 
-        imageSizeConstraints = NSLayoutConstraint.Size(NSLayoutConstraint.size(avatarView, size: imageSize).activate())
+        imageSizeConstraints = NSLayoutConstraint.Size(avatarView.anchor.size.equalTo(imageSize).constraints)
 
         // Avatar Center
-        NSLayoutConstraint.centerY(avatarView).activate()
+        avatarView.anchor.make {
+            $0.centerY.equalToSuperview()
+        }
 
         imageAndTitleSpacingConstraint = NSLayoutConstraint(item: labelsStackView, attribute: .leading, toItem: avatarView, attribute: .trailing, constant: textImageSpacing).activate()
 

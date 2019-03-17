@@ -34,12 +34,12 @@ open class SplitScreenViewController: UIViewController {
         setupConstraints()
     }
 
-    open func addViewController(toHeaderContainerView vc: UIViewController, enableConstraints: Bool = true, padding: UIEdgeInsets = .zero) {
-        addViewController(vc, containerView: headerContainerView, enableConstraints: enableConstraints, padding: padding)
+    open func addViewController(toHeaderContainerView vc: UIViewController, enableConstraints: Bool = true, inset: UIEdgeInsets = 0) {
+        addViewController(vc, containerView: headerContainerView, enableConstraints: enableConstraints, inset: inset)
     }
 
-    open func addViewController(toBodyContainerView vc: UIViewController, enableConstraints: Bool = true, padding: UIEdgeInsets = .zero) {
-        addViewController(vc, containerView: bodyContainerView, enableConstraints: enableConstraints, padding: padding)
+    open func addViewController(toBodyContainerView vc: UIViewController, enableConstraints: Bool = true, inset: UIEdgeInsets = 0) {
+        addViewController(vc, containerView: bodyContainerView, enableConstraints: enableConstraints, inset: inset)
     }
 
     // MARK: Setup Methods: Container Views
@@ -56,14 +56,18 @@ open class SplitScreenViewController: UIViewController {
         let priority = UILayoutPriority.defaultHigh
 
         // Setup constraints: headerContainerView
-        NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(headerContainerView).activate()
-        NSLayoutConstraint(item: headerContainerView, attribute: .top, toItem: view).activate()
+        headerContainerView.anchor.make { anchor in
+            anchor.horizontally.equalToSuperview()
+            anchor.top.equalToSuperview()
+        }
         // Set aspect-ratio priority to low this ensures that landscape view works as expected.
         NSLayoutConstraint(item: headerContainerView, attribute: .width, toItem: headerContainerView, attribute: .height, multiplier: headerContainerViewAspectRatio, priority: priority).activate()
 
         // Setup constraints: bodyContainerView
-        NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(bodyContainerView).activate()
-        NSLayoutConstraint(item: bodyContainerView, attribute: .bottom, toItem: view, priority: priority).activate()
-        NSLayoutConstraint(item: bodyContainerView, attribute: .top, toItem: headerContainerView, attribute: .bottom).activate()
+        bodyContainerView.anchor.make { anchor in
+            anchor.horizontally.equalToSuperview()
+            anchor.bottom.equalToSuperview().priority(priority)
+            anchor.top.equalTo(headerContainerView.anchor.bottom)
+        }
     }
 }

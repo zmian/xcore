@@ -36,7 +36,7 @@ open class IconLabelCollectionViewController: UIViewController {
         super.viewDidLoad()
         collectionView.apply {
             view.addSubview($0)
-            NSLayoutConstraint.constraintsForViewToFillSuperview($0).activate()
+            $0.anchor.edges.equalToSuperview()
         }
     }
 }

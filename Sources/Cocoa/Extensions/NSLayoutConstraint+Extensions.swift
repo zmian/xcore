@@ -63,14 +63,69 @@ extension NSLayoutConstraint {
         return self
     }
 
-    /// A convenience method to set layout priority.
+    /// A convenience method to set constraint priority.
     ///
-    /// - Parameter value: The layout priority.
+    /// - Parameter value: The constraint priority.
     /// - Returns: `self`.
     @discardableResult
     public func priority(_ value: UILayoutPriority) -> NSLayoutConstraint {
         priority = value
         return self
+    }
+
+    /// A convenience method to set constraint identifier.
+    ///
+    /// - Parameter value: The constraint identifier.
+    /// - Returns: `self`.
+    @discardableResult
+    public func identifier(_ value: String?) -> NSLayoutConstraint {
+        identifier = value
+        return self
+    }
+}
+
+extension NSLayoutConstraint {
+    /// Creates a new constraint with the given priority.
+    ///
+    /// - Parameter priority: The priority that should be set for the new constraint.
+    /// - Returns: The new activated constraint with the provided `priority` value.
+    @discardableResult
+    func createWithPriority( _ priority: UILayoutPriority) -> NSLayoutConstraint {
+        let newConstraint = NSLayoutConstraint(
+            item: firstItem!,
+            attribute: firstAttribute,
+            relatedBy: relation,
+            toItem: secondItem,
+            attribute: secondAttribute,
+            multiplier: multiplier,
+            constant: constant
+        )
+        newConstraint.priority = priority
+        deactivate()
+        firstItem?.removeConstraint(self)
+        newConstraint.activate()
+        return newConstraint
+    }
+
+    /// Creates a new constraint with the given multiplier.
+    ///
+    /// - Parameter multiplier: The multiplier that should be set for the new constraint.
+    /// - Returns: The new activated constraint with the provided `multiplier` value.
+    @discardableResult
+    func createWithMultiplier( _ multiplier: CGFloat) -> NSLayoutConstraint {
+        let newConstraint = NSLayoutConstraint(
+            item: firstItem!,
+            attribute: firstAttribute,
+            relatedBy: relation,
+            toItem: secondItem,
+            attribute: secondAttribute,
+            multiplier: multiplier,
+            constant: constant
+        )
+        deactivate()
+        firstItem?.removeConstraint(self)
+        newConstraint.activate()
+        return newConstraint
     }
 }
 
@@ -117,5 +172,33 @@ extension Array where Element: NSLayoutConstraint {
             $0.priority = value
         }
         return self
+    }
+}
+
+extension NSLayoutConstraint {
+    private struct AssociatedKey {
+        static var anchorAttributes = "anchorAttributes"
+    }
+
+    var anchorAttributes: Anchor.Attributes? {
+        get {
+            guard let intValue: Int = associatedObject(&AssociatedKey.anchorAttributes) else {
+                return nil
+            }
+
+            return Anchor.Attributes(rawValue: intValue)
+        }
+        set { setAssociatedObject(&AssociatedKey.anchorAttributes, value: newValue?.rawValue) }
+    }
+
+    func anchorAttributes(_ value: Anchor.Attributes) -> NSLayoutConstraint {
+        anchorAttributes = value
+        return self
+    }
+}
+
+extension Array where Element: NSLayoutConstraint {
+    func firstAttribute(_ value: Anchor.Attributes) -> NSLayoutConstraint? {
+        return first { $0.anchorAttributes == value }
     }
 }

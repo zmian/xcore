@@ -76,3 +76,26 @@ extension UIScrollView {
         setContentOffset(CGPoint(x: 0, y: -adjustedContentInset.top), animated: animated)
     }
 }
+
+extension UIScrollView {
+    func resolve(using resolverView: UIView, fixedView: UIView, axis: NSLayoutConstraint.Axis) {
+        switch axis {
+            case .vertical:
+                resolverView.anchor.make {
+                    $0.horizontally.equalToSuperview()
+                    $0.top.equalTo(self)
+                    // Now the important part
+                    // Setting the `resolverView` width to `self.view` width correctly defines the content width of the scroll view
+                    $0.width.equalTo(fixedView)
+                }
+        case .horizontal:
+            resolverView.anchor.make {
+                $0.vertically.equalToSuperview()
+                $0.leading.equalTo(self)
+                // Now the important part
+                // Setting the `resolverView` height to `self.view` height correctly defines the content height of the scroll view
+                $0.height.equalTo(fixedView)
+            }
+        }
+    }
+}
