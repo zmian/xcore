@@ -39,10 +39,6 @@ open class XCScrollViewController: UIViewController {
     }
 
     private func resolveContentSize() {
-        let scrollViewWidthResolver = UIView()
-        scrollViewWidthResolver.isHidden = true
-        scrollView.addSubview(scrollViewWidthResolver)
-        scrollView.resolve(using: scrollViewWidthResolver, fixedView: view, axis: .vertical)
-        scrollViewWidthResolver.anchor.height.equalTo(CGFloat(1))
+        scrollView.resolve(axis: .vertical, fixedView: view)
     }
 }
