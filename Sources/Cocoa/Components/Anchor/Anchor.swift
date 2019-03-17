@@ -72,7 +72,7 @@ extension Anchor.Axis {
         /// - Returns: `self`.
         @discardableResult
         public func priority(_ value: UILayoutPriority) -> Modifier {
-            for (index, constraint) in constraints.reversed().enumerated(){
+            for (index, constraint) in constraints.reversed().enumerated() {
                 guard constraint.priority.rawValue > value.rawValue else {
                     constraint.priority = value
                     continue
