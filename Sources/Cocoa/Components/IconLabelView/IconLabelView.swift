@@ -101,8 +101,8 @@ open class IconLabelView: XCView {
                 labelsWidthConstraints.deactivate()
             } else {
                 if labelsWidthConstraints.isEmpty {
-                    labelsWidthConstraints.append(NSLayoutConstraint(item: titleLabel, width: labelsWidth))
-                    labelsWidthConstraints.append(NSLayoutConstraint(item: subtitleLabel, width: labelsWidth))
+                    labelsWidthConstraints.append(titleLabel.anchor.width.equalTo(labelsWidth).constraints.first!)
+                    labelsWidthConstraints.append(subtitleLabel.anchor.width.equalTo(labelsWidth).constraints.first!)
                 }
                 labelsWidthConstraints.forEach {
                     $0.constant = labelsWidth
@@ -212,7 +212,7 @@ open class IconLabelView: XCView {
         set { stackView.spacing = newValue }
     }
 
-    /// The default value is `.zero`.
+    /// The default value is `0`.
     @objc open dynamic var contentInset: UIEdgeInsets {
         get { return stackView.layoutMargins }
         set { stackView.layoutMargins = newValue }
@@ -223,14 +223,17 @@ open class IconLabelView: XCView {
     open override func commonInit() {
         addSubview(stackView)
 
-        NSLayoutConstraint.center(stackView, priority: .defaultLow).activate()
+        stackView.anchor.make {
+            $0.center.equalToSuperview().priority(.defaultLow)
+        }
+
         NSLayoutConstraint(item: stackView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: self).activate()
         NSLayoutConstraint(item: stackView, attribute: .bottom, relatedBy: .lessThanOrEqual, toItem: self).activate()
 
         updateAxis()
 
-        imageSizeConstraints = NSLayoutConstraint.Size(NSLayoutConstraint.size(imageViewContainer, size: imageSize).activate())
-        imagePaddingConstraints = NSLayoutConstraint.Edges(NSLayoutConstraint.constraintsForViewToFillSuperview(imageView, padding: imageInset).activate())
+        imageSizeConstraints = NSLayoutConstraint.Size(imageViewContainer.anchor.size.equalTo(imageSize).constraints)
+        imagePaddingConstraints = NSLayoutConstraint.Edges(imageView.anchor.edges.equalToSuperview().inset(imageInset).constraints)
     }
 
     open override func setNeedsLayout() {
@@ -296,7 +299,7 @@ extension IconLabelView {
                 // Deactivate `horizontal` and activate `vertical` constraints.
                 stackViewConstraints.horizontal?.deactivate()
                 if stackViewConstraints.vertical == nil {
-                    stackViewConstraints.vertical = NSLayoutConstraint.constraintsForViewToFillSuperviewHorizontal(stackView)
+                    stackViewConstraints.vertical = stackView.anchor.horizontally.equalToSuperview().constraints
                 }
                 stackViewConstraints.vertical?.activate()
             case .horizontal:
@@ -304,7 +307,7 @@ extension IconLabelView {
                 // Deactivate `vertical` and activate `horizontal` constraints.
                 stackViewConstraints.vertical?.deactivate()
                 if stackViewConstraints.horizontal == nil {
-                    stackViewConstraints.horizontal = NSLayoutConstraint.constraintsForViewToFillSuperviewVertical(stackView)
+                    stackViewConstraints.horizontal = stackView.anchor.vertically.equalToSuperview().constraints
                 }
                 stackViewConstraints.horizontal?.activate()
         }

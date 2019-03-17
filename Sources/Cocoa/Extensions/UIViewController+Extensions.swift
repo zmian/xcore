@@ -31,7 +31,7 @@ extension UIViewController {
     /// - Parameters:
     ///   - childViewController: The view controller to add as a child view controller.
     ///   - containerView:   A container view where this child view controller will be added. The default value is view controller's view.
-    open func addViewController(_ childViewController: UIViewController, containerView: UIView? = nil, enableConstraints: Bool = false, padding: UIEdgeInsets = .zero) {
+    open func addViewController(_ childViewController: UIViewController, containerView: UIView? = nil, enableConstraints: Bool = false, inset: UIEdgeInsets = 0) {
         guard let containerView = containerView ?? view else { return }
 
         addChild(childViewController)
@@ -40,7 +40,7 @@ extension UIViewController {
         childViewController.didMove(toParent: self)
 
         if enableConstraints {
-            NSLayoutConstraint.constraintsForViewToFillSuperview(childViewController.view, padding: padding).activate()
+            childViewController.view.anchor.edges.equalToSuperview().inset(inset)
         }
     }
 

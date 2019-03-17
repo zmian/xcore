@@ -52,15 +52,15 @@ open class XCComposedTableViewController: UIViewController {
     /// An option to determine whether the table view top and bottom
     /// is constrained to top and bottom safe areas.
     ///
-    /// The default value is `[]`.
+    /// The default value is `.none`.
     open var pinnedToSafeAreaLayoutGuides: SafeAreaLayoutGuideOptions {
-        return []
+        return .none
     }
 
     /// The distance that the tableView is inset from the enclosing view.
     ///
-    /// The default value is `.zero`.
-    @objc open dynamic var contentInset: UIEdgeInsets = .zero {
+    /// The default value is `0`.
+    @objc open dynamic var contentInset: UIEdgeInsets = 0 {
         didSet {
             tableViewConstraints.update(from: contentInset)
         }
@@ -75,18 +75,16 @@ open class XCComposedTableViewController: UIViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(tableView)
-        tableViewConstraints = NSLayoutConstraint.Edges(
-            constraintsForViewToFillSuperview(
-                tableView,
-                padding: contentInset,
-                constraintToLayoutGuideOptions: pinnedToSafeAreaLayoutGuides
-            ).activate()
-        )
+
         tableView.apply {
             composedDataSource.dataSources = dataSources(for: $0)
             $0.dataSource = composedDataSource
             $0.delegate = self
+
+            view.addSubview($0)
+            tableViewConstraints = NSLayoutConstraint.Edges(
+                $0.anchor.edges.equalTo(pinnedToSafeAreaLayoutGuides).inset(contentInset).constraints
+            )
         }
     }
 

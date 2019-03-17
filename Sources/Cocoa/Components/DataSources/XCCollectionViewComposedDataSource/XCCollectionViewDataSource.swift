@@ -105,7 +105,7 @@ extension XCCollectionViewDataSource {
 
 extension XCCollectionViewDataSource {
     open func collectionView(_ collectionView: UICollectionView, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset ?? .zero
+        return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset ?? 0
     }
 
     open func collectionView(_ collectionView: UICollectionView, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -174,7 +174,7 @@ extension XCCollectionViewDataSource {
         if let headerView = self.collectionView(sizeCollectionView, viewForHeaderInSectionAt: IndexPath(item: 0, section: section)) {
             return headerView.sizeFitting(width: availableWidth)
         } else {
-            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.headerReferenceSize ?? .zero
+            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.headerReferenceSize ?? 0
         }
     }
 
@@ -188,7 +188,7 @@ extension XCCollectionViewDataSource {
         if let footerView = self.collectionView(sizeCollectionView, viewForFooterInSectionAt: IndexPath(item: 0, section: section)) {
             return footerView.sizeFitting(width: availableWidth)
         } else {
-            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize ?? .zero
+            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize ?? 0
         }
     }
 }

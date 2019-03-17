@@ -93,7 +93,7 @@ open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
         textLabel.htmlText = text
         scrollView.alwaysBounceVertical = true
         scrollView.addSubview(textLabel)
-        NSLayoutConstraint.constraintsForViewToFillSuperview(textLabel, padding: contentInset, priority: .defaultHigh).activate()
+        textLabel.anchor.edges.equalToSuperview().inset(contentInset).priority(.defaultHigh)
 
         if let backgroundImage = backgroundImage?.cgImage {
             view.layer.contents = backgroundImage

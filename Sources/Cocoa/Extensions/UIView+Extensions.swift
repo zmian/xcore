@@ -156,15 +156,15 @@ import UIKit
         return UIView().apply {
             $0.backgroundColor = color
             addSubview($0)
-            NSLayoutConstraint.constraintsForViewToFillSuperview($0).activate()
+            $0.anchor.edges.equalToSuperview()
         }
     }
 
     // Credit: http://stackoverflow.com/a/23157272
     @discardableResult
-    open func addBorder(edges: UIRectEdge, color: UIColor = .white, thickness: CGFloat = 1, padding: UIEdgeInsets = .zero) -> [UIView] {
+    open func addBorder(edges: UIRectEdge, color: UIColor = .white, thickness: CGFloat = 1, inset: UIEdgeInsets = 0) -> [UIView] {
         var borders = [UIView]()
-        let metrics = ["thickness": thickness, "paddingTop": padding.top, "paddingLeft": padding.left, "paddingBottom": padding.bottom, "paddingRight": padding.right]
+        let metrics = ["thickness": thickness, "insetTop": inset.top, "insetLeft": inset.left, "insetBottom": inset.bottom, "insetRight": inset.right]
         let allEdges = edges.contains(.all)
 
         func border() -> UIView {
@@ -177,12 +177,12 @@ import UIKit
         if edges.contains(.top) || allEdges {
             let top = border()
             addSubview(top)
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|-paddingTop-[top(==thickness)]",
+            NSLayoutConstraint.constraints(withVisualFormat: "V:|-insetTop-[top(==thickness)]",
                 options: [],
                 metrics: metrics,
                 views: ["top": top]
             ).activate()
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-paddingLeft-[top]-paddingRight-|",
+            NSLayoutConstraint.constraints(withVisualFormat: "H:|-insetLeft-[top]-insetRight-|",
                 options: [],
                 metrics: metrics,
                 views: ["top": top]
@@ -193,12 +193,12 @@ import UIKit
         if edges.contains(.left) || allEdges {
             let left = border()
             addSubview(left)
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-paddingLeft-[left(==thickness)]",
+            NSLayoutConstraint.constraints(withVisualFormat: "H:|-insetLeft-[left(==thickness)]",
                 options: [],
                 metrics: metrics,
                 views: ["left": left]
             ).activate()
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|-paddingTop-[left]-paddingBottom-|",
+            NSLayoutConstraint.constraints(withVisualFormat: "V:|-insetTop-[left]-insetBottom-|",
                 options: [],
                 metrics: metrics,
                 views: ["left": left]
@@ -209,12 +209,12 @@ import UIKit
         if edges.contains(.right) || allEdges {
             let right = border()
             addSubview(right)
-            NSLayoutConstraint.constraints(withVisualFormat: "H:[right(==thickness)]-paddingRight-|",
+            NSLayoutConstraint.constraints(withVisualFormat: "H:[right(==thickness)]-insetRight-|",
                 options: [],
                 metrics: metrics,
                 views: ["right": right]
             ).activate()
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|-paddingTop-[right]-paddingBottom-|",
+            NSLayoutConstraint.constraints(withVisualFormat: "V:|-insetTop-[right]-insetBottom-|",
                 options: [],
                 metrics: metrics,
                 views: ["right": right]
@@ -225,12 +225,12 @@ import UIKit
         if edges.contains(.bottom) || allEdges {
             let bottom = border()
             addSubview(bottom)
-            NSLayoutConstraint.constraints(withVisualFormat: "V:[bottom(==thickness)]-paddingBottom-|",
+            NSLayoutConstraint.constraints(withVisualFormat: "V:[bottom(==thickness)]-insetBottom-|",
                 options: [],
                 metrics: metrics,
                 views: ["bottom": bottom]
             ).activate()
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-paddingLeft-[bottom]-paddingRight-|",
+            NSLayoutConstraint.constraints(withVisualFormat: "H:|-insetLeft-[bottom]-insetRight-|",
                 options: [],
                 metrics: metrics,
                 views: ["bottom": bottom]

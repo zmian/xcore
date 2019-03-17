@@ -42,15 +42,15 @@ open class XCComposedCollectionViewController: UIViewController {
     /// An option to determine whether the collection view top and bottom
     /// is constrained to top and bottom safe areas.
     ///
-    /// The default value is `[]`.
+    /// The default value is `.none`.
     open var pinnedToSafeAreaLayoutGuides: SafeAreaLayoutGuideOptions {
-        return []
+        return .none
     }
 
     /// The distance that the collectionView is inset from the enclosing view.
     ///
-    /// The default value is `.zero`.
-    @objc open dynamic var contentInset: UIEdgeInsets = .zero {
+    /// The default value is `0`.
+    @objc open dynamic var contentInset: UIEdgeInsets = 0 {
         didSet {
             collectionViewConstraints.update(from: contentInset)
         }
@@ -65,18 +65,16 @@ open class XCComposedCollectionViewController: UIViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(collectionView)
-        collectionViewConstraints = NSLayoutConstraint.Edges(
-            constraintsForViewToFillSuperview(
-                collectionView,
-                padding: contentInset,
-                constraintToLayoutGuideOptions: pinnedToSafeAreaLayoutGuides
-            ).activate()
-        )
+
         collectionView.apply {
             composedDataSource.dataSources = dataSources(for: $0)
             $0.dataSource = composedDataSource
             $0.delegate = self
+
+            view.addSubview($0)
+            collectionViewConstraints = NSLayoutConstraint.Edges(
+                $0.anchor.edges.equalTo(pinnedToSafeAreaLayoutGuides).inset(contentInset).constraints
+            )
         }
     }
 

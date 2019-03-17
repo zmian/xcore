@@ -140,7 +140,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     // MARK: isContentCentered
 
     private var shouldUpdateActualContentInset = true
-    private var actualContentInset: UIEdgeInsets = .zero
+    private var actualContentInset: UIEdgeInsets = 0
     open override var contentInset: UIEdgeInsets {
         didSet {
             guard shouldUpdateActualContentInset else { return }

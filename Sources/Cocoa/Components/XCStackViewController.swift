@@ -1,7 +1,7 @@
 //
-// XCScrollViewController.swift
+// XCStackViewController.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2018 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,33 +24,38 @@
 
 import UIKit
 
-open class XCScrollViewController: UIViewController {
-    public let scrollView = UIScrollView()
+open class XCStackViewController: UIViewController {
+    private let scrollView = UIScrollView()
+    public let stackView = UIStackView().apply {
+        $0.isLayoutMarginsRelativeArrangement = true
+    }
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        setupContentView()
+        setupScrollView()
+        setupStackView()
     }
 
     /// An option to determine whether the scroll view top and bottom
     /// is constrained to top and bottom safe areas.
     ///
-    /// The default value is `.none`.
+    /// The default value is `[]`.
     open var pinnedToSafeAreaLayoutGuides: SafeAreaLayoutGuideOptions {
-        return .none
+        return []
     }
 
-    private func setupContentView() {
+    private func setupScrollView() {
         view.addSubview(scrollView)
         scrollView.anchor.edges.equalTo(pinnedToSafeAreaLayoutGuides)
-        resolveContentSize()
     }
 
-    private func resolveContentSize() {
-        let scrollViewWidthResolver = UIView()
-        scrollViewWidthResolver.isHidden = true
-        scrollView.addSubview(scrollViewWidthResolver)
-        scrollView.resolve(using: scrollViewWidthResolver, fixedView: view, axis: .vertical)
-        scrollViewWidthResolver.anchor.height.equalTo(CGFloat(1))
+    private func setupStackView() {
+        scrollView.addSubview(stackView)
+        stackView.anchor.make { anchor in
+            anchor.edges.equalToSuperview()
+            anchor.width.equalTo(view)
+        }
+
+        NSLayoutConstraint(item: stackView, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: scrollView).activate()
     }
 }

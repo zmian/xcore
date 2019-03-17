@@ -399,9 +399,9 @@ extension UIButton {
     // MARK: Reset
 
     @objc open func removeInsets() {
-        contentEdgeInsets = .zero
-        titleEdgeInsets = .zero
-        imageEdgeInsets = .zero
+        contentEdgeInsets = 0
+        titleEdgeInsets = 0
+        imageEdgeInsets = 0
     }
 }
 
@@ -511,10 +511,10 @@ extension UIButton {
     @objc open var touchAreaEdgeInsets: UIEdgeInsets {
         get {
             guard let value: NSValue = associatedObject(&AssociatedKey.touchAreaEdgeInsets) else {
-                return .zero
+                return 0
             }
 
-            var edgeInsets: UIEdgeInsets = .zero
+            var edgeInsets: UIEdgeInsets = 0
             value.getValue(&edgeInsets)
             return edgeInsets
         }
@@ -527,7 +527,7 @@ extension UIButton {
     }
 
     @objc open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        if touchAreaEdgeInsets == .zero || !isUserInteractionEnabled || !isEnabled || isHidden {
+        if touchAreaEdgeInsets == 0 || !isUserInteractionEnabled || !isEnabled || isHidden {
             return super.point(inside: point, with: event)
         }
 

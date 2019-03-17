@@ -54,7 +54,7 @@ extension IconLabelCollectionView {
 
         open override func commonInit() {
             contentView.addSubview(iconLabelView)
-            NSLayoutConstraint.constraintsForViewToFillSuperview(iconLabelView).activate()
+            iconLabelView.anchor.edges.equalToSuperview()
             setupDeleteButton()
         }
 
@@ -64,9 +64,12 @@ extension IconLabelCollectionView {
             contentView.addSubview(deleteButton)
             let buttonSize: CGFloat = 44
             let offset = iconLabelView.isImageViewRounded ? buttonSize / 4 : buttonSize / 2
-            NSLayoutConstraint.size(deleteButton, size: CGSize(buttonSize)).activate()
-            NSLayoutConstraint(item: deleteButton, attribute: .top, toItem: contentView, constant: -offset).activate()
-            NSLayoutConstraint(item: contentView, attribute: .trailing, toItem: deleteButton, constant: -offset).activate()
+
+            deleteButton.anchor.make {
+                $0.size.equalTo(buttonSize)
+                $0.top.equalToSuperview().inset(-offset)
+                $0.trailing.equalToSuperview().inset(-offset)
+            }
         }
     }
 }
