@@ -32,17 +32,9 @@ open class XCScrollViewController: UIViewController {
         setupContentView()
     }
 
-    /// An option to determine whether the scroll view top and bottom
-    /// is constrained to top and bottom safe areas.
-    ///
-    /// The default value is `.none`.
-    open var pinnedToSafeAreaLayoutGuides: SafeAreaLayoutGuideOptions {
-        return .none
-    }
-
     private func setupContentView() {
         view.addSubview(scrollView)
-        scrollView.anchor.edges.equalTo(pinnedToSafeAreaLayoutGuides)
+        scrollView.anchor.edges.equalToSuperview()
         resolveContentSize()
     }
 

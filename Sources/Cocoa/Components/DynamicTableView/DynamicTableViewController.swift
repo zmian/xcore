@@ -36,14 +36,6 @@ open class DynamicTableViewController: UIViewController {
         }
     }
 
-    /// An option to determine whether the table view top and bottom
-    /// is constrained to top and bottom safe areas.
-    ///
-    /// The default value is `.none`.
-    open var pinnedToSafeAreaLayoutGuides: SafeAreaLayoutGuideOptions {
-        return .none
-    }
-
     /// The distance that the tableView is inset from the enclosing view.
     ///
     /// The default value is `0`.
@@ -82,7 +74,7 @@ open class DynamicTableViewController: UIViewController {
 
         view.addSubview(tableView)
         tableViewConstraints = NSLayoutConstraint.Edges(
-            tableView.anchor.edges.equalTo(pinnedToSafeAreaLayoutGuides).inset(contentInset).constraints
+            tableView.anchor.edges.equalToSuperview().inset(contentInset).constraints
         )
     }
 }
