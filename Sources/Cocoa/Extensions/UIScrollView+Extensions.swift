@@ -78,24 +78,42 @@ extension UIScrollView {
 }
 
 extension UIScrollView {
-    func resolve(using resolverView: UIView, fixedView: UIView, axis: NSLayoutConstraint.Axis) {
+    private final class ContentSizeResolverView: UIView {}
+
+    /// A method to resolve scroll view content size for the given axis.
+    ///
+    /// - Parameters:
+    ///   - axis: The axis for which to resolve the content size.
+    ///   - fixedView: The view that has the size resolved.
+    func resolve(axis: NSLayoutConstraint.Axis, fixedView: UIView) {
+        let contentSizeResolverView = ContentSizeResolverView().apply {
+            $0.isHidden = true
+            addSubview($0)
+        }
+
         switch axis {
             case .vertical:
-                resolverView.anchor.make {
+                contentSizeResolverView.anchor.make {
                     $0.horizontally.equalToSuperview()
                     $0.top.equalTo(self)
+                    $0.height.equalTo(CGFloat(1))
                     // Now the important part
-                    // Setting the `resolverView` width to `self.view` width correctly defines the content width of the scroll view
+                    //
+                    // Setting the resolver view width to `fixedView` width correctly defines the
+                    // content width of the scroll view.
                     $0.width.equalTo(fixedView)
                 }
-        case .horizontal:
-            resolverView.anchor.make {
-                $0.vertically.equalToSuperview()
-                $0.leading.equalTo(self)
-                // Now the important part
-                // Setting the `resolverView` height to `self.view` height correctly defines the content height of the scroll view
-                $0.height.equalTo(fixedView)
-            }
+            case .horizontal:
+                contentSizeResolverView.anchor.make {
+                    $0.vertically.equalToSuperview()
+                    $0.leading.equalTo(self)
+                    $0.width.equalTo(CGFloat(1))
+                    // Now the important part
+                    //
+                    // Setting the resolver view height to `fixedView` width correctly defines the
+                    // content height of the scroll view.
+                    $0.height.equalTo(fixedView)
+                }
         }
     }
 }
