@@ -48,6 +48,7 @@ extension HUD {
 extension HUD {
     private final class ViewController: UIViewController {
         override func viewDidLoad() {
+            super.viewDidLoad()
             view.backgroundColor = .white
         }
 
@@ -136,11 +137,71 @@ open class HUD {
     ///
     /// - Parameter view: The view to be added. After being added, this view appears
     ///                   on top of any other subviews.
-    open func addSubview(_ view: UIView) {
+    open func add(_ view: UIView) {
         self.view.addSubview(view)
     }
 
-    private func toggle(enabled: Bool, animated: Bool, _ completion: (() -> Void)?) {
+    /// This method creates a parent-child relationship between the hud view
+    /// controller and the object in the `viewController` parameter. This
+    /// relationship is necessary when embedding the child view controller’s view
+    /// into the current view controller’s content. If the new child view controller
+    /// is already the child of a container view controller, it is removed from that
+    /// container before being added.
+    ///
+    /// This method is only intended to be called by an implementation of a custom
+    /// container view controller. If you override this method, you must call super
+    /// in your implementation.
+    ///
+    ///
+    ///
+    /// - Parameter viewController: The view controller to be added as a child.
+    open func add(_ viewController: UIViewController) {
+        self.viewController.addViewController(viewController, enableConstraints: true)
+    }
+
+    /// Presents a view controller modally.
+    ///
+    /// In a horizontally regular environment, the view controller is presented in
+    /// the style specified by the `modalPresentationStyle` property. In a
+    /// horizontally compact environment, the view controller is presented full
+    /// screen by default. If you associate an adaptive delegate with the
+    /// presentation controller associated with the object in
+    /// `viewControllerToPresent`, you can modify the presentation style dynamically.
+    ///
+    /// The object on which you call this method may not always be the one that
+    /// handles the presentation. Each presentation style has different rules
+    /// governing its behavior. For example, a full-screen presentation must be made
+    /// by a view controller that itself covers the entire screen. If the current
+    /// view controller is unable to fulfill a request, it forwards the request up
+    /// the view controller hierarchy to its nearest parent, which can then handle
+    /// or forward the request.
+    ///
+    /// Before displaying the view controller, this method resizes the presented
+    /// view controller's view based on the presentation style. For most
+    /// presentation styles, the resulting view is then animated onscreen using the
+    /// transition style in the `modalTransitionStyle` property of the presented view
+    /// controller. For custom presentations, the view is animated onscreen using
+    /// the presented view controller’s transitioning delegate. For current context
+    /// presentations, the view may be animated onscreen using the current view
+    /// controller’s transition style.
+    ///
+    /// The completion handler is called after the `viewDidAppear(_:)` method is
+    /// called on the presented view controller.
+    ///
+    /// - Parameters:
+    ///   - viewControllerToPresent: The view controller to display over the current
+    ///                              view controller’s content.
+    ///   - flag: Pass `true` to animate the presentation; otherwise, pass `false`.
+    ///   - completion: The block to execute after the presentation finishes. This
+    ///                 block has no return value and takes no parameters. You may
+    ///                 specify `nil` for this parameter.
+    open func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, _ completion: (() -> Void)? = nil) {
+        show(animated: false) { [weak self, unowned viewControllerToPresent] in
+            self?.viewController.present(viewControllerToPresent, animated: flag, completion: completion)
+        }
+    }
+
+    private func internalToggle(enabled: Bool, animated: Bool, _ completion: (() -> Void)?) {
         guard isEnabled != enabled, !temporaryUnavailable else {
             temporaryUnavailable = false
             completion?()
@@ -181,6 +242,18 @@ open class HUD {
                 self.window.isHidden = true
                 completion?()
             })
+        }
+    }
+
+    private func toggle(enabled: Bool, animated: Bool, _ completion: (() -> Void)?) {
+        guard let presentedViewController = viewController.presentedViewController else {
+            return internalToggle(enabled: enabled, animated: animated, completion)
+        }
+
+        presentedViewController.dismiss(animated: animated) { [weak self] in
+            self?.internalToggle(enabled: false, animated: false) {
+                completion?()
+            }
         }
     }
 
