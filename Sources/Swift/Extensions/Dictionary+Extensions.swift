@@ -196,6 +196,14 @@ public func ==<Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
     return NSDictionary(dictionary: lhs).isEqual(to: rhs)
 }
 
+public func !=<Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
+    guard let lhs = lhs as? [Key: Value], let rhs = rhs as? [Key: Value] else {
+        return true
+    }
+
+    return !NSDictionary(dictionary: lhs).isEqual(to: rhs)
+}
+
 // MARK: OptionalType
 
 // Credit: https://stackoverflow.com/a/45462046
