@@ -36,26 +36,18 @@ open class Weak<T: AnyObject>: Equatable, Hashable {
     public init (value: T) {
         self.value = value
     }
-
-    public var hashValue: Int {
-        guard let value = value else {
-            return Unmanaged<AnyObject>.passUnretained(self).toOpaque().hashValue
-        }
-
+    
+    public func hash(into hasher: inout Hasher) {
         if let value = value as? AnyHashable {
-            return value.hashValue
+            hasher.combine(value)
+            return
         }
 
-        return Unmanaged<AnyObject>.passUnretained(value).toOpaque().hashValue
+        let valueHashValue = Unmanaged<AnyObject>.passUnretained(self).toOpaque().hashValue
+        hasher.combine(valueHashValue)
     }
 
     public static func ==<T>(lhs: Weak<T>, rhs: Weak<T>) -> Bool {
         return lhs.value === rhs.value
-    }
-}
-
-extension NSObject {
-    var memoryAddress: String {
-        return String(describing: Unmanaged<NSObject>.passUnretained(self).toOpaque())
     }
 }

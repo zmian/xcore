@@ -25,6 +25,12 @@
 import Foundation
 
 extension NSObject {
+    var memoryAddress: String {
+        return String(describing: Unmanaged<NSObject>.passUnretained(self).toOpaque())
+    }
+}
+
+extension NSObject {
     /// Returns the value for the property identified by a given key.
     ///
     /// The search pattern that `valueForKey:` uses to find the correct value

@@ -56,6 +56,8 @@ final public class BackgroundImageTransform: ImageTransform {
                 break
             case .right, .trailing:
                 drawingPosition.x = finalSize.width - size.width
+            @unknown default:
+                fatalError(because: .unknownCaseDetected(alignment))
         }
 
         return UIGraphicsImageRenderer(bounds: rect).image { rendererContext in

@@ -51,7 +51,7 @@ open class XCTableViewComposedDataSource: XCTableViewDataSource, ExpressibleByAr
     }
 
     open func remove(_ dataSource: XCTableViewDataSource) {
-        guard let index = dataSources.index(of: dataSource) else {
+        guard let index = dataSources.firstIndex(of: dataSource) else {
             return
         }
 

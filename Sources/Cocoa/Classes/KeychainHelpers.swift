@@ -50,9 +50,9 @@ final public class KeychainHelpers {
     public static func items(for secClass: String) -> [String: Any] {
         let query: [CFString: Any] = [
             kSecClass: secClass,
-            kSecReturnData: kCFBooleanTrue,
-            kSecReturnAttributes: kCFBooleanTrue,
-            kSecReturnRef: kCFBooleanTrue,
+            kSecReturnData: kCFBooleanTrue!,
+            kSecReturnAttributes: kCFBooleanTrue!,
+            kSecReturnRef: kCFBooleanTrue!,
             kSecMatchLimit: kSecMatchLimitAll
         ]
 

@@ -62,6 +62,10 @@ extension FatalReason {
     static func unsupportedTextStyle(_ name: String) -> FatalReason {
         return FatalReason("Unsupported text style: \(name)")
     }
+
+    static func unknownCaseDetected<T: RawRepresentable>(_ case: T) -> FatalReason {
+        return FatalReason("Unknown case detected: \(`case`) - (\(`case`.rawValue))")
+    }
 }
 
 /// Unconditionally prints a given message and stops execution.

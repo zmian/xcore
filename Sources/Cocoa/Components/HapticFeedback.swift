@@ -105,6 +105,8 @@ extension HapticFeedback {
                 return mediumImpactFeedbackGenerator
             case .heavy:
                 return heavyImpactFeedbackGenerator
+            @unknown default:
+                fatalError(because: .unknownCaseDetected(style))
         }
     }
 
