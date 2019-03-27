@@ -80,7 +80,7 @@
 		6822FF8220D217880037E780 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEFA20D217880037E780 /* Reusable.swift */; };
 		6822FF8320D217880037E780 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEFB20D217880037E780 /* UITableView+Reusable.swift */; };
 		6822FF8420D217880037E780 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6822FEFD20D217880037E780 /* Assets.xcassets */; };
-		6822FF8520D217880037E780 /* Xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = 6822FEFE20D217880037E780 /* Xcore.h */; };
+		6822FF8520D217880037E780 /* Xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = 6822FEFE20D217880037E780 /* Xcore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6822FF8720D217880037E780 /* Benchmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0220D217880037E780 /* Benchmark.swift */; };
 		6822FF8820D217880037E780 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0320D217880037E780 /* Observer.swift */; };
 		6822FF8920D217880037E780 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0420D217880037E780 /* Console.swift */; };
@@ -1615,7 +1615,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1632,7 +1631,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1693,7 +1691,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1748,7 +1746,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1808,7 +1806,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AF0020B13909A1E9E3123664 /* Pods-UnitTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = "UnitTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1826,7 +1823,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 762F6CADAAB782F8D9499DA3 /* Pods-UnitTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = "UnitTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
