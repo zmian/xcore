@@ -187,12 +187,13 @@ extension UIButton {
     }
 
     private func updateStyleIfNeeded() {
-//        observeHeightSetAutomaticallySetter = false
-//        contentEdgeInsets = UIEdgeInsets(horizontal: .defaultPadding)
-//        prepareForReuse()
+        observeHeightSetAutomaticallySetter = false
+        contentEdgeInsets = UIEdgeInsets(horizontal: .defaultPadding)
+        prepareForReuse()
+//        #warning("Fixme")
 //        style.configure(self)
-//        updateHeightConstraintIfNeeded()
-//        observeHeightSetAutomaticallySetter = true
+        updateHeightConstraintIfNeeded()
+        observeHeightSetAutomaticallySetter = true
     }
 
     @objc open func prepareForReuse() {
