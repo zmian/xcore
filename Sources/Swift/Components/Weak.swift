@@ -36,7 +36,7 @@ open class Weak<T: AnyObject>: Equatable, Hashable {
     public init (value: T) {
         self.value = value
     }
-    
+
     public func hash(into hasher: inout Hasher) {
         if let value = value as? AnyHashable {
             hasher.combine(value)
