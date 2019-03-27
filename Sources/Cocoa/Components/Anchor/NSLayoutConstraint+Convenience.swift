@@ -51,6 +51,8 @@ extension NSLayoutAnchor {
                 return constraint(lessThanOrEqualTo: anchor)
             case .greaterThanOrEqual:
                 return constraint(greaterThanOrEqualTo: anchor)
+            @unknown default:
+                fatalError(because: .unknownCaseDetected(relation))
         }
     }
 }

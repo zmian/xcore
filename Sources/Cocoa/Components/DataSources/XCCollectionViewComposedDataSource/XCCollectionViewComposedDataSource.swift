@@ -113,7 +113,7 @@ open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, Expre
     }
 
     open func remove(_ dataSource: XCCollectionViewDataSource) {
-        guard let index = dataSources.index(of: dataSource) else {
+        guard let index = dataSources.firstIndex(of: dataSource) else {
             return
         }
 

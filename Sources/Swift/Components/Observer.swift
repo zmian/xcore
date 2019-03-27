@@ -36,7 +36,7 @@ open class Observers {
 
     /// Register an observer.
     open func observe<T>(owner: T, _ handler: @escaping () -> Void) where T: AnyObject, T: Equatable {
-        if let existingObserverIndex = observers.index(where: { $0 == owner }) {
+        if let existingObserverIndex = observers.firstIndex(where: { $0 == owner }) {
             observers[existingObserverIndex].handler = handler
         } else {
             observers.append(Observer(owner: owner, handler: handler))
@@ -45,7 +45,7 @@ open class Observers {
 
     /// Remove given observers.
     open func remove<T>(_ owner: T) where T: AnyObject, T: Equatable {
-        guard let index = observers.index(where: { $0 == owner }) else {
+        guard let index = observers.firstIndex(where: { $0 == owner }) else {
             return
         }
 

@@ -51,7 +51,7 @@ extension UIImage {
                 downloadedImages += 1
 
                 if let image = image, finished {
-                    if let index = (orderedObjects.index { $0.url == object.url }) {
+                    if let index = orderedObjects.firstIndex(where: { $0.url == object.url }) {
                         orderedObjects[index].image = image
                     }
                 }

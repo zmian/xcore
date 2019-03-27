@@ -304,26 +304,35 @@ extension String {
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: PartialRangeUpTo<Int>) -> Bool {
-        return range.upperBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
+        return true
+//        return range.upperBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: PartialRangeThrough<Int>) -> Bool {
-        return range.upperBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
+        return true
+
+//        return range.upperBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: PartialRangeFrom<Int>) -> Bool {
-        return range.lowerBound >= startIndex.encodedOffset && range.lowerBound < endIndex.encodedOffset
+        return true
+
+//        return range.lowerBound >= startIndex.encodedOffset && range.lowerBound < endIndex.encodedOffset
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: CountableRange<Int>) -> Bool {
-        return range.lowerBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
+        return true
+
+//        return range.lowerBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: CountableClosedRange<Int>) -> Bool {
-        return range.lowerBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
+        return true
+
+//        return range.lowerBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
     }
 }

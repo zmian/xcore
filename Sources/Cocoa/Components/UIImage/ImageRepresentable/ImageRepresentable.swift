@@ -84,6 +84,8 @@ extension ImageSourceType {
                     self = .disk
                 case .memory:
                     self = .memory
+                @unknown default:
+                    fatalError(because: .unknownCaseDetected(type))
             }
         }
 

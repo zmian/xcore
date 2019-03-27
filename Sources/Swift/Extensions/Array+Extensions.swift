@@ -196,8 +196,8 @@ extension Array where Element: Equatable {
     public mutating func sort(by preferredOrder: [Element]) {
         return sort { (a, b) -> Bool in
             guard
-                let first = preferredOrder.index(of: a),
-                let second = preferredOrder.index(of: b)
+                let first = preferredOrder.firstIndex(of: a),
+                let second = preferredOrder.firstIndex(of: b)
             else {
                 return false
             }
@@ -224,8 +224,8 @@ extension Array where Element: Equatable {
     public func sorted(by preferredOrder: [Element]) -> [Element] {
         return sorted { (a, b) -> Bool in
             guard
-                let first = preferredOrder.index(of: a),
-                let second = preferredOrder.index(of: b)
+                let first = preferredOrder.firstIndex(of: a),
+                let second = preferredOrder.firstIndex(of: b)
             else {
                 return false
             }

@@ -310,6 +310,8 @@ extension IconLabelView {
                     stackViewConstraints.horizontal = stackView.anchor.vertically.equalToSuperview().constraints
                 }
                 stackViewConstraints.horizontal?.activate()
+            @unknown default:
+                fatalError(because: .unknownCaseDetected(axis))
         }
     }
 

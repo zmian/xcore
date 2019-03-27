@@ -114,6 +114,8 @@ extension UIScrollView {
                     // content height of the scroll view.
                     $0.height.equalTo(fixedView)
                 }
+            @unknown default:
+                fatalError(because: .unknownCaseDetected(axis))
         }
     }
 }

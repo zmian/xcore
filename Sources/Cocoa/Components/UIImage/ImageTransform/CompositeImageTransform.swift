@@ -38,7 +38,7 @@ final public class CompositeImageTransform: ImageTransform, ExpressibleByArrayLi
     public func remove(_ transform: ImageTransform) {
         let identifiers = transforms.map { $0.identifier }
 
-        guard let index = identifiers.index(of: transform.identifier) else {
+        guard let index = identifiers.firstIndex(of: transform.identifier) else {
             return
         }
 

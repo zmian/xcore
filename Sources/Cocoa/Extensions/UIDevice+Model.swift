@@ -389,6 +389,12 @@ extension UIDevice.ModelType {
                     self = .carPlay
                 case .unspecified:
                     self = .unknown
+                @unknown default:
+                    #if DEBUG
+                    fatalError(because: .unknownCaseDetected(device.userInterfaceIdiom))
+                    #else
+                    self = .unknown
+                    #endif
             }
         }
 
