@@ -304,35 +304,26 @@ extension String {
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: PartialRangeUpTo<Int>) -> Bool {
-        return true
-//        return range.upperBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
+        return range.upperBound >= startIndex.utf16Offset(in: self) && range.upperBound < endIndex.utf16Offset(in: self)
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: PartialRangeThrough<Int>) -> Bool {
-        return true
-
-//        return range.upperBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
+        return range.upperBound >= startIndex.utf16Offset(in: self) && range.upperBound < endIndex.utf16Offset(in: self)
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: PartialRangeFrom<Int>) -> Bool {
-        return true
-
-//        return range.lowerBound >= startIndex.encodedOffset && range.lowerBound < endIndex.encodedOffset
+        return range.lowerBound >= startIndex.utf16Offset(in: self) && range.lowerBound < endIndex.utf16Offset(in: self)
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: CountableRange<Int>) -> Bool {
-        return true
-
-//        return range.lowerBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
+        return range.lowerBound >= startIndex.utf16Offset(in: self) && range.upperBound < endIndex.utf16Offset(in: self)
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: CountableClosedRange<Int>) -> Bool {
-        return true
-
-//        return range.lowerBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
+        return range.lowerBound >= startIndex.utf16Offset(in: self) && range.upperBound < endIndex.utf16Offset(in: self)
     }
 }
