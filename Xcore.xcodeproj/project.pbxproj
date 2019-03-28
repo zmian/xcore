@@ -208,6 +208,7 @@
 		684B1EC8224C544A009F6197 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1EC3224C544A009F6197 /* RootViewController.swift */; };
 		684B1EC9224C544A009F6197 /* ExampleDynamicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1EC4224C544A009F6197 /* ExampleDynamicTableViewController.swift */; };
 		684B1ECA224C544A009F6197 /* UIImage+AssetIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1EC6224C544A009F6197 /* UIImage+AssetIdentifier.swift */; };
+		68CA631F224C76760012DF31 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA631E224C76750012DF31 /* StringTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -438,6 +439,7 @@
 		684B1EC3224C544A009F6197 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		684B1EC4224C544A009F6197 /* ExampleDynamicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleDynamicTableViewController.swift; sourceTree = "<group>"; };
 		684B1EC6224C544A009F6197 /* UIImage+AssetIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+AssetIdentifier.swift"; sourceTree = "<group>"; };
+		68CA631E224C76750012DF31 /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		8D64F6471089E2220DD070CC /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		989B05E63B9D27BBB2D81B2C /* Pods-UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UITests/Pods-UITests.release.xcconfig"; sourceTree = "<group>"; };
 		9B4A87B278E5152219B8BDDE /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -532,6 +534,7 @@
 				684B1E90224C5167009F6197 /* CurrencySymbolsOptionsTests.swift */,
 				684B1E8B224C5167009F6197 /* ImageTransformTests.swift */,
 				684B1E8D224C5167009F6197 /* PercentageTests.swift */,
+				68CA631E224C76750012DF31 /* StringTests.swift */,
 				684B1E8A224C5167009F6197 /* PredicateRepresentableTests.swift */,
 				684B1E8F224C5167009F6197 /* SubviewLookupTests.swift */,
 				684B1E8C224C5167009F6197 /* VersionTests.swift */,
@@ -1507,6 +1510,7 @@
 				684B1E96224C5167009F6197 /* SubviewLookupTests.swift in Sources */,
 				684B1E99224C5176009F6197 /* ViewControllerTestCase.swift in Sources */,
 				684B1E95224C5167009F6197 /* CaseIterableTests.swift in Sources */,
+				68CA631F224C76760012DF31 /* StringTests.swift in Sources */,
 				684B1E97224C5167009F6197 /* CurrencySymbolsOptionsTests.swift in Sources */,
 				684B1CFC224C4CAA009F6197 /* TestCase.swift in Sources */,
 				684B1E94224C5167009F6197 /* PercentageTests.swift in Sources */,
