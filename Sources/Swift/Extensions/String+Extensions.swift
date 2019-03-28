@@ -304,26 +304,36 @@ extension String {
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: PartialRangeUpTo<Int>) -> Bool {
-        return range.upperBound >= startIndex.utf16Offset(in: self) && range.upperBound < endIndex.utf16Offset(in: self)
+        return range.upperBound >= firstIndex && range.upperBound < lastIndex
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: PartialRangeThrough<Int>) -> Bool {
-        return range.upperBound >= startIndex.utf16Offset(in: self) && range.upperBound < endIndex.utf16Offset(in: self)
+        return range.upperBound >= firstIndex && range.upperBound < lastIndex
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: PartialRangeFrom<Int>) -> Bool {
-        return range.lowerBound >= startIndex.utf16Offset(in: self) && range.lowerBound < endIndex.utf16Offset(in: self)
+        return range.lowerBound >= firstIndex && range.lowerBound < lastIndex
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: CountableRange<Int>) -> Bool {
-        return range.lowerBound >= startIndex.utf16Offset(in: self) && range.upperBound < endIndex.utf16Offset(in: self)
+        return range.lowerBound >= firstIndex && range.upperBound < lastIndex
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: CountableClosedRange<Int>) -> Bool {
-        return range.lowerBound >= startIndex.utf16Offset(in: self) && range.upperBound < endIndex.utf16Offset(in: self)
+        return range.lowerBound >= firstIndex && range.upperBound < lastIndex
+    }
+}
+
+extension String {
+    private var firstIndex: Int {
+        return startIndex.utf16Offset(in: self)
+    }
+
+    private var lastIndex: Int {
+        return endIndex.utf16Offset(in: self)
     }
 }
