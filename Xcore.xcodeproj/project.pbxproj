@@ -211,13 +211,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		684B1CF8224C4CAA009F6197 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 684B1CE4224C4CAA009F6197 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 684B1CEC224C4CAA009F6197;
-			remoteInfo = Xcore;
-		};
 		684B1EB2224C5218009F6197 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 684B1CE4224C4CAA009F6197 /* Project object */;
@@ -1097,7 +1090,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				684B1CF9224C4CAA009F6197 /* PBXTargetDependency */,
 				684B1ECC224C54FF009F6197 /* PBXTargetDependency */,
 			);
 			name = UnitTests;
@@ -1544,11 +1536,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		684B1CF9224C4CAA009F6197 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 684B1CEC224C4CAA009F6197 /* Xcore */;
-			targetProxy = 684B1CF8224C4CAA009F6197 /* PBXContainerItemProxy */;
-		};
 		684B1EB3224C5218009F6197 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 684B1E9D224C5218009F6197 /* Example */;
