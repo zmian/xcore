@@ -24,7 +24,7 @@
 
 import XCTest
 import UIKit
-@testable import Example
+@testable import Xcore
 
 class ViewControllerTestCase: TestCase {
     let viewController = UIViewController()
