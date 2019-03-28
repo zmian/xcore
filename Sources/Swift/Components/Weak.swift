@@ -30,21 +30,11 @@ import Foundation
 /// ```swift
 /// let views = [Weak<UIView>]()
 /// ```
-open class Weak<T: AnyObject>: Equatable, Hashable {
+open class Weak<T: AnyObject>: Equatable {
     open weak var value: T?
 
     public init (value: T) {
         self.value = value
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        if let value = value as? AnyHashable {
-            hasher.combine(value)
-            return
-        }
-
-        let valueHashValue = Unmanaged<AnyObject>.passUnretained(self).toOpaque().hashValue
-        hasher.combine(valueHashValue)
     }
 
     public static func ==<T>(lhs: Weak<T>, rhs: Weak<T>) -> Bool {
