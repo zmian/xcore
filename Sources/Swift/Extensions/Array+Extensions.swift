@@ -34,7 +34,7 @@ extension Array {
             return self
         }
 
-        let index = Int(arc4random_uniform(UInt32(count - size)))
+        let index = Int.random(in: .min..<(count - size))
         return Array(self[index..<(size + index)])
     }
 

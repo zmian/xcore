@@ -27,6 +27,6 @@ import Foundation
 extension ClosedRange where Bound: FloatingPoint {
     public func random() -> Bound {
         let range = upperBound - lowerBound
-        return ((Bound(arc4random_uniform(UInt32.max)) / Bound(UInt32.max)) * range + lowerBound)
+        return (Bound(UInt32.random(in: .min..<UInt32.max)) / Bound(UInt32.max)) * range + lowerBound
     }
 }
