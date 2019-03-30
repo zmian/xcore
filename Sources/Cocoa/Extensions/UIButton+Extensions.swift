@@ -190,8 +190,7 @@ extension UIButton {
         observeHeightSetAutomaticallySetter = false
         contentEdgeInsets = UIEdgeInsets(horizontal: .defaultPadding)
         prepareForReuse()
-//        #warning("Fixme")
-//        style.configure(self)
+        style.apply(to: self)
         updateHeightConstraintIfNeeded()
         observeHeightSetAutomaticallySetter = true
     }

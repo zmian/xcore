@@ -52,3 +52,12 @@ extension XCConfiguration where Type: UIButton {
         }
     }
 }
+
+// Workaround for Swift 5 Segmentation fault: 11.
+//
+// Command failed due to signal: Segmentation fault: 11 while emitting IR SIL function
+extension XCConfiguration where Type == UIButton {
+    func apply(to button: UIButton) {
+        configure(button)
+    }
+}
