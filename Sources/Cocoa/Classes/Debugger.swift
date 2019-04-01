@@ -26,7 +26,9 @@ import Foundation
 
 // Credit http://stackoverflow.com/a/33177600
 
-/// Detects if the app is being run from Xcode.
+/// Detects if the LLDB debugger is attached to the app.
+///
+/// - Note: LLDB is automatically attached when the app is running from Xcode.
 public var isDebuggerAttached: Bool {
     var info = kinfo_proc()
     var mib: [Int32] = [CTL_KERN, KERN_PROC, KERN_PROC_PID, getpid()]
