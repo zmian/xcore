@@ -56,11 +56,11 @@ import UIKit
 /// ```
 public struct XCConfiguration<Type> {
     public let identifier: String
-    public let configure: ((Type) -> Void)
+    private let _configure: ((Type) -> Void)
 
     public init(identifier: String? = nil, _ configure: @escaping ((Type) -> Void)) {
         self.identifier = identifier ?? "___defaultIdentifier___"
-        self.configure = configure
+        self._configure = configure
     }
 
     public func extend(identifier: String? = nil, _ configure: @escaping ((Type) -> Void)) -> XCConfiguration<Type> {
@@ -68,6 +68,10 @@ public struct XCConfiguration<Type> {
             self.configure(type)
             configure(type)
         }
+    }
+
+    public func configure(_ type: Type) {
+        self._configure(type)
     }
 }
 
