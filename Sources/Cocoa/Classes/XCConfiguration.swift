@@ -55,8 +55,8 @@ import UIKit
 /// let headerLabel = UILabel(style: .header)
 /// ```
 public struct XCConfiguration<Type> {
-    public var identifier: String
-    public var configure: ((Type) -> Void)
+    public let identifier: String
+    public let configure: ((Type) -> Void)
 
     public init(identifier: String? = nil, _ configure: @escaping ((Type) -> Void)) {
         self.identifier = identifier ?? "___defaultIdentifier___"
