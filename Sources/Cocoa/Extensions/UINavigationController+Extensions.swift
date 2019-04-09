@@ -157,6 +157,27 @@ extension UINavigationController {
             setViewControllers(vcs, animated: animated)
         }, completionHandler: completion)
     }
+
+    /// A convenience method to push a view controller by replacing all view controllers
+    /// from a specific view controller type, including this one.
+    /// If the given type of view controller is not found then it pushes on top of the stack.
+    ///
+    /// - Parameters:
+    ///   - viewController: The view controller to push
+    ///   - location: The view controller type from where to perform the push
+    ///   - replacing: Indicates if the view controller replaces or is pushed on top of the 'location' one
+    ///   - animated: Set this value to `true` to animate the transition.
+    ///               Pass `false` if you are setting up a navigation controller
+    ///               before its view is displayed.
+    open func pushViewController(_ viewController: UIViewController, on location: UIViewController.Type, replacing: Bool, animated: Bool) {
+        guard let index = viewControllers.firstIndex(of: location) else {
+            return pushViewController(viewController, animated: animated)
+        }
+        
+        var remainingViewControllers = Array(replacing ? viewControllers.prefix(upTo: index) : viewControllers.prefix(through: index))
+        remainingViewControllers.append(viewController)
+        setViewControllers(remainingViewControllers, animated: animated)
+    }
 }
 
 extension UINavigationController {
