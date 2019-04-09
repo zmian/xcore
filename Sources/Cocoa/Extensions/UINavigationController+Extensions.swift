@@ -173,7 +173,7 @@ extension UINavigationController {
         guard let index = viewControllers.firstIndex(of: location) else {
             return pushViewController(viewController, animated: animated)
         }
-        
+
         var remainingViewControllers = Array(replacing ? viewControllers.prefix(upTo: index) : viewControllers.prefix(through: index))
         remainingViewControllers.append(viewController)
         setViewControllers(remainingViewControllers, animated: animated)
