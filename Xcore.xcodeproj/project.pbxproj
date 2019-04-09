@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2E0CEC745C3B56374E928CA6 /* Pods_UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FA92F065206A727FCD2B3D /* Pods_UITests.framework */; };
+		2FFFDC7E225D109800ED1C26 /* Xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = 6822FEFE20D217880037E780 /* Xcore.h */; };
 		6801120821923E8600B5D7DD /* PredicateRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6801120721923E8600B5D7DD /* PredicateRepresentable.swift */; };
 		680626E52198B39600A5590B /* UIImageView+ImageRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680626E42198B39600A5590B /* UIImageView+ImageRepresentable.swift */; };
 		680FD5C4223EB4E900147C6E /* Anchor+Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680FD5C3223EB4E900147C6E /* Anchor+Attributes.swift */; };
@@ -80,7 +81,6 @@
 		6822FF8220D217880037E780 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEFA20D217880037E780 /* Reusable.swift */; };
 		6822FF8320D217880037E780 /* UITableView+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FEFB20D217880037E780 /* UITableView+Reusable.swift */; };
 		6822FF8420D217880037E780 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6822FEFD20D217880037E780 /* Assets.xcassets */; };
-		6822FF8520D217880037E780 /* Xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = 6822FEFE20D217880037E780 /* Xcore.h */; };
 		6822FF8720D217880037E780 /* Benchmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0220D217880037E780 /* Benchmark.swift */; };
 		6822FF8820D217880037E780 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0320D217880037E780 /* Observer.swift */; };
 		6822FF8920D217880037E780 /* Console.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6822FF0420D217880037E780 /* Console.swift */; };
@@ -1050,7 +1050,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6822FF8520D217880037E780 /* Xcore.h in Headers */,
+				2FFFDC7E225D109800ED1C26 /* Xcore.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1607,7 +1607,7 @@
 			baseConfigurationReference = 446C91589F40B969C0CF0706 /* Pods-Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AY868Z3HG2;
 				INFOPLIST_FILE = "Example/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1623,7 +1623,7 @@
 			baseConfigurationReference = 5D3CFC269887586363462B4B /* Pods-Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AY868Z3HG2;
 				INFOPLIST_FILE = "Example/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
