@@ -208,6 +208,7 @@
 		684B1EC8224C544A009F6197 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1EC3224C544A009F6197 /* RootViewController.swift */; };
 		684B1EC9224C544A009F6197 /* ExampleDynamicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1EC4224C544A009F6197 /* ExampleDynamicTableViewController.swift */; };
 		684B1ECA224C544A009F6197 /* UIImage+AssetIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1EC6224C544A009F6197 /* UIImage+AssetIdentifier.swift */; };
+		689911842262D6BD00F9C39E /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689911832262D6BD00F9C39E /* String+Localization.swift */; };
 		68CA631F224C76760012DF31 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA631E224C76750012DF31 /* StringTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -439,6 +440,7 @@
 		684B1EC3224C544A009F6197 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		684B1EC4224C544A009F6197 /* ExampleDynamicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleDynamicTableViewController.swift; sourceTree = "<group>"; };
 		684B1EC6224C544A009F6197 /* UIImage+AssetIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+AssetIdentifier.swift"; sourceTree = "<group>"; };
+		689911832262D6BD00F9C39E /* String+Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		68CA631E224C76750012DF31 /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		8D64F6471089E2220DD070CC /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		989B05E63B9D27BBB2D81B2C /* Pods-UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UITests/Pods-UITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -581,6 +583,7 @@
 				684B1D0D224C500A009F6197 /* Array+Extensions.swift */,
 				684B1D0E224C500A009F6197 /* CaseIterable+Extensions.swift */,
 				684B1D0F224C500A009F6197 /* String+Extensions.swift */,
+				689911832262D6BD00F9C39E /* String+Localization.swift */,
 				684B1D10224C500A009F6197 /* Range+Extensions.swift */,
 				684B1D11224C500A009F6197 /* Dictionary+Extensions.swift */,
 				684B1D12224C500A009F6197 /* Numbers+Extensions.swift */,
@@ -1486,6 +1489,7 @@
 				684B1E5F224C500B009F6197 /* IntrinsicContentSizeView.swift in Sources */,
 				684B1E1E224C500A009F6197 /* NSObject+Extensions.swift in Sources */,
 				684B1E29224C500A009F6197 /* UILabel+Extensions.swift in Sources */,
+				689911842262D6BD00F9C39E /* String+Localization.swift in Sources */,
 				684B1E43224C500B009F6197 /* ImageTransform.swift in Sources */,
 				684B1E68224C500B009F6197 /* SiriShortcutConvertible.swift in Sources */,
 				684B1E87224C500B009F6197 /* UICollectionView+Reusable.swift in Sources */,

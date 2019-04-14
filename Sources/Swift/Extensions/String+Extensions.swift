@@ -139,19 +139,6 @@ extension String {
     }
 }
 
-// MARK: Localization
-
-extension String {
-    private var localized: String {
-        #warning("TODO: Add more customization to use these methods instead of secondary library")
-        return NSLocalizedString(self, tableName: nil, bundle: .main, value: "", comment: "")
-    }
-
-    private func localized(_ comment: String) -> String {
-        return NSLocalizedString(self, tableName: nil, bundle: .main, value: "", comment: comment)
-    }
-}
-
 // MARK: Base64 Support
 
 extension String {
