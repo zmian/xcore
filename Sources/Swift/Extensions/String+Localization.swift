@@ -55,6 +55,12 @@ public struct StringsFile: RawRepresentable {
     }
 }
 
+extension StringsFile: ExpressibleByStringLiteral {
+    public init(stringLiteral value: StringLiteralType) {
+        self.init(rawValue: value)
+    }
+}
+
 extension String {
     /// Use this method to localize your strings from a specific file without
     /// arguments.

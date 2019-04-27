@@ -1,7 +1,7 @@
 //
-// Weak.swift
+// DictionaryTests.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2019 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,39 +22,37 @@
 // THE SOFTWARE.
 //
 
-import Foundation
+import XCTest
+@testable import Xcore
 
-/// A generic class to hold a weak reference to a type `T`.
-/// This is useful for holding a reference to nullable object.
-///
-/// ```swift
-/// let views = [Weak<UIView>]()
-/// ```
-open class Weak<T: AnyObject> {
-    open weak var value: T?
-
-    public init (value: T) {
-        self.value = value
-    }
-}
-
-extension Weak: Equatable {
-    public static func ==(lhs: Weak, rhs: Weak) -> Bool {
-        return lhs.value === rhs.value
-    }
-}
-
-extension Weak: Hashable where T: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(value)
-    }
-}
-
-extension RangeReplaceableCollection where Element: Weak<AnyObject>, Index == Int {
-    /// Removes all elements where the `value` is deallocated.
-    public mutating func flatten() {
-        for (index, element) in enumerated() where element.value == nil {
-            remove(at: index)
+final class DictionaryTests: TestCase {
+    func testRawRepresentableSubscriptString() {
+        enum Key: String {
+            case name
+            case framework
+            case language
         }
+
+        let dictionary = [
+            "name": "zmian",
+            "framework": "Xcore",
+            "language": "Swift"
+        ]
+
+        XCTAssertEqual(dictionary[Key.framework]!, "Xcore")
+    }
+
+    func testRawRepresentableSubscriptInt() {
+        enum Key: Int {
+            case zero
+            case one
+        }
+
+        let dictionary = [
+            0: "zmian",
+            1: "Xcore"
+        ]
+
+        XCTAssertEqual(dictionary[Key.one]!, "Xcore")
     }
 }

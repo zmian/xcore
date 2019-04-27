@@ -24,13 +24,6 @@
 
 import Foundation
 
-private func format(seconds: TimeInterval) -> String {
-    let value = Int(seconds)
-    let seconds = value % 60
-    let minutes = value / 60
-    return String(format: "%02d:%02d", minutes, seconds)
-}
-
 // Credit: http://stackoverflow.com/a/31412302
 
 /// A convenience function to measure code execution.
@@ -66,4 +59,11 @@ public func measure(label: String, block: (_ finish: () -> Void) -> Void) {
         let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
         print("\(label):: Time: \(timeElapsed)", format(seconds: timeElapsed))
     }
+}
+
+private func format(seconds: TimeInterval) -> String {
+    let value = Int(seconds)
+    let seconds = value % 60
+    let minutes = value / 60
+    return String(format: "%02d:%02d", minutes, seconds)
 }

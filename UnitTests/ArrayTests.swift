@@ -1,7 +1,7 @@
 //
-// Weak.swift
+// ArrayTests.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2019 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,39 +22,14 @@
 // THE SOFTWARE.
 //
 
-import Foundation
+import XCTest
+@testable import Xcore
 
-/// A generic class to hold a weak reference to a type `T`.
-/// This is useful for holding a reference to nullable object.
-///
-/// ```swift
-/// let views = [Weak<UIView>]()
-/// ```
-open class Weak<T: AnyObject> {
-    open weak var value: T?
-
-    public init (value: T) {
-        self.value = value
-    }
-}
-
-extension Weak: Equatable {
-    public static func ==(lhs: Weak, rhs: Weak) -> Bool {
-        return lhs.value === rhs.value
-    }
-}
-
-extension Weak: Hashable where T: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(value)
-    }
-}
-
-extension RangeReplaceableCollection where Element: Weak<AnyObject>, Index == Int {
-    /// Removes all elements where the `value` is deallocated.
-    public mutating func flatten() {
-        for (index, element) in enumerated() where element.value == nil {
-            remove(at: index)
-        }
+final class ArrayTests: TestCase {
+    func testSplitBy() {
+        let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        let chunks = array.splitBy(5)
+        let expected = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12]]
+        XCTAssertEqual(chunks, expected)
     }
 }

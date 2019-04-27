@@ -42,29 +42,31 @@ public struct FatalReason: CustomStringConvertible {
     }
 }
 
+extension FatalReason: ExpressibleByStringLiteral {
+    public init(stringLiteral value: StringLiteralType) {
+        self.init(value)
+    }
+}
+
 extension FatalReason {
-    public static let subclassMustImplement = FatalReason("Must be implemented by subclass.")
-
-    public static func dequeueFailed(for name: String, identifier: String) -> FatalReason {
-        return FatalReason("Failed to dequeue \(name) with identifier: \(identifier)")
-    }
-
-    public static func dequeueFailed(for name: String, kind: String, indexPath: IndexPath) -> FatalReason {
-        return FatalReason("Failed to dequeue \(name) for kind: \(kind) at indexPath(\(indexPath.section), \(indexPath.item))")
-    }
+    public static let subclassMustImplement: FatalReason = "Must be implemented by subclass."
 }
 
 // MARK: Xcore Fatal Reasons
 
 extension FatalReason {
-    static let unsupportedFallbackFormattingStyle = FatalReason("Fallback style shouldn't be of type `abbreviationWith`.")
-    static let unsupportedEnum = FatalReason("Unsupported type of enum detected. `CaseIterable` does not support enums marked with `@objc` as it can hang and eventually crash the app in the Release mode.")
-    static func unsupportedTextStyle(_ name: String) -> FatalReason {
-        return FatalReason("Unsupported text style: \(name)")
-    }
+    static let unsupportedFallbackFormattingStyle: FatalReason = "Fallback style shouldn't be of type `abbreviationWith`."
 
     static func unknownCaseDetected<T: RawRepresentable>(_ case: T) -> FatalReason {
         return FatalReason("Unknown case detected: \(`case`) - (\(`case`.rawValue))")
+    }
+
+    static func dequeueFailed(for name: String, identifier: String) -> FatalReason {
+        return FatalReason("Failed to dequeue \(name) with identifier: \(identifier)")
+    }
+
+    static func dequeueFailed(for name: String, kind: String, indexPath: IndexPath) -> FatalReason {
+        return FatalReason("Failed to dequeue \(name) for kind: \(kind) at indexPath(\(indexPath.section), \(indexPath.item))")
     }
 }
 
