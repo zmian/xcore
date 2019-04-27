@@ -117,6 +117,20 @@ extension UIStackView {
     }
 }
 
+extension UITextView {
+    public convenience init(style: XCConfiguration<UITextView>) {
+        self.init()
+        style.configure(self)
+    }
+}
+
+extension UITextField {
+    public convenience init(style: XCConfiguration<UITextField>) {
+        self.init()
+        style.configure(self)
+    }
+}
+
 // MARK: With
 
 public protocol With {}
