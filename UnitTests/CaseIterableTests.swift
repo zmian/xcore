@@ -31,10 +31,30 @@ final class CaseIterableTests: TestCase {
         XCTAssert(SomeClass.NewCounting.allCases.count == 2)
         XCTAssert(SomeStruct.Counting.allCases.count == 3)
     }
+
+    func testCount() {
+        XCTAssertEqual(SomeClass.Counting.count, 3)
+        XCTAssertEqual(SomeClass.NewCounting.count, 2)
+    }
+
+    func testRawValues() {
+        let expectedRawValues1 = [
+            "one",
+            "two",
+            "three"
+        ]
+
+        let expectedRawValues2 = [
+            "one",
+            "two"
+        ]
+
+        XCTAssertEqual(SomeClass.Counting.rawValues, expectedRawValues1)
+        XCTAssertEqual(SomeClass.NewCounting.rawValues, expectedRawValues2)
+    }
 }
 
-private final class SomeClass {
-}
+private final class SomeClass { }
 
 extension SomeClass {
     fileprivate enum Counting: String, CaseIterable {
