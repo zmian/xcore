@@ -112,6 +112,36 @@ extension String {
     public var pathExtension: String {
         return nsString.pathExtension
     }
+
+    /// Returns a new string made by appending to the receiver a given path component.
+    ///
+    /// The following table illustrates the effect of this method on a variety of
+    /// different paths, assuming that aString is supplied as “`scratch.tiff`”:
+    ///
+    /// ```
+    /// +-----------------------------------------------+
+    /// | Receiver’s String Value | Resulting String    |
+    /// |-------------------------+---------------------|
+    /// | “/tmp”                  | “/tmp/scratch.tiff” |
+    /// | “/tmp/”                 | “/tmp/scratch.tiff” |
+    /// | “/”                     | “/scratch.tiff”     |
+    /// | “” (an empty string)    | “scratch.tiff”      |
+    /// +-----------------------------------------------+
+    /// ```
+    ///
+    /// Note that this method only works with file paths (not, for example, string
+    /// representations of URLs).
+    ///
+    /// - Parameter component: The path component to append to the receiver.
+    /// - Returns: A new string made by appending `component` to the receiver,
+    ///            preceded if necessary by a path separator.
+    public func appendingPathComponent(_ component: Any?) -> String {
+        guard let component = component else {
+            return self
+        }
+
+        return nsString.appendingPathComponent(String(describing: component))
+    }
 }
 
 extension String {

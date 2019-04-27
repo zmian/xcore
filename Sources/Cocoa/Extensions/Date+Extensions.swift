@@ -28,10 +28,11 @@ import UIKit
 
 extension Date {
     public func fromNow(style: DateComponentsFormatter.UnitsStyle = .abbreviated, format: String = "%@") -> String? {
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = style
-        formatter.maximumUnitCount = 1
-        formatter.allowedUnits = [.year, .month, .day, .hour, .minute, .second]
+        let formatter = DateComponentsFormatter().apply {
+            $0.unitsStyle = style
+            $0.maximumUnitCount = 1
+            $0.allowedUnits = [.year, .month, .day, .hour, .minute, .second]
+        }
 
         guard let timeString = formatter.string(from: self, to: Date()) else {
             return nil
@@ -43,9 +44,8 @@ extension Date {
 
     /// Reset time to beginning of the day (`12 AM`) of `self` without changing the timezone.
     public func stripTime() -> Date {
-        let calendar = Calendar.current
-        let components = (calendar as NSCalendar).components([.year, .month, .day], from: self)
-        return calendar.date(from: components) ?? self
+        let components = Calendar.current.dateComponents([.year, .month, .day], from: self)
+        return Calendar.current.date(from: components) ?? self
     }
 
     // MARK: UTC
@@ -61,6 +61,37 @@ extension Date {
         let date = Date.utcDateFormatter.date(from: dateString)!
         Date.utcDateFormatter.timeZone = .utc
         return date
+    }
+}
+
+extension Date {
+    /// Epoch in milliseconds.
+    ///
+    /// Epoch, also known as Unix timestamps, is the number of seconds
+    /// (not milliseconds) that have elapsed since January 1, 1970 at 00:00:00 GMT
+    /// (1970-01-01 00:00:00 GMT).
+    public var unixTimeMilliseconds: Int64 {
+        return Int64(timeIntervalSince1970 * 1000)
+    }
+
+    public init(
+        year: Int,
+        month: Int,
+        day: Int,
+        hour: Int? = nil,
+        minute: Int? = nil,
+        second: Int? = nil
+    ) {
+        let dateComponent = DateComponents(
+            year: year,
+            month: month,
+            day: day,
+            hour: hour,
+            minute: minute,
+            second: second
+        )
+
+        self = Calendar.current.date(from: dateComponent)!
     }
 }
 

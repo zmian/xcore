@@ -39,3 +39,56 @@ extension ProcessInfo {
         return environment[key] != nil
     }
 }
+
+extension ProcessInfo {
+    public struct Argument: RawRepresentable, ExpressibleByStringLiteral, CustomStringConvertible, Equatable {
+        /// The variable name in the environment from which the process was launched.
+        public let rawValue: String
+
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
+
+        public init(stringLiteral value: String) {
+            self.rawValue = value
+        }
+
+        public var description: String {
+            return rawValue
+        }
+
+        /// A boolean property to indicate whether the variable exists in the
+        /// environment from which the process was launched.
+        public var exists: Bool {
+            return ProcessInfo.shared.contains(key: rawValue)
+        }
+
+        /// The variable value in the environment from which the process was launched.
+        public var value: String? {
+            guard
+                let value = ProcessInfo.shared.environment[rawValue],
+                !value.isBlank
+            else {
+                return nil
+            }
+
+            return value
+        }
+    }
+}
+
+extension ProcessInfo {
+    public enum Arguments { }
+}
+
+extension ProcessInfo.Arguments {
+    public static var isTesting: Bool {
+        let argument: ProcessInfo.Argument = "XCTestConfigurationFilePath"
+        return argument.exists
+    }
+
+    public static var isDebug: Bool {
+        let argument: ProcessInfo.Argument = "DEBUG"
+        return argument.exists
+    }
+}

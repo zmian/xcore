@@ -209,3 +209,9 @@ extension Array where Element: RawRepresentable {
         return map { $0.rawValue }
     }
 }
+
+extension Array where Element == String? {
+    public func joined(separator: String) -> String {
+        return lazy.compactMap { $0 }.filter { !$0.isBlank }.joined(separator: separator)
+    }
+}
