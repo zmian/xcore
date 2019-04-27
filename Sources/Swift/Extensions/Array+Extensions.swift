@@ -27,15 +27,18 @@ import Foundation
 extension Array {
     /// Returns a random subarray of given length.
     ///
-    /// - Parameter size: Length
+    /// - Parameter count: Number of random elements to return.
     /// - Returns: Random subarray of length n.
-    public func randomElements(_ size: Int = 1) -> Array {
+    public func randomElements(count: Int = 1) -> Array {
+        let size = count
+        let count = self.count
+
         if size >= count {
-            return self
+            return shuffled()
         }
 
-        let index = Int.random(in: .min..<(count - size))
-        return Array(self[index..<(size + index)])
+        let index = Int.random(in: 0..<(count - size))
+        return self[index..<(size + index)].shuffled()
     }
 
     /// Returns a random element from `self`.

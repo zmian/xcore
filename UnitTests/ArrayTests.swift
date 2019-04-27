@@ -65,6 +65,97 @@ final class ArrayTests: TestCase {
 
         XCTAssertEqual(values.rawValues, expectedRawValues)
     }
+
+    func testContains() {
+        let instances = [UIView(), UIImageView()]
+        let result = instances.contains(any: [UIImageView.self, UILabel.self])
+        XCTAssertEqual(result, true)
+        XCTAssertEqual(instances.contains(any: [UILabel.self]), false)
+    }
+
+    func testRandomElement() {
+        let values = [132, 2432, 35435, 455]
+        let randomValue = values.randomElement()
+        XCTAssert(values.contains(randomValue))
+    }
+
+    func testRandomElements() {
+        let values = [132, 2432, 35435, 455]
+        let randomValue1 = values.randomElements(count: 17)
+        let randomValue2 = values.randomElements(count: 2)
+
+        XCTAssertEqual(randomValue1.count, values.count)
+        XCTAssertEqual(randomValue2.count, 2)
+    }
+
+    func testEmptyRandomElements() {
+        let values: [Int] = []
+        let randomValue1 = values.randomElements(count: 17)
+        let randomValue2 = values.randomElements(count: 2)
+
+        XCTAssertEqual(randomValue1.count, values.count)
+        XCTAssertEqual(randomValue2.count, 0)
+    }
+
+    func testFirstElement() {
+        let value: [Any] = ["232", 12, 2, 11.0, "hello"]
+        let resultString = value.firstElement(type: String.self)
+        let resultInt = value.firstElement(type: Int.self)
+        let resultDouble = value.firstElement(type: Double.self)
+        let resultCGFloat = value.firstElement(type: CGFloat.self)
+        XCTAssertEqual(resultString!, "232")
+        XCTAssertEqual(resultInt!, 12)
+        XCTAssertEqual(resultDouble!, 11)
+        XCTAssertNil(resultCGFloat)
+    }
+
+    func testLastElement() {
+        let value: [Any] = ["232", 12, 2, 11.0, "hello"]
+        let resultString = value.lastElement(type: String.self)
+        let resultInt = value.lastElement(type: Int.self)
+        let resultDouble = value.lastElement(type: Double.self)
+        let resultCGFloat = value.lastElement(type: CGFloat.self)
+        XCTAssertEqual(resultString!, "hello")
+        XCTAssertEqual(resultInt!, 2)
+        XCTAssertEqual(resultDouble!, 11)
+        XCTAssertNil(resultCGFloat)
+    }
+
+    func testFirstIndex() {
+        let tag1View = UIView().apply { $0.tag = 1 }
+        let tag2View = UIView().apply { $0.tag = 2 }
+
+        let tag1Label = UILabel().apply { $0.tag = 1 }
+        let tag2Label = UILabel().apply { $0.tag = 2 }
+
+        let value: [NSObject] = [NSString("232"), tag1View, tag2View, tag1Label, tag2Label, NSString("hello")]
+        let resultNSString = value.firstIndex(of: NSString.self)
+        let resultUIView = value.firstIndex(of: UIView.self)
+        let resultUILabel = value.firstIndex(of: UILabel.self)
+        let resultUIViewController = value.firstIndex(of: UIViewController.self)
+        XCTAssertEqual(resultNSString!, 0)
+        XCTAssertEqual(resultUIView!, 1)
+        XCTAssertEqual(resultUILabel!, 3)
+        XCTAssertNil(resultUIViewController)
+    }
+
+    func testLastIndex() {
+        let tag1View = UIView().apply { $0.tag = 1 }
+        let tag2View = UIView().apply { $0.tag = 2 }
+
+        let tag1Label = UILabel().apply { $0.tag = 1 }
+        let tag2Label = UILabel().apply { $0.tag = 2 }
+
+        let value: [NSObject] = [NSString("232"), tag1View, tag2View, tag1Label, tag2Label, NSString("hello")]
+        let resultNSString = value.lastIndex(of: NSString.self)
+        let resultUIView = value.lastIndex(of: UIView.self)
+        let resultUILabel = value.lastIndex(of: UILabel.self)
+        let resultUIViewController = value.lastIndex(of: UIViewController.self)
+        XCTAssertEqual(resultNSString!, 5)
+        XCTAssertEqual(resultUIView!, 4) // UILabel is subclass of UIView
+        XCTAssertEqual(resultUILabel!, 4)
+        XCTAssertNil(resultUIViewController)
+    }
 }
 
 private struct SomeType: RawRepresentable {
