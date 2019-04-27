@@ -39,11 +39,12 @@ extension ExtensibleByAssociatedObject {
     ///
     /// - Parameters:
     ///   - key: The key for the association.
-    ///   - defaultValue: The default value to return if the no associated value is found.
-    ///   - defaultValueAssociationPolicy: An optional value to save the `defaultValue` so the next call
-    ///                                    will have the associated object.
+    ///   - defaultValue: The default value to return if there is no associated value.
+    ///   - defaultValueAssociationPolicy: An optional value to save the
+    ///                                    `defaultValue` so the next call will have
+    ///                                     the associated object.
     /// - Returns: The value associated with the key for object.
-    public func associatedObject<T>(_ key: UnsafeRawPointer, default defaultValue: @autoclosure () -> T, policy defaultValueAssociationPolicy: AssociatedObjectPolicy? = nil) -> T {
+    public func associatedObject<T>(_ key: UnsafeRawPointer, default defaultValue: @autoclosure () -> T, policy defaultValueAssociationPolicy: AssociationPolicy? = nil) -> T {
         guard let value = objc_getAssociatedObject(self, key) as? T else {
             let defaultValue = defaultValue()
 
@@ -57,18 +58,21 @@ extension ExtensibleByAssociatedObject {
         return value
     }
 
-    /// Sets an associated value for a given object using a given key and association policy.
+    /// Sets an associated value for a given object using a given key and
+    /// association policy.
     ///
     /// - Parameters:
     ///   - key: The key for the association.
-    ///   - value: The value to associate with the key for object. Pass `nil` to clear an existing association.
-    ///   - policy: The policy for the association. The default value is `.strong`.
-    public func setAssociatedObject<T>(_ key: UnsafeRawPointer, value: T?, policy: AssociatedObjectPolicy = .strong) {
-        objc_setAssociatedObject(self, key, value, policy.rawValue)
+    ///   - value: The value to associate with the key for object. Pass `nil` to
+    ///            clear an existing association.
+    ///   - associationPolicy: The policy for the association. The default value is
+    ///                        `.strong`.
+    public func setAssociatedObject<T>(_ key: UnsafeRawPointer, value: T?, policy associationPolicy: AssociationPolicy = .strong) {
+        objc_setAssociatedObject(self, key, value, associationPolicy.rawValue)
     }
 }
 
-public enum AssociatedObjectPolicy {
+public enum AssociationPolicy {
     /// Specifies a weak reference to the associated object.
     case weak
 
