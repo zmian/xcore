@@ -23,7 +23,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 public enum ImageSourceType {
     case url(String)
@@ -75,19 +74,6 @@ extension ImageSourceType {
 
         /// The image was obtained from the memory cache.
         case memory
-
-        init(_ type: SDImageCacheType) {
-            switch type {
-                case .none:
-                    self = .none
-                case .disk:
-                    self = .disk
-                case .memory:
-                    self = .memory
-                @unknown default:
-                    fatalError(because: .unknownCaseDetected(type))
-            }
-        }
 
         var possiblyDelayed: Bool {
             return self != .memory

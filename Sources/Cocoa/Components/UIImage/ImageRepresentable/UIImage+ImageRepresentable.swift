@@ -23,7 +23,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 extension UIImage {
     /// Fetch an image from the given source.
@@ -43,11 +42,7 @@ extension UIImage {
         var downloadedImages = 0
 
         orderedObjects.forEach { object in
-            SDWebImageDownloader.shared().downloadImage(
-                with: object.url,
-                options: [],
-                progress: nil
-            ) { image, data, error, finished in
+            ImageDownloader.download(url: object.url) { image, data, error, finished in
                 downloadedImages += 1
 
                 if let image = image, finished {

@@ -1,8 +1,8 @@
 PODS:
   - MDHTMLLabel (1.0.2)
-  - SDWebImage (4.4.2):
-    - SDWebImage/Core (= 4.4.2)
-  - SDWebImage/Core (4.4.2)
+  - SDWebImage (5.0.1):
+    - SDWebImage/Core (= 5.0.1)
+  - SDWebImage/Core (5.0.1)
   - Xcore (1.0.0):
     - MDHTMLLabel
     - SDWebImage
@@ -21,8 +21,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   MDHTMLLabel: 18bf09ec7d6c1ae396497345c005857c0493ee0a
-  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
-  Xcore: 52429c9ead7d936513f0fd2e63794c755b9906e8
+  SDWebImage: 27dd2c9ea07a2252f94557c9fbb6105ee94b74c9
+  Xcore: efa66d9aee0f2359adc731707aeb6f9518baa7e2
 
 PODFILE CHECKSUM: 88e52b970d3f4bab0bd3d83ca0ee0c57ef849dee
 
