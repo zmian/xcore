@@ -120,3 +120,61 @@ extension Collection {
         return try filter(predicate).count
     }
 }
+
+extension RangeReplaceableCollection {
+    /// Returns an array by removing all the elements that satisfy the given predicate.
+    ///
+    /// Use this method to remove every element in a collection that meets
+    /// particular criteria. This example removes all the odd values from an
+    /// array of numbers:
+    ///
+    ///     var numbers = [5, 6, 7, 8, 9, 10, 11]
+    ///     let removedNumbers = numbers.removingAll(where: { $0 % 2 == 1 })
+    ///
+    ///     // numbers == [6, 8, 10]
+    ///     // removedNumbers == [5, 7, 9, 11]
+    ///
+    /// - Parameter predicate: A closure that takes an element of the
+    ///   sequence as its argument and returns a Boolean value indicating
+    ///   whether the element should be removed from the collection.
+    public mutating func removingAll(where predicate: (Element) throws -> Bool) rethrows -> Self {
+        let result = try filter(predicate)
+        try removeAll(where: predicate)
+        return result
+    }
+}
+
+extension RangeReplaceableCollection where Element: Equatable, Index == Int {
+    /// Remove element by value.
+    ///
+    /// - Returns: true if removed; false otherwise
+    @discardableResult
+    public mutating func remove(_ element: Element) -> Bool {
+        for (index, elementToCompare) in enumerated() where element == elementToCompare {
+            remove(at: index)
+            return true
+        }
+        return false
+    }
+
+    /// Remove elements by value.
+    public mutating func remove(_ elements: [Element]) {
+        elements.forEach { remove($0) }
+    }
+
+    /// Move an element in `self` to a specific index.
+    ///
+    /// - Parameters:
+    ///   - element: The element in `self` to move.
+    ///   - index: An index locating the new location of the element in `self`.
+    /// - Returns: `true` if moved; otherwise, `false`.
+    @discardableResult
+    public mutating func move(_ element: Element, to index: Int) -> Bool {
+        guard remove(element) else {
+            return false
+        }
+
+        insert(element, at: index)
+        return true
+    }
+}

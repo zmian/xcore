@@ -84,6 +84,17 @@ extension FloatingPoint {
     }
 }
 
+extension Sequence where Iterator.Element: BinaryInteger {
+    /// ```swift
+    /// [1, 1, 1, 1, 1, 1].runningSum() // -> [1, 2, 3, 4, 5, 6]
+    /// ```
+    public func runningSum() -> [Iterator.Element] {
+        return reduce([]) { sums, element in
+            sums + [element + (sums.last ?? 0)]
+        }
+    }
+}
+
 extension Double {
     public func rounded(places: Int) -> Double {
         let divisor = pow(10.0, Double(places))
@@ -154,17 +165,6 @@ extension Double {
     }
 
     private static let testValues: [Double] = [598, -999, 1000, -1284, 9940, 9980, 39900, 99880, 399880, 999898, 999999, 1456384, 12383474, 987, 1200, 12000, 120000, 1200000, 1340, 132456, 9_000_000_000, 16_000_000, 160_000_000, 999_000_000]
-}
-
-extension Sequence where Iterator.Element == Double {
-    /// ```swift
-    /// [1, 1, 1, 1, 1, 1].runningSum() // -> [1, 2, 3, 4, 5, 6]
-    /// ```
-    public func runningSum() -> [Iterator.Element] {
-        return self.reduce([]) { sums, element in
-            sums + [element + (sums.last ?? 0)]
-        }
-    }
 }
 
 extension Double {

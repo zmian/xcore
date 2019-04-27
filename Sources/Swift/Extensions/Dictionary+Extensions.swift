@@ -111,7 +111,7 @@ extension Dictionary {
     }
 }
 
-extension Dictionary where Key == String {
+extension Dictionary {
     /// Accesses the value associated with the given key for reading and writing.
     ///
     /// This *key-based* subscript returns the value for the given key if the key
@@ -156,7 +156,7 @@ extension Dictionary where Key == String {
     /// - Parameter key: The key to find in the dictionary.
     /// - Returns: The value associated with `key` if `key` is in the dictionary;
     ///   otherwise, `nil`.
-    public subscript<T: RawRepresentable>(key: T) -> Value? where T.RawValue == String {
+    public subscript<T: RawRepresentable>(key: T) -> Value? where T.RawValue == Key {
         get { return self[key.rawValue] }
         set { self[key.rawValue] = newValue }
     }

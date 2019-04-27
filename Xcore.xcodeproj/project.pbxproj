@@ -10,6 +10,7 @@
 		03A51414B09BF009E2B58BCF /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44A8F39EEE5884C0EAAD69D9 /* Pods_UnitTests.framework */; };
 		14B04607871830CB4B0DDE9D /* Pods_UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16E36FDA8C7C8821AAA4F0E0 /* Pods_UITests.framework */; };
 		167C05D21FAB102542BD188D /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67CC55C468091B5137D790BB /* Pods_Example.framework */; };
+		6804D60A2274052900BEB7E0 /* ArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6804D6092274052900BEB7E0 /* ArrayTests.swift */; };
 		684B1CF7224C4CAA009F6197 /* Xcore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 684B1CED224C4CAA009F6197 /* Xcore.framework */; };
 		684B1CFC224C4CAA009F6197 /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1CFB224C4CAA009F6197 /* TestCase.swift */; };
 		684B1CFE224C4CAA009F6197 /* Xcore.h in Headers */ = {isa = PBXBuildFile; fileRef = 684B1CF0224C4CAA009F6197 /* Xcore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -208,6 +209,7 @@
 		684B1EC8224C544A009F6197 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1EC3224C544A009F6197 /* RootViewController.swift */; };
 		684B1EC9224C544A009F6197 /* ExampleDynamicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1EC4224C544A009F6197 /* ExampleDynamicTableViewController.swift */; };
 		684B1ECA224C544A009F6197 /* UIImage+AssetIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1EC6224C544A009F6197 /* UIImage+AssetIdentifier.swift */; };
+		688C357C2273DED400CF3FCB /* DictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688C357B2273DED400CF3FCB /* DictionaryTests.swift */; };
 		689911842262D6BD00F9C39E /* String+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689911832262D6BD00F9C39E /* String+Localization.swift */; };
 		68CA631F224C76760012DF31 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA631E224C76750012DF31 /* StringTests.swift */; };
 /* End PBXBuildFile section */
@@ -234,6 +236,7 @@
 		309E89228D7005D3FF16F162 /* Pods-UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UITests/Pods-UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		44A8F39EEE5884C0EAAD69D9 /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		67CC55C468091B5137D790BB /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6804D6092274052900BEB7E0 /* ArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayTests.swift; sourceTree = "<group>"; };
 		684B1CED224C4CAA009F6197 /* Xcore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Xcore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		684B1CF0224C4CAA009F6197 /* Xcore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Xcore.h; sourceTree = "<group>"; };
 		684B1CF1224C4CAA009F6197 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -440,6 +443,7 @@
 		684B1EC3224C544A009F6197 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		684B1EC4224C544A009F6197 /* ExampleDynamicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleDynamicTableViewController.swift; sourceTree = "<group>"; };
 		684B1EC6224C544A009F6197 /* UIImage+AssetIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+AssetIdentifier.swift"; sourceTree = "<group>"; };
+		688C357B2273DED400CF3FCB /* DictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTests.swift; sourceTree = "<group>"; };
 		689911832262D6BD00F9C39E /* String+Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Localization.swift"; sourceTree = "<group>"; };
 		68CA631E224C76750012DF31 /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		8D64F6471089E2220DD070CC /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -537,6 +541,8 @@
 				684B1E8B224C5167009F6197 /* ImageTransformTests.swift */,
 				684B1E8D224C5167009F6197 /* PercentageTests.swift */,
 				68CA631E224C76750012DF31 /* StringTests.swift */,
+				688C357B2273DED400CF3FCB /* DictionaryTests.swift */,
+				6804D6092274052900BEB7E0 /* ArrayTests.swift */,
 				684B1E8A224C5167009F6197 /* PredicateRepresentableTests.swift */,
 				684B1E8F224C5167009F6197 /* SubviewLookupTests.swift */,
 				684B1E8C224C5167009F6197 /* VersionTests.swift */,
@@ -1089,8 +1095,8 @@
 			buildConfigurationList = 684B1D04224C4CAA009F6197 /* Build configuration list for PBXNativeTarget "UnitTests" */;
 			buildPhases = (
 				B09A35965DE7DDAA7A32D373 /* [CP] Check Pods Manifest.lock */,
-				684B1CF2224C4CAA009F6197 /* Sources */,
 				684B1CF3224C4CAA009F6197 /* Frameworks */,
+				684B1CF2224C4CAA009F6197 /* Sources */,
 				684B1CF4224C4CAA009F6197 /* Resources */,
 			);
 			buildRules = (
@@ -1108,8 +1114,8 @@
 			buildConfigurationList = 684B1EB8224C5218009F6197 /* Build configuration list for PBXNativeTarget "Example" */;
 			buildPhases = (
 				85846F93C7557A9E2076D03D /* [CP] Check Pods Manifest.lock */,
-				684B1E9A224C5218009F6197 /* Sources */,
 				684B1E9B224C5218009F6197 /* Frameworks */,
+				684B1E9A224C5218009F6197 /* Sources */,
 				684B1E9C224C5218009F6197 /* Resources */,
 				B47E64DA73F21F07B0F8074F /* [CP] Embed Pods Frameworks */,
 			);
@@ -1127,8 +1133,8 @@
 			buildConfigurationList = 684B1EBB224C5218009F6197 /* Build configuration list for PBXNativeTarget "UITests" */;
 			buildPhases = (
 				5E7CCF049AB7DC2BF6D8021A /* [CP] Check Pods Manifest.lock */,
-				684B1EAD224C5218009F6197 /* Sources */,
 				684B1EAE224C5218009F6197 /* Frameworks */,
+				684B1EAD224C5218009F6197 /* Sources */,
 				684B1EAF224C5218009F6197 /* Resources */,
 			);
 			buildRules = (
@@ -1298,7 +1304,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Example/Pods-Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/MDHTMLLabel/MDHTMLLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/Xcore/Xcore.framework",
@@ -1313,7 +1319,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Example/Pods-Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1516,6 +1522,8 @@
 				684B1E95224C5167009F6197 /* CaseIterableTests.swift in Sources */,
 				68CA631F224C76760012DF31 /* StringTests.swift in Sources */,
 				684B1E97224C5167009F6197 /* CurrencySymbolsOptionsTests.swift in Sources */,
+				688C357C2273DED400CF3FCB /* DictionaryTests.swift in Sources */,
+				6804D60A2274052900BEB7E0 /* ArrayTests.swift in Sources */,
 				684B1CFC224C4CAA009F6197 /* TestCase.swift in Sources */,
 				684B1E94224C5167009F6197 /* PercentageTests.swift in Sources */,
 			);
@@ -1634,6 +1642,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1763,6 +1772,22 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreText\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MDHTMLLabel\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Xcore\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.unittests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1784,6 +1809,22 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreText\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MDHTMLLabel\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Xcore\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.unittests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1804,6 +1845,22 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreText\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MDHTMLLabel\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Xcore\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1822,6 +1879,22 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreText\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MDHTMLLabel\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Xcore\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1843,6 +1916,22 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreText\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MDHTMLLabel\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Xcore\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1863,6 +1952,22 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreText\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MDHTMLLabel\"",
+					"-framework",
+					"\"SDWebImage\"",
+					"-framework",
+					"\"Xcore\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
