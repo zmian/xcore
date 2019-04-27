@@ -26,21 +26,43 @@ import UIKit
 import MessageUI
 import ObjectiveC
 
-private class MailClosureWrapper: NSObject {
-    var closure: ((_ controller: MFMailComposeViewController, _ result: MFMailComposeResult, _ error: Error?) -> Void)?
+extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
+    public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        var value: Result
 
-    init(_ closure: ((_ controller: MFMailComposeViewController, _ result: MFMailComposeResult, _ error: Error?) -> Void)?) {
-        self.closure = closure
+        if let actionHandler = actionHandlerWrapper?.closure {
+            if let error = error {
+                value = .failure(error)
+            } else {
+                value = .success(result)
+            }
+
+            actionHandler(controller, value)
+        }
+
+        if shouldAutoDismiss {
+            controller.dismiss(animated: true)
+        }
     }
 }
 
-extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
+extension MFMailComposeViewController {
+    public typealias Result = Swift.Result<MFMailComposeResult, Error>
+
+    private class ClosureWrapper: NSObject {
+        var closure: ((_ controller: MFMailComposeViewController, _ result: Result) -> Void)?
+
+        init(_ closure: ((_ controller: MFMailComposeViewController, _ result: Result) -> Void)?) {
+            self.closure = closure
+        }
+    }
+
     private struct AssociatedKey {
         static var actionHandler = "actionHandler"
         static var shouldAutoDismiss = "shouldAutoDismiss"
     }
 
-    private var actionHandlerWrapper: MailClosureWrapper? {
+    private var actionHandlerWrapper: ClosureWrapper? {
         get { return associatedObject(&AssociatedKey.actionHandler) }
         set { setAssociatedObject(&AssociatedKey.actionHandler, value: newValue) }
     }
@@ -53,18 +75,8 @@ extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
         }
     }
 
-    public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        if let actionHandler = actionHandlerWrapper?.closure {
-            actionHandler(controller, result, error)
-        }
-
-        if shouldAutoDismiss {
-            controller.dismiss(animated: true)
-        }
-    }
-
-    public func didFinishWithResult(_ handler: @escaping (_ controller: MFMailComposeViewController, _ result: MFMailComposeResult, _ error: Error?) -> Void) {
+    public func didFinishWithResult(_ handler: @escaping (_ controller: MFMailComposeViewController, _ result: Result) -> Void) {
         mailComposeDelegate = self
-        actionHandlerWrapper = MailClosureWrapper(handler)
+        actionHandlerWrapper = ClosureWrapper(handler)
     }
 }
