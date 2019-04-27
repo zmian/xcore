@@ -32,4 +32,41 @@ final class ArrayTests: TestCase {
         let expected = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12]]
         XCTAssertEqual(chunks, expected)
     }
+
+    func testSortByPreferredOrder() {
+        let preferredOrder = ["Z", "A", "B", "C", "D"]
+        var alphabets = ["D", "C", "B", "A", "Z", "W"]
+        alphabets.sort(by: preferredOrder)
+        let expected = ["Z", "A", "B", "C", "D", "W"]
+        XCTAssertEqual(alphabets, expected)
+    }
+
+    func testSortedByPreferredOrder() {
+        let preferredOrder = ["Z", "A", "B", "C", "D"]
+        let alphabets = ["D", "C", "B", "A", "Z", "W"]
+        let sorted = alphabets.sorted(by: preferredOrder)
+        let expected = ["Z", "A", "B", "C", "D", "W"]
+        XCTAssertEqual(sorted, expected)
+        XCTAssertNotEqual(sorted, alphabets)
+    }
+
+    func testRawValues() {
+        let values = [
+            SomeType(rawValue: "Hello"),
+            SomeType(rawValue: "World"),
+            SomeType(rawValue: "!")
+        ]
+
+        let expectedRawValues = [
+            "Hello",
+            "World",
+            "!"
+        ]
+
+        XCTAssertEqual(values.rawValues, expectedRawValues)
+    }
+}
+
+private struct SomeType: RawRepresentable {
+    let rawValue: String
 }
