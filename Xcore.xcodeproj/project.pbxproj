@@ -1776,18 +1776,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
-					"\"CoreText\"",
-					"-framework",
-					"\"ImageIO\"",
-					"-framework",
-					"\"Xcore\"",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.unittests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1808,18 +1796,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
-					"\"CoreText\"",
-					"-framework",
-					"\"ImageIO\"",
-					"-framework",
-					"\"Xcore\"",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.unittests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1839,18 +1815,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
-					"\"CoreText\"",
-					"-framework",
-					"\"ImageIO\"",
-					"-framework",
-					"\"Xcore\"",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1868,18 +1832,6 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
-					"\"CoreText\"",
-					"-framework",
-					"\"ImageIO\"",
-					"-framework",
-					"\"Xcore\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1900,18 +1852,6 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
-					"\"CoreText\"",
-					"-framework",
-					"\"ImageIO\"",
-					"-framework",
-					"\"Xcore\"",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1931,18 +1871,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
-					"\"CoreText\"",
-					"-framework",
-					"\"ImageIO\"",
-					"-framework",
-					"\"Xcore\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
