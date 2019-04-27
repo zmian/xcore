@@ -23,7 +23,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 final class RemoteImageFetcher: ImageFetcher {
     static func canHandle(_ image: ImageRepresentable) -> Bool {
@@ -42,11 +41,7 @@ final class RemoteImageFetcher: ImageFetcher {
             return
         }
 
-        let token = SDWebImageManager.shared().loadImage(
-            with: url,
-            options: [.avoidAutoSetImage],
-            progress: nil
-        ) { image, data, error, cacheType, finished, url in
+        let cancelToken = ImageDownloader.load(url: url) { image, data, error, finished, cacheType in
             guard finished else {
                 return
             }
@@ -56,18 +51,14 @@ final class RemoteImageFetcher: ImageFetcher {
                 return
             }
 
-            callback(image, .init(cacheType))
+            callback(image, cacheType)
         }
 
         // Store the token cancel block so the request can be cancelled if needed.
-        imageView?._imageFetcherCancelBlock = token?.cancel
+        imageView?._imageFetcherCancelBlock = cancelToken
     }
 
     static func removeCache() {
-        SDWebImageManager.shared().imageCache?.apply {
-            $0.clearMemory()
-            $0.clearDisk()
-            $0.deleteOldFiles()
-        }
+        ImageDownloader.removeCache()
     }
 }
