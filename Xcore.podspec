@@ -16,6 +16,6 @@ Pod::Spec.new do |s|
     # invoke appropriate methods for different environments.
     # 'OTHER_SWIFT_FLAGS' => '-DXCORE_ENVIRONMENT_${CONFIGURATION}'
   }
-  s.dependency 'SDWebImage'
+  s.dependency 'SDWebImage', '~> 4.0'
   s.dependency 'MDHTMLLabel'
 end
