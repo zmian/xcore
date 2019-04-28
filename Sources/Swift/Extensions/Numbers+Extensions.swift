@@ -84,7 +84,7 @@ extension FloatingPoint {
     }
 }
 
-extension Sequence where Iterator.Element: BinaryInteger {
+extension Sequence where Iterator.Element: Numeric {
     /// ```swift
     /// [1, 1, 1, 1, 1, 1].runningSum() // -> [1, 2, 3, 4, 5, 6]
     /// ```
@@ -92,6 +92,31 @@ extension Sequence where Iterator.Element: BinaryInteger {
         return reduce([]) { sums, element in
             sums + [element + (sums.last ?? 0)]
         }
+    }
+
+    public func sum() -> Element {
+        return reduce(0, +)
+    }
+}
+
+extension Collection where Iterator.Element: BinaryInteger  {
+    /// Returns the average of all elements in the collection.
+    public func average() -> Double {
+        return isEmpty ? 0 : Double(sum()) / Double(count)
+    }
+}
+
+extension Collection where Element: BinaryFloatingPoint {
+    /// Returns the average of all elements in the collection.
+    public func average() -> Element {
+        return isEmpty ? 0 : sum() / Element(count)
+    }
+}
+
+extension Collection where Element == Decimal {
+    /// Returns the average of all elements in the collection.
+    public func average() -> Decimal {
+        return isEmpty ? 0 : sum() / Decimal(count)
     }
 }
 
