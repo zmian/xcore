@@ -81,7 +81,7 @@ extension XCConfiguration: Equatable {
     }
 }
 
-// MARK: Convenience UIKit Initializers
+// MARK: - Convenience UIKit Initializers
 
 extension UILabel {
     public convenience init(style: XCConfiguration<UILabel>, text: String? = nil) {
@@ -96,42 +96,28 @@ extension UILabel {
     }
 }
 
-extension UIImageView {
-    public convenience init(style: XCConfiguration<UIImageView>) {
+// MARK: - Stylable
+
+public protocol Stylable { }
+
+extension Stylable where Self: UIView {
+    public init(style: XCConfiguration<Self>) {
         self.init()
         style.configure(self)
     }
 }
 
-extension UIBarButtonItem {
-    public convenience init(style: XCConfiguration<UIBarButtonItem>) {
+extension Stylable where Self: UIBarButtonItem {
+    public init(style: XCConfiguration<Self>) {
         self.init()
         style.configure(self)
     }
 }
 
-extension UIStackView {
-    public convenience init(style: XCConfiguration<UIStackView>) {
-        self.init()
-        style.configure(self)
-    }
-}
+extension UIView: Stylable { }
+extension UIBarButtonItem: Stylable { }
 
-extension UITextView {
-    public convenience init(style: XCConfiguration<UITextView>) {
-        self.init()
-        style.configure(self)
-    }
-}
-
-extension UITextField {
-    public convenience init(style: XCConfiguration<UITextField>) {
-        self.init()
-        style.configure(self)
-    }
-}
-
-// MARK: With
+// MARK: - With
 
 public protocol With {}
 
