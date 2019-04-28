@@ -32,8 +32,8 @@ extension NSPredicate {
 }
 
 extension Array where Element: NSPredicate {
-    /// Returns a new predicate by joining the elements of the
-    /// sequence by the given logical type.
+    /// Returns a new predicate by joining the elements of the sequence by the given
+    /// logical type.
     ///
     /// Uses `NSCompoundPredicate` to create an `AND` or `OR` compound predicate of
     /// zero or more other predicates, or the NOT of a single predicate. For the
@@ -43,7 +43,7 @@ extension Array where Element: NSPredicate {
     /// - An `OR` predicate with no subpredicates evaluates to `false`.
     /// - A compound predicate with one or more subpredicates evaluates to the truth
     ///   of its subpredicates.
-
+    ///
     /// - Parameter type: The logical type used to join the elements in `self`.
     /// - Returns: A specialized predicate that evaluates logical combinations of
     ///            other predicates.
