@@ -36,6 +36,8 @@ public struct ValidationRule<Input> {
     }
 }
 
+// MARK: - Conditional Conformance
+
 extension ValidationRule where Input == String {
     public init(pattern: String, transform: ((Input) -> Input)? = nil) {
         self.init { input in
@@ -63,6 +65,8 @@ extension ValidationRule: ExpressibleByUnicodeScalarLiteral where Input == Strin
     }
 }
 
+// MARK: - Convenience Extension
+
 extension String {
     public func validate(rule: ValidationRule<String>) -> Bool {
         return rule.validate(self)
@@ -72,8 +76,22 @@ extension String {
 // MARK: - Built-in Rules
 
 extension ValidationRule where Input == String {
+    public static var name: ValidationRule {
+        return ValidationRule { input in
+            let range = 2...50
+            return range.contains(input.count) && !input.isMatch("[0-9]")
+        }
+    }
+
     public static var email: ValidationRule {
         return "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+    }
+
+    public static var ssn: ValidationRule {
+        return ValidationRule(
+            pattern: "^(?!000)(?!666)^([0-8]\\d{2})((?!00)(\\d{2}))((?!0000)(\\d{4}))",
+            transform: { $0.replace("-", with: "") }
+        )
     }
 
     /// Individual Taxpayer Identification Number.
@@ -92,19 +110,5 @@ extension ValidationRule where Input == String {
             pattern: "^(9\\d{2})([ \\-]?)(7\\d|8[0-8]|9[0-2]|9[4-9])([ \\-]?)(\\d{4})$",
             transform: { $0.replace("-", with: "") }
         )
-    }
-
-    public static var ssn: ValidationRule {
-        return ValidationRule(
-            pattern: "^(?!000)(?!666)^([0-8]\\d{2})((?!00)(\\d{2}))((?!0000)(\\d{4}))",
-            transform: { $0.replace("-", with: "") }
-        )
-    }
-
-    public static var name: ValidationRule {
-        return ValidationRule { input in
-            let range = 2...50
-            return range.contains(input.count) && !input.isMatch("[0-9]")
-        }
     }
 }
