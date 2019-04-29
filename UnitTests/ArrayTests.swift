@@ -156,6 +156,25 @@ final class ArrayTests: TestCase {
         XCTAssertEqual(resultUILabel!, 4)
         XCTAssertNil(resultUIViewController)
     }
+
+    func testJoined() {
+        let label1 = UILabel().apply {
+            $0.text = "Hello"
+        }
+
+        let label2 = UILabel()
+
+        let label3 = UILabel().apply {
+            $0.text = " "
+        }
+
+        let button = UIButton().apply {
+            $0.text = "World!"
+        }
+
+        let value = [label1.text, label2.text, label3.text, button.text].joined(separator: ", ")
+        XCTAssertEqual(value, "Hello, World!")
+    }
 }
 
 private struct SomeType: RawRepresentable {

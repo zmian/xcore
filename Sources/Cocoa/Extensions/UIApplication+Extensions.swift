@@ -78,13 +78,10 @@ extension UIApplication {
         return base
     }
 
-    /// This variable iterates through windows from top to bottom and returns the
-    /// visible window. Worst time complexity is O(n) where n represents
-    /// the number of windows.
-    ///
-    /// - Complexity: O(n)
+    /// Iterates through `windows` from top to bottom and returns the visible window.
     ///
     /// - Returns: Returns an optional window object based on visibility.
+    /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
     open var visibleWindow: UIWindow? {
         return windows.reversed().first { !$0.isHidden }
     }

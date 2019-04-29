@@ -24,7 +24,7 @@
 
 import Foundation
 
-public struct StringsFile: RawRepresentable {
+public struct StringsFile: RawRepresentable, Equatable {
     public let rawValue: String
     public let bundle: Bundle
 
