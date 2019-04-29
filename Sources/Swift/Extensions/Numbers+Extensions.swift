@@ -103,7 +103,7 @@ extension Sequence where Iterator.Element: Numeric {
     }
 }
 
-extension Collection where Iterator.Element: BinaryInteger  {
+extension Collection where Iterator.Element: BinaryInteger {
     /// Returns the average of all elements in the collection.
     public func average() -> Double {
         return isEmpty ? 0 : Double(sum()) / Double(count)

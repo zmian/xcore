@@ -27,7 +27,7 @@ import XCTest
 
 final class ValidationRuleTests: TestCase {
     func testEmail() {
-        let rule:  ValidationRule<String> = .email
+        let rule: ValidationRule<String> = .email
         XCTAssertTrue("help@example.com".validate(rule: rule))
         XCTAssertTrue("help@gmail.com".validate(rule: rule))
         XCTAssertTrue("help@io.com".validate(rule: rule))
@@ -40,7 +40,7 @@ final class ValidationRuleTests: TestCase {
     }
 
     func testSSN() {
-        let rule:  ValidationRule<String> = .ssn
+        let rule: ValidationRule<String> = .ssn
 
         // Valid
         XCTAssertTrue("111-11-1111".validate(rule: rule))
@@ -54,7 +54,7 @@ final class ValidationRuleTests: TestCase {
     }
 
     func testItin() {
-        let rule:  ValidationRule<String> = .itin
+        let rule: ValidationRule<String> = .itin
 
         // Valid
         XCTAssertTrue("957-75-5462".validate(rule: rule))
@@ -70,7 +70,7 @@ final class ValidationRuleTests: TestCase {
     }
 
     func testName() {
-        let rule:  ValidationRule<String> = .name
+        let rule: ValidationRule<String> = .name
 
         // Valid
         XCTAssertTrue("Xcore Swift".validate(rule: rule))
