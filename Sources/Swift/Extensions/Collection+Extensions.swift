@@ -102,7 +102,8 @@ extension Array where Element: Hashable {
 }
 
 extension Collection {
-    /// Returns the number of elements of the sequence that satisfy the given predicate.
+    /// Returns the number of elements of the sequence that satisfy the given
+    /// predicate.
     ///
     /// ```swift
     /// let cast = ["Vivien", "Marlon", "Kim", "Karl"]
@@ -111,9 +112,10 @@ extension Collection {
     /// // Prints "2"
     /// ```
     ///
-    /// - Parameter predicate: A closure that takes an element of the sequence as its argument
-    ///                        and returns a Boolean value indicating whether the element should
-    ///                        be included in the returned count.
+    /// - Parameter predicate: A closure that takes an element of the sequence as
+    ///                        its argument and returns a Boolean value indicating
+    ///                        whether the element should be included in the
+    ///                        returned count.
     /// - Returns: A count of elements that satisfy the given predicate.
     /// - Complexity: O(_n_), where _n_ is the length of the sequence.
     public func count(where predicate: (Element) throws -> Bool) rethrows -> Int {
@@ -122,21 +124,26 @@ extension Collection {
 }
 
 extension RangeReplaceableCollection {
-    /// Returns an array by removing all the elements that satisfy the given predicate.
+    /// Returns an array by removing all the elements that satisfy the given
+    /// predicate.
     ///
     /// Use this method to remove every element in a collection that meets
-    /// particular criteria. This example removes all the odd values from an
-    /// array of numbers:
+    /// particular criteria. This example removes all the odd values from an array
+    /// of numbers:
     ///
-    ///     var numbers = [5, 6, 7, 8, 9, 10, 11]
-    ///     let removedNumbers = numbers.removingAll(where: { $0 % 2 == 1 })
+    /// ```swift
+    /// var numbers = [5, 6, 7, 8, 9, 10, 11]
+    /// let removedNumbers = numbers.removingAll(where: { $0 % 2 == 1 })
     ///
-    ///     // numbers == [6, 8, 10]
-    ///     // removedNumbers == [5, 7, 9, 11]
-    ///
-    /// - Parameter predicate: A closure that takes an element of the
-    ///   sequence as its argument and returns a Boolean value indicating
-    ///   whether the element should be removed from the collection.
+    /// // numbers == [6, 8, 10]
+    /// // removedNumbers == [5, 7, 9, 11]
+    /// ```
+    ////
+    /// - Parameter predicate: A closure that takes an element of the sequence as
+    ///                        its argument and returns a Boolean value indicating
+    ///                        whether the element should be removed from the
+    ///                        collection.
+    /// - Returns: A collection of the elements that are removed.
     public mutating func removingAll(where predicate: (Element) throws -> Bool) rethrows -> Self {
         let result = try filter(predicate)
         try removeAll(where: predicate)

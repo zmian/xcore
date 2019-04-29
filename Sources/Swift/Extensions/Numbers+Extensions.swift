@@ -38,11 +38,9 @@ extension Int {
     }
 }
 
-extension Int {
-    /// Returns an `Array` containing the results of mapping `transform`
-    /// over `self`.
-    ///
-    /// - complexity: O(N).
+extension FixedWidthInteger {
+    /// Returns an array containing the results of mapping the given closure over
+    /// `self`.
     ///
     /// ```swift
     /// let values = 10.map { $0 * 2 }
@@ -51,7 +49,13 @@ extension Int {
     /// // prints
     /// [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
     /// ```
-    public func map<T>(transform: (Int) throws -> T) rethrows -> [T] {
+    ///
+    /// - Parameter transform: A mapping closure. `transform` accepts an element of
+    ///                        `self` as its parameter and returns a transformed
+    ///                        value of the same or of a different type.
+    /// - Returns: An array containing the transformed elements of `self`.
+    /// - Complexity: O(_n_).
+    public func map<T>(transform: (Self) throws -> T) rethrows -> [T] {
         var results = [T]()
         for i in 0..<self {
             try results.append(transform(i + 1))

@@ -60,4 +60,10 @@ final class NumbersTests: TestCase {
         let decimal: [Decimal] = [1.0, 12.3, 33, 37, 34, 45]
         XCTAssertEqual(decimal.average(), 27.05)
     }
+
+    func testMap() {
+        let values = 10.map { $0 * 2 }
+        let expected = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+        XCTAssertEqual(values, expected)
+    }
 }

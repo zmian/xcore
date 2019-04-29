@@ -52,17 +52,9 @@ extension URL {
     }
 }
 
-// MARK: Scheme
+// MARK: - Scheme
 
 extension URL {
-    public struct Scheme: RawRepresentable, Hashable {
-        public let rawValue: String
-
-        public init(rawValue: String) {
-            self.rawValue = rawValue
-        }
-    }
-
     /// The scheme of the `URL`.
     public var schemeType: Scheme {
         guard let scheme = scheme else {
@@ -73,12 +65,32 @@ extension URL {
     }
 }
 
+extension URL {
+    public struct Scheme: RawRepresentable, Hashable, CustomStringConvertible {
+        public let rawValue: String
+
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
+
+        public var description: String {
+            return rawValue
+        }
+    }
+}
+
+extension URL.Scheme: ExpressibleByStringLiteral {
+    public init(stringLiteral value: StringLiteralType) {
+        self.rawValue = value
+    }
+}
+
 extension URL.Scheme {
-    public static let none = URL.Scheme(rawValue: "")
-    public static let https = URL.Scheme(rawValue: "https")
-    public static let http = URL.Scheme(rawValue: "http")
-    public static let file = URL.Scheme(rawValue: "file")
-    public static let tel = URL.Scheme(rawValue: "tel")
-    public static let sms = URL.Scheme(rawValue: "sms")
-    public static let email = URL.Scheme(rawValue: "mailto")
+    public static let none: URL.Scheme = ""
+    public static let https: URL.Scheme = "https"
+    public static let http: URL.Scheme = "http"
+    public static let file: URL.Scheme = "file"
+    public static let tel: URL.Scheme = "tel"
+    public static let sms: URL.Scheme = "sms"
+    public static let email: URL.Scheme = "mailto"
 }

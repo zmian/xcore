@@ -84,7 +84,7 @@ extension XCConfiguration: Equatable {
 // MARK: - Convenience UIKit Initializers
 
 extension UILabel {
-    public convenience init(style: XCConfiguration<UILabel>, text: String? = nil) {
+    public convenience init(style: XCConfiguration<UILabel>, text: String?) {
         self.init()
         self.text = text
         style.configure(self)
