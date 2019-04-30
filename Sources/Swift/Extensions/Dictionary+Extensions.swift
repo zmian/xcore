@@ -236,6 +236,12 @@ extension Dictionary {
     }
 }
 
+extension Dictionary where Key: RawRepresentable, Key.RawValue: Hashable {
+    public func normalize() -> [Key.RawValue: Value] {
+        return mapPairs { ($0.key.rawValue, $0.value) }
+    }
+}
+
 // MARK: Operators
 
 public func +<Key, Value> (lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
