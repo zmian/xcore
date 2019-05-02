@@ -32,6 +32,28 @@ pod 'Xcore'
 pod 'Xcore', :git => 'https://github.com/zmian/xcore.swift'
 ```
 
+### Third-Party Extensions
+
+Xcore provides extensions for various third-party frameworks. They are behind `#if canImport`[flag](https://github.com/apple/swift-evolution/blob/master/proposals/0075-import-test.md) to avoid linking these frameworks as hard dependencies. 
+
+To enable these extension in your own project, simply add the following script in your `podfile`:
+
+```ruby
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            if target.name == "Xcore" then
+                config.build_settings['FRAMEWORK_SEARCH_PATHS'] ||= ['$(inherited)', '${PODS_ROOT}/../Vendor']
+            end
+        end
+    end
+end
+```
+
+Replace `'${PODS_ROOT}/../Vendor'` with location of your frameworks directory.
+
+**Note:** This script can also make your Carthage dependencies visible to Xcore so you can use these conditional extensions.
+
 ## Documentation
 
 You can find [the documentation here](https://zmian.github.io/xcore.swift). 
