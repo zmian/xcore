@@ -29,7 +29,7 @@ extension String {
         return String(prefix(1).capitalized + dropFirst())
     }
 
-    public var urlEscaped: String? {
+    public func urlEscaped() -> String? {
         return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
     }
 
@@ -74,7 +74,8 @@ extension String {
 
     /// Drops the given `prefix` from `self`.
     ///
-    /// - Returns: String without the specified `prefix` or nil if `prefix` doesn't exists.
+    /// - Returns: String without the specified `prefix` or nil if `prefix`
+    ///            doesn't exists.
     public func stripPrefix(_ prefix: String) -> String? {
         guard hasPrefix(prefix) else { return nil }
         return String(dropFirst(prefix.count))
@@ -90,7 +91,7 @@ extension String {
     }
 }
 
-// MARK: NSString
+// MARK: - NSString
 
 extension String {
     private var nsString: NSString {
@@ -101,11 +102,11 @@ extension String {
         return nsString.lastPathComponent
     }
 
-    public var stringByDeletingLastPathComponent: String {
+    public var deletingLastPathComponent: String {
         return nsString.deletingLastPathComponent
     }
 
-    public var stringByDeletingPathExtension: String {
+    public var deletingPathExtension: String {
         return nsString.deletingPathExtension
     }
 
@@ -144,6 +145,8 @@ extension String {
     }
 }
 
+// MARK: - Range Expressions
+
 extension String {
     // Credit: https://stackoverflow.com/a/27880748
 
@@ -169,7 +172,7 @@ extension String {
     }
 }
 
-// MARK: Base64 Support
+// MARK: - Base64 Support
 
 extension String {
     /// Decode specified `Base64` string
@@ -228,129 +231,5 @@ extension String {
         }
 
         return (size, numberOfLines)
-    }
-}
-
-// MARK: Range Expressions
-
-extension StringProtocol {
-    public func index(from: Int) -> Index? {
-        guard from > -1, let index = self.index(startIndex, offsetBy: from, limitedBy: endIndex) else {
-            return nil
-        }
-
-        return index
-    }
-
-    /// Returns the element at the specified index iff it is within bounds, otherwise nil.
-    public func at(_ index: Int) -> String? {
-        guard let index = self.index(from: index), let character = at(index) else {
-            return nil
-        }
-
-        return String(character)
-    }
-}
-
-extension String {
-    /// e.g., `"Hello world"[..<5] // → "Hello"`
-    private subscript(range: PartialRangeUpTo<Int>) -> Substring {
-        return self[..<index(startIndex, offsetBy: range.upperBound)]
-    }
-
-    /// e.g., `"Hello world"[...4] // → "Hello"`
-    private subscript(range: PartialRangeThrough<Int>) -> Substring {
-        return self[...index(startIndex, offsetBy: range.upperBound)]
-    }
-
-    /// e.g., `"Hello world"[0...] // → "Hello world"`
-    private subscript(range: PartialRangeFrom<Int>) -> Substring {
-        return self[index(startIndex, offsetBy: range.lowerBound)...]
-    }
-
-    /// e.g., `"Hello world"[0..<5] // → "Hello"`
-    private subscript(range: CountableRange<Int>) -> Substring {
-        let start = index(startIndex, offsetBy: range.lowerBound)
-        let end = index(startIndex, offsetBy: range.upperBound)
-        return self[start..<end]
-    }
-
-    /// e.g., `"Hello world"[0...4] // → "Hello"`
-    private subscript(range: CountableClosedRange<Int>) -> Substring {
-        let start = index(startIndex, offsetBy: range.lowerBound)
-        let end = index(startIndex, offsetBy: range.upperBound)
-        return self[start...end]
-    }
-}
-
-extension String {
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
-    ///
-    /// e.g., `"Hello world"[..<5] // → "Hello"`
-    public func at(_ range: PartialRangeUpTo<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
-    }
-
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
-    ///
-    /// e.g., `"Hello world"[...4] // → "Hello"`
-    public func at(_ range: PartialRangeThrough<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
-    }
-
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
-    ///
-    /// e.g., `"Hello world"[0...] // → "Hello world"`
-    public func at(_ range: PartialRangeFrom<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
-    }
-
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
-    ///
-    /// e.g., `"Hello world"[0..<5] // → "Hello"`
-    public func at(_ range: CountableRange<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
-    }
-
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
-    ///
-    /// e.g., `"Hello world"[0...4] // → "Hello"`
-    public func at(range: CountableClosedRange<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
-    }
-
-    /// Return true iff range is in `self`.
-    private func hasIndex(_ range: PartialRangeUpTo<Int>) -> Bool {
-        return range.upperBound >= firstIndex && range.upperBound < lastIndex
-    }
-
-    /// Return true iff range is in `self`.
-    private func hasIndex(_ range: PartialRangeThrough<Int>) -> Bool {
-        return range.upperBound >= firstIndex && range.upperBound < lastIndex
-    }
-
-    /// Return true iff range is in `self`.
-    private func hasIndex(_ range: PartialRangeFrom<Int>) -> Bool {
-        return range.lowerBound >= firstIndex && range.lowerBound < lastIndex
-    }
-
-    /// Return true iff range is in `self`.
-    private func hasIndex(_ range: CountableRange<Int>) -> Bool {
-        return range.lowerBound >= firstIndex && range.upperBound < lastIndex
-    }
-
-    /// Return true iff range is in `self`.
-    private func hasIndex(_ range: CountableClosedRange<Int>) -> Bool {
-        return range.lowerBound >= firstIndex && range.upperBound < lastIndex
-    }
-}
-
-extension String {
-    private var firstIndex: Int {
-        return startIndex.utf16Offset(in: self)
-    }
-
-    private var lastIndex: Int {
-        return endIndex.utf16Offset(in: self)
     }
 }

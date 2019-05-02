@@ -45,9 +45,9 @@ public struct JSONHelpers {
     }
 
     /// Parse local JSON file from `Bundle.main`.
-    public static func parse(fileName: String) -> Any? {
+    public static func parse(fileName: String, bundle: Bundle = .main) -> Any? {
         guard
-            let filePath = Bundle.main.path(forResource: fileName.stringByDeletingPathExtension, ofType: "json"),
+            let filePath = bundle.path(forResource: fileName.deletingPathExtension, ofType: "json"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: filePath))
         else {
             return nil

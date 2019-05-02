@@ -66,7 +66,7 @@ open class TextViewController: XCScrollViewController, MDHTMLLabelDelegate {
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
     open func setText(_ filename: String, bundle: Bundle? = nil) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            let name = filename.lastPathComponent.stringByDeletingPathExtension
+            let name = filename.lastPathComponent.deletingPathExtension
             let ext = filename.pathExtension
             let bundle = bundle ?? Bundle.main
 
