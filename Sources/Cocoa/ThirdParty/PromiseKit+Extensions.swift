@@ -28,12 +28,17 @@ import Foundation
 import PromiseKit
 
 extension Promise {
+    /// Like the `@discardableResult` attribute on a function declaration indicates
+    /// that, although the function returns a value, the compiler shouldn’t generate
+    /// a warning if the return value is unused.
+    public func discardableResult() {}
+
     /// A convenience function to make sure the promise always succeed.
     public func asAlwaysSucceed() -> Promise<Void> {
-        return Promise<Void> { fulfill, reject in
-            always {
-                fulfill(())
-            }
+        return Promise<Void> { seal in
+            ensure {
+                seal.fulfill(())
+            }.discardableResult()
         }
     }
 }
@@ -41,11 +46,11 @@ extension Promise {
 extension Promise where T: Collection, T: ExpressibleByArrayLiteral {
     /// A convenience function to make sure the promise always succeed.
     public func asAlwaysSucceed() -> Promise<T> {
-        return Promise { fulfill, reject in
-            then {
-                fulfill($0)
+        return Promise { seal in
+            done {
+                seal.fulfill($0)
             }.catch { _ in
-                fulfill([])
+                seal.fulfill([])
             }
         }
     }
@@ -70,22 +75,21 @@ extension Array where Element: Promise<Void> {
     /// - Returns: A new promise that resolves once all the provided promises resolve.
     /// - Note: The returned promise can be rejected if any one of the promises is rejected.
     public func join() -> Promise<Void> {
-        return Promise { fulfill, reject in
+        return Promise { seal in
             let promises = self
 
             firstly {
                 when(resolved: promises)
-            }.then { results -> Void in
+            }.done { results in
                 for result in results {
                     if case .rejected(let error) = result {
-                        reject(error)
+                        seal.reject(error)
                         return
                     }
                 }
-
-                fulfill(())
+                seal.fulfill(())
             }.catch { error in
-                reject(error)
+                seal.reject(error)
             }
         }
     }
@@ -102,9 +106,9 @@ extension Array where Element == () -> Promise<Void> {
         var currentProcessIndex = 0
 
         func innerPromise(_ promises: [() -> Promise<Void>]) -> Promise<Void> {
-            return Promise { fulfill, reject in
+            return Promise { seal in
                 guard totalCount > currentProcessIndex else {
-                    return fulfill(())
+                    return seal.fulfill(())
                 }
 
                 firstly {
@@ -112,10 +116,10 @@ extension Array where Element == () -> Promise<Void> {
                 }.then { () -> Promise<Void> in
                     currentProcessIndex += 1
                     return innerPromise(promises)
-                }.then {
-                    fulfill(())
+                }.done {
+                    seal.fulfill(())
                 }.catch { error in
-                    reject(error)
+                    seal.reject(error)
                 }
             }
         }
@@ -133,21 +137,21 @@ public func orderedJoin<T>(_ promises: [() -> Promise<[T]>]) -> Promise<[T]> {
     var currentProcessIndex = 0
 
     func innerPromise(_ promises: [() -> Promise<[T]>], initialValue: [T]) -> Promise<[T]> {
-        return Promise { fulfill, reject in
+        return Promise { seal in
             guard totalCount > currentProcessIndex else {
-                return fulfill(initialValue)
+                return seal.fulfill(initialValue)
             }
 
             firstly {
                 promises[currentProcessIndex]()
-            }.then { values -> Promise<[T]> in
+            }.then { (values) -> Promise<[T]> in
                 currentProcessIndex += 1
                 let aggregateValue = initialValue + values
                 return innerPromise(promises, initialValue: aggregateValue)
-            }.then { finalValue in
-                fulfill(finalValue)
+            }.done { finalValue in
+                seal.fulfill(finalValue)
             }.catch { error in
-                reject(error)
+                seal.reject(error)
             }
         }
     }
@@ -170,10 +174,10 @@ public enum MultiplePromisesResolutionStrategy {
 ///               The default value is `.rejectsIfAnyRejects`.
 /// - Returns: A new promise that resolves once all the provided promises resolve.
 public func join<T>(_ promises: [Promise<[T]>], strategy: MultiplePromisesResolutionStrategy = .rejectsIfAnyRejects) -> Promise<[T]> {
-    return Promise { fulfill, reject in
+    return Promise { seal in
         firstly {
             when(resolved: promises)
-        }.then { results -> Void in
+        }.done { results in
             var values: [T] = []
 
             for result in results {
@@ -182,15 +186,15 @@ public func join<T>(_ promises: [Promise<[T]>], strategy: MultiplePromisesResolu
                         values += value
                     case .rejected(let error):
                         if strategy == .rejectsIfAnyRejects {
-                            reject(error)
+                            seal.reject(error)
                             return
                         }
                 }
             }
 
-            fulfill(values)
+            seal.fulfill(values)
         }.catch { error in
-            reject(error)
+            seal.reject(error)
         }
     }
 }
@@ -231,7 +235,7 @@ public func promiseUntil<T>(
     retryDelay: TimeInterval = 0,
     maxRetrySeconds: Int = 15
 ) -> Promise<T> {
-    return Promise { fulfill, reject in
+    return Promise { seal in
         let maxTries = Int(maxRetrySeconds / Int(retryDelay))
         var numberOfPastTries = 0
         var isTimedOut: Bool {
@@ -242,20 +246,20 @@ public func promiseUntil<T>(
         func loop() {
             firstly {
                 body()
-            }.then { value -> Void in
+            }.done { value -> Void in
                 if predicate(value) || isTimedOut {
-                    fulfill(value)
+                    seal.fulfill(value)
                 } else {
                     firstly {
                         after(seconds: retryDelay)
-                    }.then {
+                    }.done {
                         loop()
                     }.catch { error in
-                        reject(error)
+                        seal.reject(error)
                     }
                 }
             }.catch { error in
-                reject(error)
+                seal.reject(error)
             }
         }
 
