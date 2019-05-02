@@ -1,10 +1,20 @@
 PODS:
   - MDHTMLLabel (1.0.2)
+  - PromiseKit (6.8.4):
+    - PromiseKit/CorePromise (= 6.8.4)
+    - PromiseKit/Foundation (= 6.8.4)
+    - PromiseKit/UIKit (= 6.8.4)
+  - PromiseKit/CorePromise (6.8.4)
+  - PromiseKit/Foundation (6.8.4):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.8.4):
+    - PromiseKit/CorePromise
   - SDWebImage (4.4.6):
     - SDWebImage/Core (= 4.4.6)
   - SDWebImage/Core (4.4.6)
   - Xcore (1.0.0):
     - MDHTMLLabel
+    - PromiseKit
     - SDWebImage (~> 4.0)
 
 DEPENDENCIES:
@@ -13,6 +23,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - MDHTMLLabel
+    - PromiseKit
     - SDWebImage
 
 EXTERNAL SOURCES:
@@ -21,8 +32,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   MDHTMLLabel: 18bf09ec7d6c1ae396497345c005857c0493ee0a
+  PromiseKit: 51794a832647e7b819336dc2279039ce9f1cc49b
   SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
-  Xcore: 99e8de288a5b3d29e6e91d60ac18c01b30f4ba23
+  Xcore: 542f7e67b85e8198f247a3de60b6071e1e100e1f
 
 PODFILE CHECKSUM: 88e52b970d3f4bab0bd3d83ca0ee0c57ef849dee
 
