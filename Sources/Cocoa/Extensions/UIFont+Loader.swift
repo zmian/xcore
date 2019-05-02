@@ -39,7 +39,7 @@ extension UIFont {
     ///   - fontName: The font name to register.
     ///   - fontUrl: The local url where the font is located.
     public static func registerIfNeeded(fontName: String, url fontUrl: URL) throws {
-        let name = fontName.stringByDeletingPathExtension
+        let name = fontName.deletingPathExtension
 
         // Check if the given font is not already registered with font manager before
         // attempting to register.
@@ -56,7 +56,7 @@ extension UIFont {
     ///   - fontName: The font name to unregister.
     ///   - fontUrl: The local url where the font is located.
     public static func unregisterIfExists(fontName: String, url fontUrl: URL) throws {
-        let name = fontName.stringByDeletingPathExtension
+        let name = fontName.deletingPathExtension
 
         // Check if the given font is registered with font manager before
         // attempting to unregister.

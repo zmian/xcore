@@ -150,7 +150,7 @@ extension Console {
         }
 
         if contains(.className) {
-            result += className.lastPathComponent.stringByDeletingPathExtension
+            result += className.lastPathComponent.deletingPathExtension
         }
 
         if contains(.functionName) {
