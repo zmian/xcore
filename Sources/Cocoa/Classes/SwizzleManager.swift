@@ -91,16 +91,24 @@ public final class SwizzleManager {
             UIView._runOnceSwapSelectors()
         }
 
-        if options.contains(.imageView) {
-            UIImageView.runOnceSwapSelectors()
+        if options.contains(.button) {
+            UIButton.runOnceSwapSelectors()
+        }
+
+        if options.contains(.label) {
+            UILabel.swizzle_runOnceSwapSelectors()
         }
 
         if options.contains(.textField) {
             UITextField.runOnceSwapSelectors()
         }
 
-        if options.contains(.button) {
-            UIButton.runOnceSwapSelectors()
+        if options.contains(.textView) {
+            UITextView.swizzle_runOnceSwapSelectors()
+        }
+
+        if options.contains(.imageView) {
+            UIImageView.runOnceSwapSelectors()
         }
 
         if options.contains(.searchBar) {
@@ -131,15 +139,26 @@ extension SwizzleManager {
         }
 
         public static let view = SwizzleOptions(rawValue: 1 << 0)
-        public static let imageView = SwizzleOptions(rawValue: 1 << 1)
-        public static let textField = SwizzleOptions(rawValue: 1 << 2)
-        public static let button = SwizzleOptions(rawValue: 1 << 3)
-        public static let searchBar = SwizzleOptions(rawValue: 1 << 4)
-        public static let collectionViewCell = SwizzleOptions(rawValue: 1 << 5)
-        public static let viewController = SwizzleOptions(rawValue: 1 << 6)
-        public static let userContentController = SwizzleOptions(rawValue: 1 << 7)
+        public static let button = SwizzleOptions(rawValue: 1 << 1)
+        public static let label = SwizzleOptions(rawValue: 1 << 2)
+        public static let textField = SwizzleOptions(rawValue: 1 << 3)
+        public static let textView = SwizzleOptions(rawValue: 1 << 4)
+        public static let imageView = SwizzleOptions(rawValue: 1 << 5)
+        public static let searchBar = SwizzleOptions(rawValue: 1 << 6)
+        public static let collectionViewCell = SwizzleOptions(rawValue: 1 << 7)
+        public static let viewController = SwizzleOptions(rawValue: 1 << 8)
+        public static let userContentController = SwizzleOptions(rawValue: 1 << 9)
         public static let all: SwizzleOptions = [
-            view, imageView, textField, button, searchBar, collectionViewCell, viewController, userContentController
+            view,
+            button,
+            label,
+            textField,
+            textView,
+            imageView,
+            searchBar,
+            collectionViewCell,
+            viewController,
+            userContentController
         ]
     }
 }
