@@ -17,4 +17,6 @@ Pod::Spec.new do |s|
   s.dependency 'SDWebImage', '~> 4.0'
   s.dependency 'MDHTMLLabel'
   s.dependency 'PromiseKit'
+  s.dependency 'Haring'
+  s.dependency 'SnapKit'
 end

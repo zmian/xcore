@@ -621,5 +621,7 @@ extension UIButton {
             originalSelector: #selector(setter: UIButton.isEnabled),
             swizzledSelector: #selector(UIButton.swizzled_isEnabledSetter(newValue:))
         )
+
+        UIButton.swizzle_runOnceSwapSelectors()
     }
 }
