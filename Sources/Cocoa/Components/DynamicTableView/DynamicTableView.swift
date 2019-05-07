@@ -406,7 +406,7 @@ extension DynamicTableView {
             case .none:
                 break
             case .disclosureIndicator:
-                cell.accessoryView = UIImageView(assetIdentifier: UIImage.AssetIdentifier.disclosureIndicator)
+                cell.accessoryView = UIImageView(assetIdentifier: .disclosureIndicator)
                 cell.accessoryView?.tintColor = disclosureIndicatorTintColor
             case .switch(let (isOn, callback)):
                 cell.selectionStyle = .none

@@ -76,6 +76,17 @@ open class GradientView: XCView {
             gradientLayer.frame = bounds
         }
     }
+
+    public func setColors(_ colors: [UIColor], animated: Bool) {
+        guard !animated else {
+            self.colors = colors
+            return
+        }
+
+        CATransaction.performWithoutAnimation {
+            self.colors = colors
+        }
+    }
 }
 
 open class GradientLayer: CALayer {
