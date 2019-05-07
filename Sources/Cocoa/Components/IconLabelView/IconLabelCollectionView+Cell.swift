@@ -40,7 +40,7 @@ extension IconLabelCollectionView {
         private let deleteButton = UIButton().apply {
             $0.isHidden = true
 
-            $0.image(R(.collectionViewCellDeleteIcon), for: .normal)
+            $0.image(r(.collectionViewCellDeleteIcon), for: .normal)
             $0.imageView?.cornerRadius = 24/2
             $0.imageView?.backgroundColor = .white
 

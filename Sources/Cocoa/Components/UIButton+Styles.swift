@@ -45,10 +45,39 @@ extension XCConfiguration where Type: UIButton {
             $0.highlightedAnimation = .none
             $0.contentEdgeInsets = 0
 
-            let unfilledImage = UIImage(assetIdentifier: UIImage.AssetIdentifier.checkmarkIconUnfilled)
-            let filledImage = UIImage(assetIdentifier: UIImage.AssetIdentifier.checkmarkIconFilled)
+            let unfilledImage = UIImage(assetIdentifier: .checkmarkIconUnfilled)
+            let filledImage = UIImage(assetIdentifier: .checkmarkIconFilled)
             $0.setImage(unfilledImage.tintColor(normalColor), for: .normal)
             $0.setImage(filledImage.tintColor(selectedColor), for: .selected)
+        }
+    }
+
+    public static func radioButton(selectedColor: UIColor, borderColor: UIColor, borderWidth: CGFloat = 0.5) -> XCConfiguration {
+        return XCConfiguration(identifier: "radioButton") {
+            let outerWidth: CGFloat = 20
+
+            $0.accessibilityIdentifier = "radioButton"
+            $0.layer.borderWidth = borderWidth
+            $0.layer.borderColor = borderColor.cgColor
+            $0.layer.masksToBounds = true
+            $0.layer.cornerRadius = outerWidth / 2
+
+            $0.anchor.make {
+                $0.size.equalTo(outerWidth)
+            }
+
+            let scale: CGFloat = 0.15
+            $0.image = UIImage()
+            let inset = outerWidth * scale
+            $0.imageView?.cornerRadius = (outerWidth - inset * 2) / 2
+
+            $0.imageView?.anchor.make {
+                $0.edges.equalToSuperview().inset(inset)
+            }
+
+            $0.didSelect { sender in
+                sender.imageView?.backgroundColor = sender.isSelected ? selectedColor : .clear
+            }
         }
     }
 }

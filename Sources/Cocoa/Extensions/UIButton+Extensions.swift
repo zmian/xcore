@@ -403,6 +403,14 @@ extension UIButton {
         titleEdgeInsets = 0
         imageEdgeInsets = 0
     }
+
+    @objc open dynamic var contentTintColor: UIColor {
+        get { return tintColor }
+        set {
+            tintColor = newValue
+            imageView?.tintColor = newValue
+        }
+    }
 }
 
 extension ControlTargetActionBlockRepresentable where Self: UIButton {

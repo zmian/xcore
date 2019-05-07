@@ -210,7 +210,7 @@ extension NSAttributedString {
         case back
         case forward
 
-        var assetIdentifier: UIImage.AssetIdentifier? {
+        var assetIdentifier: ImageAssetIdentifier? {
             switch self {
                 case .none:
                     return nil
