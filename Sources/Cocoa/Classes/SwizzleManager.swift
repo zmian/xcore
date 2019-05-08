@@ -27,6 +27,7 @@ import WebKit
 
 public final class SwizzleManager {
     private static var didSwizzle = false
+    static var options: SwizzleOptions = .all
 
     private init() {}
 
@@ -80,6 +81,7 @@ public final class SwizzleManager {
         guard !didSwizzle else { return }
         defer { didSwizzle = true }
 
+        self.options = options
         xcoreSwizzle(options: options)
         additionalSelectors().forEach {
             $0()
@@ -148,6 +150,7 @@ extension SwizzleManager {
         public static let collectionViewCell = SwizzleOptions(rawValue: 1 << 7)
         public static let viewController = SwizzleOptions(rawValue: 1 << 8)
         public static let userContentController = SwizzleOptions(rawValue: 1 << 9)
+        public static let chrome = SwizzleOptions(rawValue: 1 << 10)
         public static let all: SwizzleOptions = [
             view,
             button,
@@ -158,7 +161,8 @@ extension SwizzleManager {
             searchBar,
             collectionViewCell,
             viewController,
-            userContentController
+            userContentController,
+            chrome
         ]
     }
 }

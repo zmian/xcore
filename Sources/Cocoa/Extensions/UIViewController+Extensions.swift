@@ -23,7 +23,6 @@
 //
 
 import UIKit
-import ObjectiveC
 
 extension UIViewController {
     /// A convenience method to easily add child view controller.
@@ -147,184 +146,15 @@ extension UIViewController {
     ///   - transitioningDelegate:   The delegate object that provides transition animator and interactive controller objects.
     ///   - animated:                Pass `true` to animate the presentation; otherwise, pass `false`.
     ///   - completion:              The block to execute after the presentation finishes.
-    open func presentViewControllerWithTransition(_ viewControllerToPresent: UIViewController, modalPresentationStyle: UIModalPresentationStyle = .custom, transitioningDelegate: UIViewControllerTransitioningDelegate, animated: Bool = true, completion: (() -> Void)? = nil) {
+    open func presentViewControllerWithTransition(
+        _ viewControllerToPresent: UIViewController,
+        modalPresentationStyle: UIModalPresentationStyle = .custom,
+        transitioningDelegate: UIViewControllerTransitioningDelegate,
+        animated: Bool = true,
+        completion: (() -> Void)? = nil
+    ) {
         viewControllerToPresent.transitioningDelegate = transitioningDelegate
         viewControllerToPresent.modalPresentationStyle = modalPresentationStyle
         present(viewControllerToPresent, animated: animated, completion: completion)
-    }
-}
-
-extension UIViewController {
-    private struct AssociatedKey {
-        static var supportedInterfaceOrientations = "supportedInterfaceOrientations"
-        static var preferredInterfaceOrientationForPresentation = "preferredInterfaceOrientationForPresentation"
-        static var preferredStatusBarStyle = "preferredStatusBarStyle"
-        static var preferredStatusBarUpdateAnimation = "preferredStatusBarUpdateAnimation"
-        static var prefersStatusBarHidden = "prefersStatusBarHidden"
-        static var isTabBarHidden = "isTabBarHidden"
-        static var shouldAutorotate = "shouldAutorotate"
-    }
-
-    /// A convenience property to set `supportedInterfaceOrientations` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to set supported interface orientation.
-    ///
-    /// The default value is `nil` which means use the `supportedInterfaceOrientations` value.
-    ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
-    ///
-    /// ```swift
-    /// let vc = UIImagePickerController()
-    /// vc.preferredInterfaceOrientations = .allButUpsideDown
-    /// ```
-    open var preferredInterfaceOrientations: UIInterfaceOrientationMask? {
-        get {
-            guard let intValue: UInt = associatedObject(&AssociatedKey.supportedInterfaceOrientations) else {
-                return nil
-            }
-
-            return UIInterfaceOrientationMask(rawValue: intValue)
-        }
-        set { setAssociatedObject(&AssociatedKey.supportedInterfaceOrientations, value: newValue?.rawValue) }
-    }
-
-    /// A convenience property to set `preferredInterfaceOrientationForPresentation` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to set supported interface orientation.
-    ///
-    /// The default value is `nil` which means use the `preferredInterfaceOrientationForPresentation` value.
-    ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
-    ///
-    /// ```swift
-    /// let vc = UIImagePickerController()
-    /// vc.interfaceOrientationForPresentation = .portrait
-    /// ```
-    open var interfaceOrientationForPresentation: UIInterfaceOrientation? {
-        get {
-            guard let intValue: Int = associatedObject(&AssociatedKey.preferredInterfaceOrientationForPresentation) else {
-                return nil
-            }
-
-            return UIInterfaceOrientation(rawValue: intValue)
-        }
-        set { setAssociatedObject(&AssociatedKey.preferredInterfaceOrientationForPresentation, value: newValue?.rawValue) }
-    }
-
-    /// A convenience property to set `preferredStatusBarStyle` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to update the status bar style to match with the app's look and feel.
-    ///
-    /// The default value is `nil` which means use the `preferredStatusBarStyle` value.
-    ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
-    /// This enables `info.plist`'s `View controller-based status bar appearance: NO` like behavior
-    /// but allowing any of its view controllers to override the value.
-    ///
-    /// ```swift
-    /// let vc = UIImagePickerController()
-    /// vc.statusBarStyle = .lightContent
-    /// ```
-    open var statusBarStyle: UIStatusBarStyle? {
-        get {
-            guard let intValue: Int = associatedObject(&AssociatedKey.preferredStatusBarStyle) else {
-                return nil
-            }
-
-            return UIStatusBarStyle(rawValue: intValue)
-        }
-        set {
-            setAssociatedObject(&AssociatedKey.preferredStatusBarStyle, value: newValue?.rawValue)
-            setNeedsStatusBarAppearanceUpdate()
-        }
-    }
-
-    /// A convenience property to set `preferredStatusBarUpdateAnimation` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to update the status bar animation.
-    ///
-    /// The default value is `nil` which means use the `preferredStatusBarUpdateAnimation` value.
-    ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
-    ///
-    /// ```swift
-    /// let vc = UIImagePickerController()
-    /// vc.statusBarUpdateAnimation = .fade
-    /// ```
-    open var statusBarUpdateAnimation: UIStatusBarAnimation? {
-        get {
-            guard let intValue: Int = associatedObject(&AssociatedKey.preferredStatusBarUpdateAnimation) else {
-                return nil
-            }
-
-            return UIStatusBarAnimation(rawValue: intValue)
-        }
-        set { setAssociatedObject(&AssociatedKey.preferredStatusBarUpdateAnimation, value: newValue?.rawValue) }
-    }
-
-    /// A convenience property to set `prefersStatusBarHidden` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to show/hide status bar.
-    ///
-    /// The default value is `nil` which means use the `prefersStatusBarHidden` value.
-    ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
-    ///
-    /// ```swift
-    /// let vc = UIImagePickerController()
-    /// vc.isStatusBarHidden = false
-    /// ```
-    open var isStatusBarHidden: Bool? {
-        get { return associatedObject(&AssociatedKey.prefersStatusBarHidden) }
-        set {
-            setAssociatedObject(&AssociatedKey.prefersStatusBarHidden, value: newValue)
-            setNeedsStatusBarAppearanceUpdate()
-        }
-    }
-
-    /// A convenience property to set `shouldAutorotate` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to enable/disable rotation.
-    ///
-    /// The default value is `nil` which means use the `shouldAutorotate` value.
-    ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
-    ///
-    /// ```swift
-    /// let vc = UIImagePickerController()
-    /// vc.isAutorotateEnabled = false
-    /// ```
-    open var isAutorotateEnabled: Bool? {
-        get { return associatedObject(&AssociatedKey.shouldAutorotate) }
-        set { setAssociatedObject(&AssociatedKey.shouldAutorotate, value: newValue) }
-    }
-
-    /// A convenience property to set `prefersTabBarHidden` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to show/hide tab bar.
-    ///
-    /// The default value is `nil` which means use the `prefersTabBarHidden` value.
-    ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
-    ///
-    /// ```swift
-    /// let vc = UIImagePickerController()
-    /// vc.isTabBarHidden = false
-    /// ```
-    open var isTabBarHidden: Bool? {
-        get { return associatedObject(&AssociatedKey.isTabBarHidden) }
-        set { setAssociatedObject(&AssociatedKey.isTabBarHidden, value: newValue) }
-    }
-
-    /// The default value is of property `isTabBarHidden` if it's set, otherwise, `false`.
-    @objc dynamic open var prefersTabBarHidden: Bool {
-        return isTabBarHidden ?? false
     }
 }

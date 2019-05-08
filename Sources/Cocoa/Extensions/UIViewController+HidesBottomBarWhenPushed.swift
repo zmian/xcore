@@ -25,23 +25,12 @@
 import UIKit
 
 extension UIViewController {
-    static func runOnceSwapSelectors() {
-        swizzle(
-            UIViewController.self,
-            originalSelector: #selector(UIViewController.viewDidLoad),
-            swizzledSelector: #selector(UIViewController.swizzled_viewDidLoad)
-        )
-
+    static func swizzle_hidesBottomBarWhenPushed_runOnceSwapSelectors() {
         swizzle(
             UIViewController.self,
             originalSelector: #selector(getter: UIViewController.hidesBottomBarWhenPushed),
             swizzledSelector: #selector(getter: UIViewController.swizzled_hidesBottomBarWhenPushed)
         )
-    }
-
-    @objc private func swizzled_viewDidLoad() {
-        self.swizzled_viewDidLoad()
-        _addKeyboardNotificationObservers()
     }
 
     /// A swizzled function to ensure that `hidesBottomBarWhenPushed` value is
@@ -61,32 +50,5 @@ extension UIViewController {
         }
 
         return value
-    }
-}
-
-extension UIView {
-    private struct AssociatedKey {
-        static var didAddKeyboardNotificationObservers = "didAddKeyboardNotificationObservers"
-    }
-
-    private var didAddKeyboardNotificationObservers: Bool {
-        get { return associatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, default: false) }
-        set { setAssociatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, value: newValue) }
-    }
-
-    static func _runOnceSwapSelectors() {
-        swizzle(
-            UIView.self,
-            originalSelector: #selector(UIView.layoutSubviews),
-            swizzledSelector: #selector(UIView.swizzled_view_layoutSubviews)
-        )
-    }
-
-    @objc private func swizzled_view_layoutSubviews() {
-        self.swizzled_view_layoutSubviews()
-        if !didAddKeyboardNotificationObservers {
-            _addKeyboardNotificationObservers()
-            didAddKeyboardNotificationObservers = true
-        }
     }
 }

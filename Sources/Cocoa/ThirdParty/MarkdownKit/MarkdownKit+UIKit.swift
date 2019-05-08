@@ -356,7 +356,6 @@ extension UILabel {
     }
 }
 
-
 extension UIButton {
     static func swizzle_runOnceSwapSelectors() {
         #if canImport(Haring)
