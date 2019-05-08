@@ -27,7 +27,7 @@ import UIKit
 extension NotificationCenter {
     /// Removes all entries specifying a given observer from the notification
     /// center's dispatch table.
-    public func removeObserver(_ observer: Any?) {
+    public func removeObserver(_ observer: NSObjectProtocol?) {
         guard let observer = observer else {
             return
         }
