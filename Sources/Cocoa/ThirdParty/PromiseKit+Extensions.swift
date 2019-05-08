@@ -144,7 +144,7 @@ public func orderedJoin<T>(_ promises: [() -> Promise<[T]>]) -> Promise<[T]> {
 
             firstly {
                 promises[currentProcessIndex]()
-            }.then { (values) -> Promise<[T]> in
+            }.then { values -> Promise<[T]> in
                 currentProcessIndex += 1
                 let aggregateValue = initialValue + values
                 return innerPromise(promises, initialValue: aggregateValue)

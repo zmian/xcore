@@ -22,7 +22,7 @@
 // THE SOFTWARE.
 //
 
-// MARK: Type Based Constants
+// MARK: - Type Based Constants
 
 extension TimeInterval {
     /// The fast duration to use for animations when the desired interval is between `0.2...0.3` seconds.
@@ -81,4 +81,70 @@ extension UIEdgeInsets {
     public static let minimumPadding = UIEdgeInsets(.minimumPadding)
     public static let defaultPadding = UIEdgeInsets(.defaultPadding)
     public static let maximumPadding = UIEdgeInsets(.maximumPadding)
+}
+
+// MARK: - App Constants
+
+public struct AppConstants {
+    /// The golden ratio.
+    public static var φ: CGFloat { return 0.618 }
+
+    public static var statusBarHeight: CGFloat {
+        return UIApplication.sharedOrNil?.statusBarFrame.height ?? 20
+    }
+
+    public static var navBarPlusStatusBarHeight: CGFloat {
+        return navBarHeight + statusBarHeight
+    }
+
+    public static var navBarHeight: CGFloat {
+        if UIDevice.current.modelType.family == .pad, #available(iOS 12.0, *) {
+            return 50
+        }
+
+        return 44
+    }
+
+    public static var navBarItemHeight: CGFloat { return 24 }
+    public static var tabBarHeight: CGFloat { return 49 }
+    public static var uiControlsHeight: CGFloat { return 50 }
+}
+
+// MARK: - Device
+
+extension AppConstants {
+    public static var supportsHomeIndicator: Bool {
+        return UIDevice.current.capability.contains(.homeIndicator)
+    }
+
+    public static var homeIndicatorHeightIfPresent: CGFloat {
+        return supportsHomeIndicator ? 34 : 0
+    }
+
+    public static var smallScreenSize: Bool {
+        return UIDevice.current.modelType.screenSize <= .iPhone5
+    }
+
+    public static var mediumScreenSize: Bool {
+        return UIDevice.current.modelType.screenSize.size.max <= iPhone6ScreenSize.max
+    }
+
+    public static var iPhone6ScreenSize: CGSize {
+        return UIDevice.ModelType.ScreenSize.iPhone6.size
+    }
+
+    /// A convenience function to get relative value for given device based on iPhone 6 width.
+    public static func aspect(_ value: CGFloat, axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
+        let screenSize = UIScreen.main.bounds.size
+        let reference = iPhone6ScreenSize
+        let relation = axis == .vertical ? screenSize.height / reference.height : screenSize.width / reference.width
+        return value * relation
+    }
+
+    public static func remaining(axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
+        let screenSize = UIScreen.main.bounds.size
+        let reference = iPhone6ScreenSize
+        let remaining = axis == .vertical ? screenSize.height - reference.height : screenSize.width - reference.width
+        return max(0.0, remaining)
+    }
 }
