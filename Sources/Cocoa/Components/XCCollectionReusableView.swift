@@ -27,7 +27,7 @@ import UIKit
 open class XCCollectionReusableView: UICollectionReusableView {
     private var didTap: (() -> Void)?
 
-    // MARK: Highlighted Background Color
+    // MARK: - Highlighted Background Color
 
     open var isHighlighted = false
 
@@ -36,7 +36,7 @@ open class XCCollectionReusableView: UICollectionReusableView {
         super.setHighlighted(highlighted, animated: animated)
     }
 
-    // MARK: Init Methods
+    // MARK: - Init Methods
 
     public convenience init() {
         self.init(frame: .zero)
@@ -52,7 +52,7 @@ open class XCCollectionReusableView: UICollectionReusableView {
         commonInit()
     }
 
-    // MARK: Setup Methods
+    // MARK: - Setup Methods
 
     /// The default implementation of this method does nothing.
     ///
@@ -60,9 +60,24 @@ open class XCCollectionReusableView: UICollectionReusableView {
     /// for example, add new subviews or configure properties.
     /// This method is called when self is initialized using any of the relevant `init` methods.
     open func commonInit() {}
+
+    /// A boolean value that indicates whether the cell resist dimming its content
+    /// view.
+    ///
+    /// The default value is `false`.
+    open var resistsDimming: Bool {
+        return false
+    }
+
+    open override var layer: CALayer {
+        let layer = super.layer
+        // Fixes an issue where scrollbar would appear below header views.
+        layer.zPosition = 0
+        return layer
+    }
 }
 
-// MARK: Touches
+// MARK: - Touches
 
 extension XCCollectionReusableView {
     open func triggerDidTap() {
@@ -76,5 +91,24 @@ extension XCCollectionReusableView {
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         didTap?()
+    }
+}
+
+// MARK: - Dim
+
+extension XCCollectionReusableView {
+    @objc open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        guard let attributes = super.preferredLayoutAttributesFitting(layoutAttributes) as? CollectionViewFlexLayout.Attributes else {
+            return super.preferredLayoutAttributesFitting(layoutAttributes)
+        }
+        attributes.alpha = (attributes.shouldDim && !resistsDimming) ? 0.5 : 1
+        alpha = attributes.alpha
+        return attributes
+    }
+
+    @objc open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        guard let layoutAttributes = layoutAttributes as? CollectionViewFlexLayout.Attributes else { return }
+        alpha = (layoutAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
     }
 }
