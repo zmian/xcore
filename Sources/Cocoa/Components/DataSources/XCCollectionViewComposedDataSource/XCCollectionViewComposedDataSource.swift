@@ -42,42 +42,12 @@ final class XCCollectionView: UICollectionView {
 }
 
 private final class XCFakeCollectionView: UICollectionView {
-    static var cellCache = [String: UICollectionViewCell]()
-    static var supplementaryViewCache = [String: UICollectionReusableView]()
-
     override func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
-        let className = identifier
-
-        if let cachedCell = XCFakeCollectionView.cellCache[className] {
-            cachedCell.prepareForReuse()
-            return cachedCell
-        }
-
-        let aClass = NSClassFromString(className) as! UICollectionViewCell.Type
-        let cell = aClass.init(frame: .zero)
-        XCFakeCollectionView.cellCache[className] = cell
-        return cell
+        return CollectionViewDequeueCache.shared.dequeueCell(identifier: identifier)
     }
 
     override func dequeueReusableSupplementaryView(ofKind elementKind: String, withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionReusableView {
-        let className = identifier
-
-        if let cachedSupplementaryView = XCFakeCollectionView.supplementaryViewCache[className] {
-            cachedSupplementaryView.prepareForReuse()
-            return cachedSupplementaryView
-        }
-
-        let aClass = NSClassFromString(className) as! UICollectionReusableView.Type
-        let supplementaryView = aClass.init(frame: .zero)
-        XCFakeCollectionView.supplementaryViewCache[className] = supplementaryView
-        return supplementaryView
-    }
-}
-
-extension XCCollectionViewComposedDataSource {
-    public static func clearCellCache() {
-        XCFakeCollectionView.cellCache.removeAll(keepingCapacity: false)
-        XCFakeCollectionView.supplementaryViewCache.removeAll(keepingCapacity: false)
+        return CollectionViewDequeueCache.shared.dequeueSupplementaryView(kind: elementKind, identifier: identifier)
     }
 }
 

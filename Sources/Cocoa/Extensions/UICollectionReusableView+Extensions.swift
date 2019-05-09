@@ -38,7 +38,7 @@ extension UICollectionReusableView {
     }
 }
 
-// MARK: Highlighted Background Color
+// MARK: - Highlighted Background Color
 
 extension UICollectionReusableView {
     /// The background color for the highlighted state.
@@ -85,7 +85,7 @@ extension UICollectionReusableView {
     }
 }
 
-// MARK: Background Color Storage
+// MARK: - Background Color Storage
 
 extension UICollectionReusableView {
     private typealias State = UInt
@@ -104,7 +104,7 @@ extension UICollectionReusableView {
     }
 }
 
-// MARK: Touches
+// MARK: - Touches
 
 extension UICollectionReusableView {
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

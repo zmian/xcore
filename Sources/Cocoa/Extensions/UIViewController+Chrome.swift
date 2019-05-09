@@ -210,8 +210,8 @@ extension UIViewController {
         set { setAssociatedObject(&AssociatedKey.shouldAutorotate, value: newValue) }
     }
 
-    /// A boolean value indicating whether the swipe to peek or pop view controller
-    /// gesture is enabled.
+    /// A boolean value indicating whether the swipe gesture to peek or pop view
+    /// controller is enabled.
     ///
     /// The default value is `true`.
     @objc open var isSwipeBackGestureEnabled: Bool {

@@ -29,65 +29,6 @@ import UIKit
         return responder()
     }
 
-    /// Performs a view animation using a timing curve corresponding to the motion of a physical spring.
-    ///
-    /// - Parameters:
-    ///   - duration:   The total duration of the animations, measured in seconds. If you specify a negative value or `0`, the changes are made without animating them. The default value is `0.6`.
-    ///   - delay:      The amount of time (measured in seconds) to wait before beginning the animations. The default value is `0`.
-    ///   - damping:    The damping ratio for the spring animation as it approaches its quiescent state. The default value is `0.7`.
-    ///   - velocity:   The initial spring velocity. For smooth start to the animation, match this value to the view’s velocity as it was prior to attachment. The default value is `0`.
-    ///   - options:    A mask of options indicating how you want to perform the animations. The default value is `UIViewAnimationOptions.AllowUserInteraction`.
-    ///   - animations: A block object containing the changes to commit to the views.
-    ///   - completion: A block object to be executed when the animation sequence ends.
-    public static func animate(_ duration: TimeInterval = 0.6, delay: TimeInterval = 0, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: AnimationOptions = .allowUserInteraction, animations: @escaping (() -> Void), completion: ((Bool) -> Void)?) {
-        UIView.animate(withDuration: duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: completion)
-    }
-
-    /// Performs a view animation using a timing curve corresponding to the motion of a physical spring.
-    ///
-    /// - Parameters:
-    ///   - duration:   The total duration of the animations, measured in seconds. If you specify a negative value or `0`, the changes are made without animating them. The default value is `0.6`.
-    ///   - delay:      The amount of time (measured in seconds) to wait before beginning the animations. The default value is `0`.
-    ///   - damping:    The damping ratio for the spring animation as it approaches its quiescent state. The default value is `0.7`.
-    ///   - velocity:   The initial spring velocity. For smooth start to the animation, match this value to the view’s velocity as it was prior to attachment. The default value is `0`.
-    ///   - options:    A mask of options indicating how you want to perform the animations. The default value is `UIViewAnimationOptions.AllowUserInteraction`.
-    ///   - animations: A block object containing the changes to commit to the views.
-    public static func animate(_ duration: TimeInterval = 0.6, delay: TimeInterval = 0, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: AnimationOptions = .allowUserInteraction, animations: @escaping (() -> Void)) {
-        UIView.animate(withDuration: duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: nil)
-    }
-
-    public static func animateFromCurrentState(withDuration duration: TimeInterval = .fast, _ animations: @escaping () -> Void) {
-        animateFromCurrentState(withDuration: duration, animations: animations) {}
-    }
-
-    public static func animateFromCurrentState(withDuration duration: TimeInterval = .fast, animations: @escaping () -> Void, completion: @escaping () -> Void) {
-        UIView.animate(withDuration: duration, delay: 0, options: .beginFromCurrentState, animations: {
-            animations()
-        }, completion: { _ in
-            completion()
-        })
-    }
-
-    open func setHidden(_ hide: Bool, animated: Bool, duration: TimeInterval = .normal, _ completion: (() -> Void)? = nil) {
-        guard animated else {
-            isHidden = hide
-            completion?()
-            return
-        }
-
-        UIView.transition(
-            with: self,
-            duration: duration,
-            options: [.beginFromCurrentState, .transitionCrossDissolve],
-            animations: {
-                self.isHidden = hide
-            },
-            completion: { _ in
-                completion?()
-            }
-        )
-    }
-
     @IBInspectable open var borderWidth: CGFloat {
         get { return layer.borderWidth }
         set { layer.borderWidth = newValue }
@@ -114,7 +55,7 @@ import UIKit
         }
     }
 
-    // MARK: Fade Content
+    // MARK: - Fade Content
 
     @discardableResult
     open func fadeHead(rect: CGRect, startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 0.03)) -> CAGradientLayer {
@@ -159,7 +100,11 @@ import UIKit
             $0.anchor.edges.equalToSuperview()
         }
     }
+}
 
+// MARK: - Borders
+
+@objc extension UIView {
     // Credit: http://stackoverflow.com/a/23157272
     @discardableResult
     open func addBorder(edges: UIRectEdge, color: UIColor = .white, thickness: CGFloat = 1, inset: UIEdgeInsets = 0) -> [UIView] {
@@ -242,7 +187,7 @@ import UIKit
     }
 }
 
-// MARK: Snapshot
+// MARK: - Snapshot
 
 @objc extension UIView {
     /// Takes a snapshot of the complete view hierarchy as visible onscreen.
@@ -287,6 +232,8 @@ import UIKit
     }
 }
 
+// MARK: - Size
+
 @objc extension UIView {
     open var sizeFittingScreenWidth: CGSize {
         return sizeFitting(width: UIScreen.main.bounds.width)
@@ -296,9 +243,7 @@ import UIKit
         let layoutSize = systemLayoutSizeFitting(CGSize(width: width, height: 0), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
         return CGSize(width: width, height: ceil(layoutSize.height))
     }
-}
 
-@objc extension UIView {
     open func resizeToFitSubviews() {
         var height: CGFloat = 0
 
@@ -312,7 +257,7 @@ import UIKit
     }
 }
 
-// MARK: Resistance And Hugging
+// MARK: - Resistance And Hugging
 
 extension UIView {
     open func resistsSizeChange() {
@@ -359,7 +304,7 @@ extension Array where Element == UIView {
     }
 }
 
-// MARK: Lookup
+// MARK: - Lookup
 
 extension UIView {
     /// Returns the first subview of the `self` that satisfies the given
@@ -475,31 +420,29 @@ extension UIView {
     }
 }
 
-// MARK: Utilities
-
 extension UIView {
-    /// Prints `self` child view hierarchy.
-    open func printDebugSubviewsDescription() {
-        debugSubviews()
-    }
+    /// Temporarily adds a view to the end of the receiver’s list of subviews.
+    ///
+    /// - Parameters:
+    ///   - view: The view to be temporarily added. After being added, this view
+    ///           appears on top of any other subviews.
+    ///   - interval: The interval after the given `view` is removed.
+    ///   - animated: An option to animate the adding and removing of the `view`.
+    public func addSubview(_ view: UIView, removeAfter interval: TimeInterval, animated: Bool = true) {
+        view.alpha = 0
+        addSubview(view)
 
-    private func debugSubviews(_ count: Int = 0) {
-        if count == 0 {
-            print("\n\n\n")
+        let duration = animated ? .normal : 0
+
+        UIView.animate(withDuration: duration) {
+            view.alpha = 1
         }
 
-        for _ in 0...count {
-            print("--")
-        }
-
-        print("\(type(of: self))")
-
-        for view in subviews {
-            view.debugSubviews(count + 1)
-        }
-
-        if count == 0 {
-            print("\n\n\n")
+        DispatchQueue.main.asyncAfter(deadline: .now() + interval) { [weak view] in
+            UIView.animate(withDuration: duration) {
+                view?.alpha = 0
+                view?.removeFromSuperview()
+            }
         }
     }
 }
@@ -537,6 +480,35 @@ extension UIView {
     /// - Returns: A constraint if exists for the specified identifier.
     public func constraint(identifier: String) -> NSLayoutConstraint? {
         return constraints.first { $0.identifier == identifier }
+    }
+}
+
+// MARK: - Utilities
+
+extension UIView {
+    /// Prints `self` child view hierarchy.
+    open func printDebugSubviewsDescription() {
+        debugSubviews()
+    }
+
+    private func debugSubviews(_ count: Int = 0) {
+        if count == 0 {
+            print("\n\n\n")
+        }
+
+        for _ in 0...count {
+            print("--")
+        }
+
+        print("\(type(of: self))")
+
+        for view in subviews {
+            view.debugSubviews(count + 1)
+        }
+
+        if count == 0 {
+            print("\n\n\n")
+        }
     }
 }
 

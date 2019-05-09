@@ -97,10 +97,15 @@ extension UIViewController {
         return false
     }
 
-    /// A boolean value indicating whether the view is currently
-    /// loaded into memory and presented on the screen.
+    /// A boolean value indicating whether the view is currently loaded into memory
+    /// and presented on the screen.
     public var isPresented: Bool {
         return isViewLoaded && view.window != nil
+    }
+
+    /// A boolean value indicating whether the home indicator is currently present.
+    public var isHomeIndicatorPresent: Bool {
+        return view.safeAreaInsets.bottom > 0
     }
 
     /// Only `true` iff `isDeviceLandscape` and `isInterfaceLandscape` both are `true`; Otherwise, `false`.
