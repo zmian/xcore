@@ -42,7 +42,7 @@ extension UILabel {
     }
 }
 
-// MARK: Underline
+// MARK: - Underline
 
 extension UILabel {
     @objc open func underline() {
@@ -51,5 +51,81 @@ extension UILabel {
         } else if let text = text {
             self.attributedText = NSMutableAttributedString(string: text).underline(text)
         }
+    }
+}
+
+// MARK: - Bullets
+
+extension UILabel {
+    public func applyBullets(interlineFactor: CGFloat = 1.0, style: NSAttributedString.BulletStyle = .default) {
+        let attributedString = attributedText ?? NSAttributedString(string: text ?? "", attributes: [.font: font!, .foregroundColor: textColor!])
+        attributedText = attributedString.bullets(interlineFactor: interlineFactor, style: style, font: font)
+    }
+}
+
+// MARK: - Scale
+
+extension UILabel {
+    /// Update the font given scale factor.
+    ///
+    /// ```swift
+    /// let contentView = UIStackView()
+    ///
+    /// let label = UILabel()
+    /// label.attributedText = "Hello, world!"
+    ///
+    /// let width = contentView.frame.width - contentView.layoutMargins.horizontal - contentView.spacing
+    ///
+    /// let scaleFactor = label.attributedText!.fontScaleFactor(width: width)
+    /// label.updateFont(scaleFactor: scaleFactor)
+    /// ```
+    public func updateFont(scaleFactor: CGFloat) {
+        guard let attributedText = attributedText else {
+            let normalizedSize = floor(font.pointSize * scaleFactor * 10) / 10
+            font = font.withSize(normalizedSize)
+            return
+        }
+
+        let mutableAttributedString = NSMutableAttributedString(attributedString: attributedText)
+        let range = NSRange(location: 0, length: mutableAttributedString.string.count)
+
+        mutableAttributedString.enumerateAttribute(.font, in: range) { font, range, stop in
+            if let font = font as? UIFont {
+                let normalizedSize = floor(font.pointSize * scaleFactor * 10) / 10
+                let newFont = font.withSize(normalizedSize)
+                mutableAttributedString.replaceAttribute(.font, value: newFont, range: range)
+            }
+        }
+
+        self.attributedText = mutableAttributedString
+    }
+}
+
+extension NSAttributedString {
+    /// Returns font scale factor for the given width.
+    ///
+    /// ```swift
+    /// let contentView = UIStackView()
+    ///
+    /// let label = UILabel()
+    /// label.attributedText = "Hello, world!"
+    ///
+    /// let width = contentView.frame.width - contentView.layoutMargins.horizontal - contentView.spacing
+    ///
+    /// let scaleFactor = label.attributedText!.fontScaleFactor(width: width)
+    /// label.updateFont(scaleFactor: scaleFactor)
+    /// ```
+    public func fontScaleFactor(width: CGFloat, minimumScaleFactor: CGFloat = 0.5) -> CGFloat {
+        let fauxLabel = UILabel().apply {
+            $0.attributedText = self
+            $0.minimumScaleFactor = minimumScaleFactor
+            $0.adjustsFontSizeToFitWidth = true
+            $0.sizeToFit()
+            $0.frame.size.width = width
+        }
+        let context = NSStringDrawingContext()
+        context.minimumScaleFactor = fauxLabel.minimumScaleFactor
+        _ = boundingRect(with: fauxLabel.frame.size, options: .usesLineFragmentOrigin, context: context)
+        return context.actualScaleFactor
     }
 }

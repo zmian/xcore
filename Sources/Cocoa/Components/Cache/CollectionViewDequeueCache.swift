@@ -41,7 +41,7 @@ final public class CollectionViewDequeueCache {
             object: nil,
             queue: nil
         ) { [weak self] _ in
-            self?.clearAll()
+            self?.removeAll()
         }
     }
 
@@ -95,8 +95,8 @@ extension CollectionViewDequeueCache {
         return dequeueSupplementaryView(kind: kind.rawValue, identifier: View.reuseIdentifier) as! View
     }
 
-    /// Clears all cache.
-    public func clearAll() {
+    /// Empties the cache.
+    public func removeAll() {
         cellCache.removeAll(keepingCapacity: false)
         supplementaryViewCache.removeAll(keepingCapacity: false)
     }
