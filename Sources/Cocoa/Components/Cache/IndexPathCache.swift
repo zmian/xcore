@@ -67,10 +67,14 @@ struct IndexPathCache<Value> {
         set { set(newValue, for: indexPath) }
     }
 
+    /// Empties the cache.
     mutating func removeAll() {
         dictionary.removeAll(keepingCapacity: false)
     }
 
+    /// Removes the value of the specified indexPath in the cache.
+    ///
+    /// - Parameter indexPath: The indexPath identifying the value to be removed.
     mutating func remove(at indexPath: IndexPath) {
         dictionary[key(for: indexPath)] = nil
     }
