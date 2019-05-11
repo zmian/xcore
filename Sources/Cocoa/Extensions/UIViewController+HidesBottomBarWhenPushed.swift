@@ -31,13 +31,13 @@ extension UIViewController {
             originalSelector: #selector(UIViewController.viewWillAppear),
             swizzledSelector: #selector(UIViewController.swizzled_viewWillAppear)
         )
-        
+
         swizzle(
             UIViewController.self,
             originalSelector: #selector(UIViewController.viewWillDisappear),
             swizzledSelector: #selector(UIViewController.swizzled_viewWillDisappear)
         )
-        
+
         swizzle(
             UIViewController.self,
             originalSelector: #selector(getter: UIViewController.hidesBottomBarWhenPushed),

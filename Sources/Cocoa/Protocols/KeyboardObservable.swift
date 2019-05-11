@@ -132,14 +132,14 @@ extension UIViewController {
         guard (self as? KeyboardObservable) != nil else {
             return
         }
-        
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow(_:)),
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
-        
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillHide(_:)),
@@ -147,7 +147,7 @@ extension UIViewController {
             object: nil
         )
     }
-    
+
     /// This method automatically deregisters keyboard notification observers for any
     /// view controller that conforms to `KeyboardObservable` using `viewWillDisappear`
     /// method swizzling.
