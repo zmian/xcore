@@ -138,9 +138,10 @@ extension Chrome {
             }.apply(configure)
 
             superview.addSubview(view)
-            view.snp.makeConstraints { make in
-                make.top.leading.trailing.equalToSuperview()
-                make.height.equalTo(element.height)
+            view.anchor.make {
+                $0.horizontally.equalToSuperview()
+                $0.top.equalToSuperview()
+                $0.height.equalTo(element.height)
             }
 
             return view
