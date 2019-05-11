@@ -28,10 +28,16 @@ extension UIViewController {
     static func runOnceSwapSelectors() {
         swizzle(
             UIViewController.self,
-            originalSelector: #selector(UIViewController.viewDidLoad),
-            swizzledSelector: #selector(UIViewController.swizzled_viewDidLoad)
+            originalSelector: #selector(UIViewController.viewWillAppear),
+            swizzledSelector: #selector(UIViewController.swizzled_viewWillAppear)
         )
-
+        
+        swizzle(
+            UIViewController.self,
+            originalSelector: #selector(UIViewController.viewWillDisappear),
+            swizzledSelector: #selector(UIViewController.swizzled_viewWillDisappear)
+        )
+        
         swizzle(
             UIViewController.self,
             originalSelector: #selector(getter: UIViewController.hidesBottomBarWhenPushed),
@@ -39,9 +45,14 @@ extension UIViewController {
         )
     }
 
-    @objc private func swizzled_viewDidLoad() {
-        self.swizzled_viewDidLoad()
+    @objc private func swizzled_viewWillAppear() {
+        self.swizzled_viewWillAppear()
         _addKeyboardNotificationObservers()
+    }
+
+    @objc private func swizzled_viewWillDisappear() {
+        self.swizzled_viewWillDisappear()
+        _removeKeyboardNotificationObservers()
     }
 
     /// A swizzled function to ensure that `hidesBottomBarWhenPushed` value is
