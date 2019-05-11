@@ -76,6 +76,11 @@ extension UIImage {
     public convenience init(assetIdentifier: ImageAssetIdentifier) {
         self.init(named: assetIdentifier.rawValue, in: assetIdentifier.bundle, compatibleWith: nil)!
     }
+
+    public convenience init(assetIdentifier: ImageAssetIdentifier, tintColor: UIColor) {
+        let image = UIImage(assetIdentifier: assetIdentifier).tintColor(tintColor).withRenderingMode(.alwaysOriginal)
+        self.init(cgImage: image.cgImage!)
+    }
 }
 
 extension UIImageView {
@@ -114,15 +119,43 @@ private func propertyName(name: String = #function) -> ImageAssetIdentifier {
 }
 
 extension ImageAssetIdentifier {
-    static var disclosureIndicator: ImageAssetIdentifier { return propertyName() }
+    // MARK: Private
     static var collectionViewCellDeleteIcon: ImageAssetIdentifier { return propertyName() }
     static var reorderTableViewCellShadowTop: ImageAssetIdentifier { return propertyName() }
     static var reorderTableViewCellShadowBottom: ImageAssetIdentifier { return propertyName() }
-    static var checkmarkIcon: ImageAssetIdentifier { return propertyName() }
-    static var checkmarkIconFilled: ImageAssetIdentifier { return propertyName() }
-    static var checkmarkIconUnfilled: ImageAssetIdentifier { return propertyName() }
+
+    // MARK: Carets
     static var caretDirectionUp: ImageAssetIdentifier { return propertyName() }
     static var caretDirectionDown: ImageAssetIdentifier { return propertyName() }
     static var caretDirectionBack: ImageAssetIdentifier { return propertyName() }
     static var caretDirectionForward: ImageAssetIdentifier { return propertyName() }
+
+    // MARK: Checkmarks
+    public static var checkmarkIcon: ImageAssetIdentifier { return propertyName() }
+    public static var checkmarkIconFilled: ImageAssetIdentifier { return propertyName() }
+    public static var checkmarkIconUnfilled: ImageAssetIdentifier { return propertyName() }
+
+    // MARK: Shared UI Elements
+    public static var disclosureIndicator: ImageAssetIdentifier { return propertyName() }
+    public static var disclosureIndicatorFilled: ImageAssetIdentifier { return propertyName() }
+
+    public static var dismissIcon: ImageAssetIdentifier { return propertyName() }
+    public static var dismissIconFilled: ImageAssetIdentifier { return propertyName() }
+
+    // MARK: Navigation
+
+    /// Icon used to replace navigation bar back arrow
+    public static var navigationBarBackArrow: ImageAssetIdentifier { return propertyName() }
+    public static var navigationBackArrow: ImageAssetIdentifier { return propertyName() }
+    public static var navigationForwardArrow: ImageAssetIdentifier { return propertyName() }
+
+    // MARK: Arrows
+    public static var arrowRightIcon: ImageAssetIdentifier { return propertyName() }
+    public static var arrowLeftIcon: ImageAssetIdentifier { return propertyName() }
+
+    public static var filterSelectionIndicatorArrowIcon: ImageAssetIdentifier { return propertyName() }
+    public static var info: ImageAssetIdentifier { return propertyName() }
+    public static var locationIcon: ImageAssetIdentifier { return propertyName() }
+    public static var searchIcon: ImageAssetIdentifier { return propertyName() }
+    public static var validationErrorIcon: ImageAssetIdentifier { return propertyName() }
 }

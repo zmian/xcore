@@ -47,6 +47,7 @@ extension UIViewController {
         public var preferredNavigationBarBackground: Chrome.Style = .blurred
         /// The default value is `false`.
         public var prefersTabBarHidden: Bool = false
+        public override init() {}
     }
 }
 

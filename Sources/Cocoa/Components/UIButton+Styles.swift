@@ -24,7 +24,156 @@
 
 import UIKit
 
-// MARK: Main Button Styles
+extension Identifier where Type: UIButton {
+    public static var base: Identifier { return #function }
+    public static var plain: Identifier { return #function }
+    public static var callout: Identifier { return #function }
+    public static var destructive: Identifier { return #function }
+    public static var pill: Identifier { return #function }
+    public static var caret: Identifier { return #function }
+}
+
+extension XCConfiguration where Type: UIButton {
+    static var styleAttributes: StyleAttributes<UIButton> {
+        return UIButton.defaultAppearance.styleAttributes
+    }
+
+    public static var plain: XCConfiguration {
+        return .plain()
+    }
+
+    public static func plain(font: UIFont? = nil, textColor: UIColor? = nil, alignment: UIControl.ContentHorizontalAlignment = .center) -> XCConfiguration {
+        return XCConfiguration(identifier: .plain) {
+            let textColor = textColor ?? $0.default.textColor(button: $0)
+            $0.titleLabel?.font = font ?? $0.default.font(button: $0)
+            $0.contentEdgeInsets = .zero
+            $0.isHeightSetAutomatically = false
+            $0.setTitleColor(textColor, for: .normal)
+            $0.setTitleColor(textColor.alpha(textColor.alpha * 0.5), for: .highlighted)
+            $0.contentHorizontalAlignment = alignment
+            $0.cornerRadius = 0
+        }
+    }
+
+    public static var callout: XCConfiguration {
+        return callout()
+    }
+
+    public static func callout(font: UIFont? = nil, backgroundColor: UIColor? = nil, textColor: UIColor? = nil) -> XCConfiguration {
+        return XCConfiguration(identifier: .callout) {
+            $0.titleLabel?.font = font ?? $0.default.font(button: $0)
+            $0.setTitleColor(textColor ?? .white, for: .normal)
+            $0.backgroundColor = backgroundColor ?? $0.default.backgroundColor(button: $0)
+            $0.disabledBackgroundColor = .backgroundDisabled
+            $0.cornerRadius = $0.default.cornerRadius
+        }
+    }
+
+    public static var destructive: XCConfiguration {
+        return XCConfiguration(identifier: .destructive) {
+            $0.titleLabel?.font = $0.default.font(button: $0)
+            $0.setTitleColor(.white, for: .normal)
+            $0.backgroundColor = $0.default.backgroundColor(button: $0)
+            $0.disabledBackgroundColor = .backgroundDisabled
+            $0.cornerRadius = $0.default.cornerRadius
+        }
+    }
+
+    public static var pill: XCConfiguration {
+        return XCConfiguration(identifier: .pill) {
+            $0.titleLabel?.font = $0.default.font(button: $0)
+            $0.titleLabel?.lineBreakMode = .byTruncatingTail
+            $0.backgroundColor = $0.default.backgroundColor(button: $0)
+            $0.setTitleColor(.white, for: .normal)
+            $0.setContentCompressionResistancePriority(.required, for: .horizontal)
+            $0.cornerRadius = UIButton.defaultAppearance.height / 2
+        }
+    }
+}
+
+// MARK: - Main Styles
+
+extension XCConfiguration where Type: UIButton {
+    public static var dismiss: XCConfiguration {
+        return image(assetIdentifier: .dismissIcon, size: 22, axis: .horizontal, .vertical)
+    }
+
+    public static var dismissFilled: XCConfiguration {
+        return XCConfiguration(identifier: "dismissFilled") {
+            $0.image = UIImage(assetIdentifier: .dismissIconFilled)
+            $0.contentTintColor = $0.tintColor
+        }
+    }
+
+    public static var searchIcon: XCConfiguration {
+        return image(assetIdentifier: .searchIcon, size: 14, axis: .horizontal)
+    }
+
+    public static func image(
+        assetIdentifier: ImageAssetIdentifier,
+        size: CGSize,
+        identifier: String = #function,
+        axis: NSLayoutConstraint.Axis...
+    ) -> XCConfiguration {
+        return XCConfiguration(identifier: identifier) {
+            $0.isHeightSetAutomatically = false
+            $0.text = nil
+            $0.image = UIImage(assetIdentifier: assetIdentifier)
+            $0.imageView?.isContentModeAutomaticallyAdjusted = true
+            $0.contentTintColor = $0.tintColor
+            $0.contentEdgeInsets = .zero
+            $0.resistsSizeChange(axis: axis)
+            $0.touchAreaEdgeInsets = -10
+            $0.snp.makeConstraints { make in
+                make.size.equalTo(size)
+            }
+        }
+    }
+
+    public static func image(assetIdentifier: ImageAssetIdentifier, alpha: CGFloat) -> XCConfiguration {
+        return XCConfiguration {
+            $0.isHeightSetAutomatically = false
+            let image = UIImage(assetIdentifier: assetIdentifier)
+            $0.image = image.alpha(alpha).withRenderingMode(.alwaysTemplate)
+            $0.highlightedImage = image.alpha(alpha * 0.5).withRenderingMode(.alwaysTemplate)
+        }
+    }
+
+    public static var leftArrow: XCConfiguration {
+        return XCConfiguration.image(assetIdentifier: .arrowLeftIcon, alpha: 0.5).extend {
+            $0.accessibilityIdentifier = "leftButton"
+        }
+    }
+
+    public static var rightArrow: XCConfiguration {
+        return XCConfiguration.image(assetIdentifier: .arrowRightIcon, alpha: 0.5).extend {
+            $0.accessibilityIdentifier = "rightButton"
+        }
+    }
+
+    public static func caret(
+        in configuration: XCConfiguration = .plain,
+        title: String,
+        font: UIFont? = nil,
+        textColor: UIColor? = nil,
+        direction: NSAttributedString.CaretDirection = .forward,
+        animated: Bool = false
+    ) -> XCConfiguration {
+        return configuration.extend(identifier: .caret) {
+            let textColor = textColor ?? $0.default.textColor(button: $0)
+            let font = font ?? $0.default.font(button: $0)
+            $0.titleLabel?.numberOfLines = 1
+
+            let attributedTitle = NSAttributedString(string: title, font: font, color: textColor, direction: direction, for: .normal)
+            $0.setText(attributedTitle, animated: animated)
+
+            let highlightedAttributedTitle = NSAttributedString(string: title, font: font, color: textColor, direction: direction, for: .highlighted)
+            $0.setAttributedTitle(highlightedAttributedTitle, for: .highlighted)
+        }
+    }
+}
+
+// MARK: - Toggle Styles
 
 extension XCConfiguration where Type: UIButton {
     public static var none: XCConfiguration {

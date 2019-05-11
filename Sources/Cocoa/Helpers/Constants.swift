@@ -83,6 +83,10 @@ extension UIEdgeInsets {
     public static let maximumPadding = UIEdgeInsets(.maximumPadding)
 }
 
+extension UIColor {
+    @nonobjc static var backgroundDisabled: UIColor { return UIColor(hex: "EBF2FB") }
+}
+
 // MARK: - App Constants
 
 public struct AppConstants {

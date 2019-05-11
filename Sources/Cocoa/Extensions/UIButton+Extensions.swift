@@ -42,29 +42,13 @@ extension UIButton {
     /// ```
     @objc(UIButtonDefaultAppearance)
     public final class DefaultAppearance: NSObject {
-        public let style: Style
-        public let height: CGFloat
-        public let isHeightSetAutomatically: Bool
-        public let highlightedAnimation: HighlightedAnimationOptions
-
-        public init(
-            style: Style,
-            height: CGFloat,
-            isHeightSetAutomatically: Bool,
-            highlightedAnimation: HighlightedAnimationOptions
-        ) {
-            self.style = style
-            self.height = height
-            self.isHeightSetAutomatically = isHeightSetAutomatically
-            self.highlightedAnimation = highlightedAnimation
-        }
-
-        public static let `default` = DefaultAppearance(
-            style: .none,
-            height: 50,
-            isHeightSetAutomatically: false,
-            highlightedAnimation: .none
-        )
+        public var style: Style = .none
+        public var height: CGFloat = 50
+        public var isHeightSetAutomatically: Bool = false
+        public var highlightedAnimation: HighlightedAnimationOptions = .none
+        /// The default attributes for the button styles.
+        public var styleAttributes = StyleAttributes<UIButton>()
+        public override init() { }
     }
 }
 
@@ -100,7 +84,7 @@ extension UIButton {
     /// A boolean property to provide visual feedback when the
     /// button is highlighted. The default value is `.none`.
     open var highlightedAnimation: HighlightedAnimationOptions {
-        get { return associatedObject(&AssociatedKey.highlightedAnimation, default: UIButton.defaultAppearance.highlightedAnimation) }
+        get { return associatedObject(&AssociatedKey.highlightedAnimation, default: defaultAppearance.highlightedAnimation) }
         set { setAssociatedObject(&AssociatedKey.highlightedAnimation, value: newValue) }
     }
 
@@ -116,7 +100,11 @@ extension UIButton {
 extension UIButton {
     // MARK: Height
 
-    @objc public dynamic static var defaultAppearance: DefaultAppearance = .default
+    @objc public dynamic static var defaultAppearance = DefaultAppearance()
+
+    private var defaultAppearance: DefaultAppearance {
+        return UIButton.defaultAppearance
+    }
 
     @objc public dynamic static var height: CGFloat {
         return defaultAppearance.height
@@ -125,7 +113,7 @@ extension UIButton {
     /// A property to set the height of the button automatically.
     /// The default value is `false`.
     @objc open dynamic var isHeightSetAutomatically: Bool {
-        get { return associatedObject(&AssociatedKey.isHeightSetAutomatically, default: UIButton.defaultAppearance.isHeightSetAutomatically) }
+        get { return associatedObject(&AssociatedKey.isHeightSetAutomatically, default: defaultAppearance.isHeightSetAutomatically) }
         set {
             setAssociatedObject(&AssociatedKey.isHeightSetAutomatically, value: newValue)
             guard observeHeightSetAutomaticallySetter else { return }
@@ -161,11 +149,15 @@ extension UIButton {
 
     /// The style of the button. The default value is `.none`.
     open var style: Style {
-        get { return associatedObject(&AssociatedKey.style, default: UIButton.defaultAppearance.style) }
+        get { return associatedObject(&AssociatedKey.style, default: defaultAppearance.style) }
         set {
             setAssociatedObject(&AssociatedKey.style, value: newValue)
             updateStyleIfNeeded()
         }
+    }
+
+    var `default`: Identifier<UIButton> {
+        return style.identifier
     }
 
     private var initialText: String? {
@@ -200,8 +192,8 @@ extension UIButton {
         setAttributedTitle(nil, for: .normal)
         setTitleColor(nil, for: .highlighted)
         backgroundColor = nil
-        highlightedAnimation = UIButton.defaultAppearance.highlightedAnimation
-        isHeightSetAutomatically = UIButton.defaultAppearance.isHeightSetAutomatically
+        highlightedAnimation = defaultAppearance.highlightedAnimation
+        isHeightSetAutomatically = defaultAppearance.isHeightSetAutomatically
     }
 }
 
