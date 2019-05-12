@@ -24,21 +24,25 @@
 
 import Foundation
 
+// MARK: - CurrencySymbolsProvider
+
 public protocol CurrencySymbolsProvider {
     var currencySymbol: String { get }
 
     /// The string used by the receiver for a grouping separator.
     ///
-    /// For example, the grouping separator used in the United States is
-    /// the comma (“10,000”) whereas in France it is the space (“10 000”).
+    /// For example, the grouping separator used in the United States is the comma
+    /// (“10,000”) whereas in France it is the space (“10 000”).
     var groupingSeparator: String { get }
 
     /// The character the receiver uses as a decimal separator.
     ///
-    /// For example, the grouping separator used in the United States is
-    /// the period (“10,000.00”) whereas in France it is the comma (“10 000,00”).
+    /// For example, the grouping separator used in the United States is the period
+    /// (“10,000.00”) whereas in France it is the comma (“10 000,00”).
     var decimalSeparator: String { get }
 }
+
+// MARK: - CurrencySymbolsOptions
 
 public struct CurrencySymbolsOptions: OptionSet {
     public let rawValue: Int
@@ -50,14 +54,20 @@ public struct CurrencySymbolsOptions: OptionSet {
     public static let currencySymbol = CurrencySymbolsOptions(rawValue: 1 << 0)
     public static let groupingSeparator = CurrencySymbolsOptions(rawValue: 1 << 1)
     public static let decimalSeparator = CurrencySymbolsOptions(rawValue: 1 << 2)
-    public static let all: CurrencySymbolsOptions = [currencySymbol, groupingSeparator, decimalSeparator]
     public static let specialCharacters: CurrencySymbolsOptions = [currencySymbol, groupingSeparator]
+    public static let all: CurrencySymbolsOptions = [
+        currencySymbol,
+        groupingSeparator,
+        decimalSeparator
+    ]
 }
+
+// MARK: - String Extension
 
 extension String {
     /// A function to remove specified currency symbols (`$ , .`) from `self`.
     ///
-    /// ```
+    /// ```swift
     /// $2,000.88 -> 200088   // "$2,000.8".trimmingCurrencySymbols(.all)
     /// $2,000.88 -> 2,000.88 // "$2,000.8".trimmingCurrencySymbols(.currencySymbol)
     /// $2,000.88 -> $2000.88 // "$2,000.8".trimmingCurrencySymbols(.groupingSeparator)
@@ -85,9 +95,10 @@ extension String {
         return replace("[\(pattern)]+", with: "")
     }
 
-    /// Returns true iff other is non-empty and contained within `self` by case-sensitive, non-literal search.
+    /// Returns true iff other is non-empty and contained within `self` by
+    /// case-sensitive, non-literal search.
     ///
-    /// ```
+    /// ```swift
     /// true  -> ("$2,000.88").contains(.all),
     /// true  -> ("$2,000.88").contains([.currencySymbol, .groupingSeparator, .decimalSeparator]),
     /// true  -> ("$2,000.88").contains(.currencySymbol),
