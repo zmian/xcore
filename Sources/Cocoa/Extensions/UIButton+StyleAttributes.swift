@@ -46,7 +46,17 @@ public struct StyleAttributes<Type> {
 }
 
 extension NSAttributedString.Key {
-    public static let cornerRadius = NSAttributedString.Key(rawValue: "xcore.corner.radius")
+    static var cornerRadius: NSAttributedString.Key {
+        return NSAttributedString.Key(rawValue: "xcore.corner.radius")
+    }
+
+    static var borderColor: NSAttributedString.Key {
+        return NSAttributedString.Key(rawValue: "xcore.border.color")
+    }
+
+    static var selectedColor: NSAttributedString.Key {
+        return NSAttributedString.Key(rawValue: "xcore.selected.color")
+    }
 }
 
 // MARK: - Identifier<UIButton>
@@ -86,6 +96,26 @@ extension Identifier where Type: UIButton {
 
         return color
     }
+
+    func tintColor(button: UIButton) -> UIColor {
+        return button.tintColor ?? UIColor.systemTint
+    }
+
+    func selectedColor(button: UIButton) -> UIColor {
+        guard let color = attributes[.selectedColor] as? UIColor else {
+            return button.tintColor ?? UIColor.systemTint
+        }
+
+        return color
+    }
+
+    func borderColor(button: UIButton) -> UIColor {
+        guard let color = attributes[.borderColor] as? UIColor else {
+            return button.tintColor ?? UIColor.systemTint
+        }
+
+        return color
+    }
 }
 
 extension Identifier where Type: UIButton {
@@ -93,11 +123,19 @@ extension Identifier where Type: UIButton {
         setAttribute(key: .font, value: font)
     }
 
-    func textColor(_ textColor: UIColor) {
-        setAttribute(key: .foregroundColor, value: textColor)
+    func setTextColor(_ color: UIColor) {
+        setAttribute(key: .foregroundColor, value: color)
     }
 
-    func backgroundColor(_ backgroundColor: UIColor) {
-        setAttribute(key: .backgroundColor, value: backgroundColor)
+    func setBackgroundColor(_ color: UIColor) {
+        setAttribute(key: .backgroundColor, value: color)
+    }
+
+    func setBorderColor(_ color: UIColor) {
+        setAttribute(key: .borderColor, value: color)
+    }
+
+    func setSelectedColor(_ color: UIColor) {
+        setAttribute(key: .selectedColor, value: color)
     }
 }
