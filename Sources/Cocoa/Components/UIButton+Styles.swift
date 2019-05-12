@@ -124,8 +124,8 @@ extension XCConfiguration where Type: UIButton {
             $0.contentEdgeInsets = .zero
             $0.resistsSizeChange(axis: axis)
             $0.touchAreaEdgeInsets = -10
-            $0.snp.makeConstraints { make in
-                make.size.equalTo(size)
+            $0.anchor.make {
+                $0.size.equalTo(size)
             }
         }
     }
