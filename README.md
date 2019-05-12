@@ -43,7 +43,10 @@ post_install do |installer|
     installer.pods_project.targets.each do |target|
         target.build_configurations.each do |config|
             if target.name == "Xcore" then
+                # Expose `Vendor` (Carthage) directory to Xcore so we can get conditional extensions.
                 config.build_settings['FRAMEWORK_SEARCH_PATHS'] ||= ['$(inherited)', '${PODS_ROOT}/../Vendor']
+                # Or expose `SnapKit` pod to Xcore so we can get conditional extensions.
+                config.build_settings['FRAMEWORK_SEARCH_PATHS'] ||= ['$(inherited)', '${PODS_CONFIGURATION_BUILD_DIR}/SnapKit']
             end
         end
     end
