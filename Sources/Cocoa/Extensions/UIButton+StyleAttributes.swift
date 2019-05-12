@@ -63,7 +63,7 @@ extension Identifier where Type: UIButton {
     }
 
     var cornerRadius: CGFloat {
-        get { return attributes[.cornerRadius] as? CGFloat ?? 6 }
+        get { return attributes[.cornerRadius] as? CGFloat ?? AppConstants.cornerRadius }
         set { setAttribute(key: .cornerRadius, value: newValue) }
     }
 

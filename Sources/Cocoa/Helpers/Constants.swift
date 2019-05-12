@@ -109,9 +109,13 @@ public struct AppConstants {
         return 44
     }
 
+    public static var cornerRadius: CGFloat = 6
     public static var navBarItemHeight: CGFloat { return 24 }
     public static var tabBarHeight: CGFloat { return 49 }
     public static var uiControlsHeight: CGFloat { return 50 }
+    public static var searchBarHeight: CGFloat {
+        return uiControlsHeight
+    }
 }
 
 // MARK: - Device
