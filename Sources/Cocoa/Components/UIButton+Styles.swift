@@ -98,12 +98,12 @@ extension XCConfiguration where Type: UIButton {
 
 extension XCConfiguration where Type: UIButton {
     public static var dismiss: XCConfiguration {
-        return image(assetIdentifier: .dismissIcon, size: 22, axis: .horizontal, .vertical)
+        return image(assetIdentifier: .closeIcon, size: 22, axis: .horizontal, .vertical)
     }
 
     public static var dismissFilled: XCConfiguration {
         return XCConfiguration(identifier: "dismissFilled") {
-            $0.image = UIImage(assetIdentifier: .dismissIconFilled)
+            $0.image = UIImage(assetIdentifier: .closeIconFilled)
             $0.contentTintColor = $0.tintColor
         }
     }

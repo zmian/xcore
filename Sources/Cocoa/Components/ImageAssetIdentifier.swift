@@ -136,11 +136,11 @@ extension ImageAssetIdentifier {
     public static var checkmarkIconUnfilled: ImageAssetIdentifier { return propertyName() }
 
     // MARK: Shared UI Elements
+    public static var closeIcon: ImageAssetIdentifier { return propertyName() }
+    public static var closeIconFilled: ImageAssetIdentifier { return propertyName() }
+
     public static var disclosureIndicator: ImageAssetIdentifier { return propertyName() }
     public static var disclosureIndicatorFilled: ImageAssetIdentifier { return propertyName() }
-
-    public static var dismissIcon: ImageAssetIdentifier { return propertyName() }
-    public static var dismissIconFilled: ImageAssetIdentifier { return propertyName() }
 
     // MARK: Navigation
 

@@ -108,7 +108,7 @@ final public class SearchBarView: UIView {
         searchBar.barTintColor = .white
 
         // Update clear button image tint color
-        setImage(assetIdentifier: .dismissIconFilled, for: .clear, size: 16)
+        setImage(assetIdentifier: .closeIconFilled, for: .clear, size: 16)
     }
 
     private func setupConstraints() {
