@@ -43,6 +43,10 @@ public struct StyleAttributes<Type> {
         attributes[key] = value
         dictionary[style] = attributes
     }
+
+    public func style(_ style: Style) -> Style {
+        return style
+    }
 }
 
 extension NSAttributedString.Key {
@@ -57,12 +61,22 @@ extension NSAttributedString.Key {
     static var selectedColor: NSAttributedString.Key {
         return NSAttributedString.Key(rawValue: "xcore.selected.color")
     }
+
+    static var tintColor: NSAttributedString.Key {
+        return NSAttributedString.Key(rawValue: "xcore.tint.color")
+    }
+}
+
+extension UIButton {
+    func style(_ style: Identifier<UIButton>) -> Identifier<UIButton> {
+        return style
+    }
 }
 
 // MARK: - Identifier<UIButton>
 
 extension Identifier where Type: UIButton {
-    private var attributes: [NSAttributedString.Key: Any] {
+    private var attributesDictionary: [NSAttributedString.Key: Any] {
         let id = Identifier<UIButton>(rawValue: rawValue)
         return UIButton.defaultAppearance.styleAttributes.attributes(for: id)
     }
@@ -72,46 +86,84 @@ extension Identifier where Type: UIButton {
         return UIButton.defaultAppearance.styleAttributes.setAttribute(style: id, key: key, value: value)
     }
 
-    var cornerRadius: CGFloat {
-        get { return attributes[.cornerRadius] as? CGFloat ?? AppConstants.cornerRadius }
+    private func attributes(_ key: NSAttributedString.Key) -> Any? {
+        guard let value = attributesDictionary[key] else {
+            guard self != .base else {
+                return nil
+            }
+
+            // Search base to see if we have anything set for given key.
+            return UIButton.defaultAppearance.styleAttributes.attributes(for: .base)[key]
+        }
+
+        return value
+    }
+
+    private var base: Identifier<UIButton> {
+        return .base
+    }
+
+    public var cornerRadius: CGFloat {
+        get { return attributes(.cornerRadius) as? CGFloat ?? AppConstants.cornerRadius }
         set { setAttribute(key: .cornerRadius, value: newValue) }
     }
 
-    func font(button: UIButton) -> UIFont {
-        return attributes[.font] as? UIFont ?? button.titleLabel?.font ?? .preferredFont(forTextStyle: .callout)
+    public func font(button: UIButton) -> UIFont {
+        return attributes(.font) as? UIFont ?? button.titleLabel?.font ?? .preferredFont(forTextStyle: .callout)
     }
 
-    func textColor(button: UIButton) -> UIColor {
-        guard let color = attributes[.foregroundColor] as? UIColor else {
+    public func tintColor(button: UIButton) -> UIColor {
+        guard let color = attributes(.tintColor) as? UIColor else {
             return button.tintColor ?? UIColor.systemTint
         }
 
         return color
     }
 
-    func backgroundColor(button: UIButton) -> UIColor {
-        guard let color = attributes[.backgroundColor] as? UIColor else {
-            return button.tintColor ?? UIColor.systemTint
+    public func textColor(button: UIButton) -> UIColor {
+        guard let color = attributes(.foregroundColor) as? UIColor else {
+            return tintColor(button: button)
         }
 
         return color
     }
 
-    func tintColor(button: UIButton) -> UIColor {
-        return button.tintColor ?? UIColor.systemTint
-    }
-
-    func selectedColor(button: UIButton) -> UIColor {
-        guard let color = attributes[.selectedColor] as? UIColor else {
-            return button.tintColor ?? UIColor.systemTint
+    public func backgroundColor(button: UIButton) -> UIColor {
+        guard let color = attributes(.backgroundColor) as? UIColor else {
+            return tintColor(button: button)
         }
 
         return color
     }
 
-    func borderColor(button: UIButton) -> UIColor {
-        guard let color = attributes[.borderColor] as? UIColor else {
-            return button.tintColor ?? UIColor.systemTint
+    public func selectedColor(button: UIButton) -> UIColor {
+        guard let color = attributes(.selectedColor) as? UIColor else {
+            return tintColor(button: button)
+        }
+
+        return color
+    }
+
+    public func borderColor(button: UIButton) -> UIColor {
+        guard let color = attributes(.borderColor) as? UIColor else {
+            return tintColor(button: button)
+        }
+
+        return color
+    }
+
+    // MARK: Lookup
+
+    /// Returns whether the background color is explicitly set for this identifier.
+    public var hasBackgroundColor: Bool {
+        return (attributesDictionary[.backgroundColor] as? UIColor) != nil
+    }
+
+    /// Returns the background color if explicitly set for this identifier,
+    /// otherwise, returns the `defaultValue`.
+    public func backgroundColor(or defaultValue: @autoclosure () -> UIColor) -> UIColor {
+        guard let color = attributesDictionary[.backgroundColor] as? UIColor else {
+            return defaultValue()
         }
 
         return color
@@ -119,23 +171,27 @@ extension Identifier where Type: UIButton {
 }
 
 extension Identifier where Type: UIButton {
-    func setFont(_ font: UIButton) {
+    public func setFont(_ font: UIFont) {
         setAttribute(key: .font, value: font)
     }
 
-    func setTextColor(_ color: UIColor) {
+    public func setTintColor(_ color: UIColor) {
+        setAttribute(key: .tintColor, value: color)
+    }
+
+    public func setTextColor(_ color: UIColor) {
         setAttribute(key: .foregroundColor, value: color)
     }
 
-    func setBackgroundColor(_ color: UIColor) {
+    public func setBackgroundColor(_ color: UIColor) {
         setAttribute(key: .backgroundColor, value: color)
     }
 
-    func setBorderColor(_ color: UIColor) {
+    public func setBorderColor(_ color: UIColor) {
         setAttribute(key: .borderColor, value: color)
     }
 
-    func setSelectedColor(_ color: UIColor) {
+    public func setSelectedColor(_ color: UIColor) {
         setAttribute(key: .selectedColor, value: color)
     }
 }

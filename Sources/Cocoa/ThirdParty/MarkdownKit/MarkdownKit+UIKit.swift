@@ -40,34 +40,16 @@ extension MarkupText {
     /// ```
     @objc(MarkupTextAppearance)
     public final class Appearance: NSObject {
-        public var font: UIFont
-        public var textColor: UIColor
-        public var isLabelEnabled: Bool
-        public var isTextViewEnabled: Bool
-
-        public init(
-            font: UIFont,
-            textColor: UIColor,
-            isLabelEnabled: Bool,
-            isTextViewEnabled: Bool
-        ) {
-            self.font = font
-            self.textColor = textColor
-            self.isLabelEnabled = isLabelEnabled
-            self.isTextViewEnabled = isTextViewEnabled
-        }
-
-        public static let `default` = Appearance(
-            font: UIFont.preferredFont(forTextStyle: .body),
-            textColor: .black,
-            isLabelEnabled: false,
-            isTextViewEnabled: false
-        )
+        public var font: UIFont = .preferredFont(forTextStyle: .body)
+        public var textColor: UIColor = .black
+        public var isLabelEnabled: Bool = false
+        public var isTextViewEnabled: Bool = false
+        fileprivate override init() {}
     }
 }
 
 extension MarkupText {
-    @objc public dynamic static var appearance: Appearance = .default
+    @objc public dynamic static let appearance = Appearance()
 
     public static var parser: MarkdownParser {
         let parser = MarkdownParser.app()

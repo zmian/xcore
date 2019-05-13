@@ -24,7 +24,26 @@
 
 import UIKit
 
+// MARK: - Identifier<UIButton>
+
 extension Identifier where Type: UIButton {
+    /// A style used to set base attributes that we fallback to if any of the
+    /// specific style doesn't have given attribute set.
+    ///
+    /// ```swift
+    /// UIButton.defaultAppearance.apply {
+    ///     $0.styleAttributes.style(.base).setFont(.appButton())
+    ///     $0.styleAttributes.style(.base).setTextColor(.appTint)
+    ///
+    ///     let plainStyleFont = $0.styleAttributes.style(.plain).font(button: UIButton())
+    ///     // print(".appButton()", plainStyleFont == .appButton())
+    ///     // true
+    ///
+    ///     let plainStyleTextColor = $0.styleAttributes.style(.plain).textColor(button: UIButton())
+    ///     // print(".appTint", plainStyleTextColor == .appTint)
+    ///     // true
+    /// }
+    /// ```
     public static var base: Identifier { return #function }
     public static var plain: Identifier { return #function }
     public static var callout: Identifier { return #function }
@@ -36,11 +55,9 @@ extension Identifier where Type: UIButton {
     public static var checkbox: Identifier { return #function }
 }
 
-extension XCConfiguration where Type: UIButton {
-    static var styleAttributes: StyleAttributes<UIButton> {
-        return UIButton.defaultAppearance.styleAttributes
-    }
+// MARK: - Main Styles
 
+extension XCConfiguration where Type: UIButton {
     public static var plain: XCConfiguration {
         return .plain()
     }
@@ -80,7 +97,7 @@ extension XCConfiguration where Type: UIButton {
 
     public static var destructive: XCConfiguration {
         return callout.extend(identifier: .destructive) {
-            $0.backgroundColor = $0.default.backgroundColor(button: $0)
+            $0.backgroundColor = $0.default.backgroundColor(or: .red)
         }
     }
 
@@ -89,23 +106,20 @@ extension XCConfiguration where Type: UIButton {
             $0.setContentCompressionResistancePriority(.required, for: .horizontal)
             $0.titleLabel?.lineBreakMode = .byTruncatingTail
             $0.backgroundColor = $0.default.backgroundColor(button: $0)
-            $0.cornerRadius = UIButton.defaultAppearance.height / 2
+            $0.cornerRadius = $0.defaultAppearance.height / 2
         }
     }
 }
 
-// MARK: - Main Styles
+// MARK: - Images Styles
 
 extension XCConfiguration where Type: UIButton {
     public static var dismiss: XCConfiguration {
-        return image(assetIdentifier: .closeIcon, size: 22, axis: .horizontal, .vertical)
+        return image(assetIdentifier: .closeIcon, size: 24, axis: .horizontal, .vertical)
     }
 
     public static var dismissFilled: XCConfiguration {
-        return XCConfiguration(identifier: "dismissFilled") {
-            $0.image = UIImage(assetIdentifier: .closeIconFilled)
-            $0.contentTintColor = $0.tintColor
-        }
+        return image(assetIdentifier: .closeIconFilled, size: 24, axis: .horizontal, .vertical)
     }
 
     public static var searchIcon: XCConfiguration {
@@ -113,17 +127,17 @@ extension XCConfiguration where Type: UIButton {
     }
 
     public static func image(
+        identifier: String = #function,
         assetIdentifier: ImageAssetIdentifier,
         size: CGSize,
-        identifier: String = #function,
         axis: NSLayoutConstraint.Axis...
     ) -> XCConfiguration {
-        return XCConfiguration(identifier: identifier) {
+        return XCConfiguration(identifier: Identifier(rawValue: identifier)) {
             $0.isHeightSetAutomatically = false
             $0.text = nil
             $0.image = UIImage(assetIdentifier: assetIdentifier)
             $0.imageView?.isContentModeAutomaticallyAdjusted = true
-            $0.contentTintColor = $0.tintColor
+            $0.contentTintColor = $0.default.tintColor(button: $0)
             $0.contentEdgeInsets = .zero
             $0.resistsSizeChange(axis: axis)
             $0.touchAreaEdgeInsets = -10
@@ -143,13 +157,13 @@ extension XCConfiguration where Type: UIButton {
     }
 
     public static var leftArrow: XCConfiguration {
-        return XCConfiguration.image(assetIdentifier: .arrowLeftIcon, alpha: 0.5).extend {
+        return image(assetIdentifier: .arrowLeftIcon, alpha: 0.5).extend {
             $0.accessibilityIdentifier = "leftButton"
         }
     }
 
     public static var rightArrow: XCConfiguration {
-        return XCConfiguration.image(assetIdentifier: .arrowRightIcon, alpha: 0.5).extend {
+        return image(assetIdentifier: .arrowRightIcon, alpha: 0.5).extend {
             $0.accessibilityIdentifier = "rightButton"
         }
     }
