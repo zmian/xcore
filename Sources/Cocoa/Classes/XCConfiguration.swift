@@ -58,19 +58,9 @@ public struct XCConfiguration<Type> {
     public let identifier: Identifier<Type>
     private let _configure: ((Type) -> Void)
 
-    public init(identifier: Identifier<Type>?, _ configure: @escaping ((Type) -> Void)) {
+    public init(identifier: Identifier<Type>? = nil, _ configure: @escaping ((Type) -> Void)) {
         self.identifier = identifier ?? "___defaultIdentifier___"
         self._configure = configure
-    }
-
-    public init(identifier: String? = nil, _ configure: @escaping ((Type) -> Void)) {
-        var id: Identifier<Type>?
-
-        if let identifier = identifier {
-            id = Identifier(rawValue: identifier)
-        }
-
-        self.init(identifier: id, configure)
     }
 
     public func extend(identifier: Identifier<Type>? = nil, _ configure: @escaping ((Type) -> Void)) -> XCConfiguration<Type> {

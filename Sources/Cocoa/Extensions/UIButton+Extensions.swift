@@ -48,7 +48,7 @@ extension UIButton {
         public var highlightedAnimation: HighlightedAnimationOptions = .none
         /// The default attributes for the button styles.
         public var styleAttributes = StyleAttributes<UIButton>()
-        public override init() { }
+        fileprivate override init() { }
     }
 }
 
@@ -98,13 +98,13 @@ extension UIButton {
 }
 
 extension UIButton {
-    // MARK: Height
+    @objc public dynamic static let defaultAppearance = DefaultAppearance()
 
-    @objc public dynamic static var defaultAppearance = DefaultAppearance()
-
-    private var defaultAppearance: DefaultAppearance {
+    var defaultAppearance: DefaultAppearance {
         return UIButton.defaultAppearance
     }
+
+    // MARK: - Height
 
     @objc public dynamic static var height: CGFloat {
         return defaultAppearance.height
@@ -156,6 +156,8 @@ extension UIButton {
         }
     }
 
+    /// This is safe to reference inside the `Style` declaration as the style will
+    /// always be set before style is applied. Thus, containing the correct value.
     var `default`: Identifier<UIButton> {
         return style.identifier
     }

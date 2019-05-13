@@ -47,12 +47,12 @@ extension UIViewController {
         public var preferredNavigationBarBackground: Chrome.Style = .blurred
         /// The default value is `false`.
         public var prefersTabBarHidden: Bool = false
-        public override init() {}
+        fileprivate override init() {}
     }
 }
 
 @objc extension UIViewController {
-    public dynamic static var defaultAppearance = DefaultAppearance()
+    public dynamic static let defaultAppearance = DefaultAppearance()
 
     private var defaultAppearance: DefaultAppearance {
         return type(of: self).defaultAppearance

@@ -177,17 +177,3 @@ extension NumberFormatter {
         }
     }
 }
-
-extension String {
-    /// The USA decimal separator.
-    public static var usaDecimalSeparator: String {
-        return Locale.usa.decimalSeparator ?? "."
-    }
-}
-
-extension CharacterSet {
-    /// The USA decimal separator.
-    public static var usaDecimalSeparator: String {
-        return Locale.usa.decimalSeparator ?? "."
-    }
-}

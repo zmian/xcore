@@ -77,9 +77,8 @@ extension UIImage {
         self.init(named: assetIdentifier.rawValue, in: assetIdentifier.bundle, compatibleWith: nil)!
     }
 
-    public convenience init(assetIdentifier: ImageAssetIdentifier, tintColor: UIColor) {
-        let image = UIImage(assetIdentifier: assetIdentifier).tintColor(tintColor).withRenderingMode(.alwaysOriginal)
-        self.init(cgImage: image.cgImage!)
+    public static func tinted(assetIdentifier: ImageAssetIdentifier, tintColor: UIColor, renderingMode: UIImage.RenderingMode = .alwaysOriginal) -> UIImage {
+        return UIImage(assetIdentifier: assetIdentifier).tintColor(tintColor).withRenderingMode(renderingMode)
     }
 }
 
