@@ -24,7 +24,7 @@
 
 import Foundation
 
-public struct CurrencyStyleAttributes {
+public struct CurrencyStyleAttributes: Equatable {
     public let dollarsFont: UIFont
     public let centsFont: UIFont
     public let centsOffset: Int
