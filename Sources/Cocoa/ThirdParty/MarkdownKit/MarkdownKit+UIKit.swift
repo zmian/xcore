@@ -143,6 +143,16 @@ extension UITextView {
     private struct AssociatedKey {
         static var markdownParser = "markdownParser"
         static var isMarkupEnabled = "isMarkupEnabled"
+        static var isAccessibilityRotorHintEnabled = "isAccessibilityRotorHintEnabled"
+    }
+
+    /// A boolean property to determine whether the accessibility hint to use rotor
+    /// is enabled.
+    ///
+    /// The default value is `false`.
+    public var isAccessibilityRotorHintEnabled: Bool {
+        get { return associatedObject(&AssociatedKey.isAccessibilityRotorHintEnabled, default: false) }
+        set { setAssociatedObject(&AssociatedKey.isAccessibilityRotorHintEnabled, value: newValue) }
     }
 
     /// A boolean property to determine whether the Markdown is supported.
@@ -231,7 +241,26 @@ extension UITextView {
             let existingTextAlignment = textAlignment
             attributedText = markdownParser.parse(newValue)
             textAlignment = existingTextAlignment
+            setAccessibilityHintIfNeeded(attributedText)
         }
+    }
+
+    private func setAccessibilityHintIfNeeded(_ attributedText: NSAttributedString?) {
+        guard isAccessibilityRotorHintEnabled, let attributedText = attributedText else {
+            return
+        }
+
+        var totalLinks = 0
+
+        attributedText.enumerateAttribute(.link, in: NSRange(0..<attributedText.length)) { value, _, _ in
+            guard value != nil else {
+                return
+            }
+
+            totalLinks += 1
+        }
+
+        accessibilityHint = totalLinks > 0 ? "Use the rotor to access links." : ""
     }
 }
 
