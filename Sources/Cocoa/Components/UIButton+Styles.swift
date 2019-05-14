@@ -97,7 +97,7 @@ extension XCConfiguration where Type: UIButton {
 
     public static var destructive: XCConfiguration {
         return callout.extend(identifier: .destructive) {
-            $0.backgroundColor = $0.default.backgroundColor(or: .red)
+            $0.backgroundColor = $0.default.backgroundColor(or: .appleRed)
         }
     }
 
