@@ -103,6 +103,29 @@ extension Sequence where Iterator.Element: Numeric {
     }
 }
 
+extension Sequence {
+    /// ```swift
+    /// struct Expense {
+    ///     let title: String
+    ///     let amount: Double
+    /// }
+    ///
+    /// let expenses = [
+    ///     Expense(title: "Laptop", amount: 1200),
+    ///     Expense(title: "Chair", amount: 1000)
+    /// ]
+    ///
+    /// let totalCost = expenses.sum { $0.amount }
+    /// print(totalCost)
+    ///
+    /// // prints
+    /// 2200.0
+    /// ```
+    public func sum<T: Numeric>(_ transform: (Element) throws -> T) rethrows -> T {
+        return try map(transform).sum()
+    }
+}
+
 extension Collection where Iterator.Element: BinaryInteger {
     /// Returns the average of all elements in the collection.
     public func average() -> Double {
