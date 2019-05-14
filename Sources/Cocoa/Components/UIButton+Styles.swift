@@ -63,9 +63,10 @@ extension XCConfiguration where Type: UIButton {
     }
 
     public static func plain(font: UIFont? = nil, textColor: UIColor? = nil, alignment: UIControl.ContentHorizontalAlignment = .center) -> XCConfiguration {
-        return XCConfiguration(identifier: .plain) {
-            let textColor = textColor ?? $0.default.textColor(button: $0)
-            $0.titleLabel?.font = font ?? $0.default.font(button: $0)
+        let style: Identifier<Type> = .plain
+        return XCConfiguration(identifier: style) {
+            let textColor = textColor ?? style.textColor(button: $0)
+            $0.titleLabel?.font = font ?? style.font(button: $0)
             $0.contentEdgeInsets = .zero
             $0.isHeightSetAutomatically = false
             $0.setTitleColor(textColor, for: .normal)
@@ -80,32 +81,36 @@ extension XCConfiguration where Type: UIButton {
     }
 
     public static func callout(font: UIFont? = nil, backgroundColor: UIColor? = nil, textColor: UIColor? = nil) -> XCConfiguration {
-        return XCConfiguration(identifier: .callout) {
-            $0.titleLabel?.font = font ?? $0.default.font(button: $0)
+        let style: Identifier<Type> = .callout
+        return XCConfiguration(identifier: style) {
+            $0.titleLabel?.font = font ?? style.font(button: $0)
             $0.setTitleColor(textColor ?? .white, for: .normal)
-            $0.backgroundColor = backgroundColor ?? $0.default.backgroundColor(button: $0)
+            $0.backgroundColor = backgroundColor ?? style.backgroundColor(button: $0)
             $0.disabledBackgroundColor = .backgroundDisabled
-            $0.cornerRadius = $0.default.cornerRadius
+            $0.cornerRadius = style.cornerRadius
         }
     }
 
     public static var calloutSecondary: XCConfiguration {
-        return callout.extend(identifier: .calloutSecondary) {
-            $0.backgroundColor = $0.default.backgroundColor(button: $0)
+        let style: Identifier<Type> = .calloutSecondary
+        return callout.extend(identifier: style) {
+            $0.backgroundColor = style.backgroundColor(button: $0)
         }
     }
 
     public static var destructive: XCConfiguration {
-        return callout.extend(identifier: .destructive) {
-            $0.backgroundColor = $0.default.backgroundColor(or: .appleRed)
+        let style: Identifier<Type> = .destructive
+        return callout.extend(identifier: style) {
+            $0.backgroundColor = style.backgroundColor(or: .appleRed)
         }
     }
 
     public static var pill: XCConfiguration {
-        return callout.extend(identifier: .pill) {
+        let style: Identifier<Type> = .pill
+        return callout.extend(identifier: style) {
             $0.setContentCompressionResistancePriority(.required, for: .horizontal)
             $0.titleLabel?.lineBreakMode = .byTruncatingTail
-            $0.backgroundColor = $0.default.backgroundColor(button: $0)
+            $0.backgroundColor = style.backgroundColor(button: $0)
             $0.cornerRadius = $0.defaultAppearance.height / 2
         }
     }
@@ -132,12 +137,13 @@ extension XCConfiguration where Type: UIButton {
         size: CGSize,
         axis: NSLayoutConstraint.Axis...
     ) -> XCConfiguration {
-        return XCConfiguration(identifier: Identifier(rawValue: identifier)) {
+        let style = Identifier<Type>(rawValue: identifier)
+        return XCConfiguration(identifier: style) {
             $0.isHeightSetAutomatically = false
             $0.text = nil
             $0.image = UIImage(assetIdentifier: assetIdentifier)
             $0.imageView?.isContentModeAutomaticallyAdjusted = true
-            $0.contentTintColor = $0.default.tintColor(button: $0)
+            $0.contentTintColor = style.tintColor(button: $0)
             $0.contentEdgeInsets = .zero
             $0.resistsSizeChange(axis: axis)
             $0.touchAreaEdgeInsets = -10
@@ -176,9 +182,10 @@ extension XCConfiguration where Type: UIButton {
         direction: NSAttributedString.CaretDirection = .forward,
         animated: Bool = false
     ) -> XCConfiguration {
-        return configuration.extend(identifier: .caret) {
-            let textColor = textColor ?? $0.default.textColor(button: $0)
-            let font = font ?? $0.default.font(button: $0)
+        let style: Identifier<Type> = .caret
+        return configuration.extend(identifier: style) {
+            let textColor = textColor ?? style.textColor(button: $0)
+            let font = font ?? style.font(button: $0)
             $0.titleLabel?.numberOfLines = 1
 
             let attributedTitle = NSAttributedString(string: title, font: font, color: textColor, direction: direction, for: .normal)
@@ -201,12 +208,18 @@ extension XCConfiguration where Type: UIButton {
         return checkbox()
     }
 
-    public static func checkbox(normalColor: UIColor? = nil, selectedColor: UIColor? = nil, textColor: UIColor? = nil, font: UIFont? = nil) -> XCConfiguration {
-        return XCConfiguration(identifier: .checkbox) {
-            let normalColor = normalColor ?? $0.default.tintColor(button: $0)
-            let selectedColor = selectedColor ?? $0.default.tintColor(button: $0)
-            let textColor = textColor ?? $0.default.textColor(button: $0)
-            let font = font ?? $0.default.font(button: $0)
+    public static func checkbox(
+        normalColor: UIColor? = nil,
+        selectedColor: UIColor? = nil,
+        textColor: UIColor? = nil,
+        font: UIFont? = nil
+    ) -> XCConfiguration {
+        let style: Identifier<Type> = .checkbox
+        return XCConfiguration(identifier: style) {
+            let normalColor = normalColor ?? style.tintColor(button: $0)
+            let selectedColor = selectedColor ?? style.tintColor(button: $0)
+            let textColor = textColor ?? style.textColor(button: $0)
+            let font = font ?? style.font(button: $0)
 
             $0.accessibilityIdentifier = "checkboxButton"
             $0.textColor = textColor
@@ -232,14 +245,19 @@ extension XCConfiguration where Type: UIButton {
         return radioButton()
     }
 
-    public static func radioButton(selectedColor: UIColor? = nil, borderColor: UIColor? = nil, borderWidth: CGFloat = 0.5) -> XCConfiguration {
-        return XCConfiguration(identifier: .radioButton) {
+    public static func radioButton(
+        selectedColor: UIColor? = nil,
+        borderColor: UIColor? = nil,
+        borderWidth: CGFloat = 0.5
+    ) -> XCConfiguration {
+        let style: Identifier<Type> = .radioButton
+        return XCConfiguration(identifier: style) {
             let outerWidth: CGFloat = 20
-            let selectedColor = selectedColor ?? $0.default.selectedColor(button: $0)
+            let selectedColor = selectedColor ?? style.selectedColor(button: $0)
 
             $0.accessibilityIdentifier = "radioButton"
             $0.layer.borderWidth = borderWidth
-            $0.layer.borderColor = $0.default.borderColor(button: $0).cgColor
+            $0.layer.borderColor = style.borderColor(button: $0).cgColor
             $0.layer.masksToBounds = true
             $0.layer.cornerRadius = outerWidth / 2
 
