@@ -156,12 +156,6 @@ extension UIButton {
         }
     }
 
-    /// This is safe to reference inside the `Style` declaration as the style will
-    /// always be set before style is applied. Thus, containing the correct value.
-    var `default`: Identifier<UIButton> {
-        return style.identifier
-    }
-
     private var initialText: String? {
         get { return associatedObject(&AssociatedKey.initialText) }
         set { setAssociatedObject(&AssociatedKey.initialText, value: newValue) }
