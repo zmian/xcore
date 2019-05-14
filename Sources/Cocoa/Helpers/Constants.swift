@@ -84,7 +84,14 @@ extension UIEdgeInsets {
 }
 
 extension UIColor {
-    @nonobjc static var backgroundDisabled: UIColor { return UIColor(hex: "EBF2FB") }
+    @nonobjc static var appleGray: UIColor { return UIColor(hex: "EBF2FB") }
+    @nonobjc static var appleTealBlue: UIColor { return UIColor(hex: "5AC8FA") }
+    @nonobjc static var appleBlue: UIColor { return UIColor(hex: "007AFF") }
+    @nonobjc static var applePurple: UIColor { return UIColor(hex: "5856D6") }
+    @nonobjc static var appleGreen: UIColor { return UIColor(hex: "4CD964") }
+    @nonobjc static var appleRed: UIColor { return UIColor(hex: "FF3B30") }
+
+    @nonobjc static var backgroundDisabled: UIColor { return appleGray }
 }
 
 // MARK: - App Constants
