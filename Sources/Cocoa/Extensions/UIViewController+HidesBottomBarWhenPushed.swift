@@ -54,6 +54,11 @@ extension UIViewController {
         )
     }
 
+    /// Swizzled viewDidAppear and viewWillDisappear for keyboard notifications.
+    /// Registering keyboard notifications in `viewDidLoad` results in
+    /// unexpected keyboard behavior: when popping the viewController
+    /// while the keyboard is presented, keyboard will not dismiss in concurrent
+    /// with the popping progress.
     @objc private func swizzled_viewDidAppear() {
         self.swizzled_viewDidAppear()
         if !didAddKeyboardToViewControllerNotificationObservers {
