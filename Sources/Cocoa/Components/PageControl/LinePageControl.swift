@@ -123,10 +123,10 @@ final public class LinePageControl: XCView {
     public func setCurrentPage(_ page: Int, animated: Bool) {
         currentPage = page
 
-        if animated {
-            UIView.animateFromCurrentState {
-                self.layoutIfNeeded()
-            }
+        guard animated else { return }
+
+        UIView.animateFromCurrentState {
+            self.layoutIfNeeded()
         }
     }
 
