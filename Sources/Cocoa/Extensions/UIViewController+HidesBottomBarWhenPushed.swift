@@ -25,11 +25,20 @@
 import UIKit
 
 extension UIViewController {
+    private struct AssociatedKey {
+        static var didAddKeyboardToViewControllerNotificationObservers = "didAddKeyboardToViewControllerNotificationObservers"
+    }
+
+    private var didAddKeyboardToViewControllerNotificationObservers: Bool {
+        get { return associatedObject(&AssociatedKey.didAddKeyboardToViewControllerNotificationObservers, default: false) }
+        set { setAssociatedObject(&AssociatedKey.didAddKeyboardToViewControllerNotificationObservers, value: newValue) }
+    }
+
     static func runOnceSwapSelectors() {
         swizzle(
             UIViewController.self,
-            originalSelector: #selector(UIViewController.viewWillAppear),
-            swizzledSelector: #selector(UIViewController.swizzled_viewWillAppear)
+            originalSelector: #selector(UIViewController.viewDidAppear),
+            swizzledSelector: #selector(UIViewController.swizzled_viewDidAppear)
         )
 
         swizzle(
@@ -45,14 +54,20 @@ extension UIViewController {
         )
     }
 
-    @objc private func swizzled_viewWillAppear() {
-        self.swizzled_viewWillAppear()
-        _addKeyboardNotificationObservers()
+    @objc private func swizzled_viewDidAppear() {
+        self.swizzled_viewDidAppear()
+        if !didAddKeyboardToViewControllerNotificationObservers {
+            _addKeyboardNotificationObservers()
+            didAddKeyboardToViewControllerNotificationObservers = true
+        }
     }
 
     @objc private func swizzled_viewWillDisappear() {
         self.swizzled_viewWillDisappear()
-        _removeKeyboardNotificationObservers()
+        if didAddKeyboardToViewControllerNotificationObservers {
+            _removeKeyboardNotificationObservers()
+            didAddKeyboardToViewControllerNotificationObservers = false
+        }
     }
 
     /// A swizzled function to ensure that `hidesBottomBarWhenPushed` value is
@@ -77,12 +92,12 @@ extension UIViewController {
 
 extension UIView {
     private struct AssociatedKey {
-        static var didAddKeyboardNotificationObservers = "didAddKeyboardNotificationObservers"
+        static var didAddKeyboardToViewNotificationObservers = "didAddKeyboardToViewNotificationObservers"
     }
 
-    private var didAddKeyboardNotificationObservers: Bool {
-        get { return associatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, default: false) }
-        set { setAssociatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, value: newValue) }
+    private var didAddKeyboardToViewNotificationObservers: Bool {
+        get { return associatedObject(&AssociatedKey.didAddKeyboardToViewNotificationObservers, default: false) }
+        set { setAssociatedObject(&AssociatedKey.didAddKeyboardToViewNotificationObservers, value: newValue) }
     }
 
     static func _runOnceSwapSelectors() {
@@ -95,9 +110,9 @@ extension UIView {
 
     @objc private func swizzled_view_layoutSubviews() {
         self.swizzled_view_layoutSubviews()
-        if !didAddKeyboardNotificationObservers {
+        if !didAddKeyboardToViewNotificationObservers {
             _addKeyboardNotificationObservers()
-            didAddKeyboardNotificationObservers = true
+            didAddKeyboardToViewNotificationObservers = true
         }
     }
 }

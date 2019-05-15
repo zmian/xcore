@@ -60,7 +60,7 @@ public protocol KeyboardObservable {
 public struct KeyboardPayload {
     /// The final height of the keyboard in the current orientation of the device.
     public var height: CGFloat {
-        return max(0, frameBegin.origin.y - frameEnd.origin.y)
+        return frameEnd.origin.y == UIScreen.main.bounds.height ? 0 : frameEnd.height
     }
 
     /// The starting frame rectangle of the keyboard in screen coordinates. The frame
@@ -152,7 +152,16 @@ extension UIViewController {
     /// view controller that conforms to `KeyboardObservable` using `viewWillDisappear`
     /// method swizzling.
     func _removeKeyboardNotificationObservers() {
-        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
 
     @objc private func keyboardWillShow(_ notification: Notification) {
@@ -167,19 +176,20 @@ extension UIViewController {
         // `firstResponder != nil` check ensures that we are not dispatching keyboard
         // frame change events to any previous screen on swipe back when the keyboard
         // is active.
+        // `payload.frameBegin.origin.y != payload.frameEnd.origin.y` guarantees
+        // notification is only sent out on y value updates.
         guard
             isViewLoaded,
             let observable = self as? KeyboardObservable,
             view.firstResponder != nil,
-            let payload = KeyboardPayload(notification: notification, willShow: willShow)
+            let payload = KeyboardPayload(notification: notification, willShow: willShow),
+            payload.frameBegin.origin.y != payload.frameEnd.origin.y
         else {
             return
         }
 
         observable.keyboardFrameDidChange(payload)
-        UIView.animate(withDuration: .fast) {
-            self.view.layoutIfNeeded()
-        }
+        self.view.layoutIfNeeded()
     }
 }
 
@@ -234,9 +244,7 @@ extension UIView {
         }
 
         observable.keyboardFrameDidChange(payload)
-        UIView.animate(withDuration: .fast) {
-            self.layoutIfNeeded()
-        }
+        self.layoutIfNeeded()
     }
 }
 
