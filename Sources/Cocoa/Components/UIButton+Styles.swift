@@ -119,6 +119,18 @@ extension XCConfiguration where Type: UIButton {
 // MARK: - Images Styles
 
 extension XCConfiguration where Type: UIButton {
+    public static var leftArrow: XCConfiguration {
+        return image(assetIdentifier: .arrowLeftIcon, alpha: 0.5).extend {
+            $0.accessibilityIdentifier = "leftButton"
+        }
+    }
+
+    public static var rightArrow: XCConfiguration {
+        return image(assetIdentifier: .arrowRightIcon, alpha: 0.5).extend {
+            $0.accessibilityIdentifier = "rightButton"
+        }
+    }
+
     public static var dismiss: XCConfiguration {
         return image(assetIdentifier: .closeIcon, size: 24, axis: .horizontal, .vertical)
     }
@@ -137,40 +149,40 @@ extension XCConfiguration where Type: UIButton {
         size: CGSize,
         axis: NSLayoutConstraint.Axis...
     ) -> XCConfiguration {
-        let style = Identifier<Type>(rawValue: identifier)
-        return XCConfiguration(identifier: style) {
-            $0.isHeightSetAutomatically = false
-            $0.text = nil
-            $0.image = UIImage(assetIdentifier: assetIdentifier)
-            $0.imageView?.isContentModeAutomaticallyAdjusted = true
-            $0.contentTintColor = style.tintColor(button: $0)
-            $0.contentEdgeInsets = .zero
+        return image(identifier: identifier, assetIdentifier: assetIdentifier).extend {
             $0.resistsSizeChange(axis: axis)
-            $0.touchAreaEdgeInsets = -10
+            // Increase the touch area if the image size is small.
+            if let size = $0.image?.size, size.width < 44 || size.height < 44 {
+                $0.touchAreaEdgeInsets = -10
+            }
             $0.anchor.make {
                 $0.size.equalTo(size)
             }
         }
     }
 
-    public static func image(assetIdentifier: ImageAssetIdentifier, alpha: CGFloat) -> XCConfiguration {
+    public static func image(
+        identifier: String = #function,
+        assetIdentifier: ImageAssetIdentifier,
+        alpha: CGFloat? = nil
+    ) -> XCConfiguration {
+        let style = Identifier<Type>(rawValue: identifier)
         return XCConfiguration {
             $0.isHeightSetAutomatically = false
+            $0.text = nil
+            $0.imageView?.isContentModeAutomaticallyAdjusted = true
+            $0.contentTintColor = style.tintColor(button: $0)
+            $0.contentEdgeInsets = .zero
+
             let image = UIImage(assetIdentifier: assetIdentifier)
-            $0.image = image.alpha(alpha).withRenderingMode(.alwaysTemplate)
-            $0.highlightedImage = image.alpha(alpha * 0.5).withRenderingMode(.alwaysTemplate)
-        }
-    }
 
-    public static var leftArrow: XCConfiguration {
-        return image(assetIdentifier: .arrowLeftIcon, alpha: 0.5).extend {
-            $0.accessibilityIdentifier = "leftButton"
-        }
-    }
-
-    public static var rightArrow: XCConfiguration {
-        return image(assetIdentifier: .arrowRightIcon, alpha: 0.5).extend {
-            $0.accessibilityIdentifier = "rightButton"
+            if let alpha = alpha {
+                let originalRenderingMode = image.renderingMode
+                $0.image = image.alpha(alpha).withRenderingMode(originalRenderingMode)
+                $0.highlightedImage = image.alpha(alpha * 0.5).withRenderingMode(originalRenderingMode)
+            } else {
+                $0.image = image
+            }
         }
     }
 
