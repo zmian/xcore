@@ -45,61 +45,69 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
       var maxItemBottom: CGFloat = 0
 
       offset.x = sectionMargin.left + sectionPadding.left // start from left
-      offset.y += sectionVerticalSpacing + sectionMargin.top + sectionPadding.top // accumulated
 
-      for item in 0..<collectionView.numberOfItems(inSection: section) {
-        let indexPath = IndexPath(item: item, section: section)
-        let itemMargin = self.margin(forItemAt: indexPath)
-        let itemPadding = self.padding(forItemAt: indexPath)
-        let itemSize = self.size(forItemAt: indexPath)
-
-        if item > 0 {
-          offset.x += self.horizontalSpacing(betweenItemAt: IndexPath(item: item - 1, section: section), and: indexPath)
-        }
-        if offset.x + itemMargin.left + itemPadding.left + itemSize.width + itemPadding.right + itemMargin.right + sectionPadding.right + sectionMargin.right > contentWidth {
-          offset.x = sectionMargin.left + sectionPadding.left // start from left
-          offset.y += maxItemBottom // next line
-          if item > 0 {
-            offset.y += self.verticalSpacing(betweenItemAt: IndexPath(item: item - 1, section: section), and: indexPath)
-          }
-          maxItemBottom = 0
-        }
-
-        let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
-        attributes.size = itemSize
-        attributes.frame.origin.x = offset.x + itemMargin.left + itemPadding.left
-        attributes.frame.origin.y = offset.y + itemMargin.top + itemPadding.top
-        attributes.zIndex = self.zIndex(forItemAt: indexPath)
-
-        let backgroundAttributes = UICollectionViewLayoutAttributes(
-          forSupplementaryViewOfKind: UICollectionElementKindItemBackground,
-          with: indexPath
-        )
-        backgroundAttributes.frame = CGRect(
-          x: attributes.frame.minX - itemPadding.left,
-          y: attributes.frame.minY - itemPadding.top,
-          width: attributes.frame.width + itemPadding.left + itemPadding.right,
-          height: attributes.frame.height + itemPadding.top + itemPadding.bottom
-        )
-        backgroundAttributes.zIndex = -1
-        self.itemBackgroundAttributes[indexPath] = backgroundAttributes
-
-        offset.x += itemMargin.left + itemPadding.left + itemSize.width + itemPadding.right + itemMargin.right
-        maxItemBottom = max(maxItemBottom, itemMargin.top + itemPadding.top + itemSize.height + itemPadding.bottom + itemMargin.bottom)
-        self.layoutAttributes[indexPath] = attributes
-
-        if self.minYSectionAttribute[section]?.frame.minY ?? .greatestFiniteMagnitude > attributes.frame.minY {
-          self.minYSectionAttribute[section] = attributes
-        }
-        if self.maxYSectionAttribute[section]?.frame.maxY ?? -.greatestFiniteMagnitude < attributes.frame.maxY {
-          self.maxYSectionAttribute[section] = attributes
-        }
-        if self.minimumItemZIndex > attributes.zIndex {
-          self.minimumItemZIndex = attributes.zIndex
-        }
+      let itemCount = collectionView.numberOfItems(inSection: section)
+    
+      if itemCount > 0 {
+          offset.y += sectionVerticalSpacing + sectionMargin.top + sectionPadding.top // accumulated
       }
 
-      offset.y += maxItemBottom + sectionPadding.bottom + sectionMargin.bottom
+      for item in 0..<itemCount {
+            let indexPath = IndexPath(item: item, section: section)
+            let itemMargin = self.margin(forItemAt: indexPath)
+            let itemPadding = self.padding(forItemAt: indexPath)
+            let itemSize = self.size(forItemAt: indexPath)
+
+            if item > 0 {
+              offset.x += self.horizontalSpacing(betweenItemAt: IndexPath(item: item - 1, section: section), and: indexPath)
+            }
+            if offset.x + itemMargin.left + itemPadding.left + itemSize.width + itemPadding.right + itemMargin.right + sectionPadding.right + sectionMargin.right > contentWidth {
+              offset.x = sectionMargin.left + sectionPadding.left // start from left
+              offset.y += maxItemBottom // next line
+              if item > 0 {
+                offset.y += self.verticalSpacing(betweenItemAt: IndexPath(item: item - 1, section: section), and: indexPath)
+              }
+              maxItemBottom = 0
+            }
+
+            let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+            attributes.size = itemSize
+            attributes.frame.origin.x = offset.x + itemMargin.left + itemPadding.left
+            attributes.frame.origin.y = offset.y + itemMargin.top + itemPadding.top
+            attributes.zIndex = self.zIndex(forItemAt: indexPath)
+
+            let backgroundAttributes = UICollectionViewLayoutAttributes(
+              forSupplementaryViewOfKind: UICollectionElementKindItemBackground,
+              with: indexPath
+            )
+            backgroundAttributes.frame = CGRect(
+              x: attributes.frame.minX - itemPadding.left,
+              y: attributes.frame.minY - itemPadding.top,
+              width: attributes.frame.width + itemPadding.left + itemPadding.right,
+              height: attributes.frame.height + itemPadding.top + itemPadding.bottom
+            )
+            backgroundAttributes.zIndex = -1
+            self.itemBackgroundAttributes[indexPath] = backgroundAttributes
+
+            offset.x += itemMargin.left + itemPadding.left + itemSize.width + itemPadding.right + itemMargin.right
+            maxItemBottom = max(maxItemBottom, itemMargin.top + itemPadding.top + itemSize.height + itemPadding.bottom + itemMargin.bottom)
+            self.layoutAttributes[indexPath] = attributes
+
+            if self.minYSectionAttribute[section]?.frame.minY ?? .greatestFiniteMagnitude > attributes.frame.minY {
+              self.minYSectionAttribute[section] = attributes
+            }
+            if self.maxYSectionAttribute[section]?.frame.maxY ?? -.greatestFiniteMagnitude < attributes.frame.maxY {
+              self.maxYSectionAttribute[section] = attributes
+            }
+            if self.minimumItemZIndex > attributes.zIndex {
+              self.minimumItemZIndex = attributes.zIndex
+            }
+      }
+
+      if itemCount > 0 {
+          offset.y += maxItemBottom + sectionPadding.bottom + sectionMargin.bottom
+      }
+
       self.cachedContentSize = CGSize(width: contentWidth, height: offset.y)
     }
   }

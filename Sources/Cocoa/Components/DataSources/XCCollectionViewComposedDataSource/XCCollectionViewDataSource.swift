@@ -76,6 +76,11 @@ extension XCCollectionViewDataSource {
                 supplementaryView = self.collectionView(collectionView, viewForHeaderInSectionAt: indexPath)
             case .footer:
                 supplementaryView = self.collectionView(collectionView, viewForFooterInSectionAt: indexPath)
+            case .background:
+                supplementaryView = self.collectionView(collectionView, viewForBackgroundInSectionAt: indexPath)
+            case .itemBackground:
+                // TODO: Provide access to this one?
+                return collectionView.dequeueReusableSupplementaryView(kind, for: indexPath)
             default:
                 break
         }
@@ -229,5 +234,24 @@ extension XCCollectionViewDataSource {
             }
         }
         return nil
+    }
+}
+
+// MARK: UICollectionViewFlexLayout
+
+extension XCCollectionViewDataSource {
+    open func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
+        guard let sizeCollectionView = _sizeCollectionView else {
+            return .zero
+        }
+        let cell = self.collectionView(sizeCollectionView, cellForItemAt: indexPath)
+        return cell.contentView.sizeFitting(width: availableWidth)
+    }
+    
+    open func collectionView(_ collectionView: UICollectionView, viewForBackgroundInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
+        let view = collectionView.dequeueReusableSupplementaryView(.background, for: indexPath)
+        // TODO: Remove this is just for testing
+        view.backgroundColor = .red
+        return view
     }
 }

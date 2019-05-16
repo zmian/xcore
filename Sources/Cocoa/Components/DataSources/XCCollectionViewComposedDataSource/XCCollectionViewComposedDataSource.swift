@@ -182,6 +182,16 @@ extension XCCollectionViewComposedDataSource {
 // MARK: UICollectionViewDelegateFlowLayout
 
 extension XCCollectionViewComposedDataSource {
+    open override func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        var size = dataSource.collectionView(collectionView, sizeForItemAt: localIndexPath, availableWidth: availableWidth)
+        if size.width > availableWidth {
+            size.width = availableWidth
+        }
+        return size
+    }
+
     open override func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let (dataSource, localSection) = dataSourceIndex[indexPath.section]
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
@@ -278,5 +288,15 @@ extension XCCollectionViewComposedDataSource {
         let (dataSource, localSection) = dataSourceIndex[indexPath.section]
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
         return dataSource.collectionView(collectionView, viewForFooterInSectionAt: localIndexPath)
+    }
+}
+
+// MARK: Background
+
+extension XCCollectionViewComposedDataSource {
+    open override func collectionView(_ collectionView: UICollectionView, viewForBackgroundInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        return dataSource.collectionView(collectionView, viewForBackgroundInSectionAt: localIndexPath)
     }
 }
