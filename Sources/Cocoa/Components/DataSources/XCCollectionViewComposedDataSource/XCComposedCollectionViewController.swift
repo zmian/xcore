@@ -24,15 +24,31 @@
 
 import UIKit
 
+public extension XCComposedCollectionViewController {
+    enum LayoutType {
+        case feed
+        case `default`
+    }
+}
+
 open class XCComposedCollectionViewController: UIViewController {
     public private(set) var collectionViewConstraints: NSLayoutConstraint.Edges!
+
+    open var layoutType: LayoutType {
+        return .default
+    }
 
     /// The layout object `UICollectionView` uses to render itself.
     /// The layout can be changed to any subclass of `UICollectionViewLayout`.
     /// However, the layout must be set before accessing `collectionView` to ensure that it is applied correctly.
     /// The default value is `UICollectionViewFlowLayout`.
-    open var layout: UICollectionViewLayout = {
-        UICollectionViewFlowLayout()
+    open lazy var layout: UICollectionViewLayout = {
+        switch layoutType {
+            case .feed:
+                return UICollectionViewFlexLayout()
+            case .default:
+                return UICollectionViewFlowLayout()
+        }
     }()
 
     open lazy var collectionView: UICollectionView = {
@@ -91,6 +107,22 @@ extension XCComposedCollectionViewController {
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         composedDataSource.collectionView(collectionView, didSelectItemAt: indexPath)
     }
+
+    open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        return composedDataSource.collectionView(collectionView, willDisplay: cell, forItemAt: indexPath)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        return composedDataSource.collectionView(collectionView, willDisplaySupplementaryView: view, forElementKind: elementKind, at: indexPath)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        return composedDataSource.collectionView(collectionView, didEndDisplaying: cell, forItemAt: indexPath)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+        return composedDataSource.collectionView(collectionView, didEndDisplayingSupplementaryView: view, forElementOfKind: elementKind, at: indexPath)
+    }
 }
 
 // MARK: UICollectionViewDelegateFlowLayout
@@ -119,22 +151,44 @@ extension XCComposedCollectionViewController: UICollectionViewDelegateFlowLayout
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section)
     }
+}
 
-    // MARK: Lifecycle
+// MARK: UICollectionViewDelegateFlexLayout
 
-    open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        return composedDataSource.collectionView(collectionView, willDisplay: cell, forItemAt: indexPath)
+extension XCComposedCollectionViewController: UICollectionViewDelegateFlexLayout {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath)
     }
 
-    open func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        return composedDataSource.collectionView(collectionView, willDisplaySupplementaryView: view, forElementKind: elementKind, at: indexPath)
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, verticalSpacingBetweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
+        return .defaultPadding
     }
 
-    open func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        return composedDataSource.collectionView(collectionView, didEndDisplaying: cell, forItemAt: indexPath)
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, marginForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(horizontal: .defaultPadding, vertical: .defaultPadding)
     }
 
-    open func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
-        return composedDataSource.collectionView(collectionView, didEndDisplayingSupplementaryView: view, forElementOfKind: elementKind, at: indexPath)
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, paddingForSectionAt section: Int) -> UIEdgeInsets {
+        return .defaultPadding
+    }
+    
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, horizontalSpacingBetweenItemAt indexPath: IndexPath, and nextIndexPath: IndexPath) -> CGFloat {
+        return .defaultPadding
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, verticalSpacingBetweenItemAt indexPath: IndexPath, and nextIndexPath: IndexPath) -> CGFloat {
+        return .defaultPadding
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, marginForItemAt indexPath: IndexPath) -> UIEdgeInsets {
+        return .defaultPadding
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, paddingForItemAt indexPath: IndexPath) -> UIEdgeInsets {
+        return .defaultPadding
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, zIndexForItemAt indexPath: IndexPath) -> Int {
+        return 0
     }
 }
