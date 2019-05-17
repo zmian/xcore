@@ -243,3 +243,13 @@ extension XCCollectionViewDataSource {
         return cell.contentView.sizeFitting(width: availableWidth)
     }
 }
+
+extension XCCollectionViewCell {
+    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        guard let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes else {
+            return
+        }
+        contentView.roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
+    }
+}

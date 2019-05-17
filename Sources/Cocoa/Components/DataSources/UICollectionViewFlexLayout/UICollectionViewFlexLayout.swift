@@ -1,18 +1,52 @@
-#if os(iOS)
+//
+//  UICollectionViewFlexLayout.swift
+//  Xcore
+//
+//  Created by Guillermo Waitzel on 16/05/2019.
+//  Copyright © 2019 Clarity Money. All rights reserved.
+//
+
 import UIKit
 
 private let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
 private let UICollectionElementKindItemBackground = "UICollectionElementKindItemBackground"
 
-open class UICollectionViewFlexLayout: UICollectionViewLayout {
-    private(set) var layoutAttributes: [IndexPath: UICollectionViewLayoutAttributes] = [:]
-    private(set) var sectionBackgroundAttributes: [Int: UICollectionViewLayoutAttributes] = [:]
-    private(set) var cachedContentSize: CGSize = .zero
+private extension UICollectionViewFlexLayout {
+    enum TileStyle: Equatable {
+        case both
+        case top
+        case bottom
+        case none
 
-    private(set) var minYSectionAttribute: [Int: UICollectionViewLayoutAttributes] = [:]
-    private(set) var maxYSectionAttribute: [Int: UICollectionViewLayoutAttributes] = [:]
+        var corners: UIRectCorner {
+            switch self {
+            case .both:
+                return .allCorners
+            case .top:
+                return [.topLeft, .topRight]
+            case .bottom:
+                return [.bottomLeft, .bottomRight]
+            case .none:
+                return []
+            }
+        }
+    }
+}
+
+open class UICollectionViewFlexLayout: UICollectionViewLayout {
+    private typealias Attributes = UICollectionViewFlexLayoutAttributes
+    private var layoutAttributes: [IndexPath: Attributes] = [:]
+    private var sectionBackgroundAttributes: [Int: Attributes] = [:]
+    private var cachedContentSize: CGSize = .zero
+
+    private var minYSectionAttribute: [Int: Attributes] = [:]
+    private var maxYSectionAttribute: [Int: Attributes] = [:]
 
     private(set) var minimumItemZIndex: Int = 0
+
+    override open class var layoutAttributesClass: AnyClass {
+        return Attributes.self
+    }
 
     override open func prepare() {
         prepareItemAttributes()
@@ -22,7 +56,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
 
     override init() {
         super.init()
-        register(UICollectionViewFlexDecorativeBackgroundView.self, forDecorationViewOfKind: UICollectionElementKindSectionBackground)
+        register(UICollectionViewFlexBackgroundView.self, forDecorationViewOfKind: UICollectionElementKindSectionBackground)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -74,11 +108,21 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
                     maxItemBottom = 0
                 }
 
-                let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath).apply {
+                let attributes = Attributes(forCellWith: indexPath).apply {
                     $0.size = itemSize
                     $0.frame.origin.x = offset.x + itemMargin.left + itemPadding.left
                     $0.frame.origin.y = offset.y + itemMargin.top + itemPadding.top
                     $0.zIndex = zIndex(forItemAt: indexPath)
+
+                    if itemCount == 1 {
+                        $0.corners = TileStyle.both.corners
+                    } else if item == 0 {
+                        $0.corners = TileStyle.top.corners
+                    } else if item == itemCount - 1 {
+                        $0.corners = TileStyle.bottom.corners
+                    } else {
+                        $0.corners = TileStyle.none.corners
+                    }
                 }
 
                 offset.x += itemMargin.left + itemPadding.left + itemSize.width + itemPadding.right + itemMargin.right
@@ -120,7 +164,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
             guard width > 0 && height > 0 else { continue }
 
             let sectionPadding = self.padding(forSectionAt: section)
-            let attributes = UICollectionViewLayoutAttributes(
+            let attributes = Attributes(
                 forDecorationViewOfKind: UICollectionElementKindSectionBackground,
                 with: IndexPath(item: 0, section: section)
             )
@@ -245,4 +289,3 @@ extension UICollectionViewFlexLayout {
         return delegate.collectionView?(collectionView, layout: self, zIndexForItemAt: indexPath) ?? 0
     }
 }
-#endif

@@ -1,4 +1,11 @@
-#if os(iOS)
+//
+//  UICollectionViewDelegateFlexLayout.swift
+//  Xcore
+//
+//  Created by Guillermo Waitzel on 16/05/2019.
+//  Copyright © 2019 Clarity Money. All rights reserved.
+//
+
 import UIKit
 
 @objc public protocol UICollectionViewDelegateFlexLayout: UICollectionViewDelegate {
@@ -13,4 +20,3 @@ import UIKit
   @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
   @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, zIndexForItemAt indexPath: IndexPath) -> Int
 }
-#endif
