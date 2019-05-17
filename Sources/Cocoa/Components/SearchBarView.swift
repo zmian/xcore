@@ -43,7 +43,7 @@ final public class SearchBarView: UIView {
         return style == .minimal ? .defaultPadding - .minimumPadding : 0
     }
 
-    private var style: UISearchBar.Style = .default {
+    @objc dynamic public var style: UISearchBar.Style = .default {
         didSet {
             guard oldValue != style else { return }
             updateStyle()
@@ -77,9 +77,16 @@ final public class SearchBarView: UIView {
         set { searchBar.placeholderTextColor = newValue }
     }
 
-    @objc dynamic public var searchFieldBackgroundColor: UIColor? {
-        get { return searchBar.searchFieldBackgroundColor ?? UIColor.backgroundDisabled.alpha(0.3) }
-        set { searchBar.searchFieldBackgroundColor = newValue }
+    private lazy var _searchFieldBackgroundColor: UIColor = {
+        searchBar.searchFieldBackgroundColor ?? UIColor.backgroundDisabled.alpha(0.3)
+    }()
+
+    @objc dynamic public var searchFieldBackgroundColor: UIColor {
+        get { return _searchFieldBackgroundColor }
+        set {
+            _searchFieldBackgroundColor = newValue
+            updateSearchFieldBackgroundColorIfNeeded()
+        }
     }
 
     public init(placeholder: String = "Search") {
@@ -152,13 +159,21 @@ final public class SearchBarView: UIView {
                 searchBar.searchBarStyle = .minimal
                 setSeparatorHidden(true, for: .top, .bottom)
                 magnifyingGlassSize = 14
-                searchBar.searchFieldBackgroundColor = searchFieldBackgroundColor
+                updateSearchFieldBackgroundColorIfNeeded()
         }
 
         // Update built-in magnifying glass so the tint matches the app tint color
         setImage(assetIdentifier: .searchIcon, for: .search, size: magnifyingGlassSize)
 
         searchBarTrailingConstraint?.constant = searchBarTrailingPadding
+    }
+
+    private func updateSearchFieldBackgroundColorIfNeeded() {
+        guard style != .minimal else {
+            return
+        }
+
+        searchBar.searchFieldBackgroundColor = searchFieldBackgroundColor
     }
 
     private func setImage(assetIdentifier: ImageAssetIdentifier, for icon: UISearchBar.Icon, size: CGFloat? = nil) {
@@ -169,7 +184,7 @@ final public class SearchBarView: UIView {
             return
         }
 
-        let scaledImage = image.scaled(to: CGSize(size), scalingMode: .aspectFit, tintColor: tintColor)
+        let scaledImage = image.scaled(to: CGSize(size), scalingMode: .aspectFit, tintColor: tintColor).withRenderingMode(.alwaysTemplate)
         searchBar.setImage(scaledImage, for: icon, state: .normal)
     }
 

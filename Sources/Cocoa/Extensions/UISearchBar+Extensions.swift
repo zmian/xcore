@@ -29,7 +29,7 @@ extension UISearchBar {
         return subview(withClass: UITextField.self)
     }
 
-    open var searchFieldBackgroundColor: UIColor? {
+    @objc dynamic open var searchFieldBackgroundColor: UIColor? {
         get {
             switch searchBarStyle {
                 case .minimal:
@@ -61,7 +61,7 @@ extension UISearchBar {
     }
 
     /// The default value is `nil`. Uses `UISearchBar` default gray color.
-    open var placeholderTextColor: UIColor? {
+    @objc dynamic open var placeholderTextColor: UIColor? {
         /// Unfortunately, when the `searchBarStyle == .minimal` then
         /// `textField?.placeholderLabel?.textColor` doesn't work. Hence, this workaround.
         get { return associatedObject(&AssociatedKey.placeholderTextColor) }
