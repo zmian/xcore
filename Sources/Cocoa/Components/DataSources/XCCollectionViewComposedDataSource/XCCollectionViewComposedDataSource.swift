@@ -290,13 +290,3 @@ extension XCCollectionViewComposedDataSource {
         return dataSource.collectionView(collectionView, viewForFooterInSectionAt: localIndexPath)
     }
 }
-
-// MARK: Background
-
-extension XCCollectionViewComposedDataSource {
-    open override func collectionView(_ collectionView: UICollectionView, viewForBackgroundInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
-        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
-        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
-        return dataSource.collectionView(collectionView, viewForBackgroundInSectionAt: localIndexPath)
-    }
-}

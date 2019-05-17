@@ -91,8 +91,6 @@ extension UICollectionView {
         // swiftlint:disable inconsistent_naming_header_view inconsistent_naming_footer_view
         public static let header = SupplementaryViewKind(rawValue: UICollectionView.elementKindSectionHeader)
         public static let footer = SupplementaryViewKind(rawValue: UICollectionView.elementKindSectionFooter)
-        public static let background = SupplementaryViewKind(rawValue: UICollectionElementKindSectionBackground)
-        public static let itemBackground = SupplementaryViewKind(rawValue: UICollectionElementKindItemBackground)
         // swiftlint:enable inconsistent_naming_header_view inconsistent_naming_footer_view
     }
 }
