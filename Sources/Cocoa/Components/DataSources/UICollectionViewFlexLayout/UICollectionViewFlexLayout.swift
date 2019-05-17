@@ -7,7 +7,6 @@ private let UICollectionElementKindItemBackground = "UICollectionElementKindItem
 open class UICollectionViewFlexLayout: UICollectionViewLayout {
     private(set) var layoutAttributes: [IndexPath: UICollectionViewLayoutAttributes] = [:]
     private(set) var sectionBackgroundAttributes: [Int: UICollectionViewLayoutAttributes] = [:]
-    private(set) var itemBackgroundAttributes: [IndexPath: UICollectionViewLayoutAttributes] = [:]
     private(set) var cachedContentSize: CGSize = .zero
 
     private(set) var minYSectionAttribute: [Int: UICollectionViewLayoutAttributes] = [:]
@@ -36,7 +35,6 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         var offset: CGPoint = .zero
 
         layoutAttributes.removeAll()
-        itemBackgroundAttributes.removeAll()
         minYSectionAttribute.removeAll()
         maxYSectionAttribute.removeAll()
 
@@ -123,7 +121,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
 
             let sectionPadding = self.padding(forSectionAt: section)
             let attributes = UICollectionViewLayoutAttributes(
-                forSupplementaryViewOfKind: UICollectionElementKindSectionBackground,
+                forDecorationViewOfKind: UICollectionElementKindSectionBackground,
                 with: IndexPath(item: 0, section: section)
             )
 
@@ -144,9 +142,6 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
     }
 
     private func prepareZIndex() {
-        for attributes in self.itemBackgroundAttributes.values {
-              attributes.zIndex = minimumItemZIndex - 1
-        }
         for attributes in self.sectionBackgroundAttributes.values {
               attributes.zIndex = minimumItemZIndex - 2
         }
@@ -159,7 +154,6 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
     override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return self.layoutAttributes.values.filter { $0.frame.intersects(rect) }
         + self.sectionBackgroundAttributes.values.filter { $0.frame.intersects(rect) }
-        + self.itemBackgroundAttributes.values.filter { $0.frame.intersects(rect) }
     }
 
     override open func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
@@ -167,12 +161,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
     }
 
     override open func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        switch elementKind {
-            case UICollectionElementKindItemBackground:
-                return self.itemBackgroundAttributes[indexPath]
-            default:
-                return super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath)
-        }
+        return super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath)
     }
 
     override open func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
