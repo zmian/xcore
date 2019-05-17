@@ -113,6 +113,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
                     $0.frame.origin.x = offset.x + itemMargin.left + itemPadding.left
                     $0.frame.origin.y = offset.y + itemMargin.top + itemPadding.top
                     $0.zIndex = zIndex(forItemAt: indexPath)
+                    $0.cornerRadius = cornerRadius(forSectionAt: section)
 
                     if itemCount == 1 {
                         $0.corners = TileStyle.both.corners
@@ -174,6 +175,9 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
 
             let itemPaddingTop = self.padding(forItemAt: minYAttribute.indexPath).top
             let itemPaddingBottom = self.padding(forItemAt: maxYAttribute.indexPath).bottom
+
+            attributes.cornerRadius = cornerRadius(forSectionAt: section)
+            attributes.corners = .allCorners
 
             attributes.frame = CGRect(
                 x: sectionMargin.left,
@@ -287,5 +291,20 @@ extension UICollectionViewFlexLayout {
     public func zIndex(forItemAt indexPath: IndexPath) -> Int {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
         return delegate.collectionView?(collectionView, layout: self, zIndexForItemAt: indexPath) ?? 0
+    }
+
+    public func cornerRadius(forSectionAt section: Int) -> CGFloat {
+        guard let collectionView = self.collectionView, let delegate = self.delegate else { return 11 }
+        return delegate.collectionView?(collectionView, layout: self, cornerRadiusAt: section) ?? 11
+    }
+}
+
+extension XCCollectionViewCell {
+    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        guard let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes else {
+            return
+        }
+        contentView.roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
     }
 }

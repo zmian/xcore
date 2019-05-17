@@ -69,4 +69,13 @@ final class UICollectionViewFlexBackgroundView: XCCollectionReusableView {
     fileprivate func path(rect: CGRect? = nil) -> UIBezierPath {
         return UIBezierPath(roundedRect: rect ?? bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: _cornerRadius, height: _cornerRadius))
     }
+
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        guard let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes else {
+            return
+        }
+        corners = flexLayoutAttributes.corners
+        _cornerRadius = flexLayoutAttributes.cornerRadius
+    }
 }
