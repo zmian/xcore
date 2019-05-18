@@ -31,8 +31,27 @@ public struct ValidationRule<Input> {
         self.block = block
     }
 
+    /// Returns a boolean value indicating whether the given `input` matches the
+    /// conditions specified by `self`.
+    ///
+    /// ```swift
+    /// email.validate("help@example.com") // valid
+    /// email.validate("help.example.com") // invalid
+    /// ```
+    ///
+    /// - Parameter input: The input against which to evaluate `self`.
+    /// - Returns: `true` if given `input` matches the conditions specified by `self`,
+    ///            otherwise `false`.
     public func validate(_ input: Input) -> Bool {
         return block(input)
+    }
+}
+
+extension ValidationRule {
+    public enum LogicalType {
+        case and
+        case or
+        case not
     }
 }
 
@@ -81,6 +100,55 @@ extension String {
     ///            `rule`, otherwise `false`.
     public func validate(rule: ValidationRule<String>) -> Bool {
         return rule.validate(self)
+    }
+
+    /// Returns a boolean value indicating whether the `self` matches the conditions
+    /// specified by the `rules` using `join` predicate.
+    ///
+    /// ```swift
+    /// "help@example.com".validate(rules: [.email, .whitelistedDomain], join: .and) // valid
+    /// "help.example.com".validate(rules: [.email, .whitelistedDomain], join: .and) // invalid
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - join: The predicate to use when evaluating the list of given rules.
+    ///   - rules: The list of rules against which to evaluate `self`.
+    /// - Returns: `true` if `self` matches the conditions specified by the given
+    ///            `rule` and `join` predicate, otherwise `false`.
+    public func validate(rules: [ValidationRule<String>], join: ValidationRule<String>.LogicalType) -> Bool {
+        return rules.validate(self, as: join)
+    }
+}
+
+extension Array where Element == ValidationRule<String> {
+    /// Returns a boolean value indicating whether the `input` matches the
+    /// conditions specified by the `self` using `join` predicate.
+    ///
+    /// ```swift
+    /// [.email, .whitelistedDomain].validate("help@example.com", as: .and) // valid
+    /// [.email, .whitelistedDomain].validate("help.example.com", as: .and) // invalid
+    /// [.email, .whitelistedDomain].validate("help.example.com", as: .or)  // valid
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - input: The input against which to evaluate `self`.
+    ///   - join: The predicate to use when evaluating the given `input` against
+    ///           `self`.
+    /// - Returns: `true` if given `input` matches the conditions specified by
+    ///            `self` and `join` predicate, otherwise `false`.
+    public func validate(_ input: String, as join: ValidationRule<String>.LogicalType) -> Bool {
+        let initalValue = first?.validate(input) ?? true
+
+        return reduce(initalValue) { accumulator, rule -> Bool in
+            switch join {
+                case .and:
+                    return accumulator && rule.validate(input)
+                case .or:
+                    return accumulator || rule.validate(input)
+                case .not:
+                    return !accumulator && !rule.validate(input)
+            }
+        }
     }
 }
 
