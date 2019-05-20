@@ -182,14 +182,13 @@ extension UIViewController {
             isViewLoaded,
             let observable = self as? KeyboardObservable,
             view.firstResponder != nil,
-            let payload = KeyboardPayload(notification: notification, willShow: willShow),
-            payload.frameBegin.origin.y != payload.frameEnd.origin.y
+            let payload = KeyboardPayload(notification: notification, willShow: willShow)
         else {
             return
         }
 
         observable.keyboardFrameDidChange(payload)
-        self.view.layoutIfNeeded()
+        view.layoutIfNeeded()
     }
 }
 
@@ -237,14 +236,13 @@ extension UIView {
         guard
             let observable = self as? KeyboardObservable,
             firstResponder != nil,
-            let payload = KeyboardPayload(notification: notification, willShow: willShow),
-            payload.frameBegin.origin.y != payload.frameEnd.origin.y
+            let payload = KeyboardPayload(notification: notification, willShow: willShow)
         else {
             return
         }
 
         observable.keyboardFrameDidChange(payload)
-        self.layoutIfNeeded()
+        layoutIfNeeded()
     }
 }
 
