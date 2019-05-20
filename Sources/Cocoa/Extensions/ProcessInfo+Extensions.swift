@@ -36,7 +36,7 @@ extension ProcessInfo {
     }
 
     public func contains(key: String) -> Bool {
-        return environment[key] != nil
+        return environment[key] != nil || inMemoryEnvironmentStorage[key] != nil
     }
 }
 
