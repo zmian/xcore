@@ -182,16 +182,6 @@ extension XCCollectionViewComposedDataSource {
 // MARK: UICollectionViewDelegateFlowLayout
 
 extension XCCollectionViewComposedDataSource {
-    open override func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
-        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
-        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
-        var size = dataSource.collectionView(collectionView, sizeForItemAt: localIndexPath, availableWidth: availableWidth)
-        if size.width > availableWidth {
-            size.width = availableWidth
-        }
-        return size
-    }
-
     open override func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let (dataSource, localSection) = dataSourceIndex[indexPath.section]
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
@@ -288,5 +278,37 @@ extension XCCollectionViewComposedDataSource {
         let (dataSource, localSection) = dataSourceIndex[indexPath.section]
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
         return dataSource.collectionView(collectionView, viewForFooterInSectionAt: localIndexPath)
+    }
+}
+
+// MARK: UICollectionViewFlexLayoutDelegate
+
+extension XCCollectionViewComposedDataSource {
+    open override func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        var size = dataSource.collectionView(collectionView, sizeForItemAt: localIndexPath, availableWidth: availableWidth)
+        if size.width > availableWidth {
+            size.width = availableWidth
+        }
+        return size
+    }
+
+    open override func collectionView(_ collectionView: UICollectionView, isShadowEnabledForSectionAt section: Int) -> Bool {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        return dataSource.collectionView(collectionView, isShadowEnabledForSectionAt: localSection)
+    }
+    
+    open override func collectionView(_ collectionView: UICollectionView, cornerRadiusForSectionAt section: Int) -> CGFloat {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        return dataSource.collectionView(collectionView, cornerRadiusForSectionAt: localSection)
+    }
+    
+    open override func collectionView(_ collectionView: UICollectionView, marginForSectionAt section: Int) -> UIEdgeInsets {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        return dataSource.collectionView(collectionView, cornerRadiusForSectionAt: localSection)
     }
 }

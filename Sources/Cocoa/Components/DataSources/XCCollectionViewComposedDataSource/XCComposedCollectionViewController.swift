@@ -165,7 +165,23 @@ extension XCComposedCollectionViewController: UICollectionViewDelegateFlexLayout
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, marginForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(horizontal: .defaultPadding, vertical: 0)
+        return composedDataSource.collectionView(collectionView, marginForSectionAt: section)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, isShadowEnabledAt section: Int) -> Bool {
+        return composedDataSource.collectionView(collectionView, isShadowEnabledForSectionAt: section)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, cornerRadiusAt section: Int) -> CGFloat {
+        return composedDataSource.collectionView(collectionView, cornerRadiusForSectionAt: section)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForHeaderInSection section: Int) -> CGFloat {
+        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section).height
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForFooterInSection section: Int) -> CGFloat {
+        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section).height
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, paddingForSectionAt section: Int) -> UIEdgeInsets {
@@ -186,13 +202,5 @@ extension XCComposedCollectionViewController: UICollectionViewDelegateFlexLayout
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, zIndexForItemAt indexPath: IndexPath) -> Int {
         return 0
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForHeaderInSection section: Int) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section).height
-    }
-    
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForFooterInSection section: Int) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section).height
     }
 }

@@ -86,9 +86,6 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
             let headerFooterWidth = contentWidth - sectionMargin.left - sectionMargin.right
             let headerHeight = headerSize(forSectionAt: section)
             let footerHeight = footerSize(forSectionAt: section)
-            
-            // maximum value of (height + padding bottom + margin bottom)
-            var prevItemBottom: CGFloat = 0
 
             offset.x = sectionMargin.left + sectionPadding.left // start from left
 
@@ -186,6 +183,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         sectionBackgroundAttributes.removeAll()
         for section in 0..<collectionView.numberOfSections {
             guard
+                isShadowEnabled(forSectionAt: section),
                 let minYAttribute = self.minYSectionAttribute[section],
                 let maxYAttribute = self.maxYSectionAttribute[section]
             else {
