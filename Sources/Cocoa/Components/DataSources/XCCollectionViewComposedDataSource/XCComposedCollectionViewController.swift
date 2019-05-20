@@ -192,11 +192,11 @@ extension XCComposedCollectionViewController: UICollectionViewDelegateFlexLayout
         return 0
     }
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForHeaderInSection section: Int) -> CGSize {
-        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section)
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForHeaderInSection section: Int) -> CGFloat {
+        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section).height
     }
     
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForFooterInSection section: Int) -> CGSize {
-        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section)
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForFooterInSection section: Int) -> CGFloat {
+        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section).height
     }
 }

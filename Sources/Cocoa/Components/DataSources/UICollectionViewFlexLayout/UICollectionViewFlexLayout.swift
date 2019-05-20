@@ -84,6 +84,8 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
             let sectionMargin = self.margin(forSectionAt: section)
             let sectionPadding = self.padding(forSectionAt: section)
             let headerFooterWidth = contentWidth - sectionMargin.left - sectionMargin.right
+            let headerHeight = headerSize(forSectionAt: section)
+            let footerHeight = footerSize(forSectionAt: section)
 
             // maximum value of (height + padding bottom + margin bottom) in current row
             var maxItemBottom: CGFloat = 0
@@ -96,12 +98,14 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
                 offset.y += sectionVerticalSpacing + sectionMargin.top + sectionPadding.top // accumulated
             }
 
-            let headerHeight = headerSize(forSectionAt: section)
             if itemCount > 0, headerHeight > 0 {
                 let headerIndex = IndexPath(item: 0, section: section)
                 let attributes = Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: headerIndex).apply {
                     $0.size = CGSize(width: headerFooterWidth, height: headerHeight)
-                    $0.frame.origin = offset
+                    $0.frame.origin.x = offset.x
+                    $0.frame.origin.y = offset.y
+                    $0.cornerRadius = cornerRadius(forSectionAt: section)
+                    $0.corners = TileStyle.top.corners
                 }
                 headerAttributes[headerIndex] = attributes
                 calculateMinMaxAttributes(with: attributes, in: section)
@@ -134,15 +138,14 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
                     $0.zIndex = zIndex(forItemAt: indexPath)
                     $0.cornerRadius = cornerRadius(forSectionAt: section)
 
-                    if itemCount == 1 {
-                        $0.corners = TileStyle.both.corners
-                    } else if item == 0 {
-                        $0.corners = TileStyle.top.corners
-                    } else if item == itemCount - 1 {
-                        $0.corners = TileStyle.bottom.corners
-                    } else {
-                        $0.corners = TileStyle.none.corners
+                    var corners: UIRectCorner =  TileStyle.none.corners
+                    if item == 0 && headerHeight == 0 {
+                        corners.formUnion(TileStyle.top.corners)
                     }
+                    if item == itemCount - 1 && footerHeight == 0 {
+                        corners.formUnion(TileStyle.bottom.corners)
+                    }
+                    $0.corners = corners
                 }
 
                 offset.x += itemMargin.left + itemPadding.left + itemSize.width + itemPadding.right + itemMargin.right
@@ -151,16 +154,22 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
                 calculateMinMaxAttributes(with: attributes, in: section)
             }
 
-            let footerHeight = footerSize(forSectionAt: section)
             if itemCount > 0, footerHeight > 0 {
                 let footerIndex = IndexPath(item: 0, section: section)
-                let attributes = Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: footerIndex).apply {
+                let attributes = Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: footerIndex).apply {
                     $0.size = CGSize(width: headerFooterWidth, height: footerHeight)
                     $0.frame.origin = offset
+                    $0.cornerRadius = cornerRadius(forSectionAt: section)
+                    $0.corners = TileStyle.bottom.corners
                 }
+
                 footerAttributes[footerIndex] = attributes
                 calculateMinMaxAttributes(with: attributes, in: section)
                 offset.y += footerHeight
+            }
+
+            if itemCount > 0 {
+                offset.y += maxItemBottom + sectionPadding.bottom + sectionMargin.bottom
             }
 
             cachedContentSize = CGSize(width: contentWidth, height: offset.y)
