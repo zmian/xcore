@@ -362,3 +362,13 @@ extension XCCollectionViewCell {
         contentView.roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
     }
 }
+
+extension XCCollectionReusableView {
+    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        guard let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes else {
+            return
+        }
+        roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
+    }
+}
