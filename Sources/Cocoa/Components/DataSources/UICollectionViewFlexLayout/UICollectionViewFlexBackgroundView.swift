@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class UICollectionViewFlexBackgroundView: XCCollectionReusableView {
+final class UICollectionViewFlexBackgroundView: UICollectionReusableView {
     override class var layerClass: AnyClass {
         return CAShapeLayer.self
     }
@@ -31,14 +31,27 @@ final class UICollectionViewFlexBackgroundView: XCCollectionReusableView {
         }
     }
 
-    override func commonInit() {
-        super.commonInit()
+    // MARK: Init Methods
+    
+    public convenience init() {
+        self.init(frame: .zero)
+    }
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+
+    func commonInit() {
         self.clipsToBounds = false
         setupShadow()
         super.backgroundColor = .clear
         backgroundColor = .clear
-        corners = .allCorners
-        _cornerRadius = 11
     }
 
     override var backgroundColor: UIColor? {
