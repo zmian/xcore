@@ -24,23 +24,59 @@
 
 import UIKit
 
+// MARK: - UIViewController
+
 extension UIViewController {
     static func runOnceSwapSelectors() {
         swizzle(
             UIViewController.self,
-            originalSelector: #selector(UIViewController.viewDidLoad),
-            swizzledSelector: #selector(UIViewController.swizzled_viewDidLoad)
+            originalSelector: #selector(UIViewController.viewDidAppear),
+            swizzledSelector: #selector(UIViewController.swizzled_viewDidAppear)
+        )
+
+        swizzle(
+            UIViewController.self,
+            originalSelector: #selector(UIViewController.viewWillDisappear),
+            swizzledSelector: #selector(UIViewController.swizzled_viewWillDisappear)
         )
 
         swizzle_hidesBottomBarWhenPushed_runOnceSwapSelectors()
         swizzle_chrome_runOnceSwapSelectors()
     }
+}
 
-    @objc private func swizzled_viewDidLoad() {
-        self.swizzled_viewDidLoad()
-        _addKeyboardNotificationObservers()
+extension UIViewController {
+    private struct AssociatedKey {
+        static var didAddKeyboardNotificationObservers = "didAddKeyboardNotificationObservers"
+    }
+
+    private var didAddKeyboardNotificationObservers: Bool {
+        get { return associatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, default: false) }
+        set { setAssociatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, value: newValue) }
+    }
+
+    @objc private func swizzled_viewDidAppear() {
+        self.swizzled_viewDidAppear()
+        // Swizzled `viewDidAppear` and `viewWillDisappear` for keyboard notifications.
+        // Registering keyboard notifications in `viewDidLoad` results in unexpected
+        // keyboard behavior: when popping the viewController while the keyboard is
+        // presented, keyboard will not dismiss in concurrent with the popping progress.
+        if !didAddKeyboardNotificationObservers {
+            _addKeyboardNotificationObservers()
+            didAddKeyboardNotificationObservers = true
+        }
+    }
+
+    @objc private func swizzled_viewWillDisappear() {
+        self.swizzled_viewWillDisappear()
+        if didAddKeyboardNotificationObservers {
+            _removeKeyboardNotificationObservers()
+            didAddKeyboardNotificationObservers = false
+        }
     }
 }
+
+// MARK: - UIView
 
 extension UIView {
     static func _runOnceSwapSelectors() {
