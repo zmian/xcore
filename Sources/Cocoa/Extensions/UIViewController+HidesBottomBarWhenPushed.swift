@@ -55,10 +55,9 @@ extension UIViewController {
     }
 
     /// Swizzled viewDidAppear and viewWillDisappear for keyboard notifications.
-    /// Registering keyboard notifications in `viewDidLoad` results in
-    /// unexpected keyboard behavior: when popping the viewController
-    /// while the keyboard is presented, keyboard will not dismiss in concurrent
-    /// with the popping progress.
+    /// Registering keyboard notifications in `viewDidLoad` results in unexpected
+    /// keyboard behavior: when popping the viewController while the keyboard is
+    /// presented, keyboard will not dismiss in concurrent with the popping progress.
     @objc private func swizzled_viewDidAppear() {
         self.swizzled_viewDidAppear()
         if !didAddKeyboardNotificationObservers {
@@ -79,8 +78,8 @@ extension UIViewController {
     /// respected when a view controller is pushed on to a navigation controller.
     ///
     /// The default behavior of the `hidesBottomBarWhenPushed` property of
-    /// `UIViewController` is to ignores the value of any subsequent view controllers
-    /// that are pushed on to the stack.
+    /// `UIViewController` is to ignores the value of any subsequent view
+    /// controllers that are pushed on to the stack.
     ///
     /// According to the documentation: **If true, the bottom bar remains hidden
     /// until the view controller is popped from the stack.**

@@ -157,6 +157,7 @@ extension UIViewController {
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
+
         NotificationCenter.default.removeObserver(
             self,
             name: UIResponder.keyboardWillHideNotification,
@@ -176,8 +177,6 @@ extension UIViewController {
         // `firstResponder != nil` check ensures that we are not dispatching keyboard
         // frame change events to any previous screen on swipe back when the keyboard
         // is active.
-        // `payload.frameBegin.origin.y != payload.frameEnd.origin.y` guarantees
-        // notification is only sent out on y value updates.
         guard
             isViewLoaded,
             let observable = self as? KeyboardObservable,
@@ -231,8 +230,6 @@ extension UIView {
         // `firstResponder != nil` check ensures that we are not dispatching keyboard
         // frame change events to any previous screen on swipe back when the keyboard
         // is active.
-        // `payload.frameBegin.origin.y != payload.frameEnd.origin.y` guarantees
-        // notification is only sent out on y value updates.
         guard
             let observable = self as? KeyboardObservable,
             firstResponder != nil,
