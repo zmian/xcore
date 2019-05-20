@@ -30,8 +30,17 @@ extension UIViewController {
             return
         }
 
-        swizzle(UIViewController.self, originalSelector: #selector(UIViewController.viewWillAppear(_:)), swizzledSelector: #selector(UIViewController.swizzled_viewWillAppear(_:)))
-        swizzle(UIViewController.self, originalSelector: #selector(UIViewController.setNeedsStatusBarAppearanceUpdate), swizzledSelector: #selector(UIViewController.swizzled_setNeedsStatusBarAppearanceUpdate))
+        swizzle(
+            UIViewController.self,
+            originalSelector: #selector(UIViewController.viewWillAppear(_:)),
+            swizzledSelector: #selector(UIViewController.swizzled_viewWillAppear(_:))
+        )
+
+        swizzle(
+            UIViewController.self,
+            originalSelector: #selector(UIViewController.setNeedsStatusBarAppearanceUpdate),
+            swizzledSelector: #selector(UIViewController.swizzled_setNeedsStatusBarAppearanceUpdate)
+        )
     }
 
     private struct AssociatedKey {

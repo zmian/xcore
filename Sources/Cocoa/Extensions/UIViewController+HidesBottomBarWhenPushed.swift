@@ -37,8 +37,8 @@ extension UIViewController {
     /// respected when a view controller is pushed on to a navigation controller.
     ///
     /// The default behavior of the `hidesBottomBarWhenPushed` property of
-    /// `UIViewController` is to ignores the value of any subsequent view controllers
-    /// that are pushed on to the stack.
+    /// `UIViewController` is to ignores the value of any subsequent view
+    /// controllers that are pushed on to the stack.
     ///
     /// According to the documentation: **If true, the bottom bar remains hidden
     /// until the view controller is popped from the stack.**

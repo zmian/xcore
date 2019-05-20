@@ -63,8 +63,8 @@ public struct KeyboardPayload {
         return frameEnd.origin.y == UIScreen.main.bounds.height ? 0 : frameEnd.height
     }
 
-    /// The starting frame rectangle of the keyboard in screen coordinates. The frame
-    /// rectangle reflects the current orientation of the device.
+    /// The starting frame rectangle of the keyboard in screen coordinates. The
+    /// frame rectangle reflects the current orientation of the device.
     public let frameBegin: CGRect
 
     /// The ending frame rectangle of the keyboard in screen coordinates. The frame
@@ -118,15 +118,15 @@ extension KeyboardPayload: CustomDebugStringConvertible {
     }
 }
 
-// MARK: UIViewController+Keyboard
+// MARK: - UIViewController+Keyboard
 
 extension UIViewController {
     /// This method automatically registers keyboard notification observers for any
     /// view controller that conforms to `KeyboardObservable` using `viewWillAppear`
     /// method swizzling. Registering notifications in `viewDidLoad` results in
-    /// unexpected keyboard behavior: when leveraging `interactivePopGestureRecognizer`
-    /// to swipe back while the keyboard is presented, keyboard will not dismiss in concurrent
-    /// with the popping progress.
+    /// unexpected keyboard behavior: when leveraging
+    /// `interactivePopGestureRecognizer` to swipe back while the keyboard is
+    /// presented, keyboard will not dismiss in concurrent with the popping progress.
     func _addKeyboardNotificationObservers() {
         // Only add the keyboard notification observers if self conforms to `KeyboardObservable`.
         guard (self as? KeyboardObservable) != nil else {
@@ -148,9 +148,9 @@ extension UIViewController {
         )
     }
 
-    /// This method automatically deregisters keyboard notification observers for any
-    /// view controller that conforms to `KeyboardObservable` using `viewWillDisappear`
-    /// method swizzling.
+    /// This method automatically deregisters keyboard notification observers for
+    /// any view controller that conforms to `KeyboardObservable` using
+    /// `viewWillDisappear` method swizzling.
     func _removeKeyboardNotificationObservers() {
         NotificationCenter.default.removeObserver(
             self,
@@ -191,7 +191,7 @@ extension UIViewController {
     }
 }
 
-// MARK: UIView+Keyboard
+// MARK: - UIView+Keyboard
 
 extension UIView {
     /// This method automatically registers keyboard notification observers for any
