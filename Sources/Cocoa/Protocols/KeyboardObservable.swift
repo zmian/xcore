@@ -60,7 +60,7 @@ public protocol KeyboardObservable {
 public struct KeyboardPayload {
     /// The final height of the keyboard in the current orientation of the device.
     public var height: CGFloat {
-        return frameEnd.height
+        return frameEnd.origin.y == UIScreen.main.bounds.height ? 0 : frameEnd.height
     }
 
     /// The starting frame rectangle of the keyboard in screen coordinates. The frame
@@ -99,7 +99,7 @@ public struct KeyboardPayload {
         }
 
         self.frameBegin = frameBegin
-        self.frameEnd = willShow ? frameEnd : .zero
+        self.frameEnd = frameEnd
         self.animationDuration = animationDuration
         self.animationCurve = animationCurve
         self.isLocal = isLocal
@@ -122,8 +122,11 @@ extension KeyboardPayload: CustomDebugStringConvertible {
 
 extension UIViewController {
     /// This method automatically registers keyboard notification observers for any
-    /// view controller that conforms to `KeyboardObservable` using `viewDidLoad`
-    /// method swizzling.
+    /// view controller that conforms to `KeyboardObservable` using `viewWillAppear`
+    /// method swizzling. Registering notifications in `viewDidLoad` results in
+    /// unexpected keyboard behavior: when leveraging `interactivePopGestureRecognizer`
+    /// to swipe back while the keyboard is presented, keyboard will not dismiss in concurrent
+    /// with the popping progress.
     func _addKeyboardNotificationObservers() {
         // Only add the keyboard notification observers if self conforms to `KeyboardObservable`.
         guard (self as? KeyboardObservable) != nil else {
@@ -145,6 +148,22 @@ extension UIViewController {
         )
     }
 
+    /// This method automatically deregisters keyboard notification observers for any
+    /// view controller that conforms to `KeyboardObservable` using `viewWillDisappear`
+    /// method swizzling.
+    func _removeKeyboardNotificationObservers() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+
     @objc private func keyboardWillShow(_ notification: Notification) {
         internalKeyboardFrameDidChange(notification, willShow: true)
     }
@@ -157,6 +176,8 @@ extension UIViewController {
         // `firstResponder != nil` check ensures that we are not dispatching keyboard
         // frame change events to any previous screen on swipe back when the keyboard
         // is active.
+        // `payload.frameBegin.origin.y != payload.frameEnd.origin.y` guarantees
+        // notification is only sent out on y value updates.
         guard
             isViewLoaded,
             let observable = self as? KeyboardObservable,
@@ -167,9 +188,7 @@ extension UIViewController {
         }
 
         observable.keyboardFrameDidChange(payload)
-        UIView.animate(withDuration: .fast) {
-            self.view.layoutIfNeeded()
-        }
+        view.layoutIfNeeded()
     }
 }
 
@@ -212,6 +231,8 @@ extension UIView {
         // `firstResponder != nil` check ensures that we are not dispatching keyboard
         // frame change events to any previous screen on swipe back when the keyboard
         // is active.
+        // `payload.frameBegin.origin.y != payload.frameEnd.origin.y` guarantees
+        // notification is only sent out on y value updates.
         guard
             let observable = self as? KeyboardObservable,
             firstResponder != nil,
@@ -221,9 +242,7 @@ extension UIView {
         }
 
         observable.keyboardFrameDidChange(payload)
-        UIView.animate(withDuration: .fast) {
-            self.layoutIfNeeded()
-        }
+        layoutIfNeeded()
     }
 }
 
