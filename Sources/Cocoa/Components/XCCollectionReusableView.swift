@@ -78,3 +78,16 @@ extension XCCollectionReusableView {
         didTap?()
     }
 }
+
+// MARK: FlexLayout
+
+extension XCCollectionReusableView {
+    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        guard let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes else {
+            return
+        }
+        roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
+    }
+}
+

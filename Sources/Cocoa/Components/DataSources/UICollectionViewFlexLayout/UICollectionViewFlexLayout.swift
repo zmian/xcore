@@ -87,12 +87,12 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
             let headerHeight = headerSize(forSectionAt: section)
             let footerHeight = footerSize(forSectionAt: section)
 
-            offset.x = sectionMargin.left + sectionPadding.left // start from left
+            offset.x = sectionMargin.left + sectionPadding.left
 
             let itemCount = collectionView.numberOfItems(inSection: section)
 
             if itemCount > 0 {
-                offset.y += sectionVerticalSpacing + sectionMargin.top + sectionPadding.top // accumulated
+                offset.y += sectionVerticalSpacing + sectionMargin.top + sectionPadding.top
             }
 
             if itemCount > 0, headerHeight > 0 {
@@ -159,9 +159,10 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
             if itemCount > 0 {
                 offset.y += sectionPadding.bottom + sectionMargin.bottom
             }
-
-            cachedContentSize = CGSize(width: contentWidth, height: offset.y)
         }
+        let lastCollectionSection = collectionView.numberOfSections
+        let bottomSpacing = verticalSpacing(betweenSectionAt: lastCollectionSection - 1, and: lastCollectionSection)
+        cachedContentSize = CGSize(width: contentWidth, height: offset.y + bottomSpacing)
     }
 
     private func calculateMinMaxAttributes(with attributes: Attributes, in section: Int) {
@@ -348,25 +349,5 @@ extension UICollectionViewFlexLayout {
     public func isShadowEnabled(forSectionAt section: Int) -> Bool {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return true }
         return delegate.collectionView?(collectionView, layout: self, isShadowEnabledAt: section) ?? true
-    }
-}
-
-extension XCCollectionViewCell {
-    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.apply(layoutAttributes)
-        guard let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes else {
-            return
-        }
-        contentView.roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
-    }
-}
-
-extension XCCollectionReusableView {
-    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.apply(layoutAttributes)
-        guard let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes else {
-            return
-        }
-        roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
     }
 }

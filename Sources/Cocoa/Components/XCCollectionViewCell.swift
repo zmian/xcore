@@ -50,3 +50,15 @@ open class XCCollectionViewCell: UICollectionViewCell {
     /// This method is called when self is initialized using any of the relevant `init` methods.
     open func commonInit() {}
 }
+
+// MARK: FlexLayout
+
+extension XCCollectionViewCell {
+    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        guard let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes else {
+            return
+        }
+        contentView.roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
+    }
+}

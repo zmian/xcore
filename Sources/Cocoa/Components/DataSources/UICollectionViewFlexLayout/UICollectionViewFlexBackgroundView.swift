@@ -77,6 +77,8 @@ final class UICollectionViewFlexBackgroundView: UICollectionReusableView {
         layer.shadowRadius = 1
         layer.shadowOpacity = Float(0.3)
         layer.shadowPath = shapeLayer.path
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
     }
 
     fileprivate func path(rect: CGRect? = nil) -> UIBezierPath {
