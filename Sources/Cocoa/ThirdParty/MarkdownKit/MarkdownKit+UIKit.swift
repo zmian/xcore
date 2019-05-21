@@ -360,9 +360,23 @@ extension UITextView {
 extension UILabel {
     static func swizzle_runOnceSwapSelectors() {
         #if canImport(Haring)
-        swizzle(UILabel.self, originalSelector: #selector(getter: UILabel.text), swizzledSelector: #selector(getter: UILabel.swizzled_text))
-        swizzle(UILabel.self, originalSelector: #selector(setter: UILabel.text), swizzledSelector: #selector(setter: UILabel.swizzled_text))
-        swizzle(UILabel.self, originalSelector: #selector(setter: UILabel.textColor), swizzledSelector: #selector(UILabel.swizzled_textColor(_:)))
+        swizzle(
+            UILabel.self,
+            originalSelector: #selector(getter: UILabel.text),
+            swizzledSelector: #selector(getter: UILabel.swizzled_text)
+        )
+
+        swizzle(
+            UILabel.self,
+            originalSelector: #selector(setter: UILabel.text),
+            swizzledSelector: #selector(setter: UILabel.swizzled_text)
+        )
+
+        swizzle(
+            UILabel.self,
+            originalSelector: #selector(setter: UILabel.textColor),
+            swizzledSelector: #selector(UILabel.swizzled_textColor(_:))
+        )
         #endif
     }
 }
@@ -370,8 +384,17 @@ extension UILabel {
 extension UIButton {
     static func swizzle_runOnceSwapSelectors() {
         #if canImport(Haring)
-        swizzle(UIButton.self, originalSelector: #selector(UIButton.title(for:)), swizzledSelector: #selector(UIButton.swizzled_title(for:)))
-        swizzle(UIButton.self, originalSelector: #selector(UIButton.setTitle(_:for:)), swizzledSelector: #selector(UIButton.swizzled_setTitle(_:for:)))
+        swizzle(
+            UIButton.self,
+            originalSelector: #selector(UIButton.title(for:)),
+            swizzledSelector: #selector(UIButton.swizzled_title(for:))
+        )
+
+        swizzle(
+            UIButton.self,
+            originalSelector: #selector(UIButton.setTitle(_:for:)),
+            swizzledSelector: #selector(UIButton.swizzled_setTitle(_:for:))
+        )
         #endif
     }
 }
@@ -379,9 +402,23 @@ extension UIButton {
 extension UITextView {
     static func swizzle_runOnceSwapSelectors() {
         #if canImport(Haring)
-        swizzle(UITextView.self, originalSelector: #selector(getter: UITextView.text), swizzledSelector: #selector(getter: UITextView.swizzled_text))
-        swizzle(UITextView.self, originalSelector: #selector(setter: UITextView.text), swizzledSelector: #selector(setter: UITextView.swizzled_text))
-        swizzle(UITextView.self, originalSelector: #selector(setter: UITextView.textColor), swizzledSelector: #selector(UITextView.swizzled_textColor(_:)))
+        swizzle(
+            UITextView.self,
+            originalSelector: #selector(getter: UITextView.text),
+            swizzledSelector: #selector(getter: UITextView.swizzled_text)
+        )
+
+        swizzle(
+            UITextView.self,
+            originalSelector: #selector(setter: UITextView.text),
+            swizzledSelector: #selector(setter: UITextView.swizzled_text)
+        )
+
+        swizzle(
+            UITextView.self,
+            originalSelector: #selector(setter: UITextView.textColor),
+            swizzledSelector: #selector(UITextView.swizzled_textColor(_:))
+        )
         #endif
     }
 }
