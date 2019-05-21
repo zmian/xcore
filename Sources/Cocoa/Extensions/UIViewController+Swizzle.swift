@@ -30,14 +30,14 @@ extension UIViewController {
     static func runOnceSwapSelectors() {
         swizzle(
             UIViewController.self,
-            originalSelector: #selector(UIViewController.viewDidAppear),
-            swizzledSelector: #selector(UIViewController.swizzled_viewDidAppear)
+            originalSelector: #selector(UIViewController.viewDidAppear(_:)),
+            swizzledSelector: #selector(UIViewController.swizzled_viewDidAppear(_:))
         )
 
         swizzle(
             UIViewController.self,
-            originalSelector: #selector(UIViewController.viewWillDisappear),
-            swizzledSelector: #selector(UIViewController.swizzled_viewWillDisappear)
+            originalSelector: #selector(UIViewController.viewWillDisappear(_:)),
+            swizzledSelector: #selector(UIViewController.swizzled_viewWillDisappear(_:))
         )
 
         swizzle_hidesBottomBarWhenPushed_runOnceSwapSelectors()
@@ -55,8 +55,8 @@ extension UIViewController {
         set { setAssociatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, value: newValue) }
     }
 
-    @objc private func swizzled_viewDidAppear() {
-        self.swizzled_viewDidAppear()
+    @objc private func swizzled_viewDidAppear(_ animated: Bool) {
+        self.swizzled_viewDidAppear(animated)
         // Swizzled `viewDidAppear` and `viewWillDisappear` for keyboard notifications.
         // Registering keyboard notifications in `viewDidLoad` results in unexpected
         // keyboard behavior: when popping the viewController while the keyboard is
@@ -67,8 +67,8 @@ extension UIViewController {
         }
     }
 
-    @objc private func swizzled_viewWillDisappear() {
-        self.swizzled_viewWillDisappear()
+    @objc private func swizzled_viewWillDisappear(_ animated: Bool) {
+        self.swizzled_viewWillDisappear(animated)
         if didAddKeyboardNotificationObservers {
             _removeKeyboardNotificationObservers()
             didAddKeyboardNotificationObservers = false
