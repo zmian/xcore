@@ -43,8 +43,8 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
     private var sectionBackgroundAttributes: [Int: Attributes] = [:]
     private var cachedContentSize: CGSize = .zero
 
-    private var minYSectionAttribute: [Int: Attributes] = [:]
-    private var maxYSectionAttribute: [Int: Attributes] = [:]
+    private var minSection: [Int: CGPoint] = [:]
+    private var maxSection: [Int: CGPoint] = [:]
 
     private(set) var minimumItemZIndex: Int = 0
 
@@ -77,8 +77,8 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         footerAttributes.removeAll()
         headerAttributes.removeAll()
 
-        minYSectionAttribute.removeAll()
-        maxYSectionAttribute.removeAll()
+        minSection.removeAll()
+        maxSection.removeAll()
 
         for section in 0..<collectionView.numberOfSections {
             let itemCount = collectionView.numberOfItems(inSection: section)
@@ -169,14 +169,17 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
     }
 
     private func calculateMinMaxAttributes(with attributes: Attributes, in section: Int) {
-        if self.minYSectionAttribute[section]?.frame.minY ?? .greatestFiniteMagnitude > attributes.frame.minY {
-            self.minYSectionAttribute[section] = attributes
-        }
-        
-        if self.maxYSectionAttribute[section]?.frame.maxY ?? -.greatestFiniteMagnitude < attributes.frame.maxY {
-            self.maxYSectionAttribute[section] = attributes
-        }
-        
+        var minimum: CGPoint = minSection[section] ?? CGPoint(x: CGFloat.greatestFiniteMagnitude, y: CGFloat.greatestFiniteMagnitude)
+        var maximum: CGPoint = maxSection[section] ?? CGPoint(x: 0.0, y: 0.0)
+
+        if attributes.frame.minX < minimum.x { minimum.x = attributes.frame.minX }
+        if attributes.frame.minY < minimum.y { minimum.y = attributes.frame.minY }
+        if attributes.frame.maxX > maximum.x { maximum.x = attributes.frame.maxX }
+        if attributes.frame.maxY > maximum.y { maximum.y = attributes.frame.maxY }
+
+        minSection[section] = minimum
+        maxSection[section] = maximum
+
         if self.minimumItemZIndex > attributes.zIndex {
             self.minimumItemZIndex = attributes.zIndex
         }
@@ -188,34 +191,24 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         for section in 0..<collectionView.numberOfSections {
             guard
                 isShadowEnabled(forSectionAt: section),
-                let minYAttribute = self.minYSectionAttribute[section],
-                let maxYAttribute = self.maxYSectionAttribute[section]
+                let minAttribute = minSection[section],
+                let maxAttribute = maxSection[section]
             else {
                 continue
             }
 
-            let minY = minYAttribute.frame.minY
-            let maxY = maxYAttribute.frame.maxY
-            let sectionMargin = self.margin(forSectionAt: section)
-            let width = collectionView.frame.width - sectionMargin.left - sectionMargin.right
-            let height = maxY - minY
+            let backgroundRect = CGRect(origin: minAttribute, size: CGSize(width: maxAttribute.x - minAttribute.x, height: maxAttribute.y - minAttribute.y))
 
-            guard width > 0 && height > 0 else { continue }
+            guard backgroundRect.size.width > 0, backgroundRect.size.height > 0 else { continue }
 
             let attributes = Attributes(
                 forDecorationViewOfKind: UICollectionElementKindSectionBackground,
                 with: IndexPath(item: 0, section: section)
-            )
-
-            attributes.cornerRadius = cornerRadius(forSectionAt: section)
-            attributes.corners = .allCorners
-
-            attributes.frame = CGRect(
-                x: sectionMargin.left,
-                y: minY,
-                width: width,
-                height: height
-            )
+            ).apply {
+                $0.cornerRadius = cornerRadius(forSectionAt: section)
+                $0.corners = .allCorners
+                $0.frame = backgroundRect
+            }
             sectionBackgroundAttributes[section] = attributes
         }
     }
