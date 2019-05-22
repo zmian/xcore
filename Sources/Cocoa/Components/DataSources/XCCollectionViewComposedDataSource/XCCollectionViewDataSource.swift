@@ -243,6 +243,30 @@ extension XCCollectionViewDataSource {
         return cell.contentView.sizeFitting(width: availableWidth)
     }
 
+    open func collectionView(_ collectionView: UICollectionView, sizeForHeaderInSection section: Int, availableWidth: CGFloat) -> CGSize {
+        guard let sizeCollectionView = _sizeCollectionView else {
+            return .zero
+        }
+        
+        if let headerView = self.collectionView(sizeCollectionView, viewForHeaderInSectionAt: IndexPath(item: 0, section: section)) {
+            return headerView.sizeFitting(width: availableWidth)
+        } else {
+            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.headerReferenceSize ?? 0
+        }
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, sizeForFooterInSection section: Int, availableWidth: CGFloat) -> CGSize {
+        guard let sizeCollectionView = _sizeCollectionView else {
+            return .zero
+        }
+        
+        if let footerView = self.collectionView(sizeCollectionView, viewForFooterInSectionAt: IndexPath(item: 0, section: section)) {
+            return footerView.sizeFitting(width: availableWidth)
+        } else {
+            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize ?? 0
+        }
+    }
+
     open func collectionView(_ collectionView: UICollectionView, isShadowEnabledForSectionAt section: Int) -> Bool {
         return true
     }

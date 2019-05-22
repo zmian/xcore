@@ -34,6 +34,8 @@ private extension UICollectionViewFlexLayout {
 }
 
 open class UICollectionViewFlexLayout: UICollectionViewLayout {
+    private let numberOfColumns = 2
+    
     private typealias Attributes = UICollectionViewFlexLayoutAttributes
     private var layoutAttributes: [IndexPath: Attributes] = [:]
     private var footerAttributes: [IndexPath: Attributes] = [:]
@@ -68,8 +70,8 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
     private func prepareItemAttributes() {
         guard let collectionView = self.collectionView else { return }
         let contentWidth = collectionView.frame.width
-
-        var offset: CGPoint = .zero
+        let columnWidth = contentWidth / CGFloat(numberOfColumns)
+        var columnYOffset = [CGFloat](repeating: 0, count: numberOfColumns)
 
         layoutAttributes.removeAll()
         footerAttributes.removeAll()
@@ -79,26 +81,32 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         maxYSectionAttribute.removeAll()
 
         for section in 0..<collectionView.numberOfSections {
-            let sectionVerticalSpacing = section > 0 ? verticalSpacing(betweenSectionAt: section - 1, and: section) : 0
+            let itemCount = collectionView.numberOfItems(inSection: section)
+            guard itemCount > 0 else { continue }
+
+            let currentColumn = minColumnIndex(columnYOffset)
 
             let sectionMargin = self.margin(forSectionAt: section)
-            let sectionPadding = self.padding(forSectionAt: section)
-            let headerFooterWidth = contentWidth - sectionMargin.left - sectionMargin.right
-            let headerHeight = headerSize(forSectionAt: section)
-            let footerHeight = footerSize(forSectionAt: section)
 
-            offset.x = sectionMargin.left + sectionPadding.left
+             // first column -> full leading margin , other columns -> half leading margin
+            // last column -> full trailing margin, other columns -> half trailing margin
+            let leftMargin = currentColumn == 0 ? sectionMargin.left : sectionMargin.left / 2
+            let rightMargin = currentColumn == numberOfColumns - 1 ? sectionMargin.right : sectionMargin.right / 2
 
-            let itemCount = collectionView.numberOfItems(inSection: section)
+            let availableWidth = columnWidth - leftMargin - rightMargin
+            var offset = CGPoint(x: columnWidth * CGFloat(currentColumn) + leftMargin, y: columnYOffset[currentColumn])
 
-            if itemCount > 0 {
-                offset.y += sectionVerticalSpacing + sectionMargin.top + sectionPadding.top
-            }
+            let sectionVerticalSpacing =  offset.y > 0 ? verticalSpacing(betweenSectionAt: section - 1, and: section) : 0
 
-            if itemCount > 0, headerHeight > 0 {
+            let headerHeight = self.headerHeight(forSectionAt: section, width: availableWidth)
+            let footerHeight = self.footerHeight(forSectionAt: section, width: availableWidth)
+
+            offset.y += sectionVerticalSpacing + sectionMargin.top
+
+            if headerHeight > 0 {
                 let headerIndex = IndexPath(item: 0, section: section)
                 let attributes = Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: headerIndex).apply {
-                    $0.size = CGSize(width: headerFooterWidth, height: headerHeight)
+                    $0.size = CGSize(width: availableWidth, height: headerHeight)
                     $0.frame.origin.x = offset.x
                     $0.frame.origin.y = offset.y
                     $0.cornerRadius = cornerRadius(forSectionAt: section)
@@ -111,18 +119,14 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
 
             for item in 0..<itemCount {
                 let indexPath = IndexPath(item: item, section: section)
-                let itemMargin = self.margin(forItemAt: indexPath)
-                let itemPadding = self.padding(forItemAt: indexPath)
-                let itemSize = self.size(forItemAt: indexPath)
-
+                let itemHeight = height(forItemAt: indexPath, width: availableWidth)
                 if item > 0 {
                     offset.y += self.verticalSpacing(betweenItemAt: IndexPath(item: item - 1, section: section), and: indexPath)
-                    offset.y += itemMargin.top + itemPadding.top
                 }
 
                 let attributes = Attributes(forCellWith: indexPath).apply {
-                    $0.size = itemSize
-                    $0.frame.origin.x = offset.x + itemMargin.left + itemPadding.left
+                    $0.size = CGSize(width: availableWidth, height: itemHeight)
+                    $0.frame.origin.x = offset.x
                     $0.frame.origin.y = offset.y
                     $0.zIndex = zIndex(forItemAt: indexPath)
                     $0.cornerRadius = cornerRadius(forSectionAt: section)
@@ -138,13 +142,13 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
                 }
                 layoutAttributes[indexPath] = attributes
                 calculateMinMaxAttributes(with: attributes, in: section)
-                offset.y += attributes.size.height + itemMargin.bottom + itemPadding.bottom
+                offset.y += attributes.size.height
             }
 
-            if itemCount > 0, footerHeight > 0 {
+            if footerHeight > 0 {
                 let footerIndex = IndexPath(item: 0, section: section)
                 let attributes = Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: footerIndex).apply {
-                    $0.size = CGSize(width: headerFooterWidth, height: footerHeight)
+                    $0.size = CGSize(width: availableWidth, height: footerHeight)
                     $0.frame.origin.x = offset.x
                     $0.frame.origin.y = offset.y
                     $0.cornerRadius = cornerRadius(forSectionAt: section)
@@ -156,13 +160,12 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
                 offset.y += footerHeight
             }
 
-            if itemCount > 0 {
-                offset.y += sectionPadding.bottom + sectionMargin.bottom
-            }
+            offset.y += sectionMargin.bottom
+            columnYOffset[currentColumn] = offset.y
         }
-        let lastCollectionSection = collectionView.numberOfSections
-        let bottomSpacing = verticalSpacing(betweenSectionAt: lastCollectionSection - 1, and: lastCollectionSection)
-        cachedContentSize = CGSize(width: contentWidth, height: offset.y + bottomSpacing)
+    
+        let maxColumnIndex = self.maxColumnIndex(columnYOffset)
+        cachedContentSize = CGSize(width: contentWidth, height: columnYOffset[maxColumnIndex])
     }
 
     private func calculateMinMaxAttributes(with attributes: Attributes, in section: Int) {
@@ -199,26 +202,19 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
 
             guard width > 0 && height > 0 else { continue }
 
-            let sectionPadding = self.padding(forSectionAt: section)
             let attributes = Attributes(
                 forDecorationViewOfKind: UICollectionElementKindSectionBackground,
                 with: IndexPath(item: 0, section: section)
             )
-
-            let itemMarginTop = self.margin(forItemAt: minYAttribute.indexPath).top
-            let itemMarginBottom = self.margin(forItemAt: maxYAttribute.indexPath).bottom
-
-            let itemPaddingTop = self.padding(forItemAt: minYAttribute.indexPath).top
-            let itemPaddingBottom = self.padding(forItemAt: maxYAttribute.indexPath).bottom
 
             attributes.cornerRadius = cornerRadius(forSectionAt: section)
             attributes.corners = .allCorners
 
             attributes.frame = CGRect(
                 x: sectionMargin.left,
-                y: minY - sectionPadding.top - itemPaddingTop - itemMarginTop,
+                y: minY,
                 width: width,
-                height: height + sectionPadding.top + sectionPadding.bottom + itemPaddingTop + itemPaddingBottom + itemMarginTop + itemMarginBottom
+                height: height
             )
             sectionBackgroundAttributes[section] = attributes
         }
@@ -265,22 +261,31 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
                 return super.layoutAttributesForDecorationView(ofKind: elementKind, at: indexPath)
         }
     }
+}
 
-    open func maximumWidth(forItemAt indexPath: IndexPath) -> CGFloat {
-        guard let collectionView = self.collectionView else { return 0 }
-        let sectionMargin = self.margin(forSectionAt: indexPath.section)
-        let sectionPadding = self.padding(forSectionAt: indexPath.section)
-        let itemMargin = self.margin(forItemAt: indexPath)
-        let itemPadding = self.padding(forItemAt: indexPath)
-        return collectionView.frame.width
-            - sectionMargin.left
-            - sectionPadding.left
-            - itemMargin.left
-            - itemPadding.left
-            - itemPadding.right
-            - itemMargin.right
-            - sectionPadding.right
-            - sectionMargin.right
+private extension UICollectionViewFlexLayout {
+    func minColumnIndex(_ columns: [CGFloat]) -> Int {
+        var index = 0
+        var minYOffset = CGFloat.infinity
+        for (i, columnOffset) in columns.enumerated() {
+            if columnOffset < minYOffset {
+                minYOffset = columnOffset
+                index = i
+            }
+        }
+        return index
+    }
+
+    func maxColumnIndex(_ columns: [CGFloat]) -> Int {
+        var index = 0
+        var maxYOffset: CGFloat = -1.0
+        for (i, columnOffset) in columns.enumerated() {
+            if columnOffset > maxYOffset {
+                maxYOffset = columnOffset
+                index = i
+            }
+        }
+        return index
     }
 }
 
@@ -289,9 +294,9 @@ extension UICollectionViewFlexLayout {
         return self.collectionView?.delegate as? UICollectionViewDelegateFlexLayout
     }
 
-    public func size(forItemAt indexPath: IndexPath) -> CGSize {
+    public func height(forItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return .zero }
-        return delegate.collectionView?(collectionView, layout: self, sizeForItemAt: indexPath) ?? .zero
+        return delegate.collectionView?(collectionView, layout: self, heightForItemAt: indexPath, width: width) ?? 0
     }
 
     public func verticalSpacing(betweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
@@ -305,25 +310,10 @@ extension UICollectionViewFlexLayout {
         return delegate.collectionView?(collectionView, layout: self, marginForSectionAt: section) ?? .zero
     }
 
-    public func padding(forSectionAt section: Int) -> UIEdgeInsets {
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return .zero }
-        return delegate.collectionView?(collectionView, layout: self, paddingForSectionAt: section) ?? .zero
-    }
-
     public func verticalSpacing(betweenItemAt indexPath: IndexPath, and nextIndexPath: IndexPath) -> CGFloat {
         guard indexPath != nextIndexPath else { return 0 }
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
         return delegate.collectionView?(collectionView, layout: self, verticalSpacingBetweenItemAt: indexPath, and: nextIndexPath) ?? 0
-    }
-
-    public func margin(forItemAt indexPath: IndexPath) -> UIEdgeInsets {
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return .zero }
-        return delegate.collectionView?(collectionView, layout: self, marginForItemAt: indexPath) ?? .zero
-    }
-
-    public func padding(forItemAt indexPath: IndexPath) -> UIEdgeInsets {
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return .zero }
-        return delegate.collectionView?(collectionView, layout: self, paddingForItemAt: indexPath) ?? .zero
     }
 
     public func zIndex(forItemAt indexPath: IndexPath) -> Int {
@@ -331,14 +321,14 @@ extension UICollectionViewFlexLayout {
         return delegate.collectionView?(collectionView, layout: self, zIndexForItemAt: indexPath) ?? 0
     }
 
-    public func headerSize(forSectionAt section: Int) -> CGFloat {
+    public func headerHeight(forSectionAt section: Int, width: CGFloat) -> CGFloat {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
-        return delegate.collectionView?(collectionView, layout: self, sizeForHeaderInSection: section) ?? 0
+        return delegate.collectionView?(collectionView, layout: self, heightForHeaderInSection: section, width: width) ?? 0
     }
 
-    public func footerSize(forSectionAt section: Int) -> CGFloat {
+    public func footerHeight(forSectionAt section: Int, width: CGFloat) -> CGFloat {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
-        return delegate.collectionView?(collectionView, layout: self, sizeForFooterInSection: section) ?? 0
+        return delegate.collectionView?(collectionView, layout: self, heightForFooterInSection: section, width: width) ?? 0
     }
 
     public func cornerRadius(forSectionAt section: Int) -> CGFloat {

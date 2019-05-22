@@ -156,8 +156,16 @@ extension XCComposedCollectionViewController: UICollectionViewDelegateFlowLayout
 // MARK: UICollectionViewDelegateFlexLayout
 
 extension XCComposedCollectionViewController: UICollectionViewDelegateFlexLayout {
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath, availableWidth: collectionViewLayout.maximumWidth(forItemAt: indexPath))
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, heightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
+        return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath, availableWidth: width).height
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, heightForHeaderInSection section: Int, width: CGFloat) -> CGFloat {
+        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section, availableWidth: width).height
+    }
+    
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, heightForFooterInSection section: Int, width: CGFloat) -> CGFloat {
+        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section, availableWidth: width).height
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, verticalSpacingBetweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
@@ -174,14 +182,6 @@ extension XCComposedCollectionViewController: UICollectionViewDelegateFlexLayout
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, cornerRadiusAt section: Int) -> CGFloat {
         return composedDataSource.collectionView(collectionView, cornerRadiusForSectionAt: section)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForHeaderInSection section: Int) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section).height
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, sizeForFooterInSection section: Int) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section).height
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, paddingForSectionAt section: Int) -> UIEdgeInsets {
