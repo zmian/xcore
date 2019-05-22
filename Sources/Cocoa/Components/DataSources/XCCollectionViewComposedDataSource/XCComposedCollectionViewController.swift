@@ -129,7 +129,8 @@ extension XCComposedCollectionViewController {
 
 extension XCComposedCollectionViewController: UICollectionViewDelegateFlowLayout {
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath)
+        let availableWidth = composedDataSource.collectionView(collectionView, availableWidthForSectionAt: indexPath.section)
+        return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath, availableWidth: availableWidth)
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -145,11 +146,13 @@ extension XCComposedCollectionViewController: UICollectionViewDelegateFlowLayout
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section)
+        let availableWidth = composedDataSource.collectionView(collectionView, availableWidthForSectionAt: section)
+        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section, availableWidth: availableWidth)
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section)
+        let availableWidth = composedDataSource.collectionView(collectionView, availableWidthForSectionAt: section)
+        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section, availableWidth: availableWidth)
     }
 }
 

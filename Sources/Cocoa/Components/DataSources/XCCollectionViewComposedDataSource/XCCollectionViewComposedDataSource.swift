@@ -152,25 +152,9 @@ extension XCCollectionViewComposedDataSource {
 // MARK: UICollectionViewDelegateFlowLayout
 
 extension XCCollectionViewComposedDataSource {
-    open override func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
-        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
-        let availableWidth = self.availableWidth(for: collectionView, section: localSection)
-        var size = dataSource.collectionView(collectionView, sizeForItemAt: localIndexPath)
-        if size.width > availableWidth {
-            size.width = availableWidth
-        }
-        return size
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, sizeForHeaderInSection section: Int) -> CGSize {
+    override open func collectionView(_ collectionView: UICollectionView, availableWidthForSectionAt section: Int) -> CGFloat {
         let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(collectionView, sizeForHeaderInSection: localSection)
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, sizeForFooterInSection section: Int) -> CGSize {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(collectionView, sizeForFooterInSection: localSection)
+        return dataSource.collectionView(collectionView, availableWidthForSectionAt: localSection)
     }
 
     open override func collectionView(_ collectionView: UICollectionView, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -184,14 +168,8 @@ extension XCCollectionViewComposedDataSource {
         // The following logic lazily walks down the tree checking to see if any of those elements present.
         if sectionInset != 0 {
             let numberOfItemsInSection = dataSource.collectionView(collectionView, numberOfItemsInSection: localSection)
-            if numberOfItemsInSection == 0 {
-                let headerSize = dataSource.collectionView(collectionView, sizeForHeaderInSection: localSection)
-                if headerSize.height == 0 {
-                    let footerSize = dataSource.collectionView(collectionView, sizeForFooterInSection: localSection)
-                    if footerSize.height == 0 {
-                        return 0
-                    }
-                }
+            guard numberOfItemsInSection > 0 else {
+                return 0
             }
         }
 
@@ -257,11 +235,7 @@ extension XCCollectionViewComposedDataSource {
     open override func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
         let (dataSource, localSection) = dataSourceIndex[indexPath.section]
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
-        var size = dataSource.collectionView(collectionView, sizeForItemAt: localIndexPath, availableWidth: availableWidth)
-        if size.width > availableWidth {
-            size.width = availableWidth
-        }
-        return size
+        return dataSource.collectionView(collectionView, sizeForItemAt: localIndexPath, availableWidth: availableWidth)
     }
 
     open override func collectionView(_ collectionView: UICollectionView, isShadowEnabledForSectionAt section: Int) -> Bool {
