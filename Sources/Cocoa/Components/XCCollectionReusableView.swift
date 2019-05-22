@@ -94,7 +94,7 @@ extension XCCollectionReusableView {
     }
 }
 
-// MARK: - Dim
+// MARK: Custom Layout - Dim - Flex Layout
 
 extension XCCollectionReusableView {
     @objc open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
@@ -108,20 +108,12 @@ extension XCCollectionReusableView {
 
     @objc open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
-        guard let layoutAttributes = layoutAttributes as? CollectionViewFlexLayout.Attributes else { return }
-        alpha = (layoutAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
-    }
-}
-
-// MARK: FlexLayout
-
-extension XCCollectionReusableView {
-    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.apply(layoutAttributes)
-        guard let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes else {
-            return
+        if let layoutAttributes = layoutAttributes as? CollectionViewFlexLayout.Attributes {
+            alpha = (layoutAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
         }
-        roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
+
+        if let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes {
+            roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
+        }
     }
 }
-

@@ -61,7 +61,7 @@ open class XCCollectionViewCell: UICollectionViewCell {
     }
 }
 
-// MARK: - Dim
+// MARK: Custom Layout - Dim - Flex Layout
 
 extension XCCollectionViewCell {
     @objc open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
@@ -75,19 +75,12 @@ extension XCCollectionViewCell {
 
     @objc open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
-        guard let layoutAttributes = layoutAttributes as? CollectionViewFlexLayout.Attributes else { return }
-        alpha = (layoutAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
-    }
-}
-
-// MARK: FlexLayout
-
-extension XCCollectionViewCell {
-    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.apply(layoutAttributes)
-        guard let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes else {
-            return
+        if let layoutAttributes = layoutAttributes as? CollectionViewFlexLayout.Attributes {
+            alpha = (layoutAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
         }
-        contentView.roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
+
+        if let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes {
+            contentView.roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
+        }
     }
 }
