@@ -149,6 +149,43 @@ extension XCCollectionViewComposedDataSource {
     }
 }
 
+// MARK: Sizes (FlowLayout & FlexLayout)
+
+extension XCCollectionViewComposedDataSource {
+    open override func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        return dataSource.collectionView(collectionView, sizeForItemAt: localIndexPath, availableWidth: availableWidth)
+    }
+
+    open override func collectionView(_ collectionView: UICollectionView, sizeForFooterInSection section: Int, availableWidth: CGFloat) -> CGSize {
+        let (dataSource, localSection) = dataSourceIndex[section]
+        return dataSource.collectionView(collectionView, sizeForHeaderInSection: localSection, availableWidth: availableWidth)
+    }
+
+    open override func collectionView(_ collectionView: UICollectionView, sizeForHeaderInSection section: Int, availableWidth: CGFloat) -> CGSize {
+        let (dataSource, localSection) = dataSourceIndex[section]
+        return dataSource.collectionView(collectionView, sizeForHeaderInSection: localSection, availableWidth: availableWidth)
+    }
+
+}
+
+// MARK: Header and Footer
+
+extension XCCollectionViewComposedDataSource {
+    open override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        return dataSource.collectionView(collectionView, viewForHeaderInSectionAt: localIndexPath)
+    }
+
+    open override func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        return dataSource.collectionView(collectionView, viewForFooterInSectionAt: localIndexPath)
+    }
+}
+
 // MARK: UICollectionViewDelegateFlowLayout
 
 extension XCCollectionViewComposedDataSource {
@@ -213,31 +250,9 @@ extension XCCollectionViewComposedDataSource {
     }
 }
 
-// MARK: Header and Footer
-
-extension XCCollectionViewComposedDataSource {
-    open override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
-        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
-        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
-        return dataSource.collectionView(collectionView, viewForHeaderInSectionAt: localIndexPath)
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
-        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
-        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
-        return dataSource.collectionView(collectionView, viewForFooterInSectionAt: localIndexPath)
-    }
-}
-
 // MARK: UICollectionViewFlexLayoutDelegate
 
 extension XCCollectionViewComposedDataSource {
-    open override func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
-        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
-        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
-        return dataSource.collectionView(collectionView, sizeForItemAt: localIndexPath, availableWidth: availableWidth)
-    }
-
     open override func collectionView(_ collectionView: UICollectionView, isShadowEnabledForSectionAt section: Int) -> Bool {
         let (dataSource, localSection) = dataSourceIndex[section]
         return dataSource.collectionView(collectionView, isShadowEnabledForSectionAt: localSection)

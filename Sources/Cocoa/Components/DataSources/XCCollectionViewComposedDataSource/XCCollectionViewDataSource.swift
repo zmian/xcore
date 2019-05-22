@@ -154,28 +154,41 @@ extension XCCollectionViewDataSource {
 // MARK: Sizes
 
 extension XCCollectionViewDataSource {
-//    open func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let availableWidth = self.availableWidth(for: collectionView, section: indexPath.section)
-//        return self.collectionView(collectionView, sizeForItemAt: indexPath, availableWidth: availableWidth)
-//    }
-//
-//    open func collectionView(_ collectionView: UICollectionView, sizeForHeaderInSection section: Int) -> CGSize {
-//        let availableWidth = self.availableWidth(for: collectionView, section: section)
-//        let headerSize = self.collectionView(collectionView, sizeForHeaderInSection: section, availableWidth: availableWidth)
-//        guard headerSize.height > 0 else {
-//            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.headerReferenceSize ?? 0
-//        }
-//        return headerSize
-//    }
-//
-//    open func collectionView(_ collectionView: UICollectionView, sizeForFooterInSection section: Int) -> CGSize {
-//        let availableWidth = self.availableWidth(for: collectionView, section: section)
-//        let footerSize = self.collectionView(collectionView, sizeForFooterInSection: section, availableWidth: availableWidth)
-//        guard footerSize.height > 0 else {
-//            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize ?? 0
-//        }
-//        return footerSize
-//    }
+    open func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
+        guard let sizeCollectionView = _sizeCollectionView else {
+            return .zero
+        }
+        let cell = self.collectionView(sizeCollectionView, cellForItemAt: indexPath)
+        var size = cell.contentView.sizeFitting(width: availableWidth)
+        if size.width > availableWidth {
+            size.width = availableWidth
+        }
+        return size
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, sizeForHeaderInSection section: Int, availableWidth: CGFloat) -> CGSize {
+        guard let sizeCollectionView = _sizeCollectionView else {
+            return .zero
+        }
+
+        if let headerView = self.collectionView(sizeCollectionView, viewForHeaderInSectionAt: IndexPath(item: 0, section: section)) {
+            return headerView.sizeFitting(width: availableWidth)
+        } else {
+            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.headerReferenceSize ?? 0
+        }
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, sizeForFooterInSection section: Int, availableWidth: CGFloat) -> CGSize {
+        guard let sizeCollectionView = _sizeCollectionView else {
+            return .zero
+        }
+        
+        if let footerView = self.collectionView(sizeCollectionView, viewForFooterInSectionAt: IndexPath(item: 0, section: section)) {
+            return footerView.sizeFitting(width: availableWidth)
+        } else {
+            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize ?? 0
+        }
+    }
 }
 
 // MARK: Frame
@@ -220,42 +233,6 @@ extension XCCollectionViewDataSource {
 // MARK: UICollectionViewFlexLayout
 
 extension XCCollectionViewDataSource {
-    open func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
-        guard let sizeCollectionView = _sizeCollectionView else {
-            return .zero
-        }
-        let cell = self.collectionView(sizeCollectionView, cellForItemAt: indexPath)
-        var size = cell.contentView.sizeFitting(width: availableWidth)
-        if size.width > availableWidth {
-            size.width = availableWidth
-        }
-        return size
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, sizeForHeaderInSection section: Int, availableWidth: CGFloat) -> CGSize {
-        guard let sizeCollectionView = _sizeCollectionView else {
-            return .zero
-        }
-        
-        if let headerView = self.collectionView(sizeCollectionView, viewForHeaderInSectionAt: IndexPath(item: 0, section: section)) {
-            return headerView.sizeFitting(width: availableWidth)
-        } else {
-            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.headerReferenceSize ?? 0
-        }
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, sizeForFooterInSection section: Int, availableWidth: CGFloat) -> CGSize {
-        guard let sizeCollectionView = _sizeCollectionView else {
-            return .zero
-        }
-        
-        if let footerView = self.collectionView(sizeCollectionView, viewForFooterInSectionAt: IndexPath(item: 0, section: section)) {
-            return footerView.sizeFitting(width: availableWidth)
-        } else {
-            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize ?? 0
-        }
-    }
-
     open func collectionView(_ collectionView: UICollectionView, isShadowEnabledForSectionAt section: Int) -> Bool {
         return true
     }
