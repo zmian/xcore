@@ -34,8 +34,12 @@ private extension UICollectionViewFlexLayout {
 }
 
 open class UICollectionViewFlexLayout: UICollectionViewLayout {
-    private let numberOfColumns = 2
-    
+    var numberOfColumns = 1 {
+        didSet {
+            invalidateLayout()
+        }
+    }
+
     private typealias Attributes = UICollectionViewFlexLayoutAttributes
     private var layoutAttributes: [IndexPath: Attributes] = [:]
     private var footerAttributes: [IndexPath: Attributes] = [:]
