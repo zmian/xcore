@@ -34,7 +34,7 @@ private extension UICollectionViewFlexLayout {
 }
 
 open class UICollectionViewFlexLayout: UICollectionViewLayout {
-    var numberOfColumns = 1 {
+    public var numberOfColumns = 1 {
         didSet {
             invalidateLayout()
         }
