@@ -36,7 +36,18 @@ extension ProcessInfo {
     }
 
     public func contains(key: String) -> Bool {
-        return environment[key] != nil
+        return environment[key] != nil || inMemoryEnvironmentStorage[key] != nil
+    }
+}
+
+extension ProcessInfo {
+    private struct AssociatedKey {
+        static var inMemoryEnvironmentStorage = "inMemoryEnvironmentStorage"
+    }
+
+    fileprivate var inMemoryEnvironmentStorage: [String: String] {
+        get { return associatedObject(&AssociatedKey.inMemoryEnvironmentStorage, default: [:]) }
+        set { setAssociatedObject(&AssociatedKey.inMemoryEnvironmentStorage, value: newValue) }
     }
 }
 
@@ -65,14 +76,46 @@ extension ProcessInfo {
 
         /// The variable value in the environment from which the process was launched.
         public var value: String? {
-            guard
-                let value = ProcessInfo.shared.environment[rawValue],
-                !value.isBlank
-            else {
+            var storedValue = ProcessInfo.shared.inMemoryEnvironmentStorage[rawValue]
+
+            if storedValue == nil {
+                storedValue = ProcessInfo.shared.environment[rawValue]
+            }
+
+            guard let value = storedValue, !value.isBlank else {
                 return nil
             }
 
             return value
+        }
+
+        public func getValue<T>() -> T? {
+            guard let value = value else {
+                return nil
+            }
+
+            switch T.self {
+                case is Bool.Type, is Optional<Bool>.Type:
+                    return Bool(value) as? T
+                case is Float.Type, is Optional<Float>.Type:
+                    return Float(value) as? T
+                case is Double.Type, is Optional<Double>.Type:
+                    return Double(value) as? T
+                case is Int.Type, is Optional<Int>.Type:
+                    return Int(value) as? T
+                default:
+                    return value as? T
+            }
+        }
+
+        public func setInMemoryValue<T>(_ value: T?) {
+            var valueToSave: String?
+
+            if let newValue = value {
+                valueToSave = String(describing: newValue)
+            }
+
+            ProcessInfo.shared.inMemoryEnvironmentStorage[rawValue] = valueToSave
         }
     }
 }

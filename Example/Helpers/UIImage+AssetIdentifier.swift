@@ -1,5 +1,5 @@
 //
-// UIImage+AssetIdentifier.swift
+// ImageAssetIdentifier.swift
 //
 // Copyright © 2014 Zeeshan Mian
 //
@@ -26,13 +26,6 @@ import UIKit
 import Xcore
 
 /// Extension to get compile time checks for asset identifiers
-extension UIImage {
-    enum AssetIdentifier: String, ImageAssetIdentifiable {
-        case blueJay
-    }
-}
-
-/// A convenience function to get image name from `xcassets`.
-func R(_ assetIdentifier: UIImage.AssetIdentifier) -> String {
-    return assetIdentifier.rawValue
+extension ImageAssetIdentifier {
+    static var blueJay: ImageAssetIdentifier { return #function }
 }

@@ -55,15 +55,15 @@ import UIKit
 /// let headerLabel = UILabel(style: .header)
 /// ```
 public struct XCConfiguration<Type> {
-    public let identifier: String
+    public let identifier: Identifier<Type>
     private let _configure: ((Type) -> Void)
 
-    public init(identifier: String? = nil, _ configure: @escaping ((Type) -> Void)) {
+    public init(identifier: Identifier<Type>? = nil, _ configure: @escaping ((Type) -> Void)) {
         self.identifier = identifier ?? "___defaultIdentifier___"
         self._configure = configure
     }
 
-    public func extend(identifier: String? = nil, _ configure: @escaping ((Type) -> Void)) -> XCConfiguration<Type> {
+    public func extend(identifier: Identifier<Type>? = nil, _ configure: @escaping ((Type) -> Void)) -> XCConfiguration<Type> {
         return XCConfiguration(identifier: identifier) { type in
             self.configure(type)
             configure(type)

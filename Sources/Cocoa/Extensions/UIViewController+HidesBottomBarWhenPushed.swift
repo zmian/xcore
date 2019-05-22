@@ -25,13 +25,7 @@
 import UIKit
 
 extension UIViewController {
-    static func runOnceSwapSelectors() {
-        swizzle(
-            UIViewController.self,
-            originalSelector: #selector(UIViewController.viewDidLoad),
-            swizzledSelector: #selector(UIViewController.swizzled_viewDidLoad)
-        )
-
+    static func swizzle_hidesBottomBarWhenPushed_runOnceSwapSelectors() {
         swizzle(
             UIViewController.self,
             originalSelector: #selector(getter: UIViewController.hidesBottomBarWhenPushed),
@@ -39,17 +33,12 @@ extension UIViewController {
         )
     }
 
-    @objc private func swizzled_viewDidLoad() {
-        self.swizzled_viewDidLoad()
-        _addKeyboardNotificationObservers()
-    }
-
     /// A swizzled function to ensure that `hidesBottomBarWhenPushed` value is
     /// respected when a view controller is pushed on to a navigation controller.
     ///
     /// The default behavior of the `hidesBottomBarWhenPushed` property of
-    /// `UIViewController` is to ignores the value of any subsequent view controllers
-    /// that are pushed on to the stack.
+    /// `UIViewController` is to ignores the value of any subsequent view
+    /// controllers that are pushed on to the stack.
     ///
     /// According to the documentation: **If true, the bottom bar remains hidden
     /// until the view controller is popped from the stack.**
@@ -61,32 +50,5 @@ extension UIViewController {
         }
 
         return value
-    }
-}
-
-extension UIView {
-    private struct AssociatedKey {
-        static var didAddKeyboardNotificationObservers = "didAddKeyboardNotificationObservers"
-    }
-
-    private var didAddKeyboardNotificationObservers: Bool {
-        get { return associatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, default: false) }
-        set { setAssociatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, value: newValue) }
-    }
-
-    static func _runOnceSwapSelectors() {
-        swizzle(
-            UIView.self,
-            originalSelector: #selector(UIView.layoutSubviews),
-            swizzledSelector: #selector(UIView.swizzled_view_layoutSubviews)
-        )
-    }
-
-    @objc private func swizzled_view_layoutSubviews() {
-        self.swizzled_view_layoutSubviews()
-        if !didAddKeyboardNotificationObservers {
-            _addKeyboardNotificationObservers()
-            didAddKeyboardNotificationObservers = true
-        }
     }
 }

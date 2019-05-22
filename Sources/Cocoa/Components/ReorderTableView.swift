@@ -27,8 +27,8 @@ import UIKit
 
 private class ReorderTableDraggingView: XCView {
     private let imageView = UIImageView()
-    private let topShadowImage = UIImageView(assetIdentifier: UIImage.AssetIdentifier.reorderTableViewCellShadowTop)
-    private let bottomShadowImage = UIImageView(assetIdentifier: UIImage.AssetIdentifier.reorderTableViewCellShadowBottom)
+    private let topShadowImage = UIImageView(assetIdentifier: .reorderTableViewCellShadowTop)
+    private let bottomShadowImage = UIImageView(assetIdentifier: .reorderTableViewCellShadowBottom)
     private let shadowHeight: CGFloat = 19
 
     var image: UIImage? {

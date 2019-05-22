@@ -24,7 +24,7 @@
 
 import UIKit
 
-// MARK: NSAttributedString Extension
+// MARK: - NSAttributedString Extension
 
 extension NSAttributedString {
     @objc public func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
@@ -54,7 +54,7 @@ extension NSAttributedString {
     }
 }
 
-// MARK: NSMutableAttributedString Extension
+// MARK: - NSMutableAttributedString Extension
 
 extension NSMutableAttributedString {
     public override func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
@@ -163,6 +163,8 @@ extension NSAttributedString {
     }
 }
 
+// MARK: - Caret
+
 extension NSAttributedString {
     /// Returns an `NSAttributedString` object initialized with a given attributes.
     ///
@@ -210,7 +212,7 @@ extension NSAttributedString {
         case back
         case forward
 
-        var assetIdentifier: UIImage.AssetIdentifier? {
+        var assetIdentifier: ImageAssetIdentifier? {
             switch self {
                 case .none:
                     return nil
@@ -235,5 +237,41 @@ extension NSAttributedString {
                     return 0
             }
         }
+    }
+}
+
+// MARK: - Bullets
+
+extension NSAttributedString {
+    public enum BulletStyle {
+        case `default`
+        case ordinal
+
+        fileprivate func bullet(at index: Int) -> String {
+            switch self {
+                case .default:
+                    return "•   "
+                case .ordinal:
+                    return (index + 1).description + ".  "
+            }
+        }
+    }
+
+    public func bullets(interlineFactor: CGFloat = 1.0, style: BulletStyle = .default, font: UIFont) -> NSAttributedString {
+        guard !string.isEmpty else { return self }
+        let originalAttributes = attributes(at: 0, effectiveRange: nil)
+        let lines = string.components(separatedBy: "\n")
+        let textWithBullets = lines.enumerated().map { style.bullet(at: $0.0) + $0.1 }.joined(separator: "\n")
+
+        let size = style.bullet(at: 1).size(withFont: originalAttributes[.font] as? UIFont ?? font)
+        let paragraphStyle = NSMutableParagraphStyle().apply {
+            $0.firstLineHeadIndent = 0
+            $0.headIndent = size.width
+            $0.paragraphSpacing = size.height * interlineFactor
+        }
+
+        var finalAttributes = originalAttributes
+        finalAttributes += [.paragraphStyle: paragraphStyle]
+        return NSAttributedString(string: textWithBullets, attributes: finalAttributes)
     }
 }

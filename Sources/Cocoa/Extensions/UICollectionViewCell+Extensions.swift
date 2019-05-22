@@ -75,7 +75,7 @@ extension UICollectionViewCell {
     }
 }
 
-// MARK: Highlighted Background Color
+// MARK: - Highlighted Background Color
 
 extension UICollectionViewCell {
     @objc private func swizzled_isHighlightedSetter(newValue: Bool) {
@@ -98,7 +98,7 @@ extension UICollectionViewCell {
     }
 }
 
-// MARK: Swizzle
+// MARK: - Swizzle
 
 extension UICollectionViewCell {
     static func runOnceSwapSelectors() {

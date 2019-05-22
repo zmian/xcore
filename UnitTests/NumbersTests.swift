@@ -44,6 +44,21 @@ final class NumbersTests: TestCase {
         XCTAssertEqual(doubleSum, 6.0)
     }
 
+    func testSumClosure() {
+        struct Expense {
+            let title: String
+            let amount: Double
+        }
+
+        let expenses = [
+            Expense(title: "Laptop", amount: 1200),
+            Expense(title: "Chair", amount: 1000)
+        ]
+
+        let totalCost = expenses.sum { $0.amount }
+        XCTAssertEqual(totalCost, 2200.0)
+    }
+
     func testAverage() {
         let int = [1, 1, 1, 1, 1, 1].average()
         XCTAssertEqual(int, 1.0)

@@ -34,7 +34,7 @@ final class RootViewController: DynamicTableViewController {
                 title: "Components",
                 detail: "A demonstration of components included in Xcore.",
                 items: [
-                    DynamicTableModel(title: "Dynamic Table View", subtitle: "Data-driven table view") { [weak self] _, _ in
+                    DynamicTableModel(title: "Dynamic Table View", subtitle: "Data-driven table view", accessory: .disclosureIndicator) { [weak self] _, _ in
                         let vc = ExampleDynamicTableViewController()
                         self?.navigationController?.pushViewController(vc, animated: true)
                     },
