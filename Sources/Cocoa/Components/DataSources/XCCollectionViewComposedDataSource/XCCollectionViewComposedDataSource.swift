@@ -158,16 +158,15 @@ extension XCCollectionViewComposedDataSource {
         return dataSource.collectionView(collectionView, sizeForItemAt: localIndexPath, availableWidth: availableWidth)
     }
 
-    open override func collectionView(_ collectionView: UICollectionView, sizeForFooterInSection section: Int, availableWidth: CGFloat) -> CGSize {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(collectionView, sizeForHeaderInSection: localSection, availableWidth: availableWidth)
-    }
-
     open override func collectionView(_ collectionView: UICollectionView, sizeForHeaderInSection section: Int, availableWidth: CGFloat) -> CGSize {
         let (dataSource, localSection) = dataSourceIndex[section]
         return dataSource.collectionView(collectionView, sizeForHeaderInSection: localSection, availableWidth: availableWidth)
     }
 
+    open override func collectionView(_ collectionView: UICollectionView, sizeForFooterInSection section: Int, availableWidth: CGFloat) -> CGSize {
+        let (dataSource, localSection) = dataSourceIndex[section]
+        return dataSource.collectionView(collectionView, sizeForFooterInSection: localSection, availableWidth: availableWidth)
+    }
 }
 
 // MARK: Header and Footer
