@@ -64,7 +64,7 @@ open class XCComposedCollectionViewController: UIViewController {
         }
     }
 
-    // MARK: DataSources
+    // MARK: - DataSources
 
     private let _composedDataSource = XCCollectionViewComposedDataSource()
     open var composedDataSource: XCCollectionViewComposedDataSource {
@@ -101,7 +101,7 @@ open class XCComposedCollectionViewController: UIViewController {
     }
 }
 
-// MARK: UICollectionViewDelegate
+// MARK: - UICollectionViewDelegate
 
 extension XCComposedCollectionViewController {
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -125,7 +125,7 @@ extension XCComposedCollectionViewController {
     }
 }
 
-// MARK: UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension XCComposedCollectionViewController: UICollectionViewDelegateFlowLayout {
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -205,5 +205,58 @@ extension XCComposedCollectionViewController: UICollectionViewDelegateFlexLayout
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, zIndexForItemAt indexPath: IndexPath) -> Int {
         return 0
+    }
+}
+
+extension XCComposedCollectionViewController {
+    /// Scrolls to the given `dataSource` in the collection view.
+    ///
+    /// - Parameters:
+    ///   - dataSource: The data source to which collection view should scroll to.
+    ///   - animated: `true` to animate the transition at a constant velocity to the
+    ///               data source, `false` to make the transition immediate. The
+    ///               default value is `true`.
+    /// - Returns: `true` if successful; otherwise, `false`.
+    @discardableResult
+    public func scroll(to dataSource: XCCollectionViewDataSource, animated: Bool = true) -> Bool {
+        let contentSize = collectionView.collectionViewLayout.collectionViewContentSize
+
+        guard
+            contentSize.height > 0,
+            let dataSourceOffset = dataSource.frameInCollectionView?.origin.y,
+            let dataSourceHeight = dataSource.frameInCollectionView?.size.height
+        else {
+            return false
+        }
+
+        let midDataSourceDeltaOffset: CGFloat = max((collectionView.frame.size.height - dataSourceHeight) / 2.0, 0.0)
+        setDataSourceOffset(dataSourceOffset, midDataSourceDeltaOffset: midDataSourceDeltaOffset, animated: animated)
+        return true
+    }
+
+    /// Sets the offset from the content view’s origin that corresponds to the data
+    /// source origin.
+    ///
+    /// - Parameters:
+    ///   - dataSourceOffset: A point that is offset from the content view’s origin.
+    ///   - midDataSourceDeltaOffset: The offset of the middle of the data source
+    ///                               delta. The default value is `0`.
+    ///   - animated: `true` to animate the transition at a constant velocity to the
+    ///               new offset, `false` to make the transition immediate. The
+    ///               default value is `true`.
+    public func setDataSourceOffset(_ dataSourceOffset: CGFloat, midDataSourceDeltaOffset: CGFloat = 0, animated: Bool = true) {
+        let contentSize = collectionView.collectionViewLayout.collectionViewContentSize
+        let offset = collectionView.adjustedContentInset
+        let newOffset = CGPoint(
+            x: 0,
+            y: min(
+                contentSize.height - collectionView.frame.height + offset.bottom,
+                max(
+                    dataSourceOffset - offset.top - .maximumPadding - midDataSourceDeltaOffset,
+                    -offset.top
+                )
+            )
+        )
+        collectionView.setContentOffset(newOffset, animated: animated)
     }
 }

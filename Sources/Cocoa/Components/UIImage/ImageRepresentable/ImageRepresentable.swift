@@ -24,6 +24,8 @@
 
 import UIKit
 
+// MARK: - ImageSourceType
+
 public enum ImageSourceType {
     case url(String)
     case uiImage(UIImage)
@@ -64,6 +66,8 @@ extension ImageSourceType: Equatable {
     }
 }
 
+// MARK: - ImageSourceType.CacheType
+
 extension ImageSourceType {
     public enum CacheType {
         /// The image wasn't available in the cache, but was downloaded from the web.
@@ -81,7 +85,7 @@ extension ImageSourceType {
     }
 }
 
-// MARK: ImageRepresentable
+// MARK: - ImageRepresentable
 
 public protocol ImageRepresentable {
     var imageSource: ImageSourceType { get }
@@ -103,6 +107,8 @@ extension ImageRepresentable {
         }
     }
 }
+
+// MARK: - Conformance
 
 extension UIImage: ImageRepresentable {
     public var imageSource: ImageSourceType {
