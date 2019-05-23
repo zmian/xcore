@@ -92,7 +92,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
 
             let sectionMargin = self.margin(forSectionAt: section)
 
-             // first column -> full leading margin , other columns -> half leading margin
+            // first column -> full leading margin , other columns -> half leading margin
             // last column -> full trailing margin, other columns -> half trailing margin
             let leftMargin = currentColumn == 0 ? sectionMargin.left : sectionMargin.left / 2
             let rightMargin = currentColumn == numberOfColumns - 1 ? sectionMargin.right : sectionMargin.right / 2
