@@ -59,6 +59,18 @@ open class XCCollectionViewCell: UICollectionViewCell {
     open var resistsDimming: Bool {
         return false
     }
+
+    /// The default value is `[], 0`.
+    private var corners: (corners: UIRectCorner, radius: CGFloat) = ([], 0) {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+
+    override open func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.roundCorners(corners.corners, radius: corners.radius)
+    }
 }
 
 // MARK: Custom Layout - Dim - Flex Layout
@@ -80,7 +92,7 @@ extension XCCollectionViewCell {
         }
 
         if let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes {
-            contentView.roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
+            corners = (corners: flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
         }
     }
 }

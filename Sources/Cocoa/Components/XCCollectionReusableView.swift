@@ -75,6 +75,18 @@ open class XCCollectionReusableView: UICollectionReusableView {
         layer.zPosition = 0
         return layer
     }
+
+    /// The default value is `[], 0`.
+    private var corners: (corners: UIRectCorner, radius: CGFloat) = ([], 0) {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
+    override open func layoutSubviews() {
+        super.layoutSubviews()
+        roundCorners(corners.corners, radius: corners.radius)
+    }
 }
 
 // MARK: - Touches
@@ -113,7 +125,7 @@ extension XCCollectionReusableView {
         }
 
         if let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes {
-            roundCorners(flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
+            corners = (corners: flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
         }
     }
 }
