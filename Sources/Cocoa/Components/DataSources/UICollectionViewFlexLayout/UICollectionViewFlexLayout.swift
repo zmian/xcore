@@ -47,6 +47,8 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
     private var sectionBackgroundAttributes: [Int: Attributes] = [:]
     private var cachedContentSize: CGSize = .zero
 
+    private var shouldReloadAttributes = true
+
     private var minSection: [Int: CGPoint] = [:]
     private var maxSection: [Int: CGPoint] = [:]
 
@@ -57,9 +59,20 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
     }
 
     override open func prepare() {
+        super.prepare()
+        guard shouldReloadAttributes else { return }
+        shouldReloadAttributes = false
+
         prepareItemAttributes()
         prepareBackgroundAttributes()
         prepareZIndex()
+    }
+
+    override open func invalidateLayout(with context: UICollectionViewLayoutInvalidationContext) {
+        if context.invalidateEverything || context.invalidateDataSourceCounts {
+            shouldReloadAttributes = true
+        }
+        super.invalidateLayout(with: context)
     }
 
     override init() {
