@@ -182,7 +182,7 @@ extension XCCollectionViewDataSource {
         guard let sizeCollectionView = _sizeCollectionView else {
             return .zero
         }
-        
+
         if let footerView = self.collectionView(sizeCollectionView, viewForFooterInSectionAt: IndexPath(item: 0, section: section)) {
             return footerView.sizeFitting(width: availableWidth)
         } else {
