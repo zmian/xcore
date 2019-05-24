@@ -1,7 +1,7 @@
 //
-// ImageAssetIdentifier.swift
+// Swizzle.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2017 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,11 @@
 // THE SOFTWARE.
 //
 
-import UIKit
+import Foundation
 
-/// Extension to get compile time checks for asset identifiers
-extension ImageAssetIdentifier {
-    static var blueJay: ImageAssetIdentifier { return #function }
+extension UIApplication {
+    open override var next: UIResponder? {
+        SwizzleManager.start()
+        return super.next
+    }
 }

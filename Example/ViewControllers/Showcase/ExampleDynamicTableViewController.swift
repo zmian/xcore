@@ -23,7 +23,6 @@
 //
 
 import UIKit
-import Xcore
 
 final class ExampleDynamicTableViewController: DynamicTableViewController {
     override func viewDidLoad() {
@@ -47,8 +46,8 @@ final class ExampleDynamicTableViewController: DynamicTableViewController {
                     DynamicTableModel(title: "Hummingbird", image: r(.blueJay)),
                     DynamicTableModel(title: "Hummingbird", image: r(.blueJay), accessory: .disclosureIndicator),
                     DynamicTableModel(subtitle: "**You** are now a **confirmed bird watcher** with 70 birds spotted!"),
-                    DynamicTableModel(title: "Showcase", subtitle: "This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}", image: r(.blueJay)),
-                    DynamicTableModel(title: "Showcase", subtitle: "This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}. This string has **bold**, //italics//, and {#ff0000|red text}", image: r(.blueJay)),
+                    DynamicTableModel(title: "Showcase", subtitle: "This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}", image: r(.blueJay)),
+                    DynamicTableModel(title: "Showcase", subtitle: "This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}", image: r(.blueJay)),
                     DynamicTableModel(title: "Woodpecker", accessory: .disclosureIndicator),
                     DynamicTableModel(title: "Blue Jay", accessory: .text("462")),
                     DynamicTableModel(title: "1,223", subtitle: "Globally, 1,223 species of birds", image: r(.blueJay), accessory: .text("5m")),
