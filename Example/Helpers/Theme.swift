@@ -1,7 +1,7 @@
 //
-// ImageAssetIdentifier.swift
+// Theme.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2016 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,18 @@
 // THE SOFTWARE.
 //
 
-import UIKit
+public struct Theme {
+    public static func start() {
+        UIButton.defaultAppearance.apply {
+            $0.style = .callout
+            $0.height = AppConstants.uiControlsHeight
+            $0.isHeightSetAutomatically = true
+            $0.highlightedAnimation = .scale
+        }
 
-/// Extension to get compile time checks for asset identifiers
-extension ImageAssetIdentifier {
-    static var blueJay: ImageAssetIdentifier { return #function }
+        MarkupText.appearance.apply {
+            $0.isLabelEnabled = true
+            $0.isTextViewEnabled = true
+        }
+    }
 }

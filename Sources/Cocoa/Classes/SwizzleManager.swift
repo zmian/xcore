@@ -77,7 +77,7 @@ public final class SwizzleManager {
     /// - Parameters:
     ///   - options: A list of options to customize which Xcore classes to swizzle. The default value is `.all`.
     ///   - additionalSelectors: additional selectors to swizzle.
-    public static func start(options: SwizzleOptions = .all, _ additionalSelectors: @autoclosure () -> [() -> Void]) {
+    public static func start(options: SwizzleOptions = .all, _ additionalSelectors: @autoclosure () -> [() -> Void] = []) {
         guard !didSwizzle else { return }
         defer { didSwizzle = true }
 

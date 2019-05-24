@@ -1,7 +1,7 @@
 //
-// ImageAssetIdentifier.swift
+// ButtonsViewController.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2018 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,37 @@
 
 import UIKit
 
-/// Extension to get compile time checks for asset identifiers
-extension ImageAssetIdentifier {
-    static var blueJay: ImageAssetIdentifier { return #function }
+final class ButtonsViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Buttons"
+        view.backgroundColor = .white
+        exampleButtonType()
+        examplePlainButton()
+    }
+
+    private func examplePlainButton() {
+        let button = UIButton()
+        button.text = "Hello World"
+        button.textColor = .red
+        button.sizeToFit()
+        view.addSubview(button)
+
+        button.addAction(.touchUpInside) { _ in
+            print("plain button tapped")
+        }
+
+        button.center = CGPoint(x: 100, y: 300)
+    }
+
+    private func exampleButtonType() {
+        let button = UIButton(type: .contactAdd)
+        view.addSubview(button)
+
+        button.addAction(.touchUpInside) { _ in
+            print("Contact add button tapped")
+        }
+
+        button.center = CGPoint(x: 100, y: 400)
+    }
 }

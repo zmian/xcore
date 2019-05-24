@@ -23,7 +23,6 @@
 //
 
 import UIKit
-import Xcore
 
 final class RootViewController: DynamicTableViewController {
     override func viewDidLoad() {
@@ -33,17 +32,25 @@ final class RootViewController: DynamicTableViewController {
             Section(
                 title: "Components",
                 detail: "A demonstration of components included in Xcore.",
-                items: [
-                    DynamicTableModel(title: "Dynamic Table View", subtitle: "Data-driven table view", accessory: .disclosureIndicator) { [weak self] _, _ in
-                        let vc = ExampleDynamicTableViewController()
-                        self?.navigationController?.pushViewController(vc, animated: true)
-                    },
-                    DynamicTableModel(title: "Buttons", subtitle: "UIButton extensions demonstration") { [weak self] _, _ in
-                        let vc = ButtonsViewController()
-                        self?.navigationController?.pushViewController(vc, animated: true)
-                    }
-                ]
+                items: items()
             )
+        ]
+    }
+
+    private func items() -> [DynamicTableModel] {
+        return [
+            DynamicTableModel(title: "Dynamic Table View", subtitle: "Data-driven table view", accessory: .disclosureIndicator) { [weak self] _, _ in
+                let vc = ExampleDynamicTableViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
+            },
+            DynamicTableModel(title: "Buttons", subtitle: "UIButton extensions demonstration") { [weak self] _, _ in
+                let vc = ButtonsViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
+            },
+            DynamicTableModel(title: "TextViewController", subtitle: "TextViewController demonstration") { [weak self] _, _ in
+                let vc = ExampleTextViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
+            }
         ]
     }
 }
