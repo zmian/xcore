@@ -237,7 +237,6 @@ extension XCConfiguration where Type: UIButton {
             $0.textColor = textColor
             $0.titleLabel?.font = font
             $0.titleLabel?.numberOfLines = 0
-            $0.textImageSpacing = .minimumPadding
             $0.contentHorizontalAlignment = .left
             $0.adjustsImageWhenHighlighted = false
             $0.adjustsBackgroundColorWhenHighlighted = false

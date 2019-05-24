@@ -240,7 +240,12 @@ import UIKit
     }
 
     open func sizeFitting(width: CGFloat) -> CGSize {
-        let layoutSize = systemLayoutSizeFitting(CGSize(width: width, height: 0), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        let layoutSize = systemLayoutSizeFitting(
+            CGSize(width: width, height: 0),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        )
+
         return CGSize(width: width, height: ceil(layoutSize.height))
     }
 
@@ -265,18 +270,14 @@ extension UIView {
         sizeChangeResistance(.defaultLow, axis: .horizontal)
     }
 
-    open func resistsSizeChange(axis: NSLayoutConstraint.Axis...) {
+    open func resistsSizeChange(axis: NSLayoutConstraint.Axis) {
         sizeChangeResistance(.required, axis: axis)
     }
 
-    open func sizeChangeResistance(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis...) {
-        axis.forEach {
-            setContentHuggingPriority(priority, for: $0)
-            setContentCompressionResistancePriority(priority, for: $0)
-        }
+    open func sizeChangeResistance(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis) {
+        setContentHuggingPriority(priority, for: axis)
+        setContentCompressionResistancePriority(priority, for: axis)
     }
-
-    // Arrays and variadic parameters don't play well.
 
     open func resistsSizeChange(axis: [NSLayoutConstraint.Axis]) {
         sizeChangeResistance(.required, axis: axis)
@@ -295,11 +296,15 @@ extension Array where Element == UIView {
         forEach { $0.resistsSizeChange() }
     }
 
-    public func resistsSizeChange(axis: NSLayoutConstraint.Axis...) {
+    public func resistsSizeChange(axis: NSLayoutConstraint.Axis) {
         forEach { $0.resistsSizeChange(axis: axis) }
     }
 
-    public func sizeChangeResistance(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis...) {
+    public func sizeChangeResistance(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis) {
+        forEach { $0.sizeChangeResistance(priority, axis: axis) }
+    }
+
+    public func sizeChangeResistance(_ priority: UILayoutPriority, axis: [NSLayoutConstraint.Axis]) {
         forEach { $0.sizeChangeResistance(priority, axis: axis) }
     }
 }
