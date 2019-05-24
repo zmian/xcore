@@ -57,13 +57,10 @@ open class LabelTextView: UITextView {
         dataDetectorTypes = .all
         textContainerInset = .zero
         textContainer.lineFragmentPadding = 0
-        linkTextAttributes = [.foregroundColor: UIColor.appleBlue]
         isEditable = false
         isScrollEnabled = false
         backgroundColor = .clear
         textAlignment = .left
-        textColor = .black
-        font = .preferredFont(forTextStyle: .footnote)
         resistsSizeChange(axis: .vertical)
         didTapUrl = type(of: self).defaultDidTapUrlHandler
     }
@@ -109,4 +106,51 @@ extension LabelTextView: UITextViewDelegate {
 
 extension LabelTextView {
     public static var defaultDidTapUrlHandler: URLTapActionBlock?
+}
+
+// MARK: - UIAppearance Properties
+
+extension LabelTextView {
+    /// The font of the text.
+    ///
+    /// This property applies to the entire text string. The default value of this
+    /// property is the body style of the system font.
+    ///
+    /// - Note:
+    ///
+    /// You can get information about the fonts available on the system using the
+    /// methods of the `UIFont` class.
+    ///
+    /// In iOS 6 and later, assigning a new value to this property causes the new
+    /// font to be applied to the entire contents of the text view. If you want to
+    /// apply the font to only a portion of the text, you must create a new
+    /// attributed string with the desired style information and assign it to the
+    /// `attributedText` property.
+    @objc open override dynamic var font: UIFont? {
+        get { return super.font }
+        set { super.font = newValue }
+    }
+
+    /// The color of the text.
+    ///
+    /// This property applies to the entire text string. The default text color is
+    /// `.black`.
+    ///
+    /// In iOS 6 and later, assigning a new value to this property causes the new
+    /// text color to be applied to the entire contents of the text view. If you
+    /// want to apply the color to only a portion of the text, you must create a new
+    /// attributed string with the desired style information and assign it to the
+    /// `attributedText` property.
+    @objc open override dynamic var textColor: UIColor? {
+        get { return super.textColor }
+        set { super.textColor = newValue }
+    }
+
+    /// The attributes to apply to links.
+    ///
+    /// The default attributes specify blue text.
+    @objc open override dynamic var linkTextAttributes: [NSAttributedString.Key: Any]! {
+        get { return super.linkTextAttributes }
+        set { super.linkTextAttributes = newValue }
+    }
 }

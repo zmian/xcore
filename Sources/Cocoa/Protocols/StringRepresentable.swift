@@ -52,6 +52,12 @@ extension String: StringRepresentable {
     }
 }
 
+extension NSString: StringRepresentable {
+    public var stringSource: StringSourceType {
+        return .string(self as String)
+    }
+}
+
 extension NSAttributedString: StringRepresentable {
     public var stringSource: StringSourceType {
         return .attributedString(self)

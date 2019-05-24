@@ -35,5 +35,9 @@ public struct Theme {
             $0.isLabelEnabled = true
             $0.isTextViewEnabled = true
         }
+
+        LabelTextView.appearance().apply {
+            $0.font = .preferredFont(forTextStyle: .callout)
+        }
     }
 }
