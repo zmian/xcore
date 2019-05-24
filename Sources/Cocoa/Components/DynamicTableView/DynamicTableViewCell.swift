@@ -254,7 +254,7 @@ open class DynamicTableViewCell: XCTableViewCell {
         minimumContentHeightConstraint = NSLayoutConstraint(item: contentView, height: minimumContentHeight, priority: .defaultLow).activate()
     }
 
-    // MARK: Setters
+    // MARK: - Setters
 
     open func configure(_ data: DynamicTableModel) {
         self.data = data
@@ -266,7 +266,7 @@ open class DynamicTableViewCell: XCTableViewCell {
     }
 }
 
-// MARK: UIAppearance Properties
+// MARK: - UIAppearance Properties
 
 extension DynamicTableViewCell {
     @objc public dynamic var avatarBorderColor: UIColor? {
@@ -311,7 +311,7 @@ extension DynamicTableViewCell {
     }
 }
 
-// MARK: Helpers
+// MARK: - Helpers
 
 extension DynamicTableViewCell {
     private func updateImageSizeIfNeeded() {

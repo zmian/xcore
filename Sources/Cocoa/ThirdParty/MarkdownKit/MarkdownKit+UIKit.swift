@@ -187,7 +187,7 @@ extension UILabel {
     /// This variant of Markdown supports couple of extra features:
     ///
     /// - Colored text is achieved with `{#123456|the colored text}`
-    /// - Set text background colour with `{bg#123456|the text}`
+    /// - Set text background color with `{bg#123456|the text}`
     /// - Change font with `{font:HelveticaNeue,12pt|text in a different font}`
     private var markupText: String? {
         get { return attributedText?.string }
@@ -228,7 +228,7 @@ extension UITextView {
     /// This variant of Markdown supports couple of extra features:
     ///
     /// - Colored text is achieved with `{#123456|the colored text}`
-    /// - Set text background colour with `{bg#123456|the text}`
+    /// - Set text background color with `{bg#123456|the text}`
     /// - Change font with `{font:HelveticaNeue,12pt|text in a different font}`
     private var markupText: String? {
         get { return attributedText?.string }
@@ -288,13 +288,22 @@ extension UILabel {
             return
         }
 
-        if let text = text, text.isBlank {
+        if let text = (text ?? attributedText?.string), text.isBlank {
             return
         }
 
         // Reassign the text to ensure the new color is applied correctly.
-        let currentText = text
-        self.text = currentText
+        //
+        // We have to explicitly set `attributedText` instead of `markupText`
+        // as `markupText` returns `attributedText?.string` causing all the attributes
+        // to be removed.
+        if attributedText != nil {
+            let currentAttributedText = attributedText
+            self.attributedText = currentAttributedText
+        } else {
+            let currentText = text
+            self.text = currentText
+        }
     }
 }
 
@@ -308,7 +317,7 @@ extension UIButton {
     /// This variant of Markdown supports couple of extra features:
     ///
     /// - Colored text is achieved with `{#123456|the colored text}`
-    /// - Set text background colour with `{bg#123456|the text}`
+    /// - Set text background color with `{bg#123456|the text}`
     /// - Change font with `{font:HelveticaNeue,12pt|text in a different font}`
     @objc private func swizzled_setTitle(_ title: String?, for state: UIControl.State) {
         if !isMarkupEnabled {
@@ -346,13 +355,22 @@ extension UITextView {
             return
         }
 
-        if let text = text, text.isBlank {
+        if let text = (text ?? attributedText?.string), text.isBlank {
             return
         }
 
         // Reassign the text to ensure the new color is applied correctly.
-        let currentText = text
-        self.text = currentText
+        //
+        // We have to explicitly set `attributedText` instead of `markupText`
+        // as `markupText` returns `attributedText?.string` causing all the attributes
+        // to be removed.
+        if attributedText != nil {
+            let currentAttributedText = attributedText
+            self.attributedText = currentAttributedText
+        } else {
+            let currentText = text
+            self.text = currentText
+        }
     }
 }
 #endif
