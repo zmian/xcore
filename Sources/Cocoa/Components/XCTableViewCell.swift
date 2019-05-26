@@ -25,7 +25,7 @@
 import UIKit
 
 open class XCTableViewCell: UITableViewCell {
-    // MARK: Init Methods
+    // MARK: - Init Methods
 
     public convenience init() {
         self.init(style: .default, reuseIdentifier: nil)
@@ -41,7 +41,7 @@ open class XCTableViewCell: UITableViewCell {
         internalCommonInit()
     }
 
-    // MARK: Setup Methods
+    // MARK: - Setup Methods
 
     open override func setSelected(_ selected: Bool, animated: Bool) {}
     open override func setHighlighted(_ highlighted: Bool, animated: Bool) {}
@@ -53,8 +53,8 @@ open class XCTableViewCell: UITableViewCell {
 
     /// The default implementation of this method does nothing.
     ///
-    /// Subclasses can override it to perform additional actions,
-    /// for example, add new subviews or configure properties.
-    /// This method is called when self is initialized using any of the relevant `init` methods.
+    /// Subclasses can override it to perform additional actions, for example, add
+    /// new subviews or configure properties. This method is called when `self` is
+    /// initialized using any of the relevant `init` methods.
     open func commonInit() {}
 }

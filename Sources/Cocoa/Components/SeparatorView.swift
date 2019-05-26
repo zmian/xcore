@@ -132,8 +132,7 @@ public final class SeparatorView: UIView {
     private var thickness: CGFloat {
         switch style {
             case .plain:
-                let scale = window?.screen.scale ?? UIScreen.main.scale
-                return 1 / scale
+                return onePixel
             case .dotted:
                 return 2
         }

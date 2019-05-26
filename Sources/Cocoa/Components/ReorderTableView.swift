@@ -105,7 +105,7 @@ open class ReorderTableView: UITableView {
     @objc open dynamic var draggingViewOpacity: CGFloat = 0.8
     @objc open dynamic var draggingViewBackgroundColor: UIColor = .clear
 
-    // MARK: Init Methods
+    // MARK: - Init Methods
 
     public convenience init() {
         self.init(frame: .zero)

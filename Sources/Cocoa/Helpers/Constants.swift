@@ -75,6 +75,15 @@ extension CGFloat {
     public static let minimumPadding: CGFloat = 8
     public static let defaultPadding: CGFloat = 15
     public static let maximumPadding: CGFloat = 30
+
+    /// A convenience method to return `1` pixel relative to the screen scale.
+    public static var onePixel: CGFloat {
+        struct Static {
+            static let onePixel = UIView().onePixel
+        }
+
+        return Static.onePixel
+    }
 }
 
 extension UIEdgeInsets {

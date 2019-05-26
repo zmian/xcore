@@ -30,7 +30,7 @@ open class IconLabelView: XCView {
     private var labelsWidthConstraints: [NSLayoutConstraint] = []
     private var stackViewConstraints: (vertical: [NSLayoutConstraint]?, horizontal: [NSLayoutConstraint]?)
 
-    // MARK: Subviews
+    // MARK: - Subviews
 
     private lazy var stackView = UIStackView(arrangedSubviews: [
         imageViewContainer,
@@ -218,7 +218,7 @@ open class IconLabelView: XCView {
         set { stackView.layoutMargins = newValue }
     }
 
-    // MARK: Setup Methods
+    // MARK: - Setup Methods
 
     open override func commonInit() {
         addSubview(stackView)
@@ -247,7 +247,7 @@ open class IconLabelView: XCView {
     }
 }
 
-// MARK: Configure
+// MARK: - Configure
 
 extension IconLabelView {
     open func configure(_ image: ImageRepresentable? = nil, transform: ImageTransform? = nil, title: StringRepresentable?, subtitle: StringRepresentable? = nil) {
@@ -267,7 +267,7 @@ extension IconLabelView {
     }
 }
 
-// MARK: UIAppearance Properties
+// MARK: - UIAppearance Properties
 
 extension IconLabelView {
     @objc public dynamic var titleColor: UIColor? {

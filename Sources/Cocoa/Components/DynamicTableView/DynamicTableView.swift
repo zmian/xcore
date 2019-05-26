@@ -108,7 +108,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         set { self._delegate = newValue }
     }
 
-    // MARK: Init Methods
+    // MARK: - Init Methods
 
     public convenience init() {
         self.init(options: [])
@@ -137,7 +137,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         internalCommonInit()
     }
 
-    // MARK: isContentCentered
+    // MARK: - isContentCentered
 
     private var shouldUpdateActualContentInset = true
     private var actualContentInset: UIEdgeInsets = 0
@@ -174,7 +174,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         shouldUpdateActualContentInset = true
     }
 
-    // MARK: Setup Methods
+    // MARK: - Setup Methods
 
     private func internalCommonInit() {
         setupTableView()
@@ -183,9 +183,9 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     /// The default implementation of this method does nothing.
     ///
-    /// Subclasses can override it to perform additional actions,
-    /// for example, add new subviews or configure properties.
-    /// This method is called when self is initialized using any of the relevant `init` methods.
+    /// Subclasses can override it to perform additional actions, for example, add
+    /// new subviews or configure properties. This method is called when `self` is
+    /// initialized using any of the relevant `init` methods.
     open func commonInit() {}
 
     private func setupTableView() {
@@ -202,7 +202,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         register(cell, forCellReuseIdentifier: cell.reuseIdentifier)
     }
 
-    // MARK: UITableViewDataSource
+    // MARK: - UITableViewDataSource
 
     open func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
@@ -250,7 +250,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         return sections[section].detail
     }
 
-    // MARK: UITableViewDelegate
+    // MARK: - UITableViewDelegate
 
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = sections[indexPath]
@@ -300,7 +300,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         configureFooter?(section, footerView, sections[section].detail)
     }
 
-    // MARK: Reordering
+    // MARK: - Reordering
 
     open func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return allowsReordering
@@ -311,7 +311,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         didMoveItem?(sourceIndexPath, destinationIndexPath, movedItem)
     }
 
-    // MARK: Deletion
+    // MARK: - Deletion
 
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return allowsReordering || allowsDeletion || editActionsForCell != nil
@@ -350,7 +350,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         return actions
     }
 
-    // MARK: Helpers
+    // MARK: - Helpers
 
     /// Deletes the rows specified by an array of index paths, with an option to animate the deletion.
     ///
@@ -377,7 +377,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         }
     }
 
-    // MARK: UIAppearance Properties
+    // MARK: - UIAppearance Properties
 
     @objc open dynamic var headerFont: UIFont = .preferredFont(forTextStyle: .footnote)
     @objc open dynamic var headerTextColor: UIColor = .black
@@ -394,7 +394,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     @objc open dynamic var checkboxOffTintColor = UIColor.black.alpha(0.13)
 }
 
-// MARK: AccessoryView
+// MARK: - AccessoryView
 
 extension DynamicTableView {
     private func configureAccessoryView(_ cell: DynamicTableViewCell, type: DynamicTableAccessoryType, indexPath: IndexPath) {
@@ -441,7 +441,7 @@ extension DynamicTableView {
     }
 }
 
-// MARK: Convenience API
+// MARK: - Convenience API
 
 extension DynamicTableView {
     /// A convenience property to create a single section table view.
