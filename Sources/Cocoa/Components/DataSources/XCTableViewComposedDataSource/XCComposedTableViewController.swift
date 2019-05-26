@@ -27,15 +27,17 @@ import UIKit
 open class XCComposedTableViewController: UIViewController {
     public private(set) var tableViewConstraints: NSLayoutConstraint.Edges!
 
-    /// There is UIKit bug that causes `UITableView` to jump when using `estimatedRowHeight`
-    /// and reloading cells/sections or the entire table view.
+    /// There is UIKit bug that causes `UITableView` to jump when using
+    /// `estimatedRowHeight` and reloading cells/sections or the entire table view.
     ///
-    /// This solution patches the said bug of `UITableView` by caching
-    /// heights and automatically switching to those when `reloadData`, `reloadCells`,
-    /// or `reloadSection` methods are invoked.
+    /// This solution patches the said bug by caching heights and automatically
+    /// switching to those when `reloadData`, `reloadCells`, or `reloadSection`
+    /// methods are invoked.
     private var estimatedRowHeightCache = IndexPathCache<CGFloat>(default: UITableView.automaticDimension)
 
-    /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
+    /// Style must be set before accessing `tableView` to ensure that it is applied
+    /// correctly.
+    ///
     /// The default value is `.grouped`.
     public var style: UITableView.Style = .grouped
 
@@ -58,7 +60,7 @@ open class XCComposedTableViewController: UIViewController {
         }
     }
 
-    // MARK: DataSources
+    // MARK: - DataSources
 
     private let _composedDataSource = XCTableViewComposedDataSource()
     open var composedDataSource: XCTableViewComposedDataSource {
@@ -82,7 +84,8 @@ open class XCComposedTableViewController: UIViewController {
 
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        tableView.reloadData() // Fixes invalid scroll position when a ViewController is pushed/popped
+        // Fixes invalid scroll position when a view controller is pushed/popped.
+        tableView.reloadData()
     }
 
     open func dataSources(for tableView: UITableView) -> [XCTableViewDataSource] {
@@ -100,7 +103,7 @@ open class XCComposedTableViewController: UIViewController {
     }
 }
 
-// MARK: UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension XCComposedTableViewController: UITableViewDelegate {
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

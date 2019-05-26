@@ -165,7 +165,7 @@ open class DynamicTableViewCell: XCTableViewCell {
         didTransitionToState?(state)
     }
 
-    // MARK: Subviews
+    // MARK: - Subviews
 
     private lazy var labelsStackView = UIStackView(arrangedSubviews: [
         titleLabel,
@@ -208,11 +208,12 @@ open class DynamicTableViewCell: XCTableViewCell {
 
     /// The default implementation of this method does nothing.
     ///
-    /// Subclasses can override it to perform additional actions,
-    /// This method is called when `UITableView` invokes `tableView:willDisplayCell:forRowAtIndexPath:` delegate method.
+    /// Subclasses can override it to perform additional actions, This method is
+    /// called when `UITableView` invokes
+    /// `tableView:willDisplayCell:forRowAtIndexPath:` delegate method.
     open func cellWillAppear(_ indexPath: IndexPath, data: DynamicTableModel) {}
 
-    // MARK: Setup Methods
+    // MARK: - Setup Methods
 
     open override func commonInit() {
         clipsToBounds = true

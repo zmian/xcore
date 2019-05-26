@@ -56,9 +56,9 @@ open class XCCollectionReusableView: UICollectionReusableView {
 
     /// The default implementation of this method does nothing.
     ///
-    /// Subclasses can override it to perform additional actions,
-    /// for example, add new subviews or configure properties.
-    /// This method is called when self is initialized using any of the relevant `init` methods.
+    /// Subclasses can override it to perform additional actions, for example, add
+    /// new subviews or configure properties. This method is called when `self` is
+    /// initialized using any of the relevant `init` methods.
     open func commonInit() {}
 
     /// A boolean value that indicates whether the cell resist dimming its content

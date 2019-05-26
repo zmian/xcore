@@ -34,7 +34,7 @@ open class XCToolbar: UIToolbar {
         }
     }
 
-    // MARK: Init Methods
+    // MARK: - Init Methods
 
     public convenience init() {
         self.init(frame: .zero)
@@ -50,16 +50,16 @@ open class XCToolbar: UIToolbar {
         commonInit()
     }
 
-    // MARK: Setup Methods
+    // MARK: - Setup Methods
 
     /// The default implementation of this method does nothing.
     ///
-    /// Subclasses can override it to perform additional actions,
-    /// for example, add new subviews or configure properties.
-    /// This method is called when self is initialized using any of the relevant `init` methods.
+    /// Subclasses can override it to perform additional actions, for example, add
+    /// new subviews or configure properties. This method is called when `self` is
+    /// initialized using any of the relevant `init` methods.
     open func commonInit() {}
 
-    // MARK: Override Methods
+    // MARK: - Override Methods
 
     open override func layoutSubviews() {
         super.layoutSubviews()
