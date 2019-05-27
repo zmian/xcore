@@ -72,18 +72,13 @@ public final class UserDefault<T: Codable> {
     }
 
     private func setupApplicationMemoryWarningObserver() {
-        notificationToken = NotificationCenter.default.addObserver(
-            forName: UIApplication.didReceiveMemoryWarningNotification,
-            object: nil,
-            queue: nil
-        ) { [weak self] _ in
+        notificationToken = NotificationCenter.on.applicationDidReceiveMemoryWarning { [weak self] in
             self?.cachedValueInMemory = nil
         }
     }
 
     deinit {
-        guard let notificationToken = notificationToken else { return }
-        NotificationCenter.default.removeObserver(notificationToken)
+        NotificationCenter.removeObserver(notificationToken)
     }
 }
 
