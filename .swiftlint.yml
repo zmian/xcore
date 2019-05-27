@@ -36,6 +36,14 @@ excluded:
   - Pods
   - Carthage
 custom_rules:
+  import_xcore:
+    name: "Import Xcore"
+    regex: "^import Xcore$"
+    match_kinds:
+      - identifier
+      - keyword
+    message: "Xcore is imported globally. Please remove this import."
+
   equal_space:
     regex: "(?:([ ]{2,}=)|(=[ ]{2,}))"
     message: "Expected only one space before and after ="
