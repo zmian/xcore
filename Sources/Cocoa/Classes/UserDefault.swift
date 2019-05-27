@@ -78,7 +78,7 @@ public final class UserDefault<T: Codable> {
     }
 
     deinit {
-        NotificationCenter.removeObserver(notificationToken)
+        NotificationCenter.remove(notificationToken)
     }
 }
 
