@@ -118,7 +118,7 @@ public class BlurView: XCView {
         blurBackView.anchor.edges.equalToSuperview()
         blurEffectView.anchor.edges.equalToSuperview()
 
-        observer = NotificationCenter.default.addObserver(forName: UIAccessibility.reduceTransparencyStatusDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+        observer = NotificationCenter.on.accessibilityReduceTransparencyStatusDidChange { [weak self] in
             self?.accessibilityReduceTransparencyStatusDidChange()
         }
 
@@ -126,11 +126,7 @@ public class BlurView: XCView {
     }
 
     deinit {
-        guard let observer = observer else {
-            return
-        }
-
-        NotificationCenter.default.removeObserver(observer)
+        NotificationCenter.removeObserver(observer)
     }
 
     private func accessibilityReduceTransparencyStatusDidChange() {
