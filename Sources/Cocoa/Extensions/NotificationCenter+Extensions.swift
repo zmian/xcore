@@ -27,13 +27,21 @@ import UIKit
 extension NotificationCenter {
     /// Removes all entries specifying a given observer from the notification
     /// center's dispatch table.
-    public static func removeObserver(_ observer: NSObjectProtocol?) {
+    public static func remove(_ observers: [NSObjectProtocol?]) {
+        observers.forEach {
+            NotificationCenter.default.removeObserver($0)
+        }
+    }
+
+    /// Removes all entries specifying a given observer from the notification
+    /// center's dispatch table.
+    public static func remove(_ observer: NSObjectProtocol?) {
         NotificationCenter.default.removeObserver(observer)
     }
 
     /// Removes all entries specifying a given observer from the notification
     /// center's dispatch table.
-    public func removeObserver(_ observer: NSObjectProtocol?) {
+    public func remove(_ observer: NSObjectProtocol?) {
         guard let observer = observer else {
             return
         }
@@ -71,7 +79,7 @@ extension NotificationCenter {
     ///     the observer registration is removed.
     /// - Returns: An opaque object to act as the observer.
     @discardableResult
-    public func on(
+    public func observe(
         _ name: Notification.Name,
         object: Any? = nil,
         queue: OperationQueue? = nil,
@@ -110,7 +118,7 @@ extension NotificationCenter {
     ///     the observer registration is removed.
     /// - Returns: An opaque object to act as the observer.
     @discardableResult
-    public func on(
+    public func observe(
         _ name: Notification.Name,
         object: Any? = nil,
         queue: OperationQueue? = nil,
@@ -160,74 +168,74 @@ extension NotificationCenter {
 
 extension NotificationCenter.Event {
     @discardableResult
-    public func on(_ name: Notification.Name, object: Any? = nil, _ callback: @escaping (_ notification: Notification) -> Void) -> NSObjectProtocol {
-        return NotificationCenter.default.on(name, object: object, callback)
+    public func observe(_ name: Notification.Name, object: Any? = nil, _ callback: @escaping (_ notification: Notification) -> Void) -> NSObjectProtocol {
+        return NotificationCenter.default.observe(name, object: object, callback)
     }
 
     @discardableResult
-    public func on(_ name: Notification.Name, object: Any? = nil, _ callback: @escaping () -> Void) -> NSObjectProtocol {
-        return NotificationCenter.default.on(name, object: object, callback)
+    public func observe(_ name: Notification.Name, object: Any? = nil, _ callback: @escaping () -> Void) -> NSObjectProtocol {
+        return NotificationCenter.default.observe(name, object: object, callback)
     }
 
     // MARK: - UIApplication
 
     @discardableResult
     public func applicationDidFinishLaunching(_ callback: @escaping () -> Void) -> NSObjectProtocol {
-        return on(UIApplication.didFinishLaunchingNotification, callback)
+        return observe(UIApplication.didFinishLaunchingNotification, callback)
     }
 
     @discardableResult
     public func applicationWillEnterForeground(_ callback: @escaping () -> Void) -> NSObjectProtocol {
-        return on(UIApplication.willEnterForegroundNotification, callback)
+        return observe(UIApplication.willEnterForegroundNotification, callback)
     }
 
     @discardableResult
     public func applicationDidEnterBackground(_ callback: @escaping () -> Void) -> NSObjectProtocol {
-        return on(UIApplication.didEnterBackgroundNotification, callback)
+        return observe(UIApplication.didEnterBackgroundNotification, callback)
     }
 
     @discardableResult
     public func applicationDidBecomeActive(_ callback: @escaping () -> Void) -> NSObjectProtocol {
-        return on(UIApplication.didBecomeActiveNotification, callback)
+        return observe(UIApplication.didBecomeActiveNotification, callback)
     }
 
     @discardableResult
     public func applicationWillResignActive(_ callback: @escaping () -> Void) -> NSObjectProtocol {
-        return on(UIApplication.willResignActiveNotification, callback)
+        return observe(UIApplication.willResignActiveNotification, callback)
     }
 
     @discardableResult
     public func applicationDidReceiveMemoryWarning(_ callback: @escaping () -> Void) -> NSObjectProtocol {
-        return on(UIApplication.didReceiveMemoryWarningNotification, callback)
+        return observe(UIApplication.didReceiveMemoryWarningNotification, callback)
     }
 
     @discardableResult
     public func applicationWillTerminate(_ callback: @escaping () -> Void) -> NSObjectProtocol {
-        return on(UIApplication.willTerminateNotification, callback)
+        return observe(UIApplication.willTerminateNotification, callback)
     }
 
     // MARK: - UIWindow
 
     @discardableResult
     public func windowDidBecomeHidden(_ callback: @escaping () -> Void) -> NSObjectProtocol {
-        return on(UIWindow.didBecomeHiddenNotification, callback)
+        return observe(UIWindow.didBecomeHiddenNotification, callback)
     }
 
     @discardableResult
     public func windowDidBecomeVisible(_ callback: @escaping () -> Void) -> NSObjectProtocol {
-        return on(UIWindow.didBecomeVisibleNotification, callback)
+        return observe(UIWindow.didBecomeVisibleNotification, callback)
     }
 
     // MARK: - UIAccessibility
 
     @discardableResult
     public func accessibilityReduceTransparencyStatusDidChange(_ callback: @escaping () -> Void) -> NSObjectProtocol {
-        return on(UIAccessibility.reduceTransparencyStatusDidChangeNotification, callback)
+        return observe(UIAccessibility.reduceTransparencyStatusDidChangeNotification, callback)
     }
 
     @discardableResult
     public func accessibilityVoiceOverStatusDidChange(_ callback: @escaping () -> Void) -> NSObjectProtocol {
-        return on(UIAccessibility.voiceOverStatusDidChangeNotification, callback)
+        return observe(UIAccessibility.voiceOverStatusDidChangeNotification, callback)
     }
 
     // MARK: - UIContentSizeCategory
@@ -239,7 +247,7 @@ extension NotificationCenter.Event {
     /// contains the new new setting.
     @discardableResult
     public func contentSizeCategoryDidChange(_ callback: @escaping (_ newValue: UIContentSizeCategory) -> Void) -> NSObjectProtocol {
-        return on(UIContentSizeCategory.didChangeNotification) { (notification: Notification) in
+        return observe(UIContentSizeCategory.didChangeNotification) { (notification: Notification) in
             guard
                 let userInfo = notification.userInfo,
                 let rawValue = userInfo[UIContentSizeCategory.newValueUserInfoKey] as? String

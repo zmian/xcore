@@ -42,7 +42,7 @@ final public class CollectionViewDequeueCache {
     }
 
     deinit {
-        NotificationCenter.removeObserver(notificationToken)
+        NotificationCenter.remove(notificationToken)
     }
 
     func dequeueCell(identifier: String) -> UICollectionViewCell {

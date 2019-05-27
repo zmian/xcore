@@ -126,7 +126,7 @@ public class BlurView: XCView {
     }
 
     deinit {
-        NotificationCenter.removeObserver(observer)
+        NotificationCenter.remove(observer)
     }
 
     private func accessibilityReduceTransparencyStatusDidChange() {
