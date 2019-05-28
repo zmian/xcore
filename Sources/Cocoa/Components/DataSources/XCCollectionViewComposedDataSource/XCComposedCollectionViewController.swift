@@ -25,9 +25,12 @@
 import UIKit
 
 public extension XCComposedCollectionViewController {
-    enum LayoutType {
-        case feed
-        case `default`
+    struct LayoutType {
+        static let feed = LayoutType(layout: UICollectionViewFlexLayout(), adaptor: XCCollectionViewFlexLayoutAdaptor.self)
+        static let `default` = LayoutType(layout: UICollectionViewFlowLayout(), adaptor: XCCollectionViewFlowLayoutAdaptor.self)
+
+        var layout: UICollectionViewLayout
+        var adaptor: XCComposedCollectionViewLayoutAdaptor.Type
     }
 }
 
@@ -43,12 +46,11 @@ open class XCComposedCollectionViewController: UIViewController {
     /// However, the layout must be set before accessing `collectionView` to ensure that it is applied correctly.
     /// The default value is `UICollectionViewFlowLayout`.
     open lazy var layout: UICollectionViewLayout = {
-        switch layoutType {
-            case .feed:
-                return UICollectionViewFlexLayout()
-            case .default:
-                return UICollectionViewFlowLayout()
-        }
+        return layoutType.layout
+    }()
+
+    open lazy var layoutAdaptor: XCComposedCollectionViewLayoutAdaptor = {
+        return layoutType.adaptor.init(dataSource: composedDataSource)
     }()
 
     open lazy var collectionView: UICollectionView = {
@@ -77,7 +79,7 @@ open class XCComposedCollectionViewController: UIViewController {
         collectionView.apply {
             composedDataSource.dataSources = dataSources(for: $0)
             $0.dataSource = composedDataSource
-            $0.delegate = self
+            $0.delegate = layoutAdaptor
 
             view.addSubview($0)
             collectionViewConstraints = NSLayoutConstraint.Edges(
@@ -98,93 +100,6 @@ open class XCComposedCollectionViewController: UIViewController {
         #if DEBUG
         Console.info("\(self) deinit")
         #endif
-    }
-}
-
-// MARK: - UICollectionViewDelegate
-
-extension XCComposedCollectionViewController {
-    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        composedDataSource.collectionView(collectionView, didSelectItemAt: indexPath)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        return composedDataSource.collectionView(collectionView, willDisplay: cell, forItemAt: indexPath)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        return composedDataSource.collectionView(collectionView, willDisplaySupplementaryView: view, forElementKind: elementKind, at: indexPath)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        return composedDataSource.collectionView(collectionView, didEndDisplaying: cell, forItemAt: indexPath)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
-        return composedDataSource.collectionView(collectionView, didEndDisplayingSupplementaryView: view, forElementOfKind: elementKind, at: indexPath)
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension XCComposedCollectionViewController: UICollectionViewDelegateFlowLayout {
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let availableWidth = composedDataSource.collectionView(collectionView, availableWidthForSectionAt: indexPath.section)
-        return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath, availableWidth: availableWidth)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return composedDataSource.collectionView(collectionView, insetForSectionAt: section)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, minimumLineSpacingForSectionAt: section)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, minimumInteritemSpacingForSectionAt: section)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let availableWidth = composedDataSource.collectionView(collectionView, availableWidthForSectionAt: section)
-        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section, availableWidth: availableWidth)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        let availableWidth = composedDataSource.collectionView(collectionView, availableWidthForSectionAt: section)
-        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section, availableWidth: availableWidth)
-    }
-}
-
-// MARK: UICollectionViewDelegateFlexLayout
-
-extension XCComposedCollectionViewController: UICollectionViewDelegateFlexLayout {
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, heightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath, availableWidth: width).height
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, heightForHeaderInSection section: Int, width: CGFloat) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section, availableWidth: width).height
-    }
-    
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, heightForFooterInSection section: Int, width: CGFloat) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section, availableWidth: width).height
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, verticalSpacingBetweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
-        return .defaultPadding
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, marginForSectionAt section: Int) -> UIEdgeInsets {
-        return composedDataSource.collectionView(collectionView, marginForSectionAt: section)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, isShadowEnabledAt section: Int) -> Bool {
-        return composedDataSource.collectionView(collectionView, isShadowEnabledForSectionAt: section)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, cornerRadiusAt section: Int) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, cornerRadiusForSectionAt: section)
     }
 }
 

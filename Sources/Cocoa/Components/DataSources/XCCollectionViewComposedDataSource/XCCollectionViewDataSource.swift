@@ -104,26 +104,6 @@ extension XCCollectionViewDataSource {
 // MARK: UICollectionViewDelegateFlowLayout
 
 extension XCCollectionViewDataSource {
-    open func collectionView(_ collectionView: UICollectionView, availableWidthForSectionAt section: Int) -> CGFloat {
-        let sectionInset = self.collectionView(collectionView, insetForSectionAt: section)
-        let sectionInsetHorizontal = sectionInset.horizontal
-        let contentInsetHorizontal = collectionView.contentInset.horizontal
-        let finalWidth = collectionView.bounds.width - sectionInsetHorizontal - contentInsetHorizontal - 0.01
-        return finalWidth
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset ?? 0
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumLineSpacing ?? 0
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? 0
-    }
-
     // MARK: Lifecycle
 
     open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

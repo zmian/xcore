@@ -149,7 +149,7 @@ extension XCCollectionViewComposedDataSource {
     }
 }
 
-// MARK: Sizes (FlowLayout & FlexLayout)
+// MARK: Sizes
 
 extension XCCollectionViewComposedDataSource {
     open override func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
@@ -185,45 +185,9 @@ extension XCCollectionViewComposedDataSource {
     }
 }
 
-// MARK: UICollectionViewDelegateFlowLayout
+// MARK: Lifecycle
 
 extension XCCollectionViewComposedDataSource {
-    override open func collectionView(_ collectionView: UICollectionView, availableWidthForSectionAt section: Int) -> CGFloat {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(collectionView, availableWidthForSectionAt: localSection)
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        let sectionInset = dataSource.collectionView(collectionView, insetForSectionAt: localSection)
-
-        // This is to prevent any section insets being included in layout
-        // when given section has no items, header or footer present.
-        //
-        // If the given section have items, header or footer we include insets; otherwise we remove the insets from the given section.
-        // The following logic lazily walks down the tree checking to see if any of those elements present.
-        if sectionInset != 0 {
-            let numberOfItemsInSection = dataSource.collectionView(collectionView, numberOfItemsInSection: localSection)
-            guard numberOfItemsInSection > 0 else {
-                return 0
-            }
-        }
-
-        return sectionInset
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(collectionView, minimumLineSpacingForSectionAt: localSection)
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(collectionView, minimumInteritemSpacingForSectionAt: localSection)
-    }
-
-    // MARK: Lifecycle
-
     open override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let (dataSource, localSection) = dataSourceIndex[indexPath.section]
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
