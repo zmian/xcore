@@ -162,10 +162,56 @@ extension ValidationRule where Input == String {
         }
     }
 
+    /// A validation rule that checks whether the input satisfy the given regex.
+    ///
+    /// - Parameter pattern: Regex pattern used to find matches in the input.
+    /// - Returns: The validation rule.
+    public static func regex(_ pattern: String) -> ValidationRule {
+        return ValidationRule { input in
+            return input.isMatch(pattern)
+        }
+    }
+
+    /// A validation rule that checks whether the input is a subset of the given
+    /// set.
+    ///
+    /// - Parameter other: The superset of the input.
+    /// - Returns: The validation rule.
+    public static func subset(of other: CharacterSet) -> ValidationRule {
+        return ValidationRule { input in
+            let input = CharacterSet(charactersIn: input)
+            return other.isSuperset(of: input)
+        }
+    }
+
+    /// A validation rule that checks whether the input length exceed the given
+    /// minimum length.
+    ///
+    /// - Parameter length: The minimum length of the input.
+    /// - Returns: The validation rule.
+    public static func length(min length: Int) -> ValidationRule {
+        return ValidationRule { input in
+            return input.count >= length
+        }
+    }
+
+    /// A validation rule that checks whether the input length exceed the given
+    /// maximum length.
+    ///
+    /// - Parameter length: The maximum length of the input.
+    /// - Returns: The validation rule.
+    public static func length(max length: Int) -> ValidationRule {
+        return ValidationRule { input in
+            return input.count <= length
+        }
+    }
+
+    /// A validation rule that checks whether the input is a valid email address.
     public static var email: ValidationRule {
         return "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
     }
 
+    /// A validation rule that checks whether the input is a valid SSN.
     public static var ssn: ValidationRule {
         return ValidationRule(
             pattern: "^(?!000)(?!666)^([0-8]\\d{2})((?!00)(\\d{2}))((?!0000)(\\d{4}))",
@@ -173,7 +219,9 @@ extension ValidationRule where Input == String {
         )
     }
 
-    /// Individual Taxpayer Identification Number.
+    /// A validation rule that checks whether the input is a valid ITIN.
+    ///
+    /// **Individual Taxpayer Identification Number**
     ///
     /// Format: `9XX-7X-XXXX`
     ///
