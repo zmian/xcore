@@ -26,11 +26,11 @@ import UIKit
 
 public extension XCComposedCollectionViewController {
     struct LayoutType {
-        static let feed = LayoutType(layout: UICollectionViewFlexLayout(), adaptor: XCCollectionViewFlexLayoutAdaptor.self)
-        static let `default` = LayoutType(layout: UICollectionViewFlowLayout(), adaptor: XCCollectionViewFlowLayoutAdaptor.self)
+        static let feed = LayoutType(layout: XCCollectionViewTileLayout(), adaptor: XCCollectionViewTileLayoutAdapter.self)
+        static let `default` = LayoutType(layout: UICollectionViewFlowLayout(), adaptor: XCCollectionViewFlowLayoutAdapter.self)
 
         var layout: UICollectionViewLayout
-        var adaptor: XCComposedCollectionViewLayoutAdaptor.Type
+        var adaptor: XCComposedCollectionViewLayoutAdapter.Type
     }
 }
 
@@ -50,7 +50,7 @@ open class XCComposedCollectionViewController: UIViewController {
         return layoutType.layout
     }()
 
-    open lazy var layoutAdaptor: XCComposedCollectionViewLayoutAdaptor = {
+    open lazy var layoutAdapter: XCComposedCollectionViewLayoutAdapter = {
         return layoutType.adaptor.init(dataSource: composedDataSource)
     }()
 
@@ -80,7 +80,7 @@ open class XCComposedCollectionViewController: UIViewController {
         collectionView.apply {
             composedDataSource.dataSources = dataSources(for: $0)
             $0.dataSource = composedDataSource
-            $0.delegate = layoutAdaptor
+            $0.delegate = layoutAdapter
 
             view.addSubview($0)
             collectionViewConstraints = NSLayoutConstraint.Edges(

@@ -1,5 +1,5 @@
 //
-//  XCComposedCollectionViewLayoutAdaptor.swift
+//  XCComposedCollectionViewLayoutAdapter.swift
 //  Xcore
 //
 //  Created by Guillermo Waitzel on 28/05/2019.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-open class XCComposedCollectionViewLayoutAdaptor: NSObject {
+open class XCComposedCollectionViewLayoutAdapter: NSObject {
     let composedDataSource: XCCollectionViewComposedDataSource
 
     public required init(dataSource: XCCollectionViewComposedDataSource) {
@@ -16,7 +16,7 @@ open class XCComposedCollectionViewLayoutAdaptor: NSObject {
     }
 }
 
-extension XCComposedCollectionViewLayoutAdaptor: UICollectionViewDelegate {
+extension XCComposedCollectionViewLayoutAdapter: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         composedDataSource.collectionView(collectionView, didSelectItemAt: indexPath)
     }

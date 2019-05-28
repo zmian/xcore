@@ -1,5 +1,5 @@
 //
-//  UICollectionViewFlexBackgroundView.swift
+//  XCCollectionViewTileBackgroundView.swift
 //  Xcore
 //
 //  Created by Guillermo Waitzel on 16/05/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class UICollectionViewFlexBackgroundView: UICollectionReusableView {
+final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
     override class var layerClass: AnyClass {
         return CAShapeLayer.self
     }
@@ -17,15 +17,8 @@ final class UICollectionViewFlexBackgroundView: UICollectionReusableView {
         return layer as! CAShapeLayer
     }
 
-    /// The default value is `[]`.
-    private var corners: UIRectCorner = [] {
-        didSet {
-            setNeedsLayout()
-        }
-    }
-
-    /// The default value is `0`.
-    private var _cornerRadius: CGFloat = 0 {
+    /// The default value is `[], 0`.
+    private var corners: (corners: UIRectCorner, radius: CGFloat) = ([], 0) {
         didSet {
             setNeedsLayout()
         }
@@ -82,15 +75,13 @@ final class UICollectionViewFlexBackgroundView: UICollectionReusableView {
     }
 
     fileprivate func path(rect: CGRect? = nil) -> UIBezierPath {
-        return UIBezierPath(roundedRect: rect ?? bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: _cornerRadius, height: _cornerRadius))
+        return UIBezierPath(roundedRect: rect ?? bounds, byRoundingCorners: corners.corners, cornerRadii: CGSize(width: corners.radius, height: corners.radius))
     }
 
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
-        guard let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayout.Attributes else {
-            return
+        if let tileAttributes = layoutAttributes as? XCCollectionViewTileLayout.Attributes {
+            corners = (corners: tileAttributes.corners, radius: tileAttributes.cornerRadius)
         }
-        corners = flexLayoutAttributes.corners
-        _cornerRadius = flexLayoutAttributes.cornerRadius
     }
 }

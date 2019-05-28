@@ -212,22 +212,3 @@ extension XCCollectionViewComposedDataSource {
         return dataSource.collectionView(collectionView, didEndDisplayingSupplementaryView: view, forElementOfKind: elementKind, at: localIndexPath)
     }
 }
-
-// MARK: UICollectionViewFlexLayoutDelegate
-
-extension XCCollectionViewComposedDataSource {
-    open override func collectionView(_ collectionView: UICollectionView, isShadowEnabledForSectionAt section: Int) -> Bool {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(collectionView, isShadowEnabledForSectionAt: localSection)
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, cornerRadiusForSectionAt section: Int) -> CGFloat {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(collectionView, cornerRadiusForSectionAt: localSection)
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, marginForSectionAt section: Int) -> UIEdgeInsets {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(collectionView, marginForSectionAt: localSection)
-    }
-}

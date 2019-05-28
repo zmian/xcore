@@ -209,19 +209,3 @@ extension XCCollectionViewDataSource {
         return nil
     }
 }
-
-// MARK: UICollectionViewFlexLayout
-
-extension XCCollectionViewDataSource {
-    open func collectionView(_ collectionView: UICollectionView, isShadowEnabledForSectionAt section: Int) -> Bool {
-        return true
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, cornerRadiusForSectionAt section: Int) -> CGFloat {
-        return 11
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, marginForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(horizontal: .defaultPadding, vertical: 0)
-    }
-}

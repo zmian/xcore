@@ -82,7 +82,7 @@ open class XCCollectionReusableView: UICollectionReusableView {
             setNeedsLayout()
         }
     }
-    
+
     override open func layoutSubviews() {
         super.layoutSubviews()
         roundCorners(corners.corners, radius: corners.radius)
@@ -124,8 +124,8 @@ extension XCCollectionReusableView {
             alpha = (layoutAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
         }
 
-        if let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayout.Attributes {
-            corners = (corners: flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
+        if let tileAttributes = layoutAttributes as? XCCollectionViewTileLayout.Attributes {
+            corners = (corners: tileAttributes.corners, radius: tileAttributes.cornerRadius)
         }
     }
 }

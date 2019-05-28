@@ -1,5 +1,5 @@
 //
-//  XCCollectionViewFlexLayoutAdaptor.swift
+//  XCCollectionViewTileLayoutAdapter.swift
 //  Xcore
 //
 //  Created by Guillermo Waitzel on 28/05/2019.
@@ -7,24 +7,24 @@
 
 import Foundation
 
-open class XCCollectionViewFlexLayoutAdaptor: XCComposedCollectionViewLayoutAdaptor, UICollectionViewDelegateFlexLayout {
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, heightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
+open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdapter, XCCollectionViewDelegateTileLayout {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
         return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath, availableWidth: width).height
     }
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, heightForHeaderInSection section: Int, width: CGFloat) -> CGFloat {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForHeaderInSection section: Int, width: CGFloat) -> CGFloat {
         return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section, availableWidth: width).height
     }
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, heightForFooterInSection section: Int, width: CGFloat) -> CGFloat {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForFooterInSection section: Int, width: CGFloat) -> CGFloat {
         return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section, availableWidth: width).height
     }
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, verticalSpacingBetweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, verticalSpacingBetweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
         return .defaultPadding
     }
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, marginForSectionAt section: Int) -> UIEdgeInsets {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, marginForSectionAt section: Int) -> UIEdgeInsets {
         let source = composedDataSource.index(for: section)
         guard
             let custom = source.dataSource as? XCCollectionViewFlexLayoutCustomizable,
@@ -36,7 +36,7 @@ open class XCCollectionViewFlexLayoutAdaptor: XCComposedCollectionViewLayoutAdap
         return .zero
     }
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, isShadowEnabledAt section: Int) -> Bool {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isShadowEnabledAt section: Int) -> Bool {
         let source = composedDataSource.index(for: section)
         guard
             let custom = source.dataSource as? XCCollectionViewFlexLayoutCustomizable,
@@ -47,7 +47,7 @@ open class XCCollectionViewFlexLayoutAdaptor: XCComposedCollectionViewLayoutAdap
         return isShadowEnabled
     }
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlexLayout, cornerRadiusAt section: Int) -> CGFloat {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, cornerRadiusAt section: Int) -> CGFloat {
         let source = composedDataSource.index(for: section)
         guard
             let custom = source.dataSource as? XCCollectionViewFlexLayoutCustomizable,

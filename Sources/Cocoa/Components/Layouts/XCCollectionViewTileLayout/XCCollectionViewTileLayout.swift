@@ -1,5 +1,5 @@
 //
-//  UICollectionViewFlexLayout.swift
+//  XCCollectionViewTileLayout.swift
 //  Xcore
 //
 //  Created by Guillermo Waitzel on 16/05/2019.
@@ -9,9 +9,8 @@
 import UIKit
 
 private let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
-private let UICollectionElementKindItemBackground = "UICollectionElementKindItemBackground"
 
-private extension UICollectionViewFlexLayout {
+private extension XCCollectionViewTileLayout {
     enum TileStyle: Equatable {
         case both
         case top
@@ -33,7 +32,7 @@ private extension UICollectionViewFlexLayout {
     }
 }
 
-open class UICollectionViewFlexLayout: UICollectionViewLayout {
+open class XCCollectionViewTileLayout: UICollectionViewLayout {
     public var numberOfColumns = 1 {
         didSet {
             invalidateLayout()
@@ -76,7 +75,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
 
     override init() {
         super.init()
-        register(UICollectionViewFlexBackgroundView.self, forDecorationViewOfKind: UICollectionElementKindSectionBackground)
+        register(XCCollectionViewTileBackgroundView.self, forDecorationViewOfKind: UICollectionElementKindSectionBackground)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -272,7 +271,7 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
     }
 }
 
-private extension UICollectionViewFlexLayout {
+private extension XCCollectionViewTileLayout {
     func minColumnIndex(_ columns: [CGFloat]) -> Int {
         var index = 0
         var minYOffset = CGFloat.infinity
@@ -298,9 +297,9 @@ private extension UICollectionViewFlexLayout {
     }
 }
 
-extension UICollectionViewFlexLayout {
-    var delegate: UICollectionViewDelegateFlexLayout? {
-        return self.collectionView?.delegate as? UICollectionViewDelegateFlexLayout
+extension XCCollectionViewTileLayout {
+    var delegate: XCCollectionViewDelegateTileLayout? {
+        return self.collectionView?.delegate as? XCCollectionViewDelegateTileLayout
     }
 
     public func height(forItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {

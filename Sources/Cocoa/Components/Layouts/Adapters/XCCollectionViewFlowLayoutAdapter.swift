@@ -1,5 +1,5 @@
 //
-//  XCCollectionViewFlowLayoutAdaptor.swift
+//  XCCollectionViewFlowLayoutAdapter.swift
 //  Xcore
 //
 //  Created by Guillermo Waitzel on 28/05/2019.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-open class XCCollectionViewFlowLayoutAdaptor: XCComposedCollectionViewLayoutAdaptor, UICollectionViewDelegateFlowLayout {
+open class XCCollectionViewFlowLayoutAdapter: XCComposedCollectionViewLayoutAdapter, UICollectionViewDelegateFlowLayout {
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = availableWidth(for: indexPath.section, in: collectionView)
         return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath, availableWidth: width)
@@ -36,7 +36,7 @@ open class XCCollectionViewFlowLayoutAdaptor: XCComposedCollectionViewLayoutAdap
     }
 }
 
-extension XCCollectionViewFlowLayoutAdaptor {
+extension XCCollectionViewFlowLayoutAdapter {
     private func sectionInset(for section: Int, in collectionView: UICollectionView) -> UIEdgeInsets {
         return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset ?? .zero
     }
