@@ -416,6 +416,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
         setImage(highlightedImage, for: .highlighted)
         imageView?.contentMode = .scaleAspectFit
         imageView?.tintColor = tintColor
+        imageView?.enableSmoothScaling()
         if let handler = handler {
             addAction(.touchUpInside, handler)
         }

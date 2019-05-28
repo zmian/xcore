@@ -210,7 +210,7 @@ final public class SearchBarView: UIView {
 }
 
 extension SearchBarView {
-    public func hideKeyboardIfNecessary() {
+    public func hideKeyboardIfNeeded() {
         guard searchBar.isFirstResponder else { return }
 
         // Only hide cancel button if no text is present in the search bar
@@ -228,7 +228,7 @@ extension SearchBarView {
     /// This method sets the text property to `nil` and hides the `cancel` button.
     public func clear() {
         searchBar.text = nil
-        hideKeyboardIfNecessary()
+        hideKeyboardIfNeeded()
     }
 
     @discardableResult
@@ -272,6 +272,6 @@ extension SearchBarView: UISearchBarDelegate {
     }
 
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        hideKeyboardIfNecessary()
+        hideKeyboardIfNeeded()
     }
 }

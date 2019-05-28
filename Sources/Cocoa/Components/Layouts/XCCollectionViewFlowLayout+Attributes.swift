@@ -1,7 +1,7 @@
 //
-// XCView.swift
+// XCCollectionViewFlowLayout+Attributes.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2016 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,19 @@
 
 import UIKit
 
-open class XCView: UIView {
-    // MARK: - Init Methods
+extension XCCollectionViewFlowLayout {
+    open class Attributes: UICollectionViewLayoutAttributes {
+        public var separator: UIRectEdge = []
+        public var shouldDim = false
 
-    public convenience init() {
-        self.init(frame: .zero)
+        open override func copy(with zone: NSZone? = nil) -> Any {
+            guard let copy = super.copy(with: zone) as? Attributes else {
+                return super.copy(with: zone)
+            }
+
+            copy.separator = separator
+            copy.shouldDim = shouldDim
+            return copy
+        }
     }
-
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-
-    // MARK: - Setup Methods
-
-    /// The default implementation of this method does nothing.
-    ///
-    /// Subclasses can override it to perform additional actions, for example, add
-    /// new subviews or configure properties. This method is called when `self` is
-    /// initialized using any of the relevant `init` methods.
-    open func commonInit() {}
 }

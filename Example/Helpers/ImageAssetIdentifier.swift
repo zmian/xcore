@@ -1,7 +1,7 @@
 //
-// XCView.swift
+// ImageAssetIdentifier.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2014 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,29 +24,7 @@
 
 import UIKit
 
-open class XCView: UIView {
-    // MARK: - Init Methods
-
-    public convenience init() {
-        self.init(frame: .zero)
-    }
-
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-
-    // MARK: - Setup Methods
-
-    /// The default implementation of this method does nothing.
-    ///
-    /// Subclasses can override it to perform additional actions, for example, add
-    /// new subviews or configure properties. This method is called when `self` is
-    /// initialized using any of the relevant `init` methods.
-    open func commonInit() {}
+/// Extension to get compile time checks for asset identifiers
+extension ImageAssetIdentifier {
+    static var blueJay: ImageAssetIdentifier { return #function }
 }

@@ -1,7 +1,7 @@
 //
-// XCTableViewCell.swift
+// ButtonsViewController.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2018 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,37 +24,37 @@
 
 import UIKit
 
-open class XCTableViewCell: UITableViewCell {
-    // MARK: - Init Methods
-
-    public convenience init() {
-        self.init(style: .default, reuseIdentifier: nil)
+final class ButtonsViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Buttons"
+        view.backgroundColor = .white
+        exampleButtonType()
+        examplePlainButton()
     }
 
-    public override init(style: CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        internalCommonInit()
+    private func examplePlainButton() {
+        let button = UIButton()
+        button.text = "Hello World"
+        button.textColor = .red
+        button.sizeToFit()
+        view.addSubview(button)
+
+        button.addAction(.touchUpInside) { _ in
+            print("plain button tapped")
+        }
+
+        button.center = CGPoint(x: 100, y: 300)
     }
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        internalCommonInit()
+    private func exampleButtonType() {
+        let button = UIButton(type: .contactAdd)
+        view.addSubview(button)
+
+        button.addAction(.touchUpInside) { _ in
+            print("Contact add button tapped")
+        }
+
+        button.center = CGPoint(x: 100, y: 400)
     }
-
-    // MARK: - Setup Methods
-
-    open override func setSelected(_ selected: Bool, animated: Bool) {}
-    open override func setHighlighted(_ highlighted: Bool, animated: Bool) {}
-
-    private func internalCommonInit() {
-        backgroundColor = .clear
-        commonInit()
-    }
-
-    /// The default implementation of this method does nothing.
-    ///
-    /// Subclasses can override it to perform additional actions, for example, add
-    /// new subviews or configure properties. This method is called when `self` is
-    /// initialized using any of the relevant `init` methods.
-    open func commonInit() {}
 }

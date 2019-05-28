@@ -1,5 +1,5 @@
 //
-// CollectionViewFlexLayout.swift
+// CollectionViewCarouselLayout.swift
 //
 // Copyright © 2016 Zeeshan Mian
 //
@@ -24,24 +24,7 @@
 
 import UIKit
 
-extension CollectionViewFlexLayout {
-    open class Attributes: UICollectionViewLayoutAttributes {
-        public var separator: UIRectEdge = []
-        public var shouldDim = false
-
-        open override func copy(with zone: NSZone? = nil) -> Any {
-            guard let copy = super.copy(with: zone) as? Attributes else {
-                return super.copy(with: zone)
-            }
-
-            copy.separator = separator
-            copy.shouldDim = shouldDim
-            return copy
-        }
-    }
-}
-
-open class CollectionViewFlexLayout: UICollectionViewFlowLayout {
+open class CollectionViewCarouselLayout: XCCollectionViewFlowLayout {
     public var interitemSpacing: CGFloat = 0
     public var lineSpacing: CGFloat = 0
 
@@ -133,7 +116,7 @@ open class CollectionViewFlexLayout: UICollectionViewFlowLayout {
     }
 }
 
-extension CollectionViewFlexLayout {
+extension CollectionViewCarouselLayout {
     private func computeAttributes() {
         guard let collectionView = collectionView else {
             return

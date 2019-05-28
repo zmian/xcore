@@ -34,7 +34,7 @@ import UIKit
         set { layer.borderWidth = newValue }
     }
 
-    @IBInspectable open var borderColor: UIColor {
+    @IBInspectable @objc open dynamic var borderColor: UIColor {
         get { return layer.borderColor != nil ? UIColor(cgColor: layer.borderColor!) : .black }
         set { layer.borderColor = newValue.cgColor }
     }
@@ -105,22 +105,34 @@ import UIKit
 // MARK: - Borders
 
 @objc extension UIView {
+    var onePixel: CGFloat {
+        let scale = window?.screen.scale ?? UIScreen.main.scale
+        return 1 / scale
+    }
+
     // Credit: http://stackoverflow.com/a/23157272
     @discardableResult
     open func addBorder(edges: UIRectEdge, color: UIColor = .white, thickness: CGFloat = 1, inset: UIEdgeInsets = 0) -> [UIView] {
         var borders = [UIView]()
-        let metrics = ["thickness": thickness, "insetTop": inset.top, "insetLeft": inset.left, "insetBottom": inset.bottom, "insetRight": inset.right]
         let allEdges = edges.contains(.all)
+        let metrics = [
+            "thickness": thickness,
+            "insetTop": inset.top,
+            "insetLeft": inset.left,
+            "insetBottom": inset.bottom,
+            "insetRight": inset.right
+        ]
 
-        func border() -> UIView {
+        func border(tag: String) -> UIView {
             return UIView().apply {
+                $0.tag = "\(tag)BorderView".hashValue
                 $0.backgroundColor = color
                 $0.translatesAutoresizingMaskIntoConstraints = false
             }
         }
 
         if edges.contains(.top) || allEdges {
-            let top = border()
+            let top = border(tag: "top")
             addSubview(top)
             NSLayoutConstraint.constraints(withVisualFormat: "V:|-insetTop-[top(==thickness)]",
                 options: [],
@@ -136,7 +148,7 @@ import UIKit
         }
 
         if edges.contains(.left) || allEdges {
-            let left = border()
+            let left = border(tag: "left")
             addSubview(left)
             NSLayoutConstraint.constraints(withVisualFormat: "H:|-insetLeft-[left(==thickness)]",
                 options: [],
@@ -152,7 +164,7 @@ import UIKit
         }
 
         if edges.contains(.right) || allEdges {
-            let right = border()
+            let right = border(tag: "right")
             addSubview(right)
             NSLayoutConstraint.constraints(withVisualFormat: "H:[right(==thickness)]-insetRight-|",
                 options: [],
@@ -168,7 +180,7 @@ import UIKit
         }
 
         if edges.contains(.bottom) || allEdges {
-            let bottom = border()
+            let bottom = border(tag: "bottom")
             addSubview(bottom)
             NSLayoutConstraint.constraints(withVisualFormat: "V:[bottom(==thickness)]-insetBottom-|",
                 options: [],
@@ -240,7 +252,12 @@ import UIKit
     }
 
     open func sizeFitting(width: CGFloat) -> CGSize {
-        let layoutSize = systemLayoutSizeFitting(CGSize(width: width, height: 0), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        let layoutSize = systemLayoutSizeFitting(
+            CGSize(width: width, height: 0),
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        )
+
         return CGSize(width: width, height: ceil(layoutSize.height))
     }
 
@@ -265,18 +282,14 @@ extension UIView {
         sizeChangeResistance(.defaultLow, axis: .horizontal)
     }
 
-    open func resistsSizeChange(axis: NSLayoutConstraint.Axis...) {
+    open func resistsSizeChange(axis: NSLayoutConstraint.Axis) {
         sizeChangeResistance(.required, axis: axis)
     }
 
-    open func sizeChangeResistance(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis...) {
-        axis.forEach {
-            setContentHuggingPriority(priority, for: $0)
-            setContentCompressionResistancePriority(priority, for: $0)
-        }
+    open func sizeChangeResistance(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis) {
+        setContentHuggingPriority(priority, for: axis)
+        setContentCompressionResistancePriority(priority, for: axis)
     }
-
-    // Arrays and variadic parameters don't play well.
 
     open func resistsSizeChange(axis: [NSLayoutConstraint.Axis]) {
         sizeChangeResistance(.required, axis: axis)
@@ -295,11 +308,15 @@ extension Array where Element == UIView {
         forEach { $0.resistsSizeChange() }
     }
 
-    public func resistsSizeChange(axis: NSLayoutConstraint.Axis...) {
+    public func resistsSizeChange(axis: NSLayoutConstraint.Axis) {
         forEach { $0.resistsSizeChange(axis: axis) }
     }
 
-    public func sizeChangeResistance(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis...) {
+    public func sizeChangeResistance(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis) {
+        forEach { $0.sizeChangeResistance(priority, axis: axis) }
+    }
+
+    public func sizeChangeResistance(_ priority: UILayoutPriority, axis: [NSLayoutConstraint.Axis]) {
         forEach { $0.sizeChangeResistance(priority, axis: axis) }
     }
 }

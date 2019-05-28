@@ -42,6 +42,7 @@ open class XCComposedCollectionViewController: UIViewController {
     }
 
     /// The layout object `UICollectionView` uses to render itself.
+    ///
     /// The layout can be changed to any subclass of `UICollectionViewLayout`.
     /// However, the layout must be set before accessing `collectionView` to ensure that it is applied correctly.
     /// The default value is `UICollectionViewFlowLayout`.

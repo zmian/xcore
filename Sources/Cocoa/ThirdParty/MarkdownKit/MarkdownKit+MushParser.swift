@@ -35,7 +35,7 @@ import Haring
 ///
 /// **Markdown Acid Test**
 /// ```
-/// Community Rules {font:HelveticaNeue,24pt|text in {#bada55|green} a different font}\n\n {#bada55|the {bg#FFD700|should have gold color} text} {bg#bada55|the {#FFD700|should have gold color} text} **3 Bold** {bg#bada55|the text} \n\n**{#FFD700|adsdndsajhdajksdred text}** _{#ff0000|red text}_ __{#bada55|green text}__\n\n##Rule 1: Reddit's site-wide rules\n\n\n**[Click Here](http://www.reddit.com/rules) for reddit's 6 rules.**  \n\nThey are all pretty straight forward
+/// Community Rules {font:HelveticaNeue,24pt|text in {#bada55|green} a different font}\n\n {#bada55|the {bg#FFD700|should have gold color} text} {bg#bada55|the {#FFD700|should have gold color} text} **3 Bold** {bg#bada55|the text} \n\n**{#FFD700|adsdndsajhdajksdred text}** _{#ff0000|red text}_ __{#bada55|green text}__\n\n##Rule 1: Reddit's site-wide rules\n\n\n**[Tap Here](http://www.reddit.com/rules) for reddit's 6 rules.**  \n\nThey are all pretty straight forward
 /// ```
 /// <img src="https://user-images.githubusercontent.com/621693/57246709-f2aebd80-700b-11e9-91f8-4cb1e87c293a.png" height="70" width="120"/>
 final class MarkdownTextColor: MarkdownElement {

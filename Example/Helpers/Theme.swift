@@ -1,7 +1,7 @@
 //
-// ButtonsViewController.swift
+// Theme.swift
 //
-// Copyright © 2018 Zeeshan Mian
+// Copyright © 2016 Zeeshan Mian
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +22,22 @@
 // THE SOFTWARE.
 //
 
-import UIKit
-import Xcore
-
-final class ButtonsViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "Buttons"
-        view.backgroundColor = .white
-        exampleButtonType()
-        examplePlainButton()
-    }
-
-    private func examplePlainButton() {
-        let button = UIButton()
-        button.text = "Hello World"
-        button.textColor = .red
-        button.sizeToFit()
-        view.addSubview(button)
-
-        button.addAction(.touchUpInside) { _ in
-            print("plain button tapped")
+public struct Theme {
+    public static func start() {
+        UIButton.defaultAppearance.apply {
+            $0.style = .callout
+            $0.height = AppConstants.uiControlsHeight
+            $0.isHeightSetAutomatically = true
+            $0.highlightedAnimation = .scale
         }
 
-        button.center = CGPoint(x: 100, y: 300)
-    }
-
-    private func exampleButtonType() {
-        let button = UIButton(type: .contactAdd)
-        view.addSubview(button)
-
-        button.addAction(.touchUpInside) { _ in
-            print("Contact add button tapped")
+        MarkupText.appearance.apply {
+            $0.isLabelEnabled = true
+            $0.isTextViewEnabled = true
         }
 
-        button.center = CGPoint(x: 100, y: 400)
+        LabelTextView.appearance().apply {
+            $0.font = .preferredFont(forTextStyle: .callout)
+        }
     }
 }

@@ -56,9 +56,9 @@ open class XCCollectionReusableView: UICollectionReusableView {
 
     /// The default implementation of this method does nothing.
     ///
-    /// Subclasses can override it to perform additional actions,
-    /// for example, add new subviews or configure properties.
-    /// This method is called when self is initialized using any of the relevant `init` methods.
+    /// Subclasses can override it to perform additional actions, for example, add
+    /// new subviews or configure properties. This method is called when `self` is
+    /// initialized using any of the relevant `init` methods.
     open func commonInit() {}
 
     /// A boolean value that indicates whether the cell resist dimming its content
@@ -110,7 +110,7 @@ extension XCCollectionReusableView {
 
 extension XCCollectionReusableView {
     @objc open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        guard let attributes = super.preferredLayoutAttributesFitting(layoutAttributes) as? CollectionViewFlexLayout.Attributes else {
+        guard let attributes = super.preferredLayoutAttributesFitting(layoutAttributes) as? XCCollectionViewFlowLayout.Attributes else {
             return super.preferredLayoutAttributesFitting(layoutAttributes)
         }
         attributes.alpha = (attributes.shouldDim && !resistsDimming) ? 0.5 : 1
@@ -120,7 +120,7 @@ extension XCCollectionReusableView {
 
     @objc open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
-        if let layoutAttributes = layoutAttributes as? CollectionViewFlexLayout.Attributes {
+        if let layoutAttributes = layoutAttributes as? XCCollectionViewFlowLayout.Attributes {
             alpha = (layoutAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
         }
 

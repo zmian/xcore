@@ -42,7 +42,7 @@ open class SplitScreenViewController: UIViewController {
         addViewController(vc, containerView: bodyContainerView, enableConstraints: enableConstraints, inset: inset)
     }
 
-    // MARK: Setup Methods: Container Views
+    // MARK: - Setup Methods: Container Views
 
     private func setupContainerViews() {
         view.addSubview(headerContainerView)

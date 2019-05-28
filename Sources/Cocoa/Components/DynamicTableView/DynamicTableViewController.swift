@@ -45,7 +45,7 @@ open class DynamicTableViewController: UIViewController {
         }
     }
 
-    // MARK: Init Methods
+    // MARK: - Init Methods
 
     public convenience init() {
         self.init(options: [])

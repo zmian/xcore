@@ -77,7 +77,7 @@ open class XCCollectionViewCell: UICollectionViewCell {
 
 extension XCCollectionViewCell {
     @objc open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        guard let attributes = super.preferredLayoutAttributesFitting(layoutAttributes) as? CollectionViewFlexLayout.Attributes else {
+        guard let attributes = super.preferredLayoutAttributesFitting(layoutAttributes) as? XCCollectionViewFlowLayout.Attributes else {
             return super.preferredLayoutAttributesFitting(layoutAttributes)
         }
         attributes.alpha = (attributes.shouldDim && !resistsDimming) ? 0.5 : 1
@@ -87,7 +87,7 @@ extension XCCollectionViewCell {
 
     @objc open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
-        if let layoutAttributes = layoutAttributes as? CollectionViewFlexLayout.Attributes {
+        if let layoutAttributes = layoutAttributes as? XCCollectionViewFlowLayout.Attributes {
             alpha = (layoutAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
         }
 

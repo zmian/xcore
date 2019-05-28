@@ -202,3 +202,10 @@ extension Array where Element: NSLayoutConstraint {
         return first { $0.anchorAttributes == value }
     }
 }
+
+extension Array where Element == NSLayoutConstraint.Axis {
+    /// The `.vertical` and `.horizontal` `NSLayoutConstraint.Axis`.
+    public static var both: [Element] {
+        return [.vertical, .horizontal]
+    }
+}

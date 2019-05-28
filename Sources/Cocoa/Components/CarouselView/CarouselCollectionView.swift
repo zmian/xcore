@@ -43,8 +43,8 @@ final class CarouselCollectionView
     private var ignoreScrollEventsCallbacks = false
     private var autoScrollTimer: Timer?
 
-    var layout: CollectionViewFlexLayout {
-        return collectionViewLayout as! CollectionViewFlexLayout
+    var layout: CollectionViewCarouselLayout {
+        return collectionViewLayout as! CollectionViewCarouselLayout
     }
 
     var viewModel: Model? {
@@ -111,7 +111,7 @@ final class CarouselCollectionView
     // MARK: - Init Methods
 
     convenience init() {
-        self.init(frame: .zero, collectionViewLayout: CollectionViewFlexLayout())
+        self.init(frame: .zero, collectionViewLayout: CollectionViewCarouselLayout())
     }
 
     override init(frame: CGRect, collectionViewLayout: UICollectionViewLayout) {
