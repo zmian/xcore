@@ -40,7 +40,6 @@ open class UICollectionViewFlexLayout: UICollectionViewLayout {
         }
     }
 
-    private typealias Attributes = UICollectionViewFlexLayoutAttributes
     private var layoutAttributes: [IndexPath: Attributes] = [:]
     private var footerAttributes: [IndexPath: Attributes] = [:]
     private var headerAttributes: [IndexPath: Attributes] = [:]

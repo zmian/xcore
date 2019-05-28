@@ -91,7 +91,7 @@ extension XCCollectionViewCell {
             alpha = (layoutAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
         }
 
-        if let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes {
+        if let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayout.Attributes {
             corners = (corners: flexLayoutAttributes.corners, radius: flexLayoutAttributes.cornerRadius)
         }
     }

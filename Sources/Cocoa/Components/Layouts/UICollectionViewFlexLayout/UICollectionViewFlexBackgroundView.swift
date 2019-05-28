@@ -87,7 +87,7 @@ final class UICollectionViewFlexBackgroundView: UICollectionReusableView {
 
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
-        guard let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayoutAttributes else {
+        guard let flexLayoutAttributes = layoutAttributes as? UICollectionViewFlexLayout.Attributes else {
             return
         }
         corners = flexLayoutAttributes.corners
