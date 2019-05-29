@@ -71,7 +71,7 @@ extension XCCollectionViewFlowLayoutAdapter {
     }
 }
 
-@objc protocol XCCollectionViewFlowLayoutCustomizable {
+@objc public protocol XCCollectionViewFlowLayoutCustomizable {
     @objc optional func sectionInset(for section: Int) -> UIEdgeInsets
     @objc optional func minimumLineSpacing(for section: Int) -> CGFloat
     @objc optional func minimumInteritemSpacing(for section: Int) -> CGFloat

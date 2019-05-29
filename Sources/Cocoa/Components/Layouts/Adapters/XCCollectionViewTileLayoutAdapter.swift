@@ -59,7 +59,7 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
     }
 }
 
-@objc protocol XCCollectionViewFlexLayoutCustomizable {
+@objc public protocol XCCollectionViewFlexLayoutCustomizable {
     @objc optional func isFullWidth() -> Bool
     @objc optional func isShadowEnabled() -> Bool
     @objc optional func cornerRadiusForTile() -> CGFloat
