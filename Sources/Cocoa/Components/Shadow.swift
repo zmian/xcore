@@ -81,7 +81,7 @@ public struct Shadow {
     }
 }
 
-public extension UIView {
+extension UIView {
     /// Adds shadow to the receiver’s layer. The properties are animatable.
     ///
     /// - Parameter shadow: The shadow to be added.
@@ -90,7 +90,7 @@ public extension UIView {
     }
 }
 
-public extension CALayer {
+extension CALayer {
     /// Adds shadow to the receiver. The properties are animatable.
     ///
     /// - Parameter shadow: The shadow to be added.
