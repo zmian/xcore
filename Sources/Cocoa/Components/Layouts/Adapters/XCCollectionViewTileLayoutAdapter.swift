@@ -27,7 +27,7 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, marginForSectionAt section: Int) -> UIEdgeInsets {
         let source = composedDataSource.index(for: section)
         guard
-            let custom = source.dataSource as? XCCollectionViewFlexLayoutCustomizable,
+            let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable,
             let isFullWidth = custom.isFullWidth?(),
             isFullWidth
         else {
@@ -39,7 +39,7 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isShadowEnabledAt section: Int) -> Bool {
         let source = composedDataSource.index(for: section)
         guard
-            let custom = source.dataSource as? XCCollectionViewFlexLayoutCustomizable,
+            let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable,
             let isShadowEnabled = custom.isShadowEnabled?()
         else {
             return true
@@ -50,7 +50,7 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, cornerRadiusAt section: Int) -> CGFloat {
         let source = composedDataSource.index(for: section)
         guard
-            let custom = source.dataSource as? XCCollectionViewFlexLayoutCustomizable,
+            let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable,
             let cornerRadius = custom.cornerRadiusForTile?()
         else {
             return 11
@@ -59,7 +59,7 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
     }
 }
 
-@objc public protocol XCCollectionViewFlexLayoutCustomizable {
+@objc public protocol XCCollectionViewTileLayoutCustomizable {
     @objc optional func isFullWidth() -> Bool
     @objc optional func isShadowEnabled() -> Bool
     @objc optional func cornerRadiusForTile() -> CGFloat
