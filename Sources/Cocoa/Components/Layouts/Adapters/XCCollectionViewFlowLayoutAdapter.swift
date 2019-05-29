@@ -18,11 +18,25 @@ open class XCCollectionViewFlowLayoutAdapter: XCComposedCollectionViewLayoutAdap
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return (collectionViewLayout as? UICollectionViewFlowLayout)?.minimumLineSpacing ?? 0
+        let source = composedDataSource.index(for: section)
+        guard
+            let custom = source.dataSource as? XCCollectionViewFlowLayoutCustomizable,
+            let lineSpacing = custom.minimumLineSpacing?(for: source.localSection)
+        else {
+            return (collectionViewLayout as? UICollectionViewFlowLayout)?.minimumLineSpacing ?? 0
+        }
+        return lineSpacing
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return (collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? 0
+        let source = composedDataSource.index(for: section)
+        guard
+            let custom = source.dataSource as? XCCollectionViewFlowLayoutCustomizable,
+            let interitemSpacing = custom.minimumInteritemSpacing?(for: source.localSection)
+        else {
+            return (collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? 0
+        }
+        return interitemSpacing
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -38,7 +52,14 @@ open class XCCollectionViewFlowLayoutAdapter: XCComposedCollectionViewLayoutAdap
 
 extension XCCollectionViewFlowLayoutAdapter {
     private func sectionInset(for section: Int, in collectionView: UICollectionView) -> UIEdgeInsets {
-        return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset ?? .zero
+        let source = composedDataSource.index(for: section)
+        guard
+            let custom = source.dataSource as? XCCollectionViewFlowLayoutCustomizable,
+            let sectionInset = custom.sectionInset?(for: source.localSection)
+        else {
+            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset ?? .zero
+        }
+        return sectionInset
     }
 
     private func availableWidth(for section: Int, in collectionView: UICollectionView) -> CGFloat {
@@ -48,4 +69,10 @@ extension XCCollectionViewFlowLayoutAdapter {
         let finalWidth = collectionView.bounds.width - sectionInsetHorizontal - contentInsetHorizontal - 0.01
         return finalWidth
     }
+}
+
+@objc protocol XCCollectionViewFlowLayoutCustomizable {
+    @objc optional func sectionInset(for section: Int) -> UIEdgeInsets
+    @objc optional func minimumLineSpacing(for section: Int) -> CGFloat
+    @objc optional func minimumInteritemSpacing(for section: Int) -> CGFloat
 }

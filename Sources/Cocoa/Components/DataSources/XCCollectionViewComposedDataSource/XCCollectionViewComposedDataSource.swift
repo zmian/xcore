@@ -139,16 +139,6 @@ extension XCCollectionViewComposedDataSource {
     }
 }
 
-// MARK: UICollectionViewDelegate
-
-extension XCCollectionViewComposedDataSource {
-    open override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
-        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
-        dataSource.collectionView(collectionView, didSelectItemAt: localIndexPath)
-    }
-}
-
 // MARK: Sizes
 
 extension XCCollectionViewComposedDataSource {
@@ -188,6 +178,12 @@ extension XCCollectionViewComposedDataSource {
 // MARK: Lifecycle
 
 extension XCCollectionViewComposedDataSource {
+    open override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        dataSource.collectionView(collectionView, didSelectItemAt: localIndexPath)
+    }
+
     open override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let (dataSource, localSection) = dataSourceIndex[indexPath.section]
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)

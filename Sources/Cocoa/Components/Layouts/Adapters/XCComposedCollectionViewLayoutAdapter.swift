@@ -14,10 +14,16 @@ open class XCComposedCollectionViewLayoutAdapter: NSObject {
         self.composedDataSource = dataSource
         super.init()
     }
+
+    private var didSelectItem: ((IndexPath) -> Void)?
+    func didSelectItem(_ callback: @escaping (IndexPath) -> Void) {
+        didSelectItem = callback
+    }
 }
 
 extension XCComposedCollectionViewLayoutAdapter: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        didSelectItem?(indexPath)
         composedDataSource.collectionView(collectionView, didSelectItemAt: indexPath)
     }
 
