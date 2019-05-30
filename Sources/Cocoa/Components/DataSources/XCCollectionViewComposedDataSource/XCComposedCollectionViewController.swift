@@ -24,28 +24,18 @@
 
 import UIKit
 
-public extension XCComposedCollectionViewController {
-    struct Layout {
-        static let feed = Layout(layout: XCCollectionViewTileLayout(), adapter: XCCollectionViewTileLayoutAdapter())
-        static let `default` = Layout(layout: UICollectionViewFlowLayout(), adapter: XCCollectionViewFlowLayoutAdapter())
-
-        let layout: UICollectionViewLayout
-        let adapter: XCComposedCollectionViewLayoutAdapter
-    }
-}
-
 open class XCComposedCollectionViewController: UIViewController {
     public private(set) var collectionViewConstraints: NSLayoutConstraint.Edges!
 
-    public var composedLayout: Layout = .default {
+    public var layout: XCComposedCollectionViewLayout = XCComposedCollectionViewLayout( UICollectionViewFlowLayout()) {
         didSet {
-            collectionView.collectionViewLayout = composedLayout.layout
-            composedLayout.adapter.attach(to: self)
+            collectionView.collectionViewLayout = layout.collectionViewLayout
+            layout.adapter.attach(to: self)
         }
     }
 
     open lazy var collectionView: UICollectionView = {
-        XCCollectionView(frame: .zero, collectionViewLayout: composedLayout.layout)
+        XCCollectionView(frame: .zero, collectionViewLayout: layout.collectionViewLayout)
     }()
 
     /// The distance that the collectionView is inset from the enclosing view.
@@ -69,7 +59,7 @@ open class XCComposedCollectionViewController: UIViewController {
         collectionView.apply {
             composedDataSource.dataSources = dataSources(for: $0)
             $0.dataSource = composedDataSource
-            composedLayout.adapter.attach(to: self)
+            layout.adapter.attach(to: self)
             view.addSubview($0)
             collectionViewConstraints = NSLayoutConstraint.Edges(
                 $0.anchor.edges.equalToSuperview().inset(contentInset).constraints

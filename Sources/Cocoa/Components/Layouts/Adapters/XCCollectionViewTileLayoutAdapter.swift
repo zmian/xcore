@@ -7,6 +7,12 @@
 
 import Foundation
 
+@objc public protocol XCCollectionViewTileLayoutCustomizable {
+    @objc optional func isFullWidth() -> Bool
+    @objc optional func isShadowEnabled() -> Bool
+    @objc optional func cornerRadiusForTile() -> CGFloat
+}
+
 open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdapter, XCCollectionViewDelegateTileLayout {
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
         return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath, availableWidth: width).height
@@ -59,8 +65,8 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
     }
 }
 
-@objc public protocol XCCollectionViewTileLayoutCustomizable {
-    @objc optional func isFullWidth() -> Bool
-    @objc optional func isShadowEnabled() -> Bool
-    @objc optional func cornerRadiusForTile() -> CGFloat
+extension XCCollectionViewTileLayout: XCComposedCollectionViewLayoutCompatible {
+    public static var defaultAdapterType: XCComposedCollectionViewLayoutAdapter.Type {
+        return XCCollectionViewTileLayoutAdapter.self
+    }
 }

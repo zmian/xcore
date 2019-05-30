@@ -7,6 +7,12 @@
 
 import Foundation
 
+@objc public protocol XCCollectionViewFlowLayoutCustomizable {
+    @objc optional func sectionInset(for section: Int) -> UIEdgeInsets
+    @objc optional func minimumLineSpacing(for section: Int) -> CGFloat
+    @objc optional func minimumInteritemSpacing(for section: Int) -> CGFloat
+}
+
 open class XCCollectionViewFlowLayoutAdapter: XCComposedCollectionViewLayoutAdapter, UICollectionViewDelegateFlowLayout {
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = availableWidth(for: indexPath.section, in: collectionView)
@@ -71,8 +77,8 @@ extension XCCollectionViewFlowLayoutAdapter {
     }
 }
 
-@objc public protocol XCCollectionViewFlowLayoutCustomizable {
-    @objc optional func sectionInset(for section: Int) -> UIEdgeInsets
-    @objc optional func minimumLineSpacing(for section: Int) -> CGFloat
-    @objc optional func minimumInteritemSpacing(for section: Int) -> CGFloat
+extension UICollectionViewFlowLayout: XCComposedCollectionViewLayoutCompatible {
+    public static var defaultAdapterType: XCComposedCollectionViewLayoutAdapter.Type {
+        return XCCollectionViewFlowLayoutAdapter.self
+    }
 }

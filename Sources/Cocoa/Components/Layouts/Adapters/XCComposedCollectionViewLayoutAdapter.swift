@@ -18,9 +18,13 @@ open class XCComposedCollectionViewLayoutAdapter: NSObject {
         didSelectItem = callback
     }
 
+    public required override init() {
+        super.init()
+    }
+
     func attach(to viewController: XCComposedCollectionViewController) {
         _composedDataSource = viewController.composedDataSource
-        collectionView.delegate = self
+        viewController.collectionView.delegate = self
     }
 }
 
