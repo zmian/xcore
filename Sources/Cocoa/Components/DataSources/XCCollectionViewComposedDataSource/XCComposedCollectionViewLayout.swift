@@ -11,7 +11,7 @@ public struct XCComposedCollectionViewLayout {
     let collectionViewLayout: XCComposedCollectionViewLayoutCompatible
     let adapter: XCComposedCollectionViewLayoutAdapter
     
-    init(_ layout: XCComposedCollectionViewLayoutCompatible, adapter: XCComposedCollectionViewLayoutAdapter? = nil) {
+    public init(_ layout: XCComposedCollectionViewLayoutCompatible, adapter: XCComposedCollectionViewLayoutAdapter? = nil) {
         collectionViewLayout = layout
         self.adapter = adapter ?? type(of: layout).defaultAdapterType.self.init()
     }
