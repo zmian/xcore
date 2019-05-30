@@ -9,11 +9,11 @@ import Foundation
 
 public struct XCComposedCollectionViewLayout {    
     public let collectionViewLayout: XCComposedCollectionViewLayoutCompatible
-    public let adapter: XCComposedCollectionViewLayoutAdapter
+    public let delegate: XCComposedCollectionViewLayoutAdapter
 
     public init(_ layout: XCComposedCollectionViewLayoutCompatible, adapter: XCComposedCollectionViewLayoutAdapter? = nil) {
         collectionViewLayout = layout
-        self.adapter = adapter ?? type(of: layout).defaultAdapterType.self.init()
+        self.delegate = adapter ?? type(of: layout).defaultAdapterType.self.init()
     }
 }
 
