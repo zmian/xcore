@@ -16,8 +16,8 @@ final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
         return layer as! CAShapeLayer
     }
 
-    /// The default value is `[], 0`.
-    private var corners: (corners: UIRectCorner, radius: CGFloat) = ([], 0) {
+    /// The default value is `.none, 0`.
+    private var corners: (corners: UIRectCorner, radius: CGFloat) = (.none, 0) {
         didSet {
             setNeedsLayout()
         }

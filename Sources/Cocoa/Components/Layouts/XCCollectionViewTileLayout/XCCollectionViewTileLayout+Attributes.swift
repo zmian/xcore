@@ -9,8 +9,8 @@ import UIKit
 
 extension XCCollectionViewTileLayout {
     final class Attributes: UICollectionViewLayoutAttributes {
-        var cornerRadius: CGFloat = 0.0
-        var corners: UIRectCorner = []
+        var cornerRadius: CGFloat = 0
+        var corners: UIRectCorner = .none
 
         override func copy(with zone: NSZone? = nil) -> Any {
             guard let copy = super.copy(with: zone) as? XCCollectionViewTileLayout.Attributes else {

@@ -9,28 +9,6 @@ import UIKit
 
 private let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
 
-private extension XCCollectionViewTileLayout {
-    enum TileStyle: Equatable {
-        case both
-        case top
-        case bottom
-        case none
-
-        var corners: UIRectCorner {
-            switch self {
-                case .both:
-                    return .allCorners
-                case .top:
-                    return [.topLeft, .topRight]
-                case .bottom:
-                    return [.bottomLeft, .bottomRight]
-                case .none:
-                    return []
-            }
-        }
-    }
-}
-
 open class XCCollectionViewTileLayout: UICollectionViewLayout {
     public var numberOfColumns = 1 {
         didSet {
@@ -124,7 +102,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                     $0.frame.origin.x = offset.x
                     $0.frame.origin.y = offset.y
                     $0.cornerRadius = cornerRadius(forSectionAt: section)
-                    $0.corners = TileStyle.top.corners
+                    $0.corners = .top
                 }
                 headerAttributes[headerIndex] = attributes
                 calculateMinMaxAttributes(with: attributes, in: section)
@@ -145,12 +123,12 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                     $0.zIndex = zIndex(forItemAt: indexPath)
                     $0.cornerRadius = cornerRadius(forSectionAt: section)
 
-                    var corners: UIRectCorner = TileStyle.none.corners
+                    var corners: UIRectCorner = .none
                     if item == 0 && headerHeight == 0 {
-                        corners.formUnion(TileStyle.top.corners)
+                        corners.formUnion(.top)
                     }
                     if item == itemCount - 1 && footerHeight == 0 {
-                        corners.formUnion(TileStyle.bottom.corners)
+                        corners.formUnion(.bottom)
                     }
                     $0.corners = corners
                 }
@@ -166,7 +144,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                     $0.frame.origin.x = offset.x
                     $0.frame.origin.y = offset.y
                     $0.cornerRadius = cornerRadius(forSectionAt: section)
-                    $0.corners = TileStyle.bottom.corners
+                    $0.corners = .bottom
                 }
 
                 footerAttributes[footerIndex] = attributes
