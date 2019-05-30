@@ -8,9 +8,9 @@
 import Foundation
 
 public struct XCComposedCollectionViewLayout {    
-    let collectionViewLayout: XCComposedCollectionViewLayoutCompatible
-    let adapter: XCComposedCollectionViewLayoutAdapter
-    
+    public let collectionViewLayout: XCComposedCollectionViewLayoutCompatible
+    public let adapter: XCComposedCollectionViewLayoutAdapter
+
     public init(_ layout: XCComposedCollectionViewLayoutCompatible, adapter: XCComposedCollectionViewLayoutAdapter? = nil) {
         collectionViewLayout = layout
         self.adapter = adapter ?? type(of: layout).defaultAdapterType.self.init()
