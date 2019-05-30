@@ -3,7 +3,6 @@
 //  Xcore
 //
 //  Created by Guillermo Waitzel on 16/05/2019.
-//  Copyright © 2019 Clarity Money. All rights reserved.
 //
 
 import UIKit
