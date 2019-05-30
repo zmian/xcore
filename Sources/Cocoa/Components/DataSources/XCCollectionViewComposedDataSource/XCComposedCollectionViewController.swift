@@ -27,7 +27,7 @@ import UIKit
 open class XCComposedCollectionViewController: UIViewController {
     public private(set) var collectionViewConstraints: NSLayoutConstraint.Edges!
 
-    public var layout: XCComposedCollectionViewLayout = XCComposedCollectionViewLayout( UICollectionViewFlowLayout()) {
+    public var layout: XCComposedCollectionViewLayout = XCComposedCollectionViewLayout(UICollectionViewFlowLayout()) {
         didSet {
             collectionView.collectionViewLayout = layout.collectionViewLayout
             layout.delegate.attach(to: self)
@@ -140,16 +140,16 @@ extension XCComposedCollectionViewController {
 extension XCComposedCollectionViewController {
     @objc open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     }
-    
+
     @objc open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     }
-    
+
     @objc open func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
     }
-    
+
     @objc open func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     }
-    
+
     @objc open func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
     }
 }

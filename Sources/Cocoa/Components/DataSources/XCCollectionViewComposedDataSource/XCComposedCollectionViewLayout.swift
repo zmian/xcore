@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct XCComposedCollectionViewLayout {    
+public struct XCComposedCollectionViewLayout {
     public let collectionViewLayout: XCComposedCollectionViewLayoutCompatible
     public let delegate: XCComposedCollectionViewLayoutAdapter
 

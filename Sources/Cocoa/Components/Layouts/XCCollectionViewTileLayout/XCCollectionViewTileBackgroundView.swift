@@ -40,7 +40,7 @@ final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
     }
 
     func commonInit() {
-        self.clipsToBounds = false
+        clipsToBounds = false
         setupShadow()
         super.backgroundColor = .clear
         backgroundColor = .clear

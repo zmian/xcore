@@ -16,11 +16,10 @@ extension XCCollectionViewTileLayout {
             guard let copy = super.copy(with: zone) as? XCCollectionViewTileLayout.Attributes else {
                 return super.copy(with: zone)
             }
-            
+
             copy.cornerRadius = cornerRadius
             copy.corners = corners
             return copy
         }
     }
 }
-

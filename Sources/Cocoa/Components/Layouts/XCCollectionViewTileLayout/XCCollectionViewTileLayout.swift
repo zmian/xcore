@@ -18,14 +18,14 @@ private extension XCCollectionViewTileLayout {
 
         var corners: UIRectCorner {
             switch self {
-            case .both:
-                return .allCorners
-            case .top:
-                return [.topLeft, .topRight]
-            case .bottom:
-                return [.bottomLeft, .bottomRight]
-            case .none:
-                return []
+                case .both:
+                    return .allCorners
+                case .top:
+                    return [.topLeft, .topRight]
+                case .bottom:
+                    return [.bottomLeft, .bottomRight]
+                case .none:
+                    return []
             }
         }
     }
@@ -72,12 +72,12 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         super.invalidateLayout(with: context)
     }
 
-    override public init() {
+    public override init() {
         super.init()
         register(XCCollectionViewTileBackgroundView.self, forDecorationViewOfKind: UICollectionElementKindSectionBackground)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -100,7 +100,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
             let currentColumn = minColumnIndex(columnYOffset)
 
-            let sectionMargin = self.margin(forSectionAt: section)
+            let sectionMargin = margin(forSectionAt: section)
 
             // first column -> full leading margin , other columns -> half leading margin
             // last column -> full trailing margin, other columns -> half trailing margin
@@ -135,7 +135,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 let indexPath = IndexPath(item: item, section: section)
                 let itemHeight = height(forItemAt: indexPath, width: availableWidth)
                 if item > 0 {
-                    offset.y += self.verticalSpacing(betweenItemAt: IndexPath(item: item - 1, section: section), and: indexPath)
+                    offset.y += verticalSpacing(betweenItemAt: IndexPath(item: item - 1, section: section), and: indexPath)
                 }
 
                 let attributes = Attributes(forCellWith: indexPath).apply {
@@ -194,8 +194,8 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         minSection[section] = minimum
         maxSection[section] = maximum
 
-        if self.minimumItemZIndex > attributes.zIndex {
-            self.minimumItemZIndex = attributes.zIndex
+        if minimumItemZIndex > attributes.zIndex {
+            minimumItemZIndex = attributes.zIndex
         }
     }
 
@@ -228,8 +228,8 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     }
 
     private func prepareZIndex() {
-        for attributes in self.sectionBackgroundAttributes.values {
-              attributes.zIndex = minimumItemZIndex - 2
+        for attributes in sectionBackgroundAttributes.values {
+            attributes.zIndex = minimumItemZIndex - 2
         }
     }
 
@@ -245,7 +245,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     }
 
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return self.layoutAttributes[indexPath]
+        return layoutAttributes[indexPath]
     }
 
     open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
@@ -263,7 +263,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         switch elementKind {
             case UICollectionElementKindSectionBackground:
                 guard indexPath.item == 0 else { return nil }
-                return self.sectionBackgroundAttributes[indexPath.section]
+                return sectionBackgroundAttributes[indexPath.section]
             default:
                 return super.layoutAttributesForDecorationView(ofKind: elementKind, at: indexPath)
         }
@@ -298,7 +298,7 @@ private extension XCCollectionViewTileLayout {
 
 extension XCCollectionViewTileLayout {
     var delegate: XCCollectionViewDelegateTileLayout? {
-        return self.collectionView?.delegate as? XCCollectionViewDelegateTileLayout
+        return collectionView?.delegate as? XCCollectionViewDelegateTileLayout
     }
 
     private func height(forItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
