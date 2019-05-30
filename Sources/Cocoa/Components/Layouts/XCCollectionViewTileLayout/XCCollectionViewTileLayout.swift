@@ -51,11 +51,11 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
     private(set) var minimumItemZIndex: Int = 0
 
-    override open class var layoutAttributesClass: AnyClass {
+    open override class var layoutAttributesClass: AnyClass {
         return Attributes.self
     }
 
-    override open func prepare() {
+    open override func prepare() {
         super.prepare()
         guard shouldReloadAttributes else { return }
         shouldReloadAttributes = false
@@ -65,7 +65,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         prepareZIndex()
     }
 
-    override open func invalidateLayout(with context: UICollectionViewLayoutInvalidationContext) {
+    open override func invalidateLayout(with context: UICollectionViewLayoutInvalidationContext) {
         if context.invalidateEverything || context.invalidateDataSourceCounts {
             shouldReloadAttributes = true
         }
@@ -110,7 +110,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             let availableWidth = columnWidth - leftMargin - rightMargin
             var offset = CGPoint(x: columnWidth * CGFloat(currentColumn) + leftMargin, y: columnYOffset[currentColumn])
 
-            let sectionVerticalSpacing =  offset.y > 0 ? verticalSpacing(betweenSectionAt: section - 1, and: section) : 0
+            let sectionVerticalSpacing = offset.y > 0 ? verticalSpacing(betweenSectionAt: section - 1, and: section) : 0
 
             let headerHeight = self.headerHeight(forSectionAt: section, width: availableWidth)
             let footerHeight = self.footerHeight(forSectionAt: section, width: availableWidth)
@@ -145,7 +145,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                     $0.zIndex = zIndex(forItemAt: indexPath)
                     $0.cornerRadius = cornerRadius(forSectionAt: section)
 
-                    var corners: UIRectCorner =  TileStyle.none.corners
+                    var corners: UIRectCorner = TileStyle.none.corners
                     if item == 0 && headerHeight == 0 {
                         corners.formUnion(TileStyle.top.corners)
                     }
@@ -177,7 +177,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             offset.y += sectionMargin.bottom
             columnYOffset[currentColumn] = offset.y
         }
-    
+
         let maxColumnIndex = self.maxColumnIndex(columnYOffset)
         cachedContentSize = CGSize(width: contentWidth, height: columnYOffset[maxColumnIndex])
     }
@@ -233,22 +233,22 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
     }
 
-    override open var collectionViewContentSize: CGSize {
+    open override var collectionViewContentSize: CGSize {
         return self.cachedContentSize
     }
 
-    override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return layoutAttributes.values.filter { $0.frame.intersects(rect) }
             + sectionBackgroundAttributes.values.filter { $0.frame.intersects(rect) }
             + footerAttributes.values.filter { $0.frame.intersects(rect) }
             + headerAttributes.values.filter { $0.frame.intersects(rect) }
     }
 
-    override open func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return self.layoutAttributes[indexPath]
     }
 
-    override open func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         switch elementKind {
             case UICollectionView.elementKindSectionHeader:
                 return headerAttributes[indexPath]
@@ -259,7 +259,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
     }
 
-    override open func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    open override func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         switch elementKind {
             case UICollectionElementKindSectionBackground:
                 guard indexPath.item == 0 else { return nil }
@@ -301,49 +301,49 @@ extension XCCollectionViewTileLayout {
         return self.collectionView?.delegate as? XCCollectionViewDelegateTileLayout
     }
 
-    public func height(forItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
+    private func height(forItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return .zero }
         return delegate.collectionView?(collectionView, layout: self, heightForItemAt: indexPath, width: width) ?? 0
     }
 
-    public func verticalSpacing(betweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
+    private func verticalSpacing(betweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
         guard section != nextSection else { return 0 }
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
         return delegate.collectionView?(collectionView, layout: self, verticalSpacingBetweenSectionAt: section, and: nextSection) ?? 0
     }
 
-    public func margin(forSectionAt section: Int) -> UIEdgeInsets {
+    private func margin(forSectionAt section: Int) -> UIEdgeInsets {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return .zero }
         return delegate.collectionView?(collectionView, layout: self, marginForSectionAt: section) ?? .zero
     }
 
-    public func verticalSpacing(betweenItemAt indexPath: IndexPath, and nextIndexPath: IndexPath) -> CGFloat {
+    private func verticalSpacing(betweenItemAt indexPath: IndexPath, and nextIndexPath: IndexPath) -> CGFloat {
         guard indexPath != nextIndexPath else { return 0 }
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
         return delegate.collectionView?(collectionView, layout: self, verticalSpacingBetweenItemAt: indexPath, and: nextIndexPath) ?? 0
     }
 
-    public func zIndex(forItemAt indexPath: IndexPath) -> Int {
+    private func zIndex(forItemAt indexPath: IndexPath) -> Int {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
         return delegate.collectionView?(collectionView, layout: self, zIndexForItemAt: indexPath) ?? 0
     }
 
-    public func headerHeight(forSectionAt section: Int, width: CGFloat) -> CGFloat {
+    private func headerHeight(forSectionAt section: Int, width: CGFloat) -> CGFloat {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
         return delegate.collectionView?(collectionView, layout: self, heightForHeaderInSection: section, width: width) ?? 0
     }
 
-    public func footerHeight(forSectionAt section: Int, width: CGFloat) -> CGFloat {
+    private func footerHeight(forSectionAt section: Int, width: CGFloat) -> CGFloat {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
         return delegate.collectionView?(collectionView, layout: self, heightForFooterInSection: section, width: width) ?? 0
     }
 
-    public func cornerRadius(forSectionAt section: Int) -> CGFloat {
+    private func cornerRadius(forSectionAt section: Int) -> CGFloat {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return 11 }
         return delegate.collectionView?(collectionView, layout: self, cornerRadiusAt: section) ?? 11
     }
 
-    public func isShadowEnabled(forSectionAt section: Int) -> Bool {
+    private func isShadowEnabled(forSectionAt section: Int) -> Bool {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return true }
         return delegate.collectionView?(collectionView, layout: self, isShadowEnabledAt: section) ?? true
     }
