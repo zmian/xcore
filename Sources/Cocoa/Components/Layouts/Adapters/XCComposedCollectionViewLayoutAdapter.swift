@@ -12,7 +12,7 @@ open class XCComposedCollectionViewLayoutAdapter: NSObject {
     var composedDataSource: XCCollectionViewComposedDataSource {
         return _composedDataSource
     }
-    
+
     private var didSelectItem: ((IndexPath) -> Void)?
     func didSelectItem(_ callback: @escaping (IndexPath) -> Void) {
         didSelectItem = callback
