@@ -30,7 +30,7 @@ open class XCComposedCollectionViewController: UIViewController {
     public var layout: XCComposedCollectionViewLayout = XCComposedCollectionViewLayout( UICollectionViewFlowLayout()) {
         didSet {
             collectionView.collectionViewLayout = layout.collectionViewLayout
-            layout.adapter.attach(to: self)
+            layout.delegate.attach(to: self)
         }
     }
 
@@ -59,7 +59,7 @@ open class XCComposedCollectionViewController: UIViewController {
         collectionView.apply {
             composedDataSource.dataSources = dataSources(for: $0)
             $0.dataSource = composedDataSource
-            layout.adapter.attach(to: self)
+            layout.delegate.attach(to: self)
             view.addSubview($0)
             collectionViewConstraints = NSLayoutConstraint.Edges(
                 $0.anchor.edges.equalToSuperview().inset(contentInset).constraints

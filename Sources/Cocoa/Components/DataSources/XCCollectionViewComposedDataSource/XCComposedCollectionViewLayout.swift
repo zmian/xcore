@@ -11,9 +11,9 @@ public struct XCComposedCollectionViewLayout {
     public let collectionViewLayout: XCComposedCollectionViewLayoutCompatible
     public let delegate: XCComposedCollectionViewLayoutAdapter
 
-    public init(_ layout: XCComposedCollectionViewLayoutCompatible, adapter: XCComposedCollectionViewLayoutAdapter? = nil) {
+    public init(_ layout: XCComposedCollectionViewLayoutCompatible, delegate: XCComposedCollectionViewLayoutAdapter? = nil) {
         collectionViewLayout = layout
-        self.delegate = adapter ?? type(of: layout).defaultAdapterType.self.init()
+        self.delegate = delegate ?? type(of: layout).defaultAdapterType.self.init()
     }
 }
 
