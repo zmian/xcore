@@ -14,7 +14,7 @@ open class XCComposedCollectionViewLayoutAdapter: NSObject {
     }
 
     private var didSelectItem: ((IndexPath) -> Void)?
-    func didSelectItem(_ callback: @escaping (IndexPath) -> Void) {
+    public func didSelectItem(_ callback: @escaping (IndexPath) -> Void) {
         didSelectItem = callback
     }
 
