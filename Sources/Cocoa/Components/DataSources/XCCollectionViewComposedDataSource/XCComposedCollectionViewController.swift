@@ -25,9 +25,9 @@
 import UIKit
 
 public extension XCComposedCollectionViewController {
-    struct LayoutType {
-        static let feed = LayoutType(layout: XCCollectionViewTileLayout(), adapter: XCCollectionViewTileLayoutAdapter())
-        static let `default` = LayoutType(layout: UICollectionViewFlowLayout(), adapter: XCCollectionViewFlowLayoutAdapter())
+    struct Layout {
+        static let feed = Layout(layout: XCCollectionViewTileLayout(), adapter: XCCollectionViewTileLayoutAdapter())
+        static let `default` = Layout(layout: UICollectionViewFlowLayout(), adapter: XCCollectionViewFlowLayoutAdapter())
 
         let layout: UICollectionViewLayout
         let adapter: XCComposedCollectionViewLayoutAdapter
@@ -37,15 +37,15 @@ public extension XCComposedCollectionViewController {
 open class XCComposedCollectionViewController: UIViewController {
     public private(set) var collectionViewConstraints: NSLayoutConstraint.Edges!
 
-    public var layoutType: LayoutType = .default {
+    public var composedLayout: Layout = .default {
         didSet {
-            collectionView.collectionViewLayout = layoutType.layout
-            layoutType.adapter.attach(to: self)
+            collectionView.collectionViewLayout = composedLayout.layout
+            composedLayout.adapter.attach(to: self)
         }
     }
 
     open lazy var collectionView: UICollectionView = {
-        XCCollectionView(frame: .zero, collectionViewLayout: layoutType.layout)
+        XCCollectionView(frame: .zero, collectionViewLayout: composedLayout.layout)
     }()
 
     /// The distance that the collectionView is inset from the enclosing view.
@@ -69,7 +69,7 @@ open class XCComposedCollectionViewController: UIViewController {
         collectionView.apply {
             composedDataSource.dataSources = dataSources(for: $0)
             $0.dataSource = composedDataSource
-            layoutType.adapter.attach(to: self)
+            composedLayout.adapter.attach(to: self)
             view.addSubview($0)
             collectionViewConstraints = NSLayoutConstraint.Edges(
                 $0.anchor.edges.equalToSuperview().inset(contentInset).constraints
