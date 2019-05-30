@@ -8,16 +8,19 @@
 import Foundation
 
 open class XCComposedCollectionViewLayoutAdapter: NSObject {
-    let composedDataSource: XCCollectionViewComposedDataSource
-
-    public required init(dataSource: XCCollectionViewComposedDataSource) {
-        self.composedDataSource = dataSource
-        super.init()
+    private var _composedDataSource = XCCollectionViewComposedDataSource()
+    var composedDataSource: XCCollectionViewComposedDataSource {
+        return _composedDataSource
     }
-
+    
     private var didSelectItem: ((IndexPath) -> Void)?
     func didSelectItem(_ callback: @escaping (IndexPath) -> Void) {
         didSelectItem = callback
+    }
+
+    func attach(to viewController: XCComposedCollectionViewController) {
+        _composedDataSource = viewController.composedDataSource
+        collectionView.delegate = self
     }
 }
 

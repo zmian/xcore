@@ -26,36 +26,26 @@ import UIKit
 
 public extension XCComposedCollectionViewController {
     struct LayoutType {
-        static let feed = LayoutType(layout: XCCollectionViewTileLayout(), adaptor: XCCollectionViewTileLayoutAdapter.self)
-        static let `default` = LayoutType(layout: UICollectionViewFlowLayout(), adaptor: XCCollectionViewFlowLayoutAdapter.self)
+        static let feed = LayoutType(layout: XCCollectionViewTileLayout(), adapter: XCCollectionViewTileLayoutAdapter())
+        static let `default` = LayoutType(layout: UICollectionViewFlowLayout(), adapter: XCCollectionViewFlowLayoutAdapter())
 
-        var layout: UICollectionViewLayout
-        var adaptor: XCComposedCollectionViewLayoutAdapter.Type
+        let layout: UICollectionViewLayout
+        let adapter: XCComposedCollectionViewLayoutAdapter
     }
 }
 
 open class XCComposedCollectionViewController: UIViewController {
     public private(set) var collectionViewConstraints: NSLayoutConstraint.Edges!
 
-    open var layoutType: LayoutType {
-        return .default
+    public var layoutType: LayoutType = .default {
+        didSet {
+            collectionView.collectionViewLayout = layoutType.layout
+            layoutType.adapter.attach(to: self)
+        }
     }
 
-    /// The layout object `UICollectionView` uses to render itself.
-    ///
-    /// The layout can be changed to any subclass of `UICollectionViewLayout`.
-    /// However, the layout must be set before accessing `collectionView` to ensure that it is applied correctly.
-    /// The default value is `UICollectionViewFlowLayout`.
-    open lazy var layout: UICollectionViewLayout = {
-        return layoutType.layout
-    }()
-
-    open lazy var layoutAdapter: XCComposedCollectionViewLayoutAdapter = {
-        return layoutType.adaptor.init(dataSource: composedDataSource)
-    }()
-
     open lazy var collectionView: UICollectionView = {
-        XCCollectionView(frame: .zero, collectionViewLayout: self.layout)
+        XCCollectionView(frame: .zero, collectionViewLayout: layoutType.layout)
     }()
 
     /// The distance that the collectionView is inset from the enclosing view.
@@ -76,12 +66,10 @@ open class XCComposedCollectionViewController: UIViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-
         collectionView.apply {
             composedDataSource.dataSources = dataSources(for: $0)
             $0.dataSource = composedDataSource
-            $0.delegate = layoutAdapter
-
+            layoutType.adapter.attach(to: self)
             view.addSubview($0)
             collectionViewConstraints = NSLayoutConstraint.Edges(
                 $0.anchor.edges.equalToSuperview().inset(contentInset).constraints
