@@ -73,7 +73,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         super.invalidateLayout(with: context)
     }
 
-    override init() {
+    override public init() {
         super.init()
         register(XCCollectionViewTileBackgroundView.self, forDecorationViewOfKind: UICollectionElementKindSectionBackground)
     }
