@@ -1,5 +1,5 @@
 //
-// MD5.swift
+// MulticastDelegate.swift
 //
 // Copyright © 2018 Xcore
 //
@@ -23,22 +23,51 @@
 //
 
 import Foundation
-import CommonCrypto
 
-extension Data {
-    public var md5: String {
-        let hash = withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
-            var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
-            CC_MD5(bytes.baseAddress, CC_LONG(count), &hash)
-            return hash
+public class MulticastDelegate<T: NSObject>: NSObject {
+    private var delegates: [Weak<T>] = []
+
+    public override init() {
+        super.init()
+    }
+
+    public func add(_ delegate: T) {
+        flatten()
+        delegates.append(Weak(delegate))
+    }
+
+    public func remove(_ delegate: T) {
+        flatten()
+
+        guard let index = delegates.firstIndex(where: { $0 == delegate }) else {
+            return
         }
 
-        return hash.map { String(format: "%02x", $0) }.joined()
+        delegates.remove(at: index)
+    }
+
+    /// Removes all elements where the `value` is deallocated.
+    private func flatten() {
+        for (index, element) in delegates.enumerated() where element.value == nil {
+            delegates.remove(at: index)
+        }
     }
 }
 
-extension String {
-    public var md5: String? {
-        return data(using: .utf8)?.md5
+extension MulticastDelegate: Sequence {
+    public func makeIterator() -> AnyIterator<T> {
+        flatten()
+
+        var iterator = delegates.makeIterator()
+
+        return AnyIterator {
+            while let next = iterator.next() {
+                if let delegate = next.value {
+                    return delegate
+                }
+            }
+
+            return nil
+        }
     }
 }
