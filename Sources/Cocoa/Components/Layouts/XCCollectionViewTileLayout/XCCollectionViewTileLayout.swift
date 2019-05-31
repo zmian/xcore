@@ -340,12 +340,12 @@ extension XCCollectionViewTileLayout {
     }
 
     private func cornerRadius(forSectionAt section: Int) -> CGFloat {
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return 11 }
-        return delegate.collectionView?(collectionView, layout: self, cornerRadiusAt: section) ?? 11
+        guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
+        return delegate.collectionView?(collectionView, layout: self, cornerRadiusAt: section) ?? 0
     }
 
     private func isShadowEnabled(forSectionAt section: Int) -> Bool {
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return true }
-        return delegate.collectionView?(collectionView, layout: self, isShadowEnabledAt: section) ?? true
+        guard let collectionView = self.collectionView, let delegate = self.delegate else { return false }
+        return delegate.collectionView?(collectionView, layout: self, isShadowEnabledAt: section) ?? false
     }
 }

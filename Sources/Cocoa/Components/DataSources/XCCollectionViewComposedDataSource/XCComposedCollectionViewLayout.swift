@@ -28,14 +28,14 @@ import UIKit
 
 public struct XCComposedCollectionViewLayout {
     public let collectionViewLayout: XCComposedCollectionViewLayoutCompatible
-    public let delegate: XCComposedCollectionViewLayoutAdapter
+    public let adapter: XCComposedCollectionViewLayoutAdapter
 
     public init(
         _ layout: XCComposedCollectionViewLayoutCompatible,
-        delegate: XCComposedCollectionViewLayoutAdapter? = nil
+        adapter: XCComposedCollectionViewLayoutAdapter? = nil
     ) {
         self.collectionViewLayout = layout
-        self.delegate = delegate ?? type(of: layout).defaultAdapterType.self.init()
+        self.adapter = adapter ?? type(of: layout).defaultAdapterType.self.init()
     }
 }
 

@@ -31,11 +31,11 @@ open class XCComposedCollectionViewController: UIViewController {
     ///
     /// The layout can be changed to any subclass of `UICollectionViewLayout`.
     ///
-    /// The default value is `UICollectionViewFlowLayout`.
-    public var layout: XCComposedCollectionViewLayout = .init(UICollectionViewFlowLayout()) {
+    /// The default value is `XCCollectionViewFlowLayout`.
+    public var layout: XCComposedCollectionViewLayout = .init(XCCollectionViewFlowLayout()) {
         didSet {
             collectionView.collectionViewLayout = layout.collectionViewLayout
-            layout.delegate.attach(to: self)
+            layout.adapter.attach(to: self)
         }
     }
 
@@ -64,7 +64,7 @@ open class XCComposedCollectionViewController: UIViewController {
         collectionView.apply {
             composedDataSource.dataSources = dataSources(for: $0)
             $0.dataSource = composedDataSource
-            layout.delegate.attach(to: self)
+            layout.adapter.attach(to: self)
 
             view.addSubview($0)
             collectionViewConstraints = NSLayoutConstraint.Edges(
