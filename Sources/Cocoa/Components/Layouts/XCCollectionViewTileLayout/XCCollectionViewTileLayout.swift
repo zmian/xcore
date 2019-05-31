@@ -275,11 +275,9 @@ extension XCCollectionViewTileLayout {
     private func minColumnIndex(_ columns: [CGFloat]) -> Int {
         var index = 0
         var minYOffset = CGFloat.infinity
-        for (i, columnOffset) in columns.enumerated() {
-            if columnOffset < minYOffset {
-                minYOffset = columnOffset
-                index = i
-            }
+        for (i, columnOffset) in columns.enumerated() where columnOffset < minYOffset {
+            minYOffset = columnOffset
+            index = i
         }
         return index
     }
@@ -287,11 +285,9 @@ extension XCCollectionViewTileLayout {
     private func maxColumnIndex(_ columns: [CGFloat]) -> Int {
         var index = 0
         var maxYOffset: CGFloat = -1.0
-        for (i, columnOffset) in columns.enumerated() {
-            if columnOffset > maxYOffset {
-                maxYOffset = columnOffset
-                index = i
-            }
+        for (i, columnOffset) in columns.enumerated() where columnOffset > maxYOffset {
+            maxYOffset = columnOffset
+            index = i
         }
         return index
     }
