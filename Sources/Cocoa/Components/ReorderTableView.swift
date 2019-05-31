@@ -2,7 +2,7 @@
 // ReorderTableView.swift
 // Swift Port of https://github.com/bvogelzang/BVReorderTableView
 //
-// Copyright © 2016 Zeeshan Mian
+// Copyright © 2016 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
