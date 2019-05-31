@@ -24,6 +24,8 @@
 
 import UIKit
 
+// MARK: - XCCollectionView
+
 final class XCCollectionView: UICollectionView {
     override func reloadData() {
         RunLoop.cancelPreviousPerformRequests(withTarget: self, selector: #selector(xcReloadData), object: nil)
@@ -41,6 +43,8 @@ final class XCCollectionView: UICollectionView {
     }
 }
 
+// MARK: - XCFakeCollectionView
+
 private final class XCFakeCollectionView: UICollectionView {
     override func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
         return CollectionViewDequeueCache.shared.dequeueCell(identifier: identifier)
@@ -50,6 +54,8 @@ private final class XCFakeCollectionView: UICollectionView {
         return CollectionViewDequeueCache.shared.dequeueSupplementaryView(kind: elementKind, identifier: identifier)
     }
 }
+
+// MARK: - XCCollectionViewComposedDataSource
 
 open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, ExpressibleByArrayLiteral {
     private let sizeCollectionView = XCFakeCollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
@@ -75,7 +81,7 @@ open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, Expre
         self.init(dataSources: elements)
     }
 
-    // MARK: Public Interface
+    // MARK: - Public Interface
 
     /// Adds a new data source at the end of the array.
     open func add(_ dataSource: XCCollectionViewDataSource) {
@@ -103,7 +109,7 @@ open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, Expre
     }
 }
 
-// MARK: UICollectionViewDataSource
+// MARK: - UICollectionViewDataSource
 
 extension XCCollectionViewComposedDataSource {
     open override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -139,7 +145,7 @@ extension XCCollectionViewComposedDataSource {
     }
 }
 
-// MARK: Sizes
+// MARK: - Sizes
 
 extension XCCollectionViewComposedDataSource {
     open override func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
@@ -159,7 +165,7 @@ extension XCCollectionViewComposedDataSource {
     }
 }
 
-// MARK: Header and Footer
+// MARK: - Header and Footer
 
 extension XCCollectionViewComposedDataSource {
     open override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
@@ -175,7 +181,7 @@ extension XCCollectionViewComposedDataSource {
     }
 }
 
-// MARK: Lifecycle
+// MARK: - Lifecycle
 
 extension XCCollectionViewComposedDataSource {
     open override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -1,15 +1,32 @@
 //
-//  XCCollectionViewTileLayout.swift
-//  Xcore
+// XCCollectionViewTileLayout.swift
 //
-//  Created by Guillermo Waitzel on 16/05/2019.
+// Copyright © 2019 Xcore
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
 
 import UIKit
 
-private let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
-
 open class XCCollectionViewTileLayout: UICollectionViewLayout {
+    private let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
+
     public var numberOfColumns = 1 {
         didSet {
             invalidateLayout()
@@ -33,6 +50,20 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         return Attributes.self
     }
 
+    public override init() {
+        super.init()
+        commonInit()
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+
+    private func commonInit() {
+        register(XCCollectionViewTileBackgroundView.self, forDecorationViewOfKind: UICollectionElementKindSectionBackground)
+    }
+
     open override func prepare() {
         super.prepare()
         guard shouldReloadAttributes else { return }
@@ -47,16 +78,8 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         if context.invalidateEverything || context.invalidateDataSourceCounts {
             shouldReloadAttributes = true
         }
+
         super.invalidateLayout(with: context)
-    }
-
-    public override init() {
-        super.init()
-        register(XCCollectionViewTileBackgroundView.self, forDecorationViewOfKind: UICollectionElementKindSectionBackground)
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     private func prepareItemAttributes() {
@@ -248,8 +271,8 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     }
 }
 
-private extension XCCollectionViewTileLayout {
-    func minColumnIndex(_ columns: [CGFloat]) -> Int {
+extension XCCollectionViewTileLayout {
+    private func minColumnIndex(_ columns: [CGFloat]) -> Int {
         var index = 0
         var minYOffset = CGFloat.infinity
         for (i, columnOffset) in columns.enumerated() {
@@ -261,7 +284,7 @@ private extension XCCollectionViewTileLayout {
         return index
     }
 
-    func maxColumnIndex(_ columns: [CGFloat]) -> Int {
+    private func maxColumnIndex(_ columns: [CGFloat]) -> Int {
         var index = 0
         var maxYOffset: CGFloat = -1.0
         for (i, columnOffset) in columns.enumerated() {

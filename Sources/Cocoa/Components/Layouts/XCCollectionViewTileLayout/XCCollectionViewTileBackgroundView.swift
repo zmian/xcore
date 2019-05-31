@@ -1,18 +1,51 @@
 //
-//  XCCollectionViewTileBackgroundView.swift
-//  Xcore
+// XCCollectionViewTileBackgroundView.swift
 //
-//  Created by Guillermo Waitzel on 16/05/2019.
+// Copyright © 2019 Xcore
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
 final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
+    // MARK: - Init Methods
+
+    convenience init() {
+        self.init(frame: .zero)
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+
     override class var layerClass: AnyClass {
         return CAShapeLayer.self
     }
 
-    var shapeLayer: CAShapeLayer {
+    private var shapeLayer: CAShapeLayer {
         return layer as! CAShapeLayer
     }
 
@@ -23,44 +56,16 @@ final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
         }
     }
 
-    // MARK: Init Methods
-
-    public convenience init() {
-        self.init(frame: .zero)
+    override var backgroundColor: UIColor? {
+        get { return shapeLayer.fillColor?.uiColor }
+        set { shapeLayer.fillColor = newValue?.cgColor }
     }
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-
-    func commonInit() {
+    private func commonInit() {
         clipsToBounds = false
         setupShadow()
         super.backgroundColor = .clear
         backgroundColor = .clear
-    }
-
-    override var backgroundColor: UIColor? {
-        get {
-            guard let color = shapeLayer.fillColor else { return nil }
-            return UIColor(cgColor: color)
-        }
-        set {
-            shapeLayer.fillColor = newValue?.cgColor
-        }
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let path = self.path()
-        shapeLayer.path = path.cgPath
-        layer.shadowPath = path.cgPath
     }
 
     private func setupShadow() {
@@ -73,8 +78,15 @@ final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
         layer.rasterizationScale = UIScreen.main.scale
     }
 
-    fileprivate func path(rect: CGRect? = nil) -> UIBezierPath {
+    private func path(rect: CGRect? = nil) -> UIBezierPath {
         return UIBezierPath(roundedRect: rect ?? bounds, byRoundingCorners: corners.corners, cornerRadii: CGSize(width: corners.radius, height: corners.radius))
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let path = self.path()
+        shapeLayer.path = path.cgPath
+        layer.shadowPath = path.cgPath
     }
 
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {

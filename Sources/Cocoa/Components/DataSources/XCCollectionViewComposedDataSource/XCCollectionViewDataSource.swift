@@ -52,7 +52,7 @@ open class XCCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     }
 }
 
-// MARK: UICollectionViewDataSource
+// MARK: - UICollectionViewDataSource
 
 extension XCCollectionViewDataSource {
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -94,17 +94,17 @@ extension XCCollectionViewDataSource {
     }
 }
 
-// MARK: UICollectionViewDelegate
+// MARK: - UICollectionViewDelegate
 
 extension XCCollectionViewDataSource {
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     }
 }
 
-// MARK: UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension XCCollectionViewDataSource {
-    // MARK: Lifecycle
+    // MARK: - Lifecycle
 
     open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     }
@@ -119,7 +119,7 @@ extension XCCollectionViewDataSource {
     }
 }
 
-// MARK: Header and Footer
+// MARK: - Header and Footer
 
 extension XCCollectionViewDataSource {
     open func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
@@ -131,18 +131,20 @@ extension XCCollectionViewDataSource {
     }
 }
 
-// MARK: Sizes
+// MARK: - Sizes
 
 extension XCCollectionViewDataSource {
     open func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
         guard let sizeCollectionView = _sizeCollectionView else {
             return .zero
         }
+
         let cell = self.collectionView(sizeCollectionView, cellForItemAt: indexPath)
         var size = cell.contentView.sizeFitting(width: availableWidth)
         if size.width > availableWidth {
             size.width = availableWidth
         }
+
         return size
     }
 
@@ -171,7 +173,7 @@ extension XCCollectionViewDataSource {
     }
 }
 
-// MARK: Frame
+// MARK: - Frame
 
 extension XCCollectionViewDataSource {
     /// Returns the frame of the first valid item in the datasource.

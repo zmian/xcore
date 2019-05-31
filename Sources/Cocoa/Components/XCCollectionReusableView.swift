@@ -83,7 +83,7 @@ open class XCCollectionReusableView: UICollectionReusableView {
         }
     }
 
-    override open func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         roundCorners(corners.corners, radius: corners.radius)
     }

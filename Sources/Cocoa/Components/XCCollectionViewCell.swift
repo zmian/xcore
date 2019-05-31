@@ -67,7 +67,7 @@ open class XCCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    override open func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         contentView.roundCorners(corners.corners, radius: corners.radius)
     }
