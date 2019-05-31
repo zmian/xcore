@@ -29,14 +29,14 @@ extension NotificationCenter {
     /// center's dispatch table.
     public static func remove(_ observers: [NSObjectProtocol?]) {
         observers.forEach {
-            NotificationCenter.default.removeObserver($0)
+            NotificationCenter.default.remove($0)
         }
     }
 
     /// Removes all entries specifying a given observer from the notification
     /// center's dispatch table.
     public static func remove(_ observer: NSObjectProtocol?) {
-        NotificationCenter.default.removeObserver(observer)
+        NotificationCenter.default.remove(observer)
     }
 
     /// Removes all entries specifying a given observer from the notification
