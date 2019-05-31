@@ -24,7 +24,7 @@
 
 import UIKit
 
-// MARK: CGFloat - Extensions
+// MARK: - CGFloat - Extensions
 
 /// The value of `π` as a `CGFloat`.
 public let π = CGFloat.pi
@@ -45,7 +45,7 @@ extension CGFloat {
     }
 }
 
-// MARK: UIEdgeInsets - ExpressibleByFloatLiteral
+// MARK: - UIEdgeInsets - ExpressibleByFloatLiteral
 
 extension UIEdgeInsets: ExpressibleByFloatLiteral {
     public init(floatLiteral value: FloatLiteralType) {
@@ -53,7 +53,7 @@ extension UIEdgeInsets: ExpressibleByFloatLiteral {
     }
 }
 
-// MARK: UIEdgeInsets - ExpressibleByIntegerLiteral
+// MARK: - UIEdgeInsets - ExpressibleByIntegerLiteral
 
 extension UIEdgeInsets: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: IntegerLiteralType) {
@@ -61,7 +61,7 @@ extension UIEdgeInsets: ExpressibleByIntegerLiteral {
     }
 }
 
-// MARK: UIEdgeInsets - Extensions
+// MARK: - UIEdgeInsets - Extensions
 
 extension UIEdgeInsets {
     public init(_ value: CGFloat) {
@@ -195,7 +195,7 @@ extension UIEdgeInsets {
     }
 }
 
-// MARK: CGSize - ExpressibleByFloatLiteral
+// MARK: - CGSize - ExpressibleByFloatLiteral
 
 extension CGSize: ExpressibleByFloatLiteral {
     public init(floatLiteral value: FloatLiteralType) {
@@ -204,7 +204,7 @@ extension CGSize: ExpressibleByFloatLiteral {
     }
 }
 
-// MARK: CGSize - ExpressibleByIntegerLiteral
+// MARK: - CGSize - ExpressibleByIntegerLiteral
 
 extension CGSize: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: IntegerLiteralType) {
@@ -213,7 +213,7 @@ extension CGSize: ExpressibleByIntegerLiteral {
     }
 }
 
-// MARK: CGSize - Extensions
+// MARK: - CGSize - Extensions
 
 extension CGSize {
     /// Returns the lesser of width and height.
@@ -288,7 +288,7 @@ extension CGSize {
     }
 }
 
-// MARK: CGRect - Extensions
+// MARK: - CGRect - Extensions
 
 extension CGRect {
     public init(_ size: CGSize) {
@@ -296,7 +296,7 @@ extension CGRect {
     }
 }
 
-// MARK: UILayoutPriority - Extensions
+// MARK: - UILayoutPriority - Extensions
 
 extension UILayoutPriority {
     public static func +(lhs: UILayoutPriority, rhs: Float) -> UILayoutPriority {
@@ -306,4 +306,12 @@ extension UILayoutPriority {
     public static func -(lhs: UILayoutPriority, rhs: Float) -> UILayoutPriority {
         return UILayoutPriority(lhs.rawValue - rhs)
     }
+}
+
+// MARK: - UIRectCorner - Extensions
+
+extension UIRectCorner {
+    public static let none: UIRectCorner = []
+    public static let top: UIRectCorner = [.topLeft, .topRight]
+    public static let bottom: UIRectCorner = [.bottomLeft, .bottomRight]
 }
