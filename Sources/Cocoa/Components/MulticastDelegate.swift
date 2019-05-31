@@ -1,7 +1,7 @@
 //
-// Weak.swift
+// MulticastDelegate.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2018 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,41 +24,50 @@
 
 import Foundation
 
-/// A generic class to hold a weak reference to a type `T`.
-/// This is useful for holding a reference to nullable object.
-///
-/// ```swift
-/// let views = [Weak<UIView>]()
-/// ```
-final public class Weak<Value: AnyObject> {
-    public weak var value: Value?
+public class MulticastDelegate<T: NSObject>: NSObject {
+    private var delegates: [Weak<T>] = []
 
-    public init (_ value: Value) {
-        self.value = value
-    }
-}
-
-extension Weak: Equatable {
-    public static func ==(lhs: Weak, rhs: Weak) -> Bool {
-        return lhs.value === rhs.value
+    public override init() {
+        super.init()
     }
 
-    public static func ==(lhs: Weak, rhs: Value) -> Bool {
-        return lhs.value === rhs
+    public func add(_ delegate: T) {
+        flatten()
+        delegates.append(Weak(delegate))
     }
-}
 
-extension Weak: Hashable where Value: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(value)
+    public func remove(_ delegate: T) {
+        flatten()
+
+        guard let index = delegates.firstIndex(where: { $0 == delegate }) else {
+            return
+        }
+
+        delegates.remove(at: index)
     }
-}
 
-extension RangeReplaceableCollection where Element: Weak<AnyObject>, Index == Int {
     /// Removes all elements where the `value` is deallocated.
-    public mutating func flatten() {
-        for (index, element) in enumerated() where element.value == nil {
-            remove(at: index)
+    private func flatten() {
+        for (index, element) in delegates.enumerated() where element.value == nil {
+            delegates.remove(at: index)
+        }
+    }
+}
+
+extension MulticastDelegate: Sequence {
+    public func makeIterator() -> AnyIterator<T> {
+        flatten()
+
+        var iterator = delegates.makeIterator()
+
+        return AnyIterator {
+            while let next = iterator.next() {
+                if let delegate = next.value {
+                    return delegate
+                }
+            }
+
+            return nil
         }
     }
 }
