@@ -110,11 +110,17 @@ extension XCCollectionReusableView {
 
 extension XCCollectionReusableView {
     @objc open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        guard let attributes = super.preferredLayoutAttributesFitting(layoutAttributes) as? XCCollectionViewFlowLayout.Attributes else {
-            return super.preferredLayoutAttributesFitting(layoutAttributes)
+        let attributes =  layoutAttributes
+        if let flowAttributes = attributes as? XCCollectionViewFlowLayout.Attributes {
+            flowAttributes.alpha = (flowAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
+            alpha = attributes.alpha
         }
-        attributes.alpha = (attributes.shouldDim && !resistsDimming) ? 0.5 : 1
-        alpha = attributes.alpha
+
+        if attributes.size.height == 0 {
+            constraint(identifier: "UIView-Encapsulated-Layout-Height")?.deactivate()
+            let size = super.sizeFitting(width: attributes.size.width)
+            attributes.size = size
+        }
         return attributes
     }
 

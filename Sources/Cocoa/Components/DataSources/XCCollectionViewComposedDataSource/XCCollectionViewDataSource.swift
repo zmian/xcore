@@ -122,6 +122,14 @@ extension XCCollectionViewDataSource {
 // MARK: Header and Footer
 
 extension XCCollectionViewDataSource {
+    open func collectionView(isHeaderEnabledInSectionAt section: Int) -> Bool {
+        return false
+    }
+
+    open func collectionView(isFooterEnabledInSectionAt section: Int) -> Bool {
+        return false
+    }
+
     open func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
         return nil
     }

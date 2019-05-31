@@ -35,11 +35,20 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
     open override func prepare() {
         super.prepare()
-        guard shouldReloadAttributes else { return }
-        shouldReloadAttributes = false
+        if shouldReloadAttributes {
+            layoutAttributes.removeAll()
+            footerAttributes.removeAll()
+            headerAttributes.removeAll()
+            
+            minSection.removeAll()
+            maxSection.removeAll()
 
-        prepareItemAttributes()
-        prepareBackgroundAttributes()
+            sectionBackgroundAttributes.removeAll()
+            shouldReloadAttributes = false
+        }
+
+        calculateAttributes()
+        calculateBackgroundAttributes()
         prepareZIndex()
     }
 
@@ -48,6 +57,33 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             shouldReloadAttributes = true
         }
         super.invalidateLayout(with: context)
+    }
+
+    open override func shouldInvalidateLayout(
+        forPreferredLayoutAttributes preferredAttributes: UICollectionViewLayoutAttributes,
+        withOriginalAttributes originalAttributes: UICollectionViewLayoutAttributes)
+        -> Bool
+    {
+        let hasNewPreferredHeight = preferredAttributes.size.height.rounded() != originalAttributes.size.height.rounded()
+        guard hasNewPreferredHeight else { return false }
+        var storedAttributes: UICollectionViewLayoutAttributes?
+        switch originalAttributes.representedElementCategory {
+            case .cell:
+                storedAttributes = layoutAttributes[originalAttributes.indexPath]
+            case .supplementaryView:
+                switch originalAttributes.representedElementKind {
+                    case UICollectionView.elementKindSectionHeader:
+                        storedAttributes = headerAttributes[originalAttributes.indexPath]
+                    case UICollectionView.elementKindSectionFooter:
+                        storedAttributes = footerAttributes[originalAttributes.indexPath]
+                    default:
+                        break
+                }
+            default:
+                break
+        }
+        storedAttributes?.size = preferredAttributes.size
+        return true
     }
 
     public override init() {
@@ -59,97 +95,98 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func prepareItemAttributes() {
+    private func calculateAttributes() {
         guard let collectionView = self.collectionView else { return }
         let contentWidth = collectionView.frame.width
         let columnWidth = contentWidth / CGFloat(numberOfColumns)
         var columnYOffset = [CGFloat](repeating: 0, count: numberOfColumns)
 
-        layoutAttributes.removeAll()
-        footerAttributes.removeAll()
-        headerAttributes.removeAll()
-
-        minSection.removeAll()
-        maxSection.removeAll()
-
         for section in 0..<collectionView.numberOfSections {
             let itemCount = collectionView.numberOfItems(inSection: section)
             guard itemCount > 0 else { continue }
-
+            
             let currentColumn = minColumnIndex(columnYOffset)
-
+            
             let sectionMargin = margin(forSectionAt: section)
-
+            
             // first column -> full leading margin , other columns -> half leading margin
             // last column -> full trailing margin, other columns -> half trailing margin
             let leftMargin = currentColumn == 0 ? sectionMargin.left : sectionMargin.left / 2
             let rightMargin = currentColumn == numberOfColumns - 1 ? sectionMargin.right : sectionMargin.right / 2
-
+            
             let availableWidth = columnWidth - leftMargin - rightMargin
             var offset = CGPoint(x: columnWidth * CGFloat(currentColumn) + leftMargin, y: columnYOffset[currentColumn])
 
             let sectionVerticalSpacing = offset.y > 0 ? verticalSpacing(betweenSectionAt: section - 1, and: section) : 0
 
-            let headerHeight = self.headerHeight(forSectionAt: section, width: availableWidth)
-            let footerHeight = self.footerHeight(forSectionAt: section, width: availableWidth)
-
+            let isHeaderEnabled = self.isHeaderEnabled(section: section)
+            let isFooterEnabled = self.isFooterEnabled(section: section)
+//            let headerHeight = self.headerHeight(forSectionAt: section, width: availableWidth)
+//            let footerHeight = self.footerHeight(forSectionAt: section, width: availableWidth)
+            
             offset.y += sectionVerticalSpacing + sectionMargin.top
-
-            if headerHeight > 0 {
+            
+            if isHeaderEnabled {
                 let headerIndex = IndexPath(item: 0, section: section)
-                let attributes = Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: headerIndex).apply {
-                    $0.size = CGSize(width: availableWidth, height: headerHeight)
-                    $0.frame.origin.x = offset.x
-                    $0.frame.origin.y = offset.y
+                let attributes = headerAttributes[headerIndex] ?? Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: headerIndex).apply {
+                    $0.size = CGSize(width: availableWidth, height: 0)
                     $0.cornerRadius = cornerRadius(forSectionAt: section)
                     $0.corners = .top
                 }
+                attributes.apply {
+                    $0.frame.origin.x = offset.x
+                    $0.frame.origin.y = offset.y
+                }
+
                 headerAttributes[headerIndex] = attributes
                 calculateMinMaxAttributes(with: attributes, in: section)
-                offset.y += headerHeight
+                offset.y += attributes.size.height
             }
 
             for item in 0..<itemCount {
                 let indexPath = IndexPath(item: item, section: section)
-                let itemHeight = height(forItemAt: indexPath, width: availableWidth)
                 if item > 0 {
                     offset.y += verticalSpacing(betweenItemAt: IndexPath(item: item - 1, section: section), and: indexPath)
                 }
 
-                let attributes = Attributes(forCellWith: indexPath).apply {
-                    $0.size = CGSize(width: availableWidth, height: itemHeight)
-                    $0.frame.origin.x = offset.x
-                    $0.frame.origin.y = offset.y
+                let attributes = layoutAttributes[indexPath] ?? Attributes(forCellWith: indexPath).apply {
+                    $0.size = CGSize(width: availableWidth, height: 0.0)
                     $0.zIndex = zIndex(forItemAt: indexPath)
                     $0.cornerRadius = cornerRadius(forSectionAt: section)
 
                     var corners: UIRectCorner = .none
-                    if item == 0 && headerHeight == 0 {
+                    if !isHeaderEnabled, item == 0 {
                         corners.formUnion(.top)
                     }
-                    if item == itemCount - 1 && footerHeight == 0 {
+                    if !isFooterEnabled, item == itemCount - 1 {
                         corners.formUnion(.bottom)
                     }
                     $0.corners = corners
+                }
+                // Adjusts the location (if it resized)
+                attributes.apply {
+                    $0.frame.origin.x = offset.x
+                    $0.frame.origin.y = offset.y
                 }
                 layoutAttributes[indexPath] = attributes
                 calculateMinMaxAttributes(with: attributes, in: section)
                 offset.y += attributes.size.height
             }
 
-            if footerHeight > 0 {
+            if isFooterEnabled {
                 let footerIndex = IndexPath(item: 0, section: section)
-                let attributes = Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: footerIndex).apply {
-                    $0.size = CGSize(width: availableWidth, height: footerHeight)
-                    $0.frame.origin.x = offset.x
-                    $0.frame.origin.y = offset.y
+                let attributes = footerAttributes[footerIndex] ?? Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: footerIndex).apply {
+                    $0.size = CGSize(width: availableWidth, height: 0.0)
                     $0.cornerRadius = cornerRadius(forSectionAt: section)
                     $0.corners = .bottom
                 }
-
+                attributes.apply {
+                    $0.frame.origin.x = offset.x
+                    $0.frame.origin.y = offset.y
+                }
                 footerAttributes[footerIndex] = attributes
                 calculateMinMaxAttributes(with: attributes, in: section)
-                offset.y += footerHeight
+                offset.y += attributes.size.height
             }
 
             offset.y += sectionMargin.bottom
@@ -177,9 +214,8 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
     }
 
-    private func prepareBackgroundAttributes() {
+    private func calculateBackgroundAttributes() {
         guard let collectionView = self.collectionView else { return }
-        sectionBackgroundAttributes.removeAll()
         for section in 0..<collectionView.numberOfSections {
             guard
                 isShadowEnabled(forSectionAt: section),
@@ -193,12 +229,14 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
             guard backgroundRect.size.width > 0, backgroundRect.size.height > 0 else { continue }
 
-            let attributes = Attributes(
+            let attributes = sectionBackgroundAttributes[section] ?? Attributes(
                 forDecorationViewOfKind: UICollectionElementKindSectionBackground,
                 with: IndexPath(item: 0, section: section)
             ).apply {
                 $0.cornerRadius = cornerRadius(forSectionAt: section)
                 $0.corners = .allCorners
+            }
+            attributes.apply {
                 $0.frame = backgroundRect
             }
             sectionBackgroundAttributes[section] = attributes
@@ -304,6 +342,16 @@ extension XCCollectionViewTileLayout {
     private func zIndex(forItemAt indexPath: IndexPath) -> Int {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
         return delegate.collectionView?(collectionView, layout: self, zIndexForItemAt: indexPath) ?? 0
+    }
+
+    private func isHeaderEnabled(section: Int) -> Bool {
+        guard let collectionView = self.collectionView, let delegate = self.delegate else { return false }
+        return delegate.collectionView?(collectionView, layout: self, isHeaderEnabledInSection: section) ?? false
+    }
+
+    private func isFooterEnabled(section: Int) -> Bool {
+        guard let collectionView = self.collectionView, let delegate = self.delegate else { return false }
+        return delegate.collectionView?(collectionView, layout: self, isFooterEnabledInSection: section) ?? false
     }
 
     private func headerHeight(forSectionAt section: Int, width: CGFloat) -> CGFloat {

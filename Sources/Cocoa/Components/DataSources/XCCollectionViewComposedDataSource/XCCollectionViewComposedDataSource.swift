@@ -115,8 +115,8 @@ extension XCCollectionViewComposedDataSource {
             var dataSourceSections = dataSource.numberOfSections(in: collectionView)
             var localSection = 0
 
+            dataSources[i].globalSection = numberOfSections
             while dataSourceSections > 0 {
-                dataSources[i].globalSection = i
                 dataSourceIndex[numberOfSections] = (dataSources[i], localSection)
                 localSection += 1
                 numberOfSections += 1
@@ -162,6 +162,16 @@ extension XCCollectionViewComposedDataSource {
 // MARK: Header and Footer
 
 extension XCCollectionViewComposedDataSource {
+    open override func collectionView(isHeaderEnabledInSectionAt section: Int) -> Bool {
+        let (dataSource, localSection) = dataSourceIndex[section]
+        return dataSource.collectionView(isHeaderEnabledInSectionAt: localSection)
+    }
+
+    open override func collectionView(isFooterEnabledInSectionAt section: Int) -> Bool {
+        let (dataSource, localSection) = dataSourceIndex[section]
+        return dataSource.collectionView(isFooterEnabledInSectionAt: localSection)
+    }
+
     open override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
         let (dataSource, localSection) = dataSourceIndex[indexPath.section]
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)

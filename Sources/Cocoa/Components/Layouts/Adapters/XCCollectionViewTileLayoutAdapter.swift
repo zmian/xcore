@@ -14,17 +14,25 @@ import Foundation
 }
 
 open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdapter, XCCollectionViewDelegateTileLayout {
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath, availableWidth: width).height
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isHeaderEnabledInSection section: Int) -> Bool {
+        return composedDataSource.collectionView(isHeaderEnabledInSectionAt: section)
     }
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForHeaderInSection section: Int, width: CGFloat) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section, availableWidth: width).height
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isFooterEnabledInSection section: Int) -> Bool {
+        return composedDataSource.collectionView(isFooterEnabledInSectionAt: section)
     }
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForFooterInSection section: Int, width: CGFloat) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section, availableWidth: width).height
-    }
+//    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
+//        return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath, availableWidth: width).height
+//    }
+//
+//    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForHeaderInSection section: Int, width: CGFloat) -> CGFloat {
+//        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section, availableWidth: width).height
+//    }
+//
+//    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForFooterInSection section: Int, width: CGFloat) -> CGFloat {
+//        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section, availableWidth: width).height
+//    }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, verticalSpacingBetweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
         return .defaultPadding

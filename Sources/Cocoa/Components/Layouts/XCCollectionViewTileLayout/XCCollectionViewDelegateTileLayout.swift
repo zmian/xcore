@@ -8,6 +8,9 @@
 import UIKit
 
 @objc public protocol XCCollectionViewDelegateTileLayout: UICollectionViewDelegate {
+    // Header & Footer
+    @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isHeaderEnabledInSection section: Int) -> Bool
+    @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isFooterEnabledInSection section: Int) -> Bool
     // Sizes
     @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat
     @objc optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForHeaderInSection section: Int, width: CGFloat) -> CGFloat

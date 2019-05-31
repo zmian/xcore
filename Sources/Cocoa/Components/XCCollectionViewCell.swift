@@ -50,7 +50,12 @@ open class XCCollectionViewCell: UICollectionViewCell {
     ///
     /// This method is called when `self` is initialized using any of the relevant
     /// `init` methods.
-    open func commonInit() {}
+    open func commonInit() {
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
 
     /// A boolean value that indicates whether the cell resist dimming its content
     /// view.
@@ -77,16 +82,22 @@ open class XCCollectionViewCell: UICollectionViewCell {
 
 extension XCCollectionViewCell {
     @objc open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        guard let attributes = super.preferredLayoutAttributesFitting(layoutAttributes) as? XCCollectionViewFlowLayout.Attributes else {
-            return super.preferredLayoutAttributesFitting(layoutAttributes)
+        let attributes = layoutAttributes
+        if let flowAttributes = attributes as? XCCollectionViewFlowLayout.Attributes {
+            flowAttributes.alpha = (flowAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
+            alpha = flowAttributes.alpha
         }
-        attributes.alpha = (attributes.shouldDim && !resistsDimming) ? 0.5 : 1
-        alpha = attributes.alpha
+
+        if attributes.size.height == 0 {
+            let size = contentView.sizeFitting(width: attributes.size.width)
+            attributes.size = size
+        }
         return attributes
     }
 
     @objc open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
+
         if let layoutAttributes = layoutAttributes as? XCCollectionViewFlowLayout.Attributes {
             alpha = (layoutAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
         }
