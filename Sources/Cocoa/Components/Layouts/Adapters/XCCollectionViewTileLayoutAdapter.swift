@@ -27,22 +27,12 @@ import UIKit
 // MARK: - XCCollectionViewTileLayoutCustomizable
 
 public protocol XCCollectionViewTileLayoutCustomizable {
-    func margin(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> UIEdgeInsets
-    func cornerRadius(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> CGFloat
-    func shadowEnabled(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> Bool
+    func tileAttributes(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> TileAttributes
 }
 
 extension XCCollectionViewTileLayoutCustomizable {
-    public func margin(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> UIEdgeInsets {
-        return .zero
-    }
-
-    public func cornerRadius(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> CGFloat {
-        return 0
-    }
-
-    public func shadowEnabled(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> Bool {
-        return false
+    public func tileAttributes(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> TileAttributes {
+        return .none
     }
 }
 
@@ -69,30 +59,30 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
         let source = composedDataSource.index(for: section)
 
         guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
-            return 0
+            return TileAttributes.none.margin
         }
 
-        return custom.margin(forSectionAt: source.localSection, layout: collectionViewLayout)
+        return custom.tileAttributes(forSectionAt: source.localSection, layout: collectionViewLayout).margin
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, shadowEnabledAt section: Int) -> Bool {
         let source = composedDataSource.index(for: section)
 
         guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
-            return false
+            return TileAttributes.none.isShadowEnabled
         }
 
-        return custom.shadowEnabled(forSectionAt: source.localSection, layout: collectionViewLayout)
+        return custom.tileAttributes(forSectionAt: source.localSection, layout: collectionViewLayout).isShadowEnabled
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, cornerRadiusAt section: Int) -> CGFloat {
         let source = composedDataSource.index(for: section)
 
         guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
-            return 0
+            return TileAttributes.none.cornerRadius
         }
 
-        return custom.cornerRadius(forSectionAt: source.localSection, layout: collectionViewLayout)
+        return custom.tileAttributes(forSectionAt: source.localSection, layout: collectionViewLayout).cornerRadius
     }
 }
 
