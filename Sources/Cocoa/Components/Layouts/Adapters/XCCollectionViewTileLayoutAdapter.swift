@@ -24,25 +24,29 @@
 
 import UIKit
 
+// MARK: - XCCollectionViewTileLayoutCustomizable
+
 public protocol XCCollectionViewTileLayoutCustomizable {
-    func isFullWidth() -> Bool
-    func isShadowEnabled() -> Bool
-    func cornerRadiusForTile() -> CGFloat
+    func margin(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> UIEdgeInsets
+    func cornerRadius(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> CGFloat
+    func shadowEnabled(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> Bool
 }
 
 extension XCCollectionViewTileLayoutCustomizable {
-    func isFullWidth() -> Bool {
-        return false
+    public func margin(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> UIEdgeInsets {
+        return .zero
     }
 
-    func isShadowEnabled() -> Bool {
-        return false
-    }
-
-    func cornerRadiusForTile() -> CGFloat {
+    public func cornerRadius(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> CGFloat {
         return 0
     }
+
+    public func shadowEnabled(forSectionAt section: Int, layout: XCCollectionViewTileLayout) -> Bool {
+        return false
+    }
 }
+
+// MARK: - XCCollectionViewTileLayoutAdapter
 
 open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdapter, XCCollectionViewDelegateTileLayout {
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
@@ -64,24 +68,21 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, marginForSectionAt section: Int) -> UIEdgeInsets {
         let source = composedDataSource.index(for: section)
 
-        guard
-            let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable,
-            custom.isFullWidth()
-        else {
-            return UIEdgeInsets(horizontal: .defaultPadding)
+        guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
+            return 0
         }
 
-        return .zero
+        return custom.margin(forSectionAt: source.localSection, layout: collectionViewLayout)
     }
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isShadowEnabledAt section: Int) -> Bool {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, shadowEnabledAt section: Int) -> Bool {
         let source = composedDataSource.index(for: section)
 
         guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
-            return true
+            return false
         }
 
-        return custom.isShadowEnabled()
+        return custom.shadowEnabled(forSectionAt: source.localSection, layout: collectionViewLayout)
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, cornerRadiusAt section: Int) -> CGFloat {
@@ -91,7 +92,7 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
             return 0
         }
 
-        return custom.cornerRadiusForTile()
+        return custom.cornerRadius(forSectionAt: source.localSection, layout: collectionViewLayout)
     }
 }
 

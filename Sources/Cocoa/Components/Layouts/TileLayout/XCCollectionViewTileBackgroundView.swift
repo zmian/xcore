@@ -69,13 +69,15 @@ final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
     }
 
     private func setupShadow() {
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 1)
-        layer.shadowRadius = 1
-        layer.shadowOpacity = Float(0.3)
-        layer.shadowPath = shapeLayer.path
-        layer.shouldRasterize = true
-        layer.rasterizationScale = UIScreen.main.scale
+        layer.apply {
+            $0.shadowColor = UIColor.black.cgColor
+            $0.shadowOffset = CGSize(width: 0, height: 1)
+            $0.shadowRadius = 1
+            $0.shadowOpacity = 0.3
+            $0.shadowPath = shapeLayer.path
+            $0.shouldRasterize = true
+            $0.rasterizationScale = UIScreen.main.scale
+        }
     }
 
     private func path(rect: CGRect? = nil) -> UIBezierPath {

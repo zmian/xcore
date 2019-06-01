@@ -48,6 +48,7 @@ open class XCComposedCollectionViewController: UIViewController {
     /// The default value is `0`.
     @objc open dynamic var contentInset: UIEdgeInsets = 0 {
         didSet {
+            guard oldValue != contentInset else { return }
             collectionViewConstraints.update(from: contentInset)
         }
     }
