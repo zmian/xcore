@@ -140,7 +140,7 @@ extension ProcessInfo.Arguments {
             return (false, nil)
         }
 
-        let argument: ProcessInfo.Argument = "printAnalyticsToDebugger"
+        let argument: ProcessInfo.Argument = "XCPrintAnalyticsToDebugger"
         return (argument.exists, argument.value)
     }
 }
