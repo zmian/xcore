@@ -28,7 +28,6 @@ public struct PrintAnalyticsProvider: AnalyticsProvider {
     public init() {}
 
     public func track(_ event: AnalyticsEvent) {
-        #if DEBUG
         let (enabled, containsValue) = ProcessInfo.Arguments.printAnalyticsToDebugger
 
         guard enabled else {
@@ -42,8 +41,6 @@ public struct PrintAnalyticsProvider: AnalyticsProvider {
         } else {
             log(event)
         }
-
-        #endif
     }
 
     private func log(_ event: AnalyticsEvent) {
