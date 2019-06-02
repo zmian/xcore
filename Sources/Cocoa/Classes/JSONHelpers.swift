@@ -65,7 +65,7 @@ public struct JSONHelpers {
         return parse(data)
     }
 
-    /// Parse NSData to JSON.
+    /// Parse Data to JSON.
     public static func parse(_ data: Data) -> Any? {
         return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
     }
