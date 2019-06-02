@@ -47,7 +47,7 @@ final class FeatureFlagTests: TestCase {
         XCTAssert(TestFeature.flag(.validString).value(default: defaultString) == "dark")
         XCTAssert(TestFeature.flag(.invalidString).value(default: defaultString) == defaultString)
 
-        let defaultArray: [String] = []
+        let defaultArray: [String] = ["swift", "objc"]
         XCTAssert(TestFeature.flag(.validArray).value(default: defaultArray) == ["red", "blue", "green"])
         XCTAssert(TestFeature.flag(.invalidArray).value(default: defaultArray) == defaultArray)
 
