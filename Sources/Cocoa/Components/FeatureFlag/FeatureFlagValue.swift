@@ -54,7 +54,7 @@ extension FeatureFlagValue {
 
     public var json: Any? {
         guard let jsonString = string, !jsonString.isEmpty else {
-            return []
+            return nil
         }
 
         return JSONHelpers.parse(jsonString: jsonString)
