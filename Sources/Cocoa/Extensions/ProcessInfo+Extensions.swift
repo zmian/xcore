@@ -134,4 +134,17 @@ extension ProcessInfo.Arguments {
         let argument: ProcessInfo.Argument = "DEBUG"
         return argument.exists
     }
+
+    public static var printAnalyticsToDebugger: (enabled: Bool, contains: String?) {
+        #if DEBUG
+            guard isDebuggerAttached else {
+                return (false, nil)
+            }
+
+            let argument: ProcessInfo.Argument = "printAnalyticsToDebugger"
+            return (argument.exists, argument.value)
+        #else
+            return (false, nil)
+        #endif
+    }
 }
