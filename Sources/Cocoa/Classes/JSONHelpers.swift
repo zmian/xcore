@@ -98,7 +98,12 @@ public struct JSONHelpers {
             return nil
         }
 
-        let options: JSONSerialization.WritingOptions = prettyPrinted ? [.prettyPrinted, .sortedKeys] : [.sortedKeys]
+        var options: JSONSerialization.WritingOptions = .sortedKeys
+
+        if prettyPrinted {
+            options.insert(.prettyPrinted)
+        }
+
         return try? JSONSerialization.data(withJSONObject: value, options: options)
     }
 }
