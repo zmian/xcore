@@ -44,10 +44,16 @@ public struct PrintAnalyticsProvider: AnalyticsProvider {
     }
 
     private func log(_ event: AnalyticsEvent) {
+        var propertiesString = ""
+
+        if let properties = event.properties {
+            propertiesString = JSONHelpers.stringify(properties, prettyPrinted: true)
+            propertiesString = "\nproperties: \(propertiesString)"
+        }
+
         print("""
 
-        event: "\(event.name)"
-        properties: \(event.properties ?? [:])
+        event: "\(event.name)"\(propertiesString)
         """)
     }
 }
