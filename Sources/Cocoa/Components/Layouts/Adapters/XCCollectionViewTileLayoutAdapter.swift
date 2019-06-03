@@ -27,6 +27,7 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
         let attributes = composedDataSource.collectionView(collectionView, headerAttributesForSectionAt: section)
         return (attributes.enabled, attributes.size?.height)
     }
+
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, footerAttributesInSection section: Int, width: CGFloat) -> (Bool, CGFloat?) {
         let attributes = composedDataSource.collectionView(collectionView, footerAttributesForSectionAt: section)
         return (attributes.enabled, attributes.size?.height)
