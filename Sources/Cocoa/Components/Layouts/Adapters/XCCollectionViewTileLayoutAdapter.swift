@@ -7,69 +7,37 @@
 
 import Foundation
 
-@objc public protocol XCCollectionViewTileLayoutCustomizable {
-    @objc optional func isFullWidth() -> Bool
-    @objc optional func isShadowEnabled() -> Bool
-    @objc optional func cornerRadiusForTile() -> CGFloat
+public protocol XCCollectionViewTileLayoutCustomizable {
+    func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool
+}
+
+extension XCCollectionViewTileLayoutCustomizable {
+    func isTileEnabled(_ layout: XCCollectionViewTileLayout) -> Bool {
+        return true
+    }
 }
 
 open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdapter, XCCollectionViewDelegateTileLayout {
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isHeaderEnabledInSection section: Int) -> Bool {
-        return composedDataSource.collectionView(isHeaderEnabledInSectionAt: section)
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat? {
+        let attributes = composedDataSource.collectionView(collectionView, itemAttributesAt: indexPath)
+        return attributes?.height
     }
 
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isFooterEnabledInSection section: Int) -> Bool {
-        return composedDataSource.collectionView(isFooterEnabledInSectionAt: section)
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, headerAttributesInSection section: Int, width: CGFloat) -> (Bool, CGFloat?) {
+        let attributes = composedDataSource.collectionView(collectionView, headerAttributesForSectionAt: section)
+        return (attributes.enabled, attributes.size?.height)
+    }
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, footerAttributesInSection section: Int, width: CGFloat) -> (Bool, CGFloat?) {
+        let attributes = composedDataSource.collectionView(collectionView, footerAttributesForSectionAt: section)
+        return (attributes.enabled, attributes.size?.height)
     }
 
-//    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
-//        return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath, availableWidth: width).height
-//    }
-//
-//    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForHeaderInSection section: Int, width: CGFloat) -> CGFloat {
-//        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section, availableWidth: width).height
-//    }
-//
-//    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForFooterInSection section: Int, width: CGFloat) -> CGFloat {
-//        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section, availableWidth: width).height
-//    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, verticalSpacingBetweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
-        return .defaultPadding
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, marginForSectionAt section: Int) -> UIEdgeInsets {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isTileEnabledInSection section: Int) -> Bool {
         let source = composedDataSource.index(for: section)
-        guard
-            let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable,
-            let isFullWidth = custom.isFullWidth?(),
-            isFullWidth
-        else {
-            return UIEdgeInsets(horizontal: .defaultPadding)
-        }
-        return .zero
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isShadowEnabledAt section: Int) -> Bool {
-        let source = composedDataSource.index(for: section)
-        guard
-            let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable,
-            let isShadowEnabled = custom.isShadowEnabled?()
-        else {
+        guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
             return true
         }
-        return isShadowEnabled
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, cornerRadiusAt section: Int) -> CGFloat {
-        let source = composedDataSource.index(for: section)
-        guard
-            let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable,
-            let cornerRadius = custom.cornerRadiusForTile?()
-        else {
-            return 11
-        }
-        return cornerRadius
+        return custom.isTileEnabled(collectionViewLayout)
     }
 }
 

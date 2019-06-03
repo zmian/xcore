@@ -50,6 +50,20 @@ open class XCCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         self.collectionView = collectionView
         super.init()
     }
+
+    // MARK: Layout 2.0
+
+    open func collectionView(_ collectionView: UICollectionView, itemAttributesAt indexPath: IndexPath) -> CGSize? {
+        return nil
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, headerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
+        return (false, nil)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, footerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
+        return (false, nil)
+    }
 }
 
 // MARK: UICollectionViewDataSource
@@ -92,6 +106,14 @@ extension XCCollectionViewDataSource {
 
         return reusableSupplementaryView
     }
+
+    open func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
+        return nil
+    }
+    
+    open func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
+        return nil
+    }
 }
 
 // MARK: UICollectionViewDelegate
@@ -116,26 +138,6 @@ extension XCCollectionViewDataSource {
     }
 
     open func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
-    }
-}
-
-// MARK: Header and Footer
-
-extension XCCollectionViewDataSource {
-    open func collectionView(isHeaderEnabledInSectionAt section: Int) -> Bool {
-        return false
-    }
-
-    open func collectionView(isFooterEnabledInSectionAt section: Int) -> Bool {
-        return false
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
-        return nil
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
-        return nil
     }
 }
 

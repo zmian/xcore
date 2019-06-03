@@ -68,12 +68,12 @@ final class FeedDataSource: XCCollectionViewDataSource {
         return cell
     }
 
-    override func collectionView(isHeaderEnabledInSectionAt section: Int) -> Bool {
-        return true
+    override func collectionView(_ collectionView: UICollectionView, headerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
+        return (true, nil)
     }
 
-    override func collectionView(isFooterEnabledInSectionAt section: Int) -> Bool {
-        return true
+    override func collectionView(_ collectionView: UICollectionView, footerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
+        return (true, nil)
     }
 
     override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {

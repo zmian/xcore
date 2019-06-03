@@ -101,6 +101,24 @@ open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, Expre
             $0._sizeCollectionView = sizeCollectionView
         }
     }
+
+    // MARK: Layout 2.0
+
+    open override func collectionView(_ collectionView: UICollectionView, itemAttributesAt indexPath: IndexPath) -> CGSize? {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        return dataSource.collectionView(collectionView, itemAttributesAt: localIndexPath)
+    }
+
+    open override func collectionView(_ collectionView: UICollectionView, headerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
+        let (dataSource, localSection) = dataSourceIndex[section]
+        return dataSource.collectionView(collectionView, headerAttributesForSectionAt: localSection)
+    }
+
+    open override func collectionView(_ collectionView: UICollectionView, footerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
+        let (dataSource, localSection) = dataSourceIndex[section]
+        return dataSource.collectionView(collectionView, footerAttributesForSectionAt: localSection)
+    }
 }
 
 // MARK: UICollectionViewDataSource
@@ -137,9 +155,21 @@ extension XCCollectionViewComposedDataSource {
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
         return dataSource.collectionView(collectionView, cellForItemAt: localIndexPath)
     }
+
+    open override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        return dataSource.collectionView(collectionView, viewForHeaderInSectionAt: localIndexPath)
+    }
+    
+    open override func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        return dataSource.collectionView(collectionView, viewForFooterInSectionAt: localIndexPath)
+    }
 }
 
-// MARK: Sizes
+// MARK: Old Sizes
 
 extension XCCollectionViewComposedDataSource {
     open override func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
@@ -156,32 +186,6 @@ extension XCCollectionViewComposedDataSource {
     open override func collectionView(_ collectionView: UICollectionView, sizeForFooterInSection section: Int, availableWidth: CGFloat) -> CGSize {
         let (dataSource, localSection) = dataSourceIndex[section]
         return dataSource.collectionView(collectionView, sizeForFooterInSection: localSection, availableWidth: availableWidth)
-    }
-}
-
-// MARK: Header and Footer
-
-extension XCCollectionViewComposedDataSource {
-    open override func collectionView(isHeaderEnabledInSectionAt section: Int) -> Bool {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(isHeaderEnabledInSectionAt: localSection)
-    }
-
-    open override func collectionView(isFooterEnabledInSectionAt section: Int) -> Bool {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(isFooterEnabledInSectionAt: localSection)
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
-        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
-        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
-        return dataSource.collectionView(collectionView, viewForHeaderInSectionAt: localIndexPath)
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
-        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
-        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
-        return dataSource.collectionView(collectionView, viewForFooterInSectionAt: localIndexPath)
     }
 }
 
