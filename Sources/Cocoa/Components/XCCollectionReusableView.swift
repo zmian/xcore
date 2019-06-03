@@ -116,9 +116,8 @@ extension XCCollectionReusableView {
             alpha = attributes.alpha
         }
 
-        if attributes.size.height == 0 {
-            constraint(identifier: "UIView-Encapsulated-Layout-Height")?.deactivate()
-            let size = super.sizeFitting(width: attributes.size.width)
+        if let tileAttributes = attributes as? XCCollectionViewTileLayout.Attributes, tileAttributes.isAutosizeEnabled {
+            let size = sizeFitting(width: attributes.size.width)
             attributes.size = size
         }
         return attributes
@@ -131,7 +130,7 @@ extension XCCollectionReusableView {
         }
 
         if let tileAttributes = layoutAttributes as? XCCollectionViewTileLayout.Attributes {
-            corners = (corners: tileAttributes.corners, radius: tileAttributes.cornerRadius)
+            corners = tileAttributes.corners
         }
     }
 }

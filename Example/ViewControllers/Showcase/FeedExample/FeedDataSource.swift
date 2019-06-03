@@ -69,11 +69,11 @@ final class FeedDataSource: XCCollectionViewDataSource {
     }
 
     override func collectionView(isHeaderEnabledInSectionAt section: Int) -> Bool {
-        return section.isMultiple(of: 2)
+        return true
     }
 
     override func collectionView(isFooterEnabledInSectionAt section: Int) -> Bool {
-        return section.isMultiple(of: 3)
+        return true
     }
 
     override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {

@@ -50,12 +50,7 @@ open class XCCollectionViewCell: UICollectionViewCell {
     ///
     /// This method is called when `self` is initialized using any of the relevant
     /// `init` methods.
-    open func commonInit() {
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
+    open func commonInit() {}
 
     /// A boolean value that indicates whether the cell resist dimming its content
     /// view.
@@ -88,7 +83,7 @@ extension XCCollectionViewCell {
             alpha = flowAttributes.alpha
         }
 
-        if attributes.size.height == 0 {
+        if let tileAttributes = attributes as? XCCollectionViewTileLayout.Attributes, tileAttributes.isAutosizeEnabled {
             let size = contentView.sizeFitting(width: attributes.size.width)
             attributes.size = size
         }
@@ -103,7 +98,7 @@ extension XCCollectionViewCell {
         }
 
         if let tileAttributes = layoutAttributes as? XCCollectionViewTileLayout.Attributes {
-            corners = (corners: tileAttributes.corners, radius: tileAttributes.cornerRadius)
+            corners = tileAttributes.corners
         }
     }
 }

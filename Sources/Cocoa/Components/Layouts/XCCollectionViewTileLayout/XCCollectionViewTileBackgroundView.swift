@@ -80,7 +80,7 @@ final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
         if let tileAttributes = layoutAttributes as? XCCollectionViewTileLayout.Attributes {
-            corners = (corners: tileAttributes.corners, radius: tileAttributes.cornerRadius)
+            corners = tileAttributes.corners
         }
     }
 }
