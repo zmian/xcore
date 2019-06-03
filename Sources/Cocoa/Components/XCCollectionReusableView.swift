@@ -1,7 +1,7 @@
 //
 // XCCollectionReusableView.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2015 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -83,7 +83,7 @@ open class XCCollectionReusableView: UICollectionReusableView {
         }
     }
 
-    override open func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         roundCorners(corners.corners, radius: corners.radius)
     }

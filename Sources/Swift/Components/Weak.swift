@@ -1,7 +1,7 @@
 //
 // Weak.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2017 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,10 +30,10 @@ import Foundation
 /// ```swift
 /// let views = [Weak<UIView>]()
 /// ```
-open class Weak<T: AnyObject> {
-    open weak var value: T?
+final public class Weak<Value: AnyObject> {
+    public weak var value: Value?
 
-    public init (value: T) {
+    public init (_ value: Value) {
         self.value = value
     }
 }
@@ -42,9 +42,13 @@ extension Weak: Equatable {
     public static func ==(lhs: Weak, rhs: Weak) -> Bool {
         return lhs.value === rhs.value
     }
+
+    public static func ==(lhs: Weak, rhs: Value) -> Bool {
+        return lhs.value === rhs
+    }
 }
 
-extension Weak: Hashable where T: Hashable {
+extension Weak: Hashable where Value: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(value)
     }

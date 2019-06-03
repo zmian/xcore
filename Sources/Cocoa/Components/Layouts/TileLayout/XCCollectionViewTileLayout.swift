@@ -1,15 +1,32 @@
 //
-//  XCCollectionViewTileLayout.swift
-//  Xcore
+// XCCollectionViewTileLayout.swift
 //
-//  Created by Guillermo Waitzel on 16/05/2019.
+// Copyright © 2019 Xcore
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
 
 import UIKit
 
-private let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
-
 open class XCCollectionViewTileLayout: UICollectionViewLayout {
+    private let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
+
     public var numberOfColumns = 1 {
         didSet {
             invalidateLayout()
@@ -40,11 +57,12 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
     }
 
+    private static let defaultHeight: CGFloat = 50.0
     private var layoutAttributes: [IndexPath: Attributes] = [:]
     private var footerAttributes: [IndexPath: Attributes] = [:]
     private var headerAttributes: [IndexPath: Attributes] = [:]
     private var sectionBackgroundAttributes: [Int: Attributes] = [:]
-    private var cachedContentSize: CGSize = .zero
+    private var cachedContentSize: CGSize = 0
 
     private var shouldReloadAttributes = true
 
@@ -55,6 +73,20 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
     open override class var layoutAttributesClass: AnyClass {
         return Attributes.self
+    }
+
+    public override init() {
+        super.init()
+        commonInit()
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+
+    private func commonInit() {
+        register(XCCollectionViewTileBackgroundView.self, forDecorationViewOfKind: UICollectionElementKindSectionBackground)
     }
 
     open override func prepare() {
@@ -77,6 +109,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         if context.invalidateEverything || context.invalidateDataSourceCounts {
             shouldReloadAttributes = true
         }
+
         super.invalidateLayout(with: context)
     }
 
@@ -107,17 +140,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         storedAttributes?.size = preferredAttributes.size
         return true
     }
-
-    public override init() {
-        super.init()
-        register(XCCollectionViewTileBackgroundView.self, forDecorationViewOfKind: UICollectionElementKindSectionBackground)
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    public static let defaultHeight: CGFloat = 50.0
 
     private func calculateAttributes() {
         guard let collectionView = self.collectionView else { return }
@@ -249,6 +271,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             attributes.apply {
                 $0.frame = backgroundRect
             }
+
             sectionBackgroundAttributes[section] = attributes
         }
     }
@@ -260,7 +283,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     }
 
     open override var collectionViewContentSize: CGSize {
-        return self.cachedContentSize
+        return cachedContentSize
     }
 
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
@@ -296,27 +319,23 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     }
 }
 
-private extension XCCollectionViewTileLayout {
-    func minColumnIndex(_ columns: [CGFloat]) -> Int {
+extension XCCollectionViewTileLayout {
+    private func minColumnIndex(_ columns: [CGFloat]) -> Int {
         var index = 0
         var minYOffset = CGFloat.infinity
-        for (i, columnOffset) in columns.enumerated() {
-            if columnOffset < minYOffset {
-                minYOffset = columnOffset
-                index = i
-            }
+        for (i, columnOffset) in columns.enumerated() where columnOffset < minYOffset {
+            minYOffset = columnOffset
+            index = i
         }
         return index
     }
 
-    func maxColumnIndex(_ columns: [CGFloat]) -> Int {
+    private func maxColumnIndex(_ columns: [CGFloat]) -> Int {
         var index = 0
         var maxYOffset: CGFloat = -1.0
-        for (i, columnOffset) in columns.enumerated() {
-            if columnOffset > maxYOffset {
-                maxYOffset = columnOffset
-                index = i
-            }
+        for (i, columnOffset) in columns.enumerated() where columnOffset > maxYOffset {
+            maxYOffset = columnOffset
+            index = i
         }
         return index
     }

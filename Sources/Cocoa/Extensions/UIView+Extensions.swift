@@ -1,7 +1,7 @@
 //
 // UIView+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -48,6 +48,11 @@ import UIKit
     }
 
     open func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
+        if corners == .none || radius == 0 {
+            layer.mask = nil
+            return
+        }
+
         let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(radius))
         layer.masksToBounds = true
         layer.mask = CAShapeLayer().apply {

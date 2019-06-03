@@ -1,7 +1,7 @@
 //
 // XCComposedCollectionViewController.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,15 @@ import UIKit
 open class XCComposedCollectionViewController: UIViewController {
     public private(set) var collectionViewConstraints: NSLayoutConstraint.Edges!
 
-    public var layout: XCComposedCollectionViewLayout = XCComposedCollectionViewLayout(UICollectionViewFlowLayout()) {
+    /// The layout object `UICollectionView` uses to render itself.
+    ///
+    /// The layout can be changed to any subclass of `UICollectionViewLayout`.
+    ///
+    /// The default value is `XCCollectionViewFlowLayout`.
+    public var layout: XCComposedCollectionViewLayout = .init(XCCollectionViewFlowLayout()) {
         didSet {
             collectionView.collectionViewLayout = layout.collectionViewLayout
-            layout.delegate.attach(to: self)
+            layout.adapter.attach(to: self)
         }
     }
 
@@ -43,6 +48,7 @@ open class XCComposedCollectionViewController: UIViewController {
     /// The default value is `0`.
     @objc open dynamic var contentInset: UIEdgeInsets = 0 {
         didSet {
+            guard oldValue != contentInset else { return }
             collectionViewConstraints.update(from: contentInset)
         }
     }
@@ -59,7 +65,8 @@ open class XCComposedCollectionViewController: UIViewController {
         collectionView.apply {
             composedDataSource.dataSources = dataSources(for: $0)
             $0.dataSource = composedDataSource
-            layout.delegate.attach(to: self)
+            layout.adapter.attach(to: self)
+
             view.addSubview($0)
             collectionViewConstraints = NSLayoutConstraint.Edges(
                 $0.anchor.edges.equalToSuperview().inset(contentInset).constraints
@@ -135,7 +142,7 @@ extension XCComposedCollectionViewController {
     }
 }
 
-// MARK: UICollectionViewDelegate calls forwarded from XCComposedCollectionViewLayoutAdapter
+// MARK: - UICollectionViewDelegate calls forwarded from XCComposedCollectionViewLayoutAdapter
 
 extension XCComposedCollectionViewController {
     @objc open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

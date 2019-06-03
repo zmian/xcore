@@ -1,7 +1,7 @@
 //
-// XCCollectionViewFlowLayout+Attributes.swift
+// XCCollectionViewTileLayout+Attributes.swift
 //
-// Copyright © 2016 Zeeshan Mian
+// Copyright © 2019 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,18 +24,17 @@
 
 import UIKit
 
-extension XCCollectionViewFlowLayout {
-    open class Attributes: UICollectionViewLayoutAttributes {
-        public var separator: UIRectEdge = []
-        public var shouldDim = false
+extension XCCollectionViewTileLayout {
+    final class Attributes: UICollectionViewLayoutAttributes {
+        var corners: (corners: UIRectCorner, radius: CGFloat) = (.none, 0)
+        var isAutosizeEnabled: Bool = false
 
-        open override func copy(with zone: NSZone? = nil) -> Any {
+        override func copy(with zone: NSZone? = nil) -> Any {
             guard let copy = super.copy(with: zone) as? Attributes else {
                 return super.copy(with: zone)
             }
-
-            copy.separator = separator
-            copy.shouldDim = shouldDim
+            copy.isAutosizeEnabled = isAutosizeEnabled
+            copy.corners = corners
             return copy
         }
     }
