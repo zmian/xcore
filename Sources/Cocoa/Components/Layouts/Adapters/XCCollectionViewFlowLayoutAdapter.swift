@@ -55,28 +55,23 @@ open class XCCollectionViewFlowLayoutAdapter: XCComposedCollectionViewLayoutAdap
 
 extension XCCollectionViewFlowLayoutAdapter: UICollectionViewDelegateFlowLayout {
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let availableWidth = self.availableWidth(for: indexPath.section, in: collectionView)
-        
+
         guard let attributes = composedDataSource.collectionView(collectionView, itemAttributesAt: indexPath) else {
+            let availableWidth = self.availableWidth(for: indexPath.section, in: collectionView)
             let source = composedDataSource.index(for: indexPath.section)
             let localIndexPath = IndexPath(item: indexPath.item, section: source.localSection)
             let cell = source.dataSource.collectionView(sizeCollectionView, cellForItemAt: localIndexPath)
             return cell.contentView.sizeFitting(width: availableWidth)
         }
 
-        guard attributes != UICollectionViewFlowLayout.automaticSize else {
-            return UICollectionViewFlowLayout.automaticSize
-        }
-
-        return CGSize(width: availableWidth, height: attributes.height)
+        return attributes
     }
 
-    
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let availableWidth = self.availableWidth(for: section, in: collectionView)
 
         let attributes = composedDataSource.collectionView(collectionView, headerAttributesForSectionAt: section)
         guard let size = attributes.size else {
+            let availableWidth = self.availableWidth(for: section, in: collectionView)
             let source = composedDataSource.index(for: section)
             let localPath = IndexPath(item: 0, section: source.localSection)
             if let headerView = source.dataSource.collectionView(sizeCollectionView, viewForHeaderInSectionAt: localPath) {
@@ -87,12 +82,11 @@ extension XCCollectionViewFlowLayoutAdapter: UICollectionViewDelegateFlowLayout 
         }
         return size
     }
-    
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        let availableWidth = self.availableWidth(for: section, in: collectionView)
 
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         let attributes = composedDataSource.collectionView(collectionView, footerAttributesForSectionAt: section)
         guard let size = attributes.size else {
+            let availableWidth = self.availableWidth(for: section, in: collectionView)
             let source = composedDataSource.index(for: section)
             let localPath = IndexPath(item: 0, section: source.localSection)
             if let footerView = source.dataSource.collectionView(sizeCollectionView, viewForFooterInSectionAt: localPath) {

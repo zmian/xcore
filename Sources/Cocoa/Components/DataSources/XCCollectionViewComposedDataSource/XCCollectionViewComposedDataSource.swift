@@ -83,7 +83,7 @@ open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, Expre
         return DataSource(dataSource: ds.dataSource, globalSection: section, localSection: ds.localSection)
     }
 
-    // MARK: Layout 2.0
+    // MARK: - Layout Attributes
 
     open override func collectionView(_ collectionView: UICollectionView, itemAttributesAt indexPath: IndexPath) -> CGSize? {
         let (dataSource, localSection) = dataSourceIndex[indexPath.section]
