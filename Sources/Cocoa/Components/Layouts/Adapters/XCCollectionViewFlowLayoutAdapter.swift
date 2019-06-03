@@ -27,31 +27,81 @@ import UIKit
 // MARK: - XCCollectionViewFlowLayoutCustomizable
 
 public protocol XCCollectionViewFlowLayoutCustomizable {
-    func sectionInset(for section: Int) -> UIEdgeInsets
-    func minimumLineSpacing(for section: Int) -> CGFloat
-    func minimumInteritemSpacing(for section: Int) -> CGFloat
+    func sectionInset(_ layout: UICollectionViewLayout, for section: Int) -> UIEdgeInsets
+    func minimumLineSpacing(_ layout: UICollectionViewLayout, for section: Int) -> CGFloat
+    func minimumInteritemSpacing(_ layout: UICollectionViewLayout, for section: Int) -> CGFloat
 }
 
 extension XCCollectionViewFlowLayoutCustomizable {
-    public func sectionInset(for section: Int) -> UIEdgeInsets {
-        return .zero
+    public func sectionInset(_ layout: UICollectionViewLayout, for section: Int) -> UIEdgeInsets {
+        return (layout as? UICollectionViewFlowLayout)?.sectionInset ?? .zero
     }
 
-    public func minimumLineSpacing(for section: Int) -> CGFloat {
-        return 0
+    public func minimumLineSpacing(_ layout: UICollectionViewLayout, for section: Int) -> CGFloat {
+        return (layout as? UICollectionViewFlowLayout)?.minimumLineSpacing ?? 0
     }
 
-    public func minimumInteritemSpacing(for section: Int) -> CGFloat {
-        return 0
+    public func minimumInteritemSpacing(_ layout: UICollectionViewLayout, for section: Int) -> CGFloat {
+        return (layout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? 0
     }
 }
 
-// MARK: - XCCollectionViewFlowLayoutAdapter
+open class XCCollectionViewFlowLayoutAdapter: XCComposedCollectionViewLayoutAdapter {
+    /// Internal never rendered collection view just to calculate sizes in case datasource needs it
+    private let sizeCollectionView = XCFakeCollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+}
 
-open class XCCollectionViewFlowLayoutAdapter: XCComposedCollectionViewLayoutAdapter, UICollectionViewDelegateFlowLayout {
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension XCCollectionViewFlowLayoutAdapter: UICollectionViewDelegateFlowLayout {
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = availableWidth(for: indexPath.section, in: collectionView)
-        return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath, availableWidth: width)
+        let availableWidth = self.availableWidth(for: indexPath.section, in: collectionView)
+        
+        guard let attributes = composedDataSource.collectionView(collectionView, itemAttributesAt: indexPath) else {
+            let source = composedDataSource.index(for: indexPath.section)
+            let localIndexPath = IndexPath(item: indexPath.item, section: source.localSection)
+            let cell = source.dataSource.collectionView(sizeCollectionView, cellForItemAt: localIndexPath)
+            return cell.contentView.sizeFitting(width: availableWidth)
+        }
+
+        guard attributes != UICollectionViewFlowLayout.automaticSize else {
+            return UICollectionViewFlowLayout.automaticSize
+        }
+
+        return CGSize(width: availableWidth, height: attributes.height)
+    }
+
+    
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let availableWidth = self.availableWidth(for: section, in: collectionView)
+
+        let attributes = composedDataSource.collectionView(collectionView, headerAttributesForSectionAt: section)
+        guard let size = attributes.size else {
+            let source = composedDataSource.index(for: section)
+            let localPath = IndexPath(item: 0, section: source.localSection)
+            if let headerView = source.dataSource.collectionView(sizeCollectionView, viewForHeaderInSectionAt: localPath) {
+                return headerView.sizeFitting(width: availableWidth)
+            } else {
+                return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.headerReferenceSize ?? 0
+            }
+        }
+        return size
+    }
+    
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        let availableWidth = self.availableWidth(for: section, in: collectionView)
+
+        let attributes = composedDataSource.collectionView(collectionView, footerAttributesForSectionAt: section)
+        guard let size = attributes.size else {
+            let source = composedDataSource.index(for: section)
+            let localPath = IndexPath(item: 0, section: source.localSection)
+            if let footerView = source.dataSource.collectionView(sizeCollectionView, viewForFooterInSectionAt: localPath) {
+                return footerView.sizeFitting(width: availableWidth)
+            } else {
+                return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize ?? 0
+            }
+        }
+        return size
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -65,7 +115,7 @@ open class XCCollectionViewFlowLayoutAdapter: XCComposedCollectionViewLayoutAdap
             return (collectionViewLayout as? UICollectionViewFlowLayout)?.minimumLineSpacing ?? 0
         }
 
-        return custom.minimumLineSpacing(for: source.localSection)
+        return custom.minimumLineSpacing(collectionViewLayout, for: source.localSection)
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -75,17 +125,7 @@ open class XCCollectionViewFlowLayoutAdapter: XCComposedCollectionViewLayoutAdap
             return (collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? 0
         }
 
-        return custom.minimumInteritemSpacing(for: source.localSection)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let width = availableWidth(for: section, in: collectionView)
-        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section, availableWidth: width)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        let width = availableWidth(for: section, in: collectionView)
-        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section, availableWidth: width)
+        return custom.minimumInteritemSpacing(collectionViewLayout,  for: source.localSection)
     }
 }
 
@@ -97,7 +137,7 @@ extension XCCollectionViewFlowLayoutAdapter {
             return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset ?? .zero
         }
 
-        return custom.sectionInset(for: source.localSection)
+        return custom.sectionInset(collectionView.collectionViewLayout, for: source.localSection)
     }
 
     private func availableWidth(for section: Int, in collectionView: UICollectionView) -> CGFloat {
@@ -112,5 +152,17 @@ extension XCCollectionViewFlowLayoutAdapter {
 extension UICollectionViewFlowLayout: XCComposedCollectionViewLayoutCompatible {
     public static var defaultAdapterType: XCComposedCollectionViewLayoutAdapter.Type {
         return XCCollectionViewFlowLayoutAdapter.self
+    }
+}
+
+// MARK: - XCFakeCollectionView
+
+private final class XCFakeCollectionView: UICollectionView {
+    override func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
+        return CollectionViewDequeueCache.shared.dequeueCell(identifier: identifier)
+    }
+    
+    override func dequeueReusableSupplementaryView(ofKind elementKind: String, withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionReusableView {
+        return CollectionViewDequeueCache.shared.dequeueSupplementaryView(kind: elementKind, identifier: identifier)
     }
 }

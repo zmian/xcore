@@ -26,11 +26,6 @@ import UIKit
 
 @objcMembers
 open class XCCollectionViewDataSource: NSObject, UICollectionViewDataSource {
-    /// An internal property to reference `UICollectionView` that `XCCollectionViewDataSource`
-    /// use to implement auto-resizing cells, header, and footer. This is automatically
-    /// set by the `XCCollectionViewComposedDataSource` when it is necessary.
-    internal weak var _sizeCollectionView: UICollectionView?
-
     /// The global section index of the data source in collection view.
     open var globalSection = 0
 
@@ -119,8 +114,7 @@ extension XCCollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 
 extension XCCollectionViewDataSource {
-    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    }
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {}
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -138,48 +132,6 @@ extension XCCollectionViewDataSource {
     }
 
     open func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
-    }
-}
-
-// MARK: - Sizes
-
-extension XCCollectionViewDataSource {
-    open func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
-        guard let sizeCollectionView = _sizeCollectionView else {
-            return .zero
-        }
-
-        let cell = self.collectionView(sizeCollectionView, cellForItemAt: indexPath)
-        var size = cell.contentView.sizeFitting(width: availableWidth)
-        if size.width > availableWidth {
-            size.width = availableWidth
-        }
-
-        return size
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, sizeForHeaderInSection section: Int, availableWidth: CGFloat) -> CGSize {
-        guard let sizeCollectionView = _sizeCollectionView else {
-            return .zero
-        }
-
-        if let headerView = self.collectionView(sizeCollectionView, viewForHeaderInSectionAt: IndexPath(item: 0, section: section)) {
-            return headerView.sizeFitting(width: availableWidth)
-        } else {
-            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.headerReferenceSize ?? 0
-        }
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, sizeForFooterInSection section: Int, availableWidth: CGFloat) -> CGSize {
-        guard let sizeCollectionView = _sizeCollectionView else {
-            return .zero
-        }
-
-        if let footerView = self.collectionView(sizeCollectionView, viewForFooterInSectionAt: IndexPath(item: 0, section: section)) {
-            return footerView.sizeFitting(width: availableWidth)
-        } else {
-            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize ?? 0
-        }
     }
 }
 
@@ -203,7 +155,7 @@ extension XCCollectionViewDataSource {
         guard let collectionView = collectionView else { return nil }
         let numberOfSections = self.numberOfSections(in: collectionView)
         for section in 0..<numberOfSections {
-            if self.collectionView(collectionView, sizeForHeaderInSection: section, availableWidth: collectionView.frame.width).height > 0 {
+            if self.collectionView(collectionView, headerAttributesForSectionAt: section).enabled {
                 return IndexPath(row: 0, section: section + globalSection)
             }
         }
