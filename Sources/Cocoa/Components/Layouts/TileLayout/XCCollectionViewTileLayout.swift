@@ -58,19 +58,20 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     }
 
     private static let defaultHeight: CGFloat = 50.0
-    private var allSortedAttributes = [Attributes]()
+    private var cachedContentSize: CGSize = .zero
+    private var shouldReloadAttributes = true
+    private var minimumItemZIndex: Int = 0
+
+    // Layout Elements
     private var layoutAttributes = [IndexPath: Attributes]()
     private var footerAttributes = [Int: Attributes]()
     private var headerAttributes = [Int: Attributes]()
     private var sectionBackgroundAttributes = [Int: Attributes]()
-    private var cachedContentSize: CGSize = .zero
 
-    private var shouldReloadAttributes = true
-
-    private var minSection: [Int: CGPoint] = [:]
-    private var maxSection: [Int: CGPoint] = [:]
-
-    private(set) var minimumItemZIndex: Int = 0
+    // Elements in rect calculation
+    private var attributesBySection = [Int: [Attributes]]()
+    private var sectionRects = [Int: CGRect]()
+    private var sectionIndexesByColumn = [[Int]]()
 
     open override class var layoutAttributesClass: AnyClass {
         return Attributes.self
@@ -149,27 +150,42 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     private func calculateAttributes() {
         guard let collectionView = self.collectionView else { return }
         let contentWidth: CGFloat = collectionView.bounds.width - horizontalMargin * 2.0
-        let columnWidth = contentWidth - (interColumnSpacing * CGFloat(numberOfColumns - 1)) / CGFloat(numberOfColumns)
+        let columnWidth = (contentWidth - (interColumnSpacing * CGFloat(numberOfColumns - 1))) / CGFloat(numberOfColumns)
         var columnYOffset = [CGFloat](repeating: 0, count: numberOfColumns)
 
-        allSortedAttributes.removeAll()
-        minSection.removeAll()
-        maxSection.removeAll()
+        attributesBySection.removeAll()
+        sectionRects.removeAll()
+        sectionIndexesByColumn.removeAll()
+        for _ in 0..<numberOfColumns {
+            sectionIndexesByColumn.append([Int]())
+        }
 
         for section in 0..<collectionView.numberOfSections {
             let itemCount = collectionView.numberOfItems(inSection: section)
-            guard itemCount > 0 else { continue }
+
+            attributesBySection[section] = [Attributes]()
 
             let currentColumn = isTileEnabled(forSectionAt: section) ? minColumnIndex(columnYOffset) : maxColumnIndex(columnYOffset)
             let itemWidth = isTileEnabled(forSectionAt: section) ? columnWidth : contentWidth
-            var offset = CGPoint(x: itemWidth * CGFloat(currentColumn) + horizontalMargin, y: columnYOffset[currentColumn])
 
-            let sectionVerticalSpacing = offset.y > 0 ? verticalSpacing(betweenSectionAt: section - 1, and: section) : 0
+            var offset = CGPoint(
+                x: (itemWidth + interColumnSpacing) * CGFloat(currentColumn) + horizontalMargin,
+                y: columnYOffset[currentColumn]
+            )
+
+            // Add vertical spacing
+            offset.y += offset.y > 0 ? verticalSpacing(betweenSectionAt: section - 1, and: section) : 0
+
+            // Create section rect
+            sectionRects[section] = CGRect(origin: offset, size: CGSize(width: itemWidth, height: 0))
+            sectionIndexesByColumn[currentColumn].append(section)
+
+            guard itemCount > 0 else {
+                continue
+            }
 
             let headerInfo = headerAttributes(in: section, width: itemWidth)
             let footerInfo = footerAttributes(in: section, width: itemWidth)
-
-            offset.y += sectionVerticalSpacing
 
             if headerInfo.enabled {
                 let headerIndex = IndexPath(item: 0, section: section)
@@ -184,8 +200,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 }
 
                 headerAttributes[section] = attributes
-                allSortedAttributes.append(attributes)
-                calculateMinMaxAttributes(with: attributes, in: section)
+                recalculateSectionAttributes(with: attributes, in: section)
                 offset.y += attributes.size.height
             }
 
@@ -210,8 +225,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                     $0.frame.origin.y = offset.y
                 }
                 layoutAttributes[indexPath] = attributes
-                allSortedAttributes.append(attributes)
-                calculateMinMaxAttributes(with: attributes, in: section)
+                recalculateSectionAttributes(with: attributes, in: section)
                 offset.y += attributes.size.height
             }
 
@@ -227,8 +241,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                     $0.frame.origin.y = offset.y
                 }
                 footerAttributes[section] = attributes
-                allSortedAttributes.append(attributes)
-                calculateMinMaxAttributes(with: attributes, in: section)
+                recalculateSectionAttributes(with: attributes, in: section)
                 offset.y += attributes.size.height
             }
 
@@ -239,37 +252,26 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         cachedContentSize = CGSize(width: collectionView.frame.width, height: columnYOffset[maxColumnIndex])
     }
 
-    private func calculateMinMaxAttributes(with attributes: Attributes, in section: Int) {
-        var minimum: CGPoint = minSection[section] ?? CGPoint(x: CGFloat.greatestFiniteMagnitude, y: CGFloat.greatestFiniteMagnitude)
-        var maximum: CGPoint = maxSection[section] ?? CGPoint(x: 0.0, y: 0.0)
-
-        if attributes.frame.minX < minimum.x { minimum.x = attributes.frame.minX }
-        if attributes.frame.minY < minimum.y { minimum.y = attributes.frame.minY }
-        if attributes.frame.maxX > maximum.x { maximum.x = attributes.frame.maxX }
-        if attributes.frame.maxY > maximum.y { maximum.y = attributes.frame.maxY }
-
-        minSection[section] = minimum
-        maxSection[section] = maximum
-
+    // Call sequentially per section
+    private func recalculateSectionAttributes(with attributes: Attributes, in section: Int) {
         if minimumItemZIndex > attributes.zIndex {
             minimumItemZIndex = attributes.zIndex
         }
+
+        attributesBySection[section]?.append(attributes)
+        sectionRects[section] = attributes.frame.union(sectionRects[section]!)
     }
 
     private func calculateBackgroundAttributes() {
         guard let collectionView = self.collectionView else { return }
         for section in 0..<collectionView.numberOfSections {
-            guard
-                isTileEnabled(forSectionAt: section),
-                let minAttribute = minSection[section],
-                let maxAttribute = maxSection[section]
-            else {
+            guard isTileEnabled(forSectionAt: section) else {
                 continue
             }
 
-            let backgroundRect = CGRect(origin: minAttribute, size: CGSize(width: maxAttribute.x - minAttribute.x, height: maxAttribute.y - minAttribute.y))
-
-            guard backgroundRect.size.width > 0, backgroundRect.size.height > 0 else { continue }
+            guard let backgroundRect = sectionRects[section], !backgroundRect.isEmpty else {
+                continue
+            }
 
             let attributes = sectionBackgroundAttributes[section] ?? Attributes(
                 forDecorationViewOfKind: UICollectionElementKindSectionBackground,
@@ -299,31 +301,60 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         if element1.maxY >= element2.minY, element2.maxY >= element1.minY {
             return .orderedSame
         }
-        if element1.minY < element2.minY {
+        if element1.minY <= element2.minY {
             return .orderedAscending
         } else {
             return .orderedDescending
         }
     }
 
+    private var shouldUseBinarySearch = true
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var elementsInRect = [Attributes]()
-        var sectionIndexes = Set<Int>()
-        guard let closestCandidateIndex = allSortedAttributes.binarySearch(target: rect, transform: { $0.frame }, yAxisIntersection) else {
-            return elementsInRect
-        }
-        for attributes in allSortedAttributes[..<closestCandidateIndex].reversed() {
-            guard yAxisIntersection(element1: rect, element2: attributes.frame) == .orderedSame else { break }
-            elementsInRect.append(attributes)
-            sectionIndexes.insert(attributes.indexPath.section)
-        }
 
-        for attributes in allSortedAttributes[closestCandidateIndex...] {
-            guard yAxisIntersection(element1: rect, element2: attributes.frame) == .orderedSame else { break }
-            elementsInRect.append(attributes)
-            sectionIndexes.insert(attributes.indexPath.section)
+        guard shouldUseBinarySearch else {
+            return layoutAttributes.values.filter { $0.frame.intersects(rect) }
+                + sectionBackgroundAttributes.values.filter { $0.frame.intersects(rect) }
+                + footerAttributes.values.filter { $0.frame.intersects(rect) }
+                + headerAttributes.values.filter { $0.frame.intersects(rect) }
         }
-        elementsInRect.append(contentsOf: sectionIndexes.compactMap({ sectionBackgroundAttributes[$0] }))
+        for columnSectionIndexes in sectionIndexesByColumn {
+            guard let closestCandidateIndex = columnSectionIndexes.binarySearch(
+                target: rect,
+                transform: { sectionRects[$0]! },
+                yAxisIntersection
+            ) else {
+                continue
+            }
+
+            // Look Sections Below Candidate
+            var index = closestCandidateIndex - 1
+            while index >= 0 {
+                let sectionIndex = columnSectionIndexes[index]
+                guard yAxisIntersection(element1: rect, element2: sectionRects[sectionIndex]!) == .orderedSame else {
+                    break
+                }
+                if let backgroundAttribute = sectionBackgroundAttributes[sectionIndex] {
+                    elementsInRect.append(backgroundAttribute)
+                }
+                elementsInRect.append(contentsOf: attributesBySection[sectionIndex]!.filter { $0.frame.intersects(rect) })
+                index -= 1
+            }
+            
+            // Look Sections Under Candidate
+            index = closestCandidateIndex
+            while index < columnSectionIndexes.count {
+                let sectionIndex = columnSectionIndexes[index]
+                guard yAxisIntersection(element1: rect, element2: sectionRects[sectionIndex]!) == .orderedSame else {
+                    break
+                }
+                if let backgroundAttribute = sectionBackgroundAttributes[sectionIndex] {
+                    elementsInRect.append(backgroundAttribute)
+                }
+                elementsInRect.append(contentsOf: attributesBySection[sectionIndex]!.filter { $0.frame.intersects(rect) })
+                index += 1
+            }
+        }
         return elementsInRect
     }
 
