@@ -10,28 +10,11 @@ import Foundation
 
 final class FeedViewController: XCComposedCollectionViewController {
     public override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
-        return [
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView),
-            FeedDataSource(collectionView: collectionView)
-        ]
+        var sources = [XCCollectionViewDataSource]()
+        for _ in 0..<100 {
+            sources.append(FeedDataSource(collectionView: collectionView))
+        }
+        return sources
     }
 
     override func viewDidLoad() {
