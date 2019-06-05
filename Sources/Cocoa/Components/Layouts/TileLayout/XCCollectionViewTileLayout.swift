@@ -93,15 +93,23 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
     open override func prepare() {
         super.prepare()
-        if shouldReloadAttributes {
-            layoutAttributes.removeAll()
-            footerAttributes.removeAll()
-            headerAttributes.removeAll()
-
-            sectionBackgroundAttributes.removeAll()
-            shouldReloadAttributes = false
+        for columnSectionIndexes in sectionIndexesByColumn {
+            if let lastIndex = columnSectionIndexes.last,
+                let maxY = sectionRects[lastIndex]?.maxY,
+                maxY > cachedContentSize.height {
+                cachedContentSize.height = maxY
+            }
         }
 
+        guard shouldReloadAttributes else { return }
+        shouldReloadAttributes = false
+
+        layoutAttributes.removeAll()
+        footerAttributes.removeAll()
+        headerAttributes.removeAll()
+        
+        sectionBackgroundAttributes.removeAll()
+        
         calculateAttributes()
         calculateBackgroundAttributes()
         prepareZIndex()
@@ -125,26 +133,59 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     )
         -> Bool {
         let hasNewPreferredHeight = preferredAttributes.size.height.rounded() != originalAttributes.size.height.rounded()
-        guard hasNewPreferredHeight else { return false }
-        var storedAttributes: Attributes?
-        switch originalAttributes.representedElementCategory {
-            case .cell:
-                storedAttributes = layoutAttributes[originalAttributes.indexPath]
-            case .supplementaryView:
-                switch originalAttributes.representedElementKind {
-                    case UICollectionView.elementKindSectionHeader:
-                        storedAttributes = headerAttributes[originalAttributes.indexPath.section]
-                    case UICollectionView.elementKindSectionFooter:
-                        storedAttributes = footerAttributes[originalAttributes.indexPath.section]
-                    default:
-                        break
+        return hasNewPreferredHeight
+    }
+
+    open override func invalidationContext(forPreferredLayoutAttributes preferredAttributes: UICollectionViewLayoutAttributes, withOriginalAttributes originalAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutInvalidationContext {
+
+        updateItemHeight(preferredAttributes: preferredAttributes, originalAttributes: originalAttributes)
+        let invalidationContext = super.invalidationContext(forPreferredLayoutAttributes: preferredAttributes, withOriginalAttributes: originalAttributes)
+
+        return invalidationContext
+    }
+
+    private func updateItemHeight(preferredAttributes: UICollectionViewLayoutAttributes, originalAttributes: UICollectionViewLayoutAttributes) {
+       
+        guard let storedAttributes = getStoredAttribute(from: originalAttributes) else { return }
+        let heightDifference = preferredAttributes.size.height - storedAttributes.frame.size.height
+        storedAttributes.isAutosizeEnabled = false
+        storedAttributes.frame.size = preferredAttributes.size
+
+        let targetSection = originalAttributes.indexPath.section
+        for columnSectionIndexes in sectionIndexesByColumn {
+            guard let indexOfSection = columnSectionIndexes.binarySearch(
+                target: targetSection,
+                transform: { $0 },
+                { section1, section2 in
+                    if section1 == section2 {
+                        return .orderedSame
+                    } else if section1 < section2 {
+                        return .orderedAscending
+                    } else {
+                        return .orderedDescending
+                    }
                 }
-            default:
-                break
+            ) else {
+                continue
+            }
+
+            for attributes in attributesBySection[targetSection]! {
+                if attributes.frame.origin.y > storedAttributes.frame.origin.y {
+                    attributes.frame.origin.y += heightDifference
+                }
+            }
+
+            sectionRects[targetSection]?.size.height += heightDifference
+            sectionBackgroundAttributes[targetSection]?.frame.size.height += heightDifference
+
+            for section in columnSectionIndexes[(indexOfSection + 1)...] {
+                for attributes in attributesBySection[section]! {
+                    attributes.frame.origin.y += heightDifference
+                }
+                sectionRects[section]?.origin.y += heightDifference
+                sectionBackgroundAttributes[section]?.frame.origin.y += heightDifference
+            }
         }
-        storedAttributes?.isAutosizeEnabled = false
-        storedAttributes?.size = preferredAttributes.size
-        return true
     }
 
     private func calculateAttributes() {
@@ -204,9 +245,9 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 offset.y += attributes.size.height
             }
 
+            var indexPath = IndexPath(item: 0, section: section)
             for item in 0..<itemCount {
-                let indexPath = IndexPath(item: item, section: section)
-
+                indexPath.item = item
                 let attributes = layoutAttributes[indexPath] ?? Attributes(forCellWith: indexPath).apply {
                     $0.size = CGSize(width: itemWidth, height: XCCollectionViewTileLayout.defaultHeight)
                     $0.isAutosizeEnabled = true
@@ -308,16 +349,9 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
     }
 
-    private var shouldUseBinarySearch = true
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var elementsInRect = [Attributes]()
 
-        guard shouldUseBinarySearch else {
-            return layoutAttributes.values.filter { $0.frame.intersects(rect) }
-                + sectionBackgroundAttributes.values.filter { $0.frame.intersects(rect) }
-                + footerAttributes.values.filter { $0.frame.intersects(rect) }
-                + headerAttributes.values.filter { $0.frame.intersects(rect) }
-        }
         for columnSectionIndexes in sectionIndexesByColumn {
             guard let closestCandidateIndex = columnSectionIndexes.binarySearch(
                 target: rect,
@@ -404,6 +438,24 @@ extension XCCollectionViewTileLayout {
             index = i
         }
         return index
+    }
+
+    private func getStoredAttribute(from originalAttributes: UICollectionViewLayoutAttributes) -> Attributes? {
+        switch originalAttributes.representedElementCategory {
+        case .cell:
+            return layoutAttributes[originalAttributes.indexPath]
+        case .supplementaryView:
+            switch originalAttributes.representedElementKind {
+            case UICollectionView.elementKindSectionHeader:
+                return headerAttributes[originalAttributes.indexPath.section]
+            case UICollectionView.elementKindSectionFooter:
+                return footerAttributes[originalAttributes.indexPath.section]
+            default:
+                return nil
+            }
+        default:
+            return nil
+        }
     }
 }
 
