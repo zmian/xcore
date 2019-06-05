@@ -27,12 +27,11 @@ import UIKit
 // MARK: - XCCollectionViewTileLayoutCustomizable
 
 public protocol XCCollectionViewTileLayoutCustomizable {
-func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool
-
+    func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool
 }
 
 extension XCCollectionViewTileLayoutCustomizable {
-    func isTileEnabled(_ layout: XCCollectionViewTileLayout) -> Bool {
+    func isTileEnabled(in  layout: XCCollectionViewTileLayout) -> Bool {
         return true
     }
 }
@@ -58,7 +57,7 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
         guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
             return true
         }
-        return custom.isTileEnabled(collectionViewLayout)
+        return custom.isTileEnabled(in: collectionViewLayout)
     }
 }
 

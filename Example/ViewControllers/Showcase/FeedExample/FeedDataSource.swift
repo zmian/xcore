@@ -9,62 +9,34 @@
 import Foundation
 
 final class FeedDataSource: XCCollectionViewDataSource {
+    static var isRandomEnabled = false
     let names: [[(String, String)]] = [
         [
-            ("Hello world!", "mambo jambo lala wowowow")
-        ],[
             ("Hello world!", "mambo jambo lala wowowow"),
             ("Hello world!", "mambo jambo lala wowowow"),
             ("Hello world!", "mambo jambo lala wowowow")
-        ],[
-            (
-                "Hello woas dasdasd asdasdasdasdasdasdasdasdasdasdasdrld!",
-                "mambo jambo lala wowowow asda  a klsdjflasa dfshklasdfl fasasd fasdf asdfhasldfjalskdjflkasjdflkjasdlfkjsalkdjflksajdflsajdlfkjasldkfjsaldjflkasjdflkjasdlflfaksjdl"
-            )
-        ],[
-            ("Heqwerqwerqwerqwerwllo asf!", "mambo jambo lala wowowow"),
-            ("Hello wogagrld!", "mambo jambo lala wowowow"),
-            ("Hello asd!", "mambo jambo lala wowowow")
-        ],[
-            ("Hello ga!", "mambo jambo lala wowowow"),
-            ("Hello ag!", "mambo jambo lala wowowow")
-        ],[
-            ("Hellasd fasdfasdfasdo ga!", "mambo jambo lasd fasdfala wowowow"),
-            ("Hellasd fasdfasdfasdfasd fasdfasdfasdfasdfasfasdf o ag!", "mambo jambo lala wowowow")
-        ],[
-            ("Hello ga!", "mambo jambo sadf asdfasdf asdflala wowowow"),
-            ("Hello ag!", "mambo jambo lala wowowow")
-        ],[
-            ("Hello asf!", "mambo jamboasd fasdfasdflala wowowow"),
-            ("Hello wogagrld!", "mambo jamasdf asdfasbo lala wowowow"),
-            ("Hello asd!", "mambo jambo lala wowowow")
-        ],[
-            ("Hello asf!", "mambo jambo lala wowowow"),
-            ("Hello wogagrld!", "mambo jambo lala wowowow"),
-            ("Hello asd!", "mambo jambo lala wowowow")
-        ],[
-            ("Helloqwerqwer asf!", "mambo jambo lala asd f"),
-            ("Helloqwerqwerqwer wogagrld!", "mambo sadf asdf asd f lala wowowow"),
-            ("Hellqewrqwero asd!", "mambo jambo asd fasdfasdfasdfasdflala wowowow")
+        ],
+        [
+            ("Hello world!", "mambo jambo lala wowowow"),
+        ],
+        [
+            ("Hello world!", "mambo jambo lala wowowow"),
+            ("Hello world!", "mambo jambo lala wowowow")
         ]
     ]
 
-//    let names: [[(String, String)]] = [
-//        [
-//            ("Hello world!", "mambo jambo lala wowowow")
-//        ],[
-//            ("Hello world!", "mambo jambo lala wowowow"),
-//            ("Hello world!", "mambo jambo lala wowowow"),
-//            ("Hello world!", "mambo jambo lala wowowow")
-//        ]
-//    ]
+    var isTileEnabled = true
+    var sectionCount = 3
 
     override init(collectionView: UICollectionView) {
         super.init(collectionView: collectionView)
+        if FeedDataSource.isRandomEnabled {
+            sectionCount = Int.random(in: 1...3)
+        }
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return names.count
+        return sectionCount
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -98,5 +70,11 @@ final class FeedDataSource: XCCollectionViewDataSource {
         let footer = collectionView.dequeueReusableSupplementaryView(.footer, for: globalIndexPath) as FeedTextHeaderFooterViewCell
         footer.configure(title: "FOOTER!")
         return footer
+    }
+}
+
+extension FeedDataSource: XCCollectionViewTileLayoutCustomizable {
+    func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
+        return isTileEnabled
     }
 }

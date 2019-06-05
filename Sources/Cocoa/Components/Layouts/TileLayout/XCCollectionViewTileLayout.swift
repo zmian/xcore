@@ -29,35 +29,40 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
     public var numberOfColumns = 1 {
         didSet {
+            shouldReloadAttributes = true
             invalidateLayout()
         }
     }
 
     public var verticalIntersectionSpacing: CGFloat = .defaultPadding {
         didSet {
+            shouldReloadAttributes = true
             invalidateLayout()
         }
     }
 
     public var horizontalMargin: CGFloat = .minimumPadding {
         didSet {
+            shouldReloadAttributes = true
             invalidateLayout()
         }
     }
 
     public var interColumnSpacing: CGFloat = .defaultPadding {
         didSet {
+            shouldReloadAttributes = true
             invalidateLayout()
         }
     }
 
     public var cornerRadius: CGFloat = 11 {
         didSet {
+            shouldReloadAttributes = true
             invalidateLayout()
         }
     }
 
-    private static let defaultHeight: CGFloat = 1000
+    private static let defaultHeight: CGFloat = 500
     private var cachedContentSize: CGSize = .zero
     private var shouldReloadAttributes = true
     private var minimumItemZIndex: Int = 0
@@ -104,25 +109,12 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
         calculateAttributes()
         calculateBackgroundAttributes()
-        prepareZIndex()
     }
 
     open override func invalidateLayout(with context: UICollectionViewLayoutInvalidationContext) {
         if context.invalidateEverything || context.invalidateDataSourceCounts {
             shouldReloadAttributes = true
         }
-
-        var newContentSizeHeight: CGFloat = 0.0
-        for columnSectionIndexes in sectionIndexesByColumn {
-            if
-                let lastIndex = columnSectionIndexes.last,
-                let maxY = sectionRects[lastIndex]?.maxY,
-                maxY > newContentSizeHeight
-            {
-                newContentSizeHeight = maxY
-            }
-        }
-        cachedContentSize.height = newContentSizeHeight
 
         super.invalidateLayout(with: context)
     }
@@ -149,7 +141,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     }
 
     private func updateItemHeight(preferredAttributes: UICollectionViewLayoutAttributes, originalAttributes: UICollectionViewLayoutAttributes) {
-       
+
         guard let storedAttributes = getStoredAttribute(from: originalAttributes) else { return }
         let heightDifference = preferredAttributes.size.height - storedAttributes.frame.size.height
         storedAttributes.isAutosizeEnabled = false
@@ -179,16 +171,13 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 }
             }
             sectionRects[targetSection]?.size.height += heightDifference
-//            sectionBackgroundAttributes[targetSection]?.frame.size.height += heightDifference
 
             for section in columnSectionIndexes[(indexOfSection + 1)...] {
-//                for attributes in attributesBySection[section]! {
-//                    attributes.frame.origin.y += heightDifference
-//                }
                 sectionRects[section]?.origin.y += heightDifference
-//                sectionBackgroundAttributes[section]?.frame.origin.y += heightDifference
             }
         }
+
+        cachedContentSize.height = self.maxColumn(self.columnsHeight).height
     }
 
     private func calculateAttributes() {
@@ -209,11 +198,11 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
             attributesBySection[section] = [Attributes]()
 
-            let currentColumn = isTileEnabled(forSectionAt: section) ? minColumnIndex(columnYOffset) : maxColumnIndex(columnYOffset)
-            let itemWidth = isTileEnabled(forSectionAt: section) ? columnWidth : contentWidth
-
+            let currentColumn = minColumn(columnYOffset).index
+            let itemWidth = isTileEnabled(forSectionAt: section) ? columnWidth : collectionView.frame.size.width
+            let margin = isTileEnabled(forSectionAt: section) ? horizontalMargin : 0
             var offset = CGPoint(
-                x: (itemWidth + interColumnSpacing) * CGFloat(currentColumn) + horizontalMargin,
+                x: (itemWidth + interColumnSpacing) * CGFloat(currentColumn) + margin,
                 y: columnYOffset[currentColumn]
             )
 
@@ -234,9 +223,9 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
             if headerInfo.enabled {
                 let headerIndex = IndexPath(item: 0, section: section)
-                let attributes = Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: headerIndex).apply {
+                let attributes = headerAttributes[section] ?? Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: headerIndex).apply {
                     $0.size = CGSize(width: itemWidth, height: headerInfo.height ?? XCCollectionViewTileLayout.defaultHeight)
-                    $0.corners = (.top, cornerRadius)
+                    $0.corners = isTileEnabled(forSectionAt: section) ? (.top, cornerRadius) : (.none, 0)
                     $0.isAutosizeEnabled = headerInfo.height == nil
                     $0.offsetInSection = offsetInSection
                 }
@@ -249,17 +238,22 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             var indexPath = IndexPath(item: 0, section: section)
             for item in 0..<itemCount {
                 indexPath.item = item
-                let attributes = Attributes(forCellWith: indexPath).apply {
+                let attributes = layoutAttributes[indexPath] ?? Attributes(forCellWith: indexPath).apply {
                     $0.size = CGSize(width: itemWidth, height: XCCollectionViewTileLayout.defaultHeight)
                     $0.isAutosizeEnabled = true
-                    var corners: UIRectCorner = .none
-                    if !headerInfo.enabled, item == 0 {
-                        corners.formUnion(.top)
+                    if isTileEnabled(forSectionAt: section) {
+                        var corners: UIRectCorner = .none
+                        if !headerInfo.enabled, item == 0 {
+                            corners.formUnion(.top)
+                        }
+                        if !footerInfo.enabled, item == itemCount - 1 {
+                            corners.formUnion(.bottom)
+                        }
+                        $0.corners = (corners, cornerRadius)
+                    } else {
+                        $0.corners = (.none, 0)
                     }
-                    if !footerInfo.enabled, item == itemCount - 1 {
-                        corners.formUnion(.bottom)
-                    }
-                    $0.corners = (corners, cornerRadius)
+
                     $0.offsetInSection = offsetInSection
                 }
                 layoutAttributes[indexPath] = attributes
@@ -269,9 +263,9 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
             if footerInfo.enabled {
                 let footerIndex = IndexPath(item: 0, section: section)
-                let attributes = Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: footerIndex).apply {
+                let attributes = footerAttributes[section] ?? Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: footerIndex).apply {
                     $0.size = CGSize(width: itemWidth, height: footerInfo.height ?? XCCollectionViewTileLayout.defaultHeight)
-                    $0.corners = (.bottom, cornerRadius)
+                    $0.corners = isTileEnabled(forSectionAt: section) ? (.bottom, cornerRadius) : (.none, 0)
                     $0.isAutosizeEnabled = footerInfo.height == nil
                     $0.offsetInSection = offsetInSection
                 }
@@ -286,8 +280,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             columnYOffset[currentColumn] = offset.y
         }
 
-        let maxColumnIndex = self.maxColumnIndex(columnYOffset)
-        cachedContentSize = CGSize(width: collectionView.frame.width, height: columnYOffset[maxColumnIndex])
+        cachedContentSize.height = self.maxColumn(self.columnsHeight).height
     }
 
     private func calculateBackgroundAttributes() {
@@ -301,19 +294,14 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 continue
             }
 
-            let attributes = Attributes(
+            let attributes = sectionBackgroundAttributes[section] ?? Attributes(
                 forDecorationViewOfKind: UICollectionElementKindSectionBackground,
                 with: IndexPath(item: 0, section: section)
             ).apply {
                 $0.corners = (.allCorners, cornerRadius)
+                $0.zIndex = minimumItemZIndex - 2
             }
             sectionBackgroundAttributes[section] = attributes
-        }
-    }
-
-    private func prepareZIndex() {
-        for attributes in sectionBackgroundAttributes.values {
-            attributes.zIndex = minimumItemZIndex - 2
         }
     }
 
@@ -360,7 +348,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                     elementsInRect.append(attributes)
                 }
             }
-            
+
             // Look Sections Under Candidate
             for sectionIndex in sectionsInColumn[closestCandidateIndex...] {
                 let sectionRect = sectionRects[sectionIndex] ?? .zero
@@ -408,24 +396,34 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 }
 
 extension XCCollectionViewTileLayout {
-    private func minColumnIndex(_ columns: [CGFloat]) -> Int {
+    private var columnsHeight: [CGFloat] {
+        var columnHeights = [CGFloat]()
+        for columnSectionIndexes in sectionIndexesByColumn {
+            if let lastIndex = columnSectionIndexes.last, let maxY = sectionRects[lastIndex]?.maxY {
+                columnHeights.append(maxY)
+            }
+        }
+        return columnHeights
+    }
+
+    private func minColumn(_ columns: [CGFloat]) -> (index: Int, height: CGFloat) {
         var index = 0
         var minYOffset = CGFloat.infinity
         for (i, columnOffset) in columns.enumerated() where columnOffset < minYOffset {
             minYOffset = columnOffset
             index = i
         }
-        return index
+        return (index, minYOffset)
     }
 
-    private func maxColumnIndex(_ columns: [CGFloat]) -> Int {
+    private func maxColumn(_ columns: [CGFloat]) -> (index: Int, height: CGFloat) {
         var index = 0
         var maxYOffset: CGFloat = -1.0
         for (i, columnOffset) in columns.enumerated() where columnOffset > maxYOffset {
             maxYOffset = columnOffset
             index = i
         }
-        return index
+        return (index, maxYOffset)
     }
 
     private func getStoredAttribute(from originalAttributes: UICollectionViewLayoutAttributes) -> Attributes? {
@@ -474,7 +472,13 @@ extension XCCollectionViewTileLayout {
     }
 
     private func isTileEnabled(forSectionAt section: Int) -> Bool {
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return true }
+        guard
+            numberOfColumns == 1,
+            let collectionView = self.collectionView,
+            let delegate = self.delegate
+        else {
+            return true
+        }
         return delegate.collectionView(collectionView, layout: self, isTileEnabledInSection: section)
     }
 }

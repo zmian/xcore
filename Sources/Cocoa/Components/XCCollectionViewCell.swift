@@ -83,6 +83,10 @@ extension XCCollectionViewCell {
             alpha = flowAttributes.alpha
         }
 
+        if contentView.bounds.width != layoutAttributes.size.width {
+            contentView.bounds.size.width = layoutAttributes.size.width
+        }
+
         if let tileAttributes = attributes as? XCCollectionViewTileLayout.Attributes, tileAttributes.isAutosizeEnabled {
             let size = super.systemLayoutSizeFitting(
                 attributes.size,
