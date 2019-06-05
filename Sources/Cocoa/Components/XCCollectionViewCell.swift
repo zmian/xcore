@@ -84,8 +84,12 @@ extension XCCollectionViewCell {
         }
 
         if let tileAttributes = attributes as? XCCollectionViewTileLayout.Attributes, tileAttributes.isAutosizeEnabled {
-            let size = contentView.sizeFitting(width: attributes.size.width)
-            attributes.size = size
+            let size = super.systemLayoutSizeFitting(
+                attributes.size,
+                withHorizontalFittingPriority: .required,
+                verticalFittingPriority: .fittingSizeLevel
+            )
+            attributes.frame.size = size
         }
         return attributes
     }

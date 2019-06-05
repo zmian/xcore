@@ -57,7 +57,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
     }
 
-    private static let defaultHeight: CGFloat = 50.0
+    private static let defaultHeight: CGFloat = 1000
     private var cachedContentSize: CGSize = .zero
     private var shouldReloadAttributes = true
     private var minimumItemZIndex: Int = 0
@@ -93,13 +93,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
     open override func prepare() {
         super.prepare()
-        for columnSectionIndexes in sectionIndexesByColumn {
-            if let lastIndex = columnSectionIndexes.last,
-                let maxY = sectionRects[lastIndex]?.maxY,
-                maxY > cachedContentSize.height {
-                cachedContentSize.height = maxY
-            }
-        }
 
         guard shouldReloadAttributes else { return }
         shouldReloadAttributes = false
@@ -119,6 +112,18 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         if context.invalidateEverything || context.invalidateDataSourceCounts {
             shouldReloadAttributes = true
         }
+
+        var newContentSizeHeight: CGFloat = 0.0
+        for columnSectionIndexes in sectionIndexesByColumn {
+            if
+                let lastIndex = columnSectionIndexes.last,
+                let maxY = sectionRects[lastIndex]?.maxY,
+                maxY > newContentSizeHeight
+            {
+                newContentSizeHeight = maxY
+            }
+        }
+        cachedContentSize.height = newContentSizeHeight
 
         super.invalidateLayout(with: context)
     }

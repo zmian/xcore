@@ -49,6 +49,16 @@ final class FeedDataSource: XCCollectionViewDataSource {
         ]
     ]
 
+//    let names: [[(String, String)]] = [
+//        [
+//            ("Hello world!", "mambo jambo lala wowowow")
+//        ],[
+//            ("Hello world!", "mambo jambo lala wowowow"),
+//            ("Hello world!", "mambo jambo lala wowowow"),
+//            ("Hello world!", "mambo jambo lala wowowow")
+//        ]
+//    ]
+
     override init(collectionView: UICollectionView) {
         super.init(collectionView: collectionView)
     }
@@ -73,7 +83,7 @@ final class FeedDataSource: XCCollectionViewDataSource {
     }
 
     override func collectionView(_ collectionView: UICollectionView, footerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
-        return (true, nil)
+        return (false, nil)
     }
 
     override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {

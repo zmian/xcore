@@ -40,7 +40,8 @@ final class FeedTextViewCell: XCCollectionViewCell {
         contentView.backgroundColor = .white
         contentView.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.top.bottom.equalToSuperview().inset(10.0)
         }
     }
 }
