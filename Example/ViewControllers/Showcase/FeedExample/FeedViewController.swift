@@ -11,7 +11,7 @@ import Foundation
 final class FeedViewController: XCComposedCollectionViewController {
     public override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
         var sources = [XCCollectionViewDataSource]()
-        for _ in 0..<100 {
+        for _ in 0..<300 {
             sources.append(FeedDataSource(collectionView: collectionView))
         }
         return sources
