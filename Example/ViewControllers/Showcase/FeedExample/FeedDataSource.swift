@@ -22,16 +22,48 @@ final class FeedDataSource: XCCollectionViewDataSource {
         [
             ("Hello world!", "mambo jambo lala wowowow"),
             ("Hello world!", "mambo jambo lala wowowow")
+        ],
+        [
+            ("Hello world!", "mambo jambo lala wowowow"),
+            ("Hello world!", "mambo jambo lala wowowow"),
+            ("Hello world!", "mambo jambo lala wowowow")
+        ],
+        [
+            ("Hello world!", "mambo jambo lala wowowow"),
+        ],
+        [
+            ("Hello world!", "mambo jambo lala wowowow"),
+            ("Hello world!", "mambo jambo lala wowowow")
+        ],
+        [
+            ("Hello world!", "mambo jambo lala wowowow"),
+            ("Hello world!", "mambo jambo lala wowowow"),
+            ("Hello world!", "mambo jambo lala wowowow")
+        ],
+        [
+            ("Hello world!", "mambo jambo lala wowowow"),
+        ],
+        [
+            ("Hello world!", "mambo jambo lala wowowow"),
+            ("Hello world!", "mambo jambo lala wowowow")
+        ],        [
+            ("Hello world!", "mambo jambo lala wowowow"),
+            ("Hello world!", "mambo jambo lala wowowow"),
+            ("Hello world!", "mambo jambo lala wowowow")
+        ],
+        [
+            ("Hello world!", "mambo jambo lala wowowow"),
+            ("Hello world!", "mambo jambo lala wowowow")
         ]
     ]
 
     var isTileEnabled = true
-    var sectionCount = 3
+    lazy var sectionCount = names.count
 
     override init(collectionView: UICollectionView) {
         super.init(collectionView: collectionView)
         if FeedDataSource.isRandomEnabled {
-            sectionCount = Int.random(in: 1...3)
+            sectionCount = Int.random(in: 1...names.count)
         }
     }
 
@@ -61,7 +93,7 @@ final class FeedDataSource: XCCollectionViewDataSource {
     override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
         let globalIndexPath = indexPath.with(globalSection)
         let header = collectionView.dequeueReusableSupplementaryView(.header, for: globalIndexPath) as FeedTextHeaderFooterViewCell
-        header.configure(title: "HEADER!")
+        header.configure(title: "S: \(globalIndexPath.section)")
         return header
     }
 
