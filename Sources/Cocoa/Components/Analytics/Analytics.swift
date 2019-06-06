@@ -27,8 +27,17 @@ import Foundation
 // MARK: - AnalyticsEvent
 
 public protocol AnalyticsEvent {
+    /// The name of the event that is sent to analytics providers.
     var name: String { get }
+
+    /// The properties of the event that is sent to analytics providers.
     var properties: [String: Any]? { get }
+
+    /// An option to send this event to additional analytics providers.
+    ///
+    /// For example, if a specific event should be tracked in Intercom
+    /// the said event can return `Intercom` as the additional provider.
+    var additionalProviders: [AnalyticsProvider]? { get }
 }
 
 // MARK: - AnalyticsProvider
@@ -72,8 +81,24 @@ open class Analytics<Event: AnalyticsEvent> {
     ///
     /// - Parameter event: The event to track.
     open func track(_ event: Event) {
+        let providers = finalProviders(additionalProviders: event.additionalProviders)
+
         providers.forEach {
             $0.track(event)
         }
+    }
+
+    private func finalProviders(additionalProviders: [AnalyticsProvider]? = nil) -> [AnalyticsProvider] {
+        guard let additionalProviders = additionalProviders, !additionalProviders.isEmpty else {
+            return providers
+        }
+
+        var providers = self.providers
+
+        for provider in additionalProviders where !providers.contains(where: { $0.identifier == provider.identifier }) {
+            providers.append(provider)
+        }
+
+        return providers
     }
 }
