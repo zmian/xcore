@@ -1,5 +1,5 @@
 //
-// AppEvent.swift
+// AppAnalyticsEvent.swift
 //
 // Copyright © 2019 Xcore
 //
@@ -24,17 +24,23 @@
 
 import Foundation
 
-public struct AppEvent: AnalyticsEvent {
+public struct AppAnalyticsEvent: AnalyticsEvent {
     public let name: String
     public let properties: [String: Any]?
+    public let additionalProviders: [AnalyticsProvider]?
 
-    public init(name: String, properties: [String: Any]? = nil) {
+    public init(
+        name: String,
+        properties: [String: Any]? = nil,
+        additionalProviders: [AnalyticsProvider]? = nil
+    ) {
         self.name = name
         self.properties = properties
+        self.additionalProviders = additionalProviders
     }
 }
 
-extension AppEvent: ExpressibleByStringLiteral {
+extension AppAnalyticsEvent: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
         self.init(name: value)
     }
