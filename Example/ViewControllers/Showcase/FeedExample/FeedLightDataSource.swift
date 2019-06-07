@@ -9,7 +9,7 @@
 import Foundation
 
 final class FeedLightDataSource: XCCollectionViewDataSource {
-    let height = CGFloat(Float.random(in: 100.0...500.0))
+    let height = CGFloat(Int.random(in: 100...500))
     let color: UIColor = {
         switch Int.random(in: 0...2) {
             case 0:

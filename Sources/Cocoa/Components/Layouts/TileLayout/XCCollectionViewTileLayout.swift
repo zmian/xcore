@@ -24,14 +24,6 @@
 
 import UIKit
 
-extension XCCollectionViewTileLayout {
-    struct SectionModel {
-        let attributes = [Attributes]()
-        let rect: CGRect
-        let nextSection: Int
-    }
-}
-
 open class XCCollectionViewTileLayout: UICollectionViewLayout {
     private let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
 
@@ -70,7 +62,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
     }
 
-    private static let defaultHeight: CGFloat = 200
+    private static let defaultHeight: CGFloat = 1000
     private var cachedContentSize: CGSize = .zero
     private var shouldReloadAttributes = true
     private var shouldRecalculateSectionPosition = false
@@ -82,11 +74,12 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     private var footerAttributes = [Int: Attributes]()
     private var headerAttributes = [Int: Attributes]()
     private var sectionBackgroundAttributes = [Int: Attributes]()
-
+    private var cachedDelegateAttributes = [Int: (Bool, CGFloat)]()
+    
     // Elements in rect calculation
     private var sectionRects = [Int: CGRect]()
     private var sectionIndexesByColumn = [[Int]]()
-    private var columnBySection = [Int: Int]()
+    
 
     open override class var layoutAttributesClass: AnyClass {
         return Attributes.self
@@ -117,7 +110,8 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             footerAttributes.removeAll()
             headerAttributes.removeAll()
             sectionBackgroundAttributes.removeAll()
-            
+            cachedDelegateAttributes.removeAll()
+
             calculateAttributes()
             calculateBackgroundAttributes()
             return
@@ -152,7 +146,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
     open override func invalidationContext(forPreferredLayoutAttributes preferredAttributes: UICollectionViewLayoutAttributes, withOriginalAttributes originalAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutInvalidationContext {
 
-
         let invalidationContext = super.invalidationContext(forPreferredLayoutAttributes: preferredAttributes, withOriginalAttributes: originalAttributes)
         updateItemHeight(preferredAttributes: preferredAttributes, originalAttributes: originalAttributes, invalidationContext: invalidationContext)
         return invalidationContext
@@ -186,27 +179,34 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         var currentColumn: Int = 0
         var itemWidth: CGFloat = 0
         var margin: CGFloat = 0
-        
+        var verticalSpacing: CGFloat = 0
+        var cachedParameters: (isTileEnabled: Bool, verticalSpacing: CGFloat)?
+
         sectionIndexesByColumn.removeAll()
         for _ in 0..<numberOfColumns {
             sectionIndexesByColumn.append([Int]())
         }
 
         for section in 0..<collectionView.numberOfSections {
+            cachedParameters = cachedDelegateAttributes[section]
             itemCount = collectionView.numberOfItems(inSection: section)
-            tileEnabled = isTileEnabled(forSectionAt: section)
+            tileEnabled =  cachedParameters?.isTileEnabled ?? self.isTileEnabled(forSectionAt: section)
             currentColumn = tileEnabled ? minColumn(columnYOffset).index : maxColumn(columnYOffset).index
             itemWidth = tileEnabled ? columnWidth : collectionView.frame.size.width
             margin = tileEnabled ? horizontalMargin : 0
+            verticalSpacing = cachedParameters?.verticalSpacing ?? self.verticalSpacing(betweenSectionAt: section - 1, and: section)
 
             // Add section to column
             sectionIndexesByColumn[currentColumn].append(section)
+            if cachedParameters == nil {
+                cachedDelegateAttributes[section] = (tileEnabled, verticalSpacing)
+            }
 
             offset.x = tileEnabled ? (itemWidth + interColumnSpacing) * CGFloat(currentColumn) + margin : 0
             offset.y = columnYOffset[currentColumn]
 
             // Add vertical spacing
-            offset.y += offset.y > 0 ? verticalSpacing(betweenSectionAt: section - 1, and: section) : 0
+            offset.y += offset.y > 0 ? verticalSpacing : 0
 
             // Create item attributes
             if shouldCreateAttributes {
@@ -320,7 +320,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     }
 
     open override var collectionViewContentSize: CGSize {
-        return cachedContentSize
+        return CGSize(width: cachedContentSize.width + 0.001, height: cachedContentSize.height)
     }
 
     private func yAxisIntersection(element1: CGRect, element2: CGRect) -> ComparisonResult {

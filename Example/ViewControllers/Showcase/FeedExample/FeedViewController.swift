@@ -11,7 +11,7 @@ import Foundation
 final class FeedViewController: XCComposedCollectionViewController {
     public override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
         var sources = [XCCollectionViewDataSource]()
-        for _ in 0..<10000 {
+        for _ in 0..<1000 {
             sources.append(FeedLightDataSource(collectionView: collectionView))
         }
         if let notTiled = sources[10] as? FeedDataSource {

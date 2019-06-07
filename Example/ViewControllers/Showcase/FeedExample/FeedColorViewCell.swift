@@ -25,7 +25,7 @@ final class FeedColorViewCell: XCCollectionViewCell {
         contentView.addSubview(colorView)
         colorView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            heightConstraint = make.height.equalTo(0).constraint
+            heightConstraint = make.height.equalTo(0).priority(.defaultHigh).constraint
         }
     }
 }
