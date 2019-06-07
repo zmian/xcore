@@ -11,8 +11,11 @@ import Foundation
 final class FeedViewController: XCComposedCollectionViewController {
     public override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
         var sources = [XCCollectionViewDataSource]()
-        for _ in 0..<50 {
-            sources.append(FeedDataSource(collectionView: collectionView))
+        for _ in 0..<10000 {
+            sources.append(FeedLightDataSource(collectionView: collectionView))
+        }
+        if let notTiled = sources[10] as? FeedDataSource {
+            notTiled.isTileEnabled = false
         }
         return sources
     }
@@ -20,7 +23,7 @@ final class FeedViewController: XCComposedCollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        collectionView.backgroundColor = .red
+        collectionView.backgroundColor = .white
         collectionView.contentInset.top = view.safeAreaInsets.top
         let tileLayout = XCCollectionViewTileLayout()
         tileLayout.numberOfColumns = 3

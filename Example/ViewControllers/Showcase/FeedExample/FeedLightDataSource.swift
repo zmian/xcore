@@ -1,75 +1,65 @@
 //
-//  FeedDataSource.swift
+//  FeedLightDataSource.swift
 //  Example
 //
-//  Created by Guillermo Waitzel on 31/05/2019.
+//  Created by Guillermo Waitzel on 06/06/2019.
 //  Copyright © 2019 Xcore. All rights reserved.
 //
 
 import Foundation
 
-final class FeedDataSource: XCCollectionViewDataSource {
-    static var isRandomEnabled = false
-
-    lazy var names: [(String, String)] = {
-        let cellCount = Int.random(in: 1...3)
-        var array = [(String, String)]()
-        for _ in 0...cellCount {
-            array.append(("Feed Test", "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."))
+final class FeedLightDataSource: XCCollectionViewDataSource {
+    let height = CGFloat(Float.random(in: 100.0...500.0))
+    let color: UIColor = {
+        switch Int.random(in: 0...2) {
+            case 0:
+                return .red
+            case 1:
+                return .green
+            case 2:
+                return .yellow
+            default:
+                return .black
         }
-        return array
     }()
-
-    var isTileEnabled = true
-    lazy var sectionCount = names.count
-
+    
     override init(collectionView: UICollectionView) {
         super.init(collectionView: collectionView)
-        if FeedDataSource.isRandomEnabled {
-            sectionCount = Int.random(in: 1...names.count)
-        }
     }
-
+    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return names.count
+        return 1
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(for: indexPath.with(globalSection)) as FeedTextViewCell
-        let configuration = names[indexPath.item]
-        cell.configure(title: configuration.0, subtitle: configuration.1)
+        let cell = collectionView.dequeueReusableCell(for: indexPath.with(globalSection)) as FeedColorViewCell
+        cell.configure(height: height, color: color)
         return cell
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, headerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
-        return (true, nil)
+        return (false, nil)
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, footerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
         return (false, nil)
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
         let globalIndexPath = indexPath.with(globalSection)
         let header = collectionView.dequeueReusableSupplementaryView(.header, for: globalIndexPath) as FeedTextHeaderFooterViewCell
         header.configure(title: "S: \(globalIndexPath.section)")
         return header
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
         let globalIndexPath = indexPath.with(globalSection)
         let footer = collectionView.dequeueReusableSupplementaryView(.footer, for: globalIndexPath) as FeedTextHeaderFooterViewCell
         footer.configure(title: "FOOTER!")
         return footer
-    }
-}
-
-extension FeedDataSource: XCCollectionViewTileLayoutCustomizable {
-    func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
-        return isTileEnabled
     }
 }
