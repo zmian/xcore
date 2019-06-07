@@ -63,7 +63,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     }
 
     // Enhancements
-    private var isOnDemandLoadingEnabled: Bool = false
+    private var isOnDemandLoadingEnabled: Bool = true
     private var isAvoidReLayoutSizedSections: Bool = true
 
     private static let defaultHeight: CGFloat = 250
@@ -221,7 +221,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         let contentWidth: CGFloat = collectionView.bounds.width - horizontalMargin * 2.0
         let columnWidth = (contentWidth - (interColumnSpacing * CGFloat(numberOfColumns - 1))) / CGFloat(numberOfColumns)
         let endIndex = cachedSectionCount ?? collectionView.numberOfSections
-        
+
         var offset: CGPoint = .zero
         var itemCount: Int = 0
         var tileEnabled: Bool = false
@@ -380,6 +380,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
 
         var offsetsToReconstruct = numberOfColumns
+        var fullWidthHeight: CGFloat = 0.0
         // Finding latest offset per column
         for candidateSection in (0..<alreadySizedSectionIndex).reversed() {
             guard let (column, position) = columnAndPositionOfSection[candidateSection] else { continue }
@@ -388,6 +389,11 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             if columnYOffset[column] == 0.0 {
                 let sectionRect = sectionRects[candidateSection]
                 columnYOffset[column] = sectionRect.maxY
+
+                if !cachedDelegateAttributes[candidateSection].1 {
+                    fullWidthHeight = max(fullWidthHeight, sectionRect.maxY)
+                }
+
                 sectionIndexesByColumn[column] = Array<Int>(sectionIndexesByColumn[column].prefix(upTo: position + 1))
                 offsetsToReconstruct -= 1
             }
@@ -400,17 +406,17 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         for i in 0..<offsetsToReconstruct {
             sectionIndexesByColumn[numberOfColumns - 1 - i] = [Int]()
         }
+        // Selecting the max height between the full width section and the column
+        for i in 0..<numberOfColumns {
+            columnYOffset[i] = max(columnYOffset[i], fullWidthHeight)
+        }
         return columnYOffset
     }
 
     private func calculateBackgroundAttributes() {
         guard let collectionView = self.collectionView else { return }
         for section in 0..<collectionView.numberOfSections {
-            guard isTileEnabled(forSectionAt: section) else {
-                continue
-            }
-
-            guard !sectionRects[section].isEmpty else {
+            guard isTileEnabled(forSectionAt: section), !sectionRects[section].isEmpty else {
                 continue
             }
 
