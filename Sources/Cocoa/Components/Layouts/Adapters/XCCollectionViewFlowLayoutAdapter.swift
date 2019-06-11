@@ -70,6 +70,7 @@ extension XCCollectionViewFlowLayoutAdapter: UICollectionViewDelegateFlowLayout 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
 
         let attributes = composedDataSource.collectionView(collectionView, headerAttributesForSectionAt: section)
+        guard attributes.enabled else { return .zero }
         guard let size = attributes.size else {
             let availableWidth = self.availableWidth(for: section, in: collectionView)
             let source = composedDataSource.index(for: section)
@@ -85,6 +86,7 @@ extension XCCollectionViewFlowLayoutAdapter: UICollectionViewDelegateFlowLayout 
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         let attributes = composedDataSource.collectionView(collectionView, footerAttributesForSectionAt: section)
+        guard attributes.enabled else { return .zero }
         guard let size = attributes.size else {
             let availableWidth = self.availableWidth(for: section, in: collectionView)
             let source = composedDataSource.index(for: section)
