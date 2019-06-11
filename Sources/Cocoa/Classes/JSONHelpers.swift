@@ -65,7 +65,7 @@ public struct JSONHelpers {
         return parse(data)
     }
 
-    /// Parse NSData to JSON.
+    /// Parse Data to JSON.
     public static func parse(_ data: Data) -> Any? {
         return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
     }
@@ -98,7 +98,12 @@ public struct JSONHelpers {
             return nil
         }
 
-        let options: JSONSerialization.WritingOptions = prettyPrinted ? .prettyPrinted : []
+        var options: JSONSerialization.WritingOptions = .sortedKeys
+
+        if prettyPrinted {
+            options.insert(.prettyPrinted)
+        }
+
         return try? JSONSerialization.data(withJSONObject: value, options: options)
     }
 }

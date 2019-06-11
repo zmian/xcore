@@ -17,6 +17,7 @@
 		2FF93A0422A9EF83008E4AAA /* FeedColorViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF93A0322A9EF83008E4AAA /* FeedColorViewCell.swift */; };
 		2FF93A0622A9F20B008E4AAA /* FeedLightDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF93A0522A9F20B008E4AAA /* FeedLightDataSource.swift */; };
 		6804D60A2274052900BEB7E0 /* ArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6804D6092274052900BEB7E0 /* ArrayTests.swift */; };
+		68262E4622A320D00011431A /* FeatureFlagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68262E4522A320D00011431A /* FeatureFlagTests.swift */; };
 		6836600522987F1D00FDE45B /* ButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6836600222987F1D00FDE45B /* ButtonsViewController.swift */; };
 		6836600622987F1D00FDE45B /* ExampleDynamicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6836600322987F1D00FDE45B /* ExampleDynamicTableViewController.swift */; };
 		6836600722987F1D00FDE45B /* ExampleTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6836600422987F1D00FDE45B /* ExampleTextViewController.swift */; };
@@ -81,6 +82,7 @@
 		44A8F39EEE5884C0EAAD69D9 /* Pods_UnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		67CC55C468091B5137D790BB /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6804D6092274052900BEB7E0 /* ArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayTests.swift; sourceTree = "<group>"; };
+		68262E4522A320D00011431A /* FeatureFlagTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagTests.swift; sourceTree = "<group>"; };
 		6836600222987F1D00FDE45B /* ButtonsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsViewController.swift; sourceTree = "<group>"; };
 		6836600322987F1D00FDE45B /* ExampleDynamicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleDynamicTableViewController.swift; sourceTree = "<group>"; };
 		6836600422987F1D00FDE45B /* ExampleTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleTextViewController.swift; sourceTree = "<group>"; };
@@ -179,6 +181,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		68262E4422A320AE0011431A /* Currency */ = {
+			isa = PBXGroup;
+			children = (
+				684B1E90224C5167009F6197 /* CurrencySymbolsOptionsTests.swift */,
+				68376A16228C285700C7B819 /* CurrencyFormatterTests.swift */,
+			);
+			path = Currency;
+			sourceTree = "<group>";
+		};
 		6836600122987F1D00FDE45B /* Showcase */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,8 +213,8 @@
 		68376A15228C285700C7B819 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				684B1E90224C5167009F6197 /* CurrencySymbolsOptionsTests.swift */,
-				68376A16228C285700C7B819 /* CurrencyFormatterTests.swift */,
+				68262E4522A320D00011431A /* FeatureFlagTests.swift */,
+				68262E4422A320AE0011431A /* Currency */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -559,24 +570,11 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Haring/Haring.framework",
-				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/Xcore/Xcore.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Haring.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Xcore.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -600,6 +598,7 @@
 				68376A1C228C2C9500C7B819 /* SubviewLookupTests.swift in Sources */,
 				684B1E95224C5167009F6197 /* CaseIterableTests.swift in Sources */,
 				68CA631F224C76760012DF31 /* StringTests.swift in Sources */,
+				68262E4622A320D00011431A /* FeatureFlagTests.swift in Sources */,
 				684B1E97224C5167009F6197 /* CurrencySymbolsOptionsTests.swift in Sources */,
 				688C357C2273DED400CF3FCB /* DictionaryTests.swift in Sources */,
 				688B66612276890900AD0C1A /* XCConfigurationTests.swift in Sources */,
