@@ -256,7 +256,9 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             offset.y = columnYOffset[currentColumn]
 
             // Add vertical spacing
-            offset.y += offset.y > 0 ? verticalSpacing : 0
+            if itemCount > 0 {
+                offset.y += offset.y > 0 ? verticalSpacing : 0
+            }
 
             // Create item attributes
             if shouldCreateAttributes {
