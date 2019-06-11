@@ -30,7 +30,6 @@ final class FeedTextViewCell: XCCollectionViewCell {
     // MARK: - View Lifecycle
 
     override func commonInit() {
-        
         super.commonInit()
         contentView.backgroundColor = .white
         contentView.addSubview(titleLabel)

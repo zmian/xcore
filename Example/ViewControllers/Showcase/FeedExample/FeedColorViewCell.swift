@@ -12,25 +12,20 @@ import SnapKit
 final class FeedColorViewCell: XCCollectionViewCell {
     var heightConstraint: Constraint?
     var colorView = UIView()
-    var textView = UILabel()
     // MARK: - View Lifecycle
 
     func configure(height: CGFloat, color: UIColor) {
         contentView.backgroundColor = color
         heightConstraint?.update(offset: height)
-        textView.text = "This is Awesome!."
     }
 
     override func commonInit() {
         super.commonInit()
 
-        contentView.addSubview(textView)
-        textView.isMarkupEnabled = false
-        textView.font = UIFont(name: "Helvetica", size: 40.0)
-        textView.numberOfLines = 0
-        textView.snp.makeConstraints { make in
+        contentView.addSubview(colorView)
+        colorView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-//            heightConstraint = make.height.equalTo(0).priority(.defaultHigh).constraint
+            heightConstraint = make.height.equalTo(0).priority(.defaultHigh).constraint
         }
     }
 }
