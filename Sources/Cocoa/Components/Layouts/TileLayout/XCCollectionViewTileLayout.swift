@@ -66,7 +66,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     private var isOnDemandLoadingEnabled: Bool = true
     private var isAvoidReLayoutSizedSections: Bool = true
 
-    private static let defaultHeight: CGFloat = 250
+    private static let defaultHeight: CGFloat = 100
     private var cachedContentSize: CGSize = .zero
     private var shouldReloadAttributes = true
     private var shouldRecalculateSectionPosition = false
@@ -92,15 +92,14 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
     // On demand layout
     private var validHeightOffset: CGFloat = 0.0
-    private let onDemandHeightMultiplier: CGFloat = 2
     private var shouldTriggerOnDemandLayout: Bool {
         guard let collectionView = collectionView else { return false }
-        return (validHeightOffset - collectionView.contentOffset.y) < (collectionView.frame.size.height * onDemandHeightMultiplier)
+        return (validHeightOffset - collectionView.contentOffset.y) < collectionView.frame.size.height * 2.0
     }
 
     private var onDemandAheadOffset: CGFloat {
         guard let collectionView = collectionView else { return 0.0 }
-        return max(collectionView.contentOffset.y, validHeightOffset) + collectionView.frame.size.height * onDemandHeightMultiplier
+        return max(collectionView.contentOffset.y, validHeightOffset) + collectionView.frame.size.height * 3.0
     }
 
     open override class var layoutAttributesClass: AnyClass {
@@ -397,7 +396,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 sectionIndexesByColumn[column] = Array<Int>(sectionIndexesByColumn[column].prefix(upTo: position + 1))
                 offsetsToReconstruct -= 1
             }
-    
+
             guard offsetsToReconstruct > 0 else  {
                 break
             }
@@ -448,6 +447,13 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var elementsInRect = [Attributes]()
+
+        // Loading elements if the rect is lower than our loaded height
+        if rect.maxY > validHeightOffset {
+            validHeightOffset = rect.maxY
+            calculateAttributes(shouldCreateAttributes: false, heightLimit: validHeightOffset)
+        }
+
         for sectionsInColumn in sectionIndexesByColumn {
             guard let closestCandidateIndex = sectionsInColumn.binarySearch(
                 target: rect,
