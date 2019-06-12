@@ -197,7 +197,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
         let targetSection = originalAttributes.indexPath.section
         for attributes in attributesBySection[targetSection] {
-            if attributes.offsetInSection > storedAttributes.offsetInSection {
+            if attributes != storedAttributes, attributes.offsetInSection >= storedAttributes.offsetInSection {
                 attributes.offsetInSection += heightDifference
             }
         }
