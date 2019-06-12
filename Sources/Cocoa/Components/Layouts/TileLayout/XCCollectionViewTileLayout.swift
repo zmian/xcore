@@ -455,7 +455,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         var elementsInRect = [Attributes]()
 
         // Loading elements if the rect is lower than our loaded height
-        if rect.maxY > validHeightOffset {
+        if isOnDemandLoadingEnabled, rect.maxY > validHeightOffset {
             validHeightOffset = rect.maxY
             calculateAttributes(shouldCreateAttributes: false, heightLimit: validHeightOffset)
         }
