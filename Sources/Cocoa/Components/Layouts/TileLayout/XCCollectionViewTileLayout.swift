@@ -245,7 +245,10 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             cachedParameters = cachedDelegateAttributes.at(section)
             itemCount = cachedParameters?.itemCount ?? collectionView.numberOfItems(inSection: section)
             tileEnabled =  cachedParameters?.isTileEnabled ?? self.isTileEnabled(forSectionAt: section)
-            currentColumn = tileEnabled ? minColumn(columnYOffset).index : maxColumn(columnYOffset).index
+            if numberOfColumns > 1 {
+                currentColumn = tileEnabled ? minColumn(columnYOffset).index : maxColumn(columnYOffset).index
+            }
+
             itemWidth = tileEnabled ? columnWidth : collectionView.frame.size.width
             margin = tileEnabled ? horizontalMargin : 0
             verticalSpacing = cachedParameters?.verticalSpacing ?? self.verticalSpacing(betweenSectionAt: section - 1, and: section)
@@ -277,7 +280,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             offset.y += sectionRects[section].height
             if tileEnabled {
                 columnYOffset[currentColumn] = offset.y
-            } else{
+            } else {
                 for i in 0..<columnYOffset.count {
                     columnYOffset[i] = offset.y
                 }
