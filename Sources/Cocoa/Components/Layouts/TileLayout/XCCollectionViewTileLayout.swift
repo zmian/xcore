@@ -81,14 +81,14 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     private var cachedDelegateAttributes = [(Int, Bool, CGFloat)]()
     private var cachedSectionCount: Int?
 
+    // Avoid Recalculation Of Sizes when Reloading
+    private var oldLayoutAttributes = [IndexPath: Attributes]()
+    private var oldFooterAttributes = [Int: Attributes]()
+    private var oldHeaderAttributes = [Int: Attributes]()
+
     // Elements in rect calculation
     private var sectionRects = [CGRect]()
     private var sectionIndexesByColumn = [[Int]]()
-
-    // Already sized sections
-    private var columnAndPositionOfSection = [Int: (column: Int, index: Int)]()
-    private var alreadySizedSections = [Int: Bool]()
-    private var alreadySizedSectionIndex: Int = 0
 
     // On demand layout
     private var validHeightOffset: CGFloat = 0.0
@@ -128,13 +128,17 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             sectionRects.removeAll()
 
             attributesBySection.removeAll()
+
+            oldFooterAttributes = footerAttributes
+            oldHeaderAttributes = headerAttributes
+            oldLayoutAttributes = layoutAttributes
+
             layoutAttributes.removeAll()
             footerAttributes.removeAll()
             headerAttributes.removeAll()
+
             sectionBackgroundAttributes.removeAll()
             cachedDelegateAttributes.removeAll()
-            alreadySizedSections.removeAll()
-            alreadySizedSectionIndex = 0
 
             cachedContentSize = .zero
             cachedSectionCount = nil
@@ -200,9 +204,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         storedAttributes.frame.size = preferredAttributes.size
 
         let targetSection = originalAttributes.indexPath.section
-        var sectionAlreadySized = true
         for attributes in attributesBySection[targetSection] {
-            if attributes.isAutosizeEnabled { sectionAlreadySized = false }
             if attributes.offsetInSection > storedAttributes.offsetInSection {
                 attributes.offsetInSection += heightDifference
             }
@@ -210,9 +212,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
         sectionRects[targetSection].size.height += heightDifference
         shouldRecalculateSectionPosition = true
-
-        // Section sizing optimization
-        alreadySizedSections[targetSection] = sectionAlreadySized
     }
 
     private func calculateAttributes(shouldCreateAttributes: Bool = true, heightLimit: CGFloat? = nil) {
@@ -230,12 +229,14 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         var verticalSpacing: CGFloat = 0
         var cachedParameters: (itemCount: Int, isTileEnabled: Bool, verticalSpacing: CGFloat)?
 
-        var columnYOffset = constructColumns()
+        var columnYOffset = [CGFloat](repeating: 0, count: numberOfColumns)
 
-        var isUnsizedSectionPresent: Bool = false
-        let startIndex = isAvoidReLayoutSizedSections ? alreadySizedSectionIndex : 0
+        sectionIndexesByColumn.removeAll()
+        for _ in 0..<numberOfColumns {
+            sectionIndexesByColumn.append([Int]())
+        }
 
-        for section in startIndex..<endIndex {
+        for section in 0..<endIndex {
             cachedParameters = cachedDelegateAttributes.at(section)
             itemCount = cachedParameters?.itemCount ?? collectionView.numberOfItems(inSection: section)
             tileEnabled =  cachedParameters?.isTileEnabled ?? self.isTileEnabled(forSectionAt: section)
@@ -244,8 +245,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             margin = tileEnabled ? horizontalMargin : 0
             verticalSpacing = cachedParameters?.verticalSpacing ?? self.verticalSpacing(betweenSectionAt: section - 1, and: section)
 
-            // Add section to column
-            columnAndPositionOfSection[section] = (currentColumn, sectionIndexesByColumn[currentColumn].count)
             sectionIndexesByColumn[currentColumn].append(section)
            
             if cachedParameters == nil {
@@ -258,9 +257,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             if itemCount > 0 {
                 // Add vertical spacing
                 offset.y += offset.y > 0 ? verticalSpacing : 0
-            } else {
-                // The section is empty so it's already sized
-                alreadySizedSections[section] = true
             }
 
             // Create item attributes
@@ -282,12 +278,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 }
             }
 
-            // Not laying out already sized sections
-            if !isUnsizedSectionPresent, alreadySizedSections[section] == nil {
-                alreadySizedSectionIndex = section
-                isUnsizedSectionPresent = true
-            }
-
             // On demand layout, we check if every column has surpassed the limit and we stop
             if isOnDemandLoadingEnabled, let heightLimit = heightLimit, offset.y > heightLimit {
                 var shouldStop = true
@@ -303,7 +293,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             }
         }
 
-        cachedContentSize.height = self.maxColumn(self.columnsHeight).height
+        cachedContentSize = CGSize(width: collectionView.bounds.width, height: self.maxColumn(self.columnsHeight).height)
     }
 
     private func createAttributes(for section: Int, itemWidth: CGFloat, itemCount: Int) -> CGFloat {
@@ -316,11 +306,18 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
         let headerInfo = headerAttributes(in: section, width: itemWidth)
         let footerInfo = footerAttributes(in: section, width: itemWidth)
-        
+
         if headerInfo.enabled {
             let headerIndex = IndexPath(item: 0, section: section)
-            let attributes = headerAttributes[section] ?? Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: headerIndex).apply {
-                $0.size = CGSize(width: itemWidth, height: headerInfo.height ?? XCCollectionViewTileLayout.defaultHeight)
+            let attributes = Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: headerIndex).apply {
+                if let fixedHeight = headerInfo.height {
+                    $0.size = CGSize(width: itemWidth, height: fixedHeight)
+                } else if let oldAttribute = oldHeaderAttributes[section], oldAttribute.size.width == itemWidth {
+                    $0.size = oldAttribute.size
+                } else {
+                    $0.size = CGSize(width: itemWidth, height: XCCollectionViewTileLayout.defaultHeight)
+                }
+
                 $0.corners = isTileEnabled(forSectionAt: section) ? (.top, cornerRadius) : (.none, 0)
                 $0.isAutosizeEnabled = headerInfo.height == nil
                 $0.offsetInSection = offsetInSection
@@ -332,11 +329,19 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
 
         var indexPath = IndexPath(item: 0, section: section)
+        var fixedHeight: CGFloat?
         for item in 0..<itemCount {
             indexPath.item = item
-            let attributes = layoutAttributes[indexPath] ?? Attributes(forCellWith: indexPath).apply {
-                $0.size = CGSize(width: itemWidth, height: XCCollectionViewTileLayout.defaultHeight)
-                $0.isAutosizeEnabled = true
+            fixedHeight = height(forItemAt: indexPath, width: itemWidth)
+            let attributes = Attributes(forCellWith: indexPath).apply {
+                if let fixedHeight = fixedHeight {
+                    $0.size = CGSize(width: itemWidth, height: fixedHeight)
+                } else if let oldAttribute = oldLayoutAttributes[indexPath], oldAttribute.size.width == itemWidth {
+                    $0.size = oldAttribute.size
+                } else {
+                    $0.size = CGSize(width: itemWidth, height: XCCollectionViewTileLayout.defaultHeight)
+                }
+                $0.isAutosizeEnabled = fixedHeight == nil
                 if isTileEnabled(forSectionAt: section) {
                     var corners: UIRectCorner = .none
                     if !headerInfo.enabled, item == 0 {
@@ -359,8 +364,14 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
         if footerInfo.enabled {
             let footerIndex = IndexPath(item: 0, section: section)
-            let attributes = footerAttributes[section] ?? Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: footerIndex).apply {
-                $0.size = CGSize(width: itemWidth, height: footerInfo.height ?? XCCollectionViewTileLayout.defaultHeight)
+            let attributes = Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: footerIndex).apply {
+                if let fixedHeight = footerInfo.height {
+                    $0.size = CGSize(width: itemWidth, height: fixedHeight)
+                } else if let oldAttribute = oldFooterAttributes[section], oldAttribute.size.width == itemWidth {
+                    $0.size = oldAttribute.size
+                } else {
+                    $0.size = CGSize(width: itemWidth, height: XCCollectionViewTileLayout.defaultHeight)
+                }
                 $0.corners = isTileEnabled(forSectionAt: section) ? (.bottom, cornerRadius) : (.none, 0)
                 $0.isAutosizeEnabled = footerInfo.height == nil
                 $0.offsetInSection = offsetInSection
@@ -371,51 +382,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
         attributesBySection.append(sectionAttributes)
         return offsetInSection
-    }
-
-    private func constructColumns() -> [CGFloat] {
-        var columnYOffset = [CGFloat](repeating: 0, count: numberOfColumns)
-        var alreadyReconstructed = [Int]()
-        guard isAvoidReLayoutSizedSections, alreadySizedSectionIndex > 0 else {
-            sectionIndexesByColumn.removeAll()
-            for _ in 0..<numberOfColumns {
-                sectionIndexesByColumn.append([Int]())
-            }
-            return columnYOffset
-        }
-
-        var fullWidthHeight: CGFloat = 0.0
-        // Finding latest offset per column
-        for candidateSection in (0..<alreadySizedSectionIndex).reversed() {
-            guard let (column, position) = columnAndPositionOfSection[candidateSection] else { continue }
-
-            // Reconstructing offsets that are empty
-            let sectionRect = sectionRects[candidateSection]
-            if !alreadyReconstructed.contains(column) {
-                columnYOffset[column] = sectionRect.maxY
-
-                if !cachedDelegateAttributes[candidateSection].1 {
-                    fullWidthHeight = max(fullWidthHeight, sectionRect.maxY)
-                }
-
-                sectionIndexesByColumn[column] = Array<Int>(sectionIndexesByColumn[column].prefix(upTo: position + 1))
-                alreadyReconstructed.append(column)
-            }
-
-            guard alreadyReconstructed.count < numberOfColumns else  {
-                break
-            }
-        }
-
-        for i in 0..<numberOfColumns {
-            // Constructing missing columns
-            if !alreadyReconstructed.contains(i) {
-                sectionIndexesByColumn[i] = [Int]()
-            }
-            // Selecting the max height between the full width section and the column
-            columnYOffset[i] = max(columnYOffset[i], fullWidthHeight)
-        }
-        return columnYOffset
     }
 
     private func calculateBackgroundAttributes() {
@@ -437,7 +403,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     }
 
     open override var collectionViewContentSize: CGSize {
-        return CGSize(width: cachedContentSize.width + 0.001, height: cachedContentSize.height)
+        return CGSize(width: cachedContentSize.width, height: cachedContentSize.height)
     }
 
     private func yAxisIntersection(element1: CGRect, element2: CGRect) -> ComparisonResult {
@@ -585,8 +551,8 @@ extension XCCollectionViewTileLayout {
     }
 
     private func height(forItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat? {
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return .zero }
-        return delegate.collectionView(collectionView, layout: self, heightForItemAt: indexPath, width: width) ?? 0
+        guard let collectionView = self.collectionView, let delegate = self.delegate else { return nil }
+        return delegate.collectionView(collectionView, layout: self, heightForItemAt: indexPath, width: width)
     }
 
     private func headerAttributes(in section: Int, width: CGFloat) -> (enabled: Bool, height: CGFloat?) {
