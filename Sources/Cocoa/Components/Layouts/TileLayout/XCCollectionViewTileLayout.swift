@@ -210,6 +210,11 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             }
         }
 
+        guard let collectionView = collectionView else { return }
+        if numberOfColumns == 1, storedAttributes.frame.maxY < collectionView.contentOffset.y {
+            invalidationContext.contentOffsetAdjustment.y += heightDifference
+        }
+
         sectionRects[targetSection].size.height += heightDifference
         shouldRecalculateSectionPosition = true
     }
