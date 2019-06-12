@@ -63,8 +63,8 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     }
 
     // Enhancements
-    private var isOnDemandLoadingEnabled: Bool = true
-    private var isAvoidReLayoutSizedSections: Bool = true
+    private var isOnDemandLoadingEnabled: Bool = false
+    private var isAvoidReLayoutSizedSections: Bool = false
 
     private static let defaultHeight: CGFloat = 100
     private var cachedContentSize: CGSize = .zero
@@ -255,9 +255,12 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             offset.x = tileEnabled ? (itemWidth + interColumnSpacing) * CGFloat(currentColumn) + margin : 0
             offset.y = columnYOffset[currentColumn]
 
-            // Add vertical spacing
             if itemCount > 0 {
+                // Add vertical spacing
                 offset.y += offset.y > 0 ? verticalSpacing : 0
+            } else {
+                // The section is empty so it's already sized
+                alreadySizedSections[section] = true
             }
 
             // Create item attributes
@@ -372,6 +375,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
 
     private func constructColumns() -> [CGFloat] {
         var columnYOffset = [CGFloat](repeating: 0, count: numberOfColumns)
+        var alreadyReconstructed = [Int]()
         guard isAvoidReLayoutSizedSections, alreadySizedSectionIndex > 0 else {
             sectionIndexesByColumn.removeAll()
             for _ in 0..<numberOfColumns {
@@ -380,15 +384,14 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             return columnYOffset
         }
 
-        var offsetsToReconstruct = numberOfColumns
         var fullWidthHeight: CGFloat = 0.0
         // Finding latest offset per column
         for candidateSection in (0..<alreadySizedSectionIndex).reversed() {
             guard let (column, position) = columnAndPositionOfSection[candidateSection] else { continue }
 
             // Reconstructing offsets that are empty
-            if columnYOffset[column] == 0.0 {
-                let sectionRect = sectionRects[candidateSection]
+            let sectionRect = sectionRects[candidateSection]
+            if !alreadyReconstructed.contains(column) {
                 columnYOffset[column] = sectionRect.maxY
 
                 if !cachedDelegateAttributes[candidateSection].1 {
@@ -396,19 +399,20 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 }
 
                 sectionIndexesByColumn[column] = Array<Int>(sectionIndexesByColumn[column].prefix(upTo: position + 1))
-                offsetsToReconstruct -= 1
+                alreadyReconstructed.append(column)
             }
 
-            guard offsetsToReconstruct > 0 else  {
+            guard alreadyReconstructed.count < numberOfColumns else  {
                 break
             }
         }
-        // Reconstructing missing columns
-        for i in 0..<offsetsToReconstruct {
-            sectionIndexesByColumn[numberOfColumns - 1 - i] = [Int]()
-        }
-        // Selecting the max height between the full width section and the column
+
         for i in 0..<numberOfColumns {
+            // Constructing missing columns
+            if !alreadyReconstructed.contains(i) {
+                sectionIndexesByColumn[i] = [Int]()
+            }
+            // Selecting the max height between the full width section and the column
             columnYOffset[i] = max(columnYOffset[i], fullWidthHeight)
         }
         return columnYOffset
