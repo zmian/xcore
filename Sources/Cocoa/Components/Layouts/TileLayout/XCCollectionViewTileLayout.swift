@@ -63,6 +63,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     }
 
     public var estimatedItemHeight: CGFloat = 200
+    public var estimatedHeaderFooterHeight: CGFloat = 44
 
     // Enhancements
     private var isOnDemandLoadingEnabled: Bool = false
@@ -80,11 +81,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     private var sectionBackgroundAttributes = [Int: Attributes]()
     private var cachedDelegateAttributes = [(Int, Bool, CGFloat)]()
     private var cachedSectionCount: Int?
-
-    // Avoid Recalculation Of Sizes when Reloading
-    private var oldLayoutAttributes = [IndexPath: Attributes]()
-    private var oldFooterAttributes = [Int: Attributes]()
-    private var oldHeaderAttributes = [Int: Attributes]()
 
     // Elements in rect calculation
     private var sectionRects = [CGRect]()
@@ -128,10 +124,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             sectionRects.removeAll()
 
             attributesBySection.removeAll()
-
-            oldFooterAttributes = footerAttributes
-            oldHeaderAttributes = headerAttributes
-            oldLayoutAttributes = layoutAttributes
 
             layoutAttributes.removeAll()
             footerAttributes.removeAll()
@@ -208,11 +200,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             if attributes.offsetInSection > storedAttributes.offsetInSection {
                 attributes.offsetInSection += heightDifference
             }
-        }
-
-        guard let collectionView = collectionView else { return }
-        if numberOfColumns == 1, storedAttributes.frame.maxY < collectionView.contentOffset.y {
-            invalidationContext.contentOffsetAdjustment.y += heightDifference
         }
 
         sectionRects[targetSection].size.height += heightDifference
@@ -320,10 +307,8 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             let attributes = Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: headerIndex).apply {
                 if let fixedHeight = headerInfo.height {
                     $0.size = CGSize(width: itemWidth, height: fixedHeight)
-                } else if let oldAttribute = oldHeaderAttributes[section], oldAttribute.size.width == itemWidth {
-                    $0.size = oldAttribute.size
                 } else {
-                    $0.size = CGSize(width: itemWidth, height: estimatedItemHeight)
+                    $0.size = CGSize(width: itemWidth, height: estimatedHeaderHeight(in: section, width: itemWidth))
                 }
 
                 $0.corners = isTileEnabled(forSectionAt: section) ? (.top, cornerRadius) : (.none, 0)
@@ -344,11 +329,10 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             let attributes = Attributes(forCellWith: indexPath).apply {
                 if let fixedHeight = fixedHeight {
                     $0.size = CGSize(width: itemWidth, height: fixedHeight)
-                } else if let oldAttribute = oldLayoutAttributes[indexPath], oldAttribute.size.width == itemWidth {
-                    $0.size = oldAttribute.size
                 } else {
-                    $0.size = CGSize(width: itemWidth, height: estimatedItemHeight)
+                    $0.size = CGSize(width: itemWidth, height: estimatedHeight(forItemAt: indexPath, width: itemWidth))
                 }
+
                 $0.isAutosizeEnabled = fixedHeight == nil
                 if isTileEnabled(forSectionAt: section) {
                     var corners: UIRectCorner = .none
@@ -375,10 +359,8 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
             let attributes = Attributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: footerIndex).apply {
                 if let fixedHeight = footerInfo.height {
                     $0.size = CGSize(width: itemWidth, height: fixedHeight)
-                } else if let oldAttribute = oldFooterAttributes[section], oldAttribute.size.width == itemWidth {
-                    $0.size = oldAttribute.size
                 } else {
-                    $0.size = CGSize(width: itemWidth, height: estimatedItemHeight)
+                    $0.size = CGSize(width: itemWidth, height: estimatedFooterHeight(in: section, width: itemWidth))
                 }
                 $0.corners = isTileEnabled(forSectionAt: section) ? (.bottom, cornerRadius) : (.none, 0)
                 $0.isAutosizeEnabled = footerInfo.height == nil
@@ -571,6 +553,21 @@ extension XCCollectionViewTileLayout {
     private func footerAttributes(in section: Int, width: CGFloat) -> (enabled: Bool, height: CGFloat?) {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return (false, nil) }
         return delegate.collectionView(collectionView, layout: self, footerAttributesInSection: section, width: width)
+    }
+
+    private func estimatedHeight(forItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
+        guard let collectionView = self.collectionView, let delegate = self.delegate else { return estimatedItemHeight }
+        return delegate.collectionView(collectionView, layout: self, estimatedHeightForItemAt: indexPath, width: width)
+    }
+    
+    private func estimatedHeaderHeight(in section: Int, width: CGFloat) -> CGFloat {
+        guard let collectionView = self.collectionView, let delegate = self.delegate else { return estimatedHeaderFooterHeight }
+        return delegate.collectionView(collectionView, layout: self, estimatedHeaderHeightInSection: section, width: width)
+    }
+    
+    private func estimatedFooterHeight(in section: Int, width: CGFloat) -> CGFloat {
+        guard let collectionView = self.collectionView, let delegate = self.delegate else { return estimatedHeaderFooterHeight }
+        return delegate.collectionView(collectionView, layout: self, estimatedFooterHeightInSection: section, width: width)
     }
 
     private func verticalSpacing(betweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
