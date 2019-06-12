@@ -62,7 +62,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
     }
 
-    public var isAutosizingEnabled: Bool = true {
+    public var isAutosizingEnabled: Bool = false {
         didSet {
             shouldReloadAttributes = true
             invalidateLayout()
