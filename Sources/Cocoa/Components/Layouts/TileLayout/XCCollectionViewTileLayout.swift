@@ -62,11 +62,11 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
     }
 
+    public var estimatedItemHeight: CGFloat = 200
+
     // Enhancements
     private var isOnDemandLoadingEnabled: Bool = false
-    private var isAvoidReLayoutSizedSections: Bool = false
 
-    private static let defaultHeight: CGFloat = 100
     private var cachedContentSize: CGSize = .zero
     private var shouldReloadAttributes = true
     private var shouldRecalculateSectionPosition = false
@@ -315,7 +315,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 } else if let oldAttribute = oldHeaderAttributes[section], oldAttribute.size.width == itemWidth {
                     $0.size = oldAttribute.size
                 } else {
-                    $0.size = CGSize(width: itemWidth, height: XCCollectionViewTileLayout.defaultHeight)
+                    $0.size = CGSize(width: itemWidth, height: estimatedItemHeight)
                 }
 
                 $0.corners = isTileEnabled(forSectionAt: section) ? (.top, cornerRadius) : (.none, 0)
@@ -339,7 +339,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 } else if let oldAttribute = oldLayoutAttributes[indexPath], oldAttribute.size.width == itemWidth {
                     $0.size = oldAttribute.size
                 } else {
-                    $0.size = CGSize(width: itemWidth, height: XCCollectionViewTileLayout.defaultHeight)
+                    $0.size = CGSize(width: itemWidth, height: estimatedItemHeight)
                 }
                 $0.isAutosizeEnabled = fixedHeight == nil
                 if isTileEnabled(forSectionAt: section) {
@@ -370,7 +370,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 } else if let oldAttribute = oldFooterAttributes[section], oldAttribute.size.width == itemWidth {
                     $0.size = oldAttribute.size
                 } else {
-                    $0.size = CGSize(width: itemWidth, height: XCCollectionViewTileLayout.defaultHeight)
+                    $0.size = CGSize(width: itemWidth, height: estimatedItemHeight)
                 }
                 $0.corners = isTileEnabled(forSectionAt: section) ? (.bottom, cornerRadius) : (.none, 0)
                 $0.isAutosizeEnabled = footerInfo.height == nil
