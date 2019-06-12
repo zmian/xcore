@@ -20,8 +20,8 @@ final class XCDataSourceSizeCalculator: UICollectionView {
     static func estimatedHeaderSize(in dataSource: XCCollectionViewComposedDataSource, for section: Int, availableWidth: CGFloat) -> CGSize {
         let source = dataSource.index(for: section)
         let localPath = IndexPath(item: 0, section: source.localSection)
-        if let footerView = source.dataSource.collectionView(sharedInstance, viewForFooterInSectionAt: localPath) {
-            return footerView.sizeFitting(width: availableWidth)
+        if let headerView = source.dataSource.collectionView(sharedInstance, viewForHeaderInSectionAt: localPath) {
+            return headerView.sizeFitting(width: availableWidth)
         }
         return .zero
     }
