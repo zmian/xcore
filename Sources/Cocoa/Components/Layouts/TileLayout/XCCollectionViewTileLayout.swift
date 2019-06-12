@@ -62,6 +62,13 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
     }
 
+    public var isAutosizingEnabled: Bool = true {
+        didSet {
+            shouldReloadAttributes = true
+            invalidateLayout()
+        }
+    }
+
     public var estimatedItemHeight: CGFloat = 200
     public var estimatedHeaderFooterHeight: CGFloat = 44
 
@@ -312,7 +319,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 }
 
                 $0.corners = isTileEnabled(forSectionAt: section) ? (.top, cornerRadius) : (.none, 0)
-                $0.isAutosizeEnabled = headerInfo.height == nil
+                $0.isAutosizeEnabled = isAutosizingEnabled && headerInfo.height == nil
                 $0.offsetInSection = offsetInSection
             }
             
@@ -333,7 +340,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                     $0.size = CGSize(width: itemWidth, height: estimatedHeight(forItemAt: indexPath, width: itemWidth))
                 }
 
-                $0.isAutosizeEnabled = fixedHeight == nil
+                $0.isAutosizeEnabled = isAutosizingEnabled && fixedHeight == nil
                 if isTileEnabled(forSectionAt: section) {
                     var corners: UIRectCorner = .none
                     if !headerInfo.enabled, item == 0 {
@@ -363,7 +370,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                     $0.size = CGSize(width: itemWidth, height: estimatedFooterHeight(in: section, width: itemWidth))
                 }
                 $0.corners = isTileEnabled(forSectionAt: section) ? (.bottom, cornerRadius) : (.none, 0)
-                $0.isAutosizeEnabled = footerInfo.height == nil
+                $0.isAutosizeEnabled = isAutosizingEnabled && footerInfo.height == nil
                 $0.offsetInSection = offsetInSection
             }
             footerAttributes[section] = attributes
