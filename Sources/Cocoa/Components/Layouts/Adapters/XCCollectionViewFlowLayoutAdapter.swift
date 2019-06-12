@@ -58,12 +58,12 @@ extension XCCollectionViewFlowLayoutAdapter: UICollectionViewDelegateFlowLayout 
 
         guard let attributes = composedDataSource.collectionView(collectionView, itemAttributesAt: indexPath) else {
             let availableWidth = self.availableWidth(for: indexPath.section, in: collectionView)
-            let source = composedDataSource.index(for: indexPath.section)
-            let localIndexPath = IndexPath(item: indexPath.item, section: source.localSection)
-            let cell = source.dataSource.collectionView(sizeCollectionView, cellForItemAt: localIndexPath)
-            return cell.contentView.sizeFitting(width: availableWidth)
+            return XCDataSourceSizeCalculator.estimatedItemSize(
+                in: composedDataSource,
+                at: indexPath,
+                availableWidth: availableWidth
+            )
         }
-
         return attributes
     }
 
@@ -73,13 +73,11 @@ extension XCCollectionViewFlowLayoutAdapter: UICollectionViewDelegateFlowLayout 
         guard attributes.enabled else { return .zero }
         guard let size = attributes.size else {
             let availableWidth = self.availableWidth(for: section, in: collectionView)
-            let source = composedDataSource.index(for: section)
-            let localPath = IndexPath(item: 0, section: source.localSection)
-            if let headerView = source.dataSource.collectionView(sizeCollectionView, viewForHeaderInSectionAt: localPath) {
-                return headerView.sizeFitting(width: availableWidth)
-            } else {
-                return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.headerReferenceSize ?? 0
-            }
+            return XCDataSourceSizeCalculator.estimatedHeaderSize(
+                in: composedDataSource,
+                for: section,
+                availableWidth: availableWidth
+            )
         }
         return size
     }
@@ -89,13 +87,11 @@ extension XCCollectionViewFlowLayoutAdapter: UICollectionViewDelegateFlowLayout 
         guard attributes.enabled else { return .zero }
         guard let size = attributes.size else {
             let availableWidth = self.availableWidth(for: section, in: collectionView)
-            let source = composedDataSource.index(for: section)
-            let localPath = IndexPath(item: 0, section: source.localSection)
-            if let footerView = source.dataSource.collectionView(sizeCollectionView, viewForFooterInSectionAt: localPath) {
-                return footerView.sizeFitting(width: availableWidth)
-            } else {
-                return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize ?? 0
-            }
+            return XCDataSourceSizeCalculator.estimatedFooterSize(
+                in: composedDataSource,
+                for: section,
+                availableWidth: availableWidth
+            )
         }
         return size
     }
