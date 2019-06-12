@@ -39,11 +39,7 @@ extension XCCollectionViewTileLayoutCustomizable {
 open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdapter, XCCollectionViewDelegateTileLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat? {
         let attributes = composedDataSource.collectionView(collectionView, itemAttributesAt: indexPath)
-        if let height = attributes?.height {
-            return height
-        } else {
-            return XCDataSourceSizeCalculator.estimatedItemSize(in: composedDataSource, at: indexPath, availableWidth: width).height
-        }
+        return attributes?.height
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, headerAttributesInSection section: Int, width: CGFloat) -> (Bool, CGFloat?) {
