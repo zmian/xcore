@@ -171,7 +171,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
         }
 
         // On demand layout
-        if shouldTriggerOnDemandLayout {
+        if isOnDemandLoadingEnabled, shouldTriggerOnDemandLayout {
             validHeightOffset = onDemandAheadOffset
             shouldRecalculateSectionPosition = true
             return true
