@@ -9,11 +9,18 @@
 import Foundation
 
 final class FeedViewController: XCComposedCollectionViewController {
-    public override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
-        var sources = [XCCollectionViewDataSource]()
-        for _ in 0..<1000 {
+    private var sources = [FeedDataSource]()
+    private func recreateSources() {
+        sources.removeAll()
+        let sourcesCount = Int.random(in: 100...120)
+        for _ in 0..<sourcesCount {
             sources.append(FeedDataSource(collectionView: collectionView))
         }
+        composedDataSource.dataSources = dataSources(for: collectionView)
+        collectionView.reloadData()
+    }
+
+    public override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
         return sources
     }
 
@@ -23,7 +30,11 @@ final class FeedViewController: XCComposedCollectionViewController {
         collectionView.backgroundColor = .white
         collectionView.contentInset.top = view.safeAreaInsets.top
         let tileLayout = XCCollectionViewTileLayout()
-        tileLayout.numberOfColumns = 1
+        tileLayout.numberOfColumns = 3
         layout = .init(tileLayout)
+        Timer.scheduledTimer(withTimeInterval: 6.0, repeats: true) { [weak self] _ in
+            guard let strongSelf = self else { return }
+            strongSelf.recreateSources()
+        }
     }
 }

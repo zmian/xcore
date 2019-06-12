@@ -12,12 +12,14 @@ final class FeedDataSource: XCCollectionViewDataSource {
     static var isRandomEnabled = false
 
     lazy var names: [(String, String)] = {
-        let cellCount = Int.random(in: 1...3)
-        var array = [(String, String)]()
-        for _ in 0...cellCount {
-            array.append(("Feed Test", "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."))
+        let cellCount = Int.random(in: 0...1)
+        let textSize = Int.random(in: 1...3)
+        guard cellCount > 0 else {  return [(String, String)]() }
+        var detailText = ""
+        for _ in 0..<textSize {
+            detailText.append("Lore ipsum alalas dasfasfasf\n")
         }
-        return array
+        return [("Title Test", detailText)]
     }()
 
     var isTileEnabled = true
@@ -46,7 +48,7 @@ final class FeedDataSource: XCCollectionViewDataSource {
     }
 
     override func collectionView(_ collectionView: UICollectionView, headerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
-        return (false, nil)
+        return (true, nil)
     }
 
     override func collectionView(_ collectionView: UICollectionView, footerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
