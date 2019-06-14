@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class XCCollectionViewTileLayout: UICollectionViewLayout {
+open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     private let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
 
     public var numberOfColumns = 1 {
@@ -58,6 +58,13 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
     public var cornerRadius: CGFloat = 11 {
         didSet {
             shouldReloadAttributes = true
+            invalidateLayout()
+        }
+    }
+
+    open var shouldDimElements = false {
+        didSet {
+            guard oldValue != shouldDimElements else { return }
             invalidateLayout()
         }
     }
@@ -321,6 +328,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 $0.corners = isTileEnabled(forSectionAt: section) ? (.top, cornerRadius) : (.none, 0)
                 $0.isAutosizeEnabled = isAutosizingEnabled && headerInfo.height == nil
                 $0.offsetInSection = offsetInSection
+                $0.shouldDim = shouldDimElements
             }
             
             headerAttributes[section] = attributes
@@ -355,6 +363,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 }
                 
                 $0.offsetInSection = offsetInSection
+                $0.shouldDim = shouldDimElements
             }
             layoutAttributes[indexPath] = attributes
             offsetInSection += attributes.size.height
@@ -372,6 +381,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout {
                 $0.corners = isTileEnabled(forSectionAt: section) ? (.bottom, cornerRadius) : (.none, 0)
                 $0.isAutosizeEnabled = isAutosizingEnabled && footerInfo.height == nil
                 $0.offsetInSection = offsetInSection
+                $0.shouldDim = shouldDimElements
             }
             footerAttributes[section] = attributes
             offsetInSection += attributes.size.height

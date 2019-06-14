@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class XCCollectionViewFlowLayout: UICollectionViewFlowLayout {
+open class XCCollectionViewFlowLayout: UICollectionViewFlowLayout, DimmableLayout {
     open var shouldDimElements = false {
         didSet {
             guard oldValue != shouldDimElements else { return }

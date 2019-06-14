@@ -25,7 +25,7 @@
 import UIKit
 
 extension XCCollectionViewTileLayout {
-    final class Attributes: UICollectionViewLayoutAttributes {
+    final class Attributes: XCCollectionViewFlowLayout.Attributes {
         var corners: (corners: UIRectCorner, radius: CGFloat) = (.none, 0)
         var isAutosizeEnabled: Bool = false
         var offsetInSection: CGFloat = 0
