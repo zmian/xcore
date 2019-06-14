@@ -79,9 +79,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     public var estimatedItemHeight: CGFloat = 200
     public var estimatedHeaderFooterHeight: CGFloat = 44
 
-    // Enhancements
-    private var isOnDemandLoadingEnabled: Bool = false
-
     private var cachedContentSize: CGSize = .zero
     private var shouldReloadAttributes = true
     private var shouldRecalculateSectionPosition = false
@@ -99,18 +96,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     // Elements in rect calculation
     private var sectionRects = [CGRect]()
     private var sectionIndexesByColumn = [[Int]]()
-
-    // On demand layout
-    private var validHeightOffset: CGFloat = 0.0
-    private var shouldTriggerOnDemandLayout: Bool {
-        guard let collectionView = collectionView else { return false }
-        return (validHeightOffset - collectionView.contentOffset.y) < collectionView.frame.size.height * 2.0
-    }
-
-    private var onDemandAheadOffset: CGFloat {
-        guard let collectionView = collectionView else { return 0.0 }
-        return max(collectionView.contentOffset.y, validHeightOffset) + collectionView.frame.size.height * 3.0
-    }
 
     open override class var layoutAttributesClass: AnyClass {
         return Attributes.self
@@ -150,13 +135,12 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
             cachedSectionCount = nil
             calculateAttributes()
             calculateBackgroundAttributes()
-            validHeightOffset = onDemandAheadOffset
             return
         }
 
         guard !shouldRecalculateSectionPosition else {
             shouldRecalculateSectionPosition = false
-            calculateAttributes(shouldCreateAttributes: false, heightLimit: validHeightOffset)
+            calculateAttributes(shouldCreateAttributes: false)
             return
         }
     }
@@ -173,13 +157,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
         if newBounds.size != collectionView.bounds.size {
             shouldReloadAttributes = true
-            return true
-        }
-
-        // On demand layout
-        if isOnDemandLoadingEnabled, shouldTriggerOnDemandLayout {
-            validHeightOffset = onDemandAheadOffset
-            shouldRecalculateSectionPosition = true
             return true
         }
 
@@ -220,7 +197,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
         shouldRecalculateSectionPosition = true
     }
 
-    private func calculateAttributes(shouldCreateAttributes: Bool = true, heightLimit: CGFloat? = nil) {
+    private func calculateAttributes(shouldCreateAttributes: Bool = true) {
         guard let collectionView = self.collectionView else { return }
         let contentWidth: CGFloat = collectionView.bounds.width - horizontalMargin * 2.0
         let columnWidth = (contentWidth - (interColumnSpacing * CGFloat(numberOfColumns - 1))) / CGFloat(numberOfColumns)
@@ -286,23 +263,9 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                     columnYOffset[i] = offset.y
                 }
             }
-
-            // On demand layout, we check if every column has surpassed the limit and we stop
-            if isOnDemandLoadingEnabled, let heightLimit = heightLimit, offset.y > heightLimit {
-                var shouldStop = true
-                for columnHeight in columnYOffset {
-                    if columnHeight < heightLimit {
-                        shouldStop = false
-                    }
-                }
-                if shouldStop {
-                    cachedContentSize.height = max(cachedContentSize.height, self.maxColumn(self.columnsHeight).height)
-                    return
-                }
-            }
         }
 
-        cachedContentSize = CGSize(width: collectionView.bounds.width, height: self.maxColumn(self.columnsHeight).height)
+        cachedContentSize = CGSize(width: collectionView.bounds.width, height: self.maxColumn(self.columnsHeight).height + verticalSpacing)
     }
 
     private func createAttributes(for section: Int, itemWidth: CGFloat, itemCount: Int) -> CGFloat {
@@ -404,6 +367,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
             ).apply {
                 $0.corners = (.allCorners, cornerRadius)
                 $0.zIndex = minimumItemZIndex - 2
+                $0.shouldDim = shouldDimElements
             }
             sectionBackgroundAttributes[section] = attributes
         }
@@ -426,12 +390,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var elementsInRect = [Attributes]()
-
-        // Loading elements if the rect is lower than our loaded height
-        if isOnDemandLoadingEnabled, rect.maxY > validHeightOffset {
-            validHeightOffset = rect.maxY
-            calculateAttributes(shouldCreateAttributes: false, heightLimit: validHeightOffset)
-        }
 
         for sectionsInColumn in sectionIndexesByColumn {
             guard let closestCandidateIndex = sectionsInColumn.binarySearch(
@@ -535,19 +493,19 @@ extension XCCollectionViewTileLayout {
 
     private func getStoredAttribute(from originalAttributes: UICollectionViewLayoutAttributes) -> Attributes? {
         switch originalAttributes.representedElementCategory {
-        case .cell:
-            return layoutAttributes[originalAttributes.indexPath]
-        case .supplementaryView:
-            switch originalAttributes.representedElementKind {
-            case UICollectionView.elementKindSectionHeader:
-                return headerAttributes[originalAttributes.indexPath.section]
-            case UICollectionView.elementKindSectionFooter:
-                return footerAttributes[originalAttributes.indexPath.section]
+            case .cell:
+                return layoutAttributes[originalAttributes.indexPath]
+            case .supplementaryView:
+                switch originalAttributes.representedElementKind {
+                case UICollectionView.elementKindSectionHeader:
+                    return headerAttributes[originalAttributes.indexPath.section]
+                case UICollectionView.elementKindSectionFooter:
+                    return footerAttributes[originalAttributes.indexPath.section]
+                default:
+                    return nil
+                }
             default:
                 return nil
-            }
-        default:
-            return nil
         }
     }
 }

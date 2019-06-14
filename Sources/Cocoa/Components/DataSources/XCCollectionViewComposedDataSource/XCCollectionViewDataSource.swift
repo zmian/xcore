@@ -90,13 +90,10 @@ extension XCCollectionViewDataSource {
         }
 
         guard let reusableSupplementaryView = supplementaryView else {
-            #if DEBUG
-            fatalError(because: .dequeueFailed(for: "UICollectionReusableView", kind: kind.rawValue, indexPath: indexPath))
-            #else
-            // Return a dummy cell
+            // Return a dummy cell, this happens when collection view datasources change
+            // but collection view did not update section and item counts
             // In some cases collection view queries and crash if no valid view is found.
             return collectionView.dequeueReusableSupplementaryView(kind, for: indexPath)
-            #endif
         }
 
         return reusableSupplementaryView
