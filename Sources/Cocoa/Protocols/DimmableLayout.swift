@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol DimmableLayout: UICollectionViewLayout {
+public protocol DimmableLayout: UICollectionViewLayout {
     var shouldDimElements: Bool { get set }
 }
