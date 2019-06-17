@@ -24,10 +24,24 @@
 
 import UIKit
 
-// MARK: - XCCollectionView
+final public class XCCollectionView: UICollectionView {
+    private var _reloadDataPrecondition: () -> Bool = { true }
 
-final class XCCollectionView: UICollectionView {
-    override func reloadData() {
+    /// Checks a necessary condition for `reloadData`.
+    ///
+    /// This method is invoked before any `reloadData` calls are made. This must
+    /// return `true` for the reload data call to be made.
+    ///
+    /// The default value is `true`.
+    public func reloadDataPrecondition(_ condition: @autoclosure @escaping () -> Bool) {
+        _reloadDataPrecondition = condition
+    }
+
+    public override func reloadData() {
+        guard _reloadDataPrecondition() else {
+            return
+        }
+
         RunLoop.cancelPreviousPerformRequests(withTarget: self, selector: #selector(xcReloadData), object: nil)
         perform(#selector(xcReloadData), with: nil, afterDelay: 0.03)
     }
