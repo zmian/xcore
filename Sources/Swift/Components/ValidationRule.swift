@@ -168,7 +168,7 @@ extension ValidationRule where Input == String {
     /// - Returns: The validation rule.
     public static func regex(_ pattern: String) -> ValidationRule {
         return ValidationRule { input in
-            return input.isMatch(pattern)
+            input.isMatch(pattern)
         }
     }
 
@@ -191,7 +191,7 @@ extension ValidationRule where Input == String {
     /// - Returns: The validation rule.
     public static func length(min length: Int) -> ValidationRule {
         return ValidationRule { input in
-            return input.count >= length
+            input.count >= length
         }
     }
 
@@ -202,7 +202,7 @@ extension ValidationRule where Input == String {
     /// - Returns: The validation rule.
     public static func length(max length: Int) -> ValidationRule {
         return ValidationRule { input in
-            return input.count <= length
+            input.count <= length
         }
     }
 

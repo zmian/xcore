@@ -53,7 +53,9 @@ open class LabelTextView: UITextView {
 
     private func commonInit() {
         delegate = self
+        #if canImport(Haring)
         isAccessibilityRotorHintEnabled = true
+        #endif
         dataDetectorTypes = .all
         textContainerInset = .zero
         textContainer.lineFragmentPadding = 0
