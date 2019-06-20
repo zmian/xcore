@@ -166,21 +166,18 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     open override func shouldInvalidateLayout(
         forPreferredLayoutAttributes preferredAttributes: UICollectionViewLayoutAttributes,
         withOriginalAttributes originalAttributes: UICollectionViewLayoutAttributes
-    )
-        -> Bool {
+    ) -> Bool {
         let hasNewPreferredHeight = preferredAttributes.size.height.rounded() != originalAttributes.size.height.rounded()
         return hasNewPreferredHeight
     }
 
     open override func invalidationContext(forPreferredLayoutAttributes preferredAttributes: UICollectionViewLayoutAttributes, withOriginalAttributes originalAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutInvalidationContext {
-
         let invalidationContext = super.invalidationContext(forPreferredLayoutAttributes: preferredAttributes, withOriginalAttributes: originalAttributes)
         updateItemHeight(preferredAttributes: preferredAttributes, originalAttributes: originalAttributes, invalidationContext: invalidationContext)
         return invalidationContext
     }
 
     private func updateItemHeight(preferredAttributes: UICollectionViewLayoutAttributes, originalAttributes: UICollectionViewLayoutAttributes, invalidationContext: UICollectionViewLayoutInvalidationContext) {
-
         guard let storedAttributes = getStoredAttribute(from: originalAttributes) else { return }
         let heightDifference = preferredAttributes.size.height - storedAttributes.frame.size.height
         storedAttributes.isAutosizeEnabled = false
@@ -222,7 +219,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
         for section in 0..<endIndex {
             cachedParameters = cachedDelegateAttributes.at(section)
             itemCount = cachedParameters?.itemCount ?? collectionView.numberOfItems(inSection: section)
-            tileEnabled =  cachedParameters?.isTileEnabled ?? self.isTileEnabled(forSectionAt: section)
+            tileEnabled = cachedParameters?.isTileEnabled ?? self.isTileEnabled(forSectionAt: section)
             if numberOfColumns > 1 {
                 currentColumn = tileEnabled ? minColumn(columnYOffset).index : maxColumn(columnYOffset).index
             }
@@ -232,7 +229,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
             verticalSpacing = cachedParameters?.verticalSpacing ?? self.verticalSpacing(betweenSectionAt: section - 1, and: section)
 
             sectionIndexesByColumn[currentColumn].append(section)
-           
+
             if cachedParameters == nil {
                 cachedDelegateAttributes.append((itemCount, tileEnabled, verticalSpacing))
             }
@@ -293,7 +290,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                 $0.offsetInSection = offsetInSection
                 $0.shouldDim = shouldDimElements
             }
-            
+
             headerAttributes[section] = attributes
             offsetInSection += attributes.size.height
             sectionAttributes.append(attributes)
@@ -324,7 +321,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                 } else {
                     $0.corners = (.none, 0)
                 }
-                
+
                 $0.offsetInSection = offsetInSection
                 $0.shouldDim = shouldDimElements
             }
@@ -534,12 +531,12 @@ extension XCCollectionViewTileLayout {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return estimatedItemHeight }
         return delegate.collectionView(collectionView, layout: self, estimatedHeightForItemAt: indexPath, width: width)
     }
-    
+
     private func estimatedHeaderHeight(in section: Int, width: CGFloat) -> CGFloat {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return estimatedHeaderFooterHeight }
         return delegate.collectionView(collectionView, layout: self, estimatedHeaderHeightInSection: section, width: width)
     }
-    
+
     private func estimatedFooterHeight(in section: Int, width: CGFloat) -> CGFloat {
         guard let collectionView = self.collectionView, let delegate = self.delegate else { return estimatedHeaderFooterHeight }
         return delegate.collectionView(collectionView, layout: self, estimatedFooterHeightInSection: section, width: width)

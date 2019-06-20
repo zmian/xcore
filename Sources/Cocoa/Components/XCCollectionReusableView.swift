@@ -110,7 +110,7 @@ extension XCCollectionReusableView {
 
 extension XCCollectionReusableView {
     @objc open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        let attributes =  layoutAttributes
+        let attributes = layoutAttributes
         if let flowAttributes = attributes as? XCCollectionViewFlowLayout.Attributes {
             flowAttributes.alpha = (flowAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
             alpha = attributes.alpha

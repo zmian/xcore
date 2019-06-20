@@ -68,7 +68,6 @@ extension XCCollectionViewFlowLayoutAdapter: UICollectionViewDelegateFlowLayout 
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-
         let attributes = composedDataSource.collectionView(collectionView, headerAttributesForSectionAt: section)
         guard attributes.enabled else { return .zero }
         guard let size = attributes.size else {

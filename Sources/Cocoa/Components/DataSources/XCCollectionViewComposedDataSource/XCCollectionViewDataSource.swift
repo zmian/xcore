@@ -90,9 +90,9 @@ extension XCCollectionViewDataSource {
         }
 
         guard let reusableSupplementaryView = supplementaryView else {
-            // Return a dummy cell, this happens when collection view datasources change
-            // but collection view did not update section and item counts
-            // In some cases collection view queries and crash if no valid view is found.
+            // Return a dummy cell, this happens when collection view datasources change but
+            // collection view did not update section and item counts. In some cases,
+            // collection view queries and crash if no valid view is found.
             return collectionView.dequeueReusableSupplementaryView(kind, for: indexPath)
         }
 
@@ -135,8 +135,8 @@ extension XCCollectionViewDataSource {
 // MARK: - Frame
 
 extension XCCollectionViewDataSource {
-    /// Returns the frame of the first valid item in the datasource.
-    /// If there is no content to show returns `nil`.
+    /// Returns the frame of the first valid item in the datasource. If there is no
+    /// content to show returns `nil`.
     open var frameInCollectionView: CGRect? {
         guard let collectionView = collectionView else { return nil }
         var attributes: UICollectionViewLayoutAttributes?
