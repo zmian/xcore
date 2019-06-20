@@ -59,23 +59,54 @@ open class XCCollectionViewCell: UICollectionViewCell {
     open var resistsDimming: Bool {
         return false
     }
+
+    /// The default value is `.none, 0`.
+    private var corners: (corners: UIRectCorner, radius: CGFloat) = (.none, 0) {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.roundCorners(corners.corners, radius: corners.radius)
+    }
 }
 
-// MARK: - Dim
+// MARK: Custom Layout - Dim - Flex Layout
 
 extension XCCollectionViewCell {
     @objc open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        guard let attributes = super.preferredLayoutAttributesFitting(layoutAttributes) as? XCCollectionViewFlowLayout.Attributes else {
-            return super.preferredLayoutAttributesFitting(layoutAttributes)
+        let attributes = layoutAttributes
+        if let flowAttributes = attributes as? XCCollectionViewFlowLayout.Attributes {
+            flowAttributes.alpha = (flowAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
+            alpha = flowAttributes.alpha
         }
-        attributes.alpha = (attributes.shouldDim && !resistsDimming) ? 0.5 : 1
-        alpha = attributes.alpha
+
+        if contentView.bounds.width != layoutAttributes.size.width {
+            contentView.bounds.size.width = layoutAttributes.size.width
+        }
+
+        if let tileAttributes = attributes as? XCCollectionViewTileLayout.Attributes, tileAttributes.isAutosizeEnabled {
+            let size = super.systemLayoutSizeFitting(
+                attributes.size,
+                withHorizontalFittingPriority: .required,
+                verticalFittingPriority: .fittingSizeLevel
+            )
+            attributes.frame.size = size
+        }
         return attributes
     }
 
     @objc open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
-        guard let layoutAttributes = layoutAttributes as? XCCollectionViewFlowLayout.Attributes else { return }
-        alpha = (layoutAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
+
+        if let layoutAttributes = layoutAttributes as? XCCollectionViewFlowLayout.Attributes {
+            alpha = (layoutAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
+        }
+
+        if let tileAttributes = layoutAttributes as? XCCollectionViewTileLayout.Attributes {
+            corners = tileAttributes.corners
+        }
     }
 }
