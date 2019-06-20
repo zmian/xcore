@@ -30,16 +30,17 @@ open class XCComposedCollectionViewController: UIViewController {
     /// The layout object `UICollectionView` uses to render itself.
     ///
     /// The layout can be changed to any subclass of `UICollectionViewLayout`.
-    /// However, the layout must be set before accessing `collectionView` to ensure
-    /// that it is applied correctly.
     ///
     /// The default value is `XCCollectionViewFlowLayout`.
-    open var layout: UICollectionViewLayout = {
-        XCCollectionViewFlowLayout()
-    }()
+    public var layout: XCComposedCollectionViewLayout = .init(XCCollectionViewFlowLayout()) {
+        didSet {
+            collectionView.collectionViewLayout = layout.collectionViewLayout
+            layout.adapter.attach(to: self)
+        }
+    }
 
     open lazy var collectionView: UICollectionView = {
-        XCCollectionView(frame: .zero, collectionViewLayout: self.layout)
+        XCCollectionView(frame: .zero, collectionViewLayout: layout.collectionViewLayout)
     }()
 
     /// The distance that the collectionView is inset from the enclosing view.
@@ -47,6 +48,7 @@ open class XCComposedCollectionViewController: UIViewController {
     /// The default value is `0`.
     @objc open dynamic var contentInset: UIEdgeInsets = 0 {
         didSet {
+            guard oldValue != contentInset else { return }
             collectionViewConstraints.update(from: contentInset)
         }
     }
@@ -60,11 +62,10 @@ open class XCComposedCollectionViewController: UIViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-
         collectionView.apply {
             composedDataSource.dataSources = dataSources(for: $0)
             $0.dataSource = composedDataSource
-            $0.delegate = self
+            layout.adapter.attach(to: self)
 
             view.addSubview($0)
             collectionViewConstraints = NSLayoutConstraint.Edges(
@@ -85,60 +86,6 @@ open class XCComposedCollectionViewController: UIViewController {
         #if DEBUG
         Console.info("\(self) deinit")
         #endif
-    }
-}
-
-// MARK: - UICollectionViewDelegate
-
-extension XCComposedCollectionViewController {
-    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        composedDataSource.collectionView(collectionView, didSelectItemAt: indexPath)
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension XCComposedCollectionViewController: UICollectionViewDelegateFlowLayout {
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return composedDataSource.collectionView(collectionView, sizeForItemAt: indexPath)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return composedDataSource.collectionView(collectionView, insetForSectionAt: section)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, minimumLineSpacingForSectionAt: section)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return composedDataSource.collectionView(collectionView, minimumInteritemSpacingForSectionAt: section)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return composedDataSource.collectionView(collectionView, sizeForHeaderInSection: section)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return composedDataSource.collectionView(collectionView, sizeForFooterInSection: section)
-    }
-
-    // MARK: - Lifecycle
-
-    open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        return composedDataSource.collectionView(collectionView, willDisplay: cell, forItemAt: indexPath)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-        return composedDataSource.collectionView(collectionView, willDisplaySupplementaryView: view, forElementKind: elementKind, at: indexPath)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        return composedDataSource.collectionView(collectionView, didEndDisplaying: cell, forItemAt: indexPath)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
-        return composedDataSource.collectionView(collectionView, didEndDisplayingSupplementaryView: view, forElementOfKind: elementKind, at: indexPath)
     }
 }
 
@@ -192,5 +139,24 @@ extension XCComposedCollectionViewController {
             )
         )
         collectionView.setContentOffset(newOffset, animated: animated)
+    }
+}
+
+// MARK: - UICollectionViewDelegate calls forwarded from XCComposedCollectionViewLayoutAdapter
+
+extension XCComposedCollectionViewController {
+    @objc open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    }
+
+    @objc open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    }
+
+    @objc open func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+    }
+
+    @objc open func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    }
+
+    @objc open func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
     }
 }
