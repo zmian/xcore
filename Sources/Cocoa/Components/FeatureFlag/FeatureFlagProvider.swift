@@ -25,5 +25,5 @@
 import Foundation
 
 public protocol FeatureFlagProvider {
-    func value(forKey key: FeatureFlagKey) -> FeatureFlagValue?
+    func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value?
 }
