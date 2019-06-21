@@ -55,7 +55,7 @@ extension FeatureFlag.Value {
     }
 
     public var json: Any? {
-        guard let jsonString = string, !jsonString.isEmpty else {
+        guard let jsonString = string, !jsonString.isBlank else {
             return nil
         }
 
