@@ -156,7 +156,7 @@ extension XCCollectionViewComposedDataSource {
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
         return dataSource.collectionView(collectionView, viewForHeaderInSectionAt: localIndexPath)
     }
-    
+
     open override func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
         let (dataSource, localSection) = dataSourceIndex[indexPath.section]
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
