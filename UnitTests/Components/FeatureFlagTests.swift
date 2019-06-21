@@ -93,36 +93,36 @@ private struct CustomFeatureFlag: FeatureFlagProvider {
         ["red", "blue", "green"]
         """
 
-        storage[FeatureFlag.validBool.rawValue] = true
-        storage[FeatureFlag.invalidBool.rawValue] = "no"
+        storage[FeatureFlagItem.validBool.rawValue] = true
+        storage[FeatureFlagItem.invalidBool.rawValue] = "no"
 
-        storage[FeatureFlag.validInt.rawValue] = 1213
-        storage[FeatureFlag.invalidInt.rawValue] = "two"
+        storage[FeatureFlagItem.validInt.rawValue] = 1213
+        storage[FeatureFlagItem.invalidInt.rawValue] = "two"
 
-        storage[FeatureFlag.validFloat.rawValue] = 20.34
-        storage[FeatureFlag.invalidFloat.rawValue] = "two"
+        storage[FeatureFlagItem.validFloat.rawValue] = 20.34
+        storage[FeatureFlagItem.invalidFloat.rawValue] = "two"
 
-        storage[FeatureFlag.validDouble.rawValue] = 100.76
-        storage[FeatureFlag.invalidDouble.rawValue] = "two"
+        storage[FeatureFlagItem.validDouble.rawValue] = 100.76
+        storage[FeatureFlagItem.invalidDouble.rawValue] = "two"
 
-        storage[FeatureFlag.validUrl.rawValue] = "https://swift.org/"
-        storage[FeatureFlag.invalidUrl.rawValue] = "hello world"
+        storage[FeatureFlagItem.validUrl.rawValue] = "https://swift.org/"
+        storage[FeatureFlagItem.invalidUrl.rawValue] = "hello world"
 
-        storage[FeatureFlag.validString.rawValue] = "dark"
-        storage[FeatureFlag.invalidString.rawValue] = 200
+        storage[FeatureFlagItem.validString.rawValue] = "dark"
+        storage[FeatureFlagItem.invalidString.rawValue] = 200
 
-        storage[FeatureFlag.validArray.rawValue] = arraryExample
-        storage[FeatureFlag.invalidArray.rawValue] = dictionaryExample
+        storage[FeatureFlagItem.validArray.rawValue] = arraryExample
+        storage[FeatureFlagItem.invalidArray.rawValue] = dictionaryExample
 
-        storage[FeatureFlag.validDictionary.rawValue] = dictionaryExample
-        storage[FeatureFlag.invalidDictionary.rawValue] = ""
+        storage[FeatureFlagItem.validDictionary.rawValue] = dictionaryExample
+        storage[FeatureFlagItem.invalidDictionary.rawValue] = ""
 
-        storage[FeatureFlag.validRawRepresentable.rawValue] = "dark"
-        storage[FeatureFlag.invalidRawRepresentable1.rawValue] = "not dark"
-        storage[FeatureFlag.invalidRawRepresentable2.rawValue] = 232
+        storage[FeatureFlagItem.validRawRepresentable.rawValue] = "dark"
+        storage[FeatureFlagItem.invalidRawRepresentable1.rawValue] = "not dark"
+        storage[FeatureFlagItem.invalidRawRepresentable2.rawValue] = 232
     }
 
-    func value(forKey key: FeatureFlagKey) -> FeatureFlagValue? {
+    func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value? {
         let value = storage[key.rawValue]
 
         return .init(
@@ -135,7 +135,7 @@ private struct CustomFeatureFlag: FeatureFlagProvider {
 
 // MARK: - FeatureFlag
 
-private enum FeatureFlag: String {
+private enum FeatureFlagItem: String {
     case validBool
     case invalidBool
 
@@ -165,10 +165,10 @@ private enum FeatureFlag: String {
     case invalidRawRepresentable2
 }
 
-// MARK: - FeatureFlagKey
+// MARK: - FeatureFlag.Key
 
-extension FeatureFlagKey {
-    fileprivate var storageValue: FeatureFlagValue? {
+extension FeatureFlag.Key {
+    fileprivate var storageValue: FeatureFlag.Value? {
         return CustomFeatureFlag().value(forKey: self)
     }
 
@@ -184,8 +184,8 @@ extension FeatureFlagKey {
 // MARK: - TestFeature
 
 private enum TestFeature {
-    static func flag(_ key: FeatureFlag) -> FeatureFlagKey {
-        return FeatureFlagKey(rawValue: key.rawValue)
+    static func flag(_ key: FeatureFlagItem) -> FeatureFlag.Key {
+        return .init(rawValue: key.rawValue)
     }
 }
 

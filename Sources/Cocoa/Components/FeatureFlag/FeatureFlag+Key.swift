@@ -1,5 +1,5 @@
 //
-// FeatureFlagKey.swift
+// FeatureFlag+Key.swift
 //
 // Copyright © 2019 Xcore
 //
@@ -24,36 +24,44 @@
 
 import Foundation
 
-public struct FeatureFlagKey: RawRepresentable, Equatable {
-    public let rawValue: String
+// MARK: - Namespace
 
-    /// A convenience initializer for `.strings` file in the `.main` bundle.
-    ///
-    /// - Parameter rawValue: The name of the `.strings` file.
-    public init(rawValue: String) {
-        self.rawValue = rawValue
+public enum FeatureFlag { }
+
+// MARK: - Key
+
+extension FeatureFlag {
+    public struct Key: RawRepresentable, Equatable {
+        public let rawValue: String
+
+        /// A convenience initializer for `.strings` file in the `.main` bundle.
+        ///
+        /// - Parameter rawValue: The name of the `.strings` file.
+        public init(rawValue: String) {
+            self.rawValue = rawValue
+        }
     }
 }
 
-extension FeatureFlagKey: ExpressibleByStringLiteral {
+extension FeatureFlag.Key: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
         self.init(rawValue: value)
     }
 }
 
-extension FeatureFlagKey: CustomStringConvertible {
+extension FeatureFlag.Key: CustomStringConvertible {
     public var description: String {
         return rawValue
     }
 }
 
-extension FeatureFlagKey: CustomPlaygroundDisplayConvertible {
+extension FeatureFlag.Key: CustomPlaygroundDisplayConvertible {
     public var playgroundDescription: Any {
         return rawValue
     }
 }
 
-extension FeatureFlagKey: Hashable {
+extension FeatureFlag.Key: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(rawValue)
     }

@@ -259,3 +259,50 @@ extension NotificationCenter.Event {
         }
     }
 }
+
+// MARK: NotificationObject
+
+public protocol NotificationObject {
+    var name: Notification.Name { get }
+    var object: Any? { get }
+    var userInfo: [AnyHashable: Any]? { get }
+}
+
+extension NotificationObject {
+    public var object: Any? {
+        return nil
+    }
+
+    public var userInfo: [AnyHashable: Any]? {
+        return nil
+    }
+}
+
+extension NotificationCenter {
+    public static func post(_ type: NotificationObject, delayInterval: TimeInterval = 0) {
+        NotificationCenter.post(
+            type.name,
+            object: type.object,
+            userInfo: type.userInfo,
+            delayInterval: delayInterval
+        )
+    }
+}
+
+extension NotificationCenter.Event {
+    @discardableResult
+    public func observe(
+        _ type: NotificationObject,
+        _ callback: @escaping (_ notification: Notification) -> Void
+    ) -> NSObjectProtocol {
+        return NotificationCenter.default.observe(type.name, callback)
+    }
+
+    @discardableResult
+    public func observe(
+        _ type: NotificationObject,
+        _ callback: @escaping () -> Void
+    ) -> NSObjectProtocol {
+        return NotificationCenter.default.observe(type.name, callback)
+    }
+}

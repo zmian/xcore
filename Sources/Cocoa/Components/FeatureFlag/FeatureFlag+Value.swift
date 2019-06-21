@@ -1,5 +1,5 @@
 //
-// FeatureFlagValue.swift
+// FeatureFlag+Value.swift
 //
 // Copyright © 2019 Xcore
 //
@@ -24,23 +24,25 @@
 
 import Foundation
 
-public struct FeatureFlagValue {
-    public let string: String?
-    public let number: NSNumber?
-    public let bool: Bool
+extension FeatureFlag {
+    public struct Value {
+        public let string: String?
+        public let number: NSNumber?
+        public let bool: Bool
 
-    public init(
-        string: String?,
-        number: NSNumber?,
-        bool: Bool
-    ) {
-        self.string = string
-        self.number = number
-        self.bool = bool
+        public init(
+            string: String?,
+            number: NSNumber?,
+            bool: Bool
+        ) {
+            self.string = string
+            self.number = number
+            self.bool = bool
+        }
     }
 }
 
-extension FeatureFlagValue {
+extension FeatureFlag.Value {
     public var url: URL? {
         guard
             let string = string,
@@ -69,7 +71,7 @@ extension FeatureFlagValue {
     }
 }
 
-extension FeatureFlagValue {
+extension FeatureFlag.Value {
     public func get<T>() -> T? {
         switch T.self {
             case is String.Type, is Optional<String>.Type:
