@@ -34,7 +34,7 @@ import UIKit
         set { layer.borderWidth = newValue }
     }
 
-    @IBInspectable @objc open dynamic var borderColor: UIColor {
+    @IBInspectable open dynamic var borderColor: UIColor {
         get { return layer.borderColor != nil ? UIColor(cgColor: layer.borderColor!) : .black }
         set { layer.borderColor = newValue.cgColor }
     }

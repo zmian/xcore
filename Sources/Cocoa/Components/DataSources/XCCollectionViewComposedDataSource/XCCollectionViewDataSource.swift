@@ -102,7 +102,7 @@ extension XCCollectionViewDataSource {
     open func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
         return nil
     }
-    
+
     open func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
         return nil
     }

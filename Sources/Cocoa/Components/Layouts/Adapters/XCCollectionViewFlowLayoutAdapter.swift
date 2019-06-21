@@ -55,7 +55,6 @@ open class XCCollectionViewFlowLayoutAdapter: XCComposedCollectionViewLayoutAdap
 
 extension XCCollectionViewFlowLayoutAdapter: UICollectionViewDelegateFlowLayout {
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
         guard let attributes = composedDataSource.collectionView(collectionView, itemAttributesAt: indexPath) else {
             let availableWidth = self.availableWidth(for: indexPath.section, in: collectionView)
             return XCDataSourceSizeCalculator.estimatedItemSize(
@@ -116,7 +115,7 @@ extension XCCollectionViewFlowLayoutAdapter: UICollectionViewDelegateFlowLayout 
             return (collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? 0
         }
 
-        return custom.minimumInteritemSpacing(collectionViewLayout,  for: source.localSection)
+        return custom.minimumInteritemSpacing(collectionViewLayout, for: source.localSection)
     }
 }
 
@@ -152,7 +151,7 @@ private final class XCFakeCollectionView: UICollectionView {
     override func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
         return CollectionViewDequeueCache.shared.dequeueCell(identifier: identifier)
     }
-    
+
     override func dequeueReusableSupplementaryView(ofKind elementKind: String, withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionReusableView {
         return CollectionViewDequeueCache.shared.dequeueSupplementaryView(kind: elementKind, identifier: identifier)
     }
