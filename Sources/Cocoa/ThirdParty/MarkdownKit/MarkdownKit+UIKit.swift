@@ -396,6 +396,7 @@ extension UILabel {
             swizzledSelector: #selector(UILabel.swizzled_textColor(_:))
         )
         #endif
+        swizzle_drawText_runOnceSwapSelectors()
     }
 }
 
