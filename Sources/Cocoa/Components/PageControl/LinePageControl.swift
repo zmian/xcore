@@ -71,23 +71,23 @@ final public class LinePageControl: XCView {
     /// The default value is `0`.
     public var numberOfPages: Int = 0 {
         didSet {
-            currentPage = 0
+            _currentPage = 0
             invalidateIntrinsicContentSize()
             setNeedsLayout()
             layoutIfNeeded()
         }
     }
 
+    private var _currentPage: Int = 0
     /// The current page, shown by the receiver as a active dot.
     ///
     /// The property value is an integer specifying the current page shown minus
     /// one; thus a value of zero (the default) indicates the first page. A page
     /// control shows the current page as a white dot. Values outside the possible
     /// range are pinned to either `0` or `numberOfPages` minus `1`.
-    public var currentPage: Int = 0 {
-        didSet {
-            progressConstraint?.constant = maskInset
-        }
+    public var currentPage: Int {
+        get { return _currentPage }
+        set { setCurrentPage(newValue, animated: true) }
     }
 
     public override func commonInit() {
@@ -121,7 +121,8 @@ final public class LinePageControl: XCView {
     }
 
     public func setCurrentPage(_ page: Int, animated: Bool) {
-        currentPage = page
+        _currentPage = page
+        progressConstraint?.constant = maskInset
 
         guard animated else { return }
 
