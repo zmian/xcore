@@ -25,13 +25,30 @@
 import UIKit
 
 extension UILabel {
-    open func setLineSpacing(_ spacing: CGFloat, text: String? = nil) {
-        guard let text = text ?? self.text else { return }
-        attributedText = NSMutableAttributedString(string: text).setLineSpacing(spacing)
+    private struct AssociatedKey {
+        static var contentInset = "contentInset"
+    }
+
+    /// The default value is `0`.
+    open var contentInset: UIEdgeInsets {
+        get { return associatedObject(&AssociatedKey.contentInset, default: 0) }
+        set {
+            setAssociatedObject(&AssociatedKey.contentInset, value: newValue)
+            setNeedsDisplay()
+        }
+    }
+
+    @objc private func swizzled_drawText(in rect: CGRect) {
+        self.swizzled_drawText(in: rect.inset(by: contentInset))
     }
 }
 
 extension UILabel {
+    open func setLineSpacing(_ spacing: CGFloat, text: String? = nil) {
+        guard let text = text ?? self.text else { return }
+        attributedText = NSMutableAttributedString(string: text).setLineSpacing(spacing)
+    }
+
     /// A height of the label.
     open var boundingHeight: CGFloat {
         guard let font = font else {
@@ -40,11 +57,9 @@ extension UILabel {
 
         return "Sphinx".size(withFont: font).height * CGFloat(numberOfLines)
     }
-}
 
-// MARK: - Underline
+    // MARK: - Underline
 
-extension UILabel {
     @objc open func underline() {
         if let attributedText = attributedText {
             self.attributedText = NSMutableAttributedString(attributedString: attributedText).underline(attributedText.string)
@@ -127,5 +142,17 @@ extension NSAttributedString {
         context.minimumScaleFactor = fauxLabel.minimumScaleFactor
         _ = boundingRect(with: fauxLabel.frame.size, options: .usesLineFragmentOrigin, context: context)
         return context.actualScaleFactor
+    }
+}
+
+// MARK: Swizzle
+
+extension UILabel {
+    static func swizzle_drawText_runOnceSwapSelectors() {
+        swizzle(
+            UILabel.self,
+            originalSelector: #selector(UILabel.drawText(in:)),
+            swizzledSelector: #selector(UILabel.swizzled_drawText(in:))
+        )
     }
 }
