@@ -34,8 +34,21 @@ extension UILabel {
         get { return associatedObject(&AssociatedKey.contentInset, default: 0) }
         set {
             setAssociatedObject(&AssociatedKey.contentInset, value: newValue)
+            invalidateIntrinsicContentSize()
             setNeedsDisplay()
         }
+    }
+
+    open override var intrinsicContentSize: CGSize {
+        var size = super.intrinsicContentSize
+        size.width += contentInset.horizontal
+        size.height += contentInset.vertical
+        return size
+    }
+
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        preferredMaxLayoutWidth = frame.width - contentInset.horizontal
     }
 
     @objc private func swizzled_drawText(in rect: CGRect) {
