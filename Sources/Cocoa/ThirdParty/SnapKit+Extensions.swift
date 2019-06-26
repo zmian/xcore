@@ -25,6 +25,7 @@
 import UIKit
 
 #if canImport(SnapKit)
+// swiftlint:disable:next import_snapkit
 import SnapKit
 
 extension Array where Element: UIView {
