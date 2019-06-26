@@ -25,6 +25,7 @@
 import Foundation
 
 #if canImport(PromiseKit)
+// swiftlint:disable:next import_promiseKit
 import PromiseKit
 
 extension Promise {
