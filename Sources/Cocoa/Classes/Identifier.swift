@@ -40,7 +40,7 @@ extension Identifier: ExpressibleByStringLiteral {
 
 extension Identifier: CustomStringConvertible {
     public var description: String {
-        return rawValue.description
+        return rawValue
     }
 }
 
