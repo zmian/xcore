@@ -52,6 +52,6 @@ extension WKUserContentController {
     }
 
     @objc private func swizzled_add(_ scriptMessageHandler: WKScriptMessageHandler, name: String) {
-        self.swizzled_add(WKWeakDelegate(scriptMessageHandler), name: name)
+        swizzled_add(WKWeakDelegate(scriptMessageHandler), name: name)
     }
 }

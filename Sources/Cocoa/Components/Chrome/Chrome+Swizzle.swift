@@ -53,7 +53,7 @@ extension UIViewController {
     }
 
     @objc private func swizzled_viewWillAppear(_ animated: Bool) {
-        self.swizzled_viewWillAppear(animated)
+        swizzled_viewWillAppear(animated)
 
         if !didAddFauxChrome, navigationController is NavigationController {
             // Set navigation bar background based on `preferredNavigationBarBackground` value
@@ -89,7 +89,7 @@ extension UIViewController {
     }
 
     @objc private func swizzled_setNeedsStatusBarAppearanceUpdate() {
-        self.swizzled_setNeedsStatusBarAppearanceUpdate()
+        swizzled_setNeedsStatusBarAppearanceUpdate()
         Chrome.setBackground(style: preferredStatusBarBackground, for: .statusBar, in: self)
     }
 }

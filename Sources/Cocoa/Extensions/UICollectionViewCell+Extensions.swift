@@ -80,7 +80,7 @@ extension UICollectionViewCell {
 extension UICollectionViewCell {
     @objc private func swizzled_isHighlightedSetter(newValue: Bool) {
         let oldValue = isHighlighted
-        self.swizzled_isHighlightedSetter(newValue: newValue)
+        swizzled_isHighlightedSetter(newValue: newValue)
         guard oldValue != isHighlighted else { return }
         setHighlighted(isHighlighted, animated: true)
     }
