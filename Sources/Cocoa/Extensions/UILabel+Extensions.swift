@@ -34,25 +34,16 @@ extension UILabel {
         get { return associatedObject(&AssociatedKey.contentInset, default: 0) }
         set {
             setAssociatedObject(&AssociatedKey.contentInset, value: newValue)
-            invalidateIntrinsicContentSize()
             setNeedsDisplay()
         }
     }
 
-    open override var intrinsicContentSize: CGSize {
-        var size = super.intrinsicContentSize
-        size.width += contentInset.horizontal
-        size.height += contentInset.vertical
-        return size
-    }
-
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        preferredMaxLayoutWidth = frame.width - contentInset.horizontal
-    }
-
     @objc private func swizzled_drawText(in rect: CGRect) {
-        self.swizzled_drawText(in: rect.inset(by: contentInset))
+        swizzled_drawText(in: rect.inset(by: contentInset))
+    }
+
+    @objc private func swizzled_textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+        return swizzled_textRect(forBounds: bounds.inset(by: contentInset), limitedToNumberOfLines: numberOfLines)
     }
 }
 
@@ -166,6 +157,12 @@ extension UILabel {
             UILabel.self,
             originalSelector: #selector(UILabel.drawText(in:)),
             swizzledSelector: #selector(UILabel.swizzled_drawText(in:))
+        )
+
+        swizzle(
+            UILabel.self,
+            originalSelector: #selector(UILabel.textRect(forBounds:limitedToNumberOfLines:)),
+            swizzledSelector: #selector(UILabel.swizzled_textRect(forBounds:limitedToNumberOfLines:))
         )
     }
 }
