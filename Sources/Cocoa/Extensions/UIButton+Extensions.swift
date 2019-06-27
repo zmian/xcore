@@ -557,7 +557,7 @@ extension UIButton {
 
     @objc private func swizzled_isSelectedSetter(newValue: Bool) {
         let oldValue = isSelected
-        self.swizzled_isSelectedSetter(newValue: newValue)
+        swizzled_isSelectedSetter(newValue: newValue)
         guard oldValue != isSelected else { return }
         stateDidChange(isSelected ? .selected : .normal)
         didSelect?(self)
@@ -565,7 +565,7 @@ extension UIButton {
 
     @objc private func swizzled_isHighlightedSetter(newValue: Bool) {
         let oldValue = isHighlighted
-        self.swizzled_isHighlightedSetter(newValue: newValue)
+        swizzled_isHighlightedSetter(newValue: newValue)
         guard oldValue != isHighlighted else { return }
         let state: UIControl.State = isHighlighted ? .highlighted : .normal
         changeBackgroundColor(to: state)
@@ -577,7 +577,7 @@ extension UIButton {
 
     @objc private func swizzled_isEnabledSetter(newValue: Bool) {
         let oldValue = isEnabled
-        self.swizzled_isEnabledSetter(newValue: newValue)
+        swizzled_isEnabledSetter(newValue: newValue)
         guard oldValue != isEnabled else { return }
         let state: UIControl.State = isEnabled ? .normal : .disabled
         changeBackgroundColor(to: state)

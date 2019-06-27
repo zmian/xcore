@@ -49,7 +49,7 @@ import UIKit
 ///     }
 ///
 ///     @objc private func swizzled_viewWillAppear(_ animated: Bool) {
-///         self.swizzled_viewWillAppear(animated)
+///         swizzled_viewWillAppear(animated)
 ///     }
 /// }
 /// ```

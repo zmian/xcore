@@ -56,7 +56,7 @@ extension UIViewController {
     }
 
     @objc private func swizzled_viewDidAppear(_ animated: Bool) {
-        self.swizzled_viewDidAppear(animated)
+        swizzled_viewDidAppear(animated)
         // Swizzled `viewDidAppear` and `viewWillDisappear` for keyboard notifications.
         // Registering keyboard notifications in `viewDidLoad` results in unexpected
         // keyboard behavior: when popping the viewController while the keyboard is
@@ -68,7 +68,7 @@ extension UIViewController {
     }
 
     @objc private func swizzled_viewWillDisappear(_ animated: Bool) {
-        self.swizzled_viewWillDisappear(animated)
+        swizzled_viewWillDisappear(animated)
         if didAddKeyboardNotificationObservers {
             _removeKeyboardNotificationObservers()
             didAddKeyboardNotificationObservers = false
@@ -97,7 +97,7 @@ extension UIView {
     }
 
     @objc private func swizzled_view_layoutSubviews() {
-        self.swizzled_view_layoutSubviews()
+        swizzled_view_layoutSubviews()
         if !didAddKeyboardNotificationObservers {
             _addKeyboardNotificationObservers()
             didAddKeyboardNotificationObservers = true

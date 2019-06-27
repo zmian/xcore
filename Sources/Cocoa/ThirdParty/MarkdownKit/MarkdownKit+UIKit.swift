@@ -268,12 +268,12 @@ extension UITextView {
 
 extension UILabel {
     @objc private var swizzled_text: String? {
-        get { return isMarkupEnabled ? markupText : self.swizzled_text }
+        get { return isMarkupEnabled ? markupText : swizzled_text }
         set {
             if isMarkupEnabled {
                 markupText = newValue
             } else {
-                self.swizzled_text = newValue
+                swizzled_text = newValue
             }
         }
     }
@@ -309,7 +309,7 @@ extension UILabel {
 
 extension UIButton {
     @objc private func swizzled_title(for state: UIControl.State) -> String? {
-        return isMarkupEnabled ? attributedTitle(for: state)?.string : self.swizzled_title(for: state)
+        return isMarkupEnabled ? attributedTitle(for: state)?.string : swizzled_title(for: state)
     }
 
     /// Creates and set `NSAttributedString` from Markdown.
@@ -337,12 +337,12 @@ extension UIButton {
 
 extension UITextView {
     @objc private var swizzled_text: String? {
-        get { return isMarkupEnabled ? markupText : self.swizzled_text }
+        get { return isMarkupEnabled ? markupText : swizzled_text }
         set {
             if isMarkupEnabled {
                 markupText = newValue
             } else {
-                self.swizzled_text = newValue
+                swizzled_text = newValue
             }
         }
     }

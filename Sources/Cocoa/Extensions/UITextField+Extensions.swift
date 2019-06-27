@@ -84,11 +84,11 @@ extension UITextField {
     //  Add support for content inset
 
     @objc private func swizzled_textRect(forBounds bounds: CGRect) -> CGRect {
-        return self.swizzled_textRect(forBounds: bounds.inset(by: contentInset))
+        return swizzled_textRect(forBounds: bounds.inset(by: contentInset))
     }
 
     @objc private func swizzled_editingRect(forBounds bounds: CGRect) -> CGRect {
-        return self.swizzled_editingRect(forBounds: bounds.inset(by: contentInset))
+        return swizzled_editingRect(forBounds: bounds.inset(by: contentInset))
     }
 
     // Add support for disabling insertion cursor
@@ -98,6 +98,6 @@ extension UITextField {
             return .zero
         }
 
-        return self.swizzled_caretRect(for: position)
+        return swizzled_caretRect(for: position)
     }
 }
