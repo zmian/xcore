@@ -107,6 +107,10 @@ extension ProcessInfo {
                     return Double(value) as? T
                 case is Int.Type, is Optional<Int>.Type:
                     return Int(value) as? T
+                case is NSNumber.Type, is Optional<NSNumber>.Type:
+                    let formatter = NumberFormatter()
+                    formatter.numberStyle = .decimal
+                    return formatter.number(from: value) as? T
                 default:
                     return value as? T
             }
