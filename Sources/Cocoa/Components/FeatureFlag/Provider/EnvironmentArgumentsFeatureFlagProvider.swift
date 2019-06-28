@@ -28,12 +28,14 @@ struct EnvironmentArgumentsFeatureFlag: FeatureFlagProvider {
     func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value? {
         let argument = ProcessInfo.Argument(rawValue: key.rawValue)
 
-        guard argument.exists else { return nil }
+        guard let value = argument.value else {
+            return nil
+        }
 
         return .init(
-            string: argument.getValue(),
-            number: argument.getValue(),
-            bool: argument.getValue() ?? false
+            string: argument.castValue(value),
+            number: argument.castValue(value),
+            bool: argument.castValue(value) ?? false
         )
     }
 }
