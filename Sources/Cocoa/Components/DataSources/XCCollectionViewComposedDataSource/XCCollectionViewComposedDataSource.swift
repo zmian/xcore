@@ -84,6 +84,7 @@ open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, Expre
         dataSources.append(dataSource)
     }
 
+    /// Removes the given data source.
     open func remove(_ dataSource: XCCollectionViewDataSource) {
         guard let index = dataSources.firstIndex(of: dataSource) else {
             return

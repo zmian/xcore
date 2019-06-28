@@ -1,5 +1,5 @@
 //
-// FeatureFlag+Key.swift
+// EnvironmentArgumentsFeatureFlagProvider.swift
 //
 // Copyright © 2019 Xcore
 //
@@ -24,42 +24,16 @@
 
 import Foundation
 
-// MARK: - Namespace
+struct EnvironmentArgumentsFeatureFlag: FeatureFlagProvider {
+    func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value? {
+        let argument = ProcessInfo.Argument(rawValue: key.rawValue)
 
-public enum FeatureFlag { }
+        guard argument.exists else { return nil }
 
-// MARK: - Key
-
-extension FeatureFlag {
-    public struct Key: RawRepresentable, Equatable {
-        public let rawValue: String
-
-        public init(rawValue: String) {
-            self.rawValue = rawValue
-        }
-    }
-}
-
-extension FeatureFlag.Key: ExpressibleByStringLiteral {
-    public init(stringLiteral value: StringLiteralType) {
-        self.init(rawValue: value)
-    }
-}
-
-extension FeatureFlag.Key: CustomStringConvertible {
-    public var description: String {
-        return rawValue
-    }
-}
-
-extension FeatureFlag.Key: CustomPlaygroundDisplayConvertible {
-    public var playgroundDescription: Any {
-        return rawValue
-    }
-}
-
-extension FeatureFlag.Key: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(rawValue)
+        return .init(
+            string: argument.getValue(),
+            number: argument.getValue(),
+            bool: argument.getValue() ?? false
+        )
     }
 }
