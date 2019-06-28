@@ -37,6 +37,12 @@ public struct StringConverter {
             return
         }
 
+        // Captures NSString
+        if let value = value as? String {
+            self.string = value
+            return
+        }
+
         if let value = value as? NSNumber {
             self.string = value.stringValue
             return
@@ -86,6 +92,8 @@ extension StringConverter {
                 return url as? T
             case is NSNumber.Type, is Optional<NSNumber>.Type:
                 return nsNumber as? T
+            case is NSString.Type, is Optional<NSString>.Type:
+                return string as? T
             default:
                 return json as? T
         }

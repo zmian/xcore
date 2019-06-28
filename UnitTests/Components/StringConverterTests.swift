@@ -50,6 +50,10 @@ final class StringConverterTests: TestCase {
         XCTAssert(ConvertItem.validString.value(default: defaultString) == "dark")
         XCTAssert(ConvertItem.invalidString.value(default: defaultString) == defaultString)
 
+        let defaultNsString = NSString("greeting world")
+        XCTAssert(ConvertItem.validNsString.value(default: defaultNsString) == NSString("darker"))
+        XCTAssert(ConvertItem.invalidNsString.value(default: defaultNsString) == defaultNsString)
+
         let defaultArray: [String] = ["swift", "objc"]
         XCTAssert(ConvertItem.validArray.value(default: defaultArray) == ["red", "blue", "green"])
         XCTAssert(ConvertItem.invalidArray.value(default: defaultArray) == defaultArray)
@@ -117,6 +121,9 @@ private struct ConvertValue {
         storage[.validString] = "dark"
         storage[.invalidString] = InvalidString()
 
+        storage[.validNsString] = NSString("darker")
+        storage[.invalidNsString] = InvalidString()
+
         storage[.validArray] = arraryExample
         storage[.invalidArray] = dictionaryExample
 
@@ -159,6 +166,9 @@ private enum ConvertItem: String {
     case validString
     case invalidString
 
+    case validNsString
+    case invalidNsString
+
     case validArray
     case invalidArray
 
@@ -173,7 +183,7 @@ private enum ConvertItem: String {
 // MARK: - ConvertItem
 
 extension ConvertItem {
-    fileprivate var storageValue: FeatureFlag.Value? {
+    fileprivate var storageValue: StringConverter? {
         return ConvertValue().value(for: self)
     }
 
