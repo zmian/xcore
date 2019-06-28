@@ -27,14 +27,20 @@ import UIKit
 final public class CompositeImageTransform: ImageTransform, ExpressibleByArrayLiteral {
     private var transforms: [ImageTransform] = []
 
+    public init(_ transforms: [ImageTransform]) {
+        self.transforms = transforms
+    }
+
     public init(arrayLiteral elements: ImageTransform...) {
         self.transforms = elements
     }
 
+    /// Adds a new transform at the end of the array.
     public func add(_ transform: ImageTransform) {
         transforms.append(transform)
     }
 
+    /// Removes the given transform.
     public func remove(_ transform: ImageTransform) {
         let identifiers = transforms.map { $0.identifier }
 
