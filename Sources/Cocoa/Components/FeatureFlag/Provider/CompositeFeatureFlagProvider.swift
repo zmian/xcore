@@ -74,11 +74,11 @@ extension CompositeFeatureFlagProvider {
 
     func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value? {
         for provider in providers {
-            let value = provider.value(forKey: key)
-
-            if value != nil {
-                return value
+            guard let value = provider.value(forKey: key) else {
+                continue
             }
+
+            return value
         }
 
         return nil
