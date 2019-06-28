@@ -114,6 +114,12 @@ extension String {
         return nsString.pathExtension
     }
 
+    var nsNumber: NSNumber? {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter.number(from: self)
+    }
+
     /// Returns a new string made by appending to the receiver a given path component.
     ///
     /// The following table illustrates the effect of this method on a variety of
