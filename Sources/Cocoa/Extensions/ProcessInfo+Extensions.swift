@@ -94,6 +94,10 @@ extension ProcessInfo {
                 return nil
             }
 
+            return castValue(value)
+        }
+
+        func castValue<T>(_ value: String) -> T? {
             switch T.self {
                 case is Bool.Type, is Optional<Bool>.Type:
                     return Bool(value) as? T
