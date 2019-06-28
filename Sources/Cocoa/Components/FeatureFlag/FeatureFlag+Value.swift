@@ -86,6 +86,8 @@ extension FeatureFlag.Value {
                 return number?.intValue as? T
             case is URL.Type, is Optional<URL>.Type:
                 return url as? T
+            case is NSNumber.Type, is Optional<NSNumber>.Type:
+                return number as? T
             default:
                 return json as? T
         }
