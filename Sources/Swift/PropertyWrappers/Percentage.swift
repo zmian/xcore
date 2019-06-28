@@ -77,7 +77,7 @@ extension Percentage: ExpressibleByFloatLiteral {
 
 extension Percentage: CustomStringConvertible {
     public var description: String {
-        return "\(rawValue.description)%"
+        return "\(rawValue)%"
     }
 }
 

@@ -28,14 +28,21 @@ struct EnvironmentArgumentsFeatureFlag: FeatureFlagProvider {
     func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value? {
         let argument = ProcessInfo.Argument(rawValue: key.rawValue)
 
-        guard let value = argument.value else {
+        guard argument.exists else {
             return nil
         }
 
-        return .init(
-            string: argument.castValue(value),
-            number: argument.castValue(value),
-            bool: argument.castValue(value) ?? false
-        )
+        guard let value = argument.value else {
+            // ProcessInfo environment arguments can have value without being enabled.
+            // Since, we are here it means the flag is enabled and it doesn't have any
+            // value, thus we return `true` to indicate that the flag is enabled to the
+            // caller.
+            return .init(true)
+        }
+
+        // ProcessInfo environment arguments can have value without being enabled.
+        // Since, we are here it means the flag is enabled and have value, thus we
+        // return the value to the caller.
+        return .init(value)
     }
 }

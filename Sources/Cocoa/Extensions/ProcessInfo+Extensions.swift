@@ -94,24 +94,7 @@ extension ProcessInfo {
                 return nil
             }
 
-            return castValue(value)
-        }
-
-        func castValue<T>(_ value: String) -> T? {
-            switch T.self {
-                case is Bool.Type, is Optional<Bool>.Type:
-                    return Bool(value) as? T
-                case is Float.Type, is Optional<Float>.Type:
-                    return Float(value) as? T
-                case is Double.Type, is Optional<Double>.Type:
-                    return Double(value) as? T
-                case is Int.Type, is Optional<Int>.Type:
-                    return Int(value) as? T
-                case is NSNumber.Type, is Optional<NSNumber>.Type:
-                    return value.nsNumber as? T
-                default:
-                    return value as? T
-            }
+            return StringConverter(value).get()
         }
 
         public func setInMemoryValue<T>(_ value: T?) {
