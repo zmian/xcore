@@ -109,7 +109,7 @@ private struct CustomFeatureFlag: FeatureFlagProvider {
         storage[FeatureFlagItem.invalidUrl.rawValue] = "hello world"
 
         storage[FeatureFlagItem.validString.rawValue] = "dark"
-        storage[FeatureFlagItem.invalidString.rawValue] = 200
+        storage[FeatureFlagItem.invalidString.rawValue] = InvalidString()
 
         storage[FeatureFlagItem.validArray.rawValue] = arraryExample
         storage[FeatureFlagItem.invalidArray.rawValue] = dictionaryExample
@@ -123,14 +123,10 @@ private struct CustomFeatureFlag: FeatureFlagProvider {
     }
 
     func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value? {
-        let value = storage[key.rawValue]
-
-        return .init(
-            string: value as? String,
-            number: value as? NSNumber,
-            bool: value as? Bool ?? false
-        )
+        return StringConverter(storage[key.rawValue]!)
     }
+
+    struct InvalidString { }
 }
 
 // MARK: - FeatureFlag

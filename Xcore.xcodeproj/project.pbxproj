@@ -50,6 +50,7 @@
 		688B66612276890900AD0C1A /* XCConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688B66602276890900AD0C1A /* XCConfigurationTests.swift */; };
 		688B66632276981900AD0C1A /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688B66622276981900AD0C1A /* CollectionTests.swift */; };
 		688C357C2273DED400CF3FCB /* DictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688C357B2273DED400CF3FCB /* DictionaryTests.swift */; };
+		68A9366F22C69E7200CB01BD /* StringConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A9366E22C69E7100CB01BD /* StringConverterTests.swift */; };
 		68CA631F224C76760012DF31 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA631E224C76750012DF31 /* StringTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +123,7 @@
 		688B66602276890900AD0C1A /* XCConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCConfigurationTests.swift; sourceTree = "<group>"; };
 		688B66622276981900AD0C1A /* CollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTests.swift; sourceTree = "<group>"; };
 		688C357B2273DED400CF3FCB /* DictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTests.swift; sourceTree = "<group>"; };
+		68A9366E22C69E7100CB01BD /* StringConverterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConverterTests.swift; sourceTree = "<group>"; };
 		68CA631E224C76750012DF31 /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		8D64F6471089E2220DD070CC /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		989B05E63B9D27BBB2D81B2C /* Pods-UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UITests/Pods-UITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 		68376A15228C285700C7B819 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				68A9366E22C69E7100CB01BD /* StringConverterTests.swift */,
 				68262E4522A320D00011431A /* FeatureFlagTests.swift */,
 				68262E4422A320AE0011431A /* Currency */,
 			);
@@ -589,6 +592,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				684B1E92224C5167009F6197 /* ImageTransformTests.swift in Sources */,
+				68A9366F22C69E7200CB01BD /* StringConverterTests.swift in Sources */,
 				684B1E91224C5167009F6197 /* PredicateRepresentableTests.swift in Sources */,
 				687A9062227517E6000B7C82 /* ValidationRuleTests.swift in Sources */,
 				687A905A2274FA4E000B7C82 /* SortOrderableTests.swift in Sources */,
