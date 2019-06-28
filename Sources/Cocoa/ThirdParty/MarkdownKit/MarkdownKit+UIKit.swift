@@ -268,12 +268,12 @@ extension UITextView {
 
 extension UILabel {
     @objc private var swizzled_text: String? {
-        get { return isMarkupEnabled ? markupText : swizzled_text }
+        get { return isMarkupEnabled ? markupText : self.swizzled_text }
         set {
             if isMarkupEnabled {
                 markupText = newValue
             } else {
-                swizzled_text = newValue
+                self.swizzled_text = newValue
             }
         }
     }
@@ -337,12 +337,12 @@ extension UIButton {
 
 extension UITextView {
     @objc private var swizzled_text: String? {
-        get { return isMarkupEnabled ? markupText : swizzled_text }
+        get { return isMarkupEnabled ? markupText : self.swizzled_text }
         set {
             if isMarkupEnabled {
                 markupText = newValue
             } else {
-                swizzled_text = newValue
+                self.swizzled_text = newValue
             }
         }
     }
