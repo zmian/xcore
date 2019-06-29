@@ -24,6 +24,13 @@
 
 import Foundation
 
+extension StringProtocol {
+    /// Returns `true` iff `value` is in `self`.
+    public func contains<T: StringProtocol>(_ value: T, options: String.CompareOptions = []) -> Bool {
+        return range(of: value, options: options) != nil
+    }
+}
+
 extension String {
     public var capitalizeFirstCharacter: String {
         return String(prefix(1).capitalized + dropFirst())
@@ -51,11 +58,6 @@ extension String {
     /// Trim whitespaces from start and end and normalize multiple whitespaces into one and then replace them with the given string.
     public func replaceWhitespaces(with string: String) -> String {
         return trimmingCharacters(in: .whitespaces).replace("[ ]+", with: string)
-    }
-
-    /// Returns `true` iff `value` is in `self`.
-    public func contains(_ value: String, options: String.CompareOptions = []) -> Bool {
-        return range(of: value, options: options) != nil
     }
 
     /// Determine whether the string is a valid url.

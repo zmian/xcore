@@ -84,32 +84,10 @@ final class ValidationRuleTests: TestCase {
         XCTAssertFalse("John Doe Fugetaboutit Boaty McBoatface Boaty McBoatface Doe".validate(rule: rule))
     }
 
-    func testMultipleRules() {
-        let ssn: ValidationRule<String> = .ssn
-        let email: ValidationRule<String> = .email
-
-        XCTAssertFalse("help@example.com".validate(rules: [ssn, email], join: .and))
-        XCTAssertTrue("help@example.com".validate(rules: [ssn, email], join: .or))
-        XCTAssertFalse("help@example.com".validate(rules: [ssn, email], join: .not))
-    }
-
-    func testMultipleRulesAsOne() {
-        let email: ValidationRule<String> = .email
-
-        XCTAssertTrue("help@example.com".validate(rules: [email], join: .and))
-        XCTAssertTrue("help@example.com".validate(rules: [email], join: .or))
-        XCTAssertFalse("help@example.com".validate(rules: [email], join: .not))
-
-
-        let ssn: ValidationRule<String> = .ssn
-
-        XCTAssertFalse("help@example.com".validate(rules: [ssn], join: .and))
-        XCTAssertFalse("help@example.com".validate(rules: [ssn], join: .or))
-        XCTAssertTrue("help@example.com".validate(rules: [ssn], join: .not))
-
-        
-        XCTAssertTrue("help@example.com".validate(rules: [], join: .and))
-        XCTAssertTrue("help@example.com".validate(rules: [], join: .or))
-        XCTAssertTrue("help@example.com".validate(rules: [], join: .not))
+    func testLogicalOperators() {
+        XCTAssertFalse("help@example.com".validate(rule: .ssn && .email))
+        XCTAssertTrue("help@example.com".validate(rule: .ssn || .email))
+        XCTAssertFalse("help@example.com".validate(rule: !.ssn && !.email))
+        XCTAssertTrue("help@example.com".validate(rule: !.ssn && .email))
     }
 }
