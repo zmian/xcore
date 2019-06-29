@@ -301,3 +301,21 @@ extension UIViewController {
         ]
     }
 }
+
+// MARK: - ObstructableView
+
+@objc extension UIViewController {
+    /// A property to indicate that view controller is obstructing the screen.
+    ///
+    /// Such information is useful when certain actions can't be triggered,
+    /// for example, in-app deep-linking routing.
+    ///
+    /// The default value for any `ObstructableView` conforming `UIViewController`
+    /// is `true`; otherwise, `false`.
+    open var isObstructive: Bool {
+        if self is ObstructableView {
+            return true
+        }
+        return false
+    }
+}
