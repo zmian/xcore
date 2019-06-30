@@ -29,6 +29,16 @@ import Foundation
 extension ValidationRule where Input: Collection {
     /// A validation rule that checks whether the input count is contained within the range expression.
     ///
+    /// This validation rule can be used guard minimum or maximum length:
+    ///
+    /// ```swift
+    /// let name = "John Doe"
+    /// name.validate(rule: .range(1...)) // length >= 1
+    ///
+    /// let password = "***"
+    /// password.validate(rule: .range(8...50)) // length between 8 - 50
+    /// ```
+    ///
     /// - Parameter range: The range expression to check against input count.
     /// - Returns: The validation rule.
     public static func range<T: RangeExpression>(_ range: T) -> ValidationRule where T.Bound == Int {
@@ -145,24 +155,6 @@ extension ValidationRule where Input == String {
             let input = CharacterSet(charactersIn: input)
             return other.isSuperset(of: input)
         }
-    }
-
-    /// A validation rule that checks whether the input length exceed the given
-    /// minimum length.
-    ///
-    /// - Parameter length: The minimum length of the input.
-    /// - Returns: The validation rule.
-    public static func length(min length: Int) -> ValidationRule {
-        return .init { $0.count >= length }
-    }
-
-    /// A validation rule that checks whether the input length exceed the given
-    /// maximum length.
-    ///
-    /// - Parameter length: The maximum length of the input.
-    /// - Returns: The validation rule.
-    public static func length(max length: Int) -> ValidationRule {
-        return .init { $0.count <= length }
     }
 }
 

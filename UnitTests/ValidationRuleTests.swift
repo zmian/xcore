@@ -90,4 +90,10 @@ final class ValidationRuleTests: TestCase {
         XCTAssertFalse("help@example.com".validate(rule: !.ssn && !.email))
         XCTAssertTrue("help@example.com".validate(rule: !.ssn && .email))
     }
+
+    func testRange() {
+        XCTAssertTrue("John Doe".validate(rule: .range(1...)))
+        XCTAssertFalse("secret".validate(rule: .range(8...50)))
+        XCTAssertTrue("secret123".validate(rule: .range(8...50)))
+    }
 }
