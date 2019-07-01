@@ -32,8 +32,6 @@ extension SeparatorView {
 }
 
 public final class SeparatorView: UIView {
-    private var defaultTintColor = UIColor(hex: "DFE9F5")
-
     /// The default value is `.plain`.
     public var style: Style = .plain {
         didSet {
@@ -61,7 +59,7 @@ public final class SeparatorView: UIView {
 
     private var _backgroundColor: UIColor?
     @objc dynamic public override var backgroundColor: UIColor? {
-        get { return _backgroundColor }
+        get { return _backgroundColor ?? UIColor(hex: "DFE9F5") }
         set {
             guard newValue != _backgroundColor else { return }
             _backgroundColor = newValue
@@ -70,7 +68,7 @@ public final class SeparatorView: UIView {
     }
 
     @objc dynamic public override var tintColor: UIColor! {
-        get { return backgroundColor ?? defaultTintColor }
+        get { return backgroundColor }
         set { backgroundColor = newValue }
     }
 
@@ -85,7 +83,9 @@ public final class SeparatorView: UIView {
         self.axis = axis
         self.automaticallySetThickness = automaticallySetThickness
         commonInit()
-        self.backgroundColor = backgroundColor ?? defaultTintColor
+        if let backgroundColor = backgroundColor {
+            _backgroundColor = backgroundColor
+        }
     }
 
     public override init(frame: CGRect) {
@@ -99,8 +99,6 @@ public final class SeparatorView: UIView {
     }
 
     private func commonInit() {
-        super.backgroundColor = .clear
-        backgroundColor = defaultTintColor
         updateThicknessConstraintIfNeeded()
     }
 
@@ -108,7 +106,7 @@ public final class SeparatorView: UIView {
         switch style {
             case .plain:
                 backgroundColor?.setFill()
-                UIRectFill(rect)
+                UIRectFillUsingBlendMode(rect, .normal)
             case .dotted:
                 let path = UIBezierPath()
                 let y = rect.midY
