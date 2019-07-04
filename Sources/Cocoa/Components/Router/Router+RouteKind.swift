@@ -1,5 +1,5 @@
 //
-// Router.swift
+// Router+RouteKind.swift
 //
 // Copyright © 2019 Xcore
 //
@@ -24,24 +24,9 @@
 
 import UIKit
 
-public class Router {
-    private weak var navigationController: UINavigationController?
-    private var routeHandlers: [String: Any] = [:]
-
-    init(navigationController: UINavigationController?) {
-        self.navigationController = navigationController
-    }
-
-    public func register<T: RouteHandler>(_ handler: @autoclosure () -> T) -> T {
-        let key = NSStringFromClass(T.self)
-
-        guard let existingHandler = routeHandlers[key] as? T else {
-            let handler = handler()
-            handler._setNavigationController(navigationController)
-            routeHandlers[key] = handler
-            return handler
-        }
-
-        return existingHandler
+extension Router {
+    public enum RouteKind {
+        case viewController(UIViewController)
+        case custom
     }
 }
