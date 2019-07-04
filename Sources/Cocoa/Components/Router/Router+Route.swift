@@ -117,5 +117,12 @@ extension Router {
                 .viewController(configure())
             }
         }
+
+        public static func custom(_ configure: @escaping @autoclosure () -> Void) {
+            self.init { _ -> RouteKind in
+                configure()
+                return .custom
+            }
+        }
     }
 }
