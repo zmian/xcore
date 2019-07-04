@@ -64,6 +64,12 @@ extension Router {
     ///             }
     ///         }
     ///     }
+    ///
+    ///     static var successAlert(message: String) -> Router.Route {
+    ///         return .custom { _ in
+    ///             alert(title: "Success", message: message)
+    ///         }
+    ///     }
     /// }
     /// ```
     ///
@@ -118,9 +124,9 @@ extension Router {
             }
         }
 
-        public static func custom(_ configure: @escaping @autoclosure () -> Void) {
-            self.init { _ -> RouteKind in
-                configure()
+        public static func custom(identifier: String? = nil, _ configure: @escaping (Type) -> Void) -> Route {
+            return .init(identifier: identifier) { router -> RouteKind in
+                configure(router)
                 return .custom
             }
         }
