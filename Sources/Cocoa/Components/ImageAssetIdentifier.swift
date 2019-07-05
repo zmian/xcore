@@ -113,11 +113,11 @@ public func r(_ assetIdentifier: ImageAssetIdentifier) -> String {
 
 // MARK: - Xcore Buit-in Assets
 
-private func propertyName(name: String = #function) -> ImageAssetIdentifier {
-    return ImageAssetIdentifier(rawValue: name, bundle: .xcore)
-}
-
 extension ImageAssetIdentifier {
+    private static func propertyName(name: String = #function) -> ImageAssetIdentifier {
+        return ImageAssetIdentifier(rawValue: name, bundle: .xcore)
+    }
+
     // MARK: Private
     static var collectionViewCellDeleteIcon: ImageAssetIdentifier { return propertyName() }
     static var reorderTableViewCellShadowTop: ImageAssetIdentifier { return propertyName() }
