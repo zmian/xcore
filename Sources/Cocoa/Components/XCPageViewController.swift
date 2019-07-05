@@ -24,55 +24,44 @@
 
 import UIKit
 
-private class XCUIPageViewController: UIPageViewController {
-    var isScrollEnabled = true {
-        didSet {
-            scrollView?.isScrollEnabled = isScrollEnabled
-        }
-    }
+// MARK: - PageControlPosition
 
-    // Subclasses have to be responsible when using this setting
-    // as view controller count stays at one when the bounce is disabled.
-    var isBounceForSinglePageEnabled = true
-
-    private var scrollView: UIScrollView? {
-        didSet {
-            scrollView?.bounces = isBounceForSinglePageEnabled
-            scrollView?.isScrollEnabled = isScrollEnabled
-        }
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        guard scrollView == nil else { return }
-
-        for view in view.subviews {
-            if let aScrollView = view as? UIScrollView {
-                scrollView = aScrollView
-            }
-        }
-    }
-}
-
-open class XCPageViewController: UIViewController {
+extension XCPageViewController {
     public enum PageControlPosition {
+        case none
         case top
         case center
         case bottom
     }
+}
 
-    open var pageViewController: UIPageViewController!
-    public let pageControl = UIPageControl()
+// MARK: - XCPageViewController
+
+open class XCPageViewController: UIViewController {
     public let pageControlHeight: CGFloat = 40
     open var pageControlPosition: PageControlPosition = .bottom
-    open var viewControllers: [UIViewController] = []
+    public let pageControl = UIPageControl().apply {
+        $0.isUserInteractionEnabled = false
+    }
+    private var _pageViewController: XCUIPageViewController? {
+        return pageViewController as? XCUIPageViewController
+    }
+    open private(set) var pageViewController: UIPageViewController!
+    open var viewControllers: [UIViewController] = [] {
+        didSet {
+            guard isViewLoaded else { return }
+            updateIfNeeded(shouldSetInitialViewController: oldValue.isEmpty)
+        }
+    }
+
     /// The default value is `false`.
     open var isBounceForSinglePageEnabled = false
     open var isScrollEnabled = true {
-        didSet { (pageViewController as? XCUIPageViewController)?.isScrollEnabled = isScrollEnabled }
+        didSet { _pageViewController?.isScrollEnabled = isScrollEnabled }
     }
+
     /// Spacing between between pages. The default value is `0`.
+    ///
     /// Page spacing is only valid if the transition style is `.scroll`.
     open var pageSpacing: CGFloat = 0
     open var transitionStyle: UIPageViewController.TransitionStyle = .scroll
@@ -92,38 +81,50 @@ open class XCPageViewController: UIViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        edgesForExtendedLayout = []
         setupPageViewController()
     }
 
     private func setupPageViewController() {
-        pageViewController = XCUIPageViewController(transitionStyle: transitionStyle, navigationOrientation: navigationOrientation, options: [.interPageSpacing: pageSpacing])
-        pageViewController.delegate = self
-        pageViewController.dataSource = self
-        pageViewController.view.frame = view.frame
-        if !viewControllers.isEmpty {
-            pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: false)
+        pageViewController = XCUIPageViewController(
+            transitionStyle: transitionStyle,
+            navigationOrientation: navigationOrientation,
+            options: [.interPageSpacing: pageSpacing]
+        ).apply {
+            $0.delegate = self
+            $0.dataSource = self
         }
-        addViewController(pageViewController, enableConstraints: true)
 
-        pageControl.isUserInteractionEnabled = false
-        pageControl.numberOfPages = viewControllers.count
+        addViewController(pageViewController, enableConstraints: true)
+        _pageViewController?.isScrollEnabled = isScrollEnabled
         view.addSubview(pageControl)
         setupConstraints()
+        updateIfNeeded(shouldSetInitialViewController: true)
+    }
+
+    private func updateIfNeeded(shouldSetInitialViewController: Bool) {
+        pageControl.numberOfPages = viewControllers.count
+        pageControl.isHidden = viewControllers.count < 2
 
         if viewControllers.count == 1 {
-            (pageViewController as? XCUIPageViewController)?.isBounceForSinglePageEnabled = isBounceForSinglePageEnabled
+            _pageViewController?.isBounceForSinglePageEnabled = isBounceForSinglePageEnabled
         }
 
-        (pageViewController as? XCUIPageViewController)?.isScrollEnabled = isScrollEnabled
+        if shouldSetInitialViewController {
+            setCurrentPage(0)
+        }
     }
 
     private func setupConstraints() {
         pageControl.anchor.make {
             $0.height.equalTo(pageControlHeight)
+
+            guard pageControlPosition != .none else { return }
+
             $0.horizontally.equalToSuperview()
 
             switch pageControlPosition {
+                case .none:
+                    break
                 case .top:
                     $0.top.equalTo(view)
                 case .center:
@@ -135,7 +136,7 @@ open class XCPageViewController: UIViewController {
     }
 }
 
-// MARK: UIPageViewControllerDataSource & UIPageViewControllerDelegate
+// MARK: - UIPageViewControllerDataSource & UIPageViewControllerDelegate
 
 extension XCPageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     open func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
@@ -157,7 +158,7 @@ extension XCPageViewController: UIPageViewControllerDataSource, UIPageViewContro
     }
 }
 
-// MARK: Navigation API
+// MARK: - Navigation API
 
 extension XCPageViewController {
     /// Set current view controller index to be displayed.
@@ -193,7 +194,7 @@ extension XCPageViewController {
     }
 }
 
-// MARK: Helpers
+// MARK: - Helpers
 
 extension XCPageViewController {
     private func indexOf(_ viewController: UIViewController) -> Int {
@@ -211,7 +212,7 @@ extension XCPageViewController {
     }
 }
 
-// MARK: Statusbar and Orientation
+// MARK: - Statusbar and Orientation
 
 extension XCPageViewController {
     open override var prefersStatusBarHidden: Bool {
@@ -228,5 +229,39 @@ extension XCPageViewController {
 
     open override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return statusBarUpdateAnimation ?? super.preferredStatusBarUpdateAnimation
+    }
+}
+
+// MARK: - XCUIPageViewController
+
+#warning("Remove this class and add support to UIPageViewController directly. Using Xcore.subview like scrollView in UISearchBar.")
+private final class XCUIPageViewController: UIPageViewController {
+    // Subclasses have to be responsible when using this setting
+    // as view controller count stays at one when the bounce is disabled.
+    var isBounceForSinglePageEnabled = true
+
+    var isScrollEnabled = true {
+        didSet {
+            scrollView?.isScrollEnabled = isScrollEnabled
+        }
+    }
+
+    private var scrollView: UIScrollView? {
+        didSet {
+            scrollView?.bounces = isBounceForSinglePageEnabled
+            scrollView?.isScrollEnabled = isScrollEnabled
+        }
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        guard scrollView == nil else { return }
+
+        for view in view.subviews {
+            if let aScrollView = view as? UIScrollView {
+                scrollView = aScrollView
+            }
+        }
     }
 }
