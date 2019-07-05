@@ -135,7 +135,7 @@ open class XCPageViewController: UIViewController {
     }
 }
 
-// MARK: UIPageViewControllerDataSource & UIPageViewControllerDelegate
+// MARK: - UIPageViewControllerDataSource & UIPageViewControllerDelegate
 
 extension XCPageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     open func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
