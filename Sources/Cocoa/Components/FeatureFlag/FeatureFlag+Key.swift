@@ -26,6 +26,7 @@ import Foundation
 
 // MARK: - Namespace
 
+/// Use feature flags as an iterative approach to development.
 public enum FeatureFlag { }
 
 // MARK: - Key
