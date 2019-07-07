@@ -211,7 +211,7 @@ open class CustomCarouselView<Cell: CarouselViewCellType, Model: CarouselViewMod
                 return
             }
 
-            strongSelf.didUpdateContentSize?()
+            strongSelf.didChangeContentSize?()
             strongSelf.kvoToken = nil
         }
     }
@@ -222,9 +222,9 @@ open class CustomCarouselView<Cell: CarouselViewCellType, Model: CarouselViewMod
         #endif
     }
 
-    private var didUpdateContentSize: (() -> Void)?
-    open func didUpdateContentSize(_ callback: @escaping () -> Void) {
-        didUpdateContentSize = callback
+    private var didChangeContentSize: (() -> Void)?
+    open func didChangeContentSize(_ callback: @escaping () -> Void) {
+        didChangeContentSize = callback
     }
 
     open func didSelectItem(_ callback: @escaping (_ index: Int, _ item: Cell.Model) -> Void) {
