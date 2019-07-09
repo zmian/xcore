@@ -25,7 +25,7 @@
 import UIKit
 
 extension UIFont {
-    public static var defaultAppTypeface: UIFont.Typeface = .helveticaNeue
+    public static var defaultAppTypeface: UIFont.Typeface = .system
 
     /// Scaled version of default app typeface.
     ///
@@ -43,8 +43,15 @@ extension UIFont {
         trait: Trait = .normal,
         compatibleWith traitCollection: UITraitCollection? = nil
     ) -> UIFont {
+        let typeface = defaultAppTypeface.name(weight: weight, trait: trait)
+
+        if typeface == Typeface.systemFontId {
+            // TODO: Handle monospace and italic traits.
+            return preferredFont(forTextStyle: style, compatibleWith: traitCollection)
+        }
+
         return scaled(
-            name: defaultAppTypeface.name(weight, trait: trait),
+            name: typeface,
             style: style,
             compatibleWith: traitCollection
         ).apply(trait)
@@ -58,7 +65,13 @@ extension UIFont {
     ///   - trait: The trait of the font. The default value is `.normal`.
     /// - Returns: The new font object.
     public static func app(size: CGFloat, weight: Weight = .regular, trait: Trait = .normal) -> UIFont {
-        return UIFont(typeface: defaultAppTypeface, weight: weight, trait: trait, size: size).apply(trait)
+        let typeface = defaultAppTypeface.name(weight: weight, trait: trait)
+
+        if typeface == Typeface.systemFontId {
+            return .systemFont(size: size, weight: weight, trait: trait)
+        }
+
+        return UIFont(name: typeface, size: size)!.apply(trait)
     }
 }
 

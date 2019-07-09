@@ -32,7 +32,9 @@ extension UIFont {
         trait: Trait = .normal,
         size: CGFloat
     ) {
-        self.init(name: typeface.name(weight, trait: trait), size: size)!
+        let name = typeface.name(weight: weight, trait: trait)
+        precondition(name != Typeface.systemFontId, "Please use .systemFont() method.")
+        self.init(name: name, size: size)!
     }
 
     public struct Typeface {
@@ -42,7 +44,7 @@ extension UIFont {
             self.block = block
         }
 
-        public func name(_ weight: Weight, trait: Trait = .normal) -> String {
+        public func name(weight: Weight, trait: Trait = .normal) -> String {
             return block(weight, trait)
         }
     }
@@ -51,6 +53,15 @@ extension UIFont {
 // MARK: - Custom
 
 extension UIFont.Typeface {
+    static var systemFontId = "XCAppleSystemUIFont"
+
+    public static var system: UIFont.Typeface {
+        return .init { (weight, trait) -> String in
+            /// This is special name and it will be interpreted at the callsite.
+            return systemFontId
+        }
+    }
+
     public static var avenir: UIFont.Typeface {
         return .init { (weight, trait) -> String in
             var name = "AvenirNext"
