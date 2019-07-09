@@ -25,24 +25,14 @@
 import UIKit
 
 extension UIFont {
-    public enum Style {
+    public enum Trait {
         case normal
         case italic
         case monospace
     }
 
-    public struct Size {
-        public static let headline: CGFloat = 16
-        public static let subheadline: CGFloat = 14
-        public static let body: CGFloat = 16
-        public static let label = UIFont.labelFontSize
-        public static let button = UIFont.buttonFontSize
-        public static let small = UIFont.smallSystemFontSize
-        public static let system = UIFont.systemFontSize
-    }
-
-    public static func systemFont(_ size: CGFloat, style: Style = .normal, weight: Weight = .regular) -> UIFont {
-        switch style {
+    public static func systemFont(_ size: CGFloat, trait: Trait = .normal, weight: Weight = .regular) -> UIFont {
+        switch trait {
             case .normal:
                 return systemFont(ofSize: size, weight: weight)
             case .italic:
@@ -50,6 +40,49 @@ extension UIFont {
             case .monospace:
                 return monospacedDigitSystemFont(ofSize: size, weight: weight)
         }
+    }
+}
+
+extension UIFont {
+    func apply(_ trait: Trait) -> UIFont {
+        return trait == .monospace ? monospacedDigitFont : self
+    }
+
+    /// Returns a font matching the given font descriptor.
+    ///
+    /// - Parameter traits: The new symbolic traits.
+    /// - Returns: The new font matching the given font descriptor.
+    public func traits(_ traits: UIFontDescriptor.SymbolicTraits...) -> UIFont? {
+        guard let descriptor = fontDescriptor.withSymbolicTraits(UIFontDescriptor.SymbolicTraits(traits)) else {
+            return nil
+        }
+
+        return UIFont(descriptor: descriptor, size: 0)
+    }
+
+    public func bold() -> UIFont? {
+        return traits(.traitBold)
+    }
+
+    public func italic() -> UIFont? {
+        return traits(.traitItalic)
+    }
+
+    public func monospace() -> UIFont? {
+        return traits(.traitMonoSpace)
+    }
+}
+
+extension UIFont {
+    public var monospacedDigitFont: UIFont {
+        let featureSettings = [[
+            UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType,
+            UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector
+        ]]
+        let attributes = [UIFontDescriptor.AttributeName.featureSettings: featureSettings]
+        let oldDescriptor = fontDescriptor
+        let newDescriptor = oldDescriptor.addingAttributes(attributes)
+        return UIFont(descriptor: newDescriptor, size: 0)
     }
 }
 
@@ -63,22 +96,5 @@ extension UIFont {
                 print("  - \(name)")
             }
         }
-    }
-
-    /// Returns a font matching the given font descriptor.
-    ///
-    /// - Parameter traits: The new symbolic traits.
-    /// - Returns: The new font matching the given font descriptor.
-    public func traits(_ traits: UIFontDescriptor.SymbolicTraits...) -> UIFont {
-        let descriptor = fontDescriptor.withSymbolicTraits(UIFontDescriptor.SymbolicTraits(traits))!
-        return UIFont(descriptor: descriptor, size: 0)
-    }
-
-    public var monospacedDigitFont: UIFont {
-        let featureSettings = [[UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType, UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector]]
-        let attributes = [UIFontDescriptor.AttributeName.featureSettings: featureSettings]
-        let oldDescriptor = fontDescriptor
-        let newDescriptor = oldDescriptor.addingAttributes(attributes)
-        return UIFont(descriptor: newDescriptor, size: 0)
     }
 }
