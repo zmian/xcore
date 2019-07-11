@@ -156,7 +156,7 @@ extension XCConfiguration where Type: UIButton {
                 $0.touchAreaEdgeInsets = -10
             }
             $0.anchor.make {
-                $0.size.equalTo(size)
+                $0.size.equalTo(size).priority(.stackViewSubview)
             }
         }
     }
