@@ -1,7 +1,7 @@
 //
 // Request.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2015 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -156,62 +156,4 @@ extension URLRequest {
 
         return request
     }
-}
-
-extension URL {
-    public init?(string: String, queryParameters: [String: String]) {
-        var components = URLComponents(string: string)
-        components?.queryItems = queryParameters.map(URLQueryItem.init)
-
-        guard let string = components?.url?.absoluteString else {
-            return nil
-        }
-
-        self.init(string: string)
-    }
-}
-
-extension URL {
-    /// Returns a URL constructed by removing the fragment from self.
-    ///
-    /// If the URL has no fragment (e.g., `http://www.example.com`),
-    /// then this function will return the URL unchanged.
-    public func deletingFragment() -> URL {
-        guard let fragment = fragment else {
-            return self
-        }
-
-        let urlString = absoluteString.replace("#\(fragment)", with: "")
-        return URL(string: urlString) ?? self
-    }
-}
-
-// MARK: Scheme
-
-extension URL {
-    public struct Scheme: Hashable, Equatable, RawRepresentable {
-        public let rawValue: String
-        public init(rawValue: String) {
-            self.rawValue = rawValue
-        }
-    }
-
-    /// The scheme of the `URL`.
-    public var schemeType: Scheme {
-        guard let scheme = scheme else {
-            return .none
-        }
-
-        return Scheme(rawValue: scheme)
-    }
-}
-
-extension URL.Scheme {
-    public static let none = URL.Scheme(rawValue: "")
-    public static let https = URL.Scheme(rawValue: "https")
-    public static let http = URL.Scheme(rawValue: "http")
-    public static let file = URL.Scheme(rawValue: "file")
-    public static let tel = URL.Scheme(rawValue: "tel")
-    public static let sms = URL.Scheme(rawValue: "sms")
-    public static let email = URL.Scheme(rawValue: "mailto")
 }

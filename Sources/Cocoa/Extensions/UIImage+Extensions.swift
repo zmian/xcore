@@ -1,7 +1,7 @@
 //
 // UIImage+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ extension UIImage {
     ///   - fileName: The name of the file to construct.
     ///   - bundle: The bundle in which this file is located in. The default value is `.main`.
     public convenience init?(fileName: String, in bundle: Bundle = .main) {
-        let name = fileName.stringByDeletingPathExtension
+        let name = fileName.deletingPathExtension
         let ext = fileName.pathExtension.isEmpty ? "png" : fileName.pathExtension
 
         guard let path = bundle.path(forResource: name, ofType: ext) else {

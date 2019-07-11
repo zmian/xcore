@@ -1,7 +1,7 @@
 //
 // JSONHelpers.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -45,9 +45,9 @@ public struct JSONHelpers {
     }
 
     /// Parse local JSON file from `Bundle.main`.
-    public static func parse(fileName: String) -> Any? {
+    public static func parse(fileName: String, bundle: Bundle = .main) -> Any? {
         guard
-            let filePath = Bundle.main.path(forResource: fileName.stringByDeletingPathExtension, ofType: "json"),
+            let filePath = bundle.path(forResource: fileName.deletingPathExtension, ofType: "json"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: filePath))
         else {
             return nil
@@ -65,7 +65,7 @@ public struct JSONHelpers {
         return parse(data)
     }
 
-    /// Parse NSData to JSON.
+    /// Parse Data to JSON.
     public static func parse(_ data: Data) -> Any? {
         return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
     }
@@ -98,7 +98,12 @@ public struct JSONHelpers {
             return nil
         }
 
-        let options: JSONSerialization.WritingOptions = prettyPrinted ? .prettyPrinted : []
+        var options: JSONSerialization.WritingOptions = .sortedKeys
+
+        if prettyPrinted {
+            options.insert(.prettyPrinted)
+        }
+
         return try? JSONSerialization.data(withJSONObject: value, options: options)
     }
 }

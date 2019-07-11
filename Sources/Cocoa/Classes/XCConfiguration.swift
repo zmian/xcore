@@ -1,7 +1,7 @@
 //
 // XCConfiguration.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2017 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -55,19 +55,23 @@ import UIKit
 /// let headerLabel = UILabel(style: .header)
 /// ```
 public struct XCConfiguration<Type> {
-    public var identifier: String
-    public var configure: ((Type) -> Void)
+    public let identifier: Identifier<Type>
+    private let _configure: ((Type) -> Void)
 
-    public init(identifier: String? = nil, _ configure: @escaping ((Type) -> Void)) {
+    public init(identifier: Identifier<Type>? = nil, _ configure: @escaping ((Type) -> Void)) {
         self.identifier = identifier ?? "___defaultIdentifier___"
-        self.configure = configure
+        self._configure = configure
     }
 
-    public func extend(identifier: String? = nil, _ configure: @escaping ((Type) -> Void)) -> XCConfiguration<Type> {
+    public func extend(identifier: Identifier<Type>? = nil, _ configure: @escaping ((Type) -> Void)) -> XCConfiguration<Type> {
         return XCConfiguration(identifier: identifier) { type in
             self.configure(type)
             configure(type)
         }
+    }
+
+    public func configure(_ type: Type) {
+        self._configure(type)
     }
 }
 
@@ -77,10 +81,10 @@ extension XCConfiguration: Equatable {
     }
 }
 
-// MARK: Convenience UIKit Initializers
+// MARK: - Convenience UIKit Initializers
 
 extension UILabel {
-    public convenience init(style: XCConfiguration<UILabel>, text: String? = nil) {
+    public convenience init(style: XCConfiguration<UILabel>, text: String?) {
         self.init()
         self.text = text
         style.configure(self)
@@ -92,28 +96,28 @@ extension UILabel {
     }
 }
 
-extension UIImageView {
-    public convenience init(style: XCConfiguration<UIImageView>) {
+// MARK: - Stylable
+
+public protocol Stylable { }
+
+extension Stylable where Self: UIView {
+    public init(style: XCConfiguration<Self>) {
         self.init()
         style.configure(self)
     }
 }
 
-extension UIBarButtonItem {
-    public convenience init(style: XCConfiguration<UIBarButtonItem>) {
+extension Stylable where Self: UIBarButtonItem {
+    public init(style: XCConfiguration<Self>) {
         self.init()
         style.configure(self)
     }
 }
 
-extension UIStackView {
-    public convenience init(style: XCConfiguration<UIStackView>) {
-        self.init()
-        style.configure(self)
-    }
-}
+extension UIView: Stylable { }
+extension UIBarButtonItem: Stylable { }
 
-// MARK: With
+// MARK: - With
 
 public protocol With {}
 

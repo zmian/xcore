@@ -1,7 +1,7 @@
 //
 // Data+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -35,8 +35,28 @@ extension Data {
         guard let newData = string.data(using: encoding, allowLossyConversion: allowLossyConversion) else { return }
         append(newData)
     }
+}
 
-    public var hexString: String {
-        return String(format: "%@", self as CVarArg)
+extension Data {
+    public struct HexEncodingOptions: OptionSet {
+        public let rawValue: Int
+
+        public init(rawValue: Int) {
+            self.rawValue = rawValue
+        }
+
+        /// Includes `spaces` and `<>` symbols.
+        public static let raw = HexEncodingOptions(rawValue: 1 << 0)
+        public static let uppercase = HexEncodingOptions(rawValue: 1 << 1)
+    }
+
+    /// Converts `self` into hexadecimal string representation.
+    public func hexEncodedString(options: HexEncodingOptions = []) -> String {
+        if options.contains(.raw) {
+            return String(format: "%@", self as CVarArg)
+        }
+
+        let format = options.contains(.uppercase) ? "%02hhX" : "%02hhx"
+        return map { String(format: format, $0) }.joined()
     }
 }

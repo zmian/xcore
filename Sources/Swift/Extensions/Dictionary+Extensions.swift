@@ -1,7 +1,7 @@
 //
 // Dictionary+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -111,7 +111,7 @@ extension Dictionary {
     }
 }
 
-extension Dictionary where Key == String {
+extension Dictionary {
     /// Accesses the value associated with the given key for reading and writing.
     ///
     /// This *key-based* subscript returns the value for the given key if the key
@@ -156,7 +156,7 @@ extension Dictionary where Key == String {
     /// - Parameter key: The key to find in the dictionary.
     /// - Returns: The value associated with `key` if `key` is in the dictionary;
     ///   otherwise, `nil`.
-    public subscript<T: RawRepresentable>(key: T) -> Value? where T.RawValue == String {
+    public subscript<T: RawRepresentable>(key: T) -> Value? where T.RawValue == Key {
         get { return self[key.rawValue] }
         set { self[key.rawValue] = newValue }
     }
@@ -165,6 +165,80 @@ extension Dictionary where Key == String {
 extension Dictionary where Value: Equatable {
     public func keys(forValue value: Value) -> [Key] {
         return filter { $1 == value }.map { $0.0 }
+    }
+}
+
+extension Dictionary {
+    /// Returns a dictionary containing the results of mapping the given closure
+    /// over the sequence's key value pairs.
+    ///
+    /// In this example, `mapPairs` is used to convert the parameter dictionary keys
+    /// to their corresponding raw values.
+    ///
+    /// ```swift
+    /// enum Keys: String {
+    ///     case name = "full_name"
+    ///     case age
+    ///     case language
+    /// }
+    ///
+    /// var parameter: [Keys: Any] = [
+    ///     .name: "Vivien",
+    ///     .age: 21,
+    ///     .language: "English"
+    /// ]
+    ///
+    /// let result = parameter.mapPairs { ($0.key.rawValue, $0.value) }
+    ///
+    /// //  'result' [String: Any] = [
+    /// //     "full_name": "Vivien",
+    /// //     "age": 21,
+    /// //     "language": "English"
+    /// // ]
+    /// ```
+    ///
+    /// - Parameter transform: A mapping closure. `transform` accepts an
+    ///                        element of this sequence as its parameter and returns
+    ///                        a transformed value of the same or of a different
+    ///                        type.
+    /// - Returns: A dictionary containing the transformed key value pairs.
+    public func mapPairs<K: Hashable, T>(_ transform: (Element) throws -> (K, T)) rethrows -> [K: T] {
+        return [K: T](uniqueKeysWithValues: try map(transform))
+    }
+
+    /// Returns a dictionary containing, in order, the elements of the sequence that
+    /// satisfy the given predicate.
+    ///
+    /// In this example, `filterPairs` is used to include filter out key named "age."
+    ///
+    /// var parameter: [String: Any] = [
+    ///     "name": "Vivien",
+    ///     "age": 21,
+    ///     "language": "English"
+    /// ]
+    ///
+    /// let result = parameter.filterPairs { $0.key == "age" }
+    ///
+    /// // `result`: [String: Any] = [
+    /// //     "name": "Vivien",
+    /// //     "language": "English"
+    /// // ]
+    /// ```
+    ///
+    /// - Parameter includeElement: A closure that takes an element of the sequence
+    ///                             as its argument and returns a boolean value
+    ///                             indicating whether the element should be
+    ///                             included in the returned dictionary.
+    /// - Returns: An array of the elements that `isIncluded` allowed.
+    /// - Complexity: O(_n_), where _n_ is the length of the sequence.
+    public func filterPairs(_ includeElement: (Element) throws -> Bool) rethrows -> [Key: Value] {
+        return Dictionary(uniqueKeysWithValues: try filter(includeElement))
+    }
+}
+
+extension Dictionary where Key: RawRepresentable, Key.RawValue: Hashable {
+    public func normalize() -> [Key.RawValue: Value] {
+        return mapPairs { ($0.key.rawValue, $0.value) }
     }
 }
 

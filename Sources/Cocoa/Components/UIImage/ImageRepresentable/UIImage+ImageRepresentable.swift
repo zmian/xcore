@@ -1,7 +1,7 @@
 //
 // UIImage+ImageRepresentable.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 extension UIImage {
     /// Fetch an image from the given source.
@@ -43,15 +42,11 @@ extension UIImage {
         var downloadedImages = 0
 
         orderedObjects.forEach { object in
-            SDWebImageDownloader.shared().downloadImage(
-                with: object.url,
-                options: [],
-                progress: nil
-            ) { image, data, error, finished in
+            ImageDownloader.download(url: object.url) { image, data, error, finished in
                 downloadedImages += 1
 
                 if let image = image, finished {
-                    if let index = (orderedObjects.index { $0.url == object.url }) {
+                    if let index = orderedObjects.firstIndex(where: { $0.url == object.url }) {
                         orderedObjects[index].image = image
                     }
                 }

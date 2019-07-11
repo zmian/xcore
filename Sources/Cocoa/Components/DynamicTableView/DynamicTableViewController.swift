@@ -1,7 +1,7 @@
 //
 // DynamicTableViewController.swift
 //
-// Copyright © 2016 Zeeshan Mian
+// Copyright © 2016 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@ open class DynamicTableViewController: UIViewController {
         }
     }
 
-    // MARK: Init Methods
+    // MARK: - Init Methods
 
     public convenience init() {
         self.init(options: [])

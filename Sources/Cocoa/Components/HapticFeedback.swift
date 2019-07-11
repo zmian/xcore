@@ -1,7 +1,7 @@
 //
 // HapticFeedback.swift
 //
-// Copyright © 2018 Zeeshan Mian
+// Copyright © 2018 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,14 @@ public final class HapticFeedback {
     private var generator: UIFeedbackGenerator?
     private var triggerBlock: () -> Void
 
-    private init<T>(_ generator: @autoclosure @escaping () -> T, trigger: @escaping (T) -> Void) where T: UIFeedbackGenerator {
+    private init<T>(
+        _ generator: @autoclosure @escaping () -> T,
+        trigger: @escaping (T) -> Void
+    ) where T: UIFeedbackGenerator {
         self.createGenerator = generator
-        self.triggerBlock = {} // Workaround for compiler error (Variable 'self.triggerBlock' used before being initialized).
+        // Workaround for compiler error (Variable 'self.triggerBlock' used before being
+        // initialized).
+        self.triggerBlock = {}
         self.customTriggerBlock(trigger)
     }
 
@@ -42,36 +47,41 @@ public final class HapticFeedback {
 
     /// Prepares the generator to trigger feedback.
     ///
-    /// When you call this method, the generator is placed into a prepared state for a short
-    /// period of time. While the generator is prepared, you can trigger feedback with lower
-    /// latency.
+    /// When you call this method, the generator is placed into a prepared state for
+    /// a short period of time. While the generator is prepared, you can trigger
+    /// feedback with lower latency.
     ///
-    /// Think about when you can best prepare your generators. Call `prepare()` before the
-    /// event that triggers feedback. The system needs time to prepare the Taptic Engine for
-    /// minimal latency. Calling `prepare()` and then immediately triggering feedback (without
-    /// any time in between) does not improve latency.
+    /// Think about when you can best prepare your generators. Call `prepare()`
+    /// before the event that triggers feedback. The system needs time to prepare
+    /// the Taptic Engine for minimal latency. Calling `prepare()` and then
+    /// immediately triggering feedback (without any time in between) does not
+    /// improve latency.
     ///
-    /// To conserve power, the Taptic Engine returns to an idle state after any of the following
-    /// events:
+    /// To conserve power, the Taptic Engine returns to an idle state after any of
+    /// the following events:
+    ///
     /// - You trigger feedback on the generator.
     /// - A short period of time passes (typically seconds).
     /// - The generator is deallocated.
     ///
-    /// After feedback is triggered, the Taptic Engine returns to its idle state. If you might
-    /// trigger additional feedback within the next few seconds, immediately call `prepare()`
-    /// to keep the Taptic Engine in the prepared state.
-    ///
-    /// You can also extend the prepared state by repeatedly calling the `prepare()` method.
-    /// However, if you continue calling `prepare()` without ever triggering feedback, the
-    /// system may eventually place the Taptic Engine back in an idle state and ignore any
-    /// further `prepare()` calls until after you trigger feedback at least once.
-    ///
-    /// If you no longer need a prepared generator, remove all references to the generator
-    /// object and let the system deallocate it. This lets the Taptic Engine return to its idle
+    /// After feedback is triggered, the Taptic Engine returns to its idle state. If
+    /// you might trigger additional feedback within the next few seconds,
+    /// immediately call `prepare()` to keep the Taptic Engine in the prepared
     /// state.
     ///
-    /// - Note: The `prepare()` method is optional; however, it is highly recommended. Calling this
-    /// method helps ensure that your feedback has the lowest possible latency.
+    /// You can also extend the prepared state by repeatedly calling the `prepare()`
+    /// method. However, if you continue calling `prepare()` without ever triggering
+    /// feedback, the system may eventually place the Taptic Engine back in an idle
+    /// state and ignore any further `prepare()` calls until after you trigger
+    /// feedback at least once.
+    ///
+    /// If you no longer need a prepared generator, remove all references to the
+    /// generator object and let the system deallocate it. This lets the Taptic
+    /// Engine return to its idle state.
+    ///
+    /// - Note: The `prepare()` method is optional; however, it is highly
+    /// recommended. Calling this method helps ensure that your feedback has the
+    /// lowest possible latency.
     public func prepare() {
         createGeneratorIfNeeded()
         generator?.prepare()
@@ -83,7 +93,8 @@ public final class HapticFeedback {
         triggerBlock()
     }
 
-    /// This deallocate the generator so that the Taptic Engine can return to its idle state.
+    /// This deallocate the generator so that the Taptic Engine can return to its
+    /// idle state.
     public func sleep() {
         generator = nil
     }
@@ -105,6 +116,8 @@ extension HapticFeedback {
                 return mediumImpactFeedbackGenerator
             case .heavy:
                 return heavyImpactFeedbackGenerator
+            @unknown default:
+                fatalError(because: .unknownCaseDetected(style))
         }
     }
 
@@ -120,11 +133,21 @@ extension HapticFeedback {
 }
 
 extension HapticFeedback {
-    // MARK: UIImpactFeedbackGenerator
-    private static let lightImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .light)) { $0.impactOccurred() }
-    private static let mediumImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .medium)) { $0.impactOccurred() }
-    private static let heavyImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .heavy)) { $0.impactOccurred() }
+    // MARK: - UIImpactFeedbackGenerator
 
-    // MARK: UINotificationFeedbackGenerator
+    private static let lightImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .light)) {
+        $0.impactOccurred()
+    }
+
+    private static let mediumImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .medium)) {
+        $0.impactOccurred()
+    }
+
+    private static let heavyImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .heavy)) {
+        $0.impactOccurred()
+    }
+
+    // MARK: - UINotificationFeedbackGenerator
+
     private static let notificationFeedbackGenerator = HapticFeedback(UINotificationFeedbackGenerator()) { _ in }
 }

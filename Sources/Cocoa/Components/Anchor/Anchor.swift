@@ -1,7 +1,7 @@
 //
 // Anchor.swift
 //
-// Copyright © 2019 Zeeshan Mian
+// Copyright © 2019 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -108,7 +108,8 @@ extension Anchor.Axis {
             constraints.forEach {
                 $0.constant = value
             }
-            return self
+
+            return inset(UIEdgeInsets(value))
         }
 
         /// A convenience method to set inset.
@@ -120,7 +121,7 @@ extension Anchor.Axis {
             constraints.firstAttribute(.top)?.constant = value.top
             constraints.firstAttribute(.bottom)?.constant = value.bottom
             constraints.firstAttribute(.leading)?.constant = value.left
-            constraints.firstAttribute(.trailing)?.constant = value.right
+            constraints.firstAttribute(.trailing)?.constant = -value.right
             return self
         }
 

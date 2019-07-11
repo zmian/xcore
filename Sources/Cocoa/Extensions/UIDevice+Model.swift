@@ -1,7 +1,7 @@
 //
 // UIDevice+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -389,6 +389,12 @@ extension UIDevice.ModelType {
                     self = .carPlay
                 case .unspecified:
                     self = .unknown
+                @unknown default:
+                    #if DEBUG
+                    fatalError(because: .unknownCaseDetected(device.userInterfaceIdiom))
+                    #else
+                    self = .unknown
+                    #endif
             }
         }
 

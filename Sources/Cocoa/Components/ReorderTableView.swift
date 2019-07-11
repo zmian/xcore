@@ -2,7 +2,7 @@
 // ReorderTableView.swift
 // Swift Port of https://github.com/bvogelzang/BVReorderTableView
 //
-// Copyright © 2016 Zeeshan Mian
+// Copyright © 2016 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,8 +27,8 @@ import UIKit
 
 private class ReorderTableDraggingView: XCView {
     private let imageView = UIImageView()
-    private let topShadowImage = UIImageView(assetIdentifier: UIImage.AssetIdentifier.reorderTableViewCellShadowTop)
-    private let bottomShadowImage = UIImageView(assetIdentifier: UIImage.AssetIdentifier.reorderTableViewCellShadowBottom)
+    private let topShadowImage = UIImageView(assetIdentifier: .reorderTableViewCellShadowTop)
+    private let bottomShadowImage = UIImageView(assetIdentifier: .reorderTableViewCellShadowBottom)
     private let shadowHeight: CGFloat = 19
 
     var image: UIImage? {
@@ -105,7 +105,7 @@ open class ReorderTableView: UITableView {
     @objc open dynamic var draggingViewOpacity: CGFloat = 0.8
     @objc open dynamic var draggingViewBackgroundColor: UIColor = .clear
 
-    // MARK: Init Methods
+    // MARK: - Init Methods
 
     public convenience init() {
         self.init(frame: .zero)

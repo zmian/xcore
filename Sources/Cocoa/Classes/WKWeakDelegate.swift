@@ -1,7 +1,7 @@
 //
 // WKWeakDelegate.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2017 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -52,6 +52,6 @@ extension WKUserContentController {
     }
 
     @objc private func swizzled_add(_ scriptMessageHandler: WKScriptMessageHandler, name: String) {
-        self.swizzled_add(WKWeakDelegate(scriptMessageHandler), name: name)
+        swizzled_add(WKWeakDelegate(scriptMessageHandler), name: name)
     }
 }

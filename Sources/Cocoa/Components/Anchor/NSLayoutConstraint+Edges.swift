@@ -1,7 +1,7 @@
 //
 // NSLayoutConstraint+Edges.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,10 @@ extension NSLayoutConstraint {
         }
 
         init(_ constraints: [NSLayoutConstraint]) {
-            leading = constraints[0]
-            trailing = constraints[1]
-            top = constraints[2]
-            bottom = constraints[3]
+            trailing = constraints[0]
+            leading = constraints[1]
+            bottom = constraints[2]
+            top = constraints[3]
         }
 
         public init(top: NSLayoutConstraint, bottom: NSLayoutConstraint, leading: NSLayoutConstraint, trailing: NSLayoutConstraint) {
@@ -53,14 +53,14 @@ extension NSLayoutConstraint {
             top.constant = insets.top
             bottom.constant = insets.bottom
             leading.constant = insets.left
-            trailing.constant = insets.right
+            trailing.constant = -insets.right
         }
 
         public mutating func update(from value: CGFloat) {
             top.constant = value
             bottom.constant = value
             leading.constant = value
-            trailing.constant = value
+            trailing.constant = -value
         }
 
         public func activate() {

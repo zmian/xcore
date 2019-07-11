@@ -1,7 +1,7 @@
 //
 // NSLayoutConstraint+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -200,5 +200,24 @@ extension NSLayoutConstraint {
 extension Array where Element: NSLayoutConstraint {
     func firstAttribute(_ value: Anchor.Attributes) -> NSLayoutConstraint? {
         return first { $0.anchorAttributes == value }
+    }
+}
+
+extension Array where Element == NSLayoutConstraint.Axis {
+    /// The `.vertical` and `.horizontal` `NSLayoutConstraint.Axis`.
+    public static var both: [Element] {
+        return [.vertical, .horizontal]
+    }
+}
+
+extension UILayoutPriority {
+    /// When setting `UIStackView`'s subview to hidden, it will first constrain its
+    /// height to zero in order to animate it out. This can cause `Unable to
+    /// simultaneously satisfy constraints` warnings.
+    ///
+    /// To resolve the issue, Changing constraints priority from `1000` to `999` so
+    /// the `UISV-hiding` constraint can then take priority if needed.
+    public static var stackViewSubview: UILayoutPriority {
+        return .required - 1
     }
 }

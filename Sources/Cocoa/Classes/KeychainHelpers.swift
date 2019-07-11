@@ -1,7 +1,7 @@
 //
 // KeychainHelpers.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2017 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -50,9 +50,9 @@ final public class KeychainHelpers {
     public static func items(for secClass: String) -> [String: Any] {
         let query: [CFString: Any] = [
             kSecClass: secClass,
-            kSecReturnData: kCFBooleanTrue,
-            kSecReturnAttributes: kCFBooleanTrue,
-            kSecReturnRef: kCFBooleanTrue,
+            kSecReturnData: kCFBooleanTrue!,
+            kSecReturnAttributes: kCFBooleanTrue!,
+            kSecReturnRef: kCFBooleanTrue!,
             kSecMatchLimit: kSecMatchLimitAll
         ]
 

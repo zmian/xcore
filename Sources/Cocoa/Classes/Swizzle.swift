@@ -1,7 +1,7 @@
 //
 // Swizzle.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2017 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ import UIKit
 ///     }
 ///
 ///     @objc private func swizzled_viewWillAppear(_ animated: Bool) {
-///         self.swizzled_viewWillAppear(animated)
+///         swizzled_viewWillAppear(animated)
 ///     }
 /// }
 /// ```

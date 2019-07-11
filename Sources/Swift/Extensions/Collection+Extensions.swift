@@ -1,7 +1,7 @@
 //
 // Collection+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,47 +23,6 @@
 //
 
 import Foundation
-
-extension Collection {
-    /// Returns the element at the specified index iff it is within bounds, otherwise `nil`.
-    public func at(_ index: Index) -> Iterator.Element? {
-        return indices.contains(index) ? self[index] : nil
-    }
-}
-
-extension Collection {
-    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise `nil`.
-    public func at(_ range: Range<Index>) -> SubSequence? {
-        return hasIndex(range) ? self[range] : nil
-    }
-
-    /// Return true iff range is in `self`.
-    public func hasIndex(_ range: Range<Index>) -> Bool {
-        return range.lowerBound >= startIndex && range.upperBound <= endIndex
-    }
-}
-
-extension RandomAccessCollection where Index == Int {
-    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise `nil`.
-    public func at(_ range: CountableRange<Index>) -> SubSequence? {
-        return hasIndex(range) ? self[range] : nil
-    }
-
-    /// Return true iff range is in `self`.
-    public func hasIndex(_ range: CountableRange<Index>) -> Bool {
-        return range.lowerBound >= startIndex && range.upperBound <= endIndex
-    }
-
-    /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise `nil`.
-    public func at(_ range: CountableClosedRange<Index>) -> SubSequence? {
-        return hasIndex(range) ? self[range] : nil
-    }
-
-    /// Return true iff range is in `self`.
-    public func hasIndex(_ range: CountableClosedRange<Index>) -> Bool {
-        return range.lowerBound >= startIndex && range.upperBound <= endIndex
-    }
-}
 
 extension Sequence where Iterator.Element: Hashable {
     /// Return an `Array` containing only the unique elements of `self` in order.
@@ -102,7 +61,8 @@ extension Array where Element: Hashable {
 }
 
 extension Collection {
-    /// Returns the number of elements of the sequence that satisfy the given predicate.
+    /// Returns the number of elements of the sequence that satisfy the given
+    /// predicate.
     ///
     /// ```swift
     /// let cast = ["Vivien", "Marlon", "Kim", "Karl"]
@@ -111,12 +71,76 @@ extension Collection {
     /// // Prints "2"
     /// ```
     ///
-    /// - Parameter predicate: A closure that takes an element of the sequence as its argument
-    ///                        and returns a Boolean value indicating whether the element should
-    ///                        be included in the returned count.
+    /// - Parameter predicate: A closure that takes an element of the sequence as
+    ///                        its argument and returns a Boolean value indicating
+    ///                        whether the element should be included in the
+    ///                        returned count.
     /// - Returns: A count of elements that satisfy the given predicate.
     /// - Complexity: O(_n_), where _n_ is the length of the sequence.
     public func count(where predicate: (Element) throws -> Bool) rethrows -> Int {
         return try filter(predicate).count
+    }
+}
+
+extension RangeReplaceableCollection {
+    /// Returns an array by removing all the elements that satisfy the given
+    /// predicate.
+    ///
+    /// Use this method to remove every element in a collection that meets
+    /// particular criteria. This example removes all the odd values from an array
+    /// of numbers:
+    ///
+    /// ```swift
+    /// var numbers = [5, 6, 7, 8, 9, 10, 11]
+    /// let removedNumbers = numbers.removingAll(where: { $0 % 2 == 1 })
+    ///
+    /// // numbers == [6, 8, 10]
+    /// // removedNumbers == [5, 7, 9, 11]
+    /// ```
+    ////
+    /// - Parameter predicate: A closure that takes an element of the sequence as
+    ///                        its argument and returns a Boolean value indicating
+    ///                        whether the element should be removed from the
+    ///                        collection.
+    /// - Returns: A collection of the elements that are removed.
+    public mutating func removingAll(where predicate: (Element) throws -> Bool) rethrows -> Self {
+        let result = try filter(predicate)
+        try removeAll(where: predicate)
+        return result
+    }
+}
+
+extension RangeReplaceableCollection where Element: Equatable, Index == Int {
+    /// Remove element by value.
+    ///
+    /// - Returns: true if removed; false otherwise
+    @discardableResult
+    public mutating func remove(_ element: Element) -> Bool {
+        for (index, elementToCompare) in enumerated() where element == elementToCompare {
+            remove(at: index)
+            return true
+        }
+        return false
+    }
+
+    /// Remove elements by value.
+    public mutating func remove(_ elements: [Element]) {
+        elements.forEach { remove($0) }
+    }
+
+    /// Move an element in `self` to a specific index.
+    ///
+    /// - Parameters:
+    ///   - element: The element in `self` to move.
+    ///   - index: An index locating the new location of the element in `self`.
+    /// - Returns: `true` if moved; otherwise, `false`.
+    @discardableResult
+    public mutating func move(_ element: Element, to index: Int) -> Bool {
+        guard remove(element) else {
+            return false
+        }
+
+        insert(element, at: index)
+        return true
     }
 }

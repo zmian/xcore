@@ -2,7 +2,7 @@
 // XCTableViewComposedDataSource.swift
 // Based on https://github.com/ortuman/ComposedDataSource
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,7 @@ open class XCTableViewComposedDataSource: XCTableViewDataSource, ExpressibleByAr
     }
 
     open func remove(_ dataSource: XCTableViewDataSource) {
-        guard let index = dataSources.index(of: dataSource) else {
+        guard let index = dataSources.firstIndex(of: dataSource) else {
             return
         }
 

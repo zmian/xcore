@@ -1,29 +1,45 @@
 PODS:
-  - MDHTMLLabel (1.0.2)
-  - SDWebImage (4.4.2):
-    - SDWebImage/Core (= 4.4.2)
-  - SDWebImage/Core (4.4.2)
-  - Xcore (1.0.4):
-    - MDHTMLLabel
-    - SDWebImage
+  - Haring (2.1)
+  - PromiseKit (6.8.4):
+    - PromiseKit/CorePromise (= 6.8.4)
+    - PromiseKit/Foundation (= 6.8.4)
+    - PromiseKit/UIKit (= 6.8.4)
+  - PromiseKit/CorePromise (6.8.4)
+  - PromiseKit/Foundation (6.8.4):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.8.4):
+    - PromiseKit/CorePromise
+  - SDWebImage (4.4.6):
+    - SDWebImage/Core (= 4.4.6)
+  - SDWebImage/Core (4.4.6)
+  - SnapKit (5.0.0)
+  - Xcore (1.0.0):
+    - Haring
+    - PromiseKit
+    - SDWebImage (~> 4.0)
+    - SnapKit
 
 DEPENDENCIES:
   - Xcore (from `./Local.podspec`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - MDHTMLLabel
+    - Haring
+    - PromiseKit
     - SDWebImage
+    - SnapKit
 
 EXTERNAL SOURCES:
   Xcore:
     :path: "./Local.podspec"
 
 SPEC CHECKSUMS:
-  MDHTMLLabel: 18bf09ec7d6c1ae396497345c005857c0493ee0a
-  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
-  Xcore: 5ae33c844e22d31b00eb8891e32ae1c2feba1bf4
+  Haring: b3a8495c073a016f03296d67debc609a7ecf7710
+  PromiseKit: 51794a832647e7b819336dc2279039ce9f1cc49b
+  SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
+  SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
+  Xcore: 5a0efa2f95e026d8b20cb24efb55a86acfea7233
 
-PODFILE CHECKSUM: 88e52b970d3f4bab0bd3d83ca0ee0c57ef849dee
+PODFILE CHECKSUM: f06cef61f8ecc76919bd263a33413f0ee4cd2164
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.3

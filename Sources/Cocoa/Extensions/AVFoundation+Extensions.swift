@@ -1,7 +1,7 @@
 //
 // AVFoundation+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -134,7 +134,7 @@ extension AVPlayerItem {
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
     /// - Returns: An instance of AVPlayerItem.
     public convenience init?(fileName: String, bundle: Bundle? = nil) {
-        let name = fileName.lastPathComponent.stringByDeletingPathExtension
+        let name = fileName.lastPathComponent.deletingPathExtension
         let ext = fileName.pathExtension
         let bundle = bundle ?? Bundle.main
 
@@ -166,7 +166,7 @@ extension AVAsset {
     ///             The default value is `nil`.
     /// - Returns: An instance of AVAsset.
     public convenience init?(fileName: String, bundle: Bundle? = nil) {
-        let name = fileName.lastPathComponent.stringByDeletingPathExtension
+        let name = fileName.lastPathComponent.deletingPathExtension
         let ext = fileName.pathExtension
         let bundle = bundle ?? Bundle.main
 

@@ -1,7 +1,7 @@
 //
 // BackgroundImageTransform.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2017 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -56,6 +56,8 @@ final public class BackgroundImageTransform: ImageTransform {
                 break
             case .right, .trailing:
                 drawingPosition.x = finalSize.width - size.width
+            @unknown default:
+                fatalError(because: .unknownCaseDetected(alignment))
         }
 
         return UIGraphicsImageRenderer(bounds: rect).image { rendererContext in
