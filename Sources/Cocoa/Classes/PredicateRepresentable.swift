@@ -1,7 +1,7 @@
 //
 // PredicateRepresentable.swift
 //
-// Copyright © 2016 Zeeshan Mian
+// Copyright © 2016 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,27 @@ extension NSPredicate {
     /// Creates and returns a predicate that never matches any result.
     public static var noMatch: NSPredicate {
         return NSPredicate(value: false)
+    }
+}
+
+extension Array where Element: NSPredicate {
+    /// Returns a new predicate by joining the elements of the sequence by the given
+    /// logical type.
+    ///
+    /// Uses `NSCompoundPredicate` to create an `AND` or `OR` compound predicate of
+    /// zero or more other predicates, or the NOT of a single predicate. For the
+    /// logical `AND` and `OR` operations:
+    ///
+    /// - An `AND` predicate with no subpredicates evaluates to `true`.
+    /// - An `OR` predicate with no subpredicates evaluates to `false`.
+    /// - A compound predicate with one or more subpredicates evaluates to the truth
+    ///   of its subpredicates.
+    ///
+    /// - Parameter type: The logical type used to join the elements in `self`.
+    /// - Returns: A specialized predicate that evaluates logical combinations of
+    ///            other predicates.
+    public func joined(by type: NSCompoundPredicate.LogicalType) -> NSPredicate {
+        return NSCompoundPredicate(type: type, subpredicates: self)
     }
 }
 

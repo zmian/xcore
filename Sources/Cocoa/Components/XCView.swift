@@ -1,7 +1,7 @@
 //
 // XCView.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2015 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 import UIKit
 
 open class XCView: UIView {
-    // MARK: Init Methods
+    // MARK: - Init Methods
 
     public convenience init() {
         self.init(frame: .zero)
@@ -41,12 +41,12 @@ open class XCView: UIView {
         commonInit()
     }
 
-    // MARK: Setup Methods
+    // MARK: - Setup Methods
 
     /// The default implementation of this method does nothing.
     ///
-    /// Subclasses can override it to perform additional actions,
-    /// for example, add new subviews or configure properties.
-    /// This method is called when self is initialized using any of the relevant `init` methods.
+    /// Subclasses can override it to perform additional actions, for example, add
+    /// new subviews or configure properties. This method is called when `self` is
+    /// initialized using any of the relevant `init` methods.
     open func commonInit() {}
 }

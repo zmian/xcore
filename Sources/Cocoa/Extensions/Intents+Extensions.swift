@@ -1,7 +1,7 @@
 //
 // Intents+Extensions.swift
 //
-// Copyright © 2018 Zeeshan Mian
+// Copyright © 2018 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,6 @@
 import Foundation
 import Intents
 
-@available(iOS 10.0, *)
 extension INIntent {
     /// The donation shortcut interaction.
     ///
@@ -40,7 +39,6 @@ extension INIntent {
     }
 }
 
-@available(iOS 10.0, *)
 extension INIntent {
     private struct AssociatedKey {
         static var customIdentifier = "customIdentifier"
@@ -63,5 +61,21 @@ extension INIntent {
     public var groupIdentifier: String? {
         get { return associatedObject(&AssociatedKey.groupIdentifier) }
         set { setAssociatedObject(&AssociatedKey.groupIdentifier, value: newValue) }
+    }
+}
+
+extension INCurrencyAmount {
+    public convenience init(_ value: NSDecimalNumber) {
+        self.init(amount: value, currencyCode: "USD")
+    }
+
+    public convenience init(_ value: FloatLiteralType) {
+        self.init(NSDecimalNumber(value: value))
+    }
+}
+
+extension INBalanceAmount {
+    public convenience init(_ value: Double) {
+        self.init(amount: NSDecimalNumber(decimal: Decimal(value)), currencyCode: "USD")
     }
 }

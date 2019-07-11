@@ -1,7 +1,7 @@
 //
 // Array+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,15 +27,18 @@ import Foundation
 extension Array {
     /// Returns a random subarray of given length.
     ///
-    /// - Parameter size: Length
+    /// - Parameter count: Number of random elements to return.
     /// - Returns: Random subarray of length n.
-    public func randomElements(_ size: Int = 1) -> Array {
+    public func randomElements(count: Int = 1) -> Array {
+        let size = count
+        let count = self.count
+
         if size >= count {
-            return self
+            return shuffled()
         }
 
-        let index = Int(arc4random_uniform(UInt32(count - size)))
-        return Array(self[index..<(size + index)])
+        let index = Int.random(in: 0..<(count - size))
+        return self[index..<(size + index)].shuffled()
     }
 
     /// Returns a random element from `self`.
@@ -47,8 +50,8 @@ extension Array {
     /// Split array by chunks of given size.
     ///
     /// ```swift
-    /// let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    /// let chunks = arr.splitBy(5)
+    /// let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    /// let chunks = array.splitBy(5)
     /// print(chunks) // [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12]]
     /// ```
     /// - seealso: https://gist.github.com/ericdke/fa262bdece59ff786fcb
@@ -70,48 +73,13 @@ extension Array {
     }
 
     public func lastElement<T>(type: T.Type) -> T? {
-        for element in self.reversed() {
+        for element in reversed() {
             if let element = element as? T {
                 return element
             }
         }
 
         return nil
-    }
-}
-
-extension Array where Element: Equatable {
-    /// Remove element by value.
-    ///
-    /// - Returns: true if removed; false otherwise
-    @discardableResult
-    public mutating func remove(_ element: Element) -> Bool {
-        for (index, elementToCompare) in enumerated() where element == elementToCompare {
-            remove(at: index)
-            return true
-        }
-        return false
-    }
-
-    /// Remove elements by value.
-    public mutating func remove(_ elements: [Element]) {
-        elements.forEach { remove($0) }
-    }
-
-    /// Move an element in `self` to a specific index.
-    ///
-    /// - Parameters:
-    ///   - element: The element in `self` to move.
-    ///   - index: An index locating the new location of the element in `self`.
-    /// - Returns: `true` if moved; otherwise, `false`.
-    @discardableResult
-    public mutating func move(_ element: Element, to index: Int) -> Bool {
-        guard remove(element) else {
-            return false
-        }
-
-        insert(element, at: index)
-        return true
     }
 }
 
@@ -196,8 +164,8 @@ extension Array where Element: Equatable {
     public mutating func sort(by preferredOrder: [Element]) {
         return sort { (a, b) -> Bool in
             guard
-                let first = preferredOrder.index(of: a),
-                let second = preferredOrder.index(of: b)
+                let first = preferredOrder.firstIndex(of: a),
+                let second = preferredOrder.firstIndex(of: b)
             else {
                 return false
             }
@@ -224,8 +192,8 @@ extension Array where Element: Equatable {
     public func sorted(by preferredOrder: [Element]) -> [Element] {
         return sorted { (a, b) -> Bool in
             guard
-                let first = preferredOrder.index(of: a),
-                let second = preferredOrder.index(of: b)
+                let first = preferredOrder.firstIndex(of: a),
+                let second = preferredOrder.firstIndex(of: b)
             else {
                 return false
             }
@@ -235,32 +203,40 @@ extension Array where Element: Equatable {
     }
 }
 
-extension Array {
-    /// Returns an array by removing all the elements that satisfy the given predicate.
-    ///
-    /// Use this method to remove every element in a collection that meets
-    /// particular criteria. This example removes all the odd values from an
-    /// array of numbers:
-    ///
-    ///     var numbers = [5, 6, 7, 8, 9, 10, 11]
-    ///     let removedNumbers = numbers.removingAll(where: { $0 % 2 == 1 })
-    ///
-    ///     // numbers == [6, 8, 10]
-    ///     // removedNumbers == [5, 7, 9, 11]
-    ///
-    /// - Parameter predicate: A closure that takes an element of the
-    ///   sequence as its argument and returns a Boolean value indicating
-    ///   whether the element should be removed from the collection.
-    public mutating func removingAll(where predicate: (Element) throws -> Bool) rethrows -> [Element] {
-        let result = try filter(predicate)
-        try removeAll(where: predicate)
-        return result
-    }
-}
-
 extension Array where Element: RawRepresentable {
     /// Return an array containing all corresponding `rawValue`s of `self`.
     public var rawValues: [Element.RawValue] {
         return map { $0.rawValue }
+    }
+}
+
+extension Array where Element == String? {
+    public func joined(separator: String) -> String {
+        return lazy.compactMap { $0 }.filter { !$0.isBlank }.joined(separator: separator)
+    }
+}
+
+extension Array {
+    func binarySearch<T>(target: T, transform: (Element) -> T, _ comparison: (T, T) -> ComparisonResult) -> Int? {
+        var localRange = 0..<count
+
+        while localRange.startIndex < localRange.endIndex {
+            // Find the middle point in the array within the given range
+            let midIndex: Int = localRange.startIndex + (localRange.endIndex - localRange.startIndex) / 2
+            let comparableObject = transform(self[midIndex])
+            let result = comparison(comparableObject, target)
+            switch result {
+                case .orderedSame:
+                    // If we found our search key, return the index
+                    return midIndex
+                case .orderedAscending:
+                    // If the middle value is less than the target, look at the right half
+                    localRange = (midIndex + 1)..<localRange.endIndex
+                case .orderedDescending:
+                    // If the midle value is greater than the target, look at the left half
+                    localRange = localRange.startIndex..<midIndex
+            }
+        }
+        return nil
     }
 }

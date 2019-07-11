@@ -1,7 +1,7 @@
 //
 // DispatchQueue+Extensions.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2017 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ extension DispatchQueue {
     /// Submits a work item to a dispatch queue. If already on the dispatch queue then executes
     /// the work item right away.
     ///
-    /// - parameter execute: The work item to be invoked on the queue.
+    /// - Parameter work: The work item to be invoked on the queue.
     func asyncSafe(execute work: @escaping @convention(block) () -> Void) {
         if DispatchQueue.currentLabel == label {
             work()
@@ -46,7 +46,7 @@ extension DispatchQueue {
     /// Submits a work item to a dispatch queue. If already on the dispatch queue then executes
     /// the work item right away.
     ///
-    /// - parameter execute: The work item to be invoked on the queue.
+    /// - Parameter work: The work item to be invoked on the queue.
     func syncSafe(execute work: @escaping @convention(block) () -> Void) {
         if DispatchQueue.currentLabel == label {
             work()

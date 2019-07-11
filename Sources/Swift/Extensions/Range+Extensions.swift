@@ -1,7 +1,7 @@
 //
 // Range+Extensions.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2017 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,6 @@ import Foundation
 extension ClosedRange where Bound: FloatingPoint {
     public func random() -> Bound {
         let range = upperBound - lowerBound
-        return ((Bound(arc4random_uniform(UInt32.max)) / Bound(UInt32.max)) * range + lowerBound)
+        return (Bound(UInt32.random(in: 0..<UInt32.max)) / Bound(UInt32.max)) * range + lowerBound
     }
 }

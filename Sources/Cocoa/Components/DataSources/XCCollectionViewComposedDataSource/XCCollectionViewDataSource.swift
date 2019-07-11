@@ -1,7 +1,7 @@
 //
 // XCCollectionViewDataSource.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,11 +26,6 @@ import UIKit
 
 @objcMembers
 open class XCCollectionViewDataSource: NSObject, UICollectionViewDataSource {
-    /// An internal property to reference `UICollectionView` that `XCCollectionViewDataSource`
-    /// use to implement auto-resizing cells, header, and footer. This is automatically
-    /// set by the `XCCollectionViewComposedDataSource` when it is necessary.
-    internal weak var _sizeCollectionView: UICollectionView?
-
     /// The global section index of the data source in collection view.
     open var globalSection = 0
 
@@ -50,9 +45,23 @@ open class XCCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         self.collectionView = collectionView
         super.init()
     }
+
+    // MARK: Layout 2.0
+
+    open func collectionView(_ collectionView: UICollectionView, itemAttributesAt indexPath: IndexPath) -> CGSize? {
+        return nil
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, headerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
+        return (false, nil)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, footerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
+        return (false, nil)
+    }
 }
 
-// MARK: UICollectionViewDataSource
+// MARK: - UICollectionViewDataSource
 
 extension XCCollectionViewDataSource {
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -81,42 +90,34 @@ extension XCCollectionViewDataSource {
         }
 
         guard let reusableSupplementaryView = supplementaryView else {
-            #if DEBUG
-            fatalError(because: .dequeueFailed(for: "UICollectionReusableView", kind: kind.rawValue, indexPath: indexPath))
-            #else
-            // Return a dummy cell
-            // In some cases collection view queries and crash if no valid view is found.
-            return collectionView.dequeueReusableSupplementaryView(kind: kind, for: indexPath)
-            #endif
+            // Return a dummy cell, this happens when collection view datasources change but
+            // collection view did not update section and item counts. In some cases,
+            // collection view queries and crash if no valid view is found.
+            return collectionView.dequeueReusableSupplementaryView(kind, for: indexPath)
         }
 
         return reusableSupplementaryView
     }
-}
 
-// MARK: UICollectionViewDelegate
+    open func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
+        return nil
+    }
 
-extension XCCollectionViewDataSource {
-    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    open func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
+        return nil
     }
 }
 
-// MARK: UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDelegate
 
 extension XCCollectionViewDataSource {
-    open func collectionView(_ collectionView: UICollectionView, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset ?? 0
-    }
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {}
+}
 
-    open func collectionView(_ collectionView: UICollectionView, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumLineSpacing ?? 0
-    }
+// MARK: - UICollectionViewDelegateFlowLayout
 
-    open func collectionView(_ collectionView: UICollectionView, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? 0
-    }
-
-    // MARK: Lifecycle
+extension XCCollectionViewDataSource {
+    // MARK: - Lifecycle
 
     open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     }
@@ -131,73 +132,11 @@ extension XCCollectionViewDataSource {
     }
 }
 
-// MARK: Header and Footer
+// MARK: - Frame
 
 extension XCCollectionViewDataSource {
-    open func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
-        return nil
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
-        return nil
-    }
-}
-
-// MARK: Sizes
-
-extension XCCollectionViewDataSource {
-    internal func availableWidth(for collectionView: UICollectionView, section: Int) -> CGFloat {
-        let sectionInset = self.collectionView(collectionView, insetForSectionAt: section)
-        let sectionInsetHorizontal = sectionInset.horizontal
-        let contentInsetHorizontal = collectionView.contentInset.horizontal
-        let finalWidth = collectionView.bounds.width - sectionInsetHorizontal - contentInsetHorizontal - 0.01
-        return finalWidth
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let sizeCollectionView = _sizeCollectionView else {
-            return .zero
-        }
-
-        let availableWidth = self.availableWidth(for: collectionView, section: indexPath.section)
-        let cell = self.collectionView(sizeCollectionView, cellForItemAt: indexPath)
-        return cell.contentView.sizeFitting(width: availableWidth)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, sizeForHeaderInSection section: Int) -> CGSize {
-        guard let sizeCollectionView = _sizeCollectionView else {
-            return .zero
-        }
-
-        let availableWidth = self.availableWidth(for: collectionView, section: section)
-
-        if let headerView = self.collectionView(sizeCollectionView, viewForHeaderInSectionAt: IndexPath(item: 0, section: section)) {
-            return headerView.sizeFitting(width: availableWidth)
-        } else {
-            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.headerReferenceSize ?? 0
-        }
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, sizeForFooterInSection section: Int) -> CGSize {
-        guard let sizeCollectionView = _sizeCollectionView else {
-            return .zero
-        }
-
-        let availableWidth = self.availableWidth(for: collectionView, section: section)
-
-        if let footerView = self.collectionView(sizeCollectionView, viewForFooterInSectionAt: IndexPath(item: 0, section: section)) {
-            return footerView.sizeFitting(width: availableWidth)
-        } else {
-            return (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.footerReferenceSize ?? 0
-        }
-    }
-}
-
-// MARK: Frame
-
-extension XCCollectionViewDataSource {
-    /// Returns the frame of the first valid item in the datasource.
-    /// If there is no content to show returns `nil`.
+    /// Returns the frame of the first valid item in the datasource. If there is no
+    /// content to show returns `nil`.
     open var frameInCollectionView: CGRect? {
         guard let collectionView = collectionView else { return nil }
         var attributes: UICollectionViewLayoutAttributes?
@@ -213,7 +152,7 @@ extension XCCollectionViewDataSource {
         guard let collectionView = collectionView else { return nil }
         let numberOfSections = self.numberOfSections(in: collectionView)
         for section in 0..<numberOfSections {
-            if self.collectionView(collectionView, sizeForHeaderInSection: section).height > 0 {
+            if self.collectionView(collectionView, headerAttributesForSectionAt: section).enabled {
                 return IndexPath(row: 0, section: section + globalSection)
             }
         }

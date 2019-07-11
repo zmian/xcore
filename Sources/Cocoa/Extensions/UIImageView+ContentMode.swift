@@ -1,7 +1,7 @@
 //
 // UIImageView+ContentMode.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2017 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -66,7 +66,7 @@ extension UIImageView {
 
 extension UIImageView {
     @objc private func swizzled_setHighlightedImage(_ image: UIImage?) {
-        self.swizzled_setHighlightedImage(image)
+        swizzled_setHighlightedImage(image)
         // Force update the highlighted image.
         //
         // The highlighted image doesn't change if it's changed after the
@@ -80,12 +80,12 @@ extension UIImageView {
 
 extension UIImageView {
     @objc private func swizzled_layoutSubviews() {
-        self.swizzled_layoutSubviews()
+        swizzled_layoutSubviews()
         adjustContentModeIfNeeded()
     }
 
     @objc private func swizzled_setImage(_ image: UIImage?) {
-        self.swizzled_setImage(image)
+        swizzled_setImage(image)
         adjustContentModeIfNeeded()
     }
 

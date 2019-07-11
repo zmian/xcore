@@ -1,7 +1,7 @@
 //
 // ImageRepresentable.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2015 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,8 @@
 //
 
 import UIKit
-import SDWebImage
+
+// MARK: - ImageSourceType
 
 public enum ImageSourceType {
     case url(String)
@@ -65,6 +66,8 @@ extension ImageSourceType: Equatable {
     }
 }
 
+// MARK: - ImageSourceType.CacheType
+
 extension ImageSourceType {
     public enum CacheType {
         /// The image wasn't available in the cache, but was downloaded from the web.
@@ -76,24 +79,13 @@ extension ImageSourceType {
         /// The image was obtained from the memory cache.
         case memory
 
-        init(_ type: SDImageCacheType) {
-            switch type {
-                case .none:
-                    self = .none
-                case .disk:
-                    self = .disk
-                case .memory:
-                    self = .memory
-            }
-        }
-
         var possiblyDelayed: Bool {
             return self != .memory
         }
     }
 }
 
-// MARK: ImageRepresentable
+// MARK: - ImageRepresentable
 
 public protocol ImageRepresentable {
     var imageSource: ImageSourceType { get }
@@ -115,6 +107,8 @@ extension ImageRepresentable {
         }
     }
 }
+
+// MARK: - Conformance
 
 extension UIImage: ImageRepresentable {
     public var imageSource: ImageSourceType {

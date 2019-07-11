@@ -1,7 +1,7 @@
 //
 // GradientView.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2017 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -74,6 +74,17 @@ open class GradientView: XCView {
         super.layoutSubviews()
         CATransaction.performWithoutAnimation {
             gradientLayer.frame = bounds
+        }
+    }
+
+    public func setColors(_ colors: [UIColor], animated: Bool) {
+        guard !animated else {
+            self.colors = colors
+            return
+        }
+
+        CATransaction.performWithoutAnimation {
+            self.colors = colors
         }
     }
 }

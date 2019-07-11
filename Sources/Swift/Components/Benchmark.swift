@@ -1,7 +1,7 @@
 //
 // Benchmark.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2015 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,13 +23,6 @@
 //
 
 import Foundation
-
-private func format(seconds: TimeInterval) -> String {
-    let value = Int(seconds)
-    let seconds = value % 60
-    let minutes = value / 60
-    return String(format: "%02d:%02d", minutes, seconds)
-}
 
 // Credit: http://stackoverflow.com/a/31412302
 
@@ -66,4 +59,11 @@ public func measure(label: String, block: (_ finish: () -> Void) -> Void) {
         let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
         print("\(label):: Time: \(timeElapsed)", format(seconds: timeElapsed))
     }
+}
+
+private func format(seconds: TimeInterval) -> String {
+    let value = Int(seconds)
+    let seconds = value % 60
+    let minutes = value / 60
+    return String(format: "%02d:%02d", minutes, seconds)
 }

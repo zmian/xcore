@@ -1,7 +1,7 @@
 //
 // CompositeImageTransform.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2017 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,18 +27,24 @@ import UIKit
 final public class CompositeImageTransform: ImageTransform, ExpressibleByArrayLiteral {
     private var transforms: [ImageTransform] = []
 
+    public init(_ transforms: [ImageTransform]) {
+        self.transforms = transforms
+    }
+
     public init(arrayLiteral elements: ImageTransform...) {
         self.transforms = elements
     }
 
+    /// Adds a new transform at the end of the array.
     public func add(_ transform: ImageTransform) {
         transforms.append(transform)
     }
 
+    /// Removes the given transform.
     public func remove(_ transform: ImageTransform) {
         let identifiers = transforms.map { $0.identifier }
 
-        guard let index = identifiers.index(of: transform.identifier) else {
+        guard let index = identifiers.firstIndex(of: transform.identifier) else {
             return
         }
 

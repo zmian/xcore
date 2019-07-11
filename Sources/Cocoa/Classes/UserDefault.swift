@@ -1,7 +1,7 @@
 //
 // UserDefault.swift
 //
-// Copyright © 2016 Zeeshan Mian
+// Copyright © 2016 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -72,18 +72,13 @@ public final class UserDefault<T: Codable> {
     }
 
     private func setupApplicationMemoryWarningObserver() {
-        notificationToken = NotificationCenter.default.addObserver(
-            forName: UIApplication.didReceiveMemoryWarningNotification,
-            object: nil,
-            queue: nil
-        ) { [weak self] _ in
+        notificationToken = NotificationCenter.on.applicationDidReceiveMemoryWarning { [weak self] in
             self?.cachedValueInMemory = nil
         }
     }
 
     deinit {
-        guard let notificationToken = notificationToken else { return }
-        NotificationCenter.default.removeObserver(notificationToken)
+        NotificationCenter.remove(notificationToken)
     }
 }
 

@@ -1,7 +1,7 @@
 //
 // XCPageViewController.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -177,13 +177,13 @@ extension XCPageViewController {
     }
 
     open func removeViewController(_ viewController: UIViewController) {
-        guard let index = viewControllers.index(of: viewController) else { return }
+        guard let index = viewControllers.firstIndex(of: viewController) else { return }
         viewControllers.remove(at: index)
         reloadData()
     }
 
     open func replaceViewController(_ viewControllerToReplace: UIViewController, withViewControllers: [UIViewController]) {
-        guard let index = viewControllers.index(of: viewControllerToReplace) else { return }
+        guard let index = viewControllers.firstIndex(of: viewControllerToReplace) else { return }
         viewControllers.remove(at: index)
         viewControllers.insert(contentsOf: withViewControllers, at: index)
         reloadData()
@@ -198,7 +198,7 @@ extension XCPageViewController {
 
 extension XCPageViewController {
     private func indexOf(_ viewController: UIViewController) -> Int {
-        return viewControllers.index(of: viewController) ?? 0
+        return viewControllers.firstIndex(of: viewController) ?? 0
     }
 
     private func updateStatusBar(for index: Int) {

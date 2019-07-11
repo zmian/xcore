@@ -13,8 +13,8 @@ Xcore is a collection of pure Swift and Cocoa Touch classes, extensions and comp
 
 ## Requirements
 * iOS 11.0+
-* Xcode 10.0+
-* Swift 4.2+
+* Xcode 10.2+
+* Swift 5.0+
 
 ## Installation
 
@@ -31,6 +31,38 @@ pod 'Xcore'
 ```ruby
 pod 'Xcore', :git => 'https://github.com/zmian/xcore.swift'
 ```
+
+### Third-Party Extensions
+
+Xcore provides extensions for various third-party frameworks. They are behind `#if canImport`[flag](https://github.com/apple/swift-evolution/blob/master/proposals/0075-import-test.md) to avoid linking these frameworks as hard dependencies. 
+
+To enable these extension in your own project, simply add the following script in your `podfile`:
+
+```ruby
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            if target.name == "Xcore" then
+                # Exposing Carthage frameworks
+                #
+                # Expose `Vendor` (Carthage) directory to Xcore so we can get conditional extensions.
+                config.build_settings['FRAMEWORK_SEARCH_PATHS'] ||= ['$(inherited)', '${PODS_ROOT}/../Vendor']
+
+                # Exposing CocoaPods frameworks
+                #
+                # Or expose `SnapKit` pod to Xcore so we can get conditional extensions.
+                config.build_settings['FRAMEWORK_SEARCH_PATHS'] ||= ['$(inherited)', '${PODS_CONFIGURATION_BUILD_DIR}/SnapKit']
+                # Link `SnapKit` framework to Xcore so the conditional canImport flag works.
+                config.build_settings['OTHER_LDFLAGS'] ||= ['$(inherited)', '-framework "SnapKit"']
+            end
+        end
+    end
+end
+```
+
+Replace `'${PODS_ROOT}/../Vendor'` with location of your frameworks directory.
+
+**Note:** This script can also make your Carthage dependencies visible to Xcore so you can use these conditional extensions.
 
 ## Documentation
 

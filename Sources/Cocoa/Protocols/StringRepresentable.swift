@@ -1,7 +1,7 @@
 //
 // StringRepresentable.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2015 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,8 @@
 
 import UIKit
 
+// MARK: - StringSourceType
+
 public enum StringSourceType {
     case string(String)
     case attributedString(NSAttributedString)
@@ -38,7 +40,7 @@ public enum StringSourceType {
     }
 }
 
-// MARK: StringRepresentable
+// MARK: - StringRepresentable
 
 public protocol StringRepresentable {
     var stringSource: StringSourceType { get }
@@ -50,13 +52,19 @@ extension String: StringRepresentable {
     }
 }
 
+extension NSString: StringRepresentable {
+    public var stringSource: StringSourceType {
+        return .string(self as String)
+    }
+}
+
 extension NSAttributedString: StringRepresentable {
     public var stringSource: StringSourceType {
         return .attributedString(self)
     }
 }
 
-// MARK: TextAttributedTextRepresentable
+// MARK: - TextAttributedTextRepresentable
 
 public protocol TextAttributedTextRepresentable: class {
     var text: String? { get set }
@@ -106,6 +114,8 @@ extension TextAttributedTextRepresentable where Self: UIView {
         )
     }
 }
+
+// MARK: - Conformance
 
 extension UILabel: TextAttributedTextRepresentable { }
 extension UIButton: TextAttributedTextRepresentable { }

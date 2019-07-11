@@ -1,7 +1,7 @@
 //
 // UIImageView+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@ extension UIImageView {
     ///   - range:    Images range (e.g., `0..<30` This will create: `"AnimationImage0.png"..."AnimationImage29.png"`).
     ///   - duration: The animation duration.
     public func createAnimatedImages(_ name: String, _ range: Range<Int>, _ duration: TimeInterval) {
-        let prefix = name.stringByDeletingPathExtension
+        let prefix = name.deletingPathExtension
         let ext = name.pathExtension.isEmpty ? "png" : name.pathExtension
 
         var images: [UIImage] = []

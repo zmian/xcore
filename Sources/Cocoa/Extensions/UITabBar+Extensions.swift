@@ -1,7 +1,7 @@
 //
 // UITabBar+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,8 @@ import UIKit
 extension UITabBar {
     private struct AssociatedKey {
         static var isTransparent = "isTransparent"
+        static var borderColor = "borderColor"
+        static var borderWidth = "borderWidth"
     }
 
     open var isTransparent: Bool {
@@ -52,7 +54,36 @@ extension UITabBar {
         set { setValue(newValue, forKey: "_hidesShadow") }
     }
 
-    open func setBorder(color: UIColor, thickness: CGFloat = 1) {
+    @objc dynamic open override var borderWidth: CGFloat {
+        get { return associatedObject(&AssociatedKey.borderWidth, default: 0) }
+        set {
+            setAssociatedObject(&AssociatedKey.borderWidth, value: newValue)
+            guard borderWidth != 0 else { return }
+            topBorderView.constraint(forAttribute: .height)?.constant = newValue
+        }
+    }
+
+    @objc dynamic open override var borderColor: UIColor {
+        get { return associatedObject(&AssociatedKey.borderColor, default: layer.borderColor?.uiColor ?? .black) }
+        set {
+            setAssociatedObject(&AssociatedKey.borderColor, value: newValue)
+            guard borderWidth != 0 else { return }
+            topBorderView.backgroundColor = newValue
+        }
+    }
+
+    private var topBorderView: UIView {
+        let tag = "topBorderView".hashValue
+
+        if let view = viewWithTag(tag) {
+            return view
+        }
+
+        setBorder(color: borderColor, thickness: borderWidth)
+        return viewWithTag(tag)!
+    }
+
+    private func setBorder(color: UIColor, thickness: CGFloat = 1) {
         isBorderHidden = true
         addBorder(edges: .top, color: color, thickness: thickness)
     }

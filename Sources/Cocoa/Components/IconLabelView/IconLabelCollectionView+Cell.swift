@@ -1,7 +1,7 @@
 //
 // IconLabelCollectionView+Cell.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2015 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,7 @@ extension IconLabelCollectionView {
         private let deleteButton = UIButton().apply {
             $0.isHidden = true
 
-            $0.image(R(.collectionViewCellDeleteIcon), for: .normal)
+            $0.image(r(.collectionViewCellDeleteIcon), for: .normal)
             $0.imageView?.cornerRadius = 24/2
             $0.imageView?.backgroundColor = .white
 

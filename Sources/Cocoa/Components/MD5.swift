@@ -1,7 +1,7 @@
 //
 // MD5.swift
 //
-// Copyright © 2018 Zeeshan Mian
+// Copyright © 2018 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,9 +27,9 @@ import CommonCrypto
 
 extension Data {
     public var md5: String {
-        let hash = withUnsafeBytes { (bytes: UnsafePointer<Data>) -> [UInt8] in
-            var hash: [UInt8] = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
-            CC_MD5(bytes, CC_LONG(count), &hash)
+        let hash = withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
+            var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
+            CC_MD5(bytes.baseAddress, CC_LONG(count), &hash)
             return hash
         }
 

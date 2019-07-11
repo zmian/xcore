@@ -1,7 +1,7 @@
 //
 // Weak.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2017 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,32 +30,35 @@ import Foundation
 /// ```swift
 /// let views = [Weak<UIView>]()
 /// ```
-open class Weak<T: AnyObject>: Equatable, Hashable {
-    open weak var value: T?
+final public class Weak<Value: AnyObject> {
+    public weak var value: Value?
 
-    public init (value: T) {
+    public init (_ value: Value) {
         self.value = value
-    }
-
-    public var hashValue: Int {
-        guard let value = value else {
-            return Unmanaged<AnyObject>.passUnretained(self).toOpaque().hashValue
-        }
-
-        if let value = value as? AnyHashable {
-            return value.hashValue
-        }
-
-        return Unmanaged<AnyObject>.passUnretained(value).toOpaque().hashValue
-    }
-
-    public static func ==<T>(lhs: Weak<T>, rhs: Weak<T>) -> Bool {
-        return lhs.value === rhs.value
     }
 }
 
-extension NSObject {
-    var memoryAddress: String {
-        return String(describing: Unmanaged<NSObject>.passUnretained(self).toOpaque())
+extension Weak: Equatable {
+    public static func ==(lhs: Weak, rhs: Weak) -> Bool {
+        return lhs.value === rhs.value
+    }
+
+    public static func ==(lhs: Weak, rhs: Value) -> Bool {
+        return lhs.value === rhs
+    }
+}
+
+extension Weak: Hashable where Value: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(value)
+    }
+}
+
+extension RangeReplaceableCollection where Element: Weak<AnyObject>, Index == Int {
+    /// Removes all elements where the `value` is deallocated.
+    public mutating func flatten() {
+        for (index, element) in enumerated() where element.value == nil {
+            remove(at: index)
+        }
     }
 }

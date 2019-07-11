@@ -1,7 +1,7 @@
 //
 // IconLabelCollectionView.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2015 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -78,7 +78,7 @@ open class IconLabelCollectionView: UICollectionView {
         didMoveItem = callback
     }
 
-    // MARK: Init Methods
+    // MARK: - Init Methods
 
     public convenience init() {
         self.init(options: [])
@@ -103,7 +103,7 @@ open class IconLabelCollectionView: UICollectionView {
         internalCommonInit()
     }
 
-    // MARK: Setup Methods
+    // MARK: - Setup Methods
 
     private func internalCommonInit() {
         setupCollectionView()
@@ -112,9 +112,9 @@ open class IconLabelCollectionView: UICollectionView {
 
     /// The default implementation of this method does nothing.
     ///
-    /// Subclasses can override it to perform additional actions,
-    /// for example, add new subviews or configure properties.
-    /// This method is called when self is initialized using any of the relevant `init` methods.
+    /// Subclasses can override it to perform additional actions, for example, add
+    /// new subviews or configure properties. This method is called when `self` is
+    /// initialized using any of the relevant `init` methods.
     open func commonInit() {}
 
     private func setupCollectionView() {
@@ -139,7 +139,7 @@ open class IconLabelCollectionView: UICollectionView {
         super.reloadData()
     }
 
-    // MARK: UILongPressGestureRecognizer
+    // MARK: - UILongPressGestureRecognizer
 
     private lazy var longPressGestureRecognizer = UILongPressGestureRecognizer { [weak self] sender in
         guard
@@ -159,7 +159,7 @@ open class IconLabelCollectionView: UICollectionView {
     }
 }
 
-// MARK: UICollectionViewDelegate & UICollectionViewDataSource
+// MARK: - UICollectionViewDelegate & UICollectionViewDataSource
 
 extension IconLabelCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -189,7 +189,7 @@ extension IconLabelCollectionView: UICollectionViewDelegate, UICollectionViewDat
         cell.setDeleteButtonHidden(!isEditing)
     }
 
-    // MARK: Reordering
+    // MARK: - Reordering
 
     open func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         return allowsReordering
@@ -201,7 +201,7 @@ extension IconLabelCollectionView: UICollectionViewDelegate, UICollectionViewDat
     }
 }
 
-// MARK: Deletion
+// MARK: - Deletion
 
 extension IconLabelCollectionView {
     /// Deletes the items at the specified index paths.
@@ -222,7 +222,7 @@ extension IconLabelCollectionView {
     }
 }
 
-// MARK: Convenience API
+// MARK: - Convenience API
 
 extension IconLabelCollectionView {
     /// A convenience property to create a single section collection view.
@@ -232,7 +232,7 @@ extension IconLabelCollectionView {
     }
 }
 
-// MARK: Helpers
+// MARK: - Helpers
 
 extension IconLabelCollectionView {
     private func updateCellOptionsIfNeeded() {

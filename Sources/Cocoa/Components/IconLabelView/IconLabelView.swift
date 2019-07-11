@@ -1,7 +1,7 @@
 //
 // IconLabelView.swift
 //
-// Copyright © 2015 Zeeshan Mian
+// Copyright © 2015 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ open class IconLabelView: XCView {
     private var labelsWidthConstraints: [NSLayoutConstraint] = []
     private var stackViewConstraints: (vertical: [NSLayoutConstraint]?, horizontal: [NSLayoutConstraint]?)
 
-    // MARK: Subviews
+    // MARK: - Subviews
 
     private lazy var stackView = UIStackView(arrangedSubviews: [
         imageViewContainer,
@@ -218,7 +218,7 @@ open class IconLabelView: XCView {
         set { stackView.layoutMargins = newValue }
     }
 
-    // MARK: Setup Methods
+    // MARK: - Setup Methods
 
     open override func commonInit() {
         addSubview(stackView)
@@ -232,7 +232,7 @@ open class IconLabelView: XCView {
 
         updateAxis()
 
-        imageSizeConstraints = NSLayoutConstraint.Size(imageViewContainer.anchor.size.equalTo(imageSize).constraints)
+        imageSizeConstraints = NSLayoutConstraint.Size(imageViewContainer.anchor.size.equalTo(imageSize).priority(.stackViewSubview).constraints)
         imagePaddingConstraints = NSLayoutConstraint.Edges(imageView.anchor.edges.equalToSuperview().inset(imageInset).constraints)
     }
 
@@ -247,7 +247,7 @@ open class IconLabelView: XCView {
     }
 }
 
-// MARK: Configure
+// MARK: - Configure
 
 extension IconLabelView {
     open func configure(_ image: ImageRepresentable? = nil, transform: ImageTransform? = nil, title: StringRepresentable?, subtitle: StringRepresentable? = nil) {
@@ -267,7 +267,7 @@ extension IconLabelView {
     }
 }
 
-// MARK: UIAppearance Properties
+// MARK: - UIAppearance Properties
 
 extension IconLabelView {
     @objc public dynamic var titleColor: UIColor? {
@@ -310,6 +310,8 @@ extension IconLabelView {
                     stackViewConstraints.horizontal = stackView.anchor.vertically.equalToSuperview().constraints
                 }
                 stackViewConstraints.horizontal?.activate()
+            @unknown default:
+                fatalError(because: .unknownCaseDetected(axis))
         }
     }
 

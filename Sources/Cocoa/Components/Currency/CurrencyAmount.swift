@@ -1,7 +1,7 @@
 //
 // CurrencyAmount.swift
 //
-// Copyright © 2017 Zeeshan Mian
+// Copyright © 2017 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,8 @@
 //
 
 import Foundation
+
+// MARK: - FormattingStyle
 
 extension CurrencyAmount {
     public indirect enum FormattingStyle: Equatable {
@@ -62,6 +64,8 @@ extension CurrencyAmount {
     }
 }
 
+// MARK: - CurrencyAmount
+
 public struct CurrencyAmount: CustomStringConvertible {
     public let amount: Double
     public let dollars: String
@@ -69,16 +73,18 @@ public struct CurrencyAmount: CustomStringConvertible {
     public let currencySymbol: String
     public let groupingSeparator: String
     public let decimalSeparator: String
-
     private var isZeroCents: Bool {
         return cents == "00"
     }
 
-    public var description: String {
-        return joined(style: .none)
-    }
-
-    public init(amount: Double, dollars: String, cents: String, currencySymbol: String, groupingSeparator: String, decimalSeparator: String) {
+    public init(
+        amount: Double,
+        dollars: String,
+        cents: String,
+        currencySymbol: String,
+        groupingSeparator: String,
+        decimalSeparator: String
+    ) {
         self.amount = amount
         self.dollars = dollars
         self.cents = cents
@@ -87,8 +93,12 @@ public struct CurrencyAmount: CustomStringConvertible {
         self.decimalSeparator = decimalSeparator
     }
 
-    /// Returns a new string by concatenating the components,
-    /// using the given formatting style.
+    public var description: String {
+        return joined(style: .none)
+    }
+
+    /// Returns a new string by concatenating the components, using the given
+    /// formatting style.
     ///
     /// The default value is `.none`.
     ///
@@ -115,7 +125,8 @@ public struct CurrencyAmount: CustomStringConvertible {
         }
     }
 
-    /// The range tuple of the components with respects to the given formatting style.
+    /// The range tuple of the components with respects to the given formatting
+    /// style.
     ///
     /// - Parameter style: The formatting style to us when determining the ranges.
     /// - Returns: The tuple with range for each components.

@@ -1,7 +1,7 @@
 //
 // NSObject+Extensions.swift
 //
-// Copyright © 2018 Zeeshan Mian
+// Copyright © 2018 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,12 @@
 //
 
 import Foundation
+
+extension NSObject {
+    var memoryAddress: String {
+        return String(describing: Unmanaged<NSObject>.passUnretained(self).toOpaque())
+    }
+}
 
 extension NSObject {
     /// Returns the value for the property identified by a given key.

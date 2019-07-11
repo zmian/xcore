@@ -1,7 +1,7 @@
 //
 // VersionTests.swift
 //
-// Copyright © 2019 Zeeshan Mian
+// Copyright © 2019 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -26,9 +26,9 @@ import XCTest
 @testable import Xcore
 
 final class VersionTests: TestCase {
-    private var osVersion: Version = "12.1.3"
-
     func testComparisonCases() {
+        let osVersion: Version = "12.1.3"
+
         XCTAssertTrue(osVersion > "12")
         XCTAssertFalse(osVersion < "12")
         XCTAssertFalse(osVersion == "12")
@@ -46,5 +46,23 @@ final class VersionTests: TestCase {
         XCTAssertTrue(osVersion == "12.1.3")
         XCTAssertTrue(osVersion >= "12.1.3")
         XCTAssertTrue(osVersion <= "12.1.3")
+    }
+
+    func testConformance() {
+        let v1: Version = "12.1.3"
+        let v2 = Version(rawValue: "12.1.3")
+
+        XCTAssertTrue(v1.rawValue == "12.1.3")
+        XCTAssertTrue(v1.rawValue == v1.description)
+        XCTAssertTrue(v1.rawValue == v1.playgroundDescription as! String)
+
+        XCTAssertTrue(v1 == v2)
+        XCTAssertTrue(v1.hashValue == v2.hashValue)
+        XCTAssertTrue(v1.description == v2.description)
+
+        var hasher = Hasher()
+        v1.hash(into: &hasher)
+
+        XCTAssertTrue(v1.hashValue == v2.hashValue)
     }
 }

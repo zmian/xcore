@@ -1,7 +1,7 @@
 //
 // String+Extensions.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,19 @@
 
 import Foundation
 
+extension StringProtocol {
+    /// Returns `true` iff `value` is in `self`.
+    public func contains<T: StringProtocol>(_ value: T, options: String.CompareOptions = []) -> Bool {
+        return range(of: value, options: options) != nil
+    }
+}
+
 extension String {
     public var capitalizeFirstCharacter: String {
         return String(prefix(1).capitalized + dropFirst())
     }
 
-    public var urlEscaped: String? {
+    public func urlEscaped() -> String? {
         return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
     }
 
@@ -53,11 +60,6 @@ extension String {
         return trimmingCharacters(in: .whitespaces).replace("[ ]+", with: string)
     }
 
-    /// Returns `true` iff `value` is in `self`.
-    public func contains(_ value: String, options: String.CompareOptions = []) -> Bool {
-        return range(of: value, options: options) != nil
-    }
-
     /// Determine whether the string is a valid url.
     public var isValidUrl: Bool {
         if let url = URL(string: self), url.host != nil {
@@ -74,7 +76,8 @@ extension String {
 
     /// Drops the given `prefix` from `self`.
     ///
-    /// - Returns: String without the specified `prefix` or nil if `prefix` doesn't exists.
+    /// - Returns: String without the specified `prefix` or nil if `prefix`
+    ///            doesn't exists.
     public func stripPrefix(_ prefix: String) -> String? {
         guard hasPrefix(prefix) else { return nil }
         return String(dropFirst(prefix.count))
@@ -90,7 +93,7 @@ extension String {
     }
 }
 
-// MARK: NSString
+// MARK: - NSString
 
 extension String {
     private var nsString: NSString {
@@ -101,18 +104,50 @@ extension String {
         return nsString.lastPathComponent
     }
 
-    public var stringByDeletingLastPathComponent: String {
+    public var deletingLastPathComponent: String {
         return nsString.deletingLastPathComponent
     }
 
-    public var stringByDeletingPathExtension: String {
+    public var deletingPathExtension: String {
         return nsString.deletingPathExtension
     }
 
     public var pathExtension: String {
         return nsString.pathExtension
     }
+
+    /// Returns a new string made by appending to the receiver a given path component.
+    ///
+    /// The following table illustrates the effect of this method on a variety of
+    /// different paths, assuming that aString is supplied as “`scratch.tiff`”:
+    ///
+    /// ```
+    /// +-----------------------------------------------+
+    /// | Receiver’s String Value | Resulting String    |
+    /// |-------------------------+---------------------|
+    /// | “/tmp”                  | “/tmp/scratch.tiff” |
+    /// | “/tmp/”                 | “/tmp/scratch.tiff” |
+    /// | “/”                     | “/scratch.tiff”     |
+    /// | “” (an empty string)    | “scratch.tiff”      |
+    /// +-----------------------------------------------+
+    /// ```
+    ///
+    /// Note that this method only works with file paths (not, for example, string
+    /// representations of URLs).
+    ///
+    /// - Parameter component: The path component to append to the receiver.
+    /// - Returns: A new string made by appending `component` to the receiver,
+    ///            preceded if necessary by a path separator.
+    public func appendingPathComponent(_ component: Any?) -> String {
+        guard let component = component else {
+            return self
+        }
+
+        return nsString.appendingPathComponent(String(describing: component))
+    }
 }
+
+// MARK: - Range Expressions
 
 extension String {
     // Credit: https://stackoverflow.com/a/27880748
@@ -139,20 +174,7 @@ extension String {
     }
 }
 
-// MARK: Localization
-
-extension String {
-    private var localized: String {
-        #warning("TODO: Add more customization to use these methods instead of secondary library")
-        return NSLocalizedString(self, tableName: nil, bundle: .main, value: "", comment: "")
-    }
-
-    private func localized(_ comment: String) -> String {
-        return NSLocalizedString(self, tableName: nil, bundle: .main, value: "", comment: comment)
-    }
-}
-
-// MARK: Base64 Support
+// MARK: - Base64 Support
 
 extension String {
     /// Decode specified `Base64` string
@@ -211,119 +233,5 @@ extension String {
         }
 
         return (size, numberOfLines)
-    }
-}
-
-// MARK: Range Expressions
-
-extension StringProtocol {
-    public func index(from: Int) -> Index? {
-        guard from > -1, let index = self.index(startIndex, offsetBy: from, limitedBy: endIndex) else {
-            return nil
-        }
-
-        return index
-    }
-
-    /// Returns the element at the specified index iff it is within bounds, otherwise nil.
-    public func at(_ index: Int) -> String? {
-        guard let index = self.index(from: index), let character = at(index) else {
-            return nil
-        }
-
-        return String(character)
-    }
-}
-
-extension String {
-    /// e.g., `"Hello world"[..<5] // → "Hello"`
-    private subscript(range: PartialRangeUpTo<Int>) -> Substring {
-        return self[..<index(startIndex, offsetBy: range.upperBound)]
-    }
-
-    /// e.g., `"Hello world"[...4] // → "Hello"`
-    private subscript(range: PartialRangeThrough<Int>) -> Substring {
-        return self[...index(startIndex, offsetBy: range.upperBound)]
-    }
-
-    /// e.g., `"Hello world"[0...] // → "Hello world"`
-    private subscript(range: PartialRangeFrom<Int>) -> Substring {
-        return self[index(startIndex, offsetBy: range.lowerBound)...]
-    }
-
-    /// e.g., `"Hello world"[0..<5] // → "Hello"`
-    private subscript(range: CountableRange<Int>) -> Substring {
-        let start = index(startIndex, offsetBy: range.lowerBound)
-        let end = index(startIndex, offsetBy: range.upperBound)
-        return self[start..<end]
-    }
-
-    /// e.g., `"Hello world"[0...4] // → "Hello"`
-    private subscript(range: CountableClosedRange<Int>) -> Substring {
-        let start = index(startIndex, offsetBy: range.lowerBound)
-        let end = index(startIndex, offsetBy: range.upperBound)
-        return self[start...end]
-    }
-}
-
-extension String {
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
-    ///
-    /// e.g., `"Hello world"[..<5] // → "Hello"`
-    public func at(_ range: PartialRangeUpTo<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
-    }
-
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
-    ///
-    /// e.g., `"Hello world"[...4] // → "Hello"`
-    public func at(_ range: PartialRangeThrough<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
-    }
-
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
-    ///
-    /// e.g., `"Hello world"[0...] // → "Hello world"`
-    public func at(_ range: PartialRangeFrom<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
-    }
-
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
-    ///
-    /// e.g., `"Hello world"[0..<5] // → "Hello"`
-    public func at(_ range: CountableRange<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
-    }
-
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
-    ///
-    /// e.g., `"Hello world"[0...4] // → "Hello"`
-    public func at(range: CountableClosedRange<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
-    }
-
-    /// Return true iff range is in `self`.
-    private func hasIndex(_ range: PartialRangeUpTo<Int>) -> Bool {
-        return range.upperBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
-    }
-
-    /// Return true iff range is in `self`.
-    private func hasIndex(_ range: PartialRangeThrough<Int>) -> Bool {
-        return range.upperBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
-    }
-
-    /// Return true iff range is in `self`.
-    private func hasIndex(_ range: PartialRangeFrom<Int>) -> Bool {
-        return range.lowerBound >= startIndex.encodedOffset && range.lowerBound < endIndex.encodedOffset
-    }
-
-    /// Return true iff range is in `self`.
-    private func hasIndex(_ range: CountableRange<Int>) -> Bool {
-        return range.lowerBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
-    }
-
-    /// Return true iff range is in `self`.
-    private func hasIndex(_ range: CountableClosedRange<Int>) -> Bool {
-        return range.lowerBound >= startIndex.encodedOffset && range.upperBound < endIndex.encodedOffset
     }
 }

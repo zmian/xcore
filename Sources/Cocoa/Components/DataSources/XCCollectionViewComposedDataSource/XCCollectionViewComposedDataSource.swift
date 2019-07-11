@@ -1,7 +1,7 @@
 //
 // XCCollectionViewComposedDataSource.swift
 //
-// Copyright © 2014 Zeeshan Mian
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -57,55 +57,12 @@ final public class XCCollectionView: UICollectionView {
     }
 }
 
-private final class XCFakeCollectionView: UICollectionView {
-    static var cellCache = [String: UICollectionViewCell]()
-    static var supplementaryViewCache = [String: UICollectionReusableView]()
-
-    override func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
-        let className = identifier
-
-        if let cachedCell = XCFakeCollectionView.cellCache[className] {
-            cachedCell.prepareForReuse()
-            return cachedCell
-        }
-
-        let aClass = NSClassFromString(className) as! UICollectionViewCell.Type
-        let cell = aClass.init(frame: .zero)
-        XCFakeCollectionView.cellCache[className] = cell
-        return cell
-    }
-
-    override func dequeueReusableSupplementaryView(ofKind elementKind: String, withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionReusableView {
-        let className = identifier
-
-        if let cachedSupplementaryView = XCFakeCollectionView.supplementaryViewCache[className] {
-            cachedSupplementaryView.prepareForReuse()
-            return cachedSupplementaryView
-        }
-
-        let aClass = NSClassFromString(className) as! UICollectionReusableView.Type
-        let supplementaryView = aClass.init(frame: .zero)
-        XCFakeCollectionView.supplementaryViewCache[className] = supplementaryView
-        return supplementaryView
-    }
-}
-
-extension XCCollectionViewComposedDataSource {
-    public static func clearCellCache() {
-        XCFakeCollectionView.cellCache.removeAll(keepingCapacity: false)
-        XCFakeCollectionView.supplementaryViewCache.removeAll(keepingCapacity: false)
-    }
-}
+// MARK: - XCCollectionViewComposedDataSource
 
 open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, ExpressibleByArrayLiteral {
-    private let sizeCollectionView = XCFakeCollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var dataSourceIndex = DataSourceIndex<XCCollectionViewDataSource>()
 
-    open var dataSources = [XCCollectionViewDataSource]() {
-        didSet {
-            attachSizeCollectionView()
-        }
-    }
+    open var dataSources = [XCCollectionViewDataSource]()
 
     public override init() {
         super.init()
@@ -114,22 +71,22 @@ open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, Expre
     public init(dataSources: [XCCollectionViewDataSource]) {
         super.init()
         self.dataSources = dataSources
-        attachSizeCollectionView()
     }
 
     public required convenience init(arrayLiteral elements: XCCollectionViewDataSource...) {
         self.init(dataSources: elements)
     }
 
-    // MARK: Public Interface
+    // MARK: - Public Interface
 
     /// Adds a new data source at the end of the array.
     open func add(_ dataSource: XCCollectionViewDataSource) {
         dataSources.append(dataSource)
     }
 
+    /// Removes the given data source.
     open func remove(_ dataSource: XCCollectionViewDataSource) {
-        guard let index = dataSources.index(of: dataSource) else {
+        guard let index = dataSources.firstIndex(of: dataSource) else {
             return
         }
 
@@ -141,15 +98,26 @@ open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, Expre
         return DataSource(dataSource: ds.dataSource, globalSection: section, localSection: ds.localSection)
     }
 
-    private func attachSizeCollectionView() {
-        // Attach `sizeCollectionView` to all data sources.
-        dataSources.forEach {
-            $0._sizeCollectionView = sizeCollectionView
-        }
+    // MARK: - Layout Attributes
+
+    open override func collectionView(_ collectionView: UICollectionView, itemAttributesAt indexPath: IndexPath) -> CGSize? {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        return dataSource.collectionView(collectionView, itemAttributesAt: localIndexPath)
+    }
+
+    open override func collectionView(_ collectionView: UICollectionView, headerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
+        let (dataSource, localSection) = dataSourceIndex[section]
+        return dataSource.collectionView(collectionView, headerAttributesForSectionAt: localSection)
+    }
+
+    open override func collectionView(_ collectionView: UICollectionView, footerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
+        let (dataSource, localSection) = dataSourceIndex[section]
+        return dataSource.collectionView(collectionView, footerAttributesForSectionAt: localSection)
     }
 }
 
-// MARK: UICollectionViewDataSource
+// MARK: - UICollectionViewDataSource
 
 extension XCCollectionViewComposedDataSource {
     open override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -161,8 +129,8 @@ extension XCCollectionViewComposedDataSource {
             var dataSourceSections = dataSource.numberOfSections(in: collectionView)
             var localSection = 0
 
+            dataSources[i].globalSection = numberOfSections
             while dataSourceSections > 0 {
-                dataSources[i].globalSection = i
                 dataSourceIndex[numberOfSections] = (dataSources[i], localSection)
                 localSection += 1
                 numberOfSections += 1
@@ -183,9 +151,19 @@ extension XCCollectionViewComposedDataSource {
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
         return dataSource.collectionView(collectionView, cellForItemAt: localIndexPath)
     }
-}
 
-// MARK: UICollectionViewDelegate
+    open override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        return dataSource.collectionView(collectionView, viewForHeaderInSectionAt: localIndexPath)
+    }
+
+    open override func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
+        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
+        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
+        return dataSource.collectionView(collectionView, viewForFooterInSectionAt: localIndexPath)
+    }
+}
 
 extension XCCollectionViewComposedDataSource {
     open override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -193,68 +171,6 @@ extension XCCollectionViewComposedDataSource {
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
         dataSource.collectionView(collectionView, didSelectItemAt: localIndexPath)
     }
-}
-
-// MARK: UICollectionViewDelegateFlowLayout
-
-extension XCCollectionViewComposedDataSource {
-    open override func collectionView(_ collectionView: UICollectionView, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
-        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
-        let availableWidth = self.availableWidth(for: collectionView, section: localSection)
-        var size = dataSource.collectionView(collectionView, sizeForItemAt: localIndexPath)
-        if size.width > availableWidth {
-            size.width = availableWidth
-        }
-        return size
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, sizeForHeaderInSection section: Int) -> CGSize {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(collectionView, sizeForHeaderInSection: localSection)
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, sizeForFooterInSection section: Int) -> CGSize {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(collectionView, sizeForFooterInSection: localSection)
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        let sectionInset = dataSource.collectionView(collectionView, insetForSectionAt: localSection)
-
-        // This is to prevent any section insets being included in layout
-        // when given section has no items, header or footer present.
-        //
-        // If the given section have items, header or footer we include insets; otherwise we remove the insets from the given section.
-        // The following logic lazily walks down the tree checking to see if any of those elements present.
-        if sectionInset != 0 {
-            let numberOfItemsInSection = dataSource.collectionView(collectionView, numberOfItemsInSection: localSection)
-            if numberOfItemsInSection == 0 {
-                let headerSize = dataSource.collectionView(collectionView, sizeForHeaderInSection: localSection)
-                if headerSize.height == 0 {
-                    let footerSize = dataSource.collectionView(collectionView, sizeForFooterInSection: localSection)
-                    if footerSize.height == 0 {
-                        return 0
-                    }
-                }
-            }
-        }
-
-        return sectionInset
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(collectionView, minimumLineSpacingForSectionAt: localSection)
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        let (dataSource, localSection) = dataSourceIndex[section]
-        return dataSource.collectionView(collectionView, minimumInteritemSpacingForSectionAt: localSection)
-    }
-
-    // MARK: Lifecycle
 
     open override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let (dataSource, localSection) = dataSourceIndex[indexPath.section]
@@ -278,21 +194,5 @@ extension XCCollectionViewComposedDataSource {
         let (dataSource, localSection) = dataSourceIndex[indexPath.section]
         let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
         return dataSource.collectionView(collectionView, didEndDisplayingSupplementaryView: view, forElementOfKind: elementKind, at: localIndexPath)
-    }
-}
-
-// MARK: Header and Footer
-
-extension XCCollectionViewComposedDataSource {
-    open override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
-        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
-        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
-        return dataSource.collectionView(collectionView, viewForHeaderInSectionAt: localIndexPath)
-    }
-
-    open override func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
-        let (dataSource, localSection) = dataSourceIndex[indexPath.section]
-        let localIndexPath = IndexPath(item: indexPath.item, section: localSection)
-        return dataSource.collectionView(collectionView, viewForFooterInSectionAt: localIndexPath)
     }
 }
