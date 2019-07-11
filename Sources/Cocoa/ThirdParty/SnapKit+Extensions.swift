@@ -57,18 +57,6 @@ extension Array where Element == SnapKit.ConstraintViewDSL {
 }
 
 extension ConstraintPriority {
-    /// When setting `UIStackView`'s subview to hidden,
-    /// it will first constrain its height to zero in order to animate it out.
-    /// This can cause `Unable to simultaneously satisfy constraints` warnings.
-    ///
-    /// To resolve the issue, Changing constraints priority from `1000` to `999`
-    /// so the `UISV-hiding` constraint can then take priority if needed.
-    public static var stackViewSubview: SnapKit.ConstraintPriority {
-        return ConstraintPriority(.required - 1)
-    }
-}
-
-extension ConstraintPriority {
     public init(_ value: UILayoutPriority) {
         self.init(value.rawValue)
     }

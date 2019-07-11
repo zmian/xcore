@@ -232,7 +232,7 @@ open class IconLabelView: XCView {
 
         updateAxis()
 
-        imageSizeConstraints = NSLayoutConstraint.Size(imageViewContainer.anchor.size.equalTo(imageSize).constraints)
+        imageSizeConstraints = NSLayoutConstraint.Size(imageViewContainer.anchor.size.equalTo(imageSize).priority(.stackViewSubview).constraints)
         imagePaddingConstraints = NSLayoutConstraint.Edges(imageView.anchor.edges.equalToSuperview().inset(imageInset).constraints)
     }
 

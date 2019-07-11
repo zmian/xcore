@@ -106,7 +106,7 @@ public final class SeparatorView: UIView {
         switch style {
             case .plain:
                 backgroundColor?.setFill()
-                UIRectFillUsingBlendMode(rect, .normal)
+                UIRectFill(rect)
             case .dotted:
                 let path = UIBezierPath()
                 let y = rect.midY
