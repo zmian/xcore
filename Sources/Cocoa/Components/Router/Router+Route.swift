@@ -130,5 +130,30 @@ extension Router {
                 return .custom
             }
         }
+
+        static func _group(_ routes: [Route<Type>], animated: Bool) -> Route<Type> {
+            return Route { router -> RouteKind in
+                var viewControllers: [UIViewController] = []
+
+                for route in routes {
+                    guard case .viewController(let vc) = route.configure(router) else {
+                        #if DEBUG
+                        Console.log("Route \(route.identifier) contains custom route. This will lead to unexpected behavior. Please handle the use case separately.")
+                        #endif
+                        continue
+                    }
+
+                    viewControllers.append(vc)
+                }
+
+                return .custom { navigationController in
+                    guard !viewControllers.isEmpty else {
+                        return
+                    }
+
+                    navigationController.pushViewController(viewControllers, animated: animated)
+                }
+            }
+        }
     }
 }
