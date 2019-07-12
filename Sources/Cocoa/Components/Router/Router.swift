@@ -62,8 +62,7 @@ extension RouteHandler {
     }
 
     public func route(to routes: Route<Self>..., animated: Bool = true) {
-        let routesGroup = Route<Self>.group(routes, animated: animated, routeHandler: self)
-        route(to: routesGroup, animated: animated)
+        route(to: .group(routes, animated: animated), animated: animated)
     }
 }
 
@@ -176,12 +175,12 @@ public struct Route<Type: RouteHandler> {
         }
     }
 
-    fileprivate static func group<Handler: RouteHandler>(_ routes: [Route<Handler>], animated: Bool = true, routeHandler: Handler) -> Route<Handler> {
-        return Route<Handler> { router -> RouteKind in
+    fileprivate static func group(_ routes: [Route<Type>], animated: Bool = true) -> Route<Type> {
+        return Route { router -> RouteKind in
             var viewControllers: [UIViewController] = []
 
             for route in routes {
-                guard case .viewController(let vc) = route.configure(routeHandler) else {
+                guard case .viewController(let vc) = route.configure(router) else {
                     #if DEBUG
                     Console.log("Route \(route.identifier) contains custom route. This will lead to unexpected behavior. Please handle the use case separately.")
                     #endif
