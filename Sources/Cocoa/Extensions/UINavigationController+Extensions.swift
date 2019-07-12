@@ -25,12 +25,18 @@
 import UIKit
 
 extension UINavigationController {
-    /// Initializes and returns a newly created navigation controller that uses your custom bar subclasses.
+    /// Initializes and returns a newly created navigation controller that uses your
+    /// custom bar subclasses.
     ///
     /// - Parameters:
-    ///   - rootViewController: The view controller that resides at the bottom of the navigation stack. This object cannot be an instance of the `UITabBarController` class.
-    ///   - navigationBarClass: Specify the custom `UINavigationBar` subclass you want to use, or specify `nil` to use the standard `UINavigationBar` class.
-    ///   - toolbarClass:       Specify the custom `UIToolbar` subclass you want to use, or specify `nil` to use the standard `UIToolbar` class.
+    ///   - rootViewController: The view controller that resides at the bottom of
+    ///                         the navigation stack. This object cannot be an
+    ///                         instance of the `UITabBarController` class.
+    ///   - navigationBarClass: Specify the custom `UINavigationBar` subclass you
+    ///                         want to use, or specify `nil` to use the standard
+    ///                         `UINavigationBar` class.
+    ///   - toolbarClass: Specify the custom `UIToolbar` subclass you want to use,
+    ///                   or specify `nil` to use the standard `UIToolbar` class.
     /// - Returns: The initialized navigation controller object.
     public convenience init(rootViewController: UIViewController, navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
         self.init(navigationBarClass: navigationBarClass, toolbarClass: toolbarClass)
@@ -55,19 +61,23 @@ extension UINavigationController {
     ///
     /// The object in the viewController parameter becomes the top view controller
     /// on the navigation stack. Pushing a view controller causes its view to be
-    /// embedded in the navigation interface. If the animated parameter is `true`, the
-    /// view is animated into position; otherwise, the view is simply displayed in
-    /// its final location.
+    /// embedded in the navigation interface. If the animated parameter is `true`,
+    /// the view is animated into position; otherwise, the view is simply displayed
+    /// in its final location.
     ///
-    /// In addition to displaying the view associated with the new view controller at
-    /// the top of the stack, this method also updates the navigation bar and tool bar
-    /// accordingly. For information on how the navigation bar is updated.
+    /// In addition to displaying the view associated with the new view controller
+    /// at the top of the stack, this method also updates the navigation bar and
+    /// tool bar accordingly. For information on how the navigation bar is updated.
     ///
     /// - Parameters:
-    ///   - viewController: The view controller to push onto the stack. This object cannot be a tab bar controller.
-    ///                     If the view controller is already on the navigation stack, this method throws an exception.
-    ///   - animated: Specify `true` to animate the transition or `false` if you do not want the transition to be animated.
-    ///               You might specify `false` if you are setting up the navigation controller at launch time.
+    ///   - viewController: The view controller to push onto the stack. This object
+    ///                     cannot be a tab bar controller.
+    ///                     If the view controller is already on the navigation
+    ///                     stack, this method throws an exception.
+    ///   - animated: Specify `true` to animate the transition or `false` if you do
+    ///               not want the transition to be animated.
+    ///               You might specify `false` if you are setting up the navigation
+    ///               controller at launch time.
     ///   - completion: The block to execute after the presentation finishes.
     open func pushViewController(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)?) {
         CATransaction.animationTransaction({
@@ -75,19 +85,54 @@ extension UINavigationController {
         }, completionHandler: completion)
     }
 
-    /// A convenience method to pop to view controller of specified subclass of `UIViewController` type.
+    /// Pushes a list of view controller onto the receiver’s stack and updates the
+    /// display.
+    ///
+    /// The object in the viewController parameter becomes the top view controller
+    /// on the navigation stack. Pushing a view controller causes its view to be
+    /// embedded in the navigation interface. If the animated parameter is `true`,
+    /// the view is animated into position; otherwise, the view is simply displayed
+    /// in its final location.
+    ///
+    /// In addition to displaying the view associated with the new view controller
+    /// at the top of the stack, this method also updates the navigation bar and
+    /// tool bar accordingly. For information on how the navigation bar is updated.
     ///
     /// - Parameters:
-    ///   - type:            The View controller type to pop to.
-    ///   - animated:        Set this value to `true` to animate the transition.
-    ///                      Pass `false` if you are setting up a navigation controller
-    ///                      before its view is displayed.
-    ///   - isReversedOrder: If multiple view controllers of specified type exists it
-    ///                      pop the latest of type by default. Pass `false` to reverse the behavior.
-    /// - Returns: An array containing the view controllers that were popped from the stack.
+    ///   - viewControllers: The view controller to push onto the stack. This object
+    ///                     cannot be a tab bar controller.
+    ///                     If the view controller is already on the navigation
+    ///                     stack, this method throws an exception.
+    ///   - animated: Specify `true` to animate the transition or `false` if you do
+    ///               not want the transition to be animated.
+    ///               You might specify `false` if you are setting up the navigation
+    ///               controller at launch time.
+    ///   - completion: The block to execute after the presentation finishes.
+    open func pushViewController(_ viewControllers: [UIViewController], animated: Bool, completion: (() -> Void)? = nil) {
+        var vcs = self.viewControllers
+        vcs.append(contentsOf: viewControllers)
+
+        CATransaction.animationTransaction({
+            setViewControllers(vcs, animated: animated)
+        }, completionHandler: completion)
+    }
+
+    /// A convenience method to pop to view controller of specified subclass of
+    /// `UIViewController` type.
+    ///
+    /// - Parameters:
+    ///   - type: The View controller type to pop to.
+    ///   - animated: Set this value to `true` to animate the transition. Pass
+    ///               `false` if you are setting up a navigation controller before
+    ///               its view is displayed.
+    ///   - reversedOrder: If multiple view controllers of specified type exists it
+    ///                    pop the latest of type by default. Pass `false` to
+    ///                    reverse the behavior.
+    /// - Returns: An array containing the view controllers that were popped from
+    ///            the stack.
     @discardableResult
-    open func popToViewController(_ type: UIViewController.Type, animated: Bool, isReversedOrder: Bool = true) -> [UIViewController]? {
-        let viewControllers = isReversedOrder ? self.viewControllers.reversed() : self.viewControllers
+    open func popToViewController(_ type: UIViewController.Type, animated: Bool, reversedOrder: Bool = true) -> [UIViewController]? {
+        let viewControllers = reversedOrder ? self.viewControllers.reversed() : self.viewControllers
 
         for viewController in viewControllers {
             if viewController.isKind(of: type) {
@@ -98,9 +143,9 @@ extension UINavigationController {
         return nil
     }
 
-    /// A convenience method to pop to specified subclass of `UIViewController` type.
-    /// If the given type of view controller is not found then it pops to the root
-    /// view controller.
+    /// A convenience method to pop to specified subclass of `UIViewController`
+    /// type. If the given type of view controller is not found then it pops to the
+    /// root view controller.
     ///
     /// - Parameters:
     ///   - type: The view controller type to pop to.
@@ -119,14 +164,16 @@ extension UINavigationController {
         return viewController
     }
 
-    /// A convenience method to pop view controllers until the one at specified index is on top. Returns the popped controllers.
+    /// A convenience method to pop view controllers until the one at specified
+    /// index is on top. Returns the popped controllers.
     ///
     /// - Parameters:
-    ///   - index:    The View controller type to pop to.
+    ///   - index: The View controller type to pop to.
     ///   - animated: Set this value to `true` to animate the transition.
     ///               Pass `false` if you are setting up a navigation controller
     ///               before its view is displayed.
-    /// - Returns: An array containing the view controllers that were popped from the stack.
+    /// - Returns: An array containing the view controllers that were popped from
+    ///            the stack.
     @discardableResult
     open func popToViewController(at index: Int, animated: Bool) -> [UIViewController]? {
         guard let viewController = viewControllers.at(index) else {
@@ -158,18 +205,25 @@ extension UINavigationController {
         }, completionHandler: completion)
     }
 
-    /// A convenience method to push a view controller by replacing all view controllers
-    /// from a specific view controller type, including this one.
-    /// If the given type of view controller is not found then it pushes on top of the stack.
+    /// A convenience method to push a view controller by replacing all view
+    /// controllers from a specific view controller type, including this one. If the
+    /// given type of view controller is not found then it pushes on top of the
+    /// stack.
     ///
     /// - Parameters:
     ///   - viewController: The view controller to push
     ///   - location: The view controller type from where to perform the push
-    ///   - replacing: Indicates if the view controller replaces or is pushed on top of the 'location' one
-    ///   - animated: Set this value to `true` to animate the transition.
-    ///               Pass `false` if you are setting up a navigation controller
-    ///               before its view is displayed.
-    open func pushViewController(_ viewController: UIViewController, on location: UIViewController.Type, replacing: Bool, animated: Bool) {
+    ///   - replacing: Indicates if the view controller replaces or is pushed on top
+    ///                of the 'location' one
+    ///   - animated: Set this value to `true` to animate the transition. Pass
+    ///               `false` if you are setting up a navigation controller before
+    ///               its view is displayed.
+    open func pushViewController(
+        _ viewController: UIViewController,
+        on location: UIViewController.Type,
+        replacing: Bool,
+        animated: Bool
+    ) {
         guard let index = viewControllers.firstIndex(of: location) else {
             return pushViewController(viewController, animated: animated)
         }
@@ -207,20 +261,24 @@ extension UINavigationController {
     /// Pushes a view controller onto the receiver’s stack and updates the
     /// display.
     ///
-    /// The object in the `viewController` parameter becomes the top view
-    /// controller on the navigation stack. Pushing a view controller causes its
-    /// view to be embedded in the navigation interface. If the animated parameter
-    /// is `true`, the view is animated into position; otherwise, the view is simply
-    /// displayed in its final location.
+    /// The object in the `viewController` parameter becomes the top view controller
+    /// on the navigation stack. Pushing a view controller causes its view to be
+    /// embedded in the navigation interface. If the animated parameter is `true`,
+    /// the view is animated into position; otherwise, the view is simply displayed
+    /// in its final location.
     ///
-    /// In addition to displaying the view associated with the new view controller at
-    /// the top of the stack, this method also updates the navigation bar and tool bar
-    /// accordingly. For information on how the navigation bar is updated.
+    /// In addition to displaying the view associated with the new view controller
+    /// at the top of the stack, this method also updates the navigation bar and
+    /// tool bar accordingly. For information on how the navigation bar is updated.
     ///
     /// - Parameters:
-    ///   - viewController: The view controller to push onto the stack. This object cannot be a tab bar controller.
-    ///                     If the view controller is already on the navigation stack, this method throws an exception.
-    ///   - animation: A property that indicates how the push animation is to be animated, for example, fade in or slide in from right.
+    ///   - viewController: The view controller to push onto the stack. This object
+    ///                     cannot be a tab bar controller.
+    ///
+    ///                     If the view controller is already on the navigation
+    ///                     stack, this method throws an exception.
+    ///   - animation: A property that indicates how the push animation is to be
+    ///                animated, for example, fade in or slide in from right.
     open func pushViewController(_ viewController: UIViewController, with animation: AnimationStyle) {
         guard animation != .default else {
             return pushViewController(viewController, animated: true)
@@ -233,16 +291,18 @@ extension UINavigationController {
     /// Pops the top view controller from the navigation stack and updates the
     /// display.
     ///
-    /// This method removes the top view controller from the stack and makes
-    /// the new top of the stack the active view controller. If the view controller
-    /// at the top of the stack is the root view controller, this method does nothing.
-    /// In other words, you cannot pop the last item on the stack.
+    /// This method removes the top view controller from the stack and makes the new
+    /// top of the stack the active view controller. If the view controller at the
+    /// top of the stack is the root view controller, this method does nothing. In
+    /// other words, you cannot pop the last item on the stack.
     ///
-    /// In addition to displaying the view associated with the new view controller at
-    /// the top of the stack, this method also updates the navigation bar and tool bar
-    /// accordingly. For information on how the navigation bar is updated.
+    /// In addition to displaying the view associated with the new view controller
+    /// at the top of the stack, this method also updates the navigation bar and
+    /// tool bar accordingly. For information on how the navigation bar is updated.
     ///
-    /// - Parameter animation: A property that indicates how the pop animation is to be animated, for example, fade out or slide out to right.
+    /// - Parameter animation: A property that indicates how the pop animation is to
+    ///                        be animated, for example, fade out or slide out to
+    ///                        right.
     /// - Returns: The view controller that was popped from the stack.
     @discardableResult
     open func popViewController(with animation: AnimationStyle) -> UIViewController? {
@@ -256,9 +316,9 @@ extension UINavigationController {
 }
 
 extension UINavigationController {
-    // Autorotation Fix. Simply override `supportedInterfaceOrientations`
-    // method in any view controller and it would respect that orientation
-    // setting per view controller.
+    // Autorotation Fix. Simply override `supportedInterfaceOrientations` method in
+    // any view controller and it would respect that orientation setting per view
+    // controller.
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return topViewController?.preferredInterfaceOrientations ?? preferredInterfaceOrientations ?? topViewController?.supportedInterfaceOrientations ?? super.supportedInterfaceOrientations
     }
