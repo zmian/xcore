@@ -28,7 +28,12 @@ import UIKit
 
 public enum RouteKind {
     case viewController(UIViewController)
-    case custom
+
+    case custom((UINavigationController) -> Void)
+
+    public static var custom: RouteKind {
+        return RouteKind.custom { _ in }
+    }
 }
 
 // MARK: RouteHandler
@@ -51,9 +56,14 @@ extension RouteHandler {
         switch routeKind {
             case .viewController(let vc):
                navigationController.pushViewController(vc, animated: animated)
-            case .custom:
-                break
+            case .custom(let block):
+                block(navigationController)
         }
+    }
+
+    public func route(to routes: Route<Self>..., animated: Bool = true) {
+        let routesGroup = Route<Self>.group(routes, animated: animated, routeHandler: self)
+        route(to: routesGroup, animated: animated)
     }
 }
 
@@ -163,6 +173,31 @@ public struct Route<Type: RouteHandler> {
     public init(_ configure: @escaping @autoclosure () -> UIViewController) {
         self.init { _ -> RouteKind in
             .viewController(configure())
+        }
+    }
+
+    fileprivate static func group<Handler: RouteHandler>(_ routes: [Route<Handler>], animated: Bool = true, routeHandler: Handler) -> Route<Handler> {
+        return Route<Handler> { router -> RouteKind in
+            var viewControllers: [UIViewController] = []
+
+            for route in routes {
+                guard case .viewController(let vc) = route.configure(routeHandler) else {
+                    #if DEBUG
+                    Console.log("Route \(route.identifier) contains custom route. This will lead to unexpected behavior. Please handle the use case separately.")
+                    #endif
+                    continue
+                }
+
+                viewControllers.append(vc)
+            }
+
+            return .custom { navigationController in
+                guard !viewControllers.isEmpty else {
+                    return
+                }
+
+                navigationController.pushViewController(viewControllers, animated: animated)
+            }
         }
     }
 }
