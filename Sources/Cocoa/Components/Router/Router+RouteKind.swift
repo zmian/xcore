@@ -27,6 +27,11 @@ import UIKit
 extension Router {
     public enum RouteKind {
         case viewController(UIViewController)
-        case custom
+
+        case custom((UINavigationController) -> Void)
+
+        public static var custom: RouteKind {
+            return custom { _ in }
+        }
     }
 }

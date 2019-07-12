@@ -42,9 +42,13 @@ extension RouteHandler {
         switch routeKind {
             case .viewController(let vc):
                navigationController.pushViewController(vc, animated: animated)
-            case .custom:
-                break
+            case .custom(let block):
+                block(navigationController)
         }
+    }
+
+    public func route(to routes: Router.Route<Self>..., animated: Bool = true) {
+        route(to: ._group(routes, animated: animated), animated: animated)
     }
 }
 
