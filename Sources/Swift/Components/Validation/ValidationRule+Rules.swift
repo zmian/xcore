@@ -161,6 +161,13 @@ extension ValidationRule where Input == String {
 // MARK: - Regex Based Rules
 
 extension ValidationRule where Input == String {
+    /// A validation rule that checks whether the input is not blank.
+    ///
+    /// - Returns: The validation rule.
+    public static var notBlank: ValidationRule {
+        return .init { !$0.isBlank }
+    }
+
     /// A validation rule that checks whether the input is a valid email address.
     public static var email: ValidationRule {
         return "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
