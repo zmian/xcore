@@ -57,7 +57,7 @@ open class IconLabelView: XCView {
         $0.font = .preferredFont(forTextStyle: .footnote)
         $0.textAlignment = .center
         $0.textColor = .black
-        $0.numberOfLines = 2
+        $0.numberOfLines = 0
         $0.sizeToFit()
     }
 
@@ -65,7 +65,7 @@ open class IconLabelView: XCView {
         $0.font = .preferredFont(forTextStyle: .footnote)
         $0.textAlignment = .center
         $0.textColor = .lightGray
-        $0.numberOfLines = 1
+        $0.numberOfLines = 0
         $0.sizeToFit()
     }
 
