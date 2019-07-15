@@ -91,6 +91,12 @@ extension String {
 
         return String(dropFirst(count - last))
     }
+
+    /// Returns a random alphanumeric string of the given length.
+    public static func randomAlphanumeric(length: Int) -> String {
+        let seed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map { _ in seed.randomElement()! })
+    }
 }
 
 // MARK: - NSString
