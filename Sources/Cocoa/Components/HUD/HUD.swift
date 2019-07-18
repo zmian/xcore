@@ -322,8 +322,8 @@ extension HUD {
     }
 
     private static var appearanceStorage: [String: Appearance] = [:]
-    public static func appearance() -> Appearance {
-        let instanceName = String(describing: type(of: self))
+    public class func appearance() -> Appearance {
+        let instanceName = NSStringFromClass(self)
 
         if let proxy = appearanceStorage[instanceName] {
             return proxy
@@ -335,14 +335,14 @@ extension HUD {
     }
 
     fileprivate var appearance: Appearance? {
-        let instanceName = String(describing: type(of: self))
+        let instanceName = NSStringFromClass(type(of: self))
 
         // Return the type proxy if exists.
         if let proxy = HUD.appearanceStorage[instanceName] {
             return proxy
         }
 
-        let baseInstanceName = String(describing: HUD.self)
+        let baseInstanceName = NSStringFromClass(HUD.self)
 
         // Return the base type proxy if exists.
         return HUD.appearanceStorage[baseInstanceName]
