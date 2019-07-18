@@ -24,47 +24,15 @@
 
 import UIKit
 
-extension HUD {
-    public struct Duration {
-        public let show: TimeInterval
-        public let hide: TimeInterval
-
-        public init(_ duration: TimeInterval) {
-            self.show = duration
-            self.hide = duration
-        }
-
-        public init(show: TimeInterval, hide: TimeInterval) {
-            self.show = show
-            self.hide = hide
-        }
-
-        public static var `default`: Duration {
-            return Duration(.normal)
-        }
-    }
-}
-
-extension HUD {
-    private final class ViewController: UIViewController {
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            view.backgroundColor = .white
-        }
-
-        override var preferredStatusBarStyle: UIStatusBarStyle {
-            return statusBarStyle ?? .default
-        }
-    }
-}
-
 /// A base class to create a HUD that sets up blank canvas that can be
 /// customized by subclasses to show anything in a fullscreen window.
 open class HUD {
-    private let window = UIWindow(frame: UIScreen.main.bounds)
-    private let viewController = ViewController()
     private var isEnabled = false
     private var temporaryUnavailable = false
+    private let window = UIWindow(frame: UIScreen.main.bounds)
+    private lazy var viewController = ViewController().apply {
+        $0.backgroundColor = appearance?.backgroundColor ?? backgroundColor
+    }
     private var view: UIView {
         return viewController.view
     }
@@ -72,7 +40,7 @@ open class HUD {
     /// The default value is `.white`.
     open var backgroundColor: UIColor = .white {
         didSet {
-            view.backgroundColor = backgroundColor
+            viewController.backgroundColor = backgroundColor
         }
     }
 
@@ -277,5 +245,106 @@ open class HUD {
 
     open func disableOnNextCall() {
         temporaryUnavailable = true
+    }
+}
+
+// MARK: - Duration
+
+extension HUD {
+    public struct Duration: ExpressibleByFloatLiteral, ExpressibleByIntegerLiteral {
+        public let show: TimeInterval
+        public let hide: TimeInterval
+
+        public init(floatLiteral value: FloatLiteralType) {
+            self.init(TimeInterval(value))
+        }
+
+        public init(integerLiteral value: IntegerLiteralType) {
+            self.init(TimeInterval(value))
+        }
+
+        public init(_ duration: TimeInterval) {
+            self.show = duration
+            self.hide = duration
+        }
+
+        public init(show: TimeInterval, hide: TimeInterval) {
+            self.show = show
+            self.hide = hide
+        }
+
+        public static var `default`: Duration {
+            return Duration(.normal)
+        }
+    }
+}
+
+// MARK: - ViewController
+
+extension HUD {
+    private final class ViewController: UIViewController {
+        var backgroundColor: UIColor? {
+            didSet {
+                guard isViewLoaded else {
+                    return
+                }
+
+                view.backgroundColor = backgroundColor
+            }
+        }
+
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            view.backgroundColor = backgroundColor
+        }
+
+        override var preferredStatusBarStyle: UIStatusBarStyle {
+            return statusBarStyle ?? .default
+        }
+    }
+}
+
+// MARK: - Appearance
+
+extension HUD {
+    /// This configuration exists to allow some of the properties to be configured
+    /// to match app's appearance style. The `UIAppearance` protocol doesn't work
+    /// when the stored properites are set using associated object.
+    ///
+    /// **Usage:**
+    ///
+    /// ```swift
+    /// HUD.appearance().backgroundColor = .gray
+    /// LaunchScreen.View.appearance().backgroundColor = .blue
+    /// ```
+    public final class Appearance: With {
+        public var backgroundColor: UIColor = .white
+    }
+
+    private static var appearanceStorage: [String: Appearance] = [:]
+    public static func appearance() -> Appearance {
+        let instanceName = String(describing: type(of: self))
+
+        if let proxy = appearanceStorage[instanceName] {
+            return proxy
+        }
+
+        let proxy = Appearance()
+        appearanceStorage[instanceName] = proxy
+        return proxy
+    }
+
+    fileprivate var appearance: Appearance? {
+        let instanceName = String(describing: type(of: self))
+
+        // Return the type proxy if exists.
+        if let proxy = HUD.appearanceStorage[instanceName] {
+            return proxy
+        }
+
+        let baseInstanceName = String(describing: HUD.self)
+
+        // Return the base type proxy if exists.
+        return HUD.appearanceStorage[baseInstanceName]
     }
 }

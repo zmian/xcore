@@ -141,6 +141,11 @@ extension ImageAssetIdentifier {
     public static var disclosureIndicator: ImageAssetIdentifier { return propertyName() }
     public static var disclosureIndicatorFilled: ImageAssetIdentifier { return propertyName() }
 
+    /// Launch screen view uses this to automatically display the launch screen
+    /// icon. This must be present in `.main` bundle before using the
+    /// `LaunchScreenView`.
+    public static var launchScreenIcon: ImageAssetIdentifier { return #function }
+
     // MARK: Navigation
 
     /// Icon used to replace navigation bar back arrow
