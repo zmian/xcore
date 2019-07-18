@@ -69,7 +69,7 @@ extension Chrome {
                 case .statusBar:
                     return AppConstants.statusBarHeight
                 case .navBar:
-                    return AppConstants.navBarPlusStatusBarHeight
+                    return AppConstants.statusBarPlusNavBarHeight
             }
         }
 

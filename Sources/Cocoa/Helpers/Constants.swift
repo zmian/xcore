@@ -113,8 +113,8 @@ public struct AppConstants {
         return UIApplication.sharedOrNil?.statusBarFrame.height ?? 20
     }
 
-    public static var navBarPlusStatusBarHeight: CGFloat {
-        return navBarHeight + statusBarHeight
+    public static var statusBarPlusNavBarHeight: CGFloat {
+        return statusBarHeight + navBarHeight
     }
 
     public static var navBarHeight: CGFloat {
