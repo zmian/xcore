@@ -335,7 +335,7 @@ extension HUD {
     }
 
     fileprivate var appearance: Appearance? {
-        let instanceName = String(reflecting: self)
+        let instanceName = String(reflecting: type(of: self))
 
         // Return the type proxy if exists.
         if let proxy = HUD.appearanceStorage[instanceName] {
