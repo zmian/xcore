@@ -49,6 +49,20 @@ public struct TransformableImage: ImageRepresentable {
 extension ImageRepresentable {
     /// Returns `TransformableImage` instance with the given transform.
     ///
+    /// **Usage**:
+    ///
+    /// ```swift
+    /// func setIcon(_ icon: ImageRepresentable) {
+    ///     let newIcon = icon
+    ///         .alignment(.leading)
+    ///         .transform(.tintColor(.white))
+    ///         .alignment(.trailing) // last one wins
+    ///
+    ///     let iconView = UIImageView()
+    ///     iconView.setImage(newIcon)
+    /// }
+    /// ```
+    ///
     /// - Parameter value: The transform value for the image.
     /// - Returns: A `TransformableImage` instance.
     public func transform(_ value: ImageTransform) -> TransformableImage {
@@ -56,6 +70,20 @@ extension ImageRepresentable {
     }
 
     /// Returns `TransformableImage` instance with the given transform.
+    ///
+    /// **Usage**:
+    ///
+    /// ```swift
+    /// func setIcon(_ icon: ImageRepresentable) {
+    ///     let newIcon = icon
+    ///         .alignment(.leading)
+    ///         .transform(.tintColor(.white))
+    ///         .alignment(.trailing) // last one wins
+    ///
+    ///     let iconView = UIImageView()
+    ///     iconView.setImage(newIcon)
+    /// }
+    /// ```
     ///
     /// - Parameter transform: The transform for the image.
     /// - Returns: A `TransformableImage` instance.

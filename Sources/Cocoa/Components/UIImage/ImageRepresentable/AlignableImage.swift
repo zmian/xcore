@@ -56,6 +56,20 @@ public struct AlignableImage: ImageRepresentable {
 extension ImageRepresentable {
     /// Returns `AlignableImage` instance with the given alignment.
     ///
+    /// **Usage**:
+    ///
+    /// ```swift
+    /// func setIcon(_ icon: ImageRepresentable) {
+    ///     let newIcon = icon
+    ///         .alignment(.leading)
+    ///         .transform(.tintColor(.white))
+    ///         .alignment(.trailing) // last one wins
+    ///
+    ///     let iconView = UIImageView()
+    ///     iconView.setImage(newIcon)
+    /// }
+    /// ```
+    ///
     /// - Parameter value: The alignment value for the image.
     /// - Returns: An `AlignableImage` instance.
     public func alignment(_ value: AlignableImage.Alignment) -> AlignableImage {
