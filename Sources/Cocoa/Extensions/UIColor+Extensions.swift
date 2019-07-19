@@ -24,7 +24,7 @@
 
 import UIKit
 
-// MARK: Hex Support
+// MARK: - Hex Support
 
 extension UIColor {
     public convenience init(hex: Int64) {
@@ -135,17 +135,6 @@ extension UIColor {
         } else {
             return self
         }
-    }
-
-    /// A convenience method to return default system tint color.
-    ///
-    /// - Returns: The default tint color.
-    public static var systemTint: UIColor {
-        struct Static {
-            static let tintColor = UIView().tintColor ?? .appleBlue
-        }
-
-        return Static.tintColor
     }
 
     public static func randomColor() -> UIColor {
