@@ -1,5 +1,5 @@
 //
-// UIImage+Extensions.swift
+// UIImage+Transform.swift
 //
 // Copyright © 2014 Xcore
 //
@@ -29,8 +29,8 @@ extension UIImage {
         return transform.transform(self)
     }
 
-    public func applying(_ transform: ImageTransformer) -> UIImage {
-        return applying(transform.transform())
+    public func applying<T: ImageTransform>(_ transform: T.Member) -> UIImage {
+        return applying(transform.base)
     }
 
     /// Process the image using the given transform.

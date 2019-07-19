@@ -426,12 +426,11 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
     ///
     /// - Parameters:
     ///   - imageNamed: A string to identify a local or a remote image.
-    ///   - transform: An optional property to transform the image before setting the image.
     ///   - handler: The block to invoke when the button is tapped.
     /// - Returns: A newly created button.
-    public init(imageNamed: ImageRepresentable, transform: ImageTransform? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
+    public init(imageNamed: ImageRepresentable, _ handler: ((_ sender: Self) -> Void)? = nil) {
         self.init(image: nil, handler)
-        imageView?.setImage(imageNamed, transform: transform) { [weak self] image in
+        imageView?.setImage(imageNamed) { [weak self] image in
             self?.setImage(image, for: .normal)
         }
     }
