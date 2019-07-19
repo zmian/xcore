@@ -25,7 +25,8 @@
 // MARK: - Type Based Constants
 
 extension TimeInterval {
-    /// The fast duration to use for animations when the desired interval is between `0.2...0.3` seconds.
+    /// The fast duration to use for animations when the desired interval is between
+    /// `0.2...0.3` seconds.
     ///
     /// ```swift
     /// UIView.animate(withDuration: .fast) {
@@ -34,7 +35,8 @@ extension TimeInterval {
     /// ```
     public static var fast: TimeInterval = 0.25
 
-    /// The normal duration to use for animations when the desired interval is between `0.3...0.5` seconds.
+    /// The normal duration to use for animations when the desired interval is
+    /// between `0.3...0.5` seconds.
     ///
     /// ```swift
     /// UIView.animate(withDuration: .normal) {
@@ -43,7 +45,8 @@ extension TimeInterval {
     /// ```
     public static var normal: TimeInterval = 0.35
 
-    /// The slow duration to use for animations when the desired interval is between `> 0.5` seconds.
+    /// The slow duration to use for animations when the desired interval is between
+    /// `> 0.5` seconds.
     ///
     /// ```swift
     /// UIView.animate(withDuration: .slow) {
@@ -54,7 +57,8 @@ extension TimeInterval {
 }
 
 extension CGAffineTransform {
-    /// The default transform scale to use for animations when providing visual feedback when elements are highlighted.
+    /// The default transform scale to use for animations when providing visual
+    /// feedback when elements are highlighted.
     ///
     /// ```swift
     /// var isHighlighted = false {
@@ -71,6 +75,8 @@ extension CGAffineTransform {
     }
 }
 
+// MARK: - CGFloat
+
 extension CGFloat {
     public static let minimumPadding: CGFloat = 8
     public static let defaultPadding: CGFloat = 15
@@ -86,10 +92,31 @@ extension CGFloat {
     }
 }
 
+// MARK: - UIEdgeInsets
+
 extension UIEdgeInsets {
     public static let minimumPadding = UIEdgeInsets(.minimumPadding)
     public static let defaultPadding = UIEdgeInsets(.defaultPadding)
     public static let maximumPadding = UIEdgeInsets(.maximumPadding)
+}
+
+// MARK: - UIColor
+
+extension UIColor {
+    /// Returns default system tint color.
+    public static var systemTint: UIColor {
+        struct Static {
+            static let tintColor = UIView().tintColor ?? .appleBlue
+        }
+
+        return Static.tintColor
+    }
+
+    /// Returns default app tint color.
+    @nonobjc public static var appTint: UIColor = .systemTint
+
+    /// Returns default separator color.
+    @nonobjc public static var separator = UIColor(hex: "DFE9F5")
 }
 
 extension UIColor {
