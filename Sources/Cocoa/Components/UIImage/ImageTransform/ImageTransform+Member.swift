@@ -39,7 +39,7 @@ extension ImageTransform {
 
     /// Wraps the transform into member type.
     public func wrap() -> Member {
-        return MetaStaticMember(self)
+        return Member(self)
     }
 }
 
