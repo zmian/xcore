@@ -115,8 +115,8 @@ extension UIColor {
     /// Returns default app tint color.
     @nonobjc public static var appTint: UIColor = .systemTint
 
-    /// Returns default separator color.
-    @nonobjc public static var separator = UIColor(hex: "DFE9F5")
+    /// The color for app borders or divider lines that hide any underlying content.
+    @nonobjc public static var appSeparator = UIColor(hex: "DFE9F5")
 }
 
 extension UIColor {
