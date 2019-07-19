@@ -29,13 +29,17 @@ extension UIImageView {
     ///
     /// - Parameters:
     ///   - image:             The image to display.
-    ///   - transform:         An optional property to transform the image before setting the image.
     ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
     ///                        The image will only fade in when fetched from a remote url and not in memory cache.
     ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0,
     ///                        the image is set without animation. The default value is `.slow`.
     ///   - callback:          A block to invoke when finished setting the image.
-    public func setImage(_ image: ImageRepresentable?, transform: ImageTransform? = nil, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, _ callback: ((_ image: UIImage?) -> Void)? = nil) {
+    public func setImage(
+        _ image: ImageRepresentable?,
+        alwaysAnimate: Bool = false,
+        animationDuration: TimeInterval = .slow,
+        _ callback: ((_ image: UIImage?) -> Void)? = nil
+    ) {
         cancelSetImageRequest()
 
         guard let imageRepresentable = image, imageRepresentable.imageSource.isValid else {
@@ -50,7 +54,6 @@ extension UIImageView {
             strongSelf.postProcess(
                 image: image,
                 source: imageRepresentable,
-                transform: transform,
                 animationDuration: animated ? animationDuration : 0,
                 callback
             )
@@ -62,19 +65,24 @@ extension UIImageView {
     /// - Parameters:
     ///   - image:             The image to display.
     ///   - defaultImage:      The fallback image to display if `image` can't be loaded.
-    ///   - transform:         An optional property to transform the image before setting the image.
     ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
     ///                        The image will only fade in when fetched from a remote url and not in memory cache.
     ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0,
     ///                        the image is set without animation. The default value is `.slow`.
     ///   - callback:          A block to invoke when finished setting the image.
-    public func setImage(_ image: ImageRepresentable?, default defaultImage: ImageRepresentable, transform: ImageTransform? = nil, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, _ callback: ((_ image: UIImage?) -> Void)? = nil) {
+    public func setImage(
+        _ image: ImageRepresentable?,
+        default defaultImage: ImageRepresentable,
+        alwaysAnimate: Bool = false,
+        animationDuration: TimeInterval = .slow,
+        _ callback: ((_ image: UIImage?) -> Void)? = nil
+    ) {
         guard let image = image else {
-            setImage(defaultImage, transform: transform, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback)
+            setImage(defaultImage, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback)
             return
         }
 
-        setImage(image, transform: transform, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration) { [weak self] image in
+        setImage(image, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration) { [weak self] image in
             guard let strongSelf = self else { return }
 
             guard image == nil else {
@@ -82,46 +90,18 @@ extension UIImageView {
                 return
             }
 
-            strongSelf.setImage(defaultImage, transform: transform, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback)
+            strongSelf.setImage(defaultImage, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback)
         }
     }
 }
 
-// Added an extension to expose `ImageTransformers`.
-
 extension UIImageView {
-    /// Automatically detect and load the image from local or a remote url.
-    ///
-    /// - Parameters:
-    ///   - image:             The image to display.
-    ///   - transform:         A property to transform the image before setting the image.
-    ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
-    ///                        The image will only fade in when fetched from a remote url and not in memory cache.
-    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0,
-    ///                        the image is set without animation. The default value is `.slow`.
-    ///   - callback:          A block to invoke when finished setting the image.
-    public func setImage(_ image: ImageRepresentable?, transform: ImageTransformer, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, _ callback: ((_ image: UIImage?) -> Void)? = nil) {
-        setImage(image, transform: transform.transform(), alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback)
-    }
-
-    /// Automatically detect and load the image from local or a remote url.
-    ///
-    /// - Parameters:
-    ///   - image:             The image to display.
-    ///   - defaultImage:      The fallback image to display if `image` can't be loaded.
-    ///   - transform:         A property to transform the image before setting the image.
-    ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
-    ///                        The image will only fade in when fetched from a remote url and not in memory cache.
-    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0,
-    ///                        the image is set without animation. The default value is `.slow`.
-    ///   - callback:          A block to invoke when finished setting the image.
-    public func setImage(_ image: ImageRepresentable?, default defaultImage: ImageRepresentable, transform: ImageTransformer, alwaysAnimate: Bool = false, animationDuration: TimeInterval = .slow, _ callback: ((_ image: UIImage?) -> Void)? = nil) {
-        setImage(image, default: defaultImage, transform: transform.transform(), alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback)
-    }
-}
-
-extension UIImageView {
-    private func postProcess(image: UIImage?, source: ImageRepresentable, transform: ImageTransform?, animationDuration: TimeInterval, _ callback: ((_ image: UIImage?) -> Void)?) {
+    private func postProcess(
+        image: UIImage?,
+        source: ImageRepresentable,
+        animationDuration: TimeInterval,
+        _ callback: ((_ image: UIImage?) -> Void)?
+    ) {
         guard var image = image else {
             DispatchQueue.main.asyncSafe {
                 callback?(nil)
@@ -135,19 +115,23 @@ extension UIImageView {
             return
         }
 
-        guard let transform = transform else {
+        guard let transformableImage = source as? TransformableImage else {
             applyImage(image, animationDuration: animationDuration, callback)
             return
         }
 
         DispatchQueue.global(qos: .userInteractive).syncSafe { [weak self] in
             guard let strongSelf = self else { return }
-            image = image.applying(transform, source: source)
+            image = image.applying(transformableImage.transform, source: source)
             strongSelf.applyImage(image, animationDuration: animationDuration, callback)
         }
     }
 
-    private func applyImage(_ image: UIImage, animationDuration: TimeInterval, _ callback: ((_ image: UIImage?) -> Void)?) {
+    private func applyImage(
+        _ image: UIImage,
+        animationDuration: TimeInterval,
+        _ callback: ((_ image: UIImage?) -> Void)?
+    ) {
         DispatchQueue.main.asyncSafe { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.setImage(image, animationDuration: animationDuration)

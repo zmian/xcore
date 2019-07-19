@@ -1,5 +1,5 @@
 //
-// ImageTransformer.swift
+// ImageTransform+Member.swift
 //
 // Copyright © 2017 Xcore
 //
@@ -24,33 +24,36 @@
 
 import UIKit
 
-/// Since Swift doesn't allow attaching static object to protocols.
-/// `ImageTransformers` is a namespace to expose some of the built-in transformers.
-public struct ImageTransformer {
-    let transform: () -> ImageTransform
+/// A concrete wrapper for enabling implicit member expressions.
+#warning("FIXME: Replace with SwiftUI's StaticMember.")
+public struct MetaStaticMember<Base> {
+    public let base: Base
 
-    public init(_ transform: @escaping @autoclosure () -> ImageTransform) {
-        self.transform = transform
+    public init(_ base: Base) {
+        self.base = base
     }
 }
 
 extension ImageTransform {
-    fileprivate func wrap() -> ImageTransformer {
-        return ImageTransformer(self)
+    public typealias Member = MetaStaticMember<Self>
+
+    /// Wraps the transform into member type.
+    public func wrap() -> Member {
+        return MetaStaticMember(self)
     }
 }
 
-extension ImageTransformer {
+extension MetaStaticMember where Base: ImageTransform {
     /// Creating arbitrarily-colored icons from a black-with-alpha master image.
-    public static func tintColor(_ color: UIColor) -> ImageTransformer {
+    public static func tintColor(_ color: UIColor) -> TintColorImageTransform.Member {
         return TintColorImageTransform(tintColor: color).wrap()
     }
 
-    public static func alpha(_ value: CGFloat) -> ImageTransformer {
+    public static func alpha(_ value: CGFloat) -> AlphaImageTransform.Member {
         return AlphaImageTransform(alpha: value).wrap()
     }
 
-    public static func cornerRadius(_ value: CGFloat) -> ImageTransformer {
+    public static func cornerRadius(_ value: CGFloat) -> CornerRadiusImageTransform.Member {
         return CornerRadiusImageTransform(cornerRadius: value).wrap()
     }
 
@@ -60,11 +63,11 @@ extension ImageTransformer {
     ///   - color: The color to use when coloring.
     ///   - kind: The kind of colorize type method to use.
     /// - Returns: The processed `UIImage` object.
-    public static func colorize(_ color: UIColor, kind: ColorizeImageTransform.Kind) -> ImageTransformer {
+    public static func colorize(_ color: UIColor, kind: ColorizeImageTransform.Kind) -> ColorizeImageTransform.Member {
         return ColorizeImageTransform(color: color, kind: kind).wrap()
     }
 
-    public static func background(_ color: UIColor, preferredSize: CGSize, alignment: UIControl.ContentHorizontalAlignment = .center) -> ImageTransformer {
+    public static func background(_ color: UIColor, preferredSize: CGSize, alignment: UIControl.ContentHorizontalAlignment = .center) -> BackgroundImageTransform.Member {
         return BackgroundImageTransform(color: color, preferredSize: preferredSize, alignment: alignment).wrap()
     }
 
@@ -76,7 +79,7 @@ extension ImageTransformer {
     ///   - tintColor: An optional tint color to apply. The default value is `nil`.
     ///
     /// - Returns: A new scaled image.
-    public static func scaled(to newSize: CGSize, scalingMode: ResizeImageTransform.ScalingMode = .aspectFill, tintColor: UIColor? = nil) -> ImageTransformer {
+    public static func scaled(to newSize: CGSize, scalingMode: ResizeImageTransform.ScalingMode = .aspectFill, tintColor: UIColor? = nil) -> CompositeImageTransform.Member {
         let transformer: CompositeImageTransform = [ResizeImageTransform(to: newSize, scalingMode: scalingMode)]
 
         if let tintColor = tintColor {
@@ -103,7 +106,7 @@ extension ImageTransformer {
         direction: GradientDirection = .topToBottom,
         locations: [Double]? = nil,
         blendMode: CGBlendMode = .normal
-    ) -> ImageTransformer {
+    ) -> GradientImageTransform.Member {
         return GradientImageTransform(
             type: type,
             colors: colors,

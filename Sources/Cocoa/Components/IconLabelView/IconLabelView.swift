@@ -250,10 +250,10 @@ open class IconLabelView: XCView {
 // MARK: - Configure
 
 extension IconLabelView {
-    open func configure(_ image: ImageRepresentable? = nil, transform: ImageTransform? = nil, title: StringRepresentable?, subtitle: StringRepresentable? = nil) {
+    open func configure(_ image: ImageRepresentable? = nil, title: StringRepresentable?, subtitle: StringRepresentable? = nil) {
         isSubtitleLabelHidden = subtitle == nil
         isImageViewHidden = image == nil
-        imageView.setImage(image, transform: transform)
+        imageView.setImage(image)
         titleLabel.setText(title)
         subtitleLabel.setText(subtitle)
     }
