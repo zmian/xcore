@@ -128,16 +128,16 @@ extension XCComposedCollectionViewController {
     public func setDataSourceOffset(_ dataSourceOffset: CGFloat, midDataSourceDeltaOffset: CGFloat = 0, animated: Bool = true) {
         let contentSize = collectionView.collectionViewLayout.collectionViewContentSize
         let offset = collectionView.adjustedContentInset
+
+        let topOffset = -offset.top
+        let bottomOffset = contentSize.height - collectionView.frame.height + offset.bottom
+        let middleOffset = dataSourceOffset - .maximumPadding - contentInset.top - midDataSourceDeltaOffset
+
         let newOffset = CGPoint(
             x: 0,
-            y: min(
-                contentSize.height - collectionView.frame.height + offset.bottom,
-                max(
-                    dataSourceOffset - offset.top - .maximumPadding - midDataSourceDeltaOffset,
-                    -offset.top
-                )
-            )
+            y: min(bottomOffset, max(middleOffset, topOffset))
         )
+
         collectionView.setContentOffset(newOffset, animated: animated)
     }
 }
