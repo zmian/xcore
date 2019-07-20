@@ -24,7 +24,7 @@
 
 import UIKit
 
-final public class GradientImageTransform: ImageTransform {
+public struct GradientImageTransform: ImageTransform {
     private let type: CAGradientLayerType
     private let colors: [UIColor]
     private let direction: GradientDirection

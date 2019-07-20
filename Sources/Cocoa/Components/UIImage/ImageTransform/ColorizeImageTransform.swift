@@ -40,7 +40,7 @@ extension ColorizeImageTransform {
     }
 }
 
-final public class ColorizeImageTransform: ImageTransform {
+public struct ColorizeImageTransform: ImageTransform {
     private let color: UIColor
     private let kind: Kind
 

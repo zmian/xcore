@@ -25,7 +25,7 @@
 import UIKit
 
 /// Creating arbitrarily-colored icons from a black-with-alpha master image.
-final public class TintColorImageTransform: ImageTransform {
+public struct TintColorImageTransform: ImageTransform {
     private let tintColor: UIColor
 
     public var identifier: String {

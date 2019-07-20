@@ -24,7 +24,7 @@
 
 import UIKit
 
-final public class ResizeImageTransform: ImageTransform {
+public struct ResizeImageTransform: ImageTransform {
     private let size: CGSize
     private let scalingMode: ScalingMode
 
