@@ -24,7 +24,7 @@
 
 import UIKit
 
-final public class AlphaImageTransform: ImageTransform {
+public struct AlphaImageTransform: ImageTransform {
     private let alpha: CGFloat
 
     public var identifier: String {

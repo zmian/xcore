@@ -24,7 +24,7 @@
 
 import UIKit
 
-public protocol ImageTransform: class, ImageRepresentablePlugin {
+public protocol ImageTransform: ImageRepresentablePlugin {
     /// A unique identifier for the transform.
     var identifier: String { get }
 
@@ -35,14 +35,6 @@ public protocol ImageTransform: class, ImageRepresentablePlugin {
     ///   - source: The original source from which the `image` was constructed.
     /// - Returns: The transformed `UIImage` object.
     func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage
-
-    /// Produces `UIImage` object asynchronous by transforming the input image.
-    ///
-    /// - Parameters:
-    ///   - image: The image to apply the transform.
-    ///   - source: The original source from which the `image` was constructed.
-    ///   - completionHandler: The completion handler to invoke on the `.main` thread when the transform operation completes.
-    func transform(_ image: UIImage, source: ImageRepresentable, _ completionHandler: @escaping (_ image: UIImage) -> Void)
 }
 
 extension ImageTransform {
@@ -51,13 +43,7 @@ extension ImageTransform {
     }
 
     var transformName: String {
-        return NSStringFromClass(Self.self)
-    }
-}
-
-extension ImageTransform {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.identifier == rhs.identifier
+        return String(reflecting: type(of: self))
     }
 }
 
@@ -66,16 +52,10 @@ extension ImageTransform {
     public func transform(_ image: UIImage) -> UIImage {
         return transform(image, source: image)
     }
+}
 
-    public func transform(_ image: UIImage, source: ImageRepresentable, _ completionHandler: @escaping (_ image: UIImage) -> Void) {
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            guard let strongSelf = self else { return }
-
-            let finalImage = strongSelf.transform(image, source: source)
-
-            DispatchQueue.main.async {
-                completionHandler(finalImage)
-            }
-        }
+extension ImageTransform {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.identifier == rhs.identifier
     }
 }

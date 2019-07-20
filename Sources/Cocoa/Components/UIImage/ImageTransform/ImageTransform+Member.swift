@@ -80,7 +80,7 @@ extension MetaStaticMember where Base: ImageTransform {
     ///
     /// - Returns: A new scaled image.
     public static func scaled(to newSize: CGSize, scalingMode: ResizeImageTransform.ScalingMode = .aspectFill, tintColor: UIColor? = nil) -> CompositeImageTransform.Member {
-        let transformer: CompositeImageTransform = [ResizeImageTransform(to: newSize, scalingMode: scalingMode)]
+        var transformer: CompositeImageTransform = [ResizeImageTransform(to: newSize, scalingMode: scalingMode)]
 
         if let tintColor = tintColor {
             transformer.add(TintColorImageTransform(tintColor: tintColor))

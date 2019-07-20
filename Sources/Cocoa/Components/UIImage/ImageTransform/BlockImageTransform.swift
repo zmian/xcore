@@ -24,11 +24,14 @@
 
 import UIKit
 
-public final class BlockImageTransform: ImageTransform {
+public struct BlockImageTransform: ImageTransform {
     public let identifier: String
     private let block: (_ image: UIImage, _ source: ImageRepresentable) -> UIImage
 
-    public init(identifier: String, _ transform: @escaping (_ image: UIImage, _ source: ImageRepresentable) -> UIImage) {
+    public init(
+        identifier: String,
+        _ transform: @escaping (_ image: UIImage, _ source: ImageRepresentable) -> UIImage
+    ) {
         self.identifier = identifier
         self.block = transform
     }

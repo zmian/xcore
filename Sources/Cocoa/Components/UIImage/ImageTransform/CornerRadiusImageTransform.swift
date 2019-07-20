@@ -24,7 +24,7 @@
 
 import UIKit
 
-final public class CornerRadiusImageTransform: ImageTransform {
+public struct CornerRadiusImageTransform: ImageTransform {
     private let cornerRadius: CGFloat
 
     public var identifier: String {

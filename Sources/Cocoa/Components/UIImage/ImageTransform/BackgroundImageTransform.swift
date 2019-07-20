@@ -24,7 +24,7 @@
 
 import UIKit
 
-final public class BackgroundImageTransform: ImageTransform {
+public struct BackgroundImageTransform: ImageTransform {
     private let color: UIColor
     private let preferredSize: CGSize
     private let alignment: UIControl.ContentHorizontalAlignment

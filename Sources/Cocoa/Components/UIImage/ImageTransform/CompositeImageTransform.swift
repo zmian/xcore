@@ -24,7 +24,7 @@
 
 import UIKit
 
-final public class CompositeImageTransform: ImageTransform, ExpressibleByArrayLiteral {
+public struct CompositeImageTransform: ImageTransform, ExpressibleByArrayLiteral {
     private var transforms: [ImageTransform] = []
 
     public init(_ transforms: [ImageTransform]) {
@@ -36,12 +36,12 @@ final public class CompositeImageTransform: ImageTransform, ExpressibleByArrayLi
     }
 
     /// Adds a new transform at the end of the array.
-    public func add(_ transform: ImageTransform) {
+    public mutating func add(_ transform: ImageTransform) {
         transforms.append(transform)
     }
 
     /// Removes the given transform.
-    public func remove(_ transform: ImageTransform) {
+    public mutating func remove(_ transform: ImageTransform) {
         let identifiers = transforms.map { $0.identifier }
 
         guard let index = identifiers.firstIndex(of: transform.identifier) else {
