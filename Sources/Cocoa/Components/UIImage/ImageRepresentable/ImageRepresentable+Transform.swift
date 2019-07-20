@@ -1,5 +1,5 @@
 //
-// AlignableImage.swift
+// ImageRepresentable+Transform.swift
 //
 // Copyright © 2019 Xcore
 //
@@ -24,37 +24,8 @@
 
 import UIKit
 
-extension AlignableImage {
-    public enum Alignment {
-        case leading
-        case trailing
-    }
-}
-
-/// A wrapper type to encode alignment information for any `ImageRepresentable`
-/// type.
-public struct AlignableImage: ImageRepresentable {
-    private let image: ImageRepresentable
-    public let alignment: Alignment
-
-    public var imageSource: ImageSourceType {
-        return image.imageSource
-    }
-
-    public var bundle: Bundle? {
-        return image.bundle
-    }
-
-    public init(_ image: ImageRepresentable, alignment: Alignment = .leading) {
-        self.image = image
-        self.alignment = alignment
-    }
-}
-
-// MARK: - ImageRepresentable
-
 extension ImageRepresentable {
-    /// Returns `AlignableImage` instance with the given alignment.
+    /// Returns `ImageRepresentable` instance with the given transform.
     ///
     /// **Usage**:
     ///
@@ -70,9 +41,39 @@ extension ImageRepresentable {
     /// }
     /// ```
     ///
-    /// - Parameter value: The alignment value for the image.
-    /// - Returns: An `AlignableImage` instance.
-    public func alignment(_ value: AlignableImage.Alignment) -> AlignableImage {
-        return AlignableImage(self, alignment: value)
+    /// - Parameter value: The transform value for the image.
+    /// - Returns: An `ImageRepresentable` instance.
+    public func transform(_ value: ImageTransform) -> ImageRepresentable {
+        return append(value)
+    }
+
+    /// Returns `ImageRepresentable` instance with the given transform.
+    ///
+    /// **Usage**:
+    ///
+    /// ```swift
+    /// func setIcon(_ icon: ImageRepresentable) {
+    ///     let newIcon = icon
+    ///         .alignment(.leading)
+    ///         .transform(.tintColor(.white))
+    ///         .alignment(.trailing) // last one wins when using plugin.
+    ///
+    ///     let iconView = UIImageView()
+    ///     iconView.setImage(newIcon)
+    ///
+    ///     let transform: ImageTransform = newIcon.plugin()!
+    ///     print(transform.identifier)
+    ///     // "TintColorImageTransform-tintColor:(#FFFFFF)"
+    ///
+    ///     let alignment: ImageRepresentableAlignment = newIcon.plugin()!
+    ///     print(alignment)
+    ///     // "trailing"
+    /// }
+    /// ```
+    ///
+    /// - Parameter transform: The transform for the image.
+    /// - Returns: An `ImageRepresentable` instance.
+    public func transform<T: ImageTransform>(_ transform: T.Member) -> ImageRepresentable {
+        return append(transform.base)
     }
 }

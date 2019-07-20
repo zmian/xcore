@@ -24,7 +24,7 @@
 
 import UIKit
 
-public protocol ImageTransform: class {
+public protocol ImageTransform: class, ImageRepresentablePlugin {
     /// A unique identifier for the transform.
     var identifier: String { get }
 

@@ -115,14 +115,14 @@ extension UIImageView {
             return
         }
 
-        guard let transformableImage = source as? TransformableImage else {
+        guard let transform: ImageTransform = source.plugin() else {
             applyImage(image, animationDuration: animationDuration, callback)
             return
         }
 
         DispatchQueue.global(qos: .userInteractive).syncSafe { [weak self] in
             guard let strongSelf = self else { return }
-            image = image.applying(transformableImage.transform, source: source)
+            image = image.applying(transform, source: source)
             strongSelf.applyImage(image, animationDuration: animationDuration, callback)
         }
     }
