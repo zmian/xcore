@@ -26,7 +26,7 @@ import UIKit
 
 // MARK: - StringSourceType
 
-public enum StringSourceType {
+public enum StringSourceType: Equatable {
     case string(String)
     case attributedString(NSAttributedString)
 
@@ -45,6 +45,8 @@ public enum StringSourceType {
 public protocol StringRepresentable {
     var stringSource: StringSourceType { get }
 }
+
+// MARK: - Conformance
 
 extension String: StringRepresentable {
     public var stringSource: StringSourceType {
@@ -115,7 +117,7 @@ extension TextAttributedTextRepresentable where Self: UIView {
     }
 }
 
-// MARK: - Conformance
+// MARK: - TextAttributedTextRepresentable.Conformance
 
 extension UILabel: TextAttributedTextRepresentable { }
 extension UIButton: TextAttributedTextRepresentable { }

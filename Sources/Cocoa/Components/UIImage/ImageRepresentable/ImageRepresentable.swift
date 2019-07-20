@@ -26,7 +26,7 @@ import UIKit
 
 // MARK: - ImageSourceType
 
-public enum ImageSourceType {
+public enum ImageSourceType: Equatable {
     case url(String)
     case uiImage(UIImage)
 
@@ -50,19 +50,6 @@ public enum ImageSourceType {
         }
 
         return true
-    }
-}
-
-extension ImageSourceType: Equatable {
-    public static func == (lhs: ImageSourceType, rhs: ImageSourceType) -> Bool {
-        switch (lhs, rhs) {
-            case (.uiImage(let lhsImage), .uiImage(let rhsImage)):
-                return lhsImage.isEqual(rhsImage)
-            case (.url(let lhsValue), .url(let rhsValue)):
-                return lhsValue == rhsValue
-            default:
-                return false
-        }
     }
 }
 
