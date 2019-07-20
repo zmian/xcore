@@ -33,11 +33,19 @@ extension ImageRepresentable {
     /// func setIcon(_ icon: ImageRepresentable) {
     ///     let newIcon = icon
     ///         .alignment(.leading)
-    ///         .transform(.tintColor(.white))
-    ///         .alignment(.trailing) // last one wins
+    ///         .transform(TintColorImageTransform(tintColor: .white))
+    ///         .alignment(.trailing) // last one wins when using plugin.
     ///
     ///     let iconView = UIImageView()
     ///     iconView.setImage(newIcon)
+    ///
+    ///     let transform: ImageTransform = newIcon.plugin()!
+    ///     print(transform.identifier)
+    ///     // "TintColorImageTransform-tintColor:(#FFFFFF)"
+    ///
+    ///     let alignment: ImageRepresentableAlignment = newIcon.plugin()!
+    ///     print(alignment)
+    ///     // "trailing"
     /// }
     /// ```
     ///
