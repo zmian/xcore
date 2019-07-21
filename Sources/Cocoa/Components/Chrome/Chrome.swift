@@ -166,7 +166,7 @@ extension Chrome {
     final public class Style: NSObject {
         public let type: BackgroundStyle
 
-        @available(*, unavailable, message: "unavailable")
+        @available(*, unavailable)
         override init() {
             fatalError()
         }
