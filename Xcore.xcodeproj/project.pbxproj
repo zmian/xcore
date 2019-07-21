@@ -50,6 +50,7 @@
 		688B66612276890900AD0C1A /* XCConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688B66602276890900AD0C1A /* XCConfigurationTests.swift */; };
 		688B66632276981900AD0C1A /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688B66622276981900AD0C1A /* CollectionTests.swift */; };
 		688C357C2273DED400CF3FCB /* DictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688C357B2273DED400CF3FCB /* DictionaryTests.swift */; };
+		68A8D4FD22E3ECB3000E2115 /* ReflectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A8D4FC22E3ECB2000E2115 /* ReflectionTests.swift */; };
 		68A9366F22C69E7200CB01BD /* StringConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A9366E22C69E7100CB01BD /* StringConverterTests.swift */; };
 		68CA631F224C76760012DF31 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA631E224C76750012DF31 /* StringTests.swift */; };
 /* End PBXBuildFile section */
@@ -123,6 +124,7 @@
 		688B66602276890900AD0C1A /* XCConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCConfigurationTests.swift; sourceTree = "<group>"; };
 		688B66622276981900AD0C1A /* CollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTests.swift; sourceTree = "<group>"; };
 		688C357B2273DED400CF3FCB /* DictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTests.swift; sourceTree = "<group>"; };
+		68A8D4FC22E3ECB2000E2115 /* ReflectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReflectionTests.swift; sourceTree = "<group>"; };
 		68A9366E22C69E7100CB01BD /* StringConverterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConverterTests.swift; sourceTree = "<group>"; };
 		68CA631E224C76750012DF31 /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		8D64F6471089E2220DD070CC /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				684B1E8E224C5167009F6197 /* CaseIterableTests.swift */,
 				684B1E8B224C5167009F6197 /* ImageTransformTests.swift */,
 				684B1E8D224C5167009F6197 /* PercentageTests.swift */,
+				68A8D4FC22E3ECB2000E2115 /* ReflectionTests.swift */,
 				68CA631E224C76750012DF31 /* StringTests.swift */,
 				688B66602276890900AD0C1A /* XCConfigurationTests.swift */,
 				688C357B2273DED400CF3FCB /* DictionaryTests.swift */,
@@ -601,6 +604,7 @@
 				684B1E99224C5176009F6197 /* ViewControllerTestCase.swift in Sources */,
 				68376A1C228C2C9500C7B819 /* SubviewLookupTests.swift in Sources */,
 				684B1E95224C5167009F6197 /* CaseIterableTests.swift in Sources */,
+				68A8D4FD22E3ECB3000E2115 /* ReflectionTests.swift in Sources */,
 				68CA631F224C76760012DF31 /* StringTests.swift in Sources */,
 				68262E4622A320D00011431A /* FeatureFlagTests.swift in Sources */,
 				684B1E97224C5167009F6197 /* CurrencySymbolsOptionsTests.swift in Sources */,

@@ -57,8 +57,9 @@ extension UIAlertController {
             return
         }
 
-        // There is bug in `tableView:didSelectRowAtIndexPath` that causes delay in presenting
-        // `UIAlertController` and wrapping the `presentViewController:` call in `DispatchQueue.main.async` fixes it.
+        // There is bug in `tableView:didSelectRowAtIndexPath` that causes delay in
+        // presenting `UIAlertController` and wrapping the `presentViewController:` call
+        // in `DispatchQueue.main.async` fixes it.
         //
         // http://openradar.appspot.com/19285091
         DispatchQueue.main.async { [weak presentingViewController] in

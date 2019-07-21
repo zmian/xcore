@@ -31,7 +31,7 @@ public protocol ImageRepresentablePlugin {
 
 extension ImageRepresentablePlugin {
     public var identifier: String {
-        return String(reflecting: type(of: self))
+        return name(of: self)
     }
 }
 
