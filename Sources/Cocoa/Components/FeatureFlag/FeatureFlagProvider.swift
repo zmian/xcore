@@ -33,6 +33,6 @@ public protocol FeatureFlagProvider {
 
 extension FeatureFlagProvider {
     public var identifier: String {
-        return String(describing: self)
+        return name(of: self)
     }
 }

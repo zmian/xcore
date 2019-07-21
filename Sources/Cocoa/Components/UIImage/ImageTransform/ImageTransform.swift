@@ -43,7 +43,7 @@ extension ImageTransform {
     }
 
     var transformName: String {
-        return String(reflecting: type(of: self))
+        return name(of: self)
     }
 }
 

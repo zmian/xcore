@@ -25,6 +25,9 @@
 import UIKit
 
 public enum ImageRepresentableAlignment: ImageRepresentablePlugin {
+    case top
+    case bottom
+    case center
     case leading
     case trailing
 }

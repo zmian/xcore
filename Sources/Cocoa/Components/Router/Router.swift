@@ -33,7 +33,7 @@ public class Router {
     }
 
     public func register<T: RouteHandler>(_ handler: @autoclosure () -> T) -> T {
-        let key = NSStringFromClass(T.self)
+        let key = name(of: T.self)
 
         guard let existingHandler = routeHandlers[key] as? T else {
             let handler = handler()

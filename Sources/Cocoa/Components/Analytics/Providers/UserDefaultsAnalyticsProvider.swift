@@ -34,7 +34,7 @@ final public class UserDefaultsAnalyticsProvider: AnalyticsProvider {
     /// - Parameter named: The database name. Specifying `nil` defaults to database
     ///                    named: `UserDefaultsAnalyticsProvider`.
     public init(named: String? = nil) {
-        self.suiteName = named ?? NSStringFromClass(UserDefaultsAnalyticsProvider.self)
+        self.suiteName = named ?? name(of: UserDefaultsAnalyticsProvider.self)
     }
 
     public func track(_ event: AnalyticsEvent) {

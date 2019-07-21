@@ -54,7 +54,7 @@ public protocol AnalyticsProvider {
 
 extension AnalyticsProvider {
     public var identifier: String {
-        return String(describing: self)
+        return name(of: self)
     }
 }
 
