@@ -26,11 +26,11 @@ import UIKit
 
 // MARK: - StringSourceType
 
-public enum StringSourceType: Equatable {
+public enum StringSourceType: Equatable, CustomStringConvertible {
     case string(String)
     case attributedString(NSAttributedString)
 
-    public var rawValue: String {
+    public var description: String {
         switch self {
             case .string(let value):
                 return value
@@ -42,11 +42,17 @@ public enum StringSourceType: Equatable {
 
 // MARK: - StringRepresentable
 
-public protocol StringRepresentable {
+public protocol StringRepresentable: CustomStringConvertible {
     var stringSource: StringSourceType { get }
 }
 
 // MARK: - Conformance
+
+extension StringRepresentable {
+    public var description: String {
+        return stringSource.description
+    }
+}
 
 extension String: StringRepresentable {
     public var stringSource: StringSourceType {

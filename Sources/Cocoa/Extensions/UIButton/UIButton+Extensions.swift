@@ -369,7 +369,12 @@ extension UIButton {
     /// - Parameters:
     ///   - named:  The remote image url or local image name to use for the specified state.
     ///   - state:  The state that uses the specified image.
-    public func image(_ named: ImageRepresentable, for state: UIControl.State) {
+    public func image(_ named: ImageRepresentable?, for state: UIControl.State) {
+        guard let named = named else {
+            setImage(nil, for: .normal)
+            return
+        }
+
         UIImage.fetch(named) { [weak self] image in
             self?.setImage(image, for: state)
         }
