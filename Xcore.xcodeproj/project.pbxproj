@@ -10,6 +10,7 @@
 		03A51414B09BF009E2B58BCF /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44A8F39EEE5884C0EAAD69D9 /* Pods_UnitTests.framework */; };
 		14B04607871830CB4B0DDE9D /* Pods_UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16E36FDA8C7C8821AAA4F0E0 /* Pods_UITests.framework */; };
 		167C05D21FAB102542BD188D /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67CC55C468091B5137D790BB /* Pods_Example.framework */; };
+		2F35F20F22E362C900B45C85 /* ExampleArrowOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F35F20E22E362C900B45C85 /* ExampleArrowOptions.swift */; };
 		2F9B4C7F22A19B0E00FB644E /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B4C7E22A19B0E00FB644E /* FeedViewController.swift */; };
 		2F9B4C8222A19BB600FB644E /* FeedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B4C8122A19BB600FB644E /* FeedDataSource.swift */; };
 		2F9B4C8422A19E7400FB644E /* FeedTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B4C8322A19E7400FB644E /* FeedTextViewCell.swift */; };
@@ -74,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		16E36FDA8C7C8821AAA4F0E0 /* Pods_UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F35F20E22E362C900B45C85 /* ExampleArrowOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleArrowOptions.swift; sourceTree = "<group>"; };
 		2F9B4C7E22A19B0E00FB644E /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		2F9B4C8122A19BB600FB644E /* FeedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDataSource.swift; sourceTree = "<group>"; };
 		2F9B4C8322A19E7400FB644E /* FeedTextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTextViewCell.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				6836600322987F1D00FDE45B /* ExampleDynamicTableViewController.swift */,
 				6836600222987F1D00FDE45B /* ButtonsViewController.swift */,
 				6836600422987F1D00FDE45B /* ExampleTextViewController.swift */,
+				2F35F20E22E362C900B45C85 /* ExampleArrowOptions.swift */,
 				2F9B4C8022A19B7B00FB644E /* FeedExample */,
 			);
 			path = Showcase;
@@ -630,6 +633,7 @@
 				2F9B4C8222A19BB600FB644E /* FeedDataSource.swift in Sources */,
 				6836600C22987F3700FDE45B /* Theme.swift in Sources */,
 				6836600722987F1D00FDE45B /* ExampleTextViewController.swift in Sources */,
+				2F35F20F22E362C900B45C85 /* ExampleArrowOptions.swift in Sources */,
 				6836600B22987F3700FDE45B /* Imports.swift in Sources */,
 				684B1ECA224C544A009F6197 /* ImageAssetIdentifier.swift in Sources */,
 				6836600522987F1D00FDE45B /* ButtonsViewController.swift in Sources */,

@@ -25,13 +25,13 @@
 import UIKit
 
 final class LocalImageFetcher: ImageFetcher {
-    private static let cache = NSCache<NSString, UIImage>()
+    private let cache = NSCache<NSString, UIImage>()
 
-    static func canHandle(_ image: ImageRepresentable) -> Bool {
+    func canHandle(_ image: ImageRepresentable) -> Bool {
         return !image.imageSource.isRemoteUrl
     }
 
-    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
+    func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
         switch image.imageSource {
             case .uiImage(let image):
                 callback(image, .memory)
@@ -48,8 +48,9 @@ final class LocalImageFetcher: ImageFetcher {
                     return
                 }
 
-                DispatchQueue.global(qos: .userInteractive).asyncSafe {
+                DispatchQueue.global(qos: .userInteractive).asyncSafe { [weak self] in
                     guard
+                        let strongSelf = self,
                         let url = URL(string: value),
                         url.schemeType == .file,
                         let data = try? Data(contentsOf: url),
@@ -62,7 +63,7 @@ final class LocalImageFetcher: ImageFetcher {
                     }
 
                     if let cacheKey = cacheKey {
-                        cache.setObject(image, forKey: cacheKey)
+                        strongSelf.cache.setObject(image, forKey: cacheKey)
                     }
 
                     DispatchQueue.main.asyncSafe {
@@ -72,7 +73,7 @@ final class LocalImageFetcher: ImageFetcher {
         }
     }
 
-    static func removeCache() {
+    func clearCache() {
         cache.removeAllObjects()
     }
 }

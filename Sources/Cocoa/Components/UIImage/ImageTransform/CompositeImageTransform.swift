@@ -35,7 +35,7 @@ public struct CompositeImageTransform: ImageTransform, ExpressibleByArrayLiteral
         self.transforms = elements
     }
 
-    /// Adds a new transform at the end of the array.
+    /// Adds a new transform at the end of the collection.
     public mutating func add(_ transform: ImageTransform) {
         transforms.append(transform)
     }

@@ -27,7 +27,10 @@ import UIKit
 public protocol ImageFetcher {
     typealias ResultBlock = (_ image: UIImage?, _ cacheType: ImageSourceType.CacheType) -> Void
 
-    static func canHandle(_ image: ImageRepresentable) -> Bool
+    /// A unique identifier for the image fetcher.
+    var identifier: String { get }
+
+    func canHandle(_ image: ImageRepresentable) -> Bool
 
     /// Fetch the image.
     ///
@@ -35,5 +38,13 @@ public protocol ImageFetcher {
     ///   - image: The image requested to be fetched.
     ///   - imageView: An optional property if this image will be set on the image view.
     ///   - callback: The callback to let the handler know when the image is fetched.
-    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock)
+    func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock)
+
+    func clearCache()
+}
+
+extension ImageFetcher {
+    public var identifier: String {
+        return name(of: self)
+    }
 }
