@@ -27,10 +27,10 @@ import UIKit
 public class BlurView: XCView {
     private var observer: NSObjectProtocol?
     private var style: UIBlurEffect.Style = .light
-    private lazy var blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: self.style))
+    private lazy var blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: style))
     private lazy var blurBackView = UIView().apply {
-        $0.backgroundColor = self.blurColor
-        $0.alpha = 1 - self.blurOpacity
+        $0.backgroundColor = blurColor
+        $0.alpha = 1 - blurOpacity
     }
 
     /// Returns a boolean value indicating whether reduce transparency is enabled.
