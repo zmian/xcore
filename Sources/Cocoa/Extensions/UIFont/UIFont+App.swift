@@ -96,8 +96,7 @@ extension UIFont {
 
         let customFontDescriptor = UIFontDescriptor(fontAttributes: [
             .name: name,
-            .size: preferredFontDescriptor.pointSize,
-            .textStyle: style
+            .size: preferredFontDescriptor.pointSize
         ])
 
         return UIFont(descriptor: customFontDescriptor, size: 0)
