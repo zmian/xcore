@@ -1,49 +1,59 @@
 //
-//  UIImage+Fetcher.swift
-//  Xcore
+// UIImage+Fetcher.swift
 //
-//  Created by Zeeshan Mian on 12/8/18.
-//  Copyright © 2018 Xcore. All rights reserved.
+// Copyright © 2018 Xcore
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
-// MARK: Namespace
+// MARK: - Namespace
 
 extension UIImage {
     public enum Fetcher { }
 }
 
-// MARK: Registration
+// MARK: - Registration
 
 extension UIImage.Fetcher {
-    static var registered: [ImageFetcher.Type] = [RemoteImageFetcher.self, LocalImageFetcher.self]
+    /// The registered list of fetchers.
+    private static let registered = CompositeImageFetcher([
+        RemoteImageFetcher(),
+        LocalImageFetcher()
+    ])
 
-    public static func register(_ fetcher: ImageFetcher.Type) {
-        registered.append(fetcher)
-    }
-}
-
-// MARK: Cache Management
-
-extension UIImage.Fetcher {
-    public enum CacheType {
-        case local
-        case remote
+    /// Register the given fetcher if it's not already registered.
+    ///
+    /// - Note: This method ensures there are no duplicate fetchers.
+    public static func register(_ fetcher: ImageFetcher) {
+        registered.add(fetcher)
     }
 
-    public static func clearCache(type: CacheType) {
-        switch type {
-            case .local:
-                LocalImageFetcher.removeCache()
-            case .remote:
-                RemoteImageFetcher.removeCache()
-        }
+    // MARK: - Cache Management
+
+    public static func clearCache() {
+        registered.clearCache()
     }
 
-    public static func clearAllCache() {
-        clearCache(type: .local)
-        clearCache(type: .remote)
+    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ImageFetcher.ResultBlock) {
+        registered.fetch(image, in: imageView, callback)
     }
 }
 
@@ -66,9 +76,9 @@ extension UIImageView {
     }
 
     /// Cancel any pending or in-flight image fetch/set request dispatched via
-    /// `setImage(_:transform:alwaysAnimate:animationDuration:_:)` method.
+    /// `setImage(_:alwaysAnimate:animationDuration:_:)` method.
     ///
-    /// - seealso: `setImage(_:transform:alwaysAnimate:animationDuration:_:)`
+    /// - seealso: `setImage(_:alwaysAnimate:animationDuration:_:)`
     public func cancelSetImageRequest() {
         sd_cancelCurrentImageLoad()
         _imageFetcherCancelBlock?()

@@ -1,5 +1,5 @@
 //
-// ImageRepresentablePlugin.swift
+// Picker.swift
 //
 // Copyright © 2019 Xcore
 //
@@ -22,38 +22,36 @@
 // THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
-public protocol ImageRepresentablePlugin {
-    /// A unique identifier for the image plugin.
-    var identifier: String { get }
-}
+public final class Picker {
+    private let content: Content
 
-extension ImageRepresentablePlugin {
-    public var identifier: String {
-        return name(of: self)
+    public init(model: PickerModel) {
+        content = Content(model: model)
     }
-}
 
-// MARK: - ImageRepresentable
+    public func present() {
+        content.present()
+    }
 
-extension ImageRepresentable {
-    /// Adds a plugin to the end of the collection.
+    public func dismiss() {
+        content.dismiss()
+    }
+
+    public func didTapOtherButton(_ callback: @escaping () -> Void) {
+        content.didTapOtherButton(callback)
+    }
+
+    /// Reloads all components of the picker view.
     ///
-    /// - Parameter plugin: The plugin to append to the collection.
-    /// - Returns: An `ImageRepresentable` instance with given plugin.
-    public func append(_ plugin: ImageRepresentablePlugin) -> ImageRepresentable {
-        var pluginImage = self as? PluginImage ?? PluginImage(self, plugins: [])
-        pluginImage.add(plugin)
-        return pluginImage
+    /// Calling this method causes the picker view to query the delegate for new
+    /// data for all components.
+    public func reloadData() {
+        content.reloadData()
     }
 
-    /// Returns the last plugin of given type `T`.
-    public func plugin<T>() -> T? {
-        guard let pluginImage = self as? PluginImage else {
-            return nil
-        }
-
-        return pluginImage.last { $0 is T } as? T
+    public func setTitle(_ title: StringRepresentable?) {
+        content.setTitle(title)
     }
 }

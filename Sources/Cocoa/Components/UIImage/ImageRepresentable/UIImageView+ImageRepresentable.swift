@@ -48,7 +48,7 @@ extension UIImageView {
             return
         }
 
-        CompositeImageFetcher.fetch(imageRepresentable, in: self) { [weak self] image, cacheType in
+        UIImage.Fetcher.fetch(imageRepresentable, in: self) { [weak self] image, cacheType in
             guard let strongSelf = self else { return }
             let animated = (alwaysAnimate || cacheType.possiblyDelayed)
             strongSelf.postProcess(
@@ -78,11 +78,20 @@ extension UIImageView {
         _ callback: ((_ image: UIImage?) -> Void)? = nil
     ) {
         guard let image = image else {
-            setImage(defaultImage, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback)
+            setImage(
+                defaultImage,
+                alwaysAnimate: alwaysAnimate,
+                animationDuration: animationDuration,
+                callback
+            )
             return
         }
 
-        setImage(image, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration) { [weak self] image in
+        setImage(
+            image,
+            alwaysAnimate: alwaysAnimate,
+            animationDuration: animationDuration
+        ) { [weak self] image in
             guard let strongSelf = self else { return }
 
             guard image == nil else {
@@ -90,7 +99,12 @@ extension UIImageView {
                 return
             }
 
-            strongSelf.setImage(defaultImage, alwaysAnimate: alwaysAnimate, animationDuration: animationDuration, callback)
+            strongSelf.setImage(
+                defaultImage,
+                alwaysAnimate: alwaysAnimate,
+                animationDuration: animationDuration,
+                callback
+            )
         }
     }
 }

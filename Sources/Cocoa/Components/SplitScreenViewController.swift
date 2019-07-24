@@ -56,18 +56,18 @@ open class SplitScreenViewController: UIViewController {
         let priority = UILayoutPriority.defaultHigh
 
         // Setup constraints: headerContainerView
-        headerContainerView.anchor.make { anchor in
-            anchor.horizontally.equalToSuperview()
-            anchor.top.equalToSuperview()
+        headerContainerView.anchor.make {
+            $0.horizontally.equalToSuperview()
+            $0.top.equalToSuperview()
         }
         // Set aspect-ratio priority to low this ensures that landscape view works as expected.
         NSLayoutConstraint(item: headerContainerView, attribute: .width, toItem: headerContainerView, attribute: .height, multiplier: headerContainerViewAspectRatio, priority: priority).activate()
 
         // Setup constraints: bodyContainerView
-        bodyContainerView.anchor.make { anchor in
-            anchor.horizontally.equalToSuperview()
-            anchor.bottom.equalToSuperview().priority(priority)
-            anchor.top.equalTo(headerContainerView.anchor.bottom)
+        bodyContainerView.anchor.make {
+            $0.horizontally.equalToSuperview()
+            $0.bottom.equalToSuperview().priority(priority)
+            $0.top.equalTo(headerContainerView.anchor.bottom)
         }
     }
 }

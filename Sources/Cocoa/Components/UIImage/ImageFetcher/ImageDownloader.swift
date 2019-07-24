@@ -70,7 +70,7 @@ final class ImageDownloader {
         }
     }
 
-    static func removeCache() {
+    static func clearCache() {
         SDImageCache.shared().apply {
             $0.clearMemory()
             $0.clearDisk {}

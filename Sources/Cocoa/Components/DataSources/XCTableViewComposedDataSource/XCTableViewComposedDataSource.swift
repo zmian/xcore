@@ -45,7 +45,7 @@ open class XCTableViewComposedDataSource: XCTableViewDataSource, ExpressibleByAr
 
     // MARK: Public Interface
 
-    /// Adds a new data source at the end of the array.
+    /// Adds a new data source at the end of the collection.
     open func add(_ dataSource: XCTableViewDataSource) {
         dataSources.append(dataSource)
     }
