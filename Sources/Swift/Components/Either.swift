@@ -75,12 +75,14 @@ extension Either {
     /// instance when it represents a left value. The following example transforms
     /// the integer left value of a result into a string:
     ///
-    ///     func getNextInteger() -> Either<Int, String> { /* ... */ }
+    /// ```swift
+    /// func getNextInteger() -> Either<Int, String> { /* ... */ }
     ///
-    ///     let integerResult = getNextInteger()
-    ///     // integerResult == .left(5)
-    ///     let stringResult = integerResult.mapLeft { String($0) }
-    ///     // stringResult == .left("5")
+    /// let integerResult = getNextInteger()
+    /// // integerResult == .left(5)
+    /// let stringResult = integerResult.mapLeft { String($0) }
+    /// // stringResult == .left("5")
+    /// ```
     ///
     /// - Parameter transform: A closure that takes the left value of this
     ///   instance.
@@ -102,12 +104,14 @@ extension Either {
     /// instance when it represents a right value. The following example transforms
     /// the integer right value of a result into a string:
     ///
-    ///     func getNextInteger() -> Either<Int, String> { /* ... */ }
+    /// ```swift
+    /// func getNextInteger() -> Either<Int, String> { /* ... */ }
     ///
-    ///     let integerResult = getNextInteger()
-    ///     // integerResult == .right(5)
-    ///     let stringResult = integerResult.mapRight { String($0) }
-    ///     // stringResult == .right("5")
+    /// let integerResult = getNextInteger()
+    /// // integerResult == .right(5)
+    /// let stringResult = integerResult.mapRight { String($0) }
+    /// // stringResult == .right("5")
+    /// ```
     ///
     /// - Parameter transform: A closure that takes the right value of this
     ///   instance.

@@ -27,7 +27,7 @@ import UIKit
 extension UIImage {
     /// Fetch an image from the given source.
     public class func fetch(_ source: ImageRepresentable, callback: @escaping (_ image: UIImage?) -> Void) {
-        CompositeImageFetcher.fetch(source, in: nil) { image, _ in
+        UIImage.Fetcher.fetch(source, in: nil) { image, _ in
             DispatchQueue.main.asyncSafe {
                 callback(image)
             }

@@ -25,7 +25,7 @@
 import UIKit
 
 final class RemoteImageFetcher: ImageFetcher {
-    static func canHandle(_ image: ImageRepresentable) -> Bool {
+    func canHandle(_ image: ImageRepresentable) -> Bool {
         return image.imageSource.isRemoteUrl
     }
 
@@ -33,9 +33,11 @@ final class RemoteImageFetcher: ImageFetcher {
     ///
     /// - Parameters:
     ///   - image: The image requested to be fetched.
-    ///   - imageView: An optional property if this image will be set on the image view.
-    ///   - callback: A block with the `UIImage` object and cache type if image successfully fetched. Otherwise, `nil`.
-    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
+    ///   - imageView: An optional property if this image will be set on the image
+    ///                view.
+    ///   - callback: A block with the `UIImage` object and cache type if image
+    ///               successfully fetched. Otherwise, `nil`.
+    func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
         guard case .url(let value) = image.imageSource, let url = URL(string: value), url.host != nil else {
             callback(nil, .none)
             return
@@ -58,7 +60,7 @@ final class RemoteImageFetcher: ImageFetcher {
         imageView?._imageFetcherCancelBlock = cancelToken
     }
 
-    static func removeCache() {
-        ImageDownloader.removeCache()
+    func clearCache() {
+        ImageDownloader.clearCache()
     }
 }

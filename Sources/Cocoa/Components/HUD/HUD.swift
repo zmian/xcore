@@ -33,7 +33,7 @@ open class HUD {
     private lazy var viewController = ViewController().apply {
         $0.backgroundColor = appearance?.backgroundColor ?? backgroundColor
     }
-    private var view: UIView {
+    var view: UIView {
         return viewController.view
     }
 
@@ -45,9 +45,7 @@ open class HUD {
     }
 
     /// The default value is `.normal`.
-    open var duration: Duration {
-        return .default
-    }
+    open var duration: Duration = .default
 
     open var windowLevel: UIWindow.Level {
         get { return window.windowLevel }

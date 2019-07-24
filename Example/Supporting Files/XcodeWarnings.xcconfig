@@ -1,6 +1,6 @@
-//  XcodeWarnings by Jon Reid, https://qualitycoding.org/
-//  Copyright 2019 Jonathan M. Reid. See LICENSE.txt
-//  Source: https://github.com/jonreid/XcodeWarnings
+// XcodeWarnings by Jon Reid, https://qualitycoding.org/
+// Copyright 2019 Jonathan M. Reid. See LICENSE.txt
+// Source: https://github.com/jonreid/XcodeWarnings
 
 // Apple Clang - Preprocessing
 ENABLE_STRICT_OBJC_MSGSEND = YES

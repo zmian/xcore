@@ -65,7 +65,7 @@ struct PluginImage: ImageRepresentable {
         self.plugins = plugins
     }
 
-    /// Adds a new plugin at the end of the array.
+    /// Adds a new plugin at the end of the collection.
     mutating func add(_ plugin: ImageRepresentablePlugin) {
         plugins.append(plugin)
     }
