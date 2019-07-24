@@ -47,7 +47,8 @@ final class CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArra
         providers.append(provider)
     }
 
-    /// Add list of given providers if it's not already included in the collection.
+    /// Add list of given providers if they are not already included in the
+    /// collection.
     ///
     /// - Note: This method ensures there are no duplicate providers.
     func add(_ providers: [FeatureFlagProvider]) {
