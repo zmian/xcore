@@ -42,17 +42,11 @@ public enum StringSourceType: Equatable, CustomStringConvertible {
 
 // MARK: - StringRepresentable
 
-public protocol StringRepresentable: CustomStringConvertible {
+public protocol StringRepresentable {
     var stringSource: StringSourceType { get }
 }
 
 // MARK: - Conformance
-
-extension StringRepresentable {
-    public var description: String {
-        return stringSource.description
-    }
-}
 
 extension String: StringRepresentable {
     public var stringSource: StringSourceType {
@@ -79,6 +73,7 @@ public protocol TextAttributedTextRepresentable: class {
     var attributedText: NSAttributedString? { get set }
     func setText(_ string: StringRepresentable?)
     var hasText: Bool { get }
+    var accessibilityLabel: String? { get set }
 }
 
 extension TextAttributedTextRepresentable {
@@ -90,8 +85,11 @@ extension TextAttributedTextRepresentable {
         guard let string = string else {
             text = nil
             attributedText = nil
+            accessibilityLabel = nil
             return
         }
+
+        accessibilityLabel = String(describing: string.stringSource)
 
         switch string.stringSource {
             case .string(let string):
@@ -133,8 +131,11 @@ extension UITextView {
         guard let string = string else {
             text = nil
             attributedText = nil
+            accessibilityLabel = nil
             return
         }
+
+        accessibilityLabel = String(describing: string.stringSource)
 
         switch string.stringSource {
             case .string(let string):
