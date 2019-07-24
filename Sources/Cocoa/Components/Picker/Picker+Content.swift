@@ -54,6 +54,8 @@ extension Picker {
         }
 
         private func commonInit() {
+            toolbar.backgroundColor = .clear
+
             for i in 0..<model.numberOfComponents() {
                 let element = model.selectedElement(at: i)
                 pickerView.selectRow(element, inComponent: i, animated: false)

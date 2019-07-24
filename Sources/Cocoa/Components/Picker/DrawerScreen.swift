@@ -42,8 +42,8 @@ public final class DrawerScreen {
     private var presentedContent: Content?
     private let hud = HUD()
 
-    private let modalView = UIView().apply {
-        $0.backgroundColor = .white
+    private let modalView = BlurView().apply {
+        $0.blurOpacity = 0.3
     }
 
     private var shownConstraint: NSLayoutConstraint?
@@ -110,7 +110,7 @@ public final class DrawerScreen {
             self.hud.view.layoutSubviews()
         }, completion: { _ in
             self.hud.hide()
-            self.modalView.subviews.forEach { $0.removeFromSuperview() }
+            presentedContent.drawerContentView.removeFromSuperview()
             presentedContent.didDismiss()
             self.presentedContent = nil
             callback?()
