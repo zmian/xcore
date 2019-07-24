@@ -50,7 +50,11 @@ extension Data {
         public static let uppercase = HexEncodingOptions(rawValue: 1 << 1)
     }
 
-    /// Converts `self` into hexadecimal string representation.
+    /// Returns hexadecimal representation of `self`.
+    ///
+    /// - Parameter options: The options to use for the encoding. The default value
+    ///                      is `[]`.
+    /// - Returns: The hexadecimal encoded string.
     public func hexEncodedString(options: HexEncodingOptions = []) -> String {
         if options.contains(.raw) {
             return String(format: "%@", self as CVarArg)
