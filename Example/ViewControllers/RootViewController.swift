@@ -33,6 +33,11 @@ final class RootViewController: DynamicTableViewController {
                 title: "Components",
                 detail: "A demonstration of components included in Xcore.",
                 items: items()
+            ),
+            Section(
+                title: "Pickers",
+                detail: "A demonstration of pickers included in Xcore.",
+                items: pickers()
             )
         ]
     }
@@ -54,6 +59,21 @@ final class RootViewController: DynamicTableViewController {
             DynamicTableModel(title: "FeedViewController", subtitle: "FeedViewController demonstration") { [weak self] _, _ in
                 let vc = FeedViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
+            }
+        ]
+    }
+
+    private func pickers() -> [DynamicTableModel] {
+        return [
+            DynamicTableModel(title: "DatePicker", subtitle: "Date picker demonstration") { _, _ in
+                DatePicker.present { date in
+                    print("The selected date is \(date ?? Date())")
+                }
+            },
+            DynamicTableModel(title: "Options Representable Picker", subtitle: "Using Picker to select from an options enum") { _, _ in
+                Picker.present(selected: ExampleArrowOptions.allCases.first) { option in
+                    print("Did select \(option)")
+                }
             }
         ]
     }

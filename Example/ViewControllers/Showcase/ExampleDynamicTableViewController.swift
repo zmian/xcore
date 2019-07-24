@@ -80,11 +80,11 @@ final class ExampleDynamicTableViewController: DynamicTableViewController {
         }
 
         tableView.didSelectItem { indexPath, item in
-            print("DidSelectItemAt: \(item.title != nil ? item.title!.stringSource.rawValue : "")")
+            print("DidSelectItemAt: \(item.title != nil ? item.title!.stringSource.description : "")")
         }
 
         tableView.didRemoveItem { indexPath, item in
-            print("DidRemoveItemAt: \(item.title != nil ? item.title!.stringSource.rawValue : "")")
+            print("DidRemoveItemAt: \(item.title != nil ? item.title!.stringSource.description : "")")
         }
     }
 }

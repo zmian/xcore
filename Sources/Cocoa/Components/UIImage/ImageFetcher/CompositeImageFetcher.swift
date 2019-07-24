@@ -24,12 +24,58 @@
 
 import UIKit
 
-final class CompositeImageFetcher: ImageFetcher {
-    static func canHandle(_ image: ImageRepresentable) -> Bool {
+final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
+    /// The registered list of fetchers.
+    private var fetchers: [ImageFetcher] = []
+
+    init(_ fetchers: [ImageFetcher]) {
+        self.fetchers = fetchers
+    }
+
+    init(arrayLiteral elements: ImageFetcher...) {
+        self.fetchers = elements
+    }
+
+    /// Add given fetcher if it's not already included in the collection.
+    ///
+    /// - Note: This method ensures there are no duplicate fetchers.
+    func add(_ fetcher: ImageFetcher) {
+        guard !fetchers.contains(where: { $0.identifier == fetcher.identifier }) else {
+            return
+        }
+
+        fetchers.append(fetcher)
+    }
+
+    /// Add list of given fetchers if it's not already included in the collection.
+    ///
+    /// - Note: This method ensures there are no duplicate fetchers.
+    func add(_ fetchers: [ImageFetcher]) {
+        fetchers.forEach(add)
+    }
+
+    /// Removes the given fetcher.
+    func remove(_ fetcher: ImageFetcher) {
+        let identifiers = fetchers.map { $0.identifier }
+
+        guard let index = identifiers.firstIndex(of: fetcher.identifier) else {
+            return
+        }
+
+        fetchers.remove(at: index)
+    }
+}
+
+extension CompositeImageFetcher {
+    var identifier: String {
+        return fetchers.map { $0.identifier }.joined(separator: "_")
+    }
+
+    func canHandle(_ image: ImageRepresentable) -> Bool {
         return image.imageSource.isValid
     }
 
-    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
+    func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
         guard image.imageSource.isValid else {
             #if DEBUG
             Console.error("Unable to fetch image because of invalid image source.")
@@ -38,15 +84,20 @@ final class CompositeImageFetcher: ImageFetcher {
             return
         }
 
-        // 1. Reverse fetchers so the third-party fetchers are always prioritized over built-in ones.
+        // 1. Reverse fetchers so the third-party fetchers are always prioritized over
+        //    built-in ones.
         // 2. Find the first one that can handle the request.
         // 3. Fetch the requested image.
-        guard let fetcher = UIImage.Fetcher.registered.reversed().first(where: { $0.canHandle(image) }) else {
+        guard let fetcher = fetchers.reversed().first(where: { $0.canHandle(image) }) else {
             callback(nil, .none)
             return
         }
 
         imageView?.imageRepresentableSource = image.imageSource
         fetcher.fetch(image, in: imageView, callback)
+    }
+
+    func clearCache() {
+        fetchers.forEach { $0.clearCache() }
     }
 }
