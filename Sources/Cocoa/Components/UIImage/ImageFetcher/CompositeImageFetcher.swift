@@ -47,7 +47,8 @@ final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
         fetchers.append(fetcher)
     }
 
-    /// Add list of given fetchers if it's not already included in the collection.
+    /// Add list of given fetchers if they are not already included in the
+    /// collection.
     ///
     /// - Note: This method ensures there are no duplicate fetchers.
     func add(_ fetchers: [ImageFetcher]) {
