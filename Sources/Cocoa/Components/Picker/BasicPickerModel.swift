@@ -49,10 +49,10 @@ extension Picker {
             handler(option)
         }
 
-        let pickerView = Picker(model: model)
-        configure?(pickerView)
-        pickerView.present()
-        return pickerView
+        let picker = Picker(model: model)
+        configure?(picker)
+        picker.present()
+        return picker
     }
 
     /// A convenience method to display a picker with list of options.
@@ -75,9 +75,9 @@ extension Picker {
             handler(option)
         }
 
-        let pickerView = Picker(model: model)
-        pickerView.present()
-        return pickerView
+        let picker = Picker(model: model)
+        picker.present()
+        return picker
     }
 }
 
