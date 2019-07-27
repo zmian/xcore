@@ -126,7 +126,7 @@ public final class InputToolbar: XCView {
         set { otherButton.text = newValue }
     }
 
-    @objc public dynamic var titleColor: UIColor! {
+    @objc public dynamic var titleTextColor: UIColor {
         get { return titleLabel.textColor }
         set { titleLabel.textColor = newValue }
     }
