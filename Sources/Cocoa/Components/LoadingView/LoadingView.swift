@@ -91,9 +91,10 @@ final public class LoadingView: XCView {
         }
     }
 
-    public convenience init(style: Style, automaticallySetHeight: Bool = true) {
+    public convenience init(style: Style) {
         self.init(frame: .zero)
         self.style = style
+        style.configure(self)
     }
 
     public override func commonInit() {
