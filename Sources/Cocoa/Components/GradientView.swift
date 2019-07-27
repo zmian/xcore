@@ -25,8 +25,25 @@
 import UIKit
 import CoreGraphics
 
-open class GradientView: XCView {
+open class GradientView: UIView {
     private let gradientLayer = GradientLayer()
+
+    // MARK: - Init Methods
+
+    public required init() {
+        super.init(frame: .zero)
+        commonInit()
+    }
+
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
 
     /// The style of gradient.
     /// The default value is `.axial`.
@@ -65,8 +82,12 @@ open class GradientView: XCView {
         set { gradientLayer.direction = newValue }
     }
 
-    open override func commonInit() {
-        super.commonInit()
+    // MARK: - Setup Methods
+
+    /// Subclasses can override it to perform additional actions, for example, add
+    /// new subviews or configure properties. This method is called when `self` is
+    /// initialized using any of the relevant `init` methods.
+    open func commonInit() {
         layer.addSublayer(gradientLayer)
     }
 

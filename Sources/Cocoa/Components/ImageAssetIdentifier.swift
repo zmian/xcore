@@ -162,4 +162,6 @@ extension ImageAssetIdentifier {
     public static var locationIcon: ImageAssetIdentifier { return propertyName() }
     public static var searchIcon: ImageAssetIdentifier { return propertyName() }
     public static var validationErrorIcon: ImageAssetIdentifier { return propertyName() }
+
+    public static var moreIcon: ImageAssetIdentifier = propertyName(name: "moreIcon")
 }
