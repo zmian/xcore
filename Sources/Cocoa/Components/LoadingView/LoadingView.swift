@@ -42,13 +42,13 @@ final public class LoadingView: XCView {
     public let lhsImageView = UIImageView()
     public let rhsImageView = UIImageView()
     public let titleLabel = UILabel().apply {
-        $0.font = .app(style: .callout)
+        $0.font = .app(style: .footnote)
         $0.textColor = .white
         $0.textAlignment = .center
         $0.numberOfLines = 0
     }
     public let footerLabel = UILabel().apply {
-        $0.font = .app(style: .caption1)
+        $0.font = .app(style: .caption2)
         $0.textColor = UIColor.white.alpha(0.7)
         $0.textAlignment = .center
         $0.numberOfLines = 0
@@ -156,6 +156,28 @@ final public class LoadingView: XCView {
             self?.updateImageViewConstraintsIfNeeded(image: image)
         }
         footerLabel.text = footerMessage
+    }
+
+    // MARK: - UIAppearance Properties
+
+    @objc public dynamic var titleTextColor: UIColor {
+        get { return titleLabel.textColor }
+        set { titleLabel.textColor = newValue }
+    }
+
+    @objc public dynamic var titleFont: UIFont {
+        get { return titleLabel.font }
+        set { titleLabel.font = newValue }
+    }
+
+    @objc public dynamic var footerTextColor: UIColor {
+        get { return footerLabel.textColor }
+        set { footerLabel.textColor = newValue }
+    }
+
+    @objc public dynamic var footerFont: UIFont {
+        get { return footerLabel.font }
+        set { footerLabel.font = newValue }
     }
 }
 
