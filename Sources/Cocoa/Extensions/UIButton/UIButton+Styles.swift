@@ -83,10 +83,11 @@ extension XCConfiguration where Type: UIButton {
     public static func callout(font: UIFont? = nil, backgroundColor: UIColor? = nil, textColor: UIColor? = nil) -> XCConfiguration {
         let style: Identifier<Type> = .callout
         return XCConfiguration(identifier: style) {
+            let textColor = textColor ?? style.textColor(button: $0)
             $0.titleLabel?.font = font ?? style.font(button: $0)
-            $0.setTitleColor(textColor ?? .white, for: .normal)
+            $0.setTitleColor(textColor, for: .normal)
             $0.backgroundColor = backgroundColor ?? style.backgroundColor(button: $0)
-            $0.disabledBackgroundColor = .backgroundDisabled
+            $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
             $0.cornerRadius = style.cornerRadius
         }
     }
@@ -94,7 +95,11 @@ extension XCConfiguration where Type: UIButton {
     public static var calloutSecondary: XCConfiguration {
         let style: Identifier<Type> = .calloutSecondary
         return callout.extend(identifier: style) {
+            let textColor = style.textColor(button: $0)
+            $0.setTitleColor(textColor, for: .normal)
             $0.backgroundColor = style.backgroundColor(button: $0)
+            $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
+            $0.layer.borderColor = style.borderColor(button: $0).cgColor
         }
     }
 
@@ -102,6 +107,7 @@ extension XCConfiguration where Type: UIButton {
         let style: Identifier<Type> = .destructive
         return callout.extend(identifier: style) {
             $0.backgroundColor = style.backgroundColor(or: .appleRed)
+            $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
         }
     }
 
@@ -111,6 +117,7 @@ extension XCConfiguration where Type: UIButton {
             $0.setContentCompressionResistancePriority(.required, for: .horizontal)
             $0.titleLabel?.lineBreakMode = .byTruncatingTail
             $0.backgroundColor = style.backgroundColor(button: $0)
+            $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
             $0.cornerRadius = $0.defaultAppearance.height / 2
         }
     }
