@@ -95,8 +95,10 @@ extension XCConfiguration where Type: UIButton {
     public static var calloutSecondary: XCConfiguration {
         let style: Identifier<Type> = .calloutSecondary
         return callout.extend(identifier: style) {
-            let textColor = style.textColor(button: $0)
-            $0.setTitleColor(textColor, for: .normal)
+            // TODO: Need to inherit from parent without explicit check.
+            if let textColor = style.textColor {
+                $0.setTitleColor(textColor, for: .normal)
+            }
             $0.backgroundColor = style.backgroundColor(button: $0)
             $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
             $0.layer.borderColor = style.borderColor(button: $0).cgColor

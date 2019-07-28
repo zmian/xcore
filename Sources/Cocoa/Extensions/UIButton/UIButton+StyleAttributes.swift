@@ -180,6 +180,11 @@ extension Identifier where Type: UIButton {
 
         return color
     }
+
+    /// Returns the text color if it is explicitly set for this identifier.
+    public var textColor: UIColor? {
+        return attributesDictionary[.foregroundColor] as? UIColor
+    }
 }
 
 extension Identifier where Type: UIButton {
