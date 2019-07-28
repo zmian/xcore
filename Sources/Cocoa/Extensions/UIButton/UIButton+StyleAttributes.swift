@@ -65,6 +65,10 @@ extension NSAttributedString.Key {
     static var tintColor: NSAttributedString.Key {
         return NSAttributedString.Key(rawValue: "xcore.tint.color")
     }
+
+    static var disabledBackgroundColor: NSAttributedString.Key {
+        return NSAttributedString.Key(rawValue: "xcore.background.disabled.color")
+    }
 }
 
 extension UIButton {
@@ -131,6 +135,14 @@ extension Identifier where Type: UIButton {
     public func backgroundColor(button: UIButton) -> UIColor {
         guard let color = attributes(.backgroundColor) as? UIColor else {
             return tintColor(button: button)
+        }
+
+        return color
+    }
+
+    public func disabledBackgroundColor(button: UIButton) -> UIColor {
+        guard let color = attributes(.disabledBackgroundColor) as? UIColor else {
+            return .backgroundDisabled
         }
 
         return color
