@@ -27,7 +27,7 @@ import UIKit
 extension UITabBarController {
     public struct TabItem {
         public let id: Identifier<TabItem>
-        public let imageAssetIdentifier: ImageAssetIdentifier
+        public let assetIdentifier: ImageAssetIdentifier
         public let accessibilityLabel: String
         public let viewControllerType: UIViewController.Type
         private var _viewController: (() -> UIViewController)!
@@ -42,7 +42,7 @@ extension UITabBarController {
             viewController: @autoclosure @escaping () -> UIViewController
         ) {
             self.id = id
-            self.imageAssetIdentifier = image
+            self.assetIdentifier = image
             self.selectedImageRenderingMode = selectedImageRenderingMode
             self.accessibilityLabel = accessibilityLabel
             self.viewControllerType = viewControllerType
@@ -54,13 +54,13 @@ extension UITabBarController {
         }
 
         public var image: UIImage {
-            return UIImage(assetIdentifier: imageAssetIdentifier)
+            return UIImage(assetIdentifier: assetIdentifier)
         }
 
         public var selectedImage: UIImage {
             let selectedImage = ImageAssetIdentifier(
-                rawValue: imageAssetIdentifier.rawValue + "Selected",
-                bundle: imageAssetIdentifier.bundle ?? .main
+                rawValue: assetIdentifier.rawValue + "Selected",
+                bundle: assetIdentifier.bundle ?? .main
             )
 
             return UIImage(assetIdentifier: selectedImage).withRenderingMode(selectedImageRenderingMode)
