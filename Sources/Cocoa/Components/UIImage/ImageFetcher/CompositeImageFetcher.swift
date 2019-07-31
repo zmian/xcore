@@ -40,7 +40,7 @@ final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
     ///
     /// - Note: This method ensures there are no duplicate fetchers.
     func add(_ fetcher: ImageFetcher) {
-        guard !fetchers.contains(where: { $0.identifier == fetcher.identifier }) else {
+        guard !fetchers.contains(where: { $0.id == fetcher.id }) else {
             return
         }
 
@@ -57,9 +57,9 @@ final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
 
     /// Removes the given fetcher.
     func remove(_ fetcher: ImageFetcher) {
-        let identifiers = fetchers.map { $0.identifier }
+        let ids = fetchers.map { $0.id }
 
-        guard let index = identifiers.firstIndex(of: fetcher.identifier) else {
+        guard let index = ids.firstIndex(of: fetcher.id) else {
             return
         }
 
@@ -68,8 +68,8 @@ final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
 }
 
 extension CompositeImageFetcher {
-    var identifier: String {
-        return fetchers.map { $0.identifier }.joined(separator: "_")
+    var id: String {
+        return fetchers.map { $0.id }.joined(separator: "_")
     }
 
     func canHandle(_ image: ImageRepresentable) -> Bool {

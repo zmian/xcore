@@ -25,14 +25,14 @@
 import Foundation
 
 public protocol FeatureFlagProvider {
-    /// A unique identifier for the feature flag provider.
-    var identifier: String { get }
+    /// A unique id for the feature flag provider.
+    var id: String { get }
 
     func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value?
 }
 
 extension FeatureFlagProvider {
-    public var identifier: String {
+    public var id: String {
         return name(of: self)
     }
 }

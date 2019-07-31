@@ -50,7 +50,7 @@ extension ImageRepresentable {
     ///     iconView.setImage(newIcon)
     ///
     ///     let transform: ImageTransform = newIcon.plugin()!
-    ///     print(transform.identifier)
+    ///     print(transform.id)
     ///     // "TintColorImageTransform-tintColor:(#FFFFFF)"
     ///
     ///     let alignment: ImageRepresentableAlignment = newIcon.plugin()!

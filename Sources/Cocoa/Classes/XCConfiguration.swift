@@ -55,16 +55,16 @@ import UIKit
 /// let headerLabel = UILabel(style: .header)
 /// ```
 public struct XCConfiguration<Type> {
-    public let identifier: Identifier<Type>
+    public let id: Identifier<Type>
     private let _configure: ((Type) -> Void)
 
-    public init(identifier: Identifier<Type>? = nil, _ configure: @escaping ((Type) -> Void)) {
-        self.identifier = identifier ?? "___defaultIdentifier___"
+    public init(id: Identifier<Type>? = nil, _ configure: @escaping ((Type) -> Void)) {
+        self.id = id ?? "___defaultId___"
         self._configure = configure
     }
 
-    public func extend(identifier: Identifier<Type>? = nil, _ configure: @escaping ((Type) -> Void)) -> XCConfiguration<Type> {
-        return XCConfiguration(identifier: identifier) { type in
+    public func extend(id: Identifier<Type>? = nil, _ configure: @escaping ((Type) -> Void)) -> XCConfiguration<Type> {
+        return XCConfiguration(id: id) { type in
             self.configure(type)
             configure(type)
         }
@@ -77,7 +77,7 @@ public struct XCConfiguration<Type> {
 
 extension XCConfiguration: Equatable {
     public static func ==(lhs: XCConfiguration, rhs: XCConfiguration) -> Bool {
-        return lhs.identifier == rhs.identifier
+        return lhs.id == rhs.id
     }
 }
 

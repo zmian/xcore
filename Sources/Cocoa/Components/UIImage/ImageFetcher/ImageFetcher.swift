@@ -27,8 +27,8 @@ import UIKit
 public protocol ImageFetcher {
     typealias ResultBlock = (_ image: UIImage?, _ cacheType: ImageSourceType.CacheType) -> Void
 
-    /// A unique identifier for the image fetcher.
-    var identifier: String { get }
+    /// A unique id for the image fetcher.
+    var id: String { get }
 
     func canHandle(_ image: ImageRepresentable) -> Bool
 
@@ -44,7 +44,7 @@ public protocol ImageFetcher {
 }
 
 extension ImageFetcher {
-    public var identifier: String {
+    public var id: String {
         return name(of: self)
     }
 }

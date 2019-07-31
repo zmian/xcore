@@ -44,7 +44,7 @@ public struct ColorizeImageTransform: ImageTransform {
     private let color: UIColor
     private let kind: Kind
 
-    public var identifier: String {
+    public var id: String {
         return "\(transformName)-color:(\(color.hex))-kind:(\(kind))"
     }
 
