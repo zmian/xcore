@@ -25,8 +25,8 @@
 import UIKit
 
 public protocol ImageTransform: ImageRepresentablePlugin {
-    /// A unique identifier for the transform.
-    var identifier: String { get }
+    /// A unique id for the transform.
+    var id: String { get }
 
     /// Invoked to transform the given image.
     ///
@@ -38,7 +38,7 @@ public protocol ImageTransform: ImageRepresentablePlugin {
 }
 
 extension ImageTransform {
-    public var identifier: String {
+    public var id: String {
         return transformName
     }
 
@@ -56,6 +56,6 @@ extension ImageTransform {
 
 extension ImageTransform {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.identifier == rhs.identifier
+        return lhs.id == rhs.id
     }
 }

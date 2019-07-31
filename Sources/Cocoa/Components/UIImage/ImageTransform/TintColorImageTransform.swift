@@ -28,7 +28,7 @@ import UIKit
 public struct TintColorImageTransform: ImageTransform {
     private let tintColor: UIColor
 
-    public var identifier: String {
+    public var id: String {
         return "\(transformName)-tintColor:(\(tintColor.hex))"
     }
 

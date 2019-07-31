@@ -24,38 +24,40 @@
 
 import UIKit
 
-/// A type that all `UIViewController` subclasses conform to.
-/// It provides a safe way to init view controllers from Storyboard.
-/// It also eliminates casting as `initFromStoryboard()` method automatically
-/// returns the correct `UIViewController`'s subclass.
+/// A type to which all `UIViewController` subclasses conform.
 ///
-/// The default `storyboardIdentifier` value is `UIViewController`'s class name.
+/// It provides a safe way to init view controllers from Storyboard. It also
+/// eliminates casting as `initFromStoryboard()` method automatically returns
+/// the correct `UIViewController`'s subclass.
+///
+/// The default `storyboardId` value is `UIViewController`'s class name:
+///
 /// ```swift
 /// class SettingsViewController: UIViewController { }
 ///
-/// print(SettingsViewController.storyboardIdentifier)
-///
-/// "SettingsViewController"
+/// print(SettingsViewController.storyboardId)
+/// // "SettingsViewController"
 ///
 /// let vc = SettingsViewController.initFromStoryboard()
 /// navigationController.pushViewController(vc, animated: true)
-///
 /// ```
-/// If you want to provide your own custom `storyboardIdentifier` you can do so like:
+///
+/// If you want to provide your own custom `storyboardId` you can do so like:
+///
 /// ```swift
 /// class SettingsViewController: UIViewController {
-///     class var storyboardIdentifier: String { return "Settings" }
+///     class var storyboardId: String { return "Settings" }
 /// }
 ///
 /// let vc = SettingsViewController.initFromStoryboard()
 /// navigationController.pushViewController(vc, animated: true)
 /// ```
 public protocol StoryboardInstantiable {
-    static var storyboardIdentifier: String { get }
+    static var storyboardId: String { get }
 }
 
 extension StoryboardInstantiable {
-    public static var storyboardIdentifier: String {
+    public static var storyboardId: String {
         return String(describing: self)
     }
 }
@@ -64,14 +66,15 @@ extension StoryboardInstantiable where Self: UIViewController {
     /// Instantiates and returns the view controller of type `Self`.
     ///
     /// - Parameters:
-    ///   - identifier: An identifier string that uniquely identifies the view controller in the storyboard file.
-    ///   - named:      The name of the storyboard file without the file extension. The default value is `Main`.
-    ///   - bundle:     The bundle containing the storyboard file and its related resources. If `nil`, then
-    ///                 this method looks in the main bundle of the current application. The default value is `nil`.
+    ///   - named: The name of the storyboard file without the file extension. The
+    ///            default value is `Main`.
+    ///   - bundle: The bundle containing the storyboard file and its related
+    ///             resources. If `nil`, then this method looks in the `main` bundle
+    ///             of the current application. The default value is `nil`.
     /// - Returns: The view controller of type `Self`.
     public static func initFromStoryboard(named: String = "Main", bundle: Bundle? = nil) -> Self {
         let bundle = bundle ?? Bundle(for: Self.self)
-        return UIStoryboard(name: named, bundle: bundle).instantiateViewController(withIdentifier: storyboardIdentifier) as! Self
+        return UIStoryboard(name: named, bundle: bundle).instantiateViewController(withIdentifier: storyboardId) as! Self
     }
 }
 

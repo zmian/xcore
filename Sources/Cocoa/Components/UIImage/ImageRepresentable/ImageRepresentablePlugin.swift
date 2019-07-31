@@ -25,12 +25,12 @@
 import Foundation
 
 public protocol ImageRepresentablePlugin {
-    /// A unique identifier for the image plugin.
-    var identifier: String { get }
+    /// A unique id for the image plugin.
+    var id: String { get }
 }
 
 extension ImageRepresentablePlugin {
-    public var identifier: String {
+    public var id: String {
         return name(of: self)
     }
 }

@@ -27,7 +27,7 @@ import UIKit
 public struct AlphaImageTransform: ImageTransform {
     private let alpha: CGFloat
 
-    public var identifier: String {
+    public var id: String {
         return "\(transformName)-alpha:(\(alpha))"
     }
 

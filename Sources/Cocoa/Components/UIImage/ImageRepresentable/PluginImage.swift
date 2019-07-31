@@ -43,7 +43,7 @@ import UIKit
 ///     iconView.setImage(newIcon)
 ///
 ///     let transform: ImageTransform = newIcon.plugin()!
-///     print(transform.identifier)
+///     print(transform.id)
 ///     // "TintColorImageTransform-tintColor:(#FFFFFF)"
 ///
 ///     let alignment: ImageRepresentableAlignment = newIcon.plugin()!
@@ -72,9 +72,9 @@ struct PluginImage: ImageRepresentable {
 
     /// Removes the given plugin.
     mutating func remove(_ plugin: ImageRepresentablePlugin) {
-        let identifiers = plugins.map { $0.identifier }
+        let ids = plugins.map { $0.id }
 
-        guard let index = identifiers.firstIndex(of: plugin.identifier) else {
+        guard let index = ids.firstIndex(of: plugin.id) else {
             return
         }
 

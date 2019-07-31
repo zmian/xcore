@@ -33,7 +33,7 @@ extension SiriShortcuts {
     @available(iOS 10.0, *)
     open class Domain: Hashable, With {
         private var didUpdateDonations = false
-        public let identifier: String
+        public let id: String
         private var dynamicIntents: (() -> [INIntent])?
         /// A list of intents managed by the domain.
         private var staticIntents: [INIntent] {
@@ -43,23 +43,23 @@ extension SiriShortcuts {
             }
         }
 
-        public init(identifier: String, intents: @escaping () -> [INIntent]) {
-            self.identifier = identifier
+        public init(id: String, intents: @escaping () -> [INIntent]) {
+            self.id = id
             self.staticIntents = []
             self.dynamicIntents = intents
         }
 
-        public init(identifier: String, intents: [INIntent]) {
-            self.identifier = identifier
+        public init(id: String, intents: [INIntent]) {
+            self.id = id
             self.staticIntents = intents
         }
 
-        public convenience init(identifier: String, intent: INIntent) {
-            self.init(identifier: identifier, intents: [intent])
+        public convenience init(id: String, intent: INIntent) {
+            self.init(id: id, intents: [intent])
         }
 
-        public convenience init(identifier: String) {
-            self.init(identifier: identifier, intents: [])
+        public convenience init(id: String) {
+            self.init(id: id, intents: [])
         }
 
         open func intents() -> [INIntent] {
@@ -76,10 +76,10 @@ extension SiriShortcuts {
         private func donate() {
             intents().forEach { intent in
                 let interaction = intent.interaction
-                interaction.groupIdentifier = identifier
+                interaction.groupIdentifier = id
                 interaction.donate { [weak self] error in
                     guard let strongSelf = self, let error = error else { return }
-                    Console.error("[\(strongSelf.identifier)]", "Interaction donation failed: \(error)")
+                    Console.error("[\(strongSelf.id)]", "Interaction donation failed: \(error)")
                 }
             }
         }
@@ -110,27 +110,27 @@ extension SiriShortcuts {
             INInteraction.delete(with: intentIdentifiers) { [weak self] error in
                 completion?(error)
                 guard let strongSelf = self, let error = error else { return }
-                Console.error("[\(strongSelf.identifier)]", "Interaction donation deletion failed: \(error)")
+                Console.error("[\(strongSelf.id)]", "Interaction donation deletion failed: \(error)")
             }
         }
 
         /// Remove all interactions for the domain using the identifier.
         open func removeAllDonations(completion: ((Error?) -> Void)? = nil) {
-            INInteraction.delete(with: identifier) { [weak self] error in
+            INInteraction.delete(with: id) { [weak self] error in
                 completion?(error)
                 guard let strongSelf = self, let error = error else { return }
-                Console.error("[\(strongSelf.identifier)]", "Failed to delete donations: \(error)")
+                Console.error("[\(strongSelf.id)]", "Failed to delete donations: \(error)")
             }
         }
 
         // MARK: Hashable & Equatable
 
         open func hash(into hasher: inout Hasher) {
-            hasher.combine(identifier)
+            hasher.combine(id)
         }
 
         public static func == (lhs: Domain, rhs: Domain) -> Bool {
-            return lhs.hashValue == rhs.hashValue
+            return lhs.id == rhs.id
         }
     }
 }
@@ -146,6 +146,6 @@ extension SiriShortcuts.Domain {
     /// You must call `SiriShortcuts.Suggestions.update()` to register the
     /// newly replaced suggestions with Siri.
     open func prepareSuggestions() {
-        SiriShortcuts.sharedSuggestions.replace(intents: intents(), groupIdentifier: identifier)
+        SiriShortcuts.sharedSuggestions.replace(intents: intents(), groupIdentifier: id)
     }
 }

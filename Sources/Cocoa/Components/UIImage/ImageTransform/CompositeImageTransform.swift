@@ -42,9 +42,9 @@ public struct CompositeImageTransform: ImageTransform, ExpressibleByArrayLiteral
 
     /// Removes the given transform.
     public mutating func remove(_ transform: ImageTransform) {
-        let identifiers = transforms.map { $0.identifier }
+        let ids = transforms.map { $0.id }
 
-        guard let index = identifiers.firstIndex(of: transform.identifier) else {
+        guard let index = ids.firstIndex(of: transform.id) else {
             return
         }
 
@@ -53,8 +53,8 @@ public struct CompositeImageTransform: ImageTransform, ExpressibleByArrayLiteral
 }
 
 extension CompositeImageTransform {
-    public var identifier: String {
-        return transforms.map { $0.identifier }.joined(separator: "_")
+    public var id: String {
+        return transforms.map { $0.id }.joined(separator: "_")
     }
 
     public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {

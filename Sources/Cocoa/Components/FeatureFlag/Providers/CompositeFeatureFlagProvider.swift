@@ -40,7 +40,7 @@ final class CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArra
     ///
     /// - Note: This method ensures there are no duplicate providers.
     func add(_ provider: FeatureFlagProvider) {
-        guard !providers.contains(where: { $0.identifier == provider.identifier }) else {
+        guard !providers.contains(where: { $0.id == provider.id }) else {
             return
         }
 
@@ -57,9 +57,9 @@ final class CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArra
 
     /// Removes the given provider.
     func remove(_ provider: FeatureFlagProvider) {
-        let identifiers = providers.map { $0.identifier }
+        let ids = providers.map { $0.id }
 
-        guard let index = identifiers.firstIndex(of: provider.identifier) else {
+        guard let index = ids.firstIndex(of: provider.id) else {
             return
         }
 
@@ -68,8 +68,8 @@ final class CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArra
 }
 
 extension CompositeFeatureFlagProvider {
-    var identifier: String {
-        return providers.map { $0.identifier }.joined(separator: "_")
+    var id: String {
+        return providers.map { $0.id }.joined(separator: "_")
     }
 
     func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value? {

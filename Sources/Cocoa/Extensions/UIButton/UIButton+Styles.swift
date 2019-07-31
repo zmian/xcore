@@ -64,7 +64,7 @@ extension XCConfiguration where Type: UIButton {
 
     public static func plain(font: UIFont? = nil, textColor: UIColor? = nil, alignment: UIControl.ContentHorizontalAlignment = .center) -> XCConfiguration {
         let style: Identifier<Type> = .plain
-        return XCConfiguration(identifier: style) {
+        return XCConfiguration(id: style) {
             let textColor = textColor ?? style.textColor(button: $0)
             $0.titleLabel?.font = font ?? style.font(button: $0)
             $0.contentEdgeInsets = .zero
@@ -82,7 +82,7 @@ extension XCConfiguration where Type: UIButton {
 
     public static func callout(font: UIFont? = nil, backgroundColor: UIColor? = nil, textColor: UIColor? = nil) -> XCConfiguration {
         let style: Identifier<Type> = .callout
-        return XCConfiguration(identifier: style) {
+        return XCConfiguration(id: style) {
             let textColor = textColor ?? style.textColor(button: $0)
             $0.titleLabel?.font = font ?? style.font(button: $0)
             $0.setTitleColor(textColor, for: .normal)
@@ -94,7 +94,7 @@ extension XCConfiguration where Type: UIButton {
 
     public static var calloutSecondary: XCConfiguration {
         let style: Identifier<Type> = .calloutSecondary
-        return callout.extend(identifier: style) {
+        return callout.extend(id: style) {
             // TODO: Need to inherit from parent without explicit check.
             if let textColor = style.textColor {
                 $0.setTitleColor(textColor, for: .normal)
@@ -107,7 +107,7 @@ extension XCConfiguration where Type: UIButton {
 
     public static var destructive: XCConfiguration {
         let style: Identifier<Type> = .destructive
-        return callout.extend(identifier: style) {
+        return callout.extend(id: style) {
             $0.backgroundColor = style.backgroundColor(or: .appleRed)
             $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
         }
@@ -115,7 +115,7 @@ extension XCConfiguration where Type: UIButton {
 
     public static var pill: XCConfiguration {
         let style: Identifier<Type> = .pill
-        return callout.extend(identifier: style) {
+        return callout.extend(id: style) {
             $0.setContentCompressionResistancePriority(.required, for: .horizontal)
             $0.titleLabel?.lineBreakMode = .byTruncatingTail
             $0.backgroundColor = style.backgroundColor(button: $0)
@@ -153,12 +153,12 @@ extension XCConfiguration where Type: UIButton {
     }
 
     public static func image(
-        identifier: String = #function,
+        id: String = #function,
         assetIdentifier: ImageAssetIdentifier,
         size: CGSize,
         axis: NSLayoutConstraint.Axis...
     ) -> XCConfiguration {
-        return image(identifier: identifier, assetIdentifier: assetIdentifier).extend {
+        return image(id: id, assetIdentifier: assetIdentifier).extend {
             $0.resistsSizeChange(axis: axis)
             // Increase the touch area if the image size is small.
             if let size = $0.image?.size, size.width < 44 || size.height < 44 {
@@ -171,11 +171,11 @@ extension XCConfiguration where Type: UIButton {
     }
 
     public static func image(
-        identifier: String = #function,
+        id: String = #function,
         assetIdentifier: ImageAssetIdentifier,
         alpha: CGFloat? = nil
     ) -> XCConfiguration {
-        let style = Identifier<Type>(rawValue: identifier)
+        let style = Identifier<Type>(rawValue: id)
         return XCConfiguration {
             $0.isHeightSetAutomatically = false
             $0.text = nil
@@ -204,7 +204,7 @@ extension XCConfiguration where Type: UIButton {
         animated: Bool = false
     ) -> XCConfiguration {
         let style: Identifier<Type> = .caret
-        return configuration.extend(identifier: style) {
+        return configuration.extend(id: style) {
             let textColor = textColor ?? style.textColor(button: $0)
             let font = font ?? style.font(button: $0)
             $0.titleLabel?.numberOfLines = 1
@@ -222,7 +222,7 @@ extension XCConfiguration where Type: UIButton {
 
 extension XCConfiguration where Type: UIButton {
     public static var none: XCConfiguration {
-        return XCConfiguration(identifier: "none") { _ in }
+        return XCConfiguration(id: "none") { _ in }
     }
 
     public static var checkbox: XCConfiguration {
@@ -236,7 +236,7 @@ extension XCConfiguration where Type: UIButton {
         font: UIFont? = nil
     ) -> XCConfiguration {
         let style: Identifier<Type> = .checkbox
-        return XCConfiguration(identifier: style) {
+        return XCConfiguration(id: style) {
             let normalColor = normalColor ?? style.tintColor(button: $0)
             let selectedColor = selectedColor ?? style.tintColor(button: $0)
             let textColor = textColor ?? style.textColor(button: $0)
@@ -271,7 +271,7 @@ extension XCConfiguration where Type: UIButton {
         borderWidth: CGFloat = 0.5
     ) -> XCConfiguration {
         let style: Identifier<Type> = .radioButton
-        return XCConfiguration(identifier: style) {
+        return XCConfiguration(id: style) {
             let outerWidth: CGFloat = 20
             let selectedColor = selectedColor ?? style.selectedColor(button: $0)
 

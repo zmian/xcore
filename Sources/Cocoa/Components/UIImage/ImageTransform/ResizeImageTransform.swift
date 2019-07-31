@@ -28,7 +28,7 @@ public struct ResizeImageTransform: ImageTransform {
     private let size: CGSize
     private let scalingMode: ScalingMode
 
-    public var identifier: String {
+    public var id: String {
         return "\(transformName)-size:(\(size.width)x\(size.height))-scalingMode:(\(scalingMode))"
     }
 

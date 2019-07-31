@@ -43,8 +43,8 @@ public protocol AnalyticsEvent {
 // MARK: - AnalyticsProvider
 
 public protocol AnalyticsProvider {
-    /// A unique identifier for the analytics provider.
-    var identifier: String { get }
+    /// A unique id for the analytics provider.
+    var id: String { get }
 
     /// Track the given event.
     ///
@@ -53,7 +53,7 @@ public protocol AnalyticsProvider {
 }
 
 extension AnalyticsProvider {
-    public var identifier: String {
+    public var id: String {
         return name(of: self)
     }
 }
@@ -70,7 +70,7 @@ open class Analytics<Event: AnalyticsEvent> {
     ///
     /// - Note: This method ensures there are no duplicate providers.
     open func register(_ provider: AnalyticsProvider) {
-        guard !providers.contains(where: { $0.identifier == provider.identifier }) else {
+        guard !providers.contains(where: { $0.id == provider.id }) else {
             return
         }
 
@@ -95,7 +95,7 @@ open class Analytics<Event: AnalyticsEvent> {
 
         var providers = self.providers
 
-        for provider in additionalProviders where !providers.contains(where: { $0.identifier == provider.identifier }) {
+        for provider in additionalProviders where !providers.contains(where: { $0.id == provider.id }) {
             providers.append(provider)
         }
 

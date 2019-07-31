@@ -29,7 +29,7 @@ public struct BackgroundImageTransform: ImageTransform {
     private let preferredSize: CGSize
     private let alignment: UIControl.ContentHorizontalAlignment
 
-    public var identifier: String {
+    public var id: String {
         return "\(transformName)-color:(\(color.hex))-preferredSize:(\(preferredSize.width)x\(preferredSize.height))-alignment:(\(alignment))"
     }
 
