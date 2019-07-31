@@ -103,16 +103,16 @@ extension Router {
     /// }
     /// ```
     public struct Route<Type: RouteHandler> {
-        public var identifier: String
+        public var id: String
         public var configure: (Type) -> RouteKind
 
-        public init(identifier: String? = nil, _ configure: @escaping ((Type) -> RouteKind)) {
-            self.identifier = identifier ?? "___defaultIdentifier___"
+        public init(id: String? = nil, _ configure: @escaping ((Type) -> RouteKind)) {
+            self.id = id ?? "___defaultId___"
             self.configure = configure
         }
 
-        public init(identifier: String? = nil, _ configure: @escaping ((Type) -> UIViewController)) {
-            self.identifier = identifier ?? "___defaultIdentifier___"
+        public init(id: String? = nil, _ configure: @escaping ((Type) -> UIViewController)) {
+            self.id = id ?? "___defaultId___"
             self.configure = { router -> RouteKind in
                 .viewController(configure(router))
             }
@@ -124,8 +124,8 @@ extension Router {
             }
         }
 
-        public static func custom(identifier: String? = nil, _ configure: @escaping (Type) -> Void) -> Route {
-            return .init(identifier: identifier) { router -> RouteKind in
+        public static func custom(id: String? = nil, _ configure: @escaping (Type) -> Void) -> Route {
+            return .init(id: id) { router -> RouteKind in
                 configure(router)
                 return .custom
             }
@@ -138,7 +138,7 @@ extension Router {
                 for route in routes {
                     guard case .viewController(let vc) = route.configure(router) else {
                         #if DEBUG
-                        Console.log("Route \(route.identifier) contains custom route. This will lead to unexpected behavior. Please handle the use case separately.")
+                        Console.log("Route \(route.id) contains custom route. This will lead to unexpected behavior. Please handle the use case separately.")
                         #endif
                         continue
                     }
