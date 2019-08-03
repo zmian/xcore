@@ -107,15 +107,17 @@ extension Stylable where Self: UIView {
     }
 }
 
-extension Stylable where Self: UIBarButtonItem {
-    public init(style: XCConfiguration<Self>) {
-        self.init()
-        style.configure(self)
-    }
-}
-
 extension UIView: Stylable { }
 extension UIBarButtonItem: Stylable { }
+
+extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
+    public init(style: XCConfiguration<Self>, _ handler: ((_ sender: Self) -> Void)? = nil) {
+        self.init()
+        style.configure(self)
+        guard let handler = handler else { return }
+        addAction(handler)
+    }
+}
 
 // MARK: - With
 
