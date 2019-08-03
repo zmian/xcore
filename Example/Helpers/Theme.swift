@@ -22,7 +22,7 @@
 // THE SOFTWARE.
 //
 
-public struct Theme {
+extension Theme {
     public static func start() {
         UIButton.defaultAppearance.apply {
             $0.style = .callout
@@ -37,7 +37,10 @@ public struct Theme {
         }
 
         LabelTextView.appearance().apply {
-            $0.font = .preferredFont(forTextStyle: .callout)
+            $0.font = .app(style: .body)
         }
+
+        #warning("TODO: Fix the defaults so it matches the system defaults.")
+//        set(light: .light, dark: .dark)
     }
 }
