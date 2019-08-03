@@ -24,6 +24,8 @@
 
 import UIKit
 
+// MARK: - DrawerScreenContent
+
 public protocol DrawerScreenContent {
     var drawerContentView: UIView { get }
     func didDismiss()
@@ -32,6 +34,14 @@ public protocol DrawerScreenContent {
 extension DrawerScreenContent {
     public func didDismiss() {}
 }
+
+extension UIView: DrawerScreenContent {
+    public var drawerContentView: UIView {
+        return self
+    }
+}
+
+// MARK: - DrawerScreen
 
 public final class DrawerScreen {
     public typealias Content = DrawerScreenContent
@@ -50,6 +60,7 @@ public final class DrawerScreen {
     private var hiddenConstraint: NSLayoutConstraint?
 
     init() {
+        hud.preferredStatusBarStyle = .inherit
         hud.backgroundColor = UIColor.black.alpha(0.1)
         hud.duration = .init(.fast)
         setupAccessibilitySupport()

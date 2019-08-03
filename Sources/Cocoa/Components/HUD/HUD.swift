@@ -84,13 +84,19 @@ open class HUD {
     }
 
     private func setNeedsStatusBarAppearanceUpdate() {
-        viewController.statusBarStyle = preferredStatusBarStyle
+        switch preferredStatusBarStyle {
+            case .style(let value):
+                viewController.statusBarStyle = value
+            case .inherit:
+                let value = UIApplication.sharedOrNil?.keyWindow?.topViewController?.preferredStatusBarStyle
+                viewController.statusBarStyle = value ?? .default
+        }
     }
 
-    /// A property to set statusbar style when HUD is displayed.
+    /// A property to set status bar style when HUD is displayed.
     ///
     /// The default value is `.default`.
-    open var preferredStatusBarStyle: UIStatusBarStyle = .default
+    open var preferredStatusBarStyle: StatusBarAppearance = .default
 
     /// Adds a view to the end of the receiver’s list of subviews.
     ///
@@ -243,6 +249,29 @@ open class HUD {
 
     open func disableOnNextCall() {
         temporaryUnavailable = true
+    }
+}
+
+// MARK: - StatusBarAppearance
+
+extension HUD {
+    public enum StatusBarAppearance {
+        /// Specifies whether HUD inherits status bar style from the presenting view
+        /// controller.
+        case inherit
+
+        /// Specifies HUD status bar style.
+        case style(UIStatusBarStyle)
+
+        /// A dark status bar, intended for use on light backgrounds.
+        public static var `default`: StatusBarAppearance {
+            return .style(.default)
+        }
+
+        /// A light status bar, intended for use on dark backgrounds.
+        public static var lightContent: StatusBarAppearance {
+            return .style(.lightContent)
+        }
     }
 }
 
