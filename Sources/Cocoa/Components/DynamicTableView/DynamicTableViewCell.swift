@@ -188,15 +188,13 @@ open class DynamicTableViewCell: XCTableViewCell {
     }
 
     public let titleLabel = UILabel().apply {
-        $0.font = .preferredFont(forTextStyle: .body)
-        $0.textAlignment = .left
+        $0.font = .app(style: .body)
         $0.textColor = .black
         $0.numberOfLines = 0
     }
 
     public let subtitleLabel = UILabel().apply {
-        $0.font = .preferredFont(forTextStyle: .subheadline)
-        $0.textAlignment = .left
+        $0.font = .app(style: .callout)
         $0.textColor = .lightGray // This is ignored if NSAttributedText declares it's own color
         $0.numberOfLines = 0
     }

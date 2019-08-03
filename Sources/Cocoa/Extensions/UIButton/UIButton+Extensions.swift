@@ -44,10 +44,30 @@ extension UIButton {
     public final class DefaultAppearance: NSObject {
         public var style: Style = .none
         public var height: CGFloat = 50
-        public var isHeightSetAutomatically: Bool = false
+        public var isHeightSetAutomatically = false
         public var highlightedAnimation: HighlightedAnimationOptions = .none
         /// The default attributes for the button styles.
         public var styleAttributes = StyleAttributes<UIButton>()
+
+        /// A boolean value indicating whether `configureStyle` replaces existing styles
+        /// block call or extend it. The default value is `true`, meaning extend.
+        public var shouldExtendExistingConfigureStyle = true
+        var _configureStyle: ((UIButton, Identifier<UIButton>) -> Void)?
+        public func configureStyle(_ callback: @escaping (UIButton, Identifier<UIButton>) -> Void) {
+            guard
+                shouldExtendExistingConfigureStyle,
+                let existingConfigureStyle = _configureStyle
+            else {
+                self._configureStyle = callback
+                return
+            }
+
+            self._configureStyle = { button, id in
+                existingConfigureStyle(button, id)
+                callback(button, id)
+            }
+        }
+
         fileprivate override init() { }
     }
 }
