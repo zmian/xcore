@@ -298,3 +298,14 @@ extension Double {
         return nil
     }
 }
+
+extension Comparable {
+    /// ```swift
+    /// 30.clamped(to: 0...10) // returns 10
+    /// 3.0.clamped(to: 0.0...10.0) // returns 3.0
+    /// "z".clamped(to: "a"..."x") // returns "x"
+    /// ```
+    public func clamped(to limits: ClosedRange<Self>) -> Self {
+        return min(max(self, limits.lowerBound), limits.upperBound)
+    }
+}
