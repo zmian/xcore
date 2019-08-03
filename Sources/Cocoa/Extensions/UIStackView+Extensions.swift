@@ -45,7 +45,22 @@ extension UIStackView {
     ///                 exception.
     open func moveArrangedSubview(_ view: UIView, at stackIndex: Int) {
         guard arrangedSubviews.at(stackIndex) != view else { return }
+        _moveArrangedSubview(view, at: stackIndex)
+    }
+
+    open func moveArrangedSubview(_ view: UIView, after arrangedSubview: UIView) {
+        guard let index = arrangedSubviews.firstIndex(of: arrangedSubview) else { return }
+        _moveArrangedSubview(view, at: index)
+    }
+
+    open func moveArrangedSubview(_ view: UIView, before arrangedSubview: UIView) {
+        guard let index = arrangedSubviews.firstIndex(of: arrangedSubview) else { return }
+        _moveArrangedSubview(view, at: index - 1)
+    }
+
+    private func _moveArrangedSubview(_ view: UIView, at index: Int) {
+        let insertionIndex = index.clamped(to: 0...arrangedSubviews.count - 1)
         removeArrangedSubview(view)
-        insertArrangedSubview(view, at: stackIndex)
+        insertArrangedSubview(view, at: insertionIndex)
     }
 }
