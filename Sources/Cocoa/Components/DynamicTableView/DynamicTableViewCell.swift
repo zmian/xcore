@@ -194,7 +194,7 @@ open class DynamicTableViewCell: XCTableViewCell {
     }
 
     public let subtitleLabel = UILabel().apply {
-        $0.font = .app(style: .callout)
+        $0.font = .app(style: .subheadline)
         $0.textColor = .lightGray // This is ignored if NSAttributedText declares it's own color
         $0.numberOfLines = 0
     }

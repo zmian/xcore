@@ -143,6 +143,12 @@ extension UIColor {
         let brightness = CGFloat(arc4random() % 128) / 256 + 0.5
         return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
     }
+
+    func isLight(threshold: CGFloat = 0.6) -> Bool {
+        var white: CGFloat = 0
+        getWhite(&white, alpha: nil)
+        return white > threshold
+    }
 }
 
 extension Array where Element: UIColor {

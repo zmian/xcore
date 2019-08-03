@@ -88,10 +88,16 @@ extension XCConfiguration where Type: UIButton {
     public static func callout(font: UIFont? = nil, backgroundColor: UIColor? = nil, textColor: UIColor? = nil) -> XCConfiguration {
         let style: Identifier<Type> = .callout
         return XCConfiguration(id: style) {
-            let textColor = textColor ?? style.textColor(button: $0)
+            var textColor = textColor ?? style.textColor(button: $0)
+            let backgroundColor = backgroundColor ?? style.backgroundColor(button: $0)
+
+            if backgroundColor == textColor {
+                textColor = backgroundColor.isLight() ? .appTint : .white
+            }
+
             $0.titleLabel?.font = font ?? style.font(button: $0)
             $0.setTitleColor(textColor, for: .normal)
-            $0.backgroundColor = backgroundColor ?? style.backgroundColor(button: $0)
+            $0.backgroundColor = backgroundColor
             $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
             $0.cornerRadius = style.cornerRadius
             configure($0, style)
