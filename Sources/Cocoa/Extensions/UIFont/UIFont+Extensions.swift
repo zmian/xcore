@@ -98,3 +98,35 @@ extension UIFont {
         }
     }
 }
+
+extension UIFont.TextStyle: CaseIterable {
+    public static var allCases: [UIFont.TextStyle] = {
+        return [
+            .largeTitle,
+            .title1,
+            .title2,
+            .title3,
+            .headline,
+            .subheadline,
+            .body,
+            .callout,
+            .footnote,
+            .caption1,
+            .caption2
+        ]
+    }()
+
+    private static var headerStyles: [UIFont.TextStyle] = {
+        return [
+            .largeTitle,
+            .title1,
+            .title2,
+            .title3,
+            .headline
+        ]
+    }()
+
+    public var isTitle: Bool {
+        return UIFont.TextStyle.headerStyles.contains(self)
+    }
+}
