@@ -106,12 +106,13 @@ extension Theme {
     }
 
     private static func setNavigationBarBackButtonTheme() {
-        // NavigationBar Back button
-        UINavigationBar.appearance().apply {
+        UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).apply {
             $0.backIndicatorImage = UIImage(assetIdentifier: .navigationBarBackArrow)
             $0.backIndicatorTransitionMaskImage = UIImage(assetIdentifier: .navigationBarBackArrow)
         }
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffset(horizontal: 10, vertical: 0), for: .default)
+
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [NavigationController.self])
+            .setBackButtonTitlePositionAdjustment(UIOffset(horizontal: 10, vertical: 0), for: .default)
     }
 
     private static func setSearchBarTheme() {
@@ -139,10 +140,10 @@ extension Theme {
         // MARK: DynamicTableView
         DynamicTableView.appearance().apply {
             $0.headerFont = .app(style: .caption1)
-            $0.headerTextColor = app.textColorSecondary
+            $0.headerTextColor = app.textColor
             $0.footerFont = .app(style: .caption1)
             $0.footerTextColor = app.textColorSecondary
-            $0.accessoryFont = .app(style: .callout)
+            $0.accessoryFont = .app(style: .subheadline)
             $0.accessoryTextColor = app.textColorSecondary
             $0.accessoryTintColor = app.tintColor
             $0.checkboxOffTintColor = app.separatorColor
@@ -155,7 +156,7 @@ extension Theme {
             $0.titleTextColor = app.textColor
             $0.titleFont = .app(style: .body)
             $0.subtitleTextColor = app.textColorSecondary
-            $0.subtitleFont = .app(style: .callout)
+            $0.subtitleFont = .app(style: .subheadline)
             $0.contentInset = UIEdgeInsets(top: 9, left: 15, bottom: 10, right: 15)
             $0.textImageSpacing = .defaultPadding
         }
@@ -164,7 +165,7 @@ extension Theme {
             $0.titleTextColor = app.textColor
             $0.titleFont = .app(style: .body)
             $0.subtitleTextColor = app.textColorSecondary
-            $0.subtitleFont = .app(style: .callout)
+            $0.subtitleFont = .app(style: .subheadline)
         }
 
         BlurView.appearance().blurOpacity = 0.8

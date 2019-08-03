@@ -383,7 +383,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     @objc open dynamic var headerTextColor: UIColor = .black
     @objc open dynamic var footerFont: UIFont = .app(style: .caption1)
     @objc open dynamic var footerTextColor: UIColor = .darkGray
-    @objc open dynamic var accessoryFont: UIFont = .app(style: .callout)
+    @objc open dynamic var accessoryFont: UIFont = .app(style: .subheadline)
     @objc open dynamic var accessoryTextColor: UIColor = .appleGray
     @objc open dynamic var accessoryTintColor: UIColor = .appTint
     @objc open dynamic var accessoryTextMaxWidth: CGFloat = 0

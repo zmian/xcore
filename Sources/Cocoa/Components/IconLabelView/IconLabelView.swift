@@ -62,7 +62,7 @@ open class IconLabelView: XCView {
     }
 
     public let subtitleLabel = UILabel().apply {
-        $0.font = .app(style: .callout)
+        $0.font = .app(style: .subheadline)
         $0.textAlignment = .center
         $0.textColor = .lightGray
         $0.numberOfLines = 0
