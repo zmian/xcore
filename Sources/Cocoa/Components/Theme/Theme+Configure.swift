@@ -116,16 +116,18 @@ extension Theme {
     }
 
     private static func setSearchBarTheme() {
-        // SearchBar Cancel button normal state
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([
-            .foregroundColor: app.tintColor,
-            .font: UIFont.app(style: .body)
-        ], for: .normal)
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).apply {
+            // SearchBar Cancel button normal state
+             $0.setTitleTextAttributes([
+                .foregroundColor: app.tintColor,
+                .font: UIFont.app(style: .body)
+            ], for: .normal)
 
-        // SearchBar Cancel button disabled state
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([
-            .foregroundColor: app.tintColor.alpha(0.5)
-        ], for: .disabled)
+            // SearchBar Cancel button disabled state
+            $0.setTitleTextAttributes([
+                .foregroundColor: app.tintColor.alpha(0.5)
+            ], for: .disabled)
+        }
 
         // SearchBar text attributes
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [
