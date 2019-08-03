@@ -37,10 +37,10 @@ extension UIViewController {
     /// ```
     @objc(UIViewControllerDefaultAppearance)
     public final class DefaultAppearance: NSObject {
-        /// The default value is `.preferredFont(forTextStyle: .body)`
-        public var font: UIFont = .preferredFont(forTextStyle: .body)
-        /// The default value is `.systemTint`.
-        public var tintColor: UIColor = .systemTint
+        /// The default value is `.app(style: .body)`
+        public var font: UIFont = .app(style: .body)
+        /// The default value is `.appTint`.
+        public var tintColor: UIColor = .appTint
         /// The default value is `.transparent`.
         public var preferredStatusBarBackground: Chrome.Style = .transparent
         /// The default value is `.blurred`.
@@ -255,7 +255,7 @@ extension UIViewController {
         return false
     }
 
-    /// The default value is `.systemTint`.
+    /// The default value is `.appTint`.
     open var preferredNavigationBarTintColor: UIColor {
         return defaultAppearance.tintColor
     }

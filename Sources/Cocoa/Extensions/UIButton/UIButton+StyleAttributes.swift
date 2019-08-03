@@ -113,12 +113,12 @@ extension Identifier where Type: UIButton {
     }
 
     public func font(button: UIButton) -> UIFont {
-        return attributes(.font) as? UIFont ?? button.titleLabel?.font ?? .preferredFont(forTextStyle: .callout)
+        return attributes(.font) as? UIFont ?? button.titleLabel?.font ?? .app(style: .body)
     }
 
     public func tintColor(button: UIButton) -> UIColor {
         guard let color = attributes(.tintColor) as? UIColor else {
-            return button.tintColor ?? UIColor.systemTint
+            return button.tintColor ?? UIColor.appTint
         }
 
         return color

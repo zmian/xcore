@@ -59,7 +59,7 @@ public final class SeparatorView: UIView {
 
     private var _backgroundColor: UIColor?
     @objc dynamic public override var backgroundColor: UIColor? {
-        get { return _backgroundColor ?? UIColor(hex: "DFE9F5") }
+        get { return _backgroundColor ?? .appSeparator }
         set {
             guard newValue != _backgroundColor else { return }
             _backgroundColor = newValue

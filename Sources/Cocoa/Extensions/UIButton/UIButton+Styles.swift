@@ -58,6 +58,10 @@ extension Identifier where Type: UIButton {
 // MARK: - Main Styles
 
 extension XCConfiguration where Type: UIButton {
+    private static func configure(_ button: UIButton, _ id: Identifier<Type>) {
+        UIButton.defaultAppearance._configureStyle?(button, id as! Identifier<UIButton>)
+    }
+
     public static var plain: XCConfiguration {
         return .plain()
     }
@@ -73,6 +77,7 @@ extension XCConfiguration where Type: UIButton {
             $0.setTitleColor(textColor.alpha(textColor.alpha * 0.5), for: .highlighted)
             $0.contentHorizontalAlignment = alignment
             $0.cornerRadius = 0
+            configure($0, style)
         }
     }
 
@@ -89,6 +94,7 @@ extension XCConfiguration where Type: UIButton {
             $0.backgroundColor = backgroundColor ?? style.backgroundColor(button: $0)
             $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
             $0.cornerRadius = style.cornerRadius
+            configure($0, style)
         }
     }
 
@@ -102,6 +108,7 @@ extension XCConfiguration where Type: UIButton {
             $0.backgroundColor = style.backgroundColor(button: $0)
             $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
             $0.layer.borderColor = style.borderColor(button: $0).cgColor
+            configure($0, style)
         }
     }
 
@@ -110,6 +117,7 @@ extension XCConfiguration where Type: UIButton {
         return callout.extend(id: style) {
             $0.backgroundColor = style.backgroundColor(or: .appleRed)
             $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
+            configure($0, style)
         }
     }
 
@@ -121,6 +129,7 @@ extension XCConfiguration where Type: UIButton {
             $0.backgroundColor = style.backgroundColor(button: $0)
             $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
             $0.cornerRadius = $0.defaultAppearance.height / 2
+            configure($0, style)
         }
     }
 }
@@ -192,6 +201,8 @@ extension XCConfiguration where Type: UIButton {
             } else {
                 $0.image = image
             }
+
+            configure($0, style)
         }
     }
 
@@ -214,6 +225,7 @@ extension XCConfiguration where Type: UIButton {
 
             let highlightedAttributedTitle = NSAttributedString(string: title, font: font, color: textColor, direction: direction, for: .highlighted)
             $0.setAttributedTitle(highlightedAttributedTitle, for: .highlighted)
+            configure($0, style)
         }
     }
 }
@@ -258,6 +270,7 @@ extension XCConfiguration where Type: UIButton {
             let filledImage = UIImage(assetIdentifier: .checkmarkIconFilled)
             $0.setImage(unfilledImage.tintColor(normalColor), for: .normal)
             $0.setImage(filledImage.tintColor(selectedColor), for: .selected)
+            configure($0, style)
         }
     }
 
@@ -297,6 +310,7 @@ extension XCConfiguration where Type: UIButton {
             $0.didSelect { sender in
                 sender.imageView?.backgroundColor = sender.isSelected ? selectedColor : .clear
             }
+            configure($0, style)
         }
     }
 }

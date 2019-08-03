@@ -54,7 +54,7 @@ open class IconLabelView: XCView {
     }
 
     public let titleLabel = UILabel().apply {
-        $0.font = .preferredFont(forTextStyle: .footnote)
+        $0.font = .app(style: .body)
         $0.textAlignment = .center
         $0.textColor = .black
         $0.numberOfLines = 0
@@ -62,7 +62,7 @@ open class IconLabelView: XCView {
     }
 
     public let subtitleLabel = UILabel().apply {
-        $0.font = .preferredFont(forTextStyle: .footnote)
+        $0.font = .app(style: .callout)
         $0.textAlignment = .center
         $0.textColor = .lightGray
         $0.numberOfLines = 0
