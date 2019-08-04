@@ -469,7 +469,7 @@ extension UIView {
     }
 }
 
-// MARK: NSLayoutAttribute
+// MARK: - NSLayoutAttribute
 
 extension UIView {
     /// Returns constraint for the given attribute.
@@ -540,4 +540,28 @@ public func ==(lhs: AnyObject?, rhs: UIView) -> Bool {
     }
 
     return lhs == rhs
+}
+
+extension UIView {
+    /// A function indicating whether the receiver subviews are an accessibility
+    /// elements that an assistive application can access.
+    ///
+    /// Assistive applications can get information only about objects that are
+    /// represented by accessibility elements. Therefore, if you implement a
+    /// custom control or view that should be accessible to users with disabilities,
+    /// set this property to `true`. The only exception to this practice is a view
+    /// that merely serves as a container for other items that should be accessible.
+    /// Such a view should implement the `UIAccessibilityContainer` protocol and set
+    /// this property to `false`.
+    ///
+    /// - Parameter value: A Boolean value indicating whether the receiver subviews
+    ///                    are an accessibility elements that an assistive
+    ///                    application can access.
+    public func makeSubviewsAccessible(_ value: Bool) {
+        isAccessibilityElement = value
+
+        for view in subviews {
+            view.makeSubviewsAccessible(value)
+        }
+    }
 }
