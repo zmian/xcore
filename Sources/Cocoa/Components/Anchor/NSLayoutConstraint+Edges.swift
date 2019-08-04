@@ -100,6 +100,11 @@ extension NSLayoutConstraint {
             height.constant = value
         }
 
+        public func toggleIfNeeded() {
+            width.isActive = width.constant != 0
+            height.isActive = height.constant != 0
+        }
+
         public func activate() {
             constraints.activate()
         }
