@@ -27,10 +27,6 @@ import UIKit
 extension Theme {
     private static var didSet = false
 
-    private static var app: Theme {
-        return .default
-    }
-
     /// A method to set light and dark theme.
     ///
     /// - Note: This method can only be called once. Any subsequent calls will be
@@ -39,10 +35,10 @@ extension Theme {
     /// - Parameters:
     ///   - light: The nonadaptable light theme for the interface.
     ///   - dark: The nonadaptable dark theme for the interface.
-    ///   - default: The default theme. The default value is `.light`.
+    ///   - current: The current theme. The default value is `.light`.
     /// - Returns: `true` if first call; otherwise, `false`.
     @discardableResult
-    public static func set(light: Theme, dark: Theme, default: Theme? = nil) -> Bool {
+    public static func set(light: Theme, dark: Theme, current: Theme? = nil) -> Bool {
         guard !didSet else {
             return false
         }
@@ -51,7 +47,7 @@ extension Theme {
 
         self.light = light
         self.dark = dark
-        self.default = `default` ?? light
+        self.current = current ?? light
 
         setSystemComponentsTheme()
         setNavigationBarBackButtonTheme()
@@ -62,45 +58,45 @@ extension Theme {
     }
 
     private static func setSystemComponentsTheme() {
-        UIColor.appTint = app.tintColor
-        UIColor.appSeparator = app.separatorColor
+        UIColor.appTint = current.tintColor
+        UIColor.appSeparator = current.separatorColor
 
-        UIApplication.sharedOrNil?.delegate?.window??.tintColor = app.tintColor
+        UIApplication.sharedOrNil?.delegate?.window??.tintColor = current.tintColor
         UIBarButtonItem.appearance().setTitleTextAttributes(UIViewController.defaultNavigationBarTextAttributes, for: .normal)
 
         UINavigationBar.appearance().apply {
             $0.titleTextAttributes = UIViewController.defaultNavigationBarTextAttributes
-            $0.tintColor = app.tintColor
+            $0.tintColor = current.tintColor
             $0.barTintColor = .white
             $0.barStyle = .black
             $0.isTranslucent = true
         }
 
         UIToolbar.appearance().apply {
-            $0.tintColor = app.tintColor
+            $0.tintColor = current.tintColor
             $0.barTintColor = .white
             $0.barStyle = .black
             $0.isTranslucent = true
         }
 
         UIPageControl.appearance().apply {
-            $0.pageIndicatorTintColor = app.tintColor
-            $0.currentPageIndicatorTintColor = app.toggleColor
+            $0.pageIndicatorTintColor = current.tintColor
+            $0.currentPageIndicatorTintColor = current.toggleColor
             $0.backgroundColor = .clear
         }
 
         UISwitch.appearance().apply {
-            $0.tintColor = app.textColor.alpha(0.08)
-            $0.onTintColor = app.toggleColor
+            $0.tintColor = current.textColor.alpha(0.08)
+            $0.onTintColor = current.toggleColor
         }
 
         UISlider.appearance().apply {
-            $0.maximumTrackTintColor = app.textColor.alpha(0.16)
+            $0.maximumTrackTintColor = current.textColor.alpha(0.16)
         }
 
         UITabBar.appearance().apply {
-            $0.tintColor = app.tintColor
-            $0.borderColor = app.separatorColor
+            $0.tintColor = current.tintColor
+            $0.borderColor = current.separatorColor
             $0.borderWidth = .onePixel
         }
     }
@@ -119,54 +115,54 @@ extension Theme {
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).apply {
             // SearchBar Cancel button normal state
              $0.setTitleTextAttributes([
-                .foregroundColor: app.tintColor,
+                .foregroundColor: current.tintColor,
                 .font: UIFont.app(style: .body)
             ], for: .normal)
 
             // SearchBar Cancel button disabled state
             $0.setTitleTextAttributes([
-                .foregroundColor: app.tintColor.alpha(0.5)
+                .foregroundColor: current.tintColor.alpha(0.5)
             ], for: .disabled)
         }
 
         // SearchBar text attributes
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [
-            .foregroundColor: app.textColor,
+            .foregroundColor: current.textColor,
             .font: UIFont.app(style: .body)
         ]
 
-        UISearchBar.appearance().placeholderTextColor = app.textColor.alpha(0.5)
+        UISearchBar.appearance().placeholderTextColor = current.textColor.alpha(0.5)
     }
 
     private static func setDynamicTableViewTheme() {
         // MARK: DynamicTableView
         DynamicTableView.appearance().apply {
             $0.headerFont = .app(style: .caption1)
-            $0.headerTextColor = app.textColor
+            $0.headerTextColor = current.textColor
             $0.footerFont = .app(style: .caption1)
-            $0.footerTextColor = app.textColorSecondary
+            $0.footerTextColor = current.textColorSecondary
             $0.accessoryFont = .app(style: .subheadline)
-            $0.accessoryTextColor = app.textColorSecondary
-            $0.accessoryTintColor = app.tintColor
-            $0.checkboxOffTintColor = app.separatorColor
-            $0.separatorColor = app.separatorColor
+            $0.accessoryTextColor = current.textColorSecondary
+            $0.accessoryTintColor = current.tintColor
+            $0.checkboxOffTintColor = current.separatorColor
+            $0.separatorColor = current.separatorColor
             $0.rowActionDeleteColor = .appleRed
             $0.isEmptyCellsHidden = true
         }
 
         DynamicTableViewCell.appearance().apply {
-            $0.titleTextColor = app.textColor
+            $0.titleTextColor = current.textColor
             $0.titleFont = .app(style: .body)
-            $0.subtitleTextColor = app.textColorSecondary
+            $0.subtitleTextColor = current.textColorSecondary
             $0.subtitleFont = .app(style: .subheadline)
             $0.contentInset = UIEdgeInsets(top: 9, left: 15, bottom: 10, right: 15)
             $0.textImageSpacing = .defaultPadding
         }
 
         IconLabelView.appearance().apply {
-            $0.titleTextColor = app.textColor
+            $0.titleTextColor = current.textColor
             $0.titleFont = .app(style: .body)
-            $0.subtitleTextColor = app.textColorSecondary
+            $0.subtitleTextColor = current.textColorSecondary
             $0.subtitleFont = .app(style: .subheadline)
         }
 
@@ -174,14 +170,14 @@ extension Theme {
     }
 
     private static func setComponentsTheme() {
-        SeparatorView.appearance().backgroundColor = app.separatorColor
+        SeparatorView.appearance().backgroundColor = current.separatorColor
 
         MarkupText.appearance.apply {
-            $0.textColor = app.textColor
+            $0.textColor = current.textColor
         }
 
         UIViewController.defaultAppearance.apply {
-            $0.tintColor = app.tintColor
+            $0.tintColor = current.tintColor
             $0.font = .app(style: .body)
             $0.preferredNavigationBarBackground = .transparent
             $0.prefersTabBarHidden = true
@@ -194,29 +190,29 @@ extension Theme {
             $0.highlightedAnimation = .scale
             // Styles Updates
             $0.styleAttributes.style(.base).setFont(.app(style: .body))
-            $0.styleAttributes.style(.base).setTextColor(app.buttonTextColor)
-            $0.styleAttributes.style(.base).setTintColor(app.tintColor)
+            $0.styleAttributes.style(.base).setTextColor(current.buttonTextColor)
+            $0.styleAttributes.style(.base).setTintColor(current.tintColor)
 
             $0.styleAttributes.style(.callout).setTextColor(.white)
-            $0.styleAttributes.style(.callout).setBackgroundColor(app.buttonBackgroundColor)
-            $0.styleAttributes.style(.calloutSecondary).setBackgroundColor(app.buttonBackgroundColorSecondary)
-            $0.styleAttributes.style(.pill).setBackgroundColor(app.buttonBackgroundColorPill)
+            $0.styleAttributes.style(.callout).setBackgroundColor(current.buttonBackgroundColor)
+            $0.styleAttributes.style(.calloutSecondary).setBackgroundColor(current.buttonBackgroundColorSecondary)
+            $0.styleAttributes.style(.pill).setBackgroundColor(current.buttonBackgroundColorPill)
 
             // Toggle Styles
             $0.styleAttributes.style(.checkbox).setFont(.app(style: .caption2))
-            $0.styleAttributes.style(.checkbox).setTintColor(app.toggleColor)
-            $0.styleAttributes.style(.radioButton).setTintColor(app.toggleColor)
+            $0.styleAttributes.style(.checkbox).setTintColor(current.toggleColor)
+            $0.styleAttributes.style(.radioButton).setTintColor(current.toggleColor)
         }
 
         LabelTextView.appearance().apply {
-            $0.linkTextAttributes = [.foregroundColor: app.linkColor]
-            $0.textColor = app.textColor
+            $0.linkTextAttributes = [.foregroundColor: current.linkColor]
+            $0.textColor = current.textColor
             $0.font = .app(style: .body)
         }
 
         Picker.RowView.appearance().apply {
-            $0.titleTextColor = app.textColor
-            $0.subtitleTextColor = app.textColorSecondary
+            $0.titleTextColor = current.textColor
+            $0.subtitleTextColor = current.textColorSecondary
         }
     }
 }

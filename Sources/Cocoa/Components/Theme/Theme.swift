@@ -106,8 +106,8 @@ public struct Theme: Equatable {
 // MARK: - Default
 
 extension Theme {
-    /// The default theme for the interface.
-    internal(set) public static var `default`: Theme = .light
+    /// The current theme for the interface.
+    internal(set) public static var current: Theme = .light
 
     /// The nonadaptable light theme for the interface.
     ///
