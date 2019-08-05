@@ -71,7 +71,7 @@ final class ImageTransformTests: TestCase {
         ]
 
         for transform in transforms {
-            let input = transform.1.identifier
+            let input = transform.1.id
             let output = transform.0
             XCTAssertTrue(input == output, "Expected identifier to be \"\(output)\", instead found \"\(input).\"")
         }
