@@ -477,6 +477,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Blocks/TargetActionBlockRepresentable.swift",
+      "line": 113,
+      "symbol": "TargetActionBlockRepresentable",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Blocks/UIBarButtonItem+Blocks.swift",
       "line": 29,
       "symbol": "UIBarButtonItem.Sender",
@@ -569,7 +576,7 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Blocks/UIControl+Blocks.swift",
-      "line": 405,
+      "line": 430,
       "symbol": "ControlTargetActionBlockRepresentable",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
@@ -709,6 +716,13 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/Identifier.swift",
+      "line": 29,
+      "symbol": "Identifier",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/Identifier.swift",
       "line": 35,
       "symbol": "Identifier",
       "symbol_kind": "source.lang.swift.decl.extension",
@@ -730,14 +744,14 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/Identifier.swift",
-      "line": 78,
+      "line": 82,
       "symbol": "Identifier",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/Identifier.swift",
-      "line": 173,
+      "line": 190,
       "symbol": "Identifier",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
@@ -1214,21 +1228,21 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
       "line": 58,
-      "symbol": "XCConfiguration.identifier",
+      "symbol": "XCConfiguration.id",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
       "line": 61,
-      "symbol": "XCConfiguration.init(identifier:_:)",
+      "symbol": "XCConfiguration.init(id:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
       "line": 66,
-      "symbol": "XCConfiguration.extend(identifier:_:)",
+      "symbol": "XCConfiguration.extend(id:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -1276,35 +1290,28 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
-      "line": 110,
-      "symbol": "Stylable",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
-      "line": 111,
-      "symbol": "Stylable.init(style:)",
+      "line": 114,
+      "symbol": "TargetActionBlockRepresentable.init(style:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
-      "line": 122,
-      "symbol": "With",
-      "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
       "line": 124,
       "symbol": "With",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
+      "line": 126,
+      "symbol": "With",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Classes/XCConfiguration.swift",
-      "line": 125,
+      "line": 127,
       "symbol": "With.apply(style:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -1921,13 +1928,20 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Anchor/NSLayoutConstraint+Edges.swift",
       "line": 103,
+      "symbol": "NSLayoutConstraint.Size.toggleIfNeeded()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Anchor/NSLayoutConstraint+Edges.swift",
+      "line": 108,
       "symbol": "NSLayoutConstraint.Size.activate()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Anchor/NSLayoutConstraint+Edges.swift",
-      "line": 107,
+      "line": 112,
       "symbol": "NSLayoutConstraint.Size.deactivate()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -2654,114 +2668,219 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
-      "line": 29,
-      "symbol": "CurrencyAmount",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components+Attributes.swift",
       "line": 30,
-      "symbol": "CurrencyAmount.FormattingStyle",
-      "symbol_kind": "source.lang.swift.decl.enum",
+      "symbol": "Currency.Components.Attributes.dollarsFont",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components+Attributes.swift",
       "line": 31,
-      "symbol": "CurrencyAmount.FormattingStyle.none",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "symbol": "Currency.Components.Attributes.centsFont",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components+Attributes.swift",
       "line": 32,
-      "symbol": "CurrencyAmount.FormattingStyle.removeCentsIfZero",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "symbol": "Currency.Components.Attributes.centsOffset",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
-      "line": 33,
-      "symbol": "CurrencyAmount.FormattingStyle.removeCents",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components+Attributes.swift",
       "line": 34,
-      "symbol": "CurrencyAmount.FormattingStyle.abbreviationWith(threshold:fallback:)",
+      "symbol": "Currency.Components.Attributes.init(dollarsFont:centsFont:centsOffset:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components+Style.swift",
+      "line": 30,
+      "symbol": "Currency.Components.Style.none",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
-      "line": 69,
-      "symbol": "CurrencyAmount",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components+Style.swift",
+      "line": 31,
+      "symbol": "Currency.Components.Style.removeCentsIfZero",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components+Style.swift",
+      "line": 32,
+      "symbol": "Currency.Components.Style.removeCents",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components+Style.swift",
+      "line": 33,
+      "symbol": "Currency.Components.Style.abbreviationWith(threshold:fallback:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components.swift",
+      "line": 31,
+      "symbol": "Currency.Components.Range",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components.swift",
+      "line": 33,
+      "symbol": "Currency.Components.amount",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components.swift",
+      "line": 34,
+      "symbol": "Currency.Components.dollars",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components.swift",
+      "line": 35,
+      "symbol": "Currency.Components.cents",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components.swift",
+      "line": 36,
+      "symbol": "Currency.Components.currencySymbol",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components.swift",
+      "line": 37,
+      "symbol": "Currency.Components.groupingSeparator",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components.swift",
+      "line": 38,
+      "symbol": "Currency.Components.decimalSeparator",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+Components.swift",
+      "line": 43,
+      "symbol": "Currency.Components.init(amount:dollars:cents:currencySymbol:groupingSeparator:decimalSeparator:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+SymbolsOptions.swift",
+      "line": 30,
+      "symbol": "Currency.SymbolsProvider",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+SymbolsOptions.swift",
+      "line": 33,
+      "symbol": "CurrencySymbolsProvider",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+SymbolsOptions.swift",
+      "line": 34,
+      "symbol": "CurrencySymbolsProvider.currencySymbol",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+SymbolsOptions.swift",
+      "line": 52,
+      "symbol": "Currency.SymbolsOptions",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
-      "line": 70,
-      "symbol": "CurrencyAmount.amount",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+SymbolsOptions.swift",
+      "line": 59,
+      "symbol": "Currency.SymbolsOptions.currencySymbol",
+      "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
-      "line": 71,
-      "symbol": "CurrencyAmount.dollars",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+SymbolsOptions.swift",
+      "line": 60,
+      "symbol": "Currency.SymbolsOptions.groupingSeparator",
+      "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
-      "line": 72,
-      "symbol": "CurrencyAmount.cents",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+SymbolsOptions.swift",
+      "line": 61,
+      "symbol": "Currency.SymbolsOptions.decimalSeparator",
+      "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
-      "line": 73,
-      "symbol": "CurrencyAmount.currencySymbol",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+SymbolsOptions.swift",
+      "line": 62,
+      "symbol": "Currency.SymbolsOptions.specialCharacters",
+      "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
-      "line": 74,
-      "symbol": "CurrencyAmount.groupingSeparator",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency+SymbolsOptions.swift",
+      "line": 67,
+      "symbol": "Currency.SymbolsOptions.all",
+      "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
-      "line": 75,
-      "symbol": "CurrencyAmount.decimalSeparator",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency.swift",
+      "line": 27,
+      "symbol": "Currency",
+      "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyAmount.swift",
-      "line": 80,
-      "symbol": "CurrencyAmount.init(amount:dollars:cents:currencySymbol:groupingSeparator:decimalSeparator:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency.swift",
+      "line": 27,
+      "symbol": "Currency",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency.swift",
+      "line": 29,
+      "symbol": "Currency",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/Currency.swift",
+      "line": 51,
+      "symbol": "Currency",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyFormatter/CurrencyFormatter+Format.swift",
       "line": 28,
-      "symbol": "CurrencyFormatter.format(amount:attributes:format:)",
+      "symbol": "CurrencyFormatter.attributedString(for:attributes:format:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyFormatter/CurrencyFormatter+Format.swift",
       "line": 42,
-      "symbol": "CurrencyFormatter.format(amount:attributes:formattingStyle:isCentsRenderedAsSuperscript:)",
+      "symbol": "CurrencyFormatter.attributedString(for:attributes:style:superscriptCents:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -2782,13 +2901,6 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyFormatter/CurrencyFormatter.swift",
       "line": 28,
-      "symbol": "CurrencyFormatter.FormattingStyle",
-      "symbol_kind": "source.lang.swift.decl.typealias",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyFormatter/CurrencyFormatter.swift",
-      "line": 30,
       "symbol": "CurrencyFormatter.shared",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
@@ -2809,121 +2921,16 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyFormatter/CurrencyFormatter.swift",
-      "line": 120,
-      "symbol": "CurrencyFormatter.format(currency:style:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyFormatter/CurrencyFormatter.swift",
-      "line": 125,
+      "line": 128,
       "symbol": "CurrencyFormatter",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyFormatter/CurrencyFormatter.swift",
-      "line": 126,
+      "line": 158,
       "symbol": "CurrencyFormatter.format(amount:allowDecimal:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyFormatter/CurrencyFormatter.swift",
-      "line": 157,
-      "symbol": "CurrencyFormatter.double(from:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyStyleAttributes.swift",
-      "line": 27,
-      "symbol": "CurrencyStyleAttributes",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyStyleAttributes.swift",
-      "line": 28,
-      "symbol": "CurrencyStyleAttributes.dollarsFont",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyStyleAttributes.swift",
-      "line": 29,
-      "symbol": "CurrencyStyleAttributes.centsFont",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyStyleAttributes.swift",
-      "line": 30,
-      "symbol": "CurrencyStyleAttributes.centsOffset",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencyStyleAttributes.swift",
-      "line": 32,
-      "symbol": "CurrencyStyleAttributes.init(dollarsFont:centsFont:centsOffset:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencySymbolsOptions.swift",
-      "line": 29,
-      "symbol": "CurrencySymbolsProvider",
-      "symbol_kind": "source.lang.swift.decl.protocol",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencySymbolsOptions.swift",
-      "line": 30,
-      "symbol": "CurrencySymbolsProvider.currencySymbol",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencySymbolsOptions.swift",
-      "line": 47,
-      "symbol": "CurrencySymbolsOptions",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencySymbolsOptions.swift",
-      "line": 54,
-      "symbol": "CurrencySymbolsOptions.currencySymbol",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencySymbolsOptions.swift",
-      "line": 55,
-      "symbol": "CurrencySymbolsOptions.groupingSeparator",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencySymbolsOptions.swift",
-      "line": 56,
-      "symbol": "CurrencySymbolsOptions.decimalSeparator",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencySymbolsOptions.swift",
-      "line": 57,
-      "symbol": "CurrencySymbolsOptions.specialCharacters",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Currency/CurrencySymbolsOptions.swift",
-      "line": 58,
-      "symbol": "CurrencySymbolsOptions.all",
-      "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
@@ -4265,77 +4272,77 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewCell.swift",
-      "line": 197,
+      "line": 196,
       "symbol": "DynamicTableViewCell.subtitleLabel",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewCell.swift",
-      "line": 204,
+      "line": 202,
       "symbol": "DynamicTableViewCell.prepareForReuse()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewCell.swift",
-      "line": 260,
+      "line": 258,
       "symbol": "DynamicTableViewCell.configure(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewCell.swift",
-      "line": 272,
+      "line": 270,
       "symbol": "DynamicTableViewCell",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewCell.swift",
-      "line": 273,
+      "line": 271,
       "symbol": "DynamicTableViewCell.avatarBorderColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewCell.swift",
-      "line": 284,
+      "line": 282,
       "symbol": "DynamicTableViewCell.avatarBorderWidth",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewCell.swift",
-      "line": 289,
+      "line": 287,
       "symbol": "DynamicTableViewCell.avatarCornerRadius",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewCell.swift",
-      "line": 294,
-      "symbol": "DynamicTableViewCell.titleColor",
+      "line": 292,
+      "symbol": "DynamicTableViewCell.titleTextColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewCell.swift",
-      "line": 299,
+      "line": 297,
       "symbol": "DynamicTableViewCell.titleFont",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewCell.swift",
-      "line": 304,
-      "symbol": "DynamicTableViewCell.subtitleColor",
+      "line": 302,
+      "symbol": "DynamicTableViewCell.subtitleTextColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/DynamicTableView/DynamicTableViewCell.swift",
-      "line": 309,
+      "line": 307,
       "symbol": "DynamicTableViewCell.subtitleFont",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -4601,211 +4608,309 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 73,
+      "line": 33,
+      "symbol": "GradientView.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
+      "line": 38,
+      "symbol": "GradientView.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
+      "line": 43,
+      "symbol": "GradientView.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
+      "line": 94,
       "symbol": "GradientView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 80,
+      "line": 101,
       "symbol": "GradientView.setColors(_:animated:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 92,
+      "line": 113,
       "symbol": "GradientLayer",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 143,
+      "line": 164,
       "symbol": "GradientLayer.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 148,
+      "line": 169,
       "symbol": "GradientLayer.init(layer:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 153,
+      "line": 174,
       "symbol": "GradientLayer.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 158,
+      "line": 179,
       "symbol": "GradientLayer.commonInit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 163,
+      "line": 184,
       "symbol": "GradientLayer.layoutSublayers()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 175,
+      "line": 196,
       "symbol": "GradientDirection",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 176,
+      "line": 197,
       "symbol": "GradientDirection.topToBottom",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 177,
+      "line": 198,
       "symbol": "GradientDirection.bottomToTop",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 178,
+      "line": 199,
       "symbol": "GradientDirection.leftToRight",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 179,
+      "line": 200,
       "symbol": "GradientDirection.rightToLeft",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 180,
+      "line": 201,
       "symbol": "GradientDirection.topLeftToBottomRight",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 181,
+      "line": 202,
       "symbol": "GradientDirection.topRightToBottomLeft",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 182,
+      "line": 203,
       "symbol": "GradientDirection.bottomLeftToTopRight",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 183,
+      "line": 204,
       "symbol": "GradientDirection.bottomRightToTopLeft",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 184,
+      "line": 205,
       "symbol": "GradientDirection.custom(start:end:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/GradientView.swift",
-      "line": 186,
+      "line": 207,
       "symbol": "GradientDirection.points",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD.swift",
-      "line": 28,
-      "symbol": "HUD.Duration",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD.swift",
-      "line": 29,
-      "symbol": "HUD.Duration.show",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD.swift",
-      "line": 30,
-      "symbol": "HUD.Duration.hide",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD.swift",
-      "line": 32,
-      "symbol": "HUD.Duration.init(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD.swift",
-      "line": 37,
-      "symbol": "HUD.Duration.init(show:hide:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD.swift",
-      "line": 42,
-      "symbol": "HUD.Duration.default",
-      "symbol_kind": "source.lang.swift.decl.var.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD.swift",
-      "line": 84,
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 50,
       "symbol": "HUD.windowLevel",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD.swift",
-      "line": 89,
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 55,
       "symbol": "HUD.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD.swift",
-      "line": 270,
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 242,
       "symbol": "HUD.show(delay:animated:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD.swift",
-      "line": 274,
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 246,
       "symbol": "HUD.hide(delay:animated:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD.swift",
-      "line": 278,
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 250,
       "symbol": "HUD.disableOnNextCall()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 258,
+      "symbol": "HUD.StatusBarAppearance",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 281,
+      "symbol": "HUD.Duration",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 282,
+      "symbol": "HUD.Duration.show",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 283,
+      "symbol": "HUD.Duration.hide",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 293,
+      "symbol": "HUD.Duration.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 298,
+      "symbol": "HUD.Duration.init(show:hide:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 303,
+      "symbol": "HUD.Duration.default",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 348,
+      "symbol": "HUD.Appearance.backgroundColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/HUD.swift",
+      "line": 352,
+      "symbol": "HUD.appearance()",
+      "symbol_kind": "source.lang.swift.decl.function.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/LaunchScreen.swift",
+      "line": 29,
+      "symbol": "LaunchScreen",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/LaunchScreen.swift",
+      "line": 33,
+      "symbol": "LaunchScreen",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/LaunchScreen.swift",
+      "line": 34,
+      "symbol": "LaunchScreen.View",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/LaunchScreen.swift",
+      "line": 37,
+      "symbol": "LaunchScreen.View.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/LaunchScreen.swift",
+      "line": 50,
+      "symbol": "LaunchScreen",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/LaunchScreen.swift",
+      "line": 51,
+      "symbol": "LaunchScreen.ViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/LaunchScreen.swift",
+      "line": 54,
+      "symbol": "LaunchScreen.ViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/HUD/LaunchScreen.swift",
+      "line": 59,
+      "symbol": "LaunchScreen.ViewController.viewDidDisappear(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -5169,7 +5274,7 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelView.swift",
       "line": 253,
-      "symbol": "IconLabelView.configure(_:transform:title:subtitle:)",
+      "symbol": "IconLabelView.configure(_:title:subtitle:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -5197,7 +5302,7 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelView.swift",
       "line": 273,
-      "symbol": "IconLabelView.titleColor",
+      "symbol": "IconLabelView.titleTextColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -5211,7 +5316,7 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/IconLabelView/IconLabelView.swift",
       "line": 283,
-      "symbol": "IconLabelView.subtitleColor",
+      "symbol": "IconLabelView.subtitleTextColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -5350,64 +5455,71 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ImageAssetIdentifier.swift",
-      "line": 148,
+      "line": 153,
       "symbol": "ImageAssetIdentifier.navigationBackArrow",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ImageAssetIdentifier.swift",
-      "line": 149,
+      "line": 154,
       "symbol": "ImageAssetIdentifier.navigationForwardArrow",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ImageAssetIdentifier.swift",
-      "line": 152,
+      "line": 157,
       "symbol": "ImageAssetIdentifier.arrowRightIcon",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ImageAssetIdentifier.swift",
-      "line": 153,
+      "line": 158,
       "symbol": "ImageAssetIdentifier.arrowLeftIcon",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ImageAssetIdentifier.swift",
-      "line": 155,
+      "line": 160,
       "symbol": "ImageAssetIdentifier.filterSelectionIndicatorArrowIcon",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ImageAssetIdentifier.swift",
-      "line": 156,
+      "line": 161,
       "symbol": "ImageAssetIdentifier.info",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ImageAssetIdentifier.swift",
-      "line": 157,
+      "line": 162,
       "symbol": "ImageAssetIdentifier.locationIcon",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ImageAssetIdentifier.swift",
-      "line": 158,
+      "line": 163,
       "symbol": "ImageAssetIdentifier.searchIcon",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ImageAssetIdentifier.swift",
-      "line": 159,
+      "line": 164,
       "symbol": "ImageAssetIdentifier.validationErrorIcon",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ImageAssetIdentifier.swift",
+      "line": 166,
+      "symbol": "ImageAssetIdentifier.moreIcon",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
@@ -5456,7 +5568,7 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Intents/SiriShortcuts+Domain.swift",
       "line": 36,
-      "symbol": "SiriShortcuts.Domain.identifier",
+      "symbol": "SiriShortcuts.Domain.id",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -5470,28 +5582,28 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Intents/SiriShortcuts+Domain.swift",
       "line": 46,
-      "symbol": "SiriShortcuts.Domain.init(identifier:intents:)",
+      "symbol": "SiriShortcuts.Domain.init(id:intents:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Intents/SiriShortcuts+Domain.swift",
       "line": 52,
-      "symbol": "SiriShortcuts.Domain.init(identifier:intents:)",
+      "symbol": "SiriShortcuts.Domain.init(id:intents:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Intents/SiriShortcuts+Domain.swift",
       "line": 57,
-      "symbol": "SiriShortcuts.Domain.init(identifier:intent:)",
+      "symbol": "SiriShortcuts.Domain.init(id:intent:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Intents/SiriShortcuts+Domain.swift",
       "line": 61,
-      "symbol": "SiriShortcuts.Domain.init(identifier:)",
+      "symbol": "SiriShortcuts.Domain.init(id:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -6434,6 +6546,160 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 28,
+      "symbol": "XCConfiguration.plain",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 36,
+      "symbol": "LoadingView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 37,
+      "symbol": "LoadingView.Style",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 39,
+      "symbol": "LoadingView.gradientViewClass",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 40,
+      "symbol": "LoadingView.gradientView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 41,
+      "symbol": "LoadingView.progressView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 42,
+      "symbol": "LoadingView.lhsImageView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 43,
+      "symbol": "LoadingView.rhsImageView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 44,
+      "symbol": "LoadingView.titleLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 50,
+      "symbol": "LoadingView.footerLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 88,
+      "symbol": "LoadingView.style",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 94,
+      "symbol": "LoadingView.init(style:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 151,
+      "symbol": "LoadingView.configure(message:rhsImage:footerMessage:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 163,
+      "symbol": "LoadingView.titleTextColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 168,
+      "symbol": "LoadingView.titleFont",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 173,
+      "symbol": "LoadingView.footerTextColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 178,
+      "symbol": "LoadingView.footerFont",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 186,
+      "symbol": "LoadingView",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 188,
+      "symbol": "LoadingView.add(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 193,
+      "symbol": "LoadingView.add(to:style:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 201,
+      "symbol": "LoadingView.dismiss(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/LoadingView/LoadingView.swift",
+      "line": 210,
+      "symbol": "LoadingView.preferredNavigationBarTintColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/MD5.swift",
       "line": 29,
       "symbol": "Data.md5",
@@ -6707,6 +6973,447 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DatePicker.swift",
+      "line": 27,
+      "symbol": "DatePicker",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DatePicker.swift",
+      "line": 31,
+      "symbol": "DatePicker.drawerContentView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DatePicker.swift",
+      "line": 62,
+      "symbol": "DatePicker.present(initialValue:style:_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DrawerScreen.swift",
+      "line": 29,
+      "symbol": "DrawerScreenContent",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DrawerScreen.swift",
+      "line": 30,
+      "symbol": "DrawerScreenContent.drawerContentView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DrawerScreen.swift",
+      "line": 31,
+      "symbol": "DrawerScreenContent.didDismiss()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DrawerScreen.swift",
+      "line": 34,
+      "symbol": "DrawerScreenContent",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DrawerScreen.swift",
+      "line": 35,
+      "symbol": "DrawerScreenContent.didDismiss()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DrawerScreen.swift",
+      "line": 39,
+      "symbol": "UIView.drawerContentView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DrawerScreen.swift",
+      "line": 46,
+      "symbol": "DrawerScreen",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DrawerScreen.swift",
+      "line": 47,
+      "symbol": "DrawerScreen.Content",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DrawerScreen.swift",
+      "line": 132,
+      "symbol": "DrawerScreen",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DrawerScreen.swift",
+      "line": 133,
+      "symbol": "DrawerScreen.present(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/DrawerScreen.swift",
+      "line": 139,
+      "symbol": "DrawerScreen.dismiss()",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/InputToolbar.swift",
+      "line": 27,
+      "symbol": "InputToolbar",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/InputToolbar.swift",
+      "line": 30,
+      "symbol": "InputToolbar.title",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/InputToolbar.swift",
+      "line": 114,
+      "symbol": "InputToolbar.cancelTitle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/InputToolbar.swift",
+      "line": 119,
+      "symbol": "InputToolbar.doneTitle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/InputToolbar.swift",
+      "line": 124,
+      "symbol": "InputToolbar.otherTitle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/InputToolbar.swift",
+      "line": 129,
+      "symbol": "InputToolbar.titleTextColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/InputToolbar.swift",
+      "line": 137,
+      "symbol": "InputToolbar.didTapDone(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/InputToolbar.swift",
+      "line": 142,
+      "symbol": "InputToolbar.didTapCancel(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/InputToolbar.swift",
+      "line": 147,
+      "symbol": "InputToolbar.didTapOther(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker+RowView.swift",
+      "line": 30,
+      "symbol": "Picker.RowModel",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker+RowView.swift",
+      "line": 31,
+      "symbol": "Picker.RowModel.image",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker+RowView.swift",
+      "line": 32,
+      "symbol": "Picker.RowModel.title",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker+RowView.swift",
+      "line": 33,
+      "symbol": "Picker.RowModel.subtitle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker+RowView.swift",
+      "line": 35,
+      "symbol": "Picker.RowModel.init(image:title:subtitle:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker+RowView.swift",
+      "line": 50,
+      "symbol": "Picker.RowView",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker+RowView.swift",
+      "line": 109,
+      "symbol": "Picker.RowView.configure(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker+RowView.swift",
+      "line": 126,
+      "symbol": "Picker.RowView.titleTextColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker+RowView.swift",
+      "line": 131,
+      "symbol": "Picker.RowView.subtitleTextColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker.swift",
+      "line": 27,
+      "symbol": "Picker",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker.swift",
+      "line": 27,
+      "symbol": "Picker",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker.swift",
+      "line": 29,
+      "symbol": "Picker",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker.swift",
+      "line": 30,
+      "symbol": "Picker.init(model:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker.swift",
+      "line": 34,
+      "symbol": "Picker.present()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker.swift",
+      "line": 38,
+      "symbol": "Picker.dismiss()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker.swift",
+      "line": 42,
+      "symbol": "Picker.didTapOtherButton(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker.swift",
+      "line": 49,
+      "symbol": "Picker",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/Picker.swift",
+      "line": 54,
+      "symbol": "Picker.setTitle(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 27,
+      "symbol": "PickerModel",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 28,
+      "symbol": "PickerModel.numberOfComponents()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 29,
+      "symbol": "PickerModel.numberOfElements(at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 30,
+      "symbol": "PickerModel.element(at:row:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 31,
+      "symbol": "PickerModel.selectedElement(at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 32,
+      "symbol": "PickerModel.pickerDidDismiss()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 33,
+      "symbol": "PickerModel.pickerDidTapDone()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 34,
+      "symbol": "PickerModel.pickerDidSelectValue(value:at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 35,
+      "symbol": "PickerModel.pickerReloadComponents(on:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 36,
+      "symbol": "PickerModel.pickerReloadAllComponents()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 37,
+      "symbol": "PickerModel.pickerDidCancel()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 40,
+      "symbol": "PickerModel",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 41,
+      "symbol": "PickerModel.numberOfComponents()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 45,
+      "symbol": "PickerModel.numberOfElements(at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 49,
+      "symbol": "PickerModel.element(at:row:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 53,
+      "symbol": "PickerModel.selectedElement(at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 57,
+      "symbol": "PickerModel.pickerDidDismiss()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 60,
+      "symbol": "PickerModel.pickerDidTapDone()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 63,
+      "symbol": "PickerModel.pickerDidSelectValue(value:at:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 66,
+      "symbol": "PickerModel.pickerReloadComponents(on:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 70,
+      "symbol": "PickerModel.pickerReloadAllComponents()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Picker/PickerModel.swift",
+      "line": 73,
+      "symbol": "PickerModel.pickerDidCancel()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/ProgressView.swift",
       "line": 27,
       "symbol": "ProgressView",
@@ -6842,7 +7549,7 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Router/Router+Route.swift",
       "line": 106,
-      "symbol": "Router.Route.identifier",
+      "symbol": "Router.Route.id",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -6856,14 +7563,14 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Router/Router+Route.swift",
       "line": 109,
-      "symbol": "Router.Route.init(identifier:_:)",
+      "symbol": "Router.Route.init(id:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Router/Router+Route.swift",
       "line": 114,
-      "symbol": "Router.Route.init(identifier:_:)",
+      "symbol": "Router.Route.init(id:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -6877,7 +7584,7 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Router/Router+Route.swift",
       "line": 127,
-      "symbol": "Router.Route.custom(identifier:_:)",
+      "symbol": "Router.Route.custom(id:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
@@ -6911,14 +7618,21 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Router/Router+RouteHandler.swift",
-      "line": 55,
+      "line": 50,
+      "symbol": "RouteHandler.route(to:animated:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Router/Router+RouteHandler.swift",
+      "line": 59,
       "symbol": "RouteHandler",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Router/Router+RouteHandler.swift",
-      "line": 56,
+      "line": 60,
       "symbol": "RouteHandler.navigationController",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -6939,9 +7653,16 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Router/Router+RouteKind.swift",
-      "line": 30,
-      "symbol": "Router.RouteKind.custom",
+      "line": 31,
+      "symbol": "Router.RouteKind.custom(_:)",
       "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Router/Router+RouteKind.swift",
+      "line": 33,
+      "symbol": "Router.RouteKind.custom",
+      "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
@@ -7332,7 +8053,7 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/TabBarController/UITabBarController+TabItem.swift",
       "line": 30,
-      "symbol": "UITabBarController.TabItem.imageAssetIdentifier",
+      "symbol": "UITabBarController.TabItem.assetIdentifier",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -7491,6 +8212,83 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Theme/Theme.swift",
+      "line": 27,
+      "symbol": "Theme",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Theme/Theme.swift",
+      "line": 30,
+      "symbol": "Identifier.light",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Theme/Theme.swift",
+      "line": 31,
+      "symbol": "Identifier.dark",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Theme/Theme.swift",
+      "line": 36,
+      "symbol": "Theme",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Theme/Theme.swift",
+      "line": 67,
+      "symbol": "Theme.buttonTextColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Theme/Theme.swift",
+      "line": 68,
+      "symbol": "Theme.buttonBackgroundColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Theme/Theme.swift",
+      "line": 69,
+      "symbol": "Theme.buttonBackgroundColorSecondary",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Theme/Theme.swift",
+      "line": 70,
+      "symbol": "Theme.buttonBackgroundColorPill",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Theme/Theme.swift",
+      "line": 71,
+      "symbol": "Theme.statusBarStyle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Theme/Theme.swift",
+      "line": 73,
+      "symbol": "Theme.init(id:dark:tintColor:separatorColor:toggleColor:linkColor:textColor:textColorSecondary:backgroundColor:buttonTextColor:buttonBackgroundColor:buttonBackgroundColorSecondary:buttonBackgroundColorPill:statusBarStyle:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/Theme/Theme.swift",
+      "line": 108,
+      "symbol": "Theme",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageFetcher/ImageFetcher.swift",
       "line": 27,
       "symbol": "ImageFetcher",
@@ -7506,72 +8304,93 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageFetcher/ImageFetcher.swift",
-      "line": 30,
+      "line": 33,
       "symbol": "ImageFetcher.canHandle(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageFetcher/UIImage+Fetcher.swift",
-      "line": 14,
-      "symbol": "UIImage.Fetcher",
-      "symbol_kind": "source.lang.swift.decl.enum",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageFetcher/ImageFetcher.swift",
+      "line": 43,
+      "symbol": "ImageFetcher.clearCache()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageFetcher/UIImage+Fetcher.swift",
-      "line": 19,
-      "symbol": "UIImage.Fetcher",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageFetcher/UIImage+Fetcher.swift",
-      "line": 22,
-      "symbol": "UIImage.Fetcher.register(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageFetcher/UIImage+Fetcher.swift",
-      "line": 29,
-      "symbol": "UIImage.Fetcher",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageFetcher/ImageFetcher.swift",
+      "line": 46,
+      "symbol": "ImageFetcher",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageFetcher/UIImage+Fetcher.swift",
       "line": 30,
-      "symbol": "UIImage.Fetcher.CacheType",
+      "symbol": "UIImage.Fetcher",
       "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageFetcher/UIImage+Fetcher.swift",
-      "line": 31,
-      "symbol": "UIImage.Fetcher.CacheType.local",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageFetcher/UIImage+Fetcher.swift",
-      "line": 32,
-      "symbol": "UIImage.Fetcher.CacheType.remote",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageFetcher/UIImage+Fetcher.swift",
       "line": 35,
-      "symbol": "UIImage.Fetcher.clearCache(type:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "symbol": "UIImage.Fetcher",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageFetcher/UIImage+Fetcher.swift",
-      "line": 44,
-      "symbol": "UIImage.Fetcher.clearAllCache()",
+      "line": 51,
+      "symbol": "UIImage.Fetcher.clearCache()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable+Alignment.swift",
+      "line": 27,
+      "symbol": "ImageRepresentableAlignment",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable+Alignment.swift",
+      "line": 28,
+      "symbol": "ImageRepresentableAlignment.top",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable+Alignment.swift",
+      "line": 29,
+      "symbol": "ImageRepresentableAlignment.bottom",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable+Alignment.swift",
+      "line": 30,
+      "symbol": "ImageRepresentableAlignment.center",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable+Alignment.swift",
+      "line": 31,
+      "symbol": "ImageRepresentableAlignment.leading",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable+Alignment.swift",
+      "line": 32,
+      "symbol": "ImageRepresentableAlignment.trailing",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
+      "line": 27,
+      "symbol": "ImageRepresentable",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
@@ -7597,6 +8416,20 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
+      "line": 37,
+      "symbol": "ImageRepresentable",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
+      "line": 40,
+      "symbol": "ImageRepresentable",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
       "line": 42,
       "symbol": "ImageSourceType.isRemoteUrl",
       "symbol_kind": "source.lang.swift.decl.var.instance",
@@ -7604,86 +8437,93 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
-      "line": 56,
+      "line": 58,
       "symbol": "ImageSourceType",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
-      "line": 71,
-      "symbol": "ImageSourceType",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
-      "line": 72,
+      "line": 59,
       "symbol": "ImageSourceType.CacheType",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
-      "line": 90,
+      "line": 77,
       "symbol": "ImageRepresentable",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
-      "line": 91,
+      "line": 78,
       "symbol": "ImageRepresentable.imageSource",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
-      "line": 92,
+      "line": 79,
       "symbol": "ImageRepresentable.bundle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
-      "line": 95,
+      "line": 82,
       "symbol": "ImageRepresentable",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
-      "line": 96,
+      "line": 83,
       "symbol": "ImageRepresentable.bundle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
-      "line": 114,
+      "line": 101,
       "symbol": "UIImage.imageSource",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
-      "line": 120,
+      "line": 107,
       "symbol": "URL.imageSource",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentable.swift",
-      "line": 126,
+      "line": 113,
       "symbol": "String.imageSource",
       "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentablePlugin.swift",
+      "line": 27,
+      "symbol": "ImageRepresentablePlugin",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageRepresentable/ImageRepresentablePlugin.swift",
+      "line": 32,
+      "symbol": "ImageRepresentablePlugin",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/AlphaImageTransform.swift",
       "line": 27,
       "symbol": "AlphaImageTransform",
-      "symbol_kind": "source.lang.swift.decl.class",
+      "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
@@ -7697,7 +8537,7 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/BackgroundImageTransform.swift",
       "line": 27,
       "symbol": "BackgroundImageTransform",
-      "symbol_kind": "source.lang.swift.decl.class",
+      "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
@@ -7711,13 +8551,13 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/BlockImageTransform.swift",
       "line": 27,
       "symbol": "BlockImageTransform",
-      "symbol_kind": "source.lang.swift.decl.class",
+      "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/BlockImageTransform.swift",
       "line": 31,
-      "symbol": "BlockImageTransform.init(identifier:_:)",
+      "symbol": "BlockImageTransform.init(id:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -7746,7 +8586,7 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ColorizeImageTransform.swift",
       "line": 43,
       "symbol": "ColorizeImageTransform",
-      "symbol_kind": "source.lang.swift.decl.class",
+      "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
@@ -7760,7 +8600,7 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/CompositeImageTransform.swift",
       "line": 27,
       "symbol": "CompositeImageTransform",
-      "symbol_kind": "source.lang.swift.decl.class",
+      "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
@@ -7781,7 +8621,7 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/CornerRadiusImageTransform.swift",
       "line": 27,
       "symbol": "CornerRadiusImageTransform",
-      "symbol_kind": "source.lang.swift.decl.class",
+      "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
@@ -7795,7 +8635,63 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/GradientImageTransform.swift",
       "line": 27,
       "symbol": "GradientImageTransform",
-      "symbol_kind": "source.lang.swift.decl.class",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform+Member.swift",
+      "line": 29,
+      "symbol": "MetaStaticMember",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform+Member.swift",
+      "line": 30,
+      "symbol": "MetaStaticMember.base",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform+Member.swift",
+      "line": 32,
+      "symbol": "MetaStaticMember.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform+Member.swift",
+      "line": 38,
+      "symbol": "ImageTransform.Member",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform+Member.swift",
+      "line": 46,
+      "symbol": "MetaStaticMember",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform+Member.swift",
+      "line": 52,
+      "symbol": "MetaStaticMember.alpha(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform+Member.swift",
+      "line": 56,
+      "symbol": "MetaStaticMember.cornerRadius(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform+Member.swift",
+      "line": 70,
+      "symbol": "MetaStaticMember.background(_:preferredSize:alignment:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
@@ -7807,7 +8703,35 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform.swift",
-      "line": 48,
+      "line": 37,
+      "symbol": "ImageTransform",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform.swift",
+      "line": 40,
+      "symbol": "ImageTransform",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform.swift",
+      "line": 41,
+      "symbol": "ImageTransform.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform.swift",
+      "line": 50,
+      "symbol": "ImageTransform",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform.swift",
+      "line": 57,
       "symbol": "ImageTransform",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
@@ -7815,49 +8739,7 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform.swift",
       "line": 58,
-      "symbol": "ImageTransform",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform.swift",
-      "line": 59,
       "symbol": "ImageTransform.==(_:_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransform.swift",
-      "line": 64,
-      "symbol": "ImageTransform",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransformer.swift",
-      "line": 32,
-      "symbol": "ImageTransformer.init(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransformer.swift",
-      "line": 49,
-      "symbol": "ImageTransformer.alpha(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransformer.swift",
-      "line": 53,
-      "symbol": "ImageTransformer.cornerRadius(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ImageTransformer.swift",
-      "line": 67,
-      "symbol": "ImageTransformer.background(_:preferredSize:alignment:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
@@ -7865,7 +8747,7 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/UIImage/ImageTransform/ResizeImageTransform.swift",
       "line": 27,
       "symbol": "ResizeImageTransform",
-      "symbol_kind": "source.lang.swift.decl.class",
+      "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
@@ -7946,35 +8828,399 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebViewScripts.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Autofill.swift",
+      "line": 35,
+      "symbol": "WebViewController.Autofill.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 29,
+      "symbol": "WebViewController.Style",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 30,
+      "symbol": "WebViewController.Style.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 31,
+      "symbol": "WebViewController.Style.title",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 32,
+      "symbol": "WebViewController.Style.loaderClass",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 33,
+      "symbol": "WebViewController.Style.preferredNavigationBarBackground",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 35,
+      "symbol": "WebViewController.Style.init(id:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 43,
+      "symbol": "WebViewController.Style.configureLoader(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 48,
+      "symbol": "WebViewController.Style.configureProgressBar(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 55,
+      "symbol": "WebViewController.Style.saveFileNameConvention(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 60,
+      "symbol": "WebViewController.Style.evaluateJavaScript(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 78,
+      "symbol": "WebViewController.Style",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 84,
+      "symbol": "WebViewController.Style",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 90,
+      "symbol": "WebViewController.Style",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 98,
+      "symbol": "WebViewController.Style",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 99,
+      "symbol": "WebViewController.Style.setDefault(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 105,
+      "symbol": "WebViewController.Style.default(title:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController+Style.swift",
+      "line": 109,
+      "symbol": "WebViewController.Style.default",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 28,
+      "symbol": "WebViewController",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 28,
+      "symbol": "WebViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 28,
+      "symbol": "WebViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 29,
+      "symbol": "WebViewController.webView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 38,
+      "symbol": "WebViewController.configuration",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 39,
+      "symbol": "WebViewController.style",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 42,
+      "symbol": "WebViewController.progressBar",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 43,
+      "symbol": "WebViewController.loader",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 45,
+      "symbol": "WebViewController.loaderClass",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 87,
+      "symbol": "WebViewController.isToolbarHidden",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 93,
+      "symbol": "WebViewController.url",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 99,
+      "symbol": "WebViewController.request",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 105,
+      "symbol": "WebViewController.init(configuration:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 110,
+      "symbol": "WebViewController.init(url:style:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 116,
+      "symbol": "WebViewController.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 120,
+      "symbol": "WebViewController.viewDidLoad()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 182,
+      "symbol": "WebViewController.viewSafeAreaInsetsDidChange()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 233,
+      "symbol": "WebViewController.preferredStatusBarStyle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 277,
+      "symbol": "WebViewController.autofillToken(completionHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 284,
+      "symbol": "WebViewController.configureLoader(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 289,
+      "symbol": "WebViewController.didLoadView(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 294,
+      "symbol": "WebViewController.didFinishLoading(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 299,
+      "symbol": "WebViewController.didTapDoneButton(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 353,
+      "symbol": "WebViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 354,
+      "symbol": "WebViewController.webView(_:didFinish:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 359,
+      "symbol": "WebViewController.webView(_:decidePolicyFor:decisionHandler:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 364,
+      "symbol": "WebViewController.webView(_:didCommit:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 369,
+      "symbol": "WebViewController.webView(_:didFailProvisionalNavigation:withError:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 373,
+      "symbol": "WebViewController.webView(_:didFail:withError:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 378,
+      "symbol": "WebViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 379,
+      "symbol": "WebViewController.webView(_:createWebViewWith:for:windowFeatures:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 388,
+      "symbol": "WebViewController.webView(_:shouldPreviewElement:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 410,
+      "symbol": "WebViewController",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewController.swift",
+      "line": 411,
+      "symbol": "WebViewController.userContentController(_:didReceive:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewScripts.swift",
       "line": 29,
       "symbol": "WKWebView.scripts",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebViewScripts.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewScripts.swift",
       "line": 34,
       "symbol": "WebViewScripts",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebViewScripts.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewScripts.swift",
       "line": 35,
       "symbol": "WebViewScripts.webView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebViewScripts.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewScripts.swift",
       "line": 42,
       "symbol": "WebViewScripts.disableLongPress()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebViewScripts.swift",
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Components/WebView/WebViewScripts.swift",
       "line": 48,
       "symbol": "WebViewScripts.interceptLinkTap()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
@@ -8739,7 +9985,7 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/NSAttributedString+Extensions.swift",
       "line": 79,
-      "symbol": "NSMutableAttributedString.color(_:for:)",
+      "symbol": "NSMutableAttributedString.foregroundColor(_:for:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -9200,133 +10446,140 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 101,
+      "line": 56,
+      "symbol": "UIButton.DefaultAppearance.configureStyle(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
+      "line": 121,
       "symbol": "UIButton.defaultAppearance",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 109,
+      "line": 129,
       "symbol": "UIButton.height",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 148,
+      "line": 168,
       "symbol": "UIButton.Style",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 164,
+      "line": 184,
       "symbol": "UIButton.init(style:title:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 187,
+      "line": 207,
       "symbol": "UIButton.prepareForReuse()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 199,
+      "line": 219,
       "symbol": "UIButton.backgroundColor(for:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 207,
+      "line": 227,
       "symbol": "UIButton.setBackgroundColor(_:for:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 241,
+      "line": 261,
       "symbol": "UIButton.borderColor(for:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 249,
+      "line": 269,
       "symbol": "UIButton.setBorderColor(_:for:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 380,
+      "line": 405,
       "symbol": "UIButton.underline()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 390,
+      "line": 415,
       "symbol": "UIButton.removeInsets()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 396,
+      "line": 421,
       "symbol": "UIButton.contentTintColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 441,
+      "line": 465,
       "symbol": "ControlTargetActionBlockRepresentable.didSelect(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 448,
+      "line": 472,
       "symbol": "ControlTargetActionBlockRepresentable.didHighlight(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 455,
+      "line": 479,
       "symbol": "ControlTargetActionBlockRepresentable.didEnable(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 527,
+      "line": 551,
       "symbol": "UIButton.point(inside:with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 538,
+      "line": 562,
       "symbol": "UIButton.hitTest(_:with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 555,
+      "line": 579,
       "symbol": "UIButton.stateDidChange(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Extensions.swift",
-      "line": 589,
+      "line": 613,
       "symbol": "UIButton.setEnabled(_:animated:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -9354,91 +10607,98 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
-      "line": 106,
+      "line": 110,
       "symbol": "Identifier.cornerRadius",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
-      "line": 111,
+      "line": 115,
       "symbol": "Identifier.font(button:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
-      "line": 115,
+      "line": 119,
       "symbol": "Identifier.tintColor(button:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
-      "line": 123,
+      "line": 127,
       "symbol": "Identifier.textColor(button:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
-      "line": 131,
+      "line": 135,
       "symbol": "Identifier.backgroundColor(button:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
-      "line": 139,
+      "line": 143,
+      "symbol": "Identifier.disabledBackgroundColor(button:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
+      "line": 151,
       "symbol": "Identifier.selectedColor(button:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
-      "line": 147,
+      "line": 159,
       "symbol": "Identifier.borderColor(button:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
-      "line": 174,
+      "line": 191,
       "symbol": "Identifier.setFont(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
-      "line": 178,
+      "line": 195,
       "symbol": "Identifier.setTintColor(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
-      "line": 182,
+      "line": 199,
       "symbol": "Identifier.setTextColor(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
-      "line": 186,
+      "line": 203,
       "symbol": "Identifier.setBackgroundColor(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
-      "line": 190,
+      "line": 207,
       "symbol": "Identifier.setBorderColor(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+StyleAttributes.swift",
-      "line": 194,
+      "line": 211,
       "symbol": "Identifier.setSelectedColor(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -9501,140 +10761,140 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 61,
+      "line": 65,
       "symbol": "XCConfiguration.plain",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 65,
+      "line": 69,
       "symbol": "XCConfiguration.plain(font:textColor:alignment:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 79,
+      "line": 84,
       "symbol": "XCConfiguration.callout",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 83,
+      "line": 88,
       "symbol": "XCConfiguration.callout(font:backgroundColor:textColor:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 94,
+      "line": 107,
       "symbol": "XCConfiguration.calloutSecondary",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 101,
+      "line": 121,
       "symbol": "XCConfiguration.destructive",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 108,
+      "line": 130,
       "symbol": "XCConfiguration.pill",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 122,
+      "line": 146,
       "symbol": "XCConfiguration.leftArrow",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 128,
+      "line": 152,
       "symbol": "XCConfiguration.rightArrow",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 134,
+      "line": 158,
       "symbol": "XCConfiguration.dismiss",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 138,
+      "line": 162,
       "symbol": "XCConfiguration.dismissFilled",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 142,
+      "line": 166,
       "symbol": "XCConfiguration.searchIcon",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 146,
-      "symbol": "XCConfiguration.image(identifier:assetIdentifier:size:axis:)",
+      "line": 170,
+      "symbol": "XCConfiguration.image(id:assetIdentifier:size:axis:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 164,
-      "symbol": "XCConfiguration.image(identifier:assetIdentifier:alpha:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.static",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 189,
-      "symbol": "XCConfiguration.caret(in:title:font:textColor:direction:animated:)",
+      "line": 188,
+      "symbol": "XCConfiguration.image(id:assetIdentifier:alpha:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
       "line": 215,
+      "symbol": "XCConfiguration.caret(in:title:font:textColor:direction:animated:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
+      "line": 242,
       "symbol": "XCConfiguration.none",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 219,
+      "line": 246,
       "symbol": "XCConfiguration.checkbox",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 223,
+      "line": 250,
       "symbol": "XCConfiguration.checkbox(normalColor:selectedColor:textColor:font:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 255,
+      "line": 283,
       "symbol": "XCConfiguration.radioButton",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIButton/UIButton+Styles.swift",
-      "line": 259,
+      "line": 287,
       "symbol": "XCConfiguration.radioButton(selectedColor:borderColor:borderWidth:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
@@ -9732,7 +10992,7 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIColor+Extensions.swift",
-      "line": 151,
+      "line": 140,
       "symbol": "UIColor.randomColor()",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
@@ -10466,6 +11726,13 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIFont/UIFont+Extensions.swift",
+      "line": 129,
+      "symbol": "UIFont.TextStyle.isTitle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIFont/UIFont+Loader.swift",
       "line": 28,
       "symbol": "UIFont.LoaderError",
@@ -10908,84 +12175,84 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift",
-      "line": 139,
+      "line": 186,
       "symbol": "UINavigationController.pushOnFirstViewController(_:animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift",
-      "line": 151,
+      "line": 198,
       "symbol": "UINavigationController.replaceLastViewController(with:animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift",
-      "line": 186,
+      "line": 240,
       "symbol": "UINavigationController.AnimationStyle.default",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift",
-      "line": 187,
+      "line": 241,
       "symbol": "UINavigationController.AnimationStyle.fade",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift",
-      "line": 262,
+      "line": 322,
       "symbol": "UINavigationController.supportedInterfaceOrientations",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift",
-      "line": 266,
+      "line": 326,
       "symbol": "UINavigationController.preferredInterfaceOrientationForPresentation",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift",
-      "line": 271,
+      "line": 331,
       "symbol": "UINavigationController.childForStatusBarStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift",
-      "line": 280,
+      "line": 340,
       "symbol": "UINavigationController.childForStatusBarHidden",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift",
-      "line": 288,
+      "line": 348,
       "symbol": "UINavigationController.shouldAutorotate",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift",
-      "line": 292,
+      "line": 352,
       "symbol": "UINavigationController.preferredStatusBarStyle",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift",
-      "line": 296,
+      "line": 356,
       "symbol": "UINavigationController.preferredStatusBarUpdateAnimation",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UINavigationController+Extensions.swift",
-      "line": 300,
+      "line": 360,
       "symbol": "UINavigationController.prefersStatusBarHidden",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -11085,6 +12352,20 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UISearchBar+Extensions.swift",
       "line": 114,
       "symbol": "UISearchBar.didMoveToSuperview()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIStackView+Extensions.swift",
+      "line": 51,
+      "symbol": "UIStackView.moveArrangedSubview(_:after:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Extensions/UIStackView+Extensions.swift",
+      "line": 56,
+      "symbol": "UIStackView.moveArrangedSubview(_:before:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -11419,154 +12700,154 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 75,
+      "line": 81,
       "symbol": "CGFloat.minimumPadding",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 76,
+      "line": 82,
       "symbol": "CGFloat.defaultPadding",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 77,
+      "line": 83,
       "symbol": "CGFloat.maximumPadding",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 90,
+      "line": 98,
       "symbol": "UIEdgeInsets.minimumPadding",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 91,
+      "line": 99,
       "symbol": "UIEdgeInsets.defaultPadding",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 92,
+      "line": 100,
       "symbol": "UIEdgeInsets.maximumPadding",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 108,
+      "line": 135,
       "symbol": "AppConstants",
       "symbol_kind": "source.lang.swift.decl.struct",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 112,
+      "line": 139,
       "symbol": "AppConstants.statusBarHeight",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 116,
-      "symbol": "AppConstants.navBarPlusStatusBarHeight",
+      "line": 143,
+      "symbol": "AppConstants.statusBarPlusNavBarHeight",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 120,
+      "line": 147,
       "symbol": "AppConstants.navBarHeight",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 128,
+      "line": 155,
       "symbol": "AppConstants.cornerRadius",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 129,
+      "line": 156,
       "symbol": "AppConstants.navBarItemHeight",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 130,
+      "line": 157,
       "symbol": "AppConstants.tabBarHeight",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 131,
+      "line": 158,
       "symbol": "AppConstants.uiControlsHeight",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 132,
+      "line": 159,
       "symbol": "AppConstants.searchBarHeight",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 139,
+      "line": 166,
       "symbol": "AppConstants",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 140,
+      "line": 167,
       "symbol": "AppConstants.supportsHomeIndicator",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 144,
+      "line": 171,
       "symbol": "AppConstants.homeIndicatorHeightIfPresent",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 148,
+      "line": 175,
       "symbol": "AppConstants.smallScreenSize",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 152,
+      "line": 179,
       "symbol": "AppConstants.mediumScreenSize",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 156,
+      "line": 183,
       "symbol": "AppConstants.iPhone6ScreenSize",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Helpers/Constants.swift",
-      "line": 168,
+      "line": 195,
       "symbol": "AppConstants.remaining(axis:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
       "warning": "undocumented"
@@ -11685,15 +12966,15 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/NibInstantiable.swift",
-      "line": 54,
-      "symbol": "NibInstantiable.nibIdentifier",
+      "line": 56,
+      "symbol": "NibInstantiable.nibId",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/NibInstantiable.swift",
-      "line": 58,
-      "symbol": "NibInstantiable.nibIdentifier",
+      "line": 60,
+      "symbol": "NibInstantiable.nibId",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
@@ -11747,6 +13028,76 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/PresentationContext.swift",
+      "line": 35,
+      "symbol": "PresentationContext.Kind",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/PresentationContext.swift",
+      "line": 36,
+      "symbol": "PresentationContext.context",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/PresentationContext.swift",
+      "line": 37,
+      "symbol": "PresentationContext.init(collectionView:context:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/PresentationContext.swift",
+      "line": 44,
+      "symbol": "PresentationContextKind",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/PresentationContext.swift",
+      "line": 45,
+      "symbol": "PresentationContextKind.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/PresentationContext.swift",
+      "line": 47,
+      "symbol": "PresentationContextKind.init(id:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/PresentationContext.swift",
+      "line": 52,
+      "symbol": "PresentationContextKind",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/PresentationContext.swift",
+      "line": 58,
+      "symbol": "PresentationContextKind",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/PresentationContext.swift",
+      "line": 59,
+      "symbol": "PresentationContextKind.feed",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/PresentationContext.swift",
+      "line": 63,
+      "symbol": "PresentationContextKind.detail",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/SortOrderable.swift",
       "line": 27,
       "symbol": "SortOrderable",
@@ -11769,15 +13120,15 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StoryboardInstantiable.swift",
-      "line": 54,
-      "symbol": "StoryboardInstantiable.storyboardIdentifier",
+      "line": 56,
+      "symbol": "StoryboardInstantiable.storyboardId",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StoryboardInstantiable.swift",
-      "line": 58,
-      "symbol": "StoryboardInstantiable.storyboardIdentifier",
+      "line": 60,
+      "symbol": "StoryboardInstantiable.storyboardId",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
@@ -11804,13 +13155,6 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 33,
-      "symbol": "StringSourceType.rawValue",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
       "line": 45,
       "symbol": "StringRepresentable",
       "symbol_kind": "source.lang.swift.decl.protocol",
@@ -11825,56 +13169,56 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 50,
+      "line": 52,
       "symbol": "String.stringSource",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 56,
+      "line": 58,
       "symbol": "NSString.stringSource",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 62,
+      "line": 64,
       "symbol": "NSAttributedString.stringSource",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 69,
+      "line": 71,
       "symbol": "TextAttributedTextRepresentable",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 70,
+      "line": 72,
       "symbol": "TextAttributedTextRepresentable.text",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 71,
+      "line": 73,
       "symbol": "TextAttributedTextRepresentable.attributedText",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 72,
+      "line": 74,
       "symbol": "TextAttributedTextRepresentable.setText(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 73,
+      "line": 75,
       "symbol": "TextAttributedTextRepresentable.hasText",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -11882,42 +13226,112 @@
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
       "line": 76,
+      "symbol": "TextAttributedTextRepresentable.accessibilityLabel",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
+      "line": 79,
       "symbol": "TextAttributedTextRepresentable",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 77,
+      "line": 80,
       "symbol": "TextAttributedTextRepresentable.hasText",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 81,
+      "line": 84,
       "symbol": "TextAttributedTextRepresentable.setText(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 97,
+      "line": 103,
       "symbol": "TextAttributedTextRepresentable",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 98,
+      "line": 104,
       "symbol": "TextAttributedTextRepresentable.setText(_:animated:duration:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/StringRepresentable.swift",
-      "line": 124,
+      "line": 130,
       "symbol": "UITextView.setText(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/ViewMaskable.swift",
+      "line": 25,
+      "symbol": "ViewMaskable",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/ViewMaskable.swift",
+      "line": 26,
+      "symbol": "ViewMaskable.add(to:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/ViewMaskable.swift",
+      "line": 27,
+      "symbol": "ViewMaskable.dismiss(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/ViewMaskable.swift",
+      "line": 28,
+      "symbol": "ViewMaskable.preferredNavigationBarTintColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/ViewMaskable.swift",
+      "line": 29,
+      "symbol": "ViewMaskable.preferredStatusBarStyle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/ViewMaskable.swift",
+      "line": 32,
+      "symbol": "ViewMaskable",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/ViewMaskable.swift",
+      "line": 33,
+      "symbol": "ViewMaskable.preferredNavigationBarTintColor",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/ViewMaskable.swift",
+      "line": 37,
+      "symbol": "ViewMaskable.preferredStatusBarStyle",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Cocoa/Protocols/ViewMaskable.swift",
+      "line": 41,
+      "symbol": "ViewMaskable.dismiss(after:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -12356,6 +13770,48 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Either.swift",
+      "line": 30,
+      "symbol": "Either.left(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Either.swift",
+      "line": 31,
+      "symbol": "Either.right(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Either.swift",
+      "line": 35,
+      "symbol": "Either.left(value:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Either.swift",
+      "line": 43,
+      "symbol": "Either.right(value:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Either.swift",
+      "line": 53,
+      "symbol": "Either.left",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Either.swift",
+      "line": 61,
+      "symbol": "Either.right",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Observer.swift",
       "line": 27,
       "symbol": "Observers",
@@ -12476,7 +13932,7 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Components/Validation/ValidationRule+Rules.swift",
-      "line": 197,
+      "line": 204,
       "symbol": "ValidationRule.name",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
@@ -12598,6 +14054,20 @@
       "line": 46,
       "symbol": "Weak.==(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Extensions/AdaptiveURL.swift",
+      "line": 27,
+      "symbol": "AdaptiveURL",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Extensions/AdaptiveURL.swift",
+      "line": 30,
+      "symbol": "AdaptiveURL.url",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
@@ -12791,49 +14261,49 @@
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Extensions/String+Extensions.swift",
-      "line": 103,
+      "line": 109,
       "symbol": "String.lastPathComponent",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Extensions/String+Extensions.swift",
-      "line": 107,
+      "line": 113,
       "symbol": "String.deletingLastPathComponent",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Extensions/String+Extensions.swift",
-      "line": 111,
+      "line": 117,
       "symbol": "String.deletingPathExtension",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Extensions/String+Extensions.swift",
-      "line": 115,
+      "line": 121,
       "symbol": "String.pathExtension",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Extensions/String+Extensions.swift",
-      "line": 172,
+      "line": 178,
       "symbol": "String.isMatch(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Extensions/String+Extensions.swift",
-      "line": 196,
+      "line": 213,
       "symbol": "String.size(withFont:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Extensions/String+Extensions.swift",
-      "line": 200,
+      "line": 217,
       "symbol": "String.size(withFont:constrainedToSize:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -13010,6 +14480,41 @@
       "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Protocols/Configurable.swift",
       "line": 27,
       "symbol": "Configurable.configure(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Protocols/Configurable.swift",
+      "line": 32,
+      "symbol": "AnyConfigurable",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Protocols/Configurable.swift",
+      "line": 33,
+      "symbol": "AnyConfigurable.base",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Protocols/Configurable.swift",
+      "line": 36,
+      "symbol": "AnyConfigurable.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Protocols/Configurable.swift",
+      "line": 44,
+      "symbol": "AnyConfigurable",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/zmian/dev/forks/xcore.swift/Sources/Swift/Protocols/Configurable.swift",
+      "line": 45,
+      "symbol": "AnyConfigurable.configure(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
