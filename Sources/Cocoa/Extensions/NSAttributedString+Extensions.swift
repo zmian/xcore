@@ -76,13 +76,13 @@ extension NSMutableAttributedString {
         return self
     }
 
-    open func color(_ color: UIColor, for text: String? = nil) -> NSMutableAttributedString {
+    open func foregroundColor(_ color: UIColor, for text: String? = nil) -> NSMutableAttributedString {
         addAttribute(.foregroundColor, value: color, range: range(of: text))
         return self
     }
 
     open func backgroundColor(_ color: UIColor, for text: String? = nil) -> NSMutableAttributedString {
-        addAttribute(.foregroundColor, value: color, range: range(of: text))
+        addAttribute(.backgroundColor, value: color, range: range(of: text))
         return self
     }
 
