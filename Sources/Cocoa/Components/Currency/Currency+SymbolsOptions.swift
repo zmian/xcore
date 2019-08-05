@@ -1,5 +1,5 @@
 //
-// CurrencySymbolsOptions.swift
+// Currency+SymbolsOptions.swift
 //
 // Copyright © 2017 Xcore
 //
@@ -24,7 +24,11 @@
 
 import Foundation
 
-// MARK: - CurrencySymbolsProvider
+// MARK: - SymbolsProvider
+
+extension Currency {
+    public typealias SymbolsProvider = CurrencySymbolsProvider
+}
 
 public protocol CurrencySymbolsProvider {
     var currencySymbol: String { get }
@@ -42,24 +46,30 @@ public protocol CurrencySymbolsProvider {
     var decimalSeparator: String { get }
 }
 
-// MARK: - CurrencySymbolsOptions
+// MARK: - SymbolsOptions
 
-public struct CurrencySymbolsOptions: OptionSet {
-    public let rawValue: Int
+extension Currency {
+    public struct SymbolsOptions: OptionSet {
+        public let rawValue: Int
 
-    public init(rawValue: Int) {
-        self.rawValue = rawValue
+        public init(rawValue: Int) {
+            self.rawValue = rawValue
+        }
+
+        public static let currencySymbol = SymbolsOptions(rawValue: 1 << 0)
+        public static let groupingSeparator = SymbolsOptions(rawValue: 1 << 1)
+        public static let decimalSeparator = SymbolsOptions(rawValue: 1 << 2)
+        public static let specialCharacters: SymbolsOptions = [
+            currencySymbol,
+            groupingSeparator
+        ]
+
+        public static let all: SymbolsOptions = [
+            currencySymbol,
+            groupingSeparator,
+            decimalSeparator
+        ]
     }
-
-    public static let currencySymbol = CurrencySymbolsOptions(rawValue: 1 << 0)
-    public static let groupingSeparator = CurrencySymbolsOptions(rawValue: 1 << 1)
-    public static let decimalSeparator = CurrencySymbolsOptions(rawValue: 1 << 2)
-    public static let specialCharacters: CurrencySymbolsOptions = [currencySymbol, groupingSeparator]
-    public static let all: CurrencySymbolsOptions = [
-        currencySymbol,
-        groupingSeparator,
-        decimalSeparator
-    ]
 }
 
 // MARK: - String Extension
@@ -75,7 +85,7 @@ extension String {
     /// $2,000.88 -> 2000.88  // "$2,000.8".trimmingCurrencySymbols([.currencySymbol, .groupingSeparator])
     /// $2,000.88 -> 2000.88  // "$2,000.8".trimmingCurrencySymbols(.specialCharacters)
     /// ```
-    public func trimmingCurrencySymbols(_ options: CurrencySymbolsOptions, provider: CurrencySymbolsProvider) -> String {
+    public func trimmingCurrencySymbols(_ options: Currency.SymbolsOptions, provider: Currency.SymbolsProvider) -> String {
         guard !options.isEmpty else { return self }
 
         var pattern = ""
@@ -109,7 +119,7 @@ extension String {
     /// false ->   ("2000.88").contains(.specialCharacters),
     /// false ->    ("200088").contains(.all)
     /// ```
-    public func contains(_ other: CurrencySymbolsOptions, provider: CurrencySymbolsProvider) -> Bool {
+    public func contains(_ other: Currency.SymbolsOptions, provider: Currency.SymbolsProvider) -> Bool {
         guard !other.isEmpty else { return false }
 
         var result = [Bool]()
