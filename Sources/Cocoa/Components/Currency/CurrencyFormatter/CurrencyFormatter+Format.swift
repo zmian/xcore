@@ -25,38 +25,39 @@
 import Foundation
 
 extension CurrencyFormatter {
-    public func format(
-        amount: Double,
-        attributes: CurrencyStyleAttributes,
+    public func attributedString(
+        for amount: Double,
+        attributes: Currency.Components.Attributes,
         format: String?
-    ) -> NSAttributedString? {
+    ) -> NSMutableAttributedString? {
         guard let format = format else { return nil }
         let mainFormat = NSMutableAttributedString(string: format, attributes: [.font: attributes.dollarsFont])
         let range = (mainFormat.string as NSString).range(of: "%@")
         guard range.length > 0 else { return nil }
-        let formattedDollars = self.format(amount: amount, attributes: attributes)
+        let formattedDollars = self.attributedString(for: amount, attributes: attributes)
         mainFormat.replaceCharacters(in: range, with: formattedDollars)
         return mainFormat
     }
 
-    public func format(
-        amount: Double,
-        attributes: CurrencyStyleAttributes,
-        formattingStyle: CurrencyFormatter.FormattingStyle = .none,
-        isCentsRenderedAsSuperscript: Bool = true
-    ) -> NSAttributedString {
+    public func attributedString(
+        for amount: Double,
+        attributes: Currency.Components.Attributes,
+        style: Currency.Components.Style = .none,
+        superscriptCents: Bool = true
+    ) -> NSMutableAttributedString {
         let components = self.components(from: amount)
-        let joinedAmount = components.joined(style: formattingStyle)
+        let joinedAmount = components.joined(style: style)
 
-        let attributedString = NSMutableAttributedString(string: joinedAmount, attributes: [
-            .font: attributes.dollarsFont
-        ])
+        let attributedString = NSMutableAttributedString(
+            string: joinedAmount,
+            attributes: [.font: attributes.dollarsFont]
+        )
 
-        guard isCentsRenderedAsSuperscript else {
+        guard superscriptCents else {
             return attributedString
         }
 
-        if let centsRange = components.range(style: formattingStyle).cents {
+        if let centsRange = components.range(style: style).cents {
             attributedString.setAttributes([
                 .font: attributes.centsFont,
                 .baselineOffset: attributes.centsOffset

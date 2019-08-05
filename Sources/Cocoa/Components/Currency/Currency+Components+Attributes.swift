@@ -1,5 +1,5 @@
 //
-// CurrencyStyleAttributes.swift
+// Currency+Components+Attributes.swift
 //
 // Copyright © 2017 Xcore
 //
@@ -24,14 +24,17 @@
 
 import Foundation
 
-public struct CurrencyStyleAttributes: Equatable {
-    public let dollarsFont: UIFont
-    public let centsFont: UIFont
-    public let centsOffset: Int
+extension Currency.Components {
+    /// A structure that represent formatting attributes for currency components.
+    public struct Attributes: Equatable {
+        public let dollarsFont: UIFont
+        public let centsFont: UIFont
+        public let centsOffset: Int
 
-    public init(dollarsFont: UIFont, centsFont: UIFont, centsOffset: Int) {
-        self.dollarsFont = dollarsFont
-        self.centsFont = centsFont
-        self.centsOffset = centsOffset
+        public init(dollarsFont: UIFont, centsFont: UIFont, centsOffset: Int) {
+            self.dollarsFont = dollarsFont
+            self.centsFont = centsFont
+            self.centsOffset = centsOffset
+        }
     }
 }

@@ -24,9 +24,7 @@
 
 import Foundation
 
-public class CurrencyFormatter: CurrencySymbolsProvider {
-    public typealias FormattingStyle = CurrencyAmount.FormattingStyle
-
+public class CurrencyFormatter: Currency.SymbolsProvider {
     public static let shared = CurrencyFormatter()
 
     /// This formatter must be used only to transform Double values into US dollars.
@@ -86,8 +84,10 @@ public class CurrencyFormatter: CurrencySymbolsProvider {
     }
 }
 
+// MARK: - Components
+
 extension CurrencyFormatter {
-    public func components(from amount: Double) -> CurrencyAmount {
+    public func components(from amount: Double) -> Currency.Components {
         var dollarString = "0"
         var centString = "00"
 
@@ -104,10 +104,15 @@ extension CurrencyFormatter {
         if pieces.count > 1 {
             let rawCentString = pieces[1] as NSString
             let range = NSRange(location: 0, length: rawCentString.length)
-            centString = rawCentString.replacingOccurrences(of: "\\D", with: "", options: .regularExpression, range: range)
+            centString = rawCentString.replacingOccurrences(
+                of: "\\D",
+                with: "",
+                options: .regularExpression,
+                range: range
+            )
         }
 
-        return CurrencyAmount(
+        return .init(
             amount: amount,
             dollars: dollarString,
             cents: centString,
@@ -116,13 +121,40 @@ extension CurrencyFormatter {
             decimalSeparator: decimalSeparator
         )
     }
-
-    public func format(currency value: Double, style: FormattingStyle = .none) -> String {
-        return components(from: value).joined(style: style)
-    }
 }
 
+// MARK: - Format
+
 extension CurrencyFormatter {
+    /// Returns a string representation of a given value formatted using the given
+    /// style.
+    ///
+    /// - Parameters:
+    ///   - value: The value to format.
+    ///   - style: The style to format the result.
+    /// - Returns: A string representation of a given value formatted using the
+    ///            given style.
+    public func string(
+        from value: Double,
+        style: Currency.Components.Style = .none
+    ) -> String {
+        return components(from: value).joined(style: style)
+    }
+
+    /// Returns a numeric representation by parsing the given string.
+    ///
+    /// - Parameter string: A string that is parsed to generate the returned numeric
+    ///                     value.
+    /// - Returns: A numeric representation by parsing the given string, or `nil` if
+    ///            no single number could be parsed.
+    public func double(from string: String) -> Double? {
+        if let doubleValue = Double(string) {
+            return doubleValue
+        }
+
+        return formatter.number(from: string)?.doubleValue
+    }
+
     public func format(amount value: Any, allowDecimal: Bool) -> String? {
         var string = "\(value)"
 
@@ -152,18 +184,6 @@ extension CurrencyFormatter {
 
             return formattedString
         }
-    }
-
-    public func double(from string: String) -> Double? {
-        if let doubleValue = Double(string) {
-            return doubleValue
-        }
-
-        guard let formattedNumber = formatter.number(from: string)?.doubleValue else {
-            return nil
-        }
-
-        return formattedNumber
     }
 }
 
