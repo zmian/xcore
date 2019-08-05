@@ -29,8 +29,15 @@ final class FeedViewController: XCComposedCollectionViewController {
     private func recreateSources() {
         sources.removeAll()
         let sourcesCount = Int.random(in: 100...120)
-        for _ in 0..<sourcesCount {
-            sources.append(FeedDataSource(collectionView: collectionView))
+        for i in 0..<sourcesCount {
+            let source = FeedDataSource(collectionView: collectionView)
+            if i .isMultiple(of: 2) {
+                source.isShadowEnabled = false
+            }
+            if i.isMultiple(of: 3) {
+                source.cornerRadius = 3
+            }
+            sources.append(source)
         }
         composedDataSource.dataSources = dataSources(for: collectionView)
         collectionView.reloadData()

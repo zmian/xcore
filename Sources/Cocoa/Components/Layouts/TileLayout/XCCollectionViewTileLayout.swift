@@ -285,7 +285,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                     $0.size = CGSize(width: itemWidth, height: estimatedHeaderHeight(in: section, width: itemWidth))
                 }
 
-                $0.corners = isTileEnabled(forSectionAt: section) ? (.top, cornerRadius) : (.none, 0)
+                $0.corners = isTileEnabled(forSectionAt: section) ? (.top, cornerRadius(forSectionAt: section)) : (.none, 0)
                 $0.isAutosizeEnabled = isAutosizingEnabled && headerInfo.height == nil
                 $0.offsetInSection = offsetInSection
                 $0.shouldDim = shouldDimElements
@@ -317,7 +317,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                     if !footerInfo.enabled, item == itemCount - 1 {
                         corners.formUnion(.bottom)
                     }
-                    $0.corners = (corners, cornerRadius)
+                    $0.corners = (corners, cornerRadius(forSectionAt: section))
                 } else {
                     $0.corners = (.none, 0)
                 }
@@ -338,7 +338,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                 } else {
                     $0.size = CGSize(width: itemWidth, height: estimatedFooterHeight(in: section, width: itemWidth))
                 }
-                $0.corners = isTileEnabled(forSectionAt: section) ? (.bottom, cornerRadius) : (.none, 0)
+                $0.corners = isTileEnabled(forSectionAt: section) ? (.bottom, cornerRadius(forSectionAt: section)) : (.none, 0)
                 $0.isAutosizeEnabled = isAutosizingEnabled && footerInfo.height == nil
                 $0.offsetInSection = offsetInSection
                 $0.shouldDim = shouldDimElements
@@ -354,7 +354,11 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     private func calculateBackgroundAttributes() {
         guard let collectionView = self.collectionView else { return }
         for section in 0..<collectionView.numberOfSections {
-            guard isTileEnabled(forSectionAt: section), !sectionRects[section].isEmpty else {
+            guard
+                isShadowEnabled(forSectionAt: section),
+                isTileEnabled(forSectionAt: section),
+                !sectionRects[section].isEmpty
+            else {
                 continue
             }
 
@@ -362,7 +366,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                 forDecorationViewOfKind: UICollectionElementKindSectionBackground,
                 with: IndexPath(item: 0, section: section)
             ).apply {
-                $0.corners = (.allCorners, cornerRadius)
+                $0.corners = (.allCorners, cornerRadius(forSectionAt: section))
                 $0.zIndex = minimumItemZIndex - 2
                 $0.shouldDim = shouldDimElements
             }
@@ -556,5 +560,25 @@ extension XCCollectionViewTileLayout {
             return true
         }
         return delegate.collectionView(collectionView, layout: self, isTileEnabledInSection: section)
+    }
+
+    private func isShadowEnabled(forSectionAt section: Int) -> Bool {
+        guard
+            let collectionView = self.collectionView,
+            let delegate = self.delegate
+        else {
+            return true
+        }
+        return delegate.collectionView(collectionView, layout: self, isShadowEnabledInSection: section)
+    }
+
+    private func cornerRadius(forSectionAt section: Int) -> CGFloat {
+        guard
+            let collectionView = self.collectionView,
+            let delegate = self.delegate
+        else {
+            return cornerRadius
+        }
+        return delegate.collectionView(collectionView, layout: self, cornerRadiusInSection: section)
     }
 }
