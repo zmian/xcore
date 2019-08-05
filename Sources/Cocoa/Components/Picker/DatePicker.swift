@@ -66,6 +66,7 @@ public final class DatePicker: DrawerScreen.Content, With {
     ) {
         let picker = DatePicker().apply {
             $0.initialDate = date
+            $0.pickerView.date = date ?? Date()
             $0.didChangeValue = callback
             if let style = style {
                 $0.pickerView.apply(style: style)
