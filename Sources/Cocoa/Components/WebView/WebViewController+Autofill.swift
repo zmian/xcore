@@ -37,7 +37,7 @@ extension WebViewController {
         }
 
         func execute(_ webView: WKWebView) {
-            script(webView)
+            _ = script(webView)
         }
     }
 }
