@@ -44,10 +44,10 @@ final class XCConfigurationTests: TestCase {
 
     func testIdentifier() {
         let config1: XCConfiguration<UILabel> = .hello
-        XCTAssertEqual(config1.identifier, "greeting")
+        XCTAssertEqual(config1.id, "greeting")
 
         let config2: XCConfiguration<UILabel> = .someStyle
-        XCTAssertEqual(config2.identifier, "___defaultIdentifier___")
+        XCTAssertEqual(config2.id, "___defaultId___")
     }
 
     func testEquality() {
@@ -119,14 +119,14 @@ final class XCConfigurationTests: TestCase {
 
 extension XCConfiguration where Type: UILabel {
     fileprivate static var hello: XCConfiguration {
-        return XCConfiguration(identifier: "greeting") {
+        return XCConfiguration(id: "greeting") {
             $0.text = "Hello, world!"
             $0.backgroundColor = .green
         }
     }
 
     fileprivate static func greet(name: String) -> XCConfiguration {
-        return hello.extend(identifier: "greetWithName") {
+        return hello.extend(id: "greetWithName") {
             $0.text = "Hello, \(name)!"
         }
     }
