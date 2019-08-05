@@ -26,7 +26,7 @@ import XCTest
 @testable import Xcore
 
 final class CurrencySymbolsOptionsTests: TestCase {
-    private typealias TestData<OutputType> = (input: String, output: OutputType, manipulator: CurrencySymbolsOptions)
+    private typealias TestData<OutputType> = (input: String, output: OutputType, manipulator: Currency.SymbolsOptions)
     private let provider = StubCurrencySymbolsProvider()
 
     func testCurrencySymbolsTrimming() {
@@ -66,7 +66,7 @@ final class CurrencySymbolsOptionsTests: TestCase {
     }
 }
 
-private struct StubCurrencySymbolsProvider: CurrencySymbolsProvider {
+private struct StubCurrencySymbolsProvider: Currency.SymbolsProvider {
     var currencySymbol: String {
         return "$"
     }
