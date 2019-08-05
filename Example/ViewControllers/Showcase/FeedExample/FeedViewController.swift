@@ -49,8 +49,8 @@ final class FeedViewController: XCComposedCollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        collectionView.backgroundColor = .white
+        view.backgroundColor = .lightGray
+        collectionView.backgroundColor = .clear
         collectionView.contentInset.top = view.safeAreaInsets.top
         let tileLayout = XCCollectionViewTileLayout()
         tileLayout.numberOfColumns = 3
