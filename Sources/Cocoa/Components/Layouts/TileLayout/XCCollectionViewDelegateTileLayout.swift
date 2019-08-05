@@ -77,7 +77,7 @@ extension XCCollectionViewDelegateTileLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, cornerRadiusInSection section: Int) -> CGFloat {
         return collectionViewLayout.cornerRadius
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isShadowEnabledInSection section: Int) -> Bool {
         return true
     }
