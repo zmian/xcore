@@ -47,8 +47,8 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
     /// as ISO country and language codes, currency code, calendar, system of
     /// measurement, and decimal separator.
     ///
-    /// The default value is `.usa`.
-    public var locale: Locale = .usa {
+    /// The default value is `.us`.
+    public var locale: Locale = .us {
         didSet {
             formatter.locale = locale
         }
@@ -80,7 +80,7 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
     ///
     /// For example, France locale  $1,000.00 == $1 000,00
     public var currencySymbol: String {
-        return Locale.usa.currencySymbol ?? "$"
+        return Locale.us.currencySymbol ?? "$"
     }
 }
 
