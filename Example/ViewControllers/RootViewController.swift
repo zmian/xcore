@@ -65,8 +65,9 @@ final class RootViewController: DynamicTableViewController {
 
     private func pickers() -> [DynamicTableModel] {
         return [
-            DynamicTableModel(title: "DatePicker", subtitle: "Date picker demonstration") { _, _ in
-                DatePicker.present { date in
+            DynamicTableModel(title: "DatePicker", subtitle: "Date picker demonstration, selected value yesterday") { _, _ in
+                let yesterday = Date(timeIntervalSinceNow: -3600 * 24)
+                DatePicker.present(initialValue: yesterday) { date in
                     print("The selected date is \(date ?? Date())")
                 }
             },
