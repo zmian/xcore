@@ -28,10 +28,20 @@ import UIKit
 
 public protocol XCCollectionViewTileLayoutCustomizable {
     func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool
+    func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat
+    func isShadowEnabled(in layout: XCCollectionViewTileLayout) -> Bool
 }
 
 extension XCCollectionViewTileLayoutCustomizable {
-    func isTileEnabled(in  layout: XCCollectionViewTileLayout) -> Bool {
+    public func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
+        return true
+    }
+
+    public func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat {
+        return layout.cornerRadius
+    }
+
+    public func isShadowEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
         return true
     }
 }
@@ -70,6 +80,22 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
             return true
         }
         return custom.isTileEnabled(in: collectionViewLayout)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isShadowEnabledInSection section: Int) -> Bool {
+        let source = composedDataSource.index(for: section)
+        guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
+            return true
+        }
+        return custom.isShadowEnabled(in: collectionViewLayout)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, cornerRadiusInSection section: Int) -> CGFloat {
+        let source = composedDataSource.index(for: section)
+        guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
+            return collectionViewLayout.cornerRadius
+        }
+        return custom.cornerRadius(in: collectionViewLayout)
     }
 }
 

@@ -44,6 +44,9 @@ final class FeedDataSource: XCCollectionViewDataSource {
     }()
 
     var isTileEnabled = true
+    var cornerRadius: CGFloat = 11
+    var isShadowEnabled = true
+
     lazy var sectionCount = names.count
 
     override init(collectionView: UICollectionView) {
@@ -94,5 +97,13 @@ final class FeedDataSource: XCCollectionViewDataSource {
 extension FeedDataSource: XCCollectionViewTileLayoutCustomizable {
     func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
         return isTileEnabled
+    }
+
+    func isShadowEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
+        return isShadowEnabled
+    }
+
+    func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat {
+        return cornerRadius
     }
 }
