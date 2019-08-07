@@ -31,7 +31,7 @@ final class FeedViewController: XCComposedCollectionViewController {
         let sourcesCount = Int.random(in: 100...120)
         for i in 0..<sourcesCount {
             let source = FeedDataSource(collectionView: collectionView)
-            if i .isMultiple(of: 2) {
+            if i.isMultiple(of: 2) {
                 source.isShadowEnabled = false
             }
             if i.isMultiple(of: 3) {

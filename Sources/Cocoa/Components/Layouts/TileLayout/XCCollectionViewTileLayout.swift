@@ -517,68 +517,113 @@ extension XCCollectionViewTileLayout {
     }
 
     private func height(forItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat? {
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return nil }
+        guard
+            let collectionView = collectionView,
+            let delegate = delegate
+        else {
+            return nil
+        }
+
         return delegate.collectionView(collectionView, layout: self, heightForItemAt: indexPath, width: width)
     }
 
     private func headerAttributes(in section: Int, width: CGFloat) -> (enabled: Bool, height: CGFloat?) {
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return (false, nil) }
+        guard
+            let collectionView = collectionView,
+            let delegate = delegate
+        else {
+            return (false, nil)
+        }
+
         return delegate.collectionView(collectionView, layout: self, headerAttributesInSection: section, width: width)
     }
 
     private func footerAttributes(in section: Int, width: CGFloat) -> (enabled: Bool, height: CGFloat?) {
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return (false, nil) }
+        guard
+            let collectionView = collectionView,
+            let delegate = delegate
+        else {
+            return (false, nil)
+        }
+
         return delegate.collectionView(collectionView, layout: self, footerAttributesInSection: section, width: width)
     }
 
     private func estimatedHeight(forItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return estimatedItemHeight }
+        guard
+            let collectionView = collectionView,
+            let delegate = delegate
+        else {
+            return estimatedItemHeight
+        }
+
         return delegate.collectionView(collectionView, layout: self, estimatedHeightForItemAt: indexPath, width: width)
     }
 
     private func estimatedHeaderHeight(in section: Int, width: CGFloat) -> CGFloat {
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return estimatedHeaderFooterHeight }
+        guard
+            let collectionView = collectionView,
+            let delegate = delegate
+        else {
+            return estimatedHeaderFooterHeight
+        }
+
         return delegate.collectionView(collectionView, layout: self, estimatedHeaderHeightInSection: section, width: width)
     }
 
     private func estimatedFooterHeight(in section: Int, width: CGFloat) -> CGFloat {
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return estimatedHeaderFooterHeight }
+        guard
+            let collectionView = collectionView,
+            let delegate = delegate
+        else {
+            return estimatedHeaderFooterHeight
+        }
+
         return delegate.collectionView(collectionView, layout: self, estimatedFooterHeightInSection: section, width: width)
     }
 
     private func verticalSpacing(betweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
-        guard section != nextSection else { return 0 }
-        guard let collectionView = self.collectionView, let delegate = self.delegate else { return 0 }
+        guard
+            section != nextSection,
+            let collectionView = collectionView,
+            let delegate = delegate
+        else {
+            return 0
+        }
+
         return delegate.collectionView(collectionView, layout: self, verticalSpacingBetweenSectionAt: section, and: nextSection)
     }
 
     private func isTileEnabled(forSectionAt section: Int) -> Bool {
         guard
-            let collectionView = self.collectionView,
-            let delegate = self.delegate
+            let collectionView = collectionView,
+            let delegate = delegate
         else {
             return true
         }
+
         return delegate.collectionView(collectionView, layout: self, isTileEnabledInSection: section)
     }
 
     private func isShadowEnabled(forSectionAt section: Int) -> Bool {
         guard
-            let collectionView = self.collectionView,
-            let delegate = self.delegate
+            let collectionView = collectionView,
+            let delegate = delegate
         else {
             return true
         }
+
         return delegate.collectionView(collectionView, layout: self, isShadowEnabledInSection: section)
     }
 
     private func cornerRadius(forSectionAt section: Int) -> CGFloat {
         guard
-            let collectionView = self.collectionView,
-            let delegate = self.delegate
+            let collectionView = collectionView,
+            let delegate = delegate
         else {
             return cornerRadius
         }
+
         return delegate.collectionView(collectionView, layout: self, cornerRadiusInSection: section)
     }
 }
