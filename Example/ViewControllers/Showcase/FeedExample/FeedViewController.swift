@@ -26,9 +26,30 @@ import UIKit
 
 final class FeedViewController: XCComposedCollectionViewController {
     private var sources = [FeedDataSource]()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .lightGray
+        collectionView.backgroundColor = .clear
+        collectionView.contentInset.top = view.safeAreaInsets.top
+
+        layout = .init(XCCollectionViewTileLayout().apply {
+            $0.numberOfColumns = 3
+        })
+
+        Timer.scheduledTimer(withTimeInterval: 6, repeats: true) { [weak self] _ in
+            self?.recreateSources()
+        }
+    }
+
+    override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
+        return sources
+    }
+
     private func recreateSources() {
         sources.removeAll()
         let sourcesCount = Int.random(in: 100...120)
+
         for i in 0..<sourcesCount {
             let source = FeedDataSource(collectionView: collectionView)
             if i.isMultiple(of: 2) {
@@ -39,25 +60,8 @@ final class FeedViewController: XCComposedCollectionViewController {
             }
             sources.append(source)
         }
+
         composedDataSource.dataSources = dataSources(for: collectionView)
         collectionView.reloadData()
-    }
-
-    public override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
-        return sources
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .lightGray
-        collectionView.backgroundColor = .clear
-        collectionView.contentInset.top = view.safeAreaInsets.top
-        let tileLayout = XCCollectionViewTileLayout()
-        tileLayout.numberOfColumns = 3
-        layout = .init(tileLayout)
-        Timer.scheduledTimer(withTimeInterval: 6.0, repeats: true) { [weak self] _ in
-            guard let strongSelf = self else { return }
-            strongSelf.recreateSources()
-        }
     }
 }
