@@ -229,7 +229,7 @@ open class DynamicTableViewCell: XCTableViewCell {
 
         // Constraints for Labels Stack View
         labelsStackView.anchor.make {
-            $0.vertically.greaterThanOrEqualToSuperview().inset(contentInset)
+            $0.vertically.greaterThanOrEqualToSuperview().inset(contentInset).priority(.stackViewSubview)
             $0.centerY.equalToSuperview()
         }
 
@@ -240,21 +240,42 @@ open class DynamicTableViewCell: XCTableViewCell {
             $0.centerY.equalToSuperview()
         }
 
-        imageAndTitleSpacingConstraint = NSLayoutConstraint(item: labelsStackView, attribute: .leading, toItem: avatarView, attribute: .trailing, constant: textImageSpacing).activate()
+        imageAndTitleSpacingConstraint = labelsStackView.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: textImageSpacing).activate()
 
         // Content Constraints
         contentConstraints = NSLayoutConstraint.Edges(
-            top: NSLayoutConstraint(item: avatarView, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: contentView, constant: contentInset.top, priority: .defaultHigh).activate(),
-            bottom: NSLayoutConstraint(item: contentView, attribute: .bottom, relatedBy: .greaterThanOrEqual, toItem: avatarView, constant: contentInset.bottom, priority: .defaultHigh).activate(),
-            leading: NSLayoutConstraint(item: avatarView, attribute: .leading, toItem: contentView, constant: contentInset.left).activate(),
-            trailing: NSLayoutConstraint(item: contentView, attribute: .trailing, toItem: labelsStackView, constant: contentInset.right).activate()
+            top: avatarView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: contentInset.top).priority(.defaultHigh).activate(),
+            bottom: contentView.bottomAnchor.constraint(greaterThanOrEqualTo: avatarView.bottomAnchor, constant: contentInset.bottom).priority(.defaultHigh).activate(),
+            leading: avatarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: contentInset.left).activate(),
+            trailing: contentView.trailingAnchor.constraint(equalTo: labelsStackView.trailingAnchor, constant: contentInset.right).activate()
         )
 
         minimumContentHeightConstraint = NSLayoutConstraint(item: contentView, height: minimumContentHeight, priority: .defaultLow).activate()
     }
+}
 
-    // MARK: - Setters
+// MARK: - Helpers
 
+extension DynamicTableViewCell {
+    private func updateImageSizeIfNeeded() {
+        let size = isImageViewHidden ? .zero : imageSize
+        imageSizeConstraints.update(from: size)
+        roundAvatarViewCornersIfNeeded()
+    }
+
+    private func updateTextImageSpacingIfNeeded() {
+        let spacing = isImageViewHidden ? 0 : textImageSpacing
+        imageAndTitleSpacingConstraint?.constant = spacing
+    }
+
+    private func roundAvatarViewCornersIfNeeded() {
+        avatarView.layer.cornerRadius = isImageViewRounded ? imageSize.height / 2 : 0
+    }
+}
+
+// MARK: - Setters
+
+extension DynamicTableViewCell {
     open func configure(_ data: DynamicTableModel) {
         self.data = data
         isImageViewHidden = data.image == nil
@@ -307,24 +328,5 @@ extension DynamicTableViewCell {
     @objc public dynamic var subtitleFont: UIFont {
         get { return subtitleLabel.font }
         set { subtitleLabel.font = newValue }
-    }
-}
-
-// MARK: - Helpers
-
-extension DynamicTableViewCell {
-    private func updateImageSizeIfNeeded() {
-        let size = isImageViewHidden ? .zero : imageSize
-        imageSizeConstraints.update(from: size)
-        roundAvatarViewCornersIfNeeded()
-    }
-
-    private func updateTextImageSpacingIfNeeded() {
-        let spacing = isImageViewHidden ? 0 : textImageSpacing
-        imageAndTitleSpacingConstraint?.constant = spacing
-    }
-
-    private func roundAvatarViewCornersIfNeeded() {
-        avatarView.layer.cornerRadius = isImageViewRounded ? imageSize.height / 2 : 0
     }
 }
