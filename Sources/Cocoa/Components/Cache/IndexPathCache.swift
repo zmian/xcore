@@ -25,11 +25,11 @@
 import Foundation
 
 /// A helper struct to cache index path values for `UITableView` and `UICollectionView`.
-struct IndexPathCache<Value> {
+public struct IndexPathCache<Value> {
     private var dictionary = [String: Value]()
     private let defaultValue: Value
 
-    init(default defaultValue: Value) {
+    public init(default defaultValue: Value) {
         self.defaultValue = defaultValue
     }
 
@@ -58,32 +58,32 @@ struct IndexPathCache<Value> {
         return estimatedValue
     }
 
-    func exists(for indexPath: IndexPath) -> Bool {
+    public func exists(for indexPath: IndexPath) -> Bool {
         return dictionary[key(for: indexPath)] != nil
     }
 
-    subscript(indexPath: IndexPath) -> Value {
+    public subscript(indexPath: IndexPath) -> Value {
         get { return get(indexPath) }
         set { set(newValue, for: indexPath) }
     }
 
     /// Empties the cache.
-    mutating func removeAll() {
+    public mutating func removeAll() {
         dictionary.removeAll(keepingCapacity: false)
     }
 
     /// Removes the value of the specified indexPath in the cache.
     ///
     /// - Parameter indexPath: The indexPath identifying the value to be removed.
-    mutating func remove(at indexPath: IndexPath) {
+    public mutating func remove(at indexPath: IndexPath) {
         dictionary[key(for: indexPath)] = nil
     }
 
-    var count: Int {
+    public var count: Int {
         return dictionary.count
     }
 
-    var isEmpty: Bool {
+    public var isEmpty: Bool {
         return dictionary.isEmpty
     }
 }
