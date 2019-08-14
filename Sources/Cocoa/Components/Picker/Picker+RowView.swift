@@ -47,7 +47,7 @@ extension Picker {
 // MARK: - RowView
 
 extension Picker {
-    public final class RowView: UIView, Configurable {
+    final public class RowView: UIView, Configurable {
         static let height: CGFloat = 50
         private let imageSize: CGSize = 30
 

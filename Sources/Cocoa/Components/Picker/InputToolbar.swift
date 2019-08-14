@@ -24,7 +24,7 @@
 
 import Foundation
 
-public final class InputToolbar: XCView {
+final public class InputToolbar: XCView {
     private let buttonSize = CGSize(width: 60, height: 30)
 
     public var title: StringRepresentable? {

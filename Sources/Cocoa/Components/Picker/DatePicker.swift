@@ -24,7 +24,7 @@
 
 import Foundation
 
-public final class DatePicker: DrawerScreen.Content, With {
+final public class DatePicker: DrawerScreen.Content, With {
     private var initialDate: Date?
     private var didChangeValue: ((Date?) -> Void)?
 

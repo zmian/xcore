@@ -25,7 +25,7 @@
 import UIKit
 import WebKit
 
-public final class SwizzleManager {
+final public class SwizzleManager {
     private static var didSwizzle = false
     static var options: SwizzleOptions = .all
 

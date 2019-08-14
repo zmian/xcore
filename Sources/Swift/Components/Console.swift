@@ -24,7 +24,7 @@
 
 import Foundation
 
-public final class Console {
+final public class Console {
     /// The default value is `.all`.
     public static var levelOptions: LevelOptions = .all
     /// The default value is `.basic`.

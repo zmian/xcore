@@ -36,7 +36,7 @@ extension UIViewController {
     /// UIViewController.defaultAppearance.tintColor = .gray
     /// ```
     @objc(UIViewControllerDefaultAppearance)
-    public final class DefaultAppearance: NSObject {
+    final public class DefaultAppearance: NSObject {
         /// The default value is `.app(style: .body)`
         public var font: UIFont = .app(style: .body)
         /// The default value is `.appTint`.

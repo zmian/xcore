@@ -39,7 +39,7 @@ extension MarkupText {
     /// MarkupText.appearance.textColor = .gray
     /// ```
     @objc(MarkupTextAppearance)
-    public final class Appearance: NSObject {
+    final public class Appearance: NSObject {
         public var font: UIFont = .app(style: .body)
         public var textColor: UIColor = .black
         public var isLabelEnabled: Bool = false
