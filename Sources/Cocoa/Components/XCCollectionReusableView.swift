@@ -96,7 +96,7 @@ extension XCCollectionReusableView {
         didTap?()
     }
 
-    open func didTap(_ callback: @escaping () -> Void) {
+    open func didTap(_ callback: (() -> Void)?) {
         didTap = callback
     }
 
