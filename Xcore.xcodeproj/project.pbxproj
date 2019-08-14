@@ -53,6 +53,7 @@
 		688C357C2273DED400CF3FCB /* DictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688C357B2273DED400CF3FCB /* DictionaryTests.swift */; };
 		68A8D4FD22E3ECB3000E2115 /* ReflectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A8D4FC22E3ECB2000E2115 /* ReflectionTests.swift */; };
 		68A9366F22C69E7200CB01BD /* StringConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68A9366E22C69E7100CB01BD /* StringConverterTests.swift */; };
+		68BCA2DD2304B2B000424B85 /* SeparatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BCA2DC2304B2B000424B85 /* SeparatorViewController.swift */; };
 		68CA631F224C76760012DF31 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA631E224C76750012DF31 /* StringTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -128,6 +129,7 @@
 		688C357B2273DED400CF3FCB /* DictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTests.swift; sourceTree = "<group>"; };
 		68A8D4FC22E3ECB2000E2115 /* ReflectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReflectionTests.swift; sourceTree = "<group>"; };
 		68A9366E22C69E7100CB01BD /* StringConverterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConverterTests.swift; sourceTree = "<group>"; };
+		68BCA2DC2304B2B000424B85 /* SeparatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorViewController.swift; sourceTree = "<group>"; };
 		68CA631E224C76750012DF31 /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		8D64F6471089E2220DD070CC /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		989B05E63B9D27BBB2D81B2C /* Pods-UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UITests/Pods-UITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				6836600322987F1D00FDE45B /* ExampleDynamicTableViewController.swift */,
+				68BCA2DC2304B2B000424B85 /* SeparatorViewController.swift */,
 				6836600222987F1D00FDE45B /* ButtonsViewController.swift */,
 				6836600422987F1D00FDE45B /* ExampleTextViewController.swift */,
 				2F35F20E22E362C900B45C85 /* ExampleArrowOptions.swift */,
@@ -627,6 +630,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6836600D22987F3700FDE45B /* Swizzle.swift in Sources */,
+				68BCA2DD2304B2B000424B85 /* SeparatorViewController.swift in Sources */,
 				2F9B4C8422A19E7400FB644E /* FeedTextViewCell.swift in Sources */,
 				684B1EA1224C5218009F6197 /* AppDelegate.swift in Sources */,
 				2F9B4C7F22A19B0E00FB644E /* FeedViewController.swift in Sources */,
