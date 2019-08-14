@@ -172,8 +172,11 @@ final class ArrayTests: TestCase {
             $0.text = "World!"
         }
 
-        let value = [label1.text, label2.text, label3.text, button.text].joined(separator: ", ")
-        XCTAssertEqual(value, "Hello, World!")
+        let value1 = [label1.text, label2.text, label3.text, button.text].joined(separator: ", ")
+        XCTAssertEqual(value1, "Hello, World!")
+
+        let value2 = [label1.text, label2.text, label3.text, button.text].joined()
+        XCTAssertEqual(value2, "HelloWorld!")
     }
 }
 
