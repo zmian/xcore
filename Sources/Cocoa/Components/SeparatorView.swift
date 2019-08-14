@@ -99,6 +99,7 @@ final public class SeparatorView: UIView {
     }
 
     private func commonInit() {
+        super.backgroundColor = .clear
         updateThicknessConstraintIfNeeded()
     }
 
