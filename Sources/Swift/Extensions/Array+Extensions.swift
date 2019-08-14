@@ -211,7 +211,23 @@ extension Array where Element: RawRepresentable {
 }
 
 extension Array where Element == String? {
-    public func joined(separator: String) -> String {
+    /// Returns a new string by concatenating the elements of the sequence, adding
+    /// the given separator between each element.
+    ///
+    /// The following example shows how an array of strings can be joined to a
+    /// single, comma-separated string:
+    ///
+    /// ```swift
+    /// let cast = ["Vivien", nil, "Kim", "Karl"]
+    /// let list = cast.joined(separator: ", ")
+    /// print(list)
+    /// // Prints "Vivien, Kim, Karl"
+    /// ```
+    ///
+    /// - Parameter separator: A string to insert between each of the elements in
+    ///                        this sequence. The default value is an empty string.
+    /// - Returns: A single, concatenated string.
+    public func joined(separator: String = "") -> String {
         return lazy.compactMap { $0 }.filter { !$0.isBlank }.joined(separator: separator)
     }
 }
