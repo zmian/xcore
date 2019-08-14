@@ -48,6 +48,10 @@ final class RootViewController: DynamicTableViewController {
                 let vc = ExampleDynamicTableViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
             },
+            DynamicTableModel(title: "Separators", subtitle: "Separators demonstration") { [weak self] _, _ in
+                let vc = SeparatorViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
+            },
             DynamicTableModel(title: "Buttons", subtitle: "UIButton extensions demonstration") { [weak self] _, _ in
                 let vc = ButtonsViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
