@@ -31,7 +31,7 @@ extension SeparatorView {
     }
 }
 
-public final class SeparatorView: UIView {
+final public class SeparatorView: UIView {
     /// The default value is `.plain`.
     public var style: Style = .plain {
         didSet {
@@ -58,7 +58,7 @@ public final class SeparatorView: UIView {
     public var space: CGFloat = 3
 
     private var _backgroundColor: UIColor?
-    @objc dynamic public override var backgroundColor: UIColor? {
+    @objc public dynamic override var backgroundColor: UIColor? {
         get { return _backgroundColor ?? .appSeparator }
         set {
             guard newValue != _backgroundColor else { return }
@@ -67,7 +67,7 @@ public final class SeparatorView: UIView {
         }
     }
 
-    @objc dynamic public override var tintColor: UIColor! {
+    @objc public dynamic override var tintColor: UIColor! {
         get { return backgroundColor }
         set { backgroundColor = newValue }
     }

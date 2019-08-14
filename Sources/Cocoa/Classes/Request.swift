@@ -65,7 +65,7 @@ public struct Response {
     }
 }
 
-public final class Request {
+final public class Request {
     public enum Method: String {
         case get
         case post

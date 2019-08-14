@@ -41,7 +41,7 @@ extension UIButton {
     /// UIButton.defaultAppearance.highlightedAnimation = .scale
     /// ```
     @objc(UIButtonDefaultAppearance)
-    public final class DefaultAppearance: NSObject {
+    final public class DefaultAppearance: NSObject {
         public var style: Style = .none
         public var height: CGFloat = 50
         public var isHeightSetAutomatically = false

@@ -24,7 +24,7 @@
 
 import Foundation
 
-public final class UserDefault<T: Codable> {
+final public class UserDefault<T: Codable> {
     private let storage: UserDefaults
     private lazy var encoder = JSONEncoder()
     private lazy var decoder = JSONDecoder()

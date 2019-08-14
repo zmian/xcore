@@ -43,7 +43,7 @@ extension UIView: DrawerScreenContent {
 
 // MARK: - DrawerScreen
 
-public final class DrawerScreen {
+final public class DrawerScreen {
     public typealias Content = DrawerScreenContent
 
     private static let shared = DrawerScreen()

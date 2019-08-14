@@ -24,7 +24,7 @@
 
 import UIKit
 
-public final class HapticFeedback {
+final public class HapticFeedback {
     private let createGenerator: () -> UIFeedbackGenerator
     private var generator: UIFeedbackGenerator?
     private var triggerBlock: () -> Void

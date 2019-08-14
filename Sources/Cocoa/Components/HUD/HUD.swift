@@ -344,7 +344,7 @@ extension HUD {
     /// HUD.appearance().backgroundColor = .gray
     /// LaunchScreen.View.appearance().backgroundColor = .blue
     /// ```
-    public final class Appearance: With {
+    final public class Appearance: With {
         public var backgroundColor: UIColor = .white
     }
 
