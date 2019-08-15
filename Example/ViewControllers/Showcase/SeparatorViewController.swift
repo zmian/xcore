@@ -74,6 +74,12 @@ final class SeparatorViewController: UIViewController {
         $0.style = .dash(value: [1, 15, 10, 20])
     }
 
+    private lazy var freeSeparator = SeparatorView(backgroundColor: .blue, automaticallySetThickness: false).apply {
+        $0.snp.makeConstraints { make in
+            make.height.equalTo(12)
+        }
+    }
+
     private func createSeparatorsHorizontal() -> UIStackView {
         return UIStackView(arrangedSubviews: [
             SeparatorView(),
@@ -84,7 +90,8 @@ final class SeparatorViewController: UIViewController {
             SeparatorView(style: .dotted, backgroundColor: UIColor.blue.alpha(0.2)),
             SeparatorView(style: .dash(value: [2, 5]), backgroundColor: .black),
             SeparatorView(backgroundColor: .black, thickness: 5),
-            appliedSeparator
+            appliedSeparator,
+            freeSeparator
         ]).apply {
             $0.axis = .vertical
             $0.spacing = .maximumPadding
