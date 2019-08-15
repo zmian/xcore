@@ -39,7 +39,7 @@ final public class SeparatorView: UIView {
         }
     }
 
-    var shapeLayer: CAShapeLayer {
+    private var shapeLayer: CAShapeLayer {
         return layer as! CAShapeLayer
     }
 
@@ -70,8 +70,6 @@ final public class SeparatorView: UIView {
         }
     }
 
-    public let defaultDottedPattern: (line: Int, space: Int) = (1, 3)
-
     private var _backgroundColor: UIColor? {
         didSet {
             shapeLayer.strokeColor = backgroundColor?.cgColor
@@ -89,6 +87,13 @@ final public class SeparatorView: UIView {
     @objc public dynamic override var tintColor: UIColor! {
         get { return backgroundColor }
         set { backgroundColor = newValue }
+    }
+
+    // Mark: - Appearence properties
+    @objc public dynamic var dottedSpacing: Int = 3 {
+        didSet {
+            updatePattern()
+        }
     }
 
     public init(
@@ -144,9 +149,10 @@ final public class SeparatorView: UIView {
                 shapeLayer.lineDashPattern = nil
             case .dotted:
                 shapeLayer.lineDashPattern = [
-                    NSNumber(value: defaultDottedPattern.line),
-                    NSNumber(value: defaultDottedPattern.space)
+                    NSNumber(value: 0),
+                    NSNumber(value: dottedSpacing)
                 ]
+                shapeLayer.lineCap = .round
             case .pattern(let value):
                 shapeLayer.lineDashPattern = value.map { NSNumber(value: $0) }
         }
