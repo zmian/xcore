@@ -82,7 +82,7 @@ extension Theme {
         UIPageControl.appearance().apply {
             $0.pageIndicatorTintColor = current.tintColor
             $0.currentPageIndicatorTintColor = current.toggleColor
-            $0.defaultBackgroundColor = .clear
+            $0.backgroundColor = .clear
         }
 
         UISwitch.appearance().apply {
@@ -170,7 +170,7 @@ extension Theme {
     }
 
     private static func setComponentsTheme() {
-        SeparatorView.appearance().backgroundColor = current.separatorColor
+        SeparatorView.appearance().tintColor = current.separatorColor
 
         MarkupText.appearance.apply {
             $0.textColor = current.textColor
@@ -214,17 +214,5 @@ extension Theme {
             $0.titleTextColor = current.textColor
             $0.subtitleTextColor = current.textColorSecondary
         }
-    }
-}
-
-extension UIPageControl {
-    /// The page control's background color proxy to use with `UIAppearance` API.
-    ///
-    /// - Note: Directly modifying `backgroundColor` conflicts with SeparatorView's
-    /// background color and any class that overrides the `backgroundColor`
-    /// property.
-    @objc fileprivate dynamic var defaultBackgroundColor: UIColor? {
-        get { return backgroundColor }
-        set { backgroundColor = newValue }
     }
 }
