@@ -55,7 +55,7 @@ final class SeparatorViewController: UIViewController {
             SeparatorView(axis: .vertical, backgroundColor: .red),
             SeparatorView(axis: .vertical, backgroundColor: UIColor.black.alpha(0.2)),
             SeparatorView(style: .dotted, axis: .vertical, backgroundColor: .red),
-            SeparatorView(style: .dotted, axis: .vertical, backgroundColor: UIColor.black.alpha(0.2)),
+            SeparatorView(style: .dotted, axis: .vertical, backgroundColor: UIColor.blue.alpha(0.2)),
         ]).apply {
             $0.axis = .horizontal
             $0.spacing = .maximumPadding
@@ -73,7 +73,7 @@ final class SeparatorViewController: UIViewController {
             SeparatorView(backgroundColor: .red),
             SeparatorView(backgroundColor: UIColor.black.alpha(0.2)),
             SeparatorView(style: .dotted, backgroundColor: .red),
-            SeparatorView(style: .dotted, backgroundColor: UIColor.black.alpha(0.2)),
+            SeparatorView(style: .dotted, backgroundColor: UIColor.blue.alpha(0.2)),
         ]).apply {
             $0.axis = .vertical
             $0.spacing = .maximumPadding

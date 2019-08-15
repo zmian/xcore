@@ -82,7 +82,7 @@ extension Theme {
         UIPageControl.appearance().apply {
             $0.pageIndicatorTintColor = current.tintColor
             $0.currentPageIndicatorTintColor = current.toggleColor
-            $0.backgroundColor = .clear
+            $0.defaultBackgroundColor = .clear
         }
 
         UISwitch.appearance().apply {
@@ -214,5 +214,17 @@ extension Theme {
             $0.titleTextColor = current.textColor
             $0.subtitleTextColor = current.textColorSecondary
         }
+    }
+}
+
+extension UIPageControl {
+    /// The page control's background color proxy to use with `UIAppearance` API.
+    ///
+    /// - Note: Directly modifying `backgroundColor` conflicts with SeparatorView's
+    /// background color and any class that overrides the `backgroundColor`
+    /// property.
+    @objc fileprivate dynamic var defaultBackgroundColor: UIColor? {
+        get { return backgroundColor }
+        set { backgroundColor = newValue }
     }
 }
