@@ -25,19 +25,38 @@
 import UIKit
 
 extension SeparatorView {
-    public enum Style {
+    public enum Style: Equatable {
         case plain
         case dotted
+        case pattern(value: [Int])
     }
 }
 
 final public class SeparatorView: UIView {
+    public override class var layerClass: AnyClass {
+        get {
+            return CAShapeLayer.self
+        }
+    }
+
+    var shapeLayer: CAShapeLayer {
+        return layer as! CAShapeLayer
+    }
+
     /// The default value is `.plain`.
     public var style: Style = .plain {
         didSet {
             guard oldValue != style else { return }
-            setNeedsDisplay()
             updateThicknessConstraintIfNeeded()
+            updatePattern()
+        }
+    }
+
+    public override var bounds: CGRect {
+        didSet {
+            if bounds != oldValue {
+                updatePath()
+            }
         }
     }
 
@@ -51,19 +70,19 @@ final public class SeparatorView: UIView {
         }
     }
 
-    /// The default value is `1`. Only applies when the `style` is `.dotted`.
-    public var numberOfPattern: CGFloat = 1
+    public let defaultDottedPattern: (line: Int, space: Int) = (1, 3)
 
-    /// The default value is `3`. Only applies when the `style` is `.dotted`.
-    public var space: CGFloat = 3
+    private var _backgroundColor: UIColor? {
+        didSet {
+            shapeLayer.strokeColor = backgroundColor?.cgColor
+        }
+    }
 
-    private var _backgroundColor: UIColor?
     @objc public dynamic override var backgroundColor: UIColor? {
         get { return _backgroundColor ?? .appSeparator }
         set {
             guard newValue != _backgroundColor else { return }
             _backgroundColor = newValue
-            setNeedsDisplay()
         }
     }
 
@@ -90,6 +109,8 @@ final public class SeparatorView: UIView {
             // `SeparatorView.appearance().backgroundColor`.
             self.tintColor = backgroundColor
         }
+        shapeLayer.strokeColor = self.backgroundColor?.cgColor
+        updatePattern()
     }
 
     public override init(frame: CGRect) {
@@ -107,36 +128,35 @@ final public class SeparatorView: UIView {
         updateThicknessConstraintIfNeeded()
     }
 
-    public override func draw(_ rect: CGRect) {
+    private func updatePath() {
+        let path = CGMutablePath()
+        let origin = axis == .horizontal ? CGPoint(x: 0, y: bounds.midY) : CGPoint(x: bounds.midX, y: 0)
+        let end = axis == .horizontal ? CGPoint(x: bounds.width, y: bounds.midY) : CGPoint(x: bounds.midX, y: bounds.height)
+        path.move(to: origin)
+        path.addLine(to: end)
+        shapeLayer.path = path
+        shapeLayer.lineWidth = (axis == .horizontal ? bounds.height : bounds.width) / 2.0
+    }
+
+    private func updatePattern() {
         switch style {
             case .plain:
-                backgroundColor?.setFill()
-                UIRectFill(rect)
+                shapeLayer.lineDashPattern = nil
             case .dotted:
-                let path = UIBezierPath()
-                let y = rect.midY
-                path.move(to: CGPoint(x: rect.height, y: y))
-                path.addLine(to: CGPoint(x: rect.width, y: y))
-                path.lineWidth = rect.height - 0.5
-
-                let dashes: [CGFloat] = [0, path.lineWidth * space]
-                path.setLineDash(dashes, count: dashes.count, phase: 0)
-                path.lineCapStyle = .round
-                backgroundColor?.setStroke()
-                path.stroke()
+                shapeLayer.lineDashPattern = [
+                    NSNumber(value: defaultDottedPattern.line),
+                    NSNumber(value: defaultDottedPattern.space)
+                ]
+            case .pattern(let value):
+                shapeLayer.lineDashPattern = value.map { NSNumber(value: $0) }
         }
     }
 
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        setNeedsDisplay()
-    }
-
-    private var thickness: CGFloat {
+    private var defaultThickness: CGFloat {
         switch style {
             case .plain:
                 return onePixel
-            case .dotted:
+            case .dotted, .pattern:
                 return 2
         }
     }
@@ -151,9 +171,9 @@ final public class SeparatorView: UIView {
         func constraintBlock(_ anchor: Anchor) {
             switch axis {
                 case .vertical:
-                    thicknessConstraint = anchor.width.equalTo(thickness).constraints.first
+                    thicknessConstraint = anchor.width.equalTo(defaultThickness).constraints.first
                 case .horizontal:
-                    thicknessConstraint = anchor.height.equalTo(thickness).constraints.first
+                    thicknessConstraint = anchor.height.equalTo(defaultThickness).constraints.first
                 @unknown default:
                     break
             }
@@ -162,7 +182,7 @@ final public class SeparatorView: UIView {
         if thicknessConstraint == nil {
             anchor.make(constraintBlock)
         } else {
-            thicknessConstraint?.constant = thickness
+            thicknessConstraint?.constant = defaultThickness
         }
 
         thicknessConstraint?.activate()
