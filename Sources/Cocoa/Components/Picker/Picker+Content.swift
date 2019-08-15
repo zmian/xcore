@@ -29,7 +29,9 @@ extension Picker {
         private static let viewableItemsCount = 5
 
         private let model: PickerModel
-        private let toolbar = InputToolbar()
+        private let toolbar = InputToolbar().apply {
+            $0.backgroundColor = .clear
+        }
         private lazy var pickerView = UIPickerView().apply {
             $0.delegate = self
             $0.dataSource = self
@@ -54,8 +56,6 @@ extension Picker {
         }
 
         private func commonInit() {
-            toolbar.backgroundColor = .clear
-
             for i in 0..<model.numberOfComponents() {
                 let element = model.selectedElement(at: i)
                 pickerView.selectRow(element, inComponent: i, animated: false)
