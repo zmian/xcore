@@ -28,7 +28,7 @@ extension SeparatorView {
     public enum Style: Equatable {
         case plain
         case dotted
-        case pattern(value: [Int])
+        case dash(value: [Int])
     }
 }
 
@@ -52,23 +52,20 @@ final public class SeparatorView: UIView {
         }
     }
 
-    public override var bounds: CGRect {
+    public var lineCap: CAShapeLayerLineCap {
+        get { return shapeLayer.lineCap }
+        set { shapeLayer.lineCap = newValue }
+    }
+
+    public var automaticThickness: CGFloat? {
         didSet {
-            if bounds != oldValue {
-                updatePath()
-            }
+            guard automaticThickness != oldValue else { return }
+            updateThicknessConstraintIfNeeded()
         }
     }
 
     /// The default value is `.horizontal`.
     private var axis: NSLayoutConstraint.Axis = .horizontal
-
-    private var automaticallySetThickness = true {
-        didSet {
-            guard oldValue != automaticallySetThickness else { return }
-            updateThicknessConstraintIfNeeded()
-        }
-    }
 
     private var _backgroundColor: UIColor? {
         didSet {
@@ -96,26 +93,25 @@ final public class SeparatorView: UIView {
         }
     }
 
+    public override var bounds: CGRect {
+        didSet {
+            if bounds != oldValue {
+                updatePath()
+            }
+        }
+    }
+
     public init(
         style: Style = .plain,
         axis: NSLayoutConstraint.Axis = .horizontal,
         backgroundColor: UIColor? = nil,
-        automaticallySetThickness: Bool = true
+        automaticallySetThickness: Bool = true,
+        thickness: CGFloat? = nil
     ) {
         super.init(frame: .zero)
         self.style = style
         self.axis = axis
-        self.automaticallySetThickness = automaticallySetThickness
-        commonInit()
-        if let backgroundColor = backgroundColor {
-            self.backgroundColor = backgroundColor
-            // This ensures that UIAppearance proxy correctly works when
-            // `SeparatorView.appearance().tintColor` is used instead of
-            // `SeparatorView.appearance().backgroundColor`.
-            self.tintColor = backgroundColor
-        }
-        shapeLayer.strokeColor = self.backgroundColor?.cgColor
-        updatePattern()
+        commonInit(automaticallySetThickness: automaticallySetThickness, backgroundColor: backgroundColor, thickness: thickness)
     }
 
     public override init(frame: CGRect) {
@@ -128,9 +124,20 @@ final public class SeparatorView: UIView {
         commonInit()
     }
 
-    private func commonInit() {
+    private func commonInit(automaticallySetThickness: Bool = true, backgroundColor: UIColor? = nil, thickness: CGFloat? = nil) {
         super.backgroundColor = .clear
+        automaticThickness = automaticallySetThickness ? (thickness ?? defaultThickness) : nil
         updateThicknessConstraintIfNeeded()
+        if let backgroundColor = backgroundColor {
+            self.backgroundColor = backgroundColor
+            // This ensures that UIAppearance proxy correctly works when
+            // `SeparatorView.appearance().tintColor` is used instead of
+            // `SeparatorView.appearance().backgroundColor`.
+            self.tintColor = backgroundColor
+        }
+        shapeLayer.strokeColor = self.backgroundColor?.cgColor
+        lineCap = .round
+        updatePattern()
     }
 
     private func updatePath() {
@@ -152,8 +159,7 @@ final public class SeparatorView: UIView {
                     NSNumber(value: 0),
                     NSNumber(value: dottedSpacing)
                 ]
-                shapeLayer.lineCap = .round
-            case .pattern(let value):
+            case .dash(let value):
                 shapeLayer.lineDashPattern = value.map { NSNumber(value: $0) }
         }
     }
@@ -162,14 +168,14 @@ final public class SeparatorView: UIView {
         switch style {
             case .plain:
                 return onePixel
-            case .dotted, .pattern:
+            case .dotted, .dash:
                 return 2
         }
     }
 
     private var thicknessConstraint: NSLayoutConstraint?
     private func updateThicknessConstraintIfNeeded() {
-        guard automaticallySetThickness else {
+        guard let automaticThickness = automaticThickness else {
             thicknessConstraint?.deactivate()
             return
         }
@@ -177,9 +183,9 @@ final public class SeparatorView: UIView {
         func constraintBlock(_ anchor: Anchor) {
             switch axis {
                 case .vertical:
-                    thicknessConstraint = anchor.width.equalTo(defaultThickness).constraints.first
+                    thicknessConstraint = anchor.width.equalTo(automaticThickness).constraints.first
                 case .horizontal:
-                    thicknessConstraint = anchor.height.equalTo(defaultThickness).constraints.first
+                    thicknessConstraint = anchor.height.equalTo(automaticThickness).constraints.first
                 @unknown default:
                     break
             }
@@ -188,9 +194,10 @@ final public class SeparatorView: UIView {
         if thicknessConstraint == nil {
             anchor.make(constraintBlock)
         } else {
-            thicknessConstraint?.constant = defaultThickness
+            thicknessConstraint?.constant = automaticThickness
         }
 
         thicknessConstraint?.activate()
+        setNeedsLayout()
     }
 }
