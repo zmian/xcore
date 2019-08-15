@@ -84,7 +84,11 @@ final public class SeparatorView: UIView {
         self.automaticallySetThickness = automaticallySetThickness
         commonInit()
         if let backgroundColor = backgroundColor {
-            _backgroundColor = backgroundColor
+            self.backgroundColor = backgroundColor
+            // This ensures that UIAppearance proxy correctly works when
+            // `SeparatorView.appearance().tintColor` is used instead of
+            // `SeparatorView.appearance().backgroundColor`.
+            self.tintColor = backgroundColor
         }
     }
 
