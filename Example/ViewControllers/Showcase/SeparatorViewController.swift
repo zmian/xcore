@@ -70,7 +70,7 @@ final class SeparatorViewController: UIViewController {
     private lazy var fatSeparator = SeparatorView().apply {
         $0.lineCap = .square
         $0.automaticThickness = 10
-        $0.style = .dash(pattern: [1, 15, 10, 20])
+        $0.style = .dash(value: [1, 15, 10, 20])
     }
 
     private func createSeparatorsHorizontal() -> UIStackView {
