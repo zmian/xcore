@@ -40,6 +40,7 @@ final public class DatePicker: DrawerScreen.Content, With {
     }
 
     private lazy var toolbar = InputToolbar().apply {
+        $0.backgroundColor = .clear
         $0.didTapDone { [weak self] in
             DrawerScreen.dismiss()
         }
@@ -53,7 +54,7 @@ final public class DatePicker: DrawerScreen.Content, With {
 
     private lazy var pickerView = UIDatePicker().apply {
         $0.datePickerMode = .date
-        $0.backgroundColor = .white
+        $0.backgroundColor = .clear
         $0.addAction(.valueChanged) { [weak self] sender in
             self?.didChangeValue?(sender.date)
         }
