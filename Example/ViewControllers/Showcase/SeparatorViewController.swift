@@ -56,7 +56,7 @@ final class SeparatorViewController: UIViewController {
             SeparatorView(axis: .vertical, backgroundColor: UIColor.black.alpha(0.2)),
             SeparatorView(style: .dotted, axis: .vertical, backgroundColor: .red),
             SeparatorView(style: .dotted, axis: .vertical, backgroundColor: UIColor.blue.alpha(0.2)),
-            SeparatorView(style: .dash(value: [5, 2]), axis: .vertical, backgroundColor: .black),
+            SeparatorView(style: .pattern(value: [5, 2]), axis: .vertical, backgroundColor: .black),
             SeparatorView(axis: .vertical, backgroundColor: .blue, thickness: 4)
         ]).apply {
             $0.axis = .horizontal
@@ -72,7 +72,7 @@ final class SeparatorViewController: UIViewController {
         let appliedSeparator = SeparatorView().apply {
             $0.lineCap = .square
             $0.automaticThickness = 10
-            $0.style = .dash(value: [1, 15, 10, 20])
+            $0.style = .pattern(value: [1, 15, 10, 20])
         }
 
         let freeSeparator = SeparatorView(backgroundColor: .blue, automaticallySetThickness: false).apply {
@@ -88,7 +88,7 @@ final class SeparatorViewController: UIViewController {
             SeparatorView(backgroundColor: UIColor.black.alpha(0.2)),
             SeparatorView(style: .dotted, backgroundColor: .red),
             SeparatorView(style: .dotted, backgroundColor: UIColor.blue.alpha(0.2)),
-            SeparatorView(style: .dash(value: [2, 5]), backgroundColor: .black),
+            SeparatorView(style: .pattern(value: [2, 5]), backgroundColor: .black),
             SeparatorView(backgroundColor: .black, thickness: 5),
             appliedSeparator,
             freeSeparator

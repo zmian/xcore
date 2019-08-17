@@ -27,8 +27,15 @@ import UIKit
 extension SeparatorView {
     public enum Style: Equatable {
         case plain
-        case dotted
-        case dash(value: [Int])
+        case pattern(value: [Int])
+
+        public static var dash: Style {
+            return .pattern(value: [2, 5])
+        }
+
+        public static var dotted: Style {
+            return .pattern(value: [0, 3])
+        }
     }
 }
 
@@ -82,14 +89,6 @@ final public class SeparatorView: UIView {
         set { backgroundColor = newValue }
     }
 
-    // MARK: - Appearence properties
-
-    @objc public dynamic var dottedSpacing: Int = 3 {
-        didSet {
-            updatePattern()
-        }
-    }
-
     public override var bounds: CGRect {
         didSet {
             guard oldValue != bounds else { return }
@@ -107,7 +106,11 @@ final public class SeparatorView: UIView {
         super.init(frame: .zero)
         self.style = style
         self.axis = axis
-        commonInit(automaticallySetThickness: automaticallySetThickness, backgroundColor: backgroundColor, thickness: thickness)
+        commonInit(
+            automaticallySetThickness: automaticallySetThickness,
+            backgroundColor: backgroundColor,
+            thickness: thickness
+        )
     }
 
     public override init(frame: CGRect) {
@@ -137,9 +140,10 @@ final public class SeparatorView: UIView {
     }
 
     private func updatePath() {
-        let path = CGMutablePath()
         let origin = axis == .horizontal ? CGPoint(x: 0, y: bounds.midY) : CGPoint(x: bounds.midX, y: 0)
         let end = axis == .horizontal ? CGPoint(x: bounds.width, y: bounds.midY) : CGPoint(x: bounds.midX, y: bounds.height)
+
+        let path = CGMutablePath()
         path.move(to: origin)
         path.addLine(to: end)
         shapeLayer.path = path
@@ -150,12 +154,7 @@ final public class SeparatorView: UIView {
         switch style {
             case .plain:
                 shapeLayer.lineDashPattern = nil
-            case .dotted:
-                shapeLayer.lineDashPattern = [
-                    NSNumber(value: 0),
-                    NSNumber(value: dottedSpacing)
-                ]
-            case .dash(let value):
+            case .pattern(let value):
                 shapeLayer.lineDashPattern = value.map { NSNumber(value: $0) }
         }
     }
@@ -164,14 +163,14 @@ final public class SeparatorView: UIView {
         switch style {
             case .plain:
                 return onePixel
-            case .dotted, .dash:
+            case .pattern:
                 return 2
         }
     }
 
     private var thicknessConstraint: NSLayoutConstraint?
     private func updateThicknessConstraintIfNeeded() {
-        guard let automaticThickness = automaticThickness else {
+        guard let thickness = automaticThickness else {
             thicknessConstraint?.deactivate()
             return
         }
@@ -179,9 +178,9 @@ final public class SeparatorView: UIView {
         func constraintBlock(_ anchor: Anchor) {
             switch axis {
                 case .vertical:
-                    thicknessConstraint = anchor.width.equalTo(automaticThickness).constraints.first
+                    thicknessConstraint = anchor.width.equalTo(thickness).constraints.first
                 case .horizontal:
-                    thicknessConstraint = anchor.height.equalTo(automaticThickness).constraints.first
+                    thicknessConstraint = anchor.height.equalTo(thickness).constraints.first
                 @unknown default:
                     break
             }
@@ -190,7 +189,7 @@ final public class SeparatorView: UIView {
         if thicknessConstraint == nil {
             anchor.make(constraintBlock)
         } else {
-            thicknessConstraint?.constant = automaticThickness
+            thicknessConstraint?.constant = thickness
         }
 
         thicknessConstraint?.activate()
