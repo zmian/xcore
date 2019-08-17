@@ -27,14 +27,14 @@ import UIKit
 extension SeparatorView {
     public enum Style: Equatable {
         case plain
-        case pattern(value: [Int])
+        case pattern(value: [Float])
 
         public static var dash: Style {
             return .pattern(value: [2, 5])
         }
 
         public static var dotted: Style {
-            return .pattern(value: [0, 3])
+            return .pattern(value: [0.001, 6])
         }
     }
 }
@@ -96,6 +96,14 @@ final public class SeparatorView: UIView {
         }
     }
 
+    private var patternLineWidth: CGFloat {
+        var width = axis == .horizontal ? bounds.height : bounds.width
+        if style == .plain {
+            width /= 2.0
+        }
+        return width
+    }
+
     /// - Parameters:
     ///   - style: The default value is `.plain`.
     ///   - axis: The default value is `.horizontal`.
@@ -153,7 +161,7 @@ final public class SeparatorView: UIView {
         path.move(to: origin)
         path.addLine(to: end)
         shapeLayer.path = path
-        shapeLayer.lineWidth = (axis == .horizontal ? bounds.height : bounds.width) / 2.0
+        shapeLayer.lineWidth = patternLineWidth
     }
 
     private func updatePattern() {
