@@ -29,12 +29,12 @@ extension SeparatorView {
         case plain
         case pattern(value: [Int])
 
-        public static var dash: Style {
-            return .pattern(value: [2, 5])
+        public static var dot: Style {
+            return .pattern(value: [0, 5])
         }
 
-        public static var dotted: Style {
-            return .pattern(value: [0, 3])
+        public static var dash: Style {
+            return .pattern(value: [2, 5])
         }
     }
 }
