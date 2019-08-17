@@ -64,7 +64,7 @@ final public class SeparatorView: UIView {
 
     public var automaticThickness: CGFloat? {
         didSet {
-            guard automaticThickness != oldValue else { return }
+            guard oldValue != automaticThickness else { return }
             updateThicknessConstraintIfNeeded()
         }
     }
@@ -96,6 +96,12 @@ final public class SeparatorView: UIView {
         }
     }
 
+    /// - Parameters:
+    ///   - style: The default value is `.plain`.
+    ///   - axis: The default value is `.horizontal`.
+    ///   - backgroundColor: The default value is `nil`.
+    ///   - automaticallySetThickness: The default value is `true`.
+    ///   - thickness: The default value is `nil`.
     public init(
         style: Style = .plain,
         axis: NSLayoutConstraint.Axis = .horizontal,
