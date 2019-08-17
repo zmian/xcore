@@ -34,9 +34,7 @@ extension SeparatorView {
 
 final public class SeparatorView: UIView {
     public override class var layerClass: AnyClass {
-        get {
-            return CAShapeLayer.self
-        }
+        return CAShapeLayer.self
     }
 
     private var shapeLayer: CAShapeLayer {
@@ -69,16 +67,14 @@ final public class SeparatorView: UIView {
 
     private var _backgroundColor: UIColor? {
         didSet {
+            guard oldValue != _backgroundColor else { return }
             shapeLayer.strokeColor = backgroundColor?.cgColor
         }
     }
 
     @objc public dynamic override var backgroundColor: UIColor? {
         get { return _backgroundColor ?? .appSeparator }
-        set {
-            guard newValue != _backgroundColor else { return }
-            _backgroundColor = newValue
-        }
+        set { _backgroundColor = newValue }
     }
 
     @objc public dynamic override var tintColor: UIColor! {
@@ -86,7 +82,8 @@ final public class SeparatorView: UIView {
         set { backgroundColor = newValue }
     }
 
-    // Mark: - Appearence properties
+    // MARK: - Appearence properties
+
     @objc public dynamic var dottedSpacing: Int = 3 {
         didSet {
             updatePattern()
@@ -95,9 +92,8 @@ final public class SeparatorView: UIView {
 
     public override var bounds: CGRect {
         didSet {
-            if bounds != oldValue {
-                updatePath()
-            }
+            guard oldValue != bounds else { return }
+            updatePath()
         }
     }
 
