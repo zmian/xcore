@@ -27,14 +27,15 @@ import UIKit
 extension SeparatorView {
     public enum Style: Equatable {
         case plain
+        case dot(spacing: Float)
         case pattern(value: [Float])
+
+        public static var dot: Style {
+            return .dot(spacing: 1.5)
+        }
 
         public static var dash: Style {
             return .pattern(value: [2, 5])
-        }
-
-        public static var dotted: Style {
-            return .pattern(value: [0.001, 6])
         }
     }
 }
@@ -101,6 +102,7 @@ final public class SeparatorView: UIView {
         if style == .plain {
             width /= 2.0
         }
+        guard width > 0 else { return defaultThickness }
         return width
     }
 
@@ -150,7 +152,6 @@ final public class SeparatorView: UIView {
         }
         shapeLayer.strokeColor = self.backgroundColor?.cgColor
         lineCap = .round
-        updatePattern()
     }
 
     private func updatePath() {
@@ -162,12 +163,18 @@ final public class SeparatorView: UIView {
         path.addLine(to: end)
         shapeLayer.path = path
         shapeLayer.lineWidth = patternLineWidth
+        updatePattern()
     }
 
     private func updatePattern() {
         switch style {
             case .plain:
                 shapeLayer.lineDashPattern = nil
+            case .dot(let spacing):
+                shapeLayer.lineDashPattern = [
+                    NSNumber(value: 0.001),
+                    NSNumber(value: spacing * Float(patternLineWidth) * 2.0)
+                ]
             case .pattern(let value):
                 shapeLayer.lineDashPattern = value.map { NSNumber(value: $0) }
         }
@@ -177,7 +184,7 @@ final public class SeparatorView: UIView {
         switch style {
             case .plain:
                 return onePixel
-            case .pattern:
+            case .pattern, .dot:
                 return 2
         }
     }

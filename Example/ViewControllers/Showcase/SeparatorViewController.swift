@@ -51,12 +51,12 @@ final class SeparatorViewController: UIViewController {
     private func createSeparatorsVertical() -> UIStackView {
         return UIStackView(arrangedSubviews: [
             SeparatorView(axis: .vertical),
-            SeparatorView(style: .dotted, axis: .vertical),
+            SeparatorView(style: .dot, axis: .vertical),
             SeparatorView(axis: .vertical, backgroundColor: .red),
             SeparatorView(axis: .vertical, backgroundColor: UIColor.black.alpha(0.2)),
-            SeparatorView(style: .dotted, axis: .vertical, backgroundColor: .red),
-            SeparatorView(style: .dotted, axis: .vertical, backgroundColor: UIColor.blue.alpha(0.2)),
-            SeparatorView(style: .pattern(value: [5, 2]), axis: .vertical, backgroundColor: .black),
+            SeparatorView(style: .dot, axis: .vertical, backgroundColor: .red),
+            SeparatorView(style: .dot, axis: .vertical, backgroundColor: UIColor.blue.alpha(0.2)),
+            SeparatorView(style: .pattern(value: [2, 4]), axis: .vertical, backgroundColor: .black),
             SeparatorView(axis: .vertical, backgroundColor: .blue, thickness: 4)
         ]).apply {
             $0.axis = .horizontal
@@ -81,17 +81,23 @@ final class SeparatorViewController: UIViewController {
             }
         }
 
+        let bigDotsSeparator = SeparatorView(backgroundColor: .gray, automaticallySetThickness: false).apply {
+            $0.automaticThickness = 10
+            $0.style = .dot
+        }
+
         return UIStackView(arrangedSubviews: [
             SeparatorView(),
-            SeparatorView(style: .dotted),
+            SeparatorView(style: .dot),
             SeparatorView(backgroundColor: .red),
             SeparatorView(backgroundColor: UIColor.black.alpha(0.2)),
-            SeparatorView(style: .dotted, backgroundColor: .red),
-            SeparatorView(style: .dotted, backgroundColor: UIColor.blue.alpha(0.2)),
+            SeparatorView(style: .dot, backgroundColor: .red),
+            SeparatorView(style: .dot, backgroundColor: UIColor.blue.alpha(0.2)),
             SeparatorView(style: .pattern(value: [2, 5]), backgroundColor: .black),
             SeparatorView(backgroundColor: .black, thickness: 5),
             appliedSeparator,
-            freeSeparator
+            freeSeparator,
+            bigDotsSeparator
         ]).apply {
             $0.axis = .vertical
             $0.spacing = .maximumPadding
