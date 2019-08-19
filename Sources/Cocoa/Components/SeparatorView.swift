@@ -28,14 +28,14 @@ extension SeparatorView {
     public enum Style: Equatable {
         case plain
         case dot(spacing: Float)
-        case pattern(value: [Float])
+        case dash(value: [Float])
 
         public static var dot: Style {
             return .dot(spacing: 1.5)
         }
 
         public static var dash: Style {
-            return .pattern(value: [2, 5])
+            return .dash(value: [2, 5])
         }
     }
 }
@@ -63,9 +63,9 @@ final public class SeparatorView: UIView {
         set { shapeLayer.lineCap = newValue }
     }
 
-    public var automaticThickness: CGFloat? {
+    public var thickness: CGFloat? {
         didSet {
-            guard oldValue != automaticThickness else { return }
+            guard oldValue != thickness else { return }
             updateThicknessConstraintIfNeeded()
         }
     }
@@ -95,15 +95,6 @@ final public class SeparatorView: UIView {
             guard oldValue != bounds else { return }
             updatePath()
         }
-    }
-
-    private var patternLineWidth: CGFloat {
-        var width = axis == .horizontal ? bounds.height : bounds.width
-        if style == .plain {
-            width /= 2.0
-        }
-        guard width > 0 else { return defaultThickness }
-        return width
     }
 
     /// - Parameters:
@@ -141,7 +132,7 @@ final public class SeparatorView: UIView {
 
     private func commonInit(automaticallySetThickness: Bool = true, backgroundColor: UIColor? = nil, thickness: CGFloat? = nil) {
         super.backgroundColor = .clear
-        automaticThickness = automaticallySetThickness ? (thickness ?? defaultThickness) : nil
+        self.thickness = automaticallySetThickness ? (thickness ?? defaultThickness) : nil
         updateThicknessConstraintIfNeeded()
         if let backgroundColor = backgroundColor {
             self.backgroundColor = backgroundColor
@@ -175,23 +166,37 @@ final public class SeparatorView: UIView {
                     NSNumber(value: 0.001),
                     NSNumber(value: spacing * Float(patternLineWidth) * 2.0)
                 ]
-            case .pattern(let value):
+            case .dash(let value):
                 shapeLayer.lineDashPattern = value.map { NSNumber(value: $0) }
         }
+    }
+
+    private var patternLineWidth: CGFloat {
+        var width = axis == .horizontal ? bounds.height : bounds.width
+
+        if style == .plain {
+            width /= 2.0
+        }
+
+        guard width > 0 else {
+            return defaultThickness
+        }
+
+        return width
     }
 
     private var defaultThickness: CGFloat {
         switch style {
             case .plain:
                 return onePixel
-            case .pattern, .dot:
+            case .dash, .dot:
                 return 2
         }
     }
 
     private var thicknessConstraint: NSLayoutConstraint?
     private func updateThicknessConstraintIfNeeded() {
-        guard let thickness = automaticThickness else {
+        guard let thickness = thickness else {
             thicknessConstraint?.deactivate()
             return
         }
