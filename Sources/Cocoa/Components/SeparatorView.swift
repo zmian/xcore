@@ -60,7 +60,11 @@ final public class SeparatorView: UIView {
 
     public var lineCap: CAShapeLayerLineCap {
         get { return shapeLayer.lineCap }
-        set { shapeLayer.lineCap = newValue }
+        set {
+            guard newValue != shapeLayer.lineCap else { return }
+            shapeLayer.lineCap = newValue
+            updatePath()
+        }
     }
 
     public var thickness: CGFloat? {
@@ -146,8 +150,10 @@ final public class SeparatorView: UIView {
     }
 
     private func updatePath() {
-        let origin = axis == .horizontal ? CGPoint(x: 0, y: bounds.midY) : CGPoint(x: bounds.midX, y: 0)
-        let end = axis == .horizontal ? CGPoint(x: bounds.width, y: bounds.midY) : CGPoint(x: bounds.midX, y: bounds.height)
+        let capOffset = lineCap != .butt ? patternLineWidth / 2.0 : 0
+        let lineAxisPosition = patternLineWidth / 2.0
+        let origin = axis == .horizontal ? CGPoint(x: capOffset, y: lineAxisPosition) : CGPoint(x: lineAxisPosition, y: capOffset)
+        let end = axis == .horizontal ? CGPoint(x: bounds.width - capOffset, y: lineAxisPosition) : CGPoint(x: lineAxisPosition, y: bounds.height - capOffset)
 
         let path = CGMutablePath()
         path.move(to: origin)
@@ -172,12 +178,7 @@ final public class SeparatorView: UIView {
     }
 
     private var patternLineWidth: CGFloat {
-        var width = axis == .horizontal ? bounds.height : bounds.width
-
-        if style == .plain {
-            width /= 2.0
-        }
-
+        let width = thickness ?? (axis == .horizontal ? bounds.height : bounds.width)
         guard width > 0 else {
             return defaultThickness
         }
