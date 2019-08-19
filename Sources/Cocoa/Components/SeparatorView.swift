@@ -67,6 +67,10 @@ final public class SeparatorView: UIView {
         }
     }
 
+    /// An option to specify custom thickness.
+    ///
+    /// The default value is `nil`, meaning use the default thickness for each
+    /// style.
     public var thickness: CGFloat? {
         didSet {
             guard oldValue != thickness else { return }
@@ -118,8 +122,8 @@ final public class SeparatorView: UIView {
         self.style = style
         self.axis = axis
         commonInit(
-            automaticallySetThickness: automaticallySetThickness,
             backgroundColor: backgroundColor,
+            automaticallySetThickness: automaticallySetThickness,
             thickness: thickness
         )
     }
@@ -134,9 +138,10 @@ final public class SeparatorView: UIView {
         commonInit()
     }
 
-    private func commonInit(automaticallySetThickness: Bool = true, backgroundColor: UIColor? = nil, thickness: CGFloat? = nil) {
+    private func commonInit(backgroundColor: UIColor? = nil, automaticallySetThickness: Bool = true, thickness: CGFloat? = nil) {
         super.backgroundColor = .clear
-        self.thickness = automaticallySetThickness ? (thickness ?? defaultThickness) : nil
+        self.automaticallySetThickness = automaticallySetThickness
+        self.thickness = thickness
         updateThicknessConstraintIfNeeded()
         if let backgroundColor = backgroundColor {
             self.backgroundColor = backgroundColor
@@ -186,6 +191,8 @@ final public class SeparatorView: UIView {
         return width
     }
 
+    private var automaticallySetThickness = true
+
     private var defaultThickness: CGFloat {
         switch style {
             case .plain:
@@ -197,10 +204,12 @@ final public class SeparatorView: UIView {
 
     private var thicknessConstraint: NSLayoutConstraint?
     private func updateThicknessConstraintIfNeeded() {
-        guard let thickness = thickness else {
+        guard automaticallySetThickness else {
             thicknessConstraint?.deactivate()
             return
         }
+
+        let thickness = self.thickness ?? defaultThickness
 
         func constraintBlock(_ anchor: Anchor) {
             switch axis {
