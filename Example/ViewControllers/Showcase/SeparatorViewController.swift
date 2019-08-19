@@ -81,7 +81,7 @@ final class SeparatorViewController: UIViewController {
             }
         }
 
-        let bigDotsSeparator = SeparatorView(backgroundColor: .gray, automaticallySetThickness: false).apply {
+        let bigDotsSeparator = SeparatorView(backgroundColor: .gray).apply {
             $0.thickness = 10
             $0.style = .dot
         }

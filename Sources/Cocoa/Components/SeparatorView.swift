@@ -183,7 +183,8 @@ final public class SeparatorView: UIView {
     }
 
     private var patternLineWidth: CGFloat {
-        let width = thickness ?? (axis == .horizontal ? bounds.height : bounds.width)
+        let width = axis == .horizontal ? bounds.height : bounds.width
+
         guard width > 0 else {
             return defaultThickness
         }
