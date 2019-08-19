@@ -25,18 +25,47 @@
 import UIKit
 
 extension SeparatorView {
-    public enum Style {
+    public enum Style: Equatable {
         case plain
-        case dotted
+        case dot(spacing: Float)
+        case dash(value: [Float])
+
+        public static var dot: Style {
+            return .dot(spacing: 1.5)
+        }
+
+        public static var dash: Style {
+            return .dash(value: [2, 5])
+        }
     }
 }
 
 final public class SeparatorView: UIView {
+    public override class var layerClass: AnyClass {
+        return CAShapeLayer.self
+    }
+
+    private var shapeLayer: CAShapeLayer {
+        return layer as! CAShapeLayer
+    }
+
     /// The default value is `.plain`.
     public var style: Style = .plain {
         didSet {
             guard oldValue != style else { return }
-            setNeedsDisplay()
+            updateThicknessConstraintIfNeeded()
+            updatePattern()
+        }
+    }
+
+    public var lineCap: CAShapeLayerLineCap {
+        get { return shapeLayer.lineCap }
+        set { shapeLayer.lineCap = newValue }
+    }
+
+    public var thickness: CGFloat? {
+        didSet {
+            guard oldValue != thickness else { return }
             updateThicknessConstraintIfNeeded()
         }
     }
@@ -44,27 +73,16 @@ final public class SeparatorView: UIView {
     /// The default value is `.horizontal`.
     private var axis: NSLayoutConstraint.Axis = .horizontal
 
-    private var automaticallySetThickness = true {
+    private var _backgroundColor: UIColor? {
         didSet {
-            guard oldValue != automaticallySetThickness else { return }
-            updateThicknessConstraintIfNeeded()
+            guard oldValue != _backgroundColor else { return }
+            shapeLayer.strokeColor = backgroundColor?.cgColor
         }
     }
 
-    /// The default value is `1`. Only applies when the `style` is `.dotted`.
-    public var numberOfPattern: CGFloat = 1
-
-    /// The default value is `3`. Only applies when the `style` is `.dotted`.
-    public var space: CGFloat = 3
-
-    private var _backgroundColor: UIColor?
     @objc public dynamic override var backgroundColor: UIColor? {
         get { return _backgroundColor ?? .appSeparator }
-        set {
-            guard newValue != _backgroundColor else { return }
-            _backgroundColor = newValue
-            setNeedsDisplay()
-        }
+        set { _backgroundColor = newValue }
     }
 
     @objc public dynamic override var tintColor: UIColor! {
@@ -72,24 +90,34 @@ final public class SeparatorView: UIView {
         set { backgroundColor = newValue }
     }
 
+    public override var bounds: CGRect {
+        didSet {
+            guard oldValue != bounds else { return }
+            updatePath()
+        }
+    }
+
+    /// - Parameters:
+    ///   - style: The default value is `.plain`.
+    ///   - axis: The default value is `.horizontal`.
+    ///   - backgroundColor: The default value is `nil`.
+    ///   - automaticallySetThickness: The default value is `true`.
+    ///   - thickness: The default value is `nil`.
     public init(
         style: Style = .plain,
         axis: NSLayoutConstraint.Axis = .horizontal,
         backgroundColor: UIColor? = nil,
-        automaticallySetThickness: Bool = true
+        automaticallySetThickness: Bool = true,
+        thickness: CGFloat? = nil
     ) {
         super.init(frame: .zero)
         self.style = style
         self.axis = axis
-        self.automaticallySetThickness = automaticallySetThickness
-        commonInit()
-        if let backgroundColor = backgroundColor {
-            self.backgroundColor = backgroundColor
-            // This ensures that UIAppearance proxy correctly works when
-            // `SeparatorView.appearance().tintColor` is used instead of
-            // `SeparatorView.appearance().backgroundColor`.
-            self.tintColor = backgroundColor
-        }
+        commonInit(
+            automaticallySetThickness: automaticallySetThickness,
+            backgroundColor: backgroundColor,
+            thickness: thickness
+        )
     }
 
     public override init(frame: CGRect) {
@@ -102,48 +130,73 @@ final public class SeparatorView: UIView {
         commonInit()
     }
 
-    private func commonInit() {
+    private func commonInit(automaticallySetThickness: Bool = true, backgroundColor: UIColor? = nil, thickness: CGFloat? = nil) {
         super.backgroundColor = .clear
+        self.thickness = automaticallySetThickness ? (thickness ?? defaultThickness) : nil
         updateThicknessConstraintIfNeeded()
+        if let backgroundColor = backgroundColor {
+            self.backgroundColor = backgroundColor
+            // This ensures that UIAppearance proxy correctly works when
+            // `SeparatorView.appearance().tintColor` is used instead of
+            // `SeparatorView.appearance().backgroundColor`.
+            self.tintColor = backgroundColor
+        }
+        shapeLayer.strokeColor = self.backgroundColor?.cgColor
+        lineCap = .round
     }
 
-    public override func draw(_ rect: CGRect) {
+    private func updatePath() {
+        let origin = axis == .horizontal ? CGPoint(x: 0, y: bounds.midY) : CGPoint(x: bounds.midX, y: 0)
+        let end = axis == .horizontal ? CGPoint(x: bounds.width, y: bounds.midY) : CGPoint(x: bounds.midX, y: bounds.height)
+
+        let path = CGMutablePath()
+        path.move(to: origin)
+        path.addLine(to: end)
+        shapeLayer.path = path
+        shapeLayer.lineWidth = patternLineWidth
+        updatePattern()
+    }
+
+    private func updatePattern() {
         switch style {
             case .plain:
-                backgroundColor?.setFill()
-                UIRectFill(rect)
-            case .dotted:
-                let path = UIBezierPath()
-                let y = rect.midY
-                path.move(to: CGPoint(x: rect.height, y: y))
-                path.addLine(to: CGPoint(x: rect.width, y: y))
-                path.lineWidth = rect.height - 0.5
-
-                let dashes: [CGFloat] = [0, path.lineWidth * space]
-                path.setLineDash(dashes, count: dashes.count, phase: 0)
-                path.lineCapStyle = .round
-                backgroundColor?.setStroke()
-                path.stroke()
+                shapeLayer.lineDashPattern = nil
+            case .dot(let spacing):
+                shapeLayer.lineDashPattern = [
+                    NSNumber(value: 0.001),
+                    NSNumber(value: spacing * Float(patternLineWidth) * 2.0)
+                ]
+            case .dash(let value):
+                shapeLayer.lineDashPattern = value.map { NSNumber(value: $0) }
         }
     }
 
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        setNeedsDisplay()
+    private var patternLineWidth: CGFloat {
+        var width = axis == .horizontal ? bounds.height : bounds.width
+
+        if style == .plain {
+            width /= 2.0
+        }
+
+        guard width > 0 else {
+            return defaultThickness
+        }
+
+        return width
     }
 
-    private var thickness: CGFloat {
+    private var defaultThickness: CGFloat {
         switch style {
             case .plain:
                 return onePixel
-            case .dotted:
+            case .dash, .dot:
                 return 2
         }
     }
 
     private var thicknessConstraint: NSLayoutConstraint?
     private func updateThicknessConstraintIfNeeded() {
-        guard automaticallySetThickness else {
+        guard let thickness = thickness else {
             thicknessConstraint?.deactivate()
             return
         }
@@ -166,5 +219,6 @@ final public class SeparatorView: UIView {
         }
 
         thicknessConstraint?.activate()
+        setNeedsLayout()
     }
 }
