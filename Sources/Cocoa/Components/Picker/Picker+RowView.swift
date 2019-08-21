@@ -49,14 +49,6 @@ extension Picker {
 extension Picker {
     final public class RowView: UIView, Configurable {
         static let height: CGFloat = 50
-        private let imageSize: CGSize = 30
-
-        private lazy var stackView = UIStackView(arrangedSubviews: [
-            titleLabel,
-            subtitleLabel
-        ]).apply {
-            $0.axis = .vertical
-        }
 
         private let titleLabel = UILabel().apply {
             $0.font = .app(style: .body)
@@ -70,6 +62,25 @@ extension Picker {
 
         private let imageView = UIImageView().apply {
             $0.isContentModeAutomaticallyAdjusted = true
+            $0.anchor.make {
+                $0.size.equalTo(CGFloat(30))
+            }
+        }
+
+        private lazy var stackView = UIStackView(arrangedSubviews: [
+            imageView,
+            titleStackView
+        ]).apply {
+            $0.axis = .horizontal
+            $0.alignment = .center
+            $0.spacing = .minimumPadding
+        }
+
+        private lazy var titleStackView = UIStackView(arrangedSubviews: [
+            titleLabel,
+            subtitleLabel
+        ]).apply {
+            $0.axis = .vertical
         }
 
         override init(frame: CGRect) {
@@ -91,18 +102,11 @@ extension Picker {
 
         private func commonInit() {
             addSubview(stackView)
-            addSubview(imageView)
 
             stackView.anchor.make {
-                $0.height.equalTo(RowView.height)
-                $0.width.lessThanOrEqualToSuperview().inset(imageSize.width + .defaultPadding)
+                $0.height.greaterThanOrEqualTo(RowView.height)
+                $0.width.lessThanOrEqualToSuperview().inset(CGFloat.defaultPadding)
                 $0.center.equalToSuperview()
-            }
-
-            imageView.anchor.make {
-                $0.trailing.equalTo(stackView.anchor.leading).inset(CGFloat.minimumPadding)
-                $0.size.equalTo(imageSize)
-                $0.centerY.equalToSuperview()
             }
         }
 
@@ -118,7 +122,10 @@ extension Picker {
                 $0.isHidden = model.subtitle == nil
             }
 
-            imageView.setImage(model.image)
+            imageView.apply {
+                $0.setImage(model.image)
+                $0.isHidden = model.image == nil
+            }
         }
 
         // MARK: - UIAppearance Properties
