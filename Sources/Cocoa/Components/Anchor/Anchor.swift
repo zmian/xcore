@@ -524,3 +524,59 @@ extension Anchor.DimensionAxis {
         return Modifier(constraints: constraints)
     }
 }
+
+extension Anchor.DimensionAxis {
+    @discardableResult
+    open func greaterThanOrEqualTo(_ value: CGFloat, file: StaticString = #file, line: UInt = #line) -> Modifier {
+        return greaterThanOrEqualTo(CGSize(value), file: file, line: line)
+    }
+
+    @discardableResult
+    open func greaterThanOrEqualTo(_ value: CGSize, file: StaticString = #file, line: UInt = #line) -> Modifier {
+        owningView.translatesAutoresizingMaskIntoConstraints = false
+
+        var constraints: [NSLayoutConstraint] = []
+
+        if attribute.contains(.width) {
+            constraints.append(
+                owningView.widthAnchor.constraint(greaterThanOrEqualToConstant: value.width).anchorAttributes(.width)
+            )
+        }
+
+        if attribute.contains(.height) {
+            constraints.append(
+                owningView.heightAnchor.constraint(greaterThanOrEqualToConstant: value.height).anchorAttributes(.height)
+            )
+        }
+
+        return Modifier(constraints: constraints)
+    }
+}
+
+extension Anchor.DimensionAxis {
+    @discardableResult
+    open func lessThanOrEqualTo(_ value: CGFloat, file: StaticString = #file, line: UInt = #line) -> Modifier {
+        return greaterThanOrEqualTo(CGSize(value), file: file, line: line)
+    }
+
+    @discardableResult
+    open func lessThanOrEqualTo(_ value: CGSize, file: StaticString = #file, line: UInt = #line) -> Modifier {
+        owningView.translatesAutoresizingMaskIntoConstraints = false
+
+        var constraints: [NSLayoutConstraint] = []
+
+        if attribute.contains(.width) {
+            constraints.append(
+                owningView.widthAnchor.constraint(lessThanOrEqualToConstant: value.width).anchorAttributes(.width)
+            )
+        }
+
+        if attribute.contains(.height) {
+            constraints.append(
+                owningView.heightAnchor.constraint(lessThanOrEqualToConstant: value.height).anchorAttributes(.height)
+            )
+        }
+
+        return Modifier(constraints: constraints)
+    }
+}
