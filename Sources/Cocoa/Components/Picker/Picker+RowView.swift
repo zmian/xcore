@@ -62,6 +62,7 @@ extension Picker {
 
         private let imageView = UIImageView().apply {
             $0.isContentModeAutomaticallyAdjusted = true
+            $0.enableSmoothScaling()
             $0.anchor.make {
                 $0.size.equalTo(CGFloat(30))
             }
