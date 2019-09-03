@@ -78,11 +78,12 @@ final public class DrawerScreen: NSObject {
             self?.dismiss()
         }
 
-        let gesture = UITapGestureRecognizer { [weak self] _ in
-            self?.dismiss()
-        }
-        gesture.delegate = self
-        hud.view.addGestureRecognizer(gesture)
+        hud.view.addGestureRecognizer(UITapGestureRecognizer().apply {
+            $0.delegate = self
+            $0.addAction { [weak self] _ in
+                self?.dismiss()
+            }
+        })
     }
 
     deinit {
@@ -132,6 +133,18 @@ final public class DrawerScreen: NSObject {
     }
 }
 
+// MARK: - UIGestureRecognizerDelegate
+
+extension DrawerScreen: UIGestureRecognizerDelegate {
+    // Prevents dismiss gesture to be detected inside the modal view, conflicts with TableView/CollectionView tap gestures
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        let location = touch.location(in: modalView)
+        return !modalView.point(inside: location, with: nil)
+    }
+}
+
+// MARK: - Public API
+
 extension DrawerScreen {
     public static func present(_ content: Content) {
         shared.dismiss {
@@ -143,12 +156,3 @@ extension DrawerScreen {
         shared.dismiss()
     }
 }
-
-extension DrawerScreen: UIGestureRecognizerDelegate {
-    // Prevents dismiss gesture to be detected inside the modal view, conflicts with TableView/CollectionView tap gestures
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        let location = touch.location(in: modalView)
-        return !modalView.point(inside: location, with: nil)
-    }
-}
-
