@@ -79,6 +79,24 @@ final class RootViewController: DynamicTableViewController {
                 Picker.present(selected: ExampleArrowOptions.allCases.first) { option in
                     print("Did select \(option)")
                 }
+            },
+            DynamicTableModel(title: "Drawer Screen", subtitle: "Dynamic Table View inside Drawer Screen") { _, _ in
+                let vc = DynamicTableViewController(style: .plain)
+                vc.tableView.sections = [
+                    Section(items: [
+                        DynamicTableModel(title: "Option 1", subtitle: "FeedViewController demonstration") { _, _ in
+                            print("Selected model!!")
+                        },
+                        DynamicTableModel(title: "Option 2", subtitle: "FeedViewController demonstration"),
+                        DynamicTableModel(title: "Option 3", subtitle: "FeedViewController demonstration"),
+                        DynamicTableModel(title: "Option 4", subtitle: "FeedViewController demonstration"),
+                        DynamicTableModel(title: "Option 5", subtitle: "FeedViewController demonstration")
+                    ])
+                ]
+                vc.view.snp.makeConstraints { make in
+                    make.height.equalTo(300)
+                }
+                DrawerScreen.present(vc.view)
             }
         ]
     }
