@@ -43,7 +43,7 @@ extension UIView: DrawerScreenContent {
 
 // MARK: - DrawerScreen
 
-final public class DrawerScreen {
+final public class DrawerScreen: NSObject {
     public typealias Content = DrawerScreenContent
 
     private static let shared = DrawerScreen()
@@ -59,7 +59,8 @@ final public class DrawerScreen {
     private var shownConstraint: NSLayoutConstraint?
     private var hiddenConstraint: NSLayoutConstraint?
 
-    init() {
+    public override init() {
+        super.init()
         hud.preferredStatusBarStyle = .inherit
         hud.backgroundColor = UIColor.black.alpha(0.1)
         hud.duration = .init(.fast)
@@ -77,9 +78,11 @@ final public class DrawerScreen {
             self?.dismiss()
         }
 
-        hud.view.addGestureRecognizer(UITapGestureRecognizer { [weak self] _ in
+        let gesture = UITapGestureRecognizer { [weak self] _ in
             self?.dismiss()
-        })
+        }
+        gesture.delegate = self
+        hud.view.addGestureRecognizer(gesture)
     }
 
     deinit {
@@ -140,3 +143,12 @@ extension DrawerScreen {
         shared.dismiss()
     }
 }
+
+extension DrawerScreen: UIGestureRecognizerDelegate {
+    // Prevents dismiss gesture to be detected inside the modal view, conflicts with TableView/CollectionView tap gestures
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        let location = touch.location(in: modalView)
+        return !modalView.point(inside: location, with: nil)
+    }
+}
+
