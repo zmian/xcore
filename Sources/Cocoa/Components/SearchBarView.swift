@@ -78,7 +78,7 @@ final public class SearchBarView: UIView {
     }
 
     private lazy var _searchFieldBackgroundColor: UIColor = {
-        searchBar.searchFieldBackgroundColor ?? UIColor.backgroundDisabled.alpha(0.3)
+        searchBar.searchFieldBackgroundColor ?? UIColor.appBackgroundDisabled.alpha(0.3)
     }()
 
     @objc dynamic public var searchFieldBackgroundColor: UIColor {

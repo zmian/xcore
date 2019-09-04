@@ -117,6 +117,8 @@ extension UIColor {
 
     /// The color for app borders or divider lines that hide any underlying content.
     @nonobjc public static var appSeparator = UIColor(hex: "DFE9F5")
+    @nonobjc public static var appHighlightedBackground = appSeparator
+    @nonobjc public static var appBackgroundDisabled = appleGray
 }
 
 extension UIColor {
@@ -126,8 +128,6 @@ extension UIColor {
     @nonobjc static var applePurple: UIColor { return UIColor(hex: "5856D6") }
     @nonobjc static var appleGreen: UIColor { return UIColor(hex: "4CD964") }
     @nonobjc static var appleRed: UIColor { return UIColor(hex: "FF3B30") }
-
-    @nonobjc static var backgroundDisabled: UIColor { return appleGray }
 }
 
 // MARK: - App Constants

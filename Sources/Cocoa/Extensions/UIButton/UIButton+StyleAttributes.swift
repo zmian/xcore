@@ -142,7 +142,7 @@ extension Identifier where Type: UIButton {
 
     public func disabledBackgroundColor(button: UIButton) -> UIColor {
         guard let color = attributes(.disabledBackgroundColor) as? UIColor else {
-            return .backgroundDisabled
+            return .appBackgroundDisabled
         }
 
         return color
