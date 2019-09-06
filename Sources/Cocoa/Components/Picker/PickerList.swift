@@ -86,6 +86,7 @@ open class PickerList: DynamicTableViewController {
         tableView.sections = [
             Section(items: model.items)
         ]
+        tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
         tableView.layoutIfNeeded()
         view.snp.updateConstraints { make in
             let contentHeight = tableView.contentSize.height
