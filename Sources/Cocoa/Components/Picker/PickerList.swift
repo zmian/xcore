@@ -40,10 +40,12 @@ extension PickerListModel {
 // MARK: - PickerList
 
 open class PickerList: DynamicTableViewController {
+    private var contentViewportHeightConstraint: NSLayoutConstraint?
+    private let model: PickerListModel
+
     /// The animation to use when reloading the table
     open var reloadAnimation: UITableView.RowAnimation = .automatic
 
-    private let model: PickerListModel
 
     public init(model: PickerListModel) {
         self.model = model
@@ -83,24 +85,33 @@ open class PickerList: DynamicTableViewController {
         }
 
         reloadData()
+
+        view.anchor.make {
+            contentViewportHeightConstraint = $0.height.equalTo(contentViewportHeight).constraints.first
+        }
     }
 
     private func reloadData() {
         let hasSections = !tableView.sections.isEmpty
+
         tableView.sections = [
             Section(items: model.items)
         ]
+
         if hasSections {
             tableView.reloadSections(IndexSet(integer: 0), with: reloadAnimation)
         } else {
             tableView.reloadData()
         }
+
         tableView.layoutIfNeeded()
-        view.snp.updateConstraints { make in
-            let contentHeight = tableView.contentSize.height
-            let itemHeight = contentHeight / CGFloat(model.items.count)
-            make.height.equalTo(min(contentHeight, itemHeight * 4))
-        }
+        contentViewportHeightConstraint?.constant = contentViewportHeight
+    }
+
+    private var contentViewportHeight: CGFloat {
+        let contentHeight = tableView.contentSize.height
+        let itemHeight = contentHeight / CGFloat(model.items.count)
+        return min(contentHeight, itemHeight * 4)
     }
 }
 

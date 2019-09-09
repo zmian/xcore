@@ -84,7 +84,7 @@ extension UIImageView {
     }
 
     @objc private func swizzled_setBounds(_ bounds: CGRect) {
-        self.swizzled_setBounds(bounds)
+        swizzled_setBounds(bounds)
         adjustContentModeIfNeeded()
     }
 

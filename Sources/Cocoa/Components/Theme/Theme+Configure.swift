@@ -172,9 +172,11 @@ extension Theme {
     private static func setComponentsTheme() {
         SeparatorView.appearance().tintColor = current.separatorColor
 
+        #if canImport(Haring)
         MarkupText.appearance.apply {
             $0.textColor = current.textColor
         }
+        #endif
 
         UIViewController.defaultAppearance.apply {
             $0.tintColor = current.tintColor
