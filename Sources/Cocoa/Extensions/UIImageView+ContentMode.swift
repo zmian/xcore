@@ -40,12 +40,6 @@ extension UIImageView {
 }
 
 extension UIImageView {
-    open override var bounds: CGRect {
-        didSet {
-            adjustContentModeIfNeeded()
-        }
-    }
-
     /// A convenience method to adjust content mode to be
     /// `.scaleAspectFit` if the image is large or `.center` when the image is small
     /// or same size as `self`.
@@ -89,7 +83,18 @@ extension UIImageView {
         adjustContentModeIfNeeded()
     }
 
+    @objc private func swizzled_setBounds(_ bounds: CGRect) {
+        self.swizzled_setBounds(bounds)
+        adjustContentModeIfNeeded()
+    }
+
     static func runOnceSwapSelectors() {
+        swizzle(
+            UIImageView.self,
+            originalSelector: #selector(setter: UIImageView.bounds),
+            swizzledSelector: #selector(UIImageView.swizzled_setBounds(_:))
+        )
+
         swizzle(
             UIImageView.self,
             originalSelector: #selector(setter: UIImageView.image),
