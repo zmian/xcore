@@ -24,7 +24,7 @@
 
 import UIKit
 
-class ExamplePickerListModel: PickerListModel {
+final class ExamplePickerListModel: PickerListModel {
     private var timer: Timer?
     private var count = 0
     private var _didChange: (() -> Void)?
