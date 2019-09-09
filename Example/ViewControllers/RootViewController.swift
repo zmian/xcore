@@ -97,6 +97,12 @@ final class RootViewController: DynamicTableViewController {
                     make.height.equalTo(300)
                 }
                 DrawerScreen.present(vc.view)
+            },
+            DynamicTableModel(title: "Picker List", subtitle: "Dynamic Table View inside Drawer Screen configured using a view-model") { _, _ in
+                let model = ExamplePickerListModel()
+                let list = PickerList(model: model)
+                list.reloadAnimation = .none
+                list.present()
             }
         ]
     }
