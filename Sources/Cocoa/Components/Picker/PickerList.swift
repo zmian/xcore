@@ -40,6 +40,9 @@ extension PickerListModel {
 // MARK: - PickerList
 
 open class PickerList: DynamicTableViewController {
+    /// The animation to use when reloading the table
+    open var reloadAnimation: UITableView.RowAnimation = .automatic
+
     private let model: PickerListModel
 
     public init(model: PickerListModel) {
@@ -88,7 +91,7 @@ open class PickerList: DynamicTableViewController {
             Section(items: model.items)
         ]
         if hasSections {
-            tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+            tableView.reloadSections(IndexSet(integer: 0), with: reloadAnimation)
         } else {
             tableView.reloadData()
         }
