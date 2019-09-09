@@ -1,5 +1,5 @@
 //
-//  ExamplePickerListModel.swift
+// ExamplePickerListModel.swift
 //
 // Copyright © 2019 Xcore
 //
