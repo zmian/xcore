@@ -64,3 +64,11 @@ extension UIStackView {
         insertArrangedSubview(view, at: insertionIndex)
     }
 }
+
+extension UIStackView {
+    public func removeAllArrangedSubviews() {
+        arrangedSubviews.forEach {
+            $0.removeFromSuperview()
+        }
+    }
+}
