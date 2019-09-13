@@ -121,7 +121,7 @@ extension Anchor.Axis {
             constraints.firstAttribute(.top)?.constant = value.top
             constraints.firstAttribute(.bottom)?.constant = value.bottom
             constraints.firstAttribute(.leading)?.constant = value.left
-            constraints.firstAttribute(.trailing)?.constant = -value.right
+            constraints.firstAttribute(.trailing)?.constant = value.right
             return self
         }
 
@@ -299,15 +299,15 @@ extension Anchor.Axis {
 
         if attribute.contains(.trailing) {
             constraints.append(
-                owningView.trailingAnchor.constraint(
+                otherAttribute.xAxisAnchor(
+                    otherView,
+                    safeAreaLayoutGuideOptions: safeAreaLayoutGuideOptions,
+                    preferred: Anchor.Attributes.related(to: .trailing),
+                    file: file,
+                    line: line
+                ).constraint(
                     relation,
-                    anchor: otherAttribute.xAxisAnchor(
-                        otherView,
-                        safeAreaLayoutGuideOptions: safeAreaLayoutGuideOptions,
-                        preferred: Anchor.Attributes.related(to: .trailing),
-                        file: file,
-                        line: line
-                    )
+                    anchor: owningView.trailingAnchor
                 ).identifier("xc-anchor-trailing").anchorAttributes(.trailing)
             )
         }
