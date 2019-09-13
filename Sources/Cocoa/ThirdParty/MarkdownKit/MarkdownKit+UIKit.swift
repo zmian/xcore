@@ -44,6 +44,7 @@ extension MarkupText {
         public var textColor: UIColor = .black
         public var isLabelEnabled: Bool = false
         public var isTextViewEnabled: Bool = false
+        public var customElements: [MarkdownElement] = []
         fileprivate override init() {}
     }
 }
@@ -69,7 +70,7 @@ extension MarkdownParser {
                 MarkdownBackgroundColor(),
                 MarkdownCustomFont(),
                 MarkdownUnderline()
-            ]
+            ] + MarkupText.appearance.customElements
         )
         return markdownParser
     }
