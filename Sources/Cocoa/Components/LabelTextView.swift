@@ -36,6 +36,9 @@ open class LabelTextView: UITextView {
     /// The default value is `true`.
     open var isEmailLinkTapEnabled = true
 
+    /// The default value is ["http", "https"]
+    open var supportedUrlSchemes: [URL.Scheme] = [.http, .https]
+
     private var didTapUrl: URLTapActionBlock?
     open func didTapUrl(_ callback: URLTapActionBlock? = nil) {
         self.didTapUrl = callback
@@ -82,7 +85,7 @@ extension LabelTextView: UITextViewDelegate {
     }
 
     private func handleUrlTapped(url: URL, characterRange: NSRange) -> Bool {
-        if [.http, .https].contains(url.schemeType) {
+        if supportedUrlSchemes.contains(url.schemeType) {
             notifyUrlTapped(url: url, characterRange: characterRange)
             return false
         }
