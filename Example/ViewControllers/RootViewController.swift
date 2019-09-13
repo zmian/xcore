@@ -81,7 +81,7 @@ final class RootViewController: DynamicTableViewController {
             },
             DynamicTableModel(title: "Options Representable Picker", subtitle: "Using Picker to select from an options enum") { _, _ in
                 Picker.present(selected: ExampleArrowOptions.allCases.first) { option in
-                    print("Did select \(option)")
+                    print("Selected: \(option)")
                 }
             },
             DynamicTableModel(title: "Drawer Screen", subtitle: "Dynamic Table View inside Drawer Screen") { _, _ in
@@ -100,9 +100,24 @@ final class RootViewController: DynamicTableViewController {
                 vc.view.snp.makeConstraints { make in
                     make.height.equalTo(300)
                 }
-                DrawerScreen.present(vc.view)
             },
-            DynamicTableModel(title: "Picker List", subtitle: "Dynamic Table View inside Drawer Screen configured using a view-model") { _, _ in
+            DynamicTableModel(title: "Picker List: Options Representable", subtitle: "Using Picker to select from an options enum") { _, _ in
+                PickerList.present(selected: ExampleArrowOptions.allCases.first) { option in
+                    print("Selected: \(option)")
+                }
+            },
+            DynamicTableModel(title: "Picker List: Strings", subtitle: "Using Picker to select from an array of strings") { _, _ in
+                PickerList.present(options: [
+                    "Option 1",
+                    "Option 2",
+                    "Option 3",
+                    "Option 4",
+                    "Option 5",
+                ]) { selected in
+                    print("Selected: \(selected)")
+                }
+            },
+            DynamicTableModel(title: "Picker List: Timer", subtitle: "Dynamic Table View inside Drawer Screen configured using a view-model") { _, _ in
                 let model = ExamplePickerListModel()
                 let list = PickerList(model: model).apply {
                     $0.reloadAnimation = .none

@@ -143,6 +143,7 @@ private final class BasicPickerListModel<T: OptionsRepresentable>: PickerListMod
                 }
 
                 strongSelf.selectionCallback(option)
+                DrawerScreen.dismiss()
             }
         }
     }()
@@ -189,6 +190,7 @@ private final class BasicTextPickerListModel: PickerListModel {
                 }
 
                 strongSelf.selectionCallback(option)
+                DrawerScreen.dismiss()
             }
         }
     }()
