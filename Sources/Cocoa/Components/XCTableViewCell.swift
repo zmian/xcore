@@ -44,7 +44,9 @@ open class XCTableViewCell: UITableViewCell {
     // MARK: - Setup Methods
 
     open override func setSelected(_ selected: Bool, animated: Bool) {}
-    open override func setHighlighted(_ highlighted: Bool, animated: Bool) {}
+    open override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        _setHighlighted(highlighted, animated: animated)
+    }
 
     private func internalCommonInit() {
         backgroundColor = .clear

@@ -51,15 +51,15 @@ final class ExampleDynamicTableViewController: DynamicTableViewController {
                     DynamicTableModel(title: "Woodpecker", accessory: .disclosureIndicator),
                     DynamicTableModel(title: "Blue Jay", accessory: .text("462")),
                     DynamicTableModel(title: "1,223", subtitle: "Globally, 1,223 species of birds", image: r(.blueJay), accessory: .text("5m")),
-                    DynamicTableModel(title: "American Goldfinch", subtitle: "Spinus tristis", image: r(.blueJay), accessory: DynamicTableAccessoryType.checkbox(isSelected: true) { sender -> Void in
+                    DynamicTableModel(title: "American Goldfinch", subtitle: "Spinus tristis", image: r(.blueJay), accessory: ListAccessoryType.checkbox(isSelected: true) { sender -> Void in
                         let choice = sender.isSelected ? "On" : "Off"
                         print("American Goldfinch \(choice)")
                     }),
-                    DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: DynamicTableAccessoryType.checkbox(isSelected: true) { sender -> Void in
+                    DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: ListAccessoryType.checkbox(isSelected: true) { sender -> Void in
                         let choice = sender.isSelected ? "On" : "Off"
                         print("Woodpecker \(choice)")
                     }),
-                    DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: DynamicTableAccessoryType.switch(isOn: true) { sender -> Void in
+                    DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: ListAccessoryType.toggle(isOn: true) { sender -> Void in
                         let choice = sender.isOn ? "On" : "Off"
                         print("Woodpecker \(choice)")
                     }),
@@ -70,6 +70,11 @@ final class ExampleDynamicTableViewController: DynamicTableViewController {
         ]
 
         tableView.configureCell { indexPath, cell, item in
+            cell.avatarView.apply {
+                $0.isContentModeAutomaticallyAdjusted = false
+                $0.contentMode = .scaleAspectFill
+            }
+
             if indexPath.row == 1 {
                 cell.isImageViewRounded = true
             }

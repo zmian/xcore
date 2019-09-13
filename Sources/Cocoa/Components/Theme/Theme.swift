@@ -118,7 +118,7 @@ extension Theme {
         separatorColor: .lightGray,
         toggleColor: .systemTint,
         linkColor: .systemTint,
-        textColor: .darkText,
+        textColor: .black,
         textColorSecondary: .lightGray,
         backgroundColor: .white,
         buttonTextColor: .systemTint,

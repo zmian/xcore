@@ -51,12 +51,13 @@ open class IconLabelView: XCView {
     public let imageView = UIImageView().apply {
         $0.isContentModeAutomaticallyAdjusted = true
         $0.enableSmoothScaling()
+        $0.tintColor = .appTint
     }
 
     public let titleLabel = UILabel().apply {
         $0.font = .app(style: .body)
         $0.textAlignment = .center
-        $0.textColor = .black
+        $0.textColor = Theme.current.textColor
         $0.numberOfLines = 0
         $0.sizeToFit()
     }
@@ -64,7 +65,7 @@ open class IconLabelView: XCView {
     public let subtitleLabel = UILabel().apply {
         $0.font = .app(style: .subheadline)
         $0.textAlignment = .center
-        $0.textColor = .lightGray
+        $0.textColor = Theme.current.textColorSecondary
         $0.numberOfLines = 0
         $0.sizeToFit()
     }
@@ -267,30 +268,6 @@ extension IconLabelView {
     }
 }
 
-// MARK: - UIAppearance Properties
-
-extension IconLabelView {
-    @objc public dynamic var titleTextColor: UIColor {
-        get { return titleLabel.textColor }
-        set { titleLabel.textColor = newValue }
-    }
-
-    @objc public dynamic var titleFont: UIFont {
-        get { return titleLabel.font }
-        set { titleLabel.font = newValue }
-    }
-
-    @objc public dynamic var subtitleTextColor: UIColor {
-        get { return subtitleLabel.textColor }
-        set { subtitleLabel.textColor = newValue }
-    }
-
-    @objc public dynamic var subtitleFont: UIFont {
-        get { return subtitleLabel.font }
-        set { subtitleLabel.font = newValue }
-    }
-}
-
 extension IconLabelView {
     private func updateAxis() {
         switch axis {
@@ -324,5 +301,29 @@ extension IconLabelView {
         }
 
         stackView.setCustomSpacing(textImageSpacing, after: firstView)
+    }
+}
+
+// MARK: - UIAppearance Properties
+
+extension IconLabelView {
+    @objc public dynamic var titleTextColor: UIColor {
+        get { return titleLabel.textColor }
+        set { titleLabel.textColor = newValue }
+    }
+
+    @objc public dynamic var titleFont: UIFont {
+        get { return titleLabel.font }
+        set { titleLabel.font = newValue }
+    }
+
+    @objc public dynamic var subtitleTextColor: UIColor {
+        get { return subtitleLabel.textColor }
+        set { subtitleLabel.textColor = newValue }
+    }
+
+    @objc public dynamic var subtitleFont: UIFont {
+        get { return subtitleLabel.font }
+        set { subtitleLabel.font = newValue }
     }
 }

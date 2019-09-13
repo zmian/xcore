@@ -40,6 +40,10 @@ final class RootViewController: DynamicTableViewController {
                 items: pickers()
             )
         ]
+
+        tableView.configureCell { indexPath, cell, item in
+            cell.highlightedBackgroundColor = .appHighlightedBackground
+        }
     }
 
     private func items() -> [DynamicTableModel] {

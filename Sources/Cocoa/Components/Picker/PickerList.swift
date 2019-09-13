@@ -46,7 +46,6 @@ open class PickerList: DynamicTableViewController {
     /// The animation to use when reloading the table
     open var reloadAnimation: UITableView.RowAnimation = .automatic
 
-
     public init(model: PickerListModel) {
         self.model = model
         super.init(nibName: nil, bundle: nil)
@@ -72,8 +71,6 @@ open class PickerList: DynamicTableViewController {
                 cell.imageSize = 30
                 cell.avatarCornerRadius = 0
                 cell.avatarBorderWidth = 0
-                cell.avatarView.tintColor = .appTint
-                cell.avatarView.isContentModeAutomaticallyAdjusted = true
                 cell.subtitleFont = .app(style: .caption1)
                 cell.separatorInset = 0
                 strongSelf.model.configure(indexPath: indexPath, cell: cell, item: item)

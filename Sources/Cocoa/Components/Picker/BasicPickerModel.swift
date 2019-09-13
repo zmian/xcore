@@ -81,6 +81,8 @@ extension Picker {
     }
 }
 
+// MARK: - BasicPickerModel
+
 private final class BasicPickerModel<T: OptionsRepresentable>: PickerModel {
     private var options: [T] = T.allCases
     private var selectedOption: T
@@ -141,6 +143,8 @@ private final class BasicPickerModel<T: OptionsRepresentable>: PickerModel {
         setSelectedOption(selectedOption)
     }
 }
+
+// MARK: - BasicTextPickerModel
 
 private final class BasicTextPickerModel: PickerModel {
     private let options: [String]
