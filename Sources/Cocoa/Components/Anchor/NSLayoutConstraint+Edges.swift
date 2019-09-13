@@ -53,14 +53,14 @@ extension NSLayoutConstraint {
             top.constant = insets.top
             bottom.constant = insets.bottom
             leading.constant = insets.left
-            trailing.constant = -insets.right
+            trailing.constant = insets.right
         }
 
         public mutating func update(from value: CGFloat) {
             top.constant = value
             bottom.constant = value
             leading.constant = value
-            trailing.constant = -value
+            trailing.constant = value
         }
 
         public func activate() {
