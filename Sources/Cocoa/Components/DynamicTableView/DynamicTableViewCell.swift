@@ -106,65 +106,6 @@ open class DynamicTableViewCell: XCTableViewCell {
         }
     }
 
-    /// The background color of the cell when it is highlighted.
-    @objc open dynamic var highlightedBackgroundColor: UIColor?
-    private var normalBackgroundColor: UIColor?
-    private var observeBackgroundColorSetter = true
-    open override var backgroundColor: UIColor? {
-        didSet {
-            guard observeBackgroundColorSetter else { return }
-            normalBackgroundColor = backgroundColor
-        }
-    }
-
-    private var onHighlight: ((_ highlighted: Bool, _ animated: Bool) -> Void)?
-    open func onHighlight(_ callback: @escaping (_ highlighted: Bool, _ animated: Bool) -> Void) {
-        onHighlight = callback
-    }
-
-    private var onSelect: ((_ selected: Bool, _ animated: Bool) -> Void)?
-    open func onSelect(_ callback: @escaping (_ selected: Bool, _ animated: Bool) -> Void) {
-        onSelect = callback
-    }
-
-    open override func setSelected(_ selected: Bool, animated: Bool) {
-        onSelect?(selected, animated)
-    }
-
-    open override func setHighlighted(_ highlighted: Bool, animated: Bool) {
-        if let highlightedBackgroundColor = highlightedBackgroundColor {
-            observeBackgroundColorSetter = false
-            UIView.animate(withDuration: 0.25, animations: {
-                self.backgroundColor = highlighted ? highlightedBackgroundColor : self.normalBackgroundColor
-            }, completion: { _ in
-                self.observeBackgroundColorSetter = true
-            })
-        }
-        onHighlight?(highlighted, animated)
-    }
-
-    // MARK: UITableViewCellStateMask
-
-    private var willTransitionToState: ((_ state: StateMask) -> Void)?
-    @nonobjc open func willTransitionToState(_ callback: @escaping (_ state: StateMask) -> Void) {
-        willTransitionToState = callback
-    }
-
-    open override func willTransition(to state: StateMask) {
-        super.willTransition(to: state)
-        willTransitionToState?(state)
-    }
-
-    private var didTransitionToState: ((_ state: StateMask) -> Void)?
-    @nonobjc open func didTransitionToState(_ callback: @escaping (_ state: StateMask) -> Void) {
-        didTransitionToState = callback
-    }
-
-    open override func didTransition(to state: StateMask) {
-        super.didTransition(to: state)
-        didTransitionToState?(state)
-    }
-
     // MARK: - Subviews
 
     private lazy var labelsStackView = UIStackView(arrangedSubviews: [
@@ -176,9 +117,9 @@ open class DynamicTableViewCell: XCTableViewCell {
     }
 
     public let avatarView = UIImageView().apply {
-        $0.backgroundColor = UIColor(white: 1, alpha: 0.2)
+        $0.isContentModeAutomaticallyAdjusted = true
         $0.clipsToBounds = true
-        $0.contentMode = .scaleAspectFill
+        $0.tintColor = .appTint
         $0.enableSmoothScaling()
 
         // Border
@@ -189,13 +130,13 @@ open class DynamicTableViewCell: XCTableViewCell {
 
     public let titleLabel = UILabel().apply {
         $0.font = .app(style: .body)
-        $0.textColor = .black
+        $0.textColor = Theme.current.textColor
         $0.numberOfLines = 0
     }
 
     public let subtitleLabel = UILabel().apply {
         $0.font = .app(style: .subheadline)
-        $0.textColor = .lightGray // This is ignored if NSAttributedText declares it's own color
+        $0.textColor = Theme.current.textColorSecondary
         $0.numberOfLines = 0
     }
 
@@ -251,6 +192,49 @@ open class DynamicTableViewCell: XCTableViewCell {
         )
 
         minimumContentHeightConstraint = NSLayoutConstraint(item: contentView, height: minimumContentHeight, priority: .defaultLow).activate()
+    }
+
+    // MARK: - Hooks
+
+    private var onHighlight: ((_ highlighted: Bool, _ animated: Bool) -> Void)?
+    open func onHighlight(_ callback: @escaping (_ highlighted: Bool, _ animated: Bool) -> Void) {
+        onHighlight = callback
+    }
+
+    private var onSelect: ((_ selected: Bool, _ animated: Bool) -> Void)?
+    open func onSelect(_ callback: @escaping (_ selected: Bool, _ animated: Bool) -> Void) {
+        onSelect = callback
+    }
+
+    open override func setSelected(_ selected: Bool, animated: Bool) {
+        onSelect?(selected, animated)
+    }
+
+    open override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+        onHighlight?(highlighted, animated)
+    }
+
+    // MARK: - StateMask
+
+    private var willTransitionToState: ((_ state: StateMask) -> Void)?
+    @nonobjc open func willTransitionToState(_ callback: @escaping (_ state: StateMask) -> Void) {
+        willTransitionToState = callback
+    }
+
+    open override func willTransition(to state: StateMask) {
+        super.willTransition(to: state)
+        willTransitionToState?(state)
+    }
+
+    private var didTransitionToState: ((_ state: StateMask) -> Void)?
+    @nonobjc open func didTransitionToState(_ callback: @escaping (_ state: StateMask) -> Void) {
+        didTransitionToState = callback
+    }
+
+    open override func didTransition(to state: StateMask) {
+        super.didTransition(to: state)
+        didTransitionToState?(state)
     }
 }
 

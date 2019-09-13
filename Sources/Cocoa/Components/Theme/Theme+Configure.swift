@@ -152,18 +152,14 @@ extension Theme {
 
         DynamicTableViewCell.appearance().apply {
             $0.titleTextColor = current.textColor
-            $0.titleFont = .app(style: .body)
             $0.subtitleTextColor = current.textColorSecondary
-            $0.subtitleFont = .app(style: .subheadline)
             $0.contentInset = UIEdgeInsets(top: 9, left: 15, bottom: 10, right: 15)
             $0.textImageSpacing = .defaultPadding
         }
 
         IconLabelView.appearance().apply {
             $0.titleTextColor = current.textColor
-            $0.titleFont = .app(style: .body)
             $0.subtitleTextColor = current.textColorSecondary
-            $0.subtitleFont = .app(style: .subheadline)
         }
 
         BlurView.appearance().blurOpacity = 0.8

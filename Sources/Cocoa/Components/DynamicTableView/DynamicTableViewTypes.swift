@@ -56,4 +56,12 @@ public struct DynamicTableModel {
         self.userInfo = userInfo
         self.handler = handler
     }
+
+    var isTextOnly: Bool {
+        if image == nil, case.none = accessory {
+            return true
+        }
+
+        return false
+    }
 }
