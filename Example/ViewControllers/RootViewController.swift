@@ -100,6 +100,7 @@ final class RootViewController: DynamicTableViewController {
                 vc.view.snp.makeConstraints { make in
                     make.height.equalTo(300)
                 }
+                DrawerScreen.present(vc.view)
             },
             DynamicTableModel(title: "Picker List: Options Representable", subtitle: "Using Picker to select from an options enum") { _, _ in
                 PickerList.present(selected: ExampleArrowOptions.allCases.first) { option in
