@@ -36,7 +36,7 @@ open class LabelTextView: UITextView {
     /// The default value is `true`.
     open var isEmailLinkTapEnabled = true
 
-    /// The default value is ["http", "https"]
+    /// The default value is ["http", "https"].
     open var supportedUrlSchemes: [URL.Scheme] = [.http, .https]
 
     private var didTapUrl: URLTapActionBlock?
