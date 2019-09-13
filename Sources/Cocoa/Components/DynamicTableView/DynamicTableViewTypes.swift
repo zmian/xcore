@@ -24,12 +24,12 @@
 
 import UIKit
 
-public enum DynamicTableAccessoryType {
+public enum ListAccessoryType {
     case none
     case disclosureIndicator
     case text(String)
     case custom(UIView)
-    case `switch`(isOn: Bool, callback: ((_ sender: UISwitch) -> Void)?)
+    case toggle(isOn: Bool, callback: ((_ sender: UISwitch) -> Void)?)
     case checkbox(isSelected: Bool, callback: ((_ sender: UIButton) -> Void)?)
 }
 
@@ -37,11 +37,18 @@ public struct DynamicTableModel {
     public var title: StringRepresentable?
     public var subtitle: StringRepresentable?
     public var image: ImageRepresentable?
-    public var accessory: DynamicTableAccessoryType = .none
+    public var accessory: ListAccessoryType = .none
     public var userInfo: [AnyHashable: Any] = [:]
     public var handler: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)?
 
-    public init(title: StringRepresentable? = nil, subtitle: StringRepresentable? = nil, image: ImageRepresentable? = nil, accessory: DynamicTableAccessoryType = .none, userInfo: [AnyHashable: Any] = [:], handler: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)? = nil) {
+    public init(
+        title: StringRepresentable? = nil,
+        subtitle: StringRepresentable? = nil,
+        image: ImageRepresentable? = nil,
+        accessory: ListAccessoryType = .none,
+        userInfo: [AnyHashable: Any] = [:],
+        handler: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> Void)? = nil
+    ) {
         self.title = title
         self.subtitle = subtitle
         self.image = image
@@ -50,26 +57,3 @@ public struct DynamicTableModel {
         self.handler = handler
     }
 }
-
-// MARK: DynamicTableModelDisplayable
-// TODO: WIP Make the model genric so any class can conform to it.
-
-// private protocol DynamicTableModelDisplayable {
-//    typealias Model: DynamicTableModelDisplayable
-//
-//    var title: StringRepresentable? { get }
-//    var subtitle: StringRepresentable? { get }
-//    var image: ImageRepresentable? { get }
-//    var accessory: DynamicTableAccessoryType { get set }
-//    var userInfo: [AnyHashable: Any] { get set }
-//    var handler: ((indexPath: IndexPath, item: Model) -> Void)? { get }
-//}
-//
-// extension DynamicTableModelDisplayable {
-//    var title: StringRepresentable? { return nil }
-//    var subtitle: StringRepresentable? { return nil }
-//    var image: ImageRepresentable? { return nil }
-//    var accessory: DynamicTableAccessoryType { return .None }
-//    var userInfo: [AnyHashable: Any] { return [:] }
-//    var handler: ((indexPath: IndexPath, item: DynamicTableModel) -> Void)? { return nil }
-//}

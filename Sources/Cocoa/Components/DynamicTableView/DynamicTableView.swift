@@ -27,6 +27,7 @@ import UIKit
 open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewDataSource {
     private var allowsReordering: Bool { return cellOptions.contains(.move) }
     private var allowsDeletion: Bool { return cellOptions.contains(.delete) }
+    private let emptyTableFooterView = UIView()
     open var sections: [Section<DynamicTableModel>] = []
     open var cellOptions: CellOptions = .none {
         didSet {
@@ -34,15 +35,6 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         }
     }
 
-    @objc open dynamic var rowActionDeleteColor: UIColor?
-    /// Text to display in the swipe to delete row action. The default value is **"Delete"**.
-    @objc open dynamic var rowActionDeleteTitle = "Delete"
-    /// A boolean value to determine whether the content is centered in the table view. The default value is `false`.
-    @objc open dynamic var isContentCentered = false
-    /// A boolean value to determine whether the last table view cell separator is hidden. The default value is `false`.
-    @objc open dynamic var isLastCellSeparatorHidden = false
-
-    private var emptyTableFooterView = UIView()
     /// A boolean value to determine whether the empty table view cells are hidden. The default value is `false`.
     @objc open dynamic var isEmptyCellsHidden = false {
         didSet {
@@ -53,6 +45,31 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
             tableFooterView = isEmptyCellsHidden ? emptyTableFooterView : nil
         }
     }
+
+    // MARK: - UIAppearance Properties
+
+    @objc open dynamic var rowActionDeleteColor: UIColor?
+    /// Text to display in the swipe to delete row action. The default value is **"Delete"**.
+    @objc open dynamic var rowActionDeleteTitle = "Delete"
+    /// A boolean value to determine whether the content is centered in the table view. The default value is `false`.
+    @objc open dynamic var isContentCentered = false
+    /// A boolean value to determine whether the last table view cell separator is hidden. The default value is `false`.
+    @objc open dynamic var isLastCellSeparatorHidden = false
+
+    @objc open dynamic var headerFont: UIFont = .app(style: .caption1)
+    @objc open dynamic var headerTextColor: UIColor = .black
+    @objc open dynamic var footerFont: UIFont = .app(style: .caption1)
+    @objc open dynamic var footerTextColor: UIColor = .darkGray
+    @objc open dynamic var accessoryFont: UIFont = .app(style: .subheadline)
+    @objc open dynamic var accessoryTextColor: UIColor = .appleGray
+    @objc open dynamic var accessoryTintColor: UIColor = .appTint
+    @objc open dynamic var accessoryTextMaxWidth: CGFloat = 0
+    @objc open dynamic var disclosureIndicatorTintColor: UIColor = .appleGray
+    /// The color of the check box ring when the checkbox is Off.
+    /// The default value is `UIColor.blackColor().alpha(0.13)`.
+    @objc open dynamic var checkboxOffTintColor = UIColor.black.alpha(0.13)
+
+    // MARK: - Hooks
 
     private var configureCell: ((_ indexPath: IndexPath, _ cell: DynamicTableViewCell, _ item: DynamicTableModel) -> Void)?
     open func configureCell(_ callback: @escaping (_ indexPath: IndexPath, _ cell: DynamicTableViewCell, _ item: DynamicTableModel) -> Void) {
@@ -99,7 +116,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         editActionsForCell = callback
     }
 
-    // MARK: Delegate
+    // MARK: - Delegate
 
     /// We need to support two delegates for this class.
     ///
@@ -227,7 +244,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
             }
         }
 
-        if item.userInfo[DynamicTableView.ReorderTableViewDummyItemIdentifier] == nil {
+        if item.userInfo[DynamicTableView.reorderTableViewDummyItemIdentifier] == nil {
             configureCell?(indexPath, cell, item)
         }
 
@@ -379,28 +396,12 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
             checkboxAccessoryView(at: indexPath)?.isSelected = false
         }
     }
-
-    // MARK: - UIAppearance Properties
-
-    @objc open dynamic var headerFont: UIFont = .app(style: .caption1)
-    @objc open dynamic var headerTextColor: UIColor = .black
-    @objc open dynamic var footerFont: UIFont = .app(style: .caption1)
-    @objc open dynamic var footerTextColor: UIColor = .darkGray
-    @objc open dynamic var accessoryFont: UIFont = .app(style: .subheadline)
-    @objc open dynamic var accessoryTextColor: UIColor = .appleGray
-    @objc open dynamic var accessoryTintColor: UIColor = .appTint
-    @objc open dynamic var accessoryTextMaxWidth: CGFloat = 0
-    @objc open dynamic var disclosureIndicatorTintColor: UIColor = .appleGray
-
-    /// The color of the check box ring when the checkbox is Off.
-    /// The default value is `UIColor.blackColor().alpha(0.13)`.
-    @objc open dynamic var checkboxOffTintColor = UIColor.black.alpha(0.13)
 }
 
 // MARK: - AccessoryView
 
 extension DynamicTableView {
-    private func configureAccessoryView(_ cell: DynamicTableViewCell, type: DynamicTableAccessoryType, indexPath: IndexPath) {
+    private func configureAccessoryView(_ cell: DynamicTableViewCell, type: ListAccessoryType, indexPath: IndexPath) {
         cell.accessoryType = .none
         cell.selectionStyle = .default
         cell.accessoryView = nil
@@ -411,31 +412,39 @@ extension DynamicTableView {
             case .disclosureIndicator:
                 cell.accessoryView = UIImageView(assetIdentifier: .disclosureIndicator)
                 cell.accessoryView?.tintColor = disclosureIndicatorTintColor
-            case .switch(let (isOn, callback)):
+            case .toggle(let (isOn, callback)):
                 cell.selectionStyle = .none
-                let accessorySwitch = UISwitch()
-                accessorySwitch.isOn = isOn
-                accessorySwitch.addAction(.valueChanged) { sender in
-                    callback?(sender)
+                let accessorySwitch = UISwitch().apply {
+                    $0.isOn = isOn
+                    $0.addAction(.valueChanged) { sender in
+                        callback?(sender)
+                    }
                 }
                 cell.accessoryView = accessorySwitch
             case .checkbox(let (isSelected, _)):
                 cell.selectionStyle = .none
-                let accessoryCheckbox = UIButton(style: .checkbox(normalColor: checkboxOffTintColor, selectedColor: accessoryTintColor, textColor: footerTextColor, font: footerFont))
-                accessoryCheckbox.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-                accessoryCheckbox.isSelected = isSelected
-                accessoryCheckbox.isUserInteractionEnabled = false
+                let accessoryCheckbox = UIButton(style: .checkbox(
+                    normalColor: checkboxOffTintColor,
+                    selectedColor: accessoryTintColor,
+                    textColor: footerTextColor,
+                    font: footerFont
+                )).apply {
+                    $0.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+                    $0.isSelected = isSelected
+                    $0.isUserInteractionEnabled = false
+                }
                 cell.accessoryView = accessoryCheckbox
             case .text(let text):
-                let label = UILabel()
-                label.text = text
-                label.font = accessoryFont
-                label.textAlignment = .right
-                label.textColor = accessoryTextColor
-                label.numberOfLines = 0
-                label.sizeToFit()
-                if accessoryTextMaxWidth != 0, label.frame.width > accessoryTextMaxWidth {
-                    label.frame.size.width = accessoryTextMaxWidth
+                let label = UILabel().apply {
+                    $0.setText(text)
+                    $0.font = accessoryFont
+                    $0.textAlignment = .right
+                    $0.textColor = accessoryTextColor
+                    $0.numberOfLines = 0
+                    $0.sizeToFit()
+                    if accessoryTextMaxWidth != 0, $0.frame.width > accessoryTextMaxWidth {
+                        $0.frame.size.width = accessoryTextMaxWidth
+                    }
                 }
                 cell.accessoryView = label
             case .custom(let view):
@@ -476,13 +485,15 @@ extension DynamicTableView {
 // MARK: ReorderTableViewDelegate
 
 extension DynamicTableView: ReorderTableViewDelegate {
-    private static let ReorderTableViewDummyItemIdentifier = "_Xcore_ReorderTableView_Dummy_Item_Identifier_"
+    private static var reorderTableViewDummyItemIdentifier: String {
+        return "_Xcore_ReorderTableView_Dummy_Item_Identifier_"
+    }
 
     // This method is called when starting the re-ording process. You insert a blank row object into your
     // data source and return the object you want to save for later. This method is only called once.
     open func saveObjectAndInsertBlankRow(at indexPath: IndexPath) -> Any {
         let item = sections[indexPath]
-        sections[indexPath] = DynamicTableModel(userInfo: [DynamicTableView.ReorderTableViewDummyItemIdentifier: true])
+        sections[indexPath] = DynamicTableModel(userInfo: [DynamicTableView.reorderTableViewDummyItemIdentifier: true])
         return item
     }
 
