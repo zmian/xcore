@@ -188,7 +188,7 @@ open class DynamicTableViewCell: XCTableViewCell {
             top: avatarView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: contentInset.top).priority(.defaultHigh).activate(),
             bottom: contentView.bottomAnchor.constraint(greaterThanOrEqualTo: avatarView.bottomAnchor, constant: contentInset.bottom).priority(.defaultHigh).activate(),
             leading: avatarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: contentInset.left).activate(),
-            trailing: contentView.trailingAnchor.constraint(equalTo: labelsStackView.trailingAnchor, constant: contentInset.right).activate()
+            trailing: labelsStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: contentInset.right).activate()
         )
 
         minimumContentHeightConstraint = NSLayoutConstraint(item: contentView, height: minimumContentHeight, priority: .defaultLow).activate()
