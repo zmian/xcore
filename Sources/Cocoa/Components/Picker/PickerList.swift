@@ -62,6 +62,7 @@ open class PickerList: DynamicTableViewController {
 
         view.backgroundColor = .clear
         tableView.apply {
+            $0.alwaysBounceVertical = false
             $0.isEmptyCellsHidden = true
             $0.isLastCellSeparatorHidden = true
             $0.contentInsetAdjustmentBehavior = .never
