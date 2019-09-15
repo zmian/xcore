@@ -106,9 +106,9 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
     }
 }
 
-/// A convenience function to get resource name from `.xcassets`.
-public func r(_ assetIdentifier: ImageAssetIdentifier) -> String {
-    return assetIdentifier.rawValue
+/// A convenience function to get resource.
+public func r(_ assetIdentifier: ImageAssetIdentifier) -> ImageAssetIdentifier {
+    return assetIdentifier
 }
 
 // MARK: - Xcore Buit-in Assets
