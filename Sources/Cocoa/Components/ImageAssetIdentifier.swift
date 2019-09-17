@@ -130,9 +130,9 @@ extension ImageAssetIdentifier {
     static var caretDirectionForward: ImageAssetIdentifier { return propertyName() }
 
     // MARK: Checkmarks
-    public static var checkmarkIcon: ImageAssetIdentifier { return propertyName() }
-    public static var checkmarkIconFilled: ImageAssetIdentifier { return propertyName() }
-    public static var checkmarkIconUnfilled: ImageAssetIdentifier { return propertyName() }
+    public static var checkmarkIcon: ImageAssetIdentifier = propertyName(name: "checkmarkIcon")
+    public static var checkmarkIconFilled: ImageAssetIdentifier = propertyName(name: "checkmarkIconFilled")
+    public static var checkmarkIconUnfilled: ImageAssetIdentifier = propertyName(name: "checkmarkIconUnfilled")
 
     // MARK: Shared UI Elements
     public static var closeIcon: ImageAssetIdentifier { return propertyName() }
