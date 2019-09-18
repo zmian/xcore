@@ -29,7 +29,7 @@ public struct AdaptiveURL: UserInfoKeyContainer {
     public let title: String
     public let url: URL?
     /// Additional info which may be used to describe the url further.
-    public var userInfo: [AdaptiveURL.UserInfoKey: Any]
+    public var userInfo: UserInfo
 
     /// Initialize an instance of adaptive URL.
     ///
