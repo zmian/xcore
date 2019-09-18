@@ -56,15 +56,15 @@ extension UserInfoKey: Hashable {}
 
 extension UserInfoKey: Codable { }
 
-// MARK: - UserInfoKeyContainer
+// MARK: - UserInfoContainer
 
-public protocol UserInfoKeyContainer {
+public protocol UserInfoContainer {
     typealias UserInfoKey = Xcore.UserInfoKey<Self>
     typealias UserInfo = [UserInfoKey: Any]
     var userInfo: UserInfo { get set }
 }
 
-extension UserInfoKeyContainer {
+extension UserInfoContainer {
     public subscript<T>(userInfoKey key: UserInfoKey) -> T? {
         get { return userInfo[key] as? T }
         set { userInfo[key] = newValue }
