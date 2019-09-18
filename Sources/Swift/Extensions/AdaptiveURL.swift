@@ -46,8 +46,8 @@ public struct AdaptiveURL: UserInfoKeyContainer {
 // MARK: - UserInfo
 
 extension UserInfoKey where Type == AdaptiveURL {
-    ///   - adaptsAppearance: A boolean property indicating whether the URL content
-    ///                       should adapt app appearance.
+    /// A boolean property indicating whether the URL content should adapt app
+    /// appearance.
     public static var shouldAdaptAppearance: UserInfoKey<AdaptiveURL> { return #function }
 }
 
