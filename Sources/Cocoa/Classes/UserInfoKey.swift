@@ -59,17 +59,18 @@ extension UserInfoKey: Codable { }
 // MARK: - UserInfoKeyContainer
 
 public protocol UserInfoKeyContainer {
-    typealias UserInfo = [UserInfoKey<Self>: Any]
+    typealias UserInfoKey = Xcore.UserInfoKey<Self>
+    typealias UserInfo = [UserInfoKey: Any]
     var userInfo: UserInfo { get set }
 }
 
 extension UserInfoKeyContainer {
-    public subscript<T>(userInfoKey key: UserInfoKey<Self>) -> T? {
+    public subscript<T>(userInfoKey key: UserInfoKey) -> T? {
         get { return userInfo[key] as? T }
         set { userInfo[key] = newValue }
     }
 
-    public subscript<T>(userInfoKey key: UserInfoKey<Self>, default defaultValue: @autoclosure () -> T) -> T {
+    public subscript<T>(userInfoKey key: UserInfoKey, default defaultValue: @autoclosure () -> T) -> T {
         return self[userInfoKey: key] ?? defaultValue()
     }
 }
