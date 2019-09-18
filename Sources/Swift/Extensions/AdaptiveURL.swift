@@ -24,24 +24,38 @@
 
 import Foundation
 
-public struct AdaptiveURL {
+public struct AdaptiveURL: UserInfoKeyContainer {
     /// The title of the URL.
     public let title: String
     public let url: URL?
-    /// A boolean property indicating whether the URL content should adapt app
-    /// appearance.
-    public let shouldAdaptAppearance: Bool
+    /// Additional info which may be used to describe the url further.
+    public var userInfo: [UserInfoKey<AdaptiveURL>: Any]
 
     /// Initialize an instance of adaptive URL.
     ///
     /// - Parameters:
     ///   - title: The title of the URL.
     ///   - url: The url.
-    ///   - adaptsAppearance: A boolean property indicating whether the URL content
-    ///                       should adapt app appearance.
-    public init(title: String, url: URL?, adaptsAppearance: Bool = false) {
+    public init(title: String, url: URL?, userInfo: UserInfo = [:]) {
         self.title = title
         self.url = url
-        self.shouldAdaptAppearance = adaptsAppearance
+        self.userInfo = userInfo
+    }
+}
+
+// MARK: - UserInfo
+
+extension UserInfoKey where Type == AdaptiveURL {
+    ///   - adaptsAppearance: A boolean property indicating whether the URL content
+    ///                       should adapt app appearance.
+    public static var shouldAdaptAppearance: UserInfoKey<AdaptiveURL> { return #function }
+}
+
+extension AdaptiveURL {
+    /// A boolean property indicating whether the URL content should adapt app
+    /// appearance.
+    public var shouldAdaptAppearance: Bool {
+        get { return self[userInfoKey: .shouldAdaptAppearance, default: false] }
+        set { self[userInfoKey: .shouldAdaptAppearance] = newValue }
     }
 }
