@@ -31,13 +31,13 @@ final class SubviewLookupTests: ViewControllerTestCase {
         view.addSubview(searchBar)
         searchBar.layoutIfNeeded()
 
-        XCTAssertNotNil(searchBar.subview(withClass: UITextField.self))
-        XCTAssertNotNil(searchBar.subview(withClassName: "UISearchBarTextField"))
+        XCTAssertNotNil(searchBar.firstSubview(withClass: UITextField.self))
+        XCTAssertNotNil(searchBar.firstSubview(withClassName: "UISearchBarTextField"))
 
-        XCTAssertNil(searchBar.subview(withClass: UITextField.self, comparison: .typeOf))
-        XCTAssertNotNil(searchBar.subview(withClass: UITextField.self, comparison: .kindOf))
-        XCTAssertNotNil(searchBar.subview(withClassName: "UISearchBarTextField", comparison: .typeOf))
-        XCTAssertNotNil(searchBar.subview(withClassName: "UISearchBarTextField", comparison: .kindOf))
+        XCTAssertNil(searchBar.firstSubview(withClass: UITextField.self, comparison: .typeOf))
+        XCTAssertNotNil(searchBar.firstSubview(withClass: UITextField.self, comparison: .kindOf))
+        XCTAssertNotNil(searchBar.firstSubview(withClassName: "UISearchBarTextField", comparison: .typeOf))
+        XCTAssertNotNil(searchBar.firstSubview(withClassName: "UISearchBarTextField", comparison: .kindOf))
     }
 
     func testSearchBar() {

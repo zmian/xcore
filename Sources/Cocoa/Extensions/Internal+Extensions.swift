@@ -28,7 +28,7 @@ extension DynamicTableView {
     func expandCellReorderControl(willDisplayCell cell: UITableViewCell) {
         // The grip control customization
         // Credit: http://b2cloud.com.au/tutorial/reordering-a-uitableviewcell-from-any-touch-point
-        guard let reorderControl = cell.subview(withClassName: "UITableViewCellReorderControl") else {
+        guard let reorderControl = cell.firstSubview(withClassName: "UITableViewCellReorderControl") else {
             return
         }
 
