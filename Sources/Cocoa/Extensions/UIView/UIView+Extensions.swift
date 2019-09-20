@@ -345,13 +345,13 @@ extension UIView {
     ///   subview is a match.
     /// - Returns: The first subview of the `self` that satisfies `predicate`,
     ///   or `nil` if there is no subview that satisfies `predicate`.
-    open func subview(where predicate: (UIView) throws -> Bool) rethrows -> UIView? {
+    open func firstSubview(where predicate: (UIView) throws -> Bool) rethrows -> UIView? {
         if try predicate(self) {
             return self
         }
 
         for view in subviews {
-            if let subview = try view.subview(where: predicate) {
+            if let subview = try view.firstSubview(where: predicate) {
                 return subview
             }
         }
@@ -393,18 +393,18 @@ extension UIView {
         return result
     }
 
-    /// Get a child view by class name.
+    /// Get the first child view by class name.
     ///
     /// - Parameters:
     ///   - className: The class name of the child view (e.g., `UIImageView`).
     ///   - comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
     /// - Returns: The child view if exists; otherwise `nil`.
-    open func subview(withClassName className: String, comparison: LookupComparison = .kindOf) -> UIView? {
+    open func firstSubview(withClassName className: String, comparison: LookupComparison = .kindOf) -> UIView? {
         guard let aClass = NSClassFromString(className) else {
             return nil
         }
 
-        return subview { $0.isType(of: aClass, comparison: comparison) }
+        return firstSubview { $0.isType(of: aClass, comparison: comparison) }
     }
 
     /// Get child views by class name.
@@ -421,14 +421,14 @@ extension UIView {
         return subviews { $0.isType(of: aClass, comparison: comparison) }
     }
 
-    /// Get a child view by class.
+    /// Get the first child view by class.
     ///
     /// - Parameters:
     ///   - aClass: The class name of the child view (e.g., `UIImageView`).
     ///   - comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
     /// - Returns: The child view if exists; otherwise `nil`.
-    open func subview<T: UIView>(withClass aClass: T.Type, comparison: LookupComparison = .kindOf) -> T? {
-        return subview { $0.isType(of: aClass, comparison: comparison) } as? T
+    open func firstSubview<T: UIView>(withClass aClass: T.Type, comparison: LookupComparison = .kindOf) -> T? {
+        return firstSubview { $0.isType(of: aClass, comparison: comparison) } as? T
     }
 
     /// Get child views by class.

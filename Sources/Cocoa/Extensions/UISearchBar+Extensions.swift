@@ -26,7 +26,7 @@ import UIKit
 
 extension UISearchBar {
     open var textField: UITextField? {
-        return subview(withClass: UITextField.self)
+        return firstSubview(withClass: UITextField.self)
     }
 
     @objc dynamic open var searchFieldBackgroundColor: UIColor? {
