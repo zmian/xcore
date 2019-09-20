@@ -35,4 +35,60 @@ final class StringTests: TestCase {
 
         XCTAssert(string1.md5! != string2.md5!)
     }
+
+    func testUppercasedFirstAndLowercasedFirst() {
+        let input1 = "Hello World"
+        XCTAssert(input1.uppercasedFirst() == "Hello World")
+        XCTAssert(input1.lowercasedFirst() == "hello World")
+
+        let input2 = "HelloWorld"
+        XCTAssert(input2.uppercasedFirst() == "HelloWorld")
+        XCTAssert(input2.lowercasedFirst() == "helloWorld")
+
+        let input3 = "helloworld"
+        XCTAssert(input3.uppercasedFirst() == "Helloworld")
+        XCTAssert(input3.lowercasedFirst() == "helloworld")
+
+        let input4 = "hello world"
+        XCTAssert(input4.uppercasedFirst() == "Hello world")
+        XCTAssert(input4.lowercasedFirst() == "hello world")
+    }
+
+    func testCamelcased() {
+        XCTAssert("".camelcased() == "")
+        XCTAssert("a".camelcased() == "a")
+        XCTAssert("aBC".camelcased() == "aBC")
+        XCTAssert("a b".camelcased() == "aB")
+        XCTAssert("Helloworld".camelcased() == "helloworld")
+        XCTAssert("HelloWorld".camelcased() == "helloWorld")
+        XCTAssert("Hello World".camelcased() == "helloWorld")
+        XCTAssert("Hello World, Greeting".camelcased() == "helloWorldGreeting")
+        XCTAssert("Hello World, Greeting 🐶🐮".camelcased() == "helloWorldGreeting")
+        XCTAssert("Hello World, Greeting 🐶🐮".snakecased().titlecased().camelcased() == "helloWorldGreeting")
+    }
+
+    func testSnakecased() {
+        XCTAssert("".snakecased() == "")
+        XCTAssert("a".snakecased() == "a")
+        XCTAssert("aBC".snakecased() == "a_b_c")
+        XCTAssert("a b".snakecased() == "a_b")
+        XCTAssert("Helloworld".snakecased() == "helloworld")
+        XCTAssert("HelloWorld".snakecased() == "hello_world")
+        XCTAssert("hello_world".snakecased() == "hello_world")
+        XCTAssert("Hello_World".snakecased() == "hello_world")
+        XCTAssert("Hello World".snakecased() == "hello_world")
+        XCTAssert("Hello World, Greeting".snakecased() == "hello_world_greeting")
+        XCTAssert("Hello World, Greeting 🐶🐮".snakecased() == "hello_world_greeting")
+        XCTAssert("Hello World, Greeting 🐶🐮".camelcased().titlecased().snakecased() == "hello_world_greeting")
+    }
+
+    func testTitlecased() {
+        XCTAssert("".titlecased() == "")
+        XCTAssert("a".titlecased() == "A")
+        XCTAssert("aBC".titlecased() == "A B C")
+        XCTAssert("a b".titlecased() == "A B")
+        XCTAssert("we're having dinner in the garden".titlecased() == "We're Having Dinner In The Garden")
+        XCTAssert("TheSwiftProgrammingLanguage".titlecased() == "The Swift Programming Language")
+        XCTAssert("TheSwiftProgrammingLanguage".snakecased().camelcased().titlecased() == "The Swift Programming Language")
+    }
 }

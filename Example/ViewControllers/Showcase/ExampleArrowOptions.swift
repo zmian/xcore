@@ -39,7 +39,7 @@ enum ExampleArrowOptions: String, CaseIterable, OptionsRepresentable {
     }
 
     var description: String {
-        return rawValue.capitalizeFirstCharacter
+        return rawValue.uppercasedFirst()
     }
 
     var image: ImageRepresentable? {

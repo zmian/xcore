@@ -29,13 +29,72 @@ extension StringProtocol {
     public func contains<T: StringProtocol>(_ value: T, options: String.CompareOptions = []) -> Bool {
         return range(of: value, options: options) != nil
     }
+
+    /// A uppercase representation of the first character in string.
+    public func uppercasedFirst() -> String {
+        return prefix(1).uppercased() + dropFirst()
+    }
+
+    /// A lowercase representation of the first character in string.
+    public func lowercasedFirst() -> String {
+        return prefix(1).lowercased() + dropFirst()
+    }
+
+    /// A camel case representation of the string.
+    public func camelcased() -> String {
+        return parts().lazy.enumerated().map {
+            if $0.offset == 0 {
+                return $0.element.lowercasedFirst()
+            }
+
+            return $0.element.uppercasedFirst()
+        }.joined()
+    }
+
+    /// A snake case representation of the string.
+    public func snakecased() -> String {
+        return parts().joined(separator: "_")
+    }
+
+    private func parts() -> [String] {
+        guard !isEmpty else {
+            return []
+        }
+
+        let normalized = replacingOccurrences(of: "(?=\\S)[A-Z]", with: " $0", options: .regularExpression, range: range).lowercased()
+        return normalized.components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty }
+    }
+
+    private var range: Range<String.Index> {
+        return Range(uncheckedBounds: (startIndex, endIndex))
+    }
 }
 
 extension String {
-    public var capitalizeFirstCharacter: String {
-        return String(prefix(1).capitalized + dropFirst())
-    }
+    // Credit: https://gist.github.com/devxoul/a1e6822def36f75d0bc5
+    //
+    /// A title case representation of the string.
+    public func titlecased() -> String {
+        if count <= 1 {
+            return uppercased()
+        }
 
+        let regex = try! NSRegularExpression(pattern: "(?=\\S)[A-Z]")
+        let range = NSMakeRange(1, count - 1)
+
+        var titlecased = regex.stringByReplacingMatches(in: self, range: range, withTemplate: " $0")
+
+        for i in titlecased.indices {
+            if i == titlecased.startIndex || titlecased[titlecased.index(before: i)] == " " {
+                titlecased.replaceSubrange(i...i, with: titlecased[i].uppercased())
+            }
+        }
+
+        return titlecased
+    }
+}
+
+extension String {
     public func urlEscaped() -> String? {
         return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
     }
