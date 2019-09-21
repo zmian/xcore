@@ -37,14 +37,16 @@ open class IconLabelView: XCView {
         titleLabel
     ]).apply {
         $0.isLayoutMarginsRelativeArrangement = true
-        $0.distribution = .fill
+        $0.distribution = .fillProportionally
         $0.alignment = .center
         $0.spacing = .minimumPadding / 2
+        $0.sizeChangeResistance(.required, axis: .both)
     }
 
     public lazy var imageViewContainer = UIView().apply {
         $0.backgroundColor = imageBackgroundColor
         $0.cornerRadius = imageCornerRadius
+        $0.sizeChangeResistance(.required, axis: .both)
         $0.addSubview(imageView)
     }
 
@@ -52,6 +54,7 @@ open class IconLabelView: XCView {
         $0.isContentModeAutomaticallyAdjusted = true
         $0.enableSmoothScaling()
         $0.tintColor = .appTint
+        $0.sizeChangeResistance(.required, axis: .both)
     }
 
     public let titleLabel = UILabel().apply {
@@ -59,7 +62,8 @@ open class IconLabelView: XCView {
         $0.textAlignment = .center
         $0.textColor = Theme.current.textColor
         $0.numberOfLines = 0
-        $0.sizeToFit()
+        $0.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        $0.sizeChangeResistance(.required, axis: .vertical)
     }
 
     public let subtitleLabel = UILabel().apply {
@@ -67,7 +71,8 @@ open class IconLabelView: XCView {
         $0.textAlignment = .center
         $0.textColor = Theme.current.textColorSecondary
         $0.numberOfLines = 0
-        $0.sizeToFit()
+        $0.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        $0.sizeChangeResistance(.required, axis: .vertical)
     }
 
     /// The default value is `.vertical`.
