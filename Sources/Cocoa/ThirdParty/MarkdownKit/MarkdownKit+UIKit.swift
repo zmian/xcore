@@ -161,7 +161,15 @@ extension UITextView {
     /// The default value is `false`.
     public var isMarkupEnabled: Bool {
         get { return associatedObject(&AssociatedKey.isMarkupEnabled, default: MarkupText.appearance.isTextViewEnabled) }
-        set { setAssociatedObject(&AssociatedKey.isMarkupEnabled, value: newValue) }
+        set {
+            let oldValue = isMarkupEnabled
+            setAssociatedObject(&AssociatedKey.isMarkupEnabled, value: newValue)
+            // If new value is `true` and have text, trigger parsing.
+            if newValue, hasText, oldValue != newValue {
+                let existingText = text
+                text = existingText
+            }
+        }
     }
 
     private var markdownParser: MarkdownParser {
