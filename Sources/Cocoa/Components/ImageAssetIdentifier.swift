@@ -129,11 +129,6 @@ extension ImageAssetIdentifier {
     static var caretDirectionBack: ImageAssetIdentifier { return propertyName() }
     static var caretDirectionForward: ImageAssetIdentifier { return propertyName() }
 
-    // MARK: Checkmarks
-    public static var checkmarkIcon: ImageAssetIdentifier = propertyName(name: "checkmarkIcon")
-    public static var checkmarkIconFilled: ImageAssetIdentifier = propertyName(name: "checkmarkIconFilled")
-    public static var checkmarkIconUnfilled: ImageAssetIdentifier = propertyName(name: "checkmarkIconUnfilled")
-
     // MARK: Shared UI Elements
     public static var closeIcon: ImageAssetIdentifier { return propertyName() }
     public static var closeIconFilled: ImageAssetIdentifier { return propertyName() }
@@ -163,5 +158,19 @@ extension ImageAssetIdentifier {
     public static var searchIcon: ImageAssetIdentifier { return propertyName() }
     public static var validationErrorIcon: ImageAssetIdentifier { return propertyName() }
 
-    public static var moreIcon: ImageAssetIdentifier = propertyName(name: "moreIcon")
+}
+
+// MARK: - Xcore Buit-in Overridable Assets
+
+extension ImageAssetIdentifier {
+    // MARK: Checkmarks
+    public static var checkmarkIcon = propertyName(name: "checkmarkIcon")
+    public static var checkmarkIconFilled = propertyName(name: "checkmarkIconFilled")
+    public static var checkmarkIconUnfilled = propertyName(name: "checkmarkIconUnfilled")
+
+    public static var moreIcon = propertyName(name: "moreIcon")
+
+    // MARK: Biometrics ID
+    public static var biometricsFaceIDIcon = propertyName(name: "biometricsFaceIDIcon")
+    public static var biometricsTouchIDIcon = propertyName(name: "biometricsTouchIDIcon")
 }
