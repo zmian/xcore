@@ -74,13 +74,25 @@ extension UIDevice {
                     return "Face ID"
             }
         }
+
+        /// The asset associated with biometry authentication.
+        public var assetIdentifier: ImageAssetIdentifier {
+            switch self {
+                case .none:
+                    return ""
+                case .touchID:
+                    return .biometricsTouchIDIcon
+                case .faceID:
+                    return .biometricsFaceIDIcon
+            }
+        }
     }
 }
 
 extension UIDevice {
     /// Indicates that the device owner can authenticate using biometry,
     /// Touch ID or Face ID.
-    public var isBiometricsIDAvailable: Bool {
+    public var isBiometricsIdAvailable: Bool {
         return LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
 
