@@ -102,7 +102,7 @@ extension UIDevice {
     /// of the permission status. For example, Face ID requires permission prompt.
     /// If user denies the permission, then the returned value is still `.faceID`.
     /// If you need to check if biometrics authentication is available then use
-    /// `UIDevice.current.isBiometricsIDAvailable`.
+    /// `UIDevice.current.isBiometricsIdAvailable`.
     public var biometryCapabilityType: BiometryType {
         let biometryType = BiometryType()
 
