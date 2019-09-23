@@ -25,11 +25,11 @@
 import UIKit
 
 public protocol RouteHandler: class {
-    func route(to route: Router.Route<Self>, animated: Bool)
+    func route(to route: Router.Route<Self>, options: Router.Route<Self>.Options)
 }
 
 extension RouteHandler {
-    public func route(to route: Router.Route<Self>, animated: Bool = true) {
+    public func route(to route: Router.Route<Self>, options: Router.Route<Self>.Options = .push) {
         guard let navigationController = navigationController else {
             #if DEBUG
             Console.log("Unable to find \"navigationController\".")
@@ -41,7 +41,19 @@ extension RouteHandler {
 
         switch routeKind {
             case .viewController(let vc):
-               navigationController.pushViewController(vc, animated: animated)
+                switch options.transition {
+                    case .push:
+                        navigationController.pushViewController(vc, animated: options.isAnimated)
+                    case .modal:
+                        navigationController.present(vc, animated: options.isAnimated)
+                    case .automatic:
+                        switch UIDevice.current.userInterfaceIdiom {
+                            case .pad:
+                                navigationController.present(vc, animated: options.isAnimated)
+                            default:
+                                navigationController.pushViewController(vc, animated: options.isAnimated)
+                        }
+                }
             case .custom(let block):
                 block(navigationController)
         }

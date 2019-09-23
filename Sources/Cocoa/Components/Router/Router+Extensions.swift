@@ -24,6 +24,19 @@
 
 import UIKit
 
+extension Router {
+    /// Returns the shared router.
+    public static var shared: Router? {
+        guard let topViewController = UIApplication.sharedOrNil?.delegate?.window??.topViewController else {
+            return nil
+        }
+
+        return topViewController._router
+    }
+}
+
+// MARK: - UIViewController
+
 extension UINavigationController {
     private struct AssociatedKey {
         static var router = "router"
@@ -46,19 +59,31 @@ extension UINavigationController {
     }
 }
 
+// MARK: - UIViewController
+
 extension UIViewController {
     public var router: Router {
+        guard let router = _router else {
+            fatalError("Router requires a navigation controller.")
+        }
+
+        return router
+    }
+
+    fileprivate var _router: Router? {
         guard let navigationController = navigationController else {
             if let navController = self as? UINavigationController {
                 return navController._navigationControllerRouter
             }
 
-            fatalError("Router requires a navigation controller.")
+            return nil
         }
 
         return navigationController._navigationControllerRouter
     }
 }
+
+// MARK: - XCCollectionViewDataSource
 
 extension XCCollectionViewDataSource {
     public var router: Router {
@@ -78,6 +103,8 @@ extension XCCollectionViewDataSource {
         return router
     }
 }
+
+// MARK: - XCTableViewDataSource
 
 extension XCTableViewDataSource {
     public var router: Router {
