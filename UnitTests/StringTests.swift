@@ -59,6 +59,13 @@ final class StringTests: TestCase {
         XCTAssert("a".camelcased() == "a")
         XCTAssert("aBC".camelcased() == "aBC")
         XCTAssert("a b".camelcased() == "aB")
+
+        XCTAssert("HELLOWORLD".camelcased() == "helloworld")
+        XCTAssert("HELLO_WORLD".camelcased() == "helloWorld")
+        XCTAssert("HELLOwORLD".camelcased() == "helloWorld")
+        XCTAssert("HELLOworld".camelcased() == "helloWorld")
+        XCTAssert("HELLOworlD".camelcased() == "helloWorlD")
+
         XCTAssert("Helloworld".camelcased() == "helloworld")
         XCTAssert("HelloWorld".camelcased() == "helloWorld")
         XCTAssert("Hello World".camelcased() == "helloWorld")
@@ -72,6 +79,13 @@ final class StringTests: TestCase {
         XCTAssert("a".snakecased() == "a")
         XCTAssert("aBC".snakecased() == "a_b_c")
         XCTAssert("a b".snakecased() == "a_b")
+
+        XCTAssert("HELLOWORLD".snakecased() == "helloworld")
+        XCTAssert("HELLO_WORLD".snakecased() == "hello_world")
+        XCTAssert("HELLOwORLD".snakecased() == "hello_world")
+        XCTAssert("HELLOworld".snakecased() == "hello_world")
+        XCTAssert("HELLOworlD".snakecased() == "hello_worl_d")
+
         XCTAssert("Helloworld".snakecased() == "helloworld")
         XCTAssert("HelloWorld".snakecased() == "hello_world")
         XCTAssert("hello_world".snakecased() == "hello_world")
@@ -87,6 +101,13 @@ final class StringTests: TestCase {
         XCTAssert("a".titlecased() == "A")
         XCTAssert("aBC".titlecased() == "A B C")
         XCTAssert("a b".titlecased() == "A B")
+
+        XCTAssert("HELLOWORLD".titlecased() == "Helloworld")
+        XCTAssert("HELLO_WORLD".titlecased() == "Hello World")
+        XCTAssert("HELLOwORLD".titlecased() == "Hello World")
+        XCTAssert("HELLOworld".titlecased() == "Hello World")
+        XCTAssert("HELLOworlD".titlecased() == "hello Worl D")
+
         XCTAssert("we're having dinner in the garden".titlecased() == "We're Having Dinner In The Garden")
         XCTAssert("TheSwiftProgrammingLanguage".titlecased() == "The Swift Programming Language")
         XCTAssert("TheSwiftProgrammingLanguage".snakecased().camelcased().titlecased() == "The Swift Programming Language")
