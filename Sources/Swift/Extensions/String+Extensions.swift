@@ -61,11 +61,19 @@ extension StringProtocol {
             return []
         }
 
-        let normalized = replacingOccurrences(of: "(?=\\S)[A-Z]", with: " $0", options: .regularExpression, range: range).lowercased()
+        let normalized: String
+
+        // If all uppercase then lowercase everything.
+        if rangeOfCharacter(from: .lowercaseLetters, options: [], range: range) == nil {
+            normalized = lowercased()
+        } else {
+            normalized = replacingOccurrences(of: "(?=\\S)[A-Z]", with: " $0", options: .regularExpression, range: range).lowercased()
+        }
+
         return normalized.components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty }
     }
 
-    private var range: Range<String.Index> {
+    fileprivate var range: Range<String.Index> {
         return Range(uncheckedBounds: (startIndex, endIndex))
     }
 }
@@ -77,6 +85,11 @@ extension String {
     public func titlecased() -> String {
         if count <= 1 {
             return uppercased()
+        }
+
+        // If all uppercase then lowercase everything and title case the first character.
+        if rangeOfCharacter(from: .lowercaseLetters, options: [], range: range) == nil {
+            return lowercased().uppercasedFirst()
         }
 
         let regex = try! NSRegularExpression(pattern: "(?=\\S)[A-Z]")
