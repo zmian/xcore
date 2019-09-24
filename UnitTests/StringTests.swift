@@ -72,6 +72,7 @@ final class StringTests: TestCase {
         XCTAssert("Hello World, Greeting".camelcased() == "helloWorldGreeting")
         XCTAssert("Hello World, Greeting 🐶🐮".camelcased() == "helloWorldGreeting")
         XCTAssert("Hello World, Greeting 🐶🐮".snakecased().titlecased().camelcased() == "helloWorldGreeting")
+        XCTAssert("TheSwiftProgrammingLanguage".camelcased() == "theSwiftProgrammingLanguage")
     }
 
     func testSnakecased() {
@@ -94,6 +95,7 @@ final class StringTests: TestCase {
         XCTAssert("Hello World, Greeting".snakecased() == "hello_world_greeting")
         XCTAssert("Hello World, Greeting 🐶🐮".snakecased() == "hello_world_greeting")
         XCTAssert("Hello World, Greeting 🐶🐮".camelcased().titlecased().snakecased() == "hello_world_greeting")
+        XCTAssert("TheSwiftProgrammingLanguage".snakecased() == "the_swift_programming_language")
     }
 
     func testTitlecased() {
