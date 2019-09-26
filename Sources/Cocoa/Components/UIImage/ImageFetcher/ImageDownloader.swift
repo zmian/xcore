@@ -48,7 +48,7 @@ final class ImageDownloader {
 
     /// Downloads the image at the given URL, if not present in cache or return the cached version otherwise.
     static func load(url: URL, completion: @escaping (_ image: UIImage?, _ data: Data?, _ error: Error?, _ finished: Bool, _ cacheType: ImageSourceType.CacheType) -> Void) -> CancelToken? {
-        let token = SDWebImageManager.shared().loadImage(
+        let token = SDWebImageManager.shared.loadImage(
             with: url,
             options: [.avoidAutoSetImage],
             progress: nil
@@ -61,7 +61,7 @@ final class ImageDownloader {
 
     /// Downloads the image from the given url.
     static func download(url: URL, completion: @escaping (_ image: UIImage?, _ data: Data?, _ error: Error?, _ finished: Bool) -> Void) {
-        SDWebImageDownloader.shared().downloadImage(
+        SDWebImageDownloader.shared.downloadImage(
             with: url,
             options: [],
             progress: nil
@@ -71,10 +71,10 @@ final class ImageDownloader {
     }
 
     static func clearCache() {
-        SDImageCache.shared().apply {
+        SDImageCache.shared.apply {
             $0.clearMemory()
-            $0.clearDisk {}
-            $0.deleteOldFiles {}
+            $0.clearDisk()
+            $0.deleteOldFiles()
         }
     }
 }
