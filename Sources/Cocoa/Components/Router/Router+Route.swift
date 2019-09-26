@@ -130,29 +130,33 @@ extension Router {
                 return .custom
             }
         }
+    }
+}
 
-        static func _group(_ routes: [Route<Type>], animated: Bool) -> Route<Type> {
-            return Route { router -> RouteKind in
-                var viewControllers: [UIViewController] = []
+// MARK: - Group
 
-                for route in routes {
-                    guard case .viewController(let vc) = route.configure(router) else {
-                        #if DEBUG
-                        Console.log("Route \(route.id) contains custom route. This will lead to unexpected behavior. Please handle the use case separately.")
-                        #endif
-                        continue
-                    }
+extension Router.Route {
+    static func _group(_ routes: [Router.Route<Type>], options: Router.Route<Type>.Options) -> Router.Route<Type> {
+        return .init { router -> Router.RouteKind in
+            var viewControllers: [UIViewController] = []
 
-                    viewControllers.append(vc)
+            for route in routes {
+                guard case .viewController(let vc) = route.configure(router) else {
+                    #if DEBUG
+                    Console.log("Route \(route.id) contains custom route. This will lead to unexpected behavior. Please handle the use case separately.")
+                    #endif
+                    continue
                 }
 
-                return .custom { navigationController in
-                    guard !viewControllers.isEmpty else {
-                        return
-                    }
+                viewControllers.append(vc)
+            }
 
-                    navigationController.pushViewController(viewControllers, animated: animated)
+            return .custom { navigationController in
+                guard !viewControllers.isEmpty else {
+                    return
                 }
+
+                options.display(viewControllers, navigationController: navigationController)
             }
         }
     }

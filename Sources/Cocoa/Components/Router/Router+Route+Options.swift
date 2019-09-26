@@ -76,3 +76,54 @@ extension Router.Route.Options {
         return .init(transition: .modal, animated: animated)
     }
 }
+
+extension Router.Route.Options {
+    /// Show the view controller on the given navigation controller.
+    func display(_ vc: UIViewController, navigationController: UINavigationController) {
+        func show(asModal: Bool) {
+            guard asModal else {
+                navigationController.pushViewController(vc, animated: isAnimated)
+                return
+            }
+
+            // Wrap the view controller in navigation controller so the router instance when
+            // presented modally can be used. Router requires navigation controller.
+            let nvc = (vc as? UINavigationController) ?? NavigationController(rootViewController: vc)
+            navigationController.present(nvc, animated: isAnimated)
+        }
+
+        switch transition {
+            case .push:
+                show(asModal: false)
+            case .modal:
+                show(asModal: true)
+            case .automatic:
+                show(asModal: UIDevice.current.userInterfaceIdiom == .pad)
+        }
+    }
+
+    /// Show the list of view controller on the given navigation controller.
+    func display(_ vcs: [UIViewController], navigationController: UINavigationController) {
+        func show(asModal: Bool) {
+            guard asModal else {
+                navigationController.pushViewController(vcs, animated: isAnimated)
+                return
+            }
+
+            // Wrap the view controller in navigation controller so the router instance when
+            // presented modally can be used. Router requires navigation controller.
+            let nvc = NavigationController()
+            nvc.setViewControllers(vcs, animated: isAnimated)
+            navigationController.present(nvc, animated: isAnimated)
+        }
+
+        switch transition {
+            case .push:
+                show(asModal: false)
+            case .modal:
+                show(asModal: true)
+            case .automatic:
+                show(asModal: UIDevice.current.userInterfaceIdiom == .pad)
+        }
+    }
+}
