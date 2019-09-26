@@ -25,7 +25,6 @@
 import UIKit
 
 /// A concrete wrapper for enabling implicit member expressions.
-#warning("FIXME: Replace with SwiftUI's StaticMember.")
 public struct MetaStaticMember<Base> {
     public let base: Base
 

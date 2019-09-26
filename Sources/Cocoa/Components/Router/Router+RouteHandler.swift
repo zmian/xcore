@@ -41,33 +41,14 @@ extension RouteHandler {
 
         switch routeKind {
             case .viewController(let vc):
-                func show(asModal: Bool) {
-                    guard asModal else {
-                        navigationController.pushViewController(vc, animated: options.isAnimated)
-                        return
-                    }
-
-                    // Wrap the view controller in navigation controller so the router instance when
-                    // presented modally can be used. Router requires navigation controller.
-                    let nvc = (vc as? UINavigationController) ?? NavigationController(rootViewController: vc)
-                    navigationController.present(nvc, animated: options.isAnimated)
-                }
-
-                switch options.transition {
-                    case .push:
-                        show(asModal: false)
-                    case .modal:
-                        show(asModal: true)
-                    case .automatic:
-                        show(asModal: UIDevice.current.userInterfaceIdiom == .pad)
-                }
+                options.display(vc, navigationController: navigationController)
             case .custom(let block):
                 block(navigationController)
         }
     }
 
-    public func route(to routes: Router.Route<Self>..., animated: Bool = true) {
-        route(to: ._group(routes, animated: animated), animated: animated)
+    public func route(to routes: [Router.Route<Self>], options: Router.Route<Self>.Options = .push) {
+        route(to: ._group(routes, options: options), options: options)
     }
 }
 

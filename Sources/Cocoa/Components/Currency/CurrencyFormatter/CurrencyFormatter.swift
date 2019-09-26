@@ -95,7 +95,7 @@ extension CurrencyFormatter {
         // instance potentially mutated by other code.
         formatter.isDecimalEnabled = true
         let currencyString = formatter.string(from: NSNumber(value: amount))!
-        var pieces = currencyString.components(separatedBy: decimalSeparator)
+        let pieces = currencyString.components(separatedBy: decimalSeparator)
 
         if let dollars = pieces.first {
             dollarString = dollars

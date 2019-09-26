@@ -116,6 +116,18 @@ extension HapticFeedback {
                 return mediumImpactFeedbackGenerator
             case .heavy:
                 return heavyImpactFeedbackGenerator
+            case .soft:
+                if #available(iOS 13.0, *) {
+                    return .softImpactFeedbackGenerator
+                } else {
+                    return .lightImpactFeedbackGenerator
+            }
+            case .rigid:
+                if #available(iOS 13.0, *) {
+                    return .rigidImpactFeedbackGenerator
+                } else {
+                    return .heavyImpactFeedbackGenerator
+                }
             @unknown default:
                 fatalError(because: .unknownCaseDetected(style))
         }
@@ -144,6 +156,16 @@ extension HapticFeedback {
     }
 
     private static let heavyImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .heavy)) {
+        $0.impactOccurred()
+    }
+
+    @available(iOS 13.0, *)
+    private static let softImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .soft)) {
+        $0.impactOccurred()
+    }
+
+    @available(iOS 13.0, *)
+    private static let rigidImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .rigid)) {
         $0.impactOccurred()
     }
 
