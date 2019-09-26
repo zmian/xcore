@@ -43,7 +43,7 @@ extension UIImage {
         var downloadedImages = 0
 
         orderedObjects.forEach { object in
-            SDWebImageDownloader.shared().downloadImage(
+            SDWebImageDownloader.shared.downloadImage(
                 with: object.url,
                 options: [],
                 progress: nil

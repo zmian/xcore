@@ -42,7 +42,7 @@ final class RemoteImageFetcher: ImageFetcher {
             return
         }
 
-        let token = SDWebImageManager.shared().loadImage(
+        let token = SDWebImageManager.shared.loadImage(
             with: url,
             options: [.avoidAutoSetImage],
             progress: nil
@@ -64,7 +64,7 @@ final class RemoteImageFetcher: ImageFetcher {
     }
 
     static func removeCache() {
-        SDWebImageManager.shared().imageCache?.apply {
+        SDImageCache.shared.apply {
             $0.clearMemory()
             $0.clearDisk()
             $0.deleteOldFiles()
