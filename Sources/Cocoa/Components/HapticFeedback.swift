@@ -121,7 +121,7 @@ extension HapticFeedback {
                     return .softImpactFeedbackGenerator
                 } else {
                     return .lightImpactFeedbackGenerator
-            }
+                }
             case .rigid:
                 if #available(iOS 13.0, *) {
                     return .rigidImpactFeedbackGenerator
