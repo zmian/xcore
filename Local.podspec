@@ -11,10 +11,10 @@ Pod::Spec.new do |s|
   s.requires_arc          = true
   s.ios.deployment_target = '11.0'
   s.pod_target_xcconfig   = {
-    'SWIFT_VERSION' => '5.0',
+    'SWIFT_VERSION' => '5.1',
     'OTHER_SWIFT_FLAGS' => '-DXCORE_ENVIRONMENT_${CONFIGURATION}'
   }
-  s.dependency 'SDWebImage', '~> 4.0'
+  s.dependency 'SDWebImage'
   s.dependency 'PromiseKit'
   s.dependency 'Haring'
   s.dependency 'SnapKit'
