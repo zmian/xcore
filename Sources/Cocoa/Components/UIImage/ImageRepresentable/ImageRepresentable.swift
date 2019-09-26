@@ -78,7 +78,7 @@ extension ImageSourceType {
 
         init(_ type: SDImageCacheType) {
             switch type {
-                case .none:
+                case .none, .all:
                     self = .none
                 case .disk:
                     self = .disk
