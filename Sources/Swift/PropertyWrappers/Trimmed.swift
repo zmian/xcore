@@ -1,5 +1,5 @@
 //
-// LazyReset.swift
+// Trimmed.swift
 //
 // Copyright © 2019 Xcore
 //
