@@ -1,5 +1,5 @@
 //
-// UserDefault.swift
+// UserDefaultStore.swift
 //
 // Copyright © 2016 Xcore
 //
@@ -24,7 +24,7 @@
 
 import Foundation
 
-final public class UserDefault<T: Codable> {
+final public class UserDefaultStore<T: Codable> {
     private let storage: UserDefaults
     private lazy var encoder = JSONEncoder()
     private lazy var decoder = JSONDecoder()
@@ -82,7 +82,7 @@ final public class UserDefault<T: Codable> {
     }
 }
 
-extension UserDefault: CustomStringConvertible {
+extension UserDefaultStore: CustomStringConvertible {
     public var description: String {
         guard let value = value as? CustomStringConvertible else {
             return String(describing: self.value)
@@ -92,7 +92,7 @@ extension UserDefault: CustomStringConvertible {
     }
 }
 
-extension UserDefault: CustomDebugStringConvertible {
+extension UserDefaultStore: CustomDebugStringConvertible {
     public var debugDescription: String {
         return value.debugDescription
     }
