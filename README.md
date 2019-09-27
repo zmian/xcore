@@ -13,8 +13,8 @@ Xcore is a collection of pure Swift and Cocoa Touch classes, extensions and comp
 
 ## Requirements
 * iOS 11.0+
-* Xcode 10.2+
-* Swift 5.0+
+* Xcode 11.0+
+* Swift 5.1+
 
 ## Installation
 
