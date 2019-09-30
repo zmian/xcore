@@ -284,7 +284,7 @@ open class CustomCarouselView<Cell: CarouselViewCellType, Model: CarouselViewMod
 // MARK: - Autoscroll
 
 extension CustomCarouselView {
-    public func startAutoScrolling(_ interval: TimeInterval = .slow) {
+    public func startAutoScrolling(_ interval: TimeInterval = 4) {
         carouselCollectionView.startAutoScrolling(interval)
     }
 

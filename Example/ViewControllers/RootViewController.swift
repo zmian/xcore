@@ -67,6 +67,10 @@ final class RootViewController: DynamicTableViewController {
             DynamicTableModel(title: "FeedViewController", subtitle: "FeedViewController demonstration") { [weak self] _, _ in
                 let vc = FeedViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
+            },
+            DynamicTableModel(title: "Carousel View Controller", subtitle: "Carousel demonstration") { [weak self] _, _ in
+                let vc = CarouselViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
             }
         ]
     }
