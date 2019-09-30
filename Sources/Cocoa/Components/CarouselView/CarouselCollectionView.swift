@@ -146,30 +146,37 @@ final class CarouselCollectionView
     // MARK: - DataSource & Delegate
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard numberOfItems > 0 else { return 0 }
+        guard numberOfItems > 0 else {
+            return 0
+        }
+
         if style == .infiniteScroll {
             return numberOfItems + 2
         }
+
         return numberOfItems
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(for: indexPath) as Cell
-        let item = adjustedItemForInfiniteScroll(at: indexPath.item)
-        guard let itemViewModel = viewModel?.itemViewModel(index: item) else { return cell }
+        let index = adjustedIndexForInfiniteScroll(from: indexPath.item)
 
-        cell.configure(itemViewModel)
-        didConfigure?(indexPath.item, itemViewModel, cell)
-
-        cell.didSelectItem { [weak self] in
-            self?.didSelectItem?(item, itemViewModel)
+        guard let item = item(at: index) else {
+            return cell
         }
+
+        cell.configure(item)
+        didConfigure?(indexPath.item, item, cell)
+        cell.didSelectItem { [weak self] in
+            self?.didSelectItem?(index, item)
+        }
+
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        for indexPath in indexPaths {
-            prefetch?(indexPath.item)
+        indexPaths.forEach {
+            prefetch?($0.item)
         }
     }
 
@@ -180,17 +187,17 @@ final class CarouselCollectionView
 
         let cell: Cell = CollectionViewDequeueCache.shared.dequeueCell()
 
-        guard let itemViewModel = viewModel?.itemViewModel(index: indexPath.item) else {
+        guard let item = item(at: indexPath.item) else {
             return .zero
         }
 
-        cell.configure(itemViewModel)
+        cell.configure(item)
         return cell.contentView.sizeFitting(width: collectionView.frame.width)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let itemViewModel = viewModel?.itemViewModel(index: indexPath.item) else { return }
-        didSelectItem?(indexPath.item, itemViewModel)
+        guard let item = item(at: indexPath.item) else { return }
+        didSelectItem?(indexPath.item, item)
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -213,7 +220,7 @@ final class CarouselCollectionView
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard let item = viewModel?.itemViewModel(index: currentIndex) else {
+        guard let item = item(at: currentIndex) else {
             return
         }
 
@@ -230,6 +237,10 @@ final class CarouselCollectionView
         startAutoScrolling(autoScrollTimer.timeInterval)
     }
 
+    private func item(at index: Int) -> Cell.Model? {
+        return viewModel?.itemViewModel(index: index)
+    }
+
     // MARK: - API
 
     func setCurrentIndex(_ index: Int, animated: Bool = true, completionHandler: (() -> Void)? = nil) {
@@ -244,6 +255,8 @@ final class CarouselCollectionView
             completionHandler?()
         })
     }
+
+    // MARK: - Hooks
 
     private var didScroll: ((_ index: Int, _ previousIndex: Int, _ scrollView: UIScrollView) -> Void)?
     func didScroll(_ callback: @escaping (_ index: Int, _ previousIndex: Int, _ scrollView: UIScrollView) -> Void) {
@@ -295,7 +308,7 @@ extension CarouselCollectionView {
         }
 
         adjustInfiniteScrollContentOffset()
-        setCurrentIndex(currentIndex + 1)
+        setCurrentIndexFromAutoScrolling(currentIndex + 1)
     }
 
     func scrollToPreviousPage() {
@@ -307,14 +320,30 @@ extension CarouselCollectionView {
         }
 
         guard currentIndex > 0 else { return }
-        setCurrentIndex(currentIndex - 1)
+        setCurrentIndexFromAutoScrolling(currentIndex - 1)
+    }
+
+    private func setCurrentIndexFromAutoScrolling(_ index: Int) {
+        let oldValue = currentIndex
+
+        setCurrentIndex(index) { [weak self] in
+            guard
+                let strongSelf = self,
+                let item = strongSelf.item(at: strongSelf.currentIndex)
+            else {
+                return
+            }
+
+            strongSelf.previousIndex = oldValue
+            strongSelf.didChangeCurrentItem?(strongSelf.currentIndex, item)
+        }
     }
 }
 
 // MARK: - Private Helpers
 
 extension CarouselCollectionView {
-    private func adjustedItemForInfiniteScroll(at index: Int) -> Int {
+    private func adjustedIndexForInfiniteScroll(from index: Int) -> Int {
         guard style == .infiniteScroll else { return index }
 
         if index == 0 { // Left end of infinite scroll

@@ -222,6 +222,29 @@ open class CustomCarouselView<Cell: CarouselViewCellType, Model: CarouselViewMod
         #endif
     }
 
+    // MARK: - API
+
+    open func cellForItem(at index: Int) -> Cell? {
+        return carouselCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? Cell
+    }
+
+    open func reloadData() {
+        carouselCollectionView.reloadData()
+    }
+
+    open func setCurrentIndex(_ index: Int, animated: Bool = true, completionHandler: (() -> Void)? = nil) {
+        pageControl.currentPage = index
+        carouselCollectionView.setCurrentIndex(index, animated: animated, completionHandler: completionHandler)
+    }
+
+    open func configure(model: Model) {
+        carouselCollectionView.viewModel = model
+        pageControl.isHidden = isPageControlHidden
+        pageControl.numberOfPages = carouselCollectionView.numberOfPages
+    }
+
+    // MARK: - Hooks
+
     private var didChangeContentSize: (() -> Void)?
     open func didChangeContentSize(_ callback: @escaping () -> Void) {
         didChangeContentSize = callback
@@ -248,25 +271,6 @@ open class CustomCarouselView<Cell: CarouselViewCellType, Model: CarouselViewMod
     private var prefetch: ((_ indexPath: Int) -> Void)?
     open func prefetch(_ callback: @escaping ((_ indexPath: Int) -> Void)) {
         prefetch = callback
-    }
-
-    open func setCurrentIndex(_ index: Int, animated: Bool = true, completionHandler: (() -> Void)? = nil) {
-        pageControl.currentPage = index
-        carouselCollectionView.setCurrentIndex(index, animated: animated, completionHandler: completionHandler)
-    }
-
-    open func cellForItemAt(index: Int) -> Cell? {
-        return carouselCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? Cell
-    }
-
-    open func reloadData() {
-        carouselCollectionView.reloadData()
-    }
-
-    open func configure(model: Model) {
-        carouselCollectionView.viewModel = model
-        pageControl.isHidden = isPageControlHidden
-        pageControl.numberOfPages = carouselCollectionView.numberOfPages
     }
 }
 
