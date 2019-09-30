@@ -88,6 +88,13 @@ open class CustomCarouselView<Cell: CarouselViewCellType, Model: CarouselViewMod
     /// The default value is `true`.
     public var isCarouselAccessibilityEnabled = true
 
+    /// A boolean value indicating whether auto scrolling behavior is enabled.
+    ///
+    /// The default value is `false`.
+    public var isAutoScrollingEnabled: Bool {
+        return carouselCollectionView.isAutoScrollingEnabled
+    }
+
     /// A boolean value indicating whether the carousel view height is same as the
     /// height of the cell.
     ///

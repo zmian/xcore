@@ -43,6 +43,11 @@ final class CarouselCollectionView
     private var ignoreScrollEventsCallbacks = false
     private var autoScrollTimer: Timer?
 
+    /// A boolean value indicating whether auto scrolling behavior is enabled.
+    ///
+    /// The default value is `false`.
+    var isAutoScrollingEnabled = false
+
     var layout: CollectionViewCarouselLayout {
         return collectionViewLayout as! CollectionViewCarouselLayout
     }
@@ -288,6 +293,7 @@ final class CarouselCollectionView
 
 extension CarouselCollectionView {
     func startAutoScrolling(_ interval: TimeInterval = .slow) {
+        isAutoScrollingEnabled = true
         autoScrollTimer?.invalidate()
         autoScrollTimer = Timer.schedule(repeatInterval: interval) { [weak self] in
             self?.scrollToNextPage()
@@ -295,6 +301,7 @@ extension CarouselCollectionView {
     }
 
     func stopAutoScrolling() {
+        isAutoScrollingEnabled = false
         autoScrollTimer?.invalidate()
         autoScrollTimer = nil
     }
