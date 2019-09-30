@@ -55,6 +55,7 @@ final class CarouselCollectionView
     var viewModel: Model? {
         didSet {
             reloadData()
+            setCurrentIndex(0)
         }
     }
 
