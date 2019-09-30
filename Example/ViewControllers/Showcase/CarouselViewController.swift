@@ -1,15 +1,31 @@
 //
-//  CarouselViewController.swift
-//  Example
+// CarouselViewController.swift
 //
-//  Created by Guillermo Waitzel on 30/09/2019.
-//  Copyright © 2019 Xcore. All rights reserved.
+// Copyright © 2019 Xcore
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
 
 import UIKit
 
 extension CarouselViewController {
-    struct Item: CarouselAccessibilitySupport {
+    private struct Item: CarouselAccessibilitySupport {
         let title: String
         let image: ImageRepresentable
 
@@ -20,17 +36,18 @@ extension CarouselViewController {
 }
 
 final class CarouselViewController: UIViewController {
-    let items = [
+    private let items = [
         Item(title: "First Item", image: r(.blueJay)),
         Item(title: "Second Item", image: r(.blueJay)),
         Item(title: "Third Item", image: r(.blueJay))
     ]
 
-    let carouselView = CarouselView<ItemCell>().apply {
+    private let carouselView = CarouselView<ItemCell>().apply {
         $0.style = .infiniteScroll
+        $0.startAutoScrolling()
         $0.pageControl.apply {
             $0.dotsPadding = .maximumPadding
-            $0.pageIndicatorTintColor = .black
+            $0.pageIndicatorTintColor = UIColor.black.alpha(0.3)
             $0.currentPageIndicatorTintColor = .black
         }
     }
@@ -48,8 +65,10 @@ final class CarouselViewController: UIViewController {
     }
 }
 
+// MARK: - ItemCell
+
 extension CarouselViewController {
-    final class ItemCell: XCCollectionViewCell, CarouselViewCellRepresentable {
+    final private class ItemCell: XCCollectionViewCell, CarouselViewCellRepresentable {
         private let iconView = UIImageView().apply {
             $0.contentMode = .scaleAspectFit
             $0.snp.makeConstraints { make in
