@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Xcore
 
 extension CarouselViewController {
     struct Item: CarouselAccessibilitySupport {
