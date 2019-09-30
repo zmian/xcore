@@ -293,7 +293,7 @@ final class CarouselCollectionView
 // MARK: - Autoscroll
 
 extension CarouselCollectionView {
-    func startAutoScrolling(_ interval: TimeInterval = .slow) {
+    func startAutoScrolling(_ interval: TimeInterval) {
         isAutoScrollingEnabled = true
         autoScrollTimer?.invalidate()
         autoScrollTimer = Timer.schedule(repeatInterval: interval) { [weak self] in
