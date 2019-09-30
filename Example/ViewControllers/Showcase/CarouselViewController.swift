@@ -42,7 +42,6 @@ final class CarouselViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(carouselView)
         carouselView.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.5)
             make.centerY.equalToSuperview()
             make.leading.trailing.equalToSuperview()
         }
@@ -55,15 +54,16 @@ extension CarouselViewController {
         private let iconView = UIImageView().apply {
             $0.contentMode = .scaleAspectFit
             $0.snp.makeConstraints { make in
-                make.size.equalTo(100)
+                make.height.equalTo(100)
             }
         }
 
         private lazy var titleLabel = UILabel().apply {
+            $0.text = "Default Text"
             $0.font = .app(style: .body)
             $0.textColor = .black
             $0.textAlignment = .center
-            $0.resistsSizeChange(axis: .vertical)
+            $0.resistsSizeChange()
         }
 
         private lazy var stackView = UIStackView(arrangedSubviews: [
@@ -71,19 +71,19 @@ extension CarouselViewController {
             titleLabel
         ]).apply {
             $0.axis = .vertical
-            $0.alignment = .center
             $0.spacing = .defaultPadding
+            titleLabel.snp.makeConstraints { make in
+                make.leading.greaterThanOrEqualToSuperview()
+                make.trailing.lessThanOrEqualToSuperview()
+            }
         }
 
         override func commonInit() {
             super.commonInit()
-            contentView.addSubview(stackView)
             contentView.backgroundColor = .lightGray
+            contentView.addSubview(stackView)
             stackView.snp.makeConstraints { make in
-                make.top.greaterThanOrEqualToSuperview()
-                make.bottom.lessThanOrEqualToSuperview()
-                make.height.equalTo(300)
-                make.leading.trailing.equalToSuperview()
+                make.edges.equalToSuperview()
             }
         }
 
