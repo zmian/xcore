@@ -238,6 +238,24 @@ final class CarouselCollectionView
         }
     }
 
+    /// Tells the delegate when a scrolling animation in the scroll view concludes.
+    ///
+    /// - Note: The scroll view calls this method at the end of its implementations
+    ///         of the `setContentOffset:animated:` and
+    ///         `scrollRectToVisible:animated:` methods, but only if animations
+    ///         are requested.
+    ///
+    ///         This ensures `didChangeCurrentItem` callback is fired when
+    ///         auto-scrolling is enabled.
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        guard let item = item(at: currentIndex) else {
+            return
+        }
+
+        previousIndex = currentIndex
+        didChangeCurrentItem?(currentIndex, item)
+    }
+
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         guard let autoScrollTimer = autoScrollTimer else { return }
         startAutoScrolling(autoScrollTimer.timeInterval)
@@ -316,7 +334,7 @@ extension CarouselCollectionView {
         }
 
         adjustInfiniteScrollContentOffset()
-        setCurrentIndexFromAutoScrolling(currentIndex + 1)
+        setCurrentIndex(currentIndex + 1)
     }
 
     func scrollToPreviousPage() {
@@ -328,23 +346,7 @@ extension CarouselCollectionView {
         }
 
         guard currentIndex > 0 else { return }
-        setCurrentIndexFromAutoScrolling(currentIndex - 1)
-    }
-
-    private func setCurrentIndexFromAutoScrolling(_ index: Int) {
-        let oldValue = currentIndex
-
-        setCurrentIndex(index) { [weak self] in
-            guard
-                let strongSelf = self,
-                let item = strongSelf.item(at: strongSelf.currentIndex)
-            else {
-                return
-            }
-
-            strongSelf.previousIndex = oldValue
-            strongSelf.didChangeCurrentItem?(strongSelf.currentIndex, item)
-        }
+        setCurrentIndex(currentIndex - 1)
     }
 }
 
