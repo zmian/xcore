@@ -160,6 +160,20 @@ public func orderedJoin<T>(_ promises: [() -> Promise<[T]>]) -> Promise<[T]> {
     return innerPromise(promises, initialValue: [])
 }
 
+// MARK: - MultiplePromisesResponse
+
+extension Promise {
+    public struct MultiplePromisesResponse {
+        public let values: [T]
+        public let errors: [Error]
+
+        public init(values: [T], errors: [Error]) {
+            self.values = values
+            self.errors = errors
+        }
+    }
+}
+
 public enum MultiplePromisesResolutionStrategy {
     /// Rejects as soon as one of the provided promises rejects.
     case rejectsIfAnyRejects
@@ -174,28 +188,29 @@ public enum MultiplePromisesResolutionStrategy {
 ///   - strategy: The strategy to use when resolving the given `promises` if they fail.
 ///               The default value is `.rejectsIfAnyRejects`.
 /// - Returns: A new promise that resolves once all the provided promises resolve.
-public func join<T>(_ promises: [Promise<[T]>], strategy: MultiplePromisesResolutionStrategy = .rejectsIfAnyRejects) -> Promise<[T]> {
+public func join<T>(_ promises: [Promise<[T]>], strategy: MultiplePromisesResolutionStrategy = .rejectsIfAnyRejects) -> Promise<Promise<T>.MultiplePromisesResponse> {
     return Promise { seal in
-        firstly {
-            when(resolved: promises)
-        }.done { results in
+        when(resolved: promises).done { results in
             var values: [T] = []
+            var errors: [Error] = []
 
             for result in results {
                 switch result {
                     case .fulfilled(let value):
                         values += value
                     case .rejected(let error):
-                        if strategy == .rejectsIfAnyRejects {
-                            seal.reject(error)
-                            return
+                        switch strategy {
+                            case .rejectsIfAnyRejects:
+                                seal.reject(error)
+                                // Terminate the for-loop, we are done.
+                                return
+                            case .neverRejects:
+                                errors.append(error)
                         }
                 }
             }
 
-            seal.fulfill(values)
-        }.catch { error in
-            seal.reject(error)
+            seal.fulfill(.init(values: values, errors: errors))
         }
     }
 }
