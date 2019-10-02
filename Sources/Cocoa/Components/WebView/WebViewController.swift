@@ -495,16 +495,25 @@ extension WebViewController: UIDocumentInteractionControllerDelegate {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: indicator)
 
         URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-            guard let strongSelf = self, let data = data else {
-                self?.navigationItem.rightBarButtonItem = nil
+            guard let data = data else {
+                DispatchQueue.main.async { [weak self] in
+                    self?.navigationItem.rightBarButtonItem = nil
+                }
                 return
             }
 
             do {
                 try data.write(to: fileUrl)
-                strongSelf.addShareFileButton(fileUrl: fileUrl)
+                DispatchQueue.main.async { [weak self] in
+                    guard let strongSelf = self else {
+                        return
+                    }
+                    strongSelf.addShareFileButton(fileUrl: fileUrl)
+                }
             } catch {
-                strongSelf.navigationItem.rightBarButtonItem = nil
+                DispatchQueue.main.async { [weak self] in
+                    self?.navigationItem.rightBarButtonItem = nil
+                }
             }
         }.resume()
     }
