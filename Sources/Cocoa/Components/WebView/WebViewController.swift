@@ -505,10 +505,7 @@ extension WebViewController: UIDocumentInteractionControllerDelegate {
             do {
                 try data.write(to: fileUrl)
                 DispatchQueue.main.async { [weak self] in
-                    guard let strongSelf = self else {
-                        return
-                    }
-                    strongSelf.addShareFileButton(fileUrl: fileUrl)
+                    self?.addShareFileButton(fileUrl: fileUrl)
                 }
             } catch {
                 DispatchQueue.main.async { [weak self] in
