@@ -28,7 +28,7 @@ final public class KeychainHelpers {
     /// A function to get the `kSecClassGenericPassword` item for the given `key` and `prefix`.
     ///
     /// ```swift
-    /// KeychainHelpers.get("authToken", prefix: "com.example.ios.")
+    /// KeychainHelpers.get("accessToken", prefix: "com.example.ios.")
     /// ```
     public static func get(_ key: String, prefix: String) -> Any? {
         guard let data = items(for: kSecClassGenericPassword as String)["\(prefix)\(key)"] as? Data else {
@@ -82,7 +82,7 @@ final public class KeychainHelpers {
     /// A function to remove item from the keychain for the given `key`.
     ///
     /// ```swift
-    /// KeychainHelpers.remove("com.example.ios.authToken", for: kSecClassGenericPassword as String)
+    /// KeychainHelpers.remove("com.example.ios.accessToken", for: kSecClassGenericPassword as String)
     /// ```
     @discardableResult
     public static func remove(_ key: String, for secClass: String) -> Bool {
@@ -117,7 +117,7 @@ final public class KeychainHelpers {
     /// A function to show the raw value for the given `key`.
     ///
     /// ```swift
-    /// KeychainHelpers.raw("com.example.ios.authToken")
+    /// KeychainHelpers.raw("com.example.ios.accessToken")
     /// ```
     public static func raw(_ key: String) -> Any? {
         guard let data = items(for: kSecClassGenericPassword as String)["\(key)"] as? Data else {
