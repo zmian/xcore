@@ -67,7 +67,7 @@ open class LabelTextView: UITextView {
         backgroundColor = .clear
         textAlignment = .left
         resistsSizeChange(axis: .vertical)
-        didTapUrl = type(of: self).defaultDidTapUrlHandler
+        didTapUrl = Self.defaultDidTapUrlHandler
     }
 
     open override var canBecomeFirstResponder: Bool {
