@@ -48,7 +48,7 @@ public struct Percentage: RawRepresentable {
     public private(set) var rawValue: Double
 
     public init(rawValue: Double) {
-        self.rawValue = type(of: self).normalize(rawValue)
+        self.rawValue = Self.normalize(rawValue)
     }
 
     private static func normalize(_ value: Double) -> Double {

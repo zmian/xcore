@@ -98,10 +98,10 @@ extension Router.Route.Options {
             return
         }
 
-        // Wrap the view controller in navigation controller so the router instance when
+        // Embed the view controller in navigation controller so the router instance when
         // presented modally can be used. Router requires navigation controller.
-        let nvc = (vc as? UINavigationController) ?? NavigationController(rootViewController: vc)
-        navigationController.present(nvc, animated: isAnimated)
+        let vc = vc.embedInNavigationControllerIfNeeded()
+        navigationController.present(vc, animated: isAnimated)
     }
 
     /// Show the list of view controller on the given navigation controller.
@@ -111,8 +111,8 @@ extension Router.Route.Options {
             return
         }
 
-        // Wrap the view controller in navigation controller so the router instance when
-        // presented modally can be used. Router requires navigation controller.
+        // Embed the view controllers in navigation controller so the router instance
+        // when presented modally can be used. Router requires navigation controller.
         let nvc = NavigationController()
         nvc.setViewControllers(vcs, animated: isAnimated)
         navigationController.present(nvc, animated: isAnimated)

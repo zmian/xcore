@@ -55,7 +55,7 @@ extension UIViewController {
     public dynamic static let defaultAppearance = DefaultAppearance()
 
     private var defaultAppearance: DefaultAppearance {
-        return type(of: self).defaultAppearance
+        return Self.defaultAppearance
     }
 }
 

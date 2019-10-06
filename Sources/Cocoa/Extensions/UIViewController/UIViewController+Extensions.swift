@@ -163,3 +163,43 @@ extension UIViewController {
         present(viewControllerToPresent, animated: animated, completion: completion)
     }
 }
+
+// MARK: - Embed
+
+extension UIViewController {
+    /// Embed in navigation controller if needed.
+    func embedInNavigationControllerIfNeeded() -> UIViewController {
+        guard canBeEmbeddedInNavigationController else {
+            return self
+        }
+
+        return NavigationController(rootViewController: self)
+    }
+
+    /// A boolean value indicating whether the `self` can be embedded in
+    /// `UINavigationController`.
+    private var canBeEmbeddedInNavigationController: Bool {
+        switch self {
+            case is NavigationController,
+                 is UITabBarController:
+                return false
+            default:
+                return true
+        }
+    }
+}
+
+extension UIWindow {
+    public func setRootViewController(_ vc: UIViewController) {
+        if rootViewController == vc {
+            return
+        }
+
+        if let rvc = (rootViewController as? UINavigationController)?.rootViewController, rvc == vc {
+            return
+        }
+
+        rootViewController = vc.embedInNavigationControllerIfNeeded()
+        makeKeyAndVisible()
+    }
+}
