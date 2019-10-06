@@ -25,10 +25,11 @@
 import UIKit
 
 extension UIApplication {
-    /// Swift doesn't allow marking parts of Swift framework unavailable for the App Extension target.
-    /// This solution let's us overcome this limitation for now.
+    /// Swift doesn't allow marking parts of Swift framework unavailable for the App
+    /// Extension target. This solution let's us overcome this limitation for now.
     ///
-    /// `UIApplication.shared` is marked as unavailable for these for App Extension target.
+    /// `UIApplication.shared` is marked as unavailable for these for App Extension
+    /// target.
     ///
     /// https://bugs.swift.org/browse/SR-1226 is still unresolved
     /// and cause problems. It seems that as of now, marking API as unavailable
@@ -45,6 +46,32 @@ extension UIApplication {
         }
 
         return unmanagedSharedApplication.takeUnretainedValue() as? UIApplication
+    }
+
+    /// Swift doesn't allow marking parts of Swift framework unavailable for the App
+    /// Extension target. This solution let's us overcome this limitation for now.
+    ///
+    /// `UIApplication.shared.open(_:options:completionHandler:)"` is marked as
+    /// unavailable for these for App Extension target.
+    ///
+    /// https://bugs.swift.org/browse/SR-1226 is still unresolved
+    /// and cause problems. It seems that as of now, marking API as unavailable
+    /// for extensions in Swift still doesn’t let you compile for App extensions.
+    public func appExtensionSafeOpen(_ url: URL) {
+        guard let application = UIApplication.sharedOrNil else {
+            return
+        }
+
+        let selector = NSSelectorFromString("openURL:options:completionHandler:")
+
+        guard let method = application.method(for: selector) else {
+            Console.warn("Dynamic selector \(selector) isn't available.")
+            return
+        }
+
+        typealias ClosureType = @convention(c) (UIApplication, Selector, URL, [UIApplication.OpenExternalURLOptionsKey: Any], ((Bool) -> Void)?) -> Void
+        let _open : ClosureType = unsafeBitCast(method, to: ClosureType.self)
+        _open(application, selector, url, [:], nil)
     }
 }
 
