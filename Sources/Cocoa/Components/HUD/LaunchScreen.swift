@@ -36,6 +36,7 @@ extension LaunchScreen {
 
         public override init() {
             super.init()
+            windowLabel = "LaunchScreen Window"
             preferredStatusBarStyle = .lightContent
             add(imageView)
             imageView.anchor.make {

@@ -50,7 +50,12 @@ final public class DrawerScreen: NSObject {
 
     private var notificationToken: NSObjectProtocol?
     private var presentedContent: Content?
-    private let hud = HUD()
+    private let hud = HUD().apply {
+        $0.windowLabel = "DrawerScreen Window"
+        $0.preferredStatusBarStyle = .inherit
+        $0.backgroundColor = UIColor.black.alpha(0.1)
+        $0.duration = .init(.fast)
+    }
 
     private let modalView = BlurView().apply {
         $0.blurOpacity = 0.3
@@ -61,9 +66,6 @@ final public class DrawerScreen: NSObject {
 
     public override init() {
         super.init()
-        hud.preferredStatusBarStyle = .inherit
-        hud.backgroundColor = UIColor.black.alpha(0.1)
-        hud.duration = .init(.fast)
         setupAccessibilitySupport()
 
         hud.add(modalView)

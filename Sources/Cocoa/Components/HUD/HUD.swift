@@ -26,8 +26,8 @@ import UIKit
 
 /// A base class to create a HUD that sets up blank canvas that can be
 /// customized by subclasses to show anything in a fullscreen window.
-open class HUD {
-    private var isEnabled = false
+open class HUD: With {
+    public private(set) var isEnabled = false
     private var temporaryUnavailable = false
     private let window = UIWindow(frame: UIScreen.main.bounds)
     private lazy var viewController = ViewController().apply {
@@ -52,7 +52,14 @@ open class HUD {
         set { window.windowLevel = newValue }
     }
 
+    /// A succinct label that identifies the HUD window.
+    open var windowLabel: String? {
+        get { window.accessibilityLabel }
+        set { window.accessibilityLabel = newValue }
+    }
+
     public init() {
+        window.accessibilityLabel = "HUD"
         window.backgroundColor = .clear
         window.rootViewController = viewController
     }
