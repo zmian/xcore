@@ -58,7 +58,6 @@ extension UITabBar {
         get { return associatedObject(&AssociatedKey.borderWidth, default: 0) }
         set {
             setAssociatedObject(&AssociatedKey.borderWidth, value: newValue)
-            guard borderWidth != 0 else { return }
             topBorderView.constraint(forAttribute: .height)?.constant = newValue
         }
     }
@@ -67,7 +66,6 @@ extension UITabBar {
         get { return associatedObject(&AssociatedKey.borderColor, default: layer.borderColor?.uiColor ?? .black) }
         set {
             setAssociatedObject(&AssociatedKey.borderColor, value: newValue)
-            guard borderWidth != 0 else { return }
             topBorderView.backgroundColor = newValue
         }
     }
@@ -84,7 +82,7 @@ extension UITabBar {
     }
 
     private func setBorder(color: UIColor, thickness: CGFloat = 1) {
-        isBorderHidden = true
+        clipsToBounds = true
         addBorder(edges: .top, color: color, thickness: thickness)
     }
 }
