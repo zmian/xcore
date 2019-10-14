@@ -99,7 +99,7 @@ public struct Currency: Equatable, With {
     public var amount: Double?
 
     public func value() -> NSAttributedString? {
-        return attributedString()?.foregroundColor(foregroundColor)
+        attributedString()?.foregroundColor(foregroundColor)
     }
 
     private func attributedString() -> NSMutableAttributedString? {

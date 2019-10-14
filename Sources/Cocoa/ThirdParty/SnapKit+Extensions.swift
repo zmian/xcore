@@ -30,13 +30,13 @@ import SnapKit
 
 extension Array where Element: UIView {
     public var snp: [SnapKit.ConstraintViewDSL] {
-        return map { $0.snp }
+        map { $0.snp }
     }
 }
 
 extension Array where Element == SnapKit.ConstraintViewDSL {
     public func prepareConstraints(_ closure: (SnapKit.ConstraintMaker) -> Void) -> [[SnapKit.Constraint]] {
-        return map { $0.prepareConstraints(closure) }
+        map { $0.prepareConstraints(closure) }
     }
 
     public func makeConstraints(_ closure: (SnapKit.ConstraintMaker) -> Void) {
@@ -65,14 +65,14 @@ extension ConstraintPriority {
 extension ConstraintMakerPriortizable {
     @discardableResult
     public func priority(_ amount: UILayoutPriority) -> ConstraintMakerFinalizable {
-        return priority(amount.rawValue)
+        priority(amount.rawValue)
     }
 }
 
 extension Constraint {
     @discardableResult
     public func update(priority: UILayoutPriority) -> Constraint {
-        return update(priority: priority.rawValue)
+        update(priority: priority.rawValue)
     }
 }
 
@@ -169,12 +169,12 @@ extension ConstraintMakerRelatable {
 // MARK: ConstraintPriority
 
 extension ConstraintPriority {
-    public static func +(lhs: SnapKit.ConstraintPriority, rhs: Float) -> ConstraintPriority {
-        return ConstraintPriority(lhs.value + rhs)
+    public static func +(lhs: SnapKit.ConstraintPriority, rhs: Float) -> Self {
+        .init(lhs.value + rhs)
     }
 
-    public static func -(lhs: SnapKit.ConstraintPriority, rhs: Float) -> ConstraintPriority {
-        return ConstraintPriority(lhs.value - rhs)
+    public static func -(lhs: SnapKit.ConstraintPriority, rhs: Float) -> Self {
+        .init(lhs.value - rhs)
     }
 }
 

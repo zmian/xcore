@@ -33,7 +33,7 @@ extension UITableViewCell {
     /// A boolean property to provide visual feedback when the
     /// cell is highlighted. The default value is `.none`.
     open var highlightedAnimation: HighlightedAnimationOptions {
-        get { return associatedObject(&AssociatedKey.highlightedAnimation, default: .none) }
+        get { associatedObject(&AssociatedKey.highlightedAnimation, default: .none) }
         set { setAssociatedObject(&AssociatedKey.highlightedAnimation, value: newValue) }
     }
 }
@@ -43,26 +43,26 @@ extension UITableViewCell {
 extension UITableViewCell {
     /// The background color for the highlighted state.
     @objc open dynamic var highlightedBackgroundColor: UIColor? {
-        get { return backgroundColor(for: .highlighted) }
+        get { backgroundColor(for: .highlighted) }
         set { setBackgroundColor(newValue, for: .highlighted) }
     }
 
     /// The background color for the normal state.
     private var normalBackgroundColor: UIColor? {
-        get { return backgroundColor(for: .normal) }
+        get { backgroundColor(for: .normal) }
         set { setBackgroundColor(newValue, for: .normal) }
     }
 
     /// The view to which the `highlightedBackgroundColor` is applied.
     /// The default value is `self`.
     @objc open var highlightedBackgroundColorView: UIView {
-        return self
+        self
     }
 
     /// The view to which the `highlightedAnimation` is applied.
     /// The default value is `contentView`.
     @objc open var highlightedAnimationView: UIView {
-        return contentView
+        contentView
     }
 }
 
@@ -72,12 +72,12 @@ extension UITableViewCell {
     private typealias State = UInt
 
     private var backgroundColors: [State: UIColor] {
-        get { return associatedObject(&AssociatedKey.backgroundColors, default: [:]) }
+        get { associatedObject(&AssociatedKey.backgroundColors, default: [:]) }
         set { setAssociatedObject(&AssociatedKey.backgroundColors, value: newValue) }
     }
 
     private func backgroundColor(for state: UIControl.State) -> UIColor? {
-        return backgroundColors[state.rawValue]
+        backgroundColors[state.rawValue]
     }
 
     private func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControl.State) {

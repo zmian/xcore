@@ -45,7 +45,7 @@ extension UIFont {
 
 extension UIFont {
     func apply(_ trait: Trait) -> UIFont {
-        return trait == .monospace ? monospacedDigitFont : self
+        trait == .monospace ? monospacedDigitFont : self
     }
 
     /// Returns a font matching the given font descriptor.
@@ -61,15 +61,15 @@ extension UIFont {
     }
 
     public func bold() -> UIFont? {
-        return traits(.traitBold)
+        traits(.traitBold)
     }
 
     public func italic() -> UIFont? {
-        return traits(.traitItalic)
+        traits(.traitItalic)
     }
 
     public func monospace() -> UIFont? {
-        return traits(.traitMonoSpace)
+        traits(.traitMonoSpace)
     }
 }
 
@@ -101,7 +101,7 @@ extension UIFont {
 
 extension UIFont.TextStyle: CaseIterable {
     public static var allCases: [UIFont.TextStyle] = {
-        return [
+        [
             .largeTitle,
             .title1,
             .title2,
@@ -117,7 +117,7 @@ extension UIFont.TextStyle: CaseIterable {
     }()
 
     private static var headerStyles: [UIFont.TextStyle] = {
-        return [
+        [
             .largeTitle,
             .title1,
             .title2,
@@ -127,6 +127,6 @@ extension UIFont.TextStyle: CaseIterable {
     }()
 
     public var isTitle: Bool {
-        return UIFont.TextStyle.headerStyles.contains(self)
+        UIFont.TextStyle.headerStyles.contains(self)
     }
 }

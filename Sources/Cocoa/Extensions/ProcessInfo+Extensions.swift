@@ -32,11 +32,11 @@ extension ProcessInfo {
     ///
     /// - Returns: Shared process information agent for the process.
     public static var shared: ProcessInfo {
-        return processInfo
+        processInfo
     }
 
     public func contains(key: String) -> Bool {
-        return environment[key] != nil || inMemoryEnvironmentStorage[key] != nil
+        environment[key] != nil || inMemoryEnvironmentStorage[key] != nil
     }
 }
 
@@ -46,7 +46,7 @@ extension ProcessInfo {
     }
 
     fileprivate var inMemoryEnvironmentStorage: [String: String] {
-        get { return associatedObject(&AssociatedKey.inMemoryEnvironmentStorage, default: [:]) }
+        get { associatedObject(&AssociatedKey.inMemoryEnvironmentStorage, default: [:]) }
         set { setAssociatedObject(&AssociatedKey.inMemoryEnvironmentStorage, value: newValue) }
     }
 }
@@ -65,13 +65,13 @@ extension ProcessInfo {
         }
 
         public var description: String {
-            return rawValue
+            rawValue
         }
 
         /// A boolean property to indicate whether the variable exists in the
         /// environment from which the process was launched.
         public var exists: Bool {
-            return ProcessInfo.shared.contains(key: rawValue)
+            ProcessInfo.shared.contains(key: rawValue)
         }
 
         /// The variable value in the environment from which the process was launched.

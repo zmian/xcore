@@ -27,22 +27,22 @@ import Foundation
 extension StringProtocol {
     /// Returns `true` iff `value` is in `self`.
     public func contains<T: StringProtocol>(_ value: T, options: String.CompareOptions = []) -> Bool {
-        return range(of: value, options: options) != nil
+        range(of: value, options: options) != nil
     }
 
     /// A uppercase representation of the first character in string.
     public func uppercasedFirst() -> String {
-        return prefix(1).uppercased() + dropFirst()
+        prefix(1).uppercased() + dropFirst()
     }
 
     /// A lowercase representation of the first character in string.
     public func lowercasedFirst() -> String {
-        return prefix(1).lowercased() + dropFirst()
+        prefix(1).lowercased() + dropFirst()
     }
 
     /// A camel case representation of the string.
     public func camelcased() -> String {
-        return parts().lazy.enumerated().map {
+        parts().lazy.enumerated().map {
             if $0.offset == 0 {
                 return $0.element.lowercasedFirst()
             }
@@ -53,7 +53,7 @@ extension StringProtocol {
 
     /// A snake case representation of the string.
     public func snakecased() -> String {
-        return parts().joined(separator: "_")
+        parts().joined(separator: "_")
     }
 
     private func parts() -> [String] {
@@ -74,7 +74,7 @@ extension StringProtocol {
     }
 
     fileprivate var range: Range<String.Index> {
-        return Range(uncheckedBounds: (startIndex, endIndex))
+        Range(uncheckedBounds: (startIndex, endIndex))
     }
 }
 
@@ -109,27 +109,27 @@ extension String {
 
 extension String {
     public func urlEscaped() -> String? {
-        return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
     }
 
     /// Returns an array of strings at new lines.
     public var lines: [String] {
-        return components(separatedBy: .newlines)
+        components(separatedBy: .newlines)
     }
 
     /// Normalize multiple whitespaces and trim whitespaces and new line characters in `self`.
     public func trimmed() -> String {
-        return replace("[ ]+", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
+        replace("[ ]+", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     /// Searches for pattern matches in the string and replaces them with replacement.
     public func replace(_ pattern: String, with: String, options: String.CompareOptions = .regularExpression) -> String {
-        return replacingOccurrences(of: pattern, with: with, options: options, range: nil)
+        replacingOccurrences(of: pattern, with: with, options: options, range: nil)
     }
 
     /// Trim whitespaces from start and end and normalize multiple whitespaces into one and then replace them with the given string.
     public func replaceWhitespaces(with string: String) -> String {
-        return trimmingCharacters(in: .whitespaces).replace("[ ]+", with: string)
+        trimmingCharacters(in: .whitespaces).replace("[ ]+", with: string)
     }
 
     /// Determine whether the string is a valid url.
@@ -143,7 +143,7 @@ extension String {
 
     /// `true` iff `self` contains no characters and blank spaces (e.g., \n, " ").
     public var isBlank: Bool {
-        return trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     /// Drops the given `prefix` from `self`.
@@ -175,23 +175,23 @@ extension String {
 
 extension String {
     private var nsString: NSString {
-        return self as NSString
+        self as NSString
     }
 
     public var lastPathComponent: String {
-        return nsString.lastPathComponent
+        nsString.lastPathComponent
     }
 
     public var deletingLastPathComponent: String {
-        return nsString.deletingLastPathComponent
+        nsString.deletingLastPathComponent
     }
 
     public var deletingPathExtension: String {
-        return nsString.deletingPathExtension
+        nsString.deletingPathExtension
     }
 
     public var pathExtension: String {
-        return nsString.pathExtension
+        nsString.pathExtension
     }
 
     /// Returns a new string made by appending to the receiver a given path component.
@@ -248,7 +248,7 @@ extension String {
     }
 
     public func isMatch(_ pattern: String) -> Bool {
-        return !regex(pattern).isEmpty
+        !regex(pattern).isEmpty
     }
 }
 
@@ -277,13 +277,13 @@ extension String {
     ///                      is `[]`.
     /// - Returns: The Base-64 encoded string.
     public func base64Encoded(options: Data.Base64EncodingOptions = []) -> String? {
-        return data(using: .utf8)?.base64EncodedString(options: options)
+        data(using: .utf8)?.base64EncodedString(options: options)
     }
 }
 
 extension String {
     public func size(withFont font: UIFont) -> CGSize {
-        return (self as NSString).size(withAttributes: [.font: font])
+        (self as NSString).size(withAttributes: [.font: font])
     }
 
     public func size(withFont font: UIFont, constrainedToSize: CGSize) -> CGSize {

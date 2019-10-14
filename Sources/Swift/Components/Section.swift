@@ -64,11 +64,11 @@ public struct Section<Element>: RangeReplaceableCollection, MutableCollection, E
 
     public let startIndex = 0
     public var endIndex: Int {
-        return items.count
+        items.count
     }
 
     public subscript(index: Int) -> Element {
-        get { return items[index] }
+        get { items[index] }
         set { items[index] = newValue }
     }
 
@@ -77,11 +77,11 @@ public struct Section<Element>: RangeReplaceableCollection, MutableCollection, E
     /// - Parameter i: A valid index of the collection. `i` must be less than `endIndex`.
     /// - Returns: The index value immediately after `i`.
     public func index(after i: Int) -> Int {
-        return i + 1
+        i + 1
     }
 
     public func makeIterator() -> ArrayIterator<Element> {
-        return ArrayIterator(items)
+        .init(items)
     }
 
     public mutating func replaceSubrange<C: Collection>(_ subRange: Range<Int>, with newElements: C) where C.Iterator.Element == Element {
@@ -95,7 +95,7 @@ extension Array where Element: MutableCollection, Element.Index == Int {
     /// - Parameter indexPath: The index path for the element.
     /// - Returns: The element at the specified index path iff it is within bounds, otherwise `fatalError`.
     public subscript(indexPath: IndexPath) -> Element.Iterator.Element {
-        get { return self[indexPath.section][indexPath.item] }
+        get { self[indexPath.section][indexPath.item] }
         set { self[indexPath.section][indexPath.item] = newValue }
     }
 }
@@ -107,7 +107,7 @@ extension Array where Element: RangeReplaceableCollection, Element.Index == Int 
     /// - Returns: The removed element.
     @discardableResult
     public mutating func remove(at indexPath: IndexPath) -> Element.Iterator.Element {
-        return self[indexPath.section].remove(at: indexPath.item)
+        self[indexPath.section].remove(at: indexPath.item)
     }
 
     /// Insert newElement at the specified index path.

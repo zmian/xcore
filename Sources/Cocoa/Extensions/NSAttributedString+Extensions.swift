@@ -28,7 +28,7 @@ import UIKit
 
 extension NSAttributedString {
     @objc public func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
-         return NSMutableAttributedString(attributedString: self).setLineSpacing(spacing)
+         NSMutableAttributedString(attributedString: self).setLineSpacing(spacing)
     }
 
     public var attributesDescription: String {
@@ -57,7 +57,7 @@ extension NSAttributedString {
 // MARK: - NSMutableAttributedString Extension
 
 extension NSMutableAttributedString {
-    public override func setLineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
+    public override func setLineSpacing(_ spacing: CGFloat) -> Self {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = spacing
         addAttributes([.paragraphStyle: paragraphStyle], range: NSRange(location: 0, length: string.count))
@@ -71,34 +71,34 @@ extension NSMutableAttributedString {
 }
 
 extension NSMutableAttributedString {
-    open func underline(_ text: String, style: NSUnderlineStyle = .single) -> NSMutableAttributedString {
+    open func underline(_ text: String, style: NSUnderlineStyle = .single) -> Self {
         addAttribute(.underlineStyle, value: style.rawValue, range: range(of: text))
         return self
     }
 
-    open func foregroundColor(_ color: UIColor, for text: String? = nil) -> NSMutableAttributedString {
+    open func foregroundColor(_ color: UIColor, for text: String? = nil) -> Self {
         addAttribute(.foregroundColor, value: color, range: range(of: text))
         return self
     }
 
-    open func backgroundColor(_ color: UIColor, for text: String? = nil) -> NSMutableAttributedString {
+    open func backgroundColor(_ color: UIColor, for text: String? = nil) -> Self {
         addAttribute(.backgroundColor, value: color, range: range(of: text))
         return self
     }
 
-    open func font(_ font: UIFont, for text: String? = nil) -> NSMutableAttributedString {
+    open func font(_ font: UIFont, for text: String? = nil) -> Self {
         addAttribute(.font, value: font, range: range(of: text))
         return self
     }
 
-    open func textAlignment(_ textAlignment: NSTextAlignment, for text: String? = nil) -> NSMutableAttributedString {
+    open func textAlignment(_ textAlignment: NSTextAlignment, for text: String? = nil) -> Self {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = textAlignment
         addAttribute(.paragraphStyle, value: paragraphStyle, range: range(of: text))
         return self
     }
 
-    open func link(url: URL?, text: String) -> NSMutableAttributedString {
+    open func link(url: URL?, text: String) -> Self {
         guard let url = url else {
             return self
         }
@@ -175,7 +175,14 @@ extension NSAttributedString {
     ///   - color: The color for the caret and the `string`.
     ///   - direction: The caret direction to use. The default value is `.forward`.
     ///   - state: The state for which to generate the new attributed string. The default value is `.normal`.
-    public convenience init(string: String, spacer: String = "  ", font: UIFont, color: UIColor, direction: CaretDirection = .forward, for state: UIControl.State = .normal) {
+    public convenience init(
+        string: String,
+        spacer: String = "  ",
+        font: UIFont,
+        color: UIColor,
+        direction: CaretDirection = .forward,
+        for state: UIControl.State = .normal
+    ) {
         let imageTintColor = color
         var textColor = imageTintColor
         let alpha: CGFloat = textColor.alpha * 0.5

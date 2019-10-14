@@ -25,7 +25,7 @@
 extension Theme {
     public static func start() {
         UIButton.defaultAppearance.apply {
-            $0.style = .callout
+            $0.configuration = .callout
             $0.height = AppConstants.uiControlsHeight
             $0.isHeightSetAutomatically = true
             $0.highlightedAnimation = .scale

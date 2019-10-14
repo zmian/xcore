@@ -33,7 +33,7 @@ open class CollectionViewCarouselLayout: XCCollectionViewFlowLayout {
 
     /// Return `true` so that the layout is continuously invalidated as the user scrolls.
     open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return true
+        true
     }
 
     open override func prepare() {
@@ -43,7 +43,7 @@ open class CollectionViewCarouselLayout: XCCollectionViewFlowLayout {
     }
 
     open override class var layoutAttributesClass: AnyClass {
-        return Attributes.self
+        Attributes.self
     }
 
     open var shouldAddSeparators = false {

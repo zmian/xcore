@@ -34,15 +34,15 @@ public protocol XCCollectionViewFlowLayoutCustomizable {
 
 extension XCCollectionViewFlowLayoutCustomizable {
     public func sectionInset(_ layout: UICollectionViewLayout, for section: Int) -> UIEdgeInsets {
-        return (layout as? UICollectionViewFlowLayout)?.sectionInset ?? .zero
+        (layout as? UICollectionViewFlowLayout)?.sectionInset ?? .zero
     }
 
     public func minimumLineSpacing(_ layout: UICollectionViewLayout, for section: Int) -> CGFloat {
-        return (layout as? UICollectionViewFlowLayout)?.minimumLineSpacing ?? 0
+        (layout as? UICollectionViewFlowLayout)?.minimumLineSpacing ?? 0
     }
 
     public func minimumInteritemSpacing(_ layout: UICollectionViewLayout, for section: Int) -> CGFloat {
-        return (layout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? 0
+        (layout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? 0
     }
 }
 
@@ -95,7 +95,7 @@ extension XCCollectionViewFlowLayoutAdapter: UICollectionViewDelegateFlowLayout 
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sectionInset(for: section, in: collectionView)
+        sectionInset(for: section, in: collectionView)
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -141,7 +141,7 @@ extension XCCollectionViewFlowLayoutAdapter {
 
 extension UICollectionViewFlowLayout: XCComposedCollectionViewLayoutCompatible {
     public static var defaultAdapterType: XCComposedCollectionViewLayoutAdapter.Type {
-        return XCCollectionViewFlowLayoutAdapter.self
+        XCCollectionViewFlowLayoutAdapter.self
     }
 }
 
@@ -149,10 +149,10 @@ extension UICollectionViewFlowLayout: XCComposedCollectionViewLayoutCompatible {
 
 private final class XCFakeCollectionView: UICollectionView {
     override func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
-        return CollectionViewDequeueCache.shared.dequeueCell(identifier: identifier)
+        CollectionViewDequeueCache.shared.dequeueCell(identifier: identifier)
     }
 
     override func dequeueReusableSupplementaryView(ofKind elementKind: String, withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionReusableView {
-        return CollectionViewDequeueCache.shared.dequeueSupplementaryView(kind: elementKind, identifier: identifier)
+        CollectionViewDequeueCache.shared.dequeueSupplementaryView(kind: elementKind, identifier: identifier)
     }
 }

@@ -55,15 +55,15 @@ extension UIFont {
 extension UIFont.Typeface {
     static var systemFontId = "XCAppleSystemUIFont"
 
-    public static var system: UIFont.Typeface {
-        return .init { (weight, trait) -> String in
+    public static var system: Self {
+        .init { (weight, trait) -> String in
             /// This is special name and it will be interpreted at the callsite.
-            return systemFontId
+            systemFontId
         }
     }
 
-    public static var avenir: UIFont.Typeface {
-        return .init { (weight, trait) -> String in
+    public static var avenir: Self {
+        .init { (weight, trait) -> String in
             var name = "AvenirNext"
 
             switch weight {
@@ -90,8 +90,8 @@ extension UIFont.Typeface {
         }
     }
 
-    public static var helveticaNeue: UIFont.Typeface {
-        return .init { (weight, trait) -> String in
+    public static var helveticaNeue: Self {
+        .init { (weight, trait) -> String in
             var name = "HelveticaNeue"
             var spacer = ""
 
@@ -120,8 +120,8 @@ extension UIFont.Typeface {
         }
     }
 
-    public static func custom(_ namePrefix: String) -> UIFont.Typeface {
-        return .init { (weight, trait) -> String in
+    public static func custom(_ namePrefix: String) -> Self {
+        .init { (weight, trait) -> String in
             var name = namePrefix
 
             switch weight {

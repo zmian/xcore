@@ -32,7 +32,7 @@ extension ExtensibleByAssociatedObject {
     /// - Parameter key: The key for the association.
     /// - Returns: The value associated with the key for object.
     public func associatedObject<T>(_ key: UnsafeRawPointer) -> T? {
-        return objc_getAssociatedObject(self, key) as? T
+        objc_getAssociatedObject(self, key) as? T
     }
 
     /// Returns the value associated with a given object for a given key.

@@ -36,35 +36,35 @@ final class ExampleDynamicTableViewController: DynamicTableViewController {
                 title: "Section 1",
                 detail: "Important notice about the footer can be displayed here.",
                 items: [
-                    DynamicTableModel(title: "Hummingbird", subtitle: "Hummingbirds are New World birds that constitute the family Trochilidae. They are among the {#ff0000|smallest of birds}, most species measuring in the 7.5–13 cm range.")
+                    .init(title: "Hummingbird", subtitle: "Hummingbirds are New World birds that constitute the family Trochilidae. They are among the {#ff0000|smallest of birds}, most species measuring in the 7.5–13 cm range.")
                 ]
             ),
             Section(
                 title: "Birds",
                 items: [
-                    DynamicTableModel(title: "Hummingbird", subtitle: "Hummingbirds are New World birds that constitute the family Trochilidae. They are among the {#ff0000|smallest of birds}, most species measuring in the 7.5–13 cm range."),
-                    DynamicTableModel(title: "Hummingbird", image: r(.blueJay)),
-                    DynamicTableModel(title: "Hummingbird", image: r(.blueJay), accessory: .disclosureIndicator),
-                    DynamicTableModel(subtitle: "**You** are now a **confirmed bird watcher** with 70 birds spotted!"),
-                    DynamicTableModel(title: "Showcase", subtitle: "This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}", image: r(.blueJay)),
-                    DynamicTableModel(title: "Showcase", subtitle: "This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}", image: r(.blueJay)),
-                    DynamicTableModel(title: "Woodpecker", accessory: .disclosureIndicator),
-                    DynamicTableModel(title: "Blue Jay", accessory: .text("462")),
-                    DynamicTableModel(title: "1,223", subtitle: "Globally, 1,223 species of birds", image: r(.blueJay), accessory: .text("5m")),
-                    DynamicTableModel(title: "American Goldfinch", subtitle: "Spinus tristis", image: r(.blueJay), accessory: ListAccessoryType.checkbox(isSelected: true) { sender -> Void in
+                    .init(title: "Hummingbird", subtitle: "Hummingbirds are New World birds that constitute the family Trochilidae. They are among the {#ff0000|smallest of birds}, most species measuring in the 7.5–13 cm range."),
+                    .init(title: "Hummingbird", image: r(.blueJay)),
+                    .init(title: "Hummingbird", image: r(.blueJay), accessory: .disclosureIndicator),
+                    .init(subtitle: "**You** are now a **confirmed bird watcher** with 70 birds spotted!"),
+                    .init(title: "Showcase", subtitle: "This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}", image: r(.blueJay)),
+                    .init(title: "Showcase", subtitle: "This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}. This string has **bold**, _italics_, and {#ff0000|red text}", image: r(.blueJay)),
+                    .init(title: "Woodpecker", accessory: .disclosureIndicator),
+                    .init(title: "Blue Jay", accessory: .text("462")),
+                    .init(title: "1,223", subtitle: "Globally, 1,223 species of birds", image: r(.blueJay), accessory: .text("5m")),
+                    .init(title: "American Goldfinch", subtitle: "Spinus tristis", image: r(.blueJay), accessory: ListAccessoryType.checkbox(isSelected: true) { sender -> Void in
                         let choice = sender.isSelected ? "On" : "Off"
                         print("American Goldfinch \(choice)")
                     }),
-                    DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: ListAccessoryType.checkbox(isSelected: true) { sender -> Void in
+                    .init(title: "Woodpecker", subtitle: "200 Species", accessory: ListAccessoryType.checkbox(isSelected: true) { sender -> Void in
                         let choice = sender.isSelected ? "On" : "Off"
                         print("Woodpecker \(choice)")
                     }),
-                    DynamicTableModel(title: "Woodpecker", subtitle: "200 Species", accessory: ListAccessoryType.toggle(isOn: true) { sender -> Void in
+                    .init(title: "Woodpecker", subtitle: "200 Species", accessory: ListAccessoryType.toggle(isOn: true) { sender -> Void in
                         let choice = sender.isOn ? "On" : "Off"
                         print("Woodpecker \(choice)")
                     }),
-                    DynamicTableModel(title: "Cardinal", subtitle: "Cardinalidae, Passerine"),
-                    DynamicTableModel(title: "Blue Jay", subtitle: "Cyanocitta Cristata • Cyanocitta", image: r(.blueJay))
+                    .init(title: "Cardinal", subtitle: "Cardinalidae, Passerine"),
+                    .init(title: "Blue Jay", subtitle: "Cyanocitta Cristata • Cyanocitta", image: r(.blueJay))
                 ]
             )
         ]

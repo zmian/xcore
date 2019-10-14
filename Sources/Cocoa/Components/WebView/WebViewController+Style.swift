@@ -77,19 +77,19 @@ extension WebViewController {
 
 extension WebViewController.Style: CustomStringConvertible {
     public var description: String {
-        return id.rawValue
+        id.rawValue
     }
 }
 
 extension WebViewController.Style: Equatable {
     public static func == (lhs: WebViewController.Style, rhs: WebViewController.Style) -> Bool {
-        return lhs.id == rhs.id
+        lhs.id == rhs.id
     }
 }
 
 extension WebViewController.Style: Hashable {
     public func hash(into hasher: inout Hasher) {
-        return hasher.combine(id)
+        hasher.combine(id)
     }
 }
 
@@ -103,17 +103,17 @@ extension WebViewController.Style {
     /// The default app style.
     private static var _default: (_ title: String) -> WebViewController.Style = WebViewController.Style.modern
     public static func `default`(title: String) -> WebViewController.Style {
-        return _default(title)
+        _default(title)
     }
 
     public static var `default`: WebViewController.Style {
-        return `default`(title: "")
+        `default`(title: "")
     }
 }
 
 extension WebViewController.Style {
-    private static func modern(title: String) -> WebViewController.Style {
-        return WebViewController.Style(id: "xcore.modern").apply {
+    private static func modern(title: String) -> Self {
+        WebViewController.Style(id: "xcore.modern").apply {
             $0.title = title
             $0.configureProgressBar { progressBar in
                 let color = UIColor.appTint

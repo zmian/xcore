@@ -27,40 +27,40 @@ import Foundation
 extension Collection {
     /// Returns the element at the specified index iff it is within bounds, otherwise `nil`.
     public func at(_ index: Index) -> Iterator.Element? {
-        return indices.contains(index) ? self[index] : nil
+        indices.contains(index) ? self[index] : nil
     }
 }
 
 extension Collection {
     /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise `nil`.
     public func at(_ range: Range<Index>) -> SubSequence? {
-        return hasIndex(range) ? self[range] : nil
+        hasIndex(range) ? self[range] : nil
     }
 
     /// Return true iff range is in `self`.
     public func hasIndex(_ range: Range<Index>) -> Bool {
-        return range.lowerBound >= startIndex && range.upperBound <= endIndex
+        range.lowerBound >= startIndex && range.upperBound <= endIndex
     }
 }
 
 extension RandomAccessCollection where Index == Int {
     /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise `nil`.
     public func at(_ range: CountableRange<Index>) -> SubSequence? {
-        return hasIndex(range) ? self[range] : nil
+        hasIndex(range) ? self[range] : nil
     }
 
     /// Return true iff range is in `self`.
     public func hasIndex(_ range: CountableRange<Index>) -> Bool {
-        return range.lowerBound >= startIndex && range.upperBound <= endIndex
+        range.lowerBound >= startIndex && range.upperBound <= endIndex
     }
 
     /// Returns the `SubSequence` at the specified range iff it is within bounds, otherwise `nil`.
     public func at(_ range: CountableClosedRange<Index>) -> SubSequence? {
-        return hasIndex(range) ? self[range] : nil
+        hasIndex(range) ? self[range] : nil
     }
 
     /// Return true iff range is in `self`.
     public func hasIndex(_ range: CountableClosedRange<Index>) -> Bool {
-        return range.lowerBound >= startIndex && range.upperBound <= endIndex
+        range.lowerBound >= startIndex && range.upperBound <= endIndex
     }
 }

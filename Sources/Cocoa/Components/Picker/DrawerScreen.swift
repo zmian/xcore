@@ -37,7 +37,7 @@ extension DrawerScreenContent {
 
 extension UIView: DrawerScreenContent {
     public var drawerContentView: UIView {
-        return self
+        self
     }
 }
 

@@ -50,7 +50,7 @@ final class ReflectionTests: TestCase {
 }
 
 func typeName(of value: Any) -> String {
-    return name(of: value)
+    name(of: value)
 }
 
 private class MyViewController: UIViewController { }

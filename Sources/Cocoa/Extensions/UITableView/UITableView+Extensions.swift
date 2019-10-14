@@ -52,7 +52,7 @@ extension UITableView {
     /// return indexPathsForSelectedRows ?? []
     /// ```
     public var selectedIndexPaths: [IndexPath] {
-        return indexPathsForSelectedRows ?? []
+        indexPathsForSelectedRows ?? []
     }
 
     /// The total number of rows in all the sections.

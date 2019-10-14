@@ -58,7 +58,7 @@ private struct RouteHandlerAssociatedKey {
 
 extension RouteHandler {
     public var navigationController: UINavigationController? {
-        return objc_getAssociatedObject(self, &RouteHandlerAssociatedKey.navigationController) as? UINavigationController
+        objc_getAssociatedObject(self, &RouteHandlerAssociatedKey.navigationController) as? UINavigationController
     }
 
     func _setNavigationController(_ navigationController: UINavigationController?) {

@@ -80,7 +80,7 @@ extension UIApplication {
     ///
     /// - [Creating an App Extension](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionCreation.html)
     public static var isAppExtension: Bool {
-        return Bundle.main.bundlePath.hasSuffix(".appex")
+        Bundle.main.bundlePath.hasSuffix(".appex")
     }
 }
 
@@ -110,7 +110,7 @@ extension UIApplication {
     /// - Returns: Returns an optional window object based on visibility.
     /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
     open var visibleWindow: UIWindow? {
-        return windows.reversed().first { !$0.isHidden }
+        windows.reversed().first { !$0.isHidden }
     }
 }
 
@@ -119,6 +119,6 @@ extension UIApplication {
 extension UIWindow {
     /// The view controller at the top of the window's `rootViewController` stack.
     open var topViewController: UIViewController? {
-        return UIApplication.topViewController(rootViewController)
+        UIApplication.topViewController(rootViewController)
     }
 }

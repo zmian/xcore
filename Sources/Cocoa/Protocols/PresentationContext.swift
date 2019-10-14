@@ -57,10 +57,10 @@ extension PresentationContextKind: ExpressibleByStringLiteral {
 
 extension PresentationContextKind {
     public static var feed: PresentationContextKind {
-        return "feed"
+        "feed"
     }
 
     public static var detail: PresentationContextKind {
-        return "detail"
+        "detail"
     }
 }

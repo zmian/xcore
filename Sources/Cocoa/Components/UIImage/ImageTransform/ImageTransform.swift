@@ -39,23 +39,23 @@ public protocol ImageTransform: ImageRepresentablePlugin {
 
 extension ImageTransform {
     public var id: String {
-        return transformName
+        transformName
     }
 
     var transformName: String {
-        return name(of: self)
+        name(of: self)
     }
 }
 
 extension ImageTransform {
     /// A convenience function to automatically set source to the input image.
     public func transform(_ image: UIImage) -> UIImage {
-        return transform(image, source: image)
+        transform(image, source: image)
     }
 }
 
 extension ImageTransform {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.id == rhs.id
+        lhs.id == rhs.id
     }
 }

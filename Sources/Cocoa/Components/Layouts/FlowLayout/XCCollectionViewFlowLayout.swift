@@ -33,7 +33,7 @@ open class XCCollectionViewFlowLayout: UICollectionViewFlowLayout, DimmableLayou
     }
 
     open override class var layoutAttributesClass: AnyClass {
-        return Attributes.self
+        Attributes.self
     }
 
     open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {

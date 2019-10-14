@@ -66,7 +66,7 @@ open class XCCollectionReusableView: UICollectionReusableView {
     ///
     /// The default value is `false`.
     open var resistsDimming: Bool {
-        return false
+        false
     }
 
     open override var layer: CALayer {

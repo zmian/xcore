@@ -42,13 +42,13 @@ extension UserInfoKey: ExpressibleByStringLiteral {
 
 extension UserInfoKey: CustomStringConvertible {
     public var description: String {
-        return rawValue
+        rawValue
     }
 }
 
 extension UserInfoKey: CustomPlaygroundDisplayConvertible {
     public var playgroundDescription: Any {
-        return rawValue
+        rawValue
     }
 }
 
@@ -66,11 +66,11 @@ public protocol UserInfoContainer {
 
 extension UserInfoContainer {
     public subscript<T>(userInfoKey key: UserInfoKey) -> T? {
-        get { return userInfo[key] as? T }
+        get { userInfo[key] as? T }
         set { userInfo[key] = newValue }
     }
 
     public subscript<T>(userInfoKey key: UserInfoKey, default defaultValue: @autoclosure () -> T) -> T {
-        return self[userInfoKey: key] ?? defaultValue()
+        self[userInfoKey: key] ?? defaultValue()
     }
 }

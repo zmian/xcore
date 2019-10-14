@@ -31,7 +31,7 @@ struct DataSourceIndex<DataSourceType> {
     private var index = [GlobalSection: DataSource]()
 
     subscript(_ section: Int) -> (dataSource: DataSourceType, localSection: Int) {
-        get { return index[section]! }
+        get { index[section]! }
         set { index[section] = newValue }
     }
 }

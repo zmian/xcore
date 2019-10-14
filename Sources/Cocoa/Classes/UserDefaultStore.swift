@@ -94,6 +94,6 @@ extension UserDefaultStore: CustomStringConvertible {
 
 extension UserDefaultStore: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return value.debugDescription
+        value.debugDescription
     }
 }

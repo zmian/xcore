@@ -181,7 +181,7 @@ extension FeatureFlag.Key {
 
 private enum TestFeature {
     static func flag(_ key: FeatureFlagItem) -> FeatureFlag.Key {
-        return .init(rawValue: key.rawValue)
+        .init(rawValue: key.rawValue)
     }
 }
 

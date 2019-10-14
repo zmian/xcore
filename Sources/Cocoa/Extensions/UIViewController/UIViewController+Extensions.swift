@@ -100,26 +100,26 @@ extension UIViewController {
     /// A boolean value indicating whether the view is currently loaded into memory
     /// and presented on the screen.
     public var isPresented: Bool {
-        return isViewLoaded && view.window != nil
+        isViewLoaded && view.window != nil
     }
 
     /// A boolean value indicating whether the home indicator is currently present.
     public var isHomeIndicatorPresent: Bool {
-        return view.safeAreaInsets.bottom > 0
+        view.safeAreaInsets.bottom > 0
     }
 
     /// Only `true` iff `isDeviceLandscape` and `isInterfaceLandscape` both are `true`; Otherwise, `false`.
     public var isLandscape: Bool {
-        return isDeviceLandscape && isInterfaceLandscape
+        isDeviceLandscape && isInterfaceLandscape
     }
 
     public var isInterfaceLandscape: Bool {
-        return UIApplication.sharedOrNil?.statusBarOrientation.isLandscape ?? false
+        UIApplication.sharedOrNil?.statusBarOrientation.isLandscape ?? false
     }
 
     /// Returns the physical orientation of the device.
     public var isDeviceLandscape: Bool {
-        return UIDevice.current.orientation.isLandscape
+        UIDevice.current.orientation.isLandscape
     }
 
     /// This value represents the physical orientation of the device and may be different
@@ -127,7 +127,7 @@ extension UIViewController {
     ///
     /// - seealso: `UIDeviceOrientation` for descriptions of the possible values.
     public var deviceOrientation: UIDeviceOrientation {
-        return UIDevice.current.orientation
+        UIDevice.current.orientation
     }
 
     /// A function to display view controller over current view controller as modal.

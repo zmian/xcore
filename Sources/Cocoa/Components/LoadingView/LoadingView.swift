@@ -24,18 +24,17 @@
 
 import UIKit
 
-extension XCConfiguration where Type: LoadingView {
-    public static var plain: XCConfiguration {
-        return XCConfiguration {
-            $0.gradientView.colors = [UIColor.white, UIColor.white]
+extension Configuration where Type: LoadingView {
+    public static var plain: Self {
+        .init {
+            $0.gradientView.colors = [.white, .white]
             $0.configure(message: nil)
         }
     }
 }
 
 final public class LoadingView: XCView {
-    public typealias Style = XCConfiguration<LoadingView>
-
+    public typealias Configuration = Xcore.Configuration<LoadingView>
     public static var gradientViewClass: GradientView.Type = GradientView.self
     public private(set) lazy var gradientView = LoadingView.gradientViewClass.init()
     public let progressView = ProgressView()
@@ -58,8 +57,10 @@ final public class LoadingView: XCView {
     public var navigationBarTintColor: UIColor = .appTint
 
     /// A convenience property to automatically adjust content mode to be
-    /// `.scaleAspectFit` if the `image` is large or `.center` when the `image` is small
-    /// or same size as `self`. The default value is `false`.
+    /// `.scaleAspectFit` if the `image` is large or `.center` when the `image` is
+    /// small or same size as `self`.
+    ///
+    /// The default value is `false`.
     public var isContentModeAutomaticallyAdjusted = false {
         didSet {
             adjustContentModeIfNeeded()
@@ -85,16 +86,16 @@ final public class LoadingView: XCView {
         $0.spacing = .maximumPadding
     }
 
-    public var style: Style = .plain {
+    public var configuration: Configuration = .plain {
         didSet {
-            style.configure(self)
+            configuration.configure(self)
         }
     }
 
-    public convenience init(style: Style) {
+    public convenience init(configuration: Configuration) {
         self.init(frame: .zero)
-        self.style = style
-        style.configure(self)
+        self.configuration = configuration
+        configuration.configure(self)
     }
 
     public override func commonInit() {
@@ -161,22 +162,22 @@ final public class LoadingView: XCView {
     // MARK: - UIAppearance Properties
 
     @objc public dynamic var titleTextColor: UIColor {
-        get { return titleLabel.textColor }
+        get { titleLabel.textColor }
         set { titleLabel.textColor = newValue }
     }
 
     @objc public dynamic var titleFont: UIFont {
-        get { return titleLabel.font }
+        get { titleLabel.font }
         set { titleLabel.font = newValue }
     }
 
     @objc public dynamic var footerTextColor: UIColor {
-        get { return footerLabel.textColor }
+        get { footerLabel.textColor }
         set { footerLabel.textColor = newValue }
     }
 
     @objc public dynamic var footerFont: UIFont {
-        get { return footerLabel.font }
+        get { footerLabel.font }
         set { footerLabel.font = newValue }
     }
 }
@@ -186,15 +187,15 @@ final public class LoadingView: XCView {
 extension LoadingView: ViewMaskable {
     @discardableResult
     public static func add(to superview: UIView) -> LoadingView {
-        return add(to: superview, style: .plain)
+        add(to: superview, configuration: .plain)
     }
 
     @discardableResult
-    public static func add(to superview: UIView, style: Style) -> LoadingView {
-        return LoadingView().apply {
+    public static func add(to superview: UIView, configuration: Configuration) -> LoadingView {
+        LoadingView().apply {
             superview.addSubview($0)
             $0.anchor.edges.equalToSuperview()
-            $0.style = style
+            $0.configuration = configuration
         }
     }
 
@@ -208,6 +209,6 @@ extension LoadingView: ViewMaskable {
     }
 
     public var preferredNavigationBarTintColor: UIColor {
-        return navigationBarTintColor
+        navigationBarTintColor
     }
 }

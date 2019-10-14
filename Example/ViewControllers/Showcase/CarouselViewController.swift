@@ -30,7 +30,7 @@ extension CarouselViewController {
         let image: ImageRepresentable
 
         func accessibilityItem(index: Int) -> CarouselAccessibilityItem? {
-            return nil
+            nil
         }
     }
 }

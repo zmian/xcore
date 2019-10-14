@@ -28,7 +28,7 @@ public struct AlphaImageTransform: ImageTransform {
     private let alpha: CGFloat
 
     public var id: String {
-        return "\(transformName)-alpha:(\(alpha))"
+        "\(transformName)-alpha:(\(alpha))"
     }
 
     public init(alpha: CGFloat) {

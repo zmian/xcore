@@ -26,11 +26,11 @@ import UIKit
 
 extension UIImage {
     public func applying(_ transform: ImageTransform) -> UIImage {
-        return transform.transform(self)
+        transform.transform(self)
     }
 
     public func applying<T: ImageTransform>(_ transform: T.Member) -> UIImage {
-        return applying(transform.base)
+        applying(transform.base)
     }
 
     /// Process the image using the given transform.
@@ -51,15 +51,15 @@ extension UIImage {
 extension UIImage {
     /// Creating arbitrarily-colored icons from a black-with-alpha master image.
     public func tintColor(_ color: UIColor) -> UIImage {
-        return applying(.tintColor(color))
+        applying(.tintColor(color))
     }
 
     public func alpha(_ value: CGFloat) -> UIImage {
-        return applying(.alpha(value))
+        applying(.alpha(value))
     }
 
     public func cornerRadius(_ value: CGFloat) -> UIImage {
-        return applying(.cornerRadius(value))
+        applying(.cornerRadius(value))
     }
 
     /// Colorize image with given color.
@@ -69,11 +69,11 @@ extension UIImage {
     ///   - kind: The kind of colorize type method to use.
     /// - Returns: The processed `UIImage` object.
     public func colorize(_ color: UIColor, kind: ColorizeImageTransform.Kind) -> UIImage {
-        return applying(.colorize(color, kind: kind))
+        applying(.colorize(color, kind: kind))
     }
 
     public func background(_ color: UIColor, preferredSize: CGSize, alignment: UIControl.ContentHorizontalAlignment = .center) -> UIImage {
-        return applying(.background(color, preferredSize: preferredSize, alignment: alignment))
+        applying(.background(color, preferredSize: preferredSize, alignment: alignment))
     }
 
     /// Scales an image to fit within a bounds of the given size.
@@ -85,7 +85,7 @@ extension UIImage {
     ///
     /// - Returns: A new scaled image.
     public func scaled(to newSize: CGSize, scalingMode: ResizeImageTransform.ScalingMode = .aspectFill, tintColor: UIColor? = nil) -> UIImage {
-        return applying(.scaled(to: newSize, scalingMode: scalingMode, tintColor: tintColor))
+        applying(.scaled(to: newSize, scalingMode: scalingMode, tintColor: tintColor))
     }
 
     /// Applies gradient color overlay to `self`.
@@ -106,7 +106,7 @@ extension UIImage {
         locations: [Double]? = nil,
         blendMode: CGBlendMode = .normal
     ) -> UIImage {
-        return applying(.gradient(
+        applying(.gradient(
             type: type,
             colors: colors,
             direction: direction,

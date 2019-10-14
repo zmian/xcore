@@ -35,7 +35,7 @@ open class FadeAnimator: TransitionAnimator {
     open var fadeOut = true
 
     open override func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return direction == .in ? fadeInDuration : fadeOutDuration
+        direction == .in ? fadeInDuration : fadeOutDuration
     }
 
     open override func transition(context: TransitionContext, direction: AnimationDirection) {

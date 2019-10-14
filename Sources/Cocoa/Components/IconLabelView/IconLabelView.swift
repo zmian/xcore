@@ -208,19 +208,19 @@ open class IconLabelView: XCView {
 
     /// The default value is `.center`.
     open var contentAlignment: UIStackView.Alignment {
-        get { return stackView.alignment }
+        get { stackView.alignment }
         set { stackView.alignment = newValue }
     }
 
     /// The default value is `.minimumPadding / 2`.
     @objc open dynamic var contentPadding: CGFloat {
-        get { return stackView.spacing }
+        get { stackView.spacing }
         set { stackView.spacing = newValue }
     }
 
     /// The default value is `0`.
     @objc open dynamic var contentInset: UIEdgeInsets {
-        get { return stackView.layoutMargins }
+        get { stackView.layoutMargins }
         set { stackView.layoutMargins = newValue }
     }
 
@@ -313,22 +313,22 @@ extension IconLabelView {
 
 extension IconLabelView {
     @objc public dynamic var titleTextColor: UIColor {
-        get { return titleLabel.textColor }
+        get { titleLabel.textColor }
         set { titleLabel.textColor = newValue }
     }
 
     @objc public dynamic var titleFont: UIFont {
-        get { return titleLabel.font }
+        get { titleLabel.font }
         set { titleLabel.font = newValue }
     }
 
     @objc public dynamic var subtitleTextColor: UIColor {
-        get { return subtitleLabel.textColor }
+        get { subtitleLabel.textColor }
         set { subtitleLabel.textColor = newValue }
     }
 
     @objc public dynamic var subtitleFont: UIFont {
-        get { return subtitleLabel.font }
+        get { subtitleLabel.font }
         set { subtitleLabel.font = newValue }
     }
 }

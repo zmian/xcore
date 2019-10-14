@@ -48,27 +48,27 @@ final class RootViewController: DynamicTableViewController {
 
     private func items() -> [DynamicTableModel] {
         return [
-            DynamicTableModel(title: "Dynamic Table View", subtitle: "Data-driven table view", accessory: .disclosureIndicator) { [weak self] _, _ in
+            .init(title: "Dynamic Table View", subtitle: "Data-driven table view", accessory: .disclosureIndicator) { [weak self] _, _ in
                 let vc = ExampleDynamicTableViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
             },
-            DynamicTableModel(title: "Separators", subtitle: "Separators demonstration") { [weak self] _, _ in
+            .init(title: "Separators", subtitle: "Separators demonstration") { [weak self] _, _ in
                 let vc = SeparatorViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
             },
-            DynamicTableModel(title: "Buttons", subtitle: "UIButton extensions demonstration") { [weak self] _, _ in
+            .init(title: "Buttons", subtitle: "UIButton extensions demonstration") { [weak self] _, _ in
                 let vc = ButtonsViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
             },
-            DynamicTableModel(title: "TextViewController", subtitle: "TextViewController demonstration") { [weak self] _, _ in
+            .init(title: "TextViewController", subtitle: "TextViewController demonstration") { [weak self] _, _ in
                 let vc = ExampleTextViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
             },
-            DynamicTableModel(title: "FeedViewController", subtitle: "FeedViewController demonstration") { [weak self] _, _ in
+            .init(title: "FeedViewController", subtitle: "FeedViewController demonstration") { [weak self] _, _ in
                 let vc = FeedViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
             },
-            DynamicTableModel(title: "Carousel View Controller", subtitle: "Carousel demonstration") { [weak self] _, _ in
+            .init(title: "Carousel View Controller", subtitle: "Carousel demonstration") { [weak self] _, _ in
                 let vc = CarouselViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
             }
@@ -77,18 +77,18 @@ final class RootViewController: DynamicTableViewController {
 
     private func pickers() -> [DynamicTableModel] {
         return [
-            DynamicTableModel(title: "DatePicker", subtitle: "Date picker demonstration, selected value yesterday") { _, _ in
+            .init(title: "DatePicker", subtitle: "Date picker demonstration, selected value yesterday") { _, _ in
                 let yesterday = Date(timeIntervalSinceNow: -3600 * 24)
                 DatePicker.present(initialValue: yesterday) { date in
                     print("The selected date is \(date ?? Date())")
                 }
             },
-            DynamicTableModel(title: "Options Representable Picker", subtitle: "Using Picker to select from an options enum") { _, _ in
+            .init(title: "Options Representable Picker", subtitle: "Using Picker to select from an options enum") { _, _ in
                 Picker.present(selected: ExampleArrowOptions.allCases.first) { option in
                     print("Selected: \(option)")
                 }
             },
-            DynamicTableModel(title: "Drawer Screen", subtitle: "Dynamic Table View inside Drawer Screen") { _, _ in
+            .init(title: "Drawer Screen", subtitle: "Dynamic Table View inside Drawer Screen") { _, _ in
                 let vc = DynamicTableViewController(style: .plain)
                 vc.tableView.sections = [
                     Section(items: [
@@ -106,12 +106,12 @@ final class RootViewController: DynamicTableViewController {
                 }
                 DrawerScreen.present(vc.view)
             },
-            DynamicTableModel(title: "Picker List: Options Representable", subtitle: "Using Picker to select from an options enum") { _, _ in
+            .init(title: "Picker List: Options Representable", subtitle: "Using Picker to select from an options enum") { _, _ in
                 PickerList.present(selected: ExampleArrowOptions.allCases.first) { option in
                     print("Selected: \(option)")
                 }
             },
-            DynamicTableModel(title: "Picker List: Strings", subtitle: "Using Picker to select from an array of strings") { _, _ in
+            .init(title: "Picker List: Strings", subtitle: "Using Picker to select from an array of strings") { _, _ in
                 PickerList.present(options: [
                     "Option 1",
                     "Option 2",
@@ -122,7 +122,7 @@ final class RootViewController: DynamicTableViewController {
                     print("Selected: \(selected)")
                 }
             },
-            DynamicTableModel(title: "Picker List: Timer", subtitle: "Dynamic Table View inside Drawer Screen configured using a view-model") { _, _ in
+            .init(title: "Picker List: Timer", subtitle: "Dynamic Table View inside Drawer Screen configured using a view-model") { _, _ in
                 let model = ExamplePickerListModel()
                 let list = PickerList(model: model).apply {
                     $0.reloadAnimation = .none

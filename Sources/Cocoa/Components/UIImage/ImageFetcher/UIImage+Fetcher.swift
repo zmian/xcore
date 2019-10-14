@@ -65,13 +65,13 @@ extension UIImageView {
 
     /// The `ImageSourceType` object associated with the receiver.
     var imageRepresentableSource: ImageSourceType? {
-        get { return associatedObject(&AssociatedKey.imageRepresentableSource) }
+        get { associatedObject(&AssociatedKey.imageRepresentableSource) }
         set { setAssociatedObject(&AssociatedKey.imageRepresentableSource, value: newValue) }
     }
 
     /// The image fetch cancel block for the current fetch request.
     var _imageFetcherCancelBlock: (() -> Void)? {
-        get { return associatedObject(&AssociatedKey.imageFetcherCancelBlock) }
+        get { associatedObject(&AssociatedKey.imageFetcherCancelBlock) }
         set { setAssociatedObject(&AssociatedKey.imageFetcherCancelBlock, value: newValue) }
     }
 

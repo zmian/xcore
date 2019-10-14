@@ -31,7 +31,7 @@ extension UINavigationBar {
     }
 
     open var isTransparent: Bool {
-        get { return associatedObject(&AssociatedKey.isTransparent, default: false) }
+        get { associatedObject(&AssociatedKey.isTransparent, default: false) }
         set {
             guard newValue != isTransparent else { return }
             setAssociatedObject(&AssociatedKey.isTransparent, value: newValue)
@@ -49,7 +49,7 @@ extension UINavigationBar {
     }
 
     open var prefersNavigationBarBackground: Bool {
-        get { return associatedObject(&AssociatedKey.prefersNavigationBarBackground, default: false) }
+        get { associatedObject(&AssociatedKey.prefersNavigationBarBackground, default: false) }
         set { setAssociatedObject(&AssociatedKey.prefersNavigationBarBackground, value: newValue) }
     }
 }

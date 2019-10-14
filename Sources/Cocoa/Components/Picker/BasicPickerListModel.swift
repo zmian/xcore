@@ -177,7 +177,7 @@ private final class BasicTextPickerListModel: PickerListModel {
     }
 
     lazy var items: [DynamicTableModel] = {
-        return options.enumerated().map {
+        options.enumerated().map {
             DynamicTableModel(
                 title: $0.element,
                 accessory: $0.offset == selectedIndex ? .custom(checkmarkView) : .none

@@ -38,15 +38,15 @@ final public class LinePageControl: XCView {
     }
 
     private var indexCount: Int {
-        return max(1, numberOfPages - 1)
+        max(1, numberOfPages - 1)
     }
 
     private var stepSize: CGFloat {
-        return (bounds.width - dotSize) / CGFloat(indexCount)
+        (bounds.width - dotSize) / CGFloat(indexCount)
     }
 
     private var maskInset: CGFloat {
-        return CGFloat(currentPage) * stepSize + dotSize
+        CGFloat(currentPage) * stepSize + dotSize
     }
 
     @objc dynamic public var fillColor: UIColor = .appleGray {
@@ -86,7 +86,7 @@ final public class LinePageControl: XCView {
     /// control shows the current page as a white dot. Values outside the possible
     /// range are pinned to either `0` or `numberOfPages` minus `1`.
     public var currentPage: Int {
-        get { return _currentPage }
+        get { _currentPage }
         set { setCurrentPage(newValue, animated: true) }
     }
 
@@ -132,7 +132,7 @@ final public class LinePageControl: XCView {
     }
 
     public override var intrinsicContentSize: CGSize {
-        return CGSize(width: 60 * CGFloat(indexCount) + dotSize, height: dotSize)
+        .init(width: 60 * CGFloat(indexCount) + dotSize, height: dotSize)
     }
 
     private func updateGradientColors(for gradientView: CAGradientLayer) {

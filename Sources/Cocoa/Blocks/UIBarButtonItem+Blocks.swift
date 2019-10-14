@@ -33,7 +33,7 @@ extension UIBarButtonItem: TargetActionBlockRepresentable {
     }
 
     fileprivate var actionHandler: SenderClosureWrapper? {
-        get { return associatedObject(&AssociatedKey.actionHandler) }
+        get { associatedObject(&AssociatedKey.actionHandler) }
         set { setAssociatedObject(&AssociatedKey.actionHandler, value: newValue) }
     }
 }
@@ -73,7 +73,7 @@ extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
 
     /// A boolean value to determine whether an action handler is attached.
     public var hasActionHandler: Bool {
-        return actionHandler != nil
+        actionHandler != nil
     }
 
     public init(image: UIImage?, landscapeImagePhone: UIImage? = nil, style: UIBarButtonItem.Style = .plain, _ handler: ((_ sender: Self) -> Void)? = nil) {

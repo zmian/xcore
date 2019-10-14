@@ -32,7 +32,7 @@ extension NSLayoutConstraint {
         public let trailing: NSLayoutConstraint
 
         private var constraints: [NSLayoutConstraint] {
-            return [top, bottom, leading, trailing]
+            [top, bottom, leading, trailing]
         }
 
         init(_ constraints: [NSLayoutConstraint]) {
@@ -77,7 +77,7 @@ extension NSLayoutConstraint {
         public let height: NSLayoutConstraint
 
         private var constraints: [NSLayoutConstraint] {
-            return [width, height]
+            [width, height]
         }
 
         init(_ constraints: [NSLayoutConstraint]) {

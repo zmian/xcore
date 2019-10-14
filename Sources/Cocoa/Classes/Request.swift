@@ -24,17 +24,19 @@
 
 import UIKit
 
+// MARK: - Response
+
 public struct Response {
     public let request: URLRequest
     public let response: URLResponse?
     public let data: Data?
     public let error: Error?
 
-    public var responseHTTP: HTTPURLResponse? {
+    public var responseHttp: HTTPURLResponse? {
         return response as? HTTPURLResponse
     }
 
-    public var responseJSON: Any? {
+    public var responseJson: Any? {
         guard let data = data else {
             Console.error("`data` is `nil`.")
             return nil
@@ -57,7 +59,12 @@ public struct Response {
         return String(data: data, encoding: .utf8)
     }
 
-    public init(request: URLRequest, response: URLResponse? = nil, data: Data? = nil, error: Error? = nil) {
+    public init(
+        request: URLRequest,
+        response: URLResponse? = nil,
+        data: Data? = nil,
+        error: Error? = nil
+    ) {
         self.request = request
         self.response = response
         self.data = data
@@ -65,7 +72,9 @@ public struct Response {
     }
 }
 
-final public class Request {
+// MARK: - Request
+
+extension Request {
     public enum Method: String {
         case get
         case post
@@ -77,8 +86,12 @@ final public class Request {
         case json(NSDictionary)
         case data(Data)
     }
+}
 
-    public static let session = URLSession(configuration: .default)
+final public class Request {
+    public static var session: URLSession {
+        URLSession.shared
+    }
 
     public static func get(_ request: URLRequest, callback: @escaping (_ response: Response) -> Void) {
         session.dataTaskWithRequest(request, callback: callback).resume()
@@ -126,7 +139,7 @@ final public class Request {
 
 extension URLSession {
     fileprivate func dataTaskWithRequest(_ request: URLRequest, callback: @escaping (_ response: Response) -> Void) -> URLSessionDataTask {
-        return dataTask(with: request) { data, response, error in
+        dataTask(with: request) { data, response, error in
             callback(Response(request: request, response: response, data: data, error: error))
         }
     }
@@ -137,7 +150,9 @@ extension URLRequest {
         self.init(url: url)
         httpMethod = method.rawValue
         httpBody = body
-        headers?.forEach { addValue($0.1, forHTTPHeaderField: $0.0) }
+        headers?.forEach {
+            addValue($0.1, forHTTPHeaderField: $0.0)
+        }
     }
 
     fileprivate static func jsonRequest(_ method: Request.Method, url: URL, body: [String: Any]? = nil, headers: [String: String]? = nil) -> URLRequest {

@@ -26,21 +26,21 @@ import UIKit
 
 @objc extension UIView {
     open var viewController: UIViewController? {
-        return responder()
+        responder()
     }
 
     @IBInspectable open var borderWidth: CGFloat {
-        get { return layer.borderWidth }
+        get { layer.borderWidth }
         set { layer.borderWidth = newValue }
     }
 
     @IBInspectable open dynamic var borderColor: UIColor {
-        get { return layer.borderColor != nil ? UIColor(cgColor: layer.borderColor!) : .black }
+        get { layer.borderColor != nil ? UIColor(cgColor: layer.borderColor!) : .black }
         set { layer.borderColor = newValue.cgColor }
     }
 
     @IBInspectable open var cornerRadius: CGFloat {
-        get { return layer.cornerRadius }
+        get { layer.cornerRadius }
         set {
             layer.cornerRadius = newValue
             layer.masksToBounds = newValue > 0
@@ -253,7 +253,7 @@ import UIKit
 
 @objc extension UIView {
     open var sizeFittingScreenWidth: CGSize {
-        return sizeFitting(width: UIScreen.main.bounds.width)
+        sizeFitting(width: UIScreen.main.bounds.width)
     }
 
     open func sizeFitting(width: CGFloat) -> CGSize {
@@ -428,7 +428,7 @@ extension UIView {
     ///   - comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
     /// - Returns: The child view if exists; otherwise `nil`.
     open func firstSubview<T: UIView>(withClass aClass: T.Type, comparison: LookupComparison = .kindOf) -> T? {
-        return firstSubview { $0.isType(of: aClass, comparison: comparison) } as? T
+        firstSubview { $0.isType(of: aClass, comparison: comparison) } as? T
     }
 
     /// Get child views by class.
@@ -438,7 +438,7 @@ extension UIView {
     ///   - comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
     /// - Returns: The child view if exists; otherwise `nil`.
     open func subviews<T: UIView>(withClass aClass: T.Type, comparison: LookupComparison = .kindOf) -> [T] {
-        return subviews { $0.isType(of: aClass, comparison: comparison) } as? [T] ?? []
+        subviews { $0.isType(of: aClass, comparison: comparison) } as? [T] ?? []
     }
 }
 
@@ -479,7 +479,7 @@ extension UIView {
     ///   - onlyActive: An option to determine if should find only the active constraint. The default value is `true`.
     /// - Returns: A constraint if exists for the specified attribute.
     public func constraint(forAttribute attribute: NSLayoutConstraint.Attribute, onlyActive: Bool = true) -> NSLayoutConstraint? {
-        return constraints.first { constraint in
+        constraints.first { constraint in
             if onlyActive, !constraint.isActive {
                 return false
             }
@@ -501,7 +501,7 @@ extension UIView {
     /// - Parameter identifier: The identifier to use to find the constraint.
     /// - Returns: A constraint if exists for the specified identifier.
     public func constraint(identifier: String) -> NSLayoutConstraint? {
-        return constraints.first { $0.identifier == identifier }
+        constraints.first { $0.identifier == identifier }
     }
 }
 

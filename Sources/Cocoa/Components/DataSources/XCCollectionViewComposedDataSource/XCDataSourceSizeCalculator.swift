@@ -53,10 +53,10 @@ final class XCDataSourceSizeCalculator: UICollectionView {
     }
 
     override func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
-        return CollectionViewDequeueCache.shared.dequeueCell(identifier: identifier)
+        CollectionViewDequeueCache.shared.dequeueCell(identifier: identifier)
     }
 
     override func dequeueReusableSupplementaryView(ofKind elementKind: String, withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionReusableView {
-        return CollectionViewDequeueCache.shared.dequeueSupplementaryView(kind: elementKind, identifier: identifier)
+        CollectionViewDequeueCache.shared.dequeueSupplementaryView(kind: elementKind, identifier: identifier)
     }
 }

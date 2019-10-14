@@ -28,7 +28,7 @@ public struct CornerRadiusImageTransform: ImageTransform {
     private let cornerRadius: CGFloat
 
     public var id: String {
-        return "\(transformName)-cornerRadius:(\(cornerRadius))"
+        "\(transformName)-cornerRadius:(\(cornerRadius))"
     }
 
     public init(cornerRadius: CGFloat) {

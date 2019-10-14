@@ -49,13 +49,13 @@ extension FeatureFlag.Key: ExpressibleByStringLiteral {
 
 extension FeatureFlag.Key: CustomStringConvertible {
     public var description: String {
-        return rawValue
+        rawValue
     }
 }
 
 extension FeatureFlag.Key: CustomPlaygroundDisplayConvertible {
     public var playgroundDescription: Any {
-        return rawValue
+        rawValue
     }
 }
 

@@ -31,12 +31,12 @@ extension UITableView {
     }
 
     private var registeredCells: Set<String> {
-        get { return associatedObject(&AssociatedKey.registeredCells, default: Set<String>()) }
+        get { associatedObject(&AssociatedKey.registeredCells, default: Set<String>()) }
         set { setAssociatedObject(&AssociatedKey.registeredCells, value: newValue) }
     }
 
     private var registeredHeaderFooterViews: Set<String> {
-        get { return associatedObject(&AssociatedKey.registeredHeaderFooterViews, default: Set<String>()) }
+        get { associatedObject(&AssociatedKey.registeredHeaderFooterViews, default: Set<String>()) }
         set { setAssociatedObject(&AssociatedKey.registeredHeaderFooterViews, value: newValue) }
     }
 
@@ -77,7 +77,7 @@ extension UITableView {
     /// - Parameter indexPath: An index number that identifies a section of the table.
     /// - Returns: The header view associated with the section, or `nil` if the section does not have a header view.
     public func headerView<T: UITableViewHeaderFooterView>(forSection section: Int) -> T? {
-        return headerView(forSection: section) as? T
+        headerView(forSection: section) as? T
     }
 
     /// Returns a reusable `UITableViewHeaderFooterView` instance for the class inferred by the return type.
@@ -85,7 +85,7 @@ extension UITableView {
     /// - Parameter indexPath: An index number that identifies a section of the table.
     /// - Returns: The header view associated with the section, or `nil` if the section does not have a header view.
     public func footerView<T: UITableViewHeaderFooterView>(forSection section: Int) -> T? {
-        return footerView(forSection: section) as? T
+        footerView(forSection: section) as? T
     }
 
     /// Returns a reusable header or footer view instance for the class inferred by the return type.

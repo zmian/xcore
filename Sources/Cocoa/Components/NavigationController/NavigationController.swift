@@ -87,7 +87,7 @@ open class NavigationController: UINavigationController {
 extension NavigationController {
     /// Returns a bar button item that dismisses `self`.
     private func dismissButtonItem() -> UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .done).apply {
+        UIBarButtonItem(barButtonSystemItem: .done).apply {
             $0.accessibilityIdentifier = "dismissButton"
             $0.addAction { [weak self] _ in
                 self?.dismiss(animated: true)
@@ -167,7 +167,7 @@ extension NavigationController: UINavigationControllerDelegate {
     }
 
     private var defaultTintColor: UIColor {
-        return UIViewController.defaultAppearance.tintColor
+        UIViewController.defaultAppearance.tintColor
     }
 
     private func updateNavigationBarAnimation(for viewController: UIViewController?) {

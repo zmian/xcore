@@ -26,7 +26,7 @@ import Foundation
 
 extension NSObject {
     var memoryAddress: String {
-        return String(describing: Unmanaged<NSObject>.passUnretained(self).toOpaque())
+        String(describing: Unmanaged<NSObject>.passUnretained(self).toOpaque())
     }
 }
 
@@ -50,7 +50,7 @@ extension NSObject {
 
     /// Return `true` if the `self` has the property of given `name`; otherwise, `false`.
     open func hasProperty(withName name: String) -> Bool {
-        return safeValue(forKey: name) != nil
+        safeValue(forKey: name) != nil
     }
 }
 

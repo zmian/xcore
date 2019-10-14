@@ -44,19 +44,23 @@ extension Bundle {
 }
 
 extension Bundle {
+    private func info(forKey key: String) -> String {
+        infoDictionary?[key] as? String ?? ""
+    }
+
     /// The identifier string for the bundle extracted from `CFBundleIdentifier`.
     public var identifier: String {
-        return infoDictionary?["CFBundleIdentifier"] as? String ?? ""
+        info(forKey: "CFBundleIdentifier")
     }
 
     /// The release-version-number string for the bundle extracted from `CFBundleShortVersionString`.
     public var versionNumber: String {
-        return infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        info(forKey: "CFBundleShortVersionString")
     }
 
     /// The build-version-number string for the bundle extracted from `CFBundleVersion`.
     public var buildNumber: String {
-        return infoDictionary?["CFBundleVersion"] as? String ?? ""
+        info(forKey: "CFBundleVersion")
     }
 
     /// Returns common bundle information.
@@ -85,14 +89,14 @@ extension Bundle {
 extension Bundle {
     /// Returns the first URL for the specified common directory in the user domain.
     public static func url(for directory: FileManager.SearchPathDirectory) -> URL? {
-        return FileManager.default.url(for: directory)
+        FileManager.default.url(for: directory)
     }
 }
 
 extension FileManager {
     /// Returns the first URL for the specified common directory in the user domain.
     open func url(for directory: SearchPathDirectory) -> URL? {
-        return urls(for: directory, in: .userDomainMask).first
+        urls(for: directory, in: .userDomainMask).first
     }
 }
 

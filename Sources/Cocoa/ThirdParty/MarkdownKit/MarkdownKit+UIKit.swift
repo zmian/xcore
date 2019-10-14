@@ -61,7 +61,7 @@ extension MarkupText {
 
 extension MarkdownParser {
     fileprivate static func app() -> MarkdownParser {
-        let markdownParser = MarkdownParser(
+        .init(
             font: MarkupText.appearance.font,
             color: MarkupText.appearance.textColor,
             automaticLinkDetectionEnabled: false,
@@ -72,7 +72,6 @@ extension MarkdownParser {
                 MarkdownUnderline()
             ] + MarkupText.appearance.customElements
         )
-        return markdownParser
     }
 }
 
@@ -86,7 +85,7 @@ extension UILabel {
     ///
     /// The default value is `false`.
     public var isMarkupEnabled: Bool {
-        get { return associatedObject(&AssociatedKey.isMarkupEnabled, default: MarkupText.appearance.isLabelEnabled) }
+        get { associatedObject(&AssociatedKey.isMarkupEnabled, default: MarkupText.appearance.isLabelEnabled) }
         set { setAssociatedObject(&AssociatedKey.isMarkupEnabled, value: newValue) }
     }
 
@@ -119,7 +118,7 @@ extension UIButton {
     ///
     /// The default value is `false`.
     public var isMarkupEnabled: Bool {
-        get { return associatedObject(&AssociatedKey.isMarkupEnabled, default: false) }
+        get { associatedObject(&AssociatedKey.isMarkupEnabled, default: false) }
         set { setAssociatedObject(&AssociatedKey.isMarkupEnabled, value: newValue) }
     }
 
@@ -152,7 +151,7 @@ extension UITextView {
     ///
     /// The default value is `false`.
     public var isAccessibilityRotorHintEnabled: Bool {
-        get { return associatedObject(&AssociatedKey.isAccessibilityRotorHintEnabled, default: false) }
+        get { associatedObject(&AssociatedKey.isAccessibilityRotorHintEnabled, default: false) }
         set { setAssociatedObject(&AssociatedKey.isAccessibilityRotorHintEnabled, value: newValue) }
     }
 
@@ -160,7 +159,7 @@ extension UITextView {
     ///
     /// The default value is `false`.
     public var isMarkupEnabled: Bool {
-        get { return associatedObject(&AssociatedKey.isMarkupEnabled, default: MarkupText.appearance.isTextViewEnabled) }
+        get { associatedObject(&AssociatedKey.isMarkupEnabled, default: MarkupText.appearance.isTextViewEnabled) }
         set {
             let oldValue = isMarkupEnabled
             setAssociatedObject(&AssociatedKey.isMarkupEnabled, value: newValue)
@@ -199,7 +198,7 @@ extension UILabel {
     /// - Set text background color with `{bg#123456|the text}`
     /// - Change font with `{font:HelveticaNeue,12pt|text in a different font}`
     private var markupText: String? {
-        get { return attributedText?.string }
+        get { attributedText?.string }
         set {
             guard let newValue = newValue else {
                 attributedText = nil
@@ -240,7 +239,7 @@ extension UITextView {
     /// - Set text background color with `{bg#123456|the text}`
     /// - Change font with `{font:HelveticaNeue,12pt|text in a different font}`
     private var markupText: String? {
-        get { return attributedText?.string }
+        get { attributedText?.string }
         set {
             guard let newValue = newValue else {
                 attributedText = nil
@@ -277,7 +276,7 @@ extension UITextView {
 
 extension UILabel {
     @objc private var swizzled_text: String? {
-        get { return isMarkupEnabled ? markupText : self.swizzled_text }
+        get { isMarkupEnabled ? markupText : self.swizzled_text }
         set {
             if isMarkupEnabled {
                 markupText = newValue
@@ -318,7 +317,7 @@ extension UILabel {
 
 extension UIButton {
     @objc private func swizzled_title(for state: UIControl.State) -> String? {
-        return isMarkupEnabled ? attributedTitle(for: state)?.string : swizzled_title(for: state)
+        isMarkupEnabled ? attributedTitle(for: state)?.string : swizzled_title(for: state)
     }
 
     /// Creates and set `NSAttributedString` from Markdown.
@@ -346,7 +345,7 @@ extension UIButton {
 
 extension UITextView {
     @objc private var swizzled_text: String? {
-        get { return isMarkupEnabled ? markupText : self.swizzled_text }
+        get { isMarkupEnabled ? markupText : self.swizzled_text }
         set {
             if isMarkupEnabled {
                 markupText = newValue

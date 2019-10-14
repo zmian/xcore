@@ -42,28 +42,30 @@ extension UIButton {
     /// ```
     @objc(UIButtonDefaultAppearance)
     final public class DefaultAppearance: NSObject {
-        public var style: Style = .none
+        public var configuration: Configuration = .none
         public var height: CGFloat = 50
         public var isHeightSetAutomatically = false
         public var highlightedAnimation: HighlightedAnimationOptions = .none
-        /// The default attributes for the button styles.
-        public var styleAttributes = StyleAttributes<UIButton>()
+        /// The default attributes for the button configurations.
+        public var configurationAttributes = Configuration.AttributesStorage()
 
-        /// A boolean value indicating whether `configureStyle` replaces existing styles
-        /// block call or extend it. The default value is `true`, meaning extend.
-        public var shouldExtendExistingConfigureStyle = true
-        var _configureStyle: ((UIButton, Identifier<UIButton>) -> Void)?
-        public func configureStyle(_ callback: @escaping (UIButton, Identifier<UIButton>) -> Void) {
+        /// A boolean value indicating whether `configure` replaces existing
+        /// configuration block call or extend it.
+        ///
+        /// The default value is `true`, meaning extend.
+        public var shouldExtendExistingConfigureBlock = true
+        var _configure: ((UIButton, Configuration.Identifier) -> Void)?
+        public func configure(_ callback: @escaping (UIButton, Configuration.Identifier) -> Void) {
             guard
-                shouldExtendExistingConfigureStyle,
-                let existingConfigureStyle = _configureStyle
+                shouldExtendExistingConfigureBlock,
+                let existingConfigureBlock = _configure
             else {
-                self._configureStyle = callback
+                self._configure = callback
                 return
             }
 
-            self._configureStyle = { button, id in
-                existingConfigureStyle(button, id)
+            self._configure = { button, id in
+                existingConfigureBlock(button, id)
                 callback(button, id)
             }
         }
@@ -82,7 +84,7 @@ extension UIButton {
         static var didEnable = "didEnable"
         static var highlightedAnimation = "highlightedAnimation"
         static var adjustsBackgroundColorWhenHighlighted = "adjustsBackgroundColorWhenHighlighted"
-        static var style = "style"
+        static var configuration = "configuration"
         static var heightConstraint = "heightConstraint"
         static var initialText = "initialText"
         static var isHeightSetAutomatically = "isHeightSetAutomatically"
@@ -92,19 +94,19 @@ extension UIButton {
     private typealias StateType = UInt
 
     private var backgroundColors: [StateType: UIColor] {
-        get { return associatedObject(&AssociatedKey.backgroundColors, default: [:]) }
+        get { associatedObject(&AssociatedKey.backgroundColors, default: [:]) }
         set { setAssociatedObject(&AssociatedKey.backgroundColors, value: newValue) }
     }
 
     private var borderColors: [StateType: UIColor] {
-        get { return associatedObject(&AssociatedKey.borderColors, default: [:]) }
+        get { associatedObject(&AssociatedKey.borderColors, default: [:]) }
         set { setAssociatedObject(&AssociatedKey.borderColors, value: newValue) }
     }
 
     /// A boolean property to provide visual feedback when the
     /// button is highlighted. The default value is `.none`.
     open var highlightedAnimation: HighlightedAnimationOptions {
-        get { return associatedObject(&AssociatedKey.highlightedAnimation, default: defaultAppearance.highlightedAnimation) }
+        get { associatedObject(&AssociatedKey.highlightedAnimation, default: defaultAppearance.highlightedAnimation) }
         set { setAssociatedObject(&AssociatedKey.highlightedAnimation, value: newValue) }
     }
 
@@ -112,28 +114,29 @@ extension UIButton {
     ///
     /// If true, the `backgroundColor` is drawn darker when the button is highlighted. The default value is `true`.
     @objc open dynamic var adjustsBackgroundColorWhenHighlighted: Bool {
-        get { return associatedObject(&AssociatedKey.adjustsBackgroundColorWhenHighlighted, default: true) }
+        get { associatedObject(&AssociatedKey.adjustsBackgroundColorWhenHighlighted, default: true) }
         set { setAssociatedObject(&AssociatedKey.adjustsBackgroundColorWhenHighlighted, value: newValue) }
     }
 }
 
 extension UIButton {
+    public typealias Configuration = Xcore.Configuration<UIButton>
     @objc public dynamic static let defaultAppearance = DefaultAppearance()
 
     var defaultAppearance: DefaultAppearance {
-        return UIButton.defaultAppearance
+        Self.defaultAppearance
     }
 
     // MARK: - Height
 
     @objc public dynamic static var height: CGFloat {
-        return defaultAppearance.height
+        defaultAppearance.height
     }
 
     /// A property to set the height of the button automatically.
     /// The default value is `false`.
     @objc open dynamic var isHeightSetAutomatically: Bool {
-        get { return associatedObject(&AssociatedKey.isHeightSetAutomatically, default: defaultAppearance.isHeightSetAutomatically) }
+        get { associatedObject(&AssociatedKey.isHeightSetAutomatically, default: defaultAppearance.isHeightSetAutomatically) }
         set {
             setAssociatedObject(&AssociatedKey.isHeightSetAutomatically, value: newValue)
             guard observeHeightSetAutomaticallySetter else { return }
@@ -142,12 +145,12 @@ extension UIButton {
     }
 
     private var observeHeightSetAutomaticallySetter: Bool {
-        get { return associatedObject(&AssociatedKey.observeHeightSetAutomaticallySetter, default: true) }
+        get { associatedObject(&AssociatedKey.observeHeightSetAutomaticallySetter, default: true) }
         set { setAssociatedObject(&AssociatedKey.observeHeightSetAutomaticallySetter, value: newValue) }
     }
 
     private var heightConstraint: NSLayoutConstraint? {
-        get { return associatedObject(&AssociatedKey.heightConstraint) }
+        get { associatedObject(&AssociatedKey.heightConstraint) }
         set { setAssociatedObject(&AssociatedKey.heightConstraint, value: newValue) }
     }
 
@@ -165,41 +168,41 @@ extension UIButton {
         heightConstraint?.activate()
     }
 
-    public typealias Style = XCConfiguration<UIButton>
-
-    /// The style of the button. The default value is `.none`.
-    open var style: Style {
-        get { return associatedObject(&AssociatedKey.style, default: defaultAppearance.style) }
+    /// The configuration associated with the button.
+    ///
+    /// The default value is `.none`.
+    open var configuration: Configuration {
+        get { associatedObject(&AssociatedKey.configuration, default: defaultAppearance.configuration) }
         set {
-            setAssociatedObject(&AssociatedKey.style, value: newValue)
-            updateStyleIfNeeded()
+            setAssociatedObject(&AssociatedKey.configuration, value: newValue)
+            updateConfigurationIfNeeded()
         }
     }
 
     private var initialText: String? {
-        get { return associatedObject(&AssociatedKey.initialText) }
+        get { associatedObject(&AssociatedKey.initialText) }
         set { setAssociatedObject(&AssociatedKey.initialText, value: newValue) }
     }
 
-    public convenience init(style: Style, title: String? = nil) {
+    public convenience init(title: String? = nil, configuration: Configuration) {
         self.init(frame: .zero)
-        self.style = style
+        self.configuration = configuration
         self.initialText = title
         commonInit()
     }
 
     private func commonInit() {
-        updateStyleIfNeeded()
+        updateConfigurationIfNeeded()
         if let initialText = initialText {
             self.text = initialText
         }
     }
 
-    private func updateStyleIfNeeded() {
+    private func updateConfigurationIfNeeded() {
         observeHeightSetAutomaticallySetter = false
         contentEdgeInsets = UIEdgeInsets(horizontal: .defaultPadding)
         prepareForReuse()
-        style.configure(self)
+        configuration.configure(self)
         updateHeightConstraintIfNeeded()
         observeHeightSetAutomaticallySetter = true
     }
@@ -300,67 +303,67 @@ extension UIButton {
 extension UIButton {
     /// The image used for the normal state.
     open var image: UIImage? {
-        get { return image(for: .normal) }
+        get { image(for: .normal) }
         set { setImage(newValue, for: .normal) }
     }
 
     /// The image used for the highlighted state.
     open var highlightedImage: UIImage? {
-        get { return image(for: .highlighted) }
+        get { image(for: .highlighted) }
         set { setImage(newValue, for: .highlighted) }
     }
 
     /// The text used for the normal state.
     open var text: String? {
-        get { return title(for: .normal) }
+        get { title(for: .normal) }
         set { setTitle(newValue, for: .normal) }
     }
 
     /// The text used for the highlighted state.
     open var highlightedText: String? {
-        get { return title(for: .highlighted) }
+        get { title(for: .highlighted) }
         set { setTitle(newValue, for: .highlighted) }
     }
 
     /// The attributed text used for the normal state.
     open var attributedText: NSAttributedString? {
-        get { return attributedTitle(for: .normal) }
+        get { attributedTitle(for: .normal) }
         set { setAttributedTitle(newValue, for: .normal) }
     }
 
     /// The attributed text used for the highlighted state.
     open var highlightedAttributedText: NSAttributedString? {
-        get { return attributedTitle(for: .highlighted) }
+        get { attributedTitle(for: .highlighted) }
         set { setAttributedTitle(newValue, for: .highlighted) }
     }
 
     /// The color of the title used for the normal state.
     open var textColor: UIColor? {
-        get { return titleColor(for: .normal) }
+        get { titleColor(for: .normal) }
         set { setTitleColor(newValue, for: .normal) }
     }
 
     /// The color of the title used for the highlighted state.
     open var highlightedTextColor: UIColor? {
-        get { return titleColor(for: .highlighted) }
+        get { titleColor(for: .highlighted) }
         set { setTitleColor(newValue, for: .highlighted) }
     }
 
     /// The background color for the normal state.
     @objc open override var backgroundColor: UIColor? {
-        get { return backgroundColor(for: .normal) }
+        get { backgroundColor(for: .normal) }
         set { setBackgroundColor(newValue, for: .normal) }
     }
 
     /// The background color for the highlighted state.
     @nonobjc open var highlightedBackgroundColor: UIColor? {
-        get { return backgroundColor(for: .highlighted) }
+        get { backgroundColor(for: .highlighted) }
         set { setBackgroundColor(newValue, for: .highlighted) }
     }
 
     /// The background color for the disabled state.
     @nonobjc open var disabledBackgroundColor: UIColor? {
-        get { return backgroundColor(for: .disabled) }
+        get { backgroundColor(for: .disabled) }
         set { setBackgroundColor(newValue, for: .disabled) }
     }
 
@@ -419,7 +422,7 @@ extension UIButton {
     }
 
     @objc open dynamic var contentTintColor: UIColor {
-        get { return tintColor }
+        get { tintColor }
         set {
             tintColor = newValue
             imageView?.tintColor = newValue
@@ -486,17 +489,17 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
 
 extension UIButton {
     fileprivate var didSelect: ((_ sender: UIButton) -> Void)? {
-        get { return associatedObject(&AssociatedKey.didSelect) }
+        get { associatedObject(&AssociatedKey.didSelect) }
         set { setAssociatedObject(&AssociatedKey.didSelect, value: newValue) }
     }
 
     fileprivate var didHighlight: ((_ sender: UIButton) -> Void)? {
-        get { return associatedObject(&AssociatedKey.didHighlight) }
+        get { associatedObject(&AssociatedKey.didHighlight) }
         set { setAssociatedObject(&AssociatedKey.didHighlight, value: newValue) }
     }
 
     fileprivate var didEnable: ((_ sender: UIButton) -> Void)? {
-        get { return associatedObject(&AssociatedKey.didEnable) }
+        get { associatedObject(&AssociatedKey.didEnable) }
         set { setAssociatedObject(&AssociatedKey.didEnable, value: newValue) }
     }
 }
@@ -516,7 +519,7 @@ extension UIButton {
     }
 
     private var collectionViewCell: UICollectionViewCell? {
-        return responder()
+        responder()
     }
 }
 

@@ -43,7 +43,7 @@ final public class UserDefaultsAnalyticsProvider: AnalyticsProvider {
     }
 
     public func contains(_ eventName: String) -> Bool {
-        return userDefaults.object(forKey: eventName) != nil
+        userDefaults.object(forKey: eventName) != nil
     }
 
     public func properties(for eventName: String) -> [String: Any]? {

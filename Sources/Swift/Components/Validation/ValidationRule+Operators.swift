@@ -34,8 +34,8 @@ extension ValidationRule {
     ///   - lhs: A value to compare.
     ///   - rhs: Another value to compare.
     /// - Returns: The validation rule.
-    public static func ==(lhs: ValidationRule, rhs: ValidationRule) -> ValidationRule {
-        return .init { lhs.validate($0) == rhs.validate($0) }
+    public static func ==(lhs: Self, rhs: Self) -> Self {
+        .init { lhs.validate($0) == rhs.validate($0) }
     }
 
     /// Returns a compound validation rule indicating whether two validation rules
@@ -45,8 +45,8 @@ extension ValidationRule {
     ///   - lhs: A value to compare.
     ///   - rhs: Another value to compare.
     /// - Returns: The validation rule.
-    public static func !=(lhs: ValidationRule, rhs: ValidationRule) -> ValidationRule {
-        return .init { lhs.validate($0) != rhs.validate($0) }
+    public static func !=(lhs: Self, rhs: Self) -> Self {
+        .init { lhs.validate($0) != rhs.validate($0) }
     }
 }
 
@@ -66,8 +66,8 @@ extension ValidationRule {
     ///   - lhs: A value to compare.
     ///   - rhs: Another value to compare.
     /// - Returns: The validation rule.
-    public static func &&(lhs: ValidationRule, rhs: @autoclosure @escaping () -> ValidationRule) -> ValidationRule {
-        return .init { lhs.validate($0) && rhs().validate($0) }
+    public static func &&(lhs: Self, rhs: @autoclosure @escaping () -> Self) -> Self {
+        .init { lhs.validate($0) && rhs().validate($0) }
     }
 
     /// Returns a compound validation rule indicating whether either of two
@@ -83,8 +83,8 @@ extension ValidationRule {
     ///   - lhs: A value to compare.
     ///   - rhs: Another value to compare.
     /// - Returns: The validation rule.
-    public static func ||(lhs: ValidationRule, rhs: @autoclosure @escaping () -> ValidationRule) -> ValidationRule {
-        return .init { lhs.validate($0) || rhs().validate($0) }
+    public static func ||(lhs: Self, rhs: @autoclosure @escaping () -> Self) -> Self {
+        .init { lhs.validate($0) || rhs().validate($0) }
     }
 
     /// Returns a negation validation rule.
@@ -95,7 +95,7 @@ extension ValidationRule {
     ///
     /// - Parameter validation: The validation rule to negate.
     /// - Returns: The validation rule.
-    public static prefix func !(_ rule: ValidationRule) -> ValidationRule {
-        return .init { !rule.validate($0) }
+    public static prefix func !(_ rule: Self) -> Self {
+        .init { !rule.validate($0) }
     }
 }

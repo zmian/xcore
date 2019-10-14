@@ -44,7 +44,7 @@ open class XCPageViewController: UIViewController {
         $0.isUserInteractionEnabled = false
     }
     private var _pageViewController: XCUIPageViewController? {
-        return pageViewController as? XCUIPageViewController
+        pageViewController as? XCUIPageViewController
     }
     open private(set) var pageViewController: UIPageViewController!
     open var viewControllers: [UIViewController] = [] {
@@ -198,7 +198,7 @@ extension XCPageViewController {
 
 extension XCPageViewController {
     private func indexOf(_ viewController: UIViewController) -> Int {
-        return viewControllers.firstIndex(of: viewController) ?? 0
+        viewControllers.firstIndex(of: viewController) ?? 0
     }
 
     private func updateStatusBar(for index: Int) {
@@ -216,19 +216,19 @@ extension XCPageViewController {
 
 extension XCPageViewController {
     open override var prefersStatusBarHidden: Bool {
-        return isStatusBarHidden ?? super.prefersStatusBarHidden
+        isStatusBarHidden ?? super.prefersStatusBarHidden
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
-        return statusBarStyle ?? super.preferredStatusBarStyle
+        statusBarStyle ?? super.preferredStatusBarStyle
     }
 
     open override var shouldAutorotate: Bool {
-        return isAutorotateEnabled ?? super.shouldAutorotate
+        isAutorotateEnabled ?? super.shouldAutorotate
     }
 
     open override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return statusBarUpdateAnimation ?? super.preferredStatusBarUpdateAnimation
+        statusBarUpdateAnimation ?? super.preferredStatusBarUpdateAnimation
     }
 }
 

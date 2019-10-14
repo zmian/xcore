@@ -32,7 +32,7 @@ open class IconLabelCollectionView: UICollectionView {
 
     /// The layout used to organize the collection view’s items.
     open var layout: UICollectionViewFlowLayout? {
-        return collectionViewLayout as? UICollectionViewFlowLayout
+        collectionViewLayout as? UICollectionViewFlowLayout
     }
 
     open var cellOptions: CellOptions = .none {
@@ -163,11 +163,11 @@ open class IconLabelCollectionView: UICollectionView {
 
 extension IconLabelCollectionView: UICollectionViewDelegate, UICollectionViewDataSource {
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections.count
+        sections.count
     }
 
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sections[section].count
+        sections[section].count
     }
 
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -192,7 +192,7 @@ extension IconLabelCollectionView: UICollectionViewDelegate, UICollectionViewDat
     // MARK: - Reordering
 
     open func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return allowsReordering
+        allowsReordering
     }
 
     open func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -227,7 +227,7 @@ extension IconLabelCollectionView {
 extension IconLabelCollectionView {
     /// A convenience property to create a single section collection view.
     open var items: [ImageTitleDisplayable] {
-        get { return sections.first?.items ?? [] }
+        get { sections.first?.items ?? [] }
         set { sections = [Section(items: newValue)] }
     }
 }

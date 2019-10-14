@@ -32,7 +32,7 @@ private class ReorderTableDraggingView: XCView {
     private let shadowHeight: CGFloat = 19
 
     var image: UIImage? {
-        get { return imageView.image }
+        get { imageView.image }
         set { imageView.image = newValue }
     }
 

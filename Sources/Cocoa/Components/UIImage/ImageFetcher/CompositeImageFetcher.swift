@@ -69,11 +69,11 @@ final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
 
 extension CompositeImageFetcher {
     var id: String {
-        return fetchers.map { $0.id }.joined(separator: "_")
+        fetchers.map { $0.id }.joined(separator: "_")
     }
 
     func canHandle(_ image: ImageRepresentable) -> Bool {
-        return image.imageSource.isValid
+        image.imageSource.isValid
     }
 
     func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {

@@ -83,11 +83,11 @@ extension CollectionViewDequeueCache {
     ///
     /// Used to compute size of `UICollectionViewCell` at a given index path.
     public func dequeueCell<Cell>() -> Cell where Cell: UICollectionViewCell {
-        return dequeueCell(identifier: Cell.reuseIdentifier) as! Cell
+        dequeueCell(identifier: Cell.reuseIdentifier) as! Cell
     }
 
     public func dequeueSupplementaryView<View>(kind: UICollectionView.SupplementaryViewKind) -> View where View: UICollectionReusableView {
-        return dequeueSupplementaryView(kind: kind.rawValue, identifier: View.reuseIdentifier) as! View
+        dequeueSupplementaryView(kind: kind.rawValue, identifier: View.reuseIdentifier) as! View
     }
 
     /// Empties the cache.

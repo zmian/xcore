@@ -37,7 +37,7 @@ open class IntrinsicContentSizeView: UIView {
     }
 
     open override var intrinsicContentSize: CGSize {
-        return contentSize
+        contentSize
     }
 }
 
@@ -54,6 +54,6 @@ open class IntrinsicContentSizeImageView: UIImageView {
     }
 
     open override var intrinsicContentSize: CGSize {
-        return contentSize
+        contentSize
     }
 }

@@ -73,6 +73,6 @@ open class XCToolbar: UIToolbar {
     }
 
     open override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIView.noIntrinsicMetric, height: preferredHeight)
+        .init(width: UIView.noIntrinsicMetric, height: preferredHeight)
     }
 }

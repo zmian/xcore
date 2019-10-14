@@ -136,7 +136,7 @@ private struct ConvertValue {
     }
 
     func value(for item: ConvertItem) -> StringConverter? {
-        return StringConverter(storage[item]!)
+        StringConverter(storage[item]!)
     }
 
     struct InvalidString { }
@@ -184,15 +184,15 @@ private enum ConvertItem: String {
 
 extension ConvertItem {
     fileprivate var storageValue: StringConverter? {
-        return ConvertValue().value(for: self)
+        ConvertValue().value(for: self)
     }
 
     fileprivate func value<T>(default defaultValue: @autoclosure () -> T) -> T {
-        return storageValue?.get() ?? defaultValue()
+        storageValue?.get() ?? defaultValue()
     }
 
     fileprivate func value<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
-        return storageValue?.get() ?? defaultValue()
+        storageValue?.get() ?? defaultValue()
     }
 }
 

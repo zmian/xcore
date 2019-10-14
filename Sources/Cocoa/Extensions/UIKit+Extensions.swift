@@ -35,14 +35,14 @@ import ObjectiveC
 ///   - url:  The url to open.
 ///   - from: A view controller that wants to open the url.
 public func open(url: URL, from viewController: UIViewController) {
-    let svc = SFSafariViewController(url: url)
-    viewController.present(svc, animated: true, completion: nil)
+    let vc = SFSafariViewController(url: url)
+    viewController.present(vc, animated: true, completion: nil)
 }
 
 extension UIDatePicker {
     @nonobjc
     open var textColor: UIColor? {
-        get { return value(forKey: "textColor") as? UIColor }
+        get { value(forKey: "textColor") as? UIColor }
         set { setValue(newValue, forKey: "textColor") }
     }
 }

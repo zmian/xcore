@@ -71,7 +71,7 @@ extension CGAffineTransform {
     /// }
     /// ```
     public static var defaultScale: CGAffineTransform {
-        return CGAffineTransform(scaleX: 0.95, y: 0.95)
+        .init(scaleX: 0.95, y: 0.95)
     }
 }
 
@@ -95,9 +95,9 @@ extension CGFloat {
 // MARK: - UIEdgeInsets
 
 extension UIEdgeInsets {
-    public static let minimumPadding = UIEdgeInsets(.minimumPadding)
-    public static let defaultPadding = UIEdgeInsets(.defaultPadding)
-    public static let maximumPadding = UIEdgeInsets(.maximumPadding)
+    public static let minimumPadding = Self(.minimumPadding)
+    public static let defaultPadding = Self(.defaultPadding)
+    public static let maximumPadding = Self(.maximumPadding)
 }
 
 // MARK: - UIColor
@@ -122,26 +122,26 @@ extension UIColor {
 }
 
 extension UIColor {
-    @nonobjc static var appleGray: UIColor { return UIColor(hex: "EBF2FB") }
-    @nonobjc static var appleTealBlue: UIColor { return UIColor(hex: "5AC8FA") }
-    @nonobjc static var appleBlue: UIColor { return UIColor(hex: "007AFF") }
-    @nonobjc static var applePurple: UIColor { return UIColor(hex: "5856D6") }
-    @nonobjc static var appleGreen: UIColor { return UIColor(hex: "4CD964") }
-    @nonobjc static var appleRed: UIColor { return UIColor(hex: "FF3B30") }
+    @nonobjc static var appleGray: UIColor { .init(hex: "EBF2FB") }
+    @nonobjc static var appleTealBlue: UIColor { .init(hex: "5AC8FA") }
+    @nonobjc static var appleBlue: UIColor { .init(hex: "007AFF") }
+    @nonobjc static var applePurple: UIColor { .init(hex: "5856D6") }
+    @nonobjc static var appleGreen: UIColor { .init(hex: "4CD964") }
+    @nonobjc static var appleRed: UIColor { .init(hex: "FF3B30") }
 }
 
 // MARK: - App Constants
 
 public struct AppConstants {
     /// The golden ratio.
-    public static var φ: CGFloat { return 0.618 }
+    public static var φ: CGFloat { 0.618 }
 
     public static var statusBarHeight: CGFloat {
-        return UIApplication.sharedOrNil?.statusBarFrame.height ?? 20
+        UIApplication.sharedOrNil?.statusBarFrame.height ?? 20
     }
 
     public static var statusBarPlusNavBarHeight: CGFloat {
-        return statusBarHeight + navBarHeight
+        statusBarHeight + navBarHeight
     }
 
     public static var navBarHeight: CGFloat {
@@ -152,11 +152,11 @@ public struct AppConstants {
         return 44
     }
 
-    public static var navBarItemHeight: CGFloat { return 24 }
-    public static var tabBarHeight: CGFloat { return 49 }
-    public static var uiControlsHeight: CGFloat { return 50 }
+    public static var navBarItemHeight: CGFloat { 24 }
+    public static var tabBarHeight: CGFloat { 49 }
+    public static var uiControlsHeight: CGFloat { 50 }
     public static var searchBarHeight: CGFloat {
-        return uiControlsHeight
+        uiControlsHeight
     }
 
     public static var hairline: CGFloat = 0.5
@@ -168,23 +168,23 @@ public struct AppConstants {
 
 extension AppConstants {
     public static var supportsHomeIndicator: Bool {
-        return UIDevice.current.capability.contains(.homeIndicator)
+        UIDevice.current.capability.contains(.homeIndicator)
     }
 
     public static var homeIndicatorHeightIfPresent: CGFloat {
-        return supportsHomeIndicator ? 34 : 0
+        supportsHomeIndicator ? 34 : 0
     }
 
     public static var smallScreenSize: Bool {
-        return UIDevice.current.modelType.screenSize <= .iPhone5
+        UIDevice.current.modelType.screenSize <= .iPhone5
     }
 
     public static var mediumScreenSize: Bool {
-        return UIDevice.current.modelType.screenSize.size.max <= iPhone6ScreenSize.max
+        UIDevice.current.modelType.screenSize.size.max <= iPhone6ScreenSize.max
     }
 
     public static var iPhone6ScreenSize: CGSize {
-        return UIDevice.ModelType.ScreenSize.iPhone6.size
+        UIDevice.ModelType.ScreenSize.iPhone6.size
     }
 
     /// A convenience function to get relative value for given device based on iPhone 6 width.

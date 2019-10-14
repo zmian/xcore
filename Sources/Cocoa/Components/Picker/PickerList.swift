@@ -115,7 +115,7 @@ open class PickerList: DynamicTableViewController {
 
 extension PickerList: DrawerScreen.Content {
     open var drawerContentView: UIView {
-        return view
+        view
     }
 }
 

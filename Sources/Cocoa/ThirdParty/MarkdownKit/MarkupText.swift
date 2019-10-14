@@ -59,7 +59,7 @@ public class MarkupText: CustomStringConvertible {
     }
 
     public var description: String {
-        return markupText.description
+        markupText.description
     }
 }
 
@@ -71,23 +71,23 @@ private indirect enum MarkupTextBuilder: CustomStringConvertible {
     case bold(block: MarkupTextBuilder)
 
     func addFont(_ font: UIFont) -> MarkupTextBuilder {
-        return .font(font: font, block: self)
+        .font(font: font, block: self)
     }
 
     func addColor(_ color: UIColor) -> MarkupTextBuilder {
-        return .textColor(color: color.hex, block: self)
+        .textColor(color: color.hex, block: self)
     }
 
     func addUnderline() -> MarkupTextBuilder {
-        return .underline(block: self)
+        .underline(block: self)
     }
 
     func addBold() -> MarkupTextBuilder {
-        return .bold(block: self)
+        .bold(block: self)
     }
 
     var description: String {
-        return MarkupTextBuilder.parse(self)
+        MarkupTextBuilder.parse(self)
     }
 }
 

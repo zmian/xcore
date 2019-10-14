@@ -54,7 +54,7 @@ public protocol AnalyticsProvider {
 
 extension AnalyticsProvider {
     public var id: String {
-        return name(of: self)
+        name(of: self)
     }
 }
 

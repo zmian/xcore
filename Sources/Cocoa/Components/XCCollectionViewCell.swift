@@ -57,7 +57,7 @@ open class XCCollectionViewCell: UICollectionViewCell {
     ///
     /// The default value is `false`.
     open var resistsDimming: Bool {
-        return false
+        false
     }
 
     /// The default value is `.none, 0`.

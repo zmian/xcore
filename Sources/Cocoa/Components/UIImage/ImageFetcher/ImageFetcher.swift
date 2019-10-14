@@ -45,6 +45,6 @@ public protocol ImageFetcher {
 
 extension ImageFetcher {
     public var id: String {
-        return name(of: self)
+        name(of: self)
     }
 }

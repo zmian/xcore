@@ -1,5 +1,5 @@
 //
-// AdaptiveURL.swift
+// Partial.swift
 //
 // Copyright © 2019 Xcore
 //
@@ -24,38 +24,27 @@
 
 import Foundation
 
-public struct AdaptiveURL: UserInfoContainer {
-    /// The title of the URL.
-    public let title: String
-    public let url: URL?
-    /// Additional info which may be used to describe the url further.
-    public var userInfo: UserInfo
+// Credit: https://forums.swift.org/t/compositional-initialization/29535/22
+@dynamicMemberLookup
+struct Partial<Whole> {
+    private var assignments: [PartialKeyPath<Whole>: (value: Any, update: (inout Whole) -> Void)] = [:]
 
-    /// Initialize an instance of adaptive URL.
-    ///
-    /// - Parameters:
-    ///   - title: The title of the URL.
-    ///   - url: The url.
-    public init(title: String, url: URL?, userInfo: UserInfo = [:]) {
-        self.title = title
-        self.url = url
-        self.userInfo = userInfo
+    subscript<Value>(dynamicMember keyPath: WritableKeyPath<Whole, Value>) -> Value? {
+        get { assignments[keyPath]?.value as? Value }
+        set {
+            guard let newValue = newValue else {
+                assignments.removeValue(forKey: keyPath)
+                return
+            }
+            assignments[keyPath] = (value: newValue, update: { whole in
+                whole[keyPath: keyPath] = newValue
+            })
+        }
     }
-}
 
-// MARK: - UserInfo
-
-extension UserInfoKey where Type == AdaptiveURL {
-    /// A boolean property indicating whether the URL content should adapt app
-    /// appearance.
-    public static var shouldAdaptAppearance: AdaptiveURL.UserInfoKey { return #function }
-}
-
-extension AdaptiveURL {
-    /// A boolean property indicating whether the URL content should adapt app
-    /// appearance.
-    public var shouldAdaptAppearance: Bool {
-        get { return self[userInfoKey: .shouldAdaptAppearance, default: false] }
-        set { self[userInfoKey: .shouldAdaptAppearance] = newValue }
+    func applied(to initial: Whole) -> Whole {
+        assignments.values.lazy
+            .map { value, update in update }
+            .reduce(into: initial) { whole, update in update(&whole) }
     }
 }

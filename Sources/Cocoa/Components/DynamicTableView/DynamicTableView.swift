@@ -124,8 +124,8 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     /// 2. Outside client/classes can also become delegate to do further customizations.
     private weak var _delegate: UITableViewDelegate?
     open var tableViewDelegate: UITableViewDelegate? {
-        get { return _delegate }
-        set { self._delegate = newValue }
+        get { _delegate }
+        set { _delegate = newValue }
     }
 
     // MARK: - Init Methods
@@ -225,11 +225,11 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     // MARK: - UITableViewDataSource
 
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        sections.count
     }
 
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].count
+        sections[section].count
     }
 
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -261,13 +261,13 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     // Header
 
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sections[section].title
+        sections[section].title
     }
 
     // Footer
 
     open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return sections[section].detail
+        sections[section].detail
     }
 
     // MARK: - UITableViewDelegate
@@ -323,7 +323,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     // MARK: - Reordering
 
     open func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return allowsReordering
+        allowsReordering
     }
 
     open func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -334,15 +334,15 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     // MARK: - Deletion
 
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return allowsReordering || allowsDeletion || editActionsForCell != nil
+        allowsReordering || allowsDeletion || editActionsForCell != nil
     }
 
     open func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return allowsDeletion
+        allowsDeletion
     }
 
     open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return (allowsDeletion || editActionsForCell != nil) ? .delete : .none
+        (allowsDeletion || editActionsForCell != nil) ? .delete : .none
     }
 
     open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -423,7 +423,7 @@ extension DynamicTableView {
                 cell.accessoryView = accessorySwitch
             case .checkbox(let (isSelected, _)):
                 cell.selectionStyle = .none
-                let accessoryCheckbox = UIButton(style: .checkbox(
+                let accessoryCheckbox = UIButton(configuration: .checkbox(
                     normalColor: checkboxOffTintColor,
                     selectedColor: accessoryTintColor,
                     textColor: footerTextColor,
@@ -458,18 +458,18 @@ extension DynamicTableView {
 extension DynamicTableView {
     /// A convenience property to create a single section table view.
     open var items: [DynamicTableModel] {
-        get { return sections.first?.items ?? [] }
+        get { sections.first?.items ?? [] }
         set { sections = [Section(items: newValue)] }
     }
 
     /// A convenience method to access `UISwitch` at the specified index path.
     public func switchAccessoryView(at indexPath: IndexPath) -> UISwitch? {
-        return accessoryView(at: indexPath) as? UISwitch
+        accessoryView(at: indexPath) as? UISwitch
     }
 
     /// A convenience method to access `UIButton` at the specified index path.
     public func checkboxAccessoryView(at indexPath: IndexPath) -> UIButton? {
-        return accessoryView(at: indexPath) as? UIButton
+        accessoryView(at: indexPath) as? UIButton
     }
 
     /// A convenience method to access `accessoryView` at the specified index path.
@@ -486,7 +486,7 @@ extension DynamicTableView {
 
 extension DynamicTableView: ReorderTableViewDelegate {
     private static var reorderTableViewDummyItemIdentifier: String {
-        return "_Xcore_ReorderTableView_Dummy_Item_Identifier_"
+        "_Xcore_ReorderTableView_Dummy_Item_Identifier_"
     }
 
     // This method is called when starting the re-ording process. You insert a blank row object into your

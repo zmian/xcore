@@ -26,7 +26,7 @@ import UIKit
 
 extension UITextField {
     open var placeholderLabel: UILabel? {
-        return value(forKey: "_placeholderLabel") as? UILabel
+        value(forKey: "_placeholderLabel") as? UILabel
     }
 }
 
@@ -47,13 +47,13 @@ extension UITextField {
 
     /// The default value is `0`.
     open var contentInset: UIEdgeInsets {
-        get { return associatedObject(&AssociatedKey.contentInset, default: 0) }
+        get { associatedObject(&AssociatedKey.contentInset, default: 0) }
         set { setAssociatedObject(&AssociatedKey.contentInset, value: newValue) }
     }
 
     /// The default value is `true`.
     open var isInsertionCursorEnabled: Bool {
-        get { return associatedObject(&AssociatedKey.isInsertionCursorEnabled, default: true) }
+        get { associatedObject(&AssociatedKey.isInsertionCursorEnabled, default: true) }
         set { setAssociatedObject(&AssociatedKey.isInsertionCursorEnabled, value: newValue) }
     }
 }
@@ -84,11 +84,11 @@ extension UITextField {
     //  Add support for content inset
 
     @objc private func swizzled_textRect(forBounds bounds: CGRect) -> CGRect {
-        return swizzled_textRect(forBounds: bounds.inset(by: contentInset))
+        swizzled_textRect(forBounds: bounds.inset(by: contentInset))
     }
 
     @objc private func swizzled_editingRect(forBounds bounds: CGRect) -> CGRect {
-        return swizzled_editingRect(forBounds: bounds.inset(by: contentInset))
+        swizzled_editingRect(forBounds: bounds.inset(by: contentInset))
     }
 
     // Add support for disabling insertion cursor

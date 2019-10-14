@@ -92,7 +92,7 @@ extension String {
     ///            file with the arguments inserted. If the translation cannot
     ///            be found it will return its own value.
     public func localized(file: StringsFile, comment: String = "", _ arguments: CVarArg...) -> String {
-        return String(
+        String(
             format: NSLocalizedString(
                 self,
                 tableName: file.rawValue,

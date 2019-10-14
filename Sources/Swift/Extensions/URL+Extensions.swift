@@ -74,7 +74,7 @@ extension URL {
         }
 
         public var description: String {
-            return rawValue
+            rawValue
         }
     }
 }
@@ -86,11 +86,11 @@ extension URL.Scheme: ExpressibleByStringLiteral {
 }
 
 extension URL.Scheme {
-    public static let none: URL.Scheme = ""
-    public static let https: URL.Scheme = "https"
-    public static let http: URL.Scheme = "http"
-    public static let file: URL.Scheme = "file"
-    public static let tel: URL.Scheme = "tel"
-    public static let sms: URL.Scheme = "sms"
-    public static let email: URL.Scheme = "mailto"
+    public static let none: Self = ""
+    public static let https: Self = "https"
+    public static let http: Self = "http"
+    public static let file: Self = "file"
+    public static let tel: Self = "tel"
+    public static let sms: Self = "sms"
+    public static let email: Self = "mailto"
 }

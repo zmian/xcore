@@ -49,7 +49,7 @@ extension ZoomAnimatorNavigationControllerDelegate: UINavigationControllerDelega
     }
 
     public func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return zoomInteractiveTransition.interactionController
+        zoomInteractiveTransition.interactionController
     }
 
     public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {

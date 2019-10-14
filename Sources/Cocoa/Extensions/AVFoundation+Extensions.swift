@@ -29,7 +29,7 @@ import ObjectiveC
 
 extension AVPlayer {
     public var isPlaying: Bool {
-        return timeControlStatus == .playing
+        timeControlStatus == .playing
     }
 
     public func currentTime(_ block: @escaping (_ seconds: Int, _ formattedTime: String) -> Void) -> Any {
@@ -63,7 +63,7 @@ extension AVPlayer {
 
     /// Indicates whether to repeat playback of the current item.
     public var `repeat`: Bool {
-        get { return associatedObject(&AssociatedKey.playerRepeat, default: false) }
+        get { associatedObject(&AssociatedKey.playerRepeat, default: false) }
         set {
             guard newValue != `repeat` else { return }
             setAssociatedObject(&AssociatedKey.playerRepeat, value: newValue)
@@ -89,13 +89,13 @@ extension AVPlayer {
 
 extension AVPlayerItem {
     public var hasValidDuration: Bool {
-        return status == .readyToPlay && duration.isValid
+        status == .readyToPlay && duration.isValid
     }
 }
 
 extension CMTime {
     public var isValid: Bool {
-        return flags.contains(.valid)
+        flags.contains(.valid)
     }
 
     public func offset(by: TimeInterval) -> CMTime {

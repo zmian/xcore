@@ -39,7 +39,7 @@ open class XCTableViewDataSource: NSObject, UITableViewDataSource {
 
     /// A convenience property to access data source's navigation controller.
     open var navigationController: UINavigationController? {
-        return tableView?.viewController?.navigationController
+        tableView?.viewController?.navigationController
     }
 
     override init() {
@@ -56,23 +56,23 @@ open class XCTableViewDataSource: NSObject, UITableViewDataSource {
 
 extension XCTableViewDataSource {
     open func heightForRow(at indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        UITableView.automaticDimension
     }
 
     open func heightForHeaderInSection(_ section: Int) -> CGFloat {
-        return UITableView.automaticDimension
+        UITableView.automaticDimension
     }
 
     open func heightForFooterInSection(_ section: Int) -> CGFloat {
-        return UITableView.automaticDimension
+        UITableView.automaticDimension
     }
 
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return nil
+        nil
     }
 
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return nil
+        nil
     }
 
     open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -90,11 +90,11 @@ extension XCTableViewDataSource {
 extension XCTableViewDataSource {
     @objc(numberOfSectionsInTableView:)
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        1
     }
 
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        0
     }
 
     @objc(tableView:cellForRowAtIndexPath:)
@@ -103,10 +103,10 @@ extension XCTableViewDataSource {
     }
 
     open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return nil
+        nil
     }
 
     open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return nil
+        nil
     }
 }

@@ -86,11 +86,11 @@ struct PluginImage: ImageRepresentable {
 
 extension PluginImage {
     var imageSource: ImageSourceType {
-        return base.imageSource
+        base.imageSource
     }
 
     var bundle: Bundle? {
-        return base.bundle
+        base.bundle
     }
 }
 
@@ -98,15 +98,15 @@ extension PluginImage {
 
 extension PluginImage: MutableCollection, RangeReplaceableCollection, BidirectionalCollection {
     var startIndex: Int {
-        return 0
+        0
     }
 
     var endIndex: Int {
-        return plugins.count
+        plugins.count
     }
 
     subscript(index: Int) -> ImageRepresentablePlugin {
-        get { return plugins[index] }
+        get { plugins[index] }
         set { plugins[index] = newValue }
     }
 
@@ -116,7 +116,7 @@ extension PluginImage: MutableCollection, RangeReplaceableCollection, Bidirectio
     /// `endIndex`.
     /// - Returns: The index value immediately after `i`.
     func index(after i: Int) -> Int {
-        return i + 1
+        i + 1
     }
 
     /// Returns the position immediately before the given index.
@@ -125,11 +125,11 @@ extension PluginImage: MutableCollection, RangeReplaceableCollection, Bidirectio
     ///   `startIndex`.
     /// - Returns: The index value immediately before `i`.
     func index(before i: Int) -> Int {
-        return i - 1
+        i - 1
     }
 
     func makeIterator() -> ArrayIterator<ImageRepresentablePlugin> {
-        return ArrayIterator(plugins)
+        .init(plugins)
     }
 
     mutating func replaceSubrange<C: Collection>(_ subRange: Range<Int>, with newElements: C) where C.Iterator.Element == Element {

@@ -54,7 +54,7 @@ extension UITabBarController {
         }
 
         public var image: UIImage {
-            return UIImage(assetIdentifier: assetIdentifier)
+            UIImage(assetIdentifier: assetIdentifier)
         }
 
         public var selectedImage: UIImage {
@@ -87,15 +87,15 @@ extension UITabBarController.TabItem: CaseIterable {
     public static var allCases: [UITabBarController.TabItem] = []
 
     public static func item(for viewController: UIViewController) -> UITabBarController.TabItem? {
-        return allCases.first { viewController.isKind(of: $0.viewControllerType) }
+        allCases.first { viewController.isKind(of: $0.viewControllerType) }
     }
 }
 
 // MARK: - Equatable
 
 extension UITabBarController.TabItem: Equatable {
-    public static func == (lhs: UITabBarController.TabItem, rhs: UITabBarController.TabItem) -> Bool {
-        return lhs.id == rhs.id
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
     }
 }
 
@@ -103,7 +103,7 @@ extension UITabBarController.TabItem: Equatable {
 
 extension UITabBarController.TabItem: Hashable {
     public func hash(into hasher: inout Hasher) {
-        return hasher.combine(id)
+        hasher.combine(id)
     }
 }
 

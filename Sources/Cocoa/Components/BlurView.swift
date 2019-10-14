@@ -37,7 +37,7 @@ public class BlurView: XCView {
     ///
     /// `true` if the user has enabled Reduce Transparency in **Settings**; otherwise, `false`.
     private var isReduceTransparencyEnabled: Bool {
-        return UIAccessibility.isReduceTransparencyEnabled
+        UIAccessibility.isReduceTransparencyEnabled
     }
 
     /// A boolean property to determine whether this view automatically enables blur effect.
@@ -99,7 +99,7 @@ public class BlurView: XCView {
     /// This property is only used when `isSmartBlurEffectEnabled` is `true`
     /// and `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
     @objc public dynamic var effect: UIVisualEffect? {
-        get { return blurEffectView.effect }
+        get { blurEffectView.effect }
         set { blurEffectView.effect = newValue }
     }
 

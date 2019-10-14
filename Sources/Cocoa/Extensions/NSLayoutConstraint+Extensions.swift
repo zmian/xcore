@@ -199,14 +199,14 @@ extension NSLayoutConstraint {
 
 extension Array where Element: NSLayoutConstraint {
     func firstAttribute(_ value: Anchor.Attributes) -> NSLayoutConstraint? {
-        return first { $0.anchorAttributes == value }
+        first { $0.anchorAttributes == value }
     }
 }
 
 extension Array where Element == NSLayoutConstraint.Axis {
     /// The `.vertical` and `.horizontal` `NSLayoutConstraint.Axis`.
     public static var both: [Element] {
-        return [.vertical, .horizontal]
+        [.vertical, .horizontal]
     }
 }
 
@@ -218,6 +218,6 @@ extension UILayoutPriority {
     /// To resolve the issue, Changing constraints priority from `1000` to `999` so
     /// the `UISV-hiding` constraint can then take priority if needed.
     public static var stackViewSubview: UILayoutPriority {
-        return .required - 1
+        .required - 1
     }
 }

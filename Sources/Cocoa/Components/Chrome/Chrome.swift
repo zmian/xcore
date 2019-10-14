@@ -177,23 +177,23 @@ extension Chrome {
         }
 
         public static var transparent: Style {
-            return Style(.transparent)
+            .init(.transparent)
         }
 
         public static var blurred: Style {
-            return Style(.blurred)
+            .init(.blurred)
         }
 
         public static func color(_ color: UIColor) -> Style {
-            return Style(.color(color))
+            .init(.color(color))
         }
 
         public var isTransparent: Bool {
-            return type.isTransparent
+            type.isTransparent
         }
 
         public override var description: String {
-            return type.description
+            type.description
         }
 
         public override func isEqual(_ object: Any?) -> Bool {

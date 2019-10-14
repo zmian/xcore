@@ -29,7 +29,7 @@ public struct ResizeImageTransform: ImageTransform {
     private let scalingMode: ScalingMode
 
     public var id: String {
-        return "\(transformName)-size:(\(size.width)x\(size.height))-scalingMode:(\(scalingMode))"
+        "\(transformName)-size:(\(size.width)x\(size.height))-scalingMode:(\(scalingMode))"
     }
 
     public init(to size: CGSize, scalingMode: ScalingMode = .aspectFill) {

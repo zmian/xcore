@@ -63,12 +63,12 @@ extension MFMailComposeViewController {
     }
 
     private var actionHandlerWrapper: ClosureWrapper? {
-        get { return associatedObject(&AssociatedKey.actionHandler) }
+        get { associatedObject(&AssociatedKey.actionHandler) }
         set { setAssociatedObject(&AssociatedKey.actionHandler, value: newValue) }
     }
 
     public var shouldAutoDismiss: Bool {
-        get { return associatedObject(&AssociatedKey.shouldAutoDismiss, default: false) }
+        get { associatedObject(&AssociatedKey.shouldAutoDismiss, default: false) }
         set {
             mailComposeDelegate = self
             setAssociatedObject(&AssociatedKey.shouldAutoDismiss, value: newValue)

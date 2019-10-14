@@ -55,10 +55,6 @@ open class TextViewController: XCScrollViewController {
         setupTextLabel()
     }
 
-    deinit {
-        Console.info("deinit")
-    }
-
     // MARK: - Setup Methods
 
     private func setupTextLabel() {

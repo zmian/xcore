@@ -51,7 +51,7 @@ extension UIViewController {
     }
 
     private var didAddKeyboardNotificationObservers: Bool {
-        get { return associatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, default: false) }
+        get { associatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, default: false) }
         set { setAssociatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, value: newValue) }
     }
 
@@ -92,7 +92,7 @@ extension UIView {
     }
 
     private var didAddKeyboardNotificationObservers: Bool {
-        get { return associatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, default: false) }
+        get { associatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, default: false) }
         set { setAssociatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, value: newValue) }
     }
 

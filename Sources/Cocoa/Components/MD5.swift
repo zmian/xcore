@@ -39,6 +39,6 @@ extension Data {
 
 extension String {
     public var md5: String? {
-        return data(using: .utf8)?.md5
+        data(using: .utf8)?.md5
     }
 }

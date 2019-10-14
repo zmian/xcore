@@ -11,8 +11,8 @@ extension TimeInterval {
     ///
     /// - Parameter since: The duration of time that needs to have passed for this function to return `true`.
     /// - Returns: `true` if `since` has passed since now.
-    fileprivate func hasPassed(since: TimeInterval) -> Bool {
-        return Date().timeIntervalSinceReferenceDate - self > since
+    fileprivate func hasPassed(since: Self) -> Bool {
+        Date().timeIntervalSinceReferenceDate - self > since
     }
 }
 

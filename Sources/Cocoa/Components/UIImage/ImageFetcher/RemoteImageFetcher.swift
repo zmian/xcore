@@ -26,7 +26,7 @@ import UIKit
 
 final class RemoteImageFetcher: ImageFetcher {
     func canHandle(_ image: ImageRepresentable) -> Bool {
-        return image.imageSource.isRemoteUrl
+        image.imageSource.isRemoteUrl
     }
 
     /// Loads remote image either via from cache or web.

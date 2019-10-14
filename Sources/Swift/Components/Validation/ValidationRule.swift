@@ -43,7 +43,7 @@ public struct ValidationRule<Input> {
     /// - Returns: `true` if given `input` matches the conditions specified by `self`,
     ///            otherwise `false`.
     public func validate(_ input: Input) -> Bool {
-        return block(input)
+        block(input)
     }
 }
 
@@ -91,6 +91,6 @@ extension String {
     /// - Returns: `true` if `self` matches the conditions specified by the given
     ///            `rule`, otherwise `false`.
     public func validate(rule: ValidationRule<String>) -> Bool {
-        return rule.validate(self)
+        rule.validate(self)
     }
 }

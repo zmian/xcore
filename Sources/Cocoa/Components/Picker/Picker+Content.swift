@@ -46,7 +46,7 @@ extension Picker {
         }
 
         var drawerContentView: UIView {
-            return stackView
+            stackView
         }
 
         init(model: PickerModel) {
@@ -96,15 +96,15 @@ extension Picker {
 
 extension Picker.Content: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return model.numberOfElements(at: component)
+        model.numberOfElements(at: component)
     }
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return model.numberOfComponents()
+        model.numberOfComponents()
     }
 
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return Picker.RowView.height
+        Picker.RowView.height
     }
 
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {

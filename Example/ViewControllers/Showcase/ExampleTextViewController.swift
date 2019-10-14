@@ -30,7 +30,7 @@ extension ExampleTextViewController {
         case markdown
 
         var title: String {
-            return "\(self)".uppercasedFirst()
+            "\(self)".uppercasedFirst()
         }
 
         var filename: String {

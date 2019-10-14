@@ -33,7 +33,7 @@ extension UIGestureRecognizer: TargetActionBlockRepresentable {
     }
 
     fileprivate var actionHandler: SenderClosureWrapper? {
-        get { return associatedObject(&AssociatedKey.actionHandler) }
+        get { associatedObject(&AssociatedKey.actionHandler) }
         set { setAssociatedObject(&AssociatedKey.actionHandler, value: newValue) }
     }
 }
@@ -71,7 +71,7 @@ extension TargetActionBlockRepresentable where Self: UIGestureRecognizer {
 
     /// A boolean value to determine whether an action handler is attached.
     public var hasActionHandler: Bool {
-        return actionHandler != nil
+        actionHandler != nil
     }
 
     public init(_ handler: @escaping (_ sender: Self) -> Void) {

@@ -27,7 +27,7 @@ import WebKit
 
 extension WKWebView {
     public var scripts: WebViewScripts {
-        return WebViewScripts(for: self)
+        .init(for: self)
     }
 }
 
@@ -39,13 +39,13 @@ public struct WebViewScripts {
     }
 
     @discardableResult
-    public func disableLongPress() -> WebViewScripts {
+    public func disableLongPress() -> Self {
         webView.evaluateJavaScript("document.body.style.webkitTouchCallout='none';")
         return self
     }
 
     @discardableResult
-    public func interceptLinkTap() -> WebViewScripts {
+    public func interceptLinkTap() -> Self {
         let script = """
         if (document.addEventListener) {
             document.addEventListener('click', interceptClickEvent);

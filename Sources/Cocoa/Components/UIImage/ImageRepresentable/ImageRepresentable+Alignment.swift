@@ -62,6 +62,6 @@ extension ImageRepresentable {
     /// - Parameter value: The alignment value for the image.
     /// - Returns: An `ImageRepresentable` instance.
     public func alignment(_ value: ImageRepresentableAlignment) -> ImageRepresentable {
-        return append(value)
+        append(value)
     }
 }

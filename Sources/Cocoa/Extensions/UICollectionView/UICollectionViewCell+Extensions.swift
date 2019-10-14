@@ -71,7 +71,7 @@ extension UICollectionViewCell {
     }
 
     private var collectionView: UICollectionView? {
-        return responder()
+        responder()
     }
 }
 
@@ -88,13 +88,13 @@ extension UICollectionViewCell {
     /// The view to which the `highlightedBackgroundColor` is applied.
     /// The default value is `contentView`.
     @objc open override var highlightedBackgroundColorView: UIView {
-        return contentView
+        contentView
     }
 
     /// The view to which the `highlightedAnimation` is applied.
     /// The default value is `contentView`.
     @objc open override var highlightedAnimationView: UIView {
-        return contentView
+        contentView
     }
 }
 

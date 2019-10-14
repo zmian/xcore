@@ -50,19 +50,19 @@ public protocol StringRepresentable {
 
 extension String: StringRepresentable {
     public var stringSource: StringSourceType {
-        return .string(self)
+        .string(self)
     }
 }
 
 extension NSString: StringRepresentable {
     public var stringSource: StringSourceType {
-        return .string(self as String)
+        .string(self as String)
     }
 }
 
 extension NSAttributedString: StringRepresentable {
     public var stringSource: StringSourceType {
-        return .attributedString(self)
+        .attributedString(self)
     }
 }
 
@@ -78,7 +78,7 @@ public protocol TextAttributedTextRepresentable: class {
 
 extension TextAttributedTextRepresentable {
     public var hasText: Bool {
-        return text != nil || attributedText != nil
+        text != nil || attributedText != nil
     }
 
     public func setText(_ string: StringRepresentable?) {

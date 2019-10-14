@@ -29,7 +29,7 @@ extension Array {
     ///
     /// - Parameter count: Number of random elements to return.
     /// - Returns: Random subarray of length n.
-    public func randomElements(count: Int = 1) -> Array {
+    public func randomElements(count: Int = 1) -> Self {
         let size = count
         let count = self.count
 
@@ -102,7 +102,7 @@ extension Array where Element: NSObjectProtocol {
     /// - Returns: The first index where `element` is found. If `element` is not
     ///   found in the collection, returns `nil`.
     public func firstIndex(of elementType: Element.Type) -> Int? {
-        return firstIndex { $0.isKind(of: elementType) }
+        firstIndex { $0.isKind(of: elementType) }
     }
 
     /// Returns the last index where the specified value appears in the
@@ -123,7 +123,7 @@ extension Array where Element: NSObjectProtocol {
     /// - Returns: The last index where `element` is found. If `element` is not
     ///   found in the collection, returns `nil`.
     public func lastIndex(of elementType: Element.Type) -> Int? {
-        return lastIndex { $0.isKind(of: elementType) }
+        lastIndex { $0.isKind(of: elementType) }
     }
 
     /// Returns a boolean value indicating whether the sequence contains an element
@@ -161,8 +161,8 @@ extension Array where Element: Equatable {
     /// ```
     ///
     /// - Parameter preferredOrder: The ordered elements, which will be used to sort the sequence’s elements.
-    public mutating func sort(by preferredOrder: [Element]) {
-        return sort { (a, b) -> Bool in
+    public mutating func sort(by preferredOrder: Self) {
+        sort { (a, b) -> Bool in
             guard
                 let first = preferredOrder.firstIndex(of: a),
                 let second = preferredOrder.firstIndex(of: b)
@@ -189,8 +189,8 @@ extension Array where Element: Equatable {
     ///
     /// - Parameter preferredOrder: The ordered elements, which will be used to sort the sequence’s elements.
     /// - Returns: A sorted array of the sequence’s elements.
-    public func sorted(by preferredOrder: [Element]) -> [Element] {
-        return sorted { (a, b) -> Bool in
+    public func sorted(by preferredOrder: Self) -> Self {
+        sorted { (a, b) -> Bool in
             guard
                 let first = preferredOrder.firstIndex(of: a),
                 let second = preferredOrder.firstIndex(of: b)
@@ -206,7 +206,7 @@ extension Array where Element: Equatable {
 extension Array where Element: RawRepresentable {
     /// Return an array containing all corresponding `rawValue`s of `self`.
     public var rawValues: [Element.RawValue] {
-        return map { $0.rawValue }
+        map { $0.rawValue }
     }
 }
 
@@ -228,7 +228,7 @@ extension Array where Element == String? {
     ///                        this sequence. The default value is an empty string.
     /// - Returns: A single, concatenated string.
     public func joined(separator: String = "") -> String {
-        return lazy.compactMap { $0 }.filter { !$0.isBlank }.joined(separator: separator)
+        lazy.compactMap { $0 }.filter { !$0.isBlank }.joined(separator: separator)
     }
 }
 

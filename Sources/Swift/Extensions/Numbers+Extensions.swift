@@ -66,7 +66,7 @@ extension FixedWidthInteger {
 
 extension SignedInteger {
     public var digitsCount: Self {
-        return numberOfDigits(in: self)
+        numberOfDigits(in: self)
     }
 
     private func numberOfDigits(in number: Self) -> Self {
@@ -80,11 +80,11 @@ extension SignedInteger {
 
 extension FloatingPoint {
     public static var pi2: Self {
-        return .pi / 2
+        .pi / 2
     }
 
     public static var pi4: Self {
-        return .pi / 4
+        .pi / 4
     }
 }
 
@@ -93,13 +93,13 @@ extension Sequence where Iterator.Element: Numeric {
     /// [1, 1, 1, 1, 1, 1].runningSum() // -> [1, 2, 3, 4, 5, 6]
     /// ```
     public func runningSum() -> [Iterator.Element] {
-        return reduce([]) { sums, element in
+        reduce([]) { sums, element in
             sums + [element + (sums.last ?? 0)]
         }
     }
 
     public func sum() -> Element {
-        return reduce(0, +)
+        reduce(0, +)
     }
 }
 
@@ -122,28 +122,28 @@ extension Sequence {
     /// 2200.0
     /// ```
     public func sum<T: Numeric>(_ transform: (Element) throws -> T) rethrows -> T {
-        return try map(transform).sum()
+        try map(transform).sum()
     }
 }
 
 extension Collection where Iterator.Element: BinaryInteger {
     /// Returns the average of all elements in the collection.
     public func average() -> Double {
-        return isEmpty ? 0 : Double(sum()) / Double(count)
+        isEmpty ? 0 : Double(sum()) / Double(count)
     }
 }
 
 extension Collection where Element: BinaryFloatingPoint {
     /// Returns the average of all elements in the collection.
     public func average() -> Element {
-        return isEmpty ? 0 : sum() / Element(count)
+        isEmpty ? 0 : sum() / Element(count)
     }
 }
 
 extension Collection where Element == Decimal {
     /// Returns the average of all elements in the collection.
     public func average() -> Decimal {
-        return isEmpty ? 0 : sum() / Decimal(count)
+        isEmpty ? 0 : sum() / Decimal(count)
     }
 }
 
@@ -306,6 +306,6 @@ extension Comparable {
     /// "z".clamped(to: "a"..."x") // returns "x"
     /// ```
     public func clamped(to limits: ClosedRange<Self>) -> Self {
-        return min(max(self, limits.lowerBound), limits.upperBound)
+        min(max(self, limits.lowerBound), limits.upperBound)
     }
 }

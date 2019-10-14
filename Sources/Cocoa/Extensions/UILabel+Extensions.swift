@@ -31,7 +31,7 @@ extension UILabel {
 
     /// The default value is `0`.
     open var contentInset: UIEdgeInsets {
-        get { return associatedObject(&AssociatedKey.contentInset, default: 0) }
+        get { associatedObject(&AssociatedKey.contentInset, default: 0) }
         set {
             setAssociatedObject(&AssociatedKey.contentInset, value: newValue)
             setNeedsDisplay()
@@ -43,7 +43,7 @@ extension UILabel {
     }
 
     @objc private func swizzled_textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
-        return swizzled_textRect(forBounds: bounds.inset(by: contentInset), limitedToNumberOfLines: numberOfLines)
+        swizzled_textRect(forBounds: bounds.inset(by: contentInset), limitedToNumberOfLines: numberOfLines)
     }
 }
 

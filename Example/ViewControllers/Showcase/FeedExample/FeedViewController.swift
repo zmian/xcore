@@ -43,7 +43,7 @@ final class FeedViewController: XCComposedCollectionViewController {
     }
 
     override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
-        return sources
+        sources
     }
 
     private func recreateSources() {

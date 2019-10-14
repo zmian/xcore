@@ -36,7 +36,7 @@ extension Promise {
 
     /// A convenience function to make sure the promise always succeed.
     public func asAlwaysSucceed() -> Promise<Void> {
-        return Promise<Void> { seal in
+        .init { seal in
             ensure {
                 seal.fulfill(())
             }.discardableResult()
@@ -47,7 +47,7 @@ extension Promise {
 extension Promise where T: Collection, T: ExpressibleByArrayLiteral {
     /// A convenience function to make sure the promise always succeed.
     public func asAlwaysSucceed() -> Promise<T> {
-        return Promise { seal in
+        .init { seal in
             done {
                 seal.fulfill($0)
             }.catch { _ in
@@ -76,7 +76,7 @@ extension Array where Element: Promise<Void> {
     /// - Returns: A new promise that resolves once all the provided promises resolve.
     /// - Note: The returned promise can be rejected if any one of the promises is rejected.
     public func join() -> Promise<Void> {
-        return Promise { seal in
+        .init { seal in
             let promises = self
 
             firstly {
@@ -107,7 +107,7 @@ extension Array where Element == () -> Promise<Void> {
         var currentProcessIndex = 0
 
         func innerPromise(_ promises: [() -> Promise<Void>]) -> Promise<Void> {
-            return Promise { seal in
+            .init { seal in
                 guard totalCount > currentProcessIndex else {
                     return seal.fulfill(())
                 }
@@ -138,7 +138,7 @@ public func orderedJoin<T>(_ promises: [() -> Promise<[T]>]) -> Promise<[T]> {
     var currentProcessIndex = 0
 
     func innerPromise(_ promises: [() -> Promise<[T]>], initialValue: [T]) -> Promise<[T]> {
-        return Promise { seal in
+        .init { seal in
             guard totalCount > currentProcessIndex else {
                 return seal.fulfill(initialValue)
             }
@@ -189,7 +189,7 @@ public enum MultiplePromisesResolutionStrategy {
 ///               The default value is `.rejectsIfAnyRejects`.
 /// - Returns: A new promise that resolves once all the provided promises resolve.
 public func join<T>(_ promises: [Promise<[T]>], strategy: MultiplePromisesResolutionStrategy = .rejectsIfAnyRejects) -> Promise<Promise<T>.MultiplePromisesResponse> {
-    return Promise { seal in
+    .init { seal in
         when(resolved: promises).done { results in
             var values: [T] = []
             var errors: [Error] = []
@@ -251,7 +251,7 @@ public func promiseUntil<T>(
     retryDelay: TimeInterval = 0,
     maxRetrySeconds: Int = 15
 ) -> Promise<T> {
-    return Promise { seal in
+    .init { seal in
         let maxTries = Int(maxRetrySeconds / Int(retryDelay))
         var numberOfPastTries = 0
         var isTimedOut: Bool {

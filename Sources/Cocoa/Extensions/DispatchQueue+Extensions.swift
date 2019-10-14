@@ -27,7 +27,7 @@ import Dispatch
 
 extension DispatchQueue {
     private class var currentLabel: String? {
-        return OperationQueue.current?.underlyingQueue?.label
+        OperationQueue.current?.underlyingQueue?.label
     }
 
     /// Submits a work item to a dispatch queue. If already on the dispatch queue then executes
@@ -63,6 +63,6 @@ extension DispatchTime {
     /// - Parameter interval: The time interval, in seconds.
     /// - Returns: A new `DispatchTime` from specified seconds.
     public static func seconds(_ interval: TimeInterval) -> DispatchTime {
-        return .now() + Double(Int64(interval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        .now() + Double(Int64(interval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
     }
 }

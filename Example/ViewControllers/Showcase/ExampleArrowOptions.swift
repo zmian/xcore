@@ -31,15 +31,15 @@ enum ExampleArrowOptions: String, CaseIterable, OptionsRepresentable {
     case right
 
     static var title: String? {
-        return "Please select an arrow"
+        "Please select an arrow"
     }
 
     static var message: String? {
-        return "This is a message"
+        "This is a message"
     }
 
     var description: String {
-        return rawValue.uppercasedFirst()
+        rawValue.uppercasedFirst()
     }
 
     var image: ImageRepresentable? {
@@ -86,13 +86,13 @@ enum ExampleArrowOptions: String, CaseIterable, OptionsRepresentable {
 }
 
 extension ImageAssetIdentifier {
-    private static func propertyName(name: String = #function) -> ImageAssetIdentifier {
-        return ImageAssetIdentifier(rawValue: name, bundle: .xcore)
+    private static func propertyName(name: String = #function) -> Self {
+        .init(rawValue: name, bundle: .xcore)
     }
 
     // MARK: Carets
-    static var caretDirectionUp: ImageAssetIdentifier { return propertyName() }
-    static var caretDirectionDown: ImageAssetIdentifier { return propertyName() }
-    static var caretDirectionBack: ImageAssetIdentifier { return propertyName() }
-    static var caretDirectionForward: ImageAssetIdentifier { return propertyName() }
+    static var caretDirectionUp: Self { propertyName() }
+    static var caretDirectionDown: Self { propertyName() }
+    static var caretDirectionBack: Self { propertyName() }
+    static var caretDirectionForward: Self { propertyName() }
 }

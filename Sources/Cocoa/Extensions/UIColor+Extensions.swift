@@ -106,22 +106,22 @@ extension UIColor {
 
 extension UIColor {
     public var alpha: CGFloat {
-        get { return cgColor.alpha }
+        get { cgColor.alpha }
         set { withAlphaComponent(newValue) }
     }
 
     public func alpha(_ value: CGFloat) -> UIColor {
-        return withAlphaComponent(value)
+        withAlphaComponent(value)
     }
 
     // Credit: http://stackoverflow.com/a/31466450
 
     public func lighter(_ amount: CGFloat = 0.25) -> UIColor {
-        return hueColorWithBrightness(1 + amount)
+        hueColorWithBrightness(1 + amount)
     }
 
     public func darker(_ amount: CGFloat = 0.25) -> UIColor {
-        return hueColorWithBrightness(1 - amount)
+        hueColorWithBrightness(1 - amount)
     }
 
     private func hueColorWithBrightness(_ amount: CGFloat) -> UIColor {
@@ -154,6 +154,6 @@ extension UIColor {
 extension Array where Element: UIColor {
     /// The Quartz color reference that corresponds to the receiver’s color.
     public var cgColor: [CGColor] {
-        return map { $0.cgColor }
+        map { $0.cgColor }
     }
 }

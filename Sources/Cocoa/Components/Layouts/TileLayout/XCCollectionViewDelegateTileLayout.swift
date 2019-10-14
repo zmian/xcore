@@ -43,42 +43,42 @@ public protocol XCCollectionViewDelegateTileLayout: UICollectionViewDelegate {
 
 extension XCCollectionViewDelegateTileLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, heightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat? {
-        return nil
+        nil
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, headerAttributesInSection section: Int, width: CGFloat) -> (Bool, CGFloat?) {
-        return (false, nil)
+        (false, nil)
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, footerAttributesInSection section: Int, width: CGFloat) -> (Bool, CGFloat?) {
-        return (false, nil)
+        (false, nil)
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, estimatedHeightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
-        return collectionViewLayout.estimatedItemHeight
+        collectionViewLayout.estimatedItemHeight
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, estimatedHeaderHeightInSection section: Int, width: CGFloat) -> CGFloat {
-        return collectionViewLayout.estimatedHeaderFooterHeight
+        collectionViewLayout.estimatedHeaderFooterHeight
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, estimatedFooterHeightInSection section: Int, width: CGFloat) -> CGFloat {
-        return collectionViewLayout.estimatedHeaderFooterHeight
+        collectionViewLayout.estimatedHeaderFooterHeight
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, verticalSpacingBetweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
-        return collectionViewLayout.verticalIntersectionSpacing
+        collectionViewLayout.verticalIntersectionSpacing
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isTileEnabledInSection section: Int) -> Bool {
-        return true
+        true
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, cornerRadiusInSection section: Int) -> CGFloat {
-        return collectionViewLayout.cornerRadius
+        collectionViewLayout.cornerRadius
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isShadowEnabledInSection section: Int) -> Bool {
-        return true
+        true
     }
 }

@@ -28,7 +28,7 @@ final class LocalImageFetcher: ImageFetcher {
     private let cache = NSCache<NSString, UIImage>()
 
     func canHandle(_ image: ImageRepresentable) -> Bool {
-        return !image.imageSource.isRemoteUrl
+        !image.imageSource.isRemoteUrl
     }
 
     func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {

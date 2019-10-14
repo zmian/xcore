@@ -31,7 +31,7 @@ extension Router {
         case custom((UINavigationController) -> Void)
 
         public static var custom: RouteKind {
-            return custom { _ in }
+            custom { _ in }
         }
     }
 }

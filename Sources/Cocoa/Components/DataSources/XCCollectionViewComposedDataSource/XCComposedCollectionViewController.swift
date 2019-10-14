@@ -57,7 +57,7 @@ open class XCComposedCollectionViewController: UIViewController {
 
     private let _composedDataSource = XCCollectionViewComposedDataSource()
     open var composedDataSource: XCCollectionViewComposedDataSource {
-        return _composedDataSource
+        _composedDataSource
     }
 
     open override func viewDidLoad() {
@@ -75,7 +75,7 @@ open class XCComposedCollectionViewController: UIViewController {
     }
 
     open func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
-        return []
+        []
     }
 
     open func scrollToTop(animated: Bool = true) {

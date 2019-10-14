@@ -29,15 +29,15 @@ extension UITabBarController {
     // method in any view controller and it would respect that orientation
     // setting per view controller.
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return selectedViewController?.preferredInterfaceOrientations ?? preferredInterfaceOrientations ?? selectedViewController?.supportedInterfaceOrientations ?? super.supportedInterfaceOrientations
+        selectedViewController?.preferredInterfaceOrientations ?? preferredInterfaceOrientations ?? selectedViewController?.supportedInterfaceOrientations ?? super.supportedInterfaceOrientations
     }
 
     open override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return selectedViewController?.interfaceOrientationForPresentation ?? interfaceOrientationForPresentation ?? selectedViewController?.preferredInterfaceOrientationForPresentation ?? super.preferredInterfaceOrientationForPresentation
+        selectedViewController?.interfaceOrientationForPresentation ?? interfaceOrientationForPresentation ?? selectedViewController?.preferredInterfaceOrientationForPresentation ?? super.preferredInterfaceOrientationForPresentation
     }
 
     open override var shouldAutorotate: Bool {
-        return selectedViewController?.isAutorotateEnabled ?? isAutorotateEnabled ?? selectedViewController?.shouldAutorotate ?? super.shouldAutorotate
+        selectedViewController?.isAutorotateEnabled ?? isAutorotateEnabled ?? selectedViewController?.shouldAutorotate ?? super.shouldAutorotate
     }
 }
 
