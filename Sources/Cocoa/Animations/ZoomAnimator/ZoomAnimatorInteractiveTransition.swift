@@ -32,7 +32,7 @@ final class ZoomAnimatorInteractiveTransition: UIPercentDrivenInteractiveTransit
     private var interactive = false
 
     var interactionController: ZoomAnimatorInteractiveTransition? {
-        return interactive ? self : nil
+        interactive ? self : nil
     }
 
     @objc func handle(recognizer: UIScreenEdgePanGestureRecognizer) {
@@ -96,6 +96,6 @@ extension ZoomAnimatorInteractiveTransition: UIGestureRecognizerDelegate {
     }
 
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return otherGestureRecognizer === navigationController?.interactivePopGestureRecognizer
+        otherGestureRecognizer === navigationController?.interactivePopGestureRecognizer
     }
 }

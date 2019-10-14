@@ -37,7 +37,7 @@ extension Anchor {
         }
 
         fileprivate func copy(for view: UIView) -> Axis<T> {
-            return Axis<T>(view: view, attribute: attribute)
+            .init(view: view, attribute: attribute)
         }
     }
 
@@ -201,7 +201,7 @@ extension UIView {
     }
 
     var anchor: Anchor {
-        return associatedObject(&AssociatedKey.anchor, default: Anchor(view: self), policy: .strong)
+        associatedObject(&AssociatedKey.anchor, default: Anchor(view: self), policy: .strong)
     }
 }
 
@@ -213,7 +213,7 @@ extension Anchor.Axis {
         file: StaticString = #file,
         line: UInt = #line
     ) -> [NSLayoutConstraint] {
-        return constraint(
+        constraint(
             relation: relation,
             to: other.owningView,
             otherAttribute: other.attribute,
@@ -230,7 +230,7 @@ extension Anchor.Axis {
         file: StaticString = #file,
         line: UInt = #line
     ) -> [NSLayoutConstraint] {
-        return constraint(
+        constraint(
             relation: relation,
             to: otherView,
             otherAttribute: attribute,
@@ -409,17 +409,17 @@ extension Anchor.Axis {
 extension Anchor.Axis {
     @discardableResult
     public func equalToSuperview(file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return Modifier(constraints: constraint(.equal, to: owningView.superview!, file: file, line: line))
+        .init(constraints: constraint(.equal, to: owningView.superview!, file: file, line: line))
     }
 
     @discardableResult
     public func equalTo(_ other: Anchor.Axis<T>, file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return Modifier(constraints: constraint(.equal, to: other, file: file, line: line))
+        .init(constraints: constraint(.equal, to: other, file: file, line: line))
     }
 
     @discardableResult
     public func equalTo(_ other: UIView, file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return equalTo(copy(for: other), file: file, line: line)
+        equalTo(copy(for: other), file: file, line: line)
     }
 }
 
@@ -428,17 +428,17 @@ extension Anchor.Axis {
 extension Anchor.Axis {
     @discardableResult
     public func lessThanOrEqualToSuperview(file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return Modifier(constraints: constraint(.lessThanOrEqual, to: owningView.superview!, file: file, line: line))
+        .init(constraints: constraint(.lessThanOrEqual, to: owningView.superview!, file: file, line: line))
     }
 
     @discardableResult
     public func lessThanOrEqualTo(_ other: Anchor.Axis<T>, file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return Modifier(constraints: constraint(.lessThanOrEqual, to: other, file: file, line: line))
+        .init(constraints: constraint(.lessThanOrEqual, to: other, file: file, line: line))
     }
 
     @discardableResult
     public func lessThanOrEqualTo(_ other: UIView, file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return lessThanOrEqualTo(copy(for: other), file: file, line: line)
+        lessThanOrEqualTo(copy(for: other), file: file, line: line)
     }
 }
 
@@ -447,60 +447,60 @@ extension Anchor.Axis {
 extension Anchor.Axis {
     @discardableResult
     public func greaterThanOrEqualToSuperview(file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return Modifier(constraints: constraint(.greaterThanOrEqual, to: owningView.superview!, file: file, line: line))
+        .init(constraints: constraint(.greaterThanOrEqual, to: owningView.superview!, file: file, line: line))
     }
 
     @discardableResult
     public func greaterThanOrEqualTo(_ other: Anchor.Axis<T>, file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return Modifier(constraints: constraint(.greaterThanOrEqual, to: other, file: file, line: line))
+        .init(constraints: constraint(.greaterThanOrEqual, to: other, file: file, line: line))
     }
 
     @discardableResult
     public func greaterThanOrEqualTo(_ other: UIView, file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return greaterThanOrEqualTo(copy(for: other), file: file, line: line)
+        greaterThanOrEqualTo(copy(for: other), file: file, line: line)
     }
 }
 
 extension Anchor.EdgesAxis {
     @discardableResult
     public func equalToSuperviewSafeArea(file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return Modifier(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: .all, file: file, line: line))
+        .init(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: .all, file: file, line: line))
     }
 
     @discardableResult
     public func equalTo(_ safeArea: SafeAreaLayoutGuideOptions, file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return Modifier(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: safeArea, file: file, line: line))
+        .init(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: safeArea, file: file, line: line))
     }
 }
 
 extension Anchor.XAxis {
     @discardableResult
     public func equalToSuperviewSafeArea(file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return Modifier(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: .all, file: file, line: line))
+        .init(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: .all, file: file, line: line))
     }
 
     @discardableResult
     public func equalTo(_ safeArea: SafeAreaLayoutGuideOptions, file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return Modifier(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: safeArea, file: file, line: line))
+        .init(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: safeArea, file: file, line: line))
     }
 }
 
 extension Anchor.YAxis {
     @discardableResult
     public func equalToSuperviewSafeArea(file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return Modifier(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: .all, file: file, line: line))
+        .init(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: .all, file: file, line: line))
     }
 
     @discardableResult
     public func equalTo(_ safeArea: SafeAreaLayoutGuideOptions, file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return Modifier(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: safeArea, file: file, line: line))
+        .init(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: safeArea, file: file, line: line))
     }
 }
 
 extension Anchor.DimensionAxis {
     @discardableResult
     open func equalTo(_ value: CGFloat, file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return equalTo(CGSize(value), file: file, line: line)
+        equalTo(CGSize(value), file: file, line: line)
     }
 
     @discardableResult
@@ -521,14 +521,14 @@ extension Anchor.DimensionAxis {
             )
         }
 
-        return Modifier(constraints: constraints)
+        return .init(constraints: constraints)
     }
 }
 
 extension Anchor.DimensionAxis {
     @discardableResult
     open func greaterThanOrEqualTo(_ value: CGFloat, file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return greaterThanOrEqualTo(CGSize(value), file: file, line: line)
+        greaterThanOrEqualTo(CGSize(value), file: file, line: line)
     }
 
     @discardableResult
@@ -549,14 +549,14 @@ extension Anchor.DimensionAxis {
             )
         }
 
-        return Modifier(constraints: constraints)
+        return .init(constraints: constraints)
     }
 }
 
 extension Anchor.DimensionAxis {
     @discardableResult
     open func lessThanOrEqualTo(_ value: CGFloat, file: StaticString = #file, line: UInt = #line) -> Modifier {
-        return greaterThanOrEqualTo(CGSize(value), file: file, line: line)
+        greaterThanOrEqualTo(CGSize(value), file: file, line: line)
     }
 
     @discardableResult
@@ -577,6 +577,6 @@ extension Anchor.DimensionAxis {
             )
         }
 
-        return Modifier(constraints: constraints)
+        return .init(constraints: constraints)
     }
 }

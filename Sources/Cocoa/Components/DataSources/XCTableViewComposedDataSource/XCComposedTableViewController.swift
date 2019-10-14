@@ -64,7 +64,7 @@ open class XCComposedTableViewController: UIViewController {
 
     private let _composedDataSource = XCTableViewComposedDataSource()
     open var composedDataSource: XCTableViewComposedDataSource {
-        return _composedDataSource
+        _composedDataSource
     }
 
     open override func viewDidLoad() {
@@ -89,7 +89,7 @@ open class XCComposedTableViewController: UIViewController {
     }
 
     open func dataSources(for tableView: UITableView) -> [XCTableViewDataSource] {
-        return []
+        []
     }
 
     open func scrollToTop(animated: Bool = true) {
@@ -107,7 +107,7 @@ open class XCComposedTableViewController: UIViewController {
 
 extension XCComposedTableViewController: UITableViewDelegate {
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return composedDataSource.heightForRow(at: indexPath)
+        composedDataSource.heightForRow(at: indexPath)
     }
 
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -118,11 +118,11 @@ extension XCComposedTableViewController: UITableViewDelegate {
     }
 
     open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return composedDataSource.heightForHeaderInSection(section)
+        composedDataSource.heightForHeaderInSection(section)
     }
 
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return composedDataSource.heightForFooterInSection(section)
+        composedDataSource.heightForFooterInSection(section)
     }
 
     open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -135,14 +135,14 @@ extension XCComposedTableViewController: UITableViewDelegate {
     }
 
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return composedDataSource.tableView(tableView, viewForHeaderInSection: section)
+        composedDataSource.tableView(tableView, viewForHeaderInSection: section)
     }
 
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return composedDataSource.tableView(tableView, viewForFooterInSection: section)
+        composedDataSource.tableView(tableView, viewForFooterInSection: section)
     }
 
     open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return estimatedRowHeightCache[indexPath]
+        estimatedRowHeightCache[indexPath]
     }
 }

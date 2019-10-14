@@ -24,7 +24,7 @@
 
 import UIKit
 
-final public class Picker: With {
+final public class Picker: Appliable {
     private let content: Content
 
     public init(model: PickerModel) {

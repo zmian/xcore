@@ -31,11 +31,11 @@ public protocol ViewMaskable: class {
 
 extension ViewMaskable {
     public var preferredNavigationBarTintColor: UIColor {
-        return .appTint
+        .appTint
     }
 
     public var preferredStatusBarStyle: UIStatusBarStyle {
-        return preferredNavigationBarTintColor == .white ? .lightContent : .default
+        preferredNavigationBarTintColor == .white ? .lightContent : .default
     }
 
     public func dismiss(after delayDuration: TimeInterval, _ completion: (() -> Void)? = nil) {

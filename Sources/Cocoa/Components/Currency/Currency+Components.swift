@@ -37,7 +37,7 @@ extension Currency {
         public let groupingSeparator: String
         public let decimalSeparator: String
         private var isZeroCents: Bool {
-            return cents == "00"
+            cents == "00"
         }
 
         public init(
@@ -57,7 +57,7 @@ extension Currency {
         }
 
         public var description: String {
-            return joined(style: .none)
+            joined(style: .none)
         }
 
         /// Returns a new string by concatenating the components, using the given

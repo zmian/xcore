@@ -29,7 +29,7 @@ import UIKit
 class ViewControllerTestCase: TestCase {
     let viewController = UIViewController()
     var view: UIView {
-        return viewController.view
+        viewController.view
     }
 
     override func setUp() {

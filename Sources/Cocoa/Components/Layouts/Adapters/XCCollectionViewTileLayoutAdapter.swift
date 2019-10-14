@@ -34,15 +34,15 @@ public protocol XCCollectionViewTileLayoutCustomizable {
 
 extension XCCollectionViewTileLayoutCustomizable {
     public func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
-        return true
+        true
     }
 
     public func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat {
-        return layout.cornerRadius
+        layout.cornerRadius
     }
 
     public func isShadowEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
-        return true
+        true
     }
 }
 
@@ -63,15 +63,15 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, estimatedHeightForItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat {
-        return XCDataSourceSizeCalculator.estimatedItemSize(in: composedDataSource, at: indexPath, availableWidth: width).height
+        XCDataSourceSizeCalculator.estimatedItemSize(in: composedDataSource, at: indexPath, availableWidth: width).height
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, estimatedHeaderHeightInSection section: Int, width: CGFloat) -> CGFloat {
-        return XCDataSourceSizeCalculator.estimatedHeaderSize(in: composedDataSource, for: section, availableWidth: width).height
+        XCDataSourceSizeCalculator.estimatedHeaderSize(in: composedDataSource, for: section, availableWidth: width).height
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, estimatedFooterHeightInSection section: Int, width: CGFloat) -> CGFloat {
-        return XCDataSourceSizeCalculator.estimatedFooterSize(in: composedDataSource, for: section, availableWidth: width).height
+        XCDataSourceSizeCalculator.estimatedFooterSize(in: composedDataSource, for: section, availableWidth: width).height
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isTileEnabledInSection section: Int) -> Bool {
@@ -101,6 +101,6 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
 
 extension XCCollectionViewTileLayout: XCComposedCollectionViewLayoutCompatible {
     public static var defaultAdapterType: XCComposedCollectionViewLayoutAdapter.Type {
-        return XCCollectionViewTileLayoutAdapter.self
+        XCCollectionViewTileLayoutAdapter.self
     }
 }

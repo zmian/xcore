@@ -52,7 +52,7 @@ public protocol CarouselViewCellRepresentable: Reusable {
 
 extension CarouselViewCellRepresentable {
     public func preferredWidth(collectionView: UICollectionView) -> CGFloat {
-        return collectionView.frame.width
+        collectionView.frame.width
     }
 
     public func didSelectItem(_ callback: @escaping () -> Void) { }

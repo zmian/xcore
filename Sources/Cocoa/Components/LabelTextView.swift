@@ -71,7 +71,7 @@ open class LabelTextView: UITextView {
     }
 
     open override var canBecomeFirstResponder: Bool {
-        return isSelectionEnabled
+        isSelectionEnabled
     }
 }
 
@@ -132,7 +132,7 @@ extension LabelTextView {
     /// attributed string with the desired style information and assign it to the
     /// `attributedText` property.
     @objc open override dynamic var font: UIFont? {
-        get { return super.font }
+        get { super.font }
         set { super.font = newValue }
     }
 
@@ -147,7 +147,7 @@ extension LabelTextView {
     /// attributed string with the desired style information and assign it to the
     /// `attributedText` property.
     @objc open override dynamic var textColor: UIColor? {
-        get { return super.textColor }
+        get { super.textColor }
         set { super.textColor = newValue }
     }
 
@@ -155,7 +155,7 @@ extension LabelTextView {
     ///
     /// The default attributes specify blue text.
     @objc open override dynamic var linkTextAttributes: [NSAttributedString.Key: Any]! {
-        get { return super.linkTextAttributes }
+        get { super.linkTextAttributes }
         set { super.linkTextAttributes = newValue }
     }
 }

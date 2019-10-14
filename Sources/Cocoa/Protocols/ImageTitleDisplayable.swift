@@ -32,6 +32,6 @@ public protocol ImageTitleDisplayable {
 
 extension ImageTitleDisplayable {
     public var subtitle: StringRepresentable? {
-        return nil
+        nil
     }
 }

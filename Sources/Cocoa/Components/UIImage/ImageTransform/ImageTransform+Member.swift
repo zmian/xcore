@@ -38,22 +38,22 @@ extension ImageTransform {
 
     /// Wraps the transform into member type.
     public func wrap() -> Member {
-        return Member(self)
+        Member(self)
     }
 }
 
 extension MetaStaticMember where Base: ImageTransform {
     /// Creating arbitrarily-colored icons from a black-with-alpha master image.
     public static func tintColor(_ color: UIColor) -> TintColorImageTransform.Member {
-        return TintColorImageTransform(tintColor: color).wrap()
+        TintColorImageTransform(tintColor: color).wrap()
     }
 
     public static func alpha(_ value: CGFloat) -> AlphaImageTransform.Member {
-        return AlphaImageTransform(alpha: value).wrap()
+        AlphaImageTransform(alpha: value).wrap()
     }
 
     public static func cornerRadius(_ value: CGFloat) -> CornerRadiusImageTransform.Member {
-        return CornerRadiusImageTransform(cornerRadius: value).wrap()
+        CornerRadiusImageTransform(cornerRadius: value).wrap()
     }
 
     /// Colorize image with given color.
@@ -63,11 +63,11 @@ extension MetaStaticMember where Base: ImageTransform {
     ///   - kind: The kind of colorize type method to use.
     /// - Returns: The processed `UIImage` object.
     public static func colorize(_ color: UIColor, kind: ColorizeImageTransform.Kind) -> ColorizeImageTransform.Member {
-        return ColorizeImageTransform(color: color, kind: kind).wrap()
+        ColorizeImageTransform(color: color, kind: kind).wrap()
     }
 
     public static func background(_ color: UIColor, preferredSize: CGSize, alignment: UIControl.ContentHorizontalAlignment = .center) -> BackgroundImageTransform.Member {
-        return BackgroundImageTransform(color: color, preferredSize: preferredSize, alignment: alignment).wrap()
+        BackgroundImageTransform(color: color, preferredSize: preferredSize, alignment: alignment).wrap()
     }
 
     /// Scales an image to fit within a bounds of the given size.
@@ -106,7 +106,7 @@ extension MetaStaticMember where Base: ImageTransform {
         locations: [Double]? = nil,
         blendMode: CGBlendMode = .normal
     ) -> GradientImageTransform.Member {
-        return GradientImageTransform(
+        GradientImageTransform(
             type: type,
             colors: colors,
             direction: direction,

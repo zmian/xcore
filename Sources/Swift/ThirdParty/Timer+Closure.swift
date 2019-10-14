@@ -47,12 +47,12 @@ extension Timer {
     }
 
     private var pauseDate: Date? {
-        get { return associatedObject(&AssociatedKey.timerPauseDate) }
+        get { associatedObject(&AssociatedKey.timerPauseDate) }
         set { setAssociatedObject(&AssociatedKey.timerPauseDate, value: newValue) }
     }
 
     private var previousFireDate: Date? {
-        get { return associatedObject(&AssociatedKey.timerPreviousFireDate) }
+        get { associatedObject(&AssociatedKey.timerPreviousFireDate) }
         set { setAssociatedObject(&AssociatedKey.timerPreviousFireDate, value: newValue) }
     }
 

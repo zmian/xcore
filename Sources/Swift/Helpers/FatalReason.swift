@@ -38,7 +38,7 @@ public struct FatalReason: CustomStringConvertible {
 
     /// Conforms to CustomStringConvertible, allowing reason to print directly to complaint.
     public var description: String {
-        return reason
+        reason
     }
 }
 
@@ -49,24 +49,24 @@ extension FatalReason: ExpressibleByStringLiteral {
 }
 
 extension FatalReason {
-    public static let subclassMustImplement: FatalReason = "Must be implemented by subclass."
+    public static let subclassMustImplement: Self = "Must be implemented by subclass."
 }
 
 // MARK: Xcore Fatal Reasons
 
 extension FatalReason {
-    static let unsupportedFallbackFormattingStyle: FatalReason = "Fallback style shouldn't be of type `abbreviationWith`."
+    static let unsupportedFallbackFormattingStyle: Self = "Fallback style shouldn't be of type `abbreviationWith`."
 
-    static func unknownCaseDetected<T: RawRepresentable>(_ case: T) -> FatalReason {
-        return FatalReason("Unknown case detected: \(`case`) - (\(`case`.rawValue))")
+    static func unknownCaseDetected<T: RawRepresentable>(_ case: T) -> Self {
+        .init("Unknown case detected: \(`case`) - (\(`case`.rawValue))")
     }
 
-    static func dequeueFailed(for name: String, identifier: String) -> FatalReason {
-        return FatalReason("Failed to dequeue \(name) with identifier: \(identifier)")
+    static func dequeueFailed(for name: String, identifier: String) -> Self {
+        .init("Failed to dequeue \(name) with identifier: \(identifier)")
     }
 
-    static func dequeueFailed(for name: String, kind: String, indexPath: IndexPath) -> FatalReason {
-        return FatalReason("Failed to dequeue \(name) for kind: \(kind) at indexPath(\(indexPath.section), \(indexPath.item))")
+    static func dequeueFailed(for name: String, kind: String, indexPath: IndexPath) -> Self {
+        .init("Failed to dequeue \(name) for kind: \(kind) at indexPath(\(indexPath.section), \(indexPath.item))")
     }
 }
 

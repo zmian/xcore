@@ -34,7 +34,7 @@ open class XCCollectionViewDataSource: NSObject, UICollectionViewDataSource {
 
     /// A convenience property to access data source's navigation controller.
     open var navigationController: UINavigationController? {
-        return collectionView?.viewController?.navigationController
+        collectionView?.viewController?.navigationController
     }
 
     override init() {
@@ -49,15 +49,15 @@ open class XCCollectionViewDataSource: NSObject, UICollectionViewDataSource {
     // MARK: Layout 2.0
 
     open func collectionView(_ collectionView: UICollectionView, itemAttributesAt indexPath: IndexPath) -> CGSize? {
-        return nil
+        nil
     }
 
     open func collectionView(_ collectionView: UICollectionView, headerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
-        return (false, nil)
+        (false, nil)
     }
 
     open func collectionView(_ collectionView: UICollectionView, footerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
-        return (false, nil)
+        (false, nil)
     }
 }
 
@@ -65,11 +65,11 @@ open class XCCollectionViewDataSource: NSObject, UICollectionViewDataSource {
 
 extension XCCollectionViewDataSource {
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        1
     }
 
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        0
     }
 
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -100,11 +100,11 @@ extension XCCollectionViewDataSource {
     }
 
     open func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
-        return nil
+        nil
     }
 
     open func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
-        return nil
+        nil
     }
 }
 

@@ -83,6 +83,6 @@ extension CALayer {
 
 extension CGColor {
     public var uiColor: UIColor {
-        return UIColor(cgColor: self)
+        UIColor(cgColor: self)
     }
 }

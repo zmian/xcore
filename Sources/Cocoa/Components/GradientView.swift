@@ -48,7 +48,7 @@ open class GradientView: UIView {
     /// The style of gradient.
     /// The default value is `.axial`.
     open var type: CAGradientLayerType {
-        get { return gradientLayer.type }
+        get { gradientLayer.type }
         set { gradientLayer.type = newValue }
     }
 
@@ -62,14 +62,14 @@ open class GradientView: UIView {
     /// When rendered, the colors are mapped to the output color space before being
     /// interpolated.
     open var locations: [Double]? {
-        get { return gradientLayer.locations }
+        get { gradientLayer.locations }
         set { gradientLayer.locations = newValue }
     }
 
     /// An array of `UIColor` objects defining the color of each gradient stop.
     /// This property is animatable.
     open var colors: [UIColor] {
-        get { return gradientLayer.colors }
+        get { gradientLayer.colors }
         set { gradientLayer.colors = newValue }
     }
 
@@ -78,7 +78,7 @@ open class GradientView: UIView {
     ///
     /// The default value is `.topToBottom`.
     open var direction: GradientDirection {
-        get { return gradientLayer.direction }
+        get { gradientLayer.direction }
         set { gradientLayer.direction = newValue }
     }
 

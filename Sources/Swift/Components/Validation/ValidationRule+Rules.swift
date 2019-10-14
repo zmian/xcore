@@ -41,15 +41,15 @@ extension ValidationRule where Input: Collection {
     ///
     /// - Parameter range: The range expression to check against input count.
     /// - Returns: The validation rule.
-    public static func range<T: RangeExpression>(_ range: T) -> ValidationRule where T.Bound == Int {
-        return .init { range.contains($0.count) }
+    public static func range<T: RangeExpression>(_ range: T) -> Self where T.Bound == Int {
+        .init { range.contains($0.count) }
     }
 
     /// A validation rule that checks whether the input is not empty.
     ///
     /// - Returns: The validation rule.
-    public static var notEmpty: ValidationRule {
-        return .init { !$0.isEmpty }
+    public static var notEmpty: Self {
+        .init { !$0.isEmpty }
     }
 }
 
@@ -61,8 +61,8 @@ extension ValidationRule where Input: Equatable {
     ///
     /// - Parameter value: The value to compare against input.
     /// - Returns: The validation rule.
-    public static func equals(_ value: Input) -> ValidationRule {
-        return .init { $0 == value }
+    public static func equals(_ value: Input) -> Self {
+        .init { $0 == value }
     }
 }
 
@@ -74,8 +74,8 @@ extension ValidationRule where Input: Comparable {
     ///
     /// - Parameter value: The value to compare against input.
     /// - Returns: The validation rule.
-    public static func lessThan(_ value: Input) -> ValidationRule {
-        return .init { $0 < value }
+    public static func lessThan(_ value: Input) -> Self {
+        .init { $0 < value }
     }
 
     /// A validation rule that checks whether the input is less than or equal to the
@@ -83,8 +83,8 @@ extension ValidationRule where Input: Comparable {
     ///
     /// - Parameter value: The value to compare against input.
     /// - Returns: The validation rule.
-    public static func lessThanOrEqual(_ value: Input) -> ValidationRule {
-        return .init { $0 <= value }
+    public static func lessThanOrEqual(_ value: Input) -> Self {
+        .init { $0 <= value }
     }
 
     /// A validation rule that checks whether the input is greater than the given
@@ -92,8 +92,8 @@ extension ValidationRule where Input: Comparable {
     ///
     /// - Parameter value: The value to compare against input.
     /// - Returns: The validation rule.
-    public static func greaterThan(_ value: Input) -> ValidationRule {
-        return .init { $0 > value }
+    public static func greaterThan(_ value: Input) -> Self {
+        .init { $0 > value }
     }
 
     /// A validation rule that checks whether the input is greater than or equal to
@@ -101,8 +101,8 @@ extension ValidationRule where Input: Comparable {
     ///
     /// - Parameter value: The value to compare against input.
     /// - Returns: The validation rule.
-    public static func greaterThanOrEqual(_ value: Input) -> ValidationRule {
-        return .init { $0 >= value }
+    public static func greaterThanOrEqual(_ value: Input) -> Self {
+        .init { $0 >= value }
     }
 }
 
@@ -113,8 +113,8 @@ extension ValidationRule where Input == String {
     ///
     /// - Parameter pattern: Regex pattern used to find matches in the input.
     /// - Returns: The validation rule.
-    public static func regex(_ pattern: String) -> ValidationRule {
-        return .init { $0.isMatch(pattern) }
+    public static func regex(_ pattern: String) -> Self {
+        .init { $0.isMatch(pattern) }
     }
 
     /// A validation rule that checks whether the input contains the given string.
@@ -123,8 +123,8 @@ extension ValidationRule where Input == String {
     ///   - other: The other string to search for in the input string.
     ///   - options: The String `ComparisonOptions`. The default value `[]`.
     /// - Returns: The validation rule.
-    public static func contains<T: StringProtocol>(_ other: T, options: String.CompareOptions = []) -> ValidationRule {
-        return .init { $0.contains(other, options: options) }
+    public static func contains<T: StringProtocol>(_ other: T, options: String.CompareOptions = []) -> Self {
+        .init { $0.contains(other, options: options) }
     }
 
     /// A validation rule that checks whether the input begins with the specified
@@ -132,8 +132,8 @@ extension ValidationRule where Input == String {
     ///
     /// - Parameter prefix: A possible prefix to test against this string.
     /// - Returns: The validation rule.
-    static func hasPrefix<T: StringProtocol>(_ prefix: T) -> ValidationRule {
-        return .init { $0.hasPrefix(prefix) }
+    static func hasPrefix<T: StringProtocol>(_ prefix: T) -> Self {
+        .init { $0.hasPrefix(prefix) }
     }
 
     /// A validation rule that checks whether the input ends with the specified
@@ -141,8 +141,8 @@ extension ValidationRule where Input == String {
     ///
     /// - Parameter suffix: A possible suffix to test against this string.
     /// - Returns: The validation rule.
-    static func hasSuffix<T: StringProtocol>(_ suffix: T) -> ValidationRule {
-        return .init { $0.hasSuffix(suffix) }
+    static func hasSuffix<T: StringProtocol>(_ suffix: T) -> Self {
+        .init { $0.hasSuffix(suffix) }
     }
 
     /// A validation rule that checks whether the input is a subset of the given
@@ -150,8 +150,8 @@ extension ValidationRule where Input == String {
     ///
     /// - Parameter other: The superset of the input.
     /// - Returns: The validation rule.
-    public static func subset(of other: CharacterSet) -> ValidationRule {
-        return .init { input in
+    public static func subset(of other: CharacterSet) -> Self {
+        .init { input in
             let input = CharacterSet(charactersIn: input)
             return other.isSuperset(of: input)
         }
@@ -164,18 +164,18 @@ extension ValidationRule where Input == String {
     /// A validation rule that checks whether the input is not blank.
     ///
     /// - Returns: The validation rule.
-    public static var notBlank: ValidationRule {
-        return .init { !$0.isBlank }
+    public static var notBlank: Self {
+        .init { !$0.isBlank }
     }
 
     /// A validation rule that checks whether the input is a valid email address.
-    public static var email: ValidationRule {
-        return "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+    public static var email: Self {
+        "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
     }
 
     /// A validation rule that checks whether the input is a valid SSN.
-    public static var ssn: ValidationRule {
-        return .init(
+    public static var ssn: Self {
+        .init(
             pattern: "^(?!000)(?!666)^([0-8]\\d{2})((?!00)(\\d{2}))((?!0000)(\\d{4}))",
             transform: { $0.replace("-", with: "") }
         )
@@ -194,15 +194,15 @@ extension ValidationRule where Input == String {
     /// individuals who are required to have a U.S. taxpayer identification number
     /// but who do not have, and are not eligible to obtain, a Social Security
     /// number (SSN) from the Social Security Administration (SSA).
-    public static var itin: ValidationRule {
-        return .init(
+    public static var itin: Self {
+        .init(
             pattern: "^(9\\d{2})([ \\-]?)(7\\d|8[0-8]|9[0-2]|9[4-9])([ \\-]?)(\\d{4})$",
             transform: { $0.replace("-", with: "") }
         )
     }
 
-    public static var name: ValidationRule {
-        return .init { input in
+    public static var name: Self {
+        .init { input in
             let range = 2...50
             return range.contains(input.count) && !input.isMatch("[0-9]")
         }

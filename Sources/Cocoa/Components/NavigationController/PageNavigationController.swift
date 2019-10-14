@@ -34,7 +34,7 @@ open class PageNavigationController: NavigationController {
     ///
     /// The default value is `0`.
     open var numberOfPages: Int {
-        get { return pageControl.numberOfPages }
+        get { pageControl.numberOfPages }
         set {
             pageControl.numberOfPages = newValue
             pageControl.isHidden = newValue <= 2
@@ -43,7 +43,7 @@ open class PageNavigationController: NavigationController {
 
     /// A Boolean value that determines whether the page control is hidden.
     open var isPageControlHidden: Bool {
-        get { return pageControl.isHidden }
+        get { pageControl.isHidden }
         set { pageControl.isHidden = newValue }
     }
 
@@ -54,7 +54,7 @@ open class PageNavigationController: NavigationController {
     /// control shows the current page as a white dot. Values outside the possible
     /// range are pinned to either `0` or `numberOfPages` minus `1`.
     open var currentPage: Int {
-        get { return pageControl.currentPage }
+        get { pageControl.currentPage }
         set { pageControl.currentPage = newValue }
     }
 

@@ -26,11 +26,11 @@ import UIKit
 
 extension IndexPath {
     public static var zero: IndexPath {
-        return IndexPath(item: 0, section: 0)
+        .init(item: 0, section: 0)
     }
 
     public func with(_ globalSection: Int) -> IndexPath {
-        return IndexPath(row: row, section: globalSection + section)
+        .init(row: row, section: globalSection + section)
     }
 }
 

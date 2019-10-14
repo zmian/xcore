@@ -36,7 +36,7 @@ open class ZoomAnimator: TransitionAnimator {
     }
 
     open override func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return direction == .in ? source.zoomAnimatorSourceDuration : destination.zoomAnimatorDestinationDuration
+        direction == .in ? source.zoomAnimatorSourceDuration : destination.zoomAnimatorDestinationDuration
     }
 
     open override func transition(context: TransitionContext, direction: AnimationDirection) {

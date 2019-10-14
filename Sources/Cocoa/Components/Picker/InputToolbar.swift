@@ -43,7 +43,7 @@ final public class InputToolbar: XCView {
         otherButton.isHidden = true
     }
 
-    private lazy var cancelButton = UIButton(style: .plain).apply {
+    private lazy var cancelButton = UIButton(configuration: .plain).apply {
         $0.text = "Cancel"
         $0.accessibilityIdentifier = "inputCancelButton"
         $0.isHeightSetAutomatically = false
@@ -55,7 +55,7 @@ final public class InputToolbar: XCView {
         }
     }
 
-    private lazy var doneButton = UIButton(style: .callout).apply {
+    private lazy var doneButton = UIButton(configuration: .callout).apply {
         $0.text = "Done"
         $0.accessibilityIdentifier = "inputDoneButton"
         $0.isHeightSetAutomatically = false
@@ -68,7 +68,7 @@ final public class InputToolbar: XCView {
         }
     }
 
-    private lazy var otherButton = UIButton(style: .calloutSecondary).apply {
+    private lazy var otherButton = UIButton(configuration: .calloutSecondary).apply {
         $0.text = "Other"
         $0.accessibilityIdentifier = "inputOtherButton"
         $0.isHeightSetAutomatically = false
@@ -112,22 +112,22 @@ final public class InputToolbar: XCView {
     // MARK: - UIAppearance Properties
 
     @objc public dynamic var cancelTitle: String? {
-        get { return cancelButton.text }
+        get { cancelButton.text }
         set { cancelButton.text = newValue }
     }
 
     @objc public dynamic var doneTitle: String? {
-        get { return doneButton.text }
+        get { doneButton.text }
         set { doneButton.text = newValue }
     }
 
     @objc public dynamic var otherTitle: String? {
-        get { return otherButton.text }
+        get { otherButton.text }
         set { otherButton.text = newValue }
     }
 
     @objc public dynamic var titleTextColor: UIColor {
-        get { return titleLabel.textColor }
+        get { titleLabel.textColor }
         set { titleLabel.textColor = newValue }
     }
 

@@ -1,5 +1,5 @@
 //
-// XCConfigurationTests.swift
+// ConfigurationTests.swift
 //
 // Copyright © 2019 Xcore
 //
@@ -25,41 +25,41 @@
 import XCTest
 @testable import Xcore
 
-final class XCConfigurationTests: TestCase {
+final class ConfigurationTests: TestCase {
     func testUIViewConfiguration() {
-        let label = UILabel(style: .hello)
+        let label = UILabel(configuration: .hello)
         XCTAssertEqual(label.text, "Hello, world!")
     }
 
     func testUIBarButtonItemConfiguration() {
-        let barButtonItem = UIBarButtonItem(style: .someStyle)
+        let barButtonItem = UIBarButtonItem(configuration: .someConfiguration)
         XCTAssertEqual(barButtonItem.textColor, .yellow)
     }
 
     func testExtend() {
-        let greetLabel = UILabel(style: .greet(name: "Xcore"))
+        let greetLabel = UILabel(configuration: .greet(name: "Xcore"))
         XCTAssertEqual(greetLabel.text, "Hello, Xcore!")
         XCTAssertEqual(greetLabel.backgroundColor, .green)
     }
 
     func testIdentifier() {
-        let config1: XCConfiguration<UILabel> = .hello
+        let config1: Configuration<UILabel> = .hello
         XCTAssertEqual(config1.id, "greeting")
 
-        let config2: XCConfiguration<UILabel> = .someStyle
+        let config2: Configuration<UILabel> = .someConfiguration
         XCTAssertEqual(config2.id, "___defaultId___")
     }
 
     func testEquality() {
-        let config1: XCConfiguration<UILabel> = .hello
-        let config2: XCConfiguration<UILabel> = .someStyle
+        let config1: Configuration<UILabel> = .hello
+        let config2: Configuration<UILabel> = .someConfiguration
         XCTAssertTrue(config1 != config2)
     }
 
     func testApply() {
-        let label = UILabel(style: .hello)
+        let label = UILabel(configuration: .hello)
         XCTAssertEqual(label.text, "Hello, world!")
-        label.apply(style: .greet(name: "Xcore"))
+        label.apply(.greet(name: "Xcore"))
         XCTAssertEqual(label.text, "Hello, Xcore!")
     }
 
@@ -87,7 +87,7 @@ final class XCConfigurationTests: TestCase {
     }
 
     func testUILabelConfiguration() {
-        let label = UILabel(style: .someStyle, text: "Hello, world!")
+        let label = UILabel(text: "Hello, world!", configuration: .someConfiguration)
         XCTAssertEqual(label.text, "Hello, world!")
         XCTAssertEqual(label.backgroundColor, .red)
     }
@@ -117,30 +117,30 @@ final class XCConfigurationTests: TestCase {
 
 // MARK: - Test Configurations
 
-extension XCConfiguration where Type: UILabel {
-    fileprivate static var hello: XCConfiguration {
-        return XCConfiguration(id: "greeting") {
+extension Configuration where Type: UILabel {
+    fileprivate static var hello: Self {
+        .init(id: "greeting") {
             $0.text = "Hello, world!"
             $0.backgroundColor = .green
         }
     }
 
-    fileprivate static func greet(name: String) -> XCConfiguration {
-        return hello.extend(id: "greetWithName") {
+    fileprivate static func greet(name: String) -> Self {
+        hello.extend(id: "greetWithName") {
             $0.text = "Hello, \(name)!"
         }
     }
 
-    fileprivate static var someStyle: XCConfiguration {
-        return XCConfiguration {
+    fileprivate static var someConfiguration: Self {
+        .init {
             $0.backgroundColor = .red
         }
     }
 }
 
-extension XCConfiguration where Type: UIBarButtonItem {
-    fileprivate static var someStyle: XCConfiguration {
-        return XCConfiguration {
+extension Configuration where Type: UIBarButtonItem {
+    fileprivate static var someConfiguration: Self {
+        .init {
             $0.textColor = .yellow
         }
     }

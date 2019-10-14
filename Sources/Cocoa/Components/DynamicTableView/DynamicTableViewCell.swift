@@ -72,7 +72,7 @@ open class DynamicTableViewCell: XCTableViewCell {
     ///
     /// The default value is `.minimumPadding / 2`.
     @objc open dynamic var interLabelSpacing: CGFloat {
-        get { return labelsStackView.spacing }
+        get { labelsStackView.spacing }
         set { labelsStackView.spacing = newValue }
     }
 
@@ -285,32 +285,32 @@ extension DynamicTableViewCell {
     }
 
     @objc public dynamic var avatarBorderWidth: CGFloat {
-        get { return avatarView.layer.borderWidth }
+        get { avatarView.layer.borderWidth }
         set { avatarView.layer.borderWidth = newValue }
     }
 
     @objc public dynamic var avatarCornerRadius: CGFloat {
-        get { return avatarView.layer.cornerRadius }
+        get { avatarView.layer.cornerRadius }
         set { avatarView.layer.cornerRadius = newValue }
     }
 
     @objc public dynamic var titleTextColor: UIColor {
-        get { return titleLabel.textColor }
+        get { titleLabel.textColor }
         set { titleLabel.textColor = newValue }
     }
 
     @objc public dynamic var titleFont: UIFont {
-        get { return titleLabel.font }
+        get { titleLabel.font }
         set { titleLabel.font = newValue }
     }
 
     @objc public dynamic var subtitleTextColor: UIColor {
-        get { return subtitleLabel.textColor }
+        get { subtitleLabel.textColor }
         set { subtitleLabel.textColor = newValue }
     }
 
     @objc public dynamic var subtitleFont: UIFont {
-        get { return subtitleLabel.font }
+        get { subtitleLabel.font }
         set { subtitleLabel.font = newValue }
     }
 }

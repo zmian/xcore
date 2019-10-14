@@ -31,7 +31,7 @@ final public class SiriShortcuts {
 
 extension SiriShortcuts {
     @available(iOS 10.0, *)
-    open class Domain: Hashable, With {
+    open class Domain: Hashable, Appliable {
         private var didUpdateDonations = false
         public let id: String
         private var dynamicIntents: (() -> [INIntent])?
@@ -63,11 +63,11 @@ extension SiriShortcuts {
         }
 
         open func intents() -> [INIntent] {
-            return dynamicIntents?() ?? staticIntents
+            dynamicIntents?() ?? staticIntents
         }
 
         open func setIntents(_ intents: [INIntent]) {
-            return staticIntents = intents
+            staticIntents = intents
         }
 
         // MARK: Donations
@@ -130,7 +130,7 @@ extension SiriShortcuts {
         }
 
         public static func == (lhs: Domain, rhs: Domain) -> Bool {
-            return lhs.id == rhs.id
+            lhs.id == rhs.id
         }
     }
 }

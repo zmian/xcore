@@ -26,7 +26,7 @@ import UIKit
 
 /// A base class to create a HUD that sets up blank canvas that can be
 /// customized by subclasses to show anything in a fullscreen window.
-open class HUD: With {
+open class HUD: Appliable {
     public private(set) var isEnabled = false
     private var temporaryUnavailable = false
     private let window = UIWindow(frame: UIScreen.main.bounds)
@@ -34,7 +34,7 @@ open class HUD: With {
         $0.backgroundColor = appearance?.backgroundColor ?? backgroundColor
     }
     var view: UIView {
-        return viewController.view
+        viewController.view
     }
 
     /// The default value is `.white`.
@@ -48,7 +48,7 @@ open class HUD: With {
     open var duration: Duration = .default
 
     open var windowLevel: UIWindow.Level {
-        get { return window.windowLevel }
+        get { window.windowLevel }
         set { window.windowLevel = newValue }
     }
 
@@ -271,13 +271,13 @@ extension HUD {
         case style(UIStatusBarStyle)
 
         /// A dark status bar, intended for use on light backgrounds.
-        public static var `default`: StatusBarAppearance {
-            return .style(.default)
+        public static var `default`: Self {
+            .style(.default)
         }
 
         /// A light status bar, intended for use on dark backgrounds.
-        public static var lightContent: StatusBarAppearance {
-            return .style(.lightContent)
+        public static var lightContent: Self {
+            .style(.lightContent)
         }
     }
 }
@@ -307,8 +307,8 @@ extension HUD {
             self.hide = hide
         }
 
-        public static var `default`: Duration {
-            return Duration(.normal)
+        public static var `default`: Self {
+            .init(.normal)
         }
     }
 }
@@ -333,7 +333,7 @@ extension HUD {
         }
 
         override var preferredStatusBarStyle: UIStatusBarStyle {
-            return statusBarStyle ?? .default
+            statusBarStyle ?? .default
         }
     }
 }
@@ -351,7 +351,7 @@ extension HUD {
     /// HUD.appearance().backgroundColor = .gray
     /// LaunchScreen.View.appearance().backgroundColor = .blue
     /// ```
-    final public class Appearance: With {
+    final public class Appearance: Appliable {
         public var backgroundColor: UIColor = .white
     }
 

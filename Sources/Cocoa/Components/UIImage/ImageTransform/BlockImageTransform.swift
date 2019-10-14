@@ -37,6 +37,6 @@ public struct BlockImageTransform: ImageTransform {
     }
 
     public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
-        return block(image, source)
+        block(image, source)
     }
 }

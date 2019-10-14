@@ -32,7 +32,7 @@ extension UITabBar {
     }
 
     open var isTransparent: Bool {
-        get { return associatedObject(&AssociatedKey.isTransparent, default: false) }
+        get { associatedObject(&AssociatedKey.isTransparent, default: false) }
         set {
             guard newValue != isTransparent else { return }
             setAssociatedObject(&AssociatedKey.isTransparent, value: newValue)
@@ -50,12 +50,12 @@ extension UITabBar {
     }
 
     open var isBorderHidden: Bool {
-        get { return value(forKey: "_hidesShadow") as? Bool ?? false }
+        get { value(forKey: "_hidesShadow") as? Bool ?? false }
         set { setValue(newValue, forKey: "_hidesShadow") }
     }
 
     @objc dynamic open override var borderWidth: CGFloat {
-        get { return associatedObject(&AssociatedKey.borderWidth, default: 0) }
+        get { associatedObject(&AssociatedKey.borderWidth, default: 0) }
         set {
             setAssociatedObject(&AssociatedKey.borderWidth, value: newValue)
             topBorderView.constraint(forAttribute: .height)?.constant = newValue
@@ -63,7 +63,7 @@ extension UITabBar {
     }
 
     @objc dynamic open override var borderColor: UIColor {
-        get { return associatedObject(&AssociatedKey.borderColor, default: layer.borderColor?.uiColor ?? .black) }
+        get { associatedObject(&AssociatedKey.borderColor, default: layer.borderColor?.uiColor ?? .black) }
         set {
             setAssociatedObject(&AssociatedKey.borderColor, value: newValue)
             topBorderView.backgroundColor = newValue

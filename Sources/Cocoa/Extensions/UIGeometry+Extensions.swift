@@ -34,14 +34,14 @@ extension CGFloat {
     ///
     /// - Returns: `self` value in radians.
     public func degreesToRadians() -> CGFloat {
-        return π * self / 180
+        π * self / 180
     }
 
     /// A convenience method to convert an angle from radians to degrees.
     ///
     /// - Returns: `self` value in degrees.
     public func radiansToDegrees() -> CGFloat {
-        return self * 180 / π
+        self * 180 / π
     }
 }
 
@@ -113,7 +113,7 @@ extension UIEdgeInsets {
     }
 
     public var horizontal: CGFloat {
-        get { return left + right }
+        get { left + right }
         set {
             left = newValue
             right = newValue
@@ -121,7 +121,7 @@ extension UIEdgeInsets {
     }
 
     public var vertical: CGFloat {
-        get { return top + bottom }
+        get { top + bottom }
         set {
             top = newValue
             bottom = newValue
@@ -143,7 +143,7 @@ extension UIEdgeInsets {
     }
 
     public static func +(lhs: UIEdgeInsets, rhs: UIEdgeInsets) -> UIEdgeInsets {
-        return UIEdgeInsets(
+        .init(
             top: lhs.top + rhs.top,
             left: lhs.left + rhs.left,
             bottom: lhs.bottom + rhs.bottom,
@@ -152,7 +152,7 @@ extension UIEdgeInsets {
     }
 
     public static func +(lhs: UIEdgeInsets, rhs: CGFloat) -> UIEdgeInsets {
-        return UIEdgeInsets(
+        .init(
             top: lhs.top + rhs,
             left: lhs.left + rhs,
             bottom: lhs.bottom + rhs,
@@ -177,7 +177,7 @@ extension UIEdgeInsets {
     }
 
     public static func -(lhs: UIEdgeInsets, rhs: UIEdgeInsets) -> UIEdgeInsets {
-        return UIEdgeInsets(
+        .init(
             top: lhs.top - rhs.top,
             left: lhs.left - rhs.left,
             bottom: lhs.bottom - rhs.bottom,
@@ -186,7 +186,7 @@ extension UIEdgeInsets {
     }
 
     public static func -(lhs: UIEdgeInsets, rhs: CGFloat) -> UIEdgeInsets {
-        return UIEdgeInsets(
+        .init(
             top: lhs.top - rhs,
             left: lhs.left - rhs,
             bottom: lhs.bottom - rhs,
@@ -218,12 +218,12 @@ extension CGSize: ExpressibleByIntegerLiteral {
 extension CGSize {
     /// Returns the lesser of width and height.
     public var min: CGFloat {
-        return Swift.min(width, height)
+        Swift.min(width, height)
     }
 
     /// Returns the greater of width and height.
     public var max: CGFloat {
-        return Swift.max(width, height)
+        Swift.max(width, height)
     }
 }
 
@@ -242,11 +242,11 @@ extension CGSize {
     }
 
     public static func +(lhs: CGSize, rhs: CGSize) -> CGSize {
-        return CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
+        .init(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
     }
 
     public static func +(lhs: CGSize, rhs: CGFloat) -> CGSize {
-        return CGSize(width: lhs.width + rhs, height: lhs.height + rhs)
+        .init(width: lhs.width + rhs, height: lhs.height + rhs)
     }
 }
 
@@ -261,11 +261,11 @@ extension CGSize {
     }
 
     public static func -(lhs: CGSize, rhs: CGSize) -> CGSize {
-        return CGSize(width: lhs.width - rhs.width, height: lhs.height - rhs.height)
+        .init(width: lhs.width - rhs.width, height: lhs.height - rhs.height)
     }
 
     public static func -(lhs: CGSize, rhs: CGFloat) -> CGSize {
-        return CGSize(width: lhs.width - rhs, height: lhs.height - rhs)
+        .init(width: lhs.width - rhs, height: lhs.height - rhs)
     }
 }
 
@@ -280,11 +280,11 @@ extension CGSize {
     }
 
     public static func *(lhs: CGSize, rhs: CGSize) -> CGSize {
-        return CGSize(width: lhs.width * rhs.width, height: lhs.height * rhs.height)
+        .init(width: lhs.width * rhs.width, height: lhs.height * rhs.height)
     }
 
     public static func *(lhs: CGSize, rhs: CGFloat) -> CGSize {
-        return CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
+        .init(width: lhs.width * rhs, height: lhs.height * rhs)
     }
 }
 
@@ -300,18 +300,18 @@ extension CGRect {
 
 extension UILayoutPriority {
     public static func +(lhs: UILayoutPriority, rhs: Float) -> UILayoutPriority {
-        return UILayoutPriority(lhs.rawValue + rhs)
+        .init(lhs.rawValue + rhs)
     }
 
     public static func -(lhs: UILayoutPriority, rhs: Float) -> UILayoutPriority {
-        return UILayoutPriority(lhs.rawValue - rhs)
+        .init(lhs.rawValue - rhs)
     }
 }
 
 // MARK: - UIRectCorner - Extensions
 
 extension UIRectCorner {
-    public static let none: UIRectCorner = []
-    public static let top: UIRectCorner = [.topLeft, .topRight]
-    public static let bottom: UIRectCorner = [.bottomLeft, .bottomRight]
+    public static let none: Self = []
+    public static let top: Self = [.topLeft, .topRight]
+    public static let bottom: Self = [.bottomLeft, .bottomRight]
 }

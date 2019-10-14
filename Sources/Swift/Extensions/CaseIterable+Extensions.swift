@@ -32,13 +32,13 @@ extension CaseIterable {
     /// Complexity: O(`1`) if the collection conforms to `RandomAccessCollection`; otherwise,
     /// O(`n`), where `n` is the length of the collection.
     public static var count: Int {
-        return allCases.count
+        allCases.count
     }
 }
 
 extension CaseIterable where Self: RawRepresentable {
     /// A collection of all corresponding raw values of this type.
     public static var rawValues: [RawValue] {
-        return allCases.map { $0.rawValue }
+        allCases.map { $0.rawValue }
     }
 }

@@ -30,7 +30,7 @@ extension UIRefreshControl {
     }
 
     private var timeoutTimer: Timer? {
-        get { return associatedObject(&AssociatedKey.timeoutTimer) }
+        get { associatedObject(&AssociatedKey.timeoutTimer) }
         set { setAssociatedObject(&AssociatedKey.timeoutTimer, value: newValue) }
     }
 

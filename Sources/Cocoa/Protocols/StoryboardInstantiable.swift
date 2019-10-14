@@ -46,7 +46,7 @@ import UIKit
 ///
 /// ```swift
 /// class SettingsViewController: UIViewController {
-///     class var storyboardId: String { return "Settings" }
+///     class var storyboardId: String { "Settings" }
 /// }
 ///
 /// let vc = SettingsViewController.initFromStoryboard()
@@ -58,7 +58,7 @@ public protocol StoryboardInstantiable {
 
 extension StoryboardInstantiable {
     public static var storyboardId: String {
-        return String(describing: self)
+        String(describing: self)
     }
 }
 

@@ -68,7 +68,7 @@ extension XCComposedCollectionViewLayoutAdapter: UICollectionViewDelegate {
 
 extension XCComposedCollectionViewLayoutAdapter: UIScrollViewDelegate {
     private var scrollDelegate: UIScrollViewDelegate? {
-        return viewController as? UIScrollViewDelegate
+        viewController as? UIScrollViewDelegate
     }
 
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -104,7 +104,7 @@ extension XCComposedCollectionViewLayoutAdapter: UIScrollViewDelegate {
     }
 
     public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return scrollDelegate?.viewForZooming?(in: scrollView)
+        scrollDelegate?.viewForZooming?(in: scrollView)
     }
 
     public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
@@ -116,7 +116,7 @@ extension XCComposedCollectionViewLayoutAdapter: UIScrollViewDelegate {
     }
 
     public func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        return scrollDelegate?.scrollViewShouldScrollToTop?(scrollView) ?? true
+        scrollDelegate?.scrollViewShouldScrollToTop?(scrollView) ?? true
     }
 
     public func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {

@@ -1,5 +1,5 @@
 //
-// UIButton+Styles.swift
+// UIButton+Configurations.swift
 //
 // Copyright © 2018 Xcore
 //
@@ -44,126 +44,134 @@ extension Identifier where Type: UIButton {
     ///     // true
     /// }
     /// ```
-    public static var base: Identifier { return #function }
-    public static var plain: Identifier { return #function }
-    public static var callout: Identifier { return #function }
-    public static var calloutSecondary: Identifier { return #function }
-    public static var destructive: Identifier { return #function }
-    public static var pill: Identifier { return #function }
-    public static var caret: Identifier { return #function }
-    public static var radioButton: Identifier { return #function }
-    public static var checkbox: Identifier { return #function }
+    public static var base: Self { #function }
+    public static var plain: Self { #function }
+    public static var callout: Self { #function }
+    public static var calloutSecondary: Self { #function }
+    public static var destructive: Self { #function }
+    public static var pill: Self { #function }
+    public static var caret: Self { #function }
+    public static var radioButton: Self { #function }
+    public static var checkbox: Self { #function }
 }
 
-// MARK: - Main Styles
+// MARK: - Main Configurations
 
-extension XCConfiguration where Type: UIButton {
-    private static func configure(_ button: UIButton, _ id: Identifier<Type>) {
-        UIButton.defaultAppearance._configureStyle?(button, id as! Identifier<UIButton>)
+extension Configuration where Type: UIButton {
+    private static func configure(_ button: UIButton, _ id: Identifier) {
+        UIButton.defaultAppearance._configure?(button, id as! UIButton.Configuration.Identifier)
     }
 
-    public static var plain: XCConfiguration {
+    public static var plain: Self {
         return .plain()
     }
 
-    public static func plain(font: UIFont? = nil, textColor: UIColor? = nil, alignment: UIControl.ContentHorizontalAlignment = .center) -> XCConfiguration {
-        let style: Identifier<Type> = .plain
-        return XCConfiguration(id: style) {
-            let textColor = textColor ?? style.textColor(button: $0)
-            $0.titleLabel?.font = font ?? style.font(button: $0)
+    public static func plain(
+        font: UIFont? = nil,
+        textColor: UIColor? = nil,
+        alignment: UIControl.ContentHorizontalAlignment = .center
+    ) -> Self {
+        let id: Identifier = .plain
+        return .init(id: id) {
+            let textColor = textColor ?? id.textColor(button: $0)
+            $0.titleLabel?.font = font ?? id.font(button: $0)
             $0.contentEdgeInsets = .zero
             $0.isHeightSetAutomatically = false
             $0.setTitleColor(textColor, for: .normal)
             $0.setTitleColor(textColor.alpha(textColor.alpha * 0.5), for: .highlighted)
             $0.contentHorizontalAlignment = alignment
             $0.cornerRadius = 0
-            configure($0, style)
+            configure($0, id)
         }
     }
 
-    public static var callout: XCConfiguration {
+    public static var callout: Self {
         return callout()
     }
 
-    public static func callout(font: UIFont? = nil, backgroundColor: UIColor? = nil, textColor: UIColor? = nil) -> XCConfiguration {
-        let style: Identifier<Type> = .callout
-        return XCConfiguration(id: style) {
-            var textColor = textColor ?? style.textColor(button: $0)
-            let backgroundColor = backgroundColor ?? style.backgroundColor(button: $0)
+    public static func callout(
+        font: UIFont? = nil,
+        backgroundColor: UIColor? = nil,
+        textColor: UIColor? = nil
+    ) -> Self {
+        let id: Identifier = .callout
+        return .init(id: id) {
+            var textColor = textColor ?? id.textColor(button: $0)
+            let backgroundColor = backgroundColor ?? id.backgroundColor(button: $0)
 
             if backgroundColor == textColor {
                 textColor = backgroundColor.isLight() ? .appTint : .white
             }
 
-            $0.titleLabel?.font = font ?? style.font(button: $0)
+            $0.titleLabel?.font = font ?? id.font(button: $0)
             $0.setTitleColor(textColor, for: .normal)
             $0.backgroundColor = backgroundColor
-            $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
-            $0.cornerRadius = style.cornerRadius
-            configure($0, style)
+            $0.disabledBackgroundColor = id.disabledBackgroundColor(button: $0)
+            $0.cornerRadius = id.cornerRadius
+            configure($0, id)
         }
     }
 
-    public static var calloutSecondary: XCConfiguration {
-        let style: Identifier<Type> = .calloutSecondary
-        return callout.extend(id: style) {
+    public static var calloutSecondary: Self {
+        let id: Identifier = .calloutSecondary
+        return callout.extend(id: id) {
             // TODO: Need to inherit from parent without explicit check.
-            if let textColor = style.textColor {
+            if let textColor = id.textColor {
                 $0.setTitleColor(textColor, for: .normal)
             }
-            $0.backgroundColor = style.backgroundColor(button: $0)
-            $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
-            $0.layer.borderColor = style.borderColor(button: $0).cgColor
-            configure($0, style)
+            $0.backgroundColor = id.backgroundColor(button: $0)
+            $0.disabledBackgroundColor = id.disabledBackgroundColor(button: $0)
+            $0.layer.borderColor = id.borderColor(button: $0).cgColor
+            configure($0, id)
         }
     }
 
-    public static var destructive: XCConfiguration {
-        let style: Identifier<Type> = .destructive
-        return callout.extend(id: style) {
-            $0.backgroundColor = style.backgroundColor(or: .appleRed)
-            $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
-            configure($0, style)
+    public static var destructive: Self {
+        let id: Identifier = .destructive
+        return callout.extend(id: id) {
+            $0.backgroundColor = id.backgroundColor(or: .appleRed)
+            $0.disabledBackgroundColor = id.disabledBackgroundColor(button: $0)
+            configure($0, id)
         }
     }
 
-    public static var pill: XCConfiguration {
-        let style: Identifier<Type> = .pill
-        return callout.extend(id: style) {
+    public static var pill: Self {
+        let id: Identifier = .pill
+        return callout.extend(id: id) {
             $0.setContentCompressionResistancePriority(.required, for: .horizontal)
             $0.titleLabel?.lineBreakMode = .byTruncatingTail
-            $0.backgroundColor = style.backgroundColor(button: $0)
-            $0.disabledBackgroundColor = style.disabledBackgroundColor(button: $0)
+            $0.backgroundColor = id.backgroundColor(button: $0)
+            $0.disabledBackgroundColor = id.disabledBackgroundColor(button: $0)
             $0.cornerRadius = $0.defaultAppearance.height / 2
-            configure($0, style)
+            configure($0, id)
         }
     }
 }
 
-// MARK: - Images Styles
+// MARK: - Images Configurations
 
-extension XCConfiguration where Type: UIButton {
-    public static var leftArrow: XCConfiguration {
+extension Configuration where Type: UIButton {
+    public static var leftArrow: Self {
         return image(assetIdentifier: .arrowLeftIcon, alpha: 0.5).extend {
             $0.accessibilityIdentifier = "leftButton"
         }
     }
 
-    public static var rightArrow: XCConfiguration {
+    public static var rightArrow: Self {
         return image(assetIdentifier: .arrowRightIcon, alpha: 0.5).extend {
             $0.accessibilityIdentifier = "rightButton"
         }
     }
 
-    public static var dismiss: XCConfiguration {
+    public static var dismiss: Self {
         return image(assetIdentifier: .closeIcon, size: 24, axis: .horizontal, .vertical)
     }
 
-    public static var dismissFilled: XCConfiguration {
+    public static var dismissFilled: Self {
         return image(assetIdentifier: .closeIconFilled, size: 24, axis: .horizontal, .vertical)
     }
 
-    public static var searchIcon: XCConfiguration {
+    public static var searchIcon: Self {
         return image(assetIdentifier: .searchIcon, size: 14, axis: .horizontal)
     }
 
@@ -172,7 +180,7 @@ extension XCConfiguration where Type: UIButton {
         assetIdentifier: ImageAssetIdentifier,
         size: CGSize,
         axis: NSLayoutConstraint.Axis...
-    ) -> XCConfiguration {
+    ) -> Self {
         return image(id: id, assetIdentifier: assetIdentifier).extend {
             $0.resistsSizeChange(axis: axis)
             // Increase the touch area if the image size is small.
@@ -189,13 +197,13 @@ extension XCConfiguration where Type: UIButton {
         id: String = #function,
         assetIdentifier: ImageAssetIdentifier,
         alpha: CGFloat? = nil
-    ) -> XCConfiguration {
-        let style = Identifier<Type>(rawValue: id)
-        return XCConfiguration {
+    ) -> Self {
+        let id = Identifier(rawValue: id)
+        return .init {
             $0.isHeightSetAutomatically = false
             $0.text = nil
             $0.imageView?.isContentModeAutomaticallyAdjusted = true
-            $0.contentTintColor = style.tintColor(button: $0)
+            $0.contentTintColor = id.tintColor(button: $0)
             $0.contentEdgeInsets = .zero
 
             let image = UIImage(assetIdentifier: assetIdentifier)
@@ -208,22 +216,22 @@ extension XCConfiguration where Type: UIButton {
                 $0.image = image
             }
 
-            configure($0, style)
+            configure($0, id)
         }
     }
 
     public static func caret(
-        in configuration: XCConfiguration = .plain,
+        in configuration: Configuration = .plain,
         title: String,
         font: UIFont? = nil,
         textColor: UIColor? = nil,
         direction: NSAttributedString.CaretDirection = .forward,
         animated: Bool = false
-    ) -> XCConfiguration {
-        let style: Identifier<Type> = .caret
-        return configuration.extend(id: style) {
-            let textColor = textColor ?? style.textColor(button: $0)
-            let font = font ?? style.font(button: $0)
+    ) -> Self {
+        let id: Identifier = .caret
+        return configuration.extend(id: id) {
+            let textColor = textColor ?? id.textColor(button: $0)
+            let font = font ?? id.font(button: $0)
             $0.titleLabel?.numberOfLines = 1
 
             let attributedTitle = NSAttributedString(string: title, font: font, color: textColor, direction: direction, for: .normal)
@@ -231,20 +239,20 @@ extension XCConfiguration where Type: UIButton {
 
             let highlightedAttributedTitle = NSAttributedString(string: title, font: font, color: textColor, direction: direction, for: .highlighted)
             $0.setAttributedTitle(highlightedAttributedTitle, for: .highlighted)
-            configure($0, style)
+            configure($0, id)
         }
     }
 }
 
-// MARK: - Toggle Styles
+// MARK: - Toggle Configurations
 
-extension XCConfiguration where Type: UIButton {
-    public static var none: XCConfiguration {
-        return XCConfiguration(id: "none") { _ in }
+extension Configuration where Type: UIButton {
+    public static var none: Self {
+        .init(id: #function) { _ in }
     }
 
-    public static var checkbox: XCConfiguration {
-        return checkbox()
+    public static var checkbox: Self {
+        checkbox()
     }
 
     public static func checkbox(
@@ -252,13 +260,13 @@ extension XCConfiguration where Type: UIButton {
         selectedColor: UIColor? = nil,
         textColor: UIColor? = nil,
         font: UIFont? = nil
-    ) -> XCConfiguration {
-        let style: Identifier<Type> = .checkbox
-        return XCConfiguration(id: style) {
-            let normalColor = normalColor ?? style.tintColor(button: $0)
-            let selectedColor = selectedColor ?? style.tintColor(button: $0)
-            let textColor = textColor ?? style.textColor(button: $0)
-            let font = font ?? style.font(button: $0)
+    ) -> Self {
+        let id: Identifier = .checkbox
+        return .init(id: id) {
+            let normalColor = normalColor ?? id.tintColor(button: $0)
+            let selectedColor = selectedColor ?? id.tintColor(button: $0)
+            let textColor = textColor ?? id.textColor(button: $0)
+            let font = font ?? id.font(button: $0)
 
             $0.accessibilityIdentifier = "checkboxButton"
             $0.textColor = textColor
@@ -276,27 +284,27 @@ extension XCConfiguration where Type: UIButton {
             let filledImage = UIImage(assetIdentifier: .checkmarkIconFilled)
             $0.setImage(unfilledImage.tintColor(normalColor), for: .normal)
             $0.setImage(filledImage.tintColor(selectedColor), for: .selected)
-            configure($0, style)
+            configure($0, id)
         }
     }
 
-    public static var radioButton: XCConfiguration {
-        return radioButton()
+    public static var radioButton: Self {
+        radioButton()
     }
 
     public static func radioButton(
         selectedColor: UIColor? = nil,
         borderColor: UIColor? = nil,
         borderWidth: CGFloat = 0.5
-    ) -> XCConfiguration {
-        let style: Identifier<Type> = .radioButton
-        return XCConfiguration(id: style) {
+    ) -> Self {
+        let id: Identifier = .radioButton
+        return .init(id: id) {
             let outerWidth: CGFloat = 20
-            let selectedColor = selectedColor ?? style.selectedColor(button: $0)
+            let selectedColor = selectedColor ?? id.selectedColor(button: $0)
 
             $0.accessibilityIdentifier = "radioButton"
             $0.layer.borderWidth = borderWidth
-            $0.layer.borderColor = style.borderColor(button: $0).cgColor
+            $0.layer.borderColor = id.borderColor(button: $0).cgColor
             $0.layer.masksToBounds = true
             $0.layer.cornerRadius = outerWidth / 2
 
@@ -316,7 +324,7 @@ extension XCConfiguration where Type: UIButton {
             $0.didSelect { sender in
                 sender.imageView?.backgroundColor = sender.isSelected ? selectedColor : .clear
             }
-            configure($0, style)
+            configure($0, id)
         }
     }
 }

@@ -55,7 +55,7 @@ extension UIViewController {
     public dynamic static let defaultAppearance = DefaultAppearance()
 
     private var defaultAppearance: DefaultAppearance {
-        return Self.defaultAppearance
+        Self.defaultAppearance
     }
 }
 
@@ -186,7 +186,7 @@ extension UIViewController {
     /// vc.isStatusBarHidden = false
     /// ```
     open var isStatusBarHidden: Bool? {
-        get { return associatedObject(&AssociatedKey.prefersStatusBarHidden) }
+        get { associatedObject(&AssociatedKey.prefersStatusBarHidden) }
         set {
             setAssociatedObject(&AssociatedKey.prefersStatusBarHidden, value: newValue)
             setNeedsStatusBarAppearanceUpdate()
@@ -207,7 +207,7 @@ extension UIViewController {
     /// vc.isAutorotateEnabled = false
     /// ```
     open var isAutorotateEnabled: Bool? {
-        get { return associatedObject(&AssociatedKey.shouldAutorotate) }
+        get { associatedObject(&AssociatedKey.shouldAutorotate) }
         set { setAssociatedObject(&AssociatedKey.shouldAutorotate, value: newValue) }
     }
 
@@ -216,7 +216,7 @@ extension UIViewController {
     ///
     /// The default value is `true`.
     @objc open var isSwipeBackGestureEnabled: Bool {
-        get { return associatedObject(&AssociatedKey.isSwipeBackGestureEnabled, default: true) }
+        get { associatedObject(&AssociatedKey.isSwipeBackGestureEnabled, default: true) }
         set { setAssociatedObject(&AssociatedKey.isSwipeBackGestureEnabled, value: newValue) }
     }
 
@@ -234,7 +234,7 @@ extension UIViewController {
     /// vc.isTabBarHidden = false
     /// ```
     open var isTabBarHidden: Bool? {
-        get { return associatedObject(&AssociatedKey.isTabBarHidden) }
+        get { associatedObject(&AssociatedKey.isTabBarHidden) }
         set { setAssociatedObject(&AssociatedKey.isTabBarHidden, value: newValue) }
     }
 }
@@ -242,22 +242,22 @@ extension UIViewController {
 @objc extension UIViewController {
     /// The default value is of property `isTabBarHidden` if it's set, otherwise, `false`.
     open var prefersTabBarHidden: Bool {
-        return isTabBarHidden ?? defaultAppearance.prefersTabBarHidden
+        isTabBarHidden ?? defaultAppearance.prefersTabBarHidden
     }
 
     /// The default value is `false`.
     open var prefersNavigationBarHidden: Bool {
-        return false
+        false
     }
 
     /// The default value is `false`.
     open var prefersNavigationBarFadeAnimation: Bool {
-        return false
+        false
     }
 
     /// The default value is `.appTint`.
     open var preferredNavigationBarTintColor: UIColor {
-        return defaultAppearance.tintColor
+        defaultAppearance.tintColor
     }
 
     /// The default value is `.transparent`.
@@ -291,7 +291,7 @@ extension UIViewController {
 
     /// The default value is `true`.
     open var prefersDismissButtonHiddenWhenPresentedModally: Bool {
-        return true
+        true
     }
 
     public static var defaultNavigationBarTextAttributes: [NSAttributedString.Key: Any] {

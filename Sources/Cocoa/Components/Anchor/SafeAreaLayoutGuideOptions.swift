@@ -45,18 +45,18 @@ public struct SafeAreaLayoutGuideOptions: OptionSet {
 
 extension SafeAreaLayoutGuideOptions {
     func topAnchor(_ view: UIView) -> NSLayoutAnchor<NSLayoutYAxisAnchor> {
-        return contains(.top) ? view.safeAreaLayoutGuide.topAnchor : view.topAnchor
+        contains(.top) ? view.safeAreaLayoutGuide.topAnchor : view.topAnchor
     }
 
     func bottomAnchor(_ view: UIView) -> NSLayoutAnchor<NSLayoutYAxisAnchor> {
-        return contains(.bottom) ? view.safeAreaLayoutGuide.bottomAnchor : view.bottomAnchor
+        contains(.bottom) ? view.safeAreaLayoutGuide.bottomAnchor : view.bottomAnchor
     }
 
     func leadingAnchor(_ view: UIView) -> NSLayoutAnchor<NSLayoutXAxisAnchor> {
-        return contains(.leading) ? view.safeAreaLayoutGuide.leadingAnchor : view.leadingAnchor
+        contains(.leading) ? view.safeAreaLayoutGuide.leadingAnchor : view.leadingAnchor
     }
 
     func trailingAnchor(_ view: UIView) -> NSLayoutAnchor<NSLayoutXAxisAnchor> {
-        return contains(.trailing) ? view.safeAreaLayoutGuide.trailingAnchor : view.trailingAnchor
+        contains(.trailing) ? view.safeAreaLayoutGuide.trailingAnchor : view.trailingAnchor
     }
 }

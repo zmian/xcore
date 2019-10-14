@@ -52,7 +52,7 @@ extension ImageRepresentable {
     /// - Parameter value: The transform value for the image.
     /// - Returns: An `ImageRepresentable` instance.
     public func transform(_ value: ImageTransform) -> ImageRepresentable {
-        return append(value)
+        append(value)
     }
 
     /// Returns `ImageRepresentable` instance with the given transform.
@@ -82,6 +82,6 @@ extension ImageRepresentable {
     /// - Parameter transform: The transform for the image.
     /// - Returns: An `ImageRepresentable` instance.
     public func transform<T: ImageTransform>(_ transform: T.Member) -> ImageRepresentable {
-        return append(transform.base)
+        append(transform.base)
     }
 }

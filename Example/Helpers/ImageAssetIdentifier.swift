@@ -26,5 +26,5 @@ import UIKit
 
 /// Extension to get compile time checks for asset identifiers
 extension ImageAssetIdentifier {
-    static var blueJay: ImageAssetIdentifier { return #function }
+    static var blueJay: Self { #function }
 }

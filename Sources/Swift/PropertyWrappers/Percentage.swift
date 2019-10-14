@@ -77,13 +77,13 @@ extension Percentage: ExpressibleByFloatLiteral {
 
 extension Percentage: CustomStringConvertible {
     public var description: String {
-        return "\(rawValue)%"
+        "\(rawValue)%"
     }
 }
 
 extension Percentage: CustomPlaygroundDisplayConvertible {
     public var playgroundDescription: Any {
-        return rawValue
+        rawValue
     }
 }
 
@@ -94,30 +94,30 @@ extension Percentage: Hashable {
 }
 
 extension Percentage: Comparable {
-    public static func ==(lhs: Percentage, rhs: Percentage) -> Bool {
-        return lhs.rawValue == rhs.rawValue
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.rawValue == rhs.rawValue
     }
 
-    public static func <(lhs: Percentage, rhs: Percentage) -> Bool {
-        return lhs.rawValue < rhs.rawValue
+    public static func <(lhs: Self, rhs: Self) -> Bool {
+        lhs.rawValue < rhs.rawValue
     }
 }
 
 extension Percentage {
-    public static func +(lhs: Percentage, rhs: Percentage) -> Percentage {
-        return Percentage(rawValue: lhs.rawValue + rhs.rawValue)
+    public static func +(lhs: Self, rhs: Self) -> Self {
+        .init(rawValue: lhs.rawValue + rhs.rawValue)
     }
 
-    public static func -(lhs: Percentage, rhs: Percentage) -> Percentage {
-        return Percentage(rawValue: lhs.rawValue - rhs.rawValue)
+    public static func -(lhs: Self, rhs: Self) -> Self {
+        .init(rawValue: lhs.rawValue - rhs.rawValue)
     }
 
-    public static func +=(lhs: inout Percentage, rhs: Percentage) {
+    public static func +=(lhs: inout Self, rhs: Self) {
         let normalizedValue = normalize(lhs.rawValue + rhs.rawValue)
         lhs.rawValue = normalizedValue
     }
 
-    public static func -=(lhs: inout Percentage, rhs: Percentage) {
+    public static func -=(lhs: inout Self, rhs: Self) {
         let normalizedValue = normalize(lhs.rawValue - rhs.rawValue)
         lhs.rawValue = normalizedValue
     }

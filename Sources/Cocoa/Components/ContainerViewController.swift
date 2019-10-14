@@ -36,7 +36,7 @@ import UIKit
 open class ContainerViewController: UIViewController {
     /// The view controllers currently being managed the container view.
     open var viewControllers: [UIViewController] {
-        return []
+        []
     }
 
     open override func viewDidLoad() {
@@ -90,7 +90,7 @@ open class ContainerViewController: UIViewController {
     }
 
     open override var shouldAutomaticallyForwardAppearanceMethods: Bool {
-        return false
+        false
     }
 
     /// Removes the child view controller from its parent.

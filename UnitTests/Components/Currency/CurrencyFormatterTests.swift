@@ -224,7 +224,7 @@ extension CurrencyFormatterTests {
 
 extension CurrencyFormatter {
     fileprivate var localeTest: CurrencyFormatterTests.Locale {
-        get { return CurrencyFormatterTests.Locale(rawValue: locale.identifier) ?? .usa }
+        get { CurrencyFormatterTests.Locale(rawValue: locale.identifier) ?? .usa }
         set { locale = Locale(identifier: newValue.rawValue) }
     }
 }

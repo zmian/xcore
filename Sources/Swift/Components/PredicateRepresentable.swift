@@ -24,36 +24,6 @@
 
 import Foundation
 
-extension NSPredicate {
-    /// Creates and returns a predicate that never matches any result.
-    public static var noMatch: NSPredicate {
-        return NSPredicate(value: false)
-    }
-}
-
-extension Array where Element: NSPredicate {
-    /// Returns a new predicate by joining the elements of the sequence by the given
-    /// logical type.
-    ///
-    /// Uses `NSCompoundPredicate` to create an `AND` or `OR` compound predicate of
-    /// zero or more other predicates, or the NOT of a single predicate. For the
-    /// logical `AND` and `OR` operations:
-    ///
-    /// - An `AND` predicate with no subpredicates evaluates to `true`.
-    /// - An `OR` predicate with no subpredicates evaluates to `false`.
-    /// - A compound predicate with one or more subpredicates evaluates to the truth
-    ///   of its subpredicates.
-    ///
-    /// - Parameter type: The logical type used to join the elements in `self`.
-    /// - Returns: A specialized predicate that evaluates logical combinations of
-    ///            other predicates.
-    public func joined(by type: NSCompoundPredicate.LogicalType) -> NSPredicate {
-        return NSCompoundPredicate(type: type, subpredicates: self)
-    }
-}
-
-extension NSPredicate: PredicateRepresentable {}
-
 public protocol PredicateRepresentable {
     init(format predicateFormat: String, argumentArray arguments: [Any]?)
 }
@@ -119,3 +89,37 @@ extension PredicateRepresentable {
         self.init(format: "NOT (%K IN\(caseInsensitiveModifier) %@)", argumentArray: [field, values])
     }
 }
+
+// MARK: - Array
+
+extension Array where Element: NSPredicate {
+    /// Returns a new predicate by joining the elements of the sequence by the given
+    /// logical type.
+    ///
+    /// Uses `NSCompoundPredicate` to create an `AND` or `OR` compound predicate of
+    /// zero or more other predicates, or the NOT of a single predicate. For the
+    /// logical `AND` and `OR` operations:
+    ///
+    /// - An `AND` predicate with no subpredicates evaluates to `true`.
+    /// - An `OR` predicate with no subpredicates evaluates to `false`.
+    /// - A compound predicate with one or more subpredicates evaluates to the truth
+    ///   of its subpredicates.
+    ///
+    /// - Parameter type: The logical type used to join the elements in `self`.
+    /// - Returns: A specialized predicate that evaluates logical combinations of
+    ///            other predicates.
+    public func joined(by type: NSCompoundPredicate.LogicalType) -> NSPredicate {
+        NSCompoundPredicate(type: type, subpredicates: self)
+    }
+}
+
+// MARK: - No Match
+
+extension NSPredicate {
+    /// Creates and returns a predicate that never matches any result.
+    public static var noMatch: NSPredicate {
+        .init(value: false)
+    }
+}
+
+extension NSPredicate: PredicateRepresentable {}

@@ -110,7 +110,7 @@ extension UICollectionView {
     /// - Returns: The first cell of the collection view that satisfies the given,
     ///   type or `nil` if there is no cell that satisfies the type `T`.
     open func cell<T: UICollectionViewCell>(kind: T.Type) -> T? {
-        return cell { $0.isKind(of: kind) } as? T
+        cell { $0.isKind(of: kind) } as? T
     }
 }
 
@@ -120,7 +120,7 @@ extension UICollectionView {
     }
 
     private var cellLookupTimers: [String: Timer] {
-        get { return associatedObject(&AssociatedKey.cellLookupTimers, default: [String: Timer]()) }
+        get { associatedObject(&AssociatedKey.cellLookupTimers, default: [String: Timer]()) }
         set { setAssociatedObject(&AssociatedKey.cellLookupTimers, value: newValue) }
     }
 

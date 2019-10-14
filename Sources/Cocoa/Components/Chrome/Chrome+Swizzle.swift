@@ -48,7 +48,7 @@ extension UIViewController {
     }
 
     private var didAddFauxChrome: Bool {
-        get { return associatedObject(&AssociatedKey.didAddFauxChrome, default: false) }
+        get { associatedObject(&AssociatedKey.didAddFauxChrome, default: false) }
         set { setAssociatedObject(&AssociatedKey.didAddFauxChrome, value: newValue) }
     }
 

@@ -38,14 +38,14 @@ public protocol ModallyPresentable {
 
 extension ModallyPresentable {
     public var navigationControllerClassWhenModallyPresented: UINavigationController.Type {
-        return UINavigationController.self
+        UINavigationController.self
     }
 }
 
 extension ModallyPresentable where Self: UIViewController {
     /// Returns a bar button item that dismisses `self`.
     public func dismissBarButtonItem() -> UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .cancel).apply {
+        UIBarButtonItem(barButtonSystemItem: .cancel).apply {
             $0.accessibilityIdentifier = "dismissButton"
             $0.addAction { [weak self] _ in
                 self?.dismiss(animated: true)

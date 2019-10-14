@@ -46,7 +46,7 @@ import UIKit
 ///
 /// ```swift
 /// class ProfileView: UIView {
-///     class var nibId: String { return "Profile" }
+///     class var nibId: String { "Profile" }
 /// }
 ///
 /// let view = ProfileView.initFromNib()
@@ -58,7 +58,7 @@ public protocol NibInstantiable {
 
 extension NibInstantiable {
     public static var nibId: String {
-        return String(describing: self)
+        String(describing: self)
     }
 }
 

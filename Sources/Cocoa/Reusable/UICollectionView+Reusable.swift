@@ -31,12 +31,12 @@ extension UICollectionView {
     }
 
     private var registeredCells: Set<String> {
-        get { return associatedObject(&AssociatedKey.registeredCells, default: Set<String>()) }
+        get { associatedObject(&AssociatedKey.registeredCells, default: Set<String>()) }
         set { setAssociatedObject(&AssociatedKey.registeredCells, value: newValue) }
     }
 
     private var registeredSupplementaryViews: Set<String> {
-        get { return associatedObject(&AssociatedKey.registeredSupplementaryViews, default: Set<String>()) }
+        get { associatedObject(&AssociatedKey.registeredSupplementaryViews, default: Set<String>()) }
         set { setAssociatedObject(&AssociatedKey.registeredSupplementaryViews, value: newValue) }
     }
 
@@ -85,12 +85,12 @@ extension UICollectionView {
         }
 
         public var description: String {
-            return rawValue
+            rawValue
         }
 
         // swiftlint:disable inconsistent_naming_header_view inconsistent_naming_footer_view
-        public static let header = SupplementaryViewKind(rawValue: UICollectionView.elementKindSectionHeader)
-        public static let footer = SupplementaryViewKind(rawValue: UICollectionView.elementKindSectionFooter)
+        public static let header = Self(rawValue: UICollectionView.elementKindSectionHeader)
+        public static let footer = Self(rawValue: UICollectionView.elementKindSectionFooter)
         // swiftlint:enable inconsistent_naming_header_view inconsistent_naming_footer_view
     }
 }
@@ -113,7 +113,7 @@ extension UICollectionView {
     /// - Returns: The layout attributes of the supplementary view or `nil` if the
     ///            specified supplementary view does not exist.
     open func layoutAttributesForSupplementaryElement(ofKind kind: SupplementaryViewKind, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return layoutAttributesForSupplementaryElement(ofKind: kind.rawValue, at: indexPath)
+        layoutAttributesForSupplementaryElement(ofKind: kind.rawValue, at: indexPath)
     }
 
     /// Returns a reusable `UICollectionReusableView` instance for the class
@@ -126,7 +126,7 @@ extension UICollectionView {
     /// - Returns: The specified supplementary view or `nil` if the view could not
     ///            be found.
     open func supplementaryView<T: UICollectionReusableView>(_ kind: SupplementaryViewKind, at indexPath: IndexPath) -> T? {
-        return supplementaryView(forElementKind: kind.rawValue, at: indexPath) as? T
+        supplementaryView(forElementKind: kind.rawValue, at: indexPath) as? T
     }
 
     /// Returns a reusable `UICollectionReusableView` instance for the class
@@ -174,6 +174,6 @@ extension UICollectionViewLayout {
     /// - Returns: A layout attributes object containing the information to apply to
     ///            the supplementary view.
     public func layoutAttributesForSupplementaryView(ofKind kind: UICollectionView.SupplementaryViewKind, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return layoutAttributesForSupplementaryView(ofKind: kind.rawValue, at: indexPath)
+        layoutAttributesForSupplementaryView(ofKind: kind.rawValue, at: indexPath)
     }
 }

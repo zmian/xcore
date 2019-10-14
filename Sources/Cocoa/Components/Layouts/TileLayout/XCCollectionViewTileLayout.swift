@@ -98,7 +98,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     private var sectionIndexesByColumn = [[Int]]()
 
     open override class var layoutAttributesClass: AnyClass {
-        return Attributes.self
+        Attributes.self
     }
 
     public override init() {
@@ -375,7 +375,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     }
 
     open override var collectionViewContentSize: CGSize {
-        return CGSize(width: cachedContentSize.width, height: cachedContentSize.height)
+        .init(width: cachedContentSize.width, height: cachedContentSize.height)
     }
 
     private func yAxisIntersection(element1: CGRect, element2: CGRect) -> ComparisonResult {
@@ -435,7 +435,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     }
 
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return layoutAttributes[indexPath]
+        layoutAttributes[indexPath]
     }
 
     open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
@@ -513,7 +513,7 @@ extension XCCollectionViewTileLayout {
 
 extension XCCollectionViewTileLayout {
     var delegate: XCCollectionViewDelegateTileLayout? {
-        return collectionView?.delegate as? XCCollectionViewDelegateTileLayout
+        collectionView?.delegate as? XCCollectionViewDelegateTileLayout
     }
 
     private func height(forItemAt indexPath: IndexPath, width: CGFloat) -> CGFloat? {

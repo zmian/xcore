@@ -69,13 +69,13 @@ extension Version: ExpressibleByStringLiteral {
 
 extension Version: CustomStringConvertible {
     public var description: String {
-        return rawValue
+        rawValue
     }
 }
 
 extension Version: CustomPlaygroundDisplayConvertible {
     public var playgroundDescription: Any {
-        return rawValue
+        rawValue
     }
 }
 
@@ -86,11 +86,11 @@ extension Version: Hashable {
 }
 
 extension Version: Comparable {
-    public static func ==(lhs: Version, rhs: Version) -> Bool {
-        return lhs.rawValue.compare(rhs.rawValue, options: .numeric) == .orderedSame
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.rawValue.compare(rhs.rawValue, options: .numeric) == .orderedSame
     }
 
-    public static func <(lhs: Version, rhs: Version) -> Bool {
-        return lhs.rawValue.compare(rhs.rawValue, options: .numeric) == .orderedAscending
+    public static func <(lhs: Self, rhs: Self) -> Bool {
+        lhs.rawValue.compare(rhs.rawValue, options: .numeric) == .orderedAscending
     }
 }

@@ -40,7 +40,7 @@ final public class SearchBarView: UIView {
     private let bottomSeparatorView = SeparatorView()
 
     private var searchBarTrailingPadding: CGFloat {
-        return style == .minimal ? .defaultPadding - .minimumPadding : 0
+        style == .minimal ? .defaultPadding - .minimumPadding : 0
     }
 
     @objc dynamic public var style: UISearchBar.Style = .default {
@@ -59,21 +59,21 @@ final public class SearchBarView: UIView {
     }
 
     public var placeholder: String? {
-        get { return searchBar.placeholder }
+        get { searchBar.placeholder }
         set { searchBar.placeholder = newValue }
     }
 
     public var text: String? {
-        return searchBar.text
+        searchBar.text
     }
 
     @objc dynamic public override var tintColor: UIColor! {
-        get { return searchBar.tintColor }
+        get { searchBar.tintColor }
         set { searchBar.tintColor = newValue }
     }
 
     @objc dynamic public var placeholderTextColor: UIColor? {
-        get { return searchBar.placeholderTextColor }
+        get { searchBar.placeholderTextColor }
         set { searchBar.placeholderTextColor = newValue }
     }
 
@@ -82,7 +82,7 @@ final public class SearchBarView: UIView {
     }()
 
     @objc dynamic public var searchFieldBackgroundColor: UIColor {
-        get { return _searchFieldBackgroundColor }
+        get { _searchFieldBackgroundColor }
         set {
             _searchFieldBackgroundColor = newValue
             updateSearchFieldBackgroundColorIfNeeded()
@@ -222,7 +222,7 @@ extension SearchBarView {
     }
 
     public override var isFirstResponder: Bool {
-        return searchBar.isFirstResponder
+        searchBar.isFirstResponder
     }
 
     /// This method sets the text property to `nil` and hides the `cancel` button.
@@ -233,12 +233,12 @@ extension SearchBarView {
 
     @discardableResult
     public override func becomeFirstResponder() -> Bool {
-        return searchBar.becomeFirstResponder()
+        searchBar.becomeFirstResponder()
     }
 
     @discardableResult
     public override func resignFirstResponder() -> Bool {
-        return searchBar.resignFirstResponder()
+        searchBar.resignFirstResponder()
     }
 }
 

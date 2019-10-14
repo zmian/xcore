@@ -45,7 +45,7 @@ public struct ColorizeImageTransform: ImageTransform {
     private let kind: Kind
 
     public var id: String {
-        return "\(transformName)-color:(\(color.hex))-kind:(\(kind))"
+        "\(transformName)-color:(\(color.hex))-kind:(\(kind))"
     }
 
     public init(color: UIColor, kind: Kind) {
@@ -131,7 +131,7 @@ extension ColorizeImageTransform {
 
     /// Modified Image Context, apply modification on image.
     private func draw(_ rect: CGRect, _ block: (CGContext) -> Void) -> UIImage {
-        return UIGraphicsImageRenderer(bounds: rect).image { rendererContext in
+        UIGraphicsImageRenderer(bounds: rect).image { rendererContext in
             let context = rendererContext.cgContext
             // Move and invert canvas by scaling to account for coordinate system
             context.translateBy(x: 0, y: rect.size.height)

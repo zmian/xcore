@@ -54,7 +54,7 @@ extension UIDevice {
     /// }
     /// ```
     public var osVersion: Version {
-        return Version(rawValue: systemVersion)
+        .init(rawValue: systemVersion)
     }
 }
 
@@ -484,27 +484,27 @@ extension UIDevice.ModelType {
 
 extension UIDevice.ModelType.ScreenSize: Comparable {
     private static var iPhone: Bool {
-        return UIDevice.current.modelType.family == .phone
+        UIDevice.current.modelType.family == .phone
     }
 
     public static func ==(lhs: UIDevice.ModelType.ScreenSize, rhs: UIDevice.ModelType.ScreenSize) -> Bool {
-        return iPhone && lhs.size.max == rhs.size.max && lhs.size.min == rhs.size.min
+        iPhone && lhs.size.max == rhs.size.max && lhs.size.min == rhs.size.min
     }
 
     public static func <(lhs: UIDevice.ModelType.ScreenSize, rhs: UIDevice.ModelType.ScreenSize) -> Bool {
-        return iPhone && lhs.size.max < rhs.size.max && lhs.size.min < rhs.size.min
+        iPhone && lhs.size.max < rhs.size.max && lhs.size.min < rhs.size.min
     }
 }
 
 extension UIDevice.ModelType {
     /// The model identifier of the current device (e.g., `iPhone9,2`).
     public var identifier: String {
-        return UIDevice.identifier
+        UIDevice.identifier
     }
 
     /// The family name of the current device (e.g., iPhone or Apple TV).
     public var family: Family {
-        return Family(device: UIDevice.current, identifier: identifier)
+        .init(device: UIDevice.current, identifier: identifier)
     }
 
     /// The screen size associated with the model.
@@ -513,7 +513,7 @@ extension UIDevice.ModelType {
     /// as multiple devices share the same screen sizes (e.g., iPhone X and
     /// iPhone XS or iPhone 5, 5s, 5c & SE).
     public var screenSize: ScreenSize {
-        return ScreenSize()
+        .init()
     }
 }
 
@@ -540,7 +540,7 @@ extension UIDevice {
     /// }
     /// ```
     public var modelType: ModelType {
-        return ModelType(identifier: UIDevice.identifier)
+        .init(identifier: UIDevice.identifier)
     }
 
     /// The model identifier of the current device (e.g., `iPhone9,2`).

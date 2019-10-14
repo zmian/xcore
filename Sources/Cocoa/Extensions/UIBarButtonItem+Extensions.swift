@@ -28,7 +28,7 @@ import UIKit
 
 extension UIBarButtonItem {
     @objc open dynamic var textColor: UIColor? {
-        get { return titleTextColor(for: .normal) }
+        get { titleTextColor(for: .normal) }
         set { setTitleTextColor(newValue, for: .normal) }
     }
 
@@ -45,7 +45,7 @@ extension UIBarButtonItem {
 
 extension UIBarButtonItem {
     @objc open dynamic var font: UIFont? {
-        get { return titleTextFont(for: .normal) }
+        get { titleTextFont(for: .normal) }
         set {
             UIControl.State.applicationStates.forEach {
                 setTitleTextFont(newValue, for: $0)
@@ -54,7 +54,7 @@ extension UIBarButtonItem {
     }
 
     open func titleTextFont(for state: UIControl.State) -> UIFont? {
-        return titleTextAttribute(.font, for: state)
+        titleTextAttribute(.font, for: state)
     }
 
     open func setTitleTextFont(_ font: UIFont?, for state: UIControl.State) {
@@ -66,7 +66,7 @@ extension UIBarButtonItem {
 
 extension UIBarButtonItem {
     private func titleTextAttribute<T>(_ key: NSAttributedString.Key, for state: UIControl.State) -> T? {
-        return titleTextAttributes(for: state)?[key] as? T
+        titleTextAttributes(for: state)?[key] as? T
     }
 
     private func setTitleTextAttribute(_ key: NSAttributedString.Key, value: Any?, for state: UIControl.State) {
@@ -78,6 +78,6 @@ extension UIBarButtonItem {
 
 extension UIControl.State {
     fileprivate static var applicationStates: [UIControl.State] {
-        return [.normal, .highlighted, .disabled, .selected, .focused, .application]
+        [.normal, .highlighted, .disabled, .selected, .focused, .application]
     }
 }

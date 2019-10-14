@@ -67,7 +67,7 @@ public struct JSONHelpers {
 
     /// Parse Data to JSON.
     public static func parse(_ data: Data) -> Any? {
-        return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+        try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
     }
 
     /// Parse String to JSON.

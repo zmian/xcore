@@ -45,7 +45,7 @@ extension UINavigationController {
 
     /// A convenience property to set root view controller without animation.
     open var rootViewController: UIViewController? {
-        get { return viewControllers.first }
+        get { viewControllers.first }
         set {
             var rvc: [UIViewController] = []
             if let vc = newValue {
@@ -250,7 +250,7 @@ extension UINavigationController {
         }
 
         fileprivate var transition: CATransition {
-            return CATransition().apply {
+            CATransition().apply {
                 $0.duration = .slow
                 $0.timingFunction = .easeInEaseOut
                 $0.type = transitionType
@@ -320,11 +320,11 @@ extension UINavigationController {
     // any view controller and it would respect that orientation setting per view
     // controller.
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return topViewController?.preferredInterfaceOrientations ?? preferredInterfaceOrientations ?? topViewController?.supportedInterfaceOrientations ?? super.supportedInterfaceOrientations
+        topViewController?.preferredInterfaceOrientations ?? preferredInterfaceOrientations ?? topViewController?.supportedInterfaceOrientations ?? super.supportedInterfaceOrientations
     }
 
     open override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        return topViewController?.interfaceOrientationForPresentation ?? interfaceOrientationForPresentation ?? topViewController?.preferredInterfaceOrientationForPresentation ?? super.preferredInterfaceOrientationForPresentation
+        topViewController?.interfaceOrientationForPresentation ?? interfaceOrientationForPresentation ?? topViewController?.preferredInterfaceOrientationForPresentation ?? super.preferredInterfaceOrientationForPresentation
     }
 
     // Setting `preferredStatusBarStyle` works.
@@ -346,18 +346,18 @@ extension UINavigationController {
     }
 
     open override var shouldAutorotate: Bool {
-        return topViewController?.isAutorotateEnabled ?? isAutorotateEnabled ?? topViewController?.shouldAutorotate ?? super.shouldAutorotate
+        topViewController?.isAutorotateEnabled ?? isAutorotateEnabled ?? topViewController?.shouldAutorotate ?? super.shouldAutorotate
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
-        return topViewController?.statusBarStyle ?? statusBarStyle ?? topViewController?.preferredStatusBarStyle ?? super.preferredStatusBarStyle
+        topViewController?.statusBarStyle ?? statusBarStyle ?? topViewController?.preferredStatusBarStyle ?? super.preferredStatusBarStyle
     }
 
     open override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return topViewController?.statusBarUpdateAnimation ?? statusBarUpdateAnimation ?? topViewController?.preferredStatusBarUpdateAnimation ?? super.preferredStatusBarUpdateAnimation
+        topViewController?.statusBarUpdateAnimation ?? statusBarUpdateAnimation ?? topViewController?.preferredStatusBarUpdateAnimation ?? super.preferredStatusBarUpdateAnimation
     }
 
     open override var prefersStatusBarHidden: Bool {
-        return topViewController?.isStatusBarHidden ?? isStatusBarHidden ?? topViewController?.prefersStatusBarHidden ?? super.prefersStatusBarHidden
+        topViewController?.isStatusBarHidden ?? isStatusBarHidden ?? topViewController?.prefersStatusBarHidden ?? super.prefersStatusBarHidden
     }
 }

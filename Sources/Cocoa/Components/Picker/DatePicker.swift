@@ -24,12 +24,12 @@
 
 import Foundation
 
-final public class DatePicker: DrawerScreen.Content, With {
+final public class DatePicker: DrawerScreen.Content, Appliable {
     private var initialDate: Date?
     private var didChangeValue: ((Date?) -> Void)?
 
     public var drawerContentView: UIView {
-        return stackView
+        stackView
     }
 
     private lazy var stackView = UIStackView(arrangedSubviews: [
@@ -62,15 +62,15 @@ final public class DatePicker: DrawerScreen.Content, With {
 
     public static func present(
         initialValue date: Date? = nil,
-        style: XCConfiguration<UIDatePicker>? = nil,
+        configuration: Configuration<UIDatePicker>? = nil,
         _ callback: @escaping (Date?) -> Void
     ) {
         let picker = DatePicker().apply {
             $0.initialDate = date
             $0.pickerView.date = date ?? Date()
             $0.didChangeValue = callback
-            if let style = style {
-                $0.pickerView.apply(style: style)
+            if let configuration = configuration {
+                $0.pickerView.apply(configuration)
             }
         }
 

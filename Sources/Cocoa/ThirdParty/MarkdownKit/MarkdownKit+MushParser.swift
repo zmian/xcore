@@ -40,11 +40,11 @@ import Haring
 /// <img src="https://user-images.githubusercontent.com/621693/57246709-f2aebd80-700b-11e9-91f8-4cb1e87c293a.png" height="70" width="120"/>
 final class MarkdownTextColor: MarkdownElement {
     var regex: String {
-        return "(\\{#)(.+?)(\\|)((.|\n|\r)+?)(\\})"
+        "(\\{#)(.+?)(\\|)((.|\n|\r)+?)(\\})"
     }
 
     func regularExpression() throws -> NSRegularExpression {
-        return try NSRegularExpression(pattern: regex, options: [])
+        try NSRegularExpression(pattern: regex, options: [])
     }
 
     func match(_ match: NSTextCheckingResult, attributedString: NSMutableAttributedString) {
@@ -59,11 +59,11 @@ final class MarkdownTextColor: MarkdownElement {
 
 final class MarkdownBackgroundColor: MarkdownElement {
     var regex: String {
-        return "(\\{bg#)(.+?)(\\|)((.|\n|\r)+?)(\\})"
+        "(\\{bg#)(.+?)(\\|)((.|\n|\r)+?)(\\})"
     }
 
     func regularExpression() throws -> NSRegularExpression {
-        return try NSRegularExpression(pattern: regex, options: [])
+        try NSRegularExpression(pattern: regex, options: [])
     }
 
     func match(_ match: NSTextCheckingResult, attributedString: NSMutableAttributedString) {
@@ -78,11 +78,11 @@ final class MarkdownBackgroundColor: MarkdownElement {
 
 final class MarkdownCustomFont: MarkdownElement {
     var regex: String {
-        return "(\\{font:)(.+?)(\\|)((.|\n|\r)+?)(\\})"
+        "(\\{font:)(.+?)(\\|)((.|\n|\r)+?)(\\})"
     }
 
     func regularExpression() throws -> NSRegularExpression {
-        return try NSRegularExpression(pattern: regex, options: [])
+        try NSRegularExpression(pattern: regex, options: [])
     }
 
     func match(_ match: NSTextCheckingResult, attributedString: NSMutableAttributedString) {
@@ -106,11 +106,11 @@ final class MarkdownCustomFont: MarkdownElement {
 
 final class MarkdownUnderline: MarkdownElement {
     var regex: String {
-        return "(=_)((.|\n|\r)+?)(=_)"
+        "(=_)((.|\n|\r)+?)(=_)"
     }
 
     func regularExpression() throws -> NSRegularExpression {
-        return try NSRegularExpression(pattern: regex, options: [])
+        try NSRegularExpression(pattern: regex, options: [])
     }
 
     func match(_ match: NSTextCheckingResult, attributedString: NSMutableAttributedString) {

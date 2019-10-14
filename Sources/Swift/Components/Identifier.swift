@@ -1,5 +1,5 @@
 //
-// SortOrderable.swift
+// Identifier.swift
 //
 // Copyright © 2017 Xcore
 //
@@ -22,14 +22,34 @@
 // THE SOFTWARE.
 //
 
-import UIKit
+import Foundation
 
-public protocol SortOrderable {
-    var sortOrder: Int { get }
-}
+public struct Identifier<Type>: RawRepresentable {
+    public let rawValue: String
 
-extension Sequence where Element: SortOrderable {
-    public func sorted() -> [Element] {
-        return sorted { $0.sortOrder < $1.sortOrder }
+    public init(rawValue: String) {
+        self.rawValue = rawValue
     }
 }
+
+extension Identifier: ExpressibleByStringLiteral {
+    public init(stringLiteral value: StringLiteralType) {
+        self.init(rawValue: value)
+    }
+}
+
+extension Identifier: CustomStringConvertible {
+    public var description: String {
+        rawValue
+    }
+}
+
+extension Identifier: CustomPlaygroundDisplayConvertible {
+    public var playgroundDescription: Any {
+        rawValue
+    }
+}
+
+extension Identifier: Hashable {}
+
+extension Identifier: Codable { }

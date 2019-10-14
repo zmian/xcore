@@ -26,7 +26,7 @@ import UIKit
 
 extension UISearchBar {
     open var textField: UITextField? {
-        return firstSubview(withClass: UITextField.self)
+        firstSubview(withClass: UITextField.self)
     }
 
     @objc dynamic open var searchFieldBackgroundColor: UIColor? {
@@ -64,7 +64,7 @@ extension UISearchBar {
     @objc dynamic open var placeholderTextColor: UIColor? {
         /// Unfortunately, when the `searchBarStyle == .minimal` then
         /// `textField?.placeholderLabel?.textColor` doesn't work. Hence, this workaround.
-        get { return associatedObject(&AssociatedKey.placeholderTextColor) }
+        get { associatedObject(&AssociatedKey.placeholderTextColor) }
         set {
             setAssociatedObject(&AssociatedKey.placeholderTextColor, value: newValue)
 
@@ -75,17 +75,17 @@ extension UISearchBar {
     }
 
     private var didSetInitialPlaceholderText: Bool {
-        get { return associatedObject(&AssociatedKey.didSetInitialPlaceholderText, default: false) }
+        get { associatedObject(&AssociatedKey.didSetInitialPlaceholderText, default: false) }
         set { setAssociatedObject(&AssociatedKey.didSetInitialPlaceholderText, value: newValue) }
     }
 
     private var initialPlaceholderText: String? {
-        get { return associatedObject(&AssociatedKey.initialPlaceholderText) }
+        get { associatedObject(&AssociatedKey.initialPlaceholderText) }
         set { setAssociatedObject(&AssociatedKey.initialPlaceholderText, value: newValue) }
     }
 
     @objc private var swizzled_placeholder: String? {
-        get { return textField?.attributedPlaceholder?.string }
+        get { textField?.attributedPlaceholder?.string }
         set {
             if superview == nil, let newValue = newValue {
                 initialPlaceholderText = newValue

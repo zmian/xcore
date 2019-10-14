@@ -40,11 +40,11 @@ final public class Weak<Value: AnyObject> {
 
 extension Weak: Equatable {
     public static func ==(lhs: Weak, rhs: Weak) -> Bool {
-        return lhs.value === rhs.value
+        lhs.value === rhs.value
     }
 
     public static func ==(lhs: Weak, rhs: Value) -> Bool {
-        return lhs.value === rhs
+        lhs.value === rhs
     }
 }
 

@@ -89,8 +89,8 @@ extension AnyEquatable: Equatable {
     ///   - lhs: A type-erased equatable value.
     ///   - rhs: Another type-erased equatable value.
     /// - Returns: `true` if they are equal; otherwise, `false`.
-    public static func ==(lhs: AnyEquatable, rhs: AnyEquatable) -> Bool {
-        return lhs.equals(rhs.base)
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.equals(rhs.base)
     }
 }
 
@@ -119,6 +119,6 @@ extension AnyEquatable: CustomStringConvertible {
     /// The conversion of `p` to a string in the assignment to `s` uses the
     /// `Point` type's `description` property.
     public var description: String {
-        return String(describing: base)
+        String(describing: base)
     }
 }

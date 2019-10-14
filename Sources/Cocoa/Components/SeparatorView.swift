@@ -30,23 +30,23 @@ extension SeparatorView {
         case dot(spacing: Float)
         case dash(value: [Float])
 
-        public static var dot: Style {
-            return .dot(spacing: 1.5)
+        public static var dot: Self {
+            .dot(spacing: 1.5)
         }
 
-        public static var dash: Style {
-            return .dash(value: [2, 5])
+        public static var dash: Self {
+            .dash(value: [2, 5])
         }
     }
 }
 
 final public class SeparatorView: UIView {
     public override class var layerClass: AnyClass {
-        return CAShapeLayer.self
+        CAShapeLayer.self
     }
 
     private var shapeLayer: CAShapeLayer {
-        return layer as! CAShapeLayer
+        layer as! CAShapeLayer
     }
 
     /// The default value is `.plain`.
@@ -59,7 +59,7 @@ final public class SeparatorView: UIView {
     }
 
     public var lineCap: CAShapeLayerLineCap {
-        get { return shapeLayer.lineCap }
+        get { shapeLayer.lineCap }
         set {
             guard newValue != shapeLayer.lineCap else { return }
             shapeLayer.lineCap = newValue
@@ -89,12 +89,12 @@ final public class SeparatorView: UIView {
     }
 
     @objc public dynamic override var backgroundColor: UIColor? {
-        get { return _backgroundColor ?? .appSeparator }
+        get { _backgroundColor ?? .appSeparator }
         set { _backgroundColor = newValue }
     }
 
     @objc public dynamic override var tintColor: UIColor! {
-        get { return backgroundColor }
+        get { backgroundColor }
         set { backgroundColor = newValue }
     }
 

@@ -52,10 +52,10 @@ public enum Count: Equatable, ExpressibleByIntegerLiteral, CustomStringConvertib
 
     public var description: String {
         switch self {
-        case .infinite:
-            return "infinite"
-        case .times(let count):
-            return "\(count)"
+            case .infinite:
+                return "infinite"
+            case .times(let count):
+                return "\(count)"
         }
     }
 }

@@ -60,7 +60,7 @@ public protocol KeyboardObservable {
 public struct KeyboardPayload {
     /// The final height of the keyboard in the current orientation of the device.
     public var height: CGFloat {
-        return frameEnd.origin.y == UIScreen.main.bounds.height ? 0 : frameEnd.height
+        frameEnd.origin.y == UIScreen.main.bounds.height ? 0 : frameEnd.height
     }
 
     /// The starting frame rectangle of the keyboard in screen coordinates. The

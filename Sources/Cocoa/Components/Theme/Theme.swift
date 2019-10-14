@@ -27,15 +27,15 @@ import UIKit
 // MARK: - IDs
 
 extension Identifier where Type == Theme {
-    public static var light: Identifier { return #function }
-    public static var dark: Identifier { return #function }
+    public static var light: Self { #function }
+    public static var dark: Self { #function }
 }
 
 // MARK: - Theme
 
 public struct Theme: Equatable {
     /// A unique id for the theme.
-    public let id: Identifier<Theme>
+    public let id: Identifier<Self>
 
     /// A boolean value indicating whether the theme appearance is dark.
     public let isDark: Bool
@@ -69,6 +69,7 @@ public struct Theme: Equatable {
     public let buttonBackgroundColorSecondary: UIColor
     public let buttonBackgroundColorPill: UIColor
     public let statusBarStyle: UIStatusBarStyle
+    public let chrome: Chrome.Style
 
     public init(
         id: Identifier<Theme>,
@@ -84,10 +85,12 @@ public struct Theme: Equatable {
         buttonBackgroundColor: UIColor,
         buttonBackgroundColorSecondary: UIColor,
         buttonBackgroundColorPill: UIColor,
-        statusBarStyle: UIStatusBarStyle
+        statusBarStyle: UIStatusBarStyle,
+        chrome: Chrome.Style? = nil
     ) {
+        let isDark = dark ?? (id == .dark)
         self.id = id
-        self.isDark = dark ?? (id == .dark)
+        self.isDark = isDark
         self.tintColor = tintColor
         self.separatorColor = separatorColor
         self.toggleColor = toggleColor
@@ -100,12 +103,7 @@ public struct Theme: Equatable {
         self.buttonBackgroundColorSecondary = buttonBackgroundColorSecondary
         self.buttonBackgroundColorPill = buttonBackgroundColorPill
         self.statusBarStyle = statusBarStyle
-    }
-}
-
-extension Theme {
-    public var chrome: Chrome.Style {
-        return isDark ? .color(backgroundColor) : .blurred
+        self.chrome =  chrome ?? (isDark ? .color(backgroundColor) : .blurred)
     }
 }
 
@@ -118,7 +116,7 @@ extension Theme {
     /// The nonadaptable light theme for the interface.
     ///
     /// This theme does not adapt to changes in the underlying trait environment.
-    internal(set) public static var light: Theme = Theme(
+    internal(set) public static var light: Theme = .init(
         id: .light,
         tintColor: .systemTint,
         separatorColor: .lightGray,
@@ -137,7 +135,7 @@ extension Theme {
     /// The nonadaptable dark theme for the interface.
     ///
     /// This theme does not adapt to changes in the underlying trait environment.
-    internal(set) public static var dark: Theme = Theme(
+    internal(set) public static var dark: Theme = .init(
         id: .dark,
         tintColor: .systemTint,
         separatorColor: .lightGray,

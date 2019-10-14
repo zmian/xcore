@@ -26,7 +26,7 @@ import Foundation
 
 /// A helper struct to cache index path values for `UITableView` and `UICollectionView`.
 public struct IndexPathCache<Value> {
-    private var dictionary = [String: Value]()
+    private var dictionary: [String: Value] = [:]
     private let defaultValue: Value
 
     public init(default defaultValue: Value) {
@@ -34,7 +34,7 @@ public struct IndexPathCache<Value> {
     }
 
     private func key(for indexPath: IndexPath) -> String {
-        return "\(indexPath.section)-\(indexPath.row)"
+        "\(indexPath.section)-\(indexPath.row)"
     }
 
     /// Set estimated cell value to cache.
@@ -59,11 +59,11 @@ public struct IndexPathCache<Value> {
     }
 
     public func exists(for indexPath: IndexPath) -> Bool {
-        return dictionary[key(for: indexPath)] != nil
+        dictionary[key(for: indexPath)] != nil
     }
 
     public subscript(indexPath: IndexPath) -> Value {
-        get { return get(indexPath) }
+        get { get(indexPath) }
         set { set(newValue, for: indexPath) }
     }
 
@@ -80,10 +80,10 @@ public struct IndexPathCache<Value> {
     }
 
     public var count: Int {
-        return dictionary.count
+        dictionary.count
     }
 
     public var isEmpty: Bool {
-        return dictionary.isEmpty
+        dictionary.isEmpty
     }
 }

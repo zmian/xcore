@@ -30,7 +30,7 @@ extension UIToolbar {
     }
 
     open var isTransparent: Bool {
-        get { return associatedObject(&AssociatedKey.isTransparent, default: false) }
+        get { associatedObject(&AssociatedKey.isTransparent, default: false) }
         set {
             guard newValue != isTransparent else { return }
             setAssociatedObject(&AssociatedKey.isTransparent, value: newValue)

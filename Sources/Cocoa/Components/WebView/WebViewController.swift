@@ -43,7 +43,7 @@ open class WebViewController: UIViewController {
     public private(set) var loader: ViewMaskable?
 
     open var loaderClass: ViewMaskable.Type {
-        return style.loaderClass
+        style.loaderClass
     }
 
     /// The default value is `0`.
@@ -102,7 +102,7 @@ open class WebViewController: UIViewController {
         }
     }
 
-    public init(configuration: WKWebViewConfiguration) {
+    public init(configuration: WKWebViewConfiguration?) {
         super.init(nibName: nil, bundle: nil)
         self.configuration = configuration
     }
@@ -219,7 +219,7 @@ open class WebViewController: UIViewController {
     }
 
     open override var preferredNavigationBarBackground: Chrome.Style {
-        return style.preferredNavigationBarBackground
+        style.preferredNavigationBarBackground
     }
 
     open override var preferredNavigationBarTintColor: UIColor {

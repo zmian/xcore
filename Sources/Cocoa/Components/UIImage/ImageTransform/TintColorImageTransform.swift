@@ -29,7 +29,7 @@ public struct TintColorImageTransform: ImageTransform {
     private let tintColor: UIColor
 
     public var id: String {
-        return "\(transformName)-tintColor:(\(tintColor.hex))"
+        "\(transformName)-tintColor:(\(tintColor.hex))"
     }
 
     public init(tintColor: UIColor) {

@@ -49,7 +49,7 @@ final class CarouselCollectionView
     var isAutoScrollingEnabled = false
 
     var layout: CollectionViewCarouselLayout {
-        return collectionViewLayout as! CollectionViewCarouselLayout
+        collectionViewLayout as! CollectionViewCarouselLayout
     }
 
     var viewModel: Model? {
@@ -84,7 +84,7 @@ final class CarouselCollectionView
     }
 
     var numberOfItems: Int {
-        return viewModel?.numberOfItems() ?? 0
+        viewModel?.numberOfItems() ?? 0
     }
 
     var numberOfPages: Int {
@@ -105,7 +105,7 @@ final class CarouselCollectionView
     }
 
     private var adjustedOffset: CGFloat {
-        return contentOffset.x + (style == .infiniteScroll ? -bounds.width : 0)
+        contentOffset.x + (style == .infiniteScroll ? -bounds.width : 0)
     }
 
     var height: CGFloat {
@@ -262,7 +262,7 @@ final class CarouselCollectionView
     }
 
     private func item(at index: Int) -> Cell.Model? {
-        return viewModel?.itemViewModel(index: index)
+        viewModel?.itemViewModel(index: index)
     }
 
     // MARK: - API

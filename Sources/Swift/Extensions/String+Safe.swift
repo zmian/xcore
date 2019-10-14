@@ -54,35 +54,35 @@ extension String {
     ///
     /// e.g., `"Hello world"[..<5] // → "Hello"`
     public func at(_ range: PartialRangeUpTo<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
+        hasIndex(range) ? self[range] : nil
     }
 
     /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
     ///
     /// e.g., `"Hello world"[...4] // → "Hello"`
     public func at(_ range: PartialRangeThrough<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
+        hasIndex(range) ? self[range] : nil
     }
 
     /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
     ///
     /// e.g., `"Hello world"[0...] // → "Hello world"`
     public func at(_ range: PartialRangeFrom<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
+        hasIndex(range) ? self[range] : nil
     }
 
     /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
     ///
     /// e.g., `"Hello world"[0..<5] // → "Hello"`
     public func at(_ range: CountableRange<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
+        hasIndex(range) ? self[range] : nil
     }
 
     /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
     ///
     /// e.g., `"Hello world"[0...4] // → "Hello"`
     public func at(range: CountableClosedRange<Int>) -> Substring? {
-        return hasIndex(range) ? self[range] : nil
+        hasIndex(range) ? self[range] : nil
     }
 }
 
@@ -91,17 +91,17 @@ extension String {
 extension String {
     /// e.g., `"Hello world"[..<5] // → "Hello"`
     private subscript(range: PartialRangeUpTo<Int>) -> Substring {
-        return self[..<index(startIndex, offsetBy: range.upperBound)]
+        self[..<index(startIndex, offsetBy: range.upperBound)]
     }
 
     /// e.g., `"Hello world"[...4] // → "Hello"`
     private subscript(range: PartialRangeThrough<Int>) -> Substring {
-        return self[...index(startIndex, offsetBy: range.upperBound)]
+        self[...index(startIndex, offsetBy: range.upperBound)]
     }
 
     /// e.g., `"Hello world"[0...] // → "Hello world"`
     private subscript(range: PartialRangeFrom<Int>) -> Substring {
-        return self[index(startIndex, offsetBy: range.lowerBound)...]
+        self[index(startIndex, offsetBy: range.lowerBound)...]
     }
 
     /// e.g., `"Hello world"[0..<5] // → "Hello"`
@@ -124,36 +124,36 @@ extension String {
 extension String {
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: PartialRangeUpTo<Int>) -> Bool {
-        return range.upperBound >= firstIndex && range.upperBound < lastIndex
+        range.upperBound >= firstIndex && range.upperBound < lastIndex
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: PartialRangeThrough<Int>) -> Bool {
-        return range.upperBound >= firstIndex && range.upperBound < lastIndex
+        range.upperBound >= firstIndex && range.upperBound < lastIndex
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: PartialRangeFrom<Int>) -> Bool {
-        return range.lowerBound >= firstIndex && range.lowerBound < lastIndex
+        range.lowerBound >= firstIndex && range.lowerBound < lastIndex
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: CountableRange<Int>) -> Bool {
-        return range.lowerBound >= firstIndex && range.upperBound < lastIndex
+        range.lowerBound >= firstIndex && range.upperBound < lastIndex
     }
 
     /// Return true iff range is in `self`.
     private func hasIndex(_ range: CountableClosedRange<Int>) -> Bool {
-        return range.lowerBound >= firstIndex && range.upperBound < lastIndex
+        range.lowerBound >= firstIndex && range.upperBound < lastIndex
     }
 }
 
 extension String {
     private var firstIndex: Int {
-        return startIndex.utf16Offset(in: self)
+        startIndex.utf16Offset(in: self)
     }
 
     private var lastIndex: Int {
-        return endIndex.utf16Offset(in: self)
+        endIndex.utf16Offset(in: self)
     }
 }

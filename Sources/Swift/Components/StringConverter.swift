@@ -100,6 +100,6 @@ extension StringConverter {
     }
 
     public func get<T>() -> T? where T: RawRepresentable, T.RawValue == String {
-        return T(rawValue: string)
+        T(rawValue: string)
     }
 }

@@ -132,12 +132,12 @@ extension Picker {
         // MARK: - UIAppearance Properties
 
         @objc public dynamic var titleTextColor: UIColor {
-            get { return titleLabel.textColor }
+            get { titleLabel.textColor }
             set { titleLabel.textColor = newValue }
         }
 
         @objc public dynamic var subtitleTextColor: UIColor {
-            get { return subtitleLabel.textColor }
+            get { subtitleLabel.textColor }
             set { subtitleLabel.textColor = newValue }
         }
     }

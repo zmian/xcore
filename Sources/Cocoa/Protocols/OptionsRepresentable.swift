@@ -34,14 +34,14 @@ public protocol OptionsRepresentable: CustomStringConvertible, Equatable {
 
 extension OptionsRepresentable {
     public static var title: String? {
-        return nil
+        nil
     }
 
     public static var message: String? {
-        return nil
+        nil
     }
 
     public var image: ImageRepresentable? {
-        return nil
+        nil
     }
 }

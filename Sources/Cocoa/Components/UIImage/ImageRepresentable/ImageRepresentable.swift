@@ -67,7 +67,7 @@ extension ImageSourceType {
         case memory
 
         var possiblyDelayed: Bool {
-            return self != .memory
+            self != .memory
         }
     }
 }
@@ -81,7 +81,7 @@ public protocol ImageRepresentable {
 
 extension ImageRepresentable {
     public var bundle: Bundle? {
-        return nil
+        nil
     }
 
     var cacheKey: String? {
@@ -99,18 +99,18 @@ extension ImageRepresentable {
 
 extension UIImage: ImageRepresentable {
     public var imageSource: ImageSourceType {
-        return .uiImage(self)
+        .uiImage(self)
     }
 }
 
 extension URL: ImageRepresentable {
     public var imageSource: ImageSourceType {
-        return .url(absoluteString)
+        .url(absoluteString)
     }
 }
 
 extension String: ImageRepresentable {
     public var imageSource: ImageSourceType {
-        return .url(self)
+        .url(self)
     }
 }

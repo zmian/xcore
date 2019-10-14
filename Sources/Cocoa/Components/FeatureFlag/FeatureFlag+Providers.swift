@@ -44,21 +44,21 @@ extension FeatureFlag {
 
 extension FeatureFlag.Key {
     private var currentValue: FeatureFlag.Value? {
-        return FeatureFlag.provider.value(forKey: self)
+        FeatureFlag.provider.value(forKey: self)
     }
 
     /// Returns the value of the key from registered list of feature flag providers.
     ///
     /// - Returns: The value for the key.
     public func value() -> Bool {
-        return currentValue?.get() ?? false
+        currentValue?.get() ?? false
     }
 
     /// Returns the value of the key from registered list of feature flag providers.
     ///
     /// - Returns: The value for the key.
     public func value<T>() -> T? {
-        return currentValue?.get()
+        currentValue?.get()
     }
 
     /// Returns the value of the key from registered list of feature flag providers.
@@ -67,7 +67,7 @@ extension FeatureFlag.Key {
     ///                           contain value.
     /// - Returns: The value for the key.
     public func value<T>(default defaultValue: @autoclosure () -> T) -> T {
-        return currentValue?.get() ?? defaultValue()
+        currentValue?.get() ?? defaultValue()
     }
 
     /// Returns the value of the key from registered list of feature flag providers.
@@ -76,6 +76,6 @@ extension FeatureFlag.Key {
     ///                           contain value.
     /// - Returns: The value for the key.
     public func value<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
-        return currentValue?.get() ?? defaultValue()
+        currentValue?.get() ?? defaultValue()
     }
 }

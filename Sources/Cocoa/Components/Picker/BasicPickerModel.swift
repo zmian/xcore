@@ -115,11 +115,11 @@ private final class BasicPickerModel<T: OptionsRepresentable>: PickerModel {
     }
 
     func selectedElement(at component: Int) -> Int {
-        return options.firstIndex(of: selectedOption) ?? 0
+        options.firstIndex(of: selectedOption) ?? 0
     }
 
     func numberOfElements(at component: Int) -> Int {
-        return options.count
+        options.count
     }
 
     func element(at component: Int, row: Int) -> Picker.RowModel {
@@ -164,15 +164,15 @@ private final class BasicTextPickerModel: PickerModel {
     }
 
     func selectedElement(at component: Int) -> Int {
-        return options.firstIndex(of: selectedOption) ?? 0
+        options.firstIndex(of: selectedOption) ?? 0
     }
 
     func numberOfElements(at component: Int) -> Int {
-        return options.count
+        options.count
     }
 
     func element(at component: Int, row: Int) -> Picker.RowModel {
-        return .init(title: options[row])
+        .init(title: options[row])
     }
 
     func pickerDidTapDone() {

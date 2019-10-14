@@ -39,19 +39,19 @@ public protocol PickerModel {
 
 extension PickerModel {
     public func numberOfComponents() -> Int {
-        return 1
+        1
     }
 
     public func numberOfElements(at component: Int) -> Int {
-        return 1
+        1
     }
 
     public func element(at component: Int, row: Int) -> Picker.RowModel {
-        return .init(title: "Empty Element")
+        .init(title: "Empty Element")
     }
 
     public func selectedElement(at component: Int) -> Int {
-        return 0
+        0
     }
 
     public func pickerDidDismiss() {
@@ -64,7 +64,7 @@ extension PickerModel {
     }
 
     public func pickerReloadComponents(on componentChanged: Int) -> [Int] {
-        return []
+        []
     }
 
     public func pickerReloadAllComponents() {

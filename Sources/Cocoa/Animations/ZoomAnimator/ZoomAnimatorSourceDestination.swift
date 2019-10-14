@@ -36,7 +36,7 @@ public protocol ZoomAnimatorSource {
 
 extension ZoomAnimatorSource {
     public var zoomAnimatorSourceDuration: TimeInterval {
-        return 0.35
+        0.35
     }
 
     public func zoomAnimatorSourceAnimation(animations: @escaping () -> Void, completion: @escaping (() -> Void)) {
@@ -73,7 +73,7 @@ public protocol ZoomAnimatorDestination {
 
 extension ZoomAnimatorDestination {
     public var zoomAnimatorDestinationDuration: TimeInterval {
-        return 0.35
+        0.35
     }
 
     public func zoomAnimatorDestinationAnimation(animations: @escaping () -> Void, completion: @escaping (() -> Void)) {

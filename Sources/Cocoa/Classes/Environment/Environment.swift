@@ -22,11 +22,13 @@
 // THE SOFTWARE.
 //
 
-import UIKit
+import Foundation
 
-open class Environment {
-    public enum EnvironmentType: CustomStringConvertible {
-        case development, staging, production
+extension Environment {
+    public enum Kind: CustomStringConvertible {
+        case development
+        case staging
+        case production
 
         public var description: String {
             switch self {
@@ -39,44 +41,10 @@ open class Environment {
             }
         }
     }
+}
 
-    open var isDevelopment: Bool {
-        return type == .development
-    }
+open class Environment {
+    open var kind: Kind = .production
 
-    open var isStaging: Bool {
-        return type == .staging
-    }
-
-    open var isProduction: Bool {
-        return type == .production
-    }
-
-    open private(set) var type: EnvironmentType = .production // Safest default
-
-    public init() {
-        #if XCORE_ENVIRONMENT_Release
-            type = .production
-        #elseif XCORE_ENVIRONMENT_Staging
-            type = .staging
-        #elseif XCORE_ENVIRONMENT_Debug
-            type = .development
-        #endif
-
-        setupSharedEnvironment()
-
-        switch type {
-            case .development:
-                setupDevelopment()
-            case .staging:
-                setupStaging()
-            case .production:
-                setupProduction()
-        }
-    }
-
-    open func setupSharedEnvironment() {}
-    open func setupDevelopment() {}
-    open func setupStaging() {}
-    open func setupProduction() {}
+    public init() { }
 }

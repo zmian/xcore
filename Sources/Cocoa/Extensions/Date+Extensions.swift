@@ -71,7 +71,7 @@ extension Date {
     /// (not milliseconds) that have elapsed since January 1, 1970 at 00:00:00 GMT
     /// (1970-01-01 00:00:00 GMT).
     public var unixTimeMilliseconds: Int64 {
-        return Int64(timeIntervalSince1970 * 1000)
+        Int64(timeIntervalSince1970 * 1000)
     }
 
     public init(

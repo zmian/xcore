@@ -59,7 +59,7 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
     /// For example, the grouping separator used in the United States is the period
     /// (“10,000.00”) whereas in France it is the comma (“10 000,00”).
     public var decimalSeparator: String {
-        return formatter.decimalSeparator ?? "."
+        formatter.decimalSeparator ?? "."
     }
 
     /// The string used by the receiver for a grouping separator.
@@ -67,7 +67,7 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
     /// For example, the grouping separator used in the United States is the comma
     /// (“10,000”) whereas in France it is the space (“10 000”).
     public var groupingSeparator: String {
-        return formatter.groupingSeparator ?? ","
+        formatter.groupingSeparator ?? ","
     }
 
     /// We always want to make sure the `USA` currency symbol is used when
@@ -80,7 +80,7 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
     ///
     /// For example, France locale  $1,000.00 == $1 000,00
     public var currencySymbol: String {
-        return Locale.us.currencySymbol ?? "$"
+        Locale.us.currencySymbol ?? "$"
     }
 }
 
@@ -138,7 +138,7 @@ extension CurrencyFormatter {
         from value: Double,
         style: Currency.Components.Style = .none
     ) -> String {
-        return components(from: value).joined(style: style)
+        components(from: value).joined(style: style)
     }
 
     /// Returns a numeric representation by parsing the given string.
@@ -189,7 +189,7 @@ extension CurrencyFormatter {
 
 extension NumberFormatter {
     fileprivate var isDecimalEnabled: Bool {
-        get { return minimumFractionDigits == 0 }
+        get { minimumFractionDigits == 0 }
         set {
             // This ensures that regions without fraction numbers or a different decimal
             // separator are at least getting a '.00'

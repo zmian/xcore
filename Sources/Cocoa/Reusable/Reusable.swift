@@ -41,7 +41,7 @@ import UIKit
 /// If you want to provide your own custom `reuseIdentifier` you can do so like:
 /// ```swift
 /// class ProfileCollectionViewCell: UICollectionViewCell {
-///     class var reuseIdentifier: String { return "ProfileCell" }
+///     class var reuseIdentifier: String { "ProfileCell" }
 /// }
 /// ```
 public protocol Reusable: class {
@@ -51,7 +51,7 @@ public protocol Reusable: class {
 
 extension Reusable {
     public static var reuseIdentifier: String {
-        return NSStringFromClass(self)
+        NSStringFromClass(self)
     }
 }
 

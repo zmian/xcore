@@ -157,14 +157,14 @@ extension Dictionary {
     /// - Returns: The value associated with `key` if `key` is in the dictionary;
     ///   otherwise, `nil`.
     public subscript<T: RawRepresentable>(key: T) -> Value? where T.RawValue == Key {
-        get { return self[key.rawValue] }
+        get { self[key.rawValue] }
         set { self[key.rawValue] = newValue }
     }
 }
 
 extension Dictionary where Value: Equatable {
     public func keys(forValue value: Value) -> [Key] {
-        return filter { $1 == value }.map { $0.0 }
+        filter { $1 == value }.map { $0.0 }
     }
 }
 
@@ -203,7 +203,7 @@ extension Dictionary {
     ///                        type.
     /// - Returns: A dictionary containing the transformed key value pairs.
     public func mapPairs<K: Hashable, T>(_ transform: (Element) throws -> (K, T)) rethrows -> [K: T] {
-        return [K: T](uniqueKeysWithValues: try map(transform))
+        [K: T](uniqueKeysWithValues: try map(transform))
     }
 
     /// Returns a dictionary containing, in order, the elements of the sequence that
@@ -232,20 +232,20 @@ extension Dictionary {
     /// - Returns: An array of the elements that `isIncluded` allowed.
     /// - Complexity: O(_n_), where _n_ is the length of the sequence.
     public func filterPairs(_ includeElement: (Element) throws -> Bool) rethrows -> [Key: Value] {
-        return Dictionary(uniqueKeysWithValues: try filter(includeElement))
+        Dictionary(uniqueKeysWithValues: try filter(includeElement))
     }
 }
 
 extension Dictionary where Key: RawRepresentable, Key.RawValue: Hashable {
     public func normalize() -> [Key.RawValue: Value] {
-        return mapPairs { ($0.key.rawValue, $0.value) }
+        mapPairs { ($0.key.rawValue, $0.value) }
     }
 }
 
 // MARK: Operators
 
 public func +<Key, Value> (lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
-    return lhs.merging(rhs)
+    lhs.merging(rhs)
 }
 
 public func +<Key, Value> (lhs: [Key: Value], rhs: [Key: Value]?) -> [Key: Value] {
@@ -289,7 +289,7 @@ public protocol OptionalType {
 
 extension Optional: OptionalType {
     public var wrapped: Wrapped? {
-        return self
+        self
     }
 }
 

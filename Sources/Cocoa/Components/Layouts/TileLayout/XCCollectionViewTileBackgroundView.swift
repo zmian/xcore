@@ -42,11 +42,11 @@ final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
     }
 
     override class var layerClass: AnyClass {
-        return CAShapeLayer.self
+        CAShapeLayer.self
     }
 
     private var shapeLayer: CAShapeLayer {
-        return layer as! CAShapeLayer
+        layer as! CAShapeLayer
     }
 
     /// The default value is `.none, 0`.
@@ -57,7 +57,7 @@ final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
     }
 
     override var backgroundColor: UIColor? {
-        get { return shapeLayer.fillColor?.uiColor }
+        get { shapeLayer.fillColor?.uiColor }
         set { shapeLayer.fillColor = newValue?.cgColor }
     }
 
@@ -81,7 +81,7 @@ final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
     }
 
     private func path(rect: CGRect? = nil) -> UIBezierPath {
-        return UIBezierPath(roundedRect: rect ?? bounds, byRoundingCorners: corners.corners, cornerRadii: CGSize(width: corners.radius, height: corners.radius))
+        .init(roundedRect: rect ?? bounds, byRoundingCorners: corners.corners, cornerRadii: CGSize(width: corners.radius, height: corners.radius))
     }
 
     override func layoutSubviews() {

@@ -43,15 +43,15 @@ final public class CarouselViewModel<Model>: CarouselViewModelRepresentable wher
     }
 
     public func numberOfItems() -> Int {
-        return items.count
+        items.count
     }
 
     public func itemViewModel(index: Int) -> Model? {
-        return items.at(index)
+        items.at(index)
     }
 
     public func accessibilityItem(index: Int) -> CarouselAccessibilityItem? {
-        return items.at(index)?.accessibilityItem(index: index)
+        items.at(index)?.accessibilityItem(index: index)
     }
 }
 
@@ -78,7 +78,7 @@ open class CustomCarouselView<Cell: CarouselViewCellType, Model: CarouselViewMod
     ///
     /// The default value is `.default`.
     public var style: Style {
-        get { return carouselCollectionView.style }
+        get { carouselCollectionView.style }
         set { carouselCollectionView.style = newValue }
     }
 
@@ -124,19 +124,19 @@ open class CustomCarouselView<Cell: CarouselViewCellType, Model: CarouselViewMod
     }
 
     public var currentIndex: Int {
-        return carouselCollectionView.currentIndex
+        carouselCollectionView.currentIndex
     }
 
     public var numberOfItems: Int {
-        return carouselCollectionView.viewModel?.numberOfItems() ?? 0
+        carouselCollectionView.viewModel?.numberOfItems() ?? 0
     }
 
     public var visibleCells: [Cell] {
-        return (carouselCollectionView.visibleCells as? [Cell]) ?? []
+        (carouselCollectionView.visibleCells as? [Cell]) ?? []
     }
 
     open var accessibilityElement: UIAccessibilityElement? {
-        return carouselAccessibilityElement
+        carouselAccessibilityElement
     }
 
     private var carouselAccessibilityElement: CarouselAccessibilityElement<Cell, Model>?
@@ -232,7 +232,7 @@ open class CustomCarouselView<Cell: CarouselViewCellType, Model: CarouselViewMod
     // MARK: - API
 
     open func cellForItem(at index: Int) -> Cell? {
-        return carouselCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? Cell
+        carouselCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? Cell
     }
 
     open func reloadData() {
@@ -320,19 +320,19 @@ private final class CarouselAccessibilityElement<Cell: CarouselViewCellType, Mod
     }
 
     override var accessibilityLabel: String? {
-        get { return accessibilityItem?.label }
+        get { accessibilityItem?.label }
         // swiftlint:disable:next unused_setter_value
         set { }
     }
 
     override var accessibilityValue: String? {
-        get { return accessibilityItem?.value }
+        get { accessibilityItem?.value }
         // swiftlint:disable:next unused_setter_value
         set { }
     }
 
     override var accessibilityTraits: UIAccessibilityTraits {
-        get { return .adjustable }
+        get { .adjustable }
         set { super.accessibilityTraits = newValue }
     }
 

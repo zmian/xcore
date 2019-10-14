@@ -78,7 +78,7 @@ extension Collection {
     /// - Returns: A count of elements that satisfy the given predicate.
     /// - Complexity: O(_n_), where _n_ is the length of the sequence.
     public func count(where predicate: (Element) throws -> Bool) rethrows -> Int {
-        return try filter(predicate).count
+        try filter(predicate).count
     }
 }
 

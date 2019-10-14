@@ -48,32 +48,32 @@ extension Router.Route {
 extension Router.Route.Options {
     // Automatic
 
-    public static var automatic: Router.Route<Type>.Options {
-        return .automatic(animated: true)
+    public static var automatic: Self {
+        .automatic(animated: true)
     }
 
-    public static func automatic(animated: Bool) -> Router.Route<Type>.Options {
-        return .init(transition: .automatic, animated: animated)
+    public static func automatic(animated: Bool) -> Self {
+        .init(transition: .automatic, animated: animated)
     }
 
     // Push
 
-    public static var push: Router.Route<Type>.Options {
-        return .push(animated: true)
+    public static var push: Self {
+        .push(animated: true)
     }
 
-    public static func push(animated: Bool) -> Router.Route<Type>.Options {
-        return .init(transition: .push, animated: animated)
+    public static func push(animated: Bool) -> Self {
+        .init(transition: .push, animated: animated)
     }
 
     // Modal
 
-    public static var modal: Router.Route<Type>.Options {
-        return .modal(animated: true)
+    public static var modal: Self {
+        .modal(animated: true)
     }
 
-    public static func modal(animated: Bool) -> Router.Route<Type>.Options {
-        return .init(transition: .modal, animated: animated)
+    public static func modal(animated: Bool) -> Self {
+        .init(transition: .modal, animated: animated)
     }
 }
 

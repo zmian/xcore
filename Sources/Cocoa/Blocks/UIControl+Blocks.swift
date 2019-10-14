@@ -35,7 +35,7 @@ private class ControlClosureWrapper: NSObject, NSCopying {
     }
 
     @objc func copy(with zone: NSZone?) -> Any {
-        return ControlClosureWrapper(event: event, closure: closure)
+        ControlClosureWrapper(event: event, closure: closure)
     }
 
     @objc func invoke(_ sender: AnyObject) {
@@ -51,7 +51,7 @@ extension UIControl: ControlTargetActionBlockRepresentable {
     }
 
     fileprivate var actionEvent: [UInt: ControlClosureWrapper]? {
-        get { return associatedObject(&AssociatedKey.actionHandler) }
+        get { associatedObject(&AssociatedKey.actionHandler) }
         set { setAssociatedObject(&AssociatedKey.actionHandler, value: newValue) }
     }
 }

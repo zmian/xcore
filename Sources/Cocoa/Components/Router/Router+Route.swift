@@ -39,25 +39,25 @@ extension Router {
     /// final class AuthenticationRouter: RouteHandler { }
     ///
     /// extension Router.Route where Type == AuthenticationRouter {
-    ///     static var login: Router.Route {
-    ///         return .init(LoginViewController())
+    ///     static var login: Self {
+    ///         .init(LoginViewController())
     ///     }
     /// }
     ///
     /// final class MainRouter: RouteHandler { }
     ///
     /// extension Router.Route where Type == MainRouter {
-    ///     static var home: Router.Route {
-    ///         return .init(HomeViewController())
+    ///     static var home: Self {
+    ///         .init(HomeViewController())
     ///     }
     ///
-    ///     static var profile(user: User) -> Router.Route {
-    ///         return .init(ProfileViewController(user: user))
+    ///     static var profile(user: User) -> Self {
+    ///         .init(ProfileViewController(user: user))
     ///     }
     ///
-    ///     static var likes(user: User) -> Router.Route {
-    ///         return .init { router in
-    ///             return LikesViewController(user: user).apply {
+    ///     static var likes(user: User) -> Self {
+    ///         .init { router in
+    ///             LikesViewController(user: user).apply {
     ///                 $0.didTapOnProfile {
     ///                    router.route(to: .profile(user: user))
     ///                 }
@@ -65,8 +65,8 @@ extension Router {
     ///         }
     ///     }
     ///
-    ///     static var successAlert(message: String) -> Router.Route {
-    ///         return .custom { _ in
+    ///     static var successAlert(message: String) -> Self {
+    ///         .custom { _ in
     ///             alert(title: "Success", message: message)
     ///         }
     ///     }
@@ -78,11 +78,11 @@ extension Router {
     /// ```
     /// extension Router {
     ///     var main: MainRouter {
-    ///         return register(MainRouter())
+    ///         register(MainRouter())
     ///     }
     ///
     ///    var auth: AuthenticationRouter {
-    ///        return register(AuthenticationRouter())
+    ///        register(AuthenticationRouter())
     ///    }
     /// }
     /// ```
@@ -124,8 +124,8 @@ extension Router {
             }
         }
 
-        public static func custom(id: String? = nil, _ configure: @escaping (Type) -> Void) -> Route {
-            return .init(id: id) { router -> RouteKind in
+        public static func custom(id: String? = nil, _ configure: @escaping (Type) -> Void) -> Self {
+            .init(id: id) { router -> RouteKind in
                 configure(router)
                 return .custom
             }
@@ -136,8 +136,8 @@ extension Router {
 // MARK: - Group
 
 extension Router.Route {
-    static func _group(_ routes: [Router.Route<Type>], options: Router.Route<Type>.Options) -> Router.Route<Type> {
-        return .init { router -> Router.RouteKind in
+    static func _group(_ routes: [Self], options: Self.Options) -> Self {
+        .init { router -> Router.RouteKind in
             var viewControllers: [UIViewController] = []
 
             for route in routes {

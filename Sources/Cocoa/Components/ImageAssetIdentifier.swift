@@ -27,7 +27,7 @@ import UIKit
 extension Bundle {
     /// Method for creating or retrieving bundle instances.
     public static var xcore: Bundle {
-        return Bundle(for: DynamicTableView.self)
+        .init(for: DynamicTableView.self)
     }
 }
 
@@ -54,7 +54,7 @@ public struct ImageAssetIdentifier: RawRepresentable, CustomStringConvertible, E
     }
 
     public var description: String {
-        return rawValue
+        rawValue
     }
 }
 
@@ -66,7 +66,7 @@ extension ImageAssetIdentifier: ExpressibleByStringLiteral {
 
 extension ImageAssetIdentifier: ImageRepresentable {
     public var imageSource: ImageSourceType {
-        return .url(rawValue)
+        .url(rawValue)
     }
 }
 
@@ -114,50 +114,49 @@ public func r(_ assetIdentifier: ImageAssetIdentifier) -> ImageAssetIdentifier {
 // MARK: - Xcore Buit-in Assets
 
 extension ImageAssetIdentifier {
-    private static func propertyName(name: String = #function) -> ImageAssetIdentifier {
-        return ImageAssetIdentifier(rawValue: name, bundle: .xcore)
+    private static func propertyName(name: String = #function) -> Self {
+        .init(rawValue: name, bundle: .xcore)
     }
 
     // MARK: Private
-    static var collectionViewCellDeleteIcon: ImageAssetIdentifier { return propertyName() }
-    static var reorderTableViewCellShadowTop: ImageAssetIdentifier { return propertyName() }
-    static var reorderTableViewCellShadowBottom: ImageAssetIdentifier { return propertyName() }
+    static var collectionViewCellDeleteIcon: Self { propertyName() }
+    static var reorderTableViewCellShadowTop: Self { propertyName() }
+    static var reorderTableViewCellShadowBottom: Self { propertyName() }
 
     // MARK: Carets
-    static var caretDirectionUp: ImageAssetIdentifier { return propertyName() }
-    static var caretDirectionDown: ImageAssetIdentifier { return propertyName() }
-    static var caretDirectionBack: ImageAssetIdentifier { return propertyName() }
-    static var caretDirectionForward: ImageAssetIdentifier { return propertyName() }
+    static var caretDirectionUp: Self { propertyName() }
+    static var caretDirectionDown: Self { propertyName() }
+    static var caretDirectionBack: Self { propertyName() }
+    static var caretDirectionForward: Self { propertyName() }
 
     // MARK: Shared UI Elements
-    public static var closeIcon: ImageAssetIdentifier { return propertyName() }
-    public static var closeIconFilled: ImageAssetIdentifier { return propertyName() }
+    public static var closeIcon: Self { propertyName() }
+    public static var closeIconFilled: Self { propertyName() }
 
-    public static var disclosureIndicator: ImageAssetIdentifier { return propertyName() }
-    public static var disclosureIndicatorFilled: ImageAssetIdentifier { return propertyName() }
+    public static var disclosureIndicator: Self { propertyName() }
+    public static var disclosureIndicatorFilled: Self { propertyName() }
 
     /// Launch screen view uses this to automatically display the launch screen
     /// icon. This must be present in `.main` bundle before using the
     /// `LaunchScreenView`.
-    public static var launchScreenIcon: ImageAssetIdentifier { return #function }
+    public static var launchScreenIcon: Self { #function }
 
     // MARK: Navigation
 
     /// Icon used to replace navigation bar back arrow
-    public static var navigationBarBackArrow: ImageAssetIdentifier { return propertyName() }
-    public static var navigationBackArrow: ImageAssetIdentifier { return propertyName() }
-    public static var navigationForwardArrow: ImageAssetIdentifier { return propertyName() }
+    public static var navigationBarBackArrow: Self { propertyName() }
+    public static var navigationBackArrow: Self { propertyName() }
+    public static var navigationForwardArrow: Self { propertyName() }
 
     // MARK: Arrows
-    public static var arrowRightIcon: ImageAssetIdentifier { return propertyName() }
-    public static var arrowLeftIcon: ImageAssetIdentifier { return propertyName() }
+    public static var arrowRightIcon: Self { propertyName() }
+    public static var arrowLeftIcon: Self { propertyName() }
 
-    public static var filterSelectionIndicatorArrowIcon: ImageAssetIdentifier { return propertyName() }
-    public static var info: ImageAssetIdentifier { return propertyName() }
-    public static var locationIcon: ImageAssetIdentifier { return propertyName() }
-    public static var searchIcon: ImageAssetIdentifier { return propertyName() }
-    public static var validationErrorIcon: ImageAssetIdentifier { return propertyName() }
-
+    public static var filterSelectionIndicatorArrowIcon: Self { propertyName() }
+    public static var info: Self { propertyName() }
+    public static var locationIcon: Self { propertyName() }
+    public static var searchIcon: Self { propertyName() }
+    public static var validationErrorIcon: Self { propertyName() }
 }
 
 // MARK: - Xcore Buit-in Overridable Assets

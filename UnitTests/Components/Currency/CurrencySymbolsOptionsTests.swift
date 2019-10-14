@@ -68,14 +68,14 @@ final class CurrencySymbolsOptionsTests: TestCase {
 
 private struct StubCurrencySymbolsProvider: Currency.SymbolsProvider {
     var currencySymbol: String {
-        return "$"
+        "$"
     }
 
     var groupingSeparator: String {
-        return ","
+        ","
     }
 
     var decimalSeparator: String {
-        return "."
+        "."
     }
 }
