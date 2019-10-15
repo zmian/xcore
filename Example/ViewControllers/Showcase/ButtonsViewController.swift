@@ -25,36 +25,58 @@
 import UIKit
 
 final class ButtonsViewController: UIViewController {
+    private let stackView = UIStackView().apply {
+        $0.axis = .vertical
+        $0.spacing = .maximumPadding
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Buttons"
         view.backgroundColor = .white
-        exampleButtonType()
-        examplePlainButton()
-    }
 
-    private func examplePlainButton() {
-        let button = UIButton()
-        button.text = "Hello World"
-        button.textColor = .red
-        button.sizeToFit()
-        view.addSubview(button)
-
-        button.addAction(.touchUpInside) { _ in
-            print("plain button tapped")
+        view.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(.maximumPadding * 2)
+            make.centerY.equalToSuperview()
         }
 
-        button.center = CGPoint(x: 100, y: 300)
+        addCalloutButton()
+        addPlainButton()
+        addSystemButton()
     }
 
-    private func exampleButtonType() {
-        let button = UIButton(type: .contactAdd)
-        view.addSubview(button)
-
-        button.addAction(.touchUpInside) { _ in
-            print("Contact add button tapped")
+    private func addCalloutButton() {
+        let button = UIButton().apply {
+            $0.configuration = .callout
+            $0.text = "Hello World"
+            $0.addAction(.touchUpInside) { _ in
+                print("callout button tapped")
+            }
         }
 
-        button.center = CGPoint(x: 100, y: 400)
+        stackView.addArrangedSubview(button)
+    }
+
+    private func addPlainButton() {
+        let button = UIButton().apply {
+            $0.text = "Hello World"
+            $0.textColor = .red
+            $0.addAction(.touchUpInside) { _ in
+                print("plain button tapped")
+            }
+        }
+
+        stackView.addArrangedSubview(button)
+    }
+
+    private func addSystemButton() {
+        let button = UIButton(type: .contactAdd).apply {
+            $0.addAction(.touchUpInside) { _ in
+                print("Contact add button tapped")
+            }
+        }
+
+        stackView.addArrangedSubview(button)
     }
 }
