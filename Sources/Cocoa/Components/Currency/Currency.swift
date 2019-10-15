@@ -27,7 +27,7 @@ import Foundation
 public enum Currency {}
 
 /*
-public struct Currency: Equatable, With {
+public struct Currency: Equatable, MutableAppliable {
     public init(_ amount: Double? = nil) {
         self.amount = amount
     }

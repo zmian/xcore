@@ -184,10 +184,10 @@ extension UIButton {
         set { setAssociatedObject(&AssociatedKey.initialText, value: newValue) }
     }
 
-    public convenience init(title: String? = nil, configuration: Configuration) {
+    public convenience init(text: String? = nil, configuration: Configuration) {
         self.init(frame: .zero)
         self.configuration = configuration
-        self.initialText = title
+        self.initialText = text
         commonInit()
     }
 

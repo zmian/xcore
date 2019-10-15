@@ -222,7 +222,7 @@ extension Configuration where Type: UIButton {
 
     public static func caret(
         in configuration: Configuration = .plain,
-        title: String,
+        text: String,
         font: UIFont? = nil,
         textColor: UIColor? = nil,
         direction: NSAttributedString.CaretDirection = .forward,
@@ -234,11 +234,11 @@ extension Configuration where Type: UIButton {
             let font = font ?? id.font(button: $0)
             $0.titleLabel?.numberOfLines = 1
 
-            let attributedTitle = NSAttributedString(string: title, font: font, color: textColor, direction: direction, for: .normal)
-            $0.setText(attributedTitle, animated: animated)
+            let attributedText = NSAttributedString(string: text, font: font, color: textColor, direction: direction, for: .normal)
+            $0.setText(attributedText, animated: animated)
 
-            let highlightedAttributedTitle = NSAttributedString(string: title, font: font, color: textColor, direction: direction, for: .highlighted)
-            $0.setAttributedTitle(highlightedAttributedTitle, for: .highlighted)
+            let highlightedAttributedText = NSAttributedString(string: text, font: font, color: textColor, direction: direction, for: .highlighted)
+            $0.setAttributedTitle(highlightedAttributedText, for: .highlighted)
             configure($0, id)
         }
     }
