@@ -301,6 +301,27 @@ extension CustomCarouselView {
     }
 }
 
+// MARK: - Convenience
+
+extension CustomCarouselView {
+    public func setContentOffset(_ contentOffset: CGPoint, async: Bool) {
+        guard async else {
+            carouselCollectionView.contentOffset = contentOffset
+            return
+        }
+
+        // Content offset will not change before the main run loop ends without queuing
+        // it.
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+
+            strongSelf.carouselCollectionView.contentOffset = contentOffset
+        }
+    }
+}
+
 // MARK: - CarouselAccessibilityElement
 
 private final class CarouselAccessibilityElement<Cell: CarouselViewCellType, Model: CarouselViewModelRepresentable>: UIAccessibilityElement where Cell.Model == Model.Model {

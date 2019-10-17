@@ -66,6 +66,11 @@ extension Router.Route.Options {
         .init(transition: .push, animated: animated)
     }
 
+    /// Push the given route without animation.
+    public static var notAnimated: Self {
+        .push(animated: false)
+    }
+
     // Modal
 
     public static var modal: Self {
