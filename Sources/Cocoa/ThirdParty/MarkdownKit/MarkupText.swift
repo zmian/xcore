@@ -27,6 +27,8 @@ import UIKit
 #if canImport(Haring)
 import Haring
 
+// MARK: - MarkupText
+
 public class MarkupText: CustomStringConvertible {
     private var markupText: MarkupTextBuilder
 
@@ -62,6 +64,8 @@ public class MarkupText: CustomStringConvertible {
         markupText.description
     }
 }
+
+// MARK: - MarkupTextBuilder
 
 private indirect enum MarkupTextBuilder: CustomStringConvertible {
     case text(_: String)
@@ -107,4 +111,26 @@ extension MarkupTextBuilder {
         }
     }
 }
+
+// MARK: - MarkupText: Local Link
+
+extension MarkupText {
+    /// Creates a local link with custom scheme. This ensures that the link plays
+    /// nicely with accessibility.
+    ///
+    /// This is useful to create links in attributed string that has local action
+    /// handler.
+    public static func localLink(text: String) -> String {
+        let linkText = text.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? text
+        let linkUrl = "\(URL.Scheme.localLink)://\(linkText)"
+        return "[\(text)](\(linkUrl))"
+    }
+}
+
+// MARK: - Scheme
+
+extension URL.Scheme {
+    public static let localLink: URL.Scheme = "locallink"
+}
+
 #endif
