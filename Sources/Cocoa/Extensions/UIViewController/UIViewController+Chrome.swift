@@ -38,15 +38,15 @@ extension UIViewController {
     @objc(UIViewControllerDefaultAppearance)
     final public class DefaultAppearance: NSObject {
         /// The default value is `.app(style: .body)`
-        public var font: UIFont = .app(style: .body)
+        public lazy var font: UIFont = .app(style: .body)
         /// The default value is `.appTint`.
-        public var tintColor: UIColor = .appTint
+        public lazy var tintColor: UIColor = .appTint
         /// The default value is `.transparent`.
-        public var preferredStatusBarBackground: Chrome.Style = .transparent
+        public lazy var preferredStatusBarBackground: Chrome.Style = .transparent
         /// The default value is `.blurred`.
-        public var preferredNavigationBarBackground: Chrome.Style = .blurred
+        public lazy var preferredNavigationBarBackground: Chrome.Style = .blurred
         /// The default value is `false`.
-        public var prefersTabBarHidden: Bool = false
+        public lazy var prefersTabBarHidden: Bool = false
         fileprivate override init() {}
     }
 }
