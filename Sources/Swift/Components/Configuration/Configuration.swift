@@ -91,19 +91,19 @@ extension UILabel {
     }
 }
 
-// MARK: - Stylable
+// MARK: - ConfigurationInitializable
 
-public protocol Stylable { }
+public protocol ConfigurationInitializable { }
 
-extension Stylable where Self: UIView {
+extension ConfigurationInitializable where Self: UIView {
     public init(configuration: Configuration<Self>) {
         self.init()
         configuration.configure(self)
     }
 }
 
-extension UIView: Stylable { }
-extension UIBarButtonItem: Stylable { }
+extension UIView: ConfigurationInitializable { }
+extension UIBarButtonItem: ConfigurationInitializable { }
 
 extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
     public init(configuration: Configuration<Self>, _ handler: ((_ sender: Self) -> Void)? = nil) {
