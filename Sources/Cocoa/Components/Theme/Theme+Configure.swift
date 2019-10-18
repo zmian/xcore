@@ -176,8 +176,6 @@ extension Theme {
 
         UIViewController.defaultAppearance.apply {
             $0.tintColor = current.tintColor
-            $0.font = .app(style: .body)
-            $0.preferredNavigationBarBackground = .transparent
             $0.prefersTabBarHidden = true
         }
 
