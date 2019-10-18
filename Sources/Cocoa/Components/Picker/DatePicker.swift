@@ -42,6 +42,8 @@ final public class DatePicker: DrawerScreen.Content, Appliable {
     private lazy var toolbar = InputToolbar().apply {
         $0.backgroundColor = .clear
         $0.didTapDone { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.didChangeValue?(strongSelf.pickerView.date)
             DrawerScreen.dismiss()
         }
 
