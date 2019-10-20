@@ -57,6 +57,14 @@ extension Appliable {
         configuration.configure(self)
         return self
     }
+
+    @discardableResult
+    public func apply(_ configurations: [Configuration<Self>]) -> Self {
+        configurations.forEach {
+            $0.configure(self)
+        }
+        return self
+    }
 }
 
 // MARK: - Appliable: Array
