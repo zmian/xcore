@@ -29,7 +29,7 @@ import Foundation
 /// ```
 @propertyWrapper
 public struct DelayedMutable<Value> {
-    private var _value: Value? = nil
+    private var _value: Value?
 
     public init() {}
 

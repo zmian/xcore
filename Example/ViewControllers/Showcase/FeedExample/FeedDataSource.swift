@@ -81,16 +81,16 @@ final class FeedDataSource: XCCollectionViewDataSource {
 
     override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
         let globalIndexPath = indexPath.with(globalSection)
-        let header = collectionView.dequeueReusableSupplementaryView(.header, for: globalIndexPath) as FeedTextHeaderFooterViewCell
-        header.configure(title: "S: \(globalIndexPath.section)")
-        return header
+        let headerView = collectionView.dequeueReusableSupplementaryView(.header, for: globalIndexPath) as FeedTextHeaderFooterViewCell
+        headerView.configure(title: "S: \(globalIndexPath.section)")
+        return headerView
     }
 
     override func collectionView(_ collectionView: UICollectionView, viewForFooterInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
         let globalIndexPath = indexPath.with(globalSection)
-        let footer = collectionView.dequeueReusableSupplementaryView(.footer, for: globalIndexPath) as FeedTextHeaderFooterViewCell
-        footer.configure(title: "FOOTER!")
-        return footer
+        let footerView = collectionView.dequeueReusableSupplementaryView(.footer, for: globalIndexPath) as FeedTextHeaderFooterViewCell
+        footerView.configure(title: "FOOTER!")
+        return footerView
     }
 }
 

@@ -185,6 +185,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
         let targetSection = originalAttributes.indexPath.section
         for attributes in attributesBySection[targetSection] {
+            // swiftlint:disable:next for_where
             if attributes != storedAttributes, attributes.offsetInSection >= storedAttributes.offsetInSection {
                 attributes.offsetInSection += heightDifference
             }
