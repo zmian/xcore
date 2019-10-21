@@ -103,7 +103,7 @@ public struct Theme: Equatable {
         self.buttonBackgroundColorSecondary = buttonBackgroundColorSecondary
         self.buttonBackgroundColorPill = buttonBackgroundColorPill
         self.statusBarStyle = statusBarStyle
-        self.chrome =  chrome ?? (isDark ? .color(backgroundColor) : .blurred)
+        self.chrome = chrome ?? (isDark ? .color(backgroundColor) : .blurred)
     }
 }
 

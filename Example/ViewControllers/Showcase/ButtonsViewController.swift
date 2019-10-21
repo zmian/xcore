@@ -50,7 +50,7 @@ final class ButtonsViewController: UIViewController {
         let button = UIButton().apply {
             $0.configuration = .callout
             $0.text = "Hello World"
-            $0.addAction(.touchUpInside) { _ in
+            $0.action { _ in
                 print("callout button tapped")
             }
         }
@@ -62,7 +62,7 @@ final class ButtonsViewController: UIViewController {
         let button = UIButton().apply {
             $0.text = "Hello World"
             $0.textColor = .red
-            $0.addAction(.touchUpInside) { _ in
+            $0.action { _ in
                 print("plain button tapped")
             }
         }
@@ -72,7 +72,7 @@ final class ButtonsViewController: UIViewController {
 
     private func addSystemButton() {
         let button = UIButton(type: .contactAdd).apply {
-            $0.addAction(.touchUpInside) { _ in
+            $0.action { _ in
                 print("Contact add button tapped")
             }
         }
