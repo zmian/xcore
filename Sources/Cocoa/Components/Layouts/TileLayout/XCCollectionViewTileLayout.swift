@@ -26,6 +26,7 @@ import UIKit
 
 open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     private let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
+    private let UICollectionElementKindSectionStacked = "UICollectionElementKindSectionStacked"
 
     public var numberOfColumns = 1 {
         didSet {
@@ -78,6 +79,11 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
     public var estimatedItemHeight: CGFloat = 200
     public var estimatedHeaderFooterHeight: CGFloat = 44
+    public var isStackingEnabled = false {
+        didSet {
+            shouldReloadAttributes = true
+        }
+    }
 
     private var cachedContentSize: CGSize = .zero
     private var shouldReloadAttributes = true
@@ -90,6 +96,9 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     private var footerAttributes = [Int: Attributes]()
     private var headerAttributes = [Int: Attributes]()
     private var sectionBackgroundAttributes = [Int: Attributes]()
+
+    private var stackedAttributes = [Int: Attributes]()
+
     private var cachedDelegateAttributes = [(Int, Bool, CGFloat)]()
     private var cachedSectionCount: Int?
 
@@ -113,6 +122,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
     private func commonInit() {
         register(XCCollectionViewTileBackgroundView.self, forDecorationViewOfKind: UICollectionElementKindSectionBackground)
+        register(XCCollectionViewTileStackSelector.self, forDecorationViewOfKind: UICollectionElementKindSectionStacked)
     }
 
     open override func prepare() {
@@ -216,8 +226,14 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
             sectionIndexesByColumn.append([Int]())
         }
 
+        var stackedInfo: (previousHeight: CGFloat, stackIdentifier: String)?
+        var zIndex = 0
+
         for section in 0..<endIndex {
             cachedParameters = cachedDelegateAttributes.at(section)
+
+            let stackIdentifier = stackedIdentifier(forSectionAt: section)
+
             itemCount = cachedParameters?.itemCount ?? collectionView.numberOfItems(inSection: section)
             tileEnabled = cachedParameters?.isTileEnabled ?? self.isTileEnabled(forSectionAt: section)
             if numberOfColumns > 1 {
@@ -237,9 +253,21 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
             offset.x = tileEnabled ? (itemWidth + interColumnSpacing) * CGFloat(currentColumn) + margin : 0
             offset.y = columnYOffset[currentColumn]
 
-            if itemCount > 0 {
-                // Add vertical spacing
-                offset.y += offset.y > 0 ? verticalSpacing : 0
+            if let stackedInfo = stackedInfo, stackIdentifier == stackedInfo.stackIdentifier {
+                // Next stacked section
+                offset.y -= stackedInfo.previousHeight
+                offset.y += 20.0
+                zIndex += 1
+            } else {
+                // Next Section
+                zIndex = 0
+                if itemCount > 0 {
+                    // Add vertical spacing
+                    offset.y += offset.y > 0 ? verticalSpacing : 0
+                }
+                if stackIdentifier != nil {
+                    offset.y += 30.0
+                }
             }
 
             // Create item attributes
@@ -247,12 +275,17 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                 // Create section rect
                 sectionRects.append(CGRect(origin: offset, size: CGSize(width: itemWidth, height: 0)))
                 // Update height of section rect
-                sectionRects[section].size.height = createAttributes(for: section, itemWidth: itemWidth, itemCount: itemCount)
+                sectionRects[section].size.height = createAttributes(for: section, itemWidth: itemWidth, itemCount: itemCount, zIndex: zIndex)
             } else {
                 sectionRects[section].origin = offset
             }
 
             offset.y += sectionRects[section].height
+
+            if let stackIdentifier = stackIdentifier {
+                stackedInfo = (sectionRects[section].height, stackIdentifier)
+            }
+
             if tileEnabled {
                 columnYOffset[currentColumn] = offset.y
             } else {
@@ -265,7 +298,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
         cachedContentSize = CGSize(width: collectionView.bounds.width, height: self.maxColumn(self.columnsHeight).height + verticalSpacing)
     }
 
-    private func createAttributes(for section: Int, itemWidth: CGFloat, itemCount: Int) -> CGFloat {
+    private func createAttributes(for section: Int, itemWidth: CGFloat, itemCount: Int, zIndex: Int = 0, addStackedHeader: Bool = false) -> CGFloat {
         var offsetInSection: CGFloat = 0
         var sectionAttributes = [Attributes]()
         guard itemCount > 0 else {
@@ -289,6 +322,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                 $0.isAutosizeEnabled = isAutosizingEnabled && headerInfo.height == nil
                 $0.offsetInSection = offsetInSection
                 $0.shouldDim = shouldDimElements
+                $0.zIndex = zIndex
             }
 
             headerAttributes[section] = attributes
@@ -324,6 +358,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
                 $0.offsetInSection = offsetInSection
                 $0.shouldDim = shouldDimElements
+                $0.zIndex = zIndex
             }
             layoutAttributes[indexPath] = attributes
             offsetInSection += attributes.size.height
@@ -342,6 +377,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                 $0.isAutosizeEnabled = isAutosizingEnabled && footerInfo.height == nil
                 $0.offsetInSection = offsetInSection
                 $0.shouldDim = shouldDimElements
+                $0.zIndex = zIndex
             }
             footerAttributes[section] = attributes
             offsetInSection += attributes.size.height
@@ -353,7 +389,18 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
     private func calculateBackgroundAttributes() {
         guard let collectionView = self.collectionView else { return }
+        var prevStackedIdentifier: String?
         for section in 0..<collectionView.numberOfSections {
+            if let stackedIdentifier = stackedIdentifier(forSectionAt: section),
+                stackedIdentifier != prevStackedIdentifier {
+                let attributes = stackedAttributes[section] ?? Attributes(
+                    forDecorationViewOfKind: UICollectionElementKindSectionStacked,
+                    with: IndexPath(item: 0, section: section)
+                )
+                stackedAttributes[section] = attributes
+                prevStackedIdentifier = stackedIdentifier
+            }
+
             guard
                 isShadowEnabled(forSectionAt: section),
                 isTileEnabled(forSectionAt: section),
@@ -420,26 +467,43 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
     private func addAttributesOf(section sectionIndex: Int, within rect: CGRect, in elementsInRect: inout [Attributes]) -> Bool {
         let sectionRect = sectionRects[sectionIndex]
-        guard yAxisIntersection(element1: rect, element2: sectionRects[sectionIndex]) == .orderedSame else {
+        guard yAxisIntersection(element1: rect, element2: sectionRect) == .orderedSame else {
             return false
         }
-        if let backgroundAttribute = sectionBackgroundAttributes[sectionIndex] {
-            backgroundAttribute.frame = sectionRect
-            elementsInRect.append(backgroundAttribute)
+        updateAttributesIfNeededOf(section: sectionIndex)
+        elementsInRect.append(contentsOf: attributesBySection[sectionIndex])
+        if let backgroundAttributes = sectionBackgroundAttributes[sectionIndex] {
+            elementsInRect.append(backgroundAttributes)
         }
-        for attributes in attributesBySection[sectionIndex] {
-            attributes.frame.origin = CGPoint(x: sectionRect.origin.x, y: sectionRect.origin.y + attributes.offsetInSection)
-            elementsInRect.append(attributes)
+        if let stackedAttributes = stackedAttributes[sectionIndex] {
+             elementsInRect.append(stackedAttributes)
         }
         return true
     }
 
+    private func updateAttributesIfNeededOf(section sectionIndex: Int) {
+        let sectionRect = sectionRects[sectionIndex]
+        for attributes in attributesBySection[sectionIndex] {
+            let origin = CGPoint(x: sectionRect.origin.x, y: sectionRect.origin.y + attributes.offsetInSection)
+            guard origin != attributes.frame.origin else { return }
+            attributes.frame.origin = origin
+        }
+        if let backgroundAttribute = sectionBackgroundAttributes[sectionIndex] {
+            backgroundAttribute.frame = sectionRect
+        }
+        if let stackedAttribute = stackedAttributes[sectionIndex] {
+            stackedAttribute.frame = CGRect(x: sectionRect.origin.x, y: sectionRect.origin.y - 30.0, width: sectionRect.width, height: 20.0)
+        }
+    }
+
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        layoutAttributes[indexPath]
+        updateAttributesIfNeededOf(section: indexPath.section)
+        return layoutAttributes[indexPath]
     }
 
     open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         guard indexPath.item == 0 else { return nil }
+        updateAttributesIfNeededOf(section: indexPath.section)
         switch elementKind {
             case UICollectionView.elementKindSectionHeader:
                 return headerAttributes[indexPath.section]
@@ -452,9 +516,12 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
     open override func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         guard indexPath.item == 0 else { return nil }
+        updateAttributesIfNeededOf(section: indexPath.section)
         switch elementKind {
             case UICollectionElementKindSectionBackground:
                 return sectionBackgroundAttributes[indexPath.section]
+            case UICollectionElementKindSectionStacked:
+                return stackedAttributes[indexPath.section]
             default:
                 return super.layoutAttributesForDecorationView(ofKind: elementKind, at: indexPath)
         }
@@ -625,5 +692,13 @@ extension XCCollectionViewTileLayout {
         }
 
         return delegate.collectionView(collectionView, layout: self, cornerRadiusInSection: section)
+    }
+
+    private func stackedIdentifier(forSectionAt section: Int) -> String? {
+        guard isStackingEnabled else { return nil }
+        if section < 5 {
+            return "FirstSection"
+        }
+        return nil
     }
 }
