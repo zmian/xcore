@@ -29,7 +29,7 @@ final class FeedViewController: XCComposedCollectionViewController {
     private var isStackingEnabled = false {
         didSet {
             let newLayout = XCCollectionViewTileLayout().apply {
-                $0.isStackingEnabled = true
+                $0.isStackingEnabled = isStackingEnabled
             }
             collectionView.setCollectionViewLayout(newLayout, animated: true)
         }
