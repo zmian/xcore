@@ -78,7 +78,7 @@ extension IconLabelCollectionView.Cell {
     open func configure(_ data: ImageTitleDisplayable, at indexPath: IndexPath, collectionView: IconLabelCollectionView) {
         iconLabelView.configure(data)
         setDeleteButtonHidden(!collectionView.isEditing, animated: false)
-        deleteButton.addAction(.touchUpInside) { [weak collectionView] sender in
+        deleteButton.action { [weak collectionView] _ in
             collectionView?.removeItems([indexPath])
         }
     }

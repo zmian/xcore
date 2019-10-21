@@ -202,7 +202,7 @@ extension UIButton {
         observeHeightSetAutomaticallySetter = false
         contentEdgeInsets = UIEdgeInsets(horizontal: .defaultPadding)
         prepareForReuse()
-        configuration.configure(self)
+        apply(configuration)
         updateHeightConstraintIfNeeded()
         observeHeightSetAutomaticallySetter = true
     }
@@ -512,7 +512,7 @@ extension UIButton {
     /// the button and have the cell listen for it and then manually call the
     /// `didSelectItemAt` logic in multiple places.
     @objc open func forwardTouchUpInsideActionToCollectionViewDelegate() {
-        addAction(.touchUpInside) { [weak self] _ in
+        action { [weak self] _ in
             guard let strongSelf = self, let cell = strongSelf.collectionViewCell else { return }
             cell.select(animated: false, shouldNotifyDelegate: true)
         }
