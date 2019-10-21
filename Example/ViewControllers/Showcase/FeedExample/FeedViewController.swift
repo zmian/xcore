@@ -26,6 +26,14 @@ import UIKit
 
 final class FeedViewController: XCComposedCollectionViewController {
     private var sources = [FeedDataSource]()
+    private var isStackingEnabled = false {
+        didSet {
+            let newLayout = XCCollectionViewTileLayout().apply {
+                $0.isStackingEnabled = true
+            }
+            collectionView.setCollectionViewLayout(newLayout, animated: true)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,13 +41,13 @@ final class FeedViewController: XCComposedCollectionViewController {
         collectionView.backgroundColor = .clear
         collectionView.contentInset.top = view.safeAreaInsets.top
 
-        layout = .init(XCCollectionViewTileLayout().apply {
-            $0.numberOfColumns = 3
-        })
+        recreateSources()
+        layout = .init(XCCollectionViewTileLayout())
 
         Timer.scheduledTimer(withTimeInterval: 6, repeats: true) { [weak self] _ in
-            self?.recreateSources()
+            self?.isStackingEnabled.toggle()
         }
+
     }
 
     override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
@@ -52,12 +60,6 @@ final class FeedViewController: XCComposedCollectionViewController {
 
         for i in 0..<sourcesCount {
             let source = FeedDataSource(collectionView: collectionView)
-            if i.isMultiple(of: 2) {
-                source.isShadowEnabled = false
-            }
-            if i.isMultiple(of: 3) {
-                source.cornerRadius = 3
-            }
             sources.append(source)
         }
 

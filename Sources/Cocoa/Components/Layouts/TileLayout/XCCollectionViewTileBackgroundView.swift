@@ -98,3 +98,39 @@ final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
         }
     }
 }
+
+final class XCCollectionViewTileStackSelector: UICollectionReusableView {
+    // MARK: - Init Methods
+
+    convenience init() {
+        self.init(frame: .zero)
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+
+    private let button = UIButton().apply {
+        $0.text = "Tap me boy!"
+        $0.addAction(.touchUpInside) { _ in
+            print("This button was tapped")
+        }
+    }
+
+    private func commonInit() {
+        addSubview(button)
+        button.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+    }
+
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+    }
+}

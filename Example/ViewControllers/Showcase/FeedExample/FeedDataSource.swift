@@ -28,7 +28,7 @@ final class FeedDataSource: XCCollectionViewDataSource {
     static var isRandomEnabled = false
 
     lazy var names: [(String, String)] = {
-        let cellCount = Int.random(in: 0...1)
+        let cellCount = Int.random(in: 1...1)
         let textSize = Int.random(in: 1...3)
 
         guard cellCount > 0 else {
