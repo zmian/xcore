@@ -115,15 +115,6 @@ extension XCCollectionReusableView {
             flowAttributes.alpha = (flowAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
             alpha = attributes.alpha
         }
-
-        if let tileAttributes = attributes as? XCCollectionViewTileLayout.Attributes, tileAttributes.isAutosizeEnabled {
-            let size = super.systemLayoutSizeFitting(
-                attributes.size,
-                withHorizontalFittingPriority: .required,
-                verticalFittingPriority: .fittingSizeLevel
-            )
-            attributes.frame.size = size
-        }
         return attributes
     }
 

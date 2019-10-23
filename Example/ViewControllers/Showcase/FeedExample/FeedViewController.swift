@@ -28,10 +28,9 @@ final class FeedViewController: XCComposedCollectionViewController {
     private var sources = [FeedDataSource]()
     private var isStackingEnabled = false {
         didSet {
-            let newLayout = XCCollectionViewTileLayout().apply {
-                $0.isStackingEnabled = isStackingEnabled
-            }
-            collectionView.setCollectionViewLayout(newLayout, animated: true)
+            collectionView.performBatchUpdates({
+                (collectionView.collectionViewLayout as? XCCollectionViewTileLayout)?.isStackingEnabled.toggle()
+            })
         }
     }
 
@@ -44,9 +43,9 @@ final class FeedViewController: XCComposedCollectionViewController {
         recreateSources()
         layout = .init(XCCollectionViewTileLayout())
 
-        Timer.scheduledTimer(withTimeInterval: 6, repeats: true) { [weak self] _ in
-            self?.isStackingEnabled.toggle()
-        }
+//        Timer.scheduledTimer(withTimeInterval: 6, repeats: true) { [weak self] _ in
+//            self?.isStackingEnabled.toggle()
+//        }
 
     }
 
@@ -56,7 +55,7 @@ final class FeedViewController: XCComposedCollectionViewController {
 
     private func recreateSources() {
         sources.removeAll()
-        let sourcesCount = Int.random(in: 100...120)
+        let sourcesCount = 6
 
         for i in 0..<sourcesCount {
             let source = FeedDataSource(collectionView: collectionView)
@@ -65,5 +64,9 @@ final class FeedViewController: XCComposedCollectionViewController {
 
         composedDataSource.dataSources = dataSources(for: collectionView)
         collectionView.reloadData()
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        isStackingEnabled.toggle()
     }
 }
