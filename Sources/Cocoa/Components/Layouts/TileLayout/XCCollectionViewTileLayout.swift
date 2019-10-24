@@ -139,13 +139,13 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                 sectionIndexesByColumn: sectionIndexesByColumn
             )
 
-            sectionRects.removeAll()
             attributesBySection.removeAll()
             layoutAttributes.removeAll()
             footerAttributes.removeAll()
             headerAttributes.removeAll()
             sectionBackgroundAttributes.removeAll()
             firstParentIndexByIdentifier.removeAll()
+            sectionRects.removeAll()
 
             cachedContentSize = .zero
             calculateAttributes()
@@ -466,6 +466,32 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
         return nil
     }
 
+    open override func finalLayoutAttributesForDisappearingDecorationElement(ofKind elementKind: String, at decorationIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        print("This decorative will be deleted \(decorationIndexPath)")
+        guard let beforeElements = beforeElements else {
+            return nil
+        }
+
+        if let attributes = beforeElements.sectionBackgroundAttributes[decorationIndexPath.section] {
+            // Moved items
+            if let newAttributes = sectionBackgroundAttributes[decorationIndexPath.section] {
+                guard let returnAttributes = newAttributes.copy() as? Attributes else { return nil }
+                return returnAttributes
+            }
+
+            // Stacked items go to their parents origin
+            if
+                let parentIdentifier = attributes.parentIdentifier,
+                let parentSectionIndex = beforeElements.firstParentIndexByIdentifier[parentIdentifier]
+            {
+                attributes.frame.origin = sectionRects[parentSectionIndex].origin
+            }
+            attributes.alpha = 0
+            return attributes
+        }
+        return nil
+    }
+
     open override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         print("This will be added \(itemIndexPath)")
         guard let beforeElements = beforeElements else {
@@ -494,7 +520,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
             newAttributes.alpha = 0.0
             return newAttributes
         }
-
         return nil
     }
 
@@ -503,42 +528,28 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
         guard let beforeElements = beforeElements else {
             return nil
         }
-        // Moved items
-        if let attributes = beforeElements.sectionBackgroundAttributes[decorationIndexPath.section] {
-             return attributes
-        }
-        // Inserted items
+
         if let attributes = sectionBackgroundAttributes[decorationIndexPath.section] {
-            guard
+            // Stacked items
+            if
                 let parentIdentifier = attributes.parentIdentifier,
-                let parentSectionIndex = firstParentIndexByIdentifier[parentIdentifier],
-                parentSectionIndex != decorationIndexPath.section
-            else {
-                return nil
+                let parentSectionIndex = firstParentIndexByIdentifier[parentIdentifier]
+            {
+                guard let newAttributes = attributes.copy() as? Attributes else { return nil }
+                newAttributes.frame.origin = beforeElements.sectionRects[parentSectionIndex].origin
+                newAttributes.alpha = 0.0
+                return newAttributes
             }
+
+            // Moved items
+            if let oldAttributes = beforeElements.sectionBackgroundAttributes[decorationIndexPath.section] {
+                 return oldAttributes
+            }
+
+            // New Items
             guard let newAttributes = attributes.copy() as? Attributes else { return nil }
-            newAttributes.frame.origin = sectionRects[parentSectionIndex].origin
+            newAttributes.alpha = 0.0
             return newAttributes
-        }
-        return nil
-    }
-
-    open override func finalLayoutAttributesForDisappearingDecorationElement(ofKind elementKind: String, at decorationIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-                guard let beforeElements = beforeElements else {
-            return nil
-        }
-
-        // Stacked items go to their parents origin
-        if let attributes = beforeElements.sectionBackgroundAttributes[decorationIndexPath.section] {
-            guard
-                let parentIdentifier = attributes.parentIdentifier,
-                let parentSectionIndex = beforeElements.firstParentIndexByIdentifier[parentIdentifier],
-                parentSectionIndex != decorationIndexPath.section
-            else {
-                return nil
-            }
-            attributes.frame.origin = sectionRects[parentSectionIndex].origin
-            return attributes
         }
         return nil
     }

@@ -100,8 +100,13 @@ extension AlertDataSource: XCCollectionViewTileLayoutCustomizable {
         true
     }
 
-    func isShadowEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
-        false
+    func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> Bool {
+        switch section {
+            case 0, 2:
+                return false
+            default:
+                return true
+        }
     }
 
     func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> String? {
