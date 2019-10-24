@@ -210,7 +210,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                     offset.y += createStackAttributes(for: section, offset: offset, itemWidth: itemWidth, zIndex: zIndex)
                 }
             }
-
+            print("This is the section \(section) and \(isStackedHidden)")
             let initialRect = CGRect(origin: offset, size: CGSize(width: itemWidth, height: 0))
             let sectionRect = createAttributes(for: section, rect: initialRect, itemCount: itemCount, zIndex: zIndex, alpha: isStackedHidden ? 0.0 : 1.0)
             // Update height of section rect
@@ -623,7 +623,7 @@ extension XCCollectionViewTileLayout {
     }
 
     private func stackedIdentifier(forSectionAt section: Int) -> String? {
-        if section < 4 {
+        if section < 10 {
             return "FirstSection"
         }
         return nil
