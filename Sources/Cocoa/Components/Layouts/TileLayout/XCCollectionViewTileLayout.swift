@@ -72,7 +72,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
     public var estimatedItemHeight: CGFloat = 200
     public var estimatedHeaderFooterHeight: CGFloat = 44
-    public var isStackingEnabled = false {
+    public var isStackingEnabled = true {
         willSet {
             shouldReloadAttributes = true
         }
