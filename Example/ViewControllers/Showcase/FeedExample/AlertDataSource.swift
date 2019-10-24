@@ -189,8 +189,35 @@ extension AlertDataSource {
             $0.backgroundColor = UIColor.white.darker(0.2)
         }
 
-        override func layoutSubviews() {
-            super.layoutSubviews()
+        override var bounds: CGRect {
+            didSet {
+                stackView.layoutIfNeeded()
+                roundLowerCorner(of: firstBottomView)
+                roundLowerCorner(of: secondBottomView)
+            }
+        }
+
+        func roundLowerCorner(of view: UIView) {
+            let cornerRadius: CGFloat = 11
+            let path = CGMutablePath()
+            path.addLine(to: CGPoint(x: 0.0, y: view.frame.width))
+            path.addRelativeArc(
+                center: CGPoint(x: view.frame.width - cornerRadius, y: 0.0),
+                radius: cornerRadius,
+                startAngle: 0,
+                delta: .pi2
+            )
+            path.addLine(to: CGPoint(x: cornerRadius, y: view.frame.height))
+            path.addRelativeArc(
+                center: CGPoint(x: cornerRadius, y: 0.0),
+                radius: cornerRadius,
+                startAngle: .pi2,
+                delta: .pi2
+            )
+            view.layer.masksToBounds = true
+            view.layer.mask = CAShapeLayer().apply {
+                $0.path = path
+            }
         }
 
         override func commonInit() {
