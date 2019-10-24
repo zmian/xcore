@@ -45,9 +45,9 @@ final class FeedViewController: XCComposedCollectionViewController {
         let alertSource = AlertDataSource(collectionView: collectionView)
         allDataSources.append(alertSource)
         self.alertSource = alertSource
-        for i in 3...6 {
-            allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
-        }
+//        for i in 3...6 {
+//            allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
+//        }
         return allDataSources
     }
 }

@@ -96,8 +96,8 @@ extension FeedDataSource: XCCollectionViewTileLayoutCustomizable {
         isTileEnabled
     }
 
-    func isShadowEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
-        false
+    func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> Bool {
+        true
     }
 
     func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat {
