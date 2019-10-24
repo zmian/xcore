@@ -30,7 +30,6 @@ final class FeedViewController: XCComposedCollectionViewController {
         didSet {
             collectionView.performBatchUpdates({
                 (collectionView.collectionViewLayout as? XCCollectionViewTileLayout)?.isStackingEnabled.toggle()
-                collectionView.collectionViewLayout.invalidateLayout()
             })
         }
     }
