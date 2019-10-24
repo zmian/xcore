@@ -30,6 +30,7 @@ public protocol XCCollectionViewTileLayoutCustomizable {
     func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool
     func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat
     func isShadowEnabled(in layout: XCCollectionViewTileLayout) -> Bool
+    func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> String?
 }
 
 extension XCCollectionViewTileLayoutCustomizable {
@@ -43,6 +44,10 @@ extension XCCollectionViewTileLayoutCustomizable {
 
     public func isShadowEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
         true
+    }
+
+    public func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> String? {
+        return nil
     }
 }
 
@@ -96,6 +101,14 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
             return collectionViewLayout.cornerRadius
         }
         return custom.cornerRadius(in: collectionViewLayout)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, parentIdentifierInSection section: Int) -> String? {
+        let source = composedDataSource.index(for: section)
+        guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
+            return nil
+        }
+        return custom.parentIdentifier(in: collectionViewLayout, forSectionAt: source.localSection)
     }
 }
 

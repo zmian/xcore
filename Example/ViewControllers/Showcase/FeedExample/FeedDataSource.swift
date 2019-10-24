@@ -26,7 +26,10 @@ import UIKit
 
 final class FeedDataSource: XCCollectionViewDataSource {
     static var isRandomEnabled = false
-    let cellCount = Int.random(in: 1...3)
+    let cellCount = Int.random(in: 1...1)
+    var sectionIndex: Int
+    var isVisible: Bool = true
+    var isInverted: Bool = false
     
     lazy var names: [(String, String)] = {
         let textSize = Int.random(in: 1...3)
@@ -46,7 +49,8 @@ final class FeedDataSource: XCCollectionViewDataSource {
     var cornerRadius: CGFloat = 11
     var isShadowEnabled = true
 
-    override init(collectionView: UICollectionView) {
+    init(collectionView: UICollectionView, sectionIndex: Int) {
+        self.sectionIndex = sectionIndex
         super.init(collectionView: collectionView)
     }
 
@@ -55,18 +59,20 @@ final class FeedDataSource: XCCollectionViewDataSource {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        cellCount
+        var visibility = isVisible
+        if isInverted { visibility.toggle() }
+        return visibility ? 1 : 0
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let globalIndexPath = indexPath.with(globalSection)
         let cell = collectionView.dequeueReusableCell(for: indexPath.with(globalSection)) as FeedTextViewCell
-        cell.configure(title: "S: \(globalIndexPath.section)", subtitle: "S: \(globalIndexPath.section)")
+        cell.configure(title: "S: \(sectionIndex)", subtitle: "")
         return cell
     }
 
     override func collectionView(_ collectionView: UICollectionView, headerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
-        (true, nil)
+        (false, nil)
     }
 
     override func collectionView(_ collectionView: UICollectionView, footerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
@@ -76,7 +82,7 @@ final class FeedDataSource: XCCollectionViewDataSource {
     override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
         let globalIndexPath = indexPath.with(globalSection)
         let header = collectionView.dequeueReusableSupplementaryView(.header, for: globalIndexPath) as FeedTextHeaderFooterViewCell
-        header.configure(title: "S: \(globalIndexPath.section)")
+        header.configure(title: "S: \(sectionIndex)")
         return header
     }
 
@@ -94,10 +100,14 @@ extension FeedDataSource: XCCollectionViewTileLayoutCustomizable {
     }
 
     func isShadowEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
-        isShadowEnabled
+        false
     }
 
     func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat {
         cornerRadius
+    }
+
+    func parentIdentifier(in layout: XCCollectionViewTileLayout) -> String? {
+        return "Stacked"
     }
 }

@@ -127,7 +127,6 @@ extension XCCollectionReusableView {
         if let tileAttributes = layoutAttributes as? XCCollectionViewTileLayout.Attributes {
             corners = tileAttributes.corners
             alpha = tileAttributes.alpha
-            print("Applying alpha \(tileAttributes.alpha)")
         }
     }
 }

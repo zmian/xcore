@@ -98,9 +98,7 @@ extension XCCollectionViewCell {
 
         if let tileAttributes = layoutAttributes as? XCCollectionViewTileLayout.Attributes {
             corners = tileAttributes.corners
-            alpha = tileAttributes.alpha
             contentView.alpha = tileAttributes.alpha
         }
-        print("My alpha is \(alpha)")
     }
 }
