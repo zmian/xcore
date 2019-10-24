@@ -480,6 +480,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
             {
                 guard let newAttributes = attributes.copy() as? Attributes else { return nil }
                 newAttributes.frame.origin = beforeElements.sectionRects[parentSectionIndex].origin
+                newAttributes.alpha = 0.0
                 return newAttributes
             }
 
