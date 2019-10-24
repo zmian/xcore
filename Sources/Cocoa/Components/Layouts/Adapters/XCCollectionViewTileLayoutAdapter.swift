@@ -31,6 +31,7 @@ public protocol XCCollectionViewTileLayoutCustomizable {
     func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat
     func isShadowEnabled(in layout: XCCollectionViewTileLayout) -> Bool
     func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> String?
+    func verticalBottomSpacing(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> CGFloat
 }
 
 extension XCCollectionViewTileLayoutCustomizable {
@@ -46,8 +47,12 @@ extension XCCollectionViewTileLayoutCustomizable {
         true
     }
 
+    public func verticalBottomSpacing(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> CGFloat {
+        layout.verticalIntersectionSpacing
+    }
+
     public func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> String? {
-        return nil
+        nil
     }
 }
 
@@ -77,6 +82,14 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, estimatedFooterHeightInSection section: Int, width: CGFloat) -> CGFloat {
         XCDataSourceSizeCalculator.estimatedFooterSize(in: composedDataSource, for: section, availableWidth: width).height
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, verticalSpacingBetweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
+        let source = composedDataSource.index(for: section)
+        guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
+            return collectionViewLayout.verticalIntersectionSpacing
+        }
+        return custom.verticalBottomSpacing(in: collectionViewLayout, forSectionAt: source.localSection)
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isTileEnabledInSection section: Int) -> Bool {

@@ -46,8 +46,4 @@ final class FeedViewController: XCComposedCollectionViewController {
 
         return allDataSources
     }
-
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.alertSource?.isExtended.toggle()
-    }
 }
