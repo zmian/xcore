@@ -120,7 +120,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
     private func commonInit() {
         register(XCCollectionViewTileBackgroundView.self, forDecorationViewOfKind: UICollectionElementKindSectionBackground)
-        register(XCCollectionViewTileStackSelector.self, forDecorationViewOfKind: UICollectionElementKindSectionStacked)
     }
 
     open override func prepare() {
