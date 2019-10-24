@@ -27,12 +27,14 @@ import UIKit
 extension XCCollectionViewTileLayout {
     final class Attributes: XCCollectionViewFlowLayout.Attributes {
         var corners: (corners: UIRectCorner, radius: CGFloat) = (.none, 0)
+        var parentIdentifier: String? = nil
 
         override func copy(with zone: NSZone? = nil) -> Any {
             guard let copy = super.copy(with: zone) as? Attributes else {
                 return super.copy(with: zone)
             }
             copy.corners = corners
+            copy.parentIdentifier = parentIdentifier
             return copy
         }
     }

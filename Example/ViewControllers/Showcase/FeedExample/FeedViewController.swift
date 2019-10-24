@@ -26,13 +26,7 @@ import UIKit
 
 final class FeedViewController: XCComposedCollectionViewController {
     private var sources = [FeedDataSource]()
-    private var isStackingEnabled = false {
-        didSet {
-            collectionView.performBatchUpdates({
-                (collectionView.collectionViewLayout as? XCCollectionViewTileLayout)?.isStackingEnabled.toggle()
-            })
-        }
-    }
+    private var alertSource: AlertDataSource?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,33 +34,20 @@ final class FeedViewController: XCComposedCollectionViewController {
         collectionView.backgroundColor = .clear
         collectionView.contentInset.top = view.safeAreaInsets.top
 
-        recreateSources()
         layout = .init(XCCollectionViewTileLayout())
-
-//        Timer.scheduledTimer(withTimeInterval: 6, repeats: true) { [weak self] _ in
-//            self?.isStackingEnabled.toggle()
-//        }
-
     }
 
     override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
-        sources
-    }
+        var allDataSources = [XCCollectionViewDataSource]()
 
-    private func recreateSources() {
-        sources.removeAll()
-        let sourcesCount = 6
+        let alertSource = AlertDataSource(collectionView: collectionView)
+        allDataSources.append(alertSource)
+        self.alertSource = alertSource
 
-        for _ in 0..<sourcesCount {
-            let source = FeedDataSource(collectionView: collectionView)
-            sources.append(source)
-        }
-
-        composedDataSource.dataSources = dataSources(for: collectionView)
-        collectionView.reloadData()
+        return allDataSources
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        isStackingEnabled.toggle()
+        self.alertSource?.isExtended.toggle()
     }
 }
