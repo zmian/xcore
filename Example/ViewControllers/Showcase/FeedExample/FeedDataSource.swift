@@ -26,9 +26,9 @@ import UIKit
 
 final class FeedDataSource: XCCollectionViewDataSource {
     static var isRandomEnabled = false
-
+    let cellCount = Int.random(in: 1...3)
+    
     lazy var names: [(String, String)] = {
-        let cellCount = Int.random(in: 1...1)
         let textSize = Int.random(in: 1...3)
 
         guard cellCount > 0 else {
@@ -39,21 +39,15 @@ final class FeedDataSource: XCCollectionViewDataSource {
         for _ in 0..<textSize {
             detailText.append("Lore ipsum alalas dasfasfasf\n")
         }
-
-        return [("Title Test", detailText)]
+        return [("AA", "BB")]
     }()
 
     var isTileEnabled = true
     var cornerRadius: CGFloat = 11
     var isShadowEnabled = true
 
-    lazy var sectionCount = names.count
-
     override init(collectionView: UICollectionView) {
         super.init(collectionView: collectionView)
-        if Self.isRandomEnabled {
-            sectionCount = Int.random(in: 1...names.count)
-        }
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -61,13 +55,13 @@ final class FeedDataSource: XCCollectionViewDataSource {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        names.count
+        cellCount
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let globalIndexPath = indexPath.with(globalSection)
         let cell = collectionView.dequeueReusableCell(for: indexPath.with(globalSection)) as FeedTextViewCell
-        let configuration = names[indexPath.item]
-        cell.configure(title: configuration.0, subtitle: configuration.1)
+        cell.configure(title: "S: \(globalIndexPath.section)", subtitle: "S: \(globalIndexPath.section)")
         return cell
     }
 

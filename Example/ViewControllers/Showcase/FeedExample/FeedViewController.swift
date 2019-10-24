@@ -30,6 +30,7 @@ final class FeedViewController: XCComposedCollectionViewController {
         didSet {
             collectionView.performBatchUpdates({
                 (collectionView.collectionViewLayout as? XCCollectionViewTileLayout)?.isStackingEnabled.toggle()
+                collectionView.collectionViewLayout.invalidateLayout()
             })
         }
     }
@@ -57,7 +58,7 @@ final class FeedViewController: XCComposedCollectionViewController {
         sources.removeAll()
         let sourcesCount = 6
 
-        for i in 0..<sourcesCount {
+        for _ in 0..<sourcesCount {
             let source = FeedDataSource(collectionView: collectionView)
             sources.append(source)
         }
