@@ -60,8 +60,7 @@ final class AlertDataSource: XCCollectionViewDataSource {
                 })
                 return cell
             case 2:
-                let cell = collectionView.dequeueReusableCell(for: globalIndex) as FeedColorViewCell
-                cell.configure(height: 30, color: .blue)
+                let cell = collectionView.dequeueReusableCell(for: globalIndex) as StackEffect
                 return cell
             default:
                 let cell = collectionView.dequeueReusableCell(for: globalIndex) as FeedTextViewCell
@@ -161,6 +160,45 @@ extension AlertDataSource {
         func configure(didTapHide: @escaping () -> Void, didTapClear: @escaping () -> Void) {
             didTapHideAction = didTapHide
             didTapClearAction = didTapClear
+        }
+    }
+}
+
+extension AlertDataSource {
+    final class StackEffect: XCCollectionViewCell {
+        lazy var stackView = UIStackView(arrangedSubviews: [
+            firstBottomView,
+            secondBottomView
+        ]).apply {
+            $0.axis = .vertical
+            $0.alignment = .center
+            firstBottomView.snp.makeConstraints { make in
+                make.height.equalTo(11)
+                make.leading.trailing.equalToSuperview().inset(.defaultPadding)
+            }
+            secondBottomView.snp.makeConstraints { make in
+                make.height.equalTo(11)
+                make.leading.trailing.equalToSuperview().inset(1.5 * .defaultPadding)
+            }
+        }
+
+        let firstBottomView = UIView().apply {
+            $0.backgroundColor = UIColor.white.darker(0.1)
+        }
+        let secondBottomView = UIView().apply {
+            $0.backgroundColor = UIColor.white.darker(0.2)
+        }
+
+        override func layoutSubviews() {
+            super.layoutSubviews()
+        }
+
+        override func commonInit() {
+            contentView.addSubview(stackView)
+            stackView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            layer.zPosition = -1000
         }
     }
 }

@@ -448,14 +448,20 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
         }
 
         if let attributes = beforeElements.layoutAttributes[itemIndexPath] {
-            guard
-                let parentIdentifier = attributes.parentIdentifier,
-                let parentSectionIndex = beforeElements.firstParentIndexByIdentifier[parentIdentifier],
-                parentSectionIndex != itemIndexPath.section
-            else {
-                return nil
+            // Moved items
+            if let newAttributes = layoutAttributes[itemIndexPath] {
+                guard let returnAttributes = newAttributes.copy() as? Attributes else { return nil }
+                return returnAttributes
             }
-            attributes.frame.origin = sectionRects[parentSectionIndex].origin
+
+            // Stacked items go to their parents origin
+            if
+                let parentIdentifier = attributes.parentIdentifier,
+                let parentSectionIndex = beforeElements.firstParentIndexByIdentifier[parentIdentifier]
+            {
+                attributes.frame.origin = sectionRects[parentSectionIndex].origin
+            }
+            attributes.alpha = 0
             return attributes
         }
         return nil
@@ -466,21 +472,73 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
         guard let beforeElements = beforeElements else {
             return nil
         }
+
+        if let attributes = layoutAttributes[itemIndexPath] {
+            // Stacked items
+            if
+                let parentIdentifier = attributes.parentIdentifier,
+                let parentSectionIndex = firstParentIndexByIdentifier[parentIdentifier]
+            {
+                guard let newAttributes = attributes.copy() as? Attributes else { return nil }
+                newAttributes.frame.origin = beforeElements.sectionRects[parentSectionIndex].origin
+                return newAttributes
+            }
+
+            // Moved items
+            if let oldAttributes = beforeElements.layoutAttributes[itemIndexPath] {
+                 return oldAttributes
+            }
+            
+            // New Items
+            guard let newAttributes = attributes.copy() as? Attributes else { return nil }
+            newAttributes.alpha = 0.0
+            return newAttributes
+        }
+
+        return nil
+    }
+
+    open override func initialLayoutAttributesForAppearingDecorationElement(ofKind elementKind: String, at decorationIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        print("This decorative will be added \(decorationIndexPath)")
+        guard let beforeElements = beforeElements else {
+            return nil
+        }
         // Moved items
-        if let attributes = beforeElements.layoutAttributes[itemIndexPath] {
+        if let attributes = beforeElements.sectionBackgroundAttributes[decorationIndexPath.section] {
              return attributes
         }
         // Inserted items
-        if let attributes = layoutAttributes[itemIndexPath] {
+        if let attributes = sectionBackgroundAttributes[decorationIndexPath.section] {
             guard
                 let parentIdentifier = attributes.parentIdentifier,
                 let parentSectionIndex = firstParentIndexByIdentifier[parentIdentifier],
-                parentSectionIndex != itemIndexPath.section
+                parentSectionIndex != decorationIndexPath.section
             else {
                 return nil
             }
-             attributes.frame.origin = sectionRects[parentSectionIndex].origin
-             return attributes
+            guard let newAttributes = attributes.copy() as? Attributes else { return nil }
+            newAttributes.frame.origin = sectionRects[parentSectionIndex].origin
+            return newAttributes
+        }
+        return nil
+    }
+
+    open override func finalLayoutAttributesForDisappearingDecorationElement(ofKind elementKind: String, at decorationIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+                guard let beforeElements = beforeElements else {
+            return nil
+        }
+
+        // Stacked items go to their parents origin
+        if let attributes = beforeElements.sectionBackgroundAttributes[decorationIndexPath.section] {
+            guard
+                let parentIdentifier = attributes.parentIdentifier,
+                let parentSectionIndex = beforeElements.firstParentIndexByIdentifier[parentIdentifier],
+                parentSectionIndex != decorationIndexPath.section
+            else {
+                return nil
+            }
+            attributes.frame.origin = sectionRects[parentSectionIndex].origin
+            return attributes
         }
         return nil
     }
