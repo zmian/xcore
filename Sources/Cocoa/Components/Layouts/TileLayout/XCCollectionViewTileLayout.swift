@@ -611,7 +611,8 @@ extension XCCollectionViewTileLayout {
         guard
             section != nextSection,
             let collectionView = collectionView,
-            let delegate = delegate
+            let delegate = delegate,
+            section >= 0
         else {
             return 0
         }
