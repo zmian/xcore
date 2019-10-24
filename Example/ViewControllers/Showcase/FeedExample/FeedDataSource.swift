@@ -59,13 +59,10 @@ final class FeedDataSource: XCCollectionViewDataSource {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var visibility = isVisible
-        if isInverted { visibility.toggle() }
-        return visibility ? 1 : 0
+        1
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let globalIndexPath = indexPath.with(globalSection)
         let cell = collectionView.dequeueReusableCell(for: indexPath.with(globalSection)) as FeedTextViewCell
         cell.configure(title: "S: \(sectionIndex)", subtitle: "")
         return cell
