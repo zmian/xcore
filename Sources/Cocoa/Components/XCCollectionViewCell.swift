@@ -98,7 +98,10 @@ extension XCCollectionViewCell {
 
         if let tileAttributes = layoutAttributes as? XCCollectionViewTileLayout.Attributes {
             corners = tileAttributes.corners
-            contentView.alpha = tileAttributes.alpha
+            alpha = tileAttributes.alpha
+            if tileAttributes.shouldDim && !resistsDimming {
+                alpha *= 0.5
+            }
         }
     }
 }

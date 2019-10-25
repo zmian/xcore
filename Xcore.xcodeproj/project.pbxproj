@@ -12,7 +12,6 @@
 		167C05D21FAB102542BD188D /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67CC55C468091B5137D790BB /* Pods_Example.framework */; };
 		2F35F20F22E362C900B45C85 /* ExampleArrowOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F35F20E22E362C900B45C85 /* ExampleArrowOptions.swift */; };
 		2F41FBD223426B7C00E1FD97 /* CarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F41FBD123426B7C00E1FD97 /* CarouselViewController.swift */; };
-		2F7E031D23623A9D0080D660 /* HeaderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7E031C23623A9D0080D660 /* HeaderDataSource.swift */; };
 		2F7E031F23623BF80080D660 /* AlertDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7E031E23623BF80080D660 /* AlertDataSource.swift */; };
 		2F7E032123628AFD0080D660 /* AlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7E032023628AFD0080D660 /* AlertsViewController.swift */; };
 		2F9B4C7F22A19B0E00FB644E /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B4C7E22A19B0E00FB644E /* FeedViewController.swift */; };
@@ -83,7 +82,6 @@
 		16E36FDA8C7C8821AAA4F0E0 /* Pods_UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F35F20E22E362C900B45C85 /* ExampleArrowOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleArrowOptions.swift; sourceTree = "<group>"; };
 		2F41FBD123426B7C00E1FD97 /* CarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselViewController.swift; sourceTree = "<group>"; };
-		2F7E031C23623A9D0080D660 /* HeaderDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDataSource.swift; sourceTree = "<group>"; };
 		2F7E031E23623BF80080D660 /* AlertDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDataSource.swift; sourceTree = "<group>"; };
 		2F7E032023628AFD0080D660 /* AlertsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsViewController.swift; sourceTree = "<group>"; };
 		2F9B4C7E22A19B0E00FB644E /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -182,7 +180,6 @@
 				2F9B4C7E22A19B0E00FB644E /* FeedViewController.swift */,
 				2F7E032023628AFD0080D660 /* AlertsViewController.swift */,
 				2F9B4C8122A19BB600FB644E /* FeedDataSource.swift */,
-				2F7E031C23623A9D0080D660 /* HeaderDataSource.swift */,
 				2F7E031E23623BF80080D660 /* AlertDataSource.swift */,
 				2FF93A0522A9F20B008E4AAA /* FeedLightDataSource.swift */,
 				2F9B4C8322A19E7400FB644E /* FeedTextViewCell.swift */,
@@ -682,7 +679,6 @@
 				6836600622987F1D00FDE45B /* ExampleDynamicTableViewController.swift in Sources */,
 				2FF93A0422A9EF83008E4AAA /* FeedColorViewCell.swift in Sources */,
 				2F41FBD223426B7C00E1FD97 /* CarouselViewController.swift in Sources */,
-				2F7E031D23623A9D0080D660 /* HeaderDataSource.swift in Sources */,
 				684B1EC8224C544A009F6197 /* RootViewController.swift in Sources */,
 				2F9B4C8622A1BC4700FB644E /* FeedTextHeaderFooterViewCell.swift in Sources */,
 			);
