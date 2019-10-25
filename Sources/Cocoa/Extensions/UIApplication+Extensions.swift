@@ -70,7 +70,7 @@ extension UIApplication {
         }
 
         typealias ClosureType = @convention(c) (UIApplication, Selector, URL, [UIApplication.OpenExternalURLOptionsKey: Any], ((Bool) -> Void)?) -> Void
-        let _open : ClosureType = unsafeBitCast(method, to: ClosureType.self)
+        let _open: ClosureType = unsafeBitCast(method, to: ClosureType.self)
         _open(application, selector, url, [:], nil)
     }
 }

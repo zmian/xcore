@@ -93,7 +93,7 @@ extension String {
         }
 
         let regex = try! NSRegularExpression(pattern: "(?=\\S)[A-Z]")
-        let range = NSMakeRange(1, count - 1)
+        let range = NSRange(location: 1, length: 1)
 
         var titlecased = regex.stringByReplacingMatches(in: self, range: range, withTemplate: " $0")
 

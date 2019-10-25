@@ -50,7 +50,7 @@ final public class InputToolbar: XCView {
         $0.anchor.make {
             $0.size.equalTo(buttonSize)
         }
-        $0.addAction(.touchUpInside) { [weak self] _ in
+        $0.action { [weak self] _ in
             self?.didTapCancel?()
         }
     }
@@ -63,7 +63,7 @@ final public class InputToolbar: XCView {
         $0.anchor.make {
             $0.size.equalTo(buttonSize)
         }
-        $0.addAction(.touchUpInside) { [weak self] _ in
+        $0.action { [weak self] _ in
             self?.didTapDone?()
         }
     }
@@ -76,7 +76,7 @@ final public class InputToolbar: XCView {
         $0.anchor.make {
             $0.size.equalTo(buttonSize)
         }
-        $0.addAction(.touchUpInside) { [weak self] _ in
+        $0.action { [weak self] _ in
             self?.didTapOther?()
         }
     }

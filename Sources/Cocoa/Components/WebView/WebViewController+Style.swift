@@ -82,7 +82,7 @@ extension WebViewController.Style: CustomStringConvertible {
 }
 
 extension WebViewController.Style: Equatable {
-    public static func == (lhs: WebViewController.Style, rhs: WebViewController.Style) -> Bool {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
     }
 }
@@ -96,24 +96,25 @@ extension WebViewController.Style: Hashable {
 // MARK: - Built-in
 
 extension WebViewController.Style {
-    public static func setDefault(_ style: @escaping (_ title: String) -> WebViewController.Style) {
+    public static func setDefault(_ style: @escaping (_ title: String) -> Self) {
         _default = style
     }
 
     /// The default app style.
-    private static var _default: (_ title: String) -> WebViewController.Style = WebViewController.Style.modern
-    public static func `default`(title: String) -> WebViewController.Style {
+    private static var _default: (_ title: String) -> Self = Self.modern
+    public static func `default`(title: String) -> Self {
         _default(title)
     }
 
-    public static var `default`: WebViewController.Style {
+    public static var `default`: Self {
         `default`(title: "")
     }
 }
 
 extension WebViewController.Style {
-    private static func modern(title: String) -> Self {
-        WebViewController.Style(id: "xcore.modern").apply {
+    /// A modern style with a simple loading bar.
+    public static func modern(title: String) -> Self {
+        Self.init(id: "xcore.modern").apply {
             $0.title = title
             $0.configureProgressBar { progressBar in
                 let color = UIColor.appTint

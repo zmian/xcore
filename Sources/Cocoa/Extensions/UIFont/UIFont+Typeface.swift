@@ -108,7 +108,6 @@ extension UIFont.Typeface {
                     name += "-Bold"
                 default:
                     spacer = "-"
-                    break
             }
 
             switch trait {
