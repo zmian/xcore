@@ -74,6 +74,24 @@ final class AlertDataSource: XCCollectionViewDataSource {
         }
     }
 
+    override func collectionView(_ collectionView: UICollectionView, headerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
+        switch section {
+            case 0, 2:
+                return (false, nil)
+            case 1:
+                return (true, nil)
+            default:
+                return  (isExtended, nil)
+        }
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
+        let globalIndexPath = indexPath.with(globalSection)
+        let header = collectionView.dequeueReusableSupplementaryView(.header, for: globalIndexPath) as FeedTextHeaderFooterViewCell
+        header.configure(title: "S: \(alertIndexFor(section: indexPath.section))")
+        return header
+    }
+
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
             case 0,2:
