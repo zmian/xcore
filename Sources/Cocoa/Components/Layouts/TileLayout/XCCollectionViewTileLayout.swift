@@ -473,7 +473,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
             let parentSectionIndex = firstParentIndexByIdentifier[parentIdentifier]
         {
             attributes.frame.origin.y = beforeElements.sectionRects[parentSectionIndex].origin.y + attributes.offsetInSection
-            attributes.alpha =  parentSectionIndex == indexPath.section ? 1.0 : 0.0
+            attributes.alpha = parentSectionIndex == indexPath.section ? 1.0 : 0.0
             return attributes
         }
         return attributes
