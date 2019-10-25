@@ -9,8 +9,11 @@
 import Foundation
 
 final class AlertDataSource: XCCollectionViewDataSource {
-    var alerts: [String]
-    var identifier: String
+    private var alerts: [String]
+    private var identifier: String
+    let selectorIndex = 0
+    let mainAlertIndex = 1
+    let stackIndex = 2
 
     var isExtended: Bool = false {
         didSet {
@@ -39,9 +42,11 @@ final class AlertDataSource: XCCollectionViewDataSource {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-            case 2:
-                return isExtended ? 0 : 1
-            case 1:
+            case selectorIndex:
+                return isExtended ? 1 : 0
+            case stackIndex:
+                return alerts.count > 1 && !isExtended ? 1 : 0
+            case mainAlertIndex:
                 return 1
             default:
                 return isExtended ? 1 : 0
@@ -51,7 +56,7 @@ final class AlertDataSource: XCCollectionViewDataSource {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let globalIndex = indexPath.with(globalSection)
         switch indexPath.section {
-            case 0:
+            case selectorIndex:
                 let cell = collectionView.dequeueReusableCell(for: globalIndex) as HeaderCell
                 cell.configure(didTapHide: { [weak self] in
                     self?.isExtended = false
@@ -59,7 +64,7 @@ final class AlertDataSource: XCCollectionViewDataSource {
                     
                 })
                 return cell
-            case 2:
+            case stackIndex:
                 let cell = collectionView.dequeueReusableCell(for: globalIndex) as StackEffect
                 cell.configure(isTwoOrMore: alerts.count >= 3)
                 return cell
@@ -76,9 +81,9 @@ final class AlertDataSource: XCCollectionViewDataSource {
 
     override func collectionView(_ collectionView: UICollectionView, headerAttributesForSectionAt section: Int) -> (enabled: Bool, size: CGSize?) {
         switch section {
-            case 0, 2:
+            case selectorIndex, stackIndex:
                 return (false, nil)
-            case 1:
+            case mainAlertIndex:
                 return (true, nil)
             default:
                 return  (isExtended, nil)
@@ -94,10 +99,11 @@ final class AlertDataSource: XCCollectionViewDataSource {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section {
-            case 0,2:
+            case selectorIndex, stackIndex:
                 return
             default:
-                guard isExtended else {
+                // Expand if first cell is tapped
+                if alerts.count > 1 && !isExtended {
                     isExtended = true
                     return
                 }
@@ -107,7 +113,7 @@ final class AlertDataSource: XCCollectionViewDataSource {
 
     private func alertIndexFor(section: Int) -> Int {
         switch section {
-            case 1:
+            case mainAlertIndex:
                 return 0
             default:
                 return section - 2
@@ -122,7 +128,7 @@ extension AlertDataSource: XCCollectionViewTileLayoutCustomizable {
 
     func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> Bool {
         switch section {
-            case 0, 2:
+            case selectorIndex, stackIndex:
                 return false
             default:
                 return true
@@ -131,7 +137,7 @@ extension AlertDataSource: XCCollectionViewTileLayoutCustomizable {
 
     func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> String? {
         switch section {
-            case 0, 2:
+            case selectorIndex, stackIndex:
                 return nil
             default:
                 return identifier
@@ -140,9 +146,9 @@ extension AlertDataSource: XCCollectionViewTileLayoutCustomizable {
 
     func verticalBottomSpacing(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> CGFloat {
         switch section {
-            case 0:
+            case selectorIndex:
                 return isExtended ? 0.0 : layout.verticalIntersectionSpacing
-            case 1:
+            case mainAlertIndex:
                 return 0.0
             default:
                 return layout.verticalIntersectionSpacing
