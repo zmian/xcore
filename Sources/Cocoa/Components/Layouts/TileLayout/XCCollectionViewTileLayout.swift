@@ -26,7 +26,6 @@ import UIKit
 
 open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     private let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
-    private let UICollectionElementKindSectionStacked = "UICollectionElementKindSectionStacked"
 
     public var numberOfColumns = 1 {
         didSet {
@@ -244,7 +243,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
     private func createAttributes(for section: Int, rect: CGRect, itemCount: Int, zIndex: Int = 0, alpha: CGFloat, parentIdentifier: String?) -> CGRect {
         var sectionRect = rect
-        var offsetInSection: CGFloat = 0
         var sectionAttributes = [Attributes]()
         guard itemCount > 0 else {
             attributesBySection.append(sectionAttributes)
@@ -482,7 +480,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     }
 
     open override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        print("This will be deleted \(itemIndexPath)")
         guard let attributes = super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath) as? Attributes else {
             return nil
         }
