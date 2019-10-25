@@ -27,6 +27,10 @@ final class AlertDataSource: XCCollectionViewDataSource {
     }
 
     private var allSectionsCount: Int {
+        guard !alerts.isEmpty else {
+            return 0
+        }
+        // Selector + MainAlert + stack
         return 1 + 1 + alerts.count
     }
 
