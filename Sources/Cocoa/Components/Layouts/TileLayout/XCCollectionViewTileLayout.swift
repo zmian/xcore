@@ -244,6 +244,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
     private func createAttributes(for section: Int, rect: CGRect, itemCount: Int, zIndex: Int = 0, alpha: CGFloat, parentIdentifier: String?) -> CGRect {
         var sectionRect = rect
+        var offsetInSection: CGFloat = 0
         var sectionAttributes = [Attributes]()
         guard itemCount > 0 else {
             attributesBySection.append(sectionAttributes)
@@ -271,6 +272,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                 $0.zIndex = zIndex
                 $0.alpha = alpha
                 $0.parentIdentifier = parentIdentifier
+                $0.offsetInSection = sectionRect.height
             }
 
             headerAttributes[headerIndex] = attributes
@@ -308,6 +310,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                 $0.zIndex = zIndex
                 $0.alpha = alpha
                 $0.parentIdentifier = parentIdentifier
+                $0.offsetInSection = sectionRect.height
             }
             layoutAttributes[indexPath] = attributes
             sectionRect.size.height += attributes.size.height
@@ -331,6 +334,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                 $0.zIndex = zIndex
                 $0.alpha = alpha
                 $0.parentIdentifier = parentIdentifier
+                $0.offsetInSection = sectionRect.height
             }
             footerAttributes[footerIndex] = attributes
             sectionRect.size.height += attributes.size.height
@@ -447,152 +451,77 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
         }
     }
 
-    func finalLayoutAttributesForDisappearingObject(at indexPath: IndexPath, currentAttributes: [IndexPath: Attributes], oldAttributes: [IndexPath: Attributes]) -> UICollectionViewLayoutAttributes? {
+    private func updateFinalStackAttributes(attributes: Attributes) -> Attributes {
         guard let beforeElements = beforeElements else {
-            return nil
-        }
-
-        if let attributes = oldAttributes[indexPath] {
-            // Moved items
-            if let newAttributes = currentAttributes[indexPath] {
-                guard let returnAttributes = newAttributes.copy() as? Attributes else { return nil }
-                return returnAttributes
-            }
-
-            // Stacked items go to their parents origin
-            if
-                let parentIdentifier = attributes.parentIdentifier,
-                let parentSectionIndex = beforeElements.firstParentIndexByIdentifier[parentIdentifier]
-            {
-                attributes.frame.origin = sectionRects[parentSectionIndex].origin
-            }
-            attributes.alpha = 0
             return attributes
         }
-        return nil
+        // Stacked items go to their parents origin
+        if
+            let parentIdentifier = attributes.parentIdentifier,
+            let parentSectionIndex = beforeElements.firstParentIndexByIdentifier[parentIdentifier]
+        {
+            attributes.frame.origin.y = sectionRects[parentSectionIndex].origin.y + attributes.offsetInSection
+            attributes.alpha = 0
+        }
+        return attributes
     }
 
-    func initialLayoutAttributesForAppearingObject(at indexPath: IndexPath, currentAttributes: [IndexPath: Attributes], oldAttributes: [IndexPath: Attributes]) -> UICollectionViewLayoutAttributes? {
+    private func updateInitialStackAttributes(attributes: Attributes, indexPath: IndexPath) -> Attributes {
         guard let beforeElements = beforeElements else {
-            return nil
+            return attributes
         }
-        if let attributes = currentAttributes[indexPath] {
-            // Stacked items
-            if
-                let parentIdentifier = attributes.parentIdentifier,
-                let parentSectionIndex = firstParentIndexByIdentifier[parentIdentifier]
-            {
-                guard let newAttributes = attributes.copy() as? Attributes else { return nil }
-                newAttributes.frame.origin = beforeElements.sectionRects[parentSectionIndex].origin
-                newAttributes.alpha = 0.0
-                return newAttributes
-            }
-
-            // Moved items
-            if let oldAttributes = oldAttributes[indexPath] {
-                 return oldAttributes
-            }
-            
-            // New Items
-            guard let newAttributes = attributes.copy() as? Attributes else { return nil }
-            newAttributes.alpha = 0.0
-            return newAttributes
+        if
+            let parentIdentifier = attributes.parentIdentifier,
+            let parentSectionIndex = firstParentIndexByIdentifier[parentIdentifier]
+        {
+            attributes.frame.origin.y = beforeElements.sectionRects[parentSectionIndex].origin.y + attributes.offsetInSection
+            attributes.alpha =  parentSectionIndex == indexPath.section ? 1.0 : 0.0
+            return attributes
         }
-        return nil
+        return attributes
     }
 
     open override func finalLayoutAttributesForDisappearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         print("This will be deleted \(itemIndexPath)")
-        guard let beforeElements = beforeElements else {
+        guard let attributes = super.finalLayoutAttributesForDisappearingItem(at: itemIndexPath) as? Attributes else {
             return nil
         }
-        
-        return finalLayoutAttributesForDisappearingObject(
-            at: itemIndexPath,
-            currentAttributes: layoutAttributes,
-            oldAttributes: beforeElements.layoutAttributes
-        )
-    }
-
-    open override func finalLayoutAttributesForDisappearingDecorationElement(ofKind elementKind: String, at decorationIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        print("This decorative will be deleted \(decorationIndexPath)")
-        guard let beforeElements = beforeElements else {
-            return nil
-        }
-        return finalLayoutAttributesForDisappearingObject(
-            at: decorationIndexPath,
-            currentAttributes: sectionBackgroundAttributes,
-            oldAttributes: beforeElements.sectionBackgroundAttributes
-        )
+        return updateFinalStackAttributes(attributes: attributes)
     }
 
     open override func initialLayoutAttributesForAppearingItem(at itemIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        print("This will be added \(itemIndexPath)")
-        guard let beforeElements = beforeElements else {
+        guard let attributes = super.initialLayoutAttributesForAppearingItem(at: itemIndexPath) as? Attributes else {
             return nil
         }
+        return updateInitialStackAttributes(attributes: attributes, indexPath: itemIndexPath)
+    }
 
-        return initialLayoutAttributesForAppearingObject(
-            at: itemIndexPath,
-            currentAttributes: layoutAttributes,
-            oldAttributes: beforeElements.layoutAttributes
-        )
+    open override func finalLayoutAttributesForDisappearingDecorationElement(ofKind elementKind: String, at decorationIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        guard let attributes = super.finalLayoutAttributesForDisappearingDecorationElement(ofKind: elementKind, at: decorationIndexPath) as? Attributes else {
+            return nil
+        }
+        return updateFinalStackAttributes(attributes: attributes)
     }
 
     open override func initialLayoutAttributesForAppearingDecorationElement(ofKind elementKind: String, at decorationIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        print("This decorative will be added \(decorationIndexPath)")
-        guard let beforeElements = beforeElements else {
+        guard let attributes = super.initialLayoutAttributesForAppearingDecorationElement(ofKind: elementKind, at: decorationIndexPath) as? Attributes else {
             return nil
         }
-        return initialLayoutAttributesForAppearingObject(
-            at: decorationIndexPath,
-            currentAttributes: sectionBackgroundAttributes,
-            oldAttributes: beforeElements.sectionBackgroundAttributes
-        )
-    }
-
-    open override func initialLayoutAttributesForAppearingSupplementaryElement(ofKind elementKind: String, at elementIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        guard let beforeElements = beforeElements else {
-            return nil
-        }
-        switch elementKind {
-            case UICollectionView.elementKindSectionHeader:
-                return initialLayoutAttributesForAppearingObject(
-                    at: elementIndexPath,
-                    currentAttributes: headerAttributes,
-                    oldAttributes: beforeElements.headerAttributes
-                )
-            case UICollectionView.elementKindSectionFooter:
-                return initialLayoutAttributesForAppearingObject(
-                    at: elementIndexPath,
-                    currentAttributes: footerAttributes,
-                    oldAttributes: beforeElements.footerAttributes
-                )
-            default:
-                return nil
-        }
+        return updateInitialStackAttributes(attributes: attributes, indexPath: decorationIndexPath)
     }
 
     open override func finalLayoutAttributesForDisappearingSupplementaryElement(ofKind elementKind: String, at elementIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        guard let beforeElements = beforeElements else {
+        guard let attributes = super.finalLayoutAttributesForDisappearingSupplementaryElement(ofKind: elementKind, at: elementIndexPath) as? Attributes else {
             return nil
         }
-        switch elementKind {
-            case UICollectionView.elementKindSectionHeader:
-                return finalLayoutAttributesForDisappearingObject(
-                    at: elementIndexPath,
-                    currentAttributes: headerAttributes,
-                    oldAttributes: beforeElements.headerAttributes
-                )
-            case UICollectionView.elementKindSectionFooter:
-                return finalLayoutAttributesForDisappearingObject(
-                    at: elementIndexPath,
-                    currentAttributes: footerAttributes,
-                    oldAttributes: beforeElements.footerAttributes
-                )
-            default:
-                return nil
+        return updateFinalStackAttributes(attributes: attributes)
+    }
+
+    open override func initialLayoutAttributesForAppearingSupplementaryElement(ofKind elementKind: String, at elementIndexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        guard let attributes = super.initialLayoutAttributesForAppearingSupplementaryElement(ofKind: elementKind, at: elementIndexPath) as? Attributes else {
+            return nil
         }
+        return updateInitialStackAttributes(attributes: attributes, indexPath: elementIndexPath)
     }
 }
 

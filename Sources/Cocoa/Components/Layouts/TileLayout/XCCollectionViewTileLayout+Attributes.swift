@@ -27,6 +27,7 @@ import UIKit
 extension XCCollectionViewTileLayout {
     final class Attributes: XCCollectionViewFlowLayout.Attributes {
         var corners: (corners: UIRectCorner, radius: CGFloat) = (.none, 0)
+        var offsetInSection: CGFloat = 0.0
         var parentIdentifier: String? = nil
 
         override func copy(with zone: NSZone? = nil) -> Any {
@@ -35,6 +36,7 @@ extension XCCollectionViewTileLayout {
             }
             copy.corners = corners
             copy.parentIdentifier = parentIdentifier
+            copy.offsetInSection = offsetInSection
             return copy
         }
     }

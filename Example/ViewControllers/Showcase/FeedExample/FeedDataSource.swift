@@ -30,7 +30,7 @@ final class FeedDataSource: XCCollectionViewDataSource {
     var sectionIndex: Int
     var isVisible: Bool = true
     var isInverted: Bool = false
-    
+
     lazy var names: [(String, String)] = {
         let textSize = Int.random(in: 1...3)
 
