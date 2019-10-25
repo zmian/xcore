@@ -83,3 +83,11 @@ extension ControlTargetActionBlockRepresentable where Self: UIControl {
         _ = self.actionEvent?.removeValue(forKey: event.rawValue)
     }
 }
+
+extension ControlTargetActionBlockRepresentable where Self: UIButton {
+    /// A touch-up event in the button where the finger is inside the bounds of the
+    /// button.
+    public func action(_ handler: @escaping (_ sender: Self) -> Void) {
+        addAction(.touchUpInside, handler)
+    }
+}

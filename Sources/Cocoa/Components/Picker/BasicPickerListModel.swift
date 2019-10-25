@@ -129,7 +129,7 @@ private final class BasicPickerListModel<T: OptionsRepresentable>: PickerListMod
     }
 
     lazy var items: [DynamicTableModel] = {
-        return options.enumerated().map {
+        options.enumerated().map {
             DynamicTableModel(
                 title: $0.element.description,
                 image: $0.element.image,
