@@ -20,6 +20,7 @@ final class AlertDataSource: XCCollectionViewDataSource {
             if isExtended != oldValue {
                 let reloadSet = IndexSet(integersIn: globalSection...(globalSection + allSectionsCount - 1))
                 collectionView?.performBatchUpdates({
+                    collectionView?.collectionViewLayout.invalidateLayout()
                     collectionView?.reloadSections(reloadSet)
                 })
             }
@@ -65,7 +66,6 @@ final class AlertDataSource: XCCollectionViewDataSource {
                 cell.configure(didTapHide: { [weak self] in
                     self?.isExtended = false
                 }, didTapClear: {
-                    
                 })
                 return cell
             case stackIndex:
@@ -90,7 +90,7 @@ final class AlertDataSource: XCCollectionViewDataSource {
             case mainAlertIndex:
                 return (true, nil)
             default:
-                return  (isExtended, nil)
+                return (isExtended, nil)
         }
     }
 
