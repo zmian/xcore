@@ -127,6 +127,9 @@ extension XCCollectionReusableView {
         if let tileAttributes = layoutAttributes as? XCCollectionViewTileLayout.Attributes {
             corners = tileAttributes.corners
             alpha = tileAttributes.alpha
+            if tileAttributes.shouldDim && !resistsDimming {
+                alpha *= 0.5
+            }
         }
     }
 }
