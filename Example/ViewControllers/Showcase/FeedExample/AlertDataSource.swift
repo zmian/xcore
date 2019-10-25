@@ -120,7 +120,9 @@ extension AlertDataSource: XCCollectionViewTileLayoutCustomizable {
 
     func verticalBottomSpacing(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> CGFloat {
         switch section {
-            case 0, 1:
+            case 0:
+                return isExtended ? 0.0 : layout.verticalIntersectionSpacing
+            case 1:
                 return 0.0
             default:
                 return layout.verticalIntersectionSpacing
@@ -205,14 +207,13 @@ extension AlertDataSource {
         func roundLowerCorner(of view: UIView) {
             let cornerRadius: CGFloat = 11
             let path = CGMutablePath()
-            path.addLine(to: CGPoint(x: 0.0, y: view.frame.width))
+            path.move(to: CGPoint.zero)
             path.addRelativeArc(
                 center: CGPoint(x: view.frame.width - cornerRadius, y: 0.0),
                 radius: cornerRadius,
                 startAngle: 0,
                 delta: .pi2
             )
-            path.addLine(to: CGPoint(x: cornerRadius, y: view.frame.height))
             path.addRelativeArc(
                 center: CGPoint(x: cornerRadius, y: 0.0),
                 radius: cornerRadius,
