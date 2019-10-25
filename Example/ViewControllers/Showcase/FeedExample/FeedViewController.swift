@@ -73,7 +73,7 @@ final class FeedViewController: XCComposedCollectionViewController {
         for i in 7...10 {
             allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
         }
-                allDataSources.append(AlertDataSource(collectionView: collectionView, alerts: manyAlerts, identifier: "ThirdAlerts"))
+        allDataSources.append(AlertDataSource(collectionView: collectionView, alerts: manyAlerts, identifier: "ThirdAlerts"))
         return allDataSources
     }
 }
