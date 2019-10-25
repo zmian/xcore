@@ -1,12 +1,28 @@
 //
-//  AlertDataSource.swift
-//  Example
+// AlertDataSource.swift
 //
-//  Created by Guillermo Waitzel on 24/10/2019.
-//  Copyright © 2019 Xcore. All rights reserved.
+// Copyright © 2019 Xcore
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
 final class AlertDataSource: XCCollectionViewDataSource {
     private var alerts: [String]
@@ -17,13 +33,17 @@ final class AlertDataSource: XCCollectionViewDataSource {
 
     var isExtended: Bool = false {
         didSet {
-            if isExtended != oldValue {
-                let reloadSet = IndexSet(integersIn: globalSection...(globalSection + allSectionsCount - 1))
-                collectionView?.performBatchUpdates({
-                    collectionView?.collectionViewLayout.invalidateLayout()
-                    collectionView?.reloadSections(reloadSet)
-                })
+            guard oldValue != isExtended else {
+                return
             }
+
+            let reloadSet = IndexSet(integersIn: globalSection...(globalSection + allSectionsCount - 1))
+
+            // swiftlint:disable:next trailing_closure
+            collectionView?.performBatchUpdates({
+                collectionView?.collectionViewLayout.invalidateLayout()
+                collectionView?.reloadSections(reloadSet)
+            })
         }
     }
 
@@ -31,6 +51,7 @@ final class AlertDataSource: XCCollectionViewDataSource {
         guard !alerts.isEmpty else {
             return 0
         }
+
         // Selector + MainAlert + stack
         return 1 + 1 + alerts.count
     }
@@ -42,7 +63,7 @@ final class AlertDataSource: XCCollectionViewDataSource {
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return allSectionsCount
+        allSectionsCount
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -60,13 +81,18 @@ final class AlertDataSource: XCCollectionViewDataSource {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let globalIndex = indexPath.with(globalSection)
+
         switch indexPath.section {
             case selectorIndex:
                 let cell = collectionView.dequeueReusableCell(for: globalIndex) as HeaderCell
-                cell.configure(didTapHide: { [weak self] in
-                    self?.isExtended = false
-                }, didTapClear: {
-                })
+                cell.configure(
+                    didTapHide: { [weak self] in
+                        self?.isExtended = false
+                    },
+                    didTapClear: {
+                        print("Did tap clear button")
+                    }
+                )
                 return cell
             case stackIndex:
                 let cell = collectionView.dequeueReusableCell(for: globalIndex) as StackEffect
@@ -96,9 +122,9 @@ final class AlertDataSource: XCCollectionViewDataSource {
 
     override func collectionView(_ collectionView: UICollectionView, viewForHeaderInSectionAt indexPath: IndexPath) -> UICollectionReusableView? {
         let globalIndexPath = indexPath.with(globalSection)
-        let header = collectionView.dequeueReusableSupplementaryView(.header, for: globalIndexPath) as FeedTextHeaderFooterViewCell
-        header.configure(title: "S: \(alertIndexFor(section: indexPath.section))")
-        return header
+        let headerView = collectionView.dequeueReusableSupplementaryView(.header, for: globalIndexPath) as FeedTextHeaderFooterViewCell
+        headerView.configure(title: "S: \(alertIndexFor(section: indexPath.section))")
+        return headerView
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -161,23 +187,23 @@ extension AlertDataSource: XCCollectionViewTileLayoutCustomizable {
 }
 
 extension AlertDataSource {
-    final class HeaderCell: XCCollectionViewCell {
+    final private class HeaderCell: XCCollectionViewCell {
         lazy var hideButton = UIButton().apply {
             $0.text = "Show Less"
-            $0.addAction(.touchUpInside) { [weak self] _ in
+            $0.action { [weak self] _ in
                 self?.didTapHideAction?()
             }
         }
         lazy var clearButton = UIButton().apply {
             $0.text = "Clear"
-            $0.addAction(.touchUpInside) { [weak self] _ in
+            $0.action { [weak self] _ in
                 self?.didTapClearAction?()
             }
         }
 
         private var didTapHideAction: (() -> Void)?
         private var didTapClearAction: (() -> Void)?
-        
+
         private lazy var stackView = UIStackView(arrangedSubviews: [
             hideButton,
             clearButton
@@ -202,7 +228,7 @@ extension AlertDataSource {
 }
 
 extension AlertDataSource {
-    final class StackEffect: XCCollectionViewCell {
+    final private class StackEffect: XCCollectionViewCell {
         lazy var stackView = UIStackView(arrangedSubviews: [
             firstBottomView,
             secondBottomView

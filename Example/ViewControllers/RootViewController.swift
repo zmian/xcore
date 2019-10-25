@@ -68,7 +68,7 @@ final class RootViewController: DynamicTableViewController {
                 let vc = FeedViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
             },
-            .init(title: "AlertsViewController", subtitle: "Tiled Alerts Demostration") { [weak self] _, _ in
+            .init(title: "AlertsViewController", subtitle: "Tiled alerts Demostration") { [weak self] _, _ in
                 let vc = AlertsViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
             },
