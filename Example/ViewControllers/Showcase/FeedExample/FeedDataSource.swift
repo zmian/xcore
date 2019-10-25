@@ -26,7 +26,7 @@ import UIKit
 
 final class FeedDataSource: XCCollectionViewDataSource {
     static var isRandomEnabled = false
-    let cellCount = Int.random(in: 1...1)
+    let cellCount = Int.random(in: 1...2)
     var sectionIndex: Int
     var isVisible: Bool = true
     var isInverted: Bool = false
@@ -59,7 +59,7 @@ final class FeedDataSource: XCCollectionViewDataSource {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
+        cellCount
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
