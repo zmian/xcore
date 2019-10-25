@@ -9,11 +9,9 @@
 import Foundation
 
 final class AlertDataSource: XCCollectionViewDataSource {
-    var alerts: [String] = [
-        "Attend this place",
-        "You have this to take care please take care of it!",
-        "These is a long long message that has a lot of tasks lalsasd asdasd\nYou have this to take care please take care of it!\nLong Long Long"
-    ]
+    var alerts: [String]
+    var identifier: String
+
     var isExtended: Bool = false {
         didSet {
             if isExtended != oldValue {
@@ -29,7 +27,9 @@ final class AlertDataSource: XCCollectionViewDataSource {
         return 1 + 1 + alerts.count
     }
 
-    override init(collectionView: UICollectionView) {
+    init(collectionView: UICollectionView, alerts: [String], identifier: String) {
+        self.alerts = alerts
+        self.identifier = identifier
         super.init(collectionView: collectionView)
     }
 
@@ -61,12 +61,14 @@ final class AlertDataSource: XCCollectionViewDataSource {
                 return cell
             case 2:
                 let cell = collectionView.dequeueReusableCell(for: globalIndex) as StackEffect
+                cell.configure(isTwoOrMore: alerts.count >= 3)
                 return cell
             default:
                 let cell = collectionView.dequeueReusableCell(for: globalIndex) as FeedTextViewCell
+                let index = alertIndexFor(section: indexPath.section)
                 cell.configure(
-                    title: "Alert Number: \(globalIndex.section)",
-                    subtitle: alerts.at(alertIndexFor(section: indexPath.section)) ?? ""
+                    title: "Alert Number: \(index)",
+                    subtitle: alerts.at(index) ?? ""
                 )
                 return cell
         }
@@ -114,7 +116,7 @@ extension AlertDataSource: XCCollectionViewTileLayoutCustomizable {
             case 0, 2:
                 return nil
             default:
-                return "AlertStacked"
+                return identifier
         }
     }
 
@@ -224,6 +226,10 @@ extension AlertDataSource {
             view.layer.mask = CAShapeLayer().apply {
                 $0.path = path
             }
+        }
+
+        func configure(isTwoOrMore: Bool) {
+            secondBottomView.isHidden = !isTwoOrMore
         }
 
         override func commonInit() {
