@@ -25,31 +25,25 @@
 import UIKit
 
 final class FeedViewController: XCComposedCollectionViewController {
+    var removed: Bool = false {
+        didSet {
+            let set = IndexSet(integersIn: 1...3)
+            var newSources = sources
+            if removed {
+                newSources.removeSubrange(1...3)
+            }
+            composedDataSource.dataSources = newSources
+            collectionView.performBatchUpdates({
+                if removed {
+                    collectionView.deleteSections(set)
+                } else {
+                    collectionView.insertSections(set)
+                }
+            })
+        }
+    }
+
     private var sources = [FeedDataSource]()
-
-    let severalAlerts = [
-        "Attend this place",
-        "You have this to take care please take care of it!",
-        "These is a long long message that has a lot of tasks lalsasd asdasd\nYou have this to take care please take care of it!\nLong Long Long"
-    ]
-
-    let twoAlerts = [
-        "First Alert",
-        "Second alert",
-    ]
-
-    let manyAlerts = [
-        "This Alert",
-        "Second alert",
-        "First Alert",
-        "Second alert",
-        "First Alert",
-        "Second alert",
-        "First Alert",
-        "Second alert",
-        "First Alert",
-        "Second alert",
-    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,22 +52,18 @@ final class FeedViewController: XCComposedCollectionViewController {
         collectionView.contentInset.top = view.safeAreaInsets.top
 
         layout = .init(XCCollectionViewTileLayout())
+
+        sources = (0...10).map { index in
+            FeedDataSource(collectionView: collectionView, sectionIndex: index)
+        }
+        composedDataSource.dataSources = sources
     }
 
     override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
-        var allDataSources = [XCCollectionViewDataSource]()
-        for i in 0...2 {
-            allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
-        }
-        allDataSources.append(AlertDataSource(collectionView: collectionView, alerts: twoAlerts, identifier: "FirstAlerts"))
-        for i in 3...6 {
-            allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
-        }
-        allDataSources.append(AlertDataSource(collectionView: collectionView, alerts: severalAlerts, identifier: "SecondAlerts"))
-        for i in 7...10 {
-            allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
-        }
-        allDataSources.append(AlertDataSource(collectionView: collectionView, alerts: manyAlerts, identifier: "ThirdAlerts"))
-        return allDataSources
+        return sources
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        removed.toggle()
     }
 }
