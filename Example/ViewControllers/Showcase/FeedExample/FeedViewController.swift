@@ -34,6 +34,7 @@ final class FeedViewController: XCComposedCollectionViewController {
             }
             composedDataSource.dataSources = newSources
             collectionView.performBatchUpdates({
+                collectionView.collectionViewLayout.invalidateLayout()
                 if removed {
                     collectionView.deleteSections(set)
                 } else {
