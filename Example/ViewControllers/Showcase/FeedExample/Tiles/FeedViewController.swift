@@ -25,6 +25,8 @@
 import UIKit
 
 final class FeedViewController: XCComposedCollectionViewController {
+    private var sources = [FeedDataSource]()
+
     var removed: Bool = false {
         didSet {
             let set = IndexSet(integersIn: 1...3)
@@ -33,6 +35,8 @@ final class FeedViewController: XCComposedCollectionViewController {
                 newSources.removeSubrange(1...3)
             }
             composedDataSource.dataSources = newSources
+
+            // swiftlint:disable:next trailing_closure
             collectionView.performBatchUpdates({
                 collectionView.collectionViewLayout.invalidateLayout()
                 if removed {
@@ -43,8 +47,6 @@ final class FeedViewController: XCComposedCollectionViewController {
             })
         }
     }
-
-    private var sources = [FeedDataSource]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +63,7 @@ final class FeedViewController: XCComposedCollectionViewController {
     }
 
     override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
-        return sources
+        sources
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

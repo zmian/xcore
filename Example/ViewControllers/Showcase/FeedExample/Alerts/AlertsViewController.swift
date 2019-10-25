@@ -27,18 +27,18 @@ import UIKit
 final class AlertsViewController: XCComposedCollectionViewController {
     private var sources = [FeedDataSource]()
 
-    let severalAlerts = [
+    private let severalAlerts = [
         "Attend this place",
         "You have this to take care please take care of it!",
         "These is a long long message that has a lot of tasks lalsasd asdasd\nYou have this to take care please take care of it!\nLong Long Long"
     ]
 
-    let twoAlerts = [
+    private let twoAlerts = [
         "First Alert",
-        "Second alert",
+        "Second alert"
     ]
 
-    let manyAlerts = [
+    private let manyAlerts = [
         "This Alert",
         "Second alert",
         "First Alert",
@@ -48,7 +48,7 @@ final class AlertsViewController: XCComposedCollectionViewController {
         "First Alert",
         "Second alert",
         "First Alert",
-        "Second alert",
+        "Second alert"
     ]
 
     override func viewDidLoad() {
@@ -56,24 +56,27 @@ final class AlertsViewController: XCComposedCollectionViewController {
         view.backgroundColor = .lightGray
         collectionView.backgroundColor = .clear
         collectionView.contentInset.top = view.safeAreaInsets.top
-
         layout = .init(XCCollectionViewTileLayout())
     }
 
     override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
         var allDataSources = [XCCollectionViewDataSource]()
+
         for i in 0...2 {
             allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
         }
         allDataSources.append(AlertDataSource(collectionView: collectionView, alerts: twoAlerts, identifier: "FirstAlerts"))
+
         for i in 3...6 {
             allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
         }
         allDataSources.append(AlertDataSource(collectionView: collectionView, alerts: severalAlerts, identifier: "SecondAlerts"))
+
         for i in 7...10 {
             allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
         }
         allDataSources.append(AlertDataSource(collectionView: collectionView, alerts: manyAlerts, identifier: "ThirdAlerts"))
+
         return allDataSources
     }
 }

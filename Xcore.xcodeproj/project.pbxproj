@@ -177,14 +177,8 @@
 		2F9B4C8022A19B7B00FB644E /* FeedExample */ = {
 			isa = PBXGroup;
 			children = (
-				2F9B4C7E22A19B0E00FB644E /* FeedViewController.swift */,
-				2F7E032023628AFD0080D660 /* AlertsViewController.swift */,
-				2F9B4C8122A19BB600FB644E /* FeedDataSource.swift */,
-				2F7E031E23623BF80080D660 /* AlertDataSource.swift */,
-				2FF93A0522A9F20B008E4AAA /* FeedLightDataSource.swift */,
-				2F9B4C8322A19E7400FB644E /* FeedTextViewCell.swift */,
-				2FF93A0322A9EF83008E4AAA /* FeedColorViewCell.swift */,
-				2F9B4C8522A1BC4700FB644E /* FeedTextHeaderFooterViewCell.swift */,
+				684BA32123638FD600EADCA0 /* Alerts */,
+				684BA32223638FE400EADCA0 /* Tiles */,
 			);
 			path = FeedExample;
 			sourceTree = "<group>";
@@ -366,6 +360,28 @@
 				6836600A22987F3700FDE45B /* Swizzle.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		684BA32123638FD600EADCA0 /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				2F7E032023628AFD0080D660 /* AlertsViewController.swift */,
+				2F7E031E23623BF80080D660 /* AlertDataSource.swift */,
+			);
+			path = Alerts;
+			sourceTree = "<group>";
+		};
+		684BA32223638FE400EADCA0 /* Tiles */ = {
+			isa = PBXGroup;
+			children = (
+				2F9B4C7E22A19B0E00FB644E /* FeedViewController.swift */,
+				2F9B4C8122A19BB600FB644E /* FeedDataSource.swift */,
+				2FF93A0522A9F20B008E4AAA /* FeedLightDataSource.swift */,
+				2F9B4C8322A19E7400FB644E /* FeedTextViewCell.swift */,
+				2FF93A0322A9EF83008E4AAA /* FeedColorViewCell.swift */,
+				2F9B4C8522A1BC4700FB644E /* FeedTextHeaderFooterViewCell.swift */,
+			);
+			path = Tiles;
 			sourceTree = "<group>";
 		};
 		684E037B224C5867009C1E23 /* Application */ = {

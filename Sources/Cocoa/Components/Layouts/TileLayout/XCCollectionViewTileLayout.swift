@@ -24,6 +24,21 @@
 
 import UIKit
 
+extension XCCollectionViewTileLayout {
+    private struct LayoutElements {
+        var attributesBySection: [[Attributes]]
+        var layoutAttributes: [IndexPath: Attributes]
+        var footerAttributes: [IndexPath: Attributes]
+        var headerAttributes: [IndexPath: Attributes]
+        var sectionBackgroundAttributes: [IndexPath: Attributes]
+        var firstParentIndexByIdentifier: [String: Int]
+
+        // Elements in rect calculation
+        var sectionRects: [CGRect]
+        var sectionIndexesByColumn: [[Int]]
+    }
+}
+
 open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     private let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
 
@@ -87,19 +102,6 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     // Elements in rect calculation
     private var sectionRects = [CGRect]()
     private var sectionIndexesByColumn = [[Int]]()
-
-    struct LayoutElements {
-        var attributesBySection: [[Attributes]]
-        var layoutAttributes: [IndexPath: Attributes]
-        var footerAttributes: [IndexPath: Attributes]
-        var headerAttributes: [IndexPath: Attributes]
-        var sectionBackgroundAttributes: [IndexPath: Attributes]
-        var firstParentIndexByIdentifier: [String: Int]
-
-        // Elements in rect calculation
-        var sectionRects: [CGRect]
-        var sectionIndexesByColumn: [[Int]]
-    }
 
     private var beforeElements: LayoutElements?
 
