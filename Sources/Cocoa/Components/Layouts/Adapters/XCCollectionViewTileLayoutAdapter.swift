@@ -27,21 +27,21 @@ import UIKit
 // MARK: - XCCollectionViewTileLayoutCustomizable
 
 public protocol XCCollectionViewTileLayoutCustomizable {
-    // Return true to add corners and tile effect to each section.
+    // Enables tile effect for each section.
     // In a multicolumn setup returning false to this will make
-    // the sction to be full width instead of column width
-    // Default value is true
+    // the sction to be full width instead of column width.
+    // Default value is true.
     func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool
 
-    // The corner radius applied to the section tile
+    // The corner radius applied to the section tile.
     func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat
 
-    // If true this will display a shadow behind the section tile
+    // Displays a shadow behind the section tile.
     func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> Bool
 
     // Return a not null identifier to link this section with other ones, this will make the items
     // of this section to appear and disappear from the first item that appears on the group.
-    // Used for stacking
+    // Used for stacking of sections.
     func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> String?
 
     // Space between the section and the next section, is not applied for section with no items
