@@ -86,15 +86,6 @@ extension XCCollectionViewCell {
         if contentView.bounds.width != layoutAttributes.size.width {
             contentView.bounds.size.width = layoutAttributes.size.width
         }
-
-        if let tileAttributes = attributes as? XCCollectionViewTileLayout.Attributes, tileAttributes.isAutosizeEnabled {
-            let size = super.systemLayoutSizeFitting(
-                attributes.size,
-                withHorizontalFittingPriority: .required,
-                verticalFittingPriority: .fittingSizeLevel
-            )
-            attributes.frame.size = size
-        }
         return attributes
     }
 
@@ -107,6 +98,10 @@ extension XCCollectionViewCell {
 
         if let tileAttributes = layoutAttributes as? XCCollectionViewTileLayout.Attributes {
             corners = tileAttributes.corners
+            alpha = tileAttributes.alpha
+            if tileAttributes.shouldDim && !resistsDimming {
+                alpha *= 0.5
+            }
         }
     }
 }

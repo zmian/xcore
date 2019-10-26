@@ -27,9 +27,25 @@ import UIKit
 // MARK: - XCCollectionViewTileLayoutCustomizable
 
 public protocol XCCollectionViewTileLayoutCustomizable {
+    // Enables tile effect for each section.
+    // In a multicolumn setup returning false to this will make
+    // the sction to be full width instead of column width.
+    // Default value is true.
     func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool
+
+    // The corner radius applied to the section tile.
     func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat
-    func isShadowEnabled(in layout: XCCollectionViewTileLayout) -> Bool
+
+    // Displays a shadow behind the section tile.
+    func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> Bool
+
+    // Return a not null identifier to link this section with other ones, this will make the items
+    // of this section to appear and disappear from the first item that appears on the group.
+    // Used for stacking of sections.
+    func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> String?
+
+    // Space between the section and the next section, is not applied for section with no items
+    func verticalBottomSpacing(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> CGFloat
 }
 
 extension XCCollectionViewTileLayoutCustomizable {
@@ -41,8 +57,16 @@ extension XCCollectionViewTileLayoutCustomizable {
         layout.cornerRadius
     }
 
-    public func isShadowEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
+    public func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> Bool {
         true
+    }
+
+    public func verticalBottomSpacing(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> CGFloat {
+        layout.verticalIntersectionSpacing
+    }
+
+    public func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> String? {
+        nil
     }
 }
 
@@ -74,6 +98,14 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
         XCDataSourceSizeCalculator.estimatedFooterSize(in: composedDataSource, for: section, availableWidth: width).height
     }
 
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, verticalSpacingBetweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
+        let source = composedDataSource.index(for: section)
+        guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
+            return collectionViewLayout.verticalIntersectionSpacing
+        }
+        return custom.verticalBottomSpacing(in: collectionViewLayout, forSectionAt: source.localSection)
+    }
+
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isTileEnabledInSection section: Int) -> Bool {
         let source = composedDataSource.index(for: section)
         guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
@@ -87,7 +119,7 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
         guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
             return true
         }
-        return custom.isShadowEnabled(in: collectionViewLayout)
+        return custom.isShadowEnabled(in: collectionViewLayout, forSectionAt: source.localSection)
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, cornerRadiusInSection section: Int) -> CGFloat {
@@ -96,6 +128,14 @@ open class XCCollectionViewTileLayoutAdapter: XCComposedCollectionViewLayoutAdap
             return collectionViewLayout.cornerRadius
         }
         return custom.cornerRadius(in: collectionViewLayout)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, parentIdentifierInSection section: Int) -> String? {
+        let source = composedDataSource.index(for: section)
+        guard let custom = source.dataSource as? XCCollectionViewTileLayoutCustomizable else {
+            return nil
+        }
+        return custom.parentIdentifier(in: collectionViewLayout, forSectionAt: source.localSection)
     }
 }
 
