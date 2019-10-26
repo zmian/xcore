@@ -71,7 +71,7 @@ extension CALayer {
         let height = 1
         let bitsPerComponent = 8
         let bytesPerRow = 4 * height
-        var pixel: [UInt8] = [0, 0, 0, 0]
+        let pixel: [UInt8] = [0, 0, 0, 0]
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
         let context = CGContext(data: UnsafeMutablePointer(mutating: pixel), width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
