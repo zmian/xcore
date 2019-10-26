@@ -239,9 +239,9 @@ open class CustomCarouselView<Cell: CarouselViewCellType, Model: CarouselViewMod
         carouselCollectionView.reloadData()
     }
 
-    open func setCurrentIndex(_ index: Int, animated: Bool = true, completionHandler: (() -> Void)? = nil) {
+    open func setCurrentIndex(_ index: Int, animated: Bool = true, completion: (() -> Void)? = nil) {
         pageControl.currentPage = index
-        carouselCollectionView.setCurrentIndex(index, animated: animated, completionHandler: completionHandler)
+        carouselCollectionView.setCurrentIndex(index, animated: animated, completion: completion)
     }
 
     open func configure(model: Model) {

@@ -102,13 +102,13 @@ extension UITableView {
     /// Toggles the table view into and out of editing mode with completion handler when animation is completed.
     ///
     /// - Parameters:
-    ///   - editing:           `true` to enter editing mode; `false` to leave it. The default value is `false`.
-    ///   - animated:          `true` to animate the transition to editing mode; `false` to make the transition immediate.
-    ///   - completionHandler: A block object called when animation is completed.
-    public func setEditing(_ editing: Bool, animated: Bool, completionHandler: @escaping () -> Void) {
-        CATransaction.animationTransaction({
+    ///   - editing: `true` to enter editing mode; `false` to leave it. The default value is `false`.
+    ///   - animated: `true` to animate the transition to editing mode; `false` to make the transition immediate.
+    ///   - completion: A block object called when animation is completed.
+    public func setEditing(_ editing: Bool, animated: Bool, completion: @escaping () -> Void) {
+        CATransaction.animation({
             setEditing(editing, animated: animated)
-        }, completionHandler: completionHandler)
+        }, completion: completion)
     }
 }
 

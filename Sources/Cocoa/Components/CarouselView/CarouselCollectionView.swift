@@ -267,16 +267,16 @@ final class CarouselCollectionView
 
     // MARK: - API
 
-    func setCurrentIndex(_ index: Int, animated: Bool = true, completionHandler: (() -> Void)? = nil) {
+    func setCurrentIndex(_ index: Int, animated: Bool = true, completion: (() -> Void)? = nil) {
         guard currentIndex != index else { return }
 
         layoutIfNeeded()
-        CATransaction.animationTransaction({
+        CATransaction.animation({
             ignoreScrollEventsCallbacks = true
             setContentOffset(CGPoint(x: offset(forPage: index), y: 0), animated: animated)
-        }, completionHandler: { [weak self] in
+        }, completion: { [weak self] in
             self?.ignoreScrollEventsCallbacks = false
-            completionHandler?()
+            completion?()
         })
     }
 

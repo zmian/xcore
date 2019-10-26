@@ -80,9 +80,9 @@ extension UINavigationController {
     ///               controller at launch time.
     ///   - completion: The block to execute after the presentation finishes.
     open func pushViewController(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)?) {
-        CATransaction.animationTransaction({
+        CATransaction.animation({
             pushViewController(viewController, animated: animated)
-        }, completionHandler: completion)
+        }, completion: completion)
     }
 
     /// Pushes a list of view controller onto the receiver’s stack and updates the
@@ -112,9 +112,9 @@ extension UINavigationController {
         var vcs = self.viewControllers
         vcs.append(contentsOf: viewControllers)
 
-        CATransaction.animationTransaction({
+        CATransaction.animation({
             setViewControllers(vcs, animated: animated)
-        }, completionHandler: completion)
+        }, completion: completion)
     }
 
     /// A convenience method to pop to view controller of specified subclass of
@@ -190,9 +190,9 @@ extension UINavigationController {
         }
         vcs.append(viewController)
 
-        CATransaction.animationTransaction({
+        CATransaction.animation({
             setViewControllers(vcs, animated: animated)
-        }, completionHandler: completion)
+        }, completion: completion)
     }
 
     open func replaceLastViewController(with viewController: UIViewController, animated: Bool, completion: (() -> Void)? = nil) {
@@ -200,9 +200,9 @@ extension UINavigationController {
         vcs.removeLast()
         vcs.append(viewController)
 
-        CATransaction.animationTransaction({
+        CATransaction.animation({
             setViewControllers(vcs, animated: animated)
-        }, completionHandler: completion)
+        }, completion: completion)
     }
 
     /// A convenience method to push a view controller by replacing all view
