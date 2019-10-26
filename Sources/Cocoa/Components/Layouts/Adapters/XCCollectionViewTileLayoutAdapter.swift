@@ -39,18 +39,18 @@ public protocol XCCollectionViewTileLayoutCustomizable {
     func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat
 
     /// Displays a shadow behind the section tile.
-    func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> Bool
+    func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> Bool
+
+    /// Space between the section and the next section, is not applied for section
+    /// with no items.
+    func verticalBottomSpacing(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> CGFloat
 
     /// Return a not null identifier to link this section with other ones, this will
     /// make the items of this section to appear and disappear from the first item
     /// that appears on the group.
     ///
     /// This can used for stacking of sections.
-    func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> String?
-
-    /// Space between the section and the next section, is not applied for section
-    /// with no items.
-    func verticalBottomSpacing(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> CGFloat
+    func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> String?
 }
 
 extension XCCollectionViewTileLayoutCustomizable {
@@ -62,15 +62,15 @@ extension XCCollectionViewTileLayoutCustomizable {
         layout.cornerRadius
     }
 
-    public func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> Bool {
+    public func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> Bool {
         true
     }
 
-    public func verticalBottomSpacing(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> CGFloat {
+    public func verticalBottomSpacing(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> CGFloat {
         layout.verticalIntersectionSpacing
     }
 
-    public func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> String? {
+    public func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> String? {
         nil
     }
 }
