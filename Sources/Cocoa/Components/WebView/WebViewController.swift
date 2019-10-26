@@ -274,7 +274,7 @@ open class WebViewController: UIViewController {
         #endif
     }
 
-    open func autofillToken(completionHandler: @escaping (Autofill?) -> Void) { }
+    open func autofillToken(completion: @escaping (Autofill?) -> Void) { }
 
     // MARK: Hooks
 

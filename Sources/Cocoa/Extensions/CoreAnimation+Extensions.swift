@@ -26,15 +26,18 @@ import UIKit
 import QuartzCore
 
 extension CATransaction {
-    /// A helper function to group animation transactions and call completion handler when animations for this transaction group are completed.
+    /// A function to group animation transactions and call completion handler when
+    /// animations for this transaction group are completed.
     ///
     /// - Parameters:
-    ///   - animateBlock: The block that have animations that must be completed before completion handler is called.
-    ///   - completionHandler: A block object called when animations for this transaction group are completed.
-    public static func animationTransaction(_ animateBlock: () -> Void, completionHandler: (() -> Void)?) {
+    ///   - animations: The block that have animations that must be completed before
+    ///                 completion handler is called.
+    ///   - completion: A block object called when animations for this transaction
+    ///                 group are completed.
+    public static func animation(_ animations: () -> Void, completion: (() -> Void)?) {
         CATransaction.begin()
-        CATransaction.setCompletionBlock(completionHandler)
-        animateBlock()
+        CATransaction.setCompletionBlock(completion)
+        animations()
         CATransaction.commit()
     }
 

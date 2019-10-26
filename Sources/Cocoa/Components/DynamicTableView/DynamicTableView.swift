@@ -379,9 +379,9 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     ///   - animation:  A constant that indicates how the deletion is to be animated.
     private func removeItems(_ indexPaths: [IndexPath], animation: RowAnimation = .automatic) {
         let items = indexPaths.map { (indexPath: $0, item: sections.remove(at: $0)) }
-        CATransaction.animationTransaction({
+        CATransaction.animation({
             deleteRows(at: indexPaths, with: animation)
-        }, completionHandler: { [weak self] in
+        }, completion: { [weak self] in
             guard let strongSelf = self else { return }
             items.forEach { indexPath, item in
                 strongSelf.didRemoveItem?(indexPath, item)
