@@ -33,24 +33,29 @@ public protocol XCCollectionViewDelegateTileLayout: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, estimatedHeaderHeightInSection section: Int, width: CGFloat) -> CGFloat
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, estimatedFooterHeightInSection section: Int, width: CGFloat) -> CGFloat
 
-    // Enables tile effect for each section.
-    // In a multicolumn setup returning false to this will make
-    // the sction to be full width instead of column width.
-    // Default value is true.
+    /// Enables tile effect for each section.
+    ///
+    /// In a multi-column, setup returning `false` will make this section to be full
+    /// width instead of column width.
+    ///
+    /// The default value is `true`.
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isTileEnabledInSection section: Int) -> Bool
 
-    // The corner radius applied to the section tile.
+    /// The corner radius applied to the section tile.
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, cornerRadiusInSection section: Int) -> CGFloat
 
-    // Displays a shadow behind the section tile.
+    /// Displays a shadow behind the section tile.
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isShadowEnabledInSection section: Int) -> Bool
 
-    // Return a not null identifier to link this section with other ones, this will make the items
-    // of this section to appear and disappear from the first item that appears on the group.
-    // Used for stacking of sections.
+    /// Return a not null identifier to link this section with other ones, this will
+    /// make the items of this section to appear and disappear from the first item
+    /// that appears on the group.
+    ///
+    /// This can used for stacking of sections.
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, parentIdentifierInSection section: Int) -> String?
 
-    // Space between the section and the next section, is not applied for section with no items
+    /// Space between the section and the next section, is not applied for section
+    /// with no items.
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, verticalSpacingBetweenSectionAt section: Int, and nextSection: Int) -> CGFloat
 }
 

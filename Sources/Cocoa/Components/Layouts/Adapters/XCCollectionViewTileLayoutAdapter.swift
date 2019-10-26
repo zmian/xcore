@@ -27,24 +27,29 @@ import UIKit
 // MARK: - XCCollectionViewTileLayoutCustomizable
 
 public protocol XCCollectionViewTileLayoutCustomizable {
-    // Enables tile effect for each section.
-    // In a multicolumn setup returning false to this will make
-    // the sction to be full width instead of column width.
-    // Default value is true.
+    /// Enables tile effect for each section.
+    ///
+    /// In a multi-column, setup returning `false` will make this section to be full
+    /// width instead of column width.
+    ///
+    /// The default value is `true`.
     func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool
 
-    // The corner radius applied to the section tile.
+    /// The corner radius applied to the section tile.
     func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat
 
-    // Displays a shadow behind the section tile.
+    /// Displays a shadow behind the section tile.
     func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> Bool
 
-    // Return a not null identifier to link this section with other ones, this will make the items
-    // of this section to appear and disappear from the first item that appears on the group.
-    // Used for stacking of sections.
+    /// Return a not null identifier to link this section with other ones, this will
+    /// make the items of this section to appear and disappear from the first item
+    /// that appears on the group.
+    ///
+    /// This can used for stacking of sections.
     func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> String?
 
-    // Space between the section and the next section, is not applied for section with no items
+    /// Space between the section and the next section, is not applied for section
+    /// with no items.
     func verticalBottomSpacing(in layout: XCCollectionViewTileLayout, forSectionAt: Int) -> CGFloat
 }
 
