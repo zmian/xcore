@@ -120,7 +120,7 @@ extension UICollectionView {
         guard isValid(indexPath: indexPath) else {
             return nil
         }
-        layoutAttributesForSupplementaryElement(ofKind: kind.rawValue, at: indexPath)
+        return layoutAttributesForSupplementaryElement(ofKind: kind.rawValue, at: indexPath)
     }
 
     /// Returns a reusable `UICollectionReusableView` instance for the class
