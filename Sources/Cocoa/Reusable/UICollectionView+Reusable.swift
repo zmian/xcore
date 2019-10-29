@@ -96,6 +96,10 @@ extension UICollectionView {
 }
 
 extension UICollectionView {
+    /// Returns wether an index path is valid for the current layout information.
+    open func isValid(indexPath: IndexPath) -> Bool {
+        return indexPath.section < numberOfSections && indexPath.row < numberOfItems(inSection: indexPath.section)
+    }
     /// Returns the layout information for the specified supplementary view.
     ///
     /// Use this method to retrieve the layout information for a particular
@@ -113,6 +117,9 @@ extension UICollectionView {
     /// - Returns: The layout attributes of the supplementary view or `nil` if the
     ///            specified supplementary view does not exist.
     open func layoutAttributesForSupplementaryElement(ofKind kind: SupplementaryViewKind, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        guard isValid(indexPath: indexPath) else {
+            return nil
+        }
         layoutAttributesForSupplementaryElement(ofKind: kind.rawValue, at: indexPath)
     }
 
