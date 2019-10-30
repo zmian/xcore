@@ -110,7 +110,7 @@ extension UIApplication {
     /// - Returns: Returns an optional window object based on visibility.
     /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
     open var visibleWindow: UIWindow? {
-        windows.reversed().first { !$0.isHidden }
+        windows.reversed().first { !$0.isHidden && NSStringFromClass($0.classForCoder) == "UIWindow" }
     }
 }
 
