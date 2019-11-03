@@ -33,6 +33,7 @@
 		68376A17228C285700C7B819 /* CurrencyFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68376A16228C285700C7B819 /* CurrencyFormatterTests.swift */; };
 		68376A1C228C2C9500C7B819 /* SubviewLookupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68376A1A228C2C9500C7B819 /* SubviewLookupTests.swift */; };
 		68376A1E228C2CCF00C7B819 /* SearchBarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68376A1D228C2CCF00C7B819 /* SearchBarViewTests.swift */; };
+		684019D5236F5FC700B83DB8 /* UIControlBlocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684019D4236F5FC600B83DB8 /* UIControlBlocksTests.swift */; };
 		684B1CFC224C4CAA009F6197 /* TestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1CFB224C4CAA009F6197 /* TestCase.swift */; };
 		684B1E91224C5167009F6197 /* PredicateRepresentableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1E8A224C5167009F6197 /* PredicateRepresentableTests.swift */; };
 		684B1E92224C5167009F6197 /* ImageTransformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1E8B224C5167009F6197 /* ImageTransformTests.swift */; };
@@ -106,6 +107,7 @@
 		68376A16228C285700C7B819 /* CurrencyFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyFormatterTests.swift; sourceTree = "<group>"; };
 		68376A1A228C2C9500C7B819 /* SubviewLookupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubviewLookupTests.swift; sourceTree = "<group>"; };
 		68376A1D228C2CCF00C7B819 /* SearchBarViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarViewTests.swift; sourceTree = "<group>"; };
+		684019D4236F5FC600B83DB8 /* UIControlBlocksTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIControlBlocksTests.swift; sourceTree = "<group>"; };
 		684B1CF6224C4CAA009F6197 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		684B1CFB224C4CAA009F6197 /* TestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCase.swift; sourceTree = "<group>"; };
 		684B1CFD224C4CAA009F6197 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				68A8D4FC22E3ECB2000E2115 /* ReflectionTests.swift */,
 				68CA631E224C76750012DF31 /* StringTests.swift */,
 				688B66602276890900AD0C1A /* ConfigurationTests.swift */,
+				684019D4236F5FC600B83DB8 /* UIControlBlocksTests.swift */,
 				688C357B2273DED400CF3FCB /* DictionaryTests.swift */,
 				688B665E2275511400AD0C1A /* NumbersTests.swift */,
 				688B66622276981900AD0C1A /* CollectionTests.swift */,
@@ -653,6 +656,7 @@
 				687A9062227517E6000B7C82 /* ValidationRuleTests.swift in Sources */,
 				687A905A2274FA4E000B7C82 /* SortOrderableTests.swift in Sources */,
 				684B1E93224C5167009F6197 /* VersionTests.swift in Sources */,
+				684019D5236F5FC700B83DB8 /* UIControlBlocksTests.swift in Sources */,
 				688B66632276981900AD0C1A /* CollectionTests.swift in Sources */,
 				684B1E99224C5176009F6197 /* ViewControllerTestCase.swift in Sources */,
 				68376A1C228C2C9500C7B819 /* SubviewLookupTests.swift in Sources */,

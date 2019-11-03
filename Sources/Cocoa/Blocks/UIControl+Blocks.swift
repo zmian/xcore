@@ -63,6 +63,14 @@ public protocol ControlTargetActionBlockRepresentable: class {
 }
 
 extension ControlTargetActionBlockRepresentable where Self: UIControl {
+    /// Associates an action method with the control.
+    ///
+    /// - Note: Unlike `addTarget(_:action:for:)`, calling this method with same
+    ///         event will override the existing `handler`.
+    ///
+    /// - Parameters:
+    ///     - event: An event to add to `self`.
+    ///     - handler: The block invoked whenever given event is triggered.
     public func addAction(_ event: UIControl.Event, _ handler: @escaping (_ sender: Self) -> Void) {
         var actionEvent = self.actionEvent ?? [:]
         let wrapper = actionEvent[event.rawValue] ?? ControlClosureWrapper(event: event, closure: nil)
@@ -77,6 +85,9 @@ extension ControlTargetActionBlockRepresentable where Self: UIControl {
         addTarget(wrapper, action: #selector(wrapper.invoke(_:)), for: event)
     }
 
+    /// Stops the delivery of the given event from `self`.
+    ///
+    /// - Parameter event: An event to remove from `self`.
     public func removeAction(_ event: UIControl.Event) {
         guard let actionEvent = actionEvent, let wrapper = actionEvent[event.rawValue] else { return }
         removeTarget(wrapper, action: nil, for: event)
@@ -85,9 +96,16 @@ extension ControlTargetActionBlockRepresentable where Self: UIControl {
 }
 
 extension ControlTargetActionBlockRepresentable where Self: UIButton {
-    /// A touch-up event in the button where the finger is inside the bounds of the
-    /// button.
-    public func action(_ handler: @escaping (_ sender: Self) -> Void) {
+    /// Associates `.touchUpInside` action method with the control.
+    ///
+    /// - Parameter handler: The block invoked whenever `.touchUpInside` event is
+    ///                      triggered.
+    public func action(_ handler: ((_ sender: Self) -> Void)?) {
+        guard let handler = handler else {
+            removeAction(.touchUpInside)
+            return
+        }
+
         addAction(.touchUpInside, handler)
     }
 }

@@ -48,24 +48,34 @@ extension Bundle {
         infoDictionary?[key] as? String ?? ""
     }
 
-    /// The identifier string for the bundle extracted from `CFBundleIdentifier`.
-    public var identifier: String {
-        info(forKey: "CFBundleIdentifier")
+    private func info(forKey key: CFString) -> String {
+        info(forKey: key as String)
     }
 
-    /// The release-version-number string for the bundle extracted from `CFBundleShortVersionString`.
+    /// The name of the executable in this bundle (if any).
+    public var executable: String {
+        info(forKey: kCFBundleExecutableKey)
+    }
+
+    /// The bundle identifier.
+    public var identifier: String {
+        info(forKey: kCFBundleIdentifierKey)
+    }
+
+    /// The version number of the bundle.
     public var versionNumber: String {
         info(forKey: "CFBundleShortVersionString")
     }
 
-    /// The build-version-number string for the bundle extracted from `CFBundleVersion`.
+    /// The build number of the bundle.
     public var buildNumber: String {
-        info(forKey: "CFBundleVersion")
+        info(forKey: kCFBundleVersionKey)
     }
 
     /// Returns common bundle information.
     ///
-    /// Sample output:
+    /// **Sample output:**
+    ///
     /// ```swift
     /// iOS 12.1.0        // OS Version
     /// iPhone X          // Device
