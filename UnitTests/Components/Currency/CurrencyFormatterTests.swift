@@ -36,8 +36,16 @@ final class CurrencyFormatterTests: TestCase {
         XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
 
-        // India
-        CurrencyFormatter.shared.localeTest = .india
+        // India - Hindi
+        CurrencyFormatter.shared.localeTest = .indiaHindi
+        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+
+        // India - Sanskrit
+        CurrencyFormatter.shared.localeTest = .indiaSanskrit
         XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$१,०००.", "००"))
         XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$१.", "००"))
         XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$०.", "००"))
@@ -46,11 +54,12 @@ final class CurrencyFormatterTests: TestCase {
 
         // Puerto Rico
         CurrencyFormatter.shared.localeTest = .puertoRico
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1000.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: -10000.0) == ("-$10,000.", "00"))
         XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1000.", "00"))
 
         // China
         CurrencyFormatter.shared.localeTest = .china
@@ -86,11 +95,12 @@ final class CurrencyFormatterTests: TestCase {
 
         // Mexico
         CurrencyFormatter.shared.localeTest = .mexico
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1000.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: -10000.0) == ("-$10,000.", "00"))
         XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1000.", "00"))
 
         // Brazil
         CurrencyFormatter.shared.localeTest = .brazil
@@ -116,13 +126,21 @@ final class CurrencyFormatterTests: TestCase {
         XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
 
-        // Pakistan
-        CurrencyFormatter.shared.localeTest = .pakistan
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
+        // Pakistan - Urdu
+        CurrencyFormatter.shared.localeTest = .pakistanUrdu
+        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("‎-$1,000.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("‎-$1.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+
+        // Pakistan - Punjabi
+        CurrencyFormatter.shared.localeTest = .pakistanPunjabi
+        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("‎-‎$۱٬۰۰۰٫", "۰۰"))
+        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("‎-‎$۱٫", "۰۰"))
+        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$۰٫", "۰۰"))
+        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$۱٫", "۰۰"))
+        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$۱٬۰۰۰٫", "۰۰"))
 
         // Switzerland
         CurrencyFormatter.shared.localeTest = .switzerland
@@ -142,11 +160,11 @@ final class CurrencyFormatterTests: TestCase {
 
         // Indonesia
         CurrencyFormatter.shared.localeTest = .indonesia
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1.000,", "00"))
+        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1,", "00"))
+        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0,", "00"))
+        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1,", "00"))
+        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1.000,", "00"))
     }
 
     func testCurrencyWithoutDecimals() {
@@ -196,24 +214,26 @@ final class CurrencyFormatterTests: TestCase {
 
 extension CurrencyFormatterTests {
     fileprivate enum Locale: String, CaseIterable {
-        case usa = "en-US"
-        case india = "hin-ID"
-        case puertoRico = "spn-PR"
-        case china = "mdr-CN"
-        case canadaFr = "fr-CAN"
-        case canadaEn = "en-CAN"
-        case uk = "en-UK"
-        case mexico = "spn-MX"
-        case brazil = "por-BR"
-        case germany = "de-DE"
-        case japan = "jpn-JP" // no fractional numbers: 55.00 -> 55
+        case usa = "en_US"
+        case indiaHindi = "hi_IN"
+        case indiaSanskrit = "sa_IN"
+        case puertoRico = "es_PR"
+        case china = "zh_Hans_CN"
+        case canadaFr = "fr_CA"
+        case canadaEn = "en_CA"
+        case uk = "en_GB"
+        case mexico = "es_MX"
+        case brazil = "pt_BR"
+        case germany = "de_DE"
+        case japan = "ja_JP" // no fractional numbers: 55.00 -> 55
 
         // Extra countries with different decimal separators
         // - Source: https://en.wikipedia.org/wiki/Decimal_mark
-        case pakistan = "ab-PK"
-        case switzerland = "gsw-CH"
-        case ireland = "ga-IR"
-        case indonesia = "idn-ID"
+        case pakistanUrdu = "ur_PK"
+        case pakistanPunjabi = "pa_Arab_PK"
+        case switzerland = "gsw_CH"
+        case ireland = "ga_IE"
+        case indonesia = "id_ID"
     }
 
     private func dollarsAndCents(from amount: Double) -> (dollars: String, cents: String) {
@@ -225,6 +245,6 @@ extension CurrencyFormatterTests {
 extension CurrencyFormatter {
     fileprivate var localeTest: CurrencyFormatterTests.Locale {
         get { CurrencyFormatterTests.Locale(rawValue: locale.identifier) ?? .usa }
-        set { locale = Locale(identifier: newValue.rawValue) }
+        set { locale = .init(identifier: newValue.rawValue) }
     }
 }
