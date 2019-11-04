@@ -75,12 +75,9 @@ extension UIDevice {
         case iPhone7, iPhone7Plus
         case iPhone8, iPhone8Plus
         case iPhoneX
-        case iPhoneXS
-        case iPhoneXSMax
+        case iPhoneXS, iPhoneXSMax
         case iPhoneXR
-        case iPhone11
-        case iPhone11Pro
-        case iPhone11ProMax
+        case iPhone11, iPhone11Pro, iPhone11ProMax
 
         // iPad
         case iPad_1
@@ -88,18 +85,22 @@ extension UIDevice {
         case iPad_3
         case iPad_4
         case iPad_5
+        case iPad_6
+        case iPad_7
         case iPadMini_1
         case iPadMini_2
         case iPadMini_3
         case iPadMini_4
+        case iPadMini_5
         case iPadAir_1
         case iPadAir_2
-        case iPadPro97Inch
-        case iPadPro10Inch
-        case iPadPro11Inch
-        case iPadPro12Inch_1
-        case iPadPro12Inch_2
-        case iPadPro12Inch_3
+        case iPadAir_3
+        case iPadPro_97Inch
+        case iPadPro_10Inch
+        case iPadPro_11Inch
+        case iPadPro_12Inch_1
+        case iPadPro_12Inch_2
+        case iPadPro_12Inch_3
 
         // Apple Watch
         case appleWatchSeries0_38mm
@@ -199,10 +200,16 @@ extension UIDevice {
                         return .iPad_4
                     case "iPad6,11", "iPad6,12":
                         return .iPad_5
+                    case "iPad7,5", "iPad7,6":
+                        return .iPad_6
+                    case "iPad7,11", "iPad7,12":
+                        return .iPad_7
                     case "iPad4,1", "iPad4,2", "iPad4,3":
                         return .iPadAir_1
                     case "iPad5,3", "iPad5,4":
                         return .iPadAir_2
+                    case "iPad11,3", "iPad11,4":
+                        return .iPadAir_3
                     case "iPad2,5", "iPad2,6", "iPad2,7":
                         return .iPadMini_1
                     case "iPad4,4", "iPad4,5", "iPad4,6":
@@ -211,18 +218,20 @@ extension UIDevice {
                         return .iPadMini_3
                     case "iPad5,1", "iPad5,2":
                         return .iPadMini_4
+                    case "iPad11,1", "iPad11,2":
+                        return .iPadMini_5
                     case "iPad6,3", "iPad6,4":
-                        return .iPadPro97Inch
+                        return .iPadPro_97Inch
                     case "iPad7,3", "iPad7,4":
-                         return .iPadPro10Inch
+                         return .iPadPro_10Inch
                     case "iPad8,1", "iPad8,2", "iPad8,3", "iPad8,4":
-                        return .iPadPro11Inch
+                        return .iPadPro_11Inch
                     case "iPad6,7", "iPad6,8":
-                        return .iPadPro12Inch_1
+                        return .iPadPro_12Inch_1
                     case "iPad7,1", "iPad7,2":
-                        return .iPadPro12Inch_2
+                        return .iPadPro_12Inch_2
                     case "iPad8,5", "iPad8,6", "iPad8,7", "iPad8,8":
-                        return .iPadPro12Inch_3
+                        return .iPadPro_12Inch_3
 
                     // Apple Watch
 
@@ -326,23 +335,27 @@ extension UIDevice {
                 case .iPhone11Pro:    return "iPhone 11 Pro"
                 case .iPhone11ProMax: return "iPhone 11 Pro Max"
 
-                case .iPad_1:          return "iPad 1"
-                case .iPad_2:          return "iPad 2"
-                case .iPad_3:          return "iPad 3"
-                case .iPad_4:          return "iPad 4"
-                case .iPad_5:          return "iPad 5"
-                case .iPadAir_1:       return "iPad Air"
-                case .iPadAir_2:       return "iPad Air 2"
-                case .iPadMini_1:      return "iPad Mini"
-                case .iPadMini_2:      return "iPad Mini 2"
-                case .iPadMini_3:      return "iPad Mini 3"
-                case .iPadMini_4:      return "iPad Mini 4"
-                case .iPadPro97Inch:   return "iPad Pro (9.7-inch)"
-                case .iPadPro10Inch:   return "iPad Pro (10.5-inch)"
-                case .iPadPro11Inch:   return "iPad Pro (11-inch)"
-                case .iPadPro12Inch_1: return "iPad Pro (12.9-inch)"
-                case .iPadPro12Inch_2: return "iPad Pro (12.9-inch) (2nd generation)"
-                case .iPadPro12Inch_3: return "iPad Pro (12.9-inch) (3rd generation)"
+                case .iPad_1:           return "iPad (1st generation)"
+                case .iPad_2:           return "iPad (2nd generation)"
+                case .iPad_3:           return "iPad (3rd generation)"
+                case .iPad_4:           return "iPad (4th generation)"
+                case .iPad_5:           return "iPad (5th generation)"
+                case .iPad_6:           return "iPad (6th generation)"
+                case .iPad_7:           return "iPad (7th generation)"
+                case .iPadAir_1:        return "iPad Air (1st generation)"
+                case .iPadAir_2:        return "iPad Air (2nd generation)"
+                case .iPadAir_3:        return "iPad Air (3rd generation)"
+                case .iPadMini_1:       return "iPad Mini"
+                case .iPadMini_2:       return "iPad Mini 2"
+                case .iPadMini_3:       return "iPad Mini 3"
+                case .iPadMini_4:       return "iPad Mini 4"
+                case .iPadMini_5:       return "iPad Mini 5"
+                case .iPadPro_97Inch:   return "iPad Pro (9.7-inch)"
+                case .iPadPro_10Inch:   return "iPad Pro (10.5-inch)"
+                case .iPadPro_11Inch:   return "iPad Pro (11-inch)"
+                case .iPadPro_12Inch_1: return "iPad Pro (12.9-inch)"
+                case .iPadPro_12Inch_2: return "iPad Pro (12.9-inch) (2nd generation)"
+                case .iPadPro_12Inch_3: return "iPad Pro (12.9-inch) (3rd generation)"
 
                 case .appleWatchSeries0_38mm: return "Apple Watch (1st generation) 38mm"
                 case .appleWatchSeries0_42mm: return "Apple Watch (1st generation) 42mm"
@@ -356,7 +369,6 @@ extension UIDevice {
                 case .appleWatchSeries4_44mm: return "Apple Watch Series 4 44mm"
                 case .appleWatchSeries5_40mm: return "Apple Watch Series 5 40mm"
                 case .appleWatchSeries5_44mm: return "Apple Watch Series 5 44mm"
-
 
                 case .appleTV1:     return "Apple TV 1"
                 case .appleTV2:     return "Apple TV 2"
@@ -399,36 +411,36 @@ extension UIDevice.ModelType {
             #elseif os(macOS)
                 self = .desktop
                 return
+            #else
+                if identifier.starts(with: "Watch") {
+                    self = .watch
+                    return
+                }
+
+                if identifier.starts(with: "iPod") {
+                    self = .pod
+                    return
+                }
+
+                switch device.userInterfaceIdiom {
+                    case .phone:
+                        self = .phone
+                    case .pad:
+                        self = .pad
+                    case .tv:
+                        self = .tv
+                    case .carPlay:
+                        self = .carPlay
+                    case .unspecified:
+                        self = .unknown
+                    @unknown default:
+                        #if DEBUG
+                        fatalError(because: .unknownCaseDetected(device.userInterfaceIdiom))
+                        #else
+                        self = .unknown
+                        #endif
+                }
             #endif
-
-            if identifier.starts(with: "Watch") {
-                self = .watch
-                return
-            }
-
-            if identifier.starts(with: "iPod") {
-                self = .pod
-                return
-            }
-
-            switch device.userInterfaceIdiom {
-                case .phone:
-                    self = .phone
-                case .pad:
-                    self = .pad
-                case .tv:
-                    self = .tv
-                case .carPlay:
-                    self = .carPlay
-                case .unspecified:
-                    self = .unknown
-                @unknown default:
-                    #if DEBUG
-                    fatalError(because: .unknownCaseDetected(device.userInterfaceIdiom))
-                    #else
-                    self = .unknown
-                    #endif
-            }
         }
 
         public var description: String {
