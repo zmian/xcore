@@ -36,6 +36,7 @@ public struct AdaptiveURL: UserInfoContainer {
     /// - Parameters:
     ///   - title: The title of the URL.
     ///   - url: The url.
+    ///   - userInfo: Additional info associated with the url.
     public init(title: String, url: URL?, userInfo: UserInfo = [:]) {
         self.title = title
         self.url = url
