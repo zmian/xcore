@@ -59,9 +59,9 @@ extension UIDevice {
 }
 
 extension UIDevice {
-    public enum ModelType: CustomStringConvertible {
+    public indirect enum ModelType: CustomStringConvertible {
         case unknown(String)
-        case simulator
+        case simulator(ModelType)
 
         // iPhone
         case iPhone2G
@@ -78,6 +78,9 @@ extension UIDevice {
         case iPhoneXS
         case iPhoneXSMax
         case iPhoneXR
+        case iPhone11
+        case iPhone11Pro
+        case iPhone11ProMax
 
         // iPad
         case iPad_1
@@ -109,6 +112,8 @@ extension UIDevice {
         case appleWatchSeries3_42mm
         case appleWatchSeries4_40mm
         case appleWatchSeries4_44mm
+        case appleWatchSeries5_40mm
+        case appleWatchSeries5_44mm
 
         // Apple TV
         case appleTV1
@@ -129,179 +134,197 @@ extension UIDevice {
         case homePod
 
         fileprivate init(identifier: String) {
-            switch identifier {
-                case "x86_64", "i386":
-                    self = .simulator
+            var value: ModelType {
+                switch identifier {
+                    // iPhone
 
-                // iPhone
+                    case "iPhone1,1":
+                        return .iPhone2G
+                    case "iPhone1,2":
+                        return .iPhone3G
+                    case "iPhone2,1":
+                        return .iPhone3Gs
+                    case "iPhone3,1", "iPhone3,2", "iPhone3,3":
+                        return .iPhone4
+                    case "iPhone4,1":
+                        return .iPhone4s
+                    case "iPhone5,1", "iPhone5,2":
+                        return .iPhone5
+                    case "iPhone5,3", "iPhone5,4":
+                        return .iPhone5c
+                    case "iPhone6,1", "iPhone6,2":
+                        return .iPhone5s
+                    case "iPhone8,4":
+                        return .iPhoneSE
+                    case "iPhone7,2":
+                        return .iPhone6
+                    case "iPhone7,1":
+                        return .iPhone6Plus
+                    case "iPhone8,1":
+                        return .iPhone6s
+                    case "iPhone8,2":
+                        return .iPhone6sPlus
+                    case "iPhone9,1", "iPhone9,3":
+                        return .iPhone7
+                    case "iPhone9,2", "iPhone9,4":
+                        return .iPhone7Plus
+                    case "iPhone10,1", "iPhone10,4":
+                        return .iPhone8
+                    case "iPhone10,2", "iPhone10,5":
+                        return .iPhone8Plus
+                    case "iPhone10,3", "iPhone10,6":
+                        return .iPhoneX
+                    case "iPhone11,2":
+                        return .iPhoneXS
+                    case "iPhone11,4", "iPhone11,6":
+                        return .iPhoneXSMax
+                    case "iPhone11,8":
+                        return .iPhoneXR
+                    case "iPhone12,1":
+                        return .iPhone11
+                    case "iPhone12,3":
+                        return .iPhone11Pro
+                    case "iPhone12,5":
+                        return .iPhone11ProMax
 
-                case "iPhone1,1":
-                    self = .iPhone2G
-                case "iPhone1,2":
-                    self = .iPhone3G
-                case "iPhone2,1":
-                    self = .iPhone3Gs
-                case "iPhone3,1", "iPhone3,2", "iPhone3,3":
-                    self = .iPhone4
-                case "iPhone4,1":
-                    self = .iPhone4s
-                case "iPhone5,1", "iPhone5,2":
-                    self = .iPhone5
-                case "iPhone5,3", "iPhone5,4":
-                    self = .iPhone5c
-                case "iPhone6,1", "iPhone6,2":
-                    self = .iPhone5s
-                case "iPhone8,4":
-                    self = .iPhoneSE
-                case "iPhone7,2":
-                    self = .iPhone6
-                case "iPhone7,1":
-                    self = .iPhone6Plus
-                case "iPhone8,1":
-                    self = .iPhone6s
-                case "iPhone8,2":
-                    self = .iPhone6sPlus
-                case "iPhone9,1", "iPhone9,3":
-                    self = .iPhone7
-                case "iPhone9,2", "iPhone9,4":
-                    self = .iPhone7Plus
-                case "iPhone10,1", "iPhone10,4":
-                    self = .iPhone8
-                case "iPhone10,2", "iPhone10,5":
-                    self = .iPhone8Plus
-                case "iPhone10,3", "iPhone10,6":
-                    self = .iPhoneX
-                case "iPhone11,2":
-                    self = .iPhoneXS
-                case "iPhone11,4", "iPhone11,6":
-                    self = .iPhoneXSMax
-                case "iPhone11,8":
-                    self = .iPhoneXR
+                    // iPad
 
-                // iPad
+                    case "iPad1,1", "iPad1,2":
+                        return .iPad_1
+                    case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":
+                        return .iPad_2
+                    case "iPad3,1", "iPad3,2", "iPad3,3":
+                        return .iPad_3
+                    case "iPad3,4", "iPad3,5", "iPad3,6":
+                        return .iPad_4
+                    case "iPad6,11", "iPad6,12":
+                        return .iPad_5
+                    case "iPad4,1", "iPad4,2", "iPad4,3":
+                        return .iPadAir_1
+                    case "iPad5,3", "iPad5,4":
+                        return .iPadAir_2
+                    case "iPad2,5", "iPad2,6", "iPad2,7":
+                        return .iPadMini_1
+                    case "iPad4,4", "iPad4,5", "iPad4,6":
+                        return .iPadMini_2
+                    case "iPad4,7", "iPad4,8", "iPad4,9":
+                        return .iPadMini_3
+                    case "iPad5,1", "iPad5,2":
+                        return .iPadMini_4
+                    case "iPad6,3", "iPad6,4":
+                        return .iPadPro97Inch
+                    case "iPad7,3", "iPad7,4":
+                         return .iPadPro10Inch
+                    case "iPad8,1", "iPad8,2", "iPad8,3", "iPad8,4":
+                        return .iPadPro11Inch
+                    case "iPad6,7", "iPad6,8":
+                        return .iPadPro12Inch_1
+                    case "iPad7,1", "iPad7,2":
+                        return .iPadPro12Inch_2
+                    case "iPad8,5", "iPad8,6", "iPad8,7", "iPad8,8":
+                        return .iPadPro12Inch_3
 
-                case "iPad1,1", "iPad1,2":
-                    self = .iPad_1
-                case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4":
-                    self = .iPad_2
-                case "iPad3,1", "iPad3,2", "iPad3,3":
-                    self = .iPad_3
-                case "iPad3,4", "iPad3,5", "iPad3,6":
-                    self = .iPad_4
-                case "iPad6,11", "iPad6,12":
-                    self = .iPad_5
-                case "iPad4,1", "iPad4,2", "iPad4,3":
-                    self = .iPadAir_1
-                case "iPad5,3", "iPad5,4":
-                    self = .iPadAir_2
-                case "iPad2,5", "iPad2,6", "iPad2,7":
-                    self = .iPadMini_1
-                case "iPad4,4", "iPad4,5", "iPad4,6":
-                    self = .iPadMini_2
-                case "iPad4,7", "iPad4,8", "iPad4,9":
-                    self = .iPadMini_3
-                case "iPad5,1", "iPad5,2":
-                    self = .iPadMini_4
-                case "iPad6,3", "iPad6,4":
-                    self = .iPadPro97Inch
-                case "iPad7,3", "iPad7,4":
-                     self = .iPadPro10Inch
-                case "iPad8,1", "iPad8,2", "iPad8,3", "iPad8,4":
-                    self = .iPadPro11Inch
-                case "iPad6,7", "iPad6,8":
-                    self = .iPadPro12Inch_1
-                case "iPad7,1", "iPad7,2":
-                    self = .iPadPro12Inch_2
-                case "iPad8,5", "iPad8,6", "iPad8,7", "iPad8,8":
-                    self = .iPadPro12Inch_3
+                    // Apple Watch
 
-                // Apple Watch
+                    case "Watch1,1":
+                        return .appleWatchSeries0_38mm
+                    case "Watch1,2":
+                        return .appleWatchSeries0_42mm
+                    case "Watch2,6":
+                        return .appleWatchSeries1_38mm
+                    case "Watch2,7":
+                        return .appleWatchSeries1_42mm
+                    case "Watch2,3":
+                        return .appleWatchSeries2_38mm
+                    case "Watch2,4":
+                        return .appleWatchSeries2_42mm
+                    case "Watch3,1", "Watch3,3":
+                        return .appleWatchSeries3_38mm
+                    case "Watch3,2", "Watch3,4":
+                        return .appleWatchSeries3_42mm
+                    case "Watch4,1", "Watch4,3":
+                        return .appleWatchSeries4_40mm
+                    case "Watch4,2", "Watch4,4":
+                        return .appleWatchSeries4_44mm
+                    case "Watch5,1", "Watch5,3":
+                        return .appleWatchSeries5_40mm
+                    case "Watch5,2", "Watch5,4":
+                        return .appleWatchSeries5_44mm
 
-                case "Watch1,1":
-                    self = .appleWatchSeries0_38mm
-                case "Watch1,2":
-                    self = .appleWatchSeries0_42mm
-                case "Watch2,6":
-                    self = .appleWatchSeries1_38mm
-                case "Watch2,7":
-                    self = .appleWatchSeries1_42mm
-                case "Watch2,3":
-                    self = .appleWatchSeries2_38mm
-                case "Watch2,4":
-                    self = .appleWatchSeries2_42mm
-                case "Watch3,1", "Watch3,3":
-                    self = .appleWatchSeries3_38mm
-                case "Watch3,2", "Watch3,4":
-                    self = .appleWatchSeries3_42mm
-                case "Watch4,1", "Watch4,3":
-                    self = .appleWatchSeries4_40mm
-                case "Watch4,2", "Watch4,4":
-                    self = .appleWatchSeries4_44mm
+                    // Apple TV
 
-                // Apple TV
+                    case "AppleTV1,1":
+                        return .appleTV1
+                    case "AppleTV2,1":
+                        return .appleTV2
+                    case "AppleTV3,1", "AppleTV3,2":
+                        return .appleTV3
+                    case "AppleTV5,3":
+                        return .appleTV4
+                    case "AppleTV6,2":
+                        return .appleTV4K
 
-                case "AppleTV1,1":
-                    self = .appleTV1
-                case "AppleTV2,1":
-                    self = .appleTV2
-                case "AppleTV3,1", "AppleTV3,2":
-                    self = .appleTV3
-                case "AppleTV5,3":
-                    self = .appleTV4
-                case "AppleTV6,2":
-                    self = .appleTV4K
+                    // iPod
 
-                // iPod
+                    case "iPod1,1":
+                        return .iPodTouch1
+                    case "iPod2,1":
+                        return .iPodTouch2
+                    case "iPod3,1":
+                        return .iPodTouch3
+                    case "iPod4,1":
+                        return .iPodTouch4
+                    case "iPod5,1":
+                        return .iPodTouch5
+                    case "iPod7,1":
+                        return .iPodTouch6
 
-                case "iPod1,1":
-                    self = .iPodTouch1
-                case "iPod2,1":
-                    self = .iPodTouch2
-                case "iPod3,1":
-                    self = .iPodTouch3
-                case "iPod4,1":
-                    self = .iPodTouch4
-                case "iPod5,1":
-                    self = .iPodTouch5
-                case "iPod7,1":
-                    self = .iPodTouch6
+                    // HomePod
 
-                // HomePod
+                    case "AudioAccessory1,1":
+                        return .homePod
 
-                case "AudioAccessory1,1":
-                    self = .homePod
-
-                default:
-                    self = .unknown(identifier)
+                    default:
+                        return .unknown(identifier)
+                }
             }
+
+            #if targetEnvironment(simulator)
+                self = .simulator(value)
+            #else
+                self = value
+            #endif
         }
 
         public var description: String {
             // swiftlint:disable switch_case_on_newline
             switch self {
-                case .simulator:    return "Simulator"
+                case .simulator(let model): return "Simulator (\(model))"
 
-                case .iPhone2G:     return "iPhone 2G"
-                case .iPhone3G:     return "iPhone 3G"
-                case .iPhone3Gs:    return "iPhone 3Gs"
-                case .iPhone4:      return "iPhone 4"
-                case .iPhone4s:     return "iPhone 4s"
-                case .iPhone5:      return "iPhone 5"
-                case .iPhone5c:     return "iPhone 5c"
-                case .iPhone5s:     return "iPhone 5s"
-                case .iPhoneSE:     return "iPhone SE"
-                case .iPhone6:      return "iPhone 6"
-                case .iPhone6Plus:  return "iPhone 6 Plus"
-                case .iPhone6s:     return "iPhone 6s"
-                case .iPhone6sPlus: return "iPhone 6s Plus"
-                case .iPhone7:      return "iPhone 7"
-                case .iPhone7Plus:  return "iPhone 7 Plus"
-                case .iPhone8:      return "iPhone 8"
-                case .iPhone8Plus:  return "iPhone 8 Plus"
-                case .iPhoneX:      return "iPhone X"
-                case .iPhoneXS:     return "iPhone XS"
-                case .iPhoneXSMax:  return "iPhone XS Max"
-                case .iPhoneXR:     return "iPhone XR"
+                case .iPhone2G:       return "iPhone 2G"
+                case .iPhone3G:       return "iPhone 3G"
+                case .iPhone3Gs:      return "iPhone 3Gs"
+                case .iPhone4:        return "iPhone 4"
+                case .iPhone4s:       return "iPhone 4s"
+                case .iPhone5:        return "iPhone 5"
+                case .iPhone5c:       return "iPhone 5c"
+                case .iPhone5s:       return "iPhone 5s"
+                case .iPhoneSE:       return "iPhone SE"
+                case .iPhone6:        return "iPhone 6"
+                case .iPhone6Plus:    return "iPhone 6 Plus"
+                case .iPhone6s:       return "iPhone 6s"
+                case .iPhone6sPlus:   return "iPhone 6s Plus"
+                case .iPhone7:        return "iPhone 7"
+                case .iPhone7Plus:    return "iPhone 7 Plus"
+                case .iPhone8:        return "iPhone 8"
+                case .iPhone8Plus:    return "iPhone 8 Plus"
+                case .iPhoneX:        return "iPhone X"
+                case .iPhoneXS:       return "iPhone Xs"
+                case .iPhoneXSMax:    return "iPhone Xs Max"
+                case .iPhoneXR:       return "iPhone Xʀ"
+                case .iPhone11:       return "iPhone 11"
+                case .iPhone11Pro:    return "iPhone 11 Pro"
+                case .iPhone11ProMax: return "iPhone 11 Pro Max"
 
                 case .iPad_1:          return "iPad 1"
                 case .iPad_2:          return "iPad 2"
@@ -331,6 +354,9 @@ extension UIDevice {
                 case .appleWatchSeries3_42mm: return "Apple Watch Series 3 42mm"
                 case .appleWatchSeries4_40mm: return "Apple Watch Series 4 40mm"
                 case .appleWatchSeries4_44mm: return "Apple Watch Series 4 44mm"
+                case .appleWatchSeries5_40mm: return "Apple Watch Series 5 40mm"
+                case .appleWatchSeries5_44mm: return "Apple Watch Series 5 44mm"
+
 
                 case .appleTV1:     return "Apple TV 1"
                 case .appleTV2:     return "Apple TV 2"
@@ -362,20 +388,27 @@ extension UIDevice.ModelType {
         case tv
         case carPlay
         case pod
+        case desktop
         case simulator
         case unknown
 
         fileprivate init(device: UIDevice, identifier: String) {
             #if targetEnvironment(simulator)
                 self = .simulator
+                return
+            #elseif os(macOS)
+                self = .desktop
+                return
             #endif
 
             if identifier.starts(with: "Watch") {
                 self = .watch
+                return
             }
 
             if identifier.starts(with: "iPod") {
                 self = .pod
+                return
             }
 
             switch device.userInterfaceIdiom {
@@ -412,6 +445,8 @@ extension UIDevice.ModelType {
                     return "CarPlay"
                 case .pod:
                     return "iPod"
+                case .desktop:
+                    return "Mac"
                 case .simulator:
                     return "Simulator"
                 case .unknown:
@@ -470,7 +505,8 @@ extension UIDevice.ModelType {
         }
 
         /// A property indicating if this screen size is associated with iPhone X Series
-        /// (e.g., iPhone X, iPhone XS, iPhone XS Max, iPhone XR).
+        /// (e.g., iPhone X, iPhone Xs, iPhone Xs Max, iPhone Xʀ, iPhone 11,
+        /// iPhone 11 Pro, iPhone 11 Pro Max).
         var iPhoneXSeries: Bool {
             switch self {
                 case .iPhoneX, .iPhoneXSMax:
@@ -499,12 +535,18 @@ extension UIDevice.ModelType.ScreenSize: Comparable {
 extension UIDevice.ModelType {
     /// The model identifier of the current device (e.g., `iPhone9,2`).
     public var identifier: String {
-        UIDevice.identifier
+        let id = UIDevice.internalIdentifier
+
+        #if targetEnvironment(simulator)
+            return "Simulator (\(id))"
+        #else
+            return id
+        #endif
     }
 
     /// The family name of the current device (e.g., iPhone or Apple TV).
     public var family: Family {
-        .init(device: UIDevice.current, identifier: identifier)
+        .init(device: UIDevice.current, identifier: UIDevice.internalIdentifier)
     }
 
     /// The screen size associated with the model.
@@ -540,11 +582,15 @@ extension UIDevice {
     /// }
     /// ```
     public var modelType: ModelType {
-        .init(identifier: UIDevice.identifier)
+        .init(identifier: Self.internalIdentifier)
     }
 
     /// The model identifier of the current device (e.g., `iPhone9,2`).
-    fileprivate static var identifier: String {
+    fileprivate static var internalIdentifier: String {
+        if let simulatorModelIdentifier = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
+            return simulatorModelIdentifier
+        }
+
         var systemInfo = utsname()
         uname(&systemInfo)
 
