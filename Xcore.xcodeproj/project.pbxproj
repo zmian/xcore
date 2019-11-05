@@ -808,6 +808,7 @@
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -866,6 +867,7 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -878,7 +880,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "UnitTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -887,7 +888,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.unittests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Debug;
@@ -898,7 +898,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "UnitTests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -907,7 +906,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.unittests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Release;
@@ -917,7 +915,6 @@
 			baseConfigurationReference = 9B4A87B278E5152219B8BDDE /* Pods-Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Example/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -926,7 +923,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -935,7 +931,6 @@
 			baseConfigurationReference = C6C1CBC1C9F9F312C6AB78E6 /* Pods-Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Example/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -944,7 +939,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -953,7 +947,6 @@
 			baseConfigurationReference = 309E89228D7005D3FF16F162 /* Pods-UITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "UITests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -962,7 +955,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Example;
 			};
 			name = Debug;
@@ -972,7 +964,6 @@
 			baseConfigurationReference = 989B05E63B9D27BBB2D81B2C /* Pods-UITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = "UITests/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -981,7 +972,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcore.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = Example;
 			};
 			name = Release;
