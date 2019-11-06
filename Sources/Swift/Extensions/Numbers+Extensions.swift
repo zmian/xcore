@@ -36,6 +36,12 @@ extension Int {
         Int.numberFormatter.minimumIntegerDigits = amount
         return Int.numberFormatter.string(from: NSNumber(value: self))!
     }
+
+    public func toOrdinal() -> String? {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .ordinal
+        return formatter.string(from: NSNumber(value: self))
+    }
 }
 
 extension FixedWidthInteger {
