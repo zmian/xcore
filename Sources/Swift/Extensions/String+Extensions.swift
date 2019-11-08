@@ -282,14 +282,35 @@ extension String {
 }
 
 extension String {
+    /// Returns the bounding box size the receiver occupies when drawn with the
+    /// given font.
+    ///
+    /// - Parameter font: The font to use for calculating size.
     public func size(withFont font: UIFont) -> CGSize {
         (self as NSString).size(withAttributes: [.font: font])
     }
 
-    public func size(withFont font: UIFont, constrainedToSize: CGSize) -> CGSize {
+    /// Returns the height of the string constrained by specified font and size.
+    ///
+    /// - Note: If you would like to calculate size in one dimension only you can do
+    /// so by using `.greatestFiniteMagnitude` value for the opposite dimension.
+    ///
+    /// **For example:**
+    ///
+    /// `CGSize(width: 20, height: .greatestFiniteMagnitude)`
+    ///
+    /// - Parameters:
+    ///     - font: The font to use for calculating size.
+    ///     - options: The rendering options for the string when it is drawn.
+    ///     - constrainedToSize: The maximum size the string will be drawn in.
+    public func size(
+        withFont font: UIFont,
+        options: NSStringDrawingOptions = .usesLineFragmentOrigin,
+        constrainedToSize: CGSize
+    ) -> CGSize {
         let expectedRect = (self as NSString).boundingRect(
             with: constrainedToSize,
-            options: .usesLineFragmentOrigin,
+            options: options,
             attributes: [.font: font],
             context: nil
         )
