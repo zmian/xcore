@@ -93,6 +93,15 @@ final public class AnalyticsSessionTracker {
         values.insert(value).inserted
     }
 
+    /// Removes the given value in the set.
+    ///
+    /// - Parameter value: The value to remove from the set.
+    /// - Returns: `true` if the `value` was present; otherwise, returns `false`.
+    @discardableResult
+    public func remove(_ value: String) -> Bool {
+        values.remove(value) != nil
+    }
+
     /// Returns a boolean value that indicates whether the given value exists in the
     /// set.
     ///
