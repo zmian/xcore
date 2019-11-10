@@ -56,6 +56,10 @@ final class AlertDataSource: XCCollectionViewDataSource {
         return 1 + 1 + alerts.count
     }
 
+    private var isShowingStack: Bool {
+        alerts.count > 1 && !isExtended
+    }
+
     init(collectionView: UICollectionView, alerts: [String], identifier: String) {
         self.alerts = alerts
         self.identifier = identifier
@@ -71,7 +75,7 @@ final class AlertDataSource: XCCollectionViewDataSource {
             case selectorIndex:
                 return isExtended ? 1 : 0
             case stackIndex:
-                return alerts.count > 1 && !isExtended ? 1 : 0
+                return isShowingStack ? 1 : 0
             case mainAlertIndex:
                 return 1
             default:
@@ -133,7 +137,7 @@ final class AlertDataSource: XCCollectionViewDataSource {
                 return
             default:
                 // Expand if first cell is tapped
-                if alerts.count > 1 && !isExtended {
+                if isShowingStack {
                     isExtended = true
                     return
                 }
@@ -179,7 +183,7 @@ extension AlertDataSource: XCCollectionViewTileLayoutCustomizable {
             case selectorIndex:
                 return isExtended ? 0.0 : layout.verticalIntersectionSpacing
             case mainAlertIndex:
-                return 0.0
+                return isShowingStack ? 0.0 : layout.verticalIntersectionSpacing
             default:
                 return layout.verticalIntersectionSpacing
         }
