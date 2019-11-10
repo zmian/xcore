@@ -204,17 +204,12 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
             itemWidth = tileEnabled ? columnWidth : collectionView.frame.size.width
             margin = tileEnabled ? horizontalMargin : 0
-            verticalSpacing = self.verticalSpacing(betweenSectionAt: section - 1, and: section)
+            verticalSpacing = self.verticalSpacing(betweenSectionAt: section, and: section + 1)
 
             sectionIndexesByColumn[currentColumn].append(section)
 
             offset.x = tileEnabled ? (itemWidth + interColumnSpacing) * CGFloat(currentColumn) + margin : 0
             offset.y = columnYOffset[currentColumn]
-
-            if itemCount > 0 {
-                // Add vertical spacing
-                offset.y += offset.y > 0 ? verticalSpacing : 0
-            }
 
             let initialRect = CGRect(origin: offset, size: CGSize(width: itemWidth, height: 0))
             let sectionRect = createAttributes(for: section, rect: initialRect, itemCount: itemCount, zIndex: zIndex, alpha: 1.0, parentIdentifier: parentIdentifier)
@@ -224,6 +219,11 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
             createBackgroundAttributes(for: section, zIndex: zIndex, alpha: 1.0, parentIdentifier: parentIdentifier)
 
             offset.y += sectionRects[section].height
+
+            if itemCount > 0 {
+                // Add vertical spacing
+                offset.y += offset.y > 0 ? verticalSpacing : 0
+            }
 
             if let identifier = parentIdentifier {
                 if firstParentIndexByIdentifier[identifier] == nil {
@@ -240,7 +240,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
             }
         }
 
-        cachedContentSize = CGSize(width: collectionView.bounds.width, height: self.maxColumn(self.columnsHeight).height + verticalSpacing)
+        cachedContentSize = CGSize(width: collectionView.bounds.width, height: self.maxColumn(columnYOffset).height)
     }
 
     private func createAttributes(for section: Int, rect: CGRect, itemCount: Int, zIndex: Int = 0, alpha: CGFloat, parentIdentifier: String?) -> CGRect {
