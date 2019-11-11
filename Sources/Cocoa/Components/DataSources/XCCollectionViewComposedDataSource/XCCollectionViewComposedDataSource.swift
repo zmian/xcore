@@ -42,18 +42,8 @@ final public class XCCollectionView: UICollectionView {
             return
         }
 
-        RunLoop.cancelPreviousPerformRequests(withTarget: self, selector: #selector(xcReloadData), object: nil)
-        perform(#selector(xcReloadData), with: nil, afterDelay: 0.03)
-    }
-
-    @objc
-    private func xcReloadData() {
         super.reloadData()
         collectionViewLayout.invalidateLayout()
-    }
-
-    deinit {
-        RunLoop.cancelPreviousPerformRequests(withTarget: self, selector: #selector(xcReloadData), object: nil)
     }
 }
 
