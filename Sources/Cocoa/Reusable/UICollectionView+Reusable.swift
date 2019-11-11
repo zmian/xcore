@@ -31,12 +31,12 @@ extension UICollectionView {
     }
 
     private var registeredCells: Set<String> {
-        get { associatedObject(&AssociatedKey.registeredCells, default: Set<String>()) }
+        get { associatedObject(&AssociatedKey.registeredCells, default: []) }
         set { setAssociatedObject(&AssociatedKey.registeredCells, value: newValue) }
     }
 
     private var registeredSupplementaryViews: Set<String> {
-        get { associatedObject(&AssociatedKey.registeredSupplementaryViews, default: Set<String>()) }
+        get { associatedObject(&AssociatedKey.registeredSupplementaryViews, default: []) }
         set { setAssociatedObject(&AssociatedKey.registeredSupplementaryViews, value: newValue) }
     }
 
@@ -99,7 +99,7 @@ extension UICollectionView {
     /// Returns whether the given index path is valid for the current layout
     /// information.
     open func isValid(indexPath: IndexPath) -> Bool {
-        return indexPath.section < numberOfSections && indexPath.row < numberOfItems(inSection: indexPath.section)
+        indexPath.section < numberOfSections && indexPath.row < numberOfItems(inSection: indexPath.section)
     }
 
     /// Returns the layout information for the specified supplementary view.
