@@ -171,6 +171,48 @@ extension String {
     }
 }
 
+// MARK: - Truncation
+
+extension String {
+    public enum TruncationPosition {
+        /// Truncate at head: `"...wxyz"`
+        case head
+        /// Truncate middle: `"ab...yz"`
+        case middle
+        /// Truncate at tail: `"abcd..."`
+        case tail
+    }
+
+    /// Truncates the string to the specified length and appends an ellipsis string
+    /// at the given truncation position.
+    ///
+    /// ```swift
+    /// let result = "This is a really long string".truncate(10)
+    /// print(result)
+    /// // "This is a ..."
+    /// ```
+    ///
+    /// - Parameters:
+    ///     - length: The maximum length of the string.
+    ///     - position: The truncation position option.
+    ///     - ellipsis: A `String` that will be appended in the truncation position.
+    public func truncate(_ length: Int, position: TruncationPosition = .tail, ellipsis: String = "...") -> String {
+        guard count > length else { return self }
+
+        switch position {
+            case .head:
+                return ellipsis + suffix(length)
+            case .middle:
+                let count = Double(length - ellipsis.count) / 2
+                let headCount = Int(ceil(count))
+                let tailCount = Int(floor(count))
+                return "\(prefix(headCount))\(ellipsis)\(suffix(tailCount))"
+            case .tail:
+                return prefix(length) + ellipsis
+        }
+    }
+}
+
 // MARK: - NSString
 
 extension String {
@@ -235,7 +277,6 @@ extension String {
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: [])
             let results = regex.matches(in: self, range: NSRange(startIndex..., in: self))
-            let nsString = self as NSString
             return results.map {
                 nsString.substring(with: $0.range)
             }
@@ -287,7 +328,7 @@ extension String {
     ///
     /// - Parameter font: The font to use for calculating size.
     public func size(withFont font: UIFont) -> CGSize {
-        (self as NSString).size(withAttributes: [.font: font])
+        nsString.size(withAttributes: [.font: font])
     }
 
     /// Returns the height of the string constrained by specified font and size.
@@ -308,7 +349,7 @@ extension String {
         options: NSStringDrawingOptions = .usesLineFragmentOrigin,
         constrainedToSize: CGSize
     ) -> CGSize {
-        let expectedRect = (self as NSString).boundingRect(
+        let expectedRect = nsString.boundingRect(
             with: constrainedToSize,
             options: options,
             attributes: [.font: font],
