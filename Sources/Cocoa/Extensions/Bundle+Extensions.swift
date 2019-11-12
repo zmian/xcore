@@ -175,3 +175,16 @@ extension FileManager {
         }
     }
 }
+
+extension FileManager {
+    var xcoreCacheDirectory: URL? {
+        var resourceValue = URLResourceValues()
+        resourceValue.isExcludedFromBackup = true
+
+        return try? appending(
+            path: "com.xcore",
+            relativeTo: .cachesDirectory,
+            options: .createIfNotExists(resourceValue)
+        )
+    }
+}
