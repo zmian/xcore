@@ -114,7 +114,7 @@ extension AVPlayer {
     ///
     /// Implicitly creates an AVPlayerItem. Clients can obtain the AVPlayerItem as it becomes the player's currentItem.
     ///
-    /// - Parameter remoteOrLocalName: The local file name from `NSBundle.mainBundle()` or remote url.
+    /// - Parameter remoteOrLocalName: The local filename from `NSBundle.mainBundle()` or remote url.
     /// - Returns: An instance of AVPlayer.
     public convenience init?(remoteOrLocalName: String) {
         guard let playerItem = AVPlayerItem(remoteOrLocalName: remoteOrLocalName) else {
@@ -126,16 +126,16 @@ extension AVPlayer {
 }
 
 extension AVPlayerItem {
-    /// Initializes an AVPlayerItem with local resource referenced file name.
+    /// Initializes an AVPlayerItem with local resource referenced filename.
     ///
     /// - Parameters:
-    ///   - fileName: The local file name.
-    ///   - bundle: The bundle containing the specified file name. If you specify `nil`,
+    ///   - filename: The local filename.
+    ///   - bundle: The bundle containing the specified filename. If you specify `nil`,
     ///   this method looks in the main bundle of the current application. The default value is `nil`.
     /// - Returns: An instance of AVPlayerItem.
-    public convenience init?(fileName: String, bundle: Bundle? = nil) {
-        let name = fileName.lastPathComponent.deletingPathExtension
-        let ext = fileName.pathExtension
+    public convenience init?(filename: String, bundle: Bundle? = nil) {
+        let name = filename.lastPathComponent.deletingPathExtension
+        let ext = filename.pathExtension
         let bundle = bundle ?? Bundle.main
 
         guard let url = bundle.url(forResource: name, withExtension: ext) else {
@@ -148,7 +148,7 @@ extension AVPlayerItem {
     /// Automatically detect and load the asset from local or a remote url.
     public convenience init?(remoteOrLocalName: String) {
         guard let url = URL(string: remoteOrLocalName), url.host != nil else {
-            self.init(fileName: remoteOrLocalName)
+            self.init(filename: remoteOrLocalName)
             return
         }
 
@@ -157,17 +157,17 @@ extension AVPlayerItem {
 }
 
 extension AVAsset {
-    /// Initializes an AVAsset with local resource referenced file name.
+    /// Initializes an AVAsset with local resource referenced filename.
     ///
     /// - Parameters:
-    ///   - fileName: The local file name.
-    ///   - bundle: The bundle containing the specified file name. If you specify `nil`,
+    ///   - filename: The local filename.
+    ///   - bundle: The bundle containing the specified filename. If you specify `nil`,
     ///             this method looks in the main bundle of the current application.
     ///             The default value is `nil`.
     /// - Returns: An instance of AVAsset.
-    public convenience init?(fileName: String, bundle: Bundle? = nil) {
-        let name = fileName.lastPathComponent.deletingPathExtension
-        let ext = fileName.pathExtension
+    public convenience init?(filename: String, bundle: Bundle? = nil) {
+        let name = filename.lastPathComponent.deletingPathExtension
+        let ext = filename.pathExtension
         let bundle = bundle ?? Bundle.main
 
         guard let url = bundle.url(forResource: name, withExtension: ext) else {
@@ -180,7 +180,7 @@ extension AVAsset {
     /// Automatically detect and load the asset from local or a remote url.
     public convenience init?(remoteOrLocalName: String) {
         guard let url = URL(string: remoteOrLocalName), url.host != nil else {
-            self.init(fileName: remoteOrLocalName)
+            self.init(filename: remoteOrLocalName)
             return
         }
 

@@ -77,7 +77,7 @@ extension FatalReason {
 ///   - function: The name of the calling function to print with `message`. The
 ///     default is the calling scope where `fatalError(because:, function:, file:, line:)`
 ///     is called.
-///   - file: The file name to print with `message`. The default is the file
+///   - file: The filename to print with `message`. The default is the file
 ///     where `fatalError(because:, function:, file:, line:)` is called.
 ///   - line: The line number to print along with `message`. The default is the
 ///     line number where `fatalError(because:, function:, file:, line:)` is called.
@@ -95,7 +95,7 @@ public func fatalError(
 ///
 /// - Parameters:
 ///   - value: The unknown value.
-///   - file: The file name to print with `message`. The default is the file
+///   - file: The filename to print with `message`. The default is the file
 ///     where `unknown(:function:file:line:)` is called.
 ///   - function: The name of the calling function to print with `message`. The
 ///     default is the calling scope where `unknown(:function:file:line:)` is

@@ -75,7 +75,7 @@ open class TextViewController: XCScrollViewController {
         }
     }
 
-    /// Sets text from the specified file name.
+    /// Sets text from the specified filename.
     ///
     /// ```swift
     /// let vc = TextViewController()
@@ -84,8 +84,8 @@ open class TextViewController: XCScrollViewController {
     /// ```
     ///
     /// - Parameters:
-    ///   - filename: The file name.
-    ///   - bundle: The bundle containing the specified file name. If you specify
+    ///   - filename: The filename.
+    ///   - bundle: The bundle containing the specified filename. If you specify
     ///             `nil`, this method looks in the main bundle of the current
     ///             application. The default value is `nil`.
     open func setText(_ filename: String, bundle: Bundle? = nil) {

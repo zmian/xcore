@@ -49,11 +49,11 @@ extension WebViewController {
             configureProgressBar = callback
         }
 
-        var saveFileNameConvention: (_ url: URL) -> String = {
+        var saveFilenameConvention: (_ url: URL) -> String = {
             $0.relativePath.lastPathComponent
         }
-        public mutating func saveFileNameConvention(_ callback: @escaping (_ url: URL) -> String) {
-            saveFileNameConvention = callback
+        public mutating func saveFilenameConvention(_ callback: @escaping (_ url: URL) -> String) {
+            saveFilenameConvention = callback
         }
 
         var evaluateJavaScript: (_ webView: WKWebView) -> Void = { _ in }

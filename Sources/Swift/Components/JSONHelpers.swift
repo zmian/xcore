@@ -36,7 +36,7 @@ public struct JSONHelpers {
             }
         } else {
             DispatchQueue.global().async {
-                let json = self.parse(fileName: named)
+                let json = self.parse(filename: named)
                 DispatchQueue.main.async {
                     callback(json)
                 }
@@ -45,9 +45,9 @@ public struct JSONHelpers {
     }
 
     /// Parse local JSON file from `Bundle.main`.
-    public static func parse(fileName: String, bundle: Bundle = .main) -> Any? {
+    public static func parse(filename: String, bundle: Bundle = .main) -> Any? {
         guard
-            let filePath = bundle.path(forResource: fileName.deletingPathExtension, ofType: "json"),
+            let filePath = bundle.path(forResource: filename.deletingPathExtension, ofType: "json"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: filePath))
         else {
             return nil
