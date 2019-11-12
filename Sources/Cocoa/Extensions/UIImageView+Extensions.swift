@@ -57,7 +57,7 @@ extension UIImageView {
 
         var images: [UIImage] = []
         for i in range.lowerBound..<range.upperBound {
-            if let image = UIImage(fileName: "\(prefix)\(i).\(ext)") {
+            if let image = UIImage(filename: "\(prefix)\(i).\(ext)") {
                 images.append(image)
             }
         }

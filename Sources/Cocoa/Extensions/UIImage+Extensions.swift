@@ -29,11 +29,11 @@ extension UIImage {
     /// in memory. This is great for animations to quickly discard images after use.
     ///
     /// - Parameters:
-    ///   - fileName: The name of the file to construct.
+    ///   - filename: The name of the file to construct.
     ///   - bundle: The bundle in which this file is located in. The default value is `.main`.
-    public convenience init?(fileName: String, in bundle: Bundle = .main) {
-        let name = fileName.deletingPathExtension
-        let ext = fileName.pathExtension.isEmpty ? "png" : fileName.pathExtension
+    public convenience init?(filename: String, in bundle: Bundle = .main) {
+        let name = filename.deletingPathExtension
+        let ext = filename.pathExtension.isEmpty ? "png" : filename.pathExtension
 
         guard let path = bundle.path(forResource: name, ofType: ext) else {
             return nil
