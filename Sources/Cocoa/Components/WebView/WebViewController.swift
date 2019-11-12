@@ -211,10 +211,6 @@ open class WebViewController: UIViewController {
             return
         }
 
-        if urlRequest.url?.pathExtension == "pdf" {
-            addShareOption(url: urlRequest)
-        }
-
         webView.load(urlRequest)
     }
 
@@ -359,6 +355,11 @@ extension WebViewController: WKNavigationDelegate {
         decisionHandler(.allow)
     }
 
+    open func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        addShareOptionIfNeeded(for: navigationResponse.response)
+        decisionHandler(.allow)
+    }
+
     open func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         overrideBackButtonIfNeeded()
         style.evaluateJavaScript(webView)
@@ -473,15 +474,19 @@ extension WebViewController {
 // MARK: - Preview PDF files
 
 extension WebViewController: UIDocumentInteractionControllerDelegate {
-    private func addShareOption(url: URLRequest) {
+    private func addShareOptionIfNeeded(for response: URLResponse) {
         guard
-            let docsUrl = Bundle.url(for: .documentDirectory),
-            let nameUrl = url.url
+            response.mimeType == "application/pdf",
+            let url = response.url,
+            let pdfsDirectory = FileManager.default.pdfsDirectory
         else {
+            // When user navigates back remove the share button.
+            navigationItem.rightBarButtonItem = nil
             return
         }
 
-        let fileUrl = docsUrl.appendingPathComponent(style.saveFileNameConvention(nameUrl))
+        let filename = style.saveFilenameConvention(url)
+        let fileUrl = pdfsDirectory.appendingPathComponent(filename)
 
         guard !FileManager.default.fileExists(atPath: fileUrl.path) else {
             return addShareFileButton(fileUrl: fileUrl)
@@ -492,7 +497,8 @@ extension WebViewController: UIDocumentInteractionControllerDelegate {
         }
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: indicator)
 
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
+        let request = URLRequest(url: url)
+        URLSession.shared.dataTask(with: request) { [weak self] data, _, _ in
             guard let data = data else {
                 DispatchQueue.main.async { [weak self] in
                     self?.navigationItem.rightBarButtonItem = nil
@@ -525,5 +531,18 @@ extension WebViewController: UIDocumentInteractionControllerDelegate {
             $0.delegate = self
             $0.presentOptionsMenu(from: .zero, in: view, animated: true)
         }
+    }
+}
+
+extension FileManager {
+    fileprivate var pdfsDirectory: URL? {
+        var resourceValue = URLResourceValues()
+        resourceValue.isExcludedFromBackup = true
+
+        return try? appending(
+            path: "pdfs",
+            relativeTo: .documentDirectory,
+            options: .createIfNotExists(resourceValue)
+        )
     }
 }

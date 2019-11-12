@@ -114,10 +114,10 @@ extension FileManager {
     public enum Options {
         case none
         /// An option to create url if it does not already exist.
-        case createIfNotExistsWith(_ resourceValue: URLResourceValues?)
+        case createIfNotExists(_ resourceValue: URLResourceValues?)
 
-        public static var createIfNotExists: Options {
-            return createIfNotExistsWith(nil)
+        public static var createIfNotExists: Self {
+            createIfNotExists(nil)
         }
     }
 
@@ -144,7 +144,7 @@ extension FileManager {
 
         directoryUrl = directoryUrl.appendingPathComponent(path, isDirectory: true)
 
-        if case .createIfNotExistsWith(let resourceValue) = options {
+        if case .createIfNotExists(let resourceValue) = options {
             try createIfNotExists(directoryUrl, resourceValue: resourceValue)
         }
 
