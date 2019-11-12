@@ -478,7 +478,7 @@ extension WebViewController: UIDocumentInteractionControllerDelegate {
         guard
             response.mimeType == "application/pdf",
             let url = response.url,
-            let pdfsDirectory = FileManager.default.pdfsDirectory
+            let cacheDirectory = FileManager.default.xcoreCacheDirectory
         else {
             // When user navigates back remove the share button.
             navigationItem.rightBarButtonItem = nil
@@ -486,7 +486,7 @@ extension WebViewController: UIDocumentInteractionControllerDelegate {
         }
 
         let filename = style.saveFilenameConvention(url)
-        let fileUrl = pdfsDirectory.appendingPathComponent(filename)
+        let fileUrl = cacheDirectory.appendingPathComponent(filename)
 
         guard !FileManager.default.fileExists(atPath: fileUrl.path) else {
             return addShareFileButton(fileUrl: fileUrl)
@@ -531,18 +531,5 @@ extension WebViewController: UIDocumentInteractionControllerDelegate {
             $0.delegate = self
             $0.presentOptionsMenu(from: .zero, in: view, animated: true)
         }
-    }
-}
-
-extension FileManager {
-    fileprivate var pdfsDirectory: URL? {
-        var resourceValue = URLResourceValues()
-        resourceValue.isExcludedFromBackup = true
-
-        return try? appending(
-            path: "pdfs",
-            relativeTo: .documentDirectory,
-            options: .createIfNotExists(resourceValue)
-        )
     }
 }
