@@ -485,7 +485,11 @@ extension WebViewController: UIDocumentInteractionControllerDelegate {
             return
         }
 
-        let filename = style.saveFilenameConvention(url)
+        var filename = style.saveFilenameConvention(url)
+        if filename.pathExtension != "pdf" {
+            filename += ".pdf"
+        }
+
         let fileUrl = cacheDirectory.appendingPathComponent(filename)
 
         guard !FileManager.default.fileExists(atPath: fileUrl.path) else {
