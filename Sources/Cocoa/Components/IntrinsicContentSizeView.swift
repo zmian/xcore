@@ -57,3 +57,11 @@ open class IntrinsicContentSizeImageView: UIImageView {
         contentSize
     }
 }
+
+extension IntrinsicContentSizeView {
+    /// A spacer view without intrinsic content size. In stack view, it can act as
+    /// flexible spacer view.
+    public static var spacer: IntrinsicContentSizeView {
+        .init(intrinsicContentSize: .init(UIView.noIntrinsicMetric))
+    }
+}
