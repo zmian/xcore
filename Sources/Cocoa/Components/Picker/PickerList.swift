@@ -73,7 +73,6 @@ open class PickerList: DynamicTableViewController {
                 cell.avatarCornerRadius = 0
                 cell.avatarBorderWidth = 0
                 cell.subtitleFont = .app(style: .caption1)
-                cell.separatorInset = 0
                 strongSelf.model.configure(indexPath: indexPath, cell: cell, item: item)
             }
         }
@@ -103,6 +102,11 @@ open class PickerList: DynamicTableViewController {
         }
 
         tableView.layoutIfNeeded()
+        contentViewportHeightConstraint?.constant = contentViewportHeight
+    }
+
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         contentViewportHeightConstraint?.constant = contentViewportHeight
     }
 
