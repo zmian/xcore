@@ -53,12 +53,12 @@ final public class DrawerScreen: NSObject {
     private let hud = HUD().apply {
         $0.windowLabel = "DrawerScreen Window"
         $0.preferredStatusBarStyle = .inherit
-        $0.backgroundColor = UIColor.black.alpha(0.1)
+        $0.backgroundColor = appearance().overlayColor
         $0.duration = .init(.fast)
     }
 
     private let modalView = BlurView().apply {
-        $0.blurOpacity = 0.3
+        $0.blurOpacity = appearance().blurOpacity
     }
 
     private var shownConstraint: NSLayoutConstraint?
@@ -156,5 +156,33 @@ extension DrawerScreen {
 
     public static func dismiss() {
         shared.dismiss()
+    }
+}
+
+// MARK: - Appearance
+
+extension DrawerScreen {
+    /// This configuration exists to allow some of the properties to be configured
+    /// to match app's appearance style. The `UIAppearance` protocol doesn't work
+    /// when the stored properites are set using associated object.
+    ///
+    /// **Usage:**
+    ///
+    /// ```swift
+    /// DrawerScreen.appearance().overlayColor = UIColor.black.alpha(0.8)
+    /// ```
+    final public class Appearance: Appliable {
+        fileprivate static var shared = Appearance()
+        public var overlayColor = UIColor.black.alpha(0.1)
+
+        /// A property to determine opacity for the blur effect.
+        /// Use this property to soften the blur effect if needed.
+        ///
+        /// The default value is `0.3`.
+        public var blurOpacity: CGFloat = 0.3
+    }
+
+    public static func appearance() -> Appearance {
+        .shared
     }
 }
