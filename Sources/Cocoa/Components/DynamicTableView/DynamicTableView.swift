@@ -239,9 +239,8 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         configureAccessoryView(cell, type: item.accessory, indexPath: indexPath)
 
         if isLastCellSeparatorHidden {
-            if indexPath.row == sections[indexPath.section].count - 1 {
-                cell.separatorInset.left = UIScreen.main.bounds.size.max
-            }
+            let isLastRow = indexPath.row == sections[indexPath.section].count - 1
+            cell.separatorInset = UIEdgeInsets(left: isLastRow ? UIScreen.main.bounds.size.max : 0)
         }
 
         if item.userInfo[DynamicTableView.reorderTableViewDummyItemIdentifier] == nil {
