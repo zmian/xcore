@@ -34,6 +34,7 @@ open class WebViewController: UIViewController {
         return WKWebView(frame: .zero, configuration: configuration)
     }()
 
+    private var webViewBottom: Anchor.YAxis.Modifier?
     private var shareFileInteractor: UIDocumentInteractionController?
     public var configuration: WKWebViewConfiguration?
     public var style: Style = .default
@@ -131,9 +132,16 @@ open class WebViewController: UIViewController {
 
     private func setupWebView() {
         view.addSubview(webView)
+        view.backgroundColor = webView.scrollView.backgroundColor
+
         webView.uiDelegate = self
         webView.navigationDelegate = self
-        webView.anchor.edges.equalToSuperview()
+
+        webView.anchor.horizontally.equalToSuperview()
+        webView.anchor.top.equalToSuperviewSafeArea()
+        webViewBottom = prefersTabBarHidden
+            ? webView.anchor.bottom.equalToSuperview()
+            : webView.anchor.bottom.equalToSuperviewSafeArea()
     }
 
     private func setupToolbar() {
@@ -175,8 +183,7 @@ open class WebViewController: UIViewController {
 
     private func updateContentInset() {
         let bottomInset = isToolbarHidden ? 0 : WebViewToolbar.height
-        webView.scrollView.contentInset.bottom = bottomInset
-        webView.scrollView.scrollIndicatorInsets = webView.scrollView.contentInset
+        webViewBottom?.inset(bottomInset)
     }
 
     open override func viewSafeAreaInsetsDidChange() {
