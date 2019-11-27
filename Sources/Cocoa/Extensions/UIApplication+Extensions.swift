@@ -105,6 +105,29 @@ extension UIApplication {
         return base
     }
 
+    /// Returns the top navigation controller from top windows in this application
+    /// instance.
+    public var topNavigationController: UINavigationController? {
+        let visibleWindows = windows.filter { !$0.isHidden }.reversed() ?? []
+
+        for window in visibleWindows {
+            let topViewController = window.topViewController
+
+            if let topNavigationController = topViewController?.navigationController {
+                return topNavigationController
+            }
+
+            // Look for child view controllers
+            for childViewController in topViewController?.children ?? [] {
+                if let topNavigationController = childViewController as? UINavigationController {
+                    return topNavigationController
+                }
+            }
+        }
+
+        return nil
+    }
+
     /// Iterates through `windows` from top to bottom and returns the visible window.
     ///
     /// - Returns: Returns an optional window object based on visibility.

@@ -24,7 +24,7 @@
 
 import Foundation
 
-public struct AdaptiveURL: UserInfoContainer {
+public struct AdaptiveURL: UserInfoContainer, MutableAppliable {
     /// The title of the URL.
     public let title: String
     public let url: URL?
