@@ -64,11 +64,11 @@ extension UINavigationController {
 extension UIViewController {
     public var router: Router {
         guard let router = _router else {
-           #if DEBUG
-           if isDebuggerAttached {
-               fatalError("Router requires a navigation controller.")
-           }
-           #endif
+            #if DEBUG
+            if isDebuggerAttached {
+                fatalError("Router requires a navigation controller.")
+            }
+            #endif
             return Router(navigationController: nil)
         }
 
