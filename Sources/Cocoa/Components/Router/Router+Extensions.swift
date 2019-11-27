@@ -27,11 +27,11 @@ import UIKit
 extension Router {
     /// Returns the shared router.
     public static var shared: Router? {
-        guard let topViewController = UIApplication.sharedOrNil?.delegate?.window??.topViewController else {
+        guard let navigationController = UIApplication.sharedOrNil?.topNavigationController else {
             return nil
         }
 
-        return topViewController._router
+        return navigationController._router
     }
 }
 
@@ -64,7 +64,12 @@ extension UINavigationController {
 extension UIViewController {
     public var router: Router {
         guard let router = _router else {
-            fatalError("Router requires a navigation controller.")
+           #if DEBUG
+           if isDebuggerAttached {
+               fatalError("Router requires a navigation controller.")
+           }
+           #endif
+            return Router(navigationController: nil)
         }
 
         return router
