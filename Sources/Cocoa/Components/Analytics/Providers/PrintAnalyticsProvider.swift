@@ -28,7 +28,7 @@ public struct PrintAnalyticsProvider: AnalyticsProvider {
     public init() {}
 
     public func track(_ event: AnalyticsEvent) {
-        let (enabled, containsValue) = ProcessInfo.Arguments.printAnalyticsToDebugger
+        let (enabled, containsValue) = ProcessInfo.Arguments.isAnalyticsDebugEnabled
 
         guard enabled else {
             return
