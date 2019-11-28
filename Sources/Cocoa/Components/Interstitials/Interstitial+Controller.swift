@@ -26,7 +26,7 @@ import Foundation
 
 extension Interstitial {
     final public class Controller: Appliable {
-        private let displayTimestamp: DisplayTimestampPreference
+        private let displayTimestamp: DisplayTimestamp
         private var interstitials = [Interstitial.Item]()
         private lazy var hud = HUD().apply {
             $0.willShow { [weak self] _ in
@@ -54,7 +54,7 @@ extension Interstitial {
             }
         }
 
-        public init(storage: DisplayTimestampPreferenceStorage) {
+        public init(storage: InterstitialDisplayTimestampStorage) {
             self.displayTimestamp = .init(storage: storage)
         }
 
