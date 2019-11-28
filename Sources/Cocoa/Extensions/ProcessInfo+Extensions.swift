@@ -124,12 +124,27 @@ extension ProcessInfo.Arguments {
         return argument.exists
     }
 
-    public static var printAnalyticsToDebugger: (enabled: Bool, contains: String?) {
+    public static var isAnalyticsDebugEnabled: (enabled: Bool, contains: String?) {
         guard isDebuggerAttached else {
             return (false, nil)
         }
 
-        let argument: ProcessInfo.Argument = "XCPrintAnalyticsToDebugger"
+        let argument: ProcessInfo.Argument = "XCAnalyticsDebugEnabled"
         return (argument.exists, argument.value)
+    }
+
+    public static var isAllInterstitialsEnabled: Bool {
+        get {
+            #if DEBUG
+                let argument: ProcessInfo.Argument = "XCAllInterstitialsEnabled"
+                return argument.getValue() == true
+            #else
+                return false
+            #endif
+        }
+        set {
+            let argument: ProcessInfo.Argument = "XCAllInterstitialsEnabled"
+            argument.setInMemoryValue(newValue)
+        }
     }
 }
