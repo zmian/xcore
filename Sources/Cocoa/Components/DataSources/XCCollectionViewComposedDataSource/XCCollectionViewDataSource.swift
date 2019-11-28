@@ -170,3 +170,24 @@ extension XCCollectionViewDataSource {
         return nil
     }
 }
+
+// MARK: - Convenience methods
+
+extension XCCollectionViewDataSource {
+    open var isEmpty: Bool {
+        guard let collectionView = collectionView else {
+            return true
+        }
+        let sectionsCount = numberOfSections(in: collectionView)
+        guard sectionsCount > 0 else {
+            return true
+        }
+
+        for section in 0..<sectionsCount {
+            if self.collectionView(collectionView, numberOfItemsInSection: section) > 0 {
+                return false
+            }
+        }
+        return true
+    }
+}
