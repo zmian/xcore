@@ -65,23 +65,3 @@ extension Interstitial.Item {
         }
     }
 }
-
-// MARK: - FeatureFlag
-
-extension Interstitial.Item.DisplayPolicy {
-    func updateFromFeatureFlag(id interstitialId: Interstitial.Identifier) -> Self {
-        let key = FeatureFlag.Key(rawValue: "interstitial_" + interstitialId.rawValue)
-
-        guard let dictionary: [String: Any] = key.value(), !dictionary.isEmpty else {
-            return self
-        }
-
-        let isEnabled = dictionary["enabled"] as? Bool ?? true
-
-        return .init(
-            dismissable: dictionary["dismissable"] as? Bool ?? isDismissable,
-            replayDelay: dictionary["replayDelay"] as? TimeInterval ?? replayDelay,
-            precondition: isEnabled ? precondition : { _ in false }
-        )
-    }
-}
