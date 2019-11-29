@@ -91,6 +91,15 @@ extension ProcessInfo {
 
         public func getValue<T>() -> T? {
             guard let value = value else {
+                switch T.self {
+                    case is Bool.Type, is Optional<Bool>.Type:
+                        if exists {
+                            return true as? T
+                        }
+                    default:
+                        break
+                }
+
                 return nil
             }
 
