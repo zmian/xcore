@@ -25,6 +25,11 @@
 import UIKit
 
 extension Interstitial {
+    /// The position of the Interstitial window in the z-axis.
+    public static var windowLevel: UIWindow.Level = .normal + 0.1
+}
+
+extension Interstitial {
     final class HUD: Xcore.HUD {
         private var isPresenting = false
         private var _navigationController: PageNavigationController?
@@ -61,7 +66,7 @@ extension Interstitial {
             super.init()
             windowLabel = "Interstitial Window"
             adjustWindowAttributes {
-                $0.windowLevel = .normal + 0.1
+                $0.windowLevel = Interstitial.windowLevel
             }
         }
 
