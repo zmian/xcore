@@ -108,8 +108,14 @@ extension String {
 }
 
 extension String {
-    public func urlEscaped() -> String? {
-        addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+    /// Returns a new string created by replacing all characters in the string not
+    /// in the specified set with percent encoded characters.
+    ///
+    /// The default value is `.urlQueryAllowed`.
+    ///
+    /// - Parameter allowedCharacters: The allowed character set.
+    public func urlEscaped(allowed allowedCharacters: CharacterSet = .urlQueryAllowed) -> String? {
+        addingPercentEncoding(withAllowedCharacters: allowedCharacters)
     }
 
     /// Returns an array of strings at new lines.

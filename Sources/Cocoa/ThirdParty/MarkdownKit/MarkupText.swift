@@ -121,7 +121,7 @@ extension MarkupText {
     /// This is useful to create links in attributed string that has local action
     /// handler.
     public static func localLink(text: String) -> String {
-        let linkText = text.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? text
+        let linkText = text.urlEscaped() ?? text
         let linkUrl = "\(URL.Scheme.localLink)://\(linkText)"
         return "[\(text)](\(linkUrl))"
     }
