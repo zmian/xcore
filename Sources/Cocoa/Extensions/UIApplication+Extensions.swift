@@ -108,7 +108,7 @@ extension UIApplication {
     /// Returns the top navigation controller from top windows in this application
     /// instance.
     public var topNavigationController: UINavigationController? {
-        let visibleWindows = windows.filter { !$0.isHidden }.reversed() ?? []
+        let visibleWindows = windows.filter { !$0.isHidden }.reversed()
 
         for window in visibleWindows {
             let topViewController = window.topViewController
