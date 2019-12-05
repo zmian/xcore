@@ -24,6 +24,14 @@
 
 import UIKit
 
+extension UIWindow.Level {
+    public static var top: Self {
+        let windowLevel = UIApplication.sharedOrNil?.windows.max(by: { $0.windowLevel < $1.windowLevel })?.windowLevel ?? .normal
+        let maxWinLevel = max(windowLevel, .normal)
+        return maxWinLevel + 1
+    }
+}
+
 /// A base class to create a HUD that sets up blank canvas that can be
 /// customized by subclasses to show anything in a fullscreen window.
 open class HUD: Appliable {
@@ -65,9 +73,7 @@ open class HUD: Appliable {
     }
 
     private func setDefaultWindowLevel() {
-        let windowLevel = UIApplication.sharedOrNil?.windows.last?.windowLevel ?? .normal
-        let maxWinLevel = max(windowLevel, .normal)
-        self.windowLevel = maxWinLevel + 1
+        self.windowLevel = .top
     }
 
     private lazy var adjustWindowAttributes: ((_ window: UIWindow) -> Void)? = { [weak self] _ in
