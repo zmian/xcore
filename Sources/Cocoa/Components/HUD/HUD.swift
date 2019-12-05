@@ -49,7 +49,7 @@ open class HUD: Appliable {
 
     open var windowLevel: UIWindow.Level {
         get { window.windowLevel }
-        set { window.windowLevel = newValue }
+        set { setWindowLevel(newValue, animated: false) }
     }
 
     /// A succinct label that identifies the HUD window.
@@ -72,6 +72,20 @@ open class HUD: Appliable {
 
     private lazy var adjustWindowAttributes: ((_ window: UIWindow) -> Void)? = { [weak self] _ in
         self?.setDefaultWindowLevel()
+    }
+
+    open func setWindowLevel(_ level: UIWindow.Level, animated: Bool) {
+        guard animated, window.windowLevel != level else {
+            window.windowLevel = level
+            return
+        }
+
+        UIView.animate(withDuration: duration.hide, animations: {
+            self.view.alpha = 0
+        }, completion: { _ in
+            self.window.windowLevel = level
+            self.view.alpha = 1
+        })
     }
 
     /// A block to adjust window attributes (e.g., level or make it key) so this HUD

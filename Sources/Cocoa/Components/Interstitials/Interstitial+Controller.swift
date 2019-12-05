@@ -54,8 +54,18 @@ extension Interstitial {
             }
         }
 
+        /// A boolean property indicating whether interstitial items are currently being
+        /// presented.
+        public var isPresenting: Bool {
+            hud.isPresenting
+        }
+
         public init(storage: InterstitialDisplayTimestampStorage) {
             self.displayTimestamp = .init(storage: storage)
+        }
+
+        public func canPresent(_ interstitials: [Interstitial.Item]) -> Bool {
+            !interstitials.filter(presentPrecondition(interstitial:)).isEmpty
         }
 
         public func setInterstitials(_ newInterstitials: [Interstitial.Item]) {
