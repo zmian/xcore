@@ -24,14 +24,13 @@
 
 import UIKit
 
-extension Interstitial {
-    /// The position of the Interstitial window in the z-axis.
-    public static var windowLevel: UIWindow.Level = .normal + 0.1
+extension UIWindow.Level {
+    public static var interstitial: Self = .normal + 0.1
 }
 
 extension Interstitial {
     final class HUD: Xcore.HUD {
-        private var isPresenting = false
+        private(set) var isPresenting = false
         private var _navigationController: PageNavigationController?
         var navigationController: PageNavigationController {
             // `UINavigationController` has a known bug which prevents setting new view
@@ -66,7 +65,7 @@ extension Interstitial {
             super.init()
             windowLabel = "Interstitial Window"
             adjustWindowAttributes {
-                $0.windowLevel = Interstitial.windowLevel
+                $0.windowLevel = .interstitial
             }
         }
 
