@@ -90,6 +90,7 @@ open class PickerList: DynamicTableViewController {
     }
 
     open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         UIAccessibility.post(notification: .screenChanged, argument: nil)
     }
 
