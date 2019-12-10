@@ -135,8 +135,6 @@ extension UITextView {
             return
         }
 
-        accessibilityLabel = String(describing: string.stringSource)
-
         switch string.stringSource {
             case .string(let string):
                 text = string
