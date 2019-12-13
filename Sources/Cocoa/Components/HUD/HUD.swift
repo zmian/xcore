@@ -70,6 +70,7 @@ open class HUD: Appliable {
         window.accessibilityLabel = "HUD"
         window.backgroundColor = .clear
         window.rootViewController = viewController
+        window.accessibilityViewIsModal = true
     }
 
     private func setDefaultWindowLevel() {

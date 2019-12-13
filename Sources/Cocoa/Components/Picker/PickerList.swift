@@ -68,6 +68,7 @@ open class PickerList: DynamicTableViewController {
             $0.contentInsetAdjustmentBehavior = .never
             $0.configureCell { [weak self] indexPath, cell, item in
                 guard let strongSelf = self else { return }
+                cell.accessibilityTraits = .button
                 cell.highlightedBackgroundColor = .appHighlightedBackground
                 cell.imageSize = 30
                 cell.avatarCornerRadius = 0
@@ -86,6 +87,11 @@ open class PickerList: DynamicTableViewController {
         view.anchor.make {
             contentViewportHeightConstraint = $0.height.equalTo(contentViewportHeight).constraints.first
         }
+    }
+
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIAccessibility.post(notification: .screenChanged, argument: nil)
     }
 
     private func reloadData() {
