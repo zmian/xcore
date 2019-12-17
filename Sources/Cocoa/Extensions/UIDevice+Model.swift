@@ -524,6 +524,7 @@ extension UIDevice.ModelType {
     }
 }
 
+#warning("This comform breaks the rules of a comparable item, when there are cases where < > == will return false at the same time")
 extension UIDevice.ModelType.ScreenSize: Comparable {
     private static var iPhone: Bool {
         UIDevice.current.modelType.family == .phone
