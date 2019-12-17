@@ -401,14 +401,10 @@ extension UIDevice.ModelType {
         case carPlay
         case pod
         case desktop
-        case simulator
         case unknown
 
         fileprivate init(device: UIDevice, identifier: String) {
-            #if targetEnvironment(simulator)
-                self = .simulator
-                return
-            #elseif os(macOS)
+            #if os(macOS)
                 self = .desktop
                 return
             #else
@@ -459,8 +455,6 @@ extension UIDevice.ModelType {
                     return "iPod"
                 case .desktop:
                     return "Mac"
-                case .simulator:
-                    return "Simulator"
                 case .unknown:
                     return "Unknown"
             }
