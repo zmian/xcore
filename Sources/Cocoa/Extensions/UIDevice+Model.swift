@@ -525,10 +525,6 @@ extension UIDevice.ModelType {
 }
 
 extension UIDevice.ModelType.ScreenSize: Comparable {
-    private static var iPhone: Bool {
-        UIDevice.current.modelType.family == .phone
-    }
-
     public static func ==(lhs: UIDevice.ModelType.ScreenSize, rhs: UIDevice.ModelType.ScreenSize) -> Bool {
         lhs.size.max == rhs.size.max && lhs.size.min == rhs.size.min
     }
