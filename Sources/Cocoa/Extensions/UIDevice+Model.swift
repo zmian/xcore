@@ -524,18 +524,17 @@ extension UIDevice.ModelType {
     }
 }
 
-#warning("This comform breaks the rules of a comparable item, when there are cases where < > == will return false at the same time")
 extension UIDevice.ModelType.ScreenSize: Comparable {
     private static var iPhone: Bool {
         UIDevice.current.modelType.family == .phone
     }
 
     public static func ==(lhs: UIDevice.ModelType.ScreenSize, rhs: UIDevice.ModelType.ScreenSize) -> Bool {
-        iPhone && lhs.size.max == rhs.size.max && lhs.size.min == rhs.size.min
+        lhs.size.max == rhs.size.max && lhs.size.min == rhs.size.min
     }
 
     public static func <(lhs: UIDevice.ModelType.ScreenSize, rhs: UIDevice.ModelType.ScreenSize) -> Bool {
-        iPhone && lhs.size.max < rhs.size.max && lhs.size.min < rhs.size.min
+        lhs.size.max < rhs.size.max && lhs.size.min < rhs.size.min
     }
 }
 
