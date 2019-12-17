@@ -176,7 +176,11 @@ extension AppConstants {
     }
 
     public static var smallScreenSize: Bool {
-        UIDevice.current.modelType.screenSize <= .iPhone5
+        let model = UIDevice.current.modelType
+        guard model.family == .phone else {
+            return false
+        }
+        return model.screenSize <= .iPhone5
     }
 
     public static var mediumScreenSize: Bool {
