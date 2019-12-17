@@ -26,7 +26,7 @@ import UIKit
 
 open class StackingDataSource: XCCollectionViewDataSource {
     public typealias CellProvider = (UICollectionView, IndexPath, Any?) -> XCCollectionViewCell
-    private let viewModel: StackingDataSourceViewModel
+    public let viewModel: StackingDataSourceViewModel
     private let cellProvider: CellProvider
 
     private let selectorIndex = 0
@@ -147,7 +147,7 @@ open class StackingDataSource: XCCollectionViewDataSource {
         }
     }
 
-    private func alertIndexFor(indexPath: IndexPath) -> IndexPath {
+    public func alertIndexFor(indexPath: IndexPath) -> IndexPath {
         switch indexPath.section {
             case mainAlertIndex:
                 return .init(row: indexPath.row, section: 0)
