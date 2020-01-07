@@ -29,11 +29,13 @@ import UIKit
 public protocol PickerListModel {
     var items: [DynamicTableModel] { get }
     func didChange(_ callback: @escaping () -> Void)
+    func didChangeItems(_ callback: @escaping ([IndexPath]) -> Void)
     func configure(indexPath: IndexPath, cell: DynamicTableViewCell, item: DynamicTableModel)
 }
 
 extension PickerListModel {
     public func didChange(_ callback: @escaping () -> Void) { }
+    public func didChangeItems(_ callback: @escaping ([IndexPath]) -> Void) { }
     public func configure(indexPath: IndexPath, cell: DynamicTableViewCell, item: DynamicTableModel) { }
 }
 
@@ -81,6 +83,9 @@ open class PickerList: DynamicTableViewController {
         model.didChange { [weak self] in
             self?.reloadData()
         }
+        model.didChangeItems { [weak self] in
+            self?.reloadItems(indexPaths: $0)
+        }
 
         reloadData()
 
@@ -92,6 +97,20 @@ open class PickerList: DynamicTableViewController {
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIAccessibility.post(notification: .screenChanged, argument: nil)
+    }
+
+    private func reloadItems(indexPaths: [IndexPath]) {
+        guard !indexPaths.isEmpty, !tableView.sections.isEmpty else {
+            reloadData()
+            return
+        }
+
+        let items = model.items
+        indexPaths.forEach {
+            tableView.sections[$0.section][$0.item] = items[$0.item]
+        }
+
+        tableView.reloadRows(at: indexPaths, with: reloadAnimation)
     }
 
     private func reloadData() {
