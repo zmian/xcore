@@ -92,6 +92,19 @@ open class PickerList: DynamicTableViewController {
         view.anchor.make {
             contentViewportHeightConstraint = $0.height.equalTo(contentViewportHeight).constraints.first
         }
+
+        addContentSizeKvoObservers()
+    }
+
+    private var kvoToken: NSKeyValueObservation?
+    private func addContentSizeKvoObservers() {
+        kvoToken = tableView.observe(\.contentSize, options: .new) { [weak self] _, _ in
+            self?.contentSizeUpdated()
+        }
+    }
+
+    private func contentSizeUpdated() {
+        contentViewportHeightConstraint?.constant = contentViewportHeight
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -125,14 +138,6 @@ open class PickerList: DynamicTableViewController {
         } else {
             tableView.reloadData()
         }
-
-        tableView.layoutIfNeeded()
-        contentViewportHeightConstraint?.constant = contentViewportHeight
-    }
-
-    open override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        contentViewportHeightConstraint?.constant = contentViewportHeight
     }
 
     private var contentViewportHeight: CGFloat {
