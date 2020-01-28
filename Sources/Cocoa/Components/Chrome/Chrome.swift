@@ -57,7 +57,7 @@ final public class Chrome {
     }
 }
 
-// MARK: Element
+// MARK: - Element
 
 extension Chrome {
     public enum Element: String {
@@ -80,7 +80,7 @@ extension Chrome {
     }
 }
 
-// MARK: BackgroundStyle
+// MARK: - BackgroundStyle
 
 extension Chrome {
     public enum BackgroundStyle: Equatable, CustomStringConvertible {
@@ -150,7 +150,7 @@ extension Chrome {
         fileprivate func configure(view: BlurView) {
             view.apply {
                 $0.isHidden = self == .transparent
-                $0.isSmartBlurEffectEnabled = self == .blurred
+                $0.isBlurEffectEnabled = self == .blurred
                 if case .color(let color) = self {
                     $0.backgroundColor = color
                 }
@@ -159,7 +159,7 @@ extension Chrome {
     }
 }
 
-// MARK: Style
+// MARK: - Style
 
 extension Chrome {
     @objc(ChromeStyle)
