@@ -26,7 +26,8 @@ import UIKit
 
 extension UIWindow.Level {
     public static var top: Self {
-        let windowLevel = UIApplication.sharedOrNil?.windows.max(by: { $0.windowLevel < $1.windowLevel })?.windowLevel ?? .normal
+        let topWindow = UIApplication.sharedOrNil?.windows.max { $0.windowLevel < $1.windowLevel }
+        let windowLevel = topWindow?.windowLevel ?? .normal
         let maxWinLevel = max(windowLevel, .normal)
         return maxWinLevel + 1
     }
