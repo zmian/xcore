@@ -38,7 +38,7 @@ extension UIWindow.Level {
 open class HUD: Appliable {
     public private(set) var isEnabled = false
     private var temporaryUnavailable = false
-    private let window = UIWindow(frame: UIScreen.main.bounds)
+    private let window: UIWindow
     private lazy var viewController = ViewController().apply {
         $0.backgroundColor = appearance?.backgroundColor ?? backgroundColor
     }
@@ -68,6 +68,16 @@ open class HUD: Appliable {
     }
 
     public init() {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        commonInit()
+    }
+
+    public init(frame: CGRect) {
+        window = UIWindow(frame: frame)
+        commonInit()
+    }
+
+    private func commonInit() {
         window.accessibilityLabel = "HUD"
         window.backgroundColor = .clear
         window.rootViewController = viewController
