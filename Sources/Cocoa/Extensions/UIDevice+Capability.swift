@@ -33,9 +33,9 @@ extension UIDevice {
             self.rawValue = rawValue
         }
 
-        /// - SeeAlso: `UIDevice.current.isBiometricsIdAvailable` and `UIDevice.current.biometryCapabilityType`.
+        /// - SeeAlso: `UIDevice.current.biometrics.isAvailable` and `UIDevice.current.biometrics.kind`.
         public static let touchID = Capability(rawValue: 1 << 0)
-        /// - SeeAlso: `UIDevice.current.isBiometricsIdAvailable` and `UIDevice.current.biometryCapabilityType`.
+        /// - SeeAlso: `UIDevice.current.biometrics.isAvailable` and `UIDevice.current.biometrics.kind`.
         public static let faceID = Capability(rawValue: 1 << 1)
         public static let notch = Capability(rawValue: 1 << 2)
         public static let homeIndicator = Capability(rawValue: 1 << 3)
@@ -55,7 +55,7 @@ extension UIDevice {
             capability.update(with: .homeIndicator)
         }
 
-        switch biometryCapabilityType {
+        switch biometrics.kind {
             case .touchID:
                 capability.update(with: .touchID)
             case .faceID:
