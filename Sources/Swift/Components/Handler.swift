@@ -127,3 +127,31 @@ extension Handler {
         }
     }
 }
+
+// MARK: - Convenience
+
+extension Handler.Lifecycle {
+    /// Wraps the given `block` and invokes `notifyStart` method on the lifecycle
+    /// handler.
+    ///
+    /// - Note: `onEnd` is never invoked.
+    public static func wrap(_ block: () -> Void) -> Handler.Lifecycle {
+        let handler = Handler.Lifecycle()
+        block()
+        handler.notifyStart()
+        return handler
+    }
+}
+
+extension Handler.Completion {
+    /// Wraps the given `block` and invokes `notifyStart` method on the completion
+    /// handler.
+    ///
+    /// - Note: `onHide` is never invoked.
+    public static func wrap(_ block: () -> Void) -> Handler.Completion {
+        let handler = Handler.Completion()
+        block()
+        handler.notifyShow()
+        return handler
+    }
+}
