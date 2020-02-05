@@ -98,7 +98,7 @@ extension CompositeImageFetcher {
         fetcher.fetch(image, in: imageView, callback)
     }
 
-    func clearCache() {
-        fetchers.forEach { $0.clearCache() }
+    func removeCache() {
+        fetchers.forEach { $0.removeCache() }
     }
 }
