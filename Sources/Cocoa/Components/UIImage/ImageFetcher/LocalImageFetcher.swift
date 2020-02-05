@@ -73,7 +73,7 @@ final class LocalImageFetcher: ImageFetcher {
         }
     }
 
-    func clearCache() {
+    func removeCache() {
         cache.removeAllObjects()
     }
 }

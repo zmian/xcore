@@ -40,7 +40,7 @@ public protocol ImageFetcher {
     ///   - callback: The callback to let the handler know when the image is fetched.
     func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock)
 
-    func clearCache()
+    func removeCache()
 }
 
 extension ImageFetcher {

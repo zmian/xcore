@@ -48,8 +48,8 @@ extension UIImage.Fetcher {
 
     // MARK: - Cache Management
 
-    public static func clearCache() {
-        registered.clearCache()
+    public static func removeCache() {
+        registered.removeCache()
     }
 
     static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ImageFetcher.ResultBlock) {

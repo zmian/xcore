@@ -60,7 +60,7 @@ final class RemoteImageFetcher: ImageFetcher {
         imageView?._imageFetcherCancelBlock = cancelToken
     }
 
-    func clearCache() {
-        ImageDownloader.clearCache()
+    func removeCache() {
+        ImageDownloader.removeCache()
     }
 }
