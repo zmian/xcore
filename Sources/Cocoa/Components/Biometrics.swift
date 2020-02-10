@@ -119,16 +119,39 @@ final public class Biometrics {
 // MARK: - Authenticate
 
 extension Biometrics {
+    /// Evaluates the user authentication with biometry policy.
+    ///
+    /// - Parameter completion: A closure that is executed when policy evaluation
+    ///                         finishes.
     public func authenticate(_ completion: @escaping (_ success: Bool) -> Void) {
+        guard isAvailable else {
+            return
+        }
+
+        // Using blank string " " here for `localizedReason` because `localizedReason`
+        // is not used for Face ID authentication.
+        //
+        // - SeeAlso: `NSFaceIDUsageDescription` in `Info.plist` file.
+        let context = LAContext()
+        context.localizedFallbackTitle = ""
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: " ") { success, error in
+            DispatchQueue.main.async {
+                completion(success)
+            }
+        }
+    }
+
+    public func requestPermission(_ completion: @escaping () -> Void) {
         guard isAvailable else {
             return
         }
 
         let context = LAContext()
         context.localizedFallbackTitle = ""
-        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "") { success, error in
+        context.interactionNotAllowed = true
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: " ") { success, error in
             DispatchQueue.main.async {
-                completion(success)
+                completion()
             }
         }
     }
