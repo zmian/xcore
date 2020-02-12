@@ -76,19 +76,6 @@ open class XCCollectionViewCell: UICollectionViewCell {
 // MARK: Custom Layout - Dim - Flex Layout
 
 extension XCCollectionViewCell {
-    @objc open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        let attributes = layoutAttributes
-        if let flowAttributes = attributes as? XCCollectionViewFlowLayout.Attributes {
-            flowAttributes.alpha = (flowAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
-            alpha = flowAttributes.alpha
-        }
-
-        if contentView.bounds.width != layoutAttributes.size.width {
-            contentView.bounds.size.width = layoutAttributes.size.width
-        }
-        return attributes
-    }
-
     @objc open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
 
