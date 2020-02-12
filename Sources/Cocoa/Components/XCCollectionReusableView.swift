@@ -109,15 +109,6 @@ extension XCCollectionReusableView {
 // MARK: Custom Layout - Dim - Flex Layout
 
 extension XCCollectionReusableView {
-    @objc open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        let attributes = layoutAttributes
-        if let flowAttributes = attributes as? XCCollectionViewFlowLayout.Attributes {
-            flowAttributes.alpha = (flowAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
-            alpha = attributes.alpha
-        }
-        return attributes
-    }
-
     @objc open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
         if let layoutAttributes = layoutAttributes as? XCCollectionViewFlowLayout.Attributes {
