@@ -39,5 +39,17 @@ extension XCCollectionViewTileLayout {
             copy.offsetInSection = offsetInSection
             return copy
         }
+
+        override func isEqual(_ object: Any?) -> Bool {
+            guard let rhsAttributes = object as? Attributes else {
+                return false
+            }
+            return
+                super.isEqual(object) &&
+                corners.corners == rhsAttributes.corners.corners &&
+                corners.radius == rhsAttributes.corners.radius &&
+                parentIdentifier == rhsAttributes.parentIdentifier &&
+                offsetInSection == rhsAttributes.offsetInSection
+        }
     }
 }
