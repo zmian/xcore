@@ -77,10 +77,18 @@ open class XCCollectionViewCell: UICollectionViewCell {
 
 extension XCCollectionViewCell {
     @objc open override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        let attributes = layoutAttributes
+        let attributes = super.preferredLayoutAttributesFitting(layoutAttributes)
         if let flowAttributes = attributes as? XCCollectionViewFlowLayout.Attributes {
             flowAttributes.alpha = (flowAttributes.shouldDim && !resistsDimming) ? 0.5 : 1
             alpha = flowAttributes.alpha
+        }
+
+        if let tileAttributes = layoutAttributes as? XCCollectionViewTileLayout.Attributes {
+            corners = tileAttributes.corners
+            if tileAttributes.shouldDim && !resistsDimming {
+                tileAttributes.alpha *= 0.5
+                alpha = tileAttributes.alpha
+            }
         }
 
         if contentView.bounds.width != layoutAttributes.size.width {
