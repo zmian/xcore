@@ -1,7 +1,7 @@
 //
-// MD5.swift
+// Data+Extensions.swift
 //
-// Copyright © 2018 Xcore
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,18 @@
 //
 
 import Foundation
-import CommonCrypto
 
 extension Data {
-    public var md5: String {
-        let hash = withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
-            var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
-            CC_MD5(bytes.baseAddress, CC_LONG(count), &hash)
-            return hash
-        }
-
-        return hash.map { String(format: "%02x", $0) }.joined()
-    }
-}
-
-extension String {
-    public var md5: String? {
-        data(using: .utf8)?.md5
+    /// A convenience method to append string to `Data` using specified encoding.
+    ///
+    /// - Parameters:
+    ///   - string: The string to be added to the `Data`.
+    ///   - encoding: The encoding to use for representing the specified string.
+    ///               The default value is `.utf8`.
+    ///   - allowLossyConversion: A boolean value to determine lossy conversion.
+    ///                           The default value is `false`.
+    public mutating func append(_ string: String, encoding: String.Encoding = .utf8, allowLossyConversion: Bool = false) {
+        guard let newData = string.data(using: encoding, allowLossyConversion: allowLossyConversion) else { return }
+        append(newData)
     }
 }
