@@ -64,7 +64,6 @@ final public class UserDefaultStore<T: Codable> {
         set {
             let data = newValue == nil ? nil : try? encoder.encode(newValue)
             storage.set(data, forKey: key)
-            storage.synchronize()
             if shouldCacheValueInMemory {
                 cachedValueInMemory = newValue
             }
