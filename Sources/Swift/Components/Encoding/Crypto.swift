@@ -40,7 +40,7 @@ extension Digest {
 }
 
 extension Data {
-    public var md5: String {
+    public func md5() -> String {
         if #available(iOS 13.0, *) {
             return Insecure.MD5.hash(data: self).hexEncodedString()
         } else {
@@ -54,7 +54,7 @@ extension Data {
         }
     }
 
-    public var sha256: String {
+    public func sha256() -> String {
         if #available(iOS 13.0, *) {
             return SHA256.hash(data: self).hexEncodedString()
         } else {
@@ -70,12 +70,12 @@ extension Data {
 }
 
 extension String {
-    public var md5: String? {
-        data(using: .utf8)?.md5
+    public func md5() -> String? {
+        data(using: .utf8)?.md5()
     }
 
-    public var sha256: String? {
-        data(using: .utf8)?.sha256
+    public func sha256() -> String? {
+        data(using: .utf8)?.sha256()
     }
 }
 
