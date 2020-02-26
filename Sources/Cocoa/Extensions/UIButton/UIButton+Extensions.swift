@@ -567,11 +567,18 @@ extension UIButton {
             return super.hitTest(point, with: event)
         }
 
-        let buttonSize = frame.size
-        let widthToAdd = (44 - buttonSize.width  > 0) ? 44 - buttonSize.width  : 0
-        let heightToAdd = (44 - buttonSize.height > 0) ? 44 - buttonSize.height : 0
-        let largerFrame = CGRect(x: 0 - (widthToAdd / 2), y: 0 - (heightToAdd / 2), width: buttonSize.width + widthToAdd, height: buttonSize.height + heightToAdd)
-        return largerFrame.contains(point) ? self : nil
+        var largeBounds = bounds.inset(by: touchAreaEdgeInsets)
+        let minimumSize = CGSize(width: 44, height: 44)
+
+        if largeBounds.size.width < minimumSize.width {
+            let difference = minimumSize.width - largeBounds.size.width
+            largeBounds = largeBounds.inset(by: UIEdgeInsets(horizontal: -difference/2))
+        }
+        if largeBounds.size.height < minimumSize.height {
+            let difference = minimumSize.height - largeBounds.size.height
+            largeBounds = largeBounds.inset(by: UIEdgeInsets(vertical: -difference/2))
+        }
+        return largeBounds.contains(point) ? self : nil
     }
 }
 

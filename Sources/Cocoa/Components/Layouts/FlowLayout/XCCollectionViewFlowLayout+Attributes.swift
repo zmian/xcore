@@ -38,5 +38,14 @@ extension XCCollectionViewFlowLayout {
             copy.shouldDim = shouldDim
             return copy
         }
+
+        open override func isEqual(_ object: Any?) -> Bool {
+            guard let rhsAttributes = object as? Attributes else {
+                return false
+            }
+            return super.isEqual(object) &&
+                shouldDim == rhsAttributes.shouldDim &&
+                separator == rhsAttributes.separator
+        }
     }
 }
