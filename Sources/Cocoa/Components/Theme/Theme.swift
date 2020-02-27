@@ -27,8 +27,7 @@ import UIKit
 // MARK: - IDs
 
 extension Identifier where Type == Theme {
-    public static var light: Self { #function }
-    public static var dark: Self { #function }
+    public static var `default`: Self { #function }
 }
 
 // MARK: - Theme
@@ -36,9 +35,6 @@ extension Identifier where Type == Theme {
 public struct Theme: Equatable {
     /// A unique id for the theme.
     public let id: Identifier<Self>
-
-    /// A boolean value indicating whether the theme appearance is dark.
-    public let isDark: Bool
 
     /// The main brand color for interface callout content.
     public let tintColor: UIColor
@@ -51,6 +47,9 @@ public struct Theme: Equatable {
 
     /// The color for links.
     public let linkColor: UIColor
+    
+//    /// The color to use for background of header cells in table views and outline views.
+//    public let headerBackgoundColor: UIColor
 
     // MARK: - Text
 
@@ -59,9 +58,26 @@ public struct Theme: Equatable {
 
     /// The color for text labels containing secondary content.
     public let textColorSecondary: UIColor
+    
+    /// The color to use for placeholder text in controls or text views.
+    public let placeholderTextColor: UIColor
+    
+    /// The color to use for text in header cells in table views and outline views.
+    public let headerTextColor: UIColor
 
+    // MARK: - Background
+    
     /// The color for the main background of your interface.
     public let backgroundColor: UIColor
+    
+    /// The color for background of seconday views.
+    public let backgroundColorSecondary: UIColor
+    
+    /// Add description
+    public let highglightedBackgroundColor: UIColor
+    
+    /// Add description
+    public let disabledBackgroundColor: UIColor
 
     // MARK: - Buttons
     public let buttonTextColor: UIColor
@@ -73,14 +89,18 @@ public struct Theme: Equatable {
 
     public init(
         id: Identifier<Theme>,
-        dark: Bool? = nil,
         tintColor: UIColor,
         separatorColor: UIColor,
         toggleColor: UIColor,
         linkColor: UIColor,
         textColor: UIColor,
         textColorSecondary: UIColor,
+        placeholderTextColor: UIColor,
+        headerTextColor: UIColor,
         backgroundColor: UIColor,
+        backgroundColorSecondary: UIColor,
+        highglightedBackgroundColor: UIColor,
+        disabledBackgroundColor: UIColor,
         buttonTextColor: UIColor,
         buttonBackgroundColor: UIColor,
         buttonBackgroundColorSecondary: UIColor,
@@ -88,22 +108,25 @@ public struct Theme: Equatable {
         statusBarStyle: UIStatusBarStyle,
         chrome: Chrome.Style? = nil
     ) {
-        let isDark = dark ?? (id == .dark)
         self.id = id
-        self.isDark = isDark
         self.tintColor = tintColor
         self.separatorColor = separatorColor
         self.toggleColor = toggleColor
         self.linkColor = linkColor
         self.textColor = textColor
         self.textColorSecondary = textColorSecondary
+        self.placeholderTextColor = placeholderTextColor
+        self.headerTextColor = headerTextColor
         self.backgroundColor = backgroundColor
         self.buttonTextColor = buttonTextColor
         self.buttonBackgroundColor = buttonBackgroundColor
+        self.backgroundColorSecondary = backgroundColorSecondary
+        self.highglightedBackgroundColor = highglightedBackgroundColor
+        self.disabledBackgroundColor = disabledBackgroundColor
         self.buttonBackgroundColorSecondary = buttonBackgroundColorSecondary
         self.buttonBackgroundColorPill = buttonBackgroundColorPill
         self.statusBarStyle = statusBarStyle
-        self.chrome = chrome ?? (isDark ? .color(backgroundColor) : .blurred)
+        self.chrome = .color(backgroundColor)
     }
 }
 
@@ -111,44 +134,30 @@ public struct Theme: Equatable {
 
 extension Theme {
     /// The current theme for the interface.
-    internal(set) public static var current: Theme = .light
+    internal(set) public static var current: Theme = .default
 
     /// The nonadaptable light theme for the interface.
     ///
     /// This theme does not adapt to changes in the underlying trait environment.
-    internal(set) public static var light: Theme = .init(
-        id: .light,
+    internal(set) public static var `default`: Theme = .init(
+        id: .default,
         tintColor: .systemTint,
         separatorColor: .lightGray,
         toggleColor: .systemTint,
         linkColor: .systemTint,
         textColor: .black,
         textColorSecondary: .lightGray,
+        placeholderTextColor: .red,
+        headerTextColor: .red,
         backgroundColor: .white,
+        backgroundColorSecondary: .red,
+        highglightedBackgroundColor: .red,
+        disabledBackgroundColor: .red,
         buttonTextColor: .systemTint,
         buttonBackgroundColor: .systemTint,
         buttonBackgroundColorSecondary: .systemTint,
         buttonBackgroundColorPill: .systemTint,
         statusBarStyle: .default
-    )
-
-    /// The nonadaptable dark theme for the interface.
-    ///
-    /// This theme does not adapt to changes in the underlying trait environment.
-    internal(set) public static var dark: Theme = .init(
-        id: .dark,
-        tintColor: .systemTint,
-        separatorColor: .lightGray,
-        toggleColor: .appleGreen,
-        linkColor: .systemTint,
-        textColor: .lightText,
-        textColorSecondary: .lightGray,
-        backgroundColor: .black,
-        buttonTextColor: .systemTint,
-        buttonBackgroundColor: .systemTint,
-        buttonBackgroundColorSecondary: .systemTint,
-        buttonBackgroundColorPill: .systemTint,
-        statusBarStyle: .lightContent
     )
 }
 

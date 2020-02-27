@@ -45,8 +45,7 @@ extension Theme {
 
         didSet = true
 
-        self.light = light
-        self.dark = dark
+        self.default = light
         self.current = current ?? light
 
         setSystemComponentsTheme()
