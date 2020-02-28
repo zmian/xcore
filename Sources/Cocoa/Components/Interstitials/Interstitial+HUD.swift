@@ -75,10 +75,7 @@ extension Interstitial {
         }
 
         func showIfNeeded(_ completion: (() -> Void)? = nil) {
-            guard
-                !isPresenting,
-                !isEnabled
-            else {
+            guard isHidden, !isPresenting else {
                 return
             }
 
