@@ -38,15 +38,15 @@ extension Theme {
     ///   - current: The current theme. The default value is `.light`.
     /// - Returns: `true` if first call; otherwise, `false`.
     @discardableResult
-    public static func set(light: Theme, dark: Theme, current: Theme? = nil) -> Bool {
+    public static func set(theme: Theme, current: Theme? = nil) -> Bool {
         guard !didSet else {
             return false
         }
 
         didSet = true
 
-        self.default = light
-        self.current = current ?? light
+        self.default = theme
+        self.current = current ?? theme
 
         setSystemComponentsTheme()
         setNavigationBarBackButtonTheme()
@@ -67,7 +67,7 @@ extension Theme {
             $0.titleTextAttributes = UIViewController.defaultNavigationBarTextAttributes
             $0.tintColor = current.tintColor
             $0.barTintColor = .white
-            $0.barStyle = .black
+            $0.barStyle = .default
             $0.isTranslucent = true
         }
 

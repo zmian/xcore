@@ -136,20 +136,18 @@ extension Theme {
     /// The current theme for the interface.
     internal(set) public static var current: Theme = .default
 
-    /// The nonadaptable light theme for the interface.
-    ///
-    /// This theme does not adapt to changes in the underlying trait environment.
+    #warning("TODO: Fix the defaults so it matches the system defaults")
     internal(set) public static var `default`: Theme = .init(
         id: .default,
         tintColor: .systemTint,
         separatorColor: .lightGray,
-        toggleColor: .systemTint,
+        toggleColor: .yellow,
         linkColor: .systemTint,
-        textColor: .black,
+        textColor: .purple,
         textColorSecondary: .lightGray,
         placeholderTextColor: .red,
-        headerTextColor: .red,
-        backgroundColor: .white,
+        headerTextColor: .black,
+        backgroundColor: .purple,
         backgroundColorSecondary: .red,
         highglightedBackgroundColor: .red,
         disabledBackgroundColor: .red,
