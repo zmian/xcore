@@ -67,7 +67,7 @@ extension UITabBarController {
         }
 
         public func viewController() -> UIViewController {
-            return _viewController()
+            _viewController()
         }
 
         public func configure(item: UITabBarItem) {

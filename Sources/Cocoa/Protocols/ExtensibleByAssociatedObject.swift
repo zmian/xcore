@@ -64,7 +64,7 @@ extension ExtensibleByAssociatedObject {
     /// - Parameters:
     ///   - key: The key for the association.
     ///   - value: The value to associate with the key for object. Pass `nil` to
-    ///            clear an existing association.
+    ///            remove an existing association.
     ///   - associationPolicy: The policy for the association. The default value is
     ///                        `.strong`.
     public func setAssociatedObject<T>(_ key: UnsafeRawPointer, value: T?, policy associationPolicy: AssociationPolicy = .strong) {

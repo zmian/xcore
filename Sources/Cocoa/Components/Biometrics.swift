@@ -1,5 +1,5 @@
 //
-// UIDevice+Biometrics.swift
+// Biometrics.swift
 //
 // Copyright © 2017 Xcore
 //
@@ -25,8 +25,10 @@
 import UIKit
 import LocalAuthentication
 
-extension UIDevice {
-    public enum BiometryType {
+// MARK: - Kind
+
+extension Biometrics {
+    public enum Kind {
         case none
         case touchID
         case faceID
@@ -62,8 +64,8 @@ extension UIDevice {
             }
         }
 
-        /// The name of the biometry authentication, "Touch ID" or "Face ID";
-        /// otherwise, an empty string.
+        /// The name of the biometry authentication, "Touch ID" or "Face ID"; otherwise,
+        /// an empty string.
         public var displayName: String {
             switch self {
                 case .none:
@@ -89,10 +91,10 @@ extension UIDevice {
     }
 }
 
-extension UIDevice {
-    /// Indicates that the device owner can authenticate using biometry,
-    /// Touch ID or Face ID.
-    public var isBiometricsIdAvailable: Bool {
+final public class Biometrics {
+    /// Indicates that the device owner can authenticate using biometry, Touch ID or
+    /// Face ID.
+    public var isAvailable: Bool {
         LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
 
@@ -102,14 +104,63 @@ extension UIDevice {
     /// of the permission status. For example, Face ID requires permission prompt.
     /// If user denies the permission, then the returned value is still `.faceID`.
     /// If you need to check if biometrics authentication is available then use
-    /// `UIDevice.current.isBiometricsIdAvailable`.
-    public var biometryCapabilityType: BiometryType {
-        let biometryType = BiometryType()
+    /// `UIDevice.current.biometrics.isAvailable`.
+    public var kind: Kind {
+        let kind = Kind()
 
-        guard biometryType == .none else {
-            return biometryType
+        guard kind == .none else {
+            return kind
         }
 
-        return modelType.screenSize.iPhoneXSeries ? .faceID : .touchID
+        return UIDevice.current.modelType.screenSize.iPhoneXSeries ? .faceID : .touchID
+    }
+}
+
+// MARK: - Authenticate
+
+extension Biometrics {
+    /// Evaluates the user authentication with biometry policy.
+    ///
+    /// - Parameter completion: A closure that is executed when policy evaluation
+    ///                         finishes.
+    public func authenticate(_ completion: @escaping (_ success: Bool) -> Void) {
+        guard isAvailable else {
+            return
+        }
+
+        // Using blank string " " here for `localizedReason` because `localizedReason`
+        // is not used for Face ID authentication.
+        //
+        // - SeeAlso: `NSFaceIDUsageDescription` in `Info.plist` file.
+        let context = LAContext()
+        context.localizedFallbackTitle = ""
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: " ") { success, error in
+            DispatchQueue.main.async {
+                completion(success)
+            }
+        }
+    }
+
+    public func requestPermission(_ completion: @escaping () -> Void) {
+        guard isAvailable else {
+            return
+        }
+
+        let context = LAContext()
+        context.localizedFallbackTitle = ""
+        context.interactionNotAllowed = true
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: " ") { success, error in
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+    }
+}
+
+// MARK: - UIDevice
+
+extension UIDevice {
+    public var biometrics: Biometrics {
+        .init()
     }
 }

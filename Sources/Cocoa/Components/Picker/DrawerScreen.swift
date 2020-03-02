@@ -66,8 +66,6 @@ final public class DrawerScreen: NSObject {
 
     public override init() {
         super.init()
-        setupAccessibilitySupport()
-
         hud.add(modalView)
         modalView.anchor.make {
             $0.horizontally.equalToSuperview()
@@ -90,11 +88,6 @@ final public class DrawerScreen: NSObject {
 
     deinit {
         NotificationCenter.remove(notificationToken)
-    }
-
-    private func setupAccessibilitySupport() {
-        hud.view.accessibilityViewIsModal = true
-        UIAccessibility.post(notification: .screenChanged, argument: nil)
     }
 
     func present(_ content: Content) {

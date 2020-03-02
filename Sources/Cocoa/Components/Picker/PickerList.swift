@@ -29,11 +29,13 @@ import UIKit
 public protocol PickerListModel {
     var items: [DynamicTableModel] { get }
     func didChange(_ callback: @escaping () -> Void)
+    func didChangeItems(_ callback: @escaping ([IndexPath]) -> Void)
     func configure(indexPath: IndexPath, cell: DynamicTableViewCell, item: DynamicTableModel)
 }
 
 extension PickerListModel {
     public func didChange(_ callback: @escaping () -> Void) { }
+    public func didChangeItems(_ callback: @escaping ([IndexPath]) -> Void) { }
     public func configure(indexPath: IndexPath, cell: DynamicTableViewCell, item: DynamicTableModel) { }
 }
 
@@ -68,6 +70,7 @@ open class PickerList: DynamicTableViewController {
             $0.contentInsetAdjustmentBehavior = .never
             $0.configureCell { [weak self] indexPath, cell, item in
                 guard let strongSelf = self else { return }
+                cell.accessibilityTraits = .button
                 cell.highlightedBackgroundColor = .appHighlightedBackground
                 cell.imageSize = 30
                 cell.avatarCornerRadius = 0
@@ -80,12 +83,47 @@ open class PickerList: DynamicTableViewController {
         model.didChange { [weak self] in
             self?.reloadData()
         }
+        model.didChangeItems { [weak self] in
+            self?.reloadItems(indexPaths: $0)
+        }
 
         reloadData()
 
         view.anchor.make {
             contentViewportHeightConstraint = $0.height.equalTo(contentViewportHeight).constraints.first
         }
+
+        addContentSizeKvoObservers()
+    }
+
+    private var kvoToken: NSKeyValueObservation?
+    private func addContentSizeKvoObservers() {
+        kvoToken = tableView.observe(\.contentSize, options: .new) { [weak self] _, _ in
+            self?.contentSizeUpdated()
+        }
+    }
+
+    private func contentSizeUpdated() {
+        contentViewportHeightConstraint?.constant = contentViewportHeight
+    }
+
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIAccessibility.post(notification: .screenChanged, argument: nil)
+    }
+
+    private func reloadItems(indexPaths: [IndexPath]) {
+        guard !indexPaths.isEmpty, !tableView.sections.isEmpty else {
+            reloadData()
+            return
+        }
+
+        let items = model.items
+        indexPaths.forEach {
+            tableView.sections[$0.section][$0.item] = items[$0.item]
+        }
+
+        tableView.reloadRows(at: indexPaths, with: reloadAnimation)
     }
 
     private func reloadData() {
@@ -100,14 +138,6 @@ open class PickerList: DynamicTableViewController {
         } else {
             tableView.reloadData()
         }
-
-        tableView.layoutIfNeeded()
-        contentViewportHeightConstraint?.constant = contentViewportHeight
-    }
-
-    open override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        contentViewportHeightConstraint?.constant = contentViewportHeight
     }
 
     private var contentViewportHeight: CGFloat {

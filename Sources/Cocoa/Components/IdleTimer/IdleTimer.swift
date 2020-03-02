@@ -1,7 +1,7 @@
 //
-// MD5.swift
+// IdleTimer.swift
 //
-// Copyright © 2018 Xcore
+// Copyright © 2019 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,25 @@
 //
 
 import Foundation
-import CommonCrypto
 
-extension Data {
-    public var md5: String {
-        let hash = withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
-            var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
-            CC_MD5(bytes.baseAddress, CC_LONG(count), &hash)
-            return hash
+// MARK: - Namespace
+
+public enum IdleTimer { }
+
+// MARK: - API
+
+extension IdleTimer {
+    /// Updates existing or creates a new timeout gesture for given `window` object.
+    ///
+    /// You can observe the timeout event using
+    /// `UIApplication.didTimeOutUserInteractionNotification`.
+    public static func setUserInteractionTimeout(duration: TimeInterval, for window: UIWindow?) {
+        guard let existingGesture = window?.gestureRecognizers?.firstElement(type: IdleTimer.Gesture.self) else {
+            let newGesture = IdleTimer.Gesture(timeoutAfter: duration)
+            window?.addGestureRecognizer(newGesture)
+            return
         }
 
-        return hash.map { String(format: "%02x", $0) }.joined()
-    }
-}
-
-extension String {
-    public var md5: String? {
-        data(using: .utf8)?.md5
+        existingGesture.timeoutDuration = duration
     }
 }

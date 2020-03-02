@@ -26,7 +26,8 @@ import UIKit
 
 extension UIWindow.Level {
     public static var top: Self {
-        let windowLevel = UIApplication.sharedOrNil?.windows.max(by: { $0.windowLevel < $1.windowLevel })?.windowLevel ?? .normal
+        let topWindow = UIApplication.sharedOrNil?.windows.max { $0.windowLevel < $1.windowLevel }
+        let windowLevel = topWindow?.windowLevel ?? .normal
         let maxWinLevel = max(windowLevel, .normal)
         return maxWinLevel + 1
     }
@@ -35,9 +36,9 @@ extension UIWindow.Level {
 /// A base class to create a HUD that sets up blank canvas that can be
 /// customized by subclasses to show anything in a fullscreen window.
 open class HUD: Appliable {
-    public private(set) var isEnabled = false
-    private var temporaryUnavailable = false
-    private let window = UIWindow(frame: UIScreen.main.bounds)
+    public private(set) var isHidden = true
+    private var isTemporarilySuppressed = false
+    private let window: UIWindow
     private lazy var viewController = ViewController().apply {
         $0.backgroundColor = appearance?.backgroundColor ?? backgroundColor
     }
@@ -67,13 +68,24 @@ open class HUD: Appliable {
     }
 
     public init() {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        commonInit()
+    }
+
+    public init(frame: CGRect) {
+        window = UIWindow(frame: frame)
+        commonInit()
+    }
+
+    private func commonInit() {
         window.accessibilityLabel = "HUD"
         window.backgroundColor = .clear
         window.rootViewController = viewController
+        window.accessibilityViewIsModal = true
     }
 
     private func setDefaultWindowLevel() {
-        self.windowLevel = .top
+        windowLevel = .top
     }
 
     private lazy var adjustWindowAttributes: ((_ window: UIWindow) -> Void)? = { [weak self] _ in
@@ -200,18 +212,38 @@ open class HUD: Appliable {
         }
     }
 
-    private func internalToggle(enabled: Bool, animated: Bool, _ completion: (() -> Void)?) {
-        guard isEnabled != enabled, !temporaryUnavailable else {
-            temporaryUnavailable = false
+    private func _setHidden(_ hide: Bool, animated: Bool, _ completion: (() -> Void)?) {
+        guard isHidden != hide else {
             completion?()
             return
         }
 
-        let duration = enabled ? self.duration.show : self.duration.hide
+        // If `hide` is `false` and `isTemporarilySuppressed` flag is `true`. Then, call
+        // completion handler and return to respect `isTemporarilySuppressed` flag.
+        if !hide, isTemporarilySuppressed {
+            isTemporarilySuppressed = false
+            completion?()
+            return
+        }
 
-        isEnabled = enabled
+        let duration = hide ? self.duration.hide : self.duration.show
 
-        if enabled {
+        isHidden = hide
+
+        if hide {
+            guard animated else {
+                view.alpha = 0
+                window.isHidden = true
+                completion?()
+                return
+            }
+            UIView.animate(withDuration: duration, animations: {
+                self.view.alpha = 0
+            }, completion: { _ in
+                self.window.isHidden = true
+                completion?()
+            })
+        } else {
             adjustWindowAttributes?(window)
             setNeedsStatusBarAppearanceUpdate()
             window.isHidden = false
@@ -228,54 +260,47 @@ open class HUD: Appliable {
             }, completion: { _ in
                 completion?()
             })
-        } else {
-            guard animated else {
-                view.alpha = 0
-                window.isHidden = true
-                completion?()
-                return
-            }
-            UIView.animate(withDuration: duration, animations: {
-                self.view.alpha = 0
-            }, completion: { _ in
-                self.window.isHidden = true
-                completion?()
-            })
         }
     }
 
-    private func toggle(enabled: Bool, animated: Bool, _ completion: (() -> Void)?) {
+    private func setHidden(_ hide: Bool, animated: Bool, _ completion: (() -> Void)?) {
         guard let presentedViewController = viewController.presentedViewController else {
-            return internalToggle(enabled: enabled, animated: animated, completion)
+            return _setHidden(hide, animated: animated, completion)
         }
 
         presentedViewController.dismiss(animated: animated) { [weak self] in
-            self?.internalToggle(enabled: false, animated: false) {
-                completion?()
-            }
+            self?._setHidden(true, animated: false, completion)
         }
     }
 
-    private func toggle(enabled: Bool, delay delayDuration: TimeInterval, animated: Bool, _ completion: (() -> Void)?) {
+    private func setHidden(_ hide: Bool, delay delayDuration: TimeInterval, animated: Bool, _ completion: (() -> Void)?) {
         guard delayDuration > 0 else {
-            return toggle(enabled: enabled, animated: animated, completion)
+            return setHidden(hide, animated: animated, completion)
         }
 
         delay(by: delayDuration) { [weak self] in
-            self?.toggle(enabled: enabled, animated: animated, completion)
+            self?.setHidden(hide, animated: animated, completion)
         }
     }
 
     open func show(delay delayDuration: TimeInterval = 0, animated: Bool = true, _ completion: (() -> Void)? = nil) {
-        toggle(enabled: true, delay: delayDuration, animated: animated, completion)
+        setHidden(false, delay: delayDuration, animated: animated, completion)
     }
 
     open func hide(delay delayDuration: TimeInterval = 0, animated: Bool = true, _ completion: (() -> Void)? = nil) {
-        toggle(enabled: false, delay: delayDuration, animated: animated, completion)
+        setHidden(true, delay: delayDuration, animated: animated, completion)
     }
 
-    open func disableOnNextCall() {
-        temporaryUnavailable = true
+    /// Suppress next call to `show(delay:animated:_:)` method.
+    ///
+    /// Consider a scenario where you have a splash screen that shows up whenever
+    /// app resign active state. Later on, you want to request Push Notifications
+    /// permission, this will cause the splash screen to appear. However, if you
+    /// call `suppressTemporarily()` on the splash screen HUD before asking for
+    /// permission then splash screen is suppressed when system permission dialog
+    /// appears.
+    open func suppressTemporarily() {
+        isTemporarilySuppressed = true
     }
 }
 

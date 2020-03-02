@@ -1,7 +1,7 @@
 //
-// ImageFetcher.swift
+// Data+Extensions.swift
 //
-// Copyright © 2018 Xcore
+// Copyright © 2014 Xcore
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,29 +22,19 @@
 // THE SOFTWARE.
 //
 
-import UIKit
+import Foundation
 
-public protocol ImageFetcher {
-    typealias ResultBlock = (_ image: UIImage?, _ cacheType: ImageSourceType.CacheType) -> Void
-
-    /// A unique id for the image fetcher.
-    var id: String { get }
-
-    func canHandle(_ image: ImageRepresentable) -> Bool
-
-    /// Fetch the image.
+extension Data {
+    /// A convenience method to append string to `Data` using specified encoding.
     ///
     /// - Parameters:
-    ///   - image: The image requested to be fetched.
-    ///   - imageView: An optional property if this image will be set on the image view.
-    ///   - callback: The callback to let the handler know when the image is fetched.
-    func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock)
-
-    func removeCache()
-}
-
-extension ImageFetcher {
-    public var id: String {
-        name(of: self)
+    ///   - string: The string to be added to the `Data`.
+    ///   - encoding: The encoding to use for representing the specified string.
+    ///               The default value is `.utf8`.
+    ///   - allowLossyConversion: A boolean value to determine lossy conversion.
+    ///                           The default value is `false`.
+    public mutating func append(_ string: String, encoding: String.Encoding = .utf8, allowLossyConversion: Bool = false) {
+        guard let newData = string.data(using: encoding, allowLossyConversion: allowLossyConversion) else { return }
+        append(newData)
     }
 }
