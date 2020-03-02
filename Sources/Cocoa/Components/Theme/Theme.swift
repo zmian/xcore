@@ -32,102 +32,60 @@ extension Identifier where Type == Theme {
 
 // MARK: - Theme
 
-public struct Theme: Equatable {
-    /// A unique id for the theme.
-    public let id: Identifier<Self>
-
+public struct Theme: Themable, Equatable {
+//    /// A unique id for the theme.
+//    public let id: Identifier<Self>
+//
     /// The main brand color for interface callout content.
-    public let tintColor: UIColor
-
+    public var tintColor: UIColor
+    
     /// The color for borders or divider lines that hide any underlying content.
-    public let separatorColor: UIColor
+    public var separatorColor: UIColor
 
     /// The color for toggle controls (e.g., Switch or Checkbox).
-    public let toggleColor: UIColor
+    public var toggleColor: UIColor
 
     /// The color for links.
-    public let linkColor: UIColor
+    public var linkColor: UIColor
     
-//    /// The color to use for background of header cells in table views and outline views.
-//    public let headerBackgoundColor: UIColor
-
-    // MARK: - Text
+////    /// The color to use for background of header cells in table views and outline views.
+////    public let headerBackgoundColor: UIColor
+//
+//    // MARK: - Text
 
     /// The color for text labels containing primary content.
-    public let textColor: UIColor
+    public var textColor: UIColor
 
     /// The color for text labels containing secondary content.
-    public let textColorSecondary: UIColor
-    
+    public var textColorSecondary: UIColor
+
     /// The color to use for placeholder text in controls or text views.
-    public let placeholderTextColor: UIColor
-    
+    public var placeholderTextColor: UIColor
+
     /// The color to use for text in header cells in table views and outline views.
-    public let headerTextColor: UIColor
+    public var headerTextColor: UIColor
 
     // MARK: - Background
     
     /// The color for the main background of your interface.
-    public let backgroundColor: UIColor
+    public var backgroundColor: UIColor
     
     /// The color for background of seconday views.
-    public let backgroundColorSecondary: UIColor
+    public var backgroundColorSecondary: UIColor
     
     /// Add description
-    public let highglightedBackgroundColor: UIColor
+    public var highglightedBackgroundColor: UIColor
     
     /// Add description
-    public let disabledBackgroundColor: UIColor
+    public var disabledBackgroundColor: UIColor
 
     // MARK: - Buttons
-    public let buttonTextColor: UIColor
-    public let buttonBackgroundColor: UIColor
-    public let buttonBackgroundColorSecondary: UIColor
-    public let buttonBackgroundColorPill: UIColor
-    public let statusBarStyle: UIStatusBarStyle
-    public let chrome: Chrome.Style
-
-    public init(
-        id: Identifier<Theme>,
-        tintColor: UIColor,
-        separatorColor: UIColor,
-        toggleColor: UIColor,
-        linkColor: UIColor,
-        textColor: UIColor,
-        textColorSecondary: UIColor,
-        placeholderTextColor: UIColor,
-        headerTextColor: UIColor,
-        backgroundColor: UIColor,
-        backgroundColorSecondary: UIColor,
-        highglightedBackgroundColor: UIColor,
-        disabledBackgroundColor: UIColor,
-        buttonTextColor: UIColor,
-        buttonBackgroundColor: UIColor,
-        buttonBackgroundColorSecondary: UIColor,
-        buttonBackgroundColorPill: UIColor,
-        statusBarStyle: UIStatusBarStyle,
-        chrome: Chrome.Style? = nil
-    ) {
-        self.id = id
-        self.tintColor = tintColor
-        self.separatorColor = separatorColor
-        self.toggleColor = toggleColor
-        self.linkColor = linkColor
-        self.textColor = textColor
-        self.textColorSecondary = textColorSecondary
-        self.placeholderTextColor = placeholderTextColor
-        self.headerTextColor = headerTextColor
-        self.backgroundColor = backgroundColor
-        self.buttonTextColor = buttonTextColor
-        self.buttonBackgroundColor = buttonBackgroundColor
-        self.backgroundColorSecondary = backgroundColorSecondary
-        self.highglightedBackgroundColor = highglightedBackgroundColor
-        self.disabledBackgroundColor = disabledBackgroundColor
-        self.buttonBackgroundColorSecondary = buttonBackgroundColorSecondary
-        self.buttonBackgroundColorPill = buttonBackgroundColorPill
-        self.statusBarStyle = statusBarStyle
-        self.chrome = .color(backgroundColor)
-    }
+    public var buttonTextColor: UIColor
+    public var buttonBackgroundColor: UIColor
+    public var buttonBackgroundColorSecondary: UIColor
+    public var buttonBackgroundColorPill: UIColor
+    public var statusBarStyle: UIStatusBarStyle
+    public var chrome: Chrome.Style
 }
 
 // MARK: - Default
@@ -138,7 +96,7 @@ extension Theme {
 
     #warning("TODO: Fix the defaults so it matches the system defaults")
     internal(set) public static var `default`: Theme = .init(
-        id: .default,
+//        id: .default,
         tintColor: .systemTint,
         separatorColor: .lightGray,
         toggleColor: .yellow,
@@ -147,7 +105,7 @@ extension Theme {
         textColorSecondary: .lightGray,
         placeholderTextColor: .red,
         headerTextColor: .black,
-        backgroundColor: .purple,
+        backgroundColor: .white,
         backgroundColorSecondary: .red,
         highglightedBackgroundColor: .red,
         disabledBackgroundColor: .red,
@@ -155,7 +113,8 @@ extension Theme {
         buttonBackgroundColor: .systemTint,
         buttonBackgroundColorSecondary: .systemTint,
         buttonBackgroundColorPill: .systemTint,
-        statusBarStyle: .default
+        statusBarStyle: .default,
+        chrome: .blurred
     )
 }
 
@@ -167,3 +126,141 @@ extension UIView {
     /// In your implementation, refresh the view rendering as needed.
     @objc open func themeDidChange() { }
 }
+
+public protocol Themable {
+//    /// A unique id for the theme.
+//    var id: Identifier<Self> { get }
+
+    /// The main brand color for interface callout content.
+    var tintColor: UIColor { get }
+    
+    /// The color for borders or divider lines that hide any underlying content.
+    var separatorColor: UIColor { get }
+    
+    /// The color for toggle controls (e.g., Switch or Checkbox).
+    var toggleColor: UIColor { get }
+    
+    /// The color for links.
+    var linkColor: UIColor { get }
+//
+//    //    /// The color to use for background of header cells in table views and outline views.
+//    //    public let headerBackgoundColor: UIColor
+//
+    // MARK: - Text
+
+    /// The color for text labels containing primary content.
+    var textColor: UIColor { get }
+    
+    /// The color for text labels containing secondary content.
+    var textColorSecondary: UIColor { get }
+
+    /// The color to use for placeholder text in controls or text views.
+    var placeholderTextColor: UIColor { get }
+
+    /// The color to use for text in header cells in table views and outline views.
+    var headerTextColor: UIColor { get }
+    
+    // MARK: - Background
+    
+    /// The color for the main background of your interface.
+    var backgroundColor: UIColor { get }
+    
+    /// The color for background of seconday views.
+    var backgroundColorSecondary: UIColor { get }
+    
+    /// Add description
+    var highglightedBackgroundColor: UIColor { get }
+    
+    /// Add description
+    var disabledBackgroundColor: UIColor { get }
+    
+    // MARK: - Buttons
+    var buttonTextColor: UIColor { get }
+    
+    var buttonBackgroundColor: UIColor { get }
+    
+    var buttonBackgroundColorSecondary: UIColor { get }
+    
+    var buttonBackgroundColorPill: UIColor { get }
+    
+    var statusBarStyle: UIStatusBarStyle { get }
+    
+    var chrome: Chrome.Style { get }
+}
+
+extension Themable {
+    #warning("TODO: Fix the defaults so it matches the system defaults")
+
+    public var tintColor: UIColor {
+        .green
+    }
+    
+    public var separatorColor: UIColor {
+        .green
+    }
+    
+    public var toggleColor: UIColor {
+        .green
+    }
+
+    public var linkColor: UIColor {
+        .green
+    }
+
+    public var textColor: UIColor {
+        .green
+    }
+
+    public var textColorSecondary: UIColor {
+        .green
+    }
+    
+    public var placeholderTextColor: UIColor {
+        .green
+    }
+    
+    public var headerTextColor: UIColor {
+        .green
+    }
+    
+    public var backgroundColor: UIColor {
+        .green
+    }
+    
+    public var backgroundColorSecondary: UIColor {
+        .green
+    }
+    
+    public var highglightedBackgroundColor: UIColor {
+        .green
+    }
+    
+    public var disabledBackgroundColor: UIColor {
+        .green
+    }
+    
+    public var buttonTextColor: UIColor {
+        .green
+    }
+    
+    public var buttonBackgroundColor: UIColor {
+        .green
+    }
+    
+    public var buttonBackgroundColorSecondary: UIColor {
+        .green
+    }
+    
+    public var buttonBackgroundColorPill: UIColor {
+        .green
+    }
+    
+    public var statusBarStyle: UIStatusBarStyle {
+        .default
+    }
+    
+    public var chrome: Chrome.Style {
+        .blurred
+    }
+}
+

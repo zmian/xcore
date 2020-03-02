@@ -63,7 +63,7 @@ open class DynamicTableViewController: UIViewController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = Theme.current.backgroundColor
         setupDynamicTableView()
     }
 

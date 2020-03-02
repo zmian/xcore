@@ -27,6 +27,7 @@ import UIKit
 final class ExampleDynamicTableViewController: DynamicTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = Theme.current.backgroundColor
         title = "\(DynamicTableView.self)"
 
         tableView.cellOptions = [.delete]
