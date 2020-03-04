@@ -90,21 +90,3 @@ final class FeedDataSource: XCCollectionViewDataSource {
         return footerView
     }
 }
-
-extension FeedDataSource: XCCollectionViewTileLayoutCustomizable {
-    func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
-        isTileEnabled
-    }
-
-    func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> Bool {
-        true
-    }
-
-    func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat {
-        cornerRadius
-    }
-
-    func parentIdentifier(in layout: XCCollectionViewTileLayout) -> String? {
-        "Stacked"
-    }
-}
