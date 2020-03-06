@@ -130,6 +130,13 @@ extension UIColor {
     @nonobjc static var appleRed: UIColor { .init(hex: "FF3B30") }
 }
 
+// MARK: - Character
+
+extension Character {
+    /// The character used for masking strings.
+    public static var mask: Self = "•"
+}
+
 // MARK: - App Constants
 
 public struct AppConstants {
