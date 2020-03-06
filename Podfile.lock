@@ -9,9 +9,9 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (6.13.1):
     - PromiseKit/CorePromise
-  - SDWebImage (5.5.2):
-    - SDWebImage/Core (= 5.5.2)
-  - SDWebImage/Core (5.5.2)
+  - SDWebImage (5.6.0):
+    - SDWebImage/Core (= 5.6.0)
+  - SDWebImage/Core (5.6.0)
   - SnapKit (5.0.1)
   - Xcore (1.0.0):
     - Haring
@@ -43,7 +43,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Haring: 77ee0c4f94a40975849bf336af93174f189b8de7
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
-  SDWebImage: 4d5c027c935438f341ed33dbac53ff9f479922ca
+  SDWebImage: 21b19f56b4226cdfe3aefe4e6848dc43ed129a86
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Xcore: 411f35dda1a5318ee2ac3d075aa52adbab023cf7
 

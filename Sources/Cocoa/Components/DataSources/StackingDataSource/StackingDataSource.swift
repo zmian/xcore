@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class StackingDataSource: XCCollectionViewDataSource {
+open class StackingDataSource: XCCollectionViewDataSource, XCCollectionViewTileLayoutCustomizable {
     public typealias CellProvider = (UICollectionView, IndexPath, Any?) -> XCCollectionViewCell
     public let viewModel: StackingDataSourceViewModel
     private let cellProvider: CellProvider
@@ -159,20 +159,32 @@ open class StackingDataSource: XCCollectionViewDataSource {
     private func clearAll() {
         viewModel.clearAll()
     }
+
+    // MARK: - Layout
+
+    open func sectionConfiguration(in layout: XCCollectionViewTileLayout, for section: Int) -> XCCollectionViewTileLayout.SectionConfiguration {
+        var configuration = layout.defaultSectionConfiguration
+        configuration.isTileEnabled = isTileEnabled(forSectionAt: section)
+        configuration.isShadowEnabled = isShadowEnabled(forSectionAt: section)
+        configuration.bottomSpacing = bottomSpacing(forSectionAt: section) ?? configuration.bottomSpacing
+        configuration.parentIdentifier = parentIdentifier(forSectionAt: section)
+        return configuration
+    }
 }
 
-// MARK: - Layout
-
-extension StackingDataSource: XCCollectionViewTileLayoutCustomizable {
-    public func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
-        true
+extension StackingDataSource {
+    private func isTileEnabled(forSectionAt section: Int) -> Bool {
+        switch section {
+            case selectorIndex, stackIndex:
+                return false
+            case mainAlertIndex:
+                return true
+            default:
+                return true
+        }
     }
 
-    public func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat {
-        layout.cornerRadius
-    }
-
-    public func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> Bool {
+    private func isShadowEnabled(forSectionAt section: Int) -> Bool {
         switch section {
             case selectorIndex, stackIndex:
                 return false
@@ -183,18 +195,18 @@ extension StackingDataSource: XCCollectionViewTileLayoutCustomizable {
         }
     }
 
-    public func verticalBottomSpacing(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> CGFloat {
+    private func bottomSpacing(forSectionAt section: Int) -> CGFloat? {
         switch section {
             case selectorIndex:
-                return isStackVisible ? 0.0 : layout.verticalIntersectionSpacing
+                return isStackVisible ? 0.0 : nil
             case mainAlertIndex:
-                return isStackVisible ? 0.0 : layout.verticalIntersectionSpacing
+                return isStackVisible ? 0.0 : nil
             default:
-                return layout.verticalIntersectionSpacing
+                return nil
         }
     }
 
-    public func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> String? {
+    private func parentIdentifier(forSectionAt section: Int) -> String? {
         switch section {
             case selectorIndex, stackIndex:
                 return nil
