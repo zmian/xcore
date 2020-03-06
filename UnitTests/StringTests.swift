@@ -46,6 +46,66 @@ final class StringTests: TestCase {
         XCTAssert(string1.sha256()! != string2.sha256()!)
     }
 
+    func testMask() {
+        let email = "support@apple.com"
+        XCTAssert(email.masked() == "s•••@apple.com")
+        XCTAssert(email.masked(options: .automatic(maskCount: .same)) == "s••••••@apple.com")
+        XCTAssert(email.masked(options: .automatic(maskCount: .equal(2))) == "s••@apple.com")
+
+        let string1 = "Hello World"
+        XCTAssert(string1.masked() == "•••••••••••")
+
+        let string2 = "0123456789"
+        XCTAssert(string2.masked(options: .allExceptLast(3)) == "•••••••789")
+        XCTAssert(string2.masked(options: .allExceptLast(4)) == "••••••6789")
+        XCTAssert(string2.masked(options: .allExceptFirst(4)) == "0123••••••")
+        XCTAssert(string2.masked(options: .allExceptFirst(14)) == "0123456789")
+        XCTAssert(string2.masked(options: .allExceptLast(14)) == "0123456789")
+        XCTAssert(string2.masked(options: .accountNumber) == "•••• 6789")
+
+        // Options: Last 4
+        XCTAssert(string2.masked(options: .allExceptLast(4, separator: " ")) == "•••••• 6789")
+        XCTAssert(string2.masked(options: .allExceptLast(4, maskCount: .same, separator: " ")) == "•••••• 6789")
+        XCTAssert(string2.masked(options: .allExceptLast(9, maskCount: .same, separator: " ")) == "• 123456789")
+
+        XCTAssert(string2.masked(options: .allExceptLast(10, maskCount: .min(2), separator: " ")) == "•• 0123456789")
+        XCTAssert(string2.masked(options: .allExceptLast(9, maskCount: .min(2), separator: " ")) == "•• 123456789")
+        XCTAssert(string2.masked(options: .allExceptLast(8, maskCount: .min(2), separator: " ")) == "•• 23456789")
+        XCTAssert(string2.masked(options: .allExceptLast(7, maskCount: .min(2), separator: " ")) == "••• 3456789")
+        XCTAssert(string2.masked(options: .allExceptLast(4, maskCount: .min(2), separator: " ")) == "•••••• 6789")
+
+        XCTAssert(string2.masked(options: .allExceptLast(10, maskCount: .max(2), separator: " ")) == "0123456789")
+        XCTAssert(string2.masked(options: .allExceptLast(9, maskCount: .max(2), separator: " ")) == "• 123456789")
+        XCTAssert(string2.masked(options: .allExceptLast(8, maskCount: .max(2), separator: " ")) == "•• 23456789")
+        XCTAssert(string2.masked(options: .allExceptLast(7, maskCount: .max(2), separator: " ")) == "•• 3456789")
+        XCTAssert(string2.masked(options: .allExceptLast(4, maskCount: .max(2), separator: " ")) == "•• 6789")
+
+        XCTAssert(string2.masked(options: .allExceptLast(10, maskCount: .equal(1), separator: " ")) == "• 0123456789")
+        XCTAssert(string2.masked(options: .allExceptLast(4, maskCount: .equal(4), separator: " ")) == "•••• 6789")
+        XCTAssert(string2.masked(options: .allExceptLast(10, maskCount: .equal(4), separator: " ")) == "•••• 0123456789")
+
+        // Options: First 4
+        XCTAssert(string2.masked(options: .allExceptFirst(4, separator: " ")) == "0123 ••••••")
+        XCTAssert(string2.masked(options: .allExceptFirst(4, maskCount: .same, separator: " ")) == "0123 ••••••")
+        XCTAssert(string2.masked(options: .allExceptFirst(9, maskCount: .same, separator: " ")) == "012345678 •")
+
+        XCTAssert(string2.masked(options: .allExceptFirst(10, maskCount: .min(2), separator: " ")) == "0123456789 ••")
+        XCTAssert(string2.masked(options: .allExceptFirst(9, maskCount: .min(2), separator: " ")) == "012345678 ••")
+        XCTAssert(string2.masked(options: .allExceptFirst(8, maskCount: .min(2), separator: " ")) == "01234567 ••")
+        XCTAssert(string2.masked(options: .allExceptFirst(7, maskCount: .min(2), separator: " ")) == "0123456 •••")
+        XCTAssert(string2.masked(options: .allExceptFirst(4, maskCount: .min(2), separator: " ")) == "0123 ••••••")
+
+        XCTAssert(string2.masked(options: .allExceptFirst(10, maskCount: .max(2), separator: " ")) == "0123456789")
+        XCTAssert(string2.masked(options: .allExceptFirst(9, maskCount: .max(2), separator: " ")) == "012345678 •")
+        XCTAssert(string2.masked(options: .allExceptFirst(8, maskCount: .max(2), separator: " ")) == "01234567 ••")
+        XCTAssert(string2.masked(options: .allExceptFirst(7, maskCount: .max(2), separator: " ")) == "0123456 ••")
+        XCTAssert(string2.masked(options: .allExceptFirst(4, maskCount: .max(2), separator: " ")) == "0123 ••")
+
+        XCTAssert(string2.masked(options: .allExceptFirst(10, maskCount: .equal(1), separator: " ")) == "0123456789 •")
+        XCTAssert(string2.masked(options: .allExceptFirst(4, maskCount: .equal(4), separator: " ")) == "0123 ••••")
+        XCTAssert(string2.masked(options: .allExceptFirst(10, maskCount: .equal(4), separator: " ")) == "0123456789 ••••")
+    }
+
     func testUppercasedFirstAndLowercasedFirst() {
         let input1 = "Hello World"
         XCTAssert(input1.uppercasedFirst() == "Hello World")
