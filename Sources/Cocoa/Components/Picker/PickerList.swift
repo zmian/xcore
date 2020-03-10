@@ -45,8 +45,11 @@ open class PickerList: DynamicTableViewController {
     private var contentViewportHeightConstraint: NSLayoutConstraint?
     private let model: PickerListModel
 
-    /// The animation to use when reloading the table
+    /// The animation to use when reloading the table.
     open var reloadAnimation: UITableView.RowAnimation = .automatic
+
+    /// The maximum number of items visible without scrolling.
+    open var maxVisibleItemsCount = 4
 
     public init(model: PickerListModel) {
         self.model = model
@@ -143,7 +146,7 @@ open class PickerList: DynamicTableViewController {
     private var contentViewportHeight: CGFloat {
         let contentHeight = tableView.contentSize.height
         let itemHeight = contentHeight / CGFloat(model.items.count)
-        return min(contentHeight, itemHeight * 4)
+        return min(contentHeight, itemHeight * CGFloat(maxVisibleItemsCount))
     }
 }
 
