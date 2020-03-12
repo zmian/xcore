@@ -36,7 +36,7 @@ final class ExampleLabelInsetViewController: UIViewController {
             $0.numberOfLines = 0
         }
         let label4 = UILabel().apply {
-            $0.text = "This is label is 100h 100w constrained."
+            $0.text = "100h 100w constrained."
             $0.contentInset = UIEdgeInsets(horizontal: .maximumPadding)
             $0.backgroundColor = .gray
             $0.numberOfLines = 0
