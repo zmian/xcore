@@ -33,9 +33,9 @@ extension Identifier where Type == Theme {
 // MARK: - Theme
 
 public struct Theme: Themable, Equatable {
-//    /// A unique id for the theme.
-//    public let id: Identifier<Self>
-//
+    /// A unique id for the theme.
+    public var id: Identifier<Self> = .default
+
     /// The main brand color for interface callout content.
     public var tintColor: UIColor
     
@@ -86,36 +86,58 @@ public struct Theme: Themable, Equatable {
     public var buttonBackgroundColorPill: UIColor
     public var statusBarStyle: UIStatusBarStyle
     public var chrome: Chrome.Style
+    
+    public init(
+        id: Identifier<Theme> = .default,
+        tintColor: UIColor = .systemTint,
+        separatorColor: UIColor = .green,
+        toggleColor: UIColor = .green,
+        linkColor: UIColor = .green,
+        textColor: UIColor = .green,
+        textColorSecondary: UIColor = .green,
+        placeholderTextColor: UIColor = .green,
+        headerTextColor: UIColor = .green,
+        backgroundColor: UIColor = .green,
+        backgroundColorSecondary: UIColor = .green,
+        highglightedBackgroundColor: UIColor = .green,
+        disabledBackgroundColor: UIColor = .green,
+        buttonTextColor: UIColor = .green,
+        buttonBackgroundColor: UIColor = .green,
+        buttonBackgroundColorSecondary: UIColor = .green,
+        buttonBackgroundColorPill: UIColor = .green,
+        statusBarStyle: UIStatusBarStyle = .default,
+        chrome: Chrome.Style = .blurred
+    ) {
+        self.id = id
+        self.tintColor = tintColor
+        self.separatorColor = separatorColor
+        self.toggleColor = toggleColor
+        self.linkColor = linkColor
+        self.textColor = textColor
+        self.textColorSecondary = textColorSecondary
+        self.placeholderTextColor = placeholderTextColor
+        self.headerTextColor = headerTextColor
+        self.backgroundColor = backgroundColor
+        self.backgroundColorSecondary = backgroundColorSecondary
+        self.highglightedBackgroundColor = highglightedBackgroundColor
+        self.disabledBackgroundColor = disabledBackgroundColor
+        self.buttonTextColor = buttonTextColor
+        self.buttonBackgroundColor = buttonBackgroundColor
+        self.buttonBackgroundColorSecondary = buttonBackgroundColorSecondary
+        self.buttonBackgroundColorPill = buttonBackgroundColorPill
+        self.statusBarStyle = statusBarStyle
+        self.chrome = chrome
+    }
 }
 
 // MARK: - Default
 
 extension Theme {
     /// The current theme for the interface.
-    internal(set) public static var current: Theme = .default
+    public static var current: Theme = .default
 
     #warning("TODO: Fix the defaults so it matches the system defaults")
-    internal(set) public static var `default`: Theme = .init(
-//        id: .default,
-        tintColor: .systemTint,
-        separatorColor: .lightGray,
-        toggleColor: .yellow,
-        linkColor: .systemTint,
-        textColor: .purple,
-        textColorSecondary: .lightGray,
-        placeholderTextColor: .red,
-        headerTextColor: .black,
-        backgroundColor: .white,
-        backgroundColorSecondary: .red,
-        highglightedBackgroundColor: .red,
-        disabledBackgroundColor: .red,
-        buttonTextColor: .systemTint,
-        buttonBackgroundColor: .systemTint,
-        buttonBackgroundColorSecondary: .systemTint,
-        buttonBackgroundColorPill: .systemTint,
-        statusBarStyle: .default,
-        chrome: .blurred
-    )
+    public static var `default`: Theme = .init()
 }
 
 // MARK: - UIView
@@ -128,8 +150,8 @@ extension UIView {
 }
 
 public protocol Themable {
-//    /// A unique id for the theme.
-//    var id: Identifier<Self> { get }
+    /// A unique id for the theme.
+    var id: Identifier<Self> { get }
 
     /// The main brand color for interface callout content.
     var tintColor: UIColor { get }
@@ -190,7 +212,6 @@ public protocol Themable {
 
 extension Themable {
     #warning("TODO: Fix the defaults so it matches the system defaults")
-
     public var tintColor: UIColor {
         .green
     }
