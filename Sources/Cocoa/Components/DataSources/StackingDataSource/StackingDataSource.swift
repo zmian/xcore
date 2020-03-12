@@ -1,30 +1,12 @@
 //
-// StackingDataSource.swift
-//
+// Xcore
 // Copyright © 2019 Xcore
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+// MIT license, see LICENSE file for details
 //
 
 import UIKit
 
-open class StackingDataSource: XCCollectionViewDataSource {
+open class StackingDataSource: XCCollectionViewDataSource, XCCollectionViewTileLayoutCustomizable {
     public typealias CellProvider = (UICollectionView, IndexPath, Any?) -> XCCollectionViewCell
     public let viewModel: StackingDataSourceViewModel
     private let cellProvider: CellProvider
@@ -159,20 +141,32 @@ open class StackingDataSource: XCCollectionViewDataSource {
     private func clearAll() {
         viewModel.clearAll()
     }
+
+    // MARK: - Layout
+
+    open func sectionConfiguration(in layout: XCCollectionViewTileLayout, for section: Int) -> XCCollectionViewTileLayout.SectionConfiguration {
+        var configuration = layout.defaultSectionConfiguration
+        configuration.isTileEnabled = isTileEnabled(forSectionAt: section)
+        configuration.isShadowEnabled = isShadowEnabled(forSectionAt: section)
+        configuration.bottomSpacing = bottomSpacing(forSectionAt: section) ?? configuration.bottomSpacing
+        configuration.parentIdentifier = parentIdentifier(forSectionAt: section)
+        return configuration
+    }
 }
 
-// MARK: - Layout
-
-extension StackingDataSource: XCCollectionViewTileLayoutCustomizable {
-    public func isTileEnabled(in layout: XCCollectionViewTileLayout) -> Bool {
-        true
+extension StackingDataSource {
+    private func isTileEnabled(forSectionAt section: Int) -> Bool {
+        switch section {
+            case selectorIndex, stackIndex:
+                return false
+            case mainAlertIndex:
+                return true
+            default:
+                return true
+        }
     }
 
-    public func cornerRadius(in layout: XCCollectionViewTileLayout) -> CGFloat {
-        layout.cornerRadius
-    }
-
-    public func isShadowEnabled(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> Bool {
+    private func isShadowEnabled(forSectionAt section: Int) -> Bool {
         switch section {
             case selectorIndex, stackIndex:
                 return false
@@ -183,18 +177,18 @@ extension StackingDataSource: XCCollectionViewTileLayoutCustomizable {
         }
     }
 
-    public func verticalBottomSpacing(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> CGFloat {
+    private func bottomSpacing(forSectionAt section: Int) -> CGFloat? {
         switch section {
             case selectorIndex:
-                return isStackVisible ? 0.0 : layout.verticalIntersectionSpacing
+                return isStackVisible ? 0.0 : nil
             case mainAlertIndex:
-                return isStackVisible ? 0.0 : layout.verticalIntersectionSpacing
+                return isStackVisible ? 0.0 : nil
             default:
-                return layout.verticalIntersectionSpacing
+                return nil
         }
     }
 
-    public func parentIdentifier(in layout: XCCollectionViewTileLayout, forSectionAt section: Int) -> String? {
+    private func parentIdentifier(forSectionAt section: Int) -> String? {
         switch section {
             case selectorIndex, stackIndex:
                 return nil

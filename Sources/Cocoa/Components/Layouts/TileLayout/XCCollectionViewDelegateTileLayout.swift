@@ -1,25 +1,7 @@
 //
-// XCCollectionViewDelegateTileLayout.swift
-//
+// Xcore
 // Copyright © 2019 Xcore
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+// MIT license, see LICENSE file for details
 //
 
 import UIKit
@@ -33,30 +15,7 @@ public protocol XCCollectionViewDelegateTileLayout: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, estimatedHeaderHeightInSection section: Int, width: CGFloat) -> CGFloat
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, estimatedFooterHeightInSection section: Int, width: CGFloat) -> CGFloat
 
-    /// Enables tile effect for each section.
-    ///
-    /// In a multi-column, setup returning `false` will make this section to be full
-    /// width instead of column width.
-    ///
-    /// The default value is `true`.
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isTileEnabledInSection section: Int) -> Bool
-
-    /// The corner radius applied to the section tile.
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, cornerRadiusInSection section: Int) -> CGFloat
-
-    /// Displays a shadow behind the section tile.
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isShadowEnabledInSection section: Int) -> Bool
-
-    /// Return a not null identifier to link this section with other ones, this will
-    /// make the items of this section to appear and disappear from the first item
-    /// that appears on the group.
-    ///
-    /// This can used for stacking of sections.
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, parentIdentifierInSection section: Int) -> String?
-
-    /// Space between the section and the next section, is not applied for section
-    /// with no items.
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, verticalSpacingBetweenSectionAt section: Int, and nextSection: Int) -> CGFloat
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, sectionConfigurationAt section: Int) -> XCCollectionViewTileLayout.SectionConfiguration?
 }
 
 extension XCCollectionViewDelegateTileLayout {
@@ -84,19 +43,7 @@ extension XCCollectionViewDelegateTileLayout {
         collectionViewLayout.estimatedHeaderFooterHeight
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, verticalSpacingBetweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
-        collectionViewLayout.verticalIntersectionSpacing
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isTileEnabledInSection section: Int) -> Bool {
-        true
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, cornerRadiusInSection section: Int) -> CGFloat {
-        collectionViewLayout.cornerRadius
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, isShadowEnabledInSection section: Int) -> Bool {
-        true
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: XCCollectionViewTileLayout, sectionConfigurationAt section: Int) -> XCCollectionViewTileLayout.SectionConfiguration? {
+        nil
     }
 }
