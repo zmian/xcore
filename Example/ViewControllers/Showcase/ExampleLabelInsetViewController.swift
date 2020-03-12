@@ -11,7 +11,7 @@ import Foundation
 final class ExampleLabelInsetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Separators"
+        title = "UILabel + ContentInset"
         view.backgroundColor = .white
         setupContentView()
     }
