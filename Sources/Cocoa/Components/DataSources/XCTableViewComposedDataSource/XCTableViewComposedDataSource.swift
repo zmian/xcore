@@ -1,5 +1,5 @@
 //
-// XCTableViewComposedDataSource.swift
+// Xcore
 // Based on https://github.com/ortuman/ComposedDataSource
 // Copyright © 2014 Xcore
 // MIT license, see LICENSE file for details

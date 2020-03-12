@@ -1,5 +1,5 @@
 //
-// IconLabelCollectionView+Cell.swift
+// Xcore
 // Copyright © 2015 Xcore
 // MIT license, see LICENSE file for details
 //

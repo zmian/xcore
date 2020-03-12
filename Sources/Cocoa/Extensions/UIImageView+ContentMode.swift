@@ -1,5 +1,5 @@
 //
-// UIImageView+ContentMode.swift
+// Xcore
 // Copyright © 2017 Xcore
 // MIT license, see LICENSE file for details
 //

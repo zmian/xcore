@@ -1,5 +1,5 @@
 //
-// Interstitial+Item+FeatureFlag.swift
+// Xcore
 // Copyright © 2018 Xcore
 // MIT license, see LICENSE file for details
 //
