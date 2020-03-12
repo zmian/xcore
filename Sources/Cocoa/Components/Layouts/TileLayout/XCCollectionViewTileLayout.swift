@@ -1,30 +1,65 @@
 //
-// XCCollectionViewTileLayout.swift
-//
+// Xcore
 // Copyright © 2019 Xcore
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+// MIT license, see LICENSE file for details
 //
 
 import UIKit
 
 extension XCCollectionViewTileLayout {
+    public struct SectionConfiguration {
+        /// Enables tile effect for each section.
+        /// The default value is `true`.
+        public var isTileEnabled: Bool
+
+        /// In a multi-column, setup returning `false` will make this section to be full
+        /// width instead of column width.
+        public var isFullWidth: Bool
+
+        /// The corner radius applied to the section tile.
+        public var cornerRadius: CGFloat
+
+        /// Displays a shadow behind the section tile.
+        public var isShadowEnabled: Bool
+
+        /// Return a not null identifier to link this section with other ones, this will
+        /// make the items of this section to appear and disappear from the first item
+        /// that appears on the group.
+        ///
+        /// This can used for stacking of sections.
+        public var parentIdentifier: String?
+
+        /// Space between the section and the next section, is not applied for section
+        /// with no items.
+        public var bottomSpacing: CGFloat
+
+        /// Spacing on top before section starts when placed on top of all the sections in the column.
+        public var topTileSpacing: CGFloat
+
+        /// Apply an alpha to all elements of the datasource.
+        public var shouldDimElements: Bool
+
+        public init(
+            isTileEnabled: Bool = true,
+            isFullWidth: Bool = false,
+            cornerRadius: CGFloat = 11,
+            isShadowEnabled: Bool = true,
+            parentIdentifier: String? = nil,
+            bottomSpacing: CGFloat = .defaultPadding,
+            topTileSpacing: CGFloat = .defaultPadding,
+            shouldDimElements: Bool = false
+        ) {
+            self.isTileEnabled = isTileEnabled
+            self.isFullWidth = isFullWidth
+            self.cornerRadius = cornerRadius
+            self.isShadowEnabled = isShadowEnabled
+            self.parentIdentifier = parentIdentifier
+            self.bottomSpacing = bottomSpacing
+            self.topTileSpacing = topTileSpacing
+            self.shouldDimElements = shouldDimElements
+        }
+    }
+
     private struct LayoutElements {
         var attributesBySection: [[Attributes]]
         var layoutAttributes: [IndexPath: Attributes]
@@ -41,15 +76,14 @@ extension XCCollectionViewTileLayout {
 
 open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     private let UICollectionElementKindSectionBackground = "UICollectionElementKindSectionBackground"
-
-    public var numberOfColumns = 1 {
+    public var defaultSectionConfiguration = SectionConfiguration() {
         didSet {
             shouldReloadAttributes = true
             invalidateLayout()
         }
     }
 
-    public var verticalIntersectionSpacing: CGFloat = .defaultPadding {
+    public var numberOfColumns = 1 {
         didSet {
             shouldReloadAttributes = true
             invalidateLayout()
@@ -70,19 +104,8 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
         }
     }
 
-    public var cornerRadius: CGFloat = 11 {
-        didSet {
-            shouldReloadAttributes = true
-            invalidateLayout()
-        }
-    }
-
-    open var shouldDimElements = false {
-        didSet {
-            guard oldValue != shouldDimElements else { return }
-            invalidateLayout()
-        }
-    }
+    /// A boolean property to determine whether every collection view element is dimmed.
+    public var shouldDimElements: Bool = false
 
     public var estimatedItemHeight: CGFloat = 200
     public var estimatedHeaderFooterHeight: CGFloat = 44
@@ -179,12 +202,11 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
         var offset: CGPoint = .zero
         var itemCount: Int = 0
-        var tileEnabled: Bool = false
         var currentColumn: Int = 0
         var itemWidth: CGFloat = 0
         var margin: CGFloat = 0
-        var verticalSpacing: CGFloat = 0
 
+        var sectionConfiguration: SectionConfiguration
         var columnYOffset = [CGFloat](repeating: 0, count: numberOfColumns)
 
         sectionIndexesByColumn.removeAll()
@@ -194,44 +216,55 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
 
         var zIndex = 0
         for section in 0..<collectionView.numberOfSections {
+            let isTopSection = minColumn(columnYOffset).height == 0.0
+            sectionConfiguration = configuration(forSectionAt: section)
+
             itemCount = collectionView.numberOfItems(inSection: section)
-            tileEnabled = isTileEnabled(forSectionAt: section)
-            let parentIdentifier = self.parentIdentifier(forSectionAt: section)
 
             if numberOfColumns > 1 {
-                currentColumn = tileEnabled ? minColumn(columnYOffset).index : maxColumn(columnYOffset).index
+                currentColumn = sectionConfiguration.isFullWidth ? minColumn(columnYOffset).index : maxColumn(columnYOffset).index
             }
 
-            itemWidth = tileEnabled ? columnWidth : collectionView.frame.size.width
-            margin = tileEnabled ? horizontalMargin : 0
-            verticalSpacing = self.verticalSpacing(betweenSectionAt: section, and: section + 1)
+            itemWidth = !sectionConfiguration.isFullWidth ? columnWidth : collectionView.frame.size.width
+            margin = !sectionConfiguration.isFullWidth ? horizontalMargin : 0
 
             sectionIndexesByColumn[currentColumn].append(section)
 
-            offset.x = tileEnabled ? (itemWidth + interColumnSpacing) * CGFloat(currentColumn) + margin : 0
+            offset.x = !sectionConfiguration.isFullWidth ? (itemWidth + interColumnSpacing) * CGFloat(currentColumn) + margin : 0
             offset.y = columnYOffset[currentColumn]
 
+            if itemCount > 0 && isTopSection {
+                offset.y += sectionConfiguration.topTileSpacing
+            }
+
             let initialRect = CGRect(origin: offset, size: CGSize(width: itemWidth, height: 0))
-            let sectionRect = createAttributes(for: section, rect: initialRect, itemCount: itemCount, zIndex: zIndex, alpha: 1.0, parentIdentifier: parentIdentifier)
+            let sectionRect = createAttributes(
+                for: section,
+                rect: initialRect,
+                itemCount: itemCount,
+                zIndex: zIndex,
+                alpha: 1.0,
+                sectionConfiguration: sectionConfiguration
+            )
             // Update height of section rect
             sectionRects.append(sectionRect)
             zIndex -= 1
-            createBackgroundAttributes(for: section, zIndex: zIndex, alpha: 1.0, parentIdentifier: parentIdentifier)
+            createBackgroundAttributes(for: section, zIndex: zIndex, alpha: 1.0, sectionConfiguration: sectionConfiguration)
 
             offset.y += sectionRects[section].height
 
             if itemCount > 0 {
-                // Add vertical spacing
-                offset.y += offset.y > 0 ? verticalSpacing : 0
+                // Add bottom spacing
+                offset.y += offset.y > 0 ? sectionConfiguration.bottomSpacing : 0
             }
 
-            if let identifier = parentIdentifier {
+            if let identifier = sectionConfiguration.parentIdentifier {
                 if firstParentIndexByIdentifier[identifier] == nil {
                     firstParentIndexByIdentifier[identifier] = section
                 }
             }
 
-            if tileEnabled {
+            if sectionConfiguration.isTileEnabled {
                 columnYOffset[currentColumn] = offset.y
             } else {
                 for i in 0..<columnYOffset.count {
@@ -243,7 +276,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
         cachedContentSize = CGSize(width: collectionView.bounds.width, height: self.maxColumn(columnYOffset).height)
     }
 
-    private func createAttributes(for section: Int, rect: CGRect, itemCount: Int, zIndex: Int = 0, alpha: CGFloat, parentIdentifier: String?) -> CGRect {
+    private func createAttributes(for section: Int, rect: CGRect, itemCount: Int, zIndex: Int = 0, alpha: CGFloat, sectionConfiguration: SectionConfiguration) -> CGRect {
         var sectionRect = rect
         var sectionAttributes = [Attributes]()
         guard itemCount > 0 else {
@@ -267,11 +300,11 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                     height: headerInfo.height ?? estimatedHeaderHeight(in: section, width: sectionRect.width)
                 )
 
-                $0.corners = isTileEnabled(forSectionAt: section) ? (.top, cornerRadius(forSectionAt: section)) : (.none, 0)
-                $0.shouldDim = shouldDimElements
+                $0.corners = sectionConfiguration.isTileEnabled ? (.top, sectionConfiguration.cornerRadius) : (.none, 0)
+                $0.shouldDim = shouldDimElements || sectionConfiguration.shouldDimElements
                 $0.zIndex = zIndex
                 $0.alpha = alpha
-                $0.parentIdentifier = parentIdentifier
+                $0.parentIdentifier = sectionConfiguration.parentIdentifier
                 $0.offsetInSection = sectionRect.height
             }
 
@@ -293,7 +326,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                     height: fixedHeight ?? estimatedHeight(forItemAt: indexPath, width: sectionRect.width)
                 )
 
-                if isTileEnabled(forSectionAt: section) {
+                if sectionConfiguration.isTileEnabled {
                     var corners: UIRectCorner = .none
                     if !headerInfo.enabled, item == 0 {
                         corners.formUnion(.top)
@@ -301,15 +334,15 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                     if !footerInfo.enabled, item == itemCount - 1 {
                         corners.formUnion(.bottom)
                     }
-                    $0.corners = (corners, cornerRadius(forSectionAt: section))
+                    $0.corners = (corners, sectionConfiguration.cornerRadius)
                 } else {
                     $0.corners = (.none, 0)
                 }
 
-                $0.shouldDim = shouldDimElements
+                $0.shouldDim = shouldDimElements || sectionConfiguration.shouldDimElements
                 $0.zIndex = zIndex
                 $0.alpha = alpha
-                $0.parentIdentifier = parentIdentifier
+                $0.parentIdentifier = sectionConfiguration.parentIdentifier
                 $0.offsetInSection = sectionRect.height
             }
             layoutAttributes[indexPath] = attributes
@@ -329,11 +362,11 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                     width: sectionRect.width,
                     height: fixedHeight ?? estimatedFooterHeight(in: section, width: sectionRect.width)
                 )
-                $0.corners = isTileEnabled(forSectionAt: section) ? (.bottom, cornerRadius(forSectionAt: section)) : (.none, 0)
-                $0.shouldDim = shouldDimElements
+                $0.corners = sectionConfiguration.isTileEnabled ? (.bottom, sectionConfiguration.cornerRadius) : (.none, 0)
+                $0.shouldDim = shouldDimElements || sectionConfiguration.shouldDimElements
                 $0.zIndex = zIndex
                 $0.alpha = alpha
-                $0.parentIdentifier = parentIdentifier
+                $0.parentIdentifier = sectionConfiguration.parentIdentifier
                 $0.offsetInSection = sectionRect.height
             }
             footerAttributes[footerIndex] = attributes
@@ -344,10 +377,10 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
         return sectionRect
     }
 
-    private func createBackgroundAttributes(for section: Int, zIndex: Int, alpha: CGFloat, parentIdentifier: String?) {
+    private func createBackgroundAttributes(for section: Int, zIndex: Int, alpha: CGFloat, sectionConfiguration: SectionConfiguration) {
         guard
-            isShadowEnabled(forSectionAt: section),
-            isTileEnabled(forSectionAt: section),
+            sectionConfiguration.isShadowEnabled,
+            sectionConfiguration.isTileEnabled,
             !sectionRects[section].isEmpty
         else {
             return
@@ -358,13 +391,13 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
             forDecorationViewOfKind: UICollectionElementKindSectionBackground,
             with: indexPath
         ).apply {
-            $0.corners = (.allCorners, cornerRadius(forSectionAt: section))
+            $0.corners = (.allCorners, sectionConfiguration.cornerRadius)
             $0.zIndex = (attributesBySection[section].first?.zIndex ?? 0 ) - 1
-            $0.shouldDim = shouldDimElements
+            $0.shouldDim = shouldDimElements || sectionConfiguration.shouldDimElements
             $0.frame = sectionRects[section]
             $0.zIndex = zIndex
             $0.alpha = alpha
-            $0.parentIdentifier = parentIdentifier
+            $0.parentIdentifier = sectionConfiguration.parentIdentifier
         }
         sectionBackgroundAttributes[indexPath] = attributes
     }
@@ -645,60 +678,13 @@ extension XCCollectionViewTileLayout {
         return delegate.collectionView(collectionView, layout: self, estimatedFooterHeightInSection: section, width: width)
     }
 
-    private func verticalSpacing(betweenSectionAt section: Int, and nextSection: Int) -> CGFloat {
-        guard
-            section != nextSection,
-            let collectionView = collectionView,
-            let delegate = delegate,
-            section >= 0
-        else {
-            return 0
-        }
-
-        return delegate.collectionView(collectionView, layout: self, verticalSpacingBetweenSectionAt: section, and: nextSection)
-    }
-
-    private func isTileEnabled(forSectionAt section: Int) -> Bool {
+    private func configuration(forSectionAt section: Int) -> SectionConfiguration {
         guard
             let collectionView = collectionView,
             let delegate = delegate
         else {
-            return true
+            return defaultSectionConfiguration
         }
-
-        return delegate.collectionView(collectionView, layout: self, isTileEnabledInSection: section)
-    }
-
-    private func isShadowEnabled(forSectionAt section: Int) -> Bool {
-        guard
-            let collectionView = collectionView,
-            let delegate = delegate
-        else {
-            return true
-        }
-
-        return delegate.collectionView(collectionView, layout: self, isShadowEnabledInSection: section)
-    }
-
-    private func cornerRadius(forSectionAt section: Int) -> CGFloat {
-        guard
-            let collectionView = collectionView,
-            let delegate = delegate
-        else {
-            return cornerRadius
-        }
-
-        return delegate.collectionView(collectionView, layout: self, cornerRadiusInSection: section)
-    }
-
-    private func parentIdentifier(forSectionAt section: Int) -> String? {
-        guard
-            let collectionView = collectionView,
-            let delegate = delegate
-        else {
-            return nil
-        }
-
-        return delegate.collectionView(collectionView, layout: self, parentIdentifierInSection: section)
+        return delegate.collectionView(collectionView, layout: self, sectionConfigurationAt: section) ?? defaultSectionConfiguration
     }
 }
