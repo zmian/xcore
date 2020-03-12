@@ -1,5 +1,5 @@
 //
-// XCCollectionViewFlowLayout+Attributes.swift
+// Xcore
 // Copyright © 2016 Xcore
 // MIT license, see LICENSE file for details
 //

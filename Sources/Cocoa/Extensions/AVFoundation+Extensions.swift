@@ -1,5 +1,5 @@
 //
-// AVFoundation+Extensions.swift
+// Xcore
 // Copyright © 2014 Xcore
 // MIT license, see LICENSE file for details
 //
