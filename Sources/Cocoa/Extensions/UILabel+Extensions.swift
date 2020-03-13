@@ -25,7 +25,8 @@ extension UILabel {
     }
 
     @objc private func swizzled_textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
-        swizzled_textRect(forBounds: bounds.inset(by: contentInset), limitedToNumberOfLines: numberOfLines)
+        let textRect = swizzled_textRect(forBounds: bounds.inset(by: contentInset), limitedToNumberOfLines: numberOfLines)
+        return CGRect(origin: textRect.origin, size: CGSize(width: textRect.size.width + contentInset.horizontal, height: textRect.height + contentInset.vertical))
     }
 }
 
