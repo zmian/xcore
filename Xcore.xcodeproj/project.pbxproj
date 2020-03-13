@@ -12,6 +12,7 @@
 		167C05D21FAB102542BD188D /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67CC55C468091B5137D790BB /* Pods_Example.framework */; };
 		2F35F20F22E362C900B45C85 /* ExampleArrowOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F35F20E22E362C900B45C85 /* ExampleArrowOptions.swift */; };
 		2F41FBD223426B7C00E1FD97 /* CarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F41FBD123426B7C00E1FD97 /* CarouselViewController.swift */; };
+		2F654D02241ABD1300499318 /* ExampleLabelInsetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F654D01241ABD1300499318 /* ExampleLabelInsetViewController.swift */; };
 		2F7E032123628AFD0080D660 /* AlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7E032023628AFD0080D660 /* AlertsViewController.swift */; };
 		2F9B4C7F22A19B0E00FB644E /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B4C7E22A19B0E00FB644E /* FeedViewController.swift */; };
 		2F9B4C8222A19BB600FB644E /* FeedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B4C8122A19BB600FB644E /* FeedDataSource.swift */; };
@@ -82,6 +83,7 @@
 		16E36FDA8C7C8821AAA4F0E0 /* Pods_UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F35F20E22E362C900B45C85 /* ExampleArrowOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleArrowOptions.swift; sourceTree = "<group>"; };
 		2F41FBD123426B7C00E1FD97 /* CarouselViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselViewController.swift; sourceTree = "<group>"; };
+		2F654D01241ABD1300499318 /* ExampleLabelInsetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleLabelInsetViewController.swift; sourceTree = "<group>"; };
 		2F7E032023628AFD0080D660 /* AlertsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsViewController.swift; sourceTree = "<group>"; };
 		2F9B4C7E22A19B0E00FB644E /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		2F9B4C8122A19BB600FB644E /* FeedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDataSource.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				6836600422987F1D00FDE45B /* ExampleTextViewController.swift */,
 				2F35F20E22E362C900B45C85 /* ExampleArrowOptions.swift */,
 				7118C4272326B93100821180 /* ExamplePickerListModel.swift */,
+				2F654D01241ABD1300499318 /* ExampleLabelInsetViewController.swift */,
 				2F41FBD123426B7C00E1FD97 /* CarouselViewController.swift */,
 				2F9B4C8022A19B7B00FB644E /* FeedExample */,
 			);
@@ -682,6 +685,7 @@
 				2F9B4C8422A19E7400FB644E /* FeedTextViewCell.swift in Sources */,
 				684B1EA1224C5218009F6197 /* AppDelegate.swift in Sources */,
 				7118C4282326B93100821180 /* ExamplePickerListModel.swift in Sources */,
+				2F654D02241ABD1300499318 /* ExampleLabelInsetViewController.swift in Sources */,
 				2F9B4C7F22A19B0E00FB644E /* FeedViewController.swift in Sources */,
 				2F9B4C8222A19BB600FB644E /* FeedDataSource.swift in Sources */,
 				6836600C22987F3700FDE45B /* Theme.swift in Sources */,
