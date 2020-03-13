@@ -1,9 +1,7 @@
 //
-//  ExampleLabelInsetViewController.swift
-//  Example
-//
-//  Created by Guillermo Waitzel on 12/03/2020.
-//  Copyright © 2020 Xcore. All rights reserved.
+// Xcore
+// Copyright © 2020 Xcore
+// MIT license, see LICENSE file for details
 //
 
 import Foundation
