@@ -4,13 +4,13 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import Foundation
 
 extension IdleTimer {
     final class InternalTimer {
-        private var monotonicClock = MonotonicClock()
         private var tokens: [NSObjectProtocol?] = []
-        private var timer: Timer?
+        private var uptime = MonotonicClock.Uptime()
+        private var timer: MonotonicClock.Timer?
         private let timeoutHandler: () -> Void
 
         /// The timeout duration in seconds, after which `timeoutHandler` is invoked.
@@ -35,7 +35,7 @@ extension IdleTimer {
 
         private func setupObservers() {
             tokens.append(NotificationCenter.on.applicationDidEnterBackground { [weak self] in
-                self?.monotonicClock.captureValue()
+                self?.uptime.captureValue()
             })
 
             tokens.append(NotificationCenter.on.applicationWillEnterForeground { [weak self] in
@@ -44,7 +44,7 @@ extension IdleTimer {
         }
 
         private func handleExpirationIfNeeded() {
-            guard monotonicClock.elapsed(timeoutDuration) else {
+            guard uptime.elapsed(timeoutDuration) else {
                 restart()
                 return
             }
@@ -65,7 +65,7 @@ extension IdleTimer {
                 return
             }
 
-            timer = Timer.scheduledTimer(withTimeInterval: timeoutDuration, repeats: false) { [weak self] _ in
+            timer = MonotonicClock.Timer(interval: timeoutDuration) { [weak self] in
                 self?.timeoutHandler()
             }
         }
@@ -77,27 +77,5 @@ extension IdleTimer {
 
             restart()
         }
-    }
-}
-
-// MARK: - MonotonicClock
-
-private struct MonotonicClock {
-    private let info = ProcessInfo.processInfo
-    private lazy var begin = info.systemUptime
-
-    mutating func captureValue() {
-        begin = info.systemUptime
-    }
-
-    mutating func elapsed(_ duration: TimeInterval) -> Bool {
-        let diff = info.systemUptime - begin
-
-        // System was restarted.
-        if diff < 0 {
-            return true
-        }
-
-        return diff >= duration
     }
 }
