@@ -10,13 +10,14 @@ import Foundation
 
 enum MonotonicClock { }
 
-// MARK: - MonotonicClock.Uptime
+// MARK: - Uptime
 
 extension MonotonicClock {
     struct Uptime {
         private lazy var begin = DispatchTime.now().uptimeNanoseconds
 
-        mutating func captureValue() {
+        /// Save the current uptime value internally.
+        mutating func saveValue() {
             begin = DispatchTime.now().uptimeNanoseconds
         }
 
@@ -34,7 +35,7 @@ extension MonotonicClock {
     }
 }
 
-// MARK: - MonotonicClock.Timer
+// MARK: - Timer
 
 extension MonotonicClock {
     final class Timer {

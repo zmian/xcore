@@ -35,7 +35,7 @@ extension IdleTimer {
 
         private func setupObservers() {
             tokens.append(NotificationCenter.on.applicationDidEnterBackground { [weak self] in
-                self?.uptime.captureValue()
+                self?.uptime.saveValue()
             })
 
             tokens.append(NotificationCenter.on.applicationWillEnterForeground { [weak self] in
