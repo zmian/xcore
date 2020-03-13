@@ -8,13 +8,15 @@ import UIKit
 
 extension IdleTimer {
     final class InternalTimer {
+        private var monotonicClock = MonotonicClock()
+        private var tokens: [NSObjectProtocol?] = []
         private var timer: Timer?
         private let timeoutHandler: () -> Void
 
         /// The timeout duration in seconds, after which `timeoutHandler` is invoked.
         var timeoutDuration: TimeInterval {
             didSet {
-                reset()
+                restart()
             }
         }
 
@@ -27,10 +29,34 @@ extension IdleTimer {
         init(timeoutAfter duration: TimeInterval, handler timeoutHandler: @escaping () -> Void) {
             self.timeoutDuration = duration
             self.timeoutHandler = timeoutHandler
-            reset()
+            restart()
+            setupObservers()
         }
 
-        private func reset() {
+        private func setupObservers() {
+            tokens.append(NotificationCenter.on.applicationDidEnterBackground { [weak self] in
+                self?.monotonicClock.captureValue()
+            })
+
+            tokens.append(NotificationCenter.on.applicationWillEnterForeground { [weak self] in
+                self?.handleExpirationIfNeeded()
+            })
+        }
+
+        private func handleExpirationIfNeeded() {
+            guard monotonicClock.elapsed(timeoutDuration) else {
+                restart()
+                return
+            }
+
+            timeoutHandler()
+        }
+
+        deinit {
+            NotificationCenter.remove(tokens)
+        }
+
+        private func restart() {
             if let timer = timer {
                 timer.invalidate()
             }
@@ -49,7 +75,29 @@ extension IdleTimer {
                 return
             }
 
-            reset()
+            restart()
         }
+    }
+}
+
+// MARK: - MonotonicClock
+
+private struct MonotonicClock {
+    private let info = ProcessInfo.processInfo
+    private lazy var begin = info.systemUptime
+
+    mutating func captureValue() {
+        begin = info.systemUptime
+    }
+
+    mutating func elapsed(_ duration: TimeInterval) -> Bool {
+        let diff = info.systemUptime - begin
+
+        // System was restarted.
+        if diff < 0 {
+            return true
+        }
+
+        return diff >= duration
     }
 }
