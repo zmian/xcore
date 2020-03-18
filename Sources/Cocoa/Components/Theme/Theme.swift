@@ -17,6 +17,9 @@ extension Identifier where Type == Theme {
 public struct Theme: Themable, Equatable {
     /// A unique id for the theme.
     public var id: Identifier<Self> = .default
+    
+    /// A boolean value indicating whether the theme appearance is dark.
+    public var isDark: Bool
 
     /// The main brand color for interface callout content.
     public var tintColor: UIColor
@@ -71,6 +74,7 @@ public struct Theme: Themable, Equatable {
     
     public init(
         id: Identifier<Theme> = .default,
+        isDark: Bool? = nil,
         tintColor: UIColor = .systemTint,
         separatorColor: UIColor = .green,
         toggleColor: UIColor = .green,
@@ -91,6 +95,7 @@ public struct Theme: Themable, Equatable {
         chrome: Chrome.Style = .blurred
     ) {
         self.id = id
+        self.isDark = isDark ?? false
         self.tintColor = tintColor
         self.separatorColor = separatorColor
         self.toggleColor = toggleColor
@@ -134,6 +139,9 @@ extension UIView {
 public protocol Themable {
     /// A unique id for the theme.
     var id: Identifier<Self> { get }
+    
+    /// A boolean value indicating whether the theme appearance is dark.
+    var isDark: Bool { get }
 
     /// The main brand color for interface callout content.
     var tintColor: UIColor { get }
@@ -194,6 +202,10 @@ public protocol Themable {
 
 extension Themable {
     #warning("TODO: Fix the defaults so it matches the system defaults")
+    public var isDark: Bool {
+        false
+    }
+    
     public var tintColor: UIColor {
         .green
     }
