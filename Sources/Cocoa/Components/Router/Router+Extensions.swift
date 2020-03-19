@@ -7,8 +7,8 @@
 import UIKit
 
 extension Router {
-    /// Returns the shared router.
-    public static var shared: Router? {
+    /// Returns the current router of the top level navigation controller.
+    public static var current: Router? {
         guard let navigationController = UIApplication.sharedOrNil?.topNavigationController else {
             return nil
         }
