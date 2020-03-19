@@ -6,6 +6,8 @@
 
 import Foundation
 
+/// A type that stores a property marked with an attribute to user default.
+///
 /// ```swift
 /// enum GlobalSettings {
 ///     @UserDefault(key: "is_first_launch", defaultValue: false)
@@ -16,9 +18,16 @@ import Foundation
 public struct UserDefault<Value> {
     public let key: String
     public let defaultValue: Value
+    public let storage: UserDefaults
+
+    public init(key: String, defaultValue: Value, storage: UserDefaults = .standard) {
+        self.key = key
+        self.defaultValue = defaultValue
+        self.storage = storage
+    }
 
     public var wrappedValue: Value {
-        get { UserDefaults.standard.object(forKey: key) as? Value ?? defaultValue }
-        set { UserDefaults.standard.set(newValue, forKey: key) }
+        get { storage.object(forKey: key) as? Value ?? defaultValue }
+        set { storage.set(newValue, forKey: key) }
     }
 }
