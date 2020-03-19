@@ -23,9 +23,9 @@ public struct Clamping<Value: Comparable> {
     private var value: Value
     private let range: ClosedRange<Value>
 
-    public init(wrappedValue value: Value, _ range: ClosedRange<Value>) {
-        precondition(range.contains(value))
-        self.value = value
+    public init(wrappedValue: Value, _ range: ClosedRange<Value>) {
+        precondition(range.contains(wrappedValue))
+        self.value = wrappedValue
         self.range = range
     }
 
