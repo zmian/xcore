@@ -117,6 +117,14 @@ extension UIApplication {
     open var visibleWindow: UIWindow? {
         windows.reversed().first { !$0.isHidden }
     }
+
+    /// Iterates through `windows` from top to bottom and returns the visible and key window.
+    ///
+    /// - Returns: Returns an optional window object based on visibility.
+    /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
+    open var visibleAndKeyWindow: UIWindow? {
+        windows.reversed().first { !$0.isHidden && $0.isKeyWindow }
+    }
 }
 
 // MARK: UIWindow - TopViewController
