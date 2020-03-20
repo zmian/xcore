@@ -77,6 +77,38 @@ extension ImageRepresentable {
     }
 }
 
+// MARK: - ImageRepresentable: Equatable
+
+extension ImageRepresentable {
+    public func isEqual(_ other: ImageRepresentable) -> Bool {
+        imageSource == other.imageSource && bundle == other.bundle
+    }
+}
+
+extension Optional where Wrapped == ImageRepresentable {
+    public func isEqual(_ other: ImageRepresentable?) -> Bool {
+        switch self {
+            case .none:
+                return other == nil
+            case .some(let this):
+                guard let other = other else {
+                    return false
+                }
+
+                return this.isEqual(other)
+        }
+    }
+
+    public func isEqual(_ other: ImageRepresentable) -> Bool {
+        switch self {
+            case .none:
+                return false
+            case .some(let this):
+                return this.isEqual(other)
+        }
+    }
+}
+
 // MARK: - Conformance
 
 extension UIImage: ImageRepresentable {
