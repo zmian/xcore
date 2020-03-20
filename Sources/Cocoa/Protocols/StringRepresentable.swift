@@ -28,6 +28,38 @@ public protocol StringRepresentable {
     var stringSource: StringSourceType { get }
 }
 
+// MARK: - StringRepresentable: Equatable
+
+extension StringRepresentable {
+    public func isEqual(_ other: StringRepresentable) -> Bool {
+        stringSource == other.stringSource
+    }
+}
+
+extension Optional where Wrapped == StringRepresentable {
+    public func isEqual(_ other: StringRepresentable?) -> Bool {
+        switch self {
+            case .none:
+                return other == nil
+            case .some(let this):
+                guard let other = other else {
+                    return false
+                }
+
+                return this.isEqual(other)
+        }
+    }
+
+    public func isEqual(_ other: StringRepresentable) -> Bool {
+        switch self {
+            case .none:
+                return false
+            case .some(let this):
+                return this.isEqual(other)
+        }
+    }
+}
+
 // MARK: - Conformance
 
 extension String: StringRepresentable {
