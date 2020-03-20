@@ -12,8 +12,8 @@ import XCTest
 final class LazyResetTests: TestCase {
     func testAllCases() {
         struct Example {
-            @LazyReset
-            var x: Int = 7
+            @LazyReset(7)
+            var x: Int
 
             mutating func reset() {
                 _x.reset()

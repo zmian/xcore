@@ -10,31 +10,30 @@ import Foundation
 /// to reset the wrapped value to be computed on the next access.
 ///
 /// ```swift
-/// @LazyReset
-/// var x = Int.random(in: 1...100)
+/// @LazyReset(.random(in: 1...100))
+/// var x: Int
 ///
 /// _x.reset()
 /// ```
 @propertyWrapper
 public struct LazyReset<Value> {
-    private var closure: () -> Value
+    private let block: () -> Value
     private var value: Value?
 
-    public init(wrappedValue: @autoclosure @escaping () -> Value) {
-        self.closure = wrappedValue
+    public init(_ block: @autoclosure @escaping () -> Value) {
+        self.block = block
     }
 
     public var wrappedValue: Value {
-        mutating get { value ?? reset() }
+        mutating get {
+            value = value ?? block()
+            return value!
+        }
         set { value = newValue }
     }
 
-    /// Reset the state back to uninitialized with a new, possibly-different initial
-    /// value to be computed on the next access.
-    @discardableResult
-    public mutating func reset() -> Value {
-        let newValue = closure()
-        value = newValue
-        return newValue
+    /// "Reset" the wrapper so it can be initialized again.
+    public mutating func reset() {
+        value = nil
     }
 }
