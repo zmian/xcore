@@ -37,7 +37,7 @@ final class WebViewToolbar: XCToolbar {
     override func commonInit() {
         addBorder(edges: .top, color: .appSeparator, thickness: .onePixel)
         isTransparent = true
-        backgroundColor = .white
+        backgroundColor = Theme.current.backgroundColor
         items = [backButton, fixedSpace, forwardButton]
     }
 
