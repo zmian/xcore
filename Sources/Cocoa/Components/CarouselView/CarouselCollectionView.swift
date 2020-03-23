@@ -37,7 +37,6 @@ final class CarouselCollectionView
     var viewModel: Model? {
         didSet {
             reloadData()
-            setCurrentIndex(0)
         }
     }
 
@@ -57,7 +56,6 @@ final class CarouselCollectionView
         guard bounds.width > 0, numberOfItems > 0 else {
             return 0
         }
-
         if style == .infiniteScroll {
             return (Int(round(adjustedOffset / bounds.width)) + numberOfItems) % numberOfItems
         }
