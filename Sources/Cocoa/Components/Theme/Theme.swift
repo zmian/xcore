@@ -33,10 +33,7 @@ public struct Theme: Themable, Equatable {
     /// The color for links.
     public var linkColor: UIColor
     
-////    /// The color to use for background of header cells in table views and outline views.
-////    public let headerBackgoundColor: UIColor
-//
-//    // MARK: - Text
+    // MARK: - Text
 
     /// The color for text labels containing primary content.
     public var textColor: UIColor
@@ -76,21 +73,21 @@ public struct Theme: Themable, Equatable {
         id: Identifier<Theme> = .default,
         isDark: Bool? = nil,
         tintColor: UIColor = .systemTint,
-        separatorColor: UIColor = .green,
+        separatorColor: UIColor = .lightGray,
         toggleColor: UIColor = .green,
-        linkColor: UIColor = .green,
-        textColor: UIColor = .green,
-        textColorSecondary: UIColor = .green,
-        placeholderTextColor: UIColor = .green,
-        headerTextColor: UIColor = .green,
-        backgroundColor: UIColor = .green,
-        backgroundColorSecondary: UIColor = .green,
-        highglightedBackgroundColor: UIColor = .green,
-        disabledBackgroundColor: UIColor = .green,
-        buttonTextColor: UIColor = .green,
-        buttonBackgroundColor: UIColor = .green,
-        buttonBackgroundColorSecondary: UIColor = .green,
-        buttonBackgroundColorPill: UIColor = .green,
+        linkColor: UIColor = .systemTint,
+        textColor: UIColor = .black,
+        textColorSecondary: UIColor = .lightText,
+        placeholderTextColor: UIColor = .lightGray,
+        headerTextColor: UIColor = .lightGray,
+        backgroundColor: UIColor = .white,
+        backgroundColorSecondary: UIColor = .lightGray,
+        highglightedBackgroundColor: UIColor = .lightGray,
+        disabledBackgroundColor: UIColor = .darkGray,
+        buttonTextColor: UIColor = .white,
+        buttonBackgroundColor: UIColor = .systemTint,
+        buttonBackgroundColorSecondary: UIColor = .lightGray,
+        buttonBackgroundColorPill: UIColor = .systemTint,
         statusBarStyle: UIStatusBarStyle = .default,
         chrome: Chrome.Style = .blurred
     ) {
@@ -154,10 +151,7 @@ public protocol Themable {
     
     /// The color for links.
     var linkColor: UIColor { get }
-//
-//    //    /// The color to use for background of header cells in table views and outline views.
-//    //    public let headerBackgoundColor: UIColor
-//
+
     // MARK: - Text
 
     /// The color for text labels containing primary content.
@@ -168,7 +162,7 @@ public protocol Themable {
 
     /// The color to use for placeholder text in controls or text views.
     var placeholderTextColor: UIColor { get }
-
+    
     /// The color to use for text in header cells in table views and outline views.
     var headerTextColor: UIColor { get }
     
@@ -207,11 +201,11 @@ extension Themable {
     }
     
     public var tintColor: UIColor {
-        .green
+        .systemTint
     }
     
     public var separatorColor: UIColor {
-        .green
+        .lightGray
     }
     
     public var toggleColor: UIColor {
@@ -219,55 +213,55 @@ extension Themable {
     }
 
     public var linkColor: UIColor {
-        .green
+        .systemTint
     }
 
     public var textColor: UIColor {
-        .green
+        .black
     }
 
     public var textColorSecondary: UIColor {
-        .green
+        .lightText
     }
     
     public var placeholderTextColor: UIColor {
-        .green
+        .lightGray
     }
     
     public var headerTextColor: UIColor {
-        .green
+        .lightGray
     }
     
     public var backgroundColor: UIColor {
-        .green
+        .white
     }
     
     public var backgroundColorSecondary: UIColor {
-        .green
+        .lightGray
     }
     
     public var highglightedBackgroundColor: UIColor {
-        .green
+        .lightGray
     }
     
     public var disabledBackgroundColor: UIColor {
-        .green
+        .darkGray
     }
     
     public var buttonTextColor: UIColor {
-        .green
+        .white
     }
     
     public var buttonBackgroundColor: UIColor {
-        .green
+        .systemTint
     }
     
     public var buttonBackgroundColorSecondary: UIColor {
-        .green
+        .lightGray
     }
     
     public var buttonBackgroundColorPill: UIColor {
-        .green
+        .systemTint
     }
     
     public var statusBarStyle: UIStatusBarStyle {
@@ -278,4 +272,3 @@ extension Themable {
         .blurred
     }
 }
-
