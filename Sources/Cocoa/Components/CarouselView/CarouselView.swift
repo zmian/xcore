@@ -9,7 +9,7 @@ import UIKit
 // MARK: - CarouselView
 
 final public class CarouselView<Cell: CarouselViewCellType>: CustomCarouselView<Cell, CarouselViewModel<Cell.Model>> where Cell.Model: CarouselAccessibilitySupport {
-    public func configure(items: [Cell.Model], currentIndex: Int) {
+    public func configure(items: [Cell.Model], currentIndex: Int = 0) {
         let model = CarouselViewModel<Cell.Model>(items: items)
         super.configure(model: model, currentIndex: currentIndex)
     }
@@ -226,7 +226,7 @@ open class CustomCarouselView<Cell: CarouselViewCellType, Model: CarouselViewMod
         carouselCollectionView.setCurrentIndex(index, animated: animated, completion: completion)
     }
 
-    open func configure(model: Model, currentIndex: Int) {
+    open func configure(model: Model, currentIndex: Int = 0) {
         carouselCollectionView.viewModel = model
         pageControl.isHidden = isPageControlHidden
         pageControl.numberOfPages = carouselCollectionView.numberOfPages
