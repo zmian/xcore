@@ -120,42 +120,17 @@ extension UIWindow {
     }
 }
 
-extension UIWindow {
-    public struct AttributesOptions: OptionSet {
-        public let rawValue: Int
-
-        public init(rawValue: Int) {
-            self.rawValue = rawValue
-        }
-
-        public static let keyWindow = Self(rawValue: 1 << 0)
-        public static let visible = Self(rawValue: 1 << 1)
-    }
-}
-
 extension UIApplication {
     /// Iterates through `windows` from top to bottom and returns window matching
-    /// the given attributes options.
+    /// the given `keyPaths`.
     ///
     /// - Returns: Returns an optional window object based on attributes options.
     /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
-    public func window(_ matching: UIWindow.AttributesOptions) -> UIWindow? {
-        guard !matching.isEmpty else {
-            return nil
-        }
-
-        return windows.reversed().first {
-            var predicate = true
-
-            if matching.contains(.visible) {
-                predicate = !$0.isHidden
+    public func window(_ keyPaths: KeyPath<UIWindow, Bool>...) -> UIWindow? {
+        windows.reversed().first { window in
+            keyPaths.allSatisfy {
+                window[keyPath: $0]
             }
-
-            if matching.contains(.keyWindow) {
-                predicate = predicate && $0.isKeyWindow
-            }
-
-            return predicate
         }
     }
 }
