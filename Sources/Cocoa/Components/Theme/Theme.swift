@@ -80,7 +80,7 @@ public struct Theme: Themable, Equatable {
         toggleColor: UIColor = .green,
         linkColor: UIColor = .systemTint,
         textColor: UIColor = .black,
-        textColorSecondary: UIColor = .lightText,
+        textColorSecondary: UIColor = .darkGray,
         placeholderTextColor: UIColor = .lightGray,
         headerTextColor: UIColor = .lightGray,
         backgroundColor: UIColor = .white,
@@ -222,7 +222,7 @@ extension Themable {
     }
 
     public var textColorSecondary: UIColor {
-        .lightText
+        .darkGray
     }
     
     public var placeholderTextColor: UIColor {
