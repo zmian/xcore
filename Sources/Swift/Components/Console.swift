@@ -167,12 +167,12 @@ extension Console {
             self.rawValue = rawValue
         }
 
-        public static let debug = LevelOptions(rawValue: 1 << 0)
-        public static let info = LevelOptions(rawValue: 1 << 1)
-        public static let warn = LevelOptions(rawValue: 1 << 2)
-        public static let error = LevelOptions(rawValue: 1 << 3)
-        public static let none: LevelOptions = []
-        public static let all: LevelOptions = [debug, info, warn, error]
+        public static let debug = Self(rawValue: 1 << 0)
+        public static let info = Self(rawValue: 1 << 1)
+        public static let warn = Self(rawValue: 1 << 2)
+        public static let error = Self(rawValue: 1 << 3)
+        public static let none: Self = []
+        public static let all: Self = [debug, info, warn, error]
 
         fileprivate var consoleDescription: String? {
             switch self {
@@ -198,12 +198,12 @@ extension Console {
             self.rawValue = rawValue
         }
 
-        public static let className = PrefixOptions(rawValue: 1 << 0)
-        public static let functionName = PrefixOptions(rawValue: 1 << 1)
-        public static let lineNumber = PrefixOptions(rawValue: 1 << 2)
-        public static let date = PrefixOptions(rawValue: 1 << 3)
-        public static let none: PrefixOptions = []
-        public static let all: PrefixOptions = [className, functionName, lineNumber, date]
-        public static let basic: PrefixOptions = [className, lineNumber]
+        public static let className = Self(rawValue: 1 << 0)
+        public static let functionName = Self(rawValue: 1 << 1)
+        public static let lineNumber = Self(rawValue: 1 << 2)
+        public static let date = Self(rawValue: 1 << 3)
+        public static let none: Self = []
+        public static let all: Self = [className, functionName, lineNumber, date]
+        public static let basic: Self = [className, lineNumber]
     }
 }

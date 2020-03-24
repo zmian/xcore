@@ -13,16 +13,16 @@ public struct SafeAreaLayoutGuideOptions: OptionSet {
         self.rawValue = rawValue
     }
 
-    public static let top = SafeAreaLayoutGuideOptions(rawValue: 1 << 0)
-    public static let bottom = SafeAreaLayoutGuideOptions(rawValue: 1 << 1)
-    public static let leading = SafeAreaLayoutGuideOptions(rawValue: 1 << 2)
-    public static let trailing = SafeAreaLayoutGuideOptions(rawValue: 1 << 3)
+    public static let top = Self(rawValue: 1 << 0)
+    public static let bottom = Self(rawValue: 1 << 1)
+    public static let leading = Self(rawValue: 1 << 2)
+    public static let trailing = Self(rawValue: 1 << 3)
 
-    public static let vertical: SafeAreaLayoutGuideOptions = [top, bottom]
-    public static let horizontal: SafeAreaLayoutGuideOptions = [leading, trailing]
+    public static let vertical: Self = [top, bottom]
+    public static let horizontal: Self = [leading, trailing]
 
-    public static let all: SafeAreaLayoutGuideOptions = [vertical, horizontal]
-    public static let none: SafeAreaLayoutGuideOptions = []
+    public static let all: Self = [vertical, horizontal]
+    public static let none: Self = []
 }
 
 extension SafeAreaLayoutGuideOptions {
