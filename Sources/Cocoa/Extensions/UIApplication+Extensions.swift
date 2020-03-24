@@ -109,22 +109,6 @@ extension UIApplication {
 
         return nil
     }
-
-    /// Iterates through `windows` from top to bottom and returns the visible window.
-    ///
-    /// - Returns: Returns an optional window object based on visibility.
-    /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
-    open var visibleWindow: UIWindow? {
-        windows.reversed().first { !$0.isHidden }
-    }
-
-    /// Iterates through `windows` from top to bottom and returns the visible and key window.
-    ///
-    /// - Returns: Returns an optional window object based on visibility.
-    /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
-    open var visibleAndKeyWindow: UIWindow? {
-        windows.reversed().first { !$0.isHidden && $0.isKeyWindow }
-    }
 }
 
 // MARK: UIWindow - TopViewController
@@ -133,5 +117,45 @@ extension UIWindow {
     /// The view controller at the top of the window's `rootViewController` stack.
     open var topViewController: UIViewController? {
         UIApplication.topViewController(rootViewController)
+    }
+}
+
+extension UIWindow {
+    public struct AttributesOptions: OptionSet {
+        public let rawValue: Int
+
+        public init(rawValue: Int) {
+            self.rawValue = rawValue
+        }
+
+        public static let keyWindow = Self(rawValue: 1 << 0)
+        public static let visible = Self(rawValue: 1 << 1)
+    }
+}
+
+extension UIApplication {
+    /// Iterates through `windows` from top to bottom and returns window matching
+    /// the given attributes options.
+    ///
+    /// - Returns: Returns an optional window object based on attributes options.
+    /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
+    public func window(_ matching: UIWindow.AttributesOptions) -> UIWindow? {
+        guard !matching.isEmpty else {
+            return nil
+        }
+
+        return windows.reversed().first {
+            var predicate = true
+
+            if matching.contains(.visible) {
+                predicate = !$0.isHidden
+            }
+
+            if matching.contains(.keyWindow) {
+                predicate = predicate && $0.isKeyWindow
+            }
+
+            return predicate
+        }
     }
 }
