@@ -8,7 +8,7 @@ import Foundation
 
 // credit: https://nshipster.com/propertywrapper/
 //
-/// Trims whitespace from wrapped value.
+/// Trims whitespaces from wrapped value.
 ///
 /// **Usage:**
 ///
@@ -28,12 +28,12 @@ import Foundation
 public struct Trimmed {
     private var value: String = ""
 
+    public init(wrappedValue: String) {
+        self.wrappedValue = wrappedValue
+    }
+
     public var wrappedValue: String {
         get { value }
         set { value = newValue.trimmingCharacters(in: .whitespacesAndNewlines) }
-    }
-
-    public init(wrappedValue value: String) {
-        self.wrappedValue = value
     }
 }

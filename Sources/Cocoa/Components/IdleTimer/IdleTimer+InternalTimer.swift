@@ -4,17 +4,19 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import Foundation
 
 extension IdleTimer {
     final class InternalTimer {
-        private var timer: Timer?
+        private var tokens: [NSObjectProtocol?] = []
+        private var uptime = MonotonicClock.Uptime()
+        private var timer: MonotonicClock.Timer?
         private let timeoutHandler: () -> Void
 
         /// The timeout duration in seconds, after which `timeoutHandler` is invoked.
         var timeoutDuration: TimeInterval {
             didSet {
-                reset()
+                restart()
             }
         }
 
@@ -27,10 +29,34 @@ extension IdleTimer {
         init(timeoutAfter duration: TimeInterval, handler timeoutHandler: @escaping () -> Void) {
             self.timeoutDuration = duration
             self.timeoutHandler = timeoutHandler
-            reset()
+            restart()
+            setupObservers()
         }
 
-        private func reset() {
+        private func setupObservers() {
+            tokens.append(NotificationCenter.on.applicationDidEnterBackground { [weak self] in
+                self?.uptime.saveValue()
+            })
+
+            tokens.append(NotificationCenter.on.applicationWillEnterForeground { [weak self] in
+                self?.handleExpirationIfNeeded()
+            })
+        }
+
+        private func handleExpirationIfNeeded() {
+            guard uptime.elapsed(timeoutDuration) else {
+                restart()
+                return
+            }
+
+            timeoutHandler()
+        }
+
+        deinit {
+            NotificationCenter.remove(tokens)
+        }
+
+        private func restart() {
             if let timer = timer {
                 timer.invalidate()
             }
@@ -39,7 +65,7 @@ extension IdleTimer {
                 return
             }
 
-            timer = Timer.scheduledTimer(withTimeInterval: timeoutDuration, repeats: false) { [weak self] _ in
+            timer = MonotonicClock.Timer(interval: timeoutDuration) { [weak self] in
                 self?.timeoutHandler()
             }
         }
@@ -49,7 +75,7 @@ extension IdleTimer {
                 return
             }
 
-            reset()
+            restart()
         }
     }
 }

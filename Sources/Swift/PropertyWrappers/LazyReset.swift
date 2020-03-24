@@ -6,31 +6,34 @@
 
 import Foundation
 
-/// ```swift
-/// @LazyReset var x: Int {
-///     .random(in: 1...100)
-/// }
+/// A property wrapper that combines `lazy` keyword attributes with the option
+/// to reset the wrapped value to be computed on the next access.
 ///
-/// x.reset()
+/// ```swift
+/// @LazyReset(.random(in: 1...100))
+/// var x: Int
+///
+/// _x.reset()
 /// ```
 @propertyWrapper
 public struct LazyReset<Value> {
-    private var closure: () -> Value
-    private var _value: Value?
+    private let block: () -> Value
+    private var value: Value?
 
-    public init(_ wrappedValue: @autoclosure @escaping () -> Value) {
-        self.closure = wrappedValue
+    public init(_ block: @autoclosure @escaping () -> Value) {
+        self.block = block
     }
 
     public var wrappedValue: Value {
-        mutating get { _value ?? reset() }
-        set { _value = newValue }
+        mutating get {
+            value = value ?? block()
+            return value!
+        }
+        set { value = newValue }
     }
 
-    @discardableResult
-    public mutating func reset() -> Value {
-        let newValue = closure()
-        _value = newValue
-        return newValue
+    /// "Reset" the wrapper so it can be initialized again.
+    public mutating func reset() {
+        value = nil
     }
 }
