@@ -26,7 +26,7 @@ open class XCTabBarController: UITabBarController {
 
     private func setupTabs() {
         tabBar.isTransparent = true
-        tabBar.backgroundColor = .white
+        tabBar.backgroundColor = Theme.current.backgroundColor
     }
 
     open func reloadTabs(_ tabs: [UITabBarController.TabItem]) {
