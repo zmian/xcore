@@ -13,10 +13,10 @@ public struct HighlightedAnimationOptions: OptionSet {
         self.rawValue = rawValue
     }
 
-    public static let scale = HighlightedAnimationOptions(rawValue: 1 << 0)
-    public static let alpha = HighlightedAnimationOptions(rawValue: 1 << 1)
-    public static let all: HighlightedAnimationOptions = [scale, alpha]
-    public static let none: HighlightedAnimationOptions = []
+    public static let scale = Self(rawValue: 1 << 0)
+    public static let alpha = Self(rawValue: 1 << 1)
+    public static let all: Self = [scale, alpha]
+    public static let none: Self = []
 
     func animate(_ button: UIButton) {
         animate(button, isHighlighted: button.isHighlighted)
