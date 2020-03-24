@@ -47,6 +47,7 @@ extension Interstitial {
             super.init()
             windowLabel = "Interstitial Window"
             adjustWindowAttributes {
+                $0.makeKey()
                 $0.windowLevel = .interstitial
             }
         }

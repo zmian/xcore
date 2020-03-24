@@ -126,3 +126,37 @@ extension RangeReplaceableCollection where Element: Equatable, Index == Int {
         return true
     }
 }
+
+extension Sequence {
+    /// Returns the first element of the sequence that satisfies the given predicate.
+    ///
+    /// - Parameter keyPaths: A list of `keyPaths` that are used to find an element
+    ///                       in the sequence.
+    ///
+    /// - Returns: The first element of the sequence that satisfies predicate, or
+    ///            `nil` if there is no element that satisfies predicate.
+    /// - Complexity: O(_n_), where _n_ is the length of the sequence.
+    func first(_ keyPaths: KeyPath<Element, Bool>...) -> Element? {
+        first { element in
+            keyPaths.allSatisfy {
+                element[keyPath: $0]
+            }
+        }
+    }
+
+    /// Returns the first element of the sequence that satisfies the given predicate.
+    ///
+    /// - Parameter keyPaths: A list of `keyPaths` that are used to find an element
+    ///                       in the sequence.
+    ///
+    /// - Returns: The first element of the sequence that satisfies predicate, or
+    ///            `nil` if there is no element that satisfies predicate.
+    /// - Complexity: O(_n_), where _n_ is the length of the sequence.
+    func first(_ keyPaths: [KeyPath<Element, Bool>]) -> Element? {
+        first { element in
+            keyPaths.allSatisfy {
+                element[keyPath: $0]
+            }
+        }
+    }
+}
