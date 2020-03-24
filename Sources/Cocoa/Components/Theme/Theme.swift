@@ -17,13 +17,13 @@ extension Identifier where Type == Theme {
 public struct Theme: Themable, Equatable {
     /// A unique id for the theme.
     public var id: Identifier<Self> = .default
-    
+
     /// A boolean value indicating whether the theme appearance is dark.
     public var isDark: Bool
 
     /// The main brand color for interface callout content.
     public var tintColor: UIColor
-    
+
     /// The color for borders or divider lines that hide any underlying content.
     public var separatorColor: UIColor
 
@@ -32,7 +32,7 @@ public struct Theme: Themable, Equatable {
 
     /// The color for links.
     public var linkColor: UIColor
-    
+
     // MARK: - Text
 
     /// The color for text labels containing primary content.
@@ -51,13 +51,13 @@ public struct Theme: Themable, Equatable {
     
     /// The color for the main background of your interface.
     public var backgroundColor: UIColor
-    
+
     /// The color for background of seconday views.
     public var backgroundColorSecondary: UIColor
-    
+
     /// Add description
     public var highglightedBackgroundColor: UIColor
-    
+
     /// Add description
     public var disabledBackgroundColor: UIColor
 
@@ -68,7 +68,7 @@ public struct Theme: Themable, Equatable {
     public var buttonBackgroundColorPill: UIColor
     public var statusBarStyle: UIStatusBarStyle
     public var chrome: Chrome.Style
-    
+
     public init(
         id: Identifier<Theme> = .default,
         isDark: Bool? = nil,
@@ -120,7 +120,6 @@ extension Theme {
     /// The current theme for the interface.
     public static var current: Theme = .default
 
-    #warning("TODO: Fix the defaults so it matches the system defaults")
     public static var `default`: Theme = .init()
 }
 
@@ -195,7 +194,6 @@ public protocol Themable {
 }
 
 extension Themable {
-    #warning("TODO: Fix the defaults so it matches the system defaults")
     public var isDark: Bool {
         false
     }
