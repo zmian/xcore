@@ -38,15 +38,15 @@ extension Currency {
             self.rawValue = rawValue
         }
 
-        public static let currencySymbol = SymbolsOptions(rawValue: 1 << 0)
-        public static let groupingSeparator = SymbolsOptions(rawValue: 1 << 1)
-        public static let decimalSeparator = SymbolsOptions(rawValue: 1 << 2)
-        public static let specialCharacters: SymbolsOptions = [
+        public static let currencySymbol = Self(rawValue: 1 << 0)
+        public static let groupingSeparator = Self(rawValue: 1 << 1)
+        public static let decimalSeparator = Self(rawValue: 1 << 2)
+        public static let specialCharacters: Self = [
             currencySymbol,
             groupingSeparator
         ]
 
-        public static let all: SymbolsOptions = [
+        public static let all: Self = [
             currencySymbol,
             groupingSeparator,
             decimalSeparator
