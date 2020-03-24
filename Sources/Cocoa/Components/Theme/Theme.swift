@@ -55,17 +55,20 @@ public struct Theme: Themable, Equatable {
     /// The color for background of seconday views.
     public var backgroundColorSecondary: UIColor
 
-    /// Add description
+    /// The color for background of highlighted content and selected views
     public var highglightedBackgroundColor: UIColor
 
-    /// Add description
+    /// The color for background of disabled content and views
     public var disabledBackgroundColor: UIColor
 
     // MARK: - Buttons
+    
     public var buttonTextColor: UIColor
     public var buttonBackgroundColor: UIColor
     public var buttonBackgroundColorSecondary: UIColor
     public var buttonBackgroundColorPill: UIColor
+    
+    
     public var statusBarStyle: UIStatusBarStyle
     public var chrome: Chrome.Style
 
@@ -173,10 +176,10 @@ public protocol Themable {
     /// The color for background of seconday views.
     var backgroundColorSecondary: UIColor { get }
     
-    /// Add description
+    /// The color for background of highlighted content and selected views
     var highglightedBackgroundColor: UIColor { get }
     
-    /// Add description
+    /// The color for background of disabled content and views
     var disabledBackgroundColor: UIColor { get }
     
     // MARK: - Buttons
