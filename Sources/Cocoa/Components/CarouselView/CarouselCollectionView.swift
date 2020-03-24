@@ -37,7 +37,6 @@ final class CarouselCollectionView
     var viewModel: Model? {
         didSet {
             reloadData()
-            setCurrentIndex(0)
         }
     }
 
@@ -83,6 +82,7 @@ final class CarouselCollectionView
         guard bounds.width > 0 else {
             return 0
         }
+
         return Int(contentSize.width / bounds.width)
     }
 
