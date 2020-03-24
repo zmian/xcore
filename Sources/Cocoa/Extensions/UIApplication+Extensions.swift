@@ -127,10 +127,6 @@ extension UIApplication {
     /// - Returns: Returns an optional window object based on attributes options.
     /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
     public func window(_ keyPaths: KeyPath<UIWindow, Bool>...) -> UIWindow? {
-        windows.reversed().first { window in
-            keyPaths.allSatisfy {
-                window[keyPath: $0]
-            }
-        }
+        windows.reversed().first(keyPaths)
     }
 }
