@@ -21,14 +21,9 @@ open class XCTabBarController: UITabBarController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
-        setupTabs()
-    }
-
-    private func setupTabs() {
-        tabBar.isTransparent = true
         tabBar.backgroundColor = Theme.current.backgroundColor
     }
-
+    
     open func reloadTabs(_ tabs: [UITabBarController.TabItem]) {
         guard isViewLoaded else {
             return

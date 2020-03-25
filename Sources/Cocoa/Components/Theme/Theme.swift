@@ -92,10 +92,11 @@ public struct Theme: Themable, Equatable {
         buttonBackgroundColorSecondary: UIColor = .lightGray,
         buttonBackgroundColorPill: UIColor = .systemTint,
         statusBarStyle: UIStatusBarStyle = .default,
-        chrome: Chrome.Style = .blurred
+        chrome: Chrome.Style? = nil
     ) {
+        let isDarkContent = isDark ?? false
         self.id = id
-        self.isDark = isDark ?? false
+        self.isDark = isDarkContent
         self.tintColor = tintColor
         self.separatorColor = separatorColor
         self.toggleColor = toggleColor
@@ -113,7 +114,7 @@ public struct Theme: Themable, Equatable {
         self.buttonBackgroundColorSecondary = buttonBackgroundColorSecondary
         self.buttonBackgroundColorPill = buttonBackgroundColorPill
         self.statusBarStyle = statusBarStyle
-        self.chrome = chrome
+        self.chrome = chrome ?? (isDarkContent ? .color(backgroundColor) : .blurred)
     }
 }
 
