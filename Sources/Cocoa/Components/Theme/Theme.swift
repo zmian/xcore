@@ -43,6 +43,9 @@ public struct Theme: Themable, Equatable {
 
     /// The color to use for placeholder text in controls or text views.
     public var placeholderTextColor: UIColor
+    
+    /// The color to use for text in text views.
+    public var textFieldTextColor: UIColor
 
     /// The color to use for text in header cells in table views and outline views.
     public var headerTextColor: UIColor
@@ -82,6 +85,7 @@ public struct Theme: Themable, Equatable {
         textColor: UIColor = .black,
         textColorSecondary: UIColor = .darkGray,
         placeholderTextColor: UIColor = .lightGray,
+        textFieldTextColor: UIColor = .darkGray,
         headerTextColor: UIColor = .lightGray,
         backgroundColor: UIColor = .white,
         backgroundColorSecondary: UIColor = .lightGray,
@@ -104,6 +108,7 @@ public struct Theme: Themable, Equatable {
         self.textColor = textColor
         self.textColorSecondary = textColorSecondary
         self.placeholderTextColor = placeholderTextColor
+        self.textFieldTextColor = textFieldTextColor
         self.headerTextColor = headerTextColor
         self.backgroundColor = backgroundColor
         self.backgroundColorSecondary = backgroundColorSecondary
@@ -165,6 +170,9 @@ public protocol Themable {
 
     /// The color to use for placeholder text in controls or text views.
     var placeholderTextColor: UIColor { get }
+    
+    /// The color to use for text in text views.
+    var textFieldTextColor: UIColor { get }
     
     /// The color to use for text in header cells in table views and outline views.
     var headerTextColor: UIColor { get }
@@ -228,6 +236,10 @@ extension Themable {
     
     public var placeholderTextColor: UIColor {
         .lightGray
+    }
+    
+    public var textFieldTextColor: UIColor {
+        .darkGray
     }
     
     public var headerTextColor: UIColor {
