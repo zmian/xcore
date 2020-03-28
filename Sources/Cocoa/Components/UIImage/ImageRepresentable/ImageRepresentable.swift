@@ -35,6 +35,40 @@ public enum ImageSourceType: Equatable {
     }
 }
 
+// MARK: - ImageSourceType: Codable
+
+extension ImageSourceType: Codable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+
+        if let data = try? container.decode(Data.self), let image = UIImage(data: data) {
+            self = .uiImage(image)
+        } else if let url = try? container.decode(String.self) {
+            self = .url(url)
+        } else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Failed to convert to ImageSourceType.")
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+
+        switch self {
+            case .url(let value):
+                try container.encode(value)
+            case .uiImage(let image):
+                guard let data = image.pngData() else {
+                    throw EncodingError.invalidValue(image, .init(
+                        codingPath: [],
+                        debugDescription: "Failed to convert image to data type.")
+                    )
+                }
+
+                try container.encode(data)
+        }
+    }
+}
+
 // MARK: - ImageSourceType.CacheType
 
 extension ImageSourceType {
