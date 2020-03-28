@@ -22,6 +22,8 @@
 		2FF93A0622A9F20B008E4AAA /* FeedLightDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF93A0522A9F20B008E4AAA /* FeedLightDataSource.swift */; };
 		680185DD2422EA2400035AD1 /* LazyResetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680185DC2422EA2400035AD1 /* LazyResetTests.swift */; };
 		6804D60A2274052900BEB7E0 /* ArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6804D6092274052900BEB7E0 /* ArrayTests.swift */; };
+		68054FBF243004C60089C94C /* ImageRepresentableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68054FBE243004C60089C94C /* ImageRepresentableTests.swift */; };
+		68054FC124300EA50089C94C /* IdentifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68054FC024300EA50089C94C /* IdentifierTests.swift */; };
 		68262E4622A320D00011431A /* FeatureFlagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68262E4522A320D00011431A /* FeatureFlagTests.swift */; };
 		6836600522987F1D00FDE45B /* ButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6836600222987F1D00FDE45B /* ButtonsViewController.swift */; };
 		6836600622987F1D00FDE45B /* ExampleDynamicTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6836600322987F1D00FDE45B /* ExampleDynamicTableViewController.swift */; };
@@ -97,6 +99,8 @@
 		67CC55C468091B5137D790BB /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		680185DC2422EA2400035AD1 /* LazyResetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyResetTests.swift; sourceTree = "<group>"; };
 		6804D6092274052900BEB7E0 /* ArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayTests.swift; sourceTree = "<group>"; };
+		68054FBE243004C60089C94C /* ImageRepresentableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepresentableTests.swift; sourceTree = "<group>"; };
+		68054FC024300EA50089C94C /* IdentifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierTests.swift; sourceTree = "<group>"; };
 		68262E4522A320D00011431A /* FeatureFlagTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagTests.swift; sourceTree = "<group>"; };
 		6836600222987F1D00FDE45B /* ButtonsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsViewController.swift; sourceTree = "<group>"; };
 		6836600322987F1D00FDE45B /* ExampleDynamicTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleDynamicTableViewController.swift; sourceTree = "<group>"; };
@@ -301,6 +305,8 @@
 				6804D6092274052900BEB7E0 /* ArrayTests.swift */,
 				684B1E8A224C5167009F6197 /* PredicateRepresentableTests.swift */,
 				684B1E8C224C5167009F6197 /* VersionTests.swift */,
+				68054FBE243004C60089C94C /* ImageRepresentableTests.swift */,
+				68054FC024300EA50089C94C /* IdentifierTests.swift */,
 				684B1D07224C4F27009F6197 /* Supporting Files */,
 			);
 			path = UnitTests;
@@ -661,10 +667,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68054FC124300EA50089C94C /* IdentifierTests.swift in Sources */,
 				684B1E92224C5167009F6197 /* ImageTransformTests.swift in Sources */,
 				68A9366F22C69E7200CB01BD /* StringConverterTests.swift in Sources */,
 				684B1E91224C5167009F6197 /* PredicateRepresentableTests.swift in Sources */,
 				687A9062227517E6000B7C82 /* ValidationRuleTests.swift in Sources */,
+				68054FBF243004C60089C94C /* ImageRepresentableTests.swift in Sources */,
 				687A905A2274FA4E000B7C82 /* SortOrderableTests.swift in Sources */,
 				684B1E93224C5167009F6197 /* VersionTests.swift in Sources */,
 				684019D5236F5FC700B83DB8 /* UIControlBlocksTests.swift in Sources */,
