@@ -8,10 +8,10 @@ import UIKit
 
 extension UIImage {
     /// Fetch an image from the given source.
-    public class func fetch(_ source: ImageRepresentable, callback: @escaping (_ image: UIImage?) -> Void) {
-        UIImage.Fetcher.fetch(source, in: nil) { image, _ in
+    public class func fetch(_ source: ImageRepresentable, callback: @escaping (_ result: Result<UIImage, Error>) -> Void) {
+        UIImage.Fetcher.fetch(source, in: nil) { result in
             DispatchQueue.main.asyncSafe {
-                callback(image)
+                callback(result.trimCache())
             }
         }
     }

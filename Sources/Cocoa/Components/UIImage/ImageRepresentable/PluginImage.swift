@@ -71,7 +71,7 @@ extension PluginImage {
         base.imageSource
     }
 
-    var bundle: Bundle? {
+    var bundle: Bundle {
         base.bundle
     }
 }
