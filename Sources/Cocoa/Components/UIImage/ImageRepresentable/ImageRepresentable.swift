@@ -57,14 +57,7 @@ extension ImageSourceType: Codable {
             case .url(let value):
                 try container.encode(value)
             case .uiImage(let image):
-                guard let data = image.pngData() else {
-                    throw EncodingError.invalidValue(image, .init(
-                        codingPath: [],
-                        debugDescription: "Failed to convert image to data type.")
-                    )
-                }
-
-                try container.encode(data)
+                try container.encode(image)
         }
     }
 }
