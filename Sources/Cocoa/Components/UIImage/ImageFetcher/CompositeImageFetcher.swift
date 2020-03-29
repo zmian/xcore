@@ -63,7 +63,7 @@ extension CompositeImageFetcher {
             #if DEBUG
             Console.error("Unable to fetch image because of invalid image source.")
             #endif
-            callback(nil, .none)
+            callback(.failure(ImageFetcherError.notFound))
             return
         }
 
@@ -72,7 +72,7 @@ extension CompositeImageFetcher {
         // 2. Find the first one that can handle the request.
         // 3. Fetch the requested image.
         guard let fetcher = fetchers.reversed().first(where: { $0.canHandle(image) }) else {
-            callback(nil, .none)
+            callback(.failure(ImageFetcherError.notFound))
             return
         }
 

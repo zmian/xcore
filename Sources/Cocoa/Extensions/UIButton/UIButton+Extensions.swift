@@ -380,8 +380,8 @@ extension UIButton {
             return
         }
 
-        UIImage.fetch(named) { [weak self] image in
-            self?.setImage(image, for: state)
+        UIImage.fetch(named) { [weak self] result in
+            self?.setImage(try? result.get(), for: state)
         }
     }
 

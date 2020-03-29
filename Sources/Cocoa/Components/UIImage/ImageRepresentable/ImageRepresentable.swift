@@ -92,12 +92,12 @@ extension ImageSourceType {
 
 public protocol ImageRepresentable {
     var imageSource: ImageSourceType { get }
-    var bundle: Bundle? { get }
+    var bundle: Bundle { get }
 }
 
 extension ImageRepresentable {
-    public var bundle: Bundle? {
-        nil
+    public var bundle: Bundle {
+        .main
     }
 
     var cacheKey: String? {
@@ -105,7 +105,7 @@ extension ImageRepresentable {
             case .uiImage:
                 return nil
             case .url(let value):
-                let bundlePrefix = bundle?.bundleIdentifier ?? ""
+                let bundlePrefix = bundle.bundleIdentifier ?? ""
                 return bundlePrefix + value
         }
     }

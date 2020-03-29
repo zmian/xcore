@@ -21,7 +21,7 @@ final class RemoteImageFetcher: ImageFetcher {
     ///               successfully fetched. Otherwise, `nil`.
     func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
         guard case .url(let value) = image.imageSource, let url = URL(string: value), url.host != nil else {
-            callback(nil, .none)
+            callback(.failure(ImageFetcherError.notFound))
             return
         }
 
@@ -31,11 +31,11 @@ final class RemoteImageFetcher: ImageFetcher {
             }
 
             guard let image = image else {
-                callback(nil, .none)
+                callback(.failure(error ?? ImageFetcherError.notFound))
                 return
             }
 
-            callback(image, cacheType)
+            callback(.success((image, cacheType)))
         }
 
         // Store the token cancel block so the request can be cancelled if needed.
