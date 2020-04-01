@@ -60,12 +60,12 @@ extension Router {
     /// ```
     /// extension Router {
     ///     var main: MainRouter {
-    ///         register(MainRouter())
+    ///         register(.init())
     ///     }
     ///
-    ///    var auth: AuthenticationRouter {
-    ///        register(AuthenticationRouter())
-    ///    }
+    ///     var auth: AuthenticationRouter {
+    ///         register(.init())
+    ///     }
     /// }
     /// ```
     ///
