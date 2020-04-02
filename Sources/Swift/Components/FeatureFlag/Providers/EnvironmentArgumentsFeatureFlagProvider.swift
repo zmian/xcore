@@ -14,7 +14,7 @@ struct EnvironmentArgumentsFeatureFlag: FeatureFlagProvider {
             return nil
         }
 
-        guard let value = argument.value else {
+        guard let value: String = argument.get() else {
             // ProcessInfo environment arguments can have value without being enabled.
             // Since, we are here it means the flag is enabled and it doesn't have any
             // value, thus we return `true` to indicate that the flag is enabled to the
