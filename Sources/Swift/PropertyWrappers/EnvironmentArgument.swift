@@ -30,13 +30,7 @@ public struct EnvironmentArgument<Value> {
     }
 
     public var wrappedValue: Value {
-        get {
-            #if DEBUG
-            return argument.get(default: defaultValue!())
-            #else
-                return false
-            #endif
-        }
+        get { argument.get(default: defaultValue!()) }
         set { argument.set(newValue) }
     }
 }
@@ -48,13 +42,7 @@ extension EnvironmentArgument where Value: ExpressibleByNilLiteral {
     }
 
     public var wrappedValue: Value? {
-        get {
-            #if DEBUG
-            return argument.get()
-            #else
-                return false
-            #endif
-        }
+        get { argument.get() }
         set { argument.set(newValue) }
     }
 }
