@@ -100,7 +100,7 @@ extension Router {
             }
         }
 
-        public init(_ configure: @escaping @autoclosure () -> UIViewController) {
+        public init(_ configure: @autoclosure @escaping () -> UIViewController) {
             self.init { _ -> RouteKind in
                 .viewController(configure())
             }
