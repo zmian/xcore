@@ -11,8 +11,8 @@ public struct CellOptions: OptionSet {
         self.rawValue = rawValue
     }
 
-    public static let move = CellOptions(rawValue: 1 << 0)
-    public static let delete = CellOptions(rawValue: 1 << 1)
-    public static let none: CellOptions = []
-    public static let all: CellOptions = [move, delete]
+    public static let move = Self(rawValue: 1 << 0)
+    public static let delete = Self(rawValue: 1 << 1)
+    public static let none: Self = []
+    public static let all: Self = [move, delete]
 }

@@ -60,12 +60,12 @@ extension Router {
     /// ```
     /// extension Router {
     ///     var main: MainRouter {
-    ///         register(MainRouter())
+    ///         register(.init())
     ///     }
     ///
-    ///    var auth: AuthenticationRouter {
-    ///        register(AuthenticationRouter())
-    ///    }
+    ///     var auth: AuthenticationRouter {
+    ///         register(.init())
+    ///     }
     /// }
     /// ```
     ///
@@ -100,7 +100,7 @@ extension Router {
             }
         }
 
-        public init(_ configure: @escaping @autoclosure () -> UIViewController) {
+        public init(_ configure: @autoclosure @escaping () -> UIViewController) {
             self.init { _ -> RouteKind in
                 .viewController(configure())
             }

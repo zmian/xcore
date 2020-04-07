@@ -15,7 +15,7 @@ extension Bundle {
 
 public struct ImageAssetIdentifier: RawRepresentable, CustomStringConvertible, Equatable {
     public let rawValue: String
-    public let bundle: Bundle?
+    public let bundle: Bundle
 
     /// A convenience initializer for `.xcassets` resource in the `.main` bundle.
     ///

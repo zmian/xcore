@@ -64,8 +64,8 @@ extension Data {
         }
 
         /// Includes `spaces` and `<>` symbols.
-        public static let raw = HexEncodingOptions(rawValue: 1 << 0)
-        public static let uppercase = HexEncodingOptions(rawValue: 1 << 1)
+        public static let raw = Self(rawValue: 1 << 0)
+        public static let uppercase = Self(rawValue: 1 << 1)
     }
 
     /// Returns hexadecimal representation of `self`.

@@ -7,7 +7,7 @@
 import UIKit
 
 public protocol ImageFetcher {
-    typealias ResultBlock = (_ image: UIImage?, _ cacheType: ImageSourceType.CacheType) -> Void
+    typealias ResultBlock = (Result<(image: UIImage, cacheType: ImageSourceType.CacheType), Error>) -> Void
 
     /// A unique id for the image fetcher.
     var id: String { get }
@@ -28,5 +28,20 @@ public protocol ImageFetcher {
 extension ImageFetcher {
     public var id: String {
         name(of: self)
+    }
+}
+
+enum ImageFetcherError: Error {
+    case notFound
+}
+
+extension Result where Success == (image: UIImage, cacheType: ImageSourceType.CacheType) {
+    func trimCache() -> Result<UIImage, Error> {
+        switch self {
+            case .success(let image, _):
+                return .success(image)
+            case .failure(let error):
+                return .failure(error)
+        }
     }
 }

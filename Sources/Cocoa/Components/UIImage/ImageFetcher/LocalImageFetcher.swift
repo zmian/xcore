@@ -16,17 +16,17 @@ final class LocalImageFetcher: ImageFetcher {
     func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
         switch image.imageSource {
             case .uiImage(let image):
-                callback(image, .memory)
+                callback(.success((image, .memory)))
             case .url(let value):
                 if let image = UIImage(named: value, in: image.bundle, compatibleWith: nil) {
-                    callback(image, .memory)
+                    callback(.success((image, .memory)))
                     return
                 }
 
                 let cacheKey = image.cacheKey as NSString?
 
                 if let cacheKey = cacheKey, let image = cache.object(forKey: cacheKey) {
-                    callback(image, .memory)
+                    callback(.success((image, .memory)))
                     return
                 }
 
@@ -39,7 +39,7 @@ final class LocalImageFetcher: ImageFetcher {
                         let image = UIImage(data: data)
                     else {
                         DispatchQueue.main.asyncSafe {
-                            callback(nil, .none)
+                            callback(.failure(ImageFetcherError.notFound))
                         }
                         return
                     }
@@ -49,7 +49,7 @@ final class LocalImageFetcher: ImageFetcher {
                     }
 
                     DispatchQueue.main.asyncSafe {
-                        callback(image, .disk)
+                        callback(.success((image, .disk)))
                     }
                 }
         }

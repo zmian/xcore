@@ -53,11 +53,11 @@ extension ProcessInfo {
         /// A boolean property to indicate whether the variable exists in the
         /// environment from which the process was launched.
         public var exists: Bool {
-            ProcessInfo.shared.contains(key: rawValue)
+            ProcessInfo.shared.contains(key: rawValue) || ProcessInfo.shared.inMemoryEnvironmentStorage.keys.contains(rawValue)
         }
 
         /// The variable value in the environment from which the process was launched.
-        public var value: String? {
+        private var currentValue: String? {
             var storedValue = ProcessInfo.shared.inMemoryEnvironmentStorage[rawValue]
 
             if storedValue == nil {
@@ -71,8 +71,9 @@ extension ProcessInfo {
             return value
         }
 
-        public func getValue<T>() -> T? {
-            guard let value = value else {
+        /// Returns the value of the argument.
+        public func get<T>() -> T? {
+            guard let value = currentValue else {
                 switch T.self {
                     case is Bool.Type, is Optional<Bool>.Type:
                         if exists {
@@ -88,7 +89,8 @@ extension ProcessInfo {
             return StringConverter(value).get()
         }
 
-        public func setInMemoryValue<T>(_ value: T?) {
+        /// Set given value in memory.
+        public func set<T>(_ value: T?) {
             var valueToSave: String?
 
             if let newValue = value {
@@ -100,19 +102,50 @@ extension ProcessInfo {
     }
 }
 
+// MARK: - ProcessInfo.Argument Convenience
+
+extension ProcessInfo.Argument {
+    /// Returns the value of the argument.
+    public func get() -> Bool {
+        get() ?? false
+    }
+
+    /// Returns the value of the argument.
+    ///
+    /// - Parameter defaultValue: The value returned if the value doesn't exists.
+    public func get<T>(default defaultValue: @autoclosure () -> T) -> T {
+        get() ?? defaultValue()
+    }
+
+    /// Returns the value of the key from registered list of feature flag providers.
+    ///
+    /// - Parameter defaultValue: The value returned if the providers list doesn't
+    ///                           contain value.
+    /// - Returns: The value for the key.
+    public func get<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
+        if let rawValue: String = get(), let value = T(rawValue: rawValue) {
+            return value
+        }
+
+        return defaultValue()
+    }
+}
+
+// MARK: - Namespace
+
 extension ProcessInfo {
     public enum Arguments { }
 }
 
+// MARK: - Built-in Arguments
+
 extension ProcessInfo.Arguments {
     public static var isTesting: Bool {
-        let argument: ProcessInfo.Argument = "XCTestConfigurationFilePath"
-        return argument.exists
+        ProcessInfo.Argument("XCTestConfigurationFilePath").exists
     }
 
     public static var isDebug: Bool {
-        let argument: ProcessInfo.Argument = "DEBUG"
-        return argument.exists
+        ProcessInfo.Argument("DEBUG").exists
     }
 
     public static var isAnalyticsDebugEnabled: (enabled: Bool, contains: String?) {
@@ -120,22 +153,18 @@ extension ProcessInfo.Arguments {
             return (false, nil)
         }
 
-        let argument: ProcessInfo.Argument = "XCAnalyticsDebugEnabled"
-        return (argument.exists, argument.value)
+        let argument = ProcessInfo.Argument("XCAnalyticsDebugEnabled")
+        return (argument.exists, argument.get())
     }
 
     public static var isAllInterstitialsEnabled: Bool {
         get {
             #if DEBUG
-                let argument: ProcessInfo.Argument = "XCAllInterstitialsEnabled"
-                return argument.getValue() == true
+                return ProcessInfo.Argument("XCAllInterstitialsEnabled").exists
             #else
                 return false
             #endif
         }
-        set {
-            let argument: ProcessInfo.Argument = "XCAllInterstitialsEnabled"
-            argument.setInMemoryValue(newValue)
-        }
+        set { ProcessInfo.Argument("XCAllInterstitialsEnabled").set(newValue) }
     }
 }

@@ -30,11 +30,12 @@ extension UIImageView {
             return
         }
 
-        UIImage.Fetcher.fetch(imageRepresentable, in: self) { [weak self] image, cacheType in
+        UIImage.Fetcher.fetch(imageRepresentable, in: self) { [weak self] result in
             guard let strongSelf = self else { return }
-            let animated = (alwaysAnimate || cacheType.possiblyDelayed)
+            let result = try? result.get()
+            let animated = alwaysAnimate || (result?.cacheType ?? .none).possiblyDelayed
             strongSelf.postProcess(
-                image: image,
+                image: result?.image,
                 source: imageRepresentable,
                 animationDuration: animated ? animationDuration : 0,
                 callback

@@ -109,14 +109,6 @@ extension UIApplication {
 
         return nil
     }
-
-    /// Iterates through `windows` from top to bottom and returns the visible window.
-    ///
-    /// - Returns: Returns an optional window object based on visibility.
-    /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
-    open var visibleWindow: UIWindow? {
-        windows.reversed().first { !$0.isHidden }
-    }
 }
 
 // MARK: UIWindow - TopViewController
@@ -125,5 +117,16 @@ extension UIWindow {
     /// The view controller at the top of the window's `rootViewController` stack.
     open var topViewController: UIViewController? {
         UIApplication.topViewController(rootViewController)
+    }
+}
+
+extension UIApplication {
+    /// Iterates through `windows` from top to bottom and returns window matching
+    /// the given `keyPaths`.
+    ///
+    /// - Returns: Returns an optional window object based on attributes options.
+    /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
+    public func window(_ keyPaths: KeyPath<UIWindow, Bool>...) -> UIWindow? {
+        windows.reversed().first(keyPaths)
     }
 }

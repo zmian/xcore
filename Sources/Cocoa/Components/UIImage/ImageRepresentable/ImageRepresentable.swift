@@ -35,6 +35,33 @@ public enum ImageSourceType: Equatable {
     }
 }
 
+// MARK: - ImageSourceType: Codable
+
+extension ImageSourceType: Codable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+
+        if let data = try? container.decode(Data.self), let image = UIImage(data: data) {
+            self = .uiImage(image)
+        } else if let url = try? container.decode(String.self) {
+            self = .url(url)
+        } else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Failed to convert to ImageSourceType.")
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+
+        switch self {
+            case .url(let value):
+                try container.encode(value)
+            case .uiImage(let image):
+                try container.encode(image)
+        }
+    }
+}
+
 // MARK: - ImageSourceType.CacheType
 
 extension ImageSourceType {
@@ -58,12 +85,12 @@ extension ImageSourceType {
 
 public protocol ImageRepresentable {
     var imageSource: ImageSourceType { get }
-    var bundle: Bundle? { get }
+    var bundle: Bundle { get }
 }
 
 extension ImageRepresentable {
-    public var bundle: Bundle? {
-        nil
+    public var bundle: Bundle {
+        .main
     }
 
     var cacheKey: String? {
@@ -71,7 +98,7 @@ extension ImageRepresentable {
             case .uiImage:
                 return nil
             case .url(let value):
-                let bundlePrefix = bundle?.bundleIdentifier ?? ""
+                let bundlePrefix = bundle.bundleIdentifier ?? ""
                 return bundlePrefix + value
         }
     }
