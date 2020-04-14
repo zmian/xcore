@@ -18,7 +18,7 @@ public struct AppState {
     /// The default value is `false`.
     public let isRemotelyRefreshable: Bool
 
-    /// The view controller associate with this state.
+    /// The view controller associated with this state.
     public var viewController: () -> UIViewController
 
     /// The condition indicating if the state is valid. If so, then corresponding
