@@ -26,7 +26,7 @@ public struct AppState {
     public var precondition: () -> Bool
 
     public init(
-        id: Identifier,
+        id: Identifier = #function,
         remotelyRefreshable: Bool = false,
         viewController: @autoclosure @escaping () -> UIViewController,
         precondition: @escaping () -> Bool

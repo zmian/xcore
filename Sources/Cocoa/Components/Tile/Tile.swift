@@ -30,7 +30,7 @@ public struct Tile: UserInfoContainer, MutableAppliable, CustomAnalyticsValueCon
     public var userInfo: UserInfo
 
     public init(
-        id: Identifier,
+        id: Identifier = #function,
         dismissable: Bool = false,
         analyticsValue: String? = nil,
         accessibilityLabel: String? = nil,
