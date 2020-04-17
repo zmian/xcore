@@ -24,9 +24,9 @@ public protocol PresentationContext {
 // If Swift ever allows nested types this enum can move under the
 // protocol namespace as `PresentationContextKind.Kind`.
 public struct PresentationContextKind: Equatable {
-    public let id: Identifier<PresentationContextKind>
+    public let id: Identifier<Self>
 
-    public init(id: Identifier<PresentationContextKind>) {
+    public init(id: Identifier<Self>) {
         self.id = id
     }
 }
@@ -38,11 +38,11 @@ extension PresentationContextKind: ExpressibleByStringLiteral {
 }
 
 extension PresentationContextKind {
-    public static var feed: PresentationContextKind {
+    public static var feed: Self {
         "feed"
     }
 
-    public static var detail: PresentationContextKind {
+    public static var detail: Self {
         "detail"
     }
 }
