@@ -16,7 +16,6 @@ import UIKit
 public protocol PresentationContext {
     typealias Kind = PresentationContextKind
     var context: Kind { get }
-    init(collectionView: UICollectionView, context: Kind)
 }
 
 // MARK: - Kind
@@ -24,9 +23,12 @@ public protocol PresentationContext {
 // If Swift ever allows nested types this enum can move under the
 // protocol namespace as `PresentationContextKind.Kind`.
 public struct PresentationContextKind: Equatable {
-    public let id: Identifier<Self>
+    public typealias Identifier = Xcore.Identifier<Self>
 
-    public init(id: Identifier<Self>) {
+    /// A unique id for the presentation context.
+    public let id: Identifier
+
+    public init(id: Identifier) {
         self.id = id
     }
 }

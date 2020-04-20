@@ -14,7 +14,7 @@ open class Observers {
         // Must have a public init for client code to initialize this class.
     }
 
-    // MARK: Observer API
+    // MARK: - Observer API
 
     /// Register an observer.
     open func observe<T>(owner: T, _ handler: @escaping () -> Void) where T: AnyObject, T: Equatable {
@@ -56,7 +56,7 @@ open class Observers {
         return observers.isEmpty
     }
 
-    // MARK: Notify API
+    // MARK: - Notify API
 
     /// A boolean value to determine whether the notifications should be sent.
     /// This flag is checked before firing any notification calls to the registered
@@ -89,14 +89,14 @@ open class Observers {
     }
 }
 
-// MARK: Observer
+// MARK: - Observer
 
 private final class Observer {
     fileprivate let equals: (AnyObject) -> Bool
-    public weak var owner: AnyObject?
-    public var handler: (() -> Void)?
+    weak var owner: AnyObject?
+    var handler: (() -> Void)?
 
-    public init<T>(owner: T, handler: @escaping () -> Void) where T: AnyObject, T: Equatable {
+    init<T>(owner: T, handler: @escaping () -> Void) where T: AnyObject, T: Equatable {
         self.owner = owner
         self.handler = handler
         self.equals = { [weak owner] otherOwner in
@@ -109,7 +109,7 @@ private final class Observer {
     }
 }
 
-// MARK: Observer: Equatable
+// MARK: - Observer: Equatable
 
 extension Observer: Equatable {
     static func ==(lhs: Observer, rhs: Observer) -> Bool {
@@ -121,11 +121,11 @@ extension Observer: Equatable {
     }
 
     static func ==<T>(lhs: T, rhs: Observer) -> Bool where T: AnyObject, T: Equatable {
-        return rhs.equals(lhs)
+        rhs.equals(lhs)
     }
 
     static func ==<T>(lhs: Observer, rhs: T) -> Bool where T: AnyObject, T: Equatable {
-        return lhs.equals(rhs)
+        lhs.equals(rhs)
     }
 
     static func ==<T>(lhs: T?, rhs: Observer) -> Bool where T: AnyObject, T: Equatable {

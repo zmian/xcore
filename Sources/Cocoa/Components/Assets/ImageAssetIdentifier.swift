@@ -96,7 +96,7 @@ public func r(_ assetIdentifier: ImageAssetIdentifier) -> ImageAssetIdentifier {
 // MARK: - Xcore Buit-in Assets
 
 extension ImageAssetIdentifier {
-    private static func propertyName(name: String = #function) -> Self {
+    private static func propertyName(_ name: String = #function) -> Self {
         .init(rawValue: name, bundle: .xcore)
     }
 
@@ -145,13 +145,13 @@ extension ImageAssetIdentifier {
 
 extension ImageAssetIdentifier {
     // MARK: Checkmarks
-    public static var checkmarkIcon = propertyName(name: "checkmarkIcon")
-    public static var checkmarkIconFilled = propertyName(name: "checkmarkIconFilled")
-    public static var checkmarkIconUnfilled = propertyName(name: "checkmarkIconUnfilled")
+    public static var checkmarkIcon = propertyName("checkmarkIcon")
+    public static var checkmarkIconFilled = propertyName("checkmarkIconFilled")
+    public static var checkmarkIconUnfilled = propertyName("checkmarkIconUnfilled")
 
-    public static var moreIcon = propertyName(name: "moreIcon")
+    public static var moreIcon = propertyName("moreIcon")
 
     // MARK: Biometrics ID
-    public static var biometricsFaceIDIcon = propertyName(name: "biometricsFaceIDIcon")
-    public static var biometricsTouchIDIcon = propertyName(name: "biometricsTouchIDIcon")
+    public static var biometricsFaceIDIcon = propertyName("biometricsFaceIDIcon")
+    public static var biometricsTouchIDIcon = propertyName("biometricsTouchIDIcon")
 }
