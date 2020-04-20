@@ -31,9 +31,9 @@ final class FeedDataSource: XCCollectionViewDataSource {
     var cornerRadius: CGFloat = 11
     var isShadowEnabled = true
 
-    init(collectionView: UICollectionView, sectionIndex: Int) {
+    init(sectionIndex: Int) {
         self.sectionIndex = sectionIndex
-        super.init(collectionView: collectionView)
+        super.init()
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {

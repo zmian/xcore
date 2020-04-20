@@ -53,7 +53,8 @@ open class XCComposedTableViewController: UIViewController {
         super.viewDidLoad()
 
         tableView.apply {
-            composedDataSource.dataSources = dataSources(for: $0)
+            composedDataSource.tableView = $0
+            composedDataSource.dataSources = dataSources()
             $0.dataSource = composedDataSource
             $0.delegate = self
 
@@ -70,7 +71,7 @@ open class XCComposedTableViewController: UIViewController {
         tableView.reloadData()
     }
 
-    open func dataSources(for tableView: UITableView) -> [XCTableViewDataSource] {
+    open func dataSources() -> [XCTableViewDataSource] {
         []
     }
 

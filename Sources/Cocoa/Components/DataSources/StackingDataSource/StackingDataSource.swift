@@ -52,10 +52,10 @@ open class StackingDataSource: XCCollectionViewDataSource, XCCollectionViewTileL
         viewModel.numberOfSections > 1 && isExtended
     }
 
-    public init(collectionView: UICollectionView, viewModel: StackingDataSourceViewModel, cellProvider: @escaping CellProvider) {
+    public init(viewModel: StackingDataSourceViewModel, cellProvider: @escaping CellProvider) {
         self.viewModel = viewModel
         self.cellProvider = cellProvider
-        super.init(collectionView: collectionView)
+        super.init()
 
         viewModel.didChange { [weak self] in
             self?.refreshContent()

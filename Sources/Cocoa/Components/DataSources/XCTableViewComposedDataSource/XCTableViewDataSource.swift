@@ -24,17 +24,12 @@ open class XCTableViewDataSource: NSObject, UITableViewDataSource {
         tableView?.viewController?.navigationController
     }
 
-    override init() {
-        super.init()
-    }
-
-    public init(tableView: UITableView) {
-        self.tableView = tableView
+    public override init() {
         super.init()
     }
 }
 
-// MARK: UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension XCTableViewDataSource {
     open func heightForRow(at indexPath: IndexPath) -> CGFloat {

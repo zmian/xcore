@@ -41,11 +41,11 @@ final class AlertsViewController: XCComposedCollectionViewController {
         layout = .init(XCCollectionViewTileLayout())
     }
 
-    override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
+    override func dataSources() -> [XCCollectionViewDataSource] {
         var allDataSources = [XCCollectionViewDataSource]()
 
         for i in 0...2 {
-            allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
+            allDataSources.append(FeedDataSource(sectionIndex: i))
         }
         allDataSources.append(alertsDataSource(
             viewModel: AlertsViewModel(
@@ -55,7 +55,7 @@ final class AlertsViewController: XCComposedCollectionViewController {
         ))
 
         for i in 3...6 {
-            allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
+            allDataSources.append(FeedDataSource(sectionIndex: i))
         }
         allDataSources.append(alertsDataSource(
             viewModel: AlertsViewModel(
@@ -65,8 +65,9 @@ final class AlertsViewController: XCComposedCollectionViewController {
         ))
 
         for i in 7...10 {
-            allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
+            allDataSources.append(FeedDataSource(sectionIndex: i))
         }
+
         allDataSources.append(alertsDataSource(
             viewModel: AlertsViewModel(
                 identifier: "ThirdAlerts",
@@ -89,8 +90,8 @@ final class AlertsViewController: XCComposedCollectionViewController {
             )
             return cell
         }
+
         return StackingDataSource(
-            collectionView: collectionView,
             viewModel: viewModel,
             cellProvider: cellProvider
         )

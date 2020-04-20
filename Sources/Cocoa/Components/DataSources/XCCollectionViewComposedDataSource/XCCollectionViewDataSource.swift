@@ -19,16 +19,11 @@ open class XCCollectionViewDataSource: NSObject, UICollectionViewDataSource {
         collectionView?.viewController?.navigationController
     }
 
-    override init() {
+    public override init() {
         super.init()
     }
 
-    public init(collectionView: UICollectionView) {
-        self.collectionView = collectionView
-        super.init()
-    }
-
-    // MARK: Layout 2.0
+    // MARK: - Layout 2.0
 
     open func collectionView(_ collectionView: UICollectionView, itemAttributesAt indexPath: IndexPath) -> CGSize? {
         nil
