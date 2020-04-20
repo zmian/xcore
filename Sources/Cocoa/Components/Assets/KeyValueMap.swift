@@ -58,15 +58,13 @@ public struct KeyValueMap<Type, Value>: UserInfoContainer, MutableAppliable {
     public var userInfo: UserInfo
 
     public init(_ key: String, _ value: Value, map: Set<String> = [], userInfo: UserInfo = [:]) {
-        self.key = key.lowercased()
+        self.key = key
         self.value = value
         self.map = map
         self.userInfo = userInfo
     }
 
     public func contains(_ key: String) -> Bool {
-        let key = key.lowercased()
-
         if key == self.key {
             return true
         }
