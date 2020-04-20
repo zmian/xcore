@@ -63,6 +63,7 @@
 		68BCA2DD2304B2B000424B85 /* SeparatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BCA2DC2304B2B000424B85 /* SeparatorViewController.swift */; };
 		68CA631F224C76760012DF31 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA631E224C76750012DF31 /* StringTests.swift */; };
 		7118C4282326B93100821180 /* ExamplePickerListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118C4272326B93100821180 /* ExamplePickerListModel.swift */; };
+		F2810725244D36A300EB23C0 /* DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2810724244D36A300EB23C0 /* DateTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +153,7 @@
 		9B4A87B278E5152219B8BDDE /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C6C1CBC1C9F9F312C6AB78E6 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		E48E508CA76C1ED6E256FBF4 /* Pods-UnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F2810724244D36A300EB23C0 /* DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -308,6 +310,7 @@
 				68054FBE243004C60089C94C /* ImageRepresentableTests.swift */,
 				68054FC024300EA50089C94C /* IdentifierTests.swift */,
 				684B1D07224C4F27009F6197 /* Supporting Files */,
+				F2810724244D36A300EB23C0 /* DateTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -689,6 +692,7 @@
 				6804D60A2274052900BEB7E0 /* ArrayTests.swift in Sources */,
 				68376A1E228C2CCF00C7B819 /* SearchBarViewTests.swift in Sources */,
 				68376A17228C285700C7B819 /* CurrencyFormatterTests.swift in Sources */,
+				F2810725244D36A300EB23C0 /* DateTests.swift in Sources */,
 				688B665F2275511400AD0C1A /* NumbersTests.swift in Sources */,
 				680185DD2422EA2400035AD1 /* LazyResetTests.swift in Sources */,
 				684B1CFC224C4CAA009F6197 /* TestCase.swift in Sources */,
