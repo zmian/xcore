@@ -122,7 +122,7 @@ extension Date.Region {
     }
 
     public static var current: Self {
-        .init(locale: .current, timeZone: .current)
+        .init(calendar: .gregorian, locale: .current, timeZone: .current)
     }
 
     public static var usEastern: Self {
