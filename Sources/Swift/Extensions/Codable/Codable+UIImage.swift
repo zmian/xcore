@@ -52,10 +52,10 @@ extension KeyedDecodingContainer {
 extension SingleValueEncodingContainer {
     /// Encodes a single value of the given type.
     ///
-    /// - parameter value: The value to encode.
-    /// - throws: `EncodingError.invalidValue` if the given value is invalid in
+    /// - Parameter value: The value to encode.
+    /// - Throws: `EncodingError.invalidValue` if the given value is invalid in
     ///   the current context for this format.
-    /// - precondition: May not be called after a previous `self.encode(_:)`
+    /// - Precondition: May not be called after a previous `self.encode(_:)`
     ///   call.
     public mutating func encode(_ value: UIImage, as type: EncodingImageType = .png) throws {
         var imageData: Data?

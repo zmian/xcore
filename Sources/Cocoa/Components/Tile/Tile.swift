@@ -24,7 +24,7 @@ public struct Tile: UserInfoContainer, MutableAppliable, CustomAnalyticsValueCon
     public let accessibilityLabel: String
 
     /// The data source associated with this tile.
-    public let dataSource: (_ collectionView: UICollectionView) -> XCCollectionViewDataSource
+    public let dataSource: () -> XCCollectionViewDataSource
 
     /// Additional info which may be used to describe the url further.
     public var userInfo: UserInfo
@@ -34,7 +34,7 @@ public struct Tile: UserInfoContainer, MutableAppliable, CustomAnalyticsValueCon
         dismissable: Bool = false,
         analyticsValue: String? = nil,
         accessibilityLabel: String? = nil,
-        dataSource: @escaping (_ collectionView: UICollectionView) -> XCCollectionViewDataSource,
+        dataSource: @autoclosure @escaping () -> XCCollectionViewDataSource,
         userInfo: UserInfo = [:]
     ) {
         self.id = id

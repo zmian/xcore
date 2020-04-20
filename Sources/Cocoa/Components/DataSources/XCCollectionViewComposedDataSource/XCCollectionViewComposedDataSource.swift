@@ -34,7 +34,17 @@ final public class XCCollectionView: UICollectionView {
 open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, ExpressibleByArrayLiteral {
     private var dataSourceIndex = DataSourceIndex<XCCollectionViewDataSource>()
 
-    open var dataSources = [XCCollectionViewDataSource]()
+    open override weak var collectionView: UICollectionView? {
+        didSet {
+            attachCollectionView(to: dataSources)
+        }
+    }
+
+    open var dataSources: [XCCollectionViewDataSource] = [] {
+        didSet {
+            attachCollectionView(to: dataSources)
+        }
+    }
 
     public override init() {
         super.init()
@@ -43,6 +53,7 @@ open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, Expre
     public init(dataSources: [XCCollectionViewDataSource]) {
         super.init()
         self.dataSources = dataSources
+        attachCollectionView(to: dataSources)
     }
 
     public required convenience init(arrayLiteral elements: XCCollectionViewDataSource...) {
@@ -53,6 +64,7 @@ open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, Expre
 
     /// Adds a new data source at the end of the collection.
     open func add(_ dataSource: XCCollectionViewDataSource) {
+        attachCollectionView(to: dataSources)
         dataSources.append(dataSource)
     }
 
@@ -63,6 +75,12 @@ open class XCCollectionViewComposedDataSource: XCCollectionViewDataSource, Expre
         }
 
         dataSources.remove(at: index)
+    }
+
+    private func attachCollectionView(to dataSources: [XCCollectionViewDataSource]) {
+        dataSources.forEach {
+            $0.collectionView = collectionView
+        }
     }
 
     open func index(for section: Int) -> DataSource<XCCollectionViewDataSource> {
