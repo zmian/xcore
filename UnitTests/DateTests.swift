@@ -8,15 +8,16 @@ import XCTest
 import PromiseKit
 @testable import Xcore
 
-class DateTest: XCTestCase {
+final class DateTest: XCTestCase {
     override func setUp() {
         super.setUp()
-        Date.configure(configuration: .default)
+        Date.configure(.default)
     }
 
     func testServerDate() {
         var date: Date?
         let syncExpectation = expectation(description: "sync_date")
+
         firstly {
             Date.syncServerDate(force: true)
         }.done {
@@ -30,7 +31,7 @@ class DateTest: XCTestCase {
         XCTAssertEqual(Date.serverDate, date)
     }
 
-    let customFormats: [Date.CustomFormat] = [
+    private let customFormats: [Date.CustomFormat] = [
         .iso8601,
         .iso8601Local,
         .yearMonthDayDash,
@@ -53,6 +54,7 @@ class DateTest: XCTestCase {
         for format in customFormats {
             let expectedDate: Date?
             let stringToTest: String
+
             switch format {
                 case .iso8601:
                     stringToTest = "2020-04-04T11:11:22.000+0000"
@@ -117,6 +119,7 @@ class DateTest: XCTestCase {
 
         for format in customFormats {
             let expectedResult: String
+
             switch format {
                 case .iso8601:
                     expectedResult = "2020-06-04T11:11:22.000+0000"
@@ -154,6 +157,7 @@ class DateTest: XCTestCase {
                     expectedResult = ""
                     XCTFail("Unknown format")
             }
+
             let dateString = date.toString(format: .custom(format))
             XCTAssertEqual(expectedResult, dateString)
         }
@@ -162,8 +166,7 @@ class DateTest: XCTestCase {
     func testRelativeCalculation() {
         let date = Date()
         XCTAssertEqual("Today", date.toString(format: .date(.full), doesRelativeDateFormatting: true))
-        let spanishRegion: Date.Region = .init(calendar: .gregorian, locale: Locale(identifier: "es"), timeZone: .utc)
-        XCTAssertEqual("hoy", date.toString(format: .date(.full), doesRelativeDateFormatting: true, region: spanishRegion))
+        XCTAssertEqual("hoy", date.toString(format: .date(.full), doesRelativeDateFormatting: true, region: .spanish))
     }
 
     func testTimeInDifferentRegion() {
@@ -186,8 +189,10 @@ class DateTest: XCTestCase {
     func testBeginningOfDate() {
         let components: [Calendar.Component] = [.year, .month, .day, .hour, .minute]
         let dateToAdjust = Date(year: 2020, month: 5, day: 4, hour: 21, minute: 11, second: 22)
+
         for component in components {
             let expectedDate: Date
+
             switch component {
                 case .year:
                     expectedDate = Date(year: 2020, month: 1, day: 1, hour: 0, minute: 0, second: 0)
@@ -203,8 +208,8 @@ class DateTest: XCTestCase {
                     expectedDate = Date()
                     XCTFail("Unsopported test case")
             }
-            let beginningOfDate = dateToAdjust.dateAtStartOf(component: component)
 
+            let beginningOfDate = dateToAdjust.startOf(component)
             print("Expected Date = \(expectedDate)")
             print("Receieved Result = \(beginningOfDate)")
             XCTAssertEqual(expectedDate, beginningOfDate)
@@ -214,8 +219,10 @@ class DateTest: XCTestCase {
     func testEndOfDate() {
         let components: [Calendar.Component] = [.year, .month, .day, .hour, .minute]
         let dateToAdjust = Date(year: 2020, month: 5, day: 4, hour: 21, minute: 11, second: 22)
+
         for component in components {
             let expectedDate: Date
+
             switch component {
                 case .year:
                     expectedDate = Date(year: 2020, month: 12, day: 31, hour: 23, minute: 59, second: 59).addingTimeInterval(0.999)
@@ -231,8 +238,8 @@ class DateTest: XCTestCase {
                     expectedDate = Date()
                     XCTFail("Unsopported test case")
             }
-            let endOfDate = dateToAdjust.dateAtEndOf(component: component)
 
+            let endOfDate = dateToAdjust.endOf(component)
             XCTAssertEqual(expectedDate, endOfDate)
         }
     }
@@ -251,19 +258,18 @@ class DateTest: XCTestCase {
         let nov = Date(year: 2020, month: 11, day: 4, hour: 21, minute: 11, second: 22).monthName()
         let dec = Date(year: 2020, month: 12, day: 4, hour: 21, minute: 11, second: 22).monthName()
 
-        let spanishRegion: Date.Region = .init(calendar: .gregorian, locale: Locale(identifier: "es"), timeZone: .utc)
-        let jan_es = Date(year: 2020, month: 1, day: 31, hour: 23, minute: 59, second: 59, region: spanishRegion).monthName(region: spanishRegion)
-        let feb_es = Date(year: 2020, month: 2, day: 4, hour: 21, minute: 11, second: 22, region: spanishRegion).monthName(region: spanishRegion)
-        let mar_es = Date(year: 2020, month: 3, day: 4, hour: 21, minute: 11, second: 22, region: spanishRegion).monthName(region: spanishRegion)
-        let apr_es = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 11, second: 22, region: spanishRegion).monthName(region: spanishRegion)
-        let may_es = Date(year: 2020, month: 5, day: 4, hour: 21, minute: 11, second: 22, region: spanishRegion).monthName(region: spanishRegion)
-        let jun_es = Date(year: 2020, month: 6, day: 4, hour: 21, minute: 11, second: 22, region: spanishRegion).monthName(region: spanishRegion)
-        let jul_es = Date(year: 2020, month: 7, day: 4, hour: 21, minute: 11, second: 22, region: spanishRegion).monthName(region: spanishRegion)
-        let aug_es = Date(year: 2020, month: 8, day: 4, hour: 21, minute: 11, second: 22, region: spanishRegion).monthName(region: spanishRegion)
-        let sep_es = Date(year: 2020, month: 9, day: 4, hour: 21, minute: 11, second: 22, region: spanishRegion).monthName(region: spanishRegion)
-        let oct_es = Date(year: 2020, month: 10, day: 4, hour: 21, minute: 11, second: 22, region: spanishRegion).monthName(region: spanishRegion)
-        let nov_es = Date(year: 2020, month: 11, day: 4, hour: 21, minute: 11, second: 22, region: spanishRegion).monthName(region: spanishRegion)
-        let dec_es = Date(year: 2020, month: 12, day: 4, hour: 21, minute: 11, second: 22, region: spanishRegion).monthName(region: spanishRegion)
+        let jan_es = Date(year: 2020, month: 1, day: 31, hour: 23, minute: 59, second: 59, region: .spanish).monthName(region: .spanish)
+        let feb_es = Date(year: 2020, month: 2, day: 4, hour: 21, minute: 11, second: 22, region: .spanish).monthName(region: .spanish)
+        let mar_es = Date(year: 2020, month: 3, day: 4, hour: 21, minute: 11, second: 22, region: .spanish).monthName(region: .spanish)
+        let apr_es = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 11, second: 22, region: .spanish).monthName(region: .spanish)
+        let may_es = Date(year: 2020, month: 5, day: 4, hour: 21, minute: 11, second: 22, region: .spanish).monthName(region: .spanish)
+        let jun_es = Date(year: 2020, month: 6, day: 4, hour: 21, minute: 11, second: 22, region: .spanish).monthName(region: .spanish)
+        let jul_es = Date(year: 2020, month: 7, day: 4, hour: 21, minute: 11, second: 22, region: .spanish).monthName(region: .spanish)
+        let aug_es = Date(year: 2020, month: 8, day: 4, hour: 21, minute: 11, second: 22, region: .spanish).monthName(region: .spanish)
+        let sep_es = Date(year: 2020, month: 9, day: 4, hour: 21, minute: 11, second: 22, region: .spanish).monthName(region: .spanish)
+        let oct_es = Date(year: 2020, month: 10, day: 4, hour: 21, minute: 11, second: 22, region: .spanish).monthName(region: .spanish)
+        let nov_es = Date(year: 2020, month: 11, day: 4, hour: 21, minute: 11, second: 22, region: .spanish).monthName(region: .spanish)
+        let dec_es = Date(year: 2020, month: 12, day: 4, hour: 21, minute: 11, second: 22, region: .spanish).monthName(region: .spanish)
 
         XCTAssertEqual(jan, "January")
         XCTAssertEqual(feb, "February")
@@ -301,15 +307,13 @@ class DateTest: XCTestCase {
         let sat = Date(year: 2020, month: 1, day: 11, hour: 23, minute: 59, second: 59).weekdayName()
         let sun = Date(year: 2020, month: 1, day: 12, hour: 23, minute: 59, second: 59).weekdayName()
 
-        let spanishRegion: Date.Region = .init(calendar: .gregorian, locale: Locale(identifier: "es"), timeZone: .utc)
-
-        let mon_es = Date(year: 2020, month: 1, day: 6, hour: 23, minute: 59, second: 59, region: spanishRegion).weekdayName(region: spanishRegion)
-        let tue_es = Date(year: 2020, month: 1, day: 7, hour: 23, minute: 59, second: 59, region: spanishRegion).weekdayName(region: spanishRegion)
-        let wed_es = Date(year: 2020, month: 1, day: 8, hour: 23, minute: 59, second: 59, region: spanishRegion).weekdayName(region: spanishRegion)
-        let thu_es = Date(year: 2020, month: 1, day: 9, hour: 23, minute: 59, second: 59, region: spanishRegion).weekdayName(region: spanishRegion)
-        let fri_es = Date(year: 2020, month: 1, day: 10, hour: 23, minute: 59, second: 59, region: spanishRegion).weekdayName(region: spanishRegion)
-        let sat_es = Date(year: 2020, month: 1, day: 11, hour: 23, minute: 59, second: 59, region: spanishRegion).weekdayName(region: spanishRegion)
-        let sun_es = Date(year: 2020, month: 1, day: 12, hour: 23, minute: 59, second: 59, region: spanishRegion).weekdayName(region: spanishRegion)
+        let mon_es = Date(year: 2020, month: 1, day: 6, hour: 23, minute: 59, second: 59, region: .spanish).weekdayName(region: .spanish)
+        let tue_es = Date(year: 2020, month: 1, day: 7, hour: 23, minute: 59, second: 59, region: .spanish).weekdayName(region: .spanish)
+        let wed_es = Date(year: 2020, month: 1, day: 8, hour: 23, minute: 59, second: 59, region: .spanish).weekdayName(region: .spanish)
+        let thu_es = Date(year: 2020, month: 1, day: 9, hour: 23, minute: 59, second: 59, region: .spanish).weekdayName(region: .spanish)
+        let fri_es = Date(year: 2020, month: 1, day: 10, hour: 23, minute: 59, second: 59, region: .spanish).weekdayName(region: .spanish)
+        let sat_es = Date(year: 2020, month: 1, day: 11, hour: 23, minute: 59, second: 59, region: .spanish).weekdayName(region: .spanish)
+        let sun_es = Date(year: 2020, month: 1, day: 12, hour: 23, minute: 59, second: 59, region: .spanish).weekdayName(region: .spanish)
 
         XCTAssertEqual(mon, "Monday")
         XCTAssertEqual(tue, "Tuesday")
@@ -337,14 +341,13 @@ class DateTest: XCTestCase {
         XCTAssertEqual(Date.weekdayName(for: 5), "Friday")
         XCTAssertEqual(Date.weekdayName(for: 6), "Saturday")
 
-        let spanishRegion: Date.Region = .init(calendar: .gregorian, locale: Locale(identifier: "es"), timeZone: .utc)
-        XCTAssertEqual(Date.weekdayName(for: 0, region: spanishRegion), "domingo")
-        XCTAssertEqual(Date.weekdayName(for: 1, region: spanishRegion), "lunes")
-        XCTAssertEqual(Date.weekdayName(for: 2, region: spanishRegion), "martes")
-        XCTAssertEqual(Date.weekdayName(for: 3, region: spanishRegion), "miércoles")
-        XCTAssertEqual(Date.weekdayName(for: 4, region: spanishRegion), "jueves")
-        XCTAssertEqual(Date.weekdayName(for: 5, region: spanishRegion), "viernes")
-        XCTAssertEqual(Date.weekdayName(for: 6, region: spanishRegion), "sábado")
+        XCTAssertEqual(Date.weekdayName(for: 0, region: .spanish), "domingo")
+        XCTAssertEqual(Date.weekdayName(for: 1, region: .spanish), "lunes")
+        XCTAssertEqual(Date.weekdayName(for: 2, region: .spanish), "martes")
+        XCTAssertEqual(Date.weekdayName(for: 3, region: .spanish), "miércoles")
+        XCTAssertEqual(Date.weekdayName(for: 4, region: .spanish), "jueves")
+        XCTAssertEqual(Date.weekdayName(for: 5, region: .spanish), "viernes")
+        XCTAssertEqual(Date.weekdayName(for: 6, region: .spanish), "sábado")
     }
 
     func testDateUnit() {
@@ -385,17 +388,17 @@ class DateTest: XCTestCase {
         let testSecondsGranularityDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33)
         let testSecondsGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33)
 
-        let testMultipleRegionDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33, region: .ISO)
+        let testMultipleRegionDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33, region: .iso)
         let testMultipleRegionDateRight = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 45, second: 33, region: .usEastern)
 
-        XCTAssert(testYearGranularityDateLeft.isSame(date: testYearGranularityDateRight, granularity: .year), "Year granularity failed")
-        XCTAssert(testMonthGranularityDateLeft.isSame(date: testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
-        XCTAssert(testDayGranularityDateLeft.isSame(date: testDayGranularityDateRight, granularity: .day), "Day granularity failed")
-        XCTAssert(testHourGranularityDateLeft.isSame(date: testHourGranularityDateRight, granularity: .hour), "Hour granularity failed")
-        XCTAssert(testMinuteGranularityDateLeft.isSame(date: testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
-        XCTAssert(testSecondsGranularityDateLeft.isSame(date: testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
-        XCTAssert(testSecondsGranularityDateLeft.isSame(date: testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
-        XCTAssert(testMultipleRegionDateLeft.isSame(date: testMultipleRegionDateRight, granularity: .second), "Multi region test failed")
+        XCTAssert(testYearGranularityDateLeft.isSame(testYearGranularityDateRight, granularity: .year), "Year granularity failed")
+        XCTAssert(testMonthGranularityDateLeft.isSame(testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
+        XCTAssert(testDayGranularityDateLeft.isSame(testDayGranularityDateRight, granularity: .day), "Day granularity failed")
+        XCTAssert(testHourGranularityDateLeft.isSame(testHourGranularityDateRight, granularity: .hour), "Hour granularity failed")
+        XCTAssert(testMinuteGranularityDateLeft.isSame(testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
+        XCTAssert(testSecondsGranularityDateLeft.isSame(testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
+        XCTAssert(testSecondsGranularityDateLeft.isSame(testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
+        XCTAssert(testMultipleRegionDateLeft.isSame(testMultipleRegionDateRight, granularity: .second), "Multi region test failed")
     }
 
     func testIsPastDate() {
@@ -417,17 +420,17 @@ class DateTest: XCTestCase {
         let testSecondsGranularityDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 11)
         let testSecondsGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33)
 
-        let testMultipleRegionDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33, region: .ISO)
+        let testMultipleRegionDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33, region: .iso)
         let testMultipleRegionDateRight = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 46, second: 33, region: .usEastern)
 
-        XCTAssert(testYearGranularityDateLeft.isBefore(date: testYearGranularityDateRight, granularity: .year), "Year granularity failed")
-        XCTAssert(testMonthGranularityDateLeft.isBefore(date: testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
-        XCTAssert(testDayGranularityDateLeft.isBefore(date: testDayGranularityDateRight, granularity: .day), "Day granularity failed")
-        XCTAssert(testHourGranularityDateLeft.isBefore(date: testHourGranularityDateRight, granularity: .hour), "Hour granularity failed")
-        XCTAssert(testMinuteGranularityDateLeft.isBefore(date: testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
-        XCTAssert(testSecondsGranularityDateLeft.isBefore(date: testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
-        XCTAssert(testSecondsGranularityDateLeft.isBefore(date: testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
-        XCTAssert(testMultipleRegionDateLeft.isBefore(date: testMultipleRegionDateRight, granularity: .second), "Multi region test failed")
+        XCTAssert(testYearGranularityDateLeft.isBefore(testYearGranularityDateRight, granularity: .year), "Year granularity failed")
+        XCTAssert(testMonthGranularityDateLeft.isBefore(testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
+        XCTAssert(testDayGranularityDateLeft.isBefore(testDayGranularityDateRight, granularity: .day), "Day granularity failed")
+        XCTAssert(testHourGranularityDateLeft.isBefore(testHourGranularityDateRight, granularity: .hour), "Hour granularity failed")
+        XCTAssert(testMinuteGranularityDateLeft.isBefore(testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
+        XCTAssert(testSecondsGranularityDateLeft.isBefore(testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
+        XCTAssert(testSecondsGranularityDateLeft.isBefore(testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
+        XCTAssert(testMultipleRegionDateLeft.isBefore(testMultipleRegionDateRight, granularity: .second), "Multi region test failed")
     }
 
     func testIsFutureDate() {
@@ -449,56 +452,63 @@ class DateTest: XCTestCase {
         let testSecondsGranularityDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 44)
         let testSecondsGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33)
 
-        let testMultipleRegionDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 47, second: 33, region: .ISO)
+        let testMultipleRegionDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 47, second: 33, region: .iso)
         let testMultipleRegionDateRight = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 46, second: 33, region: .usEastern)
 
-        XCTAssert(testYearGranularityDateLeft.isAfter(date: testYearGranularityDateRight, granularity: .year), "Year granularity failed")
-        XCTAssert(testMonthGranularityDateLeft.isAfter(date: testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
-        XCTAssert(testDayGranularityDateLeft.isAfter(date: testDayGranularityDateRight, granularity: .day), "Day granularity failed")
-        XCTAssert(testHourGranularityDateLeft.isAfter(date: testHourGranularityDateRight, granularity: .hour), "Hour granularity failed")
-        XCTAssert(testMinuteGranularityDateLeft.isAfter(date: testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
-        XCTAssert(testSecondsGranularityDateLeft.isAfter(date: testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
-        XCTAssert(testSecondsGranularityDateLeft.isAfter(date: testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
-        XCTAssert(testMultipleRegionDateLeft.isAfter(date: testMultipleRegionDateRight, granularity: .second), "Multi region test failed")
+        XCTAssert(testYearGranularityDateLeft.isAfter(testYearGranularityDateRight, granularity: .year), "Year granularity failed")
+        XCTAssert(testMonthGranularityDateLeft.isAfter(testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
+        XCTAssert(testDayGranularityDateLeft.isAfter(testDayGranularityDateRight, granularity: .day), "Day granularity failed")
+        XCTAssert(testHourGranularityDateLeft.isAfter(testHourGranularityDateRight, granularity: .hour), "Hour granularity failed")
+        XCTAssert(testMinuteGranularityDateLeft.isAfter(testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
+        XCTAssert(testSecondsGranularityDateLeft.isAfter(testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
+        XCTAssert(testSecondsGranularityDateLeft.isAfter(testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
+        XCTAssert(testMultipleRegionDateLeft.isAfter(testMultipleRegionDateRight, granularity: .second), "Multi region test failed")
     }
 
     func testIsBetweenDate() {
-        let testYearGranularityDateLeft = Date(year: 2021, month: 4, day: 5, hour: 1, minute: 45, second: 33)
+        let testYearGranularityDateLeft = Date(year: 2019, month: 2, day: 1, hour: 3, minute: 41, second: 22)
         let testYearGranularityDateMid = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33)
-        let testYearGranularityDateRight = Date(year: 2019, month: 2, day: 1, hour: 3, minute: 41, second: 22)
+        let testYearGranularityDateRight = Date(year: 2021, month: 4, day: 5, hour: 1, minute: 45, second: 33)
+        let testYearGranularityDateInterval = DateInterval(start: testYearGranularityDateLeft, end: testYearGranularityDateRight)
 
-        let testMonthGranularityDateLeft = Date(year: 2020, month: 6, day: 5, hour: 1, minute: 45, second: 33)
-        let testMonthGranularityDatemid = Date(year: 2020, month: 5, day: 5, hour: 1, minute: 45, second: 33)
-        let testMonthGranularityDateRight = Date(year: 2020, month: 4, day: 1, hour: 3, minute: 41, second: 22)
+        let testMonthGranularityDateLeft = Date(year: 2020, month: 4, day: 1, hour: 3, minute: 41, second: 22)
+        let testMonthGranularityDateMid = Date(year: 2020, month: 5, day: 5, hour: 1, minute: 45, second: 33)
+        let testMonthGranularityDateRight = Date(year: 2020, month: 6, day: 5, hour: 1, minute: 45, second: 33)
+        let testMonthGranularityDateInterval = DateInterval(start: testMonthGranularityDateLeft, end: testMonthGranularityDateRight)
 
-        let testDayGranularityDateLeft = Date(year: 2020, month: 4, day: 7, hour: 1, minute: 45, second: 33)
+        let testDayGranularityDateLeft = Date(year: 2020, month: 4, day: 5, hour: 3, minute: 41, second: 22)
         let testDayGranularityDateMid = Date(year: 2020, month: 4, day: 6, hour: 1, minute: 45, second: 33)
-        let testDayGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 3, minute: 41, second: 22)
+        let testDayGranularityDateRight = Date(year: 2020, month: 4, day: 7, hour: 1, minute: 45, second: 33)
+        let testDayGranularityDateInterval = DateInterval(start: testDayGranularityDateLeft, end: testDayGranularityDateRight)
 
-        let testHourGranularityDateLeft = Date(year: 2020, month: 4, day: 5, hour: 3, minute: 45, second: 33)
+        let testHourGranularityDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 41, second: 22)
         let testHourGranularityDateMid = Date(year: 2020, month: 4, day: 5, hour: 2, minute: 45, second: 33)
-        let testHourGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 41, second: 22)
+        let testHourGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 3, minute: 45, second: 33)
+        let testHourGranularityDateInterval = DateInterval(start: testHourGranularityDateLeft, end: testHourGranularityDateRight)
 
-        let testMinuteGranularityDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 59, second: 33)
+        let testMinuteGranularityDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 22)
         let testMinuteGranularityDateMid = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 55, second: 33)
-        let testMinuteGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 22)
+        let testMinuteGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 59, second: 33)
+        let testMinuteGranularityDateInterval = DateInterval(start: testMinuteGranularityDateLeft, end: testMinuteGranularityDateRight)
 
-        let testSecondsGranularityDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 55)
+        let testSecondsGranularityDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33)
         let testSecondsGranularityDateMid = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 44)
-        let testSecondsGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33)
+        let testSecondsGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 55)
+        let testSecondsGranularityDateInterval = DateInterval(start: testSecondsGranularityDateLeft, end: testSecondsGranularityDateRight)
 
-        let testMultipleRegionDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 47, second: 33, region: .ISO)
-        let testMultipleRegionDateMid = Date(year: 2020, month: 4, day: 5, hour: 4, minute: 36, second: 33, region: .init(calendar: .gregorian, locale: Locale(identifier: "TR"), timeZone: TimeZone(identifier: "Europe/Istanbul")!))
-        let testMultipleRegionDateRight = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 30, second: 33, region: .usEastern)
+        let testMultipleRegionDateLeft = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 30, second: 33, region: .usEastern)
+        let testMultipleRegionDateMid = Date(year: 2020, month: 4, day: 5, hour: 4, minute: 36, second: 33, region: .turkey)
+        let testMultipleRegionDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 47, second: 33, region: .iso)
+        let testMultipleRegionDateInterval = DateInterval(start: testMultipleRegionDateLeft, end: testMultipleRegionDateRight)
 
-        XCTAssert(testYearGranularityDateMid.isInBetween(date: testYearGranularityDateRight, and: testYearGranularityDateLeft, granularity: .year), "Year granularity failed")
-        XCTAssert(testMonthGranularityDatemid.isInBetween(date: testMonthGranularityDateRight, and: testMonthGranularityDateLeft, granularity: .month), "Month granularity failed")
-        XCTAssert(testDayGranularityDateMid.isInBetween(date: testDayGranularityDateRight, and: testDayGranularityDateLeft, granularity: .day), "Day granularity failed")
-        XCTAssert(testHourGranularityDateMid.isInBetween(date: testHourGranularityDateRight, and: testHourGranularityDateLeft, granularity: .hour), "Hour granularity failed")
-        XCTAssert(testMinuteGranularityDateMid.isInBetween(date: testMinuteGranularityDateRight, and: testMinuteGranularityDateLeft, granularity: .minute), "Minute granularity failed")
-        XCTAssert(testSecondsGranularityDateMid.isInBetween(date: testSecondsGranularityDateRight, and: testSecondsGranularityDateLeft, granularity: .second), "Seconds granularity failed")
-        XCTAssert(testSecondsGranularityDateMid.isInBetween(date: testSecondsGranularityDateRight, and: testSecondsGranularityDateLeft, granularity: .nanosecond), "NanoSeconds granularity failed")
-        XCTAssert(testMultipleRegionDateMid.isInBetween(date: testMultipleRegionDateRight, and: testMultipleRegionDateLeft, granularity: .second), "Multi region test failed")
+        XCTAssert(testYearGranularityDateMid.isInBetween(testYearGranularityDateInterval, granularity: .year), "Year granularity failed")
+        XCTAssert(testMonthGranularityDateMid.isInBetween(testMonthGranularityDateInterval, granularity: .month), "Month granularity failed")
+        XCTAssert(testDayGranularityDateMid.isInBetween(testDayGranularityDateInterval, granularity: .day), "Day granularity failed")
+        XCTAssert(testHourGranularityDateMid.isInBetween(testHourGranularityDateInterval, granularity: .hour), "Hour granularity failed")
+        XCTAssert(testMinuteGranularityDateMid.isInBetween(testMinuteGranularityDateInterval, granularity: .minute), "Minute granularity failed")
+        XCTAssert(testSecondsGranularityDateMid.isInBetween(testSecondsGranularityDateInterval, granularity: .second), "Seconds granularity failed")
+        XCTAssert(testSecondsGranularityDateMid.isInBetween(testSecondsGranularityDateInterval, granularity: .nanosecond), "NanoSeconds granularity failed")
+        XCTAssert(testMultipleRegionDateMid.isInBetween(testMultipleRegionDateInterval, granularity: .second), "Multi region test failed")
     }
 
     func testUntilDate() {
@@ -514,8 +524,8 @@ class DateTest: XCTestCase {
 
     func testTimeZone() {
         XCTAssertEqual(Date.timeZoneOffset(region: .usEastern), -4)
-        XCTAssertEqual(Date.timeZoneOffset(region: .ISO), 0)
-        XCTAssertEqual(Date.timeZoneOffset(region: .init(calendar: .gregorian, locale: Locale(identifier: "TR"), timeZone: TimeZone(identifier: "Europe/Istanbul")!)), 3)
+        XCTAssertEqual(Date.timeZoneOffset(region: .iso), 0)
+        XCTAssertEqual(Date.timeZoneOffset(region: .turkey), 3)
     }
 
     func testTotalDayInCurrentMonth() {
@@ -561,7 +571,7 @@ class DateTest: XCTestCase {
 }
 
 extension Date.Configuration {
-    static var `default`: Self {
+    fileprivate static var `default`: Self {
         .init(
             region: .gregorianUtc,
             serverDateProvider: serverDateProvider,
@@ -586,3 +596,8 @@ extension Date.Configuration {
 }
 
 private struct ParsingError: Error {}
+
+extension Date.Region {
+    fileprivate static let spanish = Self(calendar: .gregorian, timeZone: .utc, locale: Locale(identifier: "es"))
+    fileprivate static let turkey = Self(calendar: .gregorian, timeZone: TimeZone(identifier: "Europe/Istanbul")!, locale: Locale(identifier: "TR"))
+}

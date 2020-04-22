@@ -309,8 +309,8 @@
 				684B1E8C224C5167009F6197 /* VersionTests.swift */,
 				68054FBE243004C60089C94C /* ImageRepresentableTests.swift */,
 				68054FC024300EA50089C94C /* IdentifierTests.swift */,
-				684B1D07224C4F27009F6197 /* Supporting Files */,
 				F2810724244D36A300EB23C0 /* DateTests.swift */,
+				684B1D07224C4F27009F6197 /* Supporting Files */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
