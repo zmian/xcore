@@ -29,7 +29,7 @@ extension PickerModel {
     }
 
     public func element(at component: Int, row: Int) -> Picker.RowModel {
-        .init(title: "Empty Element")
+        .init(title: "-")
     }
 
     public func selectedElement(at component: Int) -> Int {

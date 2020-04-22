@@ -8,12 +8,12 @@ import Foundation
 
 extension Picker {
     /// A convenience method to display a picker with list of options
-    /// that conforms to `OptionsRepresentable` protocol.
+    /// that conforms to `PickerOptions` protocol.
     ///
     /// **Example:**
     ///
     /// ```swift
-    /// enum CompassPoint: Int, CaseIterable, OptionsRepresentable {
+    /// enum CompassPoint: Int, CaseIterable, PickerOptions {
     ///     case north, south, east, west
     /// }
     ///
@@ -22,7 +22,7 @@ extension Picker {
     /// }
     /// ```
     @discardableResult
-    public static func present<T: OptionsRepresentable>(
+    public static func present<T: PickerOptions>(
         selected option: T? = nil,
         configure: ((Picker) -> Void)? = nil,
         _ handler: @escaping (_ option: T) -> Void
@@ -61,11 +61,19 @@ extension Picker {
         picker.present()
         return picker
     }
+
+    public static func present(
+        initialValue date: Date? = nil,
+        configuration: Configuration<UIDatePicker>? = nil,
+        _ callback: @escaping (Date?) -> Void
+    ) {
+        DatePicker.present(callback)
+    }
 }
 
 // MARK: - BasicPickerModel
 
-private final class BasicPickerModel<T: OptionsRepresentable>: PickerModel {
+private final class BasicPickerModel<T: PickerOptions>: PickerModel {
     private var options: [T] = T.allCases
     private var selectedOption: T
     private var selectionCallback: (T) -> Void

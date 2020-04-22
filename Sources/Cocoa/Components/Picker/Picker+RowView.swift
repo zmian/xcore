@@ -29,7 +29,7 @@ extension Picker {
 // MARK: - RowView
 
 extension Picker {
-    final public class RowView: UIView, Configurable {
+    final class RowView: UIView, Configurable {
         static let height: CGFloat = 50
 
         private let titleLabel = UILabel().apply {
@@ -93,7 +93,7 @@ extension Picker {
             }
         }
 
-        public func configure(_ model: RowModel) {
+        func configure(_ model: RowModel) {
             titleLabel.apply {
                 $0.setText(model.title)
                 $0.sizeToFit()
@@ -113,12 +113,12 @@ extension Picker {
 
         // MARK: - UIAppearance Properties
 
-        @objc public dynamic var titleTextColor: UIColor {
+        @objc dynamic var titleTextColor: UIColor {
             get { titleLabel.textColor }
             set { titleLabel.textColor = newValue }
         }
 
-        @objc public dynamic var subtitleTextColor: UIColor {
+        @objc dynamic var subtitleTextColor: UIColor {
             get { subtitleLabel.textColor }
             set { subtitleLabel.textColor = newValue }
         }

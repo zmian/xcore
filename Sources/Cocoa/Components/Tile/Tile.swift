@@ -26,7 +26,7 @@ public struct Tile: UserInfoContainer, MutableAppliable, CustomAnalyticsValueCon
     /// The data source associated with this tile.
     public let dataSource: () -> XCCollectionViewDataSource
 
-    /// Additional info which may be used to describe the url further.
+    /// Additional info which may be used to describe the tile further.
     public var userInfo: UserInfo
 
     public init(
