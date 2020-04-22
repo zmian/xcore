@@ -6,11 +6,11 @@
 
 import Foundation
 
-final public class DatePicker: DrawerScreen.Content, Appliable {
+final class DatePicker: DrawerScreen.Content, Appliable {
     private var initialDate: Date?
     private var didChangeValue: ((Date?) -> Void)?
 
-    public var drawerContentView: UIView {
+    var drawerContentView: UIView {
         stackView
     }
 
@@ -44,7 +44,7 @@ final public class DatePicker: DrawerScreen.Content, Appliable {
         }
     }
 
-    public static func present(
+    static func present(
         initialValue date: Date? = nil,
         configuration: Configuration<UIDatePicker>? = nil,
         _ callback: @escaping (Date?) -> Void

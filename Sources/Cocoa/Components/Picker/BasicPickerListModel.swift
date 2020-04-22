@@ -8,12 +8,12 @@ import Foundation
 
 extension PickerList {
     /// A convenience method to display a picker with list of options
-    /// that conforms to `OptionsRepresentable` protocol.
+    /// that conforms to `PickerOptions` protocol.
     ///
     /// **Example:**
     ///
     /// ```swift
-    /// enum CompassPoint: Int, CaseIterable, OptionsRepresentable {
+    /// enum CompassPoint: Int, CaseIterable, PickerOptions {
     ///     case north, south, east, west
     /// }
     ///
@@ -22,7 +22,7 @@ extension PickerList {
     /// }
     /// ```
     @discardableResult
-    public static func present<T: OptionsRepresentable>(
+    public static func present<T: PickerOptions>(
         selected option: T? = nil,
         configure: ((PickerList) -> Void)? = nil,
         _ handler: @escaping (_ option: T) -> Void
@@ -85,7 +85,7 @@ extension PickerList {
 
 // MARK: - BasicPickerListModel
 
-private final class BasicPickerListModel<T: OptionsRepresentable>: PickerListModel {
+private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
     private let options: [T]
     private let selectedIndex: Int?
     private var selectionCallback: (T) -> Void

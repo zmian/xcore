@@ -42,7 +42,7 @@ extension UITabBarController {
         public var selectedImage: UIImage {
             let selectedImage = ImageAssetIdentifier(
                 rawValue: assetIdentifier.rawValue + "Selected",
-                bundle: assetIdentifier.bundle ?? .main
+                bundle: assetIdentifier.bundle
             )
 
             return UIImage(assetIdentifier: selectedImage).withRenderingMode(selectedImageRenderingMode)

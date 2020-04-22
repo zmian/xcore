@@ -6,7 +6,7 @@
 
 import UIKit
 
-enum ExampleArrowOptions: String, CaseIterable, OptionsRepresentable {
+enum ExampleArrowOptions: String, CaseIterable, PickerOptions {
     case up
     case down
     case left
