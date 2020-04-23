@@ -104,37 +104,37 @@ extension Calendar.Component {
     var _nsCalendarUnit: NSCalendar.Unit {
         switch self {
             case .era:
-                return NSCalendar.Unit.era
+                return .era
             case .year:
-                return NSCalendar.Unit.year
+                return .year
             case .month:
-                return NSCalendar.Unit.month
+                return .month
             case .day:
-                return NSCalendar.Unit.day
+                return .day
             case .hour:
-                return NSCalendar.Unit.hour
+                return .hour
             case .minute:
-                return NSCalendar.Unit.minute
+                return .minute
             case .second:
-                return NSCalendar.Unit.second
+                return .second
             case .weekday:
-                return NSCalendar.Unit.weekday
+                return .weekday
             case .weekdayOrdinal:
-                return NSCalendar.Unit.weekdayOrdinal
+                return .weekdayOrdinal
             case .quarter:
-                return NSCalendar.Unit.quarter
+                return .quarter
             case .weekOfMonth:
-                return NSCalendar.Unit.weekOfMonth
+                return .weekOfMonth
             case .weekOfYear:
-                return NSCalendar.Unit.weekOfYear
+                return .weekOfYear
             case .yearForWeekOfYear:
-                return NSCalendar.Unit.yearForWeekOfYear
+                return .yearForWeekOfYear
             case .nanosecond:
-                return NSCalendar.Unit.nanosecond
+                return .nanosecond
             case .calendar:
-                return NSCalendar.Unit.calendar
+                return .calendar
             case .timeZone:
-                return NSCalendar.Unit.timeZone
+                return .timeZone
             @unknown default:
                 fatalError("Unsupported type \(self)")
         }
