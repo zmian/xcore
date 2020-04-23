@@ -318,8 +318,8 @@ extension Date {
         return end - start
     }
 
-    /// Total number of days of month using the Date's default configuration.
-    public var totalDaysInCurrentMonth: Int {
+    /// Total number of days of month using the `.default` calendar.
+    public var monthDays: Int {
         Calendar.default.range(of: .day, in: .month, for: self)!.count
     }
 
