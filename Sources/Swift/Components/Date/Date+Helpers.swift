@@ -110,17 +110,22 @@ extension Date {
                     calendar: calendar
                 )
             case .custom(let customFormat):
+                var ordinalDay: String {
+                    cache.numberFormatter.locale = calendar.locale
+                    let day = NSNumber(value: component(.day, in: calendar))
+                    return cache.numberFormatter.string(from: day) ?? ""
+                }
+
                 switch customFormat {
                     case .monthDayOrdinal:
-                        cache.numberFormatter.locale = calendar.locale
-                        let day = NSNumber(value: component(.day, in: calendar))
-                        let ordinalDay = cache.numberFormatter.string(from: day) ?? ""
                         return "\(monthName()) \(ordinalDay)"
                     case .monthShortPeriodDayOrdinal:
                         let longMonthName = monthName(calendar: calendar)
                         let shortMonthName = monthName(isShort: true, calendar: calendar)
+                        // This ensures we don't append `.` to the month that has same short and long
+                        // name (e.g., May 4 shouldn't have period but Jun. 4 should).
                         let separator = longMonthName == shortMonthName ? "" : "."
-                        return "\(shortMonthName)\(separator) \(component(.day, in: calendar))"
+                        return "\(shortMonthName)\(separator) \(ordinalDay)"
                     default:
                         formatter = cache.dateFormatter(
                             format: customFormat.rawValue,

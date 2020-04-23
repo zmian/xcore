@@ -92,8 +92,8 @@ extension Date.CustomFormat {
     public static let yearMonthHash: Self = "yyyyMM"
 
     /// Used for ordinal days like `June 4th`
-    public static var monthDayOrdinal: Self { #function }
+    public static var monthDayOrdinal: Self { .init(rawValue: "xcore_\(#function)") }
 
     /// Used for ordinal days with short months like `Jun. 4th`
-    public static var monthShortPeriodDayOrdinal: Self { #function }
+    public static var monthShortPeriodDayOrdinal: Self { .init(rawValue: "xcore_\(#function)") }
 }

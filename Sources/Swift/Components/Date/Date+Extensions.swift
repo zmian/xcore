@@ -40,7 +40,7 @@ extension Date {
 
     /// Reset time to beginning of the day (`12 AM`) of `self`.
     ///
-    /// - Parameter region: Region to use for the date.
+    /// - Parameter calendar: The calendar to use for the date.
     public func stripTime(calendar: Calendar = .default) -> Date {
         let components = calendar.dateComponents([.year, .month, .day], from: self)
         return calendar.date(from: components) ?? self

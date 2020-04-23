@@ -360,7 +360,7 @@ final class DateTest: XCTestCase {
         XCTAssertEqual(41, date.component(.minute))
         XCTAssertEqual(22, date.component(.second))
 
-        // Test in different region.
+        // Test in different calendar.
         XCTAssertEqual(2020, date.component(.year, in: .usEastern))
         XCTAssertEqual(1, date.component(.month, in: .usEastern))
         XCTAssertEqual(31, date.component(.day, in: .usEastern))
