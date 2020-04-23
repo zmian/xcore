@@ -43,6 +43,7 @@ final class DateTest: XCTestCase {
         .monthDayYearFull,
         .monthDaySpace,
         .monthDayOrdinal,
+        .monthShortDayOrdinal,
         .monthShortPeriodDayOrdinal,
         .monthDayAbbreviated,
         .monthYearFull,
@@ -86,10 +87,9 @@ final class DateTest: XCTestCase {
                 case .monthDaySpace:
                     stringToTest = "June 4"
                     expectedDate = Date(year: 2000, month: 6, day: 4)
-                case .monthDayOrdinal:
-                    stringToTest = ""
-                    expectedDate = nil
-                case .monthShortPeriodDayOrdinal:
+                case .monthDayOrdinal,
+                     .monthShortDayOrdinal,
+                     .monthShortPeriodDayOrdinal:
                     stringToTest = ""
                     expectedDate = nil
                 case .monthDayAbbreviated:
@@ -143,6 +143,8 @@ final class DateTest: XCTestCase {
                     expectedResult = "June 4"
                 case .monthDayOrdinal:
                     expectedResult = "June 4th"
+                case .monthShortDayOrdinal:
+                    expectedResult = "Jun 4th"
                 case .monthShortPeriodDayOrdinal:
                     expectedResult = "Jun. 4th"
                 case .monthDayAbbreviated:

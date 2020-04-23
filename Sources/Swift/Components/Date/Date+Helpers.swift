@@ -118,7 +118,9 @@ extension Date {
 
                 switch customFormat {
                     case .monthDayOrdinal:
-                        return "\(monthName()) \(ordinalDay)"
+                        return "\(monthName(calendar: calendar)) \(ordinalDay)"
+                    case .monthShortDayOrdinal:
+                        return "\(monthName(isShort: true, calendar: calendar)) \(ordinalDay)"
                     case .monthShortPeriodDayOrdinal:
                         let longMonthName = monthName(calendar: calendar)
                         let shortMonthName = monthName(isShort: true, calendar: calendar)
@@ -415,7 +417,7 @@ extension Date {
     /// Calculates the month name on the receiver date based on calendar.
     ///
     /// - Parameters:
-    ///   - isShort: Boolean to indicate if the name should be shortened
+    ///   - isShort: Boolean to indicate if the name should be shortened.
     ///   - calendar: The calendar to use when generating name.
     public func monthName(isShort: Bool = false, calendar: Calendar = .default) -> String {
         let symbols = isShort ?
@@ -441,15 +443,15 @@ extension Date {
     /// Calculates the week day name for given index based on calendar and locale.
     ///
     /// - Parameters:
-    ///   - weekDay: The day's index in a week
+    ///   - weekday: The day's index in a week
     ///   - isShort: Boolean to indicate if the name should be shortened.
     ///   - calendar: The calendar to use when generating name.
-    public static func weekdayName(for weekDay: Int, isShort: Bool = false, calendar: Calendar = .default) -> String {
+    public static func weekdayName(for weekday: Int, isShort: Bool = false, calendar: Calendar = .default) -> String {
         let symbols = isShort ?
             _cache.dateFormatter(calendar: calendar).shortWeekdaySymbols :
             _cache.dateFormatter(calendar: calendar).weekdaySymbols
 
-        return symbols?.at(weekDay) ?? ""
+        return symbols?.at(weekday) ?? ""
     }
 }
 
