@@ -12,14 +12,14 @@ extension Date {
         case date(DateFormatter.Style)
         case time(DateFormatter.Style)
         case dateTime(DateFormatter.Style)
-        case custom(CustomFormat)
+        case custom(Custom)
     }
 }
 
-// MARK: - CustomFormat
+// MARK: - Format.Custom
 
-extension Date {
-    public struct CustomFormat: RawRepresentable, Equatable {
+extension Date.Format {
+    public struct Custom: RawRepresentable, Equatable {
         public let rawValue: String
 
         public init(rawValue: String) {
@@ -28,27 +28,27 @@ extension Date {
     }
 }
 
-extension Date.CustomFormat: ExpressibleByStringLiteral {
+extension Date.Format.Custom: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
         self.init(rawValue: value)
     }
 }
 
-extension Date.CustomFormat: CustomStringConvertible {
+extension Date.Format.Custom: CustomStringConvertible {
     public var description: String {
         rawValue
     }
 }
 
-extension Date.CustomFormat: CustomPlaygroundDisplayConvertible {
+extension Date.Format.Custom: CustomPlaygroundDisplayConvertible {
     public var playgroundDescription: Any {
         rawValue
     }
 }
 
-// MARK: - Built-in CustomFormat
+// MARK: - Built-in Format.Custom
 
-extension Date.CustomFormat {
+extension Date.Format.Custom {
     /// `yyyy-MM-dd'T'HH:mm:ss.SSSZ`
     public static let iso8601: Self = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
 

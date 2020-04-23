@@ -31,7 +31,7 @@ final class DateTest: XCTestCase {
         XCTAssertEqual(Date.serverDate, date)
     }
 
-    private let customFormats: [Date.CustomFormat] = [
+    private let customFormats: [Date.Format.Custom] = [
         .iso8601,
         .iso8601Local,
         .yearMonthDayDash,
@@ -160,7 +160,7 @@ final class DateTest: XCTestCase {
                     XCTFail("Unknown format")
             }
 
-            let dateString = date.toString(format: .custom(format))
+            let dateString = date.string(format: .custom(format))
             XCTAssertEqual(expectedResult, dateString, "\(format) format \(dateString) is not equal to \(expectedResult)")
         }
     }
@@ -169,20 +169,20 @@ final class DateTest: XCTestCase {
         // Test that May abbreviation should not contain period (e.g., May 3rd).
         let mayDate = Date(year: 2020, month: 5, day: 3, hour: 11, minute: 11, second: 22)
         let mayExpectedResult = "May 3rd" // Shouldn't contain period after May
-        let mayResult = mayDate.toString(format: .custom(.monthShortPeriodDayOrdinal))
+        let mayResult = mayDate.string(format: .custom(.monthShortPeriodDayOrdinal))
         XCTAssertEqual(mayExpectedResult, mayResult)
 
         // Test that June abbreviation should contain period (e.g., Jun. 4th).
         let juneDate = Date(year: 2020, month: 6, day: 4, hour: 11, minute: 11, second: 22)
         let juneExpectedResult = "Jun. 4th" // Should contain period after Jun.
-        let juneResult = juneDate.toString(format: .custom(.monthShortPeriodDayOrdinal))
+        let juneResult = juneDate.string(format: .custom(.monthShortPeriodDayOrdinal))
         XCTAssertEqual(juneExpectedResult, juneResult)
     }
 
     func testRelativeCalculation() {
         let date = Date()
-        XCTAssertEqual("Today", date.toString(format: .date(.full), doesRelativeDateFormatting: true))
-        XCTAssertEqual("hoy", date.toString(format: .date(.full), doesRelativeDateFormatting: true, calendar: .spanish))
+        XCTAssertEqual("Today", date.string(format: .date(.full), doesRelativeDateFormatting: true))
+        XCTAssertEqual("hoy", date.string(format: .date(.full), doesRelativeDateFormatting: true, calendar: .spanish))
     }
 
     func testTimeInDifferentCalendar() {

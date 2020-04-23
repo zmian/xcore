@@ -1,6 +1,6 @@
 //
 // Xcore
-// Copyright © 2014 Xcore
+// Copyright © 2018 Xcore
 // MIT license, see LICENSE file for details
 //
 
@@ -52,7 +52,7 @@ extension Date {
     ///                date.
     public init?(
         from string: String,
-        format: CustomFormat,
+        format: Format.Custom,
         calendar: Calendar = .default,
         isLenient: Bool = true
     ) {
@@ -81,7 +81,7 @@ extension Date {
     ///   happen in relative format. Note: The relative formatting only supports
     ///   Date and Time styles and not custom formats.
     ///   - calendar: The calendar to use when parsing the date.
-    public func toString(
+    public func string(
         format: Format,
         doesRelativeDateFormatting: Bool = false,
         calendar: Calendar = .default
@@ -138,6 +138,18 @@ extension Date {
         }
 
         return formatter.string(from: self)
+    }
+
+    /// Converts a date object to string representation based on given calendar.
+    ///
+    /// - Parameters:
+    ///   - format: The custom format to use when parsing the date.
+    ///   - calendar: The calendar to use when parsing the date.
+    public func string(
+        format: Format.Custom,
+        calendar: Calendar = .default
+    ) -> String {
+        string(format: .custom(format), calendar: calendar)
     }
 
     /// Adjusts the receiver's given component and along with all smaller units to
