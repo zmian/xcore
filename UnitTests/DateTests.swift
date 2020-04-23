@@ -584,6 +584,152 @@ final class DateTest: XCTestCase {
         let expectedResult = Date(year: 2021, month: 1, day: 4, hour: 3, minute: 41, second: 22)
         XCTAssertEqual(expectedResult, dateToAdjust.adjusting(dateComponents))
     }
+
+    func testComparisonOperatorDay() {
+        let today = Date()
+        XCTAssertTrue(today.is(.today))
+        XCTAssertFalse(today.is(.tomorrow))
+        XCTAssertFalse(today.is(.yesterday))
+
+        let tomorrow = Date().adjusting(.day, by: 1)
+        XCTAssertFalse(tomorrow.is(.today))
+        XCTAssertTrue(tomorrow.is(.tomorrow))
+        XCTAssertFalse(tomorrow.is(.yesterday))
+
+        let yesterday = Date().adjusting(.day, by: -1)
+        XCTAssertFalse(yesterday.is(.today))
+        XCTAssertFalse(yesterday.is(.tomorrow))
+        XCTAssertTrue(yesterday.is(.yesterday))
+
+        let date = Date(year: 3020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
+        XCTAssertFalse(date.is(.yesterday))
+        XCTAssertFalse(date.is(.today))
+        XCTAssertFalse(date.is(.tomorrow))
+    }
+
+    func testComparisonOperatorNext() {
+        let now = Date()
+        let previousDate = Date(year: 3020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
+
+        let futureDate_Day = now.adjusting(.day, by: 10)
+        let nextDate_Day = now.adjusting(.day, by: 1)
+        let nextDate_Weekday = now.adjusting(.weekday, by: 1)
+        let nextDate_Month = now.adjusting(.month, by: 1)
+        let nextDate_Year = now.adjusting(.year, by: 1)
+
+        XCTAssertFalse(previousDate.is(.next(.day)))
+        XCTAssertFalse(previousDate.is(.next(.weekday)))
+        XCTAssertFalse(previousDate.is(.next(.month)))
+        XCTAssertFalse(previousDate.is(.next(.year)))
+
+        XCTAssertFalse(futureDate_Day.is(.tomorrow), "Expected \(futureDate_Day.component(.day)) to not be tomorrow.")
+        XCTAssertTrue(nextDate_Day.is(.tomorrow), "Expected \(nextDate_Day.component(.day)) to be tomorrow.")
+        XCTAssertTrue(nextDate_Day.is(.next(.day)), "Expected \(nextDate_Day.component(.day)) to be next day after \(now.component(.day)).")
+        XCTAssertTrue(nextDate_Weekday.is(.next(.weekday)), "Expected \(nextDate_Weekday.component(.weekday)) to be next weekday after \(now.component(.weekday)).")
+        XCTAssertTrue(nextDate_Month.is(.next(.month)), "Expected \(nextDate_Month.component(.month)) to be next month after \(now.component(.month)).")
+        XCTAssertTrue(nextDate_Year.is(.next(.year)), "Expected \(nextDate_Year.component(.year)) to be next year after \(now.component(.year)).")
+    }
+
+    func testComparisonOperatorPrevious() {
+        let now = Date()
+        let nextDate = Date(year: 3020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
+
+        let pastDate_Day = now.adjusting(.day, by: -10)
+        let previousDate_Day = now.adjusting(.day, by: -1)
+        let previousDate_Weekday = now.adjusting(.weekday, by: -1)
+        let previousDate_Month = now.adjusting(.month, by: -1)
+        let previousDate_Year = now.adjusting(.year, by: -1)
+
+        XCTAssertFalse(nextDate.is(.previous(.day)))
+        XCTAssertFalse(nextDate.is(.previous(.weekday)))
+        XCTAssertFalse(nextDate.is(.previous(.month)))
+        XCTAssertFalse(nextDate.is(.previous(.year)))
+
+        XCTAssertFalse(pastDate_Day.is(.yesterday), "Expected \(pastDate_Day.component(.day)) to not be yesterday.")
+        XCTAssertTrue(previousDate_Day.is(.yesterday), "Expected \(previousDate_Day.component(.day)) to be yesterday.")
+        XCTAssertTrue(previousDate_Day.is(.previous(.day)), "Expected \(previousDate_Day.component(.day)) to be a day before \(now.component(.day)).")
+        XCTAssertTrue(previousDate_Weekday.is(.previous(.weekday)), "Expected \(previousDate_Weekday.component(.weekday)) to be a weekday \(now.component(.weekday)).")
+        XCTAssertTrue(previousDate_Month.is(.previous(.month)), "Expected \(previousDate_Month.component(.month)) to be a month before \(now.component(.month)).")
+        XCTAssertTrue(previousDate_Year.is(.previous(.year)), "Expected \(previousDate_Year.component(.year)) to be a year before \(now.component(.year)).")
+    }
+
+    func testComparisonOperatorPast() {
+        let now = Date()
+        let nextDate = Date(year: 3020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
+        let previousDate = Date(year: 1020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
+
+        let pastDate_Day = now.adjusting(.day, by: -10)
+        let pastDate_Weekday = now.adjusting(.weekday, by: -10)
+        let pastDate_Month = now.adjusting(.month, by: -10)
+        let pastDate_Year = now.adjusting(.year, by: -10)
+
+        XCTAssertFalse(nextDate.is(.past(.day)))
+        XCTAssertFalse(nextDate.is(.past(.weekday)))
+        XCTAssertFalse(nextDate.is(.past(.month)))
+        XCTAssertFalse(nextDate.is(.past(.year)))
+
+        XCTAssertTrue(previousDate.is(.past(.day)))
+        XCTAssertTrue(previousDate.is(.past(.weekday)))
+        XCTAssertTrue(previousDate.is(.past(.month)))
+        XCTAssertTrue(previousDate.is(.past(.year)))
+
+        XCTAssertTrue(pastDate_Day.is(.past(.day)), "Expected \(pastDate_Day.component(.day)) to be day past \(now.component(.day)).")
+        XCTAssertTrue(pastDate_Weekday.is(.past(.weekday)), "Expected \(pastDate_Weekday.component(.weekday)) to be weekday past \(now.component(.weekday)).")
+        XCTAssertTrue(pastDate_Month.is(.past(.month)), "Expected \(pastDate_Month.component(.month)) to be month past \(now.component(.month)).")
+        XCTAssertTrue(pastDate_Year.is(.past(.year)), "Expected \(pastDate_Year.component(.year)) to be year past \(now.component(.year)).")
+    }
+
+    func testComparisonOperatorFuture() {
+        let now = Date()
+        let nextDate = Date(year: 3020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
+        let previousDate = Date(year: 1020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
+
+        let futureDate_Day = now.adjusting(.day, by: 10)
+        let futureDate_Weekday = now.adjusting(.weekday, by: 10)
+        let futureDate_Month = now.adjusting(.month, by: 10)
+        let futureDate_Year = now.adjusting(.year, by: 10)
+
+        XCTAssertTrue(nextDate.is(.future(.day)))
+        XCTAssertTrue(nextDate.is(.future(.weekday)))
+        XCTAssertTrue(nextDate.is(.future(.month)))
+        XCTAssertTrue(nextDate.is(.future(.year)))
+
+        XCTAssertFalse(previousDate.is(.future(.day)))
+        XCTAssertFalse(previousDate.is(.future(.weekday)))
+        XCTAssertFalse(previousDate.is(.future(.month)))
+        XCTAssertFalse(previousDate.is(.future(.year)))
+
+        XCTAssertTrue(futureDate_Day.is(.future(.day)), "Expected \(futureDate_Day.component(.day)) to be day future \(now.component(.day)).")
+        XCTAssertTrue(futureDate_Weekday.is(.future(.weekday)), "Expected \(futureDate_Weekday.component(.weekday)) to be weekday future \(now.component(.weekday)).")
+        XCTAssertTrue(futureDate_Month.is(.future(.month)), "Expected \(futureDate_Month.component(.month)) to be month future \(now.component(.month)).")
+        XCTAssertTrue(futureDate_Year.is(.future(.year)), "Expected \(futureDate_Year.component(.year)) to be year future \(now.component(.year)).")
+    }
+
+    func testComparisonOperatorCurrent() {
+        let now = Date()
+        let nextDate = Date(year: 3020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
+        let previousDate = Date(year: 1020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
+
+        let currentDate_Day = now
+        let currentDate_Weekday = now
+        let currentDate_Month = now
+        let currentDate_Year = now
+
+        XCTAssertFalse(nextDate.is(.current(.day)))
+        XCTAssertFalse(nextDate.is(.current(.weekday)))
+        XCTAssertFalse(nextDate.is(.current(.month)))
+        XCTAssertFalse(nextDate.is(.current(.year)))
+
+        XCTAssertFalse(previousDate.is(.current(.day)))
+        XCTAssertFalse(previousDate.is(.current(.weekday)))
+        XCTAssertFalse(previousDate.is(.current(.month)))
+        XCTAssertFalse(previousDate.is(.current(.year)))
+
+        XCTAssertTrue(currentDate_Day.is(.current(.day)), "Expected \(currentDate_Day.component(.day)) to be day current \(now.component(.day)).")
+        XCTAssertTrue(currentDate_Weekday.is(.current(.weekday)), "Expected \(currentDate_Weekday.component(.weekday)) to be weekday current \(now.component(.weekday)).")
+        XCTAssertTrue(currentDate_Month.is(.current(.month)), "Expected \(currentDate_Month.component(.month)) to be month current \(now.component(.month)).")
+        XCTAssertTrue(currentDate_Year.is(.current(.year)), "Expected \(currentDate_Year.component(.year)) to be year current \(now.component(.year)).")
+    }
 }
 
 extension Date.Configuration {

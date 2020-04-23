@@ -6,6 +6,86 @@
 
 import Foundation
 
+// MARK: - ComparisonOperator
+
+extension Date {
+    public enum ComparisonOperator {
+        /// Receiver must be today with granularity matching at least down to the `day`.
+        /// For example, the receiver year, month, day must match today.
+        case today
+        /// Receiver must be tomorrow with granularity matching at least down to the
+        /// `day`. For example, the receiver year, month, day must match tomorrow.
+        case tomorrow
+        /// Receiver must be yesterday with granularity matching at least down to the
+        /// `day`. For example, the receiver year, month, day must match yesterday.
+        case yesterday
+        /// Receiver component must be equal to given `component + 1`.
+        case next(Calendar.Component)
+        /// Receiver component must be equal to given `component - 1`.
+        case previous(Calendar.Component)
+        /// Receiver component must be `component - n` where `n <= 1`.
+        case past(Calendar.Component)
+        /// Receiver component must be same `component` as current.
+        case current(Calendar.Component)
+        /// Receiver component must be `component + n` where `n >= 1`.
+        case future(Calendar.Component)
+    }
+
+    /// Compares the receiver with the given comparison operator.
+    ///
+    /// ```swift
+    /// let date = Date(year: 2020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
+    ///
+    /// date.is(.yesterday)
+    /// date.is(.today)
+    /// date.is(.tomorrow)
+    ///
+    /// // Granularity
+    /// date.is(.next(.day))
+    /// date.is(.previous(.day))
+    ///
+    /// date.is(.next(.weekday))
+    /// date.is(.previous(.weekday))
+    ///
+    /// date.is(.next(.month))
+    /// date.is(.previous(.month))
+    ///
+    /// date.is(.next(.year))
+    /// date.is(.previous(.year))
+    ///
+    /// // Granularity
+    /// date.is(.past(.month))
+    /// date.is(.current(.month))
+    /// date.is(.future(.month))
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - comparison: The comparison operator to use to determine the comparison.
+    ///   - calendar: The calendar to use when comparing.
+    public func `is`(_ comparison: ComparisonOperator, calendar: Calendar = .default) -> Bool {
+        switch comparison {
+            case .today:
+                return `is`(.current(.day), calendar: calendar)
+            case .tomorrow:
+                return `is`(.next(.day), calendar: calendar)
+            case .yesterday:
+                return `is`(.previous(.day), calendar: calendar)
+            case .next(let granularity):
+                let next = Date().adjusting(granularity, by: 1, in: calendar)
+                return isSame(next, granularity: granularity, calendar: calendar)
+            case .previous(let granularity):
+                let previous = Date().adjusting(granularity, by: -1, in: calendar)
+                return isSame(previous, granularity: granularity, calendar: calendar)
+            case .past(let granularity):
+                return isBefore(Date(), granularity: granularity, calendar: calendar)
+            case .current(let granularity):
+                return isSame(Date(), granularity: granularity, calendar: calendar)
+            case .future(let granularity):
+                return isAfter(Date(), granularity: granularity, calendar: calendar)
+        }
+    }
+}
+
 extension Date {
     /// Compares whether the receiver is before, after or equal to `date` based on
     /// their components down to a given unit granularity.
