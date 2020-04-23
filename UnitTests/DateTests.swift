@@ -582,7 +582,7 @@ final class DateTest: XCTestCase {
         dateComponents.day = 3
 
         let expectedResult = Date(year: 2021, month: 1, day: 4, hour: 3, minute: 41, second: 22)
-        XCTAssertEqual(expectedResult, dateToAdjust.adjusting(components: dateComponents))
+        XCTAssertEqual(expectedResult, dateToAdjust.adjusting(dateComponents))
     }
 }
 
