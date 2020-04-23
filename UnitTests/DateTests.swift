@@ -163,6 +163,20 @@ final class DateTest: XCTestCase {
         }
     }
 
+    func testDateToMonthShortPeriodDayOrdinalPeriod() {
+        // Test that May abbreviation should not contain period (e.g., May 3rd).
+        let mayDate = Date(year: 2020, month: 5, day: 3, hour: 11, minute: 11, second: 22)
+        let mayExpectedResult = "May 3rd" // Shouldn't contain period after May
+        let mayResult = mayDate.toString(format: .custom(.monthShortPeriodDayOrdinal))
+        XCTAssertEqual(mayExpectedResult, mayResult)
+
+        // Test that June abbreviation should contain period (e.g., Jun. 4th).
+        let juneDate = Date(year: 2020, month: 6, day: 4, hour: 11, minute: 11, second: 22)
+        let juneExpectedResult = "Jun. 4th" // Should contain period after Jun.
+        let juneResult = juneDate.toString(format: .custom(.monthShortPeriodDayOrdinal))
+        XCTAssertEqual(juneExpectedResult, juneResult)
+    }
+
     func testRelativeCalculation() {
         let date = Date()
         XCTAssertEqual("Today", date.toString(format: .date(.full), doesRelativeDateFormatting: true))
