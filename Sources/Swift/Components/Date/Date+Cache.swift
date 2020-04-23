@@ -15,17 +15,17 @@ extension Date {
 extension Date {
     final class _FormatterCache {
         private let queue = DispatchQueue(label: #function, attributes: .concurrent)
-        private var cache = [String: DateFormatter]()
+        private let cache = NSCache<NSString, DateFormatter>()
 
         private func register(formatter: DateFormatter, with key: String) {
             queue.async(flags: .barrier) { [unowned self] in
-                self.cache.updateValue(formatter, forKey: key)
+                self.cache.setObject(formatter, forKey: key as NSString)
             }
         }
 
         private func get(key: String) -> DateFormatter? {
             queue.sync {
-                cache[key]
+                cache.object(forKey: key as NSString)
             }
         }
 

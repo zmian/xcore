@@ -114,7 +114,7 @@ final class DateTest: XCTestCase {
         }
     }
 
-    func testDateToCustomStringFormatInDefaultRegion() {
+    func testDateToCustomStringFormatInDefaultCalendar() {
         let date = Date(year: 2020, month: 6, day: 4, hour: 11, minute: 11, second: 22)
 
         for format in customFormats {
@@ -169,7 +169,7 @@ final class DateTest: XCTestCase {
         XCTAssertEqual("hoy", date.toString(format: .date(.full), doesRelativeDateFormatting: true, calendar: .spanish))
     }
 
-    func testTimeInDifferentRegion() {
+    func testTimeInDifferentCalendar() {
         let expectedHour = 17
         let date = Date(year: 2020, month: 5, day: 4, hour: 21, minute: 11, second: 22)
         let receivedHour = date.component(.hour, in: .usEastern)
@@ -388,8 +388,8 @@ final class DateTest: XCTestCase {
         let testSecondsGranularityDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33)
         let testSecondsGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33)
 
-        let testMultipleRegionDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33, calendar: .iso)
-        let testMultipleRegionDateRight = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 45, second: 33, calendar: .usEastern)
+        let testMultipleCalendarDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33, calendar: .iso)
+        let testMultipleCalendarDateRight = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 45, second: 33, calendar: .usEastern)
 
         XCTAssert(testYearGranularityDateLeft.isSame(testYearGranularityDateRight, granularity: .year), "Year granularity failed")
         XCTAssert(testMonthGranularityDateLeft.isSame(testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
@@ -398,7 +398,7 @@ final class DateTest: XCTestCase {
         XCTAssert(testMinuteGranularityDateLeft.isSame(testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
         XCTAssert(testSecondsGranularityDateLeft.isSame(testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
         XCTAssert(testSecondsGranularityDateLeft.isSame(testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
-        XCTAssert(testMultipleRegionDateLeft.isSame(testMultipleRegionDateRight, granularity: .second), "Multi region test failed")
+        XCTAssert(testMultipleCalendarDateLeft.isSame(testMultipleCalendarDateRight, granularity: .second), "Multi calendar test failed")
     }
 
     func testIsPastDate() {
@@ -420,8 +420,8 @@ final class DateTest: XCTestCase {
         let testSecondsGranularityDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 11)
         let testSecondsGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33)
 
-        let testMultipleRegionDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33, calendar: .iso)
-        let testMultipleRegionDateRight = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 46, second: 33, calendar: .usEastern)
+        let testMultipleCalendarDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33, calendar: .iso)
+        let testMultipleCalendarDateRight = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 46, second: 33, calendar: .usEastern)
 
         XCTAssert(testYearGranularityDateLeft.isBefore(testYearGranularityDateRight, granularity: .year), "Year granularity failed")
         XCTAssert(testMonthGranularityDateLeft.isBefore(testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
@@ -430,7 +430,7 @@ final class DateTest: XCTestCase {
         XCTAssert(testMinuteGranularityDateLeft.isBefore(testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
         XCTAssert(testSecondsGranularityDateLeft.isBefore(testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
         XCTAssert(testSecondsGranularityDateLeft.isBefore(testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
-        XCTAssert(testMultipleRegionDateLeft.isBefore(testMultipleRegionDateRight, granularity: .second), "Multi region test failed")
+        XCTAssert(testMultipleCalendarDateLeft.isBefore(testMultipleCalendarDateRight, granularity: .second), "Multi calendar test failed")
     }
 
     func testIsFutureDate() {
@@ -452,8 +452,8 @@ final class DateTest: XCTestCase {
         let testSecondsGranularityDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 44)
         let testSecondsGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33)
 
-        let testMultipleRegionDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 47, second: 33, calendar: .iso)
-        let testMultipleRegionDateRight = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 46, second: 33, calendar: .usEastern)
+        let testMultipleCalendarDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 47, second: 33, calendar: .iso)
+        let testMultipleCalendarDateRight = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 46, second: 33, calendar: .usEastern)
 
         XCTAssert(testYearGranularityDateLeft.isAfter(testYearGranularityDateRight, granularity: .year), "Year granularity failed")
         XCTAssert(testMonthGranularityDateLeft.isAfter(testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
@@ -462,7 +462,7 @@ final class DateTest: XCTestCase {
         XCTAssert(testMinuteGranularityDateLeft.isAfter(testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
         XCTAssert(testSecondsGranularityDateLeft.isAfter(testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
         XCTAssert(testSecondsGranularityDateLeft.isAfter(testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
-        XCTAssert(testMultipleRegionDateLeft.isAfter(testMultipleRegionDateRight, granularity: .second), "Multi region test failed")
+        XCTAssert(testMultipleCalendarDateLeft.isAfter(testMultipleCalendarDateRight, granularity: .second), "Multi calendar test failed")
     }
 
     func testIsBetweenDate() {
@@ -496,10 +496,10 @@ final class DateTest: XCTestCase {
         let testSecondsGranularityDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 55)
         let testSecondsGranularityDateInterval = DateInterval(start: testSecondsGranularityDateLeft, end: testSecondsGranularityDateRight)
 
-        let testMultipleRegionDateLeft = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 30, second: 33, calendar: .usEastern)
-        let testMultipleRegionDateMid = Date(year: 2020, month: 4, day: 5, hour: 4, minute: 36, second: 33, calendar: .turkey)
-        let testMultipleRegionDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 47, second: 33, calendar: .iso)
-        let testMultipleRegionDateInterval = DateInterval(start: testMultipleRegionDateLeft, end: testMultipleRegionDateRight)
+        let testMultipleCalendarDateLeft = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 30, second: 33, calendar: .usEastern)
+        let testMultipleCalendarDateMid = Date(year: 2020, month: 4, day: 5, hour: 4, minute: 36, second: 33, calendar: .turkey)
+        let testMultipleCalendarDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 47, second: 33, calendar: .iso)
+        let testMultipleCalendarDateInterval = DateInterval(start: testMultipleCalendarDateLeft, end: testMultipleCalendarDateRight)
 
         XCTAssert(testYearGranularityDateMid.isInBetween(testYearGranularityDateInterval, granularity: .year), "Year granularity failed")
         XCTAssert(testMonthGranularityDateMid.isInBetween(testMonthGranularityDateInterval, granularity: .month), "Month granularity failed")
@@ -508,7 +508,7 @@ final class DateTest: XCTestCase {
         XCTAssert(testMinuteGranularityDateMid.isInBetween(testMinuteGranularityDateInterval, granularity: .minute), "Minute granularity failed")
         XCTAssert(testSecondsGranularityDateMid.isInBetween(testSecondsGranularityDateInterval, granularity: .second), "Seconds granularity failed")
         XCTAssert(testSecondsGranularityDateMid.isInBetween(testSecondsGranularityDateInterval, granularity: .nanosecond), "NanoSeconds granularity failed")
-        XCTAssert(testMultipleRegionDateMid.isInBetween(testMultipleRegionDateInterval, granularity: .second), "Multi region test failed")
+        XCTAssert(testMultipleCalendarDateMid.isInBetween(testMultipleCalendarDateInterval, granularity: .second), "Multi calendar test failed")
     }
 
     func testUntilDate() {
