@@ -36,16 +36,16 @@ extension Date {
         func dateFormatter(
             format: String,
             doesRelativeDateFormatting: Bool = false,
-            region: Date.Region = .default,
+            calendar: Calendar = .default,
             isLenient: Bool = true
         ) -> DateFormatter {
             let key = """
                 \(format)
-                \(doesRelativeDateFormatting.hashValue)
-                \(region.calendar.hashValue)
-                \(region.timeZone.hashValue)
-                \(region.locale.hashValue)
-                \(isLenient.hashValue)
+                \(doesRelativeDateFormatting)
+                \(calendar.identifier)
+                \(calendar.timeZone.identifier)
+                \(calendar.locale?.identifier ?? "")
+                \(isLenient)
                 """.sha256() ?? ""
 
             if let formatter = get(key: key) {
@@ -54,9 +54,9 @@ extension Date {
 
             let formatter = DateFormatter().apply {
                 $0.dateFormat = format
-                $0.calendar = region.calendar
-                $0.timeZone = region.timeZone
-                $0.locale = region.locale
+                $0.calendar = calendar
+                $0.timeZone = calendar.timeZone
+                $0.locale = calendar.locale
                 $0.isLenient = isLenient
                 $0.doesRelativeDateFormatting = doesRelativeDateFormatting
             }
@@ -68,16 +68,16 @@ extension Date {
             dateStyle: DateFormatter.Style = .none,
             timeStyle: DateFormatter.Style = .none,
             doesRelativeDateFormatting: Bool = false,
-            region: Date.Region,
+            calendar: Calendar,
             isLenient: Bool = true
         ) -> DateFormatter {
             let key = """
-                \(dateStyle.hashValue)
-                \(timeStyle.hashValue)
-                \(doesRelativeDateFormatting.hashValue)
-                \(region.calendar.identifier)
-                \(region.timeZone.identifier)
-                \(region.locale.identifier)
+                \(dateStyle.rawValue)
+                \(timeStyle.rawValue)
+                \(doesRelativeDateFormatting)
+                \(calendar.identifier)
+                \(calendar.timeZone.identifier)
+                \(calendar.locale?.identifier ?? "")
                 \(isLenient.hashValue)
                 """.sha256() ?? ""
 
@@ -89,9 +89,9 @@ extension Date {
                 $0.dateStyle = dateStyle
                 $0.timeStyle = timeStyle
                 $0.doesRelativeDateFormatting = doesRelativeDateFormatting
-                $0.calendar = region.calendar
-                $0.timeZone = region.timeZone
-                $0.locale = region.locale
+                $0.calendar = calendar
+                $0.timeZone = calendar.timeZone
+                $0.locale = calendar.locale
                 $0.isLenient = isLenient
             }
             register(formatter: formatter, with: key)

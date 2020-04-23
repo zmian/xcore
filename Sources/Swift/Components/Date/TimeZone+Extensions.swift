@@ -7,6 +7,5 @@
 import Foundation
 
 extension TimeZone {
-    public static let utc = TimeZone(identifier: "UTC")!
-    public static let eastern = TimeZone(identifier: "US/Eastern")!
+    public static let gmt = TimeZone(identifier: "GMT")!
 }

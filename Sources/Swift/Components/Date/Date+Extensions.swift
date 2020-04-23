@@ -21,13 +21,13 @@ extension Date {
     public func fromNow(
         style: DateComponentsFormatter.UnitsStyle = .abbreviated,
         format: String = "%@",
-        region: Region = .default
+        calendar: Calendar = .default
     ) -> String? {
         let formatter = DateComponentsFormatter().apply {
             $0.unitsStyle = style
             $0.maximumUnitCount = 1
             $0.allowedUnits = [.year, .month, .day, .hour, .minute, .second]
-            $0.calendar = region.calendar
+            $0.calendar = calendar
         }
 
         guard let timeString = formatter.string(from: self, to: Date()) else {
@@ -41,8 +41,8 @@ extension Date {
     /// Reset time to beginning of the day (`12 AM`) of `self`.
     ///
     /// - Parameter region: Region to use for the date.
-    public func stripTime(region: Region = .default) -> Date {
-        let components = region.calendar.dateComponents([.year, .month, .day], from: self)
-        return region.calendar.date(from: components) ?? self
+    public func stripTime(calendar: Calendar = .default) -> Date {
+        let components = calendar.dateComponents([.year, .month, .day], from: self)
+        return calendar.date(from: components) ?? self
     }
 }

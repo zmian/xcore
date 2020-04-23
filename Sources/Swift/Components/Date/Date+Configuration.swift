@@ -20,24 +20,17 @@ extension Date {
     }
 }
 
-extension Date.Region {
-    public static var `default`: Self {
-        Date.configuration.region
-    }
-}
-
 extension Date {
     public struct Configuration {
-        public let region: Region
         public let serverDateProvider: Promise<Date>
         public let serverDateExpirationTime: TimeInterval
 
         public init(
-            region: Region = .iso,
+            calendar: Calendar = .iso,
             serverDateProvider: Promise<Date> = .value(Date()),
             serverDateExpirationTime: TimeInterval = 3600
         ) {
-            self.region = region
+            Calendar.default = calendar
             self.serverDateProvider = serverDateProvider
             self.serverDateExpirationTime = serverDateExpirationTime
         }
