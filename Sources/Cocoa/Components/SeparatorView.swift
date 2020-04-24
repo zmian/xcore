@@ -136,6 +136,10 @@ final public class SeparatorView: UIView {
         lineCap = .round
     }
 
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        shapeLayer.strokeColor = backgroundColor?.cgColor
+    }
+
     private func updatePath() {
         let capOffset = lineCap != .butt ? patternLineWidth / 2.0 : 0
         let lineAxisPosition = patternLineWidth / 2.0
