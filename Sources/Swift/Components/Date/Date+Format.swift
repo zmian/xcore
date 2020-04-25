@@ -64,6 +64,12 @@ extension Date.Format.Custom {
     /// `M/dd`
     public static let monthDaySlash: Self = "M/dd"
 
+    /// `MM/dd/yyyy`
+    public static let monthDayYearSlash: Self = "MM/dd/yyyy"
+
+    /// `MM/dd/yyyy - h:mma`
+    public static let monthDayYearSlashTime: Self = "MM/dd/yyyy - h:mma"
+
     /// `yyyy`
     public static let year: Self = "yyyy"
 
@@ -84,9 +90,6 @@ extension Date.Format.Custom {
 
     /// `MMMM yyyy`
     public static let monthYearFull: Self = "MMMM yyyy"
-
-    /// `MM/dd/yyyy - h:mma`
-    public static let monthDayYearSlashTime: Self = "MM/dd/yyyy - h:mma"
 
     /// `yyyyMM`
     public static let yearMonthHash: Self = "yyyyMM"
