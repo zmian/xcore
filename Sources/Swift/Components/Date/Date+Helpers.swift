@@ -119,6 +119,14 @@ extension Date {
                 }
 
                 switch customFormat {
+                    case .monthName:
+                        return monthName(isShort: false, calendar: calendar)
+                    case .monthNameShort:
+                        return monthName(isShort: true, calendar: calendar)
+                    case .weekdayName:
+                        return weekdayName(isShort: false, calendar: calendar)
+                    case .weekdayNameShort:
+                        return weekdayName(isShort: true, calendar: calendar)
                     case .monthDayOrdinal:
                         return "\(monthName(calendar: calendar)) \(ordinalDay)"
                     case .monthShortDayOrdinal:
@@ -346,7 +354,7 @@ extension Date {
     /// - Parameters:
     ///   - isShort: Boolean to indicate if the name should be shortened.
     ///   - calendar: The calendar to use when generating name.
-    public func monthName(isShort: Bool = false, calendar: Calendar = .default) -> String {
+    private func monthName(isShort: Bool = false, calendar: Calendar = .default) -> String {
         let symbols = isShort ?
             Self._cache.dateFormatter(dateStyle: .full, calendar: calendar).shortMonthSymbols :
             Self._cache.dateFormatter(dateStyle: .full, calendar: calendar).monthSymbols
@@ -359,7 +367,7 @@ extension Date {
     /// - Parameters:
     ///   - isShort: Boolean to indicate if the name should be shortened.
     ///   - calendar: The calendar to use when generating name.
-    public func weekdayName(isShort: Bool = false, calendar: Calendar = .default) -> String {
+    private func weekdayName(isShort: Bool = false, calendar: Calendar = .default) -> String {
         let symbols = isShort ?
             Self._cache.dateFormatter(dateStyle: .full, calendar: calendar).shortWeekdaySymbols :
             Self._cache.dateFormatter(dateStyle: .full, calendar: calendar).weekdaySymbols

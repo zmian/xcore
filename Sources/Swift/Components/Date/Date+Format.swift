@@ -94,7 +94,27 @@ extension Date.Format.Custom {
 
     /// `yyyyMM`
     public static let yearMonthHash: Self = "yyyyMM"
+}
 
+// MARK: - Month Format
+
+extension Date.Format.Custom {
+    /// Used for month days like `June`.
+    public static var monthName: Self { .init(rawValue: "xcore_\(#function)") }
+
+    /// Used for month days like `Jun`.
+    public static var monthNameShort: Self { .init(rawValue: "xcore_\(#function)") }
+
+    /// Used for month days like `Monday`.
+    public static var weekdayName: Self { .init(rawValue: "xcore_\(#function)") }
+
+    /// Used for month days like `Mon`.
+    public static var weekdayNameShort: Self { .init(rawValue: "xcore_\(#function)") }
+}
+
+// MARK: - Ordinal Format
+
+extension Date.Format.Custom {
     /// Used for ordinal days like `June 4th`
     public static var monthDayOrdinal: Self { .init(rawValue: "xcore_\(#function)") }
 
