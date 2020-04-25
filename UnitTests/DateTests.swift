@@ -517,14 +517,14 @@ final class DateTest: XCTestCase {
         let testMultipleCalendarDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 47, second: 33, calendar: .iso)
         let testMultipleCalendarDateInterval = DateInterval(start: testMultipleCalendarDateLeft, end: testMultipleCalendarDateRight)
 
-        XCTAssert(testYearGranularityDateMid.isInBetween(testYearGranularityDateInterval, granularity: .year), "Year granularity failed")
-        XCTAssert(testMonthGranularityDateMid.isInBetween(testMonthGranularityDateInterval, granularity: .month), "Month granularity failed")
-        XCTAssert(testDayGranularityDateMid.isInBetween(testDayGranularityDateInterval, granularity: .day), "Day granularity failed")
-        XCTAssert(testHourGranularityDateMid.isInBetween(testHourGranularityDateInterval, granularity: .hour), "Hour granularity failed")
-        XCTAssert(testMinuteGranularityDateMid.isInBetween(testMinuteGranularityDateInterval, granularity: .minute), "Minute granularity failed")
-        XCTAssert(testSecondsGranularityDateMid.isInBetween(testSecondsGranularityDateInterval, granularity: .second), "Seconds granularity failed")
-        XCTAssert(testSecondsGranularityDateMid.isInBetween(testSecondsGranularityDateInterval, granularity: .nanosecond), "NanoSeconds granularity failed")
-        XCTAssert(testMultipleCalendarDateMid.isInBetween(testMultipleCalendarDateInterval, granularity: .second), "Multi calendar test failed")
+        XCTAssert(testYearGranularityDateMid.isBetween(testYearGranularityDateInterval, granularity: .year), "Year granularity failed")
+        XCTAssert(testMonthGranularityDateMid.isBetween(testMonthGranularityDateInterval, granularity: .month), "Month granularity failed")
+        XCTAssert(testDayGranularityDateMid.isBetween(testDayGranularityDateInterval, granularity: .day), "Day granularity failed")
+        XCTAssert(testHourGranularityDateMid.isBetween(testHourGranularityDateInterval, granularity: .hour), "Hour granularity failed")
+        XCTAssert(testMinuteGranularityDateMid.isBetween(testMinuteGranularityDateInterval, granularity: .minute), "Minute granularity failed")
+        XCTAssert(testSecondsGranularityDateMid.isBetween(testSecondsGranularityDateInterval, granularity: .second), "Seconds granularity failed")
+        XCTAssert(testSecondsGranularityDateMid.isBetween(testSecondsGranularityDateInterval, granularity: .nanosecond), "NanoSeconds granularity failed")
+        XCTAssert(testMultipleCalendarDateMid.isBetween(testMultipleCalendarDateInterval, granularity: .second), "Multi calendar test failed")
     }
 
     func testUntilDate() {
@@ -544,7 +544,7 @@ final class DateTest: XCTestCase {
         XCTAssertEqual(Date.timeZoneOffset(calendar: .turkey), 3)
     }
 
-    func testTotalDayInCurrentMonth() {
+    func testTotalDayInMonth() {
         let jan = Date(year: 2020, month: 1, day: 1, hour: 3, minute: 41, second: 22)
         let leapYearFeb = Date(year: 2020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
         let nonLeapYearFeb = Date(year: 2019, month: 2, day: 1, hour: 3, minute: 41, second: 22)
@@ -559,19 +559,19 @@ final class DateTest: XCTestCase {
         let nov = Date(year: 2020, month: 11, day: 1, hour: 3, minute: 41, second: 22)
         let dec = Date(year: 2020, month: 12, day: 1, hour: 3, minute: 41, second: 22)
 
-        XCTAssertEqual(jan.totalDaysInCurrentMonth, 31)
-        XCTAssertEqual(leapYearFeb.totalDaysInCurrentMonth, 29)
-        XCTAssertEqual(nonLeapYearFeb.totalDaysInCurrentMonth, 28)
-        XCTAssertEqual(mar.totalDaysInCurrentMonth, 31)
-        XCTAssertEqual(apr.totalDaysInCurrentMonth, 30)
-        XCTAssertEqual(may.totalDaysInCurrentMonth, 31)
-        XCTAssertEqual(jun.totalDaysInCurrentMonth, 30)
-        XCTAssertEqual(jul.totalDaysInCurrentMonth, 31)
-        XCTAssertEqual(aug.totalDaysInCurrentMonth, 31)
-        XCTAssertEqual(sep.totalDaysInCurrentMonth, 30)
-        XCTAssertEqual(oct.totalDaysInCurrentMonth, 31)
-        XCTAssertEqual(nov.totalDaysInCurrentMonth, 30)
-        XCTAssertEqual(dec.totalDaysInCurrentMonth, 31)
+        XCTAssertEqual(jan.monthDays, 31)
+        XCTAssertEqual(leapYearFeb.monthDays, 29)
+        XCTAssertEqual(nonLeapYearFeb.monthDays, 28)
+        XCTAssertEqual(mar.monthDays, 31)
+        XCTAssertEqual(apr.monthDays, 30)
+        XCTAssertEqual(may.monthDays, 31)
+        XCTAssertEqual(jun.monthDays, 30)
+        XCTAssertEqual(jul.monthDays, 31)
+        XCTAssertEqual(aug.monthDays, 31)
+        XCTAssertEqual(sep.monthDays, 30)
+        XCTAssertEqual(oct.monthDays, 31)
+        XCTAssertEqual(nov.monthDays, 30)
+        XCTAssertEqual(dec.monthDays, 31)
     }
 
     func testAdjustmentWithDateComponents() {

@@ -109,6 +109,8 @@ extension Date {
                     doesRelativeDateFormatting: doesRelativeDateFormatting,
                     calendar: calendar
                 )
+            case .iso8601(let options):
+                return cache.dateFormatter(options: options, calendar: calendar).string(from: self)
             case .custom(let customFormat):
                 var ordinalDay: String {
                     cache.numberFormatter.locale = calendar.locale

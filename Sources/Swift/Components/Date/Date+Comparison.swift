@@ -160,7 +160,7 @@ extension Date {
     ///   - granularity: Smallest unit that must, along with all larger units, be
     ///                  greater for the given dates.
     ///   - calendar: The calendar to use when comparing.
-    public func isInBetween(
+    public func isBetween(
         _ interval: DateInterval,
         orEqual: Bool = false,
         granularity: Calendar.Component = .nanosecond,

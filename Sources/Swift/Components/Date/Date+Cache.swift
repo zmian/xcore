@@ -15,15 +15,15 @@ extension Date {
 extension Date {
     final class _FormatterCache {
         private let queue = DispatchQueue(label: #function, attributes: .concurrent)
-        private let cache = NSCache<NSString, DateFormatter>()
+        private let cache = NSCache<NSString, Formatter>()
 
-        private func register(formatter: DateFormatter, with key: String) {
+        private func register(formatter: Formatter, with key: String) {
             queue.async(flags: .barrier) { [unowned self] in
                 self.cache.setObject(formatter, forKey: key as NSString)
             }
         }
 
-        private func get(key: String) -> DateFormatter? {
+        private func get(key: String) -> Formatter? {
             queue.sync {
                 cache.object(forKey: key as NSString)
             }
@@ -48,7 +48,7 @@ extension Date {
                 \(isLenient)
                 """.sha256() ?? ""
 
-            if let formatter = get(key: key) {
+            if let formatter = get(key: key) as? DateFormatter {
                 return formatter
             }
 
@@ -81,7 +81,7 @@ extension Date {
                 \(isLenient.hashValue)
                 """.sha256() ?? ""
 
-            if let formatter = get(key: key) {
+            if let formatter = get(key: key) as? DateFormatter {
                 return formatter
             }
 
@@ -93,6 +93,27 @@ extension Date {
                 $0.timeZone = calendar.timeZone
                 $0.locale = calendar.locale
                 $0.isLenient = isLenient
+            }
+            register(formatter: formatter, with: key)
+            return formatter
+        }
+
+        func dateFormatter(
+            options: ISO8601DateFormatter.Options,
+            calendar: Calendar
+        ) -> ISO8601DateFormatter {
+            let key = """
+                \(options.rawValue)
+                \(calendar.timeZone.identifier)
+                """.sha256() ?? ""
+
+            if let formatter = get(key: key) as? ISO8601DateFormatter {
+                return formatter
+            }
+
+            let formatter = ISO8601DateFormatter().apply {
+                $0.timeZone = calendar.timeZone
+                $0.formatOptions = options
             }
             register(formatter: formatter, with: key)
             return formatter

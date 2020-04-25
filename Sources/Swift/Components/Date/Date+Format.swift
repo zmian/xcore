@@ -12,6 +12,7 @@ extension Date {
         case date(DateFormatter.Style)
         case time(DateFormatter.Style)
         case dateTime(DateFormatter.Style)
+        case iso8601(ISO8601DateFormatter.Options)
         case custom(Custom)
     }
 }
