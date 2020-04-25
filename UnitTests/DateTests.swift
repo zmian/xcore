@@ -349,21 +349,21 @@ final class DateTest: XCTestCase {
     }
 
     func testWeekNameFromIndex() {
-        XCTAssertEqual(Date.weekdayName(for: 0), "Sunday")
-        XCTAssertEqual(Date.weekdayName(for: 1), "Monday")
-        XCTAssertEqual(Date.weekdayName(for: 2), "Tuesday")
-        XCTAssertEqual(Date.weekdayName(for: 3), "Wednesday")
-        XCTAssertEqual(Date.weekdayName(for: 4), "Thursday")
-        XCTAssertEqual(Date.weekdayName(for: 5), "Friday")
-        XCTAssertEqual(Date.weekdayName(for: 6), "Saturday")
+        XCTAssertEqual(Date.weekdayName(for: 1), "Sunday")
+        XCTAssertEqual(Date.weekdayName(for: 2), "Monday")
+        XCTAssertEqual(Date.weekdayName(for: 3), "Tuesday")
+        XCTAssertEqual(Date.weekdayName(for: 4), "Wednesday")
+        XCTAssertEqual(Date.weekdayName(for: 5), "Thursday")
+        XCTAssertEqual(Date.weekdayName(for: 6), "Friday")
+        XCTAssertEqual(Date.weekdayName(for: 7), "Saturday")
 
-        XCTAssertEqual(Date.weekdayName(for: 0, calendar: .spanish), "domingo")
-        XCTAssertEqual(Date.weekdayName(for: 1, calendar: .spanish), "lunes")
-        XCTAssertEqual(Date.weekdayName(for: 2, calendar: .spanish), "martes")
-        XCTAssertEqual(Date.weekdayName(for: 3, calendar: .spanish), "miércoles")
-        XCTAssertEqual(Date.weekdayName(for: 4, calendar: .spanish), "jueves")
-        XCTAssertEqual(Date.weekdayName(for: 5, calendar: .spanish), "viernes")
-        XCTAssertEqual(Date.weekdayName(for: 6, calendar: .spanish), "sábado")
+        XCTAssertEqual(Date.weekdayName(for: 1, calendar: .spanish), "domingo")
+        XCTAssertEqual(Date.weekdayName(for: 2, calendar: .spanish), "lunes")
+        XCTAssertEqual(Date.weekdayName(for: 3, calendar: .spanish), "martes")
+        XCTAssertEqual(Date.weekdayName(for: 4, calendar: .spanish), "miércoles")
+        XCTAssertEqual(Date.weekdayName(for: 5, calendar: .spanish), "jueves")
+        XCTAssertEqual(Date.weekdayName(for: 6, calendar: .spanish), "viernes")
+        XCTAssertEqual(Date.weekdayName(for: 7, calendar: .spanish), "sábado")
     }
 
     func testDateUnit() {

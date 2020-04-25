@@ -33,6 +33,8 @@ extension Date {
             $0.numberStyle = .ordinal
         }
 
+        let symbolFormatter = SymbolDateFormatter()
+
         func dateFormatter(
             format: String,
             doesRelativeDateFormatting: Bool = false,
