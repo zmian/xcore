@@ -62,26 +62,26 @@ extension Date {
     /// - Parameters:
     ///   - comparison: The comparison operator to use to determine the comparison.
     ///   - calendar: The calendar to use when comparing.
-    public func `is`(_ comparison: ComparisonOperator, calendar: Calendar = .default) -> Bool {
+    public func `is`(_ comparison: ComparisonOperator, in calendar: Calendar = .default) -> Bool {
         switch comparison {
             case .today:
-                return `is`(.current(.day), calendar: calendar)
+                return `is`(.current(.day), in: calendar)
             case .tomorrow:
-                return `is`(.next(.day), calendar: calendar)
+                return `is`(.next(.day), in: calendar)
             case .yesterday:
-                return `is`(.previous(.day), calendar: calendar)
+                return `is`(.previous(.day), in: calendar)
             case .next(let granularity):
                 let next = Date().adjusting(granularity, by: 1, in: calendar)
-                return isSame(next, granularity: granularity, calendar: calendar)
+                return isSame(next, granularity: granularity, in: calendar)
             case .previous(let granularity):
                 let previous = Date().adjusting(granularity, by: -1, in: calendar)
-                return isSame(previous, granularity: granularity, calendar: calendar)
+                return isSame(previous, granularity: granularity, in: calendar)
             case .past(let granularity):
-                return isBefore(Date(), granularity: granularity, calendar: calendar)
+                return isBefore(Date(), granularity: granularity, in: calendar)
             case .current(let granularity):
-                return isSame(Date(), granularity: granularity, calendar: calendar)
+                return isSame(Date(), granularity: granularity, in: calendar)
             case .future(let granularity):
-                return isAfter(Date(), granularity: granularity, calendar: calendar)
+                return isAfter(Date(), granularity: granularity, in: calendar)
         }
     }
 }
@@ -95,7 +95,7 @@ extension Date {
     ///   - granularity: Smallest unit that must, along with all larger units, be
     ///                  less for the given date.
     ///   - calendar: The calendar to use when comparing.
-    public func compare(to date: Date, granularity: Calendar.Component, calendar: Calendar = .default) -> ComparisonResult {
+    public func compare(to date: Date, granularity: Calendar.Component, in calendar: Calendar = .default) -> ComparisonResult {
         calendar.compare(self, to: date, toGranularity: granularity)
     }
 
@@ -110,8 +110,8 @@ extension Date {
     ///
     /// - Returns: `true` if the dates are the same down to the given granularity,
     ///            otherwise `false`.
-    public func isSame(_ date: Date, granularity: Calendar.Component, calendar: Calendar = .default) -> Bool {
-        compare(to: date, granularity: granularity, calendar: calendar) == .orderedSame
+    public func isSame(_ date: Date, granularity: Calendar.Component, in calendar: Calendar = .default) -> Bool {
+        compare(to: date, granularity: granularity, in: calendar) == .orderedSame
     }
 
     /// Compares whether the receiver is before/before equal `date` based on their
@@ -127,9 +127,9 @@ extension Date {
         _ date: Date,
         orEqual: Bool = false,
         granularity: Calendar.Component,
-        calendar: Calendar = .default
+        in calendar: Calendar = .default
     ) -> Bool {
-        let result = compare(to: date, granularity: granularity, calendar: calendar)
+        let result = compare(to: date, granularity: granularity, in: calendar)
         return (orEqual ? (result == .orderedSame || result == .orderedAscending) : result == .orderedAscending)
     }
 
@@ -146,9 +146,9 @@ extension Date {
         _ date: Date,
         orEqual: Bool = false,
         granularity: Calendar.Component,
-        calendar: Calendar = .default
+        in calendar: Calendar = .default
     ) -> Bool {
-        let result = compare(to: date, granularity: granularity, calendar: calendar)
+        let result = compare(to: date, granularity: granularity, in: calendar)
         return (orEqual ? (result == .orderedSame || result == .orderedDescending) : result == .orderedDescending)
     }
 
@@ -164,9 +164,9 @@ extension Date {
         _ interval: DateInterval,
         orEqual: Bool = false,
         granularity: Calendar.Component = .nanosecond,
-        calendar: Calendar = .default
+        in calendar: Calendar = .default
     ) -> Bool {
-        isAfter(interval.start, orEqual: orEqual, granularity: granularity, calendar: calendar) &&
-        isBefore(interval.end, orEqual: orEqual, granularity: granularity, calendar: calendar)
+        isAfter(interval.start, orEqual: orEqual, granularity: granularity, in: calendar) &&
+        isBefore(interval.end, orEqual: orEqual, granularity: granularity, in: calendar)
     }
 }

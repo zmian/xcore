@@ -84,7 +84,7 @@ extension Date {
     public func string(
         format: Format,
         doesRelativeDateFormatting: Bool = false,
-        calendar: Calendar = .default
+        in calendar: Calendar = .default
     ) -> String {
         let cache = Self._cache
         let formatter: DateFormatter
@@ -120,24 +120,24 @@ extension Date {
 
                 switch customFormat {
                     case .monthName(.full):
-                        return monthName(.full, calendar: calendar)
+                        return monthName(.full, in: calendar)
                     case .monthName(.short):
-                        return monthName(.short, calendar: calendar)
+                        return monthName(.short, in: calendar)
                     case .monthName(.veryShort):
-                        return monthName(.veryShort, calendar: calendar)
+                        return monthName(.veryShort, in: calendar)
                     case .weekdayName(.full):
-                        return weekdayName(.full, calendar: calendar)
+                        return weekdayName(.full, in: calendar)
                     case .weekdayName(.short):
-                        return weekdayName(.short, calendar: calendar)
+                        return weekdayName(.short, in: calendar)
                     case .weekdayName(.veryShort):
-                        return weekdayName(.veryShort, calendar: calendar)
+                        return weekdayName(.veryShort, in: calendar)
                     case .monthDayOrdinal:
-                        return "\(monthName(.full, calendar: calendar)) \(ordinalDay)"
+                        return "\(monthName(.full, in: calendar)) \(ordinalDay)"
                     case .monthShortDayOrdinal:
-                        return "\(monthName(.short, calendar: calendar)) \(ordinalDay)"
+                        return "\(monthName(.short, in: calendar)) \(ordinalDay)"
                     case .monthShortPeriodDayOrdinal:
-                        let longMonthName = monthName(.full, calendar: calendar)
-                        let shortMonthName = monthName(.short, calendar: calendar)
+                        let longMonthName = monthName(.full, in: calendar)
+                        let shortMonthName = monthName(.short, in: calendar)
                         // This ensures we don't append `.` to the month that has same short and long
                         // name (e.g., May 4 shouldn't have period but Jun. 4 should).
                         let separator = longMonthName == shortMonthName ? "" : "."
@@ -161,9 +161,9 @@ extension Date {
     ///   - calendar: The calendar to use when parsing the date.
     public func string(
         format: Format.Custom,
-        calendar: Calendar = .default
+        in calendar: Calendar = .default
     ) -> String {
-        string(format: .custom(format), calendar: calendar)
+        string(format: .custom(format), in: calendar)
     }
 
     /// Adjusts the receiver's given component and along with all smaller units to
@@ -173,7 +173,7 @@ extension Date {
     ///   - component: Component and along with all smaller units to adjust to their
     ///                start.
     ///   - calendar: The calendar to use for adjustment.
-    public func startOf(_ component: Calendar.Component, calendar: Calendar = .default) -> Date {
+    public func startOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
         var start: NSDate?
         var interval: TimeInterval = 0
 
@@ -194,7 +194,7 @@ extension Date {
     ///   - component: Component and along with all smaller units to adjust to their
     ///                end.
     ///   - calendar: The calendar to use for adjustment.
-    public func endOf(_ component: Calendar.Component, calendar: Calendar = .default) -> Date {
+    public func endOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
         var start: NSDate?
         var interval: TimeInterval = 0
 
@@ -253,7 +253,7 @@ extension Date {
                 fatalError("Unsupported type \(component)")
         }
 
-        return adjusting(dateComponent, calendar: calendar)
+        return adjusting(dateComponent, in: calendar)
     }
 
     /// Adjusts the receiver by given date components.
@@ -261,7 +261,7 @@ extension Date {
     /// - Parameters:
     ///   - components: DateComponents object that contains adjustment values.
     ///   - calendar: The calendar to use for adjustment.
-    public func adjusting(_ components: DateComponents, calendar: Calendar = .default) -> Date  {
+    public func adjusting(_ components: DateComponents, in calendar: Calendar = .default) -> Date  {
         calendar.date(byAdding: components, to: self)!
     }
 
@@ -304,23 +304,23 @@ extension Date {
 // MARK: - Counts
 
 extension Date {
-    /// Returns the total number of units until the given date.
+    /// Returns the total number of units to the given date.
     ///
     /// - Parameters:
     ///   - component: The component to calculate.
-    ///   - date: A component to calculate until date.
+    ///   - date: A component to calculate to date.
     ///   - calendar: The calendar to calculate the number.
     ///
     /// **Example**
     ///
     /// ```swift
     /// let date = Date(year: 2019, month: 3, day: 4, hour: 2, minute: 22, second: 44)
-    /// let untilDate = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 55)
-    /// let result = date.numberOf(.year, until: untilDate)
+    /// let anotherDate = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 55)
+    /// let result = date.numberOf(.year, to: anotherDate)
     ///
     /// print(result) // 1; There is only 1 year between 2019 and 2020.
     /// ```
-    public func numberOf(_ component: Calendar.Component, until date: Date, calendar: Calendar = .default) -> Int {
+    public func numberOf(_ component: Calendar.Component, to date: Date, in calendar: Calendar = .default) -> Int {
         guard let start = calendar.ordinality(of: component, in: .era, for: self) else {
             return 0
         }
@@ -358,7 +358,7 @@ extension Date {
     /// - Parameters:
     ///   - style: The style of the month name.
     ///   - calendar: The calendar to use when formatting name.
-    private func monthName(_ style: Format.SymbolStyle, calendar: Calendar = .default) -> String {
+    private func monthName(_ style: Format.SymbolStyle, in calendar: Calendar = .default) -> String {
         Self._cache.symbolFormatter.monthName(for: component(.month), style: style, calendar: calendar)
     }
 
@@ -367,7 +367,7 @@ extension Date {
     /// - Parameters:
     ///   - style: The style of the weekday name.
     ///   - calendar: The calendar to use when formatting name.
-    private func weekdayName(_ style: Format.SymbolStyle, calendar: Calendar = .default) -> String {
+    private func weekdayName(_ style: Format.SymbolStyle, in calendar: Calendar = .default) -> String {
         Self._cache.symbolFormatter.weekdayName(for: component(.weekday), style: style, calendar: calendar)
     }
 
@@ -377,7 +377,7 @@ extension Date {
     ///   - weekday: The weekday number.
     ///   - style: The style of the weekday name.
     ///   - calendar: The calendar to use when formatting name.
-    public static func weekdayName(for weekday: Int, style: Format.SymbolStyle = .full, calendar: Calendar = .default) -> String {
+    public static func weekdayName(for weekday: Int, style: Format.SymbolStyle = .full, in calendar: Calendar = .default) -> String {
         _cache.symbolFormatter.weekdayName(for: weekday, style: style, calendar: calendar)
     }
 }
@@ -392,7 +392,7 @@ extension Date {
     public func interval(
         for component: Calendar.Component,
         adjustedBy adjustment: Int = 0,
-        calendar: Calendar = .default
+        in calendar: Calendar = .default
     ) -> DateInterval {
         let date = startOf(component)
         return .init(

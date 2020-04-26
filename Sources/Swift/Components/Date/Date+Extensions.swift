@@ -21,7 +21,7 @@ extension Date {
     public func fromNow(
         style: DateComponentsFormatter.UnitsStyle = .abbreviated,
         format: String = "%@",
-        calendar: Calendar = .default
+        in calendar: Calendar = .default
     ) -> String? {
         let formatter = DateComponentsFormatter().apply {
             $0.unitsStyle = style

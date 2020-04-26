@@ -47,8 +47,7 @@ final class DateTest: XCTestCase {
         .monthShortPeriodDayOrdinal,
         .monthDayAbbreviated,
         .monthYearFull,
-        .monthDayYearSlashTime,
-        .yearMonthHash
+        .monthDayYearSlashTime
     ]
 
     func testStringToDate() {
@@ -101,9 +100,6 @@ final class DateTest: XCTestCase {
                 case .monthDayYearSlashTime:
                     stringToTest = "06/04/2020 - 11:11AM"
                     expectedDate = Date(year: 2020, month: 6, day: 4, hour: 11, minute: 11)
-                case .yearMonthHash:
-                    stringToTest = "202006"
-                    expectedDate = Date(year: 2020, month: 6, day: 1)
                 default:
                     stringToTest = ""
                     expectedDate = Date()
@@ -153,8 +149,6 @@ final class DateTest: XCTestCase {
                     expectedResult = "June 2020"
                 case .monthDayYearSlashTime:
                     expectedResult = "06/04/2020 - 11:11AM"
-                case .yearMonthHash:
-                    expectedResult = "202006"
                 default:
                     expectedResult = ""
                     XCTFail("Unknown format")
@@ -182,7 +176,7 @@ final class DateTest: XCTestCase {
     func testRelativeCalculation() {
         let date = Date()
         XCTAssertEqual("Today", date.string(format: .date(.full), doesRelativeDateFormatting: true))
-        XCTAssertEqual("hoy", date.string(format: .date(.full), doesRelativeDateFormatting: true, calendar: .spanish))
+        XCTAssertEqual("hoy", date.string(format: .date(.full), doesRelativeDateFormatting: true, in: .spanish))
     }
 
     func testTimeInDifferentCalendar() {
@@ -274,18 +268,18 @@ final class DateTest: XCTestCase {
         let nov = Date(year: 2020, month: 11, day: 4, hour: 21, minute: 11, second: 22).string(format: .monthName)
         let dec = Date(year: 2020, month: 12, day: 4, hour: 21, minute: 11, second: 22).string(format: .monthName)
 
-        let jan_es = Date(year: 2020, month: 1, day: 31, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .monthName, calendar: .spanish)
-        let feb_es = Date(year: 2020, month: 2, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, calendar: .spanish)
-        let mar_es = Date(year: 2020, month: 3, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, calendar: .spanish)
-        let apr_es = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, calendar: .spanish)
-        let may_es = Date(year: 2020, month: 5, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, calendar: .spanish)
-        let jun_es = Date(year: 2020, month: 6, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, calendar: .spanish)
-        let jul_es = Date(year: 2020, month: 7, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, calendar: .spanish)
-        let aug_es = Date(year: 2020, month: 8, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, calendar: .spanish)
-        let sep_es = Date(year: 2020, month: 9, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, calendar: .spanish)
-        let oct_es = Date(year: 2020, month: 10, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, calendar: .spanish)
-        let nov_es = Date(year: 2020, month: 11, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, calendar: .spanish)
-        let dec_es = Date(year: 2020, month: 12, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, calendar: .spanish)
+        let jan_es = Date(year: 2020, month: 1, day: 31, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .monthName, in: .spanish)
+        let feb_es = Date(year: 2020, month: 2, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, in: .spanish)
+        let mar_es = Date(year: 2020, month: 3, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, in: .spanish)
+        let apr_es = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, in: .spanish)
+        let may_es = Date(year: 2020, month: 5, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, in: .spanish)
+        let jun_es = Date(year: 2020, month: 6, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, in: .spanish)
+        let jul_es = Date(year: 2020, month: 7, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, in: .spanish)
+        let aug_es = Date(year: 2020, month: 8, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, in: .spanish)
+        let sep_es = Date(year: 2020, month: 9, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, in: .spanish)
+        let oct_es = Date(year: 2020, month: 10, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, in: .spanish)
+        let nov_es = Date(year: 2020, month: 11, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, in: .spanish)
+        let dec_es = Date(year: 2020, month: 12, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).string(format: .monthName, in: .spanish)
 
         XCTAssertEqual(jan, "January")
         XCTAssertEqual(feb, "February")
@@ -323,13 +317,13 @@ final class DateTest: XCTestCase {
         let sat = Date(year: 2020, month: 1, day: 11, hour: 23, minute: 59, second: 59).string(format: .weekdayName)
         let sun = Date(year: 2020, month: 1, day: 12, hour: 23, minute: 59, second: 59).string(format: .weekdayName)
 
-        let mon_es = Date(year: 2020, month: 1, day: 6, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, calendar: .spanish)
-        let tue_es = Date(year: 2020, month: 1, day: 7, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, calendar: .spanish)
-        let wed_es = Date(year: 2020, month: 1, day: 8, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, calendar: .spanish)
-        let thu_es = Date(year: 2020, month: 1, day: 9, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, calendar: .spanish)
-        let fri_es = Date(year: 2020, month: 1, day: 10, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, calendar: .spanish)
-        let sat_es = Date(year: 2020, month: 1, day: 11, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, calendar: .spanish)
-        let sun_es = Date(year: 2020, month: 1, day: 12, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, calendar: .spanish)
+        let mon_es = Date(year: 2020, month: 1, day: 6, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, in: .spanish)
+        let tue_es = Date(year: 2020, month: 1, day: 7, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, in: .spanish)
+        let wed_es = Date(year: 2020, month: 1, day: 8, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, in: .spanish)
+        let thu_es = Date(year: 2020, month: 1, day: 9, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, in: .spanish)
+        let fri_es = Date(year: 2020, month: 1, day: 10, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, in: .spanish)
+        let sat_es = Date(year: 2020, month: 1, day: 11, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, in: .spanish)
+        let sun_es = Date(year: 2020, month: 1, day: 12, hour: 23, minute: 59, second: 59, calendar: .spanish).string(format: .weekdayName, in: .spanish)
 
         XCTAssertEqual(mon, "Monday")
         XCTAssertEqual(tue, "Tuesday")
@@ -357,13 +351,13 @@ final class DateTest: XCTestCase {
         XCTAssertEqual(Date.weekdayName(for: 6), "Friday")
         XCTAssertEqual(Date.weekdayName(for: 7), "Saturday")
 
-        XCTAssertEqual(Date.weekdayName(for: 1, calendar: .spanish), "domingo")
-        XCTAssertEqual(Date.weekdayName(for: 2, calendar: .spanish), "lunes")
-        XCTAssertEqual(Date.weekdayName(for: 3, calendar: .spanish), "martes")
-        XCTAssertEqual(Date.weekdayName(for: 4, calendar: .spanish), "miércoles")
-        XCTAssertEqual(Date.weekdayName(for: 5, calendar: .spanish), "jueves")
-        XCTAssertEqual(Date.weekdayName(for: 6, calendar: .spanish), "viernes")
-        XCTAssertEqual(Date.weekdayName(for: 7, calendar: .spanish), "sábado")
+        XCTAssertEqual(Date.weekdayName(for: 1, in: .spanish), "domingo")
+        XCTAssertEqual(Date.weekdayName(for: 2, in: .spanish), "lunes")
+        XCTAssertEqual(Date.weekdayName(for: 3, in: .spanish), "martes")
+        XCTAssertEqual(Date.weekdayName(for: 4, in: .spanish), "miércoles")
+        XCTAssertEqual(Date.weekdayName(for: 5, in: .spanish), "jueves")
+        XCTAssertEqual(Date.weekdayName(for: 6, in: .spanish), "viernes")
+        XCTAssertEqual(Date.weekdayName(for: 7, in: .spanish), "sábado")
     }
 
     func testDateUnit() {
@@ -527,15 +521,15 @@ final class DateTest: XCTestCase {
         XCTAssert(testMultipleCalendarDateMid.isBetween(testMultipleCalendarDateInterval, granularity: .second), "Multi calendar test failed")
     }
 
-    func testUntilDate() {
+    func testNumberOf() {
         let date = Date(year: 2019, month: 3, day: 4, hour: 2, minute: 22, second: 44)
-        let untilDate = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 55)
-        XCTAssertEqual(1, date.numberOf(.year, until: untilDate))
-        XCTAssertEqual(13, date.numberOf(.month, until: untilDate))
-        XCTAssertEqual(398, date.numberOf(.day, until: untilDate))
-        XCTAssertEqual(9551, date.numberOf(.hour, until: untilDate))
-        XCTAssertEqual(573083, date.numberOf(.minute, until: untilDate))
-        XCTAssertEqual(34384991, date.numberOf(.second, until: untilDate))
+        let anotherDate = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 55)
+        XCTAssertEqual(1, date.numberOf(.year, to: anotherDate))
+        XCTAssertEqual(13, date.numberOf(.month, to: anotherDate))
+        XCTAssertEqual(398, date.numberOf(.day, to: anotherDate))
+        XCTAssertEqual(9551, date.numberOf(.hour, to: anotherDate))
+        XCTAssertEqual(573083, date.numberOf(.minute, to: anotherDate))
+        XCTAssertEqual(34384991, date.numberOf(.second, to: anotherDate))
     }
 
     func testTimeZone() {
