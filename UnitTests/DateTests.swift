@@ -11,15 +11,15 @@ import PromiseKit
 final class DateTest: XCTestCase {
     override func setUp() {
         super.setUp()
-        Date.configure(.default)
+        Calendar.default = .iso
     }
 
-    func testServerDate() {
+    func testRemoteDate() {
         var date: Date?
         let syncExpectation = expectation(description: "sync_date")
 
         firstly {
-            Date.syncServerDate(force: true)
+            Date.serverDate.sync(force: true)
         }.done {
             date = $0
             syncExpectation.fulfill()
@@ -28,7 +28,7 @@ final class DateTest: XCTestCase {
         }
 
         waitForExpectations(timeout: 60, handler: nil)
-        XCTAssertEqual(Date.serverDate, date)
+        XCTAssertEqual(Date.serverDate.date, date)
     }
 
     private let customFormats: [Date.Format.Custom] = [
@@ -726,23 +726,20 @@ final class DateTest: XCTestCase {
     }
 }
 
-extension Date.Configuration {
-    fileprivate static var `default`: Self {
-        .init(
-            calendar: .iso,
-            serverDateProvider: serverDateProvider,
-            serverDateExpirationTime: 36000
-        )
-    }
-
-    private static var serverDateProvider: Promise<Date> {
+extension Date {
+    fileprivate static var serverDate = Remote(expirationDuration: 36000) {
         .init { seal in
-            after(seconds: 1).then {
+            firstly {
+                after(seconds: 1)
+            }.then {
                 Promise.value("2020-04-19")
-            }.done { rawServerDate in
-                guard let date = Date(from: rawServerDate, format: .yearMonthDayDash) else {
+            }.done { dateString in
+                struct ParsingError: Error {}
+
+                guard let date = Date(from: dateString, format: .yearMonthDayDash) else {
                     throw ParsingError()
                 }
+
                 seal.fulfill(date)
             }.catch { error in
                 seal.reject(error)
@@ -750,8 +747,6 @@ extension Date.Configuration {
         }
     }
 }
-
-private struct ParsingError: Error {}
 
 extension Calendar {
     fileprivate static let spanish = Self(
