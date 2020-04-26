@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import AVFoundation
+import Foundation
 
 extension CharacterSet {
     /// English letters (upper and lowercase) and space.
