@@ -112,12 +112,12 @@ extension UIAlertController {
     }
 
     /// A convenience method to display an action sheet with list of specified options
-    /// that conforms to `OptionsRepresentable` protocol.
+    /// that conforms to `PickerOptions` protocol.
     ///
     /// **Example:**
     ///
     /// ```swift
-    /// enum CompassPoint: Int, CaseIterable, OptionsRepresentable {
+    /// enum CompassPoint: Int, CaseIterable, PickerOptions {
     ///     case north
     ///     case south
     ///     case east
@@ -133,7 +133,7 @@ extension UIAlertController {
     ///   - sourceView: A source view that presented the alert. A required property for iPad support.
     ///   - handler: A block to invoke when an option is selected.
     @discardableResult
-    public static func present<T: OptionsRepresentable>(sourceView: PopoverPresentationSourceView, _ handler: @escaping (_ option: T) -> Void) -> UIAlertController {
+    public static func present<T: PickerOptions>(sourceView: PopoverPresentationSourceView, _ handler: @escaping (_ option: T) -> Void) -> UIAlertController {
         let options = T.allCases
         let actions = options.map { option in
             UIAlertAction(title: option.description, style: .default) { _ in

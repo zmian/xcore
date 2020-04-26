@@ -21,10 +21,6 @@ final class FeedLightDataSource: XCCollectionViewDataSource {
         }
     }()
 
-    override init(collectionView: UICollectionView) {
-        super.init(collectionView: collectionView)
-    }
-
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }

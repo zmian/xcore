@@ -45,7 +45,8 @@ open class XCComposedCollectionViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.apply {
-            composedDataSource.dataSources = dataSources(for: $0)
+            composedDataSource.collectionView = $0
+            composedDataSource.dataSources = dataSources()
             $0.dataSource = composedDataSource
             layout.adapter.attach(to: self)
 
@@ -56,7 +57,7 @@ open class XCComposedCollectionViewController: UIViewController {
         }
     }
 
-    open func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
+    open func dataSources() -> [XCCollectionViewDataSource] {
         []
     }
 

@@ -27,9 +27,10 @@ extension UIView: DrawerScreenContent {
 
 final public class DrawerScreen: NSObject {
     public typealias Content = DrawerScreenContent
-
     private static let shared = DrawerScreen()
 
+    private var shownConstraint: NSLayoutConstraint?
+    private var hiddenConstraint: NSLayoutConstraint?
     private var notificationToken: NSObjectProtocol?
     private var presentedContent: Content?
     private let hud = HUD().apply {
@@ -42,9 +43,6 @@ final public class DrawerScreen: NSObject {
     private let modalView = BlurView().apply {
         $0.blurOpacity = appearance().blurOpacity
     }
-
-    private var shownConstraint: NSLayoutConstraint?
-    private var hiddenConstraint: NSLayoutConstraint?
 
     public override init() {
         super.init()

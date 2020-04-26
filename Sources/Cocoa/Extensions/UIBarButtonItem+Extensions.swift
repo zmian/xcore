@@ -60,6 +60,6 @@ extension UIBarButtonItem {
 
 extension UIControl.State {
     fileprivate static var applicationStates: [UIControl.State] {
-        [.normal, .highlighted, .disabled, .selected, .focused, .application]
+        [.normal, .highlighted, .disabled, .focused]
     }
 }

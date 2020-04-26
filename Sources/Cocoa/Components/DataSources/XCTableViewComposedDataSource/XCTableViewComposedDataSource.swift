@@ -10,7 +10,17 @@ import UIKit
 open class XCTableViewComposedDataSource: XCTableViewDataSource, ExpressibleByArrayLiteral {
     private var dataSourceIndex = DataSourceIndex<XCTableViewDataSource>()
 
-    open var dataSources: [XCTableViewDataSource] = []
+    open override weak var tableView: UITableView? {
+        didSet {
+            attachTableView(to: dataSources)
+        }
+    }
+
+    open var dataSources: [XCTableViewDataSource] = [] {
+        didSet {
+            attachTableView(to: dataSources)
+        }
+    }
 
     public override init() {
         super.init()
@@ -19,6 +29,7 @@ open class XCTableViewComposedDataSource: XCTableViewDataSource, ExpressibleByAr
     public init(dataSources: [XCTableViewDataSource]) {
         super.init()
         self.dataSources = dataSources
+        attachTableView(to: dataSources)
     }
 
     public required convenience init(arrayLiteral elements: XCTableViewDataSource...) {
@@ -29,6 +40,7 @@ open class XCTableViewComposedDataSource: XCTableViewDataSource, ExpressibleByAr
 
     /// Adds a new data source at the end of the collection.
     open func add(_ dataSource: XCTableViewDataSource) {
+        attachTableView(to: [dataSource])
         dataSources.append(dataSource)
     }
 
@@ -38,6 +50,12 @@ open class XCTableViewComposedDataSource: XCTableViewDataSource, ExpressibleByAr
         }
 
         dataSources.remove(at: index)
+    }
+
+    private func attachTableView(to dataSources: [XCTableViewDataSource]) {
+        dataSources.forEach {
+            $0.tableView = tableView
+        }
     }
 }
 
