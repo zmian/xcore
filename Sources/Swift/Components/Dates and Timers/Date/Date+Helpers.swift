@@ -394,9 +394,9 @@ extension Date {
         adjustedBy adjustment: Int = 0,
         in calendar: Calendar = .default
     ) -> DateInterval {
-        let date = startOf(component)
+        let date = startOf(component).adjusting(component, by: adjustment)
         return .init(
-            start: date.adjusting(component, by: adjustment),
+            start: date,
             end: date.endOf(component)
         )
     }

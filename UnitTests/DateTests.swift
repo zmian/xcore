@@ -724,6 +724,100 @@ final class DateTest: XCTestCase {
         XCTAssertTrue(currentDate_Month.is(.current(.month)), "Expected \(currentDate_Month.component(.month)) to be month current \(now.component(.month)).")
         XCTAssertTrue(currentDate_Year.is(.current(.year)), "Expected \(currentDate_Year.component(.year)) to be year current \(now.component(.year)).")
     }
+
+    func testDateIntervalsStaticDates() {
+        // Week
+        let thisWeekStartDate = Date(year: 2020, month: 1, day: 5, hour: 0, minute: 0, second: 0)
+        let thisWeekEndDate = Date(year: 2020, month: 1, day: 11, hour: 23, minute: 59, second: 59)
+        let thisWeek = thisWeekStartDate.interval(for: .weekOfYear)
+        XCTAssert(thisWeek.start == thisWeekStartDate, "Expected \(thisWeek.start) to equal \(thisWeekStartDate)")
+        XCTAssert(thisWeek.end.stripMillisecond() == thisWeekEndDate, "Expected \(thisWeek.end) to equal \(thisWeekEndDate)")
+
+        let lastWeekStartDate = Date(year: 2019, month: 12, day: 29, hour: 0, minute: 0, second: 0)
+        let lastWeekEndDate = Date(year: 2020, month: 1, day: 4, hour: 23, minute: 59, second: 59)
+        let lastWeek = thisWeekStartDate.interval(for: .weekOfYear, adjustedBy: -1)
+        XCTAssertTrue(lastWeek.start == lastWeekStartDate, "Expected \(lastWeek.start) to equal \(lastWeekStartDate)")
+        XCTAssert(lastWeek.end.stripMillisecond() == lastWeekEndDate, "Expected \(lastWeek.end) to equal \(lastWeekEndDate)")
+
+        // Month
+        let thisMonthStartDate = Date(year: 2020, month: 2, day: 1, hour: 0, minute: 0, second: 0)
+        let thisMonthEndDate = Date(year: 2020, month: 2, day: 29, hour: 23, minute: 59, second: 59)
+        let thisMonth = thisMonthStartDate.interval(for: .month)
+        XCTAssert(thisMonth.start == thisMonthStartDate, "Expected \(thisMonth.start) to equal \(thisMonthStartDate)")
+        XCTAssert(thisMonth.end.stripMillisecond() == thisMonthEndDate, "Expected \(thisMonth.end) to equal \(thisMonthEndDate)")
+
+        let lastMonthStartDate = Date(year: 2020, month: 1, day: 1, hour: 0, minute: 0, second: 0)
+        let lastMonthEndDate = Date(year: 2020, month: 1, day: 31, hour: 23, minute: 59, second: 59)
+        let lastMonth = thisMonthStartDate.interval(for: .month, adjustedBy: -1)
+        XCTAssertTrue(lastMonth.start == lastMonthStartDate, "Expected \(lastMonth.start) to equal \(lastMonthStartDate)")
+        XCTAssert(lastMonth.end.stripMillisecond() == lastMonthEndDate, "Expected \(lastMonth.end) to equal \(lastMonthEndDate)")
+
+        // Year
+        let thisYearStartDate = Date(year: 2020, month: 1, day: 1, hour: 0, minute: 0, second: 0)
+        let thisYearEndDate = Date(year: 2020, month: 12, day: 31, hour: 23, minute: 59, second: 59)
+        let thisYear = thisYearStartDate.interval(for: .year)
+        XCTAssert(thisYear.start == thisYearStartDate, "Expected \(thisYear.start) to equal \(thisYearStartDate)")
+        XCTAssert(thisYear.end.stripMillisecond() == thisYearEndDate, "Expected \(thisYear.end) to equal \(thisYearEndDate)")
+
+        let lastYearStartDate = Date(year: 2019, month: 1, day: 1, hour: 0, minute: 0, second: 0)
+        let lastYearEndDate = Date(year: 2019, month: 12, day: 31, hour: 23, minute: 59, second: 59)
+        let lastYear = thisYearStartDate.interval(for: .year, adjustedBy: -1)
+        XCTAssertTrue(lastYear.start == lastYearStartDate, "Expected \(lastYear.start) to equal \(lastYearStartDate)")
+        XCTAssert(lastYear.end.stripMillisecond() == lastYearEndDate, "Expected \(lastYear.end) to equal \(lastYearEndDate)")
+    }
+
+    func testDateIntervalBulk() {
+        let components: [Calendar.Component] = [
+            .weekOfYear,
+            .month,
+            .year
+        ]
+
+        // Current
+        for component in components {
+            let interval = Date().interval(for: component)
+            let date = Date().startOf(component)
+            XCTAssert(interval.start == date)
+            XCTAssert(interval.end == date.endOf(component))
+        }
+
+        // Previous
+        for component in components {
+            let interval = Date().interval(for: component, adjustedBy: -1)
+            let date = Date().startOf(component).adjusting(component, by: -1)
+            XCTAssert(interval.start == date)
+            XCTAssert(interval.end == date.endOf(component))
+        }
+    }
+
+    func testDateIntervalLiveDates() {
+        // Week
+        let lastWeek = DateInterval.lastWeek
+        XCTAssert(lastWeek.start == Date().startOf(.weekOfYear).adjusting(.weekOfYear, by: -1))
+        XCTAssert(lastWeek.end == Date().startOf(.weekOfYear).adjusting(.weekOfYear, by: -1).endOf(.weekOfYear))
+
+        let thisWeek = DateInterval.thisWeek
+        XCTAssert(thisWeek.start == Date().startOf(.weekOfYear))
+        XCTAssert(thisWeek.end == Date().endOf(.weekOfYear))
+
+        // Month
+        let lastMonth = DateInterval.lastMonth
+        XCTAssert(lastMonth.start == Date().startOf(.month).adjusting(.month, by: -1))
+        XCTAssert(lastMonth.end == Date().startOf(.month).adjusting(.month, by: -1).endOf(.month))
+
+        let thisMonth = DateInterval.thisMonth
+        XCTAssert(thisMonth.start == Date().startOf(.month))
+        XCTAssert(thisMonth.end == Date().endOf(.month))
+
+        // Year
+        let lastYear = DateInterval.lastYear
+        XCTAssert(lastYear.start == Date().startOf(.year).adjusting(.year, by: -1))
+        XCTAssert(lastYear.end == Date().startOf(.year).adjusting(.year, by: -1).endOf(.year))
+
+        let thisYear = DateInterval.thisYear
+        XCTAssert(thisYear.start == Date().startOf(.year))
+        XCTAssert(thisYear.end == Date().endOf(.year))
+    }
 }
 
 extension Date {
@@ -768,5 +862,40 @@ extension Calendar {
     ).applying {
         $0.timeZone = TimeZone(identifier: "US/Eastern")!
         $0.locale = .current
+    }
+}
+
+// MARK: - DateInterval
+
+extension DateInterval {
+    fileprivate static var thisWeek: Self {
+        Date().interval(for: .weekOfYear)
+    }
+
+    fileprivate static var lastWeek: Self {
+        Date().interval(for: .weekOfYear, adjustedBy: -1)
+    }
+
+    fileprivate static var thisMonth: Self {
+        Date().interval(for: .month)
+    }
+
+    fileprivate static var lastMonth: Self {
+        Date().interval(for: .month, adjustedBy: -1)
+    }
+
+    fileprivate static var thisYear: Self {
+        Date().interval(for: .year)
+    }
+
+    fileprivate static var lastYear: Self {
+        Date().interval(for: .year, adjustedBy: -1)
+    }
+}
+
+extension Date {
+    fileprivate func stripMillisecond(calendar: Calendar = .default) -> Date {
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute, .second], from: self)
+        return calendar.date(from: components) ?? self
     }
 }
