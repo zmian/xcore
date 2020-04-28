@@ -7,7 +7,7 @@
 import UIKit
 
 /// A type to present list of items in a type safe manner.
-public protocol PickerOptions: Equatable {
+public protocol PickerOptions: Equatable, CustomAnalyticsValueConvertible {
     var title: String { get }
     var subtitle: String? { get }
     var image: ImageRepresentable? { get }

@@ -10,6 +10,14 @@ public protocol CustomAnalyticsValueConvertible {
     var analyticsValue: String { get }
 }
 
+// MARK: - Auto Implementation for RawRepresentable
+
+extension CustomAnalyticsValueConvertible where Self: RawRepresentable, RawValue == String {
+    public var analyticsValue: String {
+        rawValue.snakecased()
+    }
+}
+
 // MARK: - Built-in
 
 extension Biometrics.Kind: CustomAnalyticsValueConvertible {
