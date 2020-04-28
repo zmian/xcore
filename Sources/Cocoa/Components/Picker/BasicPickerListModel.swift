@@ -7,28 +7,28 @@
 import Foundation
 
 extension PickerList {
-    /// A convenience method to display a picker with list of options
-    /// that conforms to `PickerOptions` protocol.
+    /// A convenience method to display a picker with list of items that conforms to
+    /// `PickerOptions` protocol.
     ///
     /// **Example:**
     ///
     /// ```swift
-    /// enum CompassPoint: Int, CaseIterable, PickerOptions {
+    /// enum CompassPoint: Int, CaseIterable, PickerOptionsEnum {
     ///     case north, south, east, west
     /// }
     ///
-    /// PickerList.present(selected: CompassPoint.allCases.first) { (option: CompassPoint) -> Void in
-    ///     print("selected option:" option)
+    /// PickerList.present(selected: CompassPoint.allCases.first) { (item: CompassPoint) -> Void in
+    ///     print("selected item:" item)
     /// }
     /// ```
     @discardableResult
-    public static func present<T: PickerOptions>(
-        selected option: T? = nil,
+    public static func present<T: PickerOptionsEnum>(
+        selected item: T? = nil,
         configure: ((PickerList) -> Void)? = nil,
-        _ handler: @escaping (_ option: T) -> Void
+        _ handler: @escaping (_ item: T) -> Void
     ) -> PickerList {
-        let model = BasicPickerListModel(selected: option) { option in
-            handler(option)
+        let model = BasicPickerListModel(items: T.allCases, selected: item) { item in
+            handler(item)
         }
 
         let picker = PickerList(model: model)
@@ -37,24 +37,62 @@ extension PickerList {
         return picker
     }
 
-    /// A convenience method to display a picker with list of options.
+    /// A convenience method to display a picker with list of items that conforms to
+    /// `PickerOptions` protocol.
     ///
     /// **Example:**
     ///
     /// ```swift
-    /// let options = ["Year", "Month", "Day"]
-    /// PickerList.present(options: options, selected: options.first) { option in
-    ///     print("selected option:" option)
+    /// struct Menu: PickerOptions {
+    ///     let name: String
+    ///     let amount: Double
+    /// }
+    ///
+    /// let items = [
+    ///     Menu(name: "Caffè Latte", amount: 2.95),
+    ///     Menu(name: "Cappuccino", amount: 3.45),
+    ///     Menu(name: "Caffè Mocha", amount: 3.45)
+    /// ]
+    ///
+    /// Picker.present(items, selected: items.first) { (item: Menu) -> Void in
+    ///     print("selected item:" item)
+    /// }
+    /// ```
+    @discardableResult
+    public static func present<T: PickerOptions>(
+        _ items: [T],
+        selected item: T? = nil,
+        configure: ((PickerList) -> Void)? = nil,
+        _ handler: @escaping (_ item: T) -> Void
+    ) -> PickerList {
+        let model = BasicPickerListModel(items: items, selected: item) { item in
+            handler(item)
+        }
+
+        let picker = PickerList(model: model)
+        configure?(picker)
+        picker.present()
+        return picker
+    }
+
+    /// A convenience method to display a picker with list of items.
+    ///
+    /// **Example:**
+    ///
+    /// ```swift
+    /// let items = ["Year", "Month", "Day"]
+    /// PickerList.present(items, selected: items.first) { item in
+    ///     print("selected item:" item)
     /// }
     /// ```
     @discardableResult
     public static func present(
-        options: [String],
-        selected option: String? = nil,
-        _ handler: @escaping (_ option: String) -> Void
+        _ items: [String],
+        selected item: String? = nil,
+        _ handler: @escaping (_ item: String) -> Void
     ) -> PickerList {
-        let model = BasicTextPickerListModel(options: options, selected: option) { option in
-            handler(option)
+        let model = BasicTextPickerListModel(items: items, selected: item) { item in
+            handler(item)
         }
 
         let picker = PickerList(model: model)
@@ -67,16 +105,19 @@ extension PickerList {
     /// **Example:**
     ///
     /// ```swift
-    /// let options = [
+    /// let items = [
     ///     DynamicTableModel(title: "Year") { _ in }
     ///     DynamicTableModel(title: "Month") { _ in }
     ///     DynamicTableModel(title: "Day") { _ in }
     /// ]
-    /// PickerList.present(options: options)
+    /// PickerList.present(items)
     /// ```
     @discardableResult
-    public static func present(options: [DynamicTableModel], configure: PickerList.ConfigureBlock? = nil) -> PickerList {
-        let model = BasicItemPickerListModel(options: options, configure: configure)
+    public static func present(
+        _ items: [DynamicTableModel],
+        configure: PickerList.ConfigureBlock? = nil
+    ) -> PickerList {
+        let model = BasicItemPickerListModel(items: items, configure: configure)
         let picker = PickerList(model: model)
         picker.present()
         return picker
@@ -86,14 +127,14 @@ extension PickerList {
 // MARK: - BasicPickerListModel
 
 private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
-    private let options: [T]
+    private let rawItems: [T]
     private let selectedIndex: Int?
     private var selectionCallback: (T) -> Void
 
-    init(selected option: T? = nil, handler: @escaping (T) -> Void) {
-        self.options = T.allCases
+    init(items: [T], selected item: T? = nil, handler: @escaping (T) -> Void) {
+        self.rawItems = items
 
-        if let option = option, let index = options.firstIndex(of: option) {
+        if let item = item, let index = items.firstIndex(of: item) {
             selectedIndex = index
         } else {
             selectedIndex = nil
@@ -103,7 +144,7 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
     }
 
     private var checkmarkView: UIImageView {
-        return UIImageView(assetIdentifier: .checkmarkIcon).apply {
+        UIImageView(assetIdentifier: .checkmarkIcon).apply {
             $0.frame.size = 20
             $0.tintColor = .appleGreen
             $0.isContentModeAutomaticallyAdjusted = true
@@ -111,20 +152,21 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
     }
 
     lazy var items: [DynamicTableModel] = {
-        options.enumerated().map {
+        rawItems.enumerated().map {
             DynamicTableModel(
-                title: $0.element.description,
+                title: $0.element.title,
+                subtitle: $0.element.subtitle,
                 image: $0.element.image,
                 accessory: $0.offset == selectedIndex ? .custom(checkmarkView) : .none
             ) { [weak self] indexPath, _ in
                 guard
                     let strongSelf = self,
-                    let option = strongSelf.options.at(indexPath.item)
+                    let item = strongSelf.rawItems.at(indexPath.item)
                 else {
                     return
                 }
 
-                strongSelf.selectionCallback(option)
+                strongSelf.selectionCallback(item)
                 DrawerScreen.dismiss()
             }
         }
@@ -134,14 +176,14 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
 // MARK: - BasicTextPickerListModel
 
 private final class BasicTextPickerListModel: PickerListModel {
-    private let options: [String]
+    private let rawItems: [String]
     private let selectedIndex: Int?
     private var selectionCallback: (String) -> Void
 
-    init(options: [String], selected option: String? = nil, handler: @escaping (String) -> Void) {
-        self.options = options
+    init(items: [String], selected item: String? = nil, handler: @escaping (String) -> Void) {
+        self.rawItems = items
 
-        if let option = option, let index = options.firstIndex(of: option) {
+        if let item = item, let index = items.firstIndex(of: item) {
             selectedIndex = index
         } else {
             selectedIndex = nil
@@ -151,7 +193,7 @@ private final class BasicTextPickerListModel: PickerListModel {
     }
 
     private var checkmarkView: UIImageView {
-        return UIImageView(assetIdentifier: .checkmarkIcon).apply {
+        UIImageView(assetIdentifier: .checkmarkIcon).apply {
             $0.frame.size = 20
             $0.tintColor = .appleGreen
             $0.isContentModeAutomaticallyAdjusted = true
@@ -159,19 +201,19 @@ private final class BasicTextPickerListModel: PickerListModel {
     }
 
     lazy var items: [DynamicTableModel] = {
-        options.enumerated().map {
+        rawItems.enumerated().map {
             DynamicTableModel(
                 title: $0.element,
                 accessory: $0.offset == selectedIndex ? .custom(checkmarkView) : .none
             ) { [weak self] indexPath, _ in
                 guard
                     let strongSelf = self,
-                    let option = strongSelf.options.at(indexPath.item)
+                    let item = strongSelf.rawItems.at(indexPath.item)
                 else {
                     return
                 }
 
-                strongSelf.selectionCallback(option)
+                strongSelf.selectionCallback(item)
                 DrawerScreen.dismiss()
             }
         }
@@ -188,8 +230,8 @@ private final class BasicItemPickerListModel: PickerListModel {
     private let _configure: PickerList.ConfigureBlock?
     let items: [DynamicTableModel]
 
-    init(options: [DynamicTableModel], configure: PickerList.ConfigureBlock? = nil) {
-        self.items = options
+    init(items: [DynamicTableModel], configure: PickerList.ConfigureBlock? = nil) {
+        self.items = items
         self._configure = configure
     }
 
@@ -203,5 +245,9 @@ private final class BasicItemPickerListModel: PickerListModel {
 }
 
 extension PickerList {
-    public typealias ConfigureBlock = (_ indexPath: IndexPath, _ cell: DynamicTableViewCell, _ item: DynamicTableModel) -> Void
+    public typealias ConfigureBlock = (
+        _ indexPath: IndexPath,
+        _ cell: DynamicTableViewCell,
+        _ item: DynamicTableModel
+    ) -> Void
 }
