@@ -45,7 +45,7 @@ extension Configuration where Type: UIButton {
     }
 
     public static var plain: Self {
-        return .plain()
+        .plain()
     }
 
     public static func plain(
@@ -134,27 +134,27 @@ extension Configuration where Type: UIButton {
 
 extension Configuration where Type: UIButton {
     public static var leftArrow: Self {
-        return image(assetIdentifier: .arrowLeftIcon, alpha: 0.5).extend {
+        image(assetIdentifier: .arrowLeftIcon, alpha: 0.5).extend {
             $0.accessibilityIdentifier = "leftButton"
         }
     }
 
     public static var rightArrow: Self {
-        return image(assetIdentifier: .arrowRightIcon, alpha: 0.5).extend {
+        image(assetIdentifier: .arrowRightIcon, alpha: 0.5).extend {
             $0.accessibilityIdentifier = "rightButton"
         }
     }
 
     public static var dismiss: Self {
-        return image(assetIdentifier: .closeIcon, size: 24, axis: .horizontal, .vertical)
+        image(assetIdentifier: .closeIcon, size: 24, axis: .horizontal, .vertical)
     }
 
     public static var dismissFilled: Self {
-        return image(assetIdentifier: .closeIconFilled, size: 24, axis: .horizontal, .vertical)
+        image(assetIdentifier: .closeIconFilled, size: 24, axis: .horizontal, .vertical)
     }
 
     public static var searchIcon: Self {
-        return image(assetIdentifier: .searchIcon, size: 14, axis: .horizontal)
+        image(assetIdentifier: .searchIcon, size: 14, axis: .horizontal)
     }
 
     public static func image(
@@ -163,7 +163,7 @@ extension Configuration where Type: UIButton {
         size: CGSize,
         axis: NSLayoutConstraint.Axis...
     ) -> Self {
-        return image(id: id, assetIdentifier: assetIdentifier).extend {
+        image(id: id, assetIdentifier: assetIdentifier).extend {
             $0.resistsSizeChange(axis: axis)
             // Increase the touch area if the image size is small.
             if let size = $0.image?.size, size.width < 44 || size.height < 44 {
@@ -229,10 +229,6 @@ extension Configuration where Type: UIButton {
 // MARK: - Toggle Configurations
 
 extension Configuration where Type: UIButton {
-    public static var none: Self {
-        .init(id: #function) { _ in }
-    }
-
     public static var checkbox: Self {
         checkbox()
     }
