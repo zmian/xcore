@@ -38,7 +38,7 @@ extension KeyValueMap {
             storage.contains { $0.contains(key) }
         }
 
-        public func item(_ key: String) -> KeyValueMap? {
+        public subscript(key: String) -> KeyValueMap? {
             guard let index = storage.firstIndex(where: { $0.contains(key) }) else {
                 return nil
             }
