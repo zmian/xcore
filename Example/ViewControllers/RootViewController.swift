@@ -102,7 +102,7 @@ final class RootViewController: DynamicTableViewController {
                 }
             },
             .init(title: "Picker List: Strings", subtitle: "Using Picker to select from an array of strings") { _, _ in
-                PickerList.present(options: [
+                PickerList.present([
                     "Option 1",
                     "Option 2",
                     "Option 3",
