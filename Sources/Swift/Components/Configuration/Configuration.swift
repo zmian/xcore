@@ -95,3 +95,11 @@ extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
         addAction(handler)
     }
 }
+
+// MARK: - Built-in
+
+extension Configuration {
+    public static var none: Self {
+        .init(id: #function) { _ in }
+    }
+}
