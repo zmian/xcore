@@ -6,13 +6,6 @@
 
 import UIKit
 
-extension Bundle {
-    /// Method for creating or retrieving bundle instances.
-    public static var xcore: Bundle {
-        .init(for: DynamicTableView.self)
-    }
-}
-
 public struct ImageAssetIdentifier: RawRepresentable, CustomStringConvertible, Equatable {
     public let rawValue: String
     public let bundle: Bundle
