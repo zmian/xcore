@@ -70,18 +70,18 @@ extension FloatingPoint {
     }
 }
 
-extension Sequence where Iterator.Element: Numeric {
+extension Sequence where Iterator.Element: AdditiveArithmetic {
     /// ```swift
     /// [1, 1, 1, 1, 1, 1].runningSum() // -> [1, 2, 3, 4, 5, 6]
     /// ```
     public func runningSum() -> [Iterator.Element] {
         reduce([]) { sums, element in
-            sums + [element + (sums.last ?? 0)]
+            sums + [element + (sums.last ?? .zero)]
         }
     }
 
     public func sum() -> Element {
-        reduce(0, +)
+        reduce(.zero, +)
     }
 }
 
@@ -103,8 +103,10 @@ extension Sequence {
     /// // prints
     /// 2200.0
     /// ```
-    public func sum<T: Numeric>(_ transform: (Element) throws -> T) rethrows -> T {
-        try map(transform).sum()
+    public func sum<T: AdditiveArithmetic>(_ transform: (Element) throws -> T) rethrows -> T {
+        try reduce(T.zero) { sum, element in
+            sum + (try transform(element))
+        }
     }
 }
 
