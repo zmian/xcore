@@ -112,17 +112,21 @@ extension Picker {
 // MARK: - BasicPickerModel
 
 private final class BasicPickerModel<T: PickerOptions>: PickerModel {
+    // Allow us to reload items where `T: PickerOptionsEnum`. See
+    // `pickerReloadAllComponents()` for usage.
+    private let itemsProvider: () -> [T]
     private var items: [T]
     private var selectedItem: T
     private var selectionCallback: (T) -> Void
 
-    init(items: [T], selected item: T? = nil, handler: @escaping (T) -> Void) {
-        self.items = items
+    init(items: @autoclosure @escaping () -> [T], selected item: T? = nil, handler: @escaping (T) -> Void) {
+        self.itemsProvider = items
+        self.items = items()
 
-        if let item = item, let index = items.firstIndex(of: item) {
-            selectedItem = items[index]
+        if let item = item, let index = self.items.firstIndex(of: item) {
+            selectedItem = self.items[index]
         } else {
-            selectedItem = items[0]
+            selectedItem = self.items[0]
         }
 
         selectionCallback = handler
@@ -163,11 +167,9 @@ private final class BasicPickerModel<T: PickerOptions>: PickerModel {
 
     func pickerDidDismiss() {
     }
-}
 
-extension BasicPickerModel where T: PickerOptionsEnum {
     func pickerReloadAllComponents() {
-        items = T.allCases
+        items = itemsProvider()
         setSelectedItem(selectedItem)
     }
 }
