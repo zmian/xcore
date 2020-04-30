@@ -11,7 +11,6 @@ extension IconLabelCollectionView {
         public let iconLabelView = IconLabelView().apply {
             $0.isUserInteractionEnabled = false
             $0.isImageViewRounded = true
-            $0.imagePadding = 0
             $0.imageBackgroundColor = UIColor.black.alpha(0.1)
             $0.imageView.borderColor = UIColor.black.alpha(0.1)
             $0.titleLabel.numberOfLines = 1
