@@ -29,7 +29,7 @@ final class FeedTextViewCell: XCCollectionViewCell {
 
     override func commonInit() {
         super.commonInit()
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = Theme.current.backgroundColor
         contentView.addSubview(titleLabel)
         contentView.addSubview(subtitleLabel)
         titleLabel.snp.makeConstraints { make in

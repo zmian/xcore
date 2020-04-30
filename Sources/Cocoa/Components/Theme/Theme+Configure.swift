@@ -15,20 +15,16 @@ extension Theme {
     /// ignored.
     ///
     /// - Parameters:
-    ///   - light: The nonadaptable light theme for the interface.
-    ///   - dark: The nonadaptable dark theme for the interface.
-    ///   - current: The current theme. The default value is `.light`.
+    ///   - theme: The default value is `.current`.
     /// - Returns: `true` if first call; otherwise, `false`.
     @discardableResult
-    public static func set(theme: Theme, current: Theme? = nil) -> Bool {
+    public static func set(theme: Theme) -> Bool {
         guard !didSet else {
             return false
         }
 
         didSet = true
-
-        self.default = theme
-        self.current = current ?? theme
+        self.current = theme
 
         setSystemComponentsTheme()
         setNavigationBarBackButtonTheme()
@@ -48,16 +44,16 @@ extension Theme {
         UINavigationBar.appearance().apply {
             $0.titleTextAttributes = UIViewController.defaultNavigationBarTextAttributes
             $0.tintColor = current.tintColor
-            $0.barTintColor = .white
+            $0.barTintColor = current.backgroundColor
             $0.barStyle = .default
             $0.isTranslucent = true
         }
 
         UIToolbar.appearance().apply {
             $0.tintColor = current.tintColor
-            $0.barTintColor = .white
-            $0.barStyle = .black
-            $0.isTranslucent = true
+            $0.barTintColor = current.backgroundColor
+            $0.barStyle = .default
+            $0.isTranslucent = false
         }
 
         UIPageControl.appearance().apply {
@@ -127,7 +123,7 @@ extension Theme {
             $0.accessoryTintColor = current.tintColor
             $0.checkboxOffTintColor = current.separatorColor
             $0.separatorColor = current.separatorColor
-            $0.rowActionDeleteColor = .appleRed
+            $0.rowActionDeleteColor = .systemRed
             $0.isEmptyCellsHidden = true
         }
 
@@ -171,7 +167,7 @@ extension Theme {
                 $0[.base].textColor = current.buttonTextColor
                 $0[.base].tintColor = current.tintColor
 
-                $0[.callout].textColor = .white
+                $0[.callout].textColor = current.buttonTextColor
                 $0[.callout].backgroundColor = current.buttonBackgroundColor
                 $0[.calloutSecondary].backgroundColor = current.buttonBackgroundColorSecondary
                 $0[.pill].backgroundColor = current.buttonBackgroundColorPill

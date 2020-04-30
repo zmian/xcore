@@ -9,14 +9,14 @@ import UIKit
 // MARK: - IDs
 
 extension Identifier where Type == Theme {
-    public static var `default`: Self { #function }
+    public static var current: Self { #function }
 }
 
 // MARK: - Theme
 
-public struct Theme: Themable, Equatable {
+public struct Theme: Equatable {
     /// A unique id for the theme.
-    public var id: Identifier<Self> = .default
+    public var id: Identifier<Self> = .current
 
     /// A boolean value indicating whether the theme appearance is dark.
     public var isDark: Bool
@@ -65,18 +65,17 @@ public struct Theme: Themable, Equatable {
     public var disabledBackgroundColor: UIColor
 
     // MARK: - Buttons
-    
+
     public var buttonTextColor: UIColor
     public var buttonBackgroundColor: UIColor
     public var buttonBackgroundColorSecondary: UIColor
     public var buttonBackgroundColorPill: UIColor
-    
-    
+
     public var statusBarStyle: UIStatusBarStyle
     public var chrome: Chrome.Style
 
     public init(
-        id: Identifier<Theme> = .default,
+        id: Identifier<Theme> = .current,
         isDark: Bool? = nil,
         tintColor: UIColor = .systemTint,
         separatorColor: UIColor = .lightGray,
@@ -127,9 +126,14 @@ public struct Theme: Themable, Equatable {
 
 extension Theme {
     /// The current theme for the interface.
-    public static var current: Theme = .default
+    public static var current: Theme = _current
 
-    public static var `default`: Theme = .init()
+    private static var _current: Theme {
+        guard #available(iOS 13, *) else {
+            return systemTheme
+        }
+        return dynamicSystemTheme
+    }
 }
 
 // MARK: - UIView
@@ -141,148 +145,52 @@ extension UIView {
     @objc open func themeDidChange() { }
 }
 
-public protocol Themable {
-    /// A unique id for the theme.
-    var id: Identifier<Self> { get }
-    
-    /// A boolean value indicating whether the theme appearance is dark.
-    var isDark: Bool { get }
+extension Theme {
+    public static var systemTheme: Theme = .init(
+        id: .current,
+        isDark: false,
+        tintColor: .systemTint,
+        separatorColor: .appSeparator,
+        toggleColor: .green,
+        linkColor: .systemTint,
+        textColor: .black,
+        textColorSecondary: .darkGray,
+        placeholderTextColor: .lightGray,
+        textFieldTextColor: .darkGray,
+        headerTextColor: .lightGray,
+        backgroundColor: .white,
+        backgroundColorSecondary: .lightGray,
+        highglightedBackgroundColor: .lightGray,
+        disabledBackgroundColor: .darkGray,
+        buttonTextColor: .white,
+        buttonBackgroundColor: .systemTint,
+        buttonBackgroundColorSecondary: .lightGray,
+        buttonBackgroundColorPill: .systemTint,
+        statusBarStyle: .default,
+        chrome: .blurred
+    )
 
-    /// The main brand color for interface callout content.
-    var tintColor: UIColor { get }
-    
-    /// The color for borders or divider lines that hide any underlying content.
-    var separatorColor: UIColor { get }
-    
-    /// The color for toggle controls (e.g., Switch or Checkbox).
-    var toggleColor: UIColor { get }
-    
-    /// The color for links.
-    var linkColor: UIColor { get }
-
-    // MARK: - Text
-
-    /// The color for text labels containing primary content.
-    var textColor: UIColor { get }
-    
-    /// The color for text labels containing secondary content.
-    var textColorSecondary: UIColor { get }
-
-    /// The color to use for placeholder text in controls or text views.
-    var placeholderTextColor: UIColor { get }
-    
-    /// The color to use for text in text views.
-    var textFieldTextColor: UIColor { get }
-    
-    /// The color to use for text in header cells in table views and outline views.
-    var headerTextColor: UIColor { get }
-    
-    // MARK: - Background
-    
-    /// The color for the main background of your interface.
-    var backgroundColor: UIColor { get }
-    
-    /// The color for background of seconday views.
-    var backgroundColorSecondary: UIColor { get }
-    
-    /// The color for background of highlighted content and selected views
-    var highglightedBackgroundColor: UIColor { get }
-    
-    /// The color for background of disabled content and views
-    var disabledBackgroundColor: UIColor { get }
-    
-    // MARK: - Buttons
-    var buttonTextColor: UIColor { get }
-    
-    var buttonBackgroundColor: UIColor { get }
-    
-    var buttonBackgroundColorSecondary: UIColor { get }
-    
-    var buttonBackgroundColorPill: UIColor { get }
-    
-    var statusBarStyle: UIStatusBarStyle { get }
-    
-    var chrome: Chrome.Style { get }
-}
-
-extension Themable {
-    public var isDark: Bool {
-        false
-    }
-    
-    public var tintColor: UIColor {
-        .systemTint
-    }
-    
-    public var separatorColor: UIColor {
-        .lightGray
-    }
-    
-    public var toggleColor: UIColor {
-        .green
-    }
-
-    public var linkColor: UIColor {
-        .systemTint
-    }
-
-    public var textColor: UIColor {
-        .black
-    }
-
-    public var textColorSecondary: UIColor {
-        .darkGray
-    }
-    
-    public var placeholderTextColor: UIColor {
-        .lightGray
-    }
-    
-    public var textFieldTextColor: UIColor {
-        .darkGray
-    }
-    
-    public var headerTextColor: UIColor {
-        .lightGray
-    }
-    
-    public var backgroundColor: UIColor {
-        .white
-    }
-    
-    public var backgroundColorSecondary: UIColor {
-        .lightGray
-    }
-    
-    public var highglightedBackgroundColor: UIColor {
-        .lightGray
-    }
-    
-    public var disabledBackgroundColor: UIColor {
-        .darkGray
-    }
-    
-    public var buttonTextColor: UIColor {
-        .white
-    }
-    
-    public var buttonBackgroundColor: UIColor {
-        .systemTint
-    }
-    
-    public var buttonBackgroundColorSecondary: UIColor {
-        .lightGray
-    }
-    
-    public var buttonBackgroundColorPill: UIColor {
-        .systemTint
-    }
-    
-    public var statusBarStyle: UIStatusBarStyle {
-        .default
-    }
-    
-    public var chrome: Chrome.Style {
-        .blurred
-    }
+    @available(iOS 13, *)
+    public static var dynamicSystemTheme: Theme = .init(
+        id: .current,
+        isDark: false,
+        tintColor: .link,
+        separatorColor: .separator,
+        toggleColor: .systemGreen,
+        linkColor: .link,
+        textColor: .label,
+        textColorSecondary: .secondaryLabel,
+        placeholderTextColor: .placeholderText,
+        textFieldTextColor: .placeholderText,
+        headerTextColor: .systemGray,
+        backgroundColor: .systemBackground,
+        backgroundColorSecondary: .systemGray,
+        highglightedBackgroundColor: .systemGray,
+        disabledBackgroundColor: .darkGray,
+        buttonTextColor: .systemBackground,
+        buttonBackgroundColor: .link,
+        buttonBackgroundColorSecondary: .systemGray,
+        buttonBackgroundColorPill: .systemTint,
+        statusBarStyle: .default,
+        chrome: Chrome.Style.color(.systemBackground))
 }

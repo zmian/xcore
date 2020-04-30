@@ -40,7 +40,7 @@ open class TextViewController: XCScrollViewController {
     // MARK: - Setup Methods
 
     private func setupTextLabel() {
-        view.backgroundColor = .white
+        view.backgroundColor = Theme.current.backgroundColor
         scrollView.alwaysBounceVertical = true
         scrollView.addSubview(textLabel)
 

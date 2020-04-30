@@ -10,7 +10,7 @@ final class ExampleLabelInsetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "UILabel + ContentInset"
-        view.backgroundColor = .white
+        view.backgroundColor = Theme.current.backgroundColor
         setupContentView()
     }
 

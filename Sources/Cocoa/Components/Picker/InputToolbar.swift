@@ -27,6 +27,7 @@ final public class InputToolbar: XCView {
 
     private lazy var cancelButton = UIButton(configuration: .plain).apply {
         $0.text = "Cancel"
+        $0.textColor = Theme.current.buttonBackgroundColorSecondary
         $0.accessibilityIdentifier = "inputCancelButton"
         $0.isHeightSetAutomatically = false
         $0.anchor.make {
@@ -39,6 +40,7 @@ final public class InputToolbar: XCView {
 
     private lazy var doneButton = UIButton(configuration: .callout).apply {
         $0.text = "Done"
+        $0.textColor = Theme.current.buttonTextColor
         $0.accessibilityIdentifier = "inputDoneButton"
         $0.isHeightSetAutomatically = false
         $0.contentEdgeInsets = .zero

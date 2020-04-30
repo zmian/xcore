@@ -6,7 +6,7 @@
 
 extension Theme {
     public static func start() {
-        set(theme: .default)
+        set(theme: .current)
 
         UIButton.defaultAppearance.apply {
             $0.configuration = .callout

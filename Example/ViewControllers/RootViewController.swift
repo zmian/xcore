@@ -58,7 +58,7 @@ final class RootViewController: DynamicTableViewController {
                 let vc = CarouselViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
             },
-            .init(title: "Label Inset", subtitle: "Label with different `contentInset` setup (Xcore extension)") { [weak self] _, _ in
+            .init(title: "Label Inset", subtitle: "Label with different contentInset setup (Xcore extension)") { [weak self] _, _ in
                 let vc = ExampleLabelInsetViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
             }

@@ -32,7 +32,7 @@ final class FeedViewController: XCComposedCollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = Theme.current.backgroundColorSecondary
         collectionView.backgroundColor = .clear
         collectionView.contentInset.top = view.safeAreaInsets.top
 

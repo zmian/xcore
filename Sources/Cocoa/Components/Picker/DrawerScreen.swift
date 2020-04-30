@@ -75,6 +75,7 @@ final public class DrawerScreen: NSObject {
     func present(_ content: Content) {
         presentedContent = content
         let view = content.drawerContentView
+        view.backgroundColor = .clear
         modalView.addSubview(view)
         view.anchor.make {
             $0.edges.equalToSuperviewSafeArea()

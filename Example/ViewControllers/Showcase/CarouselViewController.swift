@@ -37,7 +37,7 @@ final class CarouselViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Carousel Example"
-        view.backgroundColor = .white
+        view.backgroundColor = Theme.current.backgroundColor
         view.addSubview(carouselView)
         carouselView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()

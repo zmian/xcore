@@ -55,12 +55,12 @@ public class BlurView: XCView {
 
     /// A property to determine color for the blur effect.
     ///
-    /// The default value is `.white`.
+    /// The default value is `.backgroundColor`.
     ///
     /// - Note:
     /// This property is only used when `isBlurEffectEnabled` is `true` and
     /// `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
-    @objc public dynamic var blurColor: UIColor = .white {
+    @objc public dynamic var blurColor: UIColor = Theme.current.backgroundColor {
         didSet {
             blurBackView.backgroundColor = blurColor
         }
