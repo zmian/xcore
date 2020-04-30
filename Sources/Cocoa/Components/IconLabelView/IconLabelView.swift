@@ -19,7 +19,7 @@ open class IconLabelView: XCView {
         titleLabel
     ]).apply {
         $0.isLayoutMarginsRelativeArrangement = true
-        $0.distribution = .fillProportionally
+        $0.distribution = .fill
         $0.alignment = .center
         $0.spacing = .minimumPadding / 2
         $0.sizeChangeResistance(.required, axis: .both)
