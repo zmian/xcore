@@ -67,7 +67,7 @@ extension Identifier where Type: UIButton {
     }
 
     public func font(button: UIButton) -> UIFont {
-        return attributes(\.font) ?? button.titleLabel?.font ?? .app(style: .body)
+        attributes(\.font) ?? button.titleLabel?.font ?? .app(style: .body)
     }
 
     public func tintColor(button: UIButton) -> UIColor {
@@ -122,17 +122,13 @@ extension Identifier where Type: UIButton {
 
     /// Returns whether the background color is explicitly set for this identifier.
     public var hasBackgroundColor: Bool {
-        return attributes.backgroundColor != nil
+        attributes.backgroundColor != nil
     }
 
     /// Returns the background color if explicitly set for this identifier,
     /// otherwise, returns the `defaultValue`.
     public func backgroundColor(or defaultValue: @autoclosure () -> UIColor) -> UIColor {
-        guard let color = attributes.backgroundColor else {
-            return defaultValue()
-        }
-
-        return color
+        attributes.backgroundColor ?? defaultValue()
     }
 
     /// Returns the text color if it is explicitly set for this identifier.

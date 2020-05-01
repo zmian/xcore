@@ -374,7 +374,7 @@ extension WebViewController: WKUIDelegate {
     }
 
     open func webView(_ webView: WKWebView, shouldPreviewElement elementInfo: WKPreviewElementInfo) -> Bool {
-        return false
+        false
     }
 
     // MARK: - JavaScript Alert Support

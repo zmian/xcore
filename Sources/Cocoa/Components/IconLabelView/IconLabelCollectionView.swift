@@ -7,8 +7,8 @@
 import UIKit
 
 open class IconLabelCollectionView: UICollectionView {
-    private var allowsReordering: Bool { return cellOptions.contains(.move) }
-    private var allowsDeletion: Bool { return cellOptions.contains(.delete) }
+    private var allowsReordering: Bool { cellOptions.contains(.move) }
+    private var allowsDeletion: Bool { cellOptions.contains(.delete) }
     private var hasLongPressGestureRecognizer = false
     open var sections: [Section<ImageTitleDisplayable>] = []
 

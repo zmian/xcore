@@ -90,7 +90,7 @@ public struct KeyboardPayload {
 
 extension KeyboardPayload: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return """
+        """
         frameBegin:        \(frameBegin)
         frameEnd:          \(frameEnd)
         animationDuration: \(animationDuration)

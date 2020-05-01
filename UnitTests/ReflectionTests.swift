@@ -40,19 +40,19 @@ private class MyView: UIView { }
 private protocol MyProtocol { }
 extension MyProtocol {
     var instanceName: String {
-        return name(of: self)
+        name(of: self)
     }
 
     var typeName: String {
-        return name(of: Self.self)
+        name(of: Self.self)
     }
 
     static var staticTypeName_1: String {
-        return name(of: Self.self)
+        name(of: Self.self)
     }
 
     static var staticTypeName_2: String {
-        return name(of: self)
+        name(of: self)
     }
 }
 

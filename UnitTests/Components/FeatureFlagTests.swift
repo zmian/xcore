@@ -105,7 +105,7 @@ private struct CustomFeatureFlag: FeatureFlagProvider {
     }
 
     func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value? {
-        return StringConverter(storage[key.rawValue]!)
+        StringConverter(storage[key.rawValue]!)
     }
 
     struct InvalidString { }
@@ -147,15 +147,15 @@ private enum FeatureFlagItem: String {
 
 extension FeatureFlag.Key {
     fileprivate var storageValue: FeatureFlag.Value? {
-        return CustomFeatureFlag().value(forKey: self)
+        CustomFeatureFlag().value(forKey: self)
     }
 
     fileprivate func value<T>(default defaultValue: @autoclosure () -> T) -> T {
-        return storageValue?.get() ?? defaultValue()
+        storageValue?.get() ?? defaultValue()
     }
 
     fileprivate func value<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
-        return storageValue?.get() ?? defaultValue()
+        storageValue?.get() ?? defaultValue()
     }
 }
 

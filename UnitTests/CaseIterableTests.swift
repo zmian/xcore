@@ -51,7 +51,7 @@ extension SomeClass {
         case three
 
         static var allCases: [NewCounting] {
-            return [.one, .two]
+            [.one, .two]
         }
     }
 }

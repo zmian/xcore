@@ -12,9 +12,10 @@ final class ExamplePickerListModel: PickerListModel {
     private var _didChange: (() -> Void)?
 
     var items: [DynamicTableModel] {
-        return [
+        [
             .init(title: "Option 1", subtitle: "List has been shown for \(count) second(s)"),
-            .init(title: "Option 1", subtitle: "PickerList demonstration")]
+            .init(title: "Option 1", subtitle: "PickerList demonstration")
+        ]
     }
 
     func didChange(_ callback: @escaping () -> Void) {
