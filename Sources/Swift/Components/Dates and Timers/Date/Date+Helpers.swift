@@ -166,38 +166,6 @@ extension Date {
         string(format: .custom(format), in: calendar)
     }
 
-    /// Adjusts the receiver's given component and along with all smaller units to
-    /// their start using the calendar.
-    ///
-    /// - Parameters:
-    ///   - component: Component and along with all smaller units to adjust to their
-    ///                start.
-    ///   - calendar: The calendar to use for adjustment.
-    public func startOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
-        #if DEBUG
-        return calendar.dateInterval(of: component, for: self)!.start
-        #else
-        return calendar.dateInterval(of: component, for: self)?.start ?? self
-        #endif
-    }
-
-    /// Adjusts the receiver's given component and along with all smaller units to
-    /// their end using the calendar.
-    ///
-    /// - Parameters:
-    ///   - component: Component and along with all smaller units to adjust to their
-    ///                end.
-    ///   - calendar: The calendar to use for adjustment.
-    public func endOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
-        #if DEBUG
-        let date = calendar.dateInterval(of: component, for: self)!.end
-        #else
-        let date = calendar.dateInterval(of: component, for: self)?.end ?? self
-        #endif
-
-        return Date(timeInterval: -0.001, since: date)
-    }
-
     /// Adjusts the receiver's given component by the given offset in set calendar.
     ///
     /// - Parameters:
@@ -287,6 +255,38 @@ extension Date {
     /// ```
     public func component(_ component: Calendar.Component, in calendar: Calendar = .default) -> Int {
         calendar.component(component, from: self)
+    }
+
+    /// Adjusts the receiver's given component and along with all smaller units to
+    /// their start using the calendar.
+    ///
+    /// - Parameters:
+    ///   - component: Component and along with all smaller units to adjust to their
+    ///                start.
+    ///   - calendar: The calendar to use for adjustment.
+    public func startOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
+        #if DEBUG
+        return calendar.dateInterval(of: component, for: self)!.start
+        #else
+        return calendar.dateInterval(of: component, for: self)?.start ?? self
+        #endif
+    }
+
+    /// Adjusts the receiver's given component and along with all smaller units to
+    /// their end using the calendar.
+    ///
+    /// - Parameters:
+    ///   - component: Component and along with all smaller units to adjust to their
+    ///                end.
+    ///   - calendar: The calendar to use for adjustment.
+    public func endOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
+        #if DEBUG
+        let date = calendar.dateInterval(of: component, for: self)!.end
+        #else
+        let date = calendar.dateInterval(of: component, for: self)?.end ?? self
+        #endif
+
+        return Date(timeInterval: -0.001, since: date)
     }
 }
 
@@ -379,10 +379,10 @@ extension Date {
         adjustedBy adjustment: Int = 0,
         in calendar: Calendar = .default
     ) -> DateInterval {
-        let date = startOf(component).adjusting(component, by: adjustment)
+        let date = startOf(component, in: calendar).adjusting(component, by: adjustment, in: calendar)
         return .init(
             start: date,
-            end: date.endOf(component)
+            end: date.endOf(component, in: calendar)
         )
     }
 }
