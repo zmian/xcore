@@ -174,17 +174,11 @@ extension Date {
     ///                start.
     ///   - calendar: The calendar to use for adjustment.
     public func startOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
-        var start: NSDate?
-        var interval: TimeInterval = 0
-
-        guard
-            (calendar as NSCalendar).range(of: component._nsCalendarUnit, start: &start, interval: &interval, for: self),
-            let startDate = start
-        else {
-            return self
-        }
-
-        return startDate as Date
+        #if DEBUG
+        return calendar.dateInterval(of: component, for: self)!.start
+        #else
+        return calendar.dateInterval(of: component, for: self)?.start ?? self
+        #endif
     }
 
     /// Adjusts the receiver's given component and along with all smaller units to
@@ -195,18 +189,13 @@ extension Date {
     ///                end.
     ///   - calendar: The calendar to use for adjustment.
     public func endOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
-        var start: NSDate?
-        var interval: TimeInterval = 0
+        #if DEBUG
+        let date = calendar.dateInterval(of: component, for: self)!.end
+        #else
+        let date = calendar.dateInterval(of: component, for: self)?.end ?? self
+        #endif
 
-        guard
-            (calendar as NSCalendar).range(of: component._nsCalendarUnit, start: &start, interval: &interval, for: self),
-            let startDate = start
-        else {
-            return self
-        }
-
-        let startOfNextComponent = startDate.addingTimeInterval(interval)
-        return Date(timeInterval: -0.001, since: startOfNextComponent as Date)
+        return Date(timeInterval: -0.001, since: date)
     }
 
     /// Adjusts the receiver's given component by the given offset in set calendar.
@@ -321,15 +310,11 @@ extension Date {
     /// print(result) // 1; There is only 1 year between 2019 and 2020.
     /// ```
     public func numberOf(_ component: Calendar.Component, to date: Date, in calendar: Calendar = .default) -> Int {
-        guard let start = calendar.ordinality(of: component, in: .era, for: self) else {
-            return 0
-        }
-
-        guard let end = calendar.ordinality(of: component, in: .era, for: date) else {
-            return 0
-        }
-
-        return end - start
+        #if DEBUG
+            return calendar.dateComponents([component], from: self, to: date).value(for: component)!
+        #else
+            return calendar.dateComponents([component], from: self, to: date).value(for: component) ?? 0
+        #endif
     }
 
     /// Total number of days of month using the `.default` calendar.
