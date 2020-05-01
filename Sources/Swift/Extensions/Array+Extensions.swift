@@ -38,7 +38,7 @@ extension Array {
     /// ```
     /// - seealso: https://gist.github.com/ericdke/fa262bdece59ff786fcb
     public func splitBy(_ subSize: Int) -> [[Element]] {
-        return stride(from: 0, to: count, by: subSize).map { startIndex in
+        stride(from: 0, to: count, by: subSize).map { startIndex in
             let endIndex = index(startIndex, offsetBy: subSize, limitedBy: count) ?? startIndex + (count - startIndex)
             return Array(self[startIndex..<endIndex])
         }

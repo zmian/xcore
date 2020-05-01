@@ -277,7 +277,7 @@ extension UIViewController {
     }
 
     public static var defaultNavigationBarTextAttributes: [NSAttributedString.Key: Any] {
-        return [
+        [
             .font: defaultAppearance.font,
             .foregroundColor: defaultAppearance.tintColor
         ]

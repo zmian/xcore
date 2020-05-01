@@ -77,12 +77,12 @@ final class CurrencyFormatterTests: TestCase {
 
         // Mexico
         CurrencyFormatter.shared.localeTest = .mexico
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1000.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
         XCTAssertTrue(dollarsAndCents(from: -10000.0) == ("-$10,000.", "00"))
         XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1000.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
 
         // Brazil
         CurrencyFormatter.shared.localeTest = .brazil

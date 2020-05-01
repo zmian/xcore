@@ -48,6 +48,6 @@ public struct WebViewScripts {
 
     /// The name of the `messageHandlers` where the link taps (`interceptLinkTap()`) will be posted.
     public static var linkInnerTextEventName: String {
-        return "xcoreLinkInnerText"
+        "xcoreLinkInnerText"
     }
 }

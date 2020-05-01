@@ -54,7 +54,7 @@ extension String {
     ///            file. If the translation cannot be found it will return its
     ///            own value.
     public func localized(file: StringsFile, comment: String = "") -> String {
-        return NSLocalizedString(
+        NSLocalizedString(
             self,
             tableName: file.rawValue,
             bundle: file.bundle,

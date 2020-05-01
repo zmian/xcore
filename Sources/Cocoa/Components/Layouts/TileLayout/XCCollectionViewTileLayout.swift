@@ -459,7 +459,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
     }
 
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return layoutAttributes[indexPath]
+        layoutAttributes[indexPath]
     }
 
     open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {

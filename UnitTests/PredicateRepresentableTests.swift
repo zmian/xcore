@@ -11,7 +11,7 @@ final class PredicateRepresentableTests: TestCase {
     private typealias TestData<OutputType> = (input: String, output: OutputType)
 
     private func testData(comparator: String) -> [TestData<String>] {
-        return [
+        [
             ("Lowe's", "identifier \(comparator) \"Lowe\'s\""),
             ("Lowes", "identifier \(comparator) \"Lowes\""),
             ("görsel", "identifier \(comparator) \"görsel\""),

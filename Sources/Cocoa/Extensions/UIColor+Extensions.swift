@@ -40,7 +40,7 @@ extension UIColor {
         }
 
         func round(_ value: CGFloat) -> Int {
-            return lround(Double(value) * 255)
+            lround(Double(value) * 255)
         }
 
         if alpha == 1 {

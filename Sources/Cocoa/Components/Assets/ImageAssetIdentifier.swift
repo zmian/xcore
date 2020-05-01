@@ -53,7 +53,7 @@ extension UIImage {
     }
 
     public static func tinted(assetIdentifier: ImageAssetIdentifier, tintColor: UIColor, renderingMode: UIImage.RenderingMode = .alwaysOriginal) -> UIImage {
-        return UIImage(assetIdentifier: assetIdentifier).tintColor(tintColor).withRenderingMode(renderingMode)
+        UIImage(assetIdentifier: assetIdentifier).tintColor(tintColor).withRenderingMode(renderingMode)
     }
 }
 
@@ -83,7 +83,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
 
 /// A convenience function to get resource.
 public func r(_ assetIdentifier: ImageAssetIdentifier) -> ImageAssetIdentifier {
-    return assetIdentifier
+    assetIdentifier
 }
 
 // MARK: - Xcore Buit-in Assets

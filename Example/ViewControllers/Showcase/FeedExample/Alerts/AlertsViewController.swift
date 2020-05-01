@@ -112,11 +112,11 @@ private class AlertsViewModel: StackingDataSourceViewModel {
     }
 
     public var numberOfSections: Int {
-        return composedAlerts.count
+        composedAlerts.count
     }
 
     public func itemsCount(for section: Int) -> Int {
-        return composedAlerts.at(section)?.count ?? 0
+        composedAlerts.at(section)?.count ?? 0
     }
 
     func item(at index: IndexPath) -> Any? {
@@ -132,7 +132,7 @@ private class AlertsViewModel: StackingDataSourceViewModel {
     }
 
     var isShadowEnabled: Bool {
-        return true
+        true
     }
 
     var isClearButtonHidden: Bool {

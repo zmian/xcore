@@ -11,7 +11,7 @@ open class IconLabelCollectionViewController: UIViewController {
 
     /// The layout used to organize the collection view’s items.
     public var layout: UICollectionViewFlowLayout? {
-        return collectionView.layout
+        collectionView.layout
     }
 
     open override func viewDidLoad() {

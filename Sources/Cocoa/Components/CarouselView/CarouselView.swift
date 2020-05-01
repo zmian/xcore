@@ -74,7 +74,7 @@ open class CustomCarouselView<Cell: CarouselViewCellType, Model: CarouselViewMod
     ///
     /// The default value is `false`.
     public var isAutoScrollingEnabled: Bool {
-        return carouselCollectionView.isAutoScrollingEnabled
+        carouselCollectionView.isAutoScrollingEnabled
     }
 
     /// A boolean value that determines whether scrolling is enabled.

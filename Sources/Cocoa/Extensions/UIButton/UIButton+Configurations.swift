@@ -68,7 +68,7 @@ extension Configuration where Type: UIButton {
     }
 
     public static var callout: Self {
-        return callout()
+        callout()
     }
 
     public static func callout(
