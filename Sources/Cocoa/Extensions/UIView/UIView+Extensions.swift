@@ -46,7 +46,7 @@ import UIKit
 
     @discardableResult
     open func fadeHead(rect: CGRect, startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 0.03)) -> CAGradientLayer {
-        return CAGradientLayer().apply {
+        CAGradientLayer().apply {
             $0.frame = rect
             $0.colors = [UIColor.clear.cgColor, UIColor.white.cgColor]
             $0.startPoint = startPoint
@@ -57,7 +57,7 @@ import UIKit
 
     @discardableResult
     open func fadeTail(rect: CGRect, startPoint: CGPoint = CGPoint(x: 0.5, y: 0.93), endPoint: CGPoint = CGPoint(x: 0.5, y: 1)) -> CAGradientLayer {
-        return CAGradientLayer().apply {
+        CAGradientLayer().apply {
             $0.frame = rect
             $0.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
             $0.startPoint = startPoint
@@ -68,7 +68,7 @@ import UIKit
 
     @discardableResult
     open func addGradient(_ colors: [UIColor], startPoint: CGPoint = CGPoint(x: 0, y: 1), endPoint: CGPoint = CGPoint(x: 1, y: 1), locations: [Int] = [0, 1]) -> CAGradientLayer {
-        return CAGradientLayer().apply {
+        CAGradientLayer().apply {
             $0.colors = colors.map { $0.cgColor }
             $0.startPoint = startPoint
             $0.endPoint = endPoint
@@ -81,7 +81,7 @@ import UIKit
 
     @discardableResult
     open func addOverlay(color: UIColor) -> UIView {
-        return UIView().apply {
+        UIView().apply {
             $0.backgroundColor = color
             addSubview($0)
             $0.anchor.edges.equalToSuperview()
@@ -111,7 +111,7 @@ import UIKit
         ]
 
         func border(tag: String) -> UIView {
-            return UIView().apply {
+            UIView().apply {
                 $0.tag = "\(tag)BorderView".hashValue
                 $0.backgroundColor = color
                 $0.translatesAutoresizingMaskIntoConstraints = false

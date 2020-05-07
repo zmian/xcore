@@ -41,11 +41,11 @@ final class AlertsViewController: XCComposedCollectionViewController {
         layout = .init(XCCollectionViewTileLayout())
     }
 
-    override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
+    override func dataSources() -> [XCCollectionViewDataSource] {
         var allDataSources = [XCCollectionViewDataSource]()
 
         for i in 0...2 {
-            allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
+            allDataSources.append(FeedDataSource(sectionIndex: i))
         }
         allDataSources.append(alertsDataSource(
             viewModel: AlertsViewModel(
@@ -55,7 +55,7 @@ final class AlertsViewController: XCComposedCollectionViewController {
         ))
 
         for i in 3...6 {
-            allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
+            allDataSources.append(FeedDataSource(sectionIndex: i))
         }
         allDataSources.append(alertsDataSource(
             viewModel: AlertsViewModel(
@@ -65,8 +65,9 @@ final class AlertsViewController: XCComposedCollectionViewController {
         ))
 
         for i in 7...10 {
-            allDataSources.append(FeedDataSource(collectionView: collectionView, sectionIndex: i))
+            allDataSources.append(FeedDataSource(sectionIndex: i))
         }
+
         allDataSources.append(alertsDataSource(
             viewModel: AlertsViewModel(
                 identifier: "ThirdAlerts",
@@ -89,8 +90,8 @@ final class AlertsViewController: XCComposedCollectionViewController {
             )
             return cell
         }
+
         return StackingDataSource(
-            collectionView: collectionView,
             viewModel: viewModel,
             cellProvider: cellProvider
         )
@@ -111,11 +112,11 @@ private class AlertsViewModel: StackingDataSourceViewModel {
     }
 
     public var numberOfSections: Int {
-        return composedAlerts.count
+        composedAlerts.count
     }
 
     public func itemsCount(for section: Int) -> Int {
-        return composedAlerts.at(section)?.count ?? 0
+        composedAlerts.at(section)?.count ?? 0
     }
 
     func item(at index: IndexPath) -> Any? {
@@ -131,7 +132,7 @@ private class AlertsViewModel: StackingDataSourceViewModel {
     }
 
     var isShadowEnabled: Bool {
-        return true
+        true
     }
 
     var isClearButtonHidden: Bool {

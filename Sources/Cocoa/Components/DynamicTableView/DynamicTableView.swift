@@ -7,8 +7,8 @@
 import UIKit
 
 open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewDataSource {
-    private var allowsReordering: Bool { return cellOptions.contains(.move) }
-    private var allowsDeletion: Bool { return cellOptions.contains(.delete) }
+    private var allowsReordering: Bool { cellOptions.contains(.move) }
+    private var allowsDeletion: Bool { cellOptions.contains(.delete) }
     private let emptyTableFooterView = UIView()
     open var sections: [Section<DynamicTableModel>] = []
     open var cellOptions: CellOptions = .none {

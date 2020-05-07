@@ -6,7 +6,7 @@
 
 import UIKit
 
-enum ExampleArrowOptions: String, CaseIterable, OptionsRepresentable {
+enum ExampleArrowOptions: String, CaseIterable, PickerOptionsEnum {
     case up
     case down
     case left
@@ -20,7 +20,7 @@ enum ExampleArrowOptions: String, CaseIterable, OptionsRepresentable {
         "This is a message"
     }
 
-    var description: String {
+    var title: String {
         rawValue.uppercasedFirst()
     }
 
@@ -72,7 +72,7 @@ extension ImageAssetIdentifier {
         .init(rawValue: name, bundle: .xcore)
     }
 
-    // MARK: Carets
+    // MARK: - Carets
     static var caretDirectionUp: Self { propertyName() }
     static var caretDirectionDown: Self { propertyName() }
     static var caretDirectionBack: Self { propertyName() }

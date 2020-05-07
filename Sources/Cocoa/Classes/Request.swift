@@ -15,7 +15,7 @@ public struct Response {
     public let error: Error?
 
     public var responseHttp: HTTPURLResponse? {
-        return response as? HTTPURLResponse
+        response as? HTTPURLResponse
     }
 
     public var responseJson: Any? {

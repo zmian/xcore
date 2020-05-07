@@ -29,7 +29,7 @@ final class RootViewController: DynamicTableViewController {
     }
 
     private func items() -> [DynamicTableModel] {
-        return [
+        [
             .init(title: "Dynamic Table View", subtitle: "Data-driven table view", accessory: .disclosureIndicator) { [weak self] _, _ in
                 let vc = ExampleDynamicTableViewController()
                 self?.navigationController?.pushViewController(vc, animated: true)
@@ -66,10 +66,10 @@ final class RootViewController: DynamicTableViewController {
     }
 
     private func pickers() -> [DynamicTableModel] {
-        return [
+        [
             .init(title: "DatePicker", subtitle: "Date picker demonstration, selected value yesterday") { _, _ in
                 let yesterday = Date(timeIntervalSinceNow: -3600 * 24)
-                DatePicker.present(initialValue: yesterday) { date in
+                Picker.present(initialValue: yesterday) { date in
                     print("The selected date is \(date ?? Date())")
                 }
             },
@@ -102,7 +102,7 @@ final class RootViewController: DynamicTableViewController {
                 }
             },
             .init(title: "Picker List: Strings", subtitle: "Using Picker to select from an array of strings") { _, _ in
-                PickerList.present(options: [
+                PickerList.present([
                     "Option 1",
                     "Option 2",
                     "Option 3",

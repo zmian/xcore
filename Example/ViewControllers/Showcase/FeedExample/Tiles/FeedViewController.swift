@@ -39,12 +39,12 @@ final class FeedViewController: XCComposedCollectionViewController {
         layout = .init(XCCollectionViewTileLayout())
 
         sources = (0...10).map { index in
-            FeedDataSource(collectionView: collectionView, sectionIndex: index)
+            FeedDataSource(sectionIndex: index)
         }
         composedDataSource.dataSources = sources
     }
 
-    override func dataSources(for collectionView: UICollectionView) -> [XCCollectionViewDataSource] {
+    override func dataSources() -> [XCCollectionViewDataSource] {
         sources
     }
 

@@ -31,7 +31,7 @@ final class SeparatorViewController: UIViewController {
     }
 
     private func createSeparatorsVertical() -> UIStackView {
-        return UIStackView(arrangedSubviews: [
+        UIStackView(arrangedSubviews: [
             SeparatorView(axis: .vertical),
             SeparatorView(style: .dot, axis: .vertical),
             SeparatorView(axis: .vertical, backgroundColor: .systemRed),

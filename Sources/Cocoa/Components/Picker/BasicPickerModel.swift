@@ -7,28 +7,28 @@
 import Foundation
 
 extension Picker {
-    /// A convenience method to display a picker with list of options
-    /// that conforms to `OptionsRepresentable` protocol.
+    /// A convenience method to display a picker with list of items that conforms to
+    /// `PickerOptions` protocol.
     ///
     /// **Example:**
     ///
     /// ```swift
-    /// enum CompassPoint: Int, CaseIterable, OptionsRepresentable {
+    /// enum CompassPoint: Int, CaseIterable, PickerOptionsEnum {
     ///     case north, south, east, west
     /// }
     ///
-    /// Picker.present(selected: CompassPoint.allCases.first) { (option: CompassPoint) -> Void in
-    ///     print("selected option:" option)
+    /// Picker.present(selected: CompassPoint.allCases.first) { (item: CompassPoint) -> Void in
+    ///     print("selected item:" item)
     /// }
     /// ```
     @discardableResult
-    public static func present<T: OptionsRepresentable>(
-        selected option: T? = nil,
+    public static func present<T: PickerOptionsEnum>(
+        selected item: T? = nil,
         configure: ((Picker) -> Void)? = nil,
-        _ handler: @escaping (_ option: T) -> Void
+        _ handler: @escaping (_ item: T) -> Void
     ) -> Picker {
-        let model = BasicPickerModel(selected: option) { option in
-            handler(option)
+        let model = BasicPickerModel(items: T.allCases, selected: item) { item in
+            handler(item)
         }
 
         let picker = Picker(model: model)
@@ -37,124 +37,172 @@ extension Picker {
         return picker
     }
 
-    /// A convenience method to display a picker with list of options.
+    /// A convenience method to display a picker with list of items that conforms to
+    /// `PickerOptions` protocol.
     ///
     /// **Example:**
     ///
     /// ```swift
-    /// let options = ["Year", "Month", "Day"]
-    /// Picker.present(options: options, selected: options.first) { option in
-    ///     print("selected option:" option)
+    /// struct Menu: PickerOptions {
+    ///     let name: String
+    ///     let amount: Double
+    /// }
+    ///
+    /// let items = [
+    ///     Menu(name: "Caffè Latte", amount: 2.95),
+    ///     Menu(name: "Cappuccino", amount: 3.45),
+    ///     Menu(name: "Caffè Mocha", amount: 3.45)
+    /// ]
+    ///
+    /// Picker.present(items, selected: items.first) { (item: Menu) -> Void in
+    ///     print("selected item:" item)
+    /// }
+    /// ```
+    @discardableResult
+    public static func present<T: PickerOptions>(
+        _ items: [T],
+        selected item: T? = nil,
+        configure: ((Picker) -> Void)? = nil,
+        _ handler: @escaping (_ item: T) -> Void
+    ) -> Picker {
+        let model = BasicPickerModel(items: items, selected: item) { item in
+            handler(item)
+        }
+
+        let picker = Picker(model: model)
+        configure?(picker)
+        picker.present()
+        return picker
+    }
+
+    /// A convenience method to display a picker with list of items.
+    ///
+    /// **Example:**
+    ///
+    /// ```swift
+    /// let items = ["Year", "Month", "Day"]
+    /// Picker.present(items, selected: items.first) { item in
+    ///     print("selected item:" item)
     /// }
     /// ```
     @discardableResult
     public static func present(
-        options: [String],
-        selected option: String? = nil,
-        _ handler: @escaping (_ option: String) -> Void
+        _ items: [String],
+        selected item: String? = nil,
+        _ handler: @escaping (_ item: String) -> Void
     ) -> Picker {
-        let model = BasicTextPickerModel(options: options, selected: option) { option in
-            handler(option)
+        let model = BasicTextPickerModel(items: items, selected: item) { item in
+            handler(item)
         }
 
         let picker = Picker(model: model)
         picker.present()
         return picker
     }
+
+    public static func present(
+        initialValue date: Date? = nil,
+        configuration: Configuration<UIDatePicker>? = nil,
+        _ callback: @escaping (Date?) -> Void
+    ) {
+        DatePicker.present(callback)
+    }
 }
 
 // MARK: - BasicPickerModel
 
-private final class BasicPickerModel<T: OptionsRepresentable>: PickerModel {
-    private var options: [T] = T.allCases
-    private var selectedOption: T
+private final class BasicPickerModel<T: PickerOptions>: PickerModel {
+    // Allow us to reload items where `T: PickerOptionsEnum`. See
+    // `pickerReloadAllComponents()` for usage.
+    private let itemsProvider: () -> [T]
+    private var items: [T]
+    private var selectedItem: T
     private var selectionCallback: (T) -> Void
 
-    init(selected option: T? = nil, handler: @escaping (T) -> Void) {
-        let allCases = T.allCases
+    init(items: @autoclosure @escaping () -> [T], selected item: T? = nil, handler: @escaping (T) -> Void) {
+        self.itemsProvider = items
+        self.items = items()
 
-        if let option = option, let index = allCases.firstIndex(of: option) {
-            selectedOption = allCases[index]
+        if let item = item, let index = self.items.firstIndex(of: item) {
+            selectedItem = self.items[index]
         } else {
-            selectedOption = T.allCases.first!
+            selectedItem = self.items[0]
         }
 
         selectionCallback = handler
     }
 
-    private func setSelectedOption(_ option: T? = nil) {
-        let allCases = T.allCases
-
-        guard !allCases.isEmpty else {
+    private func setSelectedItem(_ item: T? = nil) {
+        guard !items.isEmpty else {
             return
         }
 
-        if let option = option, let index = allCases.firstIndex(of: option) {
-            selectedOption = allCases[index]
+        if let item = item, let index = items.firstIndex(of: item) {
+            selectedItem = items[index]
         } else {
-            selectedOption = T.allCases.first!
+            selectedItem = items.first!
         }
     }
 
     func selectedElement(at component: Int) -> Int {
-        options.firstIndex(of: selectedOption) ?? 0
+        items.firstIndex(of: selectedItem) ?? 0
     }
 
     func numberOfElements(at component: Int) -> Int {
-        options.count
+        items.count
     }
 
     func element(at component: Int, row: Int) -> Picker.RowModel {
-        let option = options[row]
-        return .init(image: option.image, title: option.description)
+        let item = items[row]
+        return .init(image: item.image, title: item.title, subtitle: item.subtitle)
     }
 
     func pickerDidTapDone() {
-        selectionCallback(selectedOption)
+        selectionCallback(selectedItem)
     }
 
     func pickerDidSelectValue(value: Int, at component: Int) {
-        selectedOption = options[value]
+        selectedItem = items[value]
     }
 
     func pickerDidDismiss() {
     }
 
     func pickerReloadAllComponents() {
-        options = T.allCases
-        setSelectedOption(selectedOption)
+        items = itemsProvider()
+        setSelectedItem(selectedItem)
     }
 }
 
 // MARK: - BasicTextPickerModel
 
 private final class BasicTextPickerModel: PickerModel {
-    private let options: [String]
+    private let items: [String]
     private var selectedOption: String
     private var selectionCallback: (String) -> Void
 
-    init(options: [String], selected option: String? = nil, handler: @escaping (String) -> Void) {
-        self.options = options
+    init(items: [String], selected item: String? = nil, handler: @escaping (String) -> Void) {
+        self.items = items
 
-        if let option = option, let index = options.firstIndex(of: option) {
-            selectedOption = options[index]
+        if let item = item, let index = items.firstIndex(of: item) {
+            selectedOption = items[index]
         } else {
-            selectedOption = options.first!
+            selectedOption = items.first!
         }
 
         selectionCallback = handler
     }
 
     func selectedElement(at component: Int) -> Int {
-        options.firstIndex(of: selectedOption) ?? 0
+        items.firstIndex(of: selectedOption) ?? 0
     }
 
     func numberOfElements(at component: Int) -> Int {
-        options.count
+        items.count
     }
 
     func element(at component: Int, row: Int) -> Picker.RowModel {
-        .init(title: options[row])
+        .init(title: items[row])
     }
 
     func pickerDidTapDone() {
@@ -162,7 +210,7 @@ private final class BasicTextPickerModel: PickerModel {
     }
 
     func pickerDidSelectValue(value: Int, at component: Int) {
-        selectedOption = options[value]
+        selectedOption = items[value]
     }
 
     func pickerDidDismiss() {

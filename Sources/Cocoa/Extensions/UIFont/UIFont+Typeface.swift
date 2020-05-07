@@ -27,7 +27,7 @@ extension UIFont {
         }
 
         public func name(weight: Weight, trait: Trait = .normal) -> String {
-            return block(weight, trait)
+            block(weight, trait)
         }
     }
 }

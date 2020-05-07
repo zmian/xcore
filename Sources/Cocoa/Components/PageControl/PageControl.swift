@@ -9,10 +9,10 @@ import CoreGraphics
 
 extension PageControl {
     private struct Constants {
-        static var dotSize: CGFloat { return 12 }
-        static var unselectedInset: CGFloat { return 3 }
-        static var lineWidth: CGFloat { return 1 }
-        static var unequalSizeDotsPadding: CGFloat { return 26 }
+        static var dotSize: CGFloat { 12 }
+        static var unselectedInset: CGFloat { 3 }
+        static var lineWidth: CGFloat { 1 }
+        static var unequalSizeDotsPadding: CGFloat { 26 }
     }
 }
 

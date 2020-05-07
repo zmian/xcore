@@ -15,7 +15,7 @@ extension UIBarButtonItem {
     }
 
     open func titleTextColor(for state: UIControl.State) -> UIColor? {
-        return titleTextAttribute(.foregroundColor, for: state)
+        titleTextAttribute(.foregroundColor, for: state)
     }
 
     open func setTitleTextColor(_ color: UIColor?, for state: UIControl.State) {
@@ -60,6 +60,6 @@ extension UIBarButtonItem {
 
 extension UIControl.State {
     fileprivate static var applicationStates: [UIControl.State] {
-        [.normal, .highlighted, .disabled, .selected, .focused, .application]
+        [.normal, .highlighted, .disabled, .focused]
     }
 }

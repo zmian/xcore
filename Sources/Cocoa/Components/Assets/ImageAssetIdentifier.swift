@@ -6,13 +6,6 @@
 
 import UIKit
 
-extension Bundle {
-    /// Method for creating or retrieving bundle instances.
-    public static var xcore: Bundle {
-        .init(for: DynamicTableView.self)
-    }
-}
-
 public struct ImageAssetIdentifier: RawRepresentable, CustomStringConvertible, Equatable {
     public let rawValue: String
     public let bundle: Bundle
@@ -60,7 +53,7 @@ extension UIImage {
     }
 
     public static func tinted(assetIdentifier: ImageAssetIdentifier, tintColor: UIColor, renderingMode: UIImage.RenderingMode = .alwaysOriginal) -> UIImage {
-        return UIImage(assetIdentifier: assetIdentifier).tintColor(tintColor).withRenderingMode(renderingMode)
+        UIImage(assetIdentifier: assetIdentifier).tintColor(tintColor).withRenderingMode(renderingMode)
     }
 }
 
@@ -90,13 +83,13 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
 
 /// A convenience function to get resource.
 public func r(_ assetIdentifier: ImageAssetIdentifier) -> ImageAssetIdentifier {
-    return assetIdentifier
+    assetIdentifier
 }
 
 // MARK: - Xcore Buit-in Assets
 
 extension ImageAssetIdentifier {
-    private static func propertyName(name: String = #function) -> Self {
+    private static func propertyName(_ name: String = #function) -> Self {
         .init(rawValue: name, bundle: .xcore)
     }
 
@@ -145,13 +138,13 @@ extension ImageAssetIdentifier {
 
 extension ImageAssetIdentifier {
     // MARK: Checkmarks
-    public static var checkmarkIcon = propertyName(name: "checkmarkIcon")
-    public static var checkmarkIconFilled = propertyName(name: "checkmarkIconFilled")
-    public static var checkmarkIconUnfilled = propertyName(name: "checkmarkIconUnfilled")
+    public static var checkmarkIcon = propertyName("checkmarkIcon")
+    public static var checkmarkIconFilled = propertyName("checkmarkIconFilled")
+    public static var checkmarkIconUnfilled = propertyName("checkmarkIconUnfilled")
 
-    public static var moreIcon = propertyName(name: "moreIcon")
+    public static var moreIcon = propertyName("moreIcon")
 
     // MARK: Biometrics ID
-    public static var biometricsFaceIDIcon = propertyName(name: "biometricsFaceIDIcon")
-    public static var biometricsTouchIDIcon = propertyName(name: "biometricsTouchIDIcon")
+    public static var biometricsFaceIDIcon = propertyName("biometricsFaceIDIcon")
+    public static var biometricsTouchIDIcon = propertyName("biometricsTouchIDIcon")
 }

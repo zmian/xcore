@@ -45,6 +45,18 @@ extension UIStackView {
         removeArrangedSubview(view)
         insertArrangedSubview(view, at: insertionIndex)
     }
+
+    /// Applies custom spacing before the specified view.
+    open func setCustomSpacing(_ spacing: CGFloat, before arrangedSubview: UIView) {
+        guard
+            let index = arrangedSubviews.firstIndex(of: arrangedSubview),
+            let afterView = arrangedSubviews.at(index - 1)
+        else {
+            return
+        }
+
+        setCustomSpacing(spacing, after: afterView)
+    }
 }
 
 extension UIStackView {
