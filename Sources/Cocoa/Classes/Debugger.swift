@@ -20,8 +20,8 @@ public var isDebuggerAttached: Bool {
     return (info.kp_proc.p_flag & P_TRACED) != 0
 }
 
-public func synchronized<T>(_ lock: AnyObject, _ closure: () throws -> T) rethrows -> T {
+public func synchronized<T>(_ lock: AnyObject, _ block: () throws -> T) rethrows -> T {
     objc_sync_enter(lock)
     defer { objc_sync_exit(lock) }
-    return try closure()
+    return try block()
 }

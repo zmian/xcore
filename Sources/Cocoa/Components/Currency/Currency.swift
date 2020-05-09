@@ -6,12 +6,11 @@
 
 import Foundation
 
-public enum Currency {}
-
-/*
 public struct Currency: Equatable, MutableAppliable {
     public init(_ amount: Double? = nil) {
         self.amount = amount
+        color = Self.appearance().color
+        shouldSuperscriptCents = Self.appearance().shouldSuperscriptCents
     }
 
     /// A property to change the formatting style.
@@ -24,111 +23,81 @@ public struct Currency: Equatable, MutableAppliable {
     /// The default value is `.body`.
     public var attributes: Components.Attributes = .body
 
-    /// A boolean property to indicate whether the color changes based on the amount
-    /// using the `positiveColor` and `negativeColor` properties.
-    ///
-    /// - Note: If this is `false` then `positiveColor` property's value is used.
-    ///
-    /// The default value is `false`.
-    public var isColored = false
-
     /// A property to indicate whether the output shows the sign (+/-).
     ///
-    /// The default value is `false`.
-    public var isSigned = false
+    /// The default value is `.none`.
+    public var sign: Sign = .none
 
-    /// The color to use when the amount is positive.
-    ///
-    /// This value is ignored if the `colored` property is `false`.
-    ///
-    /// The default value is `.appleGreen`.
-    public var positiveColor: UIColor = .appleGreen
-
-    /// The color to use when the amount is negative.
-    ///
-    /// This value is ignored if the `colored` property is `false`.
-    ///
-    /// The default value is `.appleBlue`.
-    public var negativeColor: UIColor = .appleBlue
-
-    /// The custom color to use when the amount is `0`.
-    /// This value is ignored if the `colored` property is `false`.
-    ///
-    /// The default value is `nil`.
-    public var zeroAmountColor: UIColor?
+    /// A property to indicate whether the color changes based on the amount.
+    public var color: Color
 
     /// The custom string to use when the amount is `0`.
     /// This value is ignored if the `shouldDisplayZeroAmounts` property is `true`.
     ///
     /// The default value is `--`.
-    public var customZeroAmountString: String = "--"
+    public var zeroAmountString: String = "--"
 
     public var shouldDisplayZeroAmounts = true
 
     /// A property to indicate whether the cents are rendered as superscript.
     ///
-    /// The default value is `true`.
-    public var shouldSuperscriptCents = true
+    /// The default value is `false`.
+    public var shouldSuperscriptCents: Bool
 
     public var accessibilityLabel: String? {
         guard let amount = amount else {
             return nil
         }
 
-        return CurrencyFormatter.shared.string(from: amount, style: format)
+        return CurrencyFormatter.shared.string(from: amount, style: style)
     }
 
     public var amount: Double?
+}
 
-    public func value() -> NSAttributedString? {
-        attributedString()?.foregroundColor(foregroundColor)
-    }
+// MARK: - ExpressibleByFloatLiteral
 
-    private func attributedString() -> NSMutableAttributedString? {
-        guard let amount = amount else {
-            return nil
-        }
-
-        if amount == 0 && !shouldDisplayZeroAmounts {
-            return NSMutableAttributedString(string: " " + customZeroAmountString)
-        }
-
-        let value = isSigned ? amount : abs(amount) // +/- represented by color
-
-        return CurrencyFormatter.shared.format(
-            amount: value,
-            attributes: style,
-            formattingStyle: format,
-            superscriptCents: shouldSuperscriptCents
-        )
-    }
-
-    private var foregroundColor: UIColor {
-        guard isColored, let amount = amount else {
-            return positiveColor
-        }
-
-        var color: UIColor
-
-        if let zeroAmountColor = zeroAmountColor, amount == 0 {
-            color = zeroAmountColor
-        } else {
-            color = amount >= 0 ? positiveColor : negativeColor
-        }
-
-        return color
+extension Currency: ExpressibleByFloatLiteral {
+    public init(floatLiteral value: FloatLiteralType) {
+        self.init(Double(value))
     }
 }
 
-// MARK: - Currency
+// MARK: - ExpressibleByIntegerLiteral
+
+extension Currency: ExpressibleByIntegerLiteral {
+    public init(integerLiteral value: IntegerLiteralType) {
+        self.init(Double(value))
+    }
+}
+
+// MARK: - StringRepresentable
 
 extension Currency: StringRepresentable {
     public var stringSource: StringSourceType {
-        guard let value = value() else {
-            return .string("")
-        }
-
-        return .attributedString(value)
+        .attributedString(CurrencyFormatter.shared.attributedString(from: self))
     }
 }
-*/
+
+// MARK: - Appearance
+
+extension Currency {
+    /// This configuration exists to allow some of the properties to be configured
+    /// to match app's appearance style. The `UIAppearance` protocol doesn't work
+    /// when the stored properites are set using associated object.
+    ///
+    /// **Usage:**
+    ///
+    /// ```swift
+    /// Currency.appearance().negativeColor = .black
+    /// ```
+    final public class Appearance: Appliable {
+        public var color = Color(positive: .systemGreen, negative: .systemRed)
+        public var shouldSuperscriptCents = false
+    }
+
+    private static var appearanceProxy = Appearance()
+    public static func appearance() -> Appearance {
+        appearanceProxy
+    }
+}
