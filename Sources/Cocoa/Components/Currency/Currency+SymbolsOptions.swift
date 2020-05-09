@@ -98,8 +98,8 @@ extension String {
     /// true  -> ("$2,000.88").contains(.decimalSeparator),
     /// true  -> ("$2,000.88").contains([.currencySymbol, .groupingSeparator]),
     /// true  -> ("$2,000.88").contains(.specialCharacters),
-    /// false ->   ("2000.88").contains(.specialCharacters),
-    /// false ->    ("200088").contains(.all)
+    /// false -> ("2000.88").contains(.specialCharacters),
+    /// false -> ("200088").contains(.all)
     /// ```
     public func contains(_ other: Currency.SymbolsOptions, provider: Currency.SymbolsProvider) -> Bool {
         guard !other.isEmpty else { return false }

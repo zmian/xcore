@@ -13,15 +13,22 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
     private lazy var formatter = NumberFormatter().apply {
         $0.numberStyle = .currency
         $0.locale = locale
-        $0.positiveFormat = "¤#,##0.00"
-        // Separators are getting replaced by locale ones
-        $0.negativeFormat = "-¤#,##0.00"
+        $0.positiveFormat = defaultPositiveFormat
+        $0.negativeFormat = defaultNegativeFormat
         // We need to add the $-Symbol manually in order to support different locals but
         // keep $ sign at the correct position to keep the design consistent
         // (i.e., Germany: 1.000,11 $ -> $1.000,11).
         $0.currencySymbol = currencySymbol
         $0.isDecimalEnabled = true
     }
+
+    // Separators will get replaced by locale ones.
+    /// `¤#,##0.00`
+    private let defaultFormat = "¤#,##0.00"
+    /// `¤#,##0.00`
+    private let defaultPositiveFormat = "¤#,##0.00"
+    /// `-¤#,##0.00`
+    private let defaultNegativeFormat = "-¤#,##0.00"
 
     /// The locale of the receiver.
     ///
@@ -69,14 +76,18 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
 // MARK: - Components
 
 extension CurrencyFormatter {
-    public func components(from amount: Double) -> Currency.Components {
+    public func components(from amount: Double, sign: Currency.Sign = .standard) -> Currency.Components {
         var dollarString = "0"
         var centString = "00"
 
         // Important to ensure decimal is enabled since the formatter is shared
         // instance potentially mutated by other code.
         formatter.isDecimalEnabled = true
-        let currencyString = formatter.string(from: NSNumber(value: amount))!
+
+        let currencyString = with(sign: sign) {
+             formatter.string(from: NSNumber(value: amount))!
+        }
+
         let pieces = currencyString.components(separatedBy: decimalSeparator)
 
         if let dollars = pieces.first {
@@ -114,13 +125,15 @@ extension CurrencyFormatter {
     /// - Parameters:
     ///   - value: The value to format.
     ///   - style: The style to format the result.
+    ///   - sign: The sign to use when formatting the result.
     /// - Returns: A string representation of a given value formatted using the
     ///            given style.
     public func string(
         from value: Double,
-        style: Currency.Components.Style = .none
+        style: Currency.Components.Style = .none,
+        sign: Currency.Sign = .standard
     ) -> String {
-        components(from: value).joined(style: style)
+        components(from: value, sign: sign).joined(style: style)
     }
 
     /// Returns a numeric representation by parsing the given string.
@@ -177,5 +190,18 @@ extension NumberFormatter {
             // separator are at least getting a '.00'
             minimumFractionDigits = newValue ? 2 : 0
         }
+    }
+}
+
+// MARK: - Sign
+
+extension CurrencyFormatter {
+    private func with<T>(sign: Currency.Sign, _ block: () -> T) -> T {
+        formatter.positiveFormat = sign.plus + defaultFormat
+        formatter.negativeFormat = sign.minus + defaultFormat
+        let result = block()
+        formatter.positiveFormat = defaultPositiveFormat
+        formatter.negativeFormat = defaultNegativeFormat
+        return result
     }
 }
