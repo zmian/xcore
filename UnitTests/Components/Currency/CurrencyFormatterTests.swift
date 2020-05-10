@@ -220,7 +220,7 @@ extension CurrencyFormatterTests {
 
     private func dollarsAndCents(from amount: Double) -> (dollars: String, cents: String) {
         let components = CurrencyFormatter.shared.components(from: amount)
-        return ("\(components.dollars)\(components.decimalSeparator)", components.cents)
+        return ("\(components.majorUnit)\(components.decimalSeparator)", components.minorUnit)
     }
 }
 

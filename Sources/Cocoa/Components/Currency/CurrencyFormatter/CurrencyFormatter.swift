@@ -45,7 +45,7 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
 
     /// The character the receiver uses as a decimal separator.
     ///
-    /// For example, the grouping separator used in the United States is the period
+    /// For example, the decimal separator used in the United States is the period
     /// (“10,000.00”) whereas in France it is the comma (“10 000,00”).
     public var decimalSeparator: String {
         formatter.decimalSeparator ?? "."
@@ -76,9 +76,9 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
 // MARK: - Components
 
 extension CurrencyFormatter {
-    public func components(from amount: Double, sign: Currency.Sign = .standard) -> Currency.Components {
-        var dollarString = "0"
-        var centString = "00"
+    public func components(from amount: Double, sign: Currency.Sign = .default) -> Currency.Components {
+        var majorUnitString = "0"
+        var minorUnitString = "00"
 
         // Important to ensure decimal is enabled since the formatter is shared
         // instance potentially mutated by other code.
@@ -90,14 +90,14 @@ extension CurrencyFormatter {
 
         let pieces = currencyString.components(separatedBy: decimalSeparator)
 
-        if let dollars = pieces.first {
-            dollarString = dollars
+        if let majorUnit = pieces.first {
+            majorUnitString = majorUnit
         }
 
         if pieces.count > 1 {
-            let rawCentString = pieces[1] as NSString
-            let range = NSRange(location: 0, length: rawCentString.length)
-            centString = rawCentString.replacingOccurrences(
+            let rawMinorUnitString = pieces[1] as NSString
+            let range = NSRange(location: 0, length: rawMinorUnitString.length)
+            minorUnitString = rawMinorUnitString.replacingOccurrences(
                 of: "\\D",
                 with: "",
                 options: .regularExpression,
@@ -107,8 +107,8 @@ extension CurrencyFormatter {
 
         return .init(
             amount: amount,
-            dollars: dollarString,
-            cents: centString,
+            majorUnit: majorUnitString,
+            minorUnit: minorUnitString,
             currencySymbol: currencySymbol,
             groupingSeparator: groupingSeparator,
             decimalSeparator: decimalSeparator
@@ -131,7 +131,7 @@ extension CurrencyFormatter {
     public func string(
         from value: Double,
         style: Currency.Components.Style = .none,
-        sign: Currency.Sign = .standard
+        sign: Currency.Sign = .default
     ) -> String {
         components(from: value, sign: sign).joined(style: style)
     }

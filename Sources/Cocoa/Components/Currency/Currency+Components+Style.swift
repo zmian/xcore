@@ -10,8 +10,21 @@ extension Currency.Components {
     /// An enumeration that represent formatting styles for currency components.
     public indirect enum Style: Equatable {
         case none
-        case removeCentsIfZero
-        case removeCents
+
+        /// ```swift
+        /// let amount = Decimal(120.30)
+        /// // 120 - major unit
+        /// // 30 - minor unit
+        /// ```
+        case removeMinorUnitIfZero
+
+        /// ```swift
+        /// let amount = Decimal(120.30)
+        /// // 120 - major unit
+        /// // 30 - minor unit
+        /// ```
+        case removeMinorUnit
+
         case abbreviationWith(threshold: Double, fallback: Style)
 
         /// Abbreviate `self` to smaller format.

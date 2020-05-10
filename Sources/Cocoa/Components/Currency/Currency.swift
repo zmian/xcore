@@ -10,7 +10,7 @@ public struct Currency: Equatable, MutableAppliable {
     public init(_ amount: Double? = nil) {
         self.amount = amount
         color = Self.appearance().color
-        shouldSuperscriptCents = Self.appearance().shouldSuperscriptCents
+        shouldSuperscriptMinorUnit = Self.appearance().shouldSuperscriptMinorUnit
     }
 
     /// A property to change the formatting style.
@@ -39,10 +39,10 @@ public struct Currency: Equatable, MutableAppliable {
 
     public var shouldDisplayZeroAmounts = true
 
-    /// A property to indicate whether the cents are rendered as superscript.
+    /// A property to indicate whether the minor unit is rendered as superscript.
     ///
     /// The default value is `false`.
-    public var shouldSuperscriptCents: Bool
+    public var shouldSuperscriptMinorUnit: Bool
 
     public var accessibilityLabel: String? {
         guard let amount = amount else {
@@ -71,6 +71,15 @@ extension Currency: ExpressibleByIntegerLiteral {
     }
 }
 
+// MARK: - CustomStringConvertible
+
+extension Currency: CustomStringConvertible {
+    public var description: String {
+        #warning("FIXME: Make Amount required")
+        return CurrencyFormatter.shared.string(from: amount ?? 0, style: style, sign: sign)
+    }
+}
+
 // MARK: - StringRepresentable
 
 extension Currency: StringRepresentable {
@@ -89,11 +98,11 @@ extension Currency {
     /// **Usage:**
     ///
     /// ```swift
-    /// Currency.appearance().negativeColor = .black
+    /// Currency.appearance().color = Color(positive: .systemGreen, negative: .systemRed)
     /// ```
     final public class Appearance: Appliable {
-        public var color = Color(positive: .systemGreen, negative: .systemRed)
-        public var shouldSuperscriptCents = false
+        public var color = Color.none
+        public var shouldSuperscriptMinorUnit = false
     }
 
     private static var appearanceProxy = Appearance()
