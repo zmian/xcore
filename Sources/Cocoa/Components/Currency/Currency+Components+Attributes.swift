@@ -9,14 +9,37 @@ import Foundation
 extension Currency.Components {
     /// A structure that represent formatting attributes for currency components.
     public struct Attributes: Equatable {
-        public let dollarsFont: UIFont
-        public let centsFont: UIFont
-        public let centsOffset: Int
+        /// Font for the major unit of the amount.
+        ///
+        /// ```swift
+        /// let amount = Decimal(120.30)
+        /// // 120 - major unit
+        /// // 30 - minor unit
+        /// ```
+        public let majorUnitFont: UIFont
 
-        public init(dollarsFont: UIFont, centsFont: UIFont, centsOffset: Int) {
-            self.dollarsFont = dollarsFont
-            self.centsFont = centsFont
-            self.centsOffset = centsOffset
+        /// Font for the minor unit of the amount.
+        ///
+        /// ```swift
+        /// let amount = Decimal(120.30)
+        /// // 120 - major unit
+        /// // 30 - minor unit
+        /// ```
+        public let minorUnitFont: UIFont
+
+        /// The offset applied to minor unit.
+        ///
+        /// ```swift
+        /// let amount = Decimal(120.30)
+        /// // 120 - major unit
+        /// // 30 - minor unit
+        /// ```
+        public let minorUnitOffset: Int
+
+        public init(majorUnitFont: UIFont, minorUnitFont: UIFont, minorUnitOffset: Int) {
+            self.majorUnitFont = majorUnitFont
+            self.minorUnitFont = minorUnitFont
+            self.minorUnitOffset = minorUnitOffset
         }
 
         public init(_ style: UIFont.TextStyle) {
@@ -24,9 +47,9 @@ extension Currency.Components {
         }
 
         public init(_ font: UIFont) {
-            self.dollarsFont = font
-            self.centsFont = font
-            self.centsOffset = 0
+            self.majorUnitFont = font
+            self.minorUnitFont = font
+            self.minorUnitOffset = 0
         }
     }
 }
@@ -34,7 +57,7 @@ extension Currency.Components {
 // MARK: - Convenience
 
 extension Currency.Components.Attributes {
-    /// Superscript based layout derived from the given dollars size.
+    /// Superscript based layout derived from the given major unit size.
     ///
     /// - Note: Consider using the pre-existing styles instead of using this method
     /// directly. If an existing style doesn't fit your need create an alias here
@@ -43,29 +66,29 @@ extension Currency.Components.Attributes {
         superscript(UIFont.app(style: style))
     }
 
-    /// Superscript based layout derived from the given dollars size.
+    /// Superscript based layout derived from the given major unit size.
     ///
     /// - Note: Consider using the pre-existing styles instead of using this method
     /// directly. If an existing style doesn't fit your need create an alias here
     /// like `.body` to ensure consistency.
     public static func superscript(_ font: UIFont) -> Self {
-        let dollarsSize = font.pointSize
+        let majorUnitSize = font.pointSize
 
         let φ = AppConstants.φ
-        var centsSize = (dollarsSize * φ).rounded()
+        var minorUnitSize = (majorUnitSize * φ).rounded()
 
         // Add buffer if the given size is small. This helps with readability.
-        if dollarsSize <= 20 {
-            centsSize += (centsSize * φ * φ * φ).rounded()
+        if majorUnitSize <= 20 {
+            minorUnitSize += (minorUnitSize * φ * φ * φ).rounded()
         }
 
-        let centsWeight: UIFont.Weight = centsSize <= 10 ? .medium : .regular
-        let centsOffset = Int((dollarsSize - centsSize).rounded())
+        let minorUnitWeight: UIFont.Weight = minorUnitSize <= 10 ? .medium : .regular
+        let minorUnitOffset = Int((majorUnitSize - minorUnitSize).rounded())
 
         return .init(
-            dollarsFont: font,
-            centsFont: .app(size: centsSize, weight: centsWeight),
-            centsOffset: centsOffset
+            majorUnitFont: font,
+            minorUnitFont: .app(size: minorUnitSize, weight: minorUnitWeight),
+            minorUnitOffset: minorUnitOffset
         )
     }
 }

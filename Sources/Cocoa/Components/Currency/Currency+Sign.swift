@@ -29,7 +29,7 @@ extension Currency.Sign {
         .init(plus: "+", minus: "-")
     }
 
-    public static var standard: Self {
+    public static var `default`: Self {
         .init(plus: "", minus: "-")
     }
 }

@@ -10,29 +10,60 @@ extension Currency {
     /// A structure that parses currency into and constructs currency from their
     /// constituent parts.
     public struct Components: CustomStringConvertible {
-        public typealias Range = (dollars: NSRange?, cents: NSRange?)
+        public typealias Range = (majorUnit: NSRange?, minorUnit: NSRange?)
 
         public let amount: Double
-        public let dollars: String
-        public let cents: String
+
+        /// The major unit of the amount.
+        ///
+        /// ```swift
+        /// let amount = Decimal(120.30)
+        /// // 120 - major unit
+        /// // 30 - minor unit
+        /// ```
+        public let majorUnit: String
+
+        /// The minor unit of the amount.
+        ///
+        /// ```swift
+        /// let amount = Decimal(120.30)
+        /// // 120 - major unit
+        /// // 30 - minor unit
+        /// ```
+        public let minorUnit: String
+
+        /// The currency symbol associated with the amount.
+        ///
+        /// For example, `$` for US dollars.
         public let currencySymbol: String
+
+        /// The grouping separator associated with the amount.
+        ///
+        /// For example, United States uses comma (`"10,000.00"`) whereas in France
+        /// space (`"10 000,00"`) is used instead for grouping separator.
         public let groupingSeparator: String
+
+        /// The decimal separator associated with the amount.
+        ///
+        /// For example, United States uses period (`"10,000.00"`) whereas in France
+        /// comma (`"10 000,00"`) is used instead for decimal separator.
         public let decimalSeparator: String
-        private var isZeroCents: Bool {
-            cents == "00"
+
+        private var isMinorUnitValueZero: Bool {
+            minorUnit == "00"
         }
 
         public init(
             amount: Double,
-            dollars: String,
-            cents: String,
+            majorUnit: String,
+            minorUnit: String,
             currencySymbol: String,
             groupingSeparator: String,
             decimalSeparator: String
         ) {
             self.amount = amount
-            self.dollars = dollars
-            self.cents = cents
+            self.majorUnit = majorUnit
+            self.minorUnit = minorUnit
             self.currencySymbol = currencySymbol
             self.groupingSeparator = groupingSeparator
             self.decimalSeparator = decimalSeparator
@@ -58,15 +89,15 @@ extension Currency {
 
                     return currencySymbol + amount.rounded(places: 2).abbreviate(threshold: threshold)
                 case .none:
-                    return "\(dollars)\(decimalSeparator)\(cents)"
-                case .removeCentsIfZero:
-                    guard isZeroCents else {
-                        return "\(dollars)\(decimalSeparator)\(cents)"
+                    return "\(majorUnit)\(decimalSeparator)\(minorUnit)"
+                case .removeMinorUnitIfZero:
+                    guard isMinorUnitValueZero else {
+                        return "\(majorUnit)\(decimalSeparator)\(minorUnit)"
                     }
 
-                    return dollars
-                case .removeCents:
-                    return dollars
+                    return majorUnit
+                case .removeMinorUnit:
+                    return majorUnit
             }
         }
 
@@ -80,26 +111,26 @@ extension Currency {
                 return range(style: fallback)
             }
 
-            let dollarsAndDecimalSeparator = "\(dollars)\(decimalSeparator)"
-            let dollarsRange = NSRange(location: 0, length: dollarsAndDecimalSeparator.count)
-            let centsRange = NSRange(location: dollarsRange.length, length: cents.count)
+            let majorUnitAndDecimalSeparator = "\(majorUnit)\(decimalSeparator)"
+            let majorUnitRange = NSRange(location: 0, length: majorUnitAndDecimalSeparator.count)
+            let minorUnitRange = NSRange(location: majorUnitRange.length, length: minorUnit.count)
 
-            let finalDollarsRange = dollarsRange.location == NSNotFound ? nil : dollarsRange
-            let finalCentsRange = centsRange.location == NSNotFound ? nil : centsRange
+            let finalMajorUnitRange = majorUnitRange.location == NSNotFound ? nil : majorUnitRange
+            let finalMinorUnitRange = minorUnitRange.location == NSNotFound ? nil : minorUnitRange
 
             switch style {
                 case .abbreviationWith:
                     return (nil, nil)
                 case .none:
-                    return (finalDollarsRange, finalCentsRange)
-                case .removeCentsIfZero:
-                    guard isZeroCents else {
-                        return (finalDollarsRange, finalCentsRange)
+                    return (finalMajorUnitRange, finalMinorUnitRange)
+                case .removeMinorUnitIfZero:
+                    guard isMinorUnitValueZero else {
+                        return (finalMajorUnitRange, finalMinorUnitRange)
                     }
 
-                    return (finalDollarsRange, nil)
-                case .removeCents:
-                    return (finalDollarsRange, nil)
+                    return (finalMajorUnitRange, nil)
+                case .removeMinorUnit:
+                    return (finalMajorUnitRange, nil)
             }
         }
     }

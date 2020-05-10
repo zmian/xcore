@@ -7,6 +7,23 @@
 import Foundation
 
 extension CurrencyFormatter {
+    /// Returns a string representation of a given value formatted using the given
+    /// style.
+    ///
+    /// - Parameters:
+    ///   - value: The value to format.
+    ///   - style: The style to format the result.
+    ///   - sign: The sign to use when formatting the result.
+    /// - Returns: A string representation of a given value formatted using the
+    ///            given style.
+    public func string(from currency: Currency) -> String {
+        guard let amount = currency.amount else {
+            return ""
+        }
+
+        return components(from: amount, sign: currency.sign).joined(style: currency.style)
+    }
+
     public func attributedString(from currency: Currency, format: String? = nil) -> NSMutableAttributedString {
         let formattedCurrency = _attributedString(from: currency)
 
@@ -24,7 +41,7 @@ extension CurrencyFormatter {
         }
 
         let mainFormat = NSMutableAttributedString(string: format, attributes: [
-            .font: currency.attributes.dollarsFont
+            .font: currency.attributes.majorUnitFont
         ])
         mainFormat.replaceCharacters(in: range, with: formattedCurrency)
         return mainFormat
@@ -56,18 +73,18 @@ extension CurrencyFormatter {
 
         let attributedString = NSMutableAttributedString(
             string: joinedAmount,
-            attributes: [.font: currency.attributes.dollarsFont]
+            attributes: [.font: currency.attributes.majorUnitFont]
         )
 
-        guard currency.shouldSuperscriptCents else {
+        guard currency.shouldSuperscriptMinorUnit else {
             return attributedString
         }
 
-        if let centsRange = components.range(style: currency.style).cents {
+        if let minorUnitRange = components.range(style: currency.style).minorUnit {
             attributedString.setAttributes([
-                .font: currency.attributes.centsFont,
-                .baselineOffset: currency.attributes.centsOffset
-            ], range: centsRange)
+                .font: currency.attributes.minorUnitFont,
+                .baselineOffset: currency.attributes.minorUnitOffset
+            ], range: minorUnitRange)
         }
 
         return attributedString
