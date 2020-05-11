@@ -58,8 +58,8 @@ extension CurrencyFormatter {
     private func _attributedStringWithoutColor(from money: Money) -> NSMutableAttributedString {
         let amount = money.amount
 
-        if amount == 0 && !money.shouldDisplayZeroAmounts {
-            return NSMutableAttributedString(string: " " + money.zeroAmountString)
+        if amount == 0 && !money.shouldDisplayZero {
+            return NSMutableAttributedString(string: " " + money.zeroString)
         }
 
         let components = self.components(from: amount, sign: money.sign)
@@ -94,10 +94,10 @@ extension CurrencyFormatter {
         let amount = money.amount
         var foregroundColor: UIColor
 
-        if let zeroAmountColor = color.zero, amount == 0 {
-            foregroundColor = zeroAmountColor
+        if amount == 0 {
+            foregroundColor = color.zero
         } else {
-            foregroundColor = amount >= 0 ? color.positive : color.negative
+            foregroundColor = amount > 0 ? color.positive : color.negative
         }
 
         return foregroundColor

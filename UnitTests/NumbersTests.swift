@@ -63,4 +63,9 @@ final class NumbersTests: TestCase {
         let expected = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
         XCTAssertEqual(values, expected)
     }
+
+    func testDecimalRounding() {
+        let x = Decimal(6.5)
+        XCTAssertEqual(x.rounded(2), 6.50)
+    }
 }

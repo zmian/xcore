@@ -15,11 +15,9 @@ extension Money {
         public let negative: UIColor
 
         /// The custom color to use when the amount is `0`.
-        ///
-        /// The default value is `nil`.
-        public let zero: UIColor?
+        public let zero: UIColor
 
-        public init(positive: UIColor, negative: UIColor, zero: UIColor? = nil) {
+        public init(positive: UIColor, negative: UIColor, zero: UIColor) {
             self.positive = positive
             self.negative = negative
             self.zero = zero
@@ -28,7 +26,7 @@ extension Money {
         public init(_ color: UIColor) {
             self.positive = color
             self.negative = color
-            self.zero = nil
+            self.zero = color
         }
     }
 }

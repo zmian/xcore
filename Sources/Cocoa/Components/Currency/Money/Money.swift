@@ -34,12 +34,13 @@ public struct Money: Equatable, Hashable, MutableAppliable {
     public var color: Color = .none
 
     /// The custom string to use when the amount is `0`.
-    /// This value is ignored if the `shouldDisplayZeroAmounts` property is `true`.
+    ///
+    /// This value is ignored if the `shouldDisplayZero` property is `true`.
     ///
     /// The default value is `--`.
-    public var zeroAmountString: String = "--"
+    public var zeroString: String = "--"
 
-    public var shouldDisplayZeroAmounts = true
+    public var shouldDisplayZero = true
 
     /// A property to indicate whether the minor unit is rendered as superscript.
     ///
@@ -114,28 +115,9 @@ extension Money {
 }
 
 extension Money {
-    public func signed() -> Self {
-        sign(.default)
-    }
-
-    public func color(_ color: Color) -> Self {
+    public func style(_ style: Components.Style) -> Self {
         applying {
-            $0.color = color
-        }
-    }
-
-    public func sign(_ sign: Sign) -> Self {
-        applying {
-            $0.sign = sign
-        }
-    }
-
-    /// Zero amount will be displayed as "--".
-    ///
-    /// See: `zeroAmountString` to customize the default value.
-    public func dasherizeZeroAmounts() -> Self {
-        applying {
-            $0.shouldDisplayZeroAmounts = false
+            $0.style = style
         }
     }
 
@@ -145,9 +127,28 @@ extension Money {
         }
     }
 
-    public func style(_ style: Components.Style) -> Self {
+    public func sign(_ sign: Sign) -> Self {
         applying {
-            $0.style = style
+            $0.sign = sign
+        }
+    }
+
+    public func color(_ color: Color) -> Self {
+        applying {
+            $0.color = color
+        }
+    }
+
+    public func signed() -> Self {
+        sign(.default)
+    }
+
+    /// Zero amount will be displayed as "--".
+    ///
+    /// See: `zeroString` to customize the default value.
+    public func dasherizeZero() -> Self {
+        applying {
+            $0.shouldDisplayZero = false
         }
     }
 
