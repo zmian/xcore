@@ -6,6 +6,8 @@
 
 import Foundation
 
+// MARK: - Namespace
+
 public enum Currency { }
 
 // MARK: - SymbolsProvider
