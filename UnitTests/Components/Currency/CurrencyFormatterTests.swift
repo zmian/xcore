@@ -218,7 +218,7 @@ extension CurrencyFormatterTests {
         case indonesia = "id_ID"
     }
 
-    private func dollarsAndCents(from amount: Double) -> (dollars: String, cents: String) {
+    private func dollarsAndCents(from amount: Decimal) -> (dollars: String, cents: String) {
         let components = CurrencyFormatter.shared.components(from: amount)
         return ("\(components.majorUnit)\(components.decimalSeparator)", components.minorUnit)
     }
