@@ -75,11 +75,13 @@ extension Percentage: Hashable {
     }
 }
 
-extension Percentage: Comparable {
+extension Percentage: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.rawValue == rhs.rawValue
     }
+}
 
+extension Percentage: Comparable {
     public static func <(lhs: Self, rhs: Self) -> Bool {
         lhs.rawValue < rhs.rawValue
     }

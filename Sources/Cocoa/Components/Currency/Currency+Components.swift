@@ -12,7 +12,8 @@ extension Money {
     public struct Components: CustomStringConvertible {
         public typealias Range = (majorUnit: NSRange?, minorUnit: NSRange?)
 
-        public let amount: Double
+        /// The amount of money.
+        public let amount: Decimal
 
         /// The major unit of the amount.
         ///
@@ -50,7 +51,7 @@ extension Money {
         public let decimalSeparator: String
 
         public init(
-            amount: Double,
+            amount: Decimal,
             majorUnit: String,
             minorUnit: String,
             currencySymbol: String,

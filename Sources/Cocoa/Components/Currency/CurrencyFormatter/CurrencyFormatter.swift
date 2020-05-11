@@ -76,7 +76,7 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
 // MARK: - Components
 
 extension CurrencyFormatter {
-    public func components(from amount: Double, sign: Money.Sign = .default) -> Money.Components {
+    public func components(from amount: Decimal, sign: Money.Sign = .default) -> Money.Components {
         var majorUnitString = "0"
         var minorUnitString = "00"
 
@@ -85,7 +85,7 @@ extension CurrencyFormatter {
         formatter.isDecimalEnabled = true
 
         let amountString = with(sign: sign) {
-             formatter.string(from: NSNumber(value: amount))!
+             formatter.string(from: NSDecimalNumber(decimal: amount))!
         }
 
         let pieces = amountString.components(separatedBy: decimalSeparator)
@@ -129,11 +129,59 @@ extension CurrencyFormatter {
     /// - Returns: A string representation of a given value formatted using the
     ///            given style.
     public func string(
-        from value: Double,
+        from value: Decimal,
         style: Money.Components.Style = .none,
         sign: Money.Sign = .default
     ) -> String {
         components(from: value, sign: sign).joined(style: style)
+    }
+
+    /// Returns a string representation of a given value formatted using the given
+    /// style.
+    ///
+    /// - Parameters:
+    ///   - value: The value to format.
+    ///   - style: The style to format the result.
+    ///   - sign: The sign to use when formatting the result.
+    /// - Returns: A string representation of a given value formatted using the
+    ///            given style.
+    public func string(
+        from value: Int,
+        style: Money.Components.Style = .none,
+        sign: Money.Sign = .default
+    ) -> String {
+        string(from: Decimal(value), style: style, sign: sign)
+    }
+
+    /// Returns a string representation of a given value formatted using the given
+    /// style.
+    ///
+    /// - Parameters:
+    ///   - value: The value to format.
+    ///   - style: The style to format the result.
+    ///   - sign: The sign to use when formatting the result.
+    /// - Returns: A string representation of a given value formatted using the
+    ///            given style.
+    public func string(
+        from value: Double,
+        style: Money.Components.Style = .none,
+        sign: Money.Sign = .default
+    ) -> String {
+        string(from: Decimal(value), style: style, sign: sign)
+    }
+
+    /// Returns a numeric representation by parsing the given string.
+    ///
+    /// - Parameter string: A string that is parsed to generate the returned numeric
+    ///                     value.
+    /// - Returns: A numeric representation by parsing the given string, or `nil` if
+    ///            no single number could be parsed.
+    public func decimal(from string: String) -> Decimal? {
+        if let decimalValue = Decimal(string: string) {
+            return decimalValue
+        }
+
+        return formatter.number(from: string)?.decimalValue
     }
 
     /// Returns a numeric representation by parsing the given string.
@@ -155,7 +203,7 @@ extension CurrencyFormatter {
 
         let shouldCleanString: Bool
 
-        if Double(string) != nil {
+        if Decimal(string: string) != nil {
             shouldCleanString = false
         } else {
             shouldCleanString = string.contains(.specialCharacters, provider: self)
@@ -171,8 +219,10 @@ extension CurrencyFormatter {
             formatter.isDecimalEnabled = allowDecimal
 
             guard
-                let number = Double(string),
-                let formattedString = formatter.string(from: NSNumber(value: needsDecimalConversion ? number / 100 : number))
+                let number = Decimal(string: string),
+                let formattedString = formatter.string(from: NSDecimalNumber(
+                    decimal: needsDecimalConversion ? number / 100 : number
+                ))
             else {
                 return nil
             }

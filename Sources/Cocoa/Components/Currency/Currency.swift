@@ -6,14 +6,14 @@
 
 import Foundation
 
-public struct Money: Equatable, MutableAppliable {
-    public init(_ amount: Double) {
+public struct Money: Equatable, Hashable, MutableAppliable {
+    /// The amount of money.
+    public var amount: Decimal
+
+    public init(_ amount: Decimal) {
         self.amount = amount
-        color = Self.appearance().color
         shouldSuperscriptMinorUnit = Self.appearance().shouldSuperscriptMinorUnit
     }
-
-    public var amount: Double
 
     /// A property to change the formatting style.
     ///
@@ -31,7 +31,7 @@ public struct Money: Equatable, MutableAppliable {
     public var sign: Sign = .none
 
     /// A property to indicate whether the color changes based on the amount.
-    public var color: Color
+    public var color: Color = .none
 
     /// The custom string to use when the amount is `0`.
     /// This value is ignored if the `shouldDisplayZeroAmounts` property is `true`.
@@ -55,7 +55,11 @@ public struct Money: Equatable, MutableAppliable {
 
 extension Money: ExpressibleByFloatLiteral {
     public init(floatLiteral value: FloatLiteralType) {
-        self.init(Double(value))
+        self.init(Decimal(floatLiteral: value))
+    }
+
+    public init(_ value: Double) {
+        self.init(Decimal(value))
     }
 }
 
@@ -63,7 +67,11 @@ extension Money: ExpressibleByFloatLiteral {
 
 extension Money: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: IntegerLiteralType) {
-        self.init(Double(value))
+        self.init(Decimal(integerLiteral: value))
+    }
+
+    public init(_ value: Int) {
+        self.init(Decimal(value))
     }
 }
 
@@ -93,10 +101,9 @@ extension Money {
     /// **Usage:**
     ///
     /// ```swift
-    /// Money.appearance().color = Color(positive: .systemGreen, negative: .systemRed)
+    /// Money.appearance().shouldSuperscriptMinorUnit = true
     /// ```
     final public class Appearance: Appliable {
-        public var color = Color.none
         public var shouldSuperscriptMinorUnit = false
     }
 

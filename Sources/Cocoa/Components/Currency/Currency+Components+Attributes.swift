@@ -8,7 +8,7 @@ import Foundation
 
 extension Money.Components {
     /// A structure that represent formatting attributes for money components.
-    public struct Attributes: Equatable {
+    public struct Attributes: Hashable {
         /// Font for the major unit of the amount.
         ///
         /// ```swift
