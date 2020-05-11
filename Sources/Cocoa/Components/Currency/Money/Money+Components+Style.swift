@@ -111,13 +111,13 @@ extension Money.Components.Style {
             join: {
                 guard
                     $0.amount >= threshold,
-                    let amountValue = Double(exactly: NSDecimalNumber(decimal: $0.amount)),
+                    let amountValue = Double(exactly: NSDecimalNumber(decimal: $0.amount.rounded(2))),
                     let thresholdValue = Double(exactly: NSDecimalNumber(decimal: threshold))
                 else {
                     return fallback.join($0)
                 }
 
-                return $0.currencySymbol + amountValue.rounded(places: 2).abbreviate(threshold: thresholdValue)
+                return $0.currencySymbol + amountValue.abbreviate(threshold: thresholdValue)
             },
             range: {
                 if $0.amount < threshold {
