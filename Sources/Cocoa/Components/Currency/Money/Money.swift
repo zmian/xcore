@@ -55,7 +55,7 @@ public struct Money: Equatable, Hashable, MutableAppliable {
 
 extension Money: ExpressibleByFloatLiteral {
     public init(floatLiteral value: FloatLiteralType) {
-        self.init(Decimal(floatLiteral: value))
+        self.init(Decimal(value))
     }
 
     public init(_ value: Double) {
@@ -67,7 +67,7 @@ extension Money: ExpressibleByFloatLiteral {
 
 extension Money: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: IntegerLiteralType) {
-        self.init(Decimal(integerLiteral: value))
+        self.init(Decimal(value))
     }
 
     public init(_ value: Int) {
