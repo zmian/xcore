@@ -8,7 +8,7 @@ import Foundation
 
 extension Money.Components {
     /// An structure that represent formatting styles for money components.
-    public struct Style: Equatable {
+    public struct Style {
         public let id: Identifier<Self>
         let join: (Money.Components) -> String
         let range: (Money.Components) -> Range
@@ -26,6 +26,14 @@ extension Money.Components {
         public static func ==(lhs: Self, rhs: Self) -> Bool {
             lhs.id == rhs.id
         }
+    }
+}
+
+// MARK: - Hashable
+
+extension Money.Components.Style: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 
@@ -97,15 +105,19 @@ extension Money.Components.Style {
     ///                then given threshold.
     ///   - fallback: The formatting style to use when threshold isn't reached.
     /// - Returns: Abbreviated version of `self`.
-    public static func abbreviation(threshold: Double, fallback: Self = .none) -> Self {
+    public static func abbreviation(threshold: Decimal, fallback: Self = .none) -> Self {
         .init(
             id: .init(rawValue: "abbreviation\(threshold)\(fallback.id)"),
             join: {
-                guard $0.amount >= threshold else {
+                guard
+                    $0.amount >= threshold,
+                    let amountValue = Double(exactly: NSDecimalNumber(decimal: $0.amount)),
+                    let thresholdValue = Double(exactly: NSDecimalNumber(decimal: threshold))
+                else {
                     return fallback.join($0)
                 }
 
-                return $0.currencySymbol + $0.amount.rounded(places: 2).abbreviate(threshold: threshold)
+                return $0.currencySymbol + amountValue.rounded(places: 2).abbreviate(threshold: thresholdValue)
             },
             range: {
                 if $0.amount < threshold {

@@ -7,7 +7,7 @@
 import Foundation
 
 extension Money {
-    public struct Sign: Equatable {
+    public struct Sign: Hashable {
         public let plus: String
         public let minus: String
 

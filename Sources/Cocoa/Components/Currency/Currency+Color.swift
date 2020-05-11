@@ -7,7 +7,7 @@
 import Foundation
 
 extension Money {
-    public struct Color: Equatable {
+    public struct Color: Hashable {
         /// The color to use when the amount is positive.
         public let positive: UIColor
 
