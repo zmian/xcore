@@ -6,54 +6,114 @@
 
 import Foundation
 
-extension Currency.Components {
-    /// An enumeration that represent formatting styles for currency components.
-    public indirect enum Style: Equatable {
-        case none
+extension Money.Components {
+    /// An structure that represent formatting styles for money components.
+    public struct Style: Equatable {
+        public let id: Identifier<Self>
+        let join: (Money.Components) -> String
+        let range: (Money.Components) -> Range
 
-        /// ```swift
-        /// let amount = Decimal(120.30)
-        /// // 120 - major unit
-        /// // 30 - minor unit
-        /// ```
-        case removeMinorUnitIfZero
-
-        /// ```swift
-        /// let amount = Decimal(120.30)
-        /// // 120 - major unit
-        /// // 30 - minor unit
-        /// ```
-        case removeMinorUnit
-
-        case abbreviationWith(threshold: Double, fallback: Style)
-
-        /// Abbreviate `self` to smaller format.
-        ///
-        /// ```swift
-        /// 987     // -> 987
-        /// 1200    // -> 1.2K
-        /// 12000   // -> 12K
-        /// 120000  // -> 120K
-        /// 1200000 // -> 1.2M
-        /// 1340    // -> 1.3K
-        /// 132456  // -> 132.5K
-        /// ```
-        ///
-        /// - Parameters:
-        ///   - threshold: A property to only apply abbreviation
-        ///                if `self` is greater then given threshold.
-        ///   - fallback: The formatting style to use when threshold isn't reached.
-        /// - Returns: Abbreviated version of `self`.
-        public static func abbreviation(threshold: Double, fallback: Style = .none) -> Style {
-            var fallback = fallback
-            if case .abbreviationWith = fallback {
-                #if DEBUG
-                fatalError(because: .unsupportedFallbackFormattingStyle)
-                #else
-                fallback = .none
-                #endif
-            }
-            return .abbreviationWith(threshold: threshold, fallback: fallback)
+        public init(
+            id: Identifier<Self>,
+            join: @escaping (Money.Components) -> String,
+            range: @escaping (Money.Components) -> Range
+        ) {
+            self.id = id
+            self.join = join
+            self.range = range
         }
+
+        public static func ==(lhs: Self, rhs: Self) -> Bool {
+            lhs.id == rhs.id
+        }
+    }
+}
+
+// MARK: - Built-in
+
+extension Money.Components.Style {
+    public static var none: Self {
+        .init(
+            id: #function,
+            join: { "\($0.majorUnit)\($0.decimalSeparator)\($0.minorUnit)" },
+            range: { $0.ranges }
+        )
+    }
+
+    /// ```swift
+    /// let amount = Decimal(120.30)
+    /// // 120 - major unit
+    /// // 30 - minor unit
+    /// ```
+    public static var removeMinorUnit: Self {
+        .init(
+            id: #function,
+            join: { $0.majorUnit },
+            range: { ($0.ranges.majorUnit, nil) }
+        )
+    }
+
+    /// ```swift
+    /// let amount = Decimal(120.30)
+    /// // 120 - major unit
+    /// // 30 - minor unit
+    /// ```
+    public static var removeMinorUnitIfZero: Self {
+        .init(
+            id: #function,
+            join: {
+                guard $0.isMinorUnitValueZero else {
+                    return "\($0.majorUnit)\($0.decimalSeparator)\($0.minorUnit)"
+                }
+
+                return $0.majorUnit
+            },
+            range: {
+                let ranges = $0.ranges
+
+                guard $0.isMinorUnitValueZero else {
+                    return ranges
+                }
+
+                return (ranges.majorUnit, nil)
+            }
+        )
+    }
+
+    /// Abbreviate amount to compact format.
+    ///
+    /// ```swift
+    /// 987     // -> 987
+    /// 1200    // -> 1.2K
+    /// 12000   // -> 12K
+    /// 120000  // -> 120K
+    /// 1200000 // -> 1.2M
+    /// 1340    // -> 1.3K
+    /// 132456  // -> 132.5K
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - threshold: A property to only apply abbreviation if `self` is greater
+    ///                then given threshold.
+    ///   - fallback: The formatting style to use when threshold isn't reached.
+    /// - Returns: Abbreviated version of `self`.
+    public static func abbreviation(threshold: Double, fallback: Self = .none) -> Self {
+        .init(
+            id: .init(rawValue: "abbreviation\(threshold)\(fallback.id)"),
+            join: {
+                guard $0.amount >= threshold else {
+                    return fallback.join($0)
+                }
+
+                return $0.currencySymbol + $0.amount.rounded(places: 2).abbreviate(threshold: threshold)
+            },
+            range: {
+                if $0.amount < threshold {
+                    return fallback.range($0)
+                }
+
+                return (nil, nil)
+            }
+        )
     }
 }

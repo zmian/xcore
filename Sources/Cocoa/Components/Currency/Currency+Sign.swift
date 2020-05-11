@@ -6,7 +6,7 @@
 
 import Foundation
 
-extension Currency {
+extension Money {
     public struct Sign: Equatable {
         public let plus: String
         public let minus: String
@@ -20,7 +20,7 @@ extension Currency {
 
 // MARK: - Built-in
 
-extension Currency.Sign {
+extension Money.Sign {
     public static var none: Self {
         .init(plus: "", minus: "")
     }

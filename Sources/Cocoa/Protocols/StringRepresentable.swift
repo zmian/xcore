@@ -124,8 +124,8 @@ extension TextAttributedTextRepresentable {
             return
         }
 
-        if let currencyString = string as? Currency {
-            accessibilityLabel = currencyString.accessibilityLabel
+        if let moneyString = string as? Money {
+            accessibilityLabel = moneyString.accessibilityLabel
         } else {
             accessibilityLabel = String(describing: string.stringSource)
         }

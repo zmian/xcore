@@ -6,8 +6,8 @@
 
 import Foundation
 
-extension Currency.Components {
-    /// A structure that represent formatting attributes for currency components.
+extension Money.Components {
+    /// A structure that represent formatting attributes for money components.
     public struct Attributes: Equatable {
         /// Font for the major unit of the amount.
         ///
@@ -56,7 +56,7 @@ extension Currency.Components {
 
 // MARK: - Convenience
 
-extension Currency.Components.Attributes {
+extension Money.Components.Attributes {
     /// Superscript based layout derived from the given major unit size.
     ///
     /// - Note: Consider using the pre-existing styles instead of using this method
@@ -95,7 +95,7 @@ extension Currency.Components.Attributes {
 
 // MARK: - Built-in
 
-extension Currency.Components.Attributes {
+extension Money.Components.Attributes {
     public static var largeTitle: Self {
         largeTitle(superscript: false)
     }
@@ -141,7 +141,7 @@ extension Currency.Components.Attributes {
     }
 }
 
-extension Currency.Components.Attributes {
+extension Money.Components.Attributes {
     public static func largeTitle(superscript: Bool) -> Self {
         superscript ? .superscript(.largeTitle) : .init(.largeTitle)
     }

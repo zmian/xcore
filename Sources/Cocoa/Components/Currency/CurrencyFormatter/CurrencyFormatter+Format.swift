@@ -7,100 +7,91 @@
 import Foundation
 
 extension CurrencyFormatter {
-    /// Returns a string representation of a given value formatted using the given
-    /// style.
+    /// Returns a string representation of a given money formatted using money
+    /// properties.
     ///
     /// - Parameters:
-    ///   - value: The value to format.
-    ///   - style: The style to format the result.
-    ///   - sign: The sign to use when formatting the result.
-    /// - Returns: A string representation of a given value formatted using the
-    ///            given style.
-    public func string(from currency: Currency) -> String {
-        guard let amount = currency.amount else {
-            return ""
+    ///   - money: The money to format.
+    /// - Returns: A string representation of the given money.
+    public func string(from money: Money, format: String? = nil) -> String {
+        let amountString = components(from: money.amount, sign: money.sign).joined(style: money.style)
+
+        guard let format = format else {
+            return amountString
         }
 
-        return components(from: amount, sign: currency.sign).joined(style: currency.style)
+        return String(format: format, amountString)
     }
 
-    public func attributedString(from currency: Currency, format: String? = nil) -> NSMutableAttributedString {
-        let formattedCurrency = _attributedString(from: currency)
+    public func attributedString(from money: Money, format: String? = nil) -> NSMutableAttributedString {
+        let formattedMoney = _attributedString(from: money)
 
-        guard
-            let format = format,
-            currency.amount != nil
-        else {
-            return formattedCurrency
+        guard let format = format else {
+            return formattedMoney
         }
 
         let range = (format as NSString).range(of: "%@")
 
         guard range.length > 0 else {
-            return formattedCurrency
+            return formattedMoney
         }
 
         let mainFormat = NSMutableAttributedString(string: format, attributes: [
-            .font: currency.attributes.majorUnitFont
+            .font: money.attributes.majorUnitFont
         ])
-        mainFormat.replaceCharacters(in: range, with: formattedCurrency)
+        mainFormat.replaceCharacters(in: range, with: formattedMoney)
         return mainFormat
     }
 }
 
 extension CurrencyFormatter {
-    private func _attributedString(from currency: Currency) -> NSMutableAttributedString {
-        let attributedString = _attributedStringWithoutColor(from: currency)
+    private func _attributedString(from money: Money) -> NSMutableAttributedString {
+        let attributedString = _attributedStringWithoutColor(from: money)
 
-        guard let foregroundColor = foregroundColor(currency) else {
+        guard let foregroundColor = foregroundColor(money) else {
             return attributedString
         }
 
         return attributedString.foregroundColor(foregroundColor)
     }
 
-    private func _attributedStringWithoutColor(from currency: Currency) -> NSMutableAttributedString {
-        guard let amount = currency.amount else {
-            return NSMutableAttributedString(string: "")
+    private func _attributedStringWithoutColor(from money: Money) -> NSMutableAttributedString {
+        let amount = money.amount
+
+        if amount == 0 && !money.shouldDisplayZeroAmounts {
+            return NSMutableAttributedString(string: " " + money.zeroAmountString)
         }
 
-        if amount == 0 && !currency.shouldDisplayZeroAmounts {
-            return NSMutableAttributedString(string: " " + currency.zeroAmountString)
-        }
-
-        let components = self.components(from: amount, sign: currency.sign)
-        let joinedAmount = components.joined(style: currency.style)
+        let components = self.components(from: amount, sign: money.sign)
+        let joinedAmount = components.joined(style: money.style)
 
         let attributedString = NSMutableAttributedString(
             string: joinedAmount,
-            attributes: [.font: currency.attributes.majorUnitFont]
+            attributes: [.font: money.attributes.majorUnitFont]
         )
 
-        guard currency.shouldSuperscriptMinorUnit else {
+        guard money.shouldSuperscriptMinorUnit else {
             return attributedString
         }
 
-        if let minorUnitRange = components.range(style: currency.style).minorUnit {
+        if let minorUnitRange = components.range(style: money.style).minorUnit {
             attributedString.setAttributes([
-                .font: currency.attributes.minorUnitFont,
-                .baselineOffset: currency.attributes.minorUnitOffset
+                .font: money.attributes.minorUnitFont,
+                .baselineOffset: money.attributes.minorUnitOffset
             ], range: minorUnitRange)
         }
 
         return attributedString
     }
 
-    private func foregroundColor(_ currency: Currency) -> UIColor? {
-        guard let amount = currency.amount else {
-            return nil
-        }
-
-        let color = currency.color
+    private func foregroundColor(_ money: Money) -> UIColor? {
+        let color = money.color
 
         guard color != .none else {
             return nil
         }
 
+        let amount = money.amount
         var foregroundColor: UIColor
 
         if let zeroAmountColor = color.zero, amount == 0 {

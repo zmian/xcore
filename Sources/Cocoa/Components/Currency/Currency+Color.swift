@@ -6,7 +6,7 @@
 
 import Foundation
 
-extension Currency {
+extension Money {
     public struct Color: Equatable {
         /// The color to use when the amount is positive.
         public let positive: UIColor
@@ -35,7 +35,7 @@ extension Currency {
 
 // MARK: - Built-in
 
-extension Currency.Color {
+extension Money.Color {
     public static var none: Self {
         .init(.clear)
     }
