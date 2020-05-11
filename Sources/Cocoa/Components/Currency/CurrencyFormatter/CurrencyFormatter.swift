@@ -76,7 +76,7 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
 // MARK: - Components
 
 extension CurrencyFormatter {
-    public func components(from amount: Double, sign: Currency.Sign = .default) -> Currency.Components {
+    public func components(from amount: Double, sign: Money.Sign = .default) -> Money.Components {
         var majorUnitString = "0"
         var minorUnitString = "00"
 
@@ -84,11 +84,11 @@ extension CurrencyFormatter {
         // instance potentially mutated by other code.
         formatter.isDecimalEnabled = true
 
-        let currencyString = with(sign: sign) {
+        let amountString = with(sign: sign) {
              formatter.string(from: NSNumber(value: amount))!
         }
 
-        let pieces = currencyString.components(separatedBy: decimalSeparator)
+        let pieces = amountString.components(separatedBy: decimalSeparator)
 
         if let majorUnit = pieces.first {
             majorUnitString = majorUnit
@@ -130,8 +130,8 @@ extension CurrencyFormatter {
     ///            given style.
     public func string(
         from value: Double,
-        style: Currency.Components.Style = .none,
-        sign: Currency.Sign = .default
+        style: Money.Components.Style = .none,
+        sign: Money.Sign = .default
     ) -> String {
         components(from: value, sign: sign).joined(style: style)
     }
@@ -196,7 +196,7 @@ extension NumberFormatter {
 // MARK: - Sign
 
 extension CurrencyFormatter {
-    private func with<T>(sign: Currency.Sign, _ block: () -> T) -> T {
+    private func with<T>(sign: Money.Sign, _ block: () -> T) -> T {
         formatter.positiveFormat = sign.plus + defaultFormat
         formatter.negativeFormat = sign.minus + defaultFormat
         let result = block()

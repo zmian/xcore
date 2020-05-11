@@ -6,12 +6,14 @@
 
 import Foundation
 
-public struct Currency: Equatable, MutableAppliable {
-    public init(_ amount: Double? = nil) {
+public struct Money: Equatable, MutableAppliable {
+    public init(_ amount: Double) {
         self.amount = amount
         color = Self.appearance().color
         shouldSuperscriptMinorUnit = Self.appearance().shouldSuperscriptMinorUnit
     }
+
+    public var amount: Double
 
     /// A property to change the formatting style.
     ///
@@ -44,20 +46,14 @@ public struct Currency: Equatable, MutableAppliable {
     /// The default value is `false`.
     public var shouldSuperscriptMinorUnit: Bool
 
-    public var accessibilityLabel: String? {
-        guard let amount = amount else {
-            return nil
-        }
-
-        return CurrencyFormatter.shared.string(from: amount, style: style)
+    public var accessibilityLabel: String {
+        CurrencyFormatter.shared.string(from: amount, style: style)
     }
-
-    public var amount: Double?
 }
 
 // MARK: - ExpressibleByFloatLiteral
 
-extension Currency: ExpressibleByFloatLiteral {
+extension Money: ExpressibleByFloatLiteral {
     public init(floatLiteral value: FloatLiteralType) {
         self.init(Double(value))
     }
@@ -65,7 +61,7 @@ extension Currency: ExpressibleByFloatLiteral {
 
 // MARK: - ExpressibleByIntegerLiteral
 
-extension Currency: ExpressibleByIntegerLiteral {
+extension Money: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: IntegerLiteralType) {
         self.init(Double(value))
     }
@@ -73,16 +69,15 @@ extension Currency: ExpressibleByIntegerLiteral {
 
 // MARK: - CustomStringConvertible
 
-extension Currency: CustomStringConvertible {
+extension Money: CustomStringConvertible {
     public var description: String {
-        #warning("FIXME: Make Amount required")
-        return CurrencyFormatter.shared.string(from: amount ?? 0, style: style, sign: sign)
+        CurrencyFormatter.shared.string(from: self)
     }
 }
 
 // MARK: - StringRepresentable
 
-extension Currency: StringRepresentable {
+extension Money: StringRepresentable {
     public var stringSource: StringSourceType {
         .attributedString(CurrencyFormatter.shared.attributedString(from: self))
     }
@@ -90,7 +85,7 @@ extension Currency: StringRepresentable {
 
 // MARK: - Appearance
 
-extension Currency {
+extension Money {
     /// This configuration exists to allow some of the properties to be configured
     /// to match app's appearance style. The `UIAppearance` protocol doesn't work
     /// when the stored properites are set using associated object.
@@ -98,7 +93,7 @@ extension Currency {
     /// **Usage:**
     ///
     /// ```swift
-    /// Currency.appearance().color = Color(positive: .systemGreen, negative: .systemRed)
+    /// Money.appearance().color = Color(positive: .systemGreen, negative: .systemRed)
     /// ```
     final public class Appearance: Appliable {
         public var color = Color.none
@@ -108,5 +103,52 @@ extension Currency {
     private static var appearanceProxy = Appearance()
     public static func appearance() -> Appearance {
         appearanceProxy
+    }
+}
+
+extension Money {
+    public func signed() -> Self {
+        sign(.default)
+    }
+
+    public func color(_ color: Color) -> Self {
+        applying {
+            $0.color = color
+        }
+    }
+
+    public func sign(_ sign: Sign) -> Self {
+        applying {
+            $0.sign = sign
+        }
+    }
+
+    /// Zero amount will be displayed as "--".
+    ///
+    /// See: `zeroAmountString` to customize the default value.
+    public func dasherizeZeroAmounts() -> Self {
+        applying {
+            $0.shouldDisplayZeroAmounts = false
+        }
+    }
+
+    public func attributes(_ attributes: Components.Attributes) -> Self {
+        applying {
+            $0.attributes = attributes
+        }
+    }
+
+    public func style(_ style: Components.Style) -> Self {
+        applying {
+            $0.style = style
+        }
+    }
+
+    public func attributedString(format: String? = nil) -> NSAttributedString {
+        CurrencyFormatter.shared.attributedString(from: self, format: format)
+    }
+
+    public func string(format: String? = nil) -> String {
+        CurrencyFormatter.shared.string(from: self, format: format)
     }
 }

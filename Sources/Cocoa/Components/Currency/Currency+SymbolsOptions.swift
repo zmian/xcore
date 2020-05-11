@@ -6,6 +6,8 @@
 
 import Foundation
 
+public enum Currency { }
+
 // MARK: - SymbolsProvider
 
 extension Currency {

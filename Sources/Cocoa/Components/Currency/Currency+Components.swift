@@ -6,8 +6,8 @@
 
 import Foundation
 
-extension Currency {
-    /// A structure that parses currency into and constructs currency from their
+extension Money {
+    /// A structure that parses money into and constructs money from their
     /// constituent parts.
     public struct Components: CustomStringConvertible {
         public typealias Range = (majorUnit: NSRange?, minorUnit: NSRange?)
@@ -49,10 +49,6 @@ extension Currency {
         /// comma (`"10 000,00"`) is used instead for decimal separator.
         public let decimalSeparator: String
 
-        private var isMinorUnitValueZero: Bool {
-            minorUnit == "00"
-        }
-
         public init(
             amount: Double,
             majorUnit: String,
@@ -81,24 +77,7 @@ extension Currency {
         /// - Parameter style: The formatting style to use when joining the components.
         /// - Returns: The joined string based on the given style.
         public func joined(style: Style = .none) -> String {
-            switch style {
-                case .abbreviationWith(let (threshold, fallback)):
-                    guard amount >= threshold else {
-                        return joined(style: fallback)
-                    }
-
-                    return currencySymbol + amount.rounded(places: 2).abbreviate(threshold: threshold)
-                case .none:
-                    return "\(majorUnit)\(decimalSeparator)\(minorUnit)"
-                case .removeMinorUnitIfZero:
-                    guard isMinorUnitValueZero else {
-                        return "\(majorUnit)\(decimalSeparator)\(minorUnit)"
-                    }
-
-                    return majorUnit
-                case .removeMinorUnit:
-                    return majorUnit
-            }
+            style.join(self)
         }
 
         /// The range tuple of the components with respects to the given formatting
@@ -107,31 +86,26 @@ extension Currency {
         /// - Parameter style: The formatting style to us when determining the ranges.
         /// - Returns: The tuple with range for each components.
         public func range(style: Style = .none) -> Range {
-            if case .abbreviationWith(let (threshold, fallback)) = style, amount < threshold {
-                return range(style: fallback)
-            }
-
-            let majorUnitAndDecimalSeparator = "\(majorUnit)\(decimalSeparator)"
-            let majorUnitRange = NSRange(location: 0, length: majorUnitAndDecimalSeparator.count)
-            let minorUnitRange = NSRange(location: majorUnitRange.length, length: minorUnit.count)
-
-            let finalMajorUnitRange = majorUnitRange.location == NSNotFound ? nil : majorUnitRange
-            let finalMinorUnitRange = minorUnitRange.location == NSNotFound ? nil : minorUnitRange
-
-            switch style {
-                case .abbreviationWith:
-                    return (nil, nil)
-                case .none:
-                    return (finalMajorUnitRange, finalMinorUnitRange)
-                case .removeMinorUnitIfZero:
-                    guard isMinorUnitValueZero else {
-                        return (finalMajorUnitRange, finalMinorUnitRange)
-                    }
-
-                    return (finalMajorUnitRange, nil)
-                case .removeMinorUnit:
-                    return (finalMajorUnitRange, nil)
-            }
+            style.range(self)
         }
+    }
+}
+
+// MARK: - Internal API
+
+extension Money.Components {
+    var isMinorUnitValueZero: Bool {
+        minorUnit == "00"
+    }
+
+    var ranges: Range {
+        let majorUnitAndDecimalSeparator = "\(majorUnit)\(decimalSeparator)"
+        let majorUnitRange = NSRange(location: 0, length: majorUnitAndDecimalSeparator.count)
+        let minorUnitRange = NSRange(location: majorUnitRange.length, length: minorUnit.count)
+
+        let finalMajorUnitRange = majorUnitRange.location == NSNotFound ? nil : majorUnitRange
+        let finalMinorUnitRange = minorUnitRange.location == NSNotFound ? nil : minorUnitRange
+
+        return (finalMajorUnitRange, finalMinorUnitRange)
     }
 }
