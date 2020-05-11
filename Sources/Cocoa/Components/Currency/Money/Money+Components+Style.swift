@@ -7,7 +7,7 @@
 import Foundation
 
 extension Money.Components {
-    /// An structure that represent formatting styles for money components.
+    /// A structure representing formatting used to display money components.
     public struct Style {
         public let id: Identifier<Self>
         let join: (Money.Components) -> String
@@ -40,7 +40,13 @@ extension Money.Components.Style: Hashable {
 // MARK: - Built-in
 
 extension Money.Components.Style {
-    public static var none: Self {
+    /// ```swift
+    /// let amount = Money(120.30)
+    ///     .style(.default) // ← Specifying style format
+    ///
+    /// print(amount) // "$120.30"
+    /// ```
+    public static var `default`: Self {
         .init(
             id: #function,
             join: { "\($0.majorUnit)\($0.decimalSeparator)\($0.minorUnit)" },
@@ -49,9 +55,10 @@ extension Money.Components.Style {
     }
 
     /// ```swift
-    /// let amount = Decimal(120.30)
-    /// // 120 - major unit
-    /// // 30 - minor unit
+    /// let amount = Money(120.30)
+    ///     .style(.removeMinorUnit) // ← Specifying style format
+    ///
+    /// print(amount) // "$120"
     /// ```
     public static var removeMinorUnit: Self {
         .init(
@@ -62,9 +69,15 @@ extension Money.Components.Style {
     }
 
     /// ```swift
-    /// let amount = Decimal(120.30)
-    /// // 120 - major unit
-    /// // 30 - minor unit
+    /// let amount = Money(120.30)
+    ///     .style(.removeMinorUnitIfZero) // ← Specifying style format
+    ///
+    /// print(amount) // "$120.30"
+    ///
+    /// let amount = Money(120.00)
+    ///     .style(.removeMinorUnitIfZero) // ← Specifying style format
+    ///
+    /// print(amount) // "$120"
     /// ```
     public static var removeMinorUnitIfZero: Self {
         .init(
@@ -105,22 +118,31 @@ extension Money.Components.Style {
     ///                then given threshold.
     ///   - fallback: The formatting style to use when threshold isn't reached.
     /// - Returns: Abbreviated version of `self`.
-    public static func abbreviation(threshold: Decimal, fallback: Self = .none) -> Self {
-        .init(
+    public static func abbreviation(threshold: Decimal, fallback: Self = .default) -> Self {
+        func canAbbreviation(amount: Decimal) -> (amount: Double, threshold: Double)? {
+            guard
+                amount >= 1000,
+                amount >= threshold,
+                let amountValue = Double(exactly: NSDecimalNumber(decimal: amount.rounded(2))),
+                let thresholdValue = Double(exactly: NSDecimalNumber(decimal: threshold))
+            else {
+                return nil
+            }
+
+            return (amountValue, thresholdValue)
+        }
+
+        return .init(
             id: .init(rawValue: "abbreviation\(threshold)\(fallback.id)"),
             join: {
-                guard
-                    $0.amount >= threshold,
-                    let amountValue = Double(exactly: NSDecimalNumber(decimal: $0.amount.rounded(2))),
-                    let thresholdValue = Double(exactly: NSDecimalNumber(decimal: threshold))
-                else {
+                guard let value = canAbbreviation(amount: $0.amount) else {
                     return fallback.join($0)
                 }
 
-                return $0.currencySymbol + amountValue.abbreviate(threshold: thresholdValue)
+                return $0.currencySymbol + value.amount.abbreviate(threshold: value.threshold)
             },
             range: {
-                if $0.amount < threshold {
+                guard canAbbreviation(amount: $0.amount) != nil else {
                     return fallback.range($0)
                 }
 

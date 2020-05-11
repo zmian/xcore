@@ -130,7 +130,7 @@ extension CurrencyFormatter {
     ///            given style.
     public func string(
         from value: Decimal,
-        style: Money.Components.Style = .none,
+        style: Money.Components.Style = .default,
         sign: Money.Sign = .default
     ) -> String {
         components(from: value, sign: sign).joined(style: style)
@@ -147,7 +147,7 @@ extension CurrencyFormatter {
     ///            given style.
     public func string(
         from value: Int,
-        style: Money.Components.Style = .none,
+        style: Money.Components.Style = .default,
         sign: Money.Sign = .default
     ) -> String {
         string(from: Decimal(value), style: style, sign: sign)
@@ -164,7 +164,7 @@ extension CurrencyFormatter {
     ///            given style.
     public func string(
         from value: Double,
-        style: Money.Components.Style = .none,
+        style: Money.Components.Style = .default,
         sign: Money.Sign = .default
     ) -> String {
         string(from: Decimal(value), style: style, sign: sign)

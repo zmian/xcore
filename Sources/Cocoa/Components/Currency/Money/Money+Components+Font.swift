@@ -7,27 +7,27 @@
 import Foundation
 
 extension Money.Components {
-    /// A structure that represent formatting attributes for money components.
-    public struct Attributes: Hashable {
-        /// Font for the major unit of the amount.
+    /// A structure representing fonts used to display money components.
+    public struct Font: Hashable {
+        /// The font to be used in displaying major unit of the amount.
         ///
         /// ```swift
         /// let amount = Decimal(120.30)
         /// // 120 - major unit
         /// // 30 - minor unit
         /// ```
-        public let majorUnitFont: UIFont
+        public let majorUnit: UIFont
 
-        /// Font for the minor unit of the amount.
+        /// The font to be used in displaying minor unit of the amount.
         ///
         /// ```swift
         /// let amount = Decimal(120.30)
         /// // 120 - major unit
         /// // 30 - minor unit
         /// ```
-        public let minorUnitFont: UIFont
+        public let minorUnit: UIFont
 
-        /// The offset applied to minor unit.
+        /// The offset applied to the minor unit of the amount.
         ///
         /// ```swift
         /// let amount = Decimal(120.30)
@@ -36,9 +36,9 @@ extension Money.Components {
         /// ```
         public let minorUnitOffset: Int
 
-        public init(majorUnitFont: UIFont, minorUnitFont: UIFont, minorUnitOffset: Int) {
-            self.majorUnitFont = majorUnitFont
-            self.minorUnitFont = minorUnitFont
+        public init(majorUnit: UIFont, minorUnit: UIFont, minorUnitOffset: Int) {
+            self.majorUnit = majorUnit
+            self.minorUnit = minorUnit
             self.minorUnitOffset = minorUnitOffset
         }
 
@@ -47,8 +47,8 @@ extension Money.Components {
         }
 
         public init(_ font: UIFont) {
-            self.majorUnitFont = font
-            self.minorUnitFont = font
+            self.majorUnit = font
+            self.minorUnit = font
             self.minorUnitOffset = 0
         }
     }
@@ -56,7 +56,7 @@ extension Money.Components {
 
 // MARK: - Convenience
 
-extension Money.Components.Attributes {
+extension Money.Components.Font {
     /// Superscript based layout derived from the given major unit size.
     ///
     /// - Note: Consider using the pre-existing styles instead of using this method
@@ -86,8 +86,8 @@ extension Money.Components.Attributes {
         let minorUnitOffset = Int((majorUnitSize - minorUnitSize).rounded())
 
         return .init(
-            majorUnitFont: font,
-            minorUnitFont: .app(size: minorUnitSize, weight: minorUnitWeight),
+            majorUnit: font,
+            minorUnit: .app(size: minorUnitSize, weight: minorUnitWeight),
             minorUnitOffset: minorUnitOffset
         )
     }
@@ -95,7 +95,7 @@ extension Money.Components.Attributes {
 
 // MARK: - Built-in
 
-extension Money.Components.Attributes {
+extension Money.Components.Font {
     public static var largeTitle: Self {
         largeTitle(superscript: false)
     }
@@ -141,7 +141,7 @@ extension Money.Components.Attributes {
     }
 }
 
-extension Money.Components.Attributes {
+extension Money.Components.Font {
     public static func largeTitle(superscript: Bool) -> Self {
         superscript ? .superscript(.largeTitle) : .init(.largeTitle)
     }
