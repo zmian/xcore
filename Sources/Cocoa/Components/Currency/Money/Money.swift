@@ -6,6 +6,33 @@
 
 import Foundation
 
+/// A structure representing money type and set of attributes to formats the
+/// output.
+///
+/// # Example
+///
+/// ```swift
+/// let amount = Money(120.30)
+///     .signed()
+///     .font(.body)
+///     .style(.removeMinorUnitIfZero)
+///
+/// // Display the amount in a label.
+/// let amountLabel = UILabel()
+/// amountLabel.setText(amount)
+/// ```
+///
+/// # Using Custom Formats
+///
+/// ```swift
+/// let monthlyPayment = Money(9.99)
+///     .font(.headline)
+///     .attributedString(format: "%@ per month")
+///
+/// // Display the amount in a label.
+/// let amountLabel = UILabel()
+/// amountLabel.setText(amount)
+/// ```
 public struct Money: Equatable, Hashable, MutableAppliable {
     /// The amount of money.
     public var amount: Decimal
@@ -15,17 +42,17 @@ public struct Money: Equatable, Hashable, MutableAppliable {
         shouldSuperscriptMinorUnit = Self.appearance().shouldSuperscriptMinorUnit
     }
 
-    /// A property to change the formatting style.
+    /// The style used to format money components.
     ///
-    /// The default value is `.none`.
-    public var style: Components.Style = .none
+    /// The default value is `.default`.
+    public var style: Components.Style = .default
 
-    /// A property to change the attributes to adjust font sizes.
+    /// The font used to display money components.
     ///
     /// The default value is `.body`.
-    public var attributes: Components.Attributes = .body
+    public var font: Components.Font = .body
 
-    /// A property to indicate whether the output shows the sign (+/-).
+    /// The sign (+/-) used to format money components.
     ///
     /// The default value is `.none`.
     public var sign: Sign = .none
@@ -114,6 +141,8 @@ extension Money {
     }
 }
 
+// MARK: - Chaining Syntactic Syntax
+
 extension Money {
     public func style(_ style: Components.Style) -> Self {
         applying {
@@ -121,9 +150,9 @@ extension Money {
         }
     }
 
-    public func attributes(_ attributes: Components.Attributes) -> Self {
+    public func font(_ font: Components.Font) -> Self {
         applying {
-            $0.attributes = attributes
+            $0.font = font
         }
     }
 
@@ -136,6 +165,12 @@ extension Money {
     public func color(_ color: Color) -> Self {
         applying {
             $0.color = color
+        }
+    }
+
+    public func color(_ color: UIColor) -> Self {
+        applying {
+            $0.color = .init(color)
         }
     }
 

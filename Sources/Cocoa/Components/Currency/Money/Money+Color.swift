@@ -7,6 +7,7 @@
 import Foundation
 
 extension Money {
+    /// A structure representing colors used to display money.
     public struct Color: Hashable {
         /// The color to use when the amount is positive.
         public let positive: UIColor
@@ -34,15 +35,10 @@ extension Money {
 // MARK: - Built-in
 
 extension Money.Color {
+    /// A color representing absent of value.
+    ///
+    /// This instance can be used to indicate to the formatter to ignore color.
     public static var none: Self {
         .init(.clear)
-    }
-
-    public static var white: Self {
-        .init(.white)
-    }
-
-    public static var black: Self {
-        .init(.black)
     }
 }

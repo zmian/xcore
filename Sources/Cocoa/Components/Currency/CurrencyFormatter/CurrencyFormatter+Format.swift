@@ -37,7 +37,7 @@ extension CurrencyFormatter {
         }
 
         let mainFormat = NSMutableAttributedString(string: format, attributes: [
-            .font: money.attributes.majorUnitFont
+            .font: money.font.majorUnit
         ])
         mainFormat.replaceCharacters(in: range, with: formattedMoney)
         return mainFormat
@@ -67,7 +67,7 @@ extension CurrencyFormatter {
 
         let attributedString = NSMutableAttributedString(
             string: joinedAmount,
-            attributes: [.font: money.attributes.majorUnitFont]
+            attributes: [.font: money.font.majorUnit]
         )
 
         guard money.shouldSuperscriptMinorUnit else {
@@ -76,8 +76,8 @@ extension CurrencyFormatter {
 
         if let minorUnitRange = components.range(style: money.style).minorUnit {
             attributedString.setAttributes([
-                .font: money.attributes.minorUnitFont,
-                .baselineOffset: money.attributes.minorUnitOffset
+                .font: money.font.minorUnit,
+                .baselineOffset: money.font.minorUnitOffset
             ], range: minorUnitRange)
         }
 

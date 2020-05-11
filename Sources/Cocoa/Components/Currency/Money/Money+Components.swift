@@ -7,8 +7,8 @@
 import Foundation
 
 extension Money {
-    /// A structure that parses money into and constructs money from their
-    /// constituent parts.
+    /// A structure representing components of the given amount and constructs money
+    /// from their constituent parts.
     public struct Components: CustomStringConvertible {
         public typealias Range = (majorUnit: NSRange?, minorUnit: NSRange?)
 
@@ -67,17 +67,17 @@ extension Money {
         }
 
         public var description: String {
-            joined(style: .none)
+            joined(style: .default)
         }
 
         /// Returns a new string by concatenating the components, using the given
         /// formatting style.
         ///
-        /// The default value is `.none`.
+        /// The default value is `.default`.
         ///
         /// - Parameter style: The formatting style to use when joining the components.
         /// - Returns: The joined string based on the given style.
-        public func joined(style: Style = .none) -> String {
+        public func joined(style: Style = .default) -> String {
             style.join(self)
         }
 
@@ -86,7 +86,7 @@ extension Money {
         ///
         /// - Parameter style: The formatting style to us when determining the ranges.
         /// - Returns: The tuple with range for each components.
-        public func range(style: Style = .none) -> Range {
+        public func range(style: Style = .default) -> Range {
             style.range(self)
         }
     }
