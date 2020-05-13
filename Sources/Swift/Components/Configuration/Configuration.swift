@@ -41,7 +41,7 @@ public struct Configuration<Type> {
     }
 
     public func extend(id: Identifier? = nil, _ configure: @escaping ((Type) -> Void)) -> Self {
-        .init(id: id) { type in
+        .init(id: id ?? self.id) { type in
             self.configure(type)
             configure(type)
         }
