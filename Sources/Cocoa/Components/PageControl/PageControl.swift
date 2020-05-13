@@ -8,7 +8,7 @@ import UIKit
 import CoreGraphics
 
 extension PageControl {
-    private struct Constants {
+    private enum Constants {
         static var dotSize: CGFloat { 12 }
         static var unselectedInset: CGFloat { 3 }
         static var lineWidth: CGFloat { 1 }

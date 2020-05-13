@@ -125,7 +125,7 @@ extension Character {
 
 // MARK: - App Constants
 
-public struct AppConstants {
+public enum AppConstants {
     /// The golden ratio.
     public static var φ: CGFloat { 0.618 }
 
