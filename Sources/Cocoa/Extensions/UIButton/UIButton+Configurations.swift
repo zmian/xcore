@@ -212,8 +212,8 @@ extension Configuration where Type: UIButton {
     ) -> Self {
         let id: Identifier = .caret
         return configuration.extend(id: id) {
-            let textColor = textColor ?? id.textColor(button: $0)
-            let font = font ?? id.font(button: $0)
+            let textColor = textColor ?? configuration.id.textColor(button: $0)
+            let font = font ?? configuration.id.font(button: $0)
             $0.titleLabel?.numberOfLines = 1
 
             let attributedText = NSAttributedString(string: text, font: font, color: textColor, direction: direction, for: .normal)
