@@ -85,7 +85,7 @@ final public class SearchBarView: UIView {
     }
 
     private func commonInit() {
-        backgroundColor = .white
+        backgroundColor = Theme.current.backgroundColor
         setupSearchBar()
         setupConstraints()
         updateStyle()
@@ -93,8 +93,8 @@ final public class SearchBarView: UIView {
 
     private func setupSearchBar() {
         searchBar.delegate = self
-        searchBar.backgroundColor = .white
-        searchBar.barTintColor = .white
+        searchBar.backgroundColor = Theme.current.backgroundColor
+        searchBar.barTintColor = Theme.current.backgroundColor
 
         // Update clear button image tint color
         setImage(assetIdentifier: .closeIconFilled, for: .clear, size: 16)
