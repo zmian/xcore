@@ -8,7 +8,7 @@ import Foundation
 
 public protocol InterstitialCompatibleViewController: UIViewController, ObstructableView {
     var didComplete: (() -> Void)? { get set }
-
+    var theme: Theme { get }
     /// A method invoked when the interstitial is canceled by the user using the
     /// dismiss button.
     func didDismiss()
@@ -16,6 +16,10 @@ public protocol InterstitialCompatibleViewController: UIViewController, Obstruct
 
 extension InterstitialCompatibleViewController {
     public func didDismiss() { }
+
+    public var theme: Theme {
+        .current
+    }
 }
 
 // MARK: - Identifier
