@@ -46,7 +46,11 @@ final public class SearchBarView: UIView {
     }
 
     public var text: String? {
-        searchBar.text
+        get { searchBar.text }
+        set {
+            searchBar.text = newValue
+            didChangeText?(newValue ?? "")
+        }
     }
 
     @objc dynamic public override var tintColor: UIColor! {
