@@ -129,6 +129,12 @@ open class GradientLayer: CALayer {
     /// This property is animatable.
     open var colors: [UIColor] = [] {
         didSet {
+            // If only color is assigned. Then fill by using the same color. So it works as
+            // expected.
+            if colors.count == 1 {
+                colors = [colors[0], colors[0]]
+            }
+
             gradient.colors = colors.map { $0.cgColor }
         }
     }

@@ -46,12 +46,15 @@ extension Chrome {
         case statusBar
         case navBar
 
-        fileprivate var height: CGFloat {
+        fileprivate func height(for view: UIView) -> CGFloat {
             switch self {
                 case .statusBar:
                     return AppConstants.statusBarHeight
                 case .navBar:
-                    return AppConstants.statusBarPlusNavBarHeight
+                    let noStatusBar = view.viewController.map {
+                        $0.isModal && $0.modalPresentationStyle == .pageSheet
+                    } ?? false
+                    return noStatusBar ? 56 : AppConstants.statusBarPlusNavBarHeight
             }
         }
 
@@ -123,7 +126,7 @@ extension Chrome {
             view.anchor.make {
                 $0.horizontally.equalToSuperview()
                 $0.top.equalToSuperview()
-                $0.height.equalTo(element.height)
+                $0.height.equalTo(element.height(for: view))
             }
 
             return view

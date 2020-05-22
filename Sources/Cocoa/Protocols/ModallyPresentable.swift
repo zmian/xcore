@@ -20,7 +20,7 @@ public protocol ModallyPresentable {
 
 extension ModallyPresentable {
     public var navigationControllerClassWhenModallyPresented: UINavigationController.Type {
-        UINavigationController.self
+        NavigationController.self
     }
 }
 
@@ -35,7 +35,7 @@ extension ModallyPresentable where Self: UIViewController {
         }
     }
 
-    /// Presents a view controller modally.
+    /// Embeds `self` in navigation controller and presents it as modally.
     public func present(presentingViewController: UIViewController? = nil) {
         guard
             let presentingViewController = presentingViewController ??
@@ -45,17 +45,10 @@ extension ModallyPresentable where Self: UIViewController {
             return
         }
 
-        navigationItem.leftBarButtonItem = dismissBarButtonItem()
-
+        navigationItem.rightBarButtonItem = dismissBarButtonItem()
         let NavigationController = navigationControllerClassWhenModallyPresented
-
-        // There is bug in `tableView:didSelectRowAtIndexPath` that causes delay in presenting
-        // `UIAlertController` and wrapping the `presentViewController:` call in `DispatchQueue.main.async` fixes it.
-        //
-        // http://openradar.appspot.com/19285091
-        DispatchQueue.main.async { [weak presentingViewController] in
-            let nvc = NavigationController.init(rootViewController: self)
-            presentingViewController?.present(nvc, animated: true)
-        }
+        let nvc = NavigationController.init(rootViewController: self)
+        nvc.modalPresentationStyle = modalPresentationStyle
+        presentingViewController.present(nvc, animated: true)
     }
 }

@@ -7,45 +7,99 @@
 import Foundation
 
 extension CurrencyFormatter {
-    public func attributedString(
-        for amount: Double,
-        attributes: Currency.Components.Attributes,
-        format: String?
-    ) -> NSMutableAttributedString? {
-        guard let format = format else { return nil }
-        let mainFormat = NSMutableAttributedString(string: format, attributes: [.font: attributes.dollarsFont])
-        let range = (mainFormat.string as NSString).range(of: "%@")
-        guard range.length > 0 else { return nil }
-        let formattedDollars = self.attributedString(for: amount, attributes: attributes)
-        mainFormat.replaceCharacters(in: range, with: formattedDollars)
-        return mainFormat
+    /// Returns a string representation of a given money formatted using money
+    /// properties.
+    ///
+    /// - Parameters:
+    ///   - money: The money to format.
+    /// - Returns: A string representation of the given money.
+    public func string(from money: Money, format: String? = nil) -> String {
+        let amountString = components(from: money.amount, sign: money.sign).joined(style: money.style)
+
+        guard let format = format else {
+            return amountString
+        }
+
+        return String(format: format, amountString)
     }
 
-    public func attributedString(
-        for amount: Double,
-        attributes: Currency.Components.Attributes,
-        style: Currency.Components.Style = .none,
-        superscriptCents: Bool = true
-    ) -> NSMutableAttributedString {
-        let components = self.components(from: amount)
-        let joinedAmount = components.joined(style: style)
+    public func attributedString(from money: Money, format: String? = nil) -> NSMutableAttributedString {
+        let formattedMoney = _attributedString(from: money)
 
-        let attributedString = NSMutableAttributedString(
-            string: joinedAmount,
-            attributes: [.font: attributes.dollarsFont]
-        )
+        guard let format = format else {
+            return formattedMoney
+        }
 
-        guard superscriptCents else {
+        let range = (format as NSString).range(of: "%@")
+
+        guard range.length > 0 else {
+            return formattedMoney
+        }
+
+        let mainFormat = NSMutableAttributedString(string: format, attributes: [
+            .font: money.font.majorUnit
+        ])
+        mainFormat.replaceCharacters(in: range, with: formattedMoney)
+        return mainFormat
+    }
+}
+
+extension CurrencyFormatter {
+    private func _attributedString(from money: Money) -> NSMutableAttributedString {
+        let attributedString = _attributedStringWithoutColor(from: money)
+
+        guard let foregroundColor = foregroundColor(money) else {
             return attributedString
         }
 
-        if let centsRange = components.range(style: style).cents {
+        return attributedString.foregroundColor(foregroundColor)
+    }
+
+    private func _attributedStringWithoutColor(from money: Money) -> NSMutableAttributedString {
+        let amount = money.amount
+
+        if amount == 0 && !money.shouldDisplayZero {
+            return NSMutableAttributedString(string: " " + money.zeroString)
+        }
+
+        let components = self.components(from: amount, sign: money.sign)
+        let joinedAmount = components.joined(style: money.style)
+
+        let attributedString = NSMutableAttributedString(
+            string: joinedAmount,
+            attributes: [.font: money.font.majorUnit]
+        )
+
+        guard money.shouldSuperscriptMinorUnit else {
+            return attributedString
+        }
+
+        if let minorUnitRange = components.range(style: money.style).minorUnit {
             attributedString.setAttributes([
-                .font: attributes.centsFont,
-                .baselineOffset: attributes.centsOffset
-            ], range: centsRange)
+                .font: money.font.minorUnit,
+                .baselineOffset: money.font.minorUnitOffset
+            ], range: minorUnitRange)
         }
 
         return attributedString
+    }
+
+    private func foregroundColor(_ money: Money) -> UIColor? {
+        let color = money.color
+
+        guard color != .none else {
+            return nil
+        }
+
+        let amount = money.amount
+        var foregroundColor: UIColor
+
+        if amount == 0 {
+            foregroundColor = color.zero
+        } else {
+            foregroundColor = amount > 0 ? color.positive : color.negative
+        }
+
+        return foregroundColor
     }
 }
