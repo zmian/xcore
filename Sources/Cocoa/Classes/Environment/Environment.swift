@@ -6,27 +6,77 @@
 
 import Foundation
 
-extension Environment {
-    public enum Kind: CustomStringConvertible {
-        case development
-        case staging
-        case production
+public struct Environment: UserInfoContainer, MutableAppliable {
+    public typealias Identifier = Xcore.Identifier<Self>
 
-        public var description: String {
-            switch self {
-                case .development:
-                    return "Development"
-                case .staging:
-                    return "Staging"
-                case .production:
-                    return "Production"
-            }
-        }
+    /// A unique id for the environment.
+    public let id: Identifier
+
+    /// Additional info which may be used to describe the environment further.
+    public var userInfo: UserInfo
+
+    /// Initialize an instance of environment.
+    ///
+    /// - Parameters:
+    ///   - id: The unique id for the environment.
+    ///   - userInfo: Additional info associated with the environment.
+    public init(
+        id: Identifier,
+        userInfo: UserInfo = [:]
+    ) {
+        self.id = id
+        self.userInfo = userInfo
     }
 }
 
-open class Environment {
-    open var kind: Kind = .production
+// MARK: - Hashable
 
-    public init() { }
+extension Environment: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
+// MARK: - Equatable
+
+extension Environment: Equatable {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+// MARK: - UserInfo
+
+extension UserInfoKey where Type == Environment {
+    /// The host name of the API.
+    fileprivate static var apiHostName: Self { #function }
+
+    /// The host name of the website.
+    fileprivate static var webHostName: Self { #function }
+}
+
+extension Environment {
+    /// The host name of the API.
+    public var apiHostName: String {
+        get {
+            guard let value: String = self[userInfoKey: .apiHostName] else {
+                fatalError("API host name isn't configured.")
+            }
+
+            return value
+        }
+        set { self[userInfoKey: .apiHostName] = newValue }
+    }
+
+    /// The host name of the website.
+    public var webHostName: String {
+        get {
+            guard let value: String = self[userInfoKey: .webHostName] else {
+                fatalError("Web host name isn't configured.")
+            }
+
+            return value
+        }
+        set { self[userInfoKey: .webHostName] = newValue }
+    }
 }
