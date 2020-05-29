@@ -47,9 +47,6 @@ public struct Theme: Equatable {
     /// The color to use for text in text views.
     public var textFieldTextColor: UIColor
 
-    /// The color to use for text in header cells in table views and outline views.
-    public var headerTextColor: UIColor
-
     // MARK: - Background
     
     /// The color for the main background of your interface.
@@ -108,7 +105,6 @@ public struct Theme: Equatable {
         self.textColorSecondary = textColorSecondary
         self.placeholderTextColor = placeholderTextColor
         self.textFieldTextColor = textFieldTextColor
-        self.headerTextColor = headerTextColor
         self.backgroundColor = backgroundColor
         self.backgroundColorSecondary = backgroundColorSecondary
         self.highglightedBackgroundColor = highglightedBackgroundColor
