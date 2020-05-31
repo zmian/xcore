@@ -319,7 +319,14 @@ extension Date {
 
     /// Total number of days of month using the `.default` calendar.
     public var monthDays: Int {
-        Calendar.default.range(of: .day, in: .month, for: self)!.count
+        monthDays(in: .default)
+    }
+
+    /// Total number of days of month using the given calendar.
+    ///
+    /// - Parameter calendar: The calendar used to calculate month days.
+    public func monthDays(in calendar: Calendar) -> Int {
+        calendar.range(of: .day, in: .month, for: self)!.count
     }
 
     /// Returns the time zone offset of a calendar from GMT.
