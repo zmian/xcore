@@ -62,3 +62,46 @@ extension Frequency: Equatable {
         lhs.id == rhs.id
     }
 }
+
+// MARK: - Built-in
+
+extension Frequency {
+    /// A list of frequencies representing all months until today's date.
+    public static func thisYearMonthsUntilNow(in calendar: Calendar = .default) -> [Self] {
+        let year = Date().component(.year, in: calendar)
+        let month = Date().component(.month, in: calendar)
+
+        let firstMonth = Date(year: year, month: 1, day: 1, calendar: calendar)
+        let currentMonth = Date(year: year, month: month, day: 1, calendar: calendar)
+
+        return months(from: firstMonth, to: currentMonth, in: calendar)
+    }
+
+    private static func months(from startDate: Date, to endDate: Date, in calendar: Calendar = .default) -> [Self]  {
+        let startYear = startDate.component(.year, in: calendar)
+        let endYear = endDate.component(.year, in: calendar)
+        var year = "\(startYear)"
+
+        if startYear != endYear {
+            year += "-\(endYear)"
+        }
+
+        let numberOfMonths = startDate.numberOf(.month, to: endDate, in: calendar)
+
+        var result: [Self] = []
+
+        for i in 0..<numberOfMonths + 1 {
+            let interval = startDate.interval(for: .month, adjustedBy: i, in: calendar)
+            let monthId = "month_\(i + 1)"
+
+            result.append(Self.init(
+                id: .init(rawValue: "\(year)_\(monthId)"),
+                title: interval.start.string(format: .monthName, in: calendar),
+                analyticsValue: monthId,
+                dateInterval: interval
+            ))
+        }
+
+        return result
+    }
+}
