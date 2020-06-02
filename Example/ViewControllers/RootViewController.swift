@@ -83,7 +83,11 @@ final class RootViewController: DynamicTableViewController {
                 vc.tableView.sections = [
                     Section(items: [
                         DynamicTableModel(title: "Option 1", subtitle: "FeedViewController demonstration") { _, _ in
-                            print("Selected model!!")
+                            let model = ExamplePickerListModel()
+                            let list = PickerList(model: model).apply {
+                                $0.reloadAnimation = .none
+                            }
+                            list.present()
                         },
                         DynamicTableModel(title: "Option 2", subtitle: "FeedViewController demonstration"),
                         DynamicTableModel(title: "Option 3", subtitle: "FeedViewController demonstration"),

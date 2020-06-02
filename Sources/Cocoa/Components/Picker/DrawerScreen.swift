@@ -99,11 +99,12 @@ final public class DrawerScreen: NSObject {
         UIView.animate(withDuration: .fast, animations: {
             self.hud.view.layoutSubviews()
         }, completion: { _ in
-            self.hud.hide()
-            presentedContent.drawerContentView.removeFromSuperview()
-            presentedContent.didDismiss()
-            self.presentedContent = nil
-            callback?()
+            self.hud.hide { [weak self] in
+                presentedContent.drawerContentView.removeFromSuperview()
+                presentedContent.didDismiss()
+                self?.presentedContent = nil
+                callback?()
+            }
         })
     }
 }
