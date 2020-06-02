@@ -17,9 +17,7 @@ extension URL {
 
         self.init(string: string)
     }
-}
 
-extension URL {
     /// GraphQL operation name associated with the request.
     ///
     /// ```
