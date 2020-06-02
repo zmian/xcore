@@ -20,6 +20,22 @@ extension URL {
 }
 
 extension URL {
+    /// GraphQL operation name associated with the request.
+    ///
+    /// ```
+    /// let url = URL(string: "https://example.com/?q=HelloWorld")!
+    /// print(url.queryItem(named: "q")) // "HelloWorld"
+    /// ```
+    public func queryItem(named name: String) -> String? {
+        guard let queryItems = URLComponents(url: self, resolvingAgainstBaseURL: true)?.queryItems else {
+            return nil
+        }
+
+        return queryItems.first { $0.name == name }?.value
+    }
+}
+
+extension URL {
     /// Returns a URL constructed by removing the fragment from self.
     ///
     /// If the URL has no fragment (e.g., `http://www.example.com`),
