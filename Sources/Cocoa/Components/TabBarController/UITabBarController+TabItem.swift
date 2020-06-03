@@ -7,18 +7,34 @@
 import UIKit
 
 extension UITabBarController {
-    public struct TabItem {
-        public let id: Identifier<TabItem>
+    public struct TabItem: CustomAnalyticsValueConvertible {
+        public typealias Identifier = Xcore.Identifier<Self>
+
+        /// A unique id for the tab.
+        public let id: Identifier
+
+        /// The asset identifier used for the tab icon.
         public let assetIdentifier: ImageAssetIdentifier
+
+        /// The analytics value for the tab.
+        public let analyticsValue: String
+
+        /// The accessibility label for the tab.
         public let accessibilityLabel: String
+
+        /// The type of view controller associated with this tab.
         public let viewControllerType: UIViewController.Type
-        private var _viewController: (() -> UIViewController)!
+
+        /// The view controller associated with this tab.
+        public let viewController: () -> UIViewController
+
         private let selectedImageRenderingMode: UIImage.RenderingMode
 
         public init(
-            id: Identifier<TabItem>,
+            id: Identifier,
             image: ImageAssetIdentifier,
             selectedImageRenderingMode: UIImage.RenderingMode = .alwaysTemplate,
+            analyticsValue: String? = nil,
             accessibilityLabel: String,
             viewControllerType: UIViewController.Type,
             viewController: @autoclosure @escaping () -> UIViewController
@@ -26,19 +42,22 @@ extension UITabBarController {
             self.id = id
             self.assetIdentifier = image
             self.selectedImageRenderingMode = selectedImageRenderingMode
+            self.analyticsValue = analyticsValue ?? id.rawValue.snakecased()
             self.accessibilityLabel = accessibilityLabel
             self.viewControllerType = viewControllerType
-            self._viewController = {
+            self.viewController = {
                 let vc = viewController()
                 vc.isTabBarHidden = false
                 return vc
             }
         }
 
+        /// The tab icon image derived from the asset identifier.
         public var image: UIImage {
             UIImage(assetIdentifier: assetIdentifier)
         }
 
+        /// The tab icon selected image derived from the asset identifier.
         public var selectedImage: UIImage {
             let selectedImage = ImageAssetIdentifier(
                 rawValue: assetIdentifier.rawValue + "Selected",
@@ -48,10 +67,9 @@ extension UITabBarController {
             return UIImage(assetIdentifier: selectedImage).withRenderingMode(selectedImageRenderingMode)
         }
 
-        public func viewController() -> UIViewController {
-            _viewController()
-        }
-
+        /// Configures the given item properties from `self`.
+        ///
+        /// - Parameter item: The item to configure.
         public func configure(item: UITabBarItem) {
             item.image = image
             item.selectedImage = selectedImage
