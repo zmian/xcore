@@ -16,7 +16,7 @@ extension Money.Components {
         /// // 120 - major unit
         /// // 30 - minor unit
         /// ```
-        public let majorUnit: UIFont
+        public let majorUnit: UIFont?
 
         /// The font to be used in displaying minor unit of the amount.
         ///
@@ -25,7 +25,7 @@ extension Money.Components {
         /// // 120 - major unit
         /// // 30 - minor unit
         /// ```
-        public let minorUnit: UIFont
+        public let minorUnit: UIFont?
 
         /// The offset applied to the minor unit of the amount.
         ///
@@ -34,9 +34,9 @@ extension Money.Components {
         /// // 120 - major unit
         /// // 30 - minor unit
         /// ```
-        public let minorUnitOffset: Int
+        public let minorUnitOffset: Int?
 
-        public init(majorUnit: UIFont, minorUnit: UIFont, minorUnitOffset: Int) {
+        public init(majorUnit: UIFont?, minorUnit: UIFont?, minorUnitOffset: Int?) {
             self.majorUnit = majorUnit
             self.minorUnit = minorUnit
             self.minorUnitOffset = minorUnitOffset
@@ -46,7 +46,7 @@ extension Money.Components {
             self.init(.app(style: style))
         }
 
-        public init(_ font: UIFont) {
+        public init(_ font: UIFont?) {
             self.majorUnit = font
             self.minorUnit = font
             self.minorUnitOffset = 0
@@ -184,5 +184,9 @@ extension Money.Components.Font {
 
     public static func caption2(superscript: Bool) -> Self {
         superscript ? .superscript(.caption2) : .init(.caption2)
+    }
+
+    public static var none: Self {
+        .init(nil)
     }
 }

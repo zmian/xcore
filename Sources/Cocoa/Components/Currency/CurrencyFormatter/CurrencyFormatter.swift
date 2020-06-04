@@ -30,6 +30,10 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
     /// `-¤#,##0.00`
     private let defaultNegativeFormat = "-¤#,##0.00"
 
+    private let defaultPlusSign = ""
+
+    private let defaultMinusSign = "-"
+
     /// The locale of the receiver.
     ///
     /// The locale determines the default values for many formatter attributes, such
@@ -80,39 +84,41 @@ extension CurrencyFormatter {
         var majorUnitString = "0"
         var minorUnitString = "00"
 
-        // Important to ensure decimal is enabled since the formatter is shared
-        // instance potentially mutated by other code.
-        formatter.isDecimalEnabled = true
+        return synchronized(formatter) {
+            // Important to ensure decimal is enabled since the formatter is shared
+            // instance potentially mutated by other code.
+            formatter.isDecimalEnabled = true
 
-        let amountString = with(sign: sign) {
-             formatter.string(from: NSDecimalNumber(decimal: amount))!
-        }
+            let amountString = with(sign: sign) {
+                formatter.string(from: NSDecimalNumber(decimal: amount))!
+            }
 
-        let pieces = amountString.components(separatedBy: decimalSeparator)
+            let pieces = amountString.components(separatedBy: decimalSeparator)
 
-        if let majorUnit = pieces.first {
-            majorUnitString = majorUnit
-        }
+            if let majorUnit = pieces.first {
+                majorUnitString = majorUnit
+            }
 
-        if pieces.count > 1 {
-            let rawMinorUnitString = pieces[1] as NSString
-            let range = NSRange(location: 0, length: rawMinorUnitString.length)
-            minorUnitString = rawMinorUnitString.replacingOccurrences(
-                of: "\\D",
-                with: "",
-                options: .regularExpression,
-                range: range
+            if pieces.count > 1 {
+                let rawMinorUnitString = pieces[1] as NSString
+                let range = NSRange(location: 0, length: rawMinorUnitString.length)
+                minorUnitString = rawMinorUnitString.replacingOccurrences(
+                    of: "\\D",
+                    with: "",
+                    options: .regularExpression,
+                    range: range
+                )
+            }
+
+            return .init(
+                amount: amount,
+                majorUnit: majorUnitString,
+                minorUnit: minorUnitString,
+                currencySymbol: currencySymbol,
+                groupingSeparator: groupingSeparator,
+                decimalSeparator: decimalSeparator
             )
         }
-
-        return .init(
-            amount: amount,
-            majorUnit: majorUnitString,
-            minorUnit: minorUnitString,
-            currencySymbol: currencySymbol,
-            groupingSeparator: groupingSeparator,
-            decimalSeparator: decimalSeparator
-        )
     }
 }
 
@@ -247,11 +253,11 @@ extension NumberFormatter {
 
 extension CurrencyFormatter {
     private func with<T>(sign: Money.Sign, _ block: () -> T) -> T {
-        formatter.positiveFormat = sign.plus + defaultFormat
-        formatter.negativeFormat = sign.minus + defaultFormat
+        formatter.minusSign = sign.minus
+        formatter.plusSign = sign.plus
         let result = block()
-        formatter.positiveFormat = defaultPositiveFormat
-        formatter.negativeFormat = defaultNegativeFormat
+        formatter.minusSign = defaultMinusSign
+        formatter.plusSign = defaultPlusSign
         return result
     }
 }
