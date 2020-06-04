@@ -10,6 +10,7 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
     public static let shared = CurrencyFormatter()
 
     /// This formatter must be used only to transform Double values into US dollars.
+    /// Reference: http://unicode.org/reports/tr35/tr35-10.html#Number_Format_Patterns
     private lazy var formatter = NumberFormatter().apply {
         $0.numberStyle = .currency
         $0.locale = locale
