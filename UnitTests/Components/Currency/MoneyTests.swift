@@ -22,6 +22,11 @@ final class MoneyTests: TestCase {
              .style(.default)
 
         XCTAssert(String(describing: amount2) == "$120.00")
+
+        let amount3 = Money(-120)
+             .style(.default)
+
+        XCTAssert(String(describing: amount3) == "$120.00")
     }
 
     func testMoneyStyles_removeMinorUnit() {

@@ -110,6 +110,7 @@ final class CurrencyFormatterTests: TestCase {
 
         // Pakistan - Urdu
         CurrencyFormatter.shared.localeTest = .pakistanUrdu
+        let value1 = dollarsAndCents(from: -1000.0)
         XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("‎-$1,000.", "00"))
         XCTAssertTrue(dollarsAndCents(from: -1.0) == ("‎-$1.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
@@ -118,6 +119,7 @@ final class CurrencyFormatterTests: TestCase {
 
         // Pakistan - Punjabi
         CurrencyFormatter.shared.localeTest = .pakistanPunjabi
+        let value2 = dollarsAndCents(from: -1000.0)
         XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("‎-‎$۱٬۰۰۰٫", "۰۰"))
         XCTAssertTrue(dollarsAndCents(from: -1.0) == ("‎-‎$۱٫", "۰۰"))
         XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$۰٫", "۰۰"))
