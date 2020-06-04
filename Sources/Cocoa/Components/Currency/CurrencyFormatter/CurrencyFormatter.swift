@@ -24,8 +24,6 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
 
     // Separators will get replaced by locale ones.
     /// `¤#,##0.00`
-    private let defaultFormat = "¤#,##0.00"
-    /// `¤#,##0.00`
     private let defaultPositiveFormat = "¤#,##0.00"
     /// `-¤#,##0.00`
     private let defaultNegativeFormat = "-¤#,##0.00"
@@ -84,41 +82,39 @@ extension CurrencyFormatter {
         var majorUnitString = "0"
         var minorUnitString = "00"
 
-        return synchronized(formatter) {
-            // Important to ensure decimal is enabled since the formatter is shared
-            // instance potentially mutated by other code.
-            formatter.isDecimalEnabled = true
+        // Important to ensure decimal is enabled since the formatter is shared
+        // instance potentially mutated by other code.
+        formatter.isDecimalEnabled = true
 
-            let amountString = with(sign: sign) {
-                formatter.string(from: NSDecimalNumber(decimal: amount))!
-            }
+        let amountString = with(sign: sign) {
+             formatter.string(from: NSDecimalNumber(decimal: amount))!
+        }
 
-            let pieces = amountString.components(separatedBy: decimalSeparator)
+        let pieces = amountString.components(separatedBy: decimalSeparator)
 
-            if let majorUnit = pieces.first {
-                majorUnitString = majorUnit
-            }
+        if let majorUnit = pieces.first {
+            majorUnitString = majorUnit
+        }
 
-            if pieces.count > 1 {
-                let rawMinorUnitString = pieces[1] as NSString
-                let range = NSRange(location: 0, length: rawMinorUnitString.length)
-                minorUnitString = rawMinorUnitString.replacingOccurrences(
-                    of: "\\D",
-                    with: "",
-                    options: .regularExpression,
-                    range: range
-                )
-            }
-
-            return .init(
-                amount: amount,
-                majorUnit: majorUnitString,
-                minorUnit: minorUnitString,
-                currencySymbol: currencySymbol,
-                groupingSeparator: groupingSeparator,
-                decimalSeparator: decimalSeparator
+        if pieces.count > 1 {
+            let rawMinorUnitString = pieces[1] as NSString
+            let range = NSRange(location: 0, length: rawMinorUnitString.length)
+            minorUnitString = rawMinorUnitString.replacingOccurrences(
+                of: "\\D",
+                with: "",
+                options: .regularExpression,
+                range: range
             )
         }
+
+        return .init(
+            amount: amount,
+            majorUnit: majorUnitString,
+            minorUnit: minorUnitString,
+            currencySymbol: currencySymbol,
+            groupingSeparator: groupingSeparator,
+            decimalSeparator: decimalSeparator
+        )
     }
 }
 
