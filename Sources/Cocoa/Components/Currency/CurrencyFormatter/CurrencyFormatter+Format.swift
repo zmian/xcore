@@ -36,7 +36,7 @@ extension CurrencyFormatter {
             return formattedMoney
         }
 
-        let mainFormat = NSMutableAttributedString(string: format, attributes: mayorUnitFont(money))
+        let mainFormat = NSMutableAttributedString(string: format, attributes: majorUnitFont(money))
         mainFormat.replaceCharacters(in: range, with: formattedMoney)
         return mainFormat
     }
@@ -65,7 +65,7 @@ extension CurrencyFormatter {
 
         let attributedString = NSMutableAttributedString(
             string: joinedAmount,
-            attributes: mayorUnitFont(money)
+            attributes: majorUnitFont(money)
         )
 
         guard money.shouldSuperscriptMinorUnit else {
@@ -97,17 +97,21 @@ extension CurrencyFormatter {
 
         return foregroundColor
     }
+}
 
-    private func mayorUnitFont(_ money: Money) -> [NSAttributedString.Key: Any] {
-        [
-            .font: money.font.majorUnit
-        ].compactMapValues { $0 }
+// MARK: - Helpers
+
+extension CurrencyFormatter {
+    private func majorUnitFont(_ money: Money) -> [NSAttributedString.Key: Any] {
+        [.font: money.font.majorUnit].compactMapValues { $0 }
     }
 
     private func minorUnitFont(_ money: Money) -> [NSAttributedString.Key: Any] {
-        [
+        let attributes: [NSAttributedString.Key: Any?] = [
             .font: money.font.minorUnit,
             .baselineOffset: money.font.minorUnitOffset
-        ].compactMapValues { $0 }
+        ]
+
+        return attributes.compactMapValues { $0 }
     }
 }

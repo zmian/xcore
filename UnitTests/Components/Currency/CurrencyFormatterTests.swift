@@ -110,24 +110,24 @@ final class CurrencyFormatterTests: TestCase {
 
         // Pakistan - Urdu
         CurrencyFormatter.shared.localeTest = .pakistanUrdu
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("‎-$1,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("‎-$1.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
 
         // Pakistan - Punjabi
         CurrencyFormatter.shared.localeTest = .pakistanPunjabi
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("‎-‎$۱٬۰۰۰٫", "۰۰"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("‎-‎$۱٫", "۰۰"))
+        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$۱٬۰۰۰٫", "۰۰"))
+        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$۱٫", "۰۰"))
         XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$۰٫", "۰۰"))
         XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$۱٫", "۰۰"))
         XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$۱٬۰۰۰٫", "۰۰"))
 
         // Switzerland
         CurrencyFormatter.shared.localeTest = .switzerland
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("−$1’000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("−$1.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1’000.", "00"))
+        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
         XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1’000.", "00"))

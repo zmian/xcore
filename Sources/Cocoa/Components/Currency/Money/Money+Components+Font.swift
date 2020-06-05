@@ -49,7 +49,7 @@ extension Money.Components {
         public init(_ font: UIFont?) {
             self.majorUnit = font
             self.minorUnit = font
-            self.minorUnitOffset = 0
+            self.minorUnitOffset = nil
         }
     }
 }
