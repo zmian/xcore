@@ -14,8 +14,8 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
     private lazy var formatter = NumberFormatter().apply {
         $0.numberStyle = .currency
         $0.locale = locale
-        $0.positiveFormat = defaultPositiveFormat
-        $0.negativeFormat = defaultNegativeFormat
+        $0.positiveFormat = "¤#,##0.00"
+        $0.negativeFormat = "-¤#,##0.00"
         // We need to add the $-Symbol manually in order to support different locals but
         // keep $ sign at the correct position to keep the design consistent
         // (i.e., Germany: 1.000,11 $ -> $1.000,11).
@@ -23,14 +23,7 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
         $0.isDecimalEnabled = true
     }
 
-    // Separators will get replaced by locale ones.
-    /// `¤#,##0.00`
-    private let defaultPositiveFormat = "¤#,##0.00"
-    /// `-¤#,##0.00`
-    private let defaultNegativeFormat = "-¤#,##0.00"
-
     private let defaultPlusSign = ""
-
     private let defaultMinusSign = "-"
 
     /// The locale of the receiver.
