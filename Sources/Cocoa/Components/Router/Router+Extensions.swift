@@ -15,6 +15,18 @@ extension Router {
 
         return navigationController._router
     }
+
+    /// Returns the router of the main app window.
+    public static var app: Router? {
+        guard
+            let rvc = UIApplication.sharedOrNil?.delegate?.window??.rootViewController,
+            let navigationController = UIApplication.topViewController(rvc)
+        else {
+            return nil
+        }
+
+        return navigationController.router
+    }
 }
 
 // MARK: - UIViewController
