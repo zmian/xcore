@@ -49,8 +49,8 @@ public struct Money: Equatable, Hashable, MutableAppliable {
 
     /// The font used to display money components.
     ///
-    /// The default value is `.body`.
-    public var font: Components.Font = .body
+    /// The default value is `.none`.
+    public var font: Components.Font = .none
 
     /// The sign (+/-) used to format money components.
     ///
