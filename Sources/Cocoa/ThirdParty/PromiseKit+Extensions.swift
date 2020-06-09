@@ -23,6 +23,16 @@ extension Promise {
             }.discardableResult()
         }
     }
+
+    /// A convenience function to convert promise to a guarantee which will always
+    /// succeed.
+    public func asGuarantee() -> Guarantee<Void> {
+        .init { fulfill in
+            ensure {
+                fulfill(())
+            }.discardableResult()
+        }
+    }
 }
 
 extension Promise where T: Collection, T: ExpressibleByArrayLiteral {
