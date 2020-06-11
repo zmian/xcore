@@ -105,3 +105,29 @@ extension Router.Route.Options {
         navigationController.present(nvc, animated: isAnimated)
     }
 }
+
+// MARK: - Dismiss
+
+extension Router.Route.Options {
+    fileprivate func dismiss(navigationController: UINavigationController) {
+        if isModal {
+            navigationController.dismiss(animated: isAnimated, completion: nil)
+        } else {
+            navigationController.popViewController(animated: isAnimated)
+        }
+    }
+}
+
+extension Router.Route {
+    /// Dismiss the current view controller.
+    public static var dismiss: Self {
+        .dismiss(options: .push)
+    }
+
+    /// Dismiss the current view controller.
+    public static func dismiss(options: Options) -> Self {
+        .init { _ in
+            .custom(options.dismiss)
+        }
+    }
+}
