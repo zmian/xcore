@@ -23,9 +23,6 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
         $0.isDecimalEnabled = true
     }
 
-    private let defaultPlusSign = ""
-    private let defaultMinusSign = "-"
-
     /// The locale of the receiver.
     ///
     /// The locale determines the default values for many formatter attributes, such
@@ -243,11 +240,13 @@ extension NumberFormatter {
 
 extension CurrencyFormatter {
     private func with<T>(sign: Money.Sign, _ block: () -> T) -> T {
-        formatter.minusSign = sign.minus
-        formatter.plusSign = sign.plus
+        let existingPositivePrefix = formatter.positivePrefix
+        let existingNegativePrefix = formatter.negativePrefix
+        formatter.positivePrefix = sign.plus + formatter.currencySymbol
+        formatter.negativePrefix = sign.minus + formatter.currencySymbol
         let result = block()
-        formatter.minusSign = defaultMinusSign
-        formatter.plusSign = defaultPlusSign
+        formatter.positivePrefix = existingPositivePrefix
+        formatter.negativePrefix = existingNegativePrefix
         return result
     }
 }
