@@ -210,7 +210,7 @@ public enum GradientDirection {
                 return (CGPoint(x: 0.0, y: 1.0), CGPoint(x: 1.0, y: 0.0))
             case .bottomRightToTopLeft:
                 return (CGPoint(x: 1.0, y: 1.0), CGPoint(x: 0.0, y: 0.0))
-            case .custom(let (start, end)):
+            case .custom(let start, let end):
                 return (start, end)
         }
     }

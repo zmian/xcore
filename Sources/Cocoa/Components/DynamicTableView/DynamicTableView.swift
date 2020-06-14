@@ -393,7 +393,7 @@ extension DynamicTableView {
             case .disclosureIndicator:
                 cell.accessoryView = UIImageView(assetIdentifier: .disclosureIndicator)
                 cell.accessoryView?.tintColor = disclosureIndicatorTintColor
-            case .toggle(let (isOn, callback)):
+            case .toggle(let isOn, let callback):
                 cell.selectionStyle = .none
                 let accessorySwitch = UISwitch().apply {
                     $0.isOn = isOn
@@ -402,7 +402,7 @@ extension DynamicTableView {
                     }
                 }
                 cell.accessoryView = accessorySwitch
-            case .checkbox(let (isSelected, _)):
+            case .checkbox(let isSelected, _):
                 cell.selectionStyle = .none
                 let accessoryCheckbox = UIButton(configuration: .checkbox(
                     normalColor: checkboxOffTintColor,
