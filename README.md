@@ -12,9 +12,9 @@
 Xcore is a collection of pure Swift and Cocoa Touch classes, extensions and components for rapid and safe iOS development. It provides a vast library of customizations and extensions to get tasks done with ease and bugs free. Check out the included example project and [documentation](https://zmian.github.io/xcore.swift) to see how.
 
 ## Requirements
-* iOS 11.0+
-* Xcode 11.0+
-* Swift 5.1+
+* iOS 12.0+
+* Xcode 11.5+
+* Swift 5.2+
 
 ## Installation
 
@@ -34,7 +34,7 @@ pod 'Xcore', :git => 'https://github.com/zmian/xcore.swift'
 
 ### Third-Party Extensions
 
-Xcore provides extensions for various third-party frameworks. They are behind `#if canImport`[flag](https://github.com/apple/swift-evolution/blob/master/proposals/0075-import-test.md) to avoid linking these frameworks as hard dependencies. 
+Xcore provides extensions for various third-party frameworks. They are behind `#if canImport`[flag](https://github.com/apple/swift-evolution/blob/master/proposals/0075-import-test.md) to avoid linking these frameworks as hard dependencies.
 
 To enable these extension in your own project, simply add the following script in your `podfile`:
 
@@ -66,7 +66,7 @@ Replace `'${PODS_ROOT}/../Vendor'` with location of your frameworks directory.
 
 ## Documentation
 
-You can find [the documentation here](https://zmian.github.io/xcore.swift). 
+You can find [the documentation here](https://zmian.github.io/xcore.swift).
 
 Documentation is generated with [jazzy](https://github.com/realm/jazzy) and hosted on [GitHub-Pages](https://pages.github.com). To regenerate documentation, run `./scripts/build_docs.sh` from the root directory in the repo.
 
