@@ -111,9 +111,9 @@ extension String {
         }
 
         switch options {
-            case .allExceptFirst(let (maxLength, maskCount, separator)):
+            case .allExceptFirst(let maxLength, let maskCount, let separator):
                 return prefix(maxLength) + maskCount.string(count: count - maxLength, separator: separator, suffix: false)
-            case .allExceptLast(let (maxLength, maskCount, separator)):
+            case .allExceptLast(let maxLength, let maskCount, let separator):
                 return maskCount.string(count: count - maxLength, separator: separator, suffix: true) + suffix(maxLength)
             case .automatic(let maskCount):
                 guard
