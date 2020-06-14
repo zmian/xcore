@@ -35,7 +35,7 @@ extension CATransaction {
 }
 
 extension CATransitionType {
-    public static let none = CATransitionType(rawValue: "")
+    public static let none = Self(rawValue: "")
 }
 
 extension CAMediaTimingFunction {
@@ -52,17 +52,26 @@ extension CALayer {
     /// - Parameter point: The point to use to detect color.
     /// - Returns: `UIColor` at the specified point.
     public func color(at point: CGPoint) -> UIColor {
-        let width = 1
-        let height = 1
-        let bitsPerComponent = 8
-        let bytesPerRow = 4 * height
-        let pixel: [UInt8] = [0, 0, 0, 0]
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
-        let context = CGContext(data: UnsafeMutablePointer(mutating: pixel), width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
+        var pixel: [UInt8] = [0, 0, 0, 0]
+        let context = CGContext(
+            data: &pixel,
+            width: 1,
+            height: 1,
+            bitsPerComponent: 8,
+            bytesPerRow: 4,
+            space: colorSpace,
+            bitmapInfo: bitmapInfo.rawValue
+        )!
         context.translateBy(x: -point.x, y: -point.y)
         render(in: context)
-        return UIColor(red: CGFloat(pixel[0])/255, green: CGFloat(pixel[1])/255, blue: CGFloat(pixel[2])/255, alpha: CGFloat(pixel[3])/255)
+        return UIColor(
+            red: CGFloat(pixel[0]) / 255,
+            green: CGFloat(pixel[1]) / 255,
+            blue: CGFloat(pixel[2]) / 255,
+            alpha: CGFloat(pixel[3]) / 255
+        )
     }
 }
 
