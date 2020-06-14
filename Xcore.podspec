@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.source_files          = 'Sources/**/*.swift'
   s.resources             = 'Sources/**/*.xcassets'
   s.requires_arc          = true
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '12.0'
   s.pod_target_xcconfig   = {
     'SWIFT_VERSION' => '5.1'
   }

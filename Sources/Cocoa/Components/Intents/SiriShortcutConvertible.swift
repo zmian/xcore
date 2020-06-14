@@ -6,7 +6,6 @@
 
 import Intents
 
-@available(iOS 12.0, *)
 public protocol SiriShortcutConvertible {
     associatedtype IntentType: INIntent
 
