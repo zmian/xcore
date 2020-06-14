@@ -38,8 +38,8 @@ enum ImageFetcherError: Error {
 extension Result where Success == (image: UIImage, cacheType: ImageSourceType.CacheType) {
     func trimCache() -> Result<UIImage, Error> {
         switch self {
-            case .success(let image, _):
-                return .success(image)
+            case .success(let value):
+                return .success(value.image)
             case .failure(let error):
                 return .failure(error)
         }
