@@ -59,7 +59,7 @@ open class XCCollectionReusableView: UICollectionReusableView {
     }
 
     /// The default value is `.none, 0`.
-    private var corners: (corners: UIRectCorner, radius: CGFloat) = (.none, 0) {
+    private var corners: (mask: CACornerMask, radius: CGFloat) = (.none, 0) {
         didSet {
             setNeedsLayout()
         }
@@ -67,7 +67,7 @@ open class XCCollectionReusableView: UICollectionReusableView {
 
     open override func layoutSubviews() {
         super.layoutSubviews()
-        roundCorners(corners.corners, radius: corners.radius)
+        roundCorners(corners.mask, radius: corners.radius)
     }
 }
 

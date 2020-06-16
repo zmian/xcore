@@ -8,7 +8,7 @@ import UIKit
 
 extension XCCollectionViewTileLayout {
     final class Attributes: XCCollectionViewFlowLayout.Attributes {
-        var corners: (corners: UIRectCorner, radius: CGFloat) = (.none, 0)
+        var corners: (mask: CACornerMask, radius: CGFloat) = (.none, 0)
         var offsetInSection: CGFloat = 0
         var parentIdentifier: String?
 
@@ -28,7 +28,7 @@ extension XCCollectionViewTileLayout {
             }
             return
                 super.isEqual(object) &&
-                corners.corners == rhsAttributes.corners.corners &&
+                corners.mask == rhsAttributes.corners.mask &&
                 corners.radius == rhsAttributes.corners.radius &&
                 parentIdentifier == rhsAttributes.parentIdentifier &&
                 offsetInSection == rhsAttributes.offsetInSection
