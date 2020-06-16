@@ -32,10 +32,16 @@ final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
     }
 
     /// The default value is `.none, 0`.
-    private var corners: (corners: UIRectCorner, radius: CGFloat) = (.none, 0) {
+    private var _corners: (corners: UIRectCorner, radius: CGFloat) = (.none, 0) {
         didSet {
             setNeedsLayout()
         }
+    }
+
+    /// The default value is `.none, 0`.
+    private var corners: (mask: CACornerMask, radius: CGFloat) {
+        get { (CACornerMask(_corners.corners), _corners.radius) }
+        set { _corners = (UIRectCorner(newValue.mask), newValue.radius) }
     }
 
     override var backgroundColor: UIColor? {
@@ -63,7 +69,7 @@ final class XCCollectionViewTileBackgroundView: UICollectionReusableView {
     }
 
     private func path(rect: CGRect? = nil) -> UIBezierPath {
-        .init(roundedRect: rect ?? bounds, byRoundingCorners: corners.corners, cornerRadii: CGSize(width: corners.radius, height: corners.radius))
+        .init(roundedRect: rect ?? bounds, byRoundingCorners: _corners.corners, cornerRadii: CGSize(width: corners.radius, height: corners.radius))
     }
 
     override func layoutSubviews() {

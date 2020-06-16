@@ -31,7 +31,7 @@ open class PickerList: DynamicTableViewController {
     open var reloadAnimation: UITableView.RowAnimation = .automatic
 
     /// The maximum number of items visible without scrolling.
-    open var maxVisibleItemsCount = 4
+    open var maxVisibleItemsCount = 5
 
     public init(model: PickerListModel) {
         self.model = model

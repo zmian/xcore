@@ -296,4 +296,53 @@ extension UIRectCorner {
     public static let none: Self = []
     public static let top: Self = [.topLeft, .topRight]
     public static let bottom: Self = [.bottomLeft, .bottomRight]
+
+    init(_ corner: CACornerMask) {
+        self = .none
+
+        if corner.contains(.layerMinXMinYCorner) {
+            self.insert(.topLeft)
+        }
+
+        if corner.contains(.layerMaxXMinYCorner) {
+            self.insert(.topRight)
+        }
+
+        if corner.contains(.layerMinXMaxYCorner) {
+            self.insert(.bottomLeft)
+        }
+
+        if corner.contains(.layerMaxXMaxYCorner) {
+            self.insert(.bottomRight)
+        }
+    }
+}
+
+// MARK: - CACornerMask - Extensions
+
+extension CACornerMask {
+    public static let none: Self = []
+    public static let all: Self = [top, bottom]
+    public static let top: Self = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    public static let bottom: Self = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+
+    init(_ corner: UIRectCorner) {
+        self = .none
+
+        if corner.contains(.topLeft) {
+            self.insert(.layerMinXMinYCorner)
+        }
+
+        if corner.contains(.topRight) {
+            self.insert(.layerMaxXMinYCorner)
+        }
+
+        if corner.contains(.bottomLeft) {
+            self.insert(.layerMinXMaxYCorner)
+        }
+
+        if corner.contains(.bottomRight) {
+            self.insert(.layerMaxXMaxYCorner)
+        }
+    }
 }
