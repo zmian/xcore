@@ -78,7 +78,7 @@ final public class InputToolbar: XCView {
         addSubview(buttonStackView)
 
         buttonStackView.anchor.make {
-            let inset = UIEdgeInsets(horizontal: .defaultPadding, vertical: .minimumPadding)
+            let inset = UIEdgeInsets(.minimumPadding)
             $0.edges.equalToSuperview().inset(inset)
         }
 
