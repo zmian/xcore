@@ -147,7 +147,7 @@ extension Picker.List {
             }
 
             let indexPath = IndexPath(item: index, section: 0)
-            tableView.scrollToRow(at: indexPath, at: .none, animated: false)
+            tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
         }
     }
 }

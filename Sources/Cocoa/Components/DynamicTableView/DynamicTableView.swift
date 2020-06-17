@@ -203,13 +203,12 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         // There is UIKit bug that causes `UITableView` to jump when using
         // `estimatedRowHeight` and reloading cells/sections or the entire table view.
         //
-        // This solution overshoots the estimated row height which causes the table view
-        // to properly calculate the height for cells.
+        // One solution is to overshoot the estimated row height which causes the table
+        // view to properly calculate the height for cells.
         //
-        // - Note: If your cell height will always be more then `100` then change the
-        // number to `> 100` so it overshoots causing table to correctly calculate
-        // height.
-        estimatedRowHeight = 100
+        // But, it still reports incorrect content size. Thus, we are implementing
+        // autosizing cells using `custom sizing cell`.
+        estimatedRowHeight = 0
         rowHeight = UITableView.automaticDimension
         isReorderingEnabled = allowsReordering
     }
@@ -398,6 +397,28 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 extension DynamicTableView {
     open func scrollViewDidScroll(_ scrollView: UIScrollView) {
         didScroll?(self)
+    }
+}
+
+// MARK: - Custom Self-sizing
+
+extension DynamicTableView {
+    private static let sizingCell = DynamicTableViewCell()
+
+    private static func cellHeight(for item: DynamicTableModel, width: CGFloat) -> CGFloat {
+        sizingCell.apply {
+            $0.prepareForReuse()
+            $0.configure(item)
+            $0.updateConstraints()
+            $0.setNeedsLayout()
+            $0.layoutIfNeeded()
+        }
+        let size = sizingCell.contentView.sizeFitting(width: width)
+        return size.height
+    }
+
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        Self.cellHeight(for: sections[indexPath], width: bounds.width)
     }
 }
 
