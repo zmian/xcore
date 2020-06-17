@@ -27,7 +27,6 @@ extension Picker {
             }
         }
 
-
         private lazy var pickerView = UIPickerView().apply {
             $0.delegate = self
             $0.dataSource = self

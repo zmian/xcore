@@ -11,10 +11,14 @@ import UIKit
 public protocol DrawerScreenContent {
     var drawerContentView: UIView { get }
     func didDismiss()
+    var isToolbarHidden: Bool { get }
 }
 
 extension DrawerScreenContent {
     public func didDismiss() {}
+    public var isToolbarHidden: Bool {
+        true
+    }
 }
 
 extension UIView: DrawerScreenContent {
@@ -38,6 +42,12 @@ final public class DrawerScreen: NSObject {
         $0.preferredStatusBarStyle = .inherit
         $0.backgroundColor = appearance().overlayColor
         $0.duration = .init(.fast)
+    }
+
+    private lazy var toolbar = Toolbar().apply {
+        $0.dismissButton.action { [weak self] _ in
+            self?.dismiss()
+        }
     }
 
     private let modalView = BlurView().apply {
@@ -66,6 +76,16 @@ final public class DrawerScreen: NSObject {
                 self?.dismiss()
             }
         })
+
+        setupToolbar()
+    }
+
+    private func setupToolbar() {
+        modalView.addSubview(toolbar)
+        toolbar.anchor.make {
+            $0.top.equalToSuperview()
+            $0.horizontally.equalToSuperview()
+        }
     }
 
     deinit {
@@ -73,11 +93,13 @@ final public class DrawerScreen: NSObject {
     }
 
     func present(_ content: Content) {
+        toolbar.isHidden = content.isToolbarHidden
         presentedContent = content
         let view = content.drawerContentView
         modalView.addSubview(view)
         view.anchor.make {
-            $0.edges.equalToSuperviewSafeArea()
+            let inset = content.isToolbarHidden ? 0 : toolbar.intrinsicContentSize.height
+            $0.edges.equalToSuperviewSafeArea().inset(UIEdgeInsets(top: inset))
         }
 
         // Presentation
