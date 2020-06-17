@@ -390,25 +390,17 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
             checkboxAccessoryView(at: indexPath)?.isSelected = false
         }
     }
-}
 
-// MARK: - UIScrollViewDelegate
 
-extension DynamicTableView {
-    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        didScroll?(self)
-    }
-}
+    // MARK: - Custom Self-sizing
 
-// MARK: - Custom Self-sizing
+    private let sizingCell = DynamicTableViewCell()
 
-extension DynamicTableView {
-    private static let sizingCell = DynamicTableViewCell()
-
-    private static func cellHeight(for item: DynamicTableModel, width: CGFloat) -> CGFloat {
+    private func cellHeight(for item: DynamicTableModel, width: CGFloat, indexPath: IndexPath) -> CGFloat {
         sizingCell.apply {
             $0.prepareForReuse()
             $0.configure(item)
+            configureAccessoryView($0, type: item.accessory, indexPath: indexPath)
             $0.updateConstraints()
             $0.setNeedsLayout()
             $0.layoutIfNeeded()
@@ -418,7 +410,15 @@ extension DynamicTableView {
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        Self.cellHeight(for: sections[indexPath], width: bounds.width)
+        cellHeight(for: sections[indexPath], width: bounds.width, indexPath: indexPath)
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension DynamicTableView {
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        didScroll?(self)
     }
 }
 
