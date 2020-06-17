@@ -13,14 +13,14 @@ extension Picker.List {
 
     public enum SelectionStyle {
         case checkmark(tintColor: UIColor)
-        case highlight(color: UIColor)
+        case highlight(UIColor)
 
         public static var checkmark: Self {
             .checkmark(tintColor: checkmarkDefaultTintColor)
         }
 
         public static var highlight: Self {
-            .highlight(color: highlightDefaultColor)
+            .highlight(highlightDefaultColor)
         }
     }
 }
