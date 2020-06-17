@@ -9,7 +9,6 @@ import UIKit
 final class ExamplePickerListModel: PickerListModel {
     private var timer: Timer?
     private var count = 0
-    private var _didChange: (() -> Void)?
 
     var items: [DynamicTableModel] {
         [
@@ -18,8 +17,9 @@ final class ExamplePickerListModel: PickerListModel {
         ]
     }
 
+    private var didChange: (() -> Void)?
     func didChange(_ callback: @escaping () -> Void) {
-        _didChange = callback
+        didChange = callback
     }
 
     init() {
@@ -34,6 +34,6 @@ final class ExamplePickerListModel: PickerListModel {
 
     private func updateCount() {
         count += 1
-        _didChange?()
+        didChange?()
     }
 }
