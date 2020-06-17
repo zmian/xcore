@@ -95,6 +95,10 @@ extension Picker.List {
                 return
             }
 
+            guard canReloadItems() else {
+                return
+            }
+
             let items = model.items
             indexPaths.forEach {
                 tableView.sections[$0.section][$0.item] = items[$0.item]
@@ -104,6 +108,10 @@ extension Picker.List {
         }
 
         func reloadData() {
+            guard canReloadItems() else {
+                return
+            }
+
             let hasSections = !tableView.sections.isEmpty
 
             tableView.sections = [
@@ -115,6 +123,18 @@ extension Picker.List {
             } else {
                 tableView.reloadData()
             }
+        }
+
+        private func canReloadItems() -> Bool {
+            model.reloadItems()
+
+            guard !model.items.isEmpty else {
+                // Nothing to display. Dismiss the picker view.
+                DrawerScreen.dismiss()
+                return false
+            }
+
+            return true
         }
 
         private var contentViewportHeight: CGFloat {
