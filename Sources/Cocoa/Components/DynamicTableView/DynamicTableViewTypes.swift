@@ -42,7 +42,7 @@ public struct DynamicTableModel {
         self.didSelect = didSelect
     }
 
-    var isTextOnly: Bool {
+    var hasTextOnly: Bool {
         if image == nil, case.none = accessory {
             return true
         }

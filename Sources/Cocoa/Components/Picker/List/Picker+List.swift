@@ -8,10 +8,20 @@ import UIKit
 
 extension Picker.List {
     public typealias Model = PickerListModel
+    public static var checkmarkDefaultTintColor = UIColor.appTint
+    public static var highlightDefaultColor = UIColor.appHighlightedBackground
 
     public enum SelectionStyle {
-        case checkmark(tintColor: UIColor = .appTint)
-        case highlight(UIColor = .appHighlightedBackground)
+        case checkmark(tintColor: UIColor)
+        case highlight(color: UIColor)
+
+        public static var checkmark: Self {
+            .checkmark(tintColor: checkmarkDefaultTintColor)
+        }
+
+        public static var highlight: Self {
+            .highlight(color: highlightDefaultColor)
+        }
     }
 }
 
@@ -23,7 +33,7 @@ extension Picker {
             content = Content(model: model)
         }
 
-        public var selectionStyle: SelectionStyle = .highlight()
+        public lazy var selectionStyle: SelectionStyle = .highlight
 
         public var isToolbarHidden: Bool {
             get { content.isToolbarHidden }

@@ -119,7 +119,7 @@ final class RootViewController: DynamicTableViewController {
                     items,
                     selected: middleItem,
                     configure: {
-                        $0.selectionStyle = .highlight(.yellow)
+                        $0.selectionStyle = .highlight(color: .yellow)
                     },
                     didSelect: { selected in
                         print("Selected: \(selected)")
@@ -137,7 +137,7 @@ final class RootViewController: DynamicTableViewController {
                     items,
                     selected: middleItem,
                     configure: {
-                        $0.selectionStyle = .checkmark()
+                        $0.selectionStyle = .checkmark
                     },
                     didSelect: { selected in
                         print("Selected: \(selected)")
