@@ -45,6 +45,7 @@ final public class DrawerScreen: NSObject {
     }
 
     private lazy var toolbar = Toolbar().apply {
+        $0.height = Self.appearance().toolbarHeight
         $0.dismissButton.action { [weak self] _ in
             self?.dismiss()
         }
@@ -173,14 +174,17 @@ extension DrawerScreen {
         fileprivate static var shared = Appearance()
         public var overlayColor = UIColor.black.alpha(0.3)
 
-        /// The default value is `.top, AppConstants.cornerRadius`.
-        public var corners: (mask: CACornerMask, radius: CGFloat) = (.top, 11)
-
-        /// A property to determine opacity for the blur effect.
-        /// Use this property to soften the blur effect if needed.
+        /// A property to determine opacity for the blur effect. Use this property to
+        /// soften the blur effect if needed.
         ///
         /// The default value is `0.3`.
         public var blurOpacity: CGFloat = 0.3
+
+        /// The default value is `.top, 11`.
+        public var corners: (mask: CACornerMask, radius: CGFloat) = (.top, 11)
+
+        /// The default value is `AppConstants.uiControlsHeight`.
+        public var toolbarHeight: CGFloat = AppConstants.uiControlsHeight
     }
 
     public static func appearance() -> Appearance {
