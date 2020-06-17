@@ -6,15 +6,28 @@
 
 import UIKit
 
+extension Picker.List {
+    public typealias Model = PickerListModel
+
+    public enum SelectionStyle {
+        case checkmark(tintColor: UIColor = .appTint)
+        case highlight(UIColor = .appHighlightedBackground)
+    }
+}
+
 extension Picker {
     final public class List: Appliable {
-        public typealias Model = PickerListModel
-        public static var checkmarkTintColor = UIColor.appTint
-
         private let content: Content
 
         public init(model: Model) {
             content = Content(model: model)
+        }
+
+        public var selectionStyle: SelectionStyle = .highlight()
+
+        public var isToolbarHidden: Bool {
+            get { content.isToolbarHidden }
+            set { content.isToolbarHidden = newValue }
         }
 
         /// The animation to use when reloading the table.
@@ -23,15 +36,10 @@ extension Picker {
             set { content.reloadAnimation = newValue }
         }
 
-        /// The maximum number of items visible without scrolling.
-        public var maxVisibleItemsCount: Int {
-            get { content.maxVisibleItemsCount }
-            set { content.maxVisibleItemsCount = newValue }
-        }
-
-        public var isToolbarHidden: Bool {
-            get { content.isToolbarHidden }
-            set { content.isToolbarHidden = newValue }
+        /// The preferred maximum number of items visible without scrolling.
+        public var preferredMaxVisibleItemsCount: Int {
+            get { content.preferredMaxVisibleItemsCount }
+            set { content.preferredMaxVisibleItemsCount = newValue }
         }
 
         public func present() {

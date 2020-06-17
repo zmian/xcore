@@ -108,16 +108,41 @@ final class RootViewController: DynamicTableViewController {
                     print("Selected: \(option)")
                 }
             },
-            .init(title: "Picker List: Strings", subtitle: "Using Picker to select from an array of strings") { _, _ in
+            .init(title: "Picker List: Strings. SelectionStyle: highlight", subtitle: "Using Picker to select from an array of strings") { _, _ in
                 let items = 10.map {
                     "Option \($0)"
                 }
 
                 let middleItem = items[items.count / 2]
 
-                Picker.List.present(items, selected: middleItem) { selected in
-                    print("Selected: \(selected)")
+                Picker.List.present(
+                    items,
+                    selected: middleItem,
+                    configure: {
+                        $0.selectionStyle = .highlight(.yellow)
+                    },
+                    didSelect: { selected in
+                        print("Selected: \(selected)")
+                    }
+                )
+            },
+            .init(title: "Picker List: Strings. SelectionStyle: Checkmark", subtitle: "Using Picker to select from an array of strings") { _, _ in
+                let items = 10.map {
+                    "Option \($0)"
                 }
+
+                let middleItem = items[items.count / 2]
+
+                Picker.List.present(
+                    items,
+                    selected: middleItem,
+                    configure: {
+                        $0.selectionStyle = .checkmark()
+                    },
+                    didSelect: { selected in
+                        print("Selected: \(selected)")
+                    }
+                )
             },
             .init(title: "Picker List: Timer", subtitle: "Dynamic Table View inside Drawer Screen configured using a view-model") { _, _ in
                 let model = ExamplePickerListModel()
@@ -126,6 +151,26 @@ final class RootViewController: DynamicTableViewController {
                     $0.isToolbarHidden = true
                 }
                 list.present()
+            },
+            .init(title: "Picker List: Really long text", subtitle: "Picker with really long text") { _, _ in
+                let items = 3.map {
+                    "\($0). Although it wasn’t added to the collection until the 18th century by French scholar Antoine Galland, ‘Aladdin’ is one of the most popular tales from 1,001 Nights because of its modern Disney adaptation. In the original tale, Aladdin is a poor, young man in ‘one of the cities of China.’ A sorcerer deceives Aladdin and persuades him to steal an oil lamp from a magic cave. Aladdin accidentally releases a genie from the lamp, and so a series of events unfold in which Aladdin’s every wish comes true, but only to be dismantled by the villain. Thankfully, a Disney-approved happy ending is in store."
+                }
+
+                Picker.List.present(items) { selected in
+                    print("Selected: \(selected)")
+                }
+            },
+            .init(title: "Picker List: Really long text with Selected", subtitle: "Picker with really long text") { _, _ in
+                let items = 3.map {
+                    "\($0). Although it wasn’t added to the collection until the 18th century by French scholar Antoine Galland, ‘Aladdin’ is one of the most popular tales from 1,001 Nights because of its modern Disney adaptation. In the original tale, Aladdin is a poor, young man in ‘one of the cities of China.’ A sorcerer deceives Aladdin and persuades him to steal an oil lamp from a magic cave. Aladdin accidentally releases a genie from the lamp, and so a series of events unfold in which Aladdin’s every wish comes true, but only to be dismantled by the villain. Thankfully, a Disney-approved happy ending is in store."
+                }
+
+                let middleItem = items[items.count / 2]
+
+                Picker.List.present(items, selected: middleItem) { selected in
+                    print("Selected: \(selected)")
+                }
             }
         ]
     }
