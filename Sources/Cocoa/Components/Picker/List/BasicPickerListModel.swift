@@ -6,7 +6,7 @@
 
 import Foundation
 
-extension PickerList {
+extension Picker.List {
     /// A convenience method to display a picker with list of items that conforms to
     /// `PickerOptions` protocol.
     ///
@@ -17,21 +17,21 @@ extension PickerList {
     ///     case north, south, east, west
     /// }
     ///
-    /// PickerList.present(selected: CompassPoint.allCases.first) { (item: CompassPoint) -> Void in
+    /// Picker.List.present(selected: CompassPoint.allCases.first) { (item: CompassPoint) -> Void in
     ///     print("selected item:" item)
     /// }
     /// ```
     @discardableResult
     public static func present<T: PickerOptionsEnum>(
         selected item: T? = nil,
-        configure: ((PickerList) -> Void)? = nil,
+        configure: ((Picker.List) -> Void)? = nil,
         _ handler: @escaping (_ item: T) -> Void
-    ) -> PickerList {
+    ) -> Picker.List {
         let model = BasicPickerListModel(items: T.allCases, selected: item) { item in
             handler(item)
         }
 
-        let picker = PickerList(model: model)
+        let picker = Picker.List(model: model)
         configure?(picker)
         picker.present()
         return picker
@@ -62,14 +62,14 @@ extension PickerList {
     public static func present<T: PickerOptions>(
         _ items: [T],
         selected item: T? = nil,
-        configure: ((PickerList) -> Void)? = nil,
+        configure: ((Picker.List) -> Void)? = nil,
         _ handler: @escaping (_ item: T) -> Void
-    ) -> PickerList {
+    ) -> Picker.List {
         let model = BasicPickerListModel(items: items, selected: item) { item in
             handler(item)
         }
 
-        let picker = PickerList(model: model)
+        let picker = Picker.List(model: model)
         configure?(picker)
         picker.present()
         return picker
@@ -81,7 +81,7 @@ extension PickerList {
     ///
     /// ```swift
     /// let items = ["Year", "Month", "Day"]
-    /// PickerList.present(items, selected: items.first) { item in
+    /// Picker.List.present(items, selected: items.first) { item in
     ///     print("selected item:" item)
     /// }
     /// ```
@@ -90,12 +90,12 @@ extension PickerList {
         _ items: [String],
         selected item: String? = nil,
         _ handler: @escaping (_ item: String) -> Void
-    ) -> PickerList {
+    ) -> Picker.List {
         let model = BasicTextPickerListModel(items: items, selected: item) { item in
             handler(item)
         }
 
-        let picker = PickerList(model: model)
+        let picker = Picker.List(model: model)
         picker.present()
         return picker
     }
@@ -110,15 +110,15 @@ extension PickerList {
     ///     DynamicTableModel(title: "Month") { _ in }
     ///     DynamicTableModel(title: "Day") { _ in }
     /// ]
-    /// PickerList.present(items)
+    /// Picker.List.present(items)
     /// ```
     @discardableResult
     public static func present(
         _ items: [DynamicTableModel],
-        configure: PickerList.ConfigureBlock? = nil
-    ) -> PickerList {
+        configure: Picker.List.ConfigureBlock? = nil
+    ) -> Picker.List {
         let model = BasicItemPickerListModel(items: items, configure: configure)
-        let picker = PickerList(model: model)
+        let picker = Picker.List(model: model)
         picker.present()
         return picker
     }
@@ -146,7 +146,7 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
     private var checkmarkView: UIImageView {
         UIImageView(assetIdentifier: .checkmarkIcon).apply {
             $0.frame.size = 20
-            $0.tintColor = .appleGreen
+            $0.tintColor = Picker.List.checkmarkTintColor
             $0.isContentModeAutomaticallyAdjusted = true
         }
     }
@@ -195,7 +195,7 @@ private final class BasicTextPickerListModel: PickerListModel {
     private var checkmarkView: UIImageView {
         UIImageView(assetIdentifier: .checkmarkIcon).apply {
             $0.frame.size = 20
-            $0.tintColor = .appleGreen
+            $0.tintColor = Picker.List.checkmarkTintColor
             $0.isContentModeAutomaticallyAdjusted = true
         }
     }
@@ -227,10 +227,10 @@ private final class BasicTextPickerListModel: PickerListModel {
 // MARK: - BasicItemPickerListModel
 
 private final class BasicItemPickerListModel: PickerListModel {
-    private let _configure: PickerList.ConfigureBlock?
+    private let _configure: Picker.List.ConfigureBlock?
     let items: [DynamicTableModel]
 
-    init(items: [DynamicTableModel], configure: PickerList.ConfigureBlock? = nil) {
+    init(items: [DynamicTableModel], configure: Picker.List.ConfigureBlock? = nil) {
         self.items = items
         self._configure = configure
     }
@@ -244,7 +244,7 @@ private final class BasicItemPickerListModel: PickerListModel {
     }
 }
 
-extension PickerList {
+extension Picker.List {
     public typealias ConfigureBlock = (
         _ indexPath: IndexPath,
         _ cell: DynamicTableViewCell,

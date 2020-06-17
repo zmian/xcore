@@ -87,7 +87,7 @@ final class RootViewController: DynamicTableViewController {
                     Section(items: [
                         DynamicTableModel(title: "Option 1", subtitle: "FeedViewController demonstration") { _, _ in
                             let model = ExamplePickerListModel()
-                            let list = PickerList(model: model).apply {
+                            let list = Picker.List(model: model).apply {
                                 $0.reloadAnimation = .none
                             }
                             list.present()
@@ -104,12 +104,12 @@ final class RootViewController: DynamicTableViewController {
                 DrawerScreen.present(vc.view)
             },
             .init(title: "Picker List: Options Representable", subtitle: "Using Picker to select from an options enum") { _, _ in
-                PickerList.present(selected: ExampleArrowOptions.allCases.first) { option in
+                Picker.List.present(selected: ExampleArrowOptions.allCases.first) { option in
                     print("Selected: \(option)")
                 }
             },
             .init(title: "Picker List: Strings", subtitle: "Using Picker to select from an array of strings") { _, _ in
-                PickerList.present([
+                Picker.List.present([
                     "Option 1",
                     "Option 2",
                     "Option 3",
@@ -122,7 +122,7 @@ final class RootViewController: DynamicTableViewController {
             },
             .init(title: "Picker List: Timer", subtitle: "Dynamic Table View inside Drawer Screen configured using a view-model") { _, _ in
                 let model = ExamplePickerListModel()
-                let list = PickerList(model: model).apply {
+                let list = Picker.List(model: model).apply {
                     $0.reloadAnimation = .none
                     $0.isToolbarHidden = true
                 }
