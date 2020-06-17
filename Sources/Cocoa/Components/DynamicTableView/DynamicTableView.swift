@@ -195,7 +195,16 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         dataSource = self
         reorderDelegate = self
         backgroundColor = .clear
-        estimatedRowHeight = 44
+        // There is UIKit bug that causes `UITableView` to jump when using
+        // `estimatedRowHeight` and reloading cells/sections or the entire table view.
+        //
+        // This solution overshoots the estimated row height which causes the table view
+        // to properly calculate the height for cells.
+        //
+        // - Note: If your cell height will always be more then `100` then change the
+        // number to `> 100` so it overshoots causing table to correctly calculate
+        // height.
+        estimatedRowHeight = 100
         rowHeight = UITableView.automaticDimension
         isReorderingEnabled = allowsReordering
     }
