@@ -83,6 +83,7 @@ extension NSLayoutConstraint {
             constant: constant
         )
         newConstraint.priority = priority
+        newConstraint.anchorAttributes = anchorAttributes
         deactivate()
         firstItem?.removeConstraint(self)
         newConstraint.activate()
@@ -104,6 +105,7 @@ extension NSLayoutConstraint {
             multiplier: multiplier,
             constant: constant
         )
+        newConstraint.anchorAttributes = anchorAttributes
         deactivate()
         firstItem?.removeConstraint(self)
         newConstraint.activate()
