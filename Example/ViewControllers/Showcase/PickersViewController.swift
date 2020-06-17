@@ -10,7 +10,7 @@ final class PickersViewController: DynamicTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Separators"
+        title = "Pickers"
 
         tableView.sections = [Section(items: items())]
 
