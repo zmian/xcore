@@ -18,10 +18,10 @@ extension NSLayoutConstraint {
         }
 
         init(_ constraints: [NSLayoutConstraint]) {
-            trailing = constraints[0]
-            leading = constraints[1]
-            bottom = constraints[2]
-            top = constraints[3]
+            trailing = constraints.firstAttribute(.trailing)!
+            leading = constraints.firstAttribute(.leading)!
+            bottom = constraints.firstAttribute(.bottom)!
+            top = constraints.firstAttribute(.top)!
         }
 
         public init(top: NSLayoutConstraint, bottom: NSLayoutConstraint, leading: NSLayoutConstraint, trailing: NSLayoutConstraint) {

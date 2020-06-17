@@ -8,7 +8,7 @@ import UIKit
 
 open class DynamicTableViewController: UIViewController {
     private var tableViewConstraints: NSLayoutConstraint.Edges!
-    open private(set) lazy var tableView = DynamicTableView(style: self.style, options: self.cellOptions)
+    open private(set) lazy var tableView = DynamicTableView(style: style, options: cellOptions)
     /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
     open var style: UITableView.Style = .plain
     open var cellOptions: CellOptions = .none {
