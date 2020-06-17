@@ -63,6 +63,11 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         willDisplayCell = callback
     }
 
+    private var didScroll: ((_ tableView: DynamicTableView) -> Void)?
+    open func didScroll(_ callback: @escaping (_ tableView: DynamicTableView) -> Void) {
+        didScroll = callback
+    }
+
     private var configureHeader: ((_ section: Int, _ headerView: UITableViewHeaderFooterView, _ text: String?) -> Void)?
     open func configureHeader(_ callback: @escaping (_ section: Int, _ headerView: UITableViewHeaderFooterView, _ text: String?) -> Void) {
         configureHeader = callback
@@ -276,7 +281,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
             }
         }
         didSelectItem?(indexPath, item)
-        item.handler?(indexPath, item)
+        item.didSelect?(indexPath, item)
     }
 
     open func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -385,6 +390,14 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         if case .checkbox = item.accessory {
             checkboxAccessoryView(at: indexPath)?.isSelected = false
         }
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension DynamicTableView {
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        didScroll?(self)
     }
 }
 

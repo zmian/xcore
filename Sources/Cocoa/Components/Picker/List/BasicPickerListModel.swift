@@ -157,7 +157,8 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
                 title: $0.element.title,
                 subtitle: $0.element.subtitle,
                 image: $0.element.image,
-                accessory: $0.offset == selectedIndex ? .custom(checkmarkView) : .none
+                accessory: $0.offset == selectedIndex ? .custom(checkmarkView) : .none,
+                isSelected: $0.offset == selectedIndex
             ) { [weak self] indexPath, _ in
                 guard
                     let strongSelf = self,
@@ -204,7 +205,8 @@ private final class BasicTextPickerListModel: PickerListModel {
         rawItems.enumerated().map {
             DynamicTableModel(
                 title: $0.element,
-                accessory: $0.offset == selectedIndex ? .custom(checkmarkView) : .none
+                accessory: $0.offset == selectedIndex ? .custom(checkmarkView) : .none,
+                isSelected: $0.offset == selectedIndex
             ) { [weak self] indexPath, _ in
                 guard
                     let strongSelf = self,
