@@ -25,14 +25,15 @@ extension Picker.List {
     public static func present<T: PickerOptionsEnum>(
         selected item: T? = nil,
         configure: ((Picker.List) -> Void)? = nil,
-        _ handler: @escaping (_ item: T) -> Void
+        didSelect: @escaping (_ item: T) -> Void
     ) -> Picker.List {
         let model = BasicPickerListModel(items: T.allCases, selected: item) { item in
-            handler(item)
+            didSelect(item)
         }
 
         let picker = Picker.List(model: model)
         configure?(picker)
+        model.selectionStyle = picker.selectionStyle
         picker.present()
         return picker
     }
@@ -63,14 +64,15 @@ extension Picker.List {
         _ items: [T],
         selected item: T? = nil,
         configure: ((Picker.List) -> Void)? = nil,
-        _ handler: @escaping (_ item: T) -> Void
+        didSelect: @escaping (_ item: T) -> Void
     ) -> Picker.List {
         let model = BasicPickerListModel(items: items, selected: item) { item in
-            handler(item)
+            didSelect(item)
         }
 
         let picker = Picker.List(model: model)
         configure?(picker)
+        model.selectionStyle = picker.selectionStyle
         picker.present()
         return picker
     }
@@ -89,13 +91,16 @@ extension Picker.List {
     public static func present(
         _ items: [String],
         selected item: String? = nil,
-        _ handler: @escaping (_ item: String) -> Void
+        configure: ((Picker.List) -> Void)? = nil,
+        didSelect: @escaping (_ item: String) -> Void
     ) -> Picker.List {
         let model = BasicTextPickerListModel(items: items, selected: item) { item in
-            handler(item)
+            didSelect(item)
         }
 
         let picker = Picker.List(model: model)
+        configure?(picker)
+        model.selectionStyle = picker.selectionStyle
         picker.present()
         return picker
     }
@@ -131,7 +136,7 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
     private let selectedIndex: Int?
     private var selectionCallback: (T) -> Void
 
-    init(items: [T], selected item: T? = nil, handler: @escaping (T) -> Void) {
+    init(items: [T], selected item: T? = nil, didSelect: @escaping (T) -> Void) {
         self.rawItems = items
 
         if let item = item, let index = items.firstIndex(of: item) {
@@ -140,15 +145,23 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
             selectedIndex = nil
         }
 
-        selectionCallback = handler
+        selectionCallback = didSelect
     }
 
-    private var checkmarkView: UIImageView {
-        UIImageView(assetIdentifier: .checkmarkIcon).apply {
+    fileprivate var selectionStyle: Picker.List.SelectionStyle = .highlight()
+
+    private func accessory(selected: Bool) -> ListAccessoryType {
+        guard selected, case .checkmark(let tintColor) = selectionStyle else {
+            return .none
+        }
+
+        let checkmarkView = UIImageView(assetIdentifier: .checkmarkIcon).apply {
             $0.frame.size = 20
-            $0.tintColor = Picker.List.checkmarkTintColor
+            $0.tintColor = tintColor
             $0.isContentModeAutomaticallyAdjusted = true
         }
+
+        return .custom(checkmarkView)
     }
 
     lazy var items: [DynamicTableModel] = {
@@ -157,7 +170,7 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
                 title: $0.element.title,
                 subtitle: $0.element.subtitle,
                 image: $0.element.image,
-                accessory: $0.offset == selectedIndex ? .custom(checkmarkView) : .none,
+                accessory: accessory(selected: $0.offset == selectedIndex),
                 isSelected: $0.offset == selectedIndex
             ) { [weak self] indexPath, _ in
                 guard
@@ -172,6 +185,12 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
             }
         }
     }()
+
+    func configure(indexPath: IndexPath, cell: DynamicTableViewCell, item: DynamicTableModel) {
+        if selectedIndex != nil, case .highlight(let color) = selectionStyle {
+            cell.backgroundColor = item.isSelected ? color : .clear
+        }
+    }
 }
 
 // MARK: - BasicTextPickerListModel
@@ -181,7 +200,7 @@ private final class BasicTextPickerListModel: PickerListModel {
     private let selectedIndex: Int?
     private var selectionCallback: (String) -> Void
 
-    init(items: [String], selected item: String? = nil, handler: @escaping (String) -> Void) {
+    init(items: [String], selected item: String? = nil, didSelect: @escaping (String) -> Void) {
         self.rawItems = items
 
         if let item = item, let index = items.firstIndex(of: item) {
@@ -190,22 +209,30 @@ private final class BasicTextPickerListModel: PickerListModel {
             selectedIndex = nil
         }
 
-        selectionCallback = handler
+        selectionCallback = didSelect
     }
 
-    private var checkmarkView: UIImageView {
-        UIImageView(assetIdentifier: .checkmarkIcon).apply {
+    fileprivate var selectionStyle: Picker.List.SelectionStyle = .highlight()
+
+    private func accessory(selected: Bool) -> ListAccessoryType {
+        guard selected, case .checkmark(let tintColor) = selectionStyle else {
+            return .none
+        }
+
+        let checkmarkView = UIImageView(assetIdentifier: .checkmarkIcon).apply {
             $0.frame.size = 20
-            $0.tintColor = Picker.List.checkmarkTintColor
+            $0.tintColor = tintColor
             $0.isContentModeAutomaticallyAdjusted = true
         }
+
+        return .custom(checkmarkView)
     }
 
     lazy var items: [DynamicTableModel] = {
         rawItems.enumerated().map {
             DynamicTableModel(
                 title: $0.element,
-                accessory: $0.offset == selectedIndex ? .custom(checkmarkView) : .none,
+                accessory: accessory(selected: $0.offset == selectedIndex),
                 isSelected: $0.offset == selectedIndex
             ) { [weak self] indexPath, _ in
                 guard
@@ -223,6 +250,10 @@ private final class BasicTextPickerListModel: PickerListModel {
 
     func configure(indexPath: IndexPath, cell: DynamicTableViewCell, item: DynamicTableModel) {
         cell.titleLabel.textAlignment = .center
+
+        if selectedIndex != nil, case .highlight(let color) = selectionStyle {
+            cell.backgroundColor = item.isSelected ? color : .clear
+        }
     }
 }
 

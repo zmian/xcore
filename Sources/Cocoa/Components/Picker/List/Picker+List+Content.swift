@@ -11,13 +11,13 @@ extension Picker.List {
         private var contentViewportHeightConstraint: NSLayoutConstraint?
         private let model: PickerListModel
 
+        var isToolbarHidden = false
+
         /// The animation to use when reloading the table.
         var reloadAnimation: UITableView.RowAnimation = .automatic
 
-        /// The maximum number of items visible without scrolling.
-        var maxVisibleItemsCount = 5
-
-        var isToolbarHidden = false
+        /// The preferred maximum number of items visible without scrolling.
+        var preferredMaxVisibleItemsCount = 5
 
         init(model: PickerListModel) {
             self.model = model
@@ -118,9 +118,22 @@ extension Picker.List {
         }
 
         private var contentViewportHeight: CGFloat {
-            let contentHeight = tableView.contentSize.height
-            let itemHeight = contentHeight / CGFloat(model.items.count)
-            return min(contentHeight, itemHeight * CGFloat(maxVisibleItemsCount))
+            var preferredContentHeight: CGFloat {
+                let contentHeight = tableView.contentSize.height
+                let itemHeight = contentHeight / CGFloat(model.items.count)
+                return min(contentHeight, itemHeight * CGFloat(preferredMaxVisibleItemsCount))
+            }
+
+            let screenHeight = UIScreen.main.bounds.height
+            var remainingViewportHeight = screenHeight - (AppConstants.statusBarHeight * 2)
+
+            if !isToolbarHidden {
+                remainingViewportHeight -= DrawerScreen.appearance().toolbarHeight
+            }
+
+            remainingViewportHeight /= 2
+
+            return min(preferredContentHeight, remainingViewportHeight)
         }
 
         private var didScrollToSelectedItem = false
@@ -134,7 +147,7 @@ extension Picker.List {
             }
 
             let indexPath = IndexPath(item: index, section: 0)
-            tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
+            tableView.scrollToRow(at: indexPath, at: .none, animated: false)
         }
     }
 }

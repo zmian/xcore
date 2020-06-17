@@ -25,10 +25,10 @@ extension Picker {
     public static func present<T: PickerOptionsEnum>(
         selected item: T? = nil,
         configure: ((Picker) -> Void)? = nil,
-        _ handler: @escaping (_ item: T) -> Void
+        didSelect: @escaping (_ item: T) -> Void
     ) -> Picker {
         let model = BasicPickerModel(items: T.allCases, selected: item) { item in
-            handler(item)
+            didSelect(item)
         }
 
         let picker = Picker(model: model)
@@ -63,10 +63,10 @@ extension Picker {
         _ items: [T],
         selected item: T? = nil,
         configure: ((Picker) -> Void)? = nil,
-        _ handler: @escaping (_ item: T) -> Void
+        didSelect: @escaping (_ item: T) -> Void
     ) -> Picker {
         let model = BasicPickerModel(items: items, selected: item) { item in
-            handler(item)
+            didSelect(item)
         }
 
         let picker = Picker(model: model)
@@ -89,13 +89,15 @@ extension Picker {
     public static func present(
         _ items: [String],
         selected item: String? = nil,
-        _ handler: @escaping (_ item: String) -> Void
+        configure: ((Picker) -> Void)? = nil,
+        didSelect: @escaping (_ item: String) -> Void
     ) -> Picker {
         let model = BasicTextPickerModel(items: items, selected: item) { item in
-            handler(item)
+            didSelect(item)
         }
 
         let picker = Picker(model: model)
+        configure?(picker)
         picker.present()
         return picker
     }
@@ -119,7 +121,7 @@ private final class BasicPickerModel<T: PickerOptions>: PickerModel {
     private var selectedItem: T
     private var selectionCallback: (T) -> Void
 
-    init(items: @autoclosure @escaping () -> [T], selected item: T? = nil, handler: @escaping (T) -> Void) {
+    init(items: @autoclosure @escaping () -> [T], selected item: T? = nil, didSelect: @escaping (T) -> Void) {
         self.itemsProvider = items
         self.items = items()
 
@@ -129,7 +131,7 @@ private final class BasicPickerModel<T: PickerOptions>: PickerModel {
             selectedItem = self.items[0]
         }
 
-        selectionCallback = handler
+        selectionCallback = didSelect
     }
 
     private func setSelectedItem(_ item: T? = nil) {
@@ -181,7 +183,7 @@ private final class BasicTextPickerModel: PickerModel {
     private var selectedOption: String
     private var selectionCallback: (String) -> Void
 
-    init(items: [String], selected item: String? = nil, handler: @escaping (String) -> Void) {
+    init(items: [String], selected item: String? = nil, didSelect: @escaping (String) -> Void) {
         self.items = items
 
         if let item = item, let index = items.firstIndex(of: item) {
@@ -190,7 +192,7 @@ private final class BasicTextPickerModel: PickerModel {
             selectedOption = items.first!
         }
 
-        selectionCallback = handler
+        selectionCallback = didSelect
     }
 
     func selectedElement(at component: Int) -> Int {
