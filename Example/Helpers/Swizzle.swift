@@ -7,8 +7,7 @@
 import Foundation
 
 extension UIApplication {
-    open override var next: UIResponder? {
+    static func swizzle() {
         SwizzleManager.start()
-        return super.next
     }
 }
