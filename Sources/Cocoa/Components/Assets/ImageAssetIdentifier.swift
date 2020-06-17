@@ -105,8 +105,8 @@ extension ImageAssetIdentifier {
     static var caretDirectionForward: Self { propertyName() }
 
     // MARK: Shared UI Elements
-    public static var closeIcon: Self { propertyName() }
-    public static var closeIconFilled: Self { propertyName() }
+    public static var closeIcon = propertyName("closeIcon")
+    public static var closeIconFilled = propertyName("closeIconFilled")
 
     public static var disclosureIndicator: Self { propertyName() }
     public static var disclosureIndicatorFilled: Self { propertyName() }
