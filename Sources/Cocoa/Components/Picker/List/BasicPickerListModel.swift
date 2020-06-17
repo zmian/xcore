@@ -132,14 +132,18 @@ extension Picker.List {
 // MARK: - BasicPickerListModel
 
 private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
-    private let rawItems: [T]
-    private let selectedIndex: Int?
+    // Allow us to reload items where `T: PickerOptionsEnum`. See
+    // `reloadData` for usage.
+    private let itemsProvider: () -> [T]
+    private var rawItems: [T]
+    private var selectedIndex: Int?
     private var selectionCallback: (T) -> Void
 
-    init(items: [T], selected item: T? = nil, didSelect: @escaping (T) -> Void) {
-        self.rawItems = items
+    init(items: @autoclosure @escaping () -> [T], selected item: T? = nil, didSelect: @escaping (T) -> Void) {
+        self.itemsProvider = items
+        self.rawItems = items()
 
-        if let item = item, let index = items.firstIndex(of: item) {
+        if let item = item, let index = rawItems.firstIndex(of: item) {
             selectedIndex = index
         } else {
             selectedIndex = nil
@@ -148,7 +152,8 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
         selectionCallback = didSelect
     }
 
-    fileprivate var selectionStyle: Picker.List.SelectionStyle = .highlight()
+    private var hasTextOnly = true
+    fileprivate var selectionStyle: Picker.List.SelectionStyle = .highlight
 
     private func accessory(selected: Bool) -> ListAccessoryType {
         guard selected, case .checkmark(let tintColor) = selectionStyle else {
@@ -164,8 +169,8 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
         return .custom(checkmarkView)
     }
 
-    lazy var items: [DynamicTableModel] = {
-        rawItems.enumerated().map {
+    var items: [DynamicTableModel] {
+        let items = rawItems.enumerated().map {
             DynamicTableModel(
                 title: $0.element.title,
                 subtitle: $0.element.subtitle,
@@ -184,11 +189,36 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
                 DrawerScreen.dismiss()
             }
         }
-    }()
+
+        hasTextOnly = items.contains { $0.hasTextOnly }
+        return items
+    }
 
     func configure(indexPath: IndexPath, cell: DynamicTableViewCell, item: DynamicTableModel) {
+        if hasTextOnly {
+            cell.titleLabel.textAlignment = .center
+        }
+
         if selectedIndex != nil, case .highlight(let color) = selectionStyle {
             cell.backgroundColor = item.isSelected ? color : .clear
+        }
+    }
+
+    func reloadItems() {
+        // Get the current selected item
+        var currentSelectedItem: T?
+        if let index = selectedIndex, let item = rawItems.at(index) {
+            currentSelectedItem = item
+        }
+
+        // Switch to new items
+        rawItems = itemsProvider()
+
+        // Reselect the existing currentItem if it's still present in new items list.
+        if let item = currentSelectedItem, let index = rawItems.firstIndex(of: item) {
+            selectedIndex = index
+        } else {
+            selectedIndex = nil
         }
     }
 }
@@ -212,7 +242,7 @@ private final class BasicTextPickerListModel: PickerListModel {
         selectionCallback = didSelect
     }
 
-    fileprivate var selectionStyle: Picker.List.SelectionStyle = .highlight()
+    fileprivate var selectionStyle: Picker.List.SelectionStyle = .highlight
 
     private func accessory(selected: Bool) -> ListAccessoryType {
         guard selected, case .checkmark(let tintColor) = selectionStyle else {
@@ -261,15 +291,17 @@ private final class BasicTextPickerListModel: PickerListModel {
 
 private final class BasicItemPickerListModel: PickerListModel {
     private let _configure: Picker.List.ConfigureBlock?
+    private var hasTextOnly = true
     let items: [DynamicTableModel]
 
     init(items: [DynamicTableModel], configure: Picker.List.ConfigureBlock? = nil) {
         self.items = items
         self._configure = configure
+        hasTextOnly = items.contains { $0.hasTextOnly }
     }
 
     func configure(indexPath: IndexPath, cell: DynamicTableViewCell, item: DynamicTableModel) {
-        if item.isTextOnly {
+        if hasTextOnly {
             cell.titleLabel.textAlignment = .center
         }
 

@@ -9,7 +9,7 @@ import UIKit
 extension Picker.List {
     public typealias Model = PickerListModel
     public static var checkmarkDefaultTintColor = UIColor.appTint
-    public static var highlightDefaultColor = UIColor.appHighlightedBackground
+    public static var highlightDefaultColor = UIColor.appHighlightedBackground.alpha(0.8)
 
     public enum SelectionStyle {
         case checkmark(tintColor: UIColor)
