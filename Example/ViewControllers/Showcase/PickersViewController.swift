@@ -10,6 +10,8 @@ final class PickersViewController: DynamicTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = "Separators"
+
         tableView.sections = [Section(items: items())]
 
         tableView.configureCell { indexPath, cell, item in
