@@ -391,7 +391,6 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         }
     }
 
-
     // MARK: - Custom Self-sizing
 
     private let sizingCell = DynamicTableViewCell()
