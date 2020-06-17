@@ -47,6 +47,7 @@ open class DynamicTableViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupDynamicTableView()
+        didLoadView?(self)
     }
 
     private func setupDynamicTableView() {
@@ -58,5 +59,10 @@ open class DynamicTableViewController: UIViewController {
         tableViewConstraints = NSLayoutConstraint.Edges(
             tableView.anchor.edges.equalToSuperview().inset(contentInset).constraints
         )
+    }
+
+    private var didLoadView: ((DynamicTableViewController) -> Void)?
+    open func didLoadView(_ callback: @escaping (DynamicTableViewController) -> Void) {
+        didLoadView = callback
     }
 }

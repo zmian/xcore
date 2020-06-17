@@ -80,6 +80,9 @@ final class RootViewController: DynamicTableViewController {
             },
             .init(title: "Drawer Screen", subtitle: "Dynamic Table View inside Drawer Screen") { _, _ in
                 let vc = DynamicTableViewController(style: .plain)
+                vc.didLoadView {
+                    $0.view.backgroundColor = .clear
+                }
                 vc.tableView.sections = [
                     Section(items: [
                         DynamicTableModel(title: "Option 1", subtitle: "FeedViewController demonstration") { _, _ in
@@ -121,6 +124,7 @@ final class RootViewController: DynamicTableViewController {
                 let model = ExamplePickerListModel()
                 let list = PickerList(model: model).apply {
                     $0.reloadAnimation = .none
+                    $0.isToolbarHidden = true
                 }
                 list.present()
             }

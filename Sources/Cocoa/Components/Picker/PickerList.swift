@@ -26,30 +26,14 @@ extension PickerListModel {
 open class PickerList: DynamicTableViewController {
     private var contentViewportHeightConstraint: NSLayoutConstraint?
     private let model: PickerListModel
-    private lazy var toolbar = UIView().apply {
-        $0.addBorder(edges: .bottom, color: UIColor(hex: "DFE9F5"))
-        $0.backgroundColor = .clear
-
-        let dismissButton = UIButton(assetIdentifier: .closeIcon).apply {
-            $0.accessibilityIdentifier = "dismissButton"
-            $0.action { [weak self] _ in
-                self?.dismiss()
-            }
-        }
-
-        $0.addSubview(dismissButton)
-
-        dismissButton.anchor.make {
-            $0.trailing.equalToSuperview().inset(CGFloat.defaultPadding)
-            $0.centerY.equalToSuperview()
-        }
-    }
 
     /// The animation to use when reloading the table.
     open var reloadAnimation: UITableView.RowAnimation = .automatic
 
     /// The maximum number of items visible without scrolling.
     open var maxVisibleItemsCount = 5
+
+    open var isToolbarHidden = false
 
     public init(model: PickerListModel) {
         self.model = model
@@ -65,7 +49,6 @@ open class PickerList: DynamicTableViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupToolbar()
         view.backgroundColor = .clear
         tableView.apply {
             $0.alwaysBounceVertical = false
@@ -98,18 +81,6 @@ open class PickerList: DynamicTableViewController {
         }
 
         addContentSizeKvoObservers()
-    }
-
-    private func setupToolbar() {
-        let toolbarHeight: CGFloat = 44
-        contentInset.top = toolbarHeight
-
-        view.addSubview(toolbar)
-        toolbar.anchor.make {
-            $0.top.equalToSuperview()
-            $0.height.equalTo(toolbarHeight)
-            $0.horizontally.equalToSuperview()
-        }
     }
 
     private var kvoToken: NSKeyValueObservation?
