@@ -174,7 +174,7 @@ extension DrawerScreen {
         public var overlayColor = UIColor.black.alpha(0.3)
 
         /// The default value is `.top, AppConstants.cornerRadius`.
-        public var corners: (mask: CACornerMask, radius: CGFloat) = (.top, AppConstants.cornerRadius)
+        public var corners: (mask: CACornerMask, radius: CGFloat) = (.top, 11)
 
         /// A property to determine opacity for the blur effect.
         /// Use this property to soften the blur effect if needed.

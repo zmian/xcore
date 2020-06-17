@@ -10,6 +10,8 @@ extension DrawerScreen {
     final class Toolbar: XCView {
         let dismissButton = UIButton(assetIdentifier: .closeIcon).apply {
             $0.accessibilityIdentifier = "dismissButton"
+            $0.accessibilityLabel = "Dismiss Picker"
+            $0.contentTintColor = .appTint
         }
 
         override var intrinsicContentSize: CGSize {
@@ -17,7 +19,7 @@ extension DrawerScreen {
         }
 
         override func commonInit() {
-            addBorder(edges: .bottom, color: .appSeparator)
+            addBorder(edges: .bottom, color: .appSeparator, thickness: .onePixel)
             backgroundColor = .clear
 
             addSubview(dismissButton)
