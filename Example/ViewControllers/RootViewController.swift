@@ -109,14 +109,13 @@ final class RootViewController: DynamicTableViewController {
                 }
             },
             .init(title: "Picker List: Strings", subtitle: "Using Picker to select from an array of strings") { _, _ in
-                Picker.List.present([
-                    "Option 1",
-                    "Option 2",
-                    "Option 3",
-                    "Option 4",
-                    "Option 5",
-                    "Option 6"
-                ]) { selected in
+                let items = 10.map {
+                    "Option \($0)"
+                }
+
+                let middleItem = items[items.count / 2]
+
+                Picker.List.present(items, selected: middleItem) { selected in
                     print("Selected: \(selected)")
                 }
             },

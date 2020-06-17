@@ -49,6 +49,11 @@ extension Picker.List {
                     cell.subtitleFont = .app(style: .caption1)
                     strongSelf.model.configure(indexPath: indexPath, cell: cell, item: item)
                 }
+                $0.didScroll { [weak self] scrollView in
+                    if scrollView.isTracking {
+                        self?.didScrollToSelectedItem = true
+                    }
+                }
             }
 
             model.didChange { [weak self] in
@@ -71,6 +76,7 @@ extension Picker.List {
         private func addContentSizeKvoObservers() {
             kvoToken = tableView.observe(\.contentSize, options: .new) { [weak self] _, _ in
                 self?.contentSizeUpdated()
+                self?.scrollToSelectedItemIfNeeded()
             }
         }
 
@@ -115,6 +121,20 @@ extension Picker.List {
             let contentHeight = tableView.contentSize.height
             let itemHeight = contentHeight / CGFloat(model.items.count)
             return min(contentHeight, itemHeight * CGFloat(maxVisibleItemsCount))
+        }
+
+        private var didScrollToSelectedItem = false
+        private func scrollToSelectedItemIfNeeded() {
+            guard !didScrollToSelectedItem else {
+                return
+            }
+
+            guard let index = model.items.firstIndex(where: { $0.isSelected }) else {
+                return
+            }
+
+            let indexPath = IndexPath(item: index, section: 0)
+            tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
         }
     }
 }
