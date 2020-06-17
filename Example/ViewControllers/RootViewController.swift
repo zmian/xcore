@@ -109,7 +109,7 @@ final class RootViewController: DynamicTableViewController {
                 }
             },
             .init(title: "Picker List: Strings. SelectionStyle: highlight", subtitle: "Using Picker to select from an array of strings") { _, _ in
-                let items = 10.map {
+                let items = 50.map {
                     "Option \($0)"
                 }
 
