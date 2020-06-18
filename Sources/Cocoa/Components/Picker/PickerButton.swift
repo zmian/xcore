@@ -48,7 +48,7 @@ final public class PickerButton<T: PickerOptionsEnum>: UIButton {
             window.endEditing(true)
             strongSelf.didTap?(strongSelf.value)
             let oldValue = strongSelf.value!
-            Picker.present(selected: strongSelf.value) { [weak self] newValue in
+            Picker.List.present(selected: strongSelf.value) { [weak self] newValue in
                 guard let strongSelf = self else { return }
                 strongSelf.configure(newValue)
                 strongSelf.didChange?(oldValue, newValue)
