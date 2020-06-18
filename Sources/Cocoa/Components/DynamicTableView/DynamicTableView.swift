@@ -393,7 +393,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     // MARK: - Custom Self-sizing
 
-    private var isUsingCustomSelfSizing = true
+    private var isUsingCustomSelfSizing = false
 
     private let sizingCell = DynamicTableViewCell()
 
