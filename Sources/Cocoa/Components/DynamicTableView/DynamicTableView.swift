@@ -208,7 +208,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         //
         // But, it still reports incorrect content size. Thus, we are implementing
         // autosizing cells using `custom sizing cell`.
-        estimatedRowHeight = 0
+        estimatedRowHeight = isUsingCustomSelfSizing ? 0 : 100
         rowHeight = UITableView.automaticDimension
         isReorderingEnabled = allowsReordering
     }
@@ -393,6 +393,8 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
 
     // MARK: - Custom Self-sizing
 
+    private var isUsingCustomSelfSizing = true
+
     private let sizingCell = DynamicTableViewCell()
 
     private func cellHeight(for item: DynamicTableModel, width: CGFloat, indexPath: IndexPath) -> CGFloat {
@@ -409,7 +411,11 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     }
 
     public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        cellHeight(for: sections[indexPath], width: bounds.width, indexPath: indexPath)
+        if isUsingCustomSelfSizing {
+            return cellHeight(for: sections[indexPath], width: bounds.width, indexPath: indexPath)
+        } else {
+            return UITableView.automaticDimension
+        }
     }
 }
 
