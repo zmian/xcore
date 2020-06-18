@@ -8,19 +8,17 @@ import UIKit
 
 extension Picker.List {
     public typealias Model = PickerListModel
-    public static var checkmarkDefaultTintColor = UIColor.appTint
-    public static var highlightDefaultColor = UIColor.appHighlightedBackground.alpha(0.8)
 
     public enum SelectionStyle {
         case checkmark(tintColor: UIColor)
         case highlight(UIColor)
 
         public static var checkmark: Self {
-            .checkmark(tintColor: checkmarkDefaultTintColor)
+            .checkmark(tintColor: appearance().checkmarkTintColor)
         }
 
         public static var highlight: Self {
-            .highlight(highlightDefaultColor)
+            .highlight(appearance().highlightColor)
         }
     }
 }
@@ -34,6 +32,7 @@ extension Picker {
         }
 
         public lazy var selectionStyle: SelectionStyle = .highlight
+        public lazy var titleLabelNumberOfLines = Self.appearance().titleLabelNumberOfLines
 
         public var isToolbarHidden: Bool {
             get { content.isToolbarHidden }
@@ -67,5 +66,30 @@ extension Picker {
         public func reloadData() {
             content.reloadData()
         }
+    }
+}
+
+// MARK: - Appearance
+
+extension Picker.List {
+    /// This configuration exists to allow some of the properties to be configured
+    /// to match app's appearance style. The `UIAppearance` protocol doesn't work
+    /// when the stored properites are set using associated object.
+    ///
+    /// **Usage:**
+    ///
+    /// ```swift
+    /// Picker.List.appearance().overlayColor = UIColor.black.alpha(0.8)
+    /// ```
+    final public class Appearance: Appliable {
+        fileprivate static var shared = Appearance()
+
+        public var checkmarkTintColor = UIColor.appTint
+        public var highlightColor = UIColor.appHighlightedBackground.alpha(0.99)
+        public var titleLabelNumberOfLines = 0
+    }
+
+    public static func appearance() -> Appearance {
+        .shared
     }
 }
