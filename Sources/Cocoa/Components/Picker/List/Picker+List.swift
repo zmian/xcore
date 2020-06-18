@@ -32,7 +32,7 @@ extension Picker {
         }
 
         public lazy var selectionStyle: SelectionStyle = .highlight
-        public lazy var titleLabelNumberOfLines = Self.appearance().titleLabelNumberOfLines
+        public lazy var titleNumberOfLines = Self.appearance().titleNumberOfLines
 
         public var isToolbarHidden: Bool {
             get { content.isToolbarHidden }
@@ -86,7 +86,7 @@ extension Picker.List {
 
         public var checkmarkTintColor = UIColor.appTint
         public var highlightColor = UIColor.appHighlightedBackground.alpha(0.99)
-        public var titleLabelNumberOfLines = 0
+        public var titleNumberOfLines = 0
     }
 
     public static func appearance() -> Appearance {
