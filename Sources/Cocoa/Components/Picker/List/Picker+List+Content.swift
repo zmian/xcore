@@ -17,7 +17,7 @@ extension Picker.List {
         var reloadAnimation: UITableView.RowAnimation = .automatic
 
         /// The preferred maximum number of items visible without scrolling.
-        var preferredMaxVisibleItemsCount = 5
+        var preferredMaxVisibleItemsCount = Picker.List.appearance().preferredMaxVisibleItemsCount
 
         init(model: PickerListModel) {
             self.model = model

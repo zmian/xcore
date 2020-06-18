@@ -87,6 +87,9 @@ extension Picker.List {
         public var checkmarkTintColor = UIColor.appTint
         public var highlightColor = UIColor.appHighlightedBackground.alpha(0.99)
         public var titleNumberOfLines = 0
+
+        /// The preferred maximum number of items visible without scrolling.
+        public var preferredMaxVisibleItemsCount = 5
     }
 
     public static func appearance() -> Appearance {
