@@ -34,6 +34,7 @@ extension Picker.List {
         let picker = Picker.List(model: model)
         configure?(picker)
         model.selectionStyle = picker.selectionStyle
+        model.titleLabelNumberOfLines = picker.titleLabelNumberOfLines
         picker.present()
         return picker
     }
@@ -73,6 +74,7 @@ extension Picker.List {
         let picker = Picker.List(model: model)
         configure?(picker)
         model.selectionStyle = picker.selectionStyle
+        model.titleLabelNumberOfLines = picker.titleLabelNumberOfLines
         picker.present()
         return picker
     }
@@ -101,6 +103,7 @@ extension Picker.List {
         let picker = Picker.List(model: model)
         configure?(picker)
         model.selectionStyle = picker.selectionStyle
+        model.titleLabelNumberOfLines = picker.titleLabelNumberOfLines
         picker.present()
         return picker
     }
@@ -153,6 +156,7 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
     }
 
     private var hasTextOnly = true
+    fileprivate var titleLabelNumberOfLines = Picker.List.appearance().titleLabelNumberOfLines
     fileprivate var selectionStyle: Picker.List.SelectionStyle = .highlight
 
     private func accessory(selected: Bool) -> ListAccessoryType {
@@ -199,6 +203,8 @@ private final class BasicPickerListModel<T: PickerOptions>: PickerListModel {
             cell.titleLabel.textAlignment = .center
         }
 
+        cell.titleLabel.numberOfLines = titleLabelNumberOfLines
+
         if selectedIndex != nil, case .highlight(let color) = selectionStyle {
             cell.backgroundColor = item.isSelected ? color : .clear
         }
@@ -242,6 +248,7 @@ private final class BasicTextPickerListModel: PickerListModel {
         selectionCallback = didSelect
     }
 
+    fileprivate var titleLabelNumberOfLines = Picker.List.appearance().titleLabelNumberOfLines
     fileprivate var selectionStyle: Picker.List.SelectionStyle = .highlight
 
     private func accessory(selected: Bool) -> ListAccessoryType {
@@ -280,6 +287,7 @@ private final class BasicTextPickerListModel: PickerListModel {
 
     func configure(indexPath: IndexPath, cell: DynamicTableViewCell, item: DynamicTableModel) {
         cell.titleLabel.textAlignment = .center
+        cell.titleLabel.numberOfLines = titleLabelNumberOfLines
 
         if selectedIndex != nil, case .highlight(let color) = selectionStyle {
             cell.backgroundColor = item.isSelected ? color : .clear
@@ -304,7 +312,7 @@ private final class BasicItemPickerListModel: PickerListModel {
         if hasTextOnly {
             cell.titleLabel.textAlignment = .center
         }
-
+        cell.titleLabel.numberOfLines = Picker.List.appearance().titleLabelNumberOfLines
         _configure?(indexPath, cell, item)
     }
 }
