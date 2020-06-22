@@ -360,7 +360,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                     x: sectionRect.origin.x,
                     y: sectionRect.maxY,
                     width: sectionRect.width,
-                    height: fixedHeight ?? estimatedFooterHeight(in: section, width: sectionRect.width)
+                    height: footerInfo.height ?? estimatedFooterHeight(in: section, width: sectionRect.width)
                 )
                 $0.corners = sectionConfiguration.isTileEnabled ? (.bottom, sectionConfiguration.cornerRadius) : (.none, 0)
                 $0.shouldDim = shouldDimElements || sectionConfiguration.shouldDimElements
