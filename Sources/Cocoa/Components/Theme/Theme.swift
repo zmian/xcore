@@ -50,6 +50,7 @@ public struct Theme: Equatable {
     public let buttonBackgroundColor: UIColor
     public let buttonBackgroundColorSecondary: UIColor
     public let buttonBackgroundColorPill: UIColor
+    public let buttonSelectedBackgroundColor: UIColor
     public let statusBarStyle: UIStatusBarStyle
     public let chrome: Chrome.Style
 
@@ -67,6 +68,7 @@ public struct Theme: Equatable {
         buttonBackgroundColor: UIColor,
         buttonBackgroundColorSecondary: UIColor,
         buttonBackgroundColorPill: UIColor,
+        buttonSelectedBackgroundColor: UIColor,
         statusBarStyle: UIStatusBarStyle,
         chrome: Chrome.Style? = nil
     ) {
@@ -84,6 +86,7 @@ public struct Theme: Equatable {
         self.buttonBackgroundColor = buttonBackgroundColor
         self.buttonBackgroundColorSecondary = buttonBackgroundColorSecondary
         self.buttonBackgroundColorPill = buttonBackgroundColorPill
+        self.buttonSelectedBackgroundColor = buttonSelectedBackgroundColor
         self.statusBarStyle = statusBarStyle
         self.chrome = chrome ?? (isDark ? .color(backgroundColor) : .blurred)
     }
@@ -111,6 +114,7 @@ extension Theme {
         buttonBackgroundColor: .systemTint,
         buttonBackgroundColorSecondary: .systemTint,
         buttonBackgroundColorPill: .systemTint,
+        buttonSelectedBackgroundColor: .systemTint,
         statusBarStyle: .default
     )
 
@@ -130,6 +134,7 @@ extension Theme {
         buttonBackgroundColor: .systemTint,
         buttonBackgroundColorSecondary: .systemTint,
         buttonBackgroundColorPill: .systemTint,
+        buttonSelectedBackgroundColor: .systemTint,
         statusBarStyle: .lightContent
     )
 }
