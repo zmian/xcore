@@ -79,7 +79,10 @@ final public class SearchBarView: UIView {
 
     private weak var rightAccessoryView: UIView?
 
-    private lazy var stackView = UIStackView(arrangedSubviews: [searchBar, rightAccessoryView].compactMap { $0 }).apply {
+    private lazy var stackView = UIStackView(arrangedSubviews: [
+        searchBar,
+        rightAccessoryView
+    ].compactMap { $0 }).apply {
         $0.axis = .horizontal
         $0.setCustomSpacing(searchBarTrailingPadding, after: searchBar)
     }
