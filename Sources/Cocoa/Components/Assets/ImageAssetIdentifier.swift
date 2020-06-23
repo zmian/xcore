@@ -130,8 +130,8 @@ extension ImageAssetIdentifier {
     public static var filterSelectionIndicatorArrowIcon: Self { propertyName() }
     public static var info: Self { propertyName() }
     public static var locationIcon: Self { propertyName() }
-    public static var searchIcon: Self { propertyName() }
     public static var validationErrorIcon: Self { propertyName() }
+    public static var searchIcon = propertyName("searchIcon")
 }
 
 // MARK: - Xcore Buit-in Overridable Assets
