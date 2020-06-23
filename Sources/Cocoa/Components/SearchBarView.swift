@@ -14,7 +14,6 @@ extension SearchBarView {
 }
 
 final public class SearchBarView: UIView {
-    private var searchBarTrailingConstraint: NSLayoutConstraint?
     private var containerViewConstraints: NSLayoutConstraint.Edges!
     private let containerView = UIView()
     private let searchBar = UISearchBar()
@@ -22,7 +21,10 @@ final public class SearchBarView: UIView {
     private let bottomSeparatorView = SeparatorView()
 
     private var searchBarTrailingPadding: CGFloat {
-        style == .minimal ? .defaultPadding - .minimumPadding : 0
+        guard let rightAccessoryView = rightAccessoryView else {
+            return style == .minimal ? .defaultPadding - .minimumPadding : 0
+        }
+        return .defaultPadding
     }
 
     @objc dynamic public var style: UISearchBar.Style = .default {
@@ -75,7 +77,15 @@ final public class SearchBarView: UIView {
         }
     }
 
-    public init(placeholder: String = "Search") {
+    private weak var rightAccessoryView: UIView?
+
+    private lazy var stackView = UIStackView(arrangedSubviews: [searchBar, rightAccessoryView].compactMap { $0 }).apply {
+        $0.axis = .horizontal
+        $0.setCustomSpacing(searchBarTrailingPadding, after: searchBar)
+    }
+
+    public init(placeholder: String = "Search", rightAccessoryView: UIView? = nil) {
+        self.rightAccessoryView = rightAccessoryView
         super.init(frame: .zero)
         commonInit()
         // This must be called after the `UISearchBar` is added as subview
@@ -113,11 +123,10 @@ final public class SearchBarView: UIView {
             containerViewConstraints = NSLayoutConstraint.Edges(constraints)
         }
 
-        containerView.addSubview(searchBar)
-        searchBar.anchor.make {
+        containerView.addSubview(stackView)
+        stackView.anchor.make {
             $0.vertically.equalToSuperview()
-            $0.leading.equalToSuperview()
-            searchBarTrailingConstraint = $0.trailing.equalToSuperview().inset(searchBarTrailingPadding).constraints.first
+            $0.horizontally.equalToSuperview()
         }
 
         containerView.addSubview(topSeparatorView)
@@ -151,7 +160,7 @@ final public class SearchBarView: UIView {
         // Update built-in magnifying glass so the tint matches the app tint color
         setImage(assetIdentifier: .searchIcon, for: .search, size: magnifyingGlassSize)
 
-        searchBarTrailingConstraint?.constant = searchBarTrailingPadding
+        stackView.setCustomSpacing(searchBarTrailingPadding, after: searchBar)
     }
 
     private func updateSearchFieldBackgroundColorIfNeeded() {
