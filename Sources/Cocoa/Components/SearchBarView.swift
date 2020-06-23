@@ -20,11 +20,17 @@ final public class SearchBarView: UIView {
     private let topSeparatorView = SeparatorView()
     private let bottomSeparatorView = SeparatorView()
 
+    public var interitemSpacing: CGFloat = .defaultPadding {
+        didSet {
+            stackView.setCustomSpacing(searchBarTrailingPadding, after: searchBar)
+        }
+    }
+
     private var searchBarTrailingPadding: CGFloat {
         guard let rightAccessoryView = rightAccessoryView else {
             return style == .minimal ? .defaultPadding - .minimumPadding : 0
         }
-        return .defaultPadding
+        return interitemSpacing
     }
 
     @objc dynamic public var style: UISearchBar.Style = .default {
