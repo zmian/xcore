@@ -40,6 +40,8 @@ final public class SearchBarView: UIView {
         }
     }
 
+    public var hidesCancelButtonWhenEmptyAndDismissed: Bool = true
+
     /// The default value is `.zero`.
     public var contentInset: UIEdgeInsets = .zero {
         didSet {
@@ -213,16 +215,20 @@ final public class SearchBarView: UIView {
     }
 }
 
-extension SearchBarView {
+extension SearchBarView: KeyboardObservable {
     public func hideKeyboardIfNeeded() {
         guard searchBar.isFirstResponder else { return }
+        updateCancelButton(isKeyboardHidden: true)
+        resignFirstResponder()
+    }
 
+    public func updateCancelButton(isKeyboardHidden: Bool) {
+        guard hidesCancelButtonWhenEmptyAndDismissed else { return }
+        let isEmpty = searchBar.text == nil || (searchBar.text != nil && searchBar.text!.isEmpty)
         // Only hide cancel button if no text is present in the search bar
-        if searchBar.text == nil || (searchBar.text != nil && searchBar.text!.isEmpty) {
+        if (isKeyboardHidden && isEmpty) {
             searchBar.setShowsCancelButton(false, animated: true)
         }
-
-        resignFirstResponder()
     }
 
     public override var isFirstResponder: Bool {
@@ -243,6 +249,11 @@ extension SearchBarView {
     @discardableResult
     public override func resignFirstResponder() -> Bool {
         searchBar.resignFirstResponder()
+    }
+
+    public func keyboardFrameDidChange(_ payload: KeyboardPayload) {
+        guard searchBar.isFirstResponder else { return }
+        updateCancelButton(isKeyboardHidden: payload.height == 0.0)
     }
 }
 
