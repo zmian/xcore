@@ -279,10 +279,11 @@ extension Configuration where Type: UIButton {
         return .init(id: id) {
             let outerWidth: CGFloat = 20
             let selectedColor = selectedColor ?? id.selectedColor(button: $0)
+            let borderColor = (borderColor ?? id.borderColor(button: $0)).cgColor
 
             $0.accessibilityIdentifier = "radioButton"
             $0.layer.borderWidth = borderWidth
-            $0.layer.borderColor = id.borderColor(button: $0).cgColor
+            $0.layer.borderColor = borderColor
             $0.layer.masksToBounds = true
             $0.layer.cornerRadius = outerWidth / 2
 
