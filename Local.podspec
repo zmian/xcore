@@ -11,7 +11,8 @@ Pod::Spec.new do |s|
   s.requires_arc          = true
   s.ios.deployment_target = '12.0'
   s.pod_target_xcconfig   = {
-    'SWIFT_VERSION' => '5.1'
+    'SWIFT_VERSION' => '5.1',
+    'SWIFT_INSTALL_OBJC_HEADER' => 'NO'
   }
   # Fixed iOS 12 simulator runtime error: dyld: Library not loaded: /System/Library/Frameworks/CryptoKit.framework/CryptoKit
   # https://forums.swift.org/t/conditionally-use-cryptokit/30138/2
