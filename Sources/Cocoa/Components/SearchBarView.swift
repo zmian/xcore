@@ -27,7 +27,7 @@ final public class SearchBarView: UIView {
     }
 
     private var searchBarTrailingPadding: CGFloat {
-        guard let rightAccessoryView = rightAccessoryView else {
+        guard rightAccessoryView != nil else {
             return style == .minimal ? .defaultPadding - .minimumPadding : 0
         }
         return interitemSpacing
