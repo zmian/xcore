@@ -226,7 +226,7 @@ extension SearchBarView: KeyboardObservable {
         guard hidesCancelButtonWhenEmptyAndDismissed else { return }
         let isEmpty = searchBar.text == nil || (searchBar.text != nil && searchBar.text!.isEmpty)
         // Only hide cancel button if no text is present in the search bar
-        if (isKeyboardHidden && isEmpty) {
+        if isKeyboardHidden, isEmpty {
             searchBar.setShowsCancelButton(false, animated: true)
         }
     }
