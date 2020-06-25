@@ -238,7 +238,7 @@ extension Configuration where Type: UIButton {
         selectedColor: UIColor? = nil,
         textColor: UIColor? = nil,
         font: UIFont? = nil,
-        size: CGFloat = 24
+        size: CGFloat? = 24
     ) -> Self {
         let id: Identifier = .checkbox
         return .init(id: id) {
@@ -259,8 +259,17 @@ extension Configuration where Type: UIButton {
             $0.textImageSpacing = 0
             $0.contentEdgeInsets = 0
 
-            $0.anchor.make {
-                $0.size.equalTo(size)
+            if let size = size {
+                if $0.constraints.firstAttribute(.width) != nil {
+                    // Updated existing constraints.
+                    $0.constraints.firstAttribute(.width)?.constant = size
+                    $0.constraints.firstAttribute(.height)?.constant = size
+                } else {
+                    // Created existing constraints.
+                    $0.anchor.make {
+                        $0.size.equalTo(size)
+                    }
+                }
             }
 
             let unfilledImage = UIImage(assetIdentifier: .checkmarkIconUnfilled)
@@ -292,8 +301,15 @@ extension Configuration where Type: UIButton {
             $0.layer.masksToBounds = true
             $0.layer.cornerRadius = size / 2
 
-            $0.anchor.make {
-                $0.size.equalTo(size)
+            if $0.constraints.firstAttribute(.width) != nil {
+                // Updated existing constraints.
+                $0.constraints.firstAttribute(.width)?.constant = size
+                $0.constraints.firstAttribute(.height)?.constant = size
+            } else {
+                // Created existing constraints.
+                $0.anchor.make {
+                    $0.size.equalTo(size)
+                }
             }
 
             let scale: CGFloat = 0.15
