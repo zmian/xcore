@@ -185,6 +185,10 @@ extension Array where Element: NSLayoutConstraint {
     func firstAttribute(_ value: Anchor.Attributes) -> NSLayoutConstraint? {
         first { $0.anchorAttributes == value }
     }
+
+    func attributes(_ value: Anchor.Attributes) -> [NSLayoutConstraint] {
+        filter { $0.anchorAttributes == value }
+    }
 }
 
 extension Array where Element == NSLayoutConstraint.Axis {
