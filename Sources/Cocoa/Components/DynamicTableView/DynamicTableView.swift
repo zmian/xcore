@@ -63,6 +63,11 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         willDisplayCell = callback
     }
 
+    private var didScroll: ((_ tableView: DynamicTableView) -> Void)?
+    open func didScroll(_ callback: @escaping (_ tableView: DynamicTableView) -> Void) {
+        didScroll = callback
+    }
+
     private var configureHeader: ((_ section: Int, _ headerView: UITableViewHeaderFooterView, _ text: String?) -> Void)?
     open func configureHeader(_ callback: @escaping (_ section: Int, _ headerView: UITableViewHeaderFooterView, _ text: String?) -> Void) {
         configureHeader = callback
@@ -195,7 +200,15 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         dataSource = self
         reorderDelegate = self
         backgroundColor = .clear
-        estimatedRowHeight = 44
+        // There is UIKit bug that causes `UITableView` to jump when using
+        // `estimatedRowHeight` and reloading cells/sections or the entire table view.
+        //
+        // One solution is to overshoot the estimated row height which causes the table
+        // view to properly calculate the height for cells.
+        //
+        // But, it still reports incorrect content size. Thus, we are implementing
+        // autosizing cells using `custom sizing cell`.
+        estimatedRowHeight = isUsingCustomSelfSizing ? 0 : 100
         rowHeight = UITableView.automaticDimension
         isReorderingEnabled = allowsReordering
     }
@@ -267,7 +280,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
             }
         }
         didSelectItem?(indexPath, item)
-        item.handler?(indexPath, item)
+        item.didSelect?(indexPath, item)
     }
 
     open func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -377,6 +390,41 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
             checkboxAccessoryView(at: indexPath)?.isSelected = false
         }
     }
+
+    // MARK: - Custom Self-sizing
+
+    private var isUsingCustomSelfSizing = false
+
+    private let sizingCell = DynamicTableViewCell()
+
+    private func cellHeight(for item: DynamicTableModel, width: CGFloat, indexPath: IndexPath) -> CGFloat {
+        sizingCell.apply {
+            $0.prepareForReuse()
+            $0.configure(item)
+            configureAccessoryView($0, type: item.accessory, indexPath: indexPath)
+            $0.updateConstraints()
+            $0.setNeedsLayout()
+            $0.layoutIfNeeded()
+        }
+        let size = sizingCell.contentView.sizeFitting(width: width)
+        return size.height
+    }
+
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if isUsingCustomSelfSizing {
+            return cellHeight(for: sections[indexPath], width: bounds.width, indexPath: indexPath)
+        } else {
+            return UITableView.automaticDimension
+        }
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension DynamicTableView {
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        didScroll?(self)
+    }
 }
 
 // MARK: - AccessoryView
@@ -393,7 +441,7 @@ extension DynamicTableView {
             case .disclosureIndicator:
                 cell.accessoryView = UIImageView(assetIdentifier: .disclosureIndicator)
                 cell.accessoryView?.tintColor = disclosureIndicatorTintColor
-            case .toggle(let (isOn, callback)):
+            case .toggle(let isOn, let callback):
                 cell.selectionStyle = .none
                 let accessorySwitch = UISwitch().apply {
                     $0.isOn = isOn
@@ -402,13 +450,14 @@ extension DynamicTableView {
                     }
                 }
                 cell.accessoryView = accessorySwitch
-            case .checkbox(let (isSelected, _)):
+            case .checkbox(let isSelected, _):
                 cell.selectionStyle = .none
                 let accessoryCheckbox = UIButton(configuration: .checkbox(
                     normalColor: checkboxOffTintColor,
                     selectedColor: accessoryTintColor,
                     textColor: footerTextColor,
-                    font: footerFont
+                    font: footerFont,
+                    size: nil
                 )).apply {
                     $0.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
                     $0.isSelected = isSelected

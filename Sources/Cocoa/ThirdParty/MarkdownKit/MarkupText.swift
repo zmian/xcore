@@ -82,9 +82,9 @@ extension MarkupTextBuilder {
         switch block {
             case .text(let text):
                 return text
-            case .textColor(let (color, tail)):
+            case .textColor(let color, let tail):
                 return "{\(color)|\(parse(tail))}"
-            case .font(let (font, tail)):
+            case .font(let font, let tail):
                 return "{font:\(font.fontName),\(font.pointSize)pt|\(parse(tail))}"
             case .underline(let tail):
                 return "=_\(parse(tail))=_"

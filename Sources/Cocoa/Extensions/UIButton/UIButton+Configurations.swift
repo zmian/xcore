@@ -237,7 +237,8 @@ extension Configuration where Type: UIButton {
         normalColor: UIColor? = nil,
         selectedColor: UIColor? = nil,
         textColor: UIColor? = nil,
-        font: UIFont? = nil
+        font: UIFont? = nil,
+        size: CGFloat? = 24
     ) -> Self {
         let id: Identifier = .checkbox
         return .init(id: id) {
@@ -258,6 +259,19 @@ extension Configuration where Type: UIButton {
             $0.textImageSpacing = 0
             $0.contentEdgeInsets = 0
 
+            if let size = size {
+                if $0.constraints.firstAttribute(.width) != nil {
+                    // Updated existing constraints.
+                    $0.constraints.firstAttribute(.width)?.constant = size
+                    $0.constraints.firstAttribute(.height)?.constant = size
+                } else {
+                    // Created existing constraints.
+                    $0.anchor.make {
+                        $0.size.equalTo(size)
+                    }
+                }
+            }
+
             let unfilledImage = UIImage(assetIdentifier: .checkmarkIconUnfilled)
             let filledImage = UIImage(assetIdentifier: .checkmarkIconFilled)
             $0.setImage(unfilledImage.tintColor(normalColor), for: .normal)
@@ -273,27 +287,35 @@ extension Configuration where Type: UIButton {
     public static func radioButton(
         selectedColor: UIColor? = nil,
         borderColor: UIColor? = nil,
-        borderWidth: CGFloat = 0.5
+        borderWidth: CGFloat = 0.5,
+        size: CGFloat = 24
     ) -> Self {
         let id: Identifier = .radioButton
         return .init(id: id) {
-            let outerWidth: CGFloat = 20
             let selectedColor = selectedColor ?? id.selectedColor(button: $0)
+            let borderColor = (borderColor ?? id.borderColor(button: $0)).cgColor
 
             $0.accessibilityIdentifier = "radioButton"
             $0.layer.borderWidth = borderWidth
-            $0.layer.borderColor = id.borderColor(button: $0).cgColor
+            $0.layer.borderColor = borderColor
             $0.layer.masksToBounds = true
-            $0.layer.cornerRadius = outerWidth / 2
+            $0.layer.cornerRadius = size / 2
 
-            $0.anchor.make {
-                $0.size.equalTo(outerWidth)
+            if $0.constraints.firstAttribute(.width) != nil {
+                // Updated existing constraints.
+                $0.constraints.firstAttribute(.width)?.constant = size
+                $0.constraints.firstAttribute(.height)?.constant = size
+            } else {
+                // Created existing constraints.
+                $0.anchor.make {
+                    $0.size.equalTo(size)
+                }
             }
 
             let scale: CGFloat = 0.15
             $0.image = UIImage()
-            let inset = outerWidth * scale
-            $0.imageView?.cornerRadius = (outerWidth - inset * 2) / 2
+            let inset = size * scale
+            $0.imageView?.cornerRadius = (size - inset * 2) / 2
 
             $0.imageView?.anchor.make {
                 $0.edges.equalToSuperview().inset(inset)

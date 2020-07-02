@@ -21,20 +21,28 @@ open class XCTabBarController: UITabBarController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
-        tabBar.backgroundColor = Theme.current.backgroundColor
+        setupTabs()
     }
     
-    open func reloadTabs(_ tabs: [UITabBarController.TabItem]) {
+    private func setupTabs() {
+        tabBar.isTransparent = true
+        tabBar.backgroundColor = Theme.current.backgroundColor
+    }
+
+    /// Reloads the tabs with an option to reusing existing view controllers.
+    ///
+    /// - Parameters:
+    ///   - tabs: The list of new tabs.
+    ///   - reuseExistingViewControllers: A boolean property indicating whether to
+    ///     use any existing view controller if the `tabs` list contains any of the
+    ///     same tab as before.
+    open func reloadTabs(_ tabs: [UITabBarController.TabItem], reuse reuseExistingViewControllers: Bool = true) {
         guard isViewLoaded else {
             return
         }
 
+        viewControllers = reusingViewControllers(for: tabs)
         self.tabs = tabs
-
-        viewControllers = tabs.map {
-            NavigationController(rootViewController: $0.viewController())
-        }
-
         tabBar.configure(tabs)
     }
 
@@ -86,5 +94,22 @@ extension XCTabBarController: UITabBarControllerDelegate {
         }
 
         didSelectTabBarItem(tabItem)
+    }
+}
+
+// MARK: - Reusing
+
+extension XCTabBarController {
+    private func reusingViewControllers(for newTabs: [UITabBarController.TabItem]) -> [UIViewController] {
+        newTabs.map { tab -> UIViewController in
+            guard
+                let existingTabIndex = tabs.firstIndex(of: tab),
+                let existingVC = viewControllers?.at(existingTabIndex)
+            else {
+                return tab.viewController().embedInNavigationControllerIfNeeded()
+            }
+
+            return existingVC
+        }
     }
 }

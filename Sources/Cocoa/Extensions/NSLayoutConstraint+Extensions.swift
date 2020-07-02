@@ -83,6 +83,7 @@ extension NSLayoutConstraint {
             constant: constant
         )
         newConstraint.priority = priority
+        newConstraint.anchorAttributes = anchorAttributes
         deactivate()
         firstItem?.removeConstraint(self)
         newConstraint.activate()
@@ -104,6 +105,7 @@ extension NSLayoutConstraint {
             multiplier: multiplier,
             constant: constant
         )
+        newConstraint.anchorAttributes = anchorAttributes
         deactivate()
         firstItem?.removeConstraint(self)
         newConstraint.activate()
@@ -182,6 +184,10 @@ extension NSLayoutConstraint {
 extension Array where Element: NSLayoutConstraint {
     func firstAttribute(_ value: Anchor.Attributes) -> NSLayoutConstraint? {
         first { $0.anchorAttributes == value }
+    }
+
+    func attributes(_ value: Anchor.Attributes) -> [NSLayoutConstraint] {
+        filter { $0.anchorAttributes == value }
     }
 }
 

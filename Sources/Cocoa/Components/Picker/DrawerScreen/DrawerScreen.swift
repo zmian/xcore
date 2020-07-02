@@ -11,10 +11,14 @@ import UIKit
 public protocol DrawerScreenContent {
     var drawerContentView: UIView { get }
     func didDismiss()
+    var isToolbarHidden: Bool { get }
 }
 
 extension DrawerScreenContent {
     public func didDismiss() {}
+    public var isToolbarHidden: Bool {
+        true
+    }
 }
 
 extension UIView: DrawerScreenContent {
@@ -40,7 +44,16 @@ final public class DrawerScreen: NSObject {
         $0.duration = .init(.fast)
     }
 
+    private lazy var toolbar = Toolbar().apply {
+        $0.height = Self.appearance().toolbarHeight
+        $0.dismissButton.action { [weak self] _ in
+            self?.dismiss()
+        }
+    }
+
     private let modalView = BlurView().apply {
+        let corners = appearance().corners
+        $0.roundCorners(corners.mask, radius: corners.radius)
         $0.blurOpacity = appearance().blurOpacity
     }
 
@@ -64,6 +77,16 @@ final public class DrawerScreen: NSObject {
                 self?.dismiss()
             }
         })
+
+        setupToolbar()
+    }
+
+    private func setupToolbar() {
+        modalView.addSubview(toolbar)
+        toolbar.anchor.make {
+            $0.top.equalToSuperview()
+            $0.horizontally.equalToSuperview()
+        }
     }
 
     deinit {
@@ -71,12 +94,14 @@ final public class DrawerScreen: NSObject {
     }
 
     func present(_ content: Content) {
+        toolbar.isHidden = content.isToolbarHidden
         presentedContent = content
         let view = content.drawerContentView
         view.backgroundColor = .clear
         modalView.addSubview(view)
         view.anchor.make {
-            $0.edges.equalToSuperviewSafeArea()
+            let inset = content.isToolbarHidden ? 0 : toolbar.intrinsicContentSize.height
+            $0.edges.equalToSuperviewSafeArea().inset(UIEdgeInsets(top: inset))
         }
 
         // Presentation
@@ -100,11 +125,12 @@ final public class DrawerScreen: NSObject {
         UIView.animate(withDuration: .fast, animations: {
             self.hud.view.layoutSubviews()
         }, completion: { _ in
-            self.hud.hide()
-            presentedContent.drawerContentView.removeFromSuperview()
-            presentedContent.didDismiss()
-            self.presentedContent = nil
-            callback?()
+            self.hud.hide { [weak self] in
+                presentedContent.drawerContentView.removeFromSuperview()
+                presentedContent.didDismiss()
+                self?.presentedContent = nil
+                callback?()
+            }
         })
     }
 }
@@ -147,13 +173,19 @@ extension DrawerScreen {
     /// ```
     final public class Appearance: Appliable {
         fileprivate static var shared = Appearance()
-        public var overlayColor = UIColor.black.alpha(0.1)
+        public var overlayColor = UIColor.black.alpha(0.3)
 
-        /// A property to determine opacity for the blur effect.
-        /// Use this property to soften the blur effect if needed.
+        /// A property to determine opacity for the blur effect. Use this property to
+        /// soften the blur effect if needed.
         ///
         /// The default value is `0.3`.
         public var blurOpacity: CGFloat = 0.3
+
+        /// The default value is `.top, 11`.
+        public var corners: (mask: CACornerMask, radius: CGFloat) = (.top, 11)
+
+        /// The default value is `AppConstants.uiControlsHeight`.
+        public var toolbarHeight: CGFloat = AppConstants.uiControlsHeight
     }
 
     public static func appearance() -> Appearance {

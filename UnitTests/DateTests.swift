@@ -196,7 +196,7 @@ final class DateTest: XCTestCase {
         XCTAssertEqual(expectedDate, adjustedDate)
     }
 
-    func testBeginningOfDate() {
+    func testStartOfDate() {
         let components: [Calendar.Component] = [.year, .month, .day, .hour, .minute]
         let dateToAdjust = Date(year: 2020, month: 5, day: 4, hour: 21, minute: 11, second: 22)
 
@@ -219,11 +219,17 @@ final class DateTest: XCTestCase {
                     XCTFail("Unsopported test case")
             }
 
-            let beginningOfDate = dateToAdjust.startOf(component)
+            let startOfDate = dateToAdjust.startOf(component)
             print("Expected Date = \(expectedDate)")
-            print("Receieved Result = \(beginningOfDate)")
-            XCTAssertEqual(expectedDate, beginningOfDate)
+            print("Receieved Result = \(startOfDate)")
+            XCTAssertEqual(expectedDate, startOfDate)
         }
+    }
+
+    func testStartOfDate_Calendar() {
+        let expectedDate = Date(year: 2020, month: 1, day: 1, calendar: .current)
+        let adjustedDate = expectedDate.startOf(.month, in: .current)
+        XCTAssertEqual(expectedDate, adjustedDate)
     }
 
     func testEndOfDate() {

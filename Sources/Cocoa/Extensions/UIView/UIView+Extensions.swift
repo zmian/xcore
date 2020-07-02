@@ -29,16 +29,12 @@ import UIKit
         }
     }
 
-    open func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
-        if corners == .none || radius == 0 {
-            layer.mask = nil
-            return
-        }
-
-        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(radius))
-        layer.masksToBounds = true
-        layer.mask = CAShapeLayer().apply {
-            $0.path = path.cgPath
+    open func roundCorners(_ mask: CACornerMask, radius: CGFloat) {
+        layer.cornerRadius = radius
+        layer.maskedCorners = mask
+        layer.masksToBounds = radius > 0
+        if #available(iOS 13.0, *) {
+            layer.cornerCurve = .continuous
         }
     }
 

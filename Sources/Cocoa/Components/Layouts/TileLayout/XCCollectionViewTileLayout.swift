@@ -327,7 +327,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                 )
 
                 if sectionConfiguration.isTileEnabled {
-                    var corners: UIRectCorner = .none
+                    var corners: CACornerMask = .none
                     if !headerInfo.enabled, item == 0 {
                         corners.formUnion(.top)
                     }
@@ -360,7 +360,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
                     x: sectionRect.origin.x,
                     y: sectionRect.maxY,
                     width: sectionRect.width,
-                    height: fixedHeight ?? estimatedFooterHeight(in: section, width: sectionRect.width)
+                    height: footerInfo.height ?? estimatedFooterHeight(in: section, width: sectionRect.width)
                 )
                 $0.corners = sectionConfiguration.isTileEnabled ? (.bottom, sectionConfiguration.cornerRadius) : (.none, 0)
                 $0.shouldDim = shouldDimElements || sectionConfiguration.shouldDimElements
@@ -391,7 +391,7 @@ open class XCCollectionViewTileLayout: UICollectionViewLayout, DimmableLayout {
             forDecorationViewOfKind: UICollectionElementKindSectionBackground,
             with: indexPath
         ).apply {
-            $0.corners = (.allCorners, sectionConfiguration.cornerRadius)
+            $0.corners = (.all, sectionConfiguration.cornerRadius)
             $0.zIndex = (attributesBySection[section].first?.zIndex ?? 0 ) - 1
             $0.shouldDim = shouldDimElements || sectionConfiguration.shouldDimElements
             $0.frame = sectionRects[section]

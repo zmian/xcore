@@ -17,6 +17,20 @@ extension URL {
 
         self.init(string: string)
     }
+
+    /// GraphQL operation name associated with the request.
+    ///
+    /// ```
+    /// let url = URL(string: "https://example.com/?q=HelloWorld")!
+    /// print(url.queryItem(named: "q")) // "HelloWorld"
+    /// ```
+    public func queryItem(named name: String) -> String? {
+        guard let queryItems = URLComponents(url: self, resolvingAgainstBaseURL: true)?.queryItems else {
+            return nil
+        }
+
+        return queryItems.first { $0.name == name }?.value
+    }
 }
 
 extension URL {

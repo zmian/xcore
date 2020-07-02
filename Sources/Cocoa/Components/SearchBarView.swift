@@ -14,15 +14,23 @@ extension SearchBarView {
 }
 
 final public class SearchBarView: UIView {
-    private var searchBarTrailingConstraint: NSLayoutConstraint?
     private var containerViewConstraints: NSLayoutConstraint.Edges!
     private let containerView = UIView()
     private let searchBar = UISearchBar()
     private let topSeparatorView = SeparatorView()
     private let bottomSeparatorView = SeparatorView()
 
+    public var interitemSpacing: CGFloat = .defaultPadding {
+        didSet {
+            stackView.setCustomSpacing(searchBarTrailingPadding, after: searchBar)
+        }
+    }
+
     private var searchBarTrailingPadding: CGFloat {
-        style == .minimal ? .defaultPadding - .minimumPadding : 0
+        guard rightAccessoryView != nil else {
+            return style == .minimal ? .defaultPadding - .minimumPadding : 0
+        }
+        return interitemSpacing
     }
 
     @objc dynamic public var style: UISearchBar.Style = .default {
@@ -31,6 +39,8 @@ final public class SearchBarView: UIView {
             updateStyle()
         }
     }
+
+    public var hidesCancelButtonWhenEmptyAndDismissed: Bool = true
 
     /// The default value is `.zero`.
     public var contentInset: UIEdgeInsets = .zero {
@@ -75,7 +85,18 @@ final public class SearchBarView: UIView {
         }
     }
 
-    public init(placeholder: String = "Search") {
+    private weak var rightAccessoryView: UIView?
+
+    private lazy var stackView = UIStackView(arrangedSubviews: [
+        searchBar,
+        rightAccessoryView
+    ].compactMap { $0 }).apply {
+        $0.axis = .horizontal
+        $0.setCustomSpacing(searchBarTrailingPadding, after: searchBar)
+    }
+
+    public init(placeholder: String = "Search", rightAccessoryView: UIView? = nil) {
+        self.rightAccessoryView = rightAccessoryView
         super.init(frame: .zero)
         commonInit()
         // This must be called after the `UISearchBar` is added as subview
@@ -113,11 +134,10 @@ final public class SearchBarView: UIView {
             containerViewConstraints = NSLayoutConstraint.Edges(constraints)
         }
 
-        containerView.addSubview(searchBar)
-        searchBar.anchor.make {
+        containerView.addSubview(stackView)
+        stackView.anchor.make {
             $0.vertically.equalToSuperview()
-            $0.leading.equalToSuperview()
-            searchBarTrailingConstraint = $0.trailing.equalToSuperview().inset(searchBarTrailingPadding).constraints.first
+            $0.horizontally.equalToSuperview()
         }
 
         containerView.addSubview(topSeparatorView)
@@ -151,7 +171,7 @@ final public class SearchBarView: UIView {
         // Update built-in magnifying glass so the tint matches the app tint color
         setImage(assetIdentifier: .searchIcon, for: .search, size: magnifyingGlassSize)
 
-        searchBarTrailingConstraint?.constant = searchBarTrailingPadding
+        stackView.setCustomSpacing(searchBarTrailingPadding, after: searchBar)
     }
 
     private func updateSearchFieldBackgroundColorIfNeeded() {
@@ -195,16 +215,20 @@ final public class SearchBarView: UIView {
     }
 }
 
-extension SearchBarView {
+extension SearchBarView: KeyboardObservable {
     public func hideKeyboardIfNeeded() {
         guard searchBar.isFirstResponder else { return }
+        updateCancelButton(isKeyboardHidden: true)
+        resignFirstResponder()
+    }
 
+    public func updateCancelButton(isKeyboardHidden: Bool) {
+        guard hidesCancelButtonWhenEmptyAndDismissed else { return }
+        let isEmpty = searchBar.text == nil || (searchBar.text != nil && searchBar.text!.isEmpty)
         // Only hide cancel button if no text is present in the search bar
-        if searchBar.text == nil || (searchBar.text != nil && searchBar.text!.isEmpty) {
+        if isKeyboardHidden, isEmpty {
             searchBar.setShowsCancelButton(false, animated: true)
         }
-
-        resignFirstResponder()
     }
 
     public override var isFirstResponder: Bool {
@@ -225,6 +249,11 @@ extension SearchBarView {
     @discardableResult
     public override func resignFirstResponder() -> Bool {
         searchBar.resignFirstResponder()
+    }
+
+    public func keyboardFrameDidChange(_ payload: KeyboardPayload) {
+        guard searchBar.isFirstResponder else { return }
+        updateCancelButton(isKeyboardHidden: payload.height == 0.0)
     }
 }
 

@@ -8,7 +8,7 @@ import UIKit
 
 open class DynamicTableViewController: UIViewController {
     private var tableViewConstraints: NSLayoutConstraint.Edges!
-    open private(set) lazy var tableView = DynamicTableView(style: self.style, options: self.cellOptions)
+    open private(set) lazy var tableView = DynamicTableView(style: style, options: cellOptions)
     /// Style must be set before accessing `tableView` to ensure that it is applied correctly.
     open var style: UITableView.Style = .plain
     open var cellOptions: CellOptions = .none {
@@ -47,6 +47,7 @@ open class DynamicTableViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Theme.current.backgroundColor
         setupDynamicTableView()
+        didLoadView?(self)
     }
 
     private func setupDynamicTableView() {
@@ -58,5 +59,10 @@ open class DynamicTableViewController: UIViewController {
         tableViewConstraints = NSLayoutConstraint.Edges(
             tableView.anchor.edges.equalToSuperview().inset(contentInset).constraints
         )
+    }
+
+    private var didLoadView: ((DynamicTableViewController) -> Void)?
+    open func didLoadView(_ callback: @escaping (DynamicTableViewController) -> Void) {
+        didLoadView = callback
     }
 }

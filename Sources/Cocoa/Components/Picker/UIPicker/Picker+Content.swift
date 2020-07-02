@@ -11,9 +11,22 @@ extension Picker {
         private static let viewableItemsCount = 5
 
         private let model: PickerModel
-        private let toolbar = InputToolbar().apply {
+        private lazy var toolbar = InputToolbar().apply {
             $0.backgroundColor = .clear
+            $0.didTapDone { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.updateSelectedRows()
+                strongSelf.model.pickerDidTapDone()
+                strongSelf.dismiss()
+            }
+
+            $0.didTapCancel { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.model.pickerDidCancel()
+                strongSelf.dismiss()
+            }
         }
+
         private lazy var pickerView = UIPickerView().apply {
             $0.delegate = self
             $0.dataSource = self
@@ -41,19 +54,6 @@ extension Picker {
             for i in 0..<model.numberOfComponents() {
                 let element = model.selectedElement(at: i)
                 pickerView.selectRow(element, inComponent: i, animated: false)
-            }
-
-            toolbar.didTapDone { [weak self] in
-                guard let strongSelf = self else { return }
-                strongSelf.updateSelectedRows()
-                strongSelf.model.pickerDidTapDone()
-                strongSelf.dismiss()
-            }
-
-            toolbar.didTapCancel { [weak self] in
-                guard let strongSelf = self else { return }
-                strongSelf.model.pickerDidCancel()
-                strongSelf.dismiss()
             }
         }
 

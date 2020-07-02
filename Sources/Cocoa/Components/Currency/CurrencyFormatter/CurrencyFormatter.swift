@@ -10,25 +10,18 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
     public static let shared = CurrencyFormatter()
 
     /// This formatter must be used only to transform Double values into US dollars.
+    /// Reference: http://unicode.org/reports/tr35/tr35-10.html#Number_Format_Patterns
     private lazy var formatter = NumberFormatter().apply {
         $0.numberStyle = .currency
         $0.locale = locale
-        $0.positiveFormat = defaultPositiveFormat
-        $0.negativeFormat = defaultNegativeFormat
+        $0.positiveFormat = "¤#,##0.00"
+        $0.negativeFormat = "-¤#,##0.00"
         // We need to add the $-Symbol manually in order to support different locals but
         // keep $ sign at the correct position to keep the design consistent
         // (i.e., Germany: 1.000,11 $ -> $1.000,11).
         $0.currencySymbol = currencySymbol
         $0.isDecimalEnabled = true
     }
-
-    // Separators will get replaced by locale ones.
-    /// `¤#,##0.00`
-    private let defaultFormat = "¤#,##0.00"
-    /// `¤#,##0.00`
-    private let defaultPositiveFormat = "¤#,##0.00"
-    /// `-¤#,##0.00`
-    private let defaultNegativeFormat = "-¤#,##0.00"
 
     /// The locale of the receiver.
     ///
@@ -247,11 +240,13 @@ extension NumberFormatter {
 
 extension CurrencyFormatter {
     private func with<T>(sign: Money.Sign, _ block: () -> T) -> T {
-        formatter.positiveFormat = sign.plus + defaultFormat
-        formatter.negativeFormat = sign.minus + defaultFormat
+        let existingPositivePrefix = formatter.positivePrefix
+        let existingNegativePrefix = formatter.negativePrefix
+        formatter.positivePrefix = sign.plus + formatter.currencySymbol
+        formatter.negativePrefix = sign.minus + formatter.currencySymbol
         let result = block()
-        formatter.positiveFormat = defaultPositiveFormat
-        formatter.negativeFormat = defaultNegativeFormat
+        formatter.positivePrefix = existingPositivePrefix
+        formatter.negativePrefix = existingNegativePrefix
         return result
     }
 }

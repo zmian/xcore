@@ -7,7 +7,6 @@
 import Intents
 
 final public class SiriShortcuts {
-    @available(iOS 12.0, *)
     public static let sharedSuggestions = Suggestions()
 }
 
@@ -117,9 +116,8 @@ extension SiriShortcuts {
     }
 }
 
-// MARK: Suggestions
+// MARK: - Suggestions
 
-@available(iOS 12.0, *)
 extension SiriShortcuts.Domain {
     /// Prepares and removes any outdate intents in `SiriShortcuts.Suggestions` for
     /// this domain.

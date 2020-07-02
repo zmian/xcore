@@ -24,7 +24,6 @@ import Intents
 ///
 /// - SeeAlso: https://developer.apple.com/documentation/sirikit/shortcut_management/suggesting_shortcuts_to_users
 extension SiriShortcuts {
-    @available(iOS 12.0, *)
     final public class Suggestions: Appliable {
         private var didUpdate = false
         public var intents: [INIntent] = [] {

@@ -105,8 +105,8 @@ extension ImageAssetIdentifier {
     static var caretDirectionForward: Self { propertyName() }
 
     // MARK: Shared UI Elements
-    public static var closeIcon: Self { propertyName() }
-    public static var closeIconFilled: Self { propertyName() }
+    public static var closeIcon = propertyName("closeIcon")
+    public static var closeIconFilled = propertyName("closeIconFilled")
 
     public static var disclosureIndicator: Self { propertyName() }
     public static var disclosureIndicatorFilled: Self { propertyName() }
@@ -130,8 +130,8 @@ extension ImageAssetIdentifier {
     public static var filterSelectionIndicatorArrowIcon: Self { propertyName() }
     public static var info: Self { propertyName() }
     public static var locationIcon: Self { propertyName() }
-    public static var searchIcon: Self { propertyName() }
     public static var validationErrorIcon: Self { propertyName() }
+    public static var searchIcon = propertyName("searchIcon")
 }
 
 // MARK: - Xcore Buit-in Overridable Assets

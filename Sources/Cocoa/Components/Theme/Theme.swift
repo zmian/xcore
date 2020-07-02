@@ -67,11 +67,18 @@ public struct Theme: Equatable {
     public var buttonBackgroundColor: UIColor
     public var buttonBackgroundColorSecondary: UIColor
     public var buttonBackgroundColorPill: UIColor
-
+    public var buttonSelectedBackgroundColor: UIColor
+    
     public var statusBarStyle: UIStatusBarStyle
     public var chrome: Chrome.Style
-
+    
     public init(
+        id: Identifier<Theme> = .current,
+        isDark: Bool? = nil,
+        tintColor: UIColor = .systemTint,
+        separatorColor: UIColor = .lightGray,
+        toggleColor: UIColor = .green,
+        linkColor: UIColor = .systemTint,
         id: Identifier<Theme> = .current,
         isDark: Bool? = nil,
         tintColor: UIColor = .systemTint,
@@ -92,11 +99,6 @@ public struct Theme: Equatable {
         buttonBackgroundColorSecondary: UIColor = .lightGray,
         buttonBackgroundColorPill: UIColor = .systemTint,
         statusBarStyle: UIStatusBarStyle = .default,
-        chrome: Chrome.Style? = nil
-    ) {
-        let isDarkContent = isDark ?? false
-        self.id = id
-        self.isDark = isDarkContent
         self.tintColor = tintColor
         self.separatorColor = separatorColor
         self.toggleColor = toggleColor
@@ -113,6 +115,7 @@ public struct Theme: Equatable {
         self.buttonBackgroundColor = buttonBackgroundColor
         self.buttonBackgroundColorSecondary = buttonBackgroundColorSecondary
         self.buttonBackgroundColorPill = buttonBackgroundColorPill
+        self.buttonSelectedBackgroundColor = buttonSelectedBackgroundColor
         self.statusBarStyle = statusBarStyle
         self.chrome = chrome ?? (isDarkContent ? .color(backgroundColor) : .blurred)
     }
@@ -127,14 +130,14 @@ extension Theme {
     private static var _current: Theme {
         guard #available(iOS 13, *) else {
             return systemTheme
+    public static var current: Theme = _current
+
+    private static var _current: Theme {
+        guard #available(iOS 13, *) else {
+            return systemTheme
         }
         return dynamicSystemTheme
     }
-}
-
-// MARK: - UIView
-
-extension UIView {
     /// Called when the app theme property changes.
     ///
     /// In your implementation, refresh the view rendering as needed.

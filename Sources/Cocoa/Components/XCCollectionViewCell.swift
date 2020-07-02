@@ -43,15 +43,10 @@ open class XCCollectionViewCell: UICollectionViewCell {
     }
 
     /// The default value is `.none, 0`.
-    private var corners: (corners: UIRectCorner, radius: CGFloat) = (.none, 0) {
+    private var corners: (mask: CACornerMask, radius: CGFloat) = (.none, 0) {
         didSet {
-            setNeedsLayout()
+            contentView.roundCorners(corners.mask, radius: corners.radius)
         }
-    }
-
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        contentView.roundCorners(corners.corners, radius: corners.radius)
     }
 }
 
