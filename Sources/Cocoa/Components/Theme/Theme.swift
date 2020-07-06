@@ -79,12 +79,6 @@ public struct Theme: Equatable {
         separatorColor: UIColor = .lightGray,
         toggleColor: UIColor = .green,
         linkColor: UIColor = .systemTint,
-        id: Identifier<Theme> = .current,
-        isDark: Bool? = nil,
-        tintColor: UIColor = .systemTint,
-        separatorColor: UIColor = .lightGray,
-        toggleColor: UIColor = .green,
-        linkColor: UIColor = .systemTint,
         textColor: UIColor = .black,
         textColorSecondary: UIColor = .darkGray,
         placeholderTextColor: UIColor = .lightGray,
@@ -98,7 +92,13 @@ public struct Theme: Equatable {
         buttonBackgroundColor: UIColor = .systemTint,
         buttonBackgroundColorSecondary: UIColor = .lightGray,
         buttonBackgroundColorPill: UIColor = .systemTint,
+        buttonSelectedBackgroundColor: UIColor = .systemTint,
         statusBarStyle: UIStatusBarStyle = .default,
+        chrome: Chrome.Style? = nil
+    ) {
+        let isDarkContent = isDark ?? false
+        self.id = id
+        self.isDark = isDarkContent
         self.tintColor = tintColor
         self.separatorColor = separatorColor
         self.toggleColor = toggleColor
@@ -130,16 +130,14 @@ extension Theme {
     private static var _current: Theme {
         guard #available(iOS 13, *) else {
             return systemTheme
-    public static var current: Theme = _current
-
-    private static var _current: Theme {
-        guard #available(iOS 13, *) else {
-            return systemTheme
         }
         return dynamicSystemTheme
     }
+}
+
+extension UIView {
     /// Called when the app theme property changes.
-    ///
+
     /// In your implementation, refresh the view rendering as needed.
     @objc open func themeDidChange() { }
 }
@@ -165,6 +163,7 @@ extension Theme {
         buttonBackgroundColor: .systemTint,
         buttonBackgroundColorSecondary: .lightGray,
         buttonBackgroundColorPill: .systemTint,
+        buttonSelectedBackgroundColor: .systemTint,
         statusBarStyle: .default,
         chrome: .blurred
     )
@@ -190,6 +189,7 @@ extension Theme {
         buttonBackgroundColor: .link,
         buttonBackgroundColorSecondary: .systemGray,
         buttonBackgroundColorPill: .systemTint,
+        buttonSelectedBackgroundColor: .systemTint,
         statusBarStyle: .default,
         chrome: Chrome.Style.color(.systemBackground))
 }
