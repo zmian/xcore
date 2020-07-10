@@ -291,8 +291,27 @@ extension SearchBarView: UISearchBarDelegate {
 
     private func enableCancelButtonIfVisible() {
         guard searchBar.showsCancelButton else { return }
-        searchBar.subviews.flatMap { $0.subviews }.forEach {
-            ($0 as? UIButton)?.isEnabled = true
+        DispatchQueue.main.async { [weak self] in
+            Self.searchAndEnableButtonInSubviews(view: self?.searchBar)
         }
+    }
+
+    @discardableResult
+    private static func searchAndEnableButtonInSubviews(view: UIView?) -> Bool {
+        guard let view = view else { return false }
+
+        if let button = view as? UIButton {
+            button.isEnabled = true
+            return true
+        }
+        guard !view.subviews.isEmpty else {
+            return false
+        }
+        for subview in view.subviews {
+            if searchAndEnableButtonInSubviews(view: subview) {
+                return true
+            }
+        }
+        return false
     }
 }
