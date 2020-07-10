@@ -215,20 +215,10 @@ final public class SearchBarView: UIView {
     }
 }
 
-extension SearchBarView: KeyboardObservable {
+extension SearchBarView {
     public func hideKeyboardIfNeeded() {
         guard searchBar.isFirstResponder else { return }
-        updateCancelButton(isKeyboardHidden: true)
         resignFirstResponder()
-    }
-
-    public func updateCancelButton(isKeyboardHidden: Bool) {
-        guard hidesCancelButtonWhenEmptyAndDismissed else { return }
-        let isEmpty = searchBar.text == nil || (searchBar.text != nil && searchBar.text!.isEmpty)
-        // Only hide cancel button if no text is present in the search bar
-        if isKeyboardHidden, isEmpty {
-            searchBar.setShowsCancelButton(false, animated: true)
-        }
     }
 
     public override var isFirstResponder: Bool {
@@ -249,11 +239,6 @@ extension SearchBarView: KeyboardObservable {
     @discardableResult
     public override func resignFirstResponder() -> Bool {
         searchBar.resignFirstResponder()
-    }
-
-    public func keyboardFrameDidChange(_ payload: KeyboardPayload) {
-        guard searchBar.isFirstResponder else { return }
-        updateCancelButton(isKeyboardHidden: payload.height == 0.0)
     }
 }
 
@@ -288,5 +273,24 @@ extension SearchBarView: UISearchBarDelegate {
 
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         hideKeyboardIfNeeded()
+    }
+
+    public func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        guard hidesCancelButtonWhenEmptyAndDismissed else { return }
+        hideCancelButtonIfNeeded()
+        enableCancelButtonIfVisible()
+    }
+
+    private func hideCancelButtonIfNeeded() {
+        let isEmpty = searchBar.text == nil || (searchBar.text != nil && searchBar.text!.isEmpty)
+        // Only hide cancel button if no text is present in the search bar
+        if isEmpty {
+            searchBar.setShowsCancelButton(false, animated: true)
+        }
+    }
+
+    private func enableCancelButtonIfVisible() {
+        guard searchBar.showsCancelButton else { return }
+        searchBar.subviews.flatMap({$0.subviews}).forEach({ ($0 as? UIButton)?.isEnabled = true })
     }
 }
