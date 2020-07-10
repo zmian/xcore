@@ -152,12 +152,12 @@ extension LabelTextView {
         get {
             guard
                 let currentFont = font,
-                let textStyle = currentFont.fontDescriptor.object(forKey: .textStyle)
+                let textStyle = currentFont.fontDescriptor.object(forKey: .textStyle) as? UIFont.TextStyle
             else {
                 return super.accessibilityTraits
             }
 
-            switch textStyle as! UIFont.TextStyle {
+            switch textStyle {
                 case UIFont.TextStyle.title1,
                      UIFont.TextStyle.title2,
                      UIFont.TextStyle.title3,
