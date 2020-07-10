@@ -278,7 +278,6 @@ extension SearchBarView: UISearchBarDelegate {
     public func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         guard hidesCancelButtonWhenEmptyAndDismissed else { return }
         hideCancelButtonIfNeeded()
-        enableCancelButtonIfVisible()
     }
 
     private func hideCancelButtonIfNeeded() {
@@ -286,13 +285,6 @@ extension SearchBarView: UISearchBarDelegate {
         // Only hide cancel button if no text is present in the search bar
         if isEmpty {
             searchBar.setShowsCancelButton(false, animated: true)
-        }
-    }
-
-    private func enableCancelButtonIfVisible() {
-        guard searchBar.showsCancelButton else { return }
-        searchBar.subviews.flatMap { $0.subviews }.forEach {
-            ($0 as? UIButton)?.isEnabled = true
         }
     }
 }
