@@ -161,7 +161,8 @@ extension LabelTextView {
                 case UIFont.TextStyle.title1,
                      UIFont.TextStyle.title2,
                      UIFont.TextStyle.title3,
-                     UIFont.TextStyle.headline:
+                     UIFont.TextStyle.headline,
+                     UIFont.TextStyle.largeTitle:
                     return .header
                 default:
                     return super.accessibilityTraits
@@ -170,4 +171,3 @@ extension LabelTextView {
         set { super.accessibilityTraits = newValue }
     }
 }
-
