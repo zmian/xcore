@@ -157,23 +157,9 @@ extension UILabel {
     /// it was given when created.
     open override var accessibilityTraits: UIAccessibilityTraits {
         get {
-            guard
-                let currentFont = font,
-                let textStyle = currentFont.fontDescriptor.object(forKey: .textStyle) as? UIFont.TextStyle
-            else {
-                return super.accessibilityTraits
-            }
+            guard let textStyle = font.textStyle else { return super.accessibilityTraits }
 
-            switch textStyle {
-                case UIFont.TextStyle.title1,
-                     UIFont.TextStyle.title2,
-                     UIFont.TextStyle.title3,
-                     UIFont.TextStyle.headline,
-                     UIFont.TextStyle.largeTitle:
-                    return .header
-                default:
-                    return super.accessibilityTraits
-            }
+            return textStyle.isTitle ? .header : super.accessibilityTraits
         }
         set { super.accessibilityTraits = newValue }
     }
