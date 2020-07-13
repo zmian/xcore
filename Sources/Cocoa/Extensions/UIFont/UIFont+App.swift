@@ -74,7 +74,7 @@ extension UIFont {
         let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(
             withTextStyle: style,
             compatibleWith: traitCollection
-        ).addingAttributes([.name : name])
+        ).addingAttributes([.name: name])
 
         return UIFont(descriptor: fontDescriptor, size: fontDescriptor.pointSize)
     }
