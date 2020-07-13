@@ -150,7 +150,7 @@ extension UILabel {
     }
 }
 
-// MARK: Accessibility
+// MARK: - Accessibility
 
 extension UILabel {
     /// The accessibility trait value that the element takes based on the text style
