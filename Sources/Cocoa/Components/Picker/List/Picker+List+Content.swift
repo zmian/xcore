@@ -41,9 +41,7 @@ extension Picker.List {
                 $0.contentInsetAdjustmentBehavior = .never
                 $0.configureCell { [weak self] indexPath, cell, item in
                     guard let strongSelf = self else { return }
-                    cell.accessibilityTraits = cell.accessoryView != nil ?
-                        [.selected, .button] :
-                        .button
+                    cell.accessibilityTraits = cell.accessoryView != nil ? [.selected, .button] : .button
                     cell.highlightedBackgroundColor = .appHighlightedBackground
                     cell.imageSize = 30
                     cell.avatarCornerRadius = 0
