@@ -81,6 +81,12 @@ extension UIFont {
     }
 }
 
+extension UIFont {
+    public var textStyle: UIFont.TextStyle? {
+        self.fontDescriptor.object(forKey: .textStyle) as? UIFont.TextStyle
+    }
+}
+
 extension UIFont.TextStyle: CaseIterable {
     public static var allCases: [UIFont.TextStyle] = {
         [

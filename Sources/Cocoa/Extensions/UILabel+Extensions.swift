@@ -149,3 +149,18 @@ extension UILabel {
         )
     }
 }
+
+// MARK: - Accessibility
+
+extension UILabel {
+    /// The accessibility trait value that the element takes based on the text style
+    /// it was given when created.
+    open override var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            guard let textStyle = font.textStyle else { return super.accessibilityTraits }
+
+            return textStyle.isTitle ? .header : super.accessibilityTraits
+        }
+        set { super.accessibilityTraits = newValue }
+    }
+}
