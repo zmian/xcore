@@ -146,8 +146,8 @@ extension LabelTextView {
 // MARK: - Accessibility
 
 extension LabelTextView {
-    /// The accessibility trait value that the element takes based on the
-    /// text style it was given when created.
+    /// The accessibility trait value that the element takes based on the text style
+    /// it was given when created.
      open override var accessibilityTraits: UIAccessibilityTraits {
         get {
             guard
