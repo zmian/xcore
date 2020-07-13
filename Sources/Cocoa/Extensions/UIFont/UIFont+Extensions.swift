@@ -83,7 +83,7 @@ extension UIFont {
 
 extension UIFont {
     public var textStyle: UIFont.TextStyle? {
-        self.fontDescriptor.object(forKey: .textStyle) as? UIFont.TextStyle
+        fontDescriptor.object(forKey: .textStyle) as? UIFont.TextStyle
     }
 }
 
