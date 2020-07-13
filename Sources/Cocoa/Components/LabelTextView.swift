@@ -148,16 +148,10 @@ extension LabelTextView {
 extension LabelTextView {
     /// The accessibility trait value that the element takes based on the text style
     /// it was given when created.
-     open override var accessibilityTraits: UIAccessibilityTraits {
+    open override var accessibilityTraits: UIAccessibilityTraits {
         get {
-            guard
-                let currentFont = font,
-                let textStyle = currentFont.textStyle
-            else {
-                return super.accessibilityTraits
-            }
-
-            return textStyle.isTitle ? .header : super.accessibilityTraits
+            let isTitle = font?.textStyle?.isTitle ?? false
+            return isTitle ? .header : super.accessibilityTraits
         }
         set { super.accessibilityTraits = newValue }
     }

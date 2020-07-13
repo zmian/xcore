@@ -157,9 +157,8 @@ extension UILabel {
     /// it was given when created.
     open override var accessibilityTraits: UIAccessibilityTraits {
         get {
-            guard let textStyle = font.textStyle else { return super.accessibilityTraits }
-
-            return textStyle.isTitle ? .header : super.accessibilityTraits
+            let isTitle = font?.textStyle?.isTitle ?? false
+            return isTitle ? .header : super.accessibilityTraits
         }
         set { super.accessibilityTraits = newValue }
     }
