@@ -71,11 +71,13 @@ extension UIFont {
         style: UIFont.TextStyle,
         compatibleWith traitCollection: UITraitCollection? = nil
     ) -> UIFont {
-        let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(
+        let preferredPointSize = UIFontDescriptor.preferredFontDescriptor(
             withTextStyle: style,
             compatibleWith: traitCollection
-        ).addingAttributes([.name: name])
+        ).pointSize
 
-        return UIFont(descriptor: fontDescriptor, size: fontDescriptor.pointSize)
+        return UIFont(name: name, size: preferredPointSize)!.apply {
+            $0._textStyle = style
+        }
     }
 }
