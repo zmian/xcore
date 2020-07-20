@@ -105,9 +105,10 @@ extension Picker {
     public static func present(
         initialValue date: Date? = nil,
         configuration: Configuration<UIDatePicker>? = nil,
+        caller: Any? = nil,
         _ callback: @escaping (Date?) -> Void
     ) {
-        DatePicker.present(callback)
+        DatePicker.present(caller: caller, callback)
     }
 }
 
