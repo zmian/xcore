@@ -25,8 +25,11 @@ public struct Theme: Equatable {
     /// The main brand color for interface callout content.
     public let tintColor: UIColor
 
-    /// The color for borders or divider lines that hide any underlying content.
+    /// The color for divider lines that hide any underlying content.
     public let separatorColor: UIColor
+
+    /// The color for borders lines that hide any underlying content.
+    public let borderColor: UIColor
 
     /// The color for toggle controls (e.g., Switch or Checkbox).
     public let toggleColor: UIColor
@@ -59,6 +62,7 @@ public struct Theme: Equatable {
         dark: Bool? = nil,
         tintColor: UIColor,
         separatorColor: UIColor,
+        borderColor: UIColor,
         toggleColor: UIColor,
         linkColor: UIColor,
         textColor: UIColor,
@@ -77,6 +81,7 @@ public struct Theme: Equatable {
         self.isDark = isDark
         self.tintColor = tintColor
         self.separatorColor = separatorColor
+        self.borderColor = borderColor
         self.toggleColor = toggleColor
         self.linkColor = linkColor
         self.textColor = textColor
@@ -105,6 +110,7 @@ extension Theme {
         id: .light,
         tintColor: .systemTint,
         separatorColor: .lightGray,
+        borderColor: .lightGray,
         toggleColor: .systemTint,
         linkColor: .systemTint,
         textColor: .black,
@@ -125,6 +131,7 @@ extension Theme {
         id: .dark,
         tintColor: .systemTint,
         separatorColor: .lightGray,
+        borderColor: .lightGray,
         toggleColor: .appleGreen,
         linkColor: .systemTint,
         textColor: .lightText,
