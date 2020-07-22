@@ -28,7 +28,7 @@ public struct Theme: Equatable {
     /// The color for divider lines that hide any underlying content.
     public let separatorColor: UIColor
 
-    /// The color for borders lines that hide any underlying content.
+    /// The color for border that hide any underlying content.
     public let borderColor: UIColor
 
     /// The color for toggle controls (e.g., Switch or Checkbox).
