@@ -17,15 +17,15 @@ extension TimeInterval {
     /// ```
     public static var fast: Self = 0.25
 
-    /// The normal duration to use for animations when the desired interval is
+    /// The default duration to use for animations when the desired interval is
     /// between `0.3...0.5` seconds.
     ///
     /// ```swift
-    /// UIView.animate(withDuration: .normal) {
+    /// UIView.animate(withDuration: .`default) {
     ///     ...
     /// }
     /// ```
-    public static var normal: Self = 0.35
+    public static var `default`: Self = 0.35
 
     /// The slow duration to use for animations when the desired interval is between
     /// `> 0.5` seconds.

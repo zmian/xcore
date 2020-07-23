@@ -432,7 +432,7 @@ extension UIView {
         view.alpha = 0
         addSubview(view)
 
-        let duration = animated ? .normal : 0
+        let duration = animated ? .default : 0
 
         UIView.animate(withDuration: duration) {
             view.alpha = 1
