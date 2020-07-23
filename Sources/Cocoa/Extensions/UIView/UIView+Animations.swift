@@ -12,40 +12,83 @@ extension UIView {
     /// Performs a view animation using a timing curve corresponding to the motion of a physical spring.
     ///
     /// - Parameters:
-    ///   - duration:   The total duration of the animations, measured in seconds. If you specify a negative value or `0`, the changes are made without animating them. The default value is `0.6`.
+    ///   - duration:   The total duration of the animations, measured in seconds. If you specify a negative value or `0`, the changes are made without animating them. The default value is `.slow`.
     ///   - delay:      The amount of time (measured in seconds) to wait before beginning the animations. The default value is `0`.
     ///   - damping:    The damping ratio for the spring animation as it approaches its quiescent state. The default value is `0.7`.
     ///   - velocity:   The initial spring velocity. For smooth start to the animation, match this value to the view’s velocity as it was prior to attachment. The default value is `0`.
     ///   - options:    A mask of options indicating how you want to perform the animations. The default value is `UIViewAnimationOptions.AllowUserInteraction`.
     ///   - animations: A block object containing the changes to commit to the views.
     ///   - completion: A block object to be executed when the animation sequence ends.
-    public static func animate(_ duration: TimeInterval = 0.6, delay: TimeInterval = 0, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: AnimationOptions = .allowUserInteraction, animations: @escaping (() -> Void), completion: ((Bool) -> Void)?) {
-        UIView.animate(withDuration: duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: completion)
+    public static func animate(
+        _ duration: TimeInterval = .slow,
+        delay: TimeInterval = 0,
+        damping: CGFloat = 0.7,
+        velocity: CGFloat = 0,
+        options: AnimationOptions = .allowUserInteraction,
+        animations: @escaping (() -> Void),
+        completion: ((Bool) -> Void)?
+    ) {
+        UIView.animate(
+            withDuration: duration,
+            delay: delay,
+            usingSpringWithDamping: damping,
+            initialSpringVelocity: velocity,
+            options: options,
+            animations: animations,
+            completion: completion
+        )
     }
 
     /// Performs a view animation using a timing curve corresponding to the motion of a physical spring.
     ///
     /// - Parameters:
-    ///   - duration:   The total duration of the animations, measured in seconds. If you specify a negative value or `0`, the changes are made without animating them. The default value is `0.6`.
+    ///   - duration:   The total duration of the animations, measured in seconds. If you specify a negative value or `0`, the changes are made without animating them. The default value is `.slow`.
     ///   - delay:      The amount of time (measured in seconds) to wait before beginning the animations. The default value is `0`.
     ///   - damping:    The damping ratio for the spring animation as it approaches its quiescent state. The default value is `0.7`.
     ///   - velocity:   The initial spring velocity. For smooth start to the animation, match this value to the view’s velocity as it was prior to attachment. The default value is `0`.
     ///   - options:    A mask of options indicating how you want to perform the animations. The default value is `UIViewAnimationOptions.AllowUserInteraction`.
     ///   - animations: A block object containing the changes to commit to the views.
-    public static func animate(_ duration: TimeInterval = 0.6, delay: TimeInterval = 0, damping: CGFloat = 0.7, velocity: CGFloat = 0, options: AnimationOptions = .allowUserInteraction, animations: @escaping (() -> Void)) {
-        UIView.animate(withDuration: duration, delay: delay, usingSpringWithDamping: damping, initialSpringVelocity: velocity, options: options, animations: animations, completion: nil)
+    public static func animate(
+        _ duration: TimeInterval = .slow,
+        delay: TimeInterval = 0,
+        damping: CGFloat = 0.7,
+        velocity: CGFloat = 0,
+        options: AnimationOptions = .allowUserInteraction,
+        animations: @escaping (() -> Void)
+    ) {
+        UIView.animate(
+            withDuration: duration,
+            delay: delay,
+            usingSpringWithDamping: damping,
+            initialSpringVelocity: velocity,
+            options: options,
+            animations: animations,
+            completion: nil
+        )
     }
 
-    public static func animateFromCurrentState(withDuration duration: TimeInterval = .fast, _ animations: @escaping () -> Void) {
+    public static func animateFromCurrentState(
+        withDuration duration: TimeInterval = .fast,
+        _ animations: @escaping () -> Void
+    ) {
         animateFromCurrentState(withDuration: duration, animations: animations) {}
     }
 
-    public static func animateFromCurrentState(withDuration duration: TimeInterval = .fast, animations: @escaping () -> Void, completion: @escaping () -> Void) {
-        UIView.animate(withDuration: duration, delay: 0, options: .beginFromCurrentState, animations: {
-            animations()
-        }, completion: { _ in
-            completion()
-        })
+    public static func animateFromCurrentState(
+        withDuration duration: TimeInterval = .fast,
+        animations: @escaping () -> Void,
+        completion: @escaping () -> Void
+    ) {
+        UIView.animate(
+            withDuration: duration,
+            delay: 0,
+            options: .beginFromCurrentState,
+            animations: {
+                animations()
+            }, completion: { _ in
+                completion()
+            }
+        )
     }
 }
 
@@ -90,7 +133,7 @@ extension UIView {
     @objc open func setHidden(
         _ hide: Bool,
         animated: Bool,
-        duration: TimeInterval = .normal,
+        duration: TimeInterval = .default,
         _ completion: (() -> Void)? = nil
     ) {
         guard animated else {
@@ -130,7 +173,7 @@ extension UIView {
 // MARK: - BackgroundColor
 
 extension UIView {
-    @objc open func animateBackgroundColor(to color: UIColor?, duration: Double = .normal) {
+    @objc open func animateBackgroundColor(to color: UIColor?, duration: Double = .default) {
         guard let color = color else { return }
         CABasicAnimation(keyPath: "fillColor").apply {
             $0.timingFunction = .easeInEaseOut
@@ -180,7 +223,7 @@ extension UIView {
 extension NSObjectProtocol where Self: UIView {
     public func withFadeAnimation(_ block: (_ view: Self) -> Void) {
         CATransition().apply {
-            $0.duration = .normal
+            $0.duration = .default
             $0.timingFunction = .easeInEaseOut
             $0.type = .fade
             layer.add($0, forKey: "fade")

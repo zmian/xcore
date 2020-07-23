@@ -335,7 +335,7 @@ extension HUD {
         }
 
         public static var `default`: Self {
-            .init(.normal)
+            .init(.default)
         }
     }
 }
