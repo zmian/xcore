@@ -51,12 +51,12 @@ extension Picker {
             set { content.preferredMaxVisibleItemsCount = newValue }
         }
 
-        public func present() {
-            DrawerScreen.present(content)
+        public func present(caller: Any? = nil) {
+            DrawerScreen.present(content, caller: caller)
         }
 
-        public func dismiss() {
-            DrawerScreen.dismiss()
+        public func dismiss(caller: Any? = nil) {
+            DrawerScreen.dismiss(caller: caller)
         }
 
         /// Reloads all components of the picker view.

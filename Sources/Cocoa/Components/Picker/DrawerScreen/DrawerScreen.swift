@@ -32,6 +32,7 @@ extension UIView: DrawerScreenContent {
 final public class DrawerScreen: NSObject {
     public typealias Content = DrawerScreenContent
     private static let shared = DrawerScreen()
+    private var drawerCaller: Any?
 
     private var shownConstraint: NSLayoutConstraint?
     private var hiddenConstraint: NSLayoutConstraint?
@@ -113,6 +114,10 @@ final public class DrawerScreen: NSObject {
         }
     }
 
+    func setCaller(caller: Any?) {
+        drawerCaller = caller
+    }
+
     func dismiss(_ callback: (() -> Void)? = nil) {
         guard let presentedContent = presentedContent else {
             callback?()
@@ -128,6 +133,7 @@ final public class DrawerScreen: NSObject {
                 presentedContent.drawerContentView.removeFromSuperview()
                 presentedContent.didDismiss()
                 self?.presentedContent = nil
+                UIAccessibility.post(notification: .layoutChanged, argument: self?.drawerCaller)
                 callback?()
             }
         })
@@ -147,13 +153,15 @@ extension DrawerScreen: UIGestureRecognizerDelegate {
 // MARK: - Public API
 
 extension DrawerScreen {
-    public static func present(_ content: Content) {
-        shared.dismiss {
+    public static func present(_ content: Content, caller: Any? = nil) {
+        shared.dismiss() {
+            shared.setCaller(caller: caller)
             shared.present(content)
         }
     }
 
-    public static func dismiss() {
+    public static func dismiss(caller: Any? = nil) {
+        shared.setCaller(caller: caller)
         shared.dismiss()
     }
 }

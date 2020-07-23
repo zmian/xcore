@@ -27,19 +27,13 @@ final class DatePicker: DrawerScreen.Content, Appliable {
         $0.didTapDone { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.didChangeValue?(strongSelf.pickerView.date)
-            DrawerScreen.dismiss()
+            DrawerScreen.dismiss(caller: strongSelf.caller)
         }
 
         $0.didTapCancel { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.didChangeValue?(strongSelf.initialDate)
-            DrawerScreen.dismiss()
-            UIAccessibility.post(notification: .layoutChanged, argument: strongSelf.caller)
-        }
-
-        $0.didTapDone { [weak self] in
-            DrawerScreen.dismiss()
-            UIAccessibility.post(notification: .layoutChanged, argument: self?.caller)
+            DrawerScreen.dismiss(caller: strongSelf.caller)
         }
     }
 
@@ -67,6 +61,6 @@ final class DatePicker: DrawerScreen.Content, Appliable {
             }
         }
 
-        DrawerScreen.present(picker)
+        DrawerScreen.present(picker, caller: caller)
     }
 }
