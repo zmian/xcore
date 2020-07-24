@@ -154,7 +154,7 @@ extension DrawerScreen: UIGestureRecognizerDelegate {
 
 extension DrawerScreen {
     public static func present(_ content: Content, caller: Any? = nil) {
-        shared.dismiss() {
+        shared.dismiss {
             shared.setCaller(caller: caller)
             shared.present(content)
         }
