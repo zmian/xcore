@@ -47,9 +47,7 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
     /// While currency isn't directly translated (e.g.,`$100 != €100`), however, it
     /// is safe to use locale aware grouping and decimal separator to make it user
     /// locale friendly (e.g., France locale  `$1,000.00` == `$1 000,00`).
-    public var currencySymbol: String {
-        Locale.us.currencySymbol ?? "$"
-    }
+    public var currencySymbol = Locale.us.currencySymbol ?? "$"
 
     /// The character the receiver uses as a grouping separator.
     ///
