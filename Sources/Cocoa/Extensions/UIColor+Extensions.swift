@@ -84,6 +84,23 @@ extension UIColor {
 
         return Int64(hexString, radix: 16) ?? 0x000000
     }
+
+    private func components(normalize: Bool = true) -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+
+        if normalize {
+            r *= 255
+            g *= 255
+            b *= 255
+        }
+
+        return (r, g, b, a)
+    }
 }
 
 extension UIColor {
@@ -130,6 +147,26 @@ extension UIColor {
         var white: CGFloat = 0
         getWhite(&white, alpha: nil)
         return white > threshold
+    }
+}
+
+extension UIColor {
+    /// Blend multiply given color with `self`.
+    public func multiply(_ color: UIColor, alpha: CGFloat = 1) -> UIColor {
+        let bg = components(normalize: false)
+        let fg = color.components(normalize: false)
+
+        let r = bg.r * fg.r
+        let g = bg.g * fg.g
+        let b = bg.b * fg.b
+        let a = alpha * fg.a + (1 - alpha) * bg.a
+
+        return UIColor(
+            red: r.clamped(to: 0...255),
+            green: g.clamped(to: 0...255),
+            blue:  b.clamped(to: 0...255),
+            alpha: a
+        )
     }
 }
 
