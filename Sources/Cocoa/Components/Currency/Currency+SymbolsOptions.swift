@@ -19,16 +19,16 @@ extension Currency {
 public protocol CurrencySymbolsProvider {
     var currencySymbol: String { get }
 
-    /// The string used by the receiver for a grouping separator.
+    /// The character the receiver uses as a grouping separator.
     ///
     /// For example, the grouping separator used in the United States is the comma
-    /// (“10,000”) whereas in France it is the space (“10 000”).
+    /// (`"10,000"`) whereas in France it is the space (`"10 000"`).
     var groupingSeparator: String { get }
 
     /// The character the receiver uses as a decimal separator.
     ///
-    /// For example, the grouping separator used in the United States is the period
-    /// (“10,000.00”) whereas in France it is the comma (“10 000,00”).
+    /// For example, the decimal separator used in the United States is the period
+    /// (`"10,000.00"`) whereas in France it is the comma (`"10 000,00"`).
     var decimalSeparator: String { get }
 }
 

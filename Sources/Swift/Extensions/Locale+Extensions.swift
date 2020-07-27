@@ -34,6 +34,9 @@ extension Locale {
     ///
     /// - SeeAlso: https://developer.apple.com/library/archive/qa/qa1480/_index.html
     public static let usPosix = Locale(identifier: "en_US_POSIX")
+
+    /// English (United Kingdom), `en_GB`
+    public static let uk = Locale(identifier: "en_GB")
 }
 
 extension Locale {
