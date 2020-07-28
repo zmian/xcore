@@ -61,6 +61,6 @@ final class DatePicker: DrawerScreen.Content, Appliable {
             }
         }
 
-        DrawerScreen.present(picker, caller: caller)
+        DrawerScreen.present(picker)
     }
 }
