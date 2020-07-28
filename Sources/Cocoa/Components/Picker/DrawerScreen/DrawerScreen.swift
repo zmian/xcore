@@ -114,10 +114,6 @@ final public class DrawerScreen: NSObject {
         }
     }
 
-    func setCaller(caller: Any?) {
-        drawerCaller = caller
-    }
-
     func dismiss(_ callback: (() -> Void)? = nil) {
         guard let presentedContent = presentedContent else {
             callback?()
@@ -155,13 +151,13 @@ extension DrawerScreen: UIGestureRecognizerDelegate {
 extension DrawerScreen {
     public static func present(_ content: Content, caller: Any? = nil) {
         shared.dismiss {
-            shared.setCaller(caller: caller)
+            shared.drawerCaller = caller
             shared.present(content)
         }
     }
 
     public static func dismiss(caller: Any? = nil) {
-        shared.setCaller(caller: caller)
+        shared.drawerCaller = caller
         shared.dismiss()
     }
 }
