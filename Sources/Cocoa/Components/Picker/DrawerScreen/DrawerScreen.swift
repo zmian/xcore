@@ -129,7 +129,7 @@ final public class DrawerScreen: NSObject {
                 presentedContent.drawerContentView.removeFromSuperview()
                 presentedContent.didDismiss()
                 self?.presentedContent = nil
-                UIAccessibility.post(notification: .layoutChanged, argument: self?.drawerCaller)
+                accessibilityFocusedElements.focusOnElement()
                 callback?()
             }
         })
@@ -150,14 +150,13 @@ extension DrawerScreen: UIGestureRecognizerDelegate {
 
 extension DrawerScreen {
     public static func present(_ content: Content, caller: Any? = nil) {
+        accessibilityFocusedElements.addFocusedElement(UIAccessibility.focusedElement(using: .notificationVoiceOver))
         shared.dismiss {
-            shared.drawerCaller = caller
             shared.present(content)
         }
     }
 
     public static func dismiss(caller: Any? = nil) {
-        shared.drawerCaller = caller
         shared.dismiss()
     }
 }
