@@ -36,33 +36,33 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
         }
     }
 
-    /// The character the receiver uses as a decimal separator.
+    /// The character the receiver uses as a currency symbol.
     ///
-    /// For example, the decimal separator used in the United States is the period
-    /// (“10,000.00”) whereas in France it is the comma (“10 000,00”).
-    public var decimalSeparator: String {
-        formatter.decimalSeparator ?? "."
-    }
+    /// Currency symbol can be independently set of locale to ensure correct
+    /// currency symbol is used while localizing decimal and grouping separators.
+    /// For example, `$ (USA)` currency symbol should be used when user changes
+    /// their locale to France, while grouping and decimal separator is changed to
+    /// space and comma respectively.
+    ///
+    /// While currency isn't directly translated (e.g.,`$100 != €100`), however, it
+    /// is safe to use locale aware grouping and decimal separator to make it user
+    /// locale friendly (e.g., France locale  `$1,000.00` == `$1 000,00`).
+    public var currencySymbol = Locale.us.currencySymbol ?? "$"
 
-    /// The string used by the receiver for a grouping separator.
+    /// The character the receiver uses as a grouping separator.
     ///
     /// For example, the grouping separator used in the United States is the comma
-    /// (“10,000”) whereas in France it is the space (“10 000”).
+    /// (`"10,000"`) whereas in France it is the space (`"10 000"`).
     public var groupingSeparator: String {
         formatter.groupingSeparator ?? ","
     }
 
-    /// We always want to make sure the `USA` currency symbol is used when
-    /// formatting to avoid bugs and confusions.
+    /// The character the receiver uses as a decimal separator.
     ///
-    /// For example, $100 != €100
-    ///
-    /// However, it is safe to use locale aware grouping and decimal separator to
-    /// make it user locale friendly.
-    ///
-    /// For example, France locale  $1,000.00 == $1 000,00
-    public var currencySymbol: String {
-        Locale.us.currencySymbol ?? "$"
+    /// For example, the decimal separator used in the United States is the period
+    /// (`"10,000.00"`) whereas in France it is the comma (`"10 000,00"`).
+    public var decimalSeparator: String {
+        formatter.decimalSeparator ?? "."
     }
 }
 
