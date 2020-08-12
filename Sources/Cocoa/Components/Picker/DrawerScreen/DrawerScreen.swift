@@ -32,7 +32,6 @@ extension UIView: DrawerScreenContent {
 final public class DrawerScreen: NSObject {
     public typealias Content = DrawerScreenContent
     private static let shared = DrawerScreen()
-    private var drawerCaller: Any?
 
     private var shownConstraint: NSLayoutConstraint?
     private var hiddenConstraint: NSLayoutConstraint?
@@ -156,7 +155,7 @@ extension DrawerScreen {
         }
     }
 
-    public static func dismiss(caller: Any? = nil) {
+    public static func dismiss() {
         shared.dismiss()
     }
 }
