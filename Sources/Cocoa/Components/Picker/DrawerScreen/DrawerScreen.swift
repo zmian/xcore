@@ -148,7 +148,7 @@ extension DrawerScreen: UIGestureRecognizerDelegate {
 // MARK: - Public API
 
 extension DrawerScreen {
-    public static func present(_ content: Content, caller: Any? = nil) {
+    public static func present(_ content: Content) {
         accessibilityFocusedElements.addFocusedElement(UIAccessibility.focusedElement(using: .notificationVoiceOver))
         shared.dismiss {
             shared.present(content)
