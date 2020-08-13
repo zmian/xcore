@@ -179,6 +179,10 @@ extension NavigationController: UINavigationControllerDelegate {
                 return
             }
 
+            if !context.isCancelled, let dismissingViewController = context.viewController(forKey: .from) {
+                dismissingViewController.viewWillPop(using: .swipeBackGesture)
+            }
+
             strongSelf.updateNavigationBar(for: viewController)
         }
 
@@ -193,6 +197,15 @@ extension NavigationController: UINavigationControllerDelegate {
     open func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         willTransition?(fromVC, toVC)
         return zoomAnimatorNavigationControllerDelegate.navigationController(navigationController, animationControllerFor: operation, from: fromVC, to: toVC)
+    }
+}
+
+// MARK: - UINavigationBarDelegate
+
+extension NavigationController: UINavigationBarDelegate {
+    open func navigationBar(_ navigationBar: UINavigationBar, shouldPop item: UINavigationItem) -> Bool {
+        viewControllers.last?.viewWillPop(using: .backBarButton)
+        return true
     }
 }
 

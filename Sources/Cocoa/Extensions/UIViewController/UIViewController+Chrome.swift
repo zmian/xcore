@@ -284,6 +284,19 @@ extension UIViewController {
     }
 }
 
+// MARK: - Pop
+
+@objc extension UIViewController {
+    @objc public enum PopMethod: Int {
+        case backBarButton
+        case swipeBackGesture
+    }
+
+    /// Called to notify the view controller that it will pop using back button or
+    /// back swipe gesture.
+    open func viewWillPop(using method: PopMethod) { }
+}
+
 // MARK: - ObstructableView
 
 @objc extension UIViewController {
