@@ -53,6 +53,7 @@
 		684B1EC8224C544A009F6197 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1EC3224C544A009F6197 /* RootViewController.swift */; };
 		684B1ECA224C544A009F6197 /* ImageAssetIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684B1EC6224C544A009F6197 /* ImageAssetIdentifier.swift */; };
 		6850D95624870C730034D87E /* URLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6850D95524870C730034D87E /* URLTests.swift */; };
+		686F57A924E7520E00E1A006 /* StackViewArrangedSubviewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686F57A824E7520E00E1A006 /* StackViewArrangedSubviewsTests.swift */; };
 		687A905A2274FA4E000B7C82 /* SortOrderableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A90592274FA4E000B7C82 /* SortOrderableTests.swift */; };
 		687A9062227517E6000B7C82 /* ValidationRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687A9061227517E6000B7C82 /* ValidationRuleTests.swift */; };
 		688B665F2275511400AD0C1A /* NumbersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688B665E2275511400AD0C1A /* NumbersTests.swift */; };
@@ -140,6 +141,7 @@
 		684B1EC3224C544A009F6197 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		684B1EC6224C544A009F6197 /* ImageAssetIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageAssetIdentifier.swift; sourceTree = "<group>"; };
 		6850D95524870C730034D87E /* URLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLTests.swift; sourceTree = "<group>"; };
+		686F57A824E7520E00E1A006 /* StackViewArrangedSubviewsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackViewArrangedSubviewsTests.swift; sourceTree = "<group>"; };
 		687A90592274FA4E000B7C82 /* SortOrderableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortOrderableTests.swift; sourceTree = "<group>"; };
 		687A9061227517E6000B7C82 /* ValidationRuleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationRuleTests.swift; sourceTree = "<group>"; };
 		688B665E2275511400AD0C1A /* NumbersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumbersTests.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				68376A1A228C2C9500C7B819 /* SubviewLookupTests.swift */,
+				686F57A824E7520E00E1A006 /* StackViewArrangedSubviewsTests.swift */,
 				68376A1D228C2CCF00C7B819 /* SearchBarViewTests.swift */,
 			);
 			path = Views;
@@ -684,6 +687,7 @@
 				68BB29AA2469C96600F4C8CC /* MoneyTests.swift in Sources */,
 				687A905A2274FA4E000B7C82 /* SortOrderableTests.swift in Sources */,
 				684B1E93224C5167009F6197 /* VersionTests.swift in Sources */,
+				686F57A924E7520E00E1A006 /* StackViewArrangedSubviewsTests.swift in Sources */,
 				6850D95624870C730034D87E /* URLTests.swift in Sources */,
 				684019D5236F5FC700B83DB8 /* UIControlBlocksTests.swift in Sources */,
 				688B66632276981900AD0C1A /* CollectionTests.swift in Sources */,
