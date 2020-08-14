@@ -27,22 +27,31 @@ extension UIStackView {
     ///                 exception.
     open func moveArrangedSubview(_ view: UIView, at stackIndex: Int) {
         guard arrangedSubviews.at(stackIndex) != view else { return }
-        _moveArrangedSubview(view, at: stackIndex)
+        let insertionIndex = stackIndex.clamped(to: 0...arrangedSubviews.count - 1)
+        removeArrangedSubview(view)
+        insertArrangedSubview(view, at: insertionIndex)
     }
 
     open func moveArrangedSubview(_ view: UIView, after arrangedSubview: UIView) {
-        guard let index = arrangedSubviews.firstIndex(of: arrangedSubview) else { return }
-        _moveArrangedSubview(view, at: index)
+        _moveArrangedSubview(view, offsetSubview: arrangedSubview, offsetBy: 1)
     }
 
     open func moveArrangedSubview(_ view: UIView, before arrangedSubview: UIView) {
-        guard let index = arrangedSubviews.firstIndex(of: arrangedSubview) else { return }
-        _moveArrangedSubview(view, at: index - 1)
+        _moveArrangedSubview(view, offsetSubview: arrangedSubview, offsetBy: 0)
     }
 
-    private func _moveArrangedSubview(_ view: UIView, at index: Int) {
-        let insertionIndex = index.clamped(to: 0...arrangedSubviews.count - 1)
+    private func _moveArrangedSubview(_ view: UIView, offsetSubview: UIView, offsetBy: Int) {
+        guard arrangedSubviews.contains(offsetSubview) else {
+            return
+        }
+
         removeArrangedSubview(view)
+
+        guard let index = arrangedSubviews.firstIndex(of: offsetSubview) else {
+            return
+        }
+
+        let insertionIndex = (index + offsetBy).clamped(to: 0...arrangedSubviews.count)
         insertArrangedSubview(view, at: insertionIndex)
     }
 
