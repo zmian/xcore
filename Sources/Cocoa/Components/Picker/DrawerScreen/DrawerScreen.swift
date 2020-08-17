@@ -136,6 +136,7 @@ final public class DrawerScreen: NSObject {
                 presentedContent.didDismiss()
                 strongSelf.presentedContent = nil
                 if strongSelf.shouldFocusOnCaller {
+                    // Force voice over to focus back on element that called the drawer
                     accessibilityFocusedElement.focusOnElement()
                 }
                 strongSelf.shouldFocusOnCaller = true
@@ -159,6 +160,7 @@ extension DrawerScreen: UIGestureRecognizerDelegate {
 
 extension DrawerScreen {
     public static func present(_ content: Content) {
+        // Add tapped element that called the drawer
         accessibilityFocusedElement.addFocusedElement()
         shared.dismiss {
             shared.present(content)
