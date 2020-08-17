@@ -7,7 +7,7 @@
 import UIKit
 
 public typealias CarouselViewCellType = UICollectionViewCell & CarouselViewCellRepresentable
-public typealias CarouselAccessibilityItem = (label: String, value: String)
+public typealias CarouselAccessibilityItem = (label: String, value: String, additionalViews: [Any]?)
 
 public protocol CarouselAccessibilitySupport {
     func accessibilityItem(index: Int) -> CarouselAccessibilityItem?
