@@ -227,21 +227,31 @@ public func name(of value: Any) -> String {
 // MARK: - Accessibility
 
 public struct AccessibilityReturnFocus {
-    private var focusedElements: [Any] = []
+    private var focusedElement: Any?
 
-    public mutating func addFocusedElement(_ focusedElement: Any?) {
-        guard let element = focusedElement else { return }
-        focusedElements.append(element)
+    public var hasElement: Bool {
+        return focusedElement != nil ? true : false
+    }
+
+    public mutating func addFocusedElement(_ tappedElement: Any? = nil) {
+        guard
+            let tappedElement = tappedElement
+        else {
+            focusedElement = UIAccessibility.focusedElement(using: .notificationVoiceOver)
+            return
+        }
+
+        focusedElement = tappedElement
     }
 
     public mutating func focusOnElement() {
-        UIAccessibility.post(notification: .layoutChanged, argument: focusedElements.last)
-        focusedElements.popLast()
+        UIAccessibility.post(notification: .layoutChanged, argument: focusedElement)
+        focusedElement = nil
     }
 
     public mutating func removeFocusedElement() {
         UIAccessibility.post(notification: .screenChanged, argument: nil)
-        focusedElements.popLast()
+        focusedElement = nil
     }
 }
 
