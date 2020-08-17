@@ -255,4 +255,4 @@ public struct AccessibilityReturnFocus {
     }
 }
 
-public var accessibilityFocusedElements = AccessibilityReturnFocus()
+public var accessibilityFocusedElement = AccessibilityReturnFocus()
