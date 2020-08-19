@@ -220,6 +220,12 @@ extension NotificationCenter.Event {
         observe(UIAccessibility.voiceOverStatusDidChangeNotification, callback)
     }
 
+    @discardableResult
+    @available(iOS 13.0, *)
+    public func accessibilityDifferentiateWithoutColorStatusDidChange(_ callback: @escaping () -> Void) -> NSObjectProtocol {
+        observe(Notification.Name(rawValue: UIAccessibility.differentiateWithoutColorDidChangeNotification), callback)
+    }
+
     // MARK: - UIContentSizeCategory
 
     /// Posted when the user changes the preferred content size setting.
