@@ -33,6 +33,10 @@ final public class DrawerScreen: NSObject {
     public typealias Content = DrawerScreenContent
     private static let shared = DrawerScreen()
 
+    // Force voice over to focus back on caller element.
+    // Default value is true
+    public var shouldFocusOnCaller = true
+
     private var shownConstraint: NSLayoutConstraint?
     private var hiddenConstraint: NSLayoutConstraint?
     private var notificationToken: NSObjectProtocol?
@@ -125,9 +129,17 @@ final public class DrawerScreen: NSObject {
             self.hud.view.layoutSubviews()
         }, completion: { _ in
             self.hud.hide { [weak self] in
+                guard let strongSelf = self else {
+                    return
+                }
                 presentedContent.drawerContentView.removeFromSuperview()
                 presentedContent.didDismiss()
-                self?.presentedContent = nil
+                strongSelf.presentedContent = nil
+                if strongSelf.shouldFocusOnCaller {
+                    // Force voice over to focus back on element that called the drawer
+                    accessibilityFocusedElement.focusOnElement()
+                }
+                strongSelf.shouldFocusOnCaller = true
                 callback?()
             }
         })
@@ -148,12 +160,17 @@ extension DrawerScreen: UIGestureRecognizerDelegate {
 
 extension DrawerScreen {
     public static func present(_ content: Content) {
+        // Add tapped element that called the drawer
+        accessibilityFocusedElement.addFocusedElement()
         shared.dismiss {
             shared.present(content)
         }
     }
 
-    public static func dismiss() {
+    public static func dismiss(_ focusOnCaller: Bool = true) {
+        if !focusOnCaller {
+            shared.shouldFocusOnCaller = focusOnCaller
+        }
         shared.dismiss()
     }
 }
