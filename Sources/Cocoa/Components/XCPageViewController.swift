@@ -42,6 +42,10 @@ open class XCPageViewController: UIViewController {
         didSet { _pageViewController?.isScrollEnabled = isScrollEnabled }
     }
 
+    open var scrollView: UIScrollView? {
+        _pageViewController?.scrollView
+    }
+
     /// Spacing between between pages. The default value is `0`.
     ///
     /// Page spacing is only valid if the transition style is `.scroll`.
@@ -228,7 +232,7 @@ private final class XCUIPageViewController: UIPageViewController {
         }
     }
 
-    private var scrollView: UIScrollView? {
+    fileprivate var scrollView: UIScrollView? {
         didSet {
             scrollView?.bounces = isBounceForSinglePageEnabled
             scrollView?.isScrollEnabled = isScrollEnabled
