@@ -41,7 +41,6 @@ open class LabelTextView: UITextView {
         #if canImport(Haring)
         isAccessibilityRotorHintEnabled = true
         #endif
-        isAccessibilityElement = true
         dataDetectorTypes = .all
         textContainerInset = .zero
         textContainer.lineFragmentPadding = 0
@@ -154,5 +153,12 @@ extension LabelTextView {
             return isTitle ? .header : super.accessibilityTraits
         }
         set { super.accessibilityTraits = newValue }
+    }
+
+    open override var isAccessibilityElement: Bool {
+        get {
+            font?.textStyle?.isTitle ?? false
+        }
+        set { super.isAccessibilityElement = newValue }
     }
 }
