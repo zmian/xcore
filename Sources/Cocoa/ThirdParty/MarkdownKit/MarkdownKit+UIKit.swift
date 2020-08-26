@@ -68,7 +68,15 @@ extension UILabel {
     /// The default value is `false`.
     public var isMarkupEnabled: Bool {
         get { associatedObject(&AssociatedKey.isMarkupEnabled, default: MarkupText.appearance.isLabelEnabled) }
-        set { setAssociatedObject(&AssociatedKey.isMarkupEnabled, value: newValue) }
+        set {
+            let oldValue = isMarkupEnabled
+            setAssociatedObject(&AssociatedKey.isMarkupEnabled, value: newValue)
+            // If new value is `true` and have text, trigger parsing.
+            if newValue, hasText, oldValue != newValue {
+                let existingText = text
+                text = existingText
+            }
+        }
     }
 
     // TODO: Expose better api to get the parser text
@@ -101,7 +109,20 @@ extension UIButton {
     /// The default value is `false`.
     public var isMarkupEnabled: Bool {
         get { associatedObject(&AssociatedKey.isMarkupEnabled, default: false) }
-        set { setAssociatedObject(&AssociatedKey.isMarkupEnabled, value: newValue) }
+        set {
+            let oldValue = isMarkupEnabled
+
+            // Store values before assigment of `isMarkupEnabled`.
+            // Text and attribtuedText does not have the same value for UIButton.
+            let existingText = text
+            let existingHasText = hasText
+
+            setAssociatedObject(&AssociatedKey.isMarkupEnabled, value: newValue)
+            // If new value is `true` and have text, trigger parsing.
+            if newValue, existingHasText, oldValue != newValue {
+                text = existingText
+            }
+        }
     }
 
     private var markdownParser: MarkdownParser {
