@@ -13,11 +13,23 @@ extension WebViewToolbar {
     }
 }
 
-final class WebViewToolbar: XCToolbar {
-    static let height: CGFloat = 44
+final class WebViewToolbar: XCView {
+    static var height: CGFloat {
+        44 + AppConstants.homeIndicatorHeightIfPresent
+    }
+
+    private let backgroundView = BlurView().apply {
+        $0.isUserInteractionEnabled = false
+    }
+
+    private lazy var toolbar = XCToolbar().apply {
+        $0.isTransparent = true
+        $0.backgroundColor = .clear
+        $0.items = [backButton, fixedSpace, forwardButton]
+    }
 
     private let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace).apply {
-        $0.width = 20
+        $0.width = 24
     }
 
     private(set) lazy var backButton = UIBarButtonItem(assetIdentifier: .navigationBackArrow).apply {
@@ -35,18 +47,28 @@ final class WebViewToolbar: XCToolbar {
     }
 
     override func commonInit() {
-        addBorder(edges: .top, color: .appSeparator, thickness: .onePixel)
-        isTransparent = true
-        backgroundColor = .white
-        items = [backButton, fixedSpace, forwardButton]
+        backgroundView.addBorder(edges: .top, color: .appSeparator, thickness: .onePixel)
+        addSubview(backgroundView)
+        backgroundView.anchor.edges.equalToSuperview()
+
+        addSubview(toolbar)
+        toolbar.anchor.horizontally.equalToSuperview()
+        toolbar.anchor.top.equalToSuperview()
     }
 
-    func updateHeight(isTabBarHidden: Bool) {
-        if isTabBarHidden {
-            preferredHeight = WebViewToolbar.height + AppConstants.homeIndicatorHeightIfPresent
-        } else {
-            preferredHeight = WebViewToolbar.height
-        }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        frame.size.height = Self.height
+    }
+
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        var size = super.sizeThatFits(size)
+        size.height = Self.height
+        return size
+    }
+
+    override var intrinsicContentSize: CGSize {
+        .init(width: UIView.noIntrinsicMetric, height: Self.height)
     }
 
     private var didTapButton: ((_ type: ButtonType) -> Void)?

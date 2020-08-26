@@ -168,11 +168,6 @@ open class WebViewController: UIViewController {
         webViewBottom?.inset(bottomInset)
     }
 
-    open override func viewSafeAreaInsetsDidChange() {
-        super.viewSafeAreaInsetsDidChange()
-        toolbar.updateHeight(isTabBarHidden: prefersTabBarHidden)
-    }
-
     private func setupProgressBar() {
         view.addSubview(progressBar)
         progressBar.anchor.make {
