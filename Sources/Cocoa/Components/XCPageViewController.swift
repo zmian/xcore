@@ -170,6 +170,7 @@ extension XCPageViewController {
         let viewControllerAtIndex = viewControllers[index]
         let direction = direction ?? (index > pageControl.currentPage ? .forward : .reverse)
 
+        // swiftlint:disable:next trailing_closure
         pageViewController.setViewControllers(
             [viewControllerAtIndex],
             direction: direction,
