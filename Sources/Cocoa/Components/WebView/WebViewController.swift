@@ -489,7 +489,7 @@ extension WebViewController: UIDocumentInteractionControllerDelegate {
             return addShareFileButton(fileUrl: fileUrl)
         }
 
-        let indicator = UIActivityIndicatorView(style: .gray).apply {
+        let indicator = UIActivityIndicatorView(style: .medium).apply {
             $0.startAnimating()
         }
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: indicator)

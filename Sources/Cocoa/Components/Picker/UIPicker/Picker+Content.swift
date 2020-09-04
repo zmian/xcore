@@ -30,7 +30,6 @@ extension Picker {
         private lazy var pickerView = UIPickerView().apply {
             $0.delegate = self
             $0.dataSource = self
-            $0.showsSelectionIndicator = true
         }
 
         private lazy var stackView = UIStackView(arrangedSubviews: [
