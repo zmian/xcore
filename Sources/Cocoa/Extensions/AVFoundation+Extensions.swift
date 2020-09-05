@@ -5,9 +5,8 @@
 //
 
 import AVFoundation
-import ObjectiveC
 
-// MARK: Current Playback Time monitoring
+// MARK: - Current Playback Time monitoring
 
 extension AVPlayer {
     public var isPlaying: Bool {
