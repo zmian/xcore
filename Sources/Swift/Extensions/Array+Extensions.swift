@@ -188,7 +188,7 @@ extension Array where Element: Equatable {
 extension Array where Element: RawRepresentable {
     /// Return an array containing all corresponding `rawValue`s of `self`.
     public var rawValues: [Element.RawValue] {
-        map { $0.rawValue }
+        map(\.rawValue)
     }
 }
 
@@ -210,7 +210,10 @@ extension Array where Element == String? {
     ///                        this sequence. The default value is an empty string.
     /// - Returns: A single, concatenated string.
     public func joined(separator: String = "") -> String {
-        lazy.compactMap { $0 }.filter { !$0.isBlank }.joined(separator: separator)
+        lazy
+            .compactMap { $0 }
+            .filter { !$0.isBlank }
+            .joined(separator: separator)
     }
 }
 

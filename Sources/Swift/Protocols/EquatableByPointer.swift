@@ -4,8 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-public protocol EquatableByPointer: class, Equatable {
-}
+public protocol EquatableByPointer: class, Equatable { }
 
 extension EquatableByPointer {
     public static func ==(lhs: Self, rhs: Self) -> Bool {

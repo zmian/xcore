@@ -6,23 +6,27 @@
 
 import Foundation
 
-// See: https://github.com/apple/swift-evolution/pull/861/files
-
-/// Reasons why code should abort at runtime
+/// Reasons why code should abort at runtime.
+///
+/// - SeeAlso: https://github.com/apple/swift-evolution/pull/861/files
 public struct FatalReason: CustomStringConvertible {
     /// An underlying string-based cause for a fatal error.
     public let reason: String
 
-    /// Establishes a new instance of a `FatalReason` with a string-based explanation.
+    /// Establishes a new instance of a `FatalReason` with a string-based
+    /// explanation.
     public init(_ reason: String) {
         self.reason = reason
     }
 
-    /// Conforms to CustomStringConvertible, allowing reason to print directly to complaint.
+    /// Conforms to CustomStringConvertible, allowing reason to print directly to
+    /// complaint.
     public var description: String {
         reason
     }
 }
+
+// MARK: - ExpressibleByStringLiteral
 
 extension FatalReason: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
@@ -34,7 +38,7 @@ extension FatalReason {
     public static let subclassMustImplement: Self = "Must be implemented by subclass."
 }
 
-// MARK: Xcore Fatal Reasons
+// MARK: - Internal Fatal Reasons
 
 extension FatalReason {
     static let unsupportedFallbackFormattingStyle: Self = "Fallback style shouldn't be of type `abbreviationWith`."

@@ -22,6 +22,8 @@ extension ProcessInfo {
     }
 }
 
+// MARK: - In-memory
+
 extension ProcessInfo {
     private struct AssociatedKey {
         static var inMemoryEnvironmentStorage = "inMemoryEnvironmentStorage"
@@ -33,8 +35,10 @@ extension ProcessInfo {
     }
 }
 
+// MARK: - Argument
+
 extension ProcessInfo {
-    public struct Argument: RawRepresentable, ExpressibleByStringLiteral, CustomStringConvertible, Equatable {
+    public struct Argument: RawRepresentable, ExpressibleByStringLiteral, CustomStringConvertible, Hashable {
         /// The variable name in the environment from which the process was launched.
         public let rawValue: String
 
@@ -53,7 +57,8 @@ extension ProcessInfo {
         /// A boolean property to indicate whether the variable exists in the
         /// environment from which the process was launched.
         public var exists: Bool {
-            ProcessInfo.shared.contains(key: rawValue) || ProcessInfo.shared.inMemoryEnvironmentStorage.keys.contains(rawValue)
+            ProcessInfo.shared.contains(key: rawValue) ||
+            ProcessInfo.shared.inMemoryEnvironmentStorage.keys.contains(rawValue)
         }
 
         /// The variable value in the environment from which the process was launched.
@@ -102,7 +107,7 @@ extension ProcessInfo {
     }
 }
 
-// MARK: - ProcessInfo.Argument Convenience
+// MARK: - Argument Convenience
 
 extension ProcessInfo.Argument {
     /// Returns the value of the argument.
@@ -131,21 +136,25 @@ extension ProcessInfo.Argument {
     }
 }
 
-// MARK: - Namespace
+// MARK: - Arguments Namespace
 
 extension ProcessInfo {
-    public enum Arguments { }
+    public enum Arguments {
+        public static func argument(_ flag: String) -> Argument {
+            Argument(rawValue: flag)
+        }
+    }
 }
 
 // MARK: - Built-in Arguments
 
 extension ProcessInfo.Arguments {
     public static var isTesting: Bool {
-        ProcessInfo.Argument("XCTestConfigurationFilePath").exists
+        argument("XCTestConfigurationFilePath").exists
     }
 
     public static var isDebug: Bool {
-        ProcessInfo.Argument("DEBUG").exists
+        argument("DEBUG").exists
     }
 
     public static var isAnalyticsDebugEnabled: (enabled: Bool, contains: String?) {
@@ -153,18 +162,18 @@ extension ProcessInfo.Arguments {
             return (false, nil)
         }
 
-        let argument = ProcessInfo.Argument("XCAnalyticsDebugEnabled")
-        return (argument.exists, argument.get())
+        let flag = argument("XCAnalyticsDebugEnabled")
+        return (flag.exists, flag.get())
     }
 
     public static var isAllInterstitialsEnabled: Bool {
         get {
             #if DEBUG
-                return ProcessInfo.Argument("XCAllInterstitialsEnabled").exists
+                return argument("XCAllInterstitialsEnabled").exists
             #else
                 return false
             #endif
         }
-        set { ProcessInfo.Argument("XCAllInterstitialsEnabled").set(newValue) }
+        set { argument("XCAllInterstitialsEnabled").set(newValue) }
     }
 }

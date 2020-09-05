@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct JSONHelpers {
+public enum JSONHelpers {
     /// Automatically detect and load the JSON from local(mainBundle) or a remote url.
     public static func remoteOrLocalJSONFile(_ named: String, callback: @escaping ((Any?) -> Void)) {
         if let url = URL(string: named), url.host != nil {

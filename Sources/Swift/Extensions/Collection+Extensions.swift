@@ -9,18 +9,19 @@ import Foundation
 extension Sequence where Iterator.Element: Hashable {
     /// Return an `Array` containing only the unique elements of `self` in order.
     public func unique() -> [Iterator.Element] {
-        var seen: [Iterator.Element: Bool] = [:]
-        return filter { seen.updateValue(true, forKey: $0) == nil }
+        unique { $0 }
     }
 }
 
 extension Sequence {
     /// Return an `Array` containing only the unique elements of `self`,
-    /// in order, where `unique` criteria is determined by the `uniqueProperty` block.
+    /// in order, where `unique` criteria is determined by the `uniqueProperty`
+    /// block.
     ///
-    /// - Parameter uniqueProperty: `unique` criteria is determined by the value returned by this block.
+    /// - Parameter uniqueProperty: `unique` criteria is determined by the value
+    ///                             returned by this block.
     /// - Returns: Return an `Array` containing only the unique elements of `self`,
-    /// in order, that satisfy the predicate `uniqueProperty`.
+    ///            in order, that satisfy the predicate `uniqueProperty`.
     public func unique<T: Hashable>(_ uniqueProperty: (Iterator.Element) -> T) -> [Iterator.Element] {
         var seen: [T: Bool] = [:]
         return filter { seen.updateValue(true, forKey: uniqueProperty($0)) == nil }

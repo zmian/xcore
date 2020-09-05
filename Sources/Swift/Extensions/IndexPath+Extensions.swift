@@ -7,17 +7,17 @@
 import UIKit
 
 extension IndexPath {
-    public static var zero: IndexPath {
+    public static var zero: Self {
         .init(item: 0, section: 0)
     }
 
-    public func with(_ globalSection: Int) -> IndexPath {
+    public func with(_ globalSection: Int) -> Self {
         .init(row: row, section: globalSection + section)
     }
 }
 
 extension IndexPath {
-    public func previous() -> IndexPath? {
+    public func previous() -> Self? {
         guard item > 0 else {
             return nil
         }
@@ -25,7 +25,7 @@ extension IndexPath {
         return IndexPath(row: item - 1, section: section)
     }
 
-    public func next(in collectionView: UICollectionView) -> IndexPath? {
+    public func next(in collectionView: UICollectionView) -> Self? {
         let itemsInSection = collectionView.numberOfItems(inSection: section)
 
         guard item + 1 < itemsInSection else {
@@ -35,7 +35,7 @@ extension IndexPath {
         return IndexPath(row: item + 1, section: section)
     }
 
-    public func next(in tableView: UITableView) -> IndexPath? {
+    public func next(in tableView: UITableView) -> Self? {
         let rowsInSection = tableView.numberOfRows(inSection: section)
 
         guard row + 1 < rowsInSection else {

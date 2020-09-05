@@ -16,32 +16,17 @@ extension Biometrics {
         case faceID
 
         fileprivate init() {
-            let context = LAContext()
-            let isAvailable = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+            let type = LAContext().biometryType
 
-            // There is a bug in the earlier versions of iOS 11 that causes crash
-            // when accessing `LAContext.biometryType`. Guarding using `context.responds`
-            // is a workaround for the devices running older iOS 11 versions.
-            // This is fixed in the later version of iOS 11.
-            guard context.responds(to: #selector(getter: LAContext.biometryType)) else {
-                // If it's is available it will always be Touch ID as the first Face ID device
-                // shipped allows access to `LAContext.biometryType`. Thus, if it's Face ID
-                // this code path will never be executed.
-                self = isAvailable ? .touchID : .none
-                return
-            }
-
-            switch context.biometryType {
+            switch type {
                 case .touchID:
                     self = .touchID
                 case .faceID:
                     self = .faceID
-                default:
-                    // The device does not support biometry.
-                    //
-                    // `LABiometryNone` introduced in `11.0` and was deprecated in `11.2` and
-                    // renamed to be `LABiometryType.none`. This default case allows us to handle
-                    // both of those cases without resorting to hacks or explicit checks.
+                case .none:
+                    self = .none
+                @unknown default:
+                    warnUnknown(type)
                     self = .none
             }
         }
@@ -73,9 +58,9 @@ extension Biometrics {
     }
 }
 
-final public class Biometrics {
-    /// Indicates that the device owner can authenticate using biometry, Touch ID or
-    /// Face ID.
+public struct Biometrics {
+    /// Indicates that the device owner can authenticate using biometry (e.g.,
+    /// Touch ID or Face ID).
     public var isAvailable: Bool {
         LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
