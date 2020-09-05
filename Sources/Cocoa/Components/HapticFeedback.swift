@@ -141,12 +141,10 @@ extension HapticFeedback {
         $0.impactOccurred()
     }
 
-    @available(iOS 13.0, *)
     private static let softImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .soft)) {
         $0.impactOccurred()
     }
 
-    @available(iOS 13.0, *)
     private static let rigidImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .rigid)) {
         $0.impactOccurred()
     }

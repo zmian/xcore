@@ -11,7 +11,6 @@ final public class SiriShortcuts {
 }
 
 extension SiriShortcuts {
-    @available(iOS 10.0, *)
     open class Domain: Hashable, Appliable {
         private var didUpdateDonations = false
         public let id: String
