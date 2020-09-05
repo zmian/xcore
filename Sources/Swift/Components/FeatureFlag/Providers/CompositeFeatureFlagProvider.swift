@@ -6,7 +6,7 @@
 
 import Foundation
 
-final class CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArrayLiteral {
+struct CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArrayLiteral {
     /// The registered list of providers.
     private var providers: [FeatureFlagProvider] = []
 
@@ -21,7 +21,7 @@ final class CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArra
     /// Add given provider if it's not already included in the collection.
     ///
     /// - Note: This method ensures there are no duplicate providers.
-    func add(_ provider: FeatureFlagProvider) {
+    mutating func add(_ provider: FeatureFlagProvider) {
         guard !providers.contains(where: { $0.id == provider.id }) else {
             return
         }
@@ -33,12 +33,14 @@ final class CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArra
     /// collection.
     ///
     /// - Note: This method ensures there are no duplicate providers.
-    func add(_ providers: [FeatureFlagProvider]) {
-        providers.forEach(add)
+    mutating func add(_ providers: [FeatureFlagProvider]) {
+        providers.forEach {
+            add($0)
+        }
     }
 
     /// Removes the given provider.
-    func remove(_ provider: FeatureFlagProvider) {
+    mutating func remove(_ provider: FeatureFlagProvider) {
         let ids = providers.map { $0.id }
 
         guard let index = ids.firstIndex(of: provider.id) else {
