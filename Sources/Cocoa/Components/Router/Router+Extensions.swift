@@ -102,24 +102,3 @@ extension XCCollectionViewDataSource {
         return router
     }
 }
-
-// MARK: - XCTableViewDataSource
-
-extension XCTableViewDataSource {
-    public var router: Router {
-        guard let tableView = tableView else {
-            return Router(navigationController: nil)
-        }
-
-        guard let router = tableView.viewController?.router else {
-            #if DEBUG
-            if isDebuggerAttached {
-                fatalError("Datasource doesn't have a view controller.")
-            }
-            #endif
-            return Router(navigationController: nil)
-        }
-
-        return router
-    }
-}
