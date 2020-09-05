@@ -7,16 +7,6 @@
 import Foundation
 import CryptoKit
 
-extension Digest {
-    public var data: Data {
-        Data(makeIterator())
-    }
-
-    public func hexEncodedString() -> String {
-        makeIterator().map { String(format: "%02hhx", $0) }.joined()
-    }
-}
-
 extension Data {
     public func md5() -> String {
         Insecure.MD5.hash(data: self).hexEncodedString()
@@ -34,6 +24,16 @@ extension String {
 
     public func sha256() -> String? {
         data(using: .utf8)?.sha256()
+    }
+}
+
+extension Digest {
+    public var data: Data {
+        Data(makeIterator())
+    }
+
+    public func hexEncodedString() -> String {
+        makeIterator().map { String(format: "%02hhx", $0) }.joined()
     }
 }
 

@@ -13,7 +13,8 @@ public struct ElementPosition: OptionSet {
         self.rawValue = rawValue
     }
 
-    public static let primary = ElementPosition(rawValue: 1 << 0)
-    public static let secondary = ElementPosition(rawValue: 1 << 1)
-    public static let tertiary = ElementPosition(rawValue: 1 << 2)
+    public static let primary = Self(rawValue: 1 << 0)
+    public static let secondary = Self(rawValue: 1 << 1)
+    public static let tertiary = Self(rawValue: 1 << 2)
+    public static let quaternary = Self(rawValue: 1 << 3)
 }

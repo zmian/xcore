@@ -4,24 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-// Adopted: https://medium.com/swift-programming/ce22d76f120c
-
 import Foundation
-
-public struct ArrayIterator<Element>: IteratorProtocol {
-    private let array: [Element]
-    private var currentIndex = 0
-
-    public init(_ array: [Element]) {
-        self.array = array
-    }
-
-    public mutating func next() -> Element? {
-        let element = array.at(currentIndex)
-        currentIndex += 1
-        return element
-    }
-}
 
 public struct Section<Element>: RangeReplaceableCollection, MutableCollection, ExpressibleByArrayLiteral {
     public var title: String?
@@ -54,16 +37,12 @@ public struct Section<Element>: RangeReplaceableCollection, MutableCollection, E
         set { items[index] = newValue }
     }
 
-    /// Returns the position immediately after the given index.
-    ///
-    /// - Parameter i: A valid index of the collection. `i` must be less than `endIndex`.
-    /// - Returns: The index value immediately after `i`.
     public func index(after i: Int) -> Int {
-        i + 1
+        items.index(after: i)
     }
 
-    public func makeIterator() -> ArrayIterator<Element> {
-        .init(items)
+    public func makeIterator() -> Array<Element>.Iterator {
+        items.makeIterator()
     }
 
     public mutating func replaceSubrange<C: Collection>(_ subRange: Range<Int>, with newElements: C) where C.Iterator.Element == Element {
