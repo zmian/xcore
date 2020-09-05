@@ -10,8 +10,8 @@ import Foundation
 
 extension FeatureFlag {
     /// The registered list of providers.
-    private static let provider = CompositeFeatureFlagProvider([
-        EnvironmentArgumentsFeatureFlag()
+    private static var provider = CompositeFeatureFlagProvider([
+        EnvironmentArgumentsFeatureFlagProvider()
     ])
 
     /// Register the given provider if it's not already registered.
