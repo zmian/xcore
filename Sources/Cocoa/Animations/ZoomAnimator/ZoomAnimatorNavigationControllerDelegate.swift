@@ -12,7 +12,7 @@ final public class ZoomAnimatorNavigationControllerDelegate: NSObject {
     private let zoomPopGestureRecognizer = UIScreenEdgePanGestureRecognizer()
 }
 
-// MARK: UINavigationControllerDelegate
+// MARK: - UINavigationControllerDelegate
 
 extension ZoomAnimatorNavigationControllerDelegate: UINavigationControllerDelegate {
     public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {

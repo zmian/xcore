@@ -6,6 +6,8 @@
 
 import UIKit
 
+// MARK: - Content Inset
+
 extension UILabel {
     private struct AssociatedKey {
         static var contentInset = "contentInset"
@@ -30,12 +32,9 @@ extension UILabel {
     }
 }
 
-extension UILabel {
-    open func setLineSpacing(_ spacing: CGFloat, text: String? = nil) {
-        guard let text = text ?? self.text else { return }
-        attributedText = NSMutableAttributedString(string: text).setLineSpacing(spacing)
-    }
+// MARK: - Line Spacing & Underline
 
+extension UILabel {
     /// A height of the label.
     open var boundingHeight: CGFloat {
         guard let font = font else {
@@ -45,40 +44,61 @@ extension UILabel {
         return "Sphinx".size(withFont: font).height * CGFloat(numberOfLines)
     }
 
-    // MARK: - Underline
+    open func setLineSpacing(_ spacing: CGFloat) {
+        attributedText = mutableAttributedString()?.lineSpacing(spacing)
+    }
 
-    @objc open func underline() {
+    open func underline() {
+        attributedText = mutableAttributedString()?.underline(nil)
+    }
+
+    private func mutableAttributedString() -> NSMutableAttributedString? {
         if let attributedText = attributedText {
-            self.attributedText = NSMutableAttributedString(attributedString: attributedText).underline(attributedText.string)
+            return NSMutableAttributedString(attributedString: attributedText)
         } else if let text = text {
-            self.attributedText = NSMutableAttributedString(string: text).underline(text)
+            return NSMutableAttributedString(string: text)
         }
+
+        return nil
     }
 }
 
 // MARK: - Bullets
 
 extension UILabel {
-    public func applyBullets(interlineFactor: CGFloat = 1.0, style: NSAttributedString.BulletStyle = .default) {
-        let attributedString = attributedText ?? NSAttributedString(string: text ?? "", attributes: [.font: font!, .foregroundColor: textColor!])
-        attributedText = attributedString.bullets(interlineFactor: interlineFactor, style: style, font: font)
+    public func applyBullets(
+        interlineFactor: CGFloat = 1,
+        style: NSAttributedString.BulletStyle = .default
+    ) {
+        let attributedString = attributedText ?? NSAttributedString(
+            string: text ?? "",
+            attributes: [
+                .font: font!,
+                .foregroundColor: textColor!
+            ]
+        )
+
+        attributedText = attributedString.bullets(
+            interlineFactor: interlineFactor,
+            style: style,
+            font: font
+        )
     }
 }
 
 // MARK: - Scale
 
 extension UILabel {
-    /// Update the font given scale factor.
+    /// Update the font given scale factor while respecting any existing font
+    /// attributes changes (e.g., subscript and superscript).
     ///
     /// ```swift
     /// let contentView = UIStackView()
+    /// let availableWidth = contentView.frame.width - contentView.layoutMargins.horizontal - contentView.spacing
     ///
     /// let label = UILabel()
     /// label.attributedText = "Hello, world!"
-    ///
-    /// let width = contentView.frame.width - contentView.layoutMargins.horizontal - contentView.spacing
-    ///
-    /// let scaleFactor = label.attributedText!.fontScaleFactor(width: width)
+    /// let scaleFactor = label.attributedText!.fontScaleFactor(width: availableWidth)
     /// label.updateFont(scaleFactor: scaleFactor)
     /// ```
     public func updateFont(scaleFactor: CGFloat) {
@@ -88,18 +108,18 @@ extension UILabel {
             return
         }
 
-        let mutableAttributedString = NSMutableAttributedString(attributedString: attributedText)
-        let range = NSRange(location: 0, length: mutableAttributedString.string.count)
+        let attributedString = NSMutableAttributedString(attributedString: attributedText)
+        let range = NSRange(location: 0, length: attributedString.string.count)
 
-        mutableAttributedString.enumerateAttribute(.font, in: range) { font, range, stop in
+        attributedString.enumerateAttribute(.font, in: range) { font, range, stop in
             if let font = font as? UIFont {
                 let normalizedSize = floor(font.pointSize * scaleFactor * 10) / 10
                 let newFont = font.withSize(normalizedSize)
-                mutableAttributedString.replaceAttribute(.font, value: newFont, range: range)
+                attributedString.replaceAttribute(.font, value: newFont, range: range)
             }
         }
 
-        self.attributedText = mutableAttributedString
+        self.attributedText = attributedString
     }
 }
 
@@ -108,13 +128,11 @@ extension NSAttributedString {
     ///
     /// ```swift
     /// let contentView = UIStackView()
+    /// let availableWidth = contentView.frame.width - contentView.layoutMargins.horizontal - contentView.spacing
     ///
     /// let label = UILabel()
     /// label.attributedText = "Hello, world!"
-    ///
-    /// let width = contentView.frame.width - contentView.layoutMargins.horizontal - contentView.spacing
-    ///
-    /// let scaleFactor = label.attributedText!.fontScaleFactor(width: width)
+    /// let scaleFactor = label.attributedText!.fontScaleFactor(width: availableWidth)
     /// label.updateFont(scaleFactor: scaleFactor)
     /// ```
     public func fontScaleFactor(width: CGFloat, minimumScaleFactor: CGFloat = 0.5) -> CGFloat {
@@ -125,14 +143,18 @@ extension NSAttributedString {
             $0.sizeToFit()
             $0.frame.size.width = width
         }
-        let context = NSStringDrawingContext()
-        context.minimumScaleFactor = fauxLabel.minimumScaleFactor
+
+        let context = NSStringDrawingContext().apply {
+            $0.minimumScaleFactor = fauxLabel.minimumScaleFactor
+        }
+
         _ = boundingRect(with: fauxLabel.frame.size, options: .usesLineFragmentOrigin, context: context)
+
         return context.actualScaleFactor
     }
 }
 
-// MARK: Swizzle
+// MARK: - Swizzle
 
 extension UILabel {
     static func swizzle_drawText_runOnceSwapSelectors() {

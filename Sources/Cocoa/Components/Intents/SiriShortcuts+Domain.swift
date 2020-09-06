@@ -50,7 +50,7 @@ extension SiriShortcuts {
             staticIntents = intents
         }
 
-        // MARK: Donations
+        // MARK: - Donations
 
         /// Donates intents as shortcuts to the system.
         private func donate() {
@@ -103,7 +103,7 @@ extension SiriShortcuts {
             }
         }
 
-        // MARK: Hashable & Equatable
+        // MARK: - Hashable & Equatable
 
         open func hash(into hasher: inout Hasher) {
             hasher.combine(id)

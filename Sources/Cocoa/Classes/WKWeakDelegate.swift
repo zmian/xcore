@@ -22,7 +22,7 @@ private class WKWeakDelegate: NSObject, WKScriptMessageHandler {
     }
 }
 
-// MARK: Swizzle
+// MARK: - Swizzle
 
 extension WKUserContentController {
     static func runOnceSwapSelectors() {

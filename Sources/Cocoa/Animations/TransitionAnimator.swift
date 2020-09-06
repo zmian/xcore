@@ -45,7 +45,7 @@ open class TransitionContext {
 open class TransitionAnimator: NSObject, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
     open var direction: AnimationDirection = .in
 
-    // MARK: UIViewControllerTransitioningDelegate
+    // MARK: - UIViewControllerTransitioningDelegate
 
     open func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         direction = .in
@@ -57,7 +57,7 @@ open class TransitionAnimator: NSObject, UIViewControllerTransitioningDelegate, 
         return self
     }
 
-    // MARK: UIViewControllerAnimatedTransitioning
+    // MARK: - UIViewControllerAnimatedTransitioning
 
     open func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let context = TransitionContext(transitionContext: transitionContext) else {

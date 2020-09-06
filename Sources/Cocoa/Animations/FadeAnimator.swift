@@ -37,7 +37,7 @@ open class FadeAnimator: TransitionAnimator {
         }
     }
 
-    // MARK: FadeIn
+    // MARK: - FadeIn
 
     private func animateBounceFadeInOrFadeIn(context: TransitionContext) {
         guard let bounceContainerView = (context.to as? FadeAnimatorBounceable)?.fadeAnimatorBounceContainerView() else {
@@ -68,7 +68,7 @@ open class FadeAnimator: TransitionAnimator {
         })
     }
 
-    // MARK: FadeOut
+    // MARK: - FadeOut
 
     private func animateBounceFadeOutOrFadeOut(context: TransitionContext) {
         guard let bounceContainerView = (context.from as? FadeAnimatorBounceable)?.fadeAnimatorBounceContainerView() else {

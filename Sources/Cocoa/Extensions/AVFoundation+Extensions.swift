@@ -86,7 +86,7 @@ extension CMTime {
     }
 }
 
-// MARK: RemoteOrLocalInstantiable
+// MARK: - RemoteOrLocalInstantiable
 
 // Convenience methods for initializing videos
 

@@ -50,7 +50,7 @@ open class XCCollectionViewCell: UICollectionViewCell {
     }
 }
 
-// MARK: Custom Layout - Dim - Flex Layout
+// MARK: - Custom Layout - Dim - Flex Layout
 
 extension XCCollectionViewCell {
     @objc open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {

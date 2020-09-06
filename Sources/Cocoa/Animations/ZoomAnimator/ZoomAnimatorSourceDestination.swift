@@ -6,7 +6,7 @@
 
 import UIKit
 
-// MARK: ZoomAnimatorSource
+// MARK: - ZoomAnimatorSource
 
 public protocol ZoomAnimatorSource {
     func zoomAnimatorSourceView() -> UIView
@@ -44,7 +44,7 @@ extension ZoomAnimatorSource where Self: UIViewController {
     }
 }
 
-// MARK: ZoomAnimatorDestination
+// MARK: - ZoomAnimatorDestination
 
 public protocol ZoomAnimatorDestination {
     func zoomAnimatorDestinationViewFrame(direction: AnimationDirection) -> CGRect

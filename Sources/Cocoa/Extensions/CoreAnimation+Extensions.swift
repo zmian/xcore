@@ -34,9 +34,13 @@ extension CATransaction {
     }
 }
 
+// MARK: - CATransitionType
+
 extension CATransitionType {
     public static let none = Self(rawValue: "")
 }
+
+// MARK: - CAMediaTimingFunction
 
 extension CAMediaTimingFunction {
     public static let `default` = CAMediaTimingFunction(name: .default)
@@ -45,6 +49,8 @@ extension CAMediaTimingFunction {
     public static let easeOut = CAMediaTimingFunction(name: .easeOut)
     public static let easeInEaseOut = CAMediaTimingFunction(name: .easeInEaseOut)
 }
+
+// MARK: - CALayer
 
 extension CALayer {
     /// A convenience method to return the color at given point in `self`.

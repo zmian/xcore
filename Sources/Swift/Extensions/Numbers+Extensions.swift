@@ -6,7 +6,7 @@
 
 import Foundation
 
-// MARK: Int
+// MARK: - Int
 
 extension Int {
     private static let numberFormatter = NumberFormatter().apply {

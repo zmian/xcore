@@ -24,7 +24,7 @@ extension FileManager {
         }
     }
 
-    enum FileManagerError: Error {
+    enum Error: Swift.Error {
         case relativeDirectoryNotFound
         case pathNotFound
         case onlyDirectoryCreationSupported
@@ -37,12 +37,17 @@ extension FileManager {
     ///   - path: The path component to add.
     ///   - directory: The directory in which the given `path` is constructed.
     ///   - options: The options that are applied to when appending path. See
-    ///                 `FileManager.Options` for possible values. The default value is `.none`.
+    ///              `FileManager.Options` for possible values. The default value
+    ///              is `.none`.
     /// - Returns: Returns a `URL` constructed by appending the given path component
     ///            relative to the specified directory.
-    open func appending(path: String, relativeTo directory: SearchPathDirectory, options: Options = .none) throws -> URL {
+    open func appending(
+        path: String,
+        relativeTo directory: SearchPathDirectory,
+        options: Options = .none
+    ) throws -> URL {
         guard var directoryUrl = url(for: directory) else {
-            throw FileManagerError.relativeDirectoryNotFound
+            throw Error.relativeDirectoryNotFound
         }
 
         directoryUrl = directoryUrl.appendingPathComponent(path, isDirectory: true)
@@ -55,7 +60,7 @@ extension FileManager {
             return directoryUrl
         }
 
-        throw FileManagerError.pathNotFound
+        throw Error.pathNotFound
     }
 }
 
@@ -67,7 +72,7 @@ extension FileManager {
         }
 
         guard url.hasDirectoryPath else {
-            throw FileManagerError.onlyDirectoryCreationSupported
+            throw Error.onlyDirectoryCreationSupported
         }
 
         var url = url

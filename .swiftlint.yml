@@ -138,6 +138,11 @@ custom_rules:
     name: "Vertical Whitespace before Closing Braces"
     message: "Don't include vertical whitespace (empty line) before closing braces."
 
+  inconsistent_mark_declaration:
+    included: ".*.swift"
+    regex: '// MARK: [^-]'
+    message: "Add \"-\" after MARK declaration (e.g., // MARK: - Example)."
+
   inconsistent_naming_parameter_capitalized:
     included: ".*.swift"
     regex: '/// - parameter'

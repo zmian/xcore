@@ -36,7 +36,7 @@ extension UINavigationBar {
     }
 }
 
-// MARK: Transparent Hit Area Accommodation
+// MARK: - Transparent Hit Area Accommodation
 
 extension UINavigationBar {
     open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {

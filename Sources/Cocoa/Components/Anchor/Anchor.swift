@@ -6,7 +6,7 @@
 
 import UIKit
 
-// MARK: Axis
+// MARK: - Axis
 
 extension Anchor {
     public class Axis<T> {
@@ -386,7 +386,7 @@ extension Anchor.Axis {
     }
 }
 
-// MARK: Equal
+// MARK: - Equal
 
 extension Anchor.Axis {
     @discardableResult
@@ -405,7 +405,7 @@ extension Anchor.Axis {
     }
 }
 
-// MARK: LessThanOrEqual
+// MARK: - LessThanOrEqual
 
 extension Anchor.Axis {
     @discardableResult
@@ -424,7 +424,7 @@ extension Anchor.Axis {
     }
 }
 
-// MARK: GreaterThanOrEqual
+// MARK: - GreaterThanOrEqual
 
 extension Anchor.Axis {
     @discardableResult

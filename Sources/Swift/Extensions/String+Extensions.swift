@@ -101,7 +101,7 @@ extension String {
     }
 
     /// Returns an array of strings at new lines.
-    public var lines: [String] {
+    public func lines() -> [String] {
         components(separatedBy: .newlines)
     }
 

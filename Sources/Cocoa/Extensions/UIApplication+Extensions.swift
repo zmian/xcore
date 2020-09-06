@@ -66,7 +66,7 @@ extension UIApplication {
     }
 }
 
-// MARK: TopViewController
+// MARK: - TopViewController
 
 extension UIApplication {
     open class func topViewController(_ base: UIViewController? = UIApplication.sharedOrNil?.keyWindow?.rootViewController) -> UIViewController? {
@@ -111,7 +111,7 @@ extension UIApplication {
     }
 }
 
-// MARK: UIWindow - TopViewController
+// MARK: - UIWindow - TopViewController
 
 extension UIWindow {
     /// The view controller at the top of the window's `rootViewController` stack.
