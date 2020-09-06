@@ -512,7 +512,7 @@ extension DynamicTableView {
     }
 }
 
-// MARK: ReorderTableViewDelegate
+// MARK: - ReorderTableViewDelegate
 
 extension DynamicTableView: ReorderTableViewDelegate {
     private static var reorderTableViewDummyItemIdentifier: String {
@@ -543,7 +543,7 @@ extension DynamicTableView: ReorderTableViewDelegate {
     }
 }
 
-// MARK: UIScrollViewDelegate Forward Calls
+// MARK: - UIScrollViewDelegate Forward Calls
 
 extension DynamicTableView {
     open override func responds(to aSelector: Selector!) -> Bool {

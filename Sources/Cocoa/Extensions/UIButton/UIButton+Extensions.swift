@@ -199,7 +199,7 @@ extension UIButton {
 }
 
 extension UIButton {
-    // MARK: Background Color
+    // MARK: - Background Color
 
     @objc open func backgroundColor(for state: UIControl.State) -> UIColor? {
         guard let color = backgroundColors[state.rawValue] else {
@@ -241,7 +241,7 @@ extension UIButton {
         }
     }
 
-    // MARK: Border Color
+    // MARK: - Border Color
 
     @objc open func borderColor(for state: UIControl.State) -> UIColor? {
         guard let color = borderColors[state.rawValue] else {
@@ -280,7 +280,7 @@ extension UIButton {
     }
 }
 
-// MARK: Convenience Aliases
+// MARK: - Convenience Aliases
 
 extension UIButton {
     /// The image used for the normal state.
@@ -385,7 +385,7 @@ extension UIButton {
         }
     }
 
-    // MARK: Underline
+    // MARK: - Underline
 
     @objc open func underline() {
         if let attributedText = titleLabel?.attributedText {
@@ -395,7 +395,7 @@ extension UIButton {
         }
     }
 
-    // MARK: Reset
+    // MARK: - Reset
 
     @objc open func removeInsets() {
         contentEdgeInsets = 0
@@ -445,7 +445,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
         }
     }
 
-    // MARK: Lifecycle Callbacks
+    // MARK: - Lifecycle Callbacks
 
     public func didSelect(_ callback: @escaping (_ sender: Self) -> Void) {
         didSelect = { sender in
@@ -505,7 +505,7 @@ extension UIButton {
     }
 }
 
-// MARK: Hit Area
+// MARK: - Hit Area
 
 extension UIButton {
     /// Increase button touch area.
@@ -564,7 +564,7 @@ extension UIButton {
     }
 }
 
-// MARK: Lifecycle Events
+// MARK: - Lifecycle Events
 
 extension UIButton {
     // A method that is called when the state changes.
@@ -614,7 +614,7 @@ extension UIButton {
     }
 }
 
-// MARK: Swizzle
+// MARK: - Swizzle
 
 extension UIButton {
     static func runOnceSwapSelectors() {

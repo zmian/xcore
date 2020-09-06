@@ -247,7 +247,7 @@ extension NotificationCenter.Event {
     }
 }
 
-// MARK: NotificationObject
+// MARK: - NotificationObject
 
 public protocol NotificationObject {
     var name: Notification.Name { get }

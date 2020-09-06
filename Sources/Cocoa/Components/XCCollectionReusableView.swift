@@ -83,7 +83,7 @@ extension XCCollectionReusableView {
     }
 }
 
-// MARK: Custom Layout - Dim - Flex Layout
+// MARK: - Custom Layout - Dim - Flex Layout
 
 extension XCCollectionReusableView {
     @objc open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {

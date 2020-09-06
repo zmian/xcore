@@ -35,7 +35,7 @@ public protocol KeyboardObservable {
     func keyboardFrameDidChange(_ payload: KeyboardPayload)
 }
 
-// MARK: KeyboardPayload
+// MARK: - KeyboardPayload
 
 /// A struct to represent keyboard payload associated with keyboard frame
 /// visibility changes notification.

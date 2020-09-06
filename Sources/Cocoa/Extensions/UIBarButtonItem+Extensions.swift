@@ -6,7 +6,7 @@
 
 import UIKit
 
-// MARK: TextColor
+// MARK: - TextColor
 
 extension UIBarButtonItem {
     @objc open dynamic var textColor: UIColor? {
@@ -23,7 +23,7 @@ extension UIBarButtonItem {
     }
 }
 
-// MARK: Font
+// MARK: - Font
 
 extension UIBarButtonItem {
     @objc open dynamic var font: UIFont? {
@@ -44,7 +44,7 @@ extension UIBarButtonItem {
     }
 }
 
-// MARK: Helpers
+// MARK: - Helpers
 
 extension UIBarButtonItem {
     private func titleTextAttribute<T>(_ key: NSAttributedString.Key, for state: UIControl.State) -> T? {

@@ -117,7 +117,6 @@ extension Theme {
     }
 
     private static func setDynamicTableViewTheme() {
-        // MARK: DynamicTableView
         DynamicTableView.appearance().apply {
             $0.headerFont = .app(style: .caption1)
             $0.headerTextColor = current.textColor

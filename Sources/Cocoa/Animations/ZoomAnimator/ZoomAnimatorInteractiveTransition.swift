@@ -50,7 +50,7 @@ final class ZoomAnimatorInteractiveTransition: UIPercentDrivenInteractiveTransit
     }
 }
 
-// MARK: UIGestureRecognizerDelegate
+// MARK: - UIGestureRecognizerDelegate
 
 extension ZoomAnimatorInteractiveTransition: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {

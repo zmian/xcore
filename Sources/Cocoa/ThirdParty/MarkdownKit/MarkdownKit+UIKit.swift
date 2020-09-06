@@ -254,7 +254,7 @@ extension UITextView {
     }
 }
 
-// MARK: MarkupText Swizzle
+// MARK: - MarkupText Swizzle
 
 extension UILabel {
     @objc private var swizzled_text: String? {

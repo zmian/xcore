@@ -147,7 +147,7 @@ extension ConstraintMakerRelatable {
     }
 }
 
-// MARK: ConstraintPriority
+// MARK: - ConstraintPriority
 
 extension ConstraintPriority {
     public static func +(lhs: SnapKit.ConstraintPriority, rhs: Float) -> Self {
@@ -159,7 +159,7 @@ extension ConstraintPriority {
     }
 }
 
-// MARK: Convenience API to allow `.minimumPadding or .defaultPadding`.
+// MARK: - Convenience API to allow `.minimumPadding or .defaultPadding`.
 
 extension ConstraintMakerEditable {
     @discardableResult

@@ -40,7 +40,7 @@ extension UITextField {
     }
 }
 
-// MARK: Swizzle
+// MARK: - Swizzle
 
 extension UITextField {
     static func runOnceSwapSelectors() {

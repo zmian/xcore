@@ -223,7 +223,7 @@ open class WebViewController: UIViewController {
         return super.preferredStatusBarStyle
     }
 
-    // MARK: KVO
+    // MARK: - KVO
 
     private var canGoBackKvoToken: NSKeyValueObservation?
     private var canGoForwardKvoToken: NSKeyValueObservation?
@@ -261,7 +261,7 @@ open class WebViewController: UIViewController {
 
     open func autofillToken(completion: @escaping (Autofill?) -> Void) { }
 
-    // MARK: Hooks
+    // MARK: - Hooks
 
     private var configureLoader: ((_ loader: ViewMaskable) -> Void)?
     public func configureLoader(_ callback: @escaping (_ loader: ViewMaskable) -> Void) {

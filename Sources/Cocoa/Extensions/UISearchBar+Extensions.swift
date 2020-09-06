@@ -106,7 +106,7 @@ extension UISearchBar {
     }
 }
 
-// MARK: Swizzle
+// MARK: - Swizzle
 
 extension UISearchBar {
     static func runOnceSwapSelectors() {
