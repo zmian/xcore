@@ -7,8 +7,9 @@
 import UIKit
 
 extension UIViewController {
-    /// This configuration exists to allow some of the properties
-    /// to be configured to match app's appearance style.
+    /// This configuration exists to allow some of the properties to be configured
+    /// to match app's appearance style.
+    ///
     /// The `UIAppearance` protocol doesn't work when the stored properites
     /// are set using associated object.
     ///
@@ -53,14 +54,18 @@ extension UIViewController {
         static var isSwipeBackGestureEnabled = "isSwipeBackGestureEnabled"
     }
 
-    /// A convenience property to set `supportedInterfaceOrientations` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to set supported interface orientation.
+    /// A convenience property to set `supportedInterfaceOrientations` without
+    /// subclassing.
     ///
-    /// The default value is `nil` which means use the `supportedInterfaceOrientations` value.
+    /// This is useful when you don't have access to the actual class source code
+    /// and need to set supported interface orientation.
     ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
+    /// The default value is `nil` which means use the
+    /// `supportedInterfaceOrientations` value.
+    ///
+    /// Setting this value on an instance of `UINavigationController` sets it for
+    /// all of it's view controllers. And, any of its view controllers can override
+    /// this on as needed basis.
     ///
     /// ```swift
     /// let vc = UIImagePickerController()
@@ -77,14 +82,18 @@ extension UIViewController {
         set { setAssociatedObject(&AssociatedKey.supportedInterfaceOrientations, value: newValue?.rawValue) }
     }
 
-    /// A convenience property to set `preferredInterfaceOrientationForPresentation` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to set supported interface orientation.
+    /// A convenience property to set `preferredInterfaceOrientationForPresentation`
+    /// without subclassing.
     ///
-    /// The default value is `nil` which means use the `preferredInterfaceOrientationForPresentation` value.
+    /// This is useful when you don't have access to the actual class source code
+    /// and need to set supported interface orientation.
     ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
+    /// The default value is `nil` which means use the
+    /// `preferredInterfaceOrientationForPresentation` value.
+    ///
+    /// Setting this value on an instance of `UINavigationController` sets it for
+    /// all of it's view controllers. And, any of its view controllers can override
+    /// this on as needed basis.
     ///
     /// ```swift
     /// let vc = UIImagePickerController()
@@ -102,15 +111,21 @@ extension UIViewController {
     }
 
     /// A convenience property to set `preferredStatusBarStyle` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to update the status bar style to match with the app's look and feel.
     ///
-    /// The default value is `nil` which means use the `preferredStatusBarStyle` value.
+    /// This is useful when you don't have access to the actual class source code
+    /// and need to update the status bar style to match with the app's look and
+    /// feel.
     ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
-    /// This enables `info.plist`'s `View controller-based status bar appearance: NO` like behavior
-    /// but allowing any of its view controllers to override the value.
+    /// The default value is `nil` which means use the `preferredStatusBarStyle`
+    /// value.
+    ///
+    /// Setting this value on an instance of `UINavigationController` sets it for
+    /// all of it's view controllers. And, any of its view controllers can override
+    /// this on as needed basis.
+    ///
+    /// This enables `info.plist` `"View controller-based status bar appearance: NO"`
+    /// like behavior but allowing any of its view controllers to override the
+    /// value.
     ///
     /// ```swift
     /// let vc = UIImagePickerController()
@@ -130,14 +145,18 @@ extension UIViewController {
         }
     }
 
-    /// A convenience property to set `preferredStatusBarUpdateAnimation` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to update the status bar animation.
+    /// A convenience property to set `preferredStatusBarUpdateAnimation` without
+    /// subclassing.
     ///
-    /// The default value is `nil` which means use the `preferredStatusBarUpdateAnimation` value.
+    /// This is useful when you don't have access to the actual class source code
+    /// and need to update the status bar animation.
     ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
+    /// The default value is `nil` which means use the
+    /// `preferredStatusBarUpdateAnimation` value.
+    ///
+    /// Setting this value on an instance of `UINavigationController` sets it for
+    /// all of it's view controllers. And, any of its view controllers can override
+    /// this on as needed basis.
     ///
     /// ```swift
     /// let vc = UIImagePickerController()
@@ -155,13 +174,15 @@ extension UIViewController {
     }
 
     /// A convenience property to set `prefersStatusBarHidden` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to show/hide status bar.
+    /// This is useful when you don't have access to the actual class source code
+    /// and need to show/hide status bar.
     ///
-    /// The default value is `nil` which means use the `prefersStatusBarHidden` value.
+    /// The default value is `nil` which means use the `prefersStatusBarHidden`
+    /// value.
     ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
+    /// Setting this value on an instance of `UINavigationController` sets it for
+    /// all of it's view controllers. And, any of its view controllers can override
+    /// this on as needed basis.
     ///
     /// ```swift
     /// let vc = UIImagePickerController()
@@ -176,13 +197,15 @@ extension UIViewController {
     }
 
     /// A convenience property to set `shouldAutorotate` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to enable/disable rotation.
+    ///
+    /// This is useful when you don't have access to the actual class source code
+    /// and need to enable/disable rotation.
     ///
     /// The default value is `nil` which means use the `shouldAutorotate` value.
     ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
+    /// Setting this value on an instance of `UINavigationController` sets it for
+    /// all of it's view controllers. And, any of its view controllers can override
+    /// this on as needed basis.
     ///
     /// ```swift
     /// let vc = UIImagePickerController()
@@ -203,13 +226,15 @@ extension UIViewController {
     }
 
     /// A convenience property to set `prefersTabBarHidden` without subclassing.
-    /// This is useful when you don't have access to the actual class source code and need
-    /// to show/hide tab bar.
+    ///
+    /// This is useful when you don't have access to the actual class source code
+    /// and need to show/hide tab bar.
     ///
     /// The default value is `nil` which means use the `prefersTabBarHidden` value.
     ///
-    /// Setting this value on an instance of `UINavigationController` sets it for all of it's view controllers.
-    /// And, any of its view controllers can override this on as needed basis.
+    /// Setting this value on an instance of `UINavigationController` sets it for
+    /// all of it's view controllers. And, any of its view controllers can override
+    /// this on as needed basis.
     ///
     /// ```swift
     /// let vc = UIImagePickerController()
@@ -222,7 +247,8 @@ extension UIViewController {
 }
 
 @objc extension UIViewController {
-    /// The default value is of property `isTabBarHidden` if it's set, otherwise, `false`.
+    /// The default value is of property `isTabBarHidden` if it's set; otherwise,
+    /// `false`.
     open var prefersTabBarHidden: Bool {
         isTabBarHidden ?? defaultAppearance.prefersTabBarHidden
     }
@@ -262,9 +288,9 @@ extension UIViewController {
 
     /// Display attributes for the bar’s title text.
     ///
-    /// You can specify the font, text color, text shadow color, and text shadow offset
-    /// for the title in the text attributes dictionary, using the text attribute keys
-    /// described in Character Attributes.
+    /// You can specify the font, text color, text shadow color, and text shadow
+    /// offset for the title in the text attributes dictionary, using the text
+    /// attribute keys described in Character Attributes.
     open var preferredNavigationBarTitleAttributes: [NSAttributedString.Key: Any] {
         var attributes = UIViewController.defaultNavigationBarTextAttributes
         attributes[.foregroundColor] = preferredNavigationBarTintColor
@@ -302,8 +328,8 @@ extension UIViewController {
 @objc extension UIViewController {
     /// A property to indicate that view controller is obstructing the screen.
     ///
-    /// Such information is useful when certain actions can't be triggered,
-    /// for example, in-app deep-linking routing.
+    /// Such information is useful when certain actions can't be triggered, for
+    /// example, in-app deep-linking routing.
     ///
     /// The default value for any `ObstructableView` conforming `UIViewController`
     /// is `true`; otherwise, `false`.

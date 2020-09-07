@@ -4,22 +4,30 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
-
 #if canImport(Haring)
+import UIKit
 import Haring
 
-/// Custom tags to support extra features in Markdown: Text color, background color, and font.
-/// MarkdownKit provides support to add custom tags support.
-/// https://github.com/ivanbruel/MarkdownKit#extensibility
-///
-/// The following test string ensures that Markdown parser is implemented correctly with our custom tags.
-///
-/// **Markdown Acid Test**
-/// ```
-/// Community Rules {font:HelveticaNeue,24pt|text in {#bada55|green} a different font}\n\n {#bada55|the {bg#FFD700|should have gold color} text} {bg#bada55|the {#FFD700|should have gold color} text} **3 Bold** {bg#bada55|the text} \n\n**{#FFD700|adsdndsajhdajksdred text}** _{#ff0000|red text}_ __{#bada55|green text}__\n\n##Rule 1: Reddit's site-wide rules\n\n\n**[Tap Here](http://www.reddit.com/rules) for reddit's 6 rules.**  \n\nThey are all pretty straight forward
-/// ```
-/// <img src="https://user-images.githubusercontent.com/621693/57246709-f2aebd80-700b-11e9-91f8-4cb1e87c293a.png" height="70" width="120"/>
+// Abstract:
+//
+// Custom tags to support extra features in Markdown: Text color, background
+// color, and font.
+//
+// MarkdownKit provides support to add custom tags support.
+// https://github.com/ivanbruel/MarkdownKit#extensibility
+//
+// The following test string ensures that Markdown parser is implemented
+// correctly with our custom tags.
+//
+// **Markdown Acid Test**
+// ```
+// Community Rules {font:HelveticaNeue,24pt|text in {#bada55|green} a different font}\n\n {#bada55|the {bg#FFD700|should have gold color} text} {bg#bada55|the {#FFD700|should have gold color} text} **3 Bold** {bg#bada55|the text} \n\n**{#FFD700|adsdndsajhdajksdred text}** _{#ff0000|red text}_ __{#bada55|green text}__\n\n##Rule 1: Reddit's site-wide rules\n\n\n**[Tap Here](http://www.reddit.com/rules) for reddit's 6 rules.**  \n\nThey are all pretty straight forward
+//
+// // Expected output: https://user-images.githubusercontent.com/621693/57246709-f2aebd80-700b-11e9-91f8-4cb1e87c293a.png
+// ```
+
+// MARK: - Text Color
+
 final class MarkdownTextColor: MarkdownElement {
     var regex: String {
         "(\\{#)(.+?)(\\|)((.|\n|\r)+?)(\\})"
@@ -39,6 +47,8 @@ final class MarkdownTextColor: MarkdownElement {
     }
 }
 
+// MARK: - Background Color
+
 final class MarkdownBackgroundColor: MarkdownElement {
     var regex: String {
         "(\\{bg#)(.+?)(\\|)((.|\n|\r)+?)(\\})"
@@ -57,6 +67,8 @@ final class MarkdownBackgroundColor: MarkdownElement {
         attributedString.replaceCharacters(in: match.range, with: formattedString)
     }
 }
+
+// MARK: - Font
 
 final class MarkdownCustomFont: MarkdownElement {
     var regex: String {
@@ -85,6 +97,8 @@ final class MarkdownCustomFont: MarkdownElement {
         attributedString.replaceCharacters(in: match.range, with: formattedString)
     }
 }
+
+// MARK: - Underline
 
 final class MarkdownUnderline: MarkdownElement {
     var regex: String {

@@ -6,6 +6,8 @@
 
 import UIKit
 
+// MARK: - Selected Cells
+
 extension UICollectionView {
     /// Returns an array of selected cells in the collection view.
     ///
@@ -19,11 +21,15 @@ extension UICollectionView {
     }
 }
 
+// MARK: - Cell Lookup
+
 extension UICollectionView {
     /// Returns all the cells of the collection view in the given visible section.
     ///
-    /// - Parameter section: The index of the section for which you want a count of the items.
-    /// - Returns: The cell objects at the corresponding section or nil if the section is not visible or indexPath is out of range.
+    /// - Parameter section: The index of the section for which you want a count of
+    ///                      the items.
+    /// - Returns: The cell objects at the corresponding section or nil if the
+    ///            section is not visible or indexPath is out of range.
     ///
     /// - Note: Only the visible cells are returned.
     open func cells(inSection section: Int) -> [UICollectionViewCell] {
@@ -79,8 +85,8 @@ extension UICollectionView {
         return nil
     }
 
-    /// Returns the first cell of the collection view that satisfies the given
-    /// type `T`.
+    /// Returns the first cell of the collection view that satisfies the given type
+    /// `T`.
     ///
     /// ```swift
     /// if let cell = collectionView.cell(kind: PhotoCell.self) {
@@ -96,6 +102,8 @@ extension UICollectionView {
     }
 }
 
+// MARK: - Cell Lookup, using timer
+
 extension UICollectionView {
     private struct AssociatedKey {
         static var cellLookupTimers = "cellLookupTimers"
@@ -106,8 +114,8 @@ extension UICollectionView {
         set { setAssociatedObject(&AssociatedKey.cellLookupTimers, value: newValue) }
     }
 
-    /// Use this method to wait for the first cell to load that that satisfies the given
-    /// type `T`.
+    /// Use this method to wait for the first cell to load that that satisfies the
+    /// given type `T`.
     ///
     /// ```swift
     /// collectionView.cell(kind: PhotoCell.self) { cell in
@@ -117,8 +125,8 @@ extension UICollectionView {
     ///
     /// - Parameters:
     ///   - kind: The kind of cell to find.
-    ///   - block: The block to invoke when the first cell of the collection view that
-    ///     satisfies the given type becomes available.
+    ///   - block: The block to invoke when the first cell of the collection view
+    ///            that satisfies the given type becomes available.
     ///
     /// - Note: The block will be called only once when the cell is avaiable.
     public func cell<T: UICollectionViewCell>(kind: T.Type, _ block: @escaping (T) -> Void) {
@@ -136,22 +144,35 @@ extension UICollectionView {
     }
 }
 
+// MARK: - Select & Deselect
+
 extension UICollectionView {
-    /// Selects the item at the specified index path and optionally scrolls it into view.
+    /// Selects the item at the specified index path and optionally scrolls it into
+    /// view.
     ///
-    /// If the `allowsSelection` property is `false`, calling this method has no effect.
-    /// If there is an existing selection with a different index path and the `allowsMultipleSelection`
-    /// property is `false`, calling this method replaces the previous selection.
+    /// If the `allowsSelection` property is `false`, calling this method has no
+    /// effect. If there is an existing selection with a different index path and
+    /// the `allowsMultipleSelection` property is `false`, calling this method
+    /// replaces the previous selection.
     ///
-    /// This method can cause selection-related delegate methods to be called based on the
-    /// `shouldNotifyDelegate` parameter value.
+    /// This method can cause selection-related delegate methods to be called based
+    ///  on the `shouldNotifyDelegate` parameter value.
     ///
     /// - Parameters:
     ///   - indexPath: The index path of the item to select.
-    ///   - animated: Specify `true` to animate the change in the selection or `false` to make the change without animating it.
-    ///   - scrollPosition: An option that specifies where the item should be positioned when scrolling finishes. For a list of possible values, see `UICollectionViewScrollPosition`.
-    ///   - shouldNotifyDelegate: An option to specify whether the delegate methods to be called.
-    @objc open func selectItem(at indexPath: IndexPath, animated: Bool, scrollPosition: ScrollPosition, shouldNotifyDelegate: Bool) {
+    ///   - animated: Specify `true` to animate the change in the selection or
+    ///               `false` to make the change without animating it.
+    ///   - scrollPosition: An option that specifies where the item should be
+    ///                     positioned when scrolling finishes. For a list of
+    ///                     possible values, see `UICollectionViewScrollPosition`.
+    ///   - shouldNotifyDelegate: An option to specify whether the delegate methods
+    ///                           to be called.
+    @objc open func selectItem(
+        at indexPath: IndexPath,
+        animated: Bool,
+        scrollPosition: ScrollPosition,
+        shouldNotifyDelegate: Bool
+    ) {
         guard shouldNotifyDelegate else {
             return selectItem(at: indexPath, animated: animated, scrollPosition: scrollPosition)
         }
@@ -161,7 +182,8 @@ extension UICollectionView {
         }
 
         // Ask the delegate method if selection for the given index path is allowed.
-        // If the delegate method for `shouldSelectItemAt` is not implemented the default value is `true`.
+        // If the delegate method for `shouldSelectItemAt` is not implemented the
+        // default value is `true`.
         let shouldSelect = delegate.collectionView?(self, shouldSelectItemAt: indexPath) ?? true
 
         guard shouldSelect else {
@@ -174,16 +196,23 @@ extension UICollectionView {
 
     /// Deselects the item at the specified index.
     ///
-    /// If the `allowsSelection` property is `false`, calling this method has no effect.
+    /// If the `allowsSelection` property is `false`, calling this method has no
+    /// effect.
     ///
-    /// This method can cause selection-related delegate methods to be called based on the
-    /// `shouldNotifyDelegate` parameter value.
+    /// This method can cause selection-related delegate methods to be called based
+    /// on the `shouldNotifyDelegate` parameter value.
     ///
     /// - Parameters:
     ///   - indexPath: The index path of the item to deselect.
-    ///   - animated: Specify `true` to animate the change in the selection or `false` to make the change without animating it.
-    ///   - shouldNotifyDelegate: An option to specify whether the delegate methods to be called.
-    @objc open func deselectItem(at indexPath: IndexPath, animated: Bool, shouldNotifyDelegate: Bool) {
+    ///   - animated: Specify `true` to animate the change in the selection or
+    ///               `false` to make the change without animating it.
+    ///   - shouldNotifyDelegate: An option to specify whether the delegate methods
+    ///                           to be called.
+    @objc open func deselectItem(
+        at indexPath: IndexPath,
+        animated: Bool,
+        shouldNotifyDelegate: Bool
+    ) {
         guard shouldNotifyDelegate else {
             return deselectItem(at: indexPath, animated: animated)
         }

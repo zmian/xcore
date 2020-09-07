@@ -55,7 +55,10 @@ extension UIScrollView {
 
 extension UIScrollView {
     open func scrollToTop(animated: Bool) {
-        setContentOffset(CGPoint(x: 0, y: -adjustedContentInset.top), animated: animated)
+        setContentOffset(
+            CGPoint(x: 0, y: -adjustedContentInset.top),
+            animated: animated
+        )
     }
 }
 

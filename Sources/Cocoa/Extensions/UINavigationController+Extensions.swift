@@ -20,7 +20,11 @@ extension UINavigationController {
     ///   - toolbarClass: Specify the custom `UIToolbar` subclass you want to use,
     ///                   or specify `nil` to use the standard `UIToolbar` class.
     /// - Returns: The initialized navigation controller object.
-    public convenience init(rootViewController: UIViewController, navigationBarClass: AnyClass?, toolbarClass: AnyClass?) {
+    public convenience init(
+        rootViewController: UIViewController,
+        navigationBarClass: AnyClass?,
+        toolbarClass: AnyClass?
+    ) {
         self.init(navigationBarClass: navigationBarClass, toolbarClass: toolbarClass)
         self.rootViewController = rootViewController
     }
@@ -37,6 +41,8 @@ extension UINavigationController {
         }
     }
 }
+
+// MARK: - Standard Methods with Completion Callback
 
 extension UINavigationController {
     /// Pushes a view controller onto the receiver’s stack and updates the display.
@@ -82,9 +88,9 @@ extension UINavigationController {
     ///
     /// - Parameters:
     ///   - viewControllers: The view controller to push onto the stack. This object
-    ///                     cannot be a tab bar controller.
-    ///                     If the view controller is already on the navigation
-    ///                     stack, this method throws an exception.
+    ///                      cannot be a tab bar controller.
+    ///                      If the view controller is already on the navigation
+    ///                      stack, this method throws an exception.
     ///   - animated: Specify `true` to animate the transition or `false` if you do
     ///               not want the transition to be animated.
     ///               You might specify `false` if you are setting up the navigation
@@ -116,10 +122,8 @@ extension UINavigationController {
     open func popToViewController(_ type: UIViewController.Type, animated: Bool, reversedOrder: Bool = true) -> [UIViewController]? {
         let viewControllers = reversedOrder ? self.viewControllers.reversed() : self.viewControllers
 
-        for viewController in viewControllers {
-            if viewController.isKind(of: type) {
-                return popToViewController(viewController, animated: animated)
-            }
+        for vc in viewControllers where vc.isKind(of: type) {
+            return popToViewController(vc, animated: animated)
         }
 
         return nil
@@ -131,9 +135,9 @@ extension UINavigationController {
     ///
     /// - Parameters:
     ///   - type: The view controller type to pop to.
-    ///   - animated: Set this value to `true` to animate the transition.
-    ///               Pass `false` if you are setting up a navigation controller
-    ///               before its view is displayed.
+    ///   - animated: Set this value to `true` to animate the transition. Pass
+    ///               `false` if you are setting up a navigation controller before
+    ///               its view is displayed.
     /// - Returns: The view controller instance of the specified type `T`.
     @discardableResult
     public func popToViewControllerOrRootViewController<T: UIViewController>(_ type: T.Type, animated: Bool) -> T? {
@@ -151,9 +155,9 @@ extension UINavigationController {
     ///
     /// - Parameters:
     ///   - index: The View controller type to pop to.
-    ///   - animated: Set this value to `true` to animate the transition.
-    ///               Pass `false` if you are setting up a navigation controller
-    ///               before its view is displayed.
+    ///   - animated: Set this value to `true` to animate the transition. Pass
+    ///               `false` if you are setting up a navigation controller before
+    ///               its view is displayed.
     /// - Returns: An array containing the view controllers that were popped from
     ///            the stack.
     @discardableResult
@@ -216,32 +220,10 @@ extension UINavigationController {
     }
 }
 
+// MARK: - Custom Push & Pop Transitions
+
 extension UINavigationController {
-    /// The type of animation when view controller is push.
-    public enum AnimationStyle {
-        case `default`
-        case fade
-
-        private var transitionType: CATransitionType {
-            switch self {
-                case .default:
-                    return .none
-                case .fade:
-                    return .fade
-            }
-        }
-
-        fileprivate var transition: CATransition {
-            CATransition().apply {
-                $0.duration = .slow
-                $0.timingFunction = .easeInEaseOut
-                $0.type = transitionType
-            }
-        }
-    }
-
-    /// Pushes a view controller onto the receiver’s stack and updates the
-    /// display.
+    /// Pushes a view controller onto the receiver’s stack and updates the display.
     ///
     /// The object in the `viewController` parameter becomes the top view controller
     /// on the navigation stack. Pushing a view controller causes its view to be
@@ -256,17 +238,16 @@ extension UINavigationController {
     /// - Parameters:
     ///   - viewController: The view controller to push onto the stack. This object
     ///                     cannot be a tab bar controller.
-    ///
     ///                     If the view controller is already on the navigation
     ///                     stack, this method throws an exception.
-    ///   - animation: A property that indicates how the push animation is to be
-    ///                animated, for example, fade in or slide in from right.
-    open func pushViewController(_ viewController: UIViewController, with animation: AnimationStyle) {
-        guard animation != .default else {
+    ///   - transition: A property that indicates how the push animation is to be
+    ///                 animated, for example, fade in or slide in from right.
+    open func pushViewController(_ viewController: UIViewController, with transition: CATransition?) {
+        guard let transition = transition else {
             return pushViewController(viewController, animated: true)
         }
 
-        view.layer.add(animation.transition, forKey: nil)
+        view.layer.add(transition, forKey: nil)
         pushViewController(viewController, animated: false)
     }
 
@@ -282,31 +263,39 @@ extension UINavigationController {
     /// at the top of the stack, this method also updates the navigation bar and
     /// tool bar accordingly. For information on how the navigation bar is updated.
     ///
-    /// - Parameter animation: A property that indicates how the pop animation is to
-    ///                        be animated, for example, fade out or slide out to
-    ///                        right.
+    /// - Parameter transition: A property that indicates how the pop animation is
+    ///                         to be animated, for example, fade out or slide out
+    ///                         to right.
     /// - Returns: The view controller that was popped from the stack.
     @discardableResult
-    open func popViewController(with animation: AnimationStyle) -> UIViewController? {
-        guard animation != .default else {
+    open func popViewController(with transition: CATransition?) -> UIViewController? {
+        guard let transition = transition else {
             return popViewController(animated: true)
         }
 
-        view.layer.add(animation.transition, forKey: nil)
+        view.layer.add(transition, forKey: nil)
         return popViewController(animated: false)
     }
 }
+
+// MARK: - Forwarding
 
 extension UINavigationController {
     // Autorotation Fix. Simply override `supportedInterfaceOrientations` method in
     // any view controller and it would respect that orientation setting per view
     // controller.
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        topViewController?.preferredInterfaceOrientations ?? preferredInterfaceOrientations ?? topViewController?.supportedInterfaceOrientations ?? super.supportedInterfaceOrientations
+        topViewController?.preferredInterfaceOrientations ??
+        preferredInterfaceOrientations ??
+        topViewController?.supportedInterfaceOrientations ??
+        super.supportedInterfaceOrientations
     }
 
     open override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-        topViewController?.interfaceOrientationForPresentation ?? interfaceOrientationForPresentation ?? topViewController?.preferredInterfaceOrientationForPresentation ?? super.preferredInterfaceOrientationForPresentation
+        topViewController?.interfaceOrientationForPresentation ??
+        interfaceOrientationForPresentation ??
+        topViewController?.preferredInterfaceOrientationForPresentation ??
+        super.preferredInterfaceOrientationForPresentation
     }
 
     // Setting `preferredStatusBarStyle` works.
@@ -328,18 +317,30 @@ extension UINavigationController {
     }
 
     open override var shouldAutorotate: Bool {
-        topViewController?.isAutorotateEnabled ?? isAutorotateEnabled ?? topViewController?.shouldAutorotate ?? super.shouldAutorotate
+        topViewController?.isAutorotateEnabled ??
+        isAutorotateEnabled ??
+        topViewController?.shouldAutorotate ??
+        super.shouldAutorotate
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
-        topViewController?.statusBarStyle ?? statusBarStyle ?? topViewController?.preferredStatusBarStyle ?? super.preferredStatusBarStyle
+        topViewController?.statusBarStyle ??
+        statusBarStyle ??
+        topViewController?.preferredStatusBarStyle ??
+        super.preferredStatusBarStyle
     }
 
     open override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        topViewController?.statusBarUpdateAnimation ?? statusBarUpdateAnimation ?? topViewController?.preferredStatusBarUpdateAnimation ?? super.preferredStatusBarUpdateAnimation
+        topViewController?.statusBarUpdateAnimation ??
+        statusBarUpdateAnimation ??
+        topViewController?.preferredStatusBarUpdateAnimation ??
+        super.preferredStatusBarUpdateAnimation
     }
 
     open override var prefersStatusBarHidden: Bool {
-        topViewController?.isStatusBarHidden ?? isStatusBarHidden ?? topViewController?.prefersStatusBarHidden ?? super.prefersStatusBarHidden
+        topViewController?.isStatusBarHidden ??
+        isStatusBarHidden ??
+        topViewController?.prefersStatusBarHidden ??
+        super.prefersStatusBarHidden
     }
 }

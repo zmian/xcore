@@ -69,7 +69,7 @@ extension UIApplication {
 // MARK: - TopViewController
 
 extension UIApplication {
-    open class func topViewController(_ base: UIViewController? = UIApplication.sharedOrNil?.keyWindow?.rootViewController) -> UIViewController? {
+    open class func topViewController(_ base: UIViewController? = UIApplication.sharedOrNil?.firstKeyWindow?.rootViewController) -> UIViewController? {
         if let nav = base as? UINavigationController {
             return topViewController(nav.visibleViewController)
         }
@@ -128,5 +128,15 @@ extension UIApplication {
     /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
     public func window(_ keyPaths: KeyPath<UIWindow, Bool>...) -> UIWindow? {
         windows.reversed().first(keyPaths)
+    }
+
+    /// A boolean property indicating the app's first key window.
+    public var firstKeyWindow: UIWindow? {
+        connectedScenes
+            .filter { $0.activationState == .foregroundActive }
+            .compactMap { $0 as? UIWindowScene }
+            .first?
+            .windows
+            .first(\.isKeyWindow)
     }
 }

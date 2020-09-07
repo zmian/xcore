@@ -6,8 +6,7 @@
 
 import UIKit
 
-public protocol PopoverPresentationSourceView {
-}
+public protocol PopoverPresentationSourceView { }
 
 extension UIView: PopoverPresentationSourceView { }
 extension UIBarButtonItem: PopoverPresentationSourceView { }
@@ -36,7 +35,7 @@ public func alert(title: String = "", message: String = "") {
 
 extension UIAlertController {
     open func show(presentingViewController: UIViewController? = nil) {
-        guard let presentingViewController = presentingViewController ?? UIApplication.sharedOrNil?.keyWindow?.topViewController else {
+        guard let presentingViewController = presentingViewController ?? UIApplication.sharedOrNil?.firstKeyWindow?.topViewController else {
             return
         }
 
@@ -77,7 +76,11 @@ extension UIAlertController {
         style: Style = .actionSheet,
         appendsCancelAction: Bool = true
     ) -> UIAlertController {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: style
+        )
 
         // For iPad support
         alertController.popoverPresentationController?.setSourceView(sourceView)
@@ -117,7 +120,8 @@ extension UIAlertController {
     /// ```
     ///
     /// - Parameters:
-    ///   - sourceView: A source view that presented the alert. A required property for iPad support.
+    ///   - sourceView: A source view that presented the alert. A required property
+    ///                 for iPad support.
     ///   - handler: A block to invoke when an item is selected.
     @discardableResult
     public static func present<T: PickerOptionsEnum>(

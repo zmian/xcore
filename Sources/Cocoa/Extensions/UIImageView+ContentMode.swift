@@ -5,7 +5,8 @@
 //
 
 import UIKit
-import ObjectiveC
+
+// MARK: - isContentModeAutomaticallyAdjusted
 
 extension UIImageView {
     private struct AssociatedKey {
@@ -22,11 +23,11 @@ extension UIImageView {
 }
 
 extension UIImageView {
-    /// A convenience method to adjust content mode to be
-    /// `.scaleAspectFit` if the image is large or `.center` when the image is small
-    /// or same size as `self`.
+    /// A convenience method to adjust content mode to be `.scaleAspectFit` if the
+    /// image is large or `.center` when the image is small or same size as `self`.
     ///
-    /// This should method will only take into effect if the frame is correct for `self`.
+    /// This should method will only take into effect if the frame is correct for
+    /// `self`.
     private func adjustContentModeIfNeeded() {
         guard isContentModeAutomaticallyAdjusted, let image = image else {
             return
@@ -40,6 +41,8 @@ extension UIImageView {
     }
 }
 
+// MARK: - Swizzle
+
 extension UIImageView {
     @objc private func swizzled_setHighlightedImage(_ image: UIImage?) {
         swizzled_setHighlightedImage(image)
@@ -52,9 +55,9 @@ extension UIImageView {
             isHighlighted = true
         }
     }
-}
 
-extension UIImageView {
+    // `AdjustContentModeIfNeeded` related swizzle calls.
+
     @objc private func swizzled_layoutSubviews() {
         swizzled_layoutSubviews()
         adjustContentModeIfNeeded()

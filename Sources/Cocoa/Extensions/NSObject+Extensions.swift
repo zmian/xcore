@@ -48,15 +48,15 @@ extension NSObject {
         case typeOf
     }
 
-/// - Parameters:
-///   - aClass: A class object representing the Objective-C class to be tested.
-///   - comparison: The comparison option to use when comparing `self` to
-///                 `aClass`.
-///
-/// - Returns: When option is `.kindOf` then this method returns true if
-///            `aClass` is a Class object of the same type. Otherwise, `.typeOf`
-///            does direct check to ensure `aClass` is the same object and not a
-///            subclass.
+    /// - Parameters:
+    ///   - aClass: A class object representing the Objective-C class to be tested.
+    ///   - comparison: The comparison option to use when comparing `self` to
+    ///                 `aClass`.
+    ///
+    /// - Returns: When option is `.kindOf` then this method returns true if
+    ///            `aClass` is a Class object of the same type. Otherwise, `.typeOf`
+    ///            does direct check to ensure `aClass` is the same object and not a
+    ///            subclass.
     public func isType(of aClass: Swift.AnyClass, comparison: LookupComparison) -> Bool {
         switch comparison {
             case .kindOf:

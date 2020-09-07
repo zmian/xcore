@@ -6,14 +6,16 @@
 
 import UIKit
 
+// MARK: - Highlighted Animation
+
 extension UICollectionReusableView {
     private struct AssociatedKey {
         static var backgroundColors = "backgroundColors"
         static var highlightedAnimation = "highlightedAnimation"
     }
 
-    /// A boolean property to provide visual feedback when the
-    /// cell is highlighted. The default value is `.none`.
+    /// A boolean property to provide visual feedback when the cell is highlighted.
+    /// The default value is `.none`.
     open var highlightedAnimation: HighlightedAnimationOptions {
         get { associatedObject(&AssociatedKey.highlightedAnimation, default: .none) }
         set { setAssociatedObject(&AssociatedKey.highlightedAnimation, value: newValue) }
@@ -42,7 +44,8 @@ extension UICollectionReusableView {
             return
         }
 
-        // Make sure we always store unhighlighted background color so we can later restore it.
+        // Make sure we always store unhighlighted background color so we can later
+        // restore it.
         if highlightedBackgroundColor != highlightedBackgroundColorView.backgroundColor {
             normalBackgroundColor = highlightedBackgroundColorView.backgroundColor
         }
@@ -104,9 +107,10 @@ extension UICollectionReusableView {
         setHighlightedToThisClassOnly(false, animated: true)
     }
 
-    /// A method to only apply highlighting for the subclasses of `UICollectionReusableView`
-    /// not subclasses of `UICollectionViewCell`. As `UICollectionViewCell` applies it's own
-    /// logic that we don't want to override.
+    /// A method to only apply highlighting for the subclasses of
+    /// `UICollectionReusableView` not subclasses of `UICollectionViewCell`. As
+    /// `UICollectionViewCell` applies it's own logic that we don't want to
+    /// override.
     private func setHighlightedToThisClassOnly(_ highlighted: Bool, animated: Bool) {
         guard !isKind(of: UICollectionViewCell.self) else {
             return

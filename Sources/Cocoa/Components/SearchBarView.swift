@@ -74,7 +74,7 @@ final public class SearchBarView: UIView {
     }
 
     private lazy var _searchFieldBackgroundColor: UIColor = {
-        searchBar.searchFieldBackgroundColor ?? UIColor.appBackgroundDisabled.alpha(0.3)
+        searchBar.searchTextFieldBackgroundColor ?? UIColor.appBackgroundDisabled.alpha(0.3)
     }()
 
     @objc dynamic public var searchFieldBackgroundColor: UIColor {
@@ -179,7 +179,7 @@ final public class SearchBarView: UIView {
             return
         }
 
-        searchBar.searchFieldBackgroundColor = searchFieldBackgroundColor
+        searchBar.searchTextFieldBackgroundColor = searchFieldBackgroundColor
     }
 
     private func setImage(assetIdentifier: ImageAssetIdentifier, for icon: UISearchBar.Icon, size: CGFloat? = nil) {
