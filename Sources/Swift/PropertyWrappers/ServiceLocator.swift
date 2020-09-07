@@ -47,7 +47,7 @@ import Foundation
 /// ```
 @propertyWrapper
 public struct Inject<Service> {
-    public init() {}
+    public init() { }
 
     public var wrappedValue: Service {
         ServiceLocator.resolve()

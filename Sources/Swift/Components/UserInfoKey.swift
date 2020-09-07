@@ -34,7 +34,7 @@ extension UserInfoKey: CustomPlaygroundDisplayConvertible {
     }
 }
 
-extension UserInfoKey: Hashable {}
+extension UserInfoKey: Hashable { }
 
 extension UserInfoKey: Codable { }
 

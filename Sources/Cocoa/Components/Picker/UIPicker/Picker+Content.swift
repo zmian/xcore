@@ -62,7 +62,7 @@ extension Picker {
                 // takes into account potential changes other component's datasources due to the current component's value change
                 model.pickerReloadComponents(on: i).forEach {
                     pickerView.reloadComponent($0)
-                    // makes sure to preserve any selected value in reloaded components, if any. Otherwise, set to selected to 0 (top)
+                    // Makes sure to preserve any selected value in reloaded components, if any. Otherwise, set to selected to 0 (top).
                     let selectedRow = max(0, pickerView.selectedRow(inComponent: $0))
                     pickerView.selectRow(selectedRow, inComponent: $0, animated: false)
                     model.pickerDidSelectValue(value: selectedRow, at: $0)

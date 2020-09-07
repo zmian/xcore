@@ -88,7 +88,7 @@ extension XCCollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 
 extension XCCollectionViewDataSource {
-    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {}
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) { }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

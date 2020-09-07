@@ -23,18 +23,18 @@ extension Anchor {
         }
     }
 
-    public class XAxis: Axis<XAxisType> {}
-    public class YAxis: Axis<YAxisType> {}
-    public class DimensionAxis: Axis<DimensionAxisType> {}
-    public class SizeAxis: DimensionAxis {}
-    public class EdgesAxis: Axis<EdgesAxisType> {}
-    public class CenterAxis: Axis<CenterAxisType> {}
+    public class XAxis: Axis<XAxisType> { }
+    public class YAxis: Axis<YAxisType> { }
+    public class DimensionAxis: Axis<DimensionAxisType> { }
+    public class SizeAxis: DimensionAxis { }
+    public class EdgesAxis: Axis<EdgesAxisType> { }
+    public class CenterAxis: Axis<CenterAxisType> { }
 
-    public enum XAxisType {}
-    public enum YAxisType {}
-    public enum DimensionAxisType {}
-    public enum EdgesAxisType {}
-    public enum CenterAxisType {}
+    public enum XAxisType { }
+    public enum YAxisType { }
+    public enum DimensionAxisType { }
+    public enum EdgesAxisType { }
+    public enum CenterAxisType { }
 }
 
 extension Anchor.Axis {

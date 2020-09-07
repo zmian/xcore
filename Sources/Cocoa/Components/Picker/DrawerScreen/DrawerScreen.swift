@@ -15,7 +15,7 @@ public protocol DrawerScreenContent {
 }
 
 extension DrawerScreenContent {
-    public func didDismiss() {}
+    public func didDismiss() { }
     public var isToolbarHidden: Bool {
         true
     }

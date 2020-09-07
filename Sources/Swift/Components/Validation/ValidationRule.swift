@@ -71,7 +71,7 @@ extension String {
     ///
     /// - Parameter rule: The rule against which to evaluate `self`.
     /// - Returns: `true` if `self` matches the conditions specified by the given
-    ///            `rule`, otherwise `false`.
+    ///            `rule`; otherwise, `false`.
     public func validate(rule: ValidationRule<String>) -> Bool {
         rule.validate(self)
     }

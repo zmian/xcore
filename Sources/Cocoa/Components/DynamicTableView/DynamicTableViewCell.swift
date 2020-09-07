@@ -132,7 +132,7 @@ open class DynamicTableViewCell: XCTableViewCell {
     /// Subclasses can override it to perform additional actions, This method is
     /// called when `UITableView` invokes
     /// `tableView:willDisplayCell:forRowAtIndexPath:` delegate method.
-    open func cellWillAppear(_ indexPath: IndexPath, data: DynamicTableModel) {}
+    open func cellWillAppear(_ indexPath: IndexPath, data: DynamicTableModel) { }
 
     // MARK: - Setup Methods
 

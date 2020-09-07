@@ -17,7 +17,11 @@ public struct HighlightedAnimationOptions: OptionSet {
     public static let alpha = Self(rawValue: 1 << 1)
     public static let all: Self = [scale, alpha]
     public static let none: Self = []
+}
 
+// MARK: - Convenience
+
+extension HighlightedAnimationOptions {
     func animate(_ button: UIButton) {
         animate(button, isHighlighted: button.isHighlighted)
     }

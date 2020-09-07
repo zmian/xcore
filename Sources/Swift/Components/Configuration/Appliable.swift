@@ -8,7 +8,7 @@ import Foundation
 
 // MARK: - Appliable
 
-public protocol Appliable {}
+public protocol Appliable { }
 
 extension Appliable {
     /// A convenience function to apply styles using block based api.
@@ -82,7 +82,7 @@ extension Array where Element: Appliable {
 
 // MARK: - MutableAppliable
 
-public protocol MutableAppliable {}
+public protocol MutableAppliable { }
 
 extension MutableAppliable {
     /// A convenience function to apply styles using block based api.
