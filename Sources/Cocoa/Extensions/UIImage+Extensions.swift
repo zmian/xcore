@@ -23,19 +23,49 @@ extension UIImage {
 
         self.init(contentsOfFile: path)
     }
+}
 
-    /// Creates an image from specified color and size.
+// MARK: - Create Custom Shape Image
+
+extension UIImage {
+    public struct Shape {
+        public let rect: CGRect
+        fileprivate let draw: (Self, CGContext) -> Void
+
+        public init(rect: CGRect, _ draw: @escaping (Self, CGContext) -> Void) {
+            self.rect = rect
+            self.draw = draw
+        }
+
+        public static var rectangle: Self {
+            rectangle(size: 50)
+        }
+
+        public static func rectangle(size: CGSize) -> Self {
+            .init(rect: .init(size)) { shape, context in
+                context.fill(shape.rect)
+            }
+        }
+
+        public static func ellipse(size: CGSize) -> Self {
+            .init(rect: .init(size)) { shape, context in
+                context.fillEllipse(in: shape.rect)
+            }
+        }
+    }
+
+    /// Creates an image from specified color and size and shape.
     ///
     /// - Parameters:
     ///   - color: The color used to create the image.
-    ///   - size: The size of the image. The default size is `50`.
-    public convenience init(color: UIColor, size: CGSize = 50) {
-        let rect = CGRect(size)
+    ///   - shape: The type of shape to render. The default value is `.rectangle`.
+    public convenience init(color: UIColor, shape: Shape = .rectangle) {
+        let rect = shape.rect
 
         let image = UIGraphicsImageRenderer(bounds: rect).image { rendererContext in
             let context = rendererContext.cgContext
             context.setFillColor(color.cgColor)
-            context.fill(rect)
+            shape.draw(shape, context)
         }
 
         self.init(cgImage: image.cgImage!)

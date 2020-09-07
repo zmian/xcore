@@ -50,6 +50,18 @@ extension CAMediaTimingFunction {
     public static let easeInEaseOut = CAMediaTimingFunction(name: .easeInEaseOut)
 }
 
+// MARK: - CATransition
+
+extension CATransition {
+    public static var fade: CATransition {
+        CATransition().apply {
+            $0.duration = .default
+            $0.timingFunction = .easeInEaseOut
+            $0.type = .fade
+        }
+    }
+}
+
 // MARK: - CALayer
 
 extension CALayer {

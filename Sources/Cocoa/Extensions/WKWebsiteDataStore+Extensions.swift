@@ -33,6 +33,8 @@ extension WKWebsiteDataStore {
     }
 }
 
+// MARK: - AllWebsiteCacheTypes
+
 extension WKWebsiteDataStore {
     private static func allWebsiteCacheTypes() -> Set<String> {
         var result: Set<String> = [

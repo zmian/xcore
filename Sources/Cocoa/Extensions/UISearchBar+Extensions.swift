@@ -7,29 +7,27 @@
 import UIKit
 
 extension UISearchBar {
-    open var textField: UITextField? {
-        firstSubview(withClass: UITextField.self)
-    }
-
-    @objc dynamic open var searchFieldBackgroundColor: UIColor? {
+    @objc dynamic open var searchTextFieldBackgroundColor: UIColor? {
         get {
             switch searchBarStyle {
                 case .minimal:
-                    return textField?.layer.backgroundColor?.uiColor
+                    return searchTextField.layer.backgroundColor?.uiColor
                 default:
-                    return textField?.backgroundColor
+                    return searchTextField.backgroundColor
             }
         }
         set {
-            guard let newValue = newValue else { return }
+            guard let newValue = newValue else {
+                return
+            }
 
             switch searchBarStyle {
                 case .minimal:
-                    textField?.layer.backgroundColor = newValue.cgColor
-                    textField?.clipsToBounds = true
-                    textField?.layer.cornerRadius = 8
+                    searchTextField.layer.backgroundColor = newValue.cgColor
+                    searchTextField.clipsToBounds = true
+                    searchTextField.layer.cornerRadius = 8
                 default:
-                    textField?.backgroundColor = newValue
+                    searchTextField.backgroundColor = newValue
             }
         }
     }
@@ -67,35 +65,34 @@ extension UISearchBar {
     }
 
     @objc private var swizzled_placeholder: String? {
-        get { textField?.attributedPlaceholder?.string }
+        get { searchTextField.attributedPlaceholder?.string }
         set {
             if superview == nil, let newValue = newValue {
                 initialPlaceholderText = newValue
                 return
             }
 
-            guard let textField = textField else {
-                return
-            }
-
             guard let newValue = newValue else {
-                textField.attributedPlaceholder = nil
+                searchTextField.attributedPlaceholder = nil
                 return
             }
 
             if let placeholderTextColor = placeholderTextColor {
-                textField.attributedPlaceholder = NSAttributedString(string: newValue, attributes: [
+                searchTextField.attributedPlaceholder = NSAttributedString(string: newValue, attributes: [
                     .foregroundColor: placeholderTextColor
                 ])
             } else {
-                textField.attributedPlaceholder = NSAttributedString(string: newValue)
+                searchTextField.attributedPlaceholder = NSAttributedString(string: newValue)
             }
         }
     }
 
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        guard superview != nil, !didSetInitialPlaceholderText else { return }
+
+        guard superview != nil, !didSetInitialPlaceholderText else {
+            return
+        }
 
         if let placeholderText = initialPlaceholderText {
             placeholder = placeholderText

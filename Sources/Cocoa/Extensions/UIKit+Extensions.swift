@@ -10,8 +10,8 @@ import ObjectiveC
 
 /// Attempts to open the resource at the specified URL.
 ///
-/// Requests are made using `SafariViewController` if available;
-/// otherwise it uses `UIApplication:openURL`.
+/// Requests are made using `SafariViewController` if available; otherwise it
+/// uses `UIApplication:openURL`.
 ///
 /// - Parameters:
 ///   - url:  The url to open.

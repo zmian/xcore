@@ -6,14 +6,16 @@
 
 import UIKit
 
+// MARK: - Highlighted Animation
+
 extension UITableViewCell {
     private struct AssociatedKey {
         static var backgroundColors = "backgroundColors"
         static var highlightedAnimation = "highlightedAnimation"
     }
 
-    /// A boolean property to provide visual feedback when the
-    /// cell is highlighted. The default value is `.none`.
+    /// A boolean property to provide visual feedback when the cell is highlighted.
+    /// The default value is `.none`.
     open var highlightedAnimation: HighlightedAnimationOptions {
         get { associatedObject(&AssociatedKey.highlightedAnimation, default: .none) }
         set { setAssociatedObject(&AssociatedKey.highlightedAnimation, value: newValue) }

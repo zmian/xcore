@@ -109,7 +109,7 @@ open class HUD: Appliable {
             case .style(let value):
                 viewController.statusBarStyle = value
             case .inherit:
-                let value = UIApplication.sharedOrNil?.keyWindow?.topViewController?.preferredStatusBarStyle
+                let value = UIApplication.sharedOrNil?.firstKeyWindow?.topViewController?.preferredStatusBarStyle
                 viewController.statusBarStyle = value ?? .default
         }
     }

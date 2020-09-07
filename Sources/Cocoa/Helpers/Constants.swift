@@ -181,7 +181,7 @@ extension AppConstants {
     }
 
     public static var iPhone6ScreenSize: CGSize {
-        UIDevice.ModelType.ScreenSize.iPhone6.size
+        UIDevice.Model.ScreenSize.iPhone6.size
     }
 
     /// A convenience function to get relative value for given device based on iPhone 6 width.

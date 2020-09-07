@@ -9,8 +9,9 @@ import WebKit
 
 extension WKWebView {
     /// Navigates to the first item in the back-forward list.
-    /// A new navigation to the requested item, or nil if there is no back
-    /// item in the back-forward list.
+    ///
+    /// A new navigation to the requested item, or nil if there is no back item in
+    /// the back-forward list.
     @discardableResult
     public func goToFirstItem() -> WKNavigation? {
         guard let firstItem = backForwardList.backList.at(0) else {
@@ -21,8 +22,9 @@ extension WKWebView {
     }
 
     /// Navigates to the last item in the back-forward list.
-    /// A new navigation to the requested item, or nil if there is no back
-    /// item in the back-forward list.
+    ///
+    /// A new navigation to the requested item, or nil if there is no back item in
+    /// the back-forward list.
     @discardableResult
     public func goToLastItem() -> WKNavigation? {
         let forwardList = backForwardList.forwardList

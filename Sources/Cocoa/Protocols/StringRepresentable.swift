@@ -140,7 +140,12 @@ extension TextAttributedTextRepresentable {
 }
 
 extension TextAttributedTextRepresentable where Self: UIView {
-    public func setText(_ string: StringRepresentable?, animated: Bool, duration: TimeInterval = .slow, completion: (() -> Void)? = nil) {
+    public func setText(
+        _ string: StringRepresentable?,
+        animated: Bool,
+        duration: TimeInterval = .slow,
+        completion: (() -> Void)? = nil
+    ) {
         guard animated else {
             setText(string)
             return
@@ -160,7 +165,7 @@ extension TextAttributedTextRepresentable where Self: UIView {
     }
 }
 
-// MARK: - TextAttributedTextRepresentable.Conformance
+// MARK: - TextAttributedTextRepresentable Conformance
 
 extension UILabel: TextAttributedTextRepresentable { }
 extension UIButton: TextAttributedTextRepresentable { }

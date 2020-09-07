@@ -42,6 +42,14 @@ public struct Money: Equatable, Hashable, MutableAppliable {
         shouldSuperscriptMinorUnit = Self.appearance().shouldSuperscriptMinorUnit
     }
 
+    public init?(_ amount: Double?) {
+        guard let amount = amount else {
+            return nil
+        }
+
+        self.init(amount)
+    }
+
     /// The style used to format money components.
     ///
     /// The default value is `.default`.
@@ -176,6 +184,12 @@ extension Money {
 
     public func signed() -> Self {
         sign(.default)
+    }
+
+    /// Signed positive amount with (`"+"`), minus (`""`) and `0` amount omits
+    /// `+` or `-` sign.
+    public func positiveSigned() -> Self {
+        sign(.init(plus: amount == 0 ? "" : "+", minus: ""))
     }
 
     /// Zero amount will be displayed as "--".

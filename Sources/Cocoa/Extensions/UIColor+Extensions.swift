@@ -10,23 +10,23 @@ import UIKit
 
 extension UIColor {
     public convenience init(hex: Int64) {
-        let (r, g, b, a) = UIColor.components(hex: hex)
+        let (r, g, b, a) = Self.components(hex: hex)
         self.init(red: r, green: g, blue: b, alpha: a)
     }
 
     public convenience init(hex: Int64, alpha: CGFloat) {
-        let (r, g, b, a) = UIColor.components(hex: hex, alpha: alpha)
+        let (r, g, b, a) = Self.components(hex: hex, alpha: alpha)
         self.init(red: r, green: g, blue: b, alpha: a)
     }
 
     @nonobjc
     public convenience init(hex: String) {
-        self.init(hex: UIColor.components(hex: hex))
+        self.init(hex: Self.components(hex: hex))
     }
 
     @nonobjc
     public convenience init(hex: String, alpha: CGFloat) {
-        self.init(hex: UIColor.components(hex: hex), alpha: alpha)
+        self.init(hex: Self.components(hex: hex), alpha: alpha)
     }
 
     public var hex: String {
@@ -103,6 +103,8 @@ extension UIColor {
     }
 }
 
+// MARK: - Alpha
+
 extension UIColor {
     public var alpha: CGFloat {
         get { cgColor.alpha }
@@ -112,7 +114,11 @@ extension UIColor {
     public func alpha(_ value: CGFloat) -> UIColor {
         withAlphaComponent(value)
     }
+}
 
+// MARK: - Lighter & Darker
+
+extension UIColor {
     // Credit: http://stackoverflow.com/a/31466450
 
     public func lighter(_ amount: CGFloat = 0.25) -> UIColor {
@@ -136,19 +142,14 @@ extension UIColor {
         }
     }
 
-    public static func randomColor() -> UIColor {
-        let hue = CGFloat(arc4random() % 256) / 256
-        let saturation = CGFloat(arc4random() % 128) / 256 + 0.5
-        let brightness = CGFloat(arc4random() % 128) / 256 + 0.5
-        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
-    }
-
     func isLight(threshold: CGFloat = 0.6) -> Bool {
         var white: CGFloat = 0
         getWhite(&white, alpha: nil)
         return white > threshold
     }
 }
+
+// MARK: - Blend
 
 extension UIColor {
     /// Blend multiply given color with `self`.
@@ -170,9 +171,58 @@ extension UIColor {
     }
 }
 
+// MARK: - Random
+
+extension UIColor {
+    public static func randomColor() -> UIColor {
+        let hue = CGFloat(arc4random() % 256) / 256
+        let saturation = CGFloat(arc4random() % 128) / 256 + 0.5
+        let brightness = CGFloat(arc4random() % 128) / 256 + 0.5
+        return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
+    }
+}
+
+// MARK: - Cross Fade
+
+extension UIColor {
+    /// A convenience function to cross fade to the given color by the specified
+    /// delta.
+    ///
+    /// - Parameters:
+    ///   - color: The color to which self should cross fade.
+    ///   - percentage: The delta of the cross fade.
+    /// - Returns: An instance of cross faded `UIColor`.
+    open func crossFade(to color: UIColor, delta percentage: CGFloat) -> UIColor {
+        let fromColor = self
+        let toColor = color
+
+        var fromRed: CGFloat = 0
+        var fromGreen: CGFloat = 0
+        var fromBlue: CGFloat = 0
+        var fromAlpha: CGFloat = 0
+
+        fromColor.getRed(&fromRed, green: &fromGreen, blue: &fromBlue, alpha: &fromAlpha)
+
+        var toRed: CGFloat = 0
+        var toGreen: CGFloat = 0
+        var toBlue: CGFloat = 0
+        var toAlpha: CGFloat = 0
+
+        toColor.getRed(&toRed, green: &toGreen, blue: &toBlue, alpha: &toAlpha)
+
+        // Calculate the actual RGBA values of the fade colour
+        let red = (toRed - fromRed) * percentage + fromRed
+        let green = (toGreen - fromGreen) * percentage + fromGreen
+        let blue = (toBlue - fromBlue) * percentage + fromBlue
+        let alpha = (toAlpha - fromAlpha) * percentage + fromAlpha
+
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
+}
+
 extension Array where Element: UIColor {
     /// The Quartz color reference that corresponds to the receiver’s color.
     public var cgColor: [CGColor] {
-        map { $0.cgColor }
+        map(\.cgColor)
     }
 }

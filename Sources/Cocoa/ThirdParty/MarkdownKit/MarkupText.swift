@@ -11,7 +11,7 @@ import Haring
 
 // MARK: - MarkupText
 
-public class MarkupText: CustomStringConvertible {
+public struct MarkupText: CustomStringConvertible {
     private var markupText: MarkupTextBuilder
 
     /// The unformatted representation of the markup text.
@@ -22,24 +22,26 @@ public class MarkupText: CustomStringConvertible {
         markupText = .text(text)
     }
 
-    public func font(_ font: UIFont) -> MarkupText {
-        markupText = markupText.addFont(font)
-        return self
+    private func apply(build: (MarkupTextBuilder) -> MarkupTextBuilder) -> Self {
+        var copy = Self(rawValue)
+        copy.markupText = build(markupText)
+        return copy
     }
 
-    public func color(_ color: UIColor) -> MarkupText {
-        markupText = markupText.addColor(color)
-        return self
+    public func font(_ font: UIFont) -> Self {
+        apply { $0.font(font) }
     }
 
-    public func underline() -> MarkupText {
-        markupText = markupText.addUnderline()
-        return self
+    public func color(_ color: UIColor) -> Self {
+        apply { $0.color(color) }
     }
 
-    public func bold() -> MarkupText {
-        markupText = markupText.addBold()
-        return self
+    public func underline() -> Self {
+        apply { $0.underline() }
+    }
+
+    public func bold() -> Self {
+        apply { $0.bold() }
     }
 
     public var description: String {
@@ -50,46 +52,46 @@ public class MarkupText: CustomStringConvertible {
 // MARK: - MarkupTextBuilder
 
 private indirect enum MarkupTextBuilder: CustomStringConvertible {
-    case text(_: String)
-    case textColor(color: String, block: MarkupTextBuilder)
-    case font(font: UIFont, block: MarkupTextBuilder)
-    case underline(block: MarkupTextBuilder)
-    case bold(block: MarkupTextBuilder)
+    case text(String)
+    case textColor(color: String, block: Self)
+    case font(font: UIFont, block: Self)
+    case underline(block: Self)
+    case bold(block: Self)
 
-    func addFont(_ font: UIFont) -> MarkupTextBuilder {
+    func font(_ font: UIFont) -> Self {
         .font(font: font, block: self)
     }
 
-    func addColor(_ color: UIColor) -> MarkupTextBuilder {
+    func color(_ color: UIColor) -> Self {
         .textColor(color: color.hex, block: self)
     }
 
-    func addUnderline() -> MarkupTextBuilder {
+    func underline() -> Self {
         .underline(block: self)
     }
 
-    func addBold() -> MarkupTextBuilder {
+    func bold() -> Self {
         .bold(block: self)
     }
 
     var description: String {
-        MarkupTextBuilder.parse(self)
+        Self.build(self)
     }
 }
 
 extension MarkupTextBuilder {
-    private static func parse(_ block: MarkupTextBuilder) -> String {
+    private static func build(_ block: Self) -> String {
         switch block {
             case .text(let text):
                 return text
             case .textColor(let color, let tail):
-                return "{\(color)|\(parse(tail))}"
+                return "{\(color)|\(build(tail))}"
             case .font(let font, let tail):
-                return "{font:\(font.fontName),\(font.pointSize)pt|\(parse(tail))}"
+                return "{font:\(font.fontName),\(font.pointSize)pt|\(build(tail))}"
             case .underline(let tail):
-                return "=_\(parse(tail))=_"
+                return "=_\(build(tail))=_"
             case .bold(let tail):
-                return "**\(parse(tail))**"
+                return "**\(build(tail))**"
         }
     }
 }

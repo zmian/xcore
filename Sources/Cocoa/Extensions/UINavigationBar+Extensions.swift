@@ -44,10 +44,11 @@ extension UINavigationBar {
             return super.point(inside: point, with: event)
         }
 
-        // If the bar is transparent, we want to allow the user to tap
-        // on UI elements that are not directly behind the `UINavigationBar`'s
-        // tappable areas, such as back button, left and right bar button items.
-        // To enable such functionality we are using transparent pixel mapping.
+        // If the bar is transparent, we want to allow the user to tap on UI elements
+        // that are not directly behind the `UINavigationBar`'s tappable areas, such as
+        // back button, left and right bar button items.
+        //
+        // To enable such functionality, we are using transparent pixel mapping.
         // However, this approach doesn't respect the hit areas of the `UINavigationBar`
         // elements. To fix this the following logic is applied:
 
@@ -59,7 +60,7 @@ extension UINavigationBar {
             }
         }
 
-        // Ignore touches on transparent pixels of navigation bar
+        // Ignore touches on transparent pixels of navigation bar.
         return layer.color(at: point).alpha != 0
     }
 

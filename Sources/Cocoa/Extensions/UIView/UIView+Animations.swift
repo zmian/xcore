@@ -222,10 +222,7 @@ extension UIView {
 
 extension NSObjectProtocol where Self: UIView {
     public func withFadeAnimation(_ block: (_ view: Self) -> Void) {
-        CATransition().apply {
-            $0.duration = .default
-            $0.timingFunction = .easeInEaseOut
-            $0.type = .fade
+        CATransition.fade.apply {
             layer.add($0, forKey: "fade")
             block(self)
         }

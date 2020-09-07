@@ -9,11 +9,14 @@ import UIKit
 #if canImport(Haring)
 import Haring
 
+// MARK: - Appearance
+
 extension MarkupText {
     /// This configuration exists to allow some of the properties
     /// to be configured to match app's appearance style.
-    /// The `UIAppearance` protocol doesn't work when the stored properites
-    /// are set using associated object.
+    ///
+    /// The `UIAppearance` protocol doesn't work when the stored properites are set
+    /// using associated object.
     ///
     /// **For example:**
     ///
@@ -32,17 +35,17 @@ extension MarkupText {
 }
 
 extension MarkupText {
-    @objc public dynamic static let appearance = Appearance()
+    public static let appearance = Appearance()
 
     public static var parser: MarkdownParser {
-        let parser = MarkdownParser.app()
+        let parser = MarkdownParser.default()
         parser.update(font: appearance.font, textColor: appearance.textColor)
         return parser
     }
 }
 
 extension MarkdownParser {
-    fileprivate static func app() -> MarkdownParser {
+    fileprivate static func `default`() -> MarkdownParser {
         .init(
             font: MarkupText.appearance.font,
             color: MarkupText.appearance.textColor,
@@ -56,6 +59,8 @@ extension MarkdownParser {
         )
     }
 }
+
+// MARK: - UILabel
 
 extension UILabel {
     private struct AssociatedKey {
@@ -79,7 +84,7 @@ extension UILabel {
             if let existingParser: MarkdownParser = associatedObject(&AssociatedKey.markdownParser) {
                 parser = existingParser
             } else {
-                parser = MarkdownParser.app()
+                parser = MarkdownParser.default()
                 self.markdownParser = parser
             }
 
@@ -89,6 +94,8 @@ extension UILabel {
         set { setAssociatedObject(&AssociatedKey.markdownParser, value: newValue) }
     }
 }
+
+// MARK: - UIButton
 
 extension UIButton {
     private struct AssociatedKey {
@@ -111,7 +118,7 @@ extension UIButton {
             if let existingParser: MarkdownParser = associatedObject(&AssociatedKey.markdownParser) {
                 parser = existingParser
             } else {
-                parser = MarkdownParser.app()
+                parser = MarkdownParser.default()
                 self.markdownParser = parser
             }
 
@@ -120,6 +127,8 @@ extension UIButton {
         set { setAssociatedObject(&AssociatedKey.markdownParser, value: newValue) }
     }
 }
+
+// MARK: - UITextView
 
 extension UITextView {
     private struct AssociatedKey {
@@ -160,7 +169,7 @@ extension UITextView {
             if let existingParser: MarkdownParser = associatedObject(&AssociatedKey.markdownParser) {
                 parser = existingParser
             } else {
-                parser = MarkdownParser.app()
+                parser = MarkdownParser.default()
                 self.markdownParser = parser
             }
 
@@ -170,6 +179,8 @@ extension UITextView {
         set { setAssociatedObject(&AssociatedKey.markdownParser, value: newValue) }
     }
 }
+
+// MARK: - UILabel
 
 extension UILabel {
     /// Creates and set `NSAttributedString` from Markdown.
@@ -189,26 +200,6 @@ extension UILabel {
 
             attributedText = markdownParser.parse(newValue)
         }
-    }
-
-    // TODO: Adding support for images in MarkdownKit would elimate the need for extension.
-    func markupText(_ markupText: String, image: UIImage, imageOffsetY: CGFloat) {
-        let attributedString = markdownParser.parse(markupText)
-        let imageAttributedString = NSAttributedString(image: image, baselineOffset: imageOffsetY)
-        let finalString = NSMutableAttributedString(attributedString: attributedString)
-        finalString.append(imageAttributedString)
-        self.attributedText = finalString
-    }
-}
-
-extension UIButton {
-    // TODO: Adding support for images in MarkdownKit would elimate the need for extension.
-    public func markupText(_ markupText: String, image: UIImage, imageOffsetY: CGFloat) {
-        let attributedString = markdownParser.parse(markupText)
-        let imageAttributedString = NSAttributedString(image: image, baselineOffset: imageOffsetY)
-        let finalString = NSMutableAttributedString(attributedString: attributedString)
-        finalString.append(imageAttributedString)
-        setAttributedTitle(finalString, for: .normal)
     }
 }
 
@@ -254,7 +245,7 @@ extension UITextView {
     }
 }
 
-// MARK: - MarkupText Swizzle
+// MARK: - Swizzle: UILabel
 
 extension UILabel {
     @objc private var swizzled_text: String? {
@@ -284,9 +275,9 @@ extension UILabel {
 
         // Reassign the text to ensure the new color is applied correctly.
         //
-        // We have to explicitly set `attributedText` instead of `markupText`
-        // as `markupText` returns `attributedText?.string` causing all the attributes
-        // to be removed.
+        // We have to explicitly set `attributedText` instead of `markupText` as
+        // `markupText` returns `attributedText?.string` causing all the attributes to
+        // be removed.
         if attributedText != nil {
             let currentAttributedText = attributedText
             self.attributedText = currentAttributedText
@@ -296,6 +287,8 @@ extension UILabel {
         }
     }
 }
+
+// MARK: - Swizzle: UIButton
 
 extension UIButton {
     @objc private func swizzled_title(for state: UIControl.State) -> String? {
@@ -324,6 +317,8 @@ extension UIButton {
         setAttributedTitle(markdownParser.parse(title), for: state)
     }
 }
+
+// MARK: - Swizzle: UITextView
 
 extension UITextView {
     @objc private var swizzled_text: String? {
