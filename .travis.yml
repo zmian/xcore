@@ -1,5 +1,8 @@
 language: swift
 osx_image: xcode11
+branches:
+  only:
+    - main
 before_install:
   - gem install xcpretty --no-document --quiet
   - gem install cocoapods -v '1.8.4' --no-document --quiet
