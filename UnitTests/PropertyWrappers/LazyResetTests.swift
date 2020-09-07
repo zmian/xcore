@@ -22,10 +22,10 @@ final class LazyResetTests: TestCase {
 
         var example = Example()
 
-        XCTAssert(example.x == 7)
+        XCTAssertEqual(example.x, 7)
         example.x = 100
-        XCTAssert(example.x == 100)
+        XCTAssertEqual(example.x, 100)
         example.reset()
-        XCTAssert(example.x == 7)
+        XCTAssertEqual(example.x, 7)
     }
 }

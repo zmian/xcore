@@ -35,7 +35,7 @@ final class ConfigurationTests: TestCase {
     func testEquality() {
         let config1: Configuration<UILabel> = .hello
         let config2: Configuration<UILabel> = .someConfiguration
-        XCTAssertTrue(config1 != config2)
+        XCTAssertNotEqual(config1, config2)
     }
 
     func testApply() {
