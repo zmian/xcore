@@ -5,7 +5,6 @@
 //
 
 import UIKit
-import ObjectiveC
 
 public protocol TargetActionBlockRepresentable: class {
     associatedtype Sender

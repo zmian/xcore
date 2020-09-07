@@ -6,24 +6,27 @@
 
 import Intents
 
-/// Suggesting Shortcuts to Users.
-///
-/// Make suggestions for shortcuts the user may want to add to Siri.
-///
-/// After the user performs an action in your app, the app should donate a shortcut that
-/// accelerates user access to the action. However, sometimes there are actions in your app the
-/// user hasn’t performed that might be of interest to them. For example, perhaps your
-/// soup-ordering app features a special soup every day. The user has never ordered the daily soup
-/// special, but they might be interested in the option to add a _soup-of-the-day_ shortcut to Siri.
-/// Your app can provide this option by making a shortcut suggestion.
-///
-/// - Note:
-/// Shortcut suggestions are available to the user only in the **Settings** app under the **Siri & Search**
-/// section. This differs from donated shortcuts, which Siri shows to the user in places such as Spotlight
-/// search, Lock Screen, and the Siri watch face.
-///
-/// - SeeAlso: https://developer.apple.com/documentation/sirikit/shortcut_management/suggesting_shortcuts_to_users
 extension SiriShortcuts {
+    /// Suggesting Shortcuts to Users.
+    ///
+    /// Make suggestions for shortcuts the user may want to add to Siri.
+    ///
+    /// After the user performs an action in your app, the app should donate a
+    /// shortcut that accelerates user access to the action. However, sometimes
+    /// there are actions in your app the user hasn’t performed that might be of
+    /// interest to them. For example, perhaps your soup-ordering app features a
+    /// special soup every day. The user has never ordered the daily soup special,
+    /// but they might be interested in the option to add a _soup-of-the-day_
+    /// shortcut to Siri. Your app can provide this option by making a shortcut
+    /// suggestion.
+    ///
+    /// - Note:
+    /// Shortcut suggestions are available to the user only in the **Settings** app
+    /// under the **Siri & Search** section. This differs from donated shortcuts,
+    /// which Siri shows to the user in places such as Spotlight search, Lock
+    /// Screen, and the Siri watch face.
+    ///
+    /// - SeeAlso: https://developer.apple.com/documentation/sirikit/shortcut_management/suggesting_shortcuts_to_users
     final public class Suggestions: Appliable {
         private var didUpdate = false
         public var intents: [INIntent] = [] {
@@ -33,8 +36,8 @@ extension SiriShortcuts {
             }
         }
 
-        /// Suggest a shortcut to an action that the user hasn't
-        /// performed but may want to add to Siri.
+        /// Suggest a shortcut to an action that the user hasn't performed but may want
+        /// to add to Siri.
         public func suggest() {
             let suggestions = intents.compactMap {
                 INShortcut(intent: $0)
@@ -79,22 +82,28 @@ extension SiriShortcuts {
         /// Remove shortcuts using the intent custom identifiers.
         public func remove(identifiers: [String]) {
             intents.removeAll { intent -> Bool in
-                if let customIdentifier = intent.customIdentifier, identifiers.contains(customIdentifier) {
-                    return true
+                guard
+                    let customIdentifier = intent.customIdentifier,
+                    identifiers.contains(customIdentifier)
+                else {
+                    return false
                 }
 
-                return false
+                return true
             }
         }
 
         /// Remove shortcuts using the intent group identifier.
         public func remove(groupIdentifier: String) {
             intents.removeAll { intent -> Bool in
-                if let intentGroupIdentifier = intent.groupIdentifier, intentGroupIdentifier == groupIdentifier {
-                    return true
+                guard
+                    let intentGroupIdentifier = intent.groupIdentifier,
+                    intentGroupIdentifier == groupIdentifier
+                else {
+                    return false
                 }
 
-                return false
+                return true
             }
         }
 

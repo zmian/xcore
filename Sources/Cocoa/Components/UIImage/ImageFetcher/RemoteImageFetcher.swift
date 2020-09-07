@@ -19,8 +19,16 @@ final class RemoteImageFetcher: ImageFetcher {
     ///                view.
     ///   - callback: A block with the `UIImage` object and cache type if image
     ///               successfully fetched; otherwise, `nil`.
-    func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
-        guard case .url(let value) = image.imageSource, let url = URL(string: value), url.host != nil else {
+    func fetch(
+        _ image: ImageRepresentable,
+        in imageView: UIImageView?,
+        _ callback: @escaping ResultBlock
+    ) {
+        guard
+            case .url(let value) = image.imageSource,
+            let url = URL(string: value),
+            url.host != nil
+        else {
             callback(.failure(ImageFetcherError.notFound))
             return
         }
