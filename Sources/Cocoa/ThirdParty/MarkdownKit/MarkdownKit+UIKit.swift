@@ -30,7 +30,7 @@ extension MarkupText {
         public var isLabelEnabled: Bool = false
         public var isTextViewEnabled: Bool = false
         public var customElements: [MarkdownElement] = []
-        fileprivate override init() {}
+        fileprivate override init() { }
     }
 }
 

@@ -23,7 +23,7 @@ extension UIButton.Configuration {
     public struct AttributesStorage: MutableAppliable {
         private var storage: [Identifier: Attributes] = [:]
 
-        init() {}
+        init() { }
 
         /// Returns the attributes for the given identifier.
         ///

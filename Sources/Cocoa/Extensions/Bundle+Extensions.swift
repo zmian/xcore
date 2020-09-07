@@ -16,7 +16,7 @@ extension Bundle {
     /// loaded or is not defined in a framework.
     ///
     /// This method creates and returns a new `Bundle` object if there is no
-    /// existing bundle associated with `forClassName`. Otherwise, the existing
+    /// existing bundle associated with `forClassName`; otherwise, the existing
     /// instance is returned.
     public convenience init?(forClassName className: String) {
         guard let aClass = NSClassFromString(className) else {

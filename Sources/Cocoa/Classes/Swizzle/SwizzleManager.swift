@@ -11,7 +11,7 @@ final public class SwizzleManager {
     private static var didSwizzle = false
     static var options: SwizzleOptions = .all
 
-    private init() {}
+    private init() { }
 
     /// An entry point to enabled extra functionality for some properties
     /// that Xcore swizzles. It also provides a hook swizzle additional selectors.

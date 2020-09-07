@@ -54,7 +54,7 @@ extension NSObject {
     ///                 `aClass`.
     ///
     /// - Returns: When option is `.kindOf` then this method returns true if
-    ///            `aClass` is a Class object of the same type. Otherwise, `.typeOf`
+    ///            `aClass` is a Class object of the same type; otherwise, `.typeOf`
     ///            does direct check to ensure `aClass` is the same object and not a
     ///            subclass.
     public func isType(of aClass: Swift.AnyClass, comparison: LookupComparison) -> Bool {

@@ -32,7 +32,7 @@ open class XCCollectionViewCell: UICollectionViewCell {
     ///
     /// This method is called when `self` is initialized using any of the relevant
     /// `init` methods.
-    open func commonInit() {}
+    open func commonInit() { }
 
     /// A boolean value that indicates whether the cell resist dimming its content
     /// view.

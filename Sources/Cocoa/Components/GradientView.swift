@@ -7,6 +7,8 @@
 import UIKit
 import CoreGraphics
 
+// MARK: - GradientView
+
 open class GradientView: UIView {
     private let gradientLayer = GradientLayer()
 
@@ -28,6 +30,7 @@ open class GradientView: UIView {
     }
 
     /// The style of gradient.
+    ///
     /// The default value is `.axial`.
     open var type: CAGradientLayerType {
         get { gradientLayer.type }
@@ -37,8 +40,10 @@ open class GradientView: UIView {
     /// An optional array of `Double` defining the location of each gradient stop.
     /// This property is animatable.
     ///
-    /// The gradient stops are specified as values between `0` and `1`. The values must be
-    /// monotonically increasing. If `nil`, the stops are spread uniformly across the range.
+    /// The gradient stops are specified as values between `0` and `1`. The values
+    /// must be monotonically increasing. If `nil`, the stops are spread uniformly
+    /// across the range.
+    ///
     /// The default value is `nil`.
     ///
     /// When rendered, the colors are mapped to the output color space before being
@@ -49,6 +54,7 @@ open class GradientView: UIView {
     }
 
     /// An array of `UIColor` objects defining the color of each gradient stop.
+    ///
     /// This property is animatable.
     open var colors: [UIColor] {
         get { gradientLayer.colors }
@@ -56,6 +62,7 @@ open class GradientView: UIView {
     }
 
     /// The direction of the gradient when drawn in the layer’s coordinate space.
+    ///
     /// This property is animatable.
     ///
     /// The default value is `.topToBottom`.
@@ -92,10 +99,13 @@ open class GradientView: UIView {
     }
 }
 
+// MARK: - GradientLayer
+
 open class GradientLayer: CALayer {
     private let gradient = CAGradientLayer()
 
     /// The style of gradient drawn by the layer.
+    ///
     /// The default value is `.axial`.
     open var type: CAGradientLayerType = .axial {
         didSet {
@@ -106,8 +116,10 @@ open class GradientLayer: CALayer {
     /// An optional array of `Double` defining the location of each gradient stop.
     /// This property is animatable.
     ///
-    /// The gradient stops are specified as values between `0` and `1`. The values must be
-    /// monotonically increasing. If `nil`, the stops are spread uniformly across the range.
+    /// The gradient stops are specified as values between `0` and `1`. The values
+    /// must be monotonically increasing. If `nil`, the stops are spread uniformly
+    /// across the range.
+    ///
     /// The default value is `nil`.
     ///
     /// When rendered, the colors are mapped to the output color space before being
@@ -126,6 +138,7 @@ open class GradientLayer: CALayer {
     }
 
     /// An array of `UIColor` objects defining the color of each gradient stop.
+    ///
     /// This property is animatable.
     open var colors: [UIColor] = [] {
         didSet {
@@ -140,6 +153,7 @@ open class GradientLayer: CALayer {
     }
 
     /// The direction of the gradient when drawn in the layer’s coordinate space.
+    ///
     /// This property is animatable.
     ///
     /// The default value is `.topToBottom`.
@@ -180,6 +194,8 @@ open class GradientLayer: CALayer {
         (gradient.startPoint, gradient.endPoint) = direction.points
     }
 }
+
+// MARK: - GradientDirection
 
 public enum GradientDirection {
     case topToBottom

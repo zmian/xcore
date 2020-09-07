@@ -71,7 +71,7 @@ extension UIView {
         withDuration duration: TimeInterval = .fast,
         _ animations: @escaping () -> Void
     ) {
-        animateFromCurrentState(withDuration: duration, animations: animations) {}
+        animateFromCurrentState(withDuration: duration, animations: animations) { }
     }
 
     public static func animateFromCurrentState(

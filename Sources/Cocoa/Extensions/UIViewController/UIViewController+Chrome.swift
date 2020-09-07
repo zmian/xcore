@@ -30,7 +30,7 @@ extension UIViewController {
         public lazy var preferredNavigationBarBackground: Chrome.Style = .blurred
         /// The default value is `false`.
         public lazy var prefersTabBarHidden: Bool = false
-        fileprivate override init() {}
+        fileprivate override init() { }
     }
 }
 

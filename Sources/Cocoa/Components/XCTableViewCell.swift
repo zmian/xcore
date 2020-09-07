@@ -25,7 +25,7 @@ open class XCTableViewCell: UITableViewCell {
 
     // MARK: - Setup Methods
 
-    open override func setSelected(_ selected: Bool, animated: Bool) {}
+    open override func setSelected(_ selected: Bool, animated: Bool) { }
     open override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         _setHighlighted(highlighted, animated: animated)
     }
@@ -40,5 +40,5 @@ open class XCTableViewCell: UITableViewCell {
     /// Subclasses can override it to perform additional actions, for example, add
     /// new subviews or configure properties. This method is called when `self` is
     /// initialized using any of the relevant `init` methods.
-    open func commonInit() {}
+    open func commonInit() { }
 }

@@ -13,7 +13,7 @@ extension Promise {
     /// Like the `@discardableResult` attribute on a function declaration indicates
     /// that, although the function returns a value, the compiler shouldn’t generate
     /// a warning if the return value is unused.
-    public func discardableResult() {}
+    public func discardableResult() { }
 
     /// A convenience function to make sure the promise always succeed.
     public func asAlwaysSucceed() -> Promise<Void> {

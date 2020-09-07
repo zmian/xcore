@@ -835,7 +835,7 @@ extension Date {
             }.then {
                 Promise.value("2020-04-19")
             }.done { dateString in
-                struct ParsingError: Error {}
+                struct ParsingError: Error { }
 
                 guard let date = Date(from: dateString, format: .yearMonthDayDash) else {
                     throw ParsingError()

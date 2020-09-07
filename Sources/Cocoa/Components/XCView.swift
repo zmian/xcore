@@ -30,5 +30,5 @@ open class XCView: UIView {
     /// Subclasses can override it to perform additional actions, for example, add
     /// new subviews or configure properties. This method is called when `self` is
     /// initialized using any of the relevant `init` methods.
-    open func commonInit() {}
+    open func commonInit() { }
 }
