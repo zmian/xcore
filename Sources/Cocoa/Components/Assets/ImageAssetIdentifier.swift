@@ -6,6 +6,8 @@
 
 import UIKit
 
+// MARK: - ImageAssetIdentifier
+
 public struct ImageAssetIdentifier: RawRepresentable, CustomStringConvertible, Equatable {
     public let rawValue: String
     public let bundle: Bundle
@@ -50,7 +52,7 @@ extension ImageAssetIdentifier: ImageRepresentable {
     }
 }
 
-// MARK: - Convenience Extensions
+// MARK: - UIImage
 
 extension UIImage {
     public convenience init(assetIdentifier: ImageAssetIdentifier) {
@@ -62,6 +64,8 @@ extension UIImage {
     }
 }
 
+// MARK: - UIImageView
+
 extension UIImageView {
     public convenience init(assetIdentifier: ImageAssetIdentifier) {
         self.init()
@@ -72,12 +76,16 @@ extension UIImageView {
     }
 }
 
+// MARK: - UIBarButtonItem
+
 extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
     public init(assetIdentifier: ImageAssetIdentifier, accessibilityIdentifier: String? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
         self.init(image: UIImage(assetIdentifier: assetIdentifier), handler)
         self.accessibilityIdentifier = accessibilityIdentifier
     }
 }
+
+// MARK: - UIButton
 
 extension ControlTargetActionBlockRepresentable where Self: UIButton {
     public init(assetIdentifier: ImageAssetIdentifier, accessibilityIdentifier: String? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
@@ -91,7 +99,7 @@ public func r(_ assetIdentifier: ImageAssetIdentifier) -> ImageAssetIdentifier {
     assetIdentifier
 }
 
-// MARK: - Xcore Buit-in Assets
+// MARK: - Buit-in Assets
 
 extension ImageAssetIdentifier {
     private static func propertyName(_ name: String = #function) -> Self {
@@ -139,7 +147,7 @@ extension ImageAssetIdentifier {
     public static var searchIcon = propertyName("searchIcon")
 }
 
-// MARK: - Xcore Buit-in Overridable Assets
+// MARK: - Buit-in Overridable Assets
 
 extension ImageAssetIdentifier {
     // MARK: - Checkmarks

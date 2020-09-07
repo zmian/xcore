@@ -6,6 +6,8 @@
 
 import UIKit
 
+// MARK: - Edges
+
 extension NSLayoutConstraint {
     public struct Edges {
         public let top: NSLayoutConstraint
@@ -53,7 +55,11 @@ extension NSLayoutConstraint {
             constraints.deactivate()
         }
     }
+}
 
+// MARK: - Size
+
+extension NSLayoutConstraint {
     public struct Size {
         public let width: NSLayoutConstraint
         public let height: NSLayoutConstraint
