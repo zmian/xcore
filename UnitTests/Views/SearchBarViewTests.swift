@@ -5,6 +5,7 @@
 //
 
 import XCTest
+import Combine
 @testable import Xcore
 
 final class SearchBarViewTests: ViewControllerTestCase {
@@ -33,34 +34,37 @@ final class SearchBarViewTests: ViewControllerTestCase {
     }
 }
 
+// MARK: - Mock
+
 private final class MockSearchBarView: XCView {
     fileprivate let searchBarView = SearchBarView()
     private var originalItems = Array(0..<100)
     private let searchBar = UISearchBar()
+    private var cancellable: AnyCancellable?
 
     var displayedItems = Array(0..<100)
 
     override func commonInit() {
         searchBarView.placeholder = "Search"
 
-        searchBarView.didChangeText { [weak self] searchText in
+        cancellable = searchBarView.actionPublisher.sink { [weak self] action in
             guard let strongSelf = self else {
                 return
             }
 
-            if let searchNumber = Int(searchText) {
-                strongSelf.displayedItems = strongSelf.originalItems.filter { $0 == searchNumber }
-                return
-            }
+            switch action {
+                case let .didChangeText(searchText):
+                    if let searchNumber = Int(searchText) {
+                        strongSelf.displayedItems = strongSelf.originalItems.filter { $0 == searchNumber }
+                        return
+                    }
 
-            if searchText.isEmpty {
-                strongSelf.displayedItems = strongSelf.originalItems
+                    if searchText.isEmpty {
+                        strongSelf.displayedItems = strongSelf.originalItems
+                    }
+                default:
+                    break
             }
-        }
-
-        searchBarView.didTapCancel { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.displayedItems = strongSelf.originalItems
         }
 
         addSubview(searchBarView)

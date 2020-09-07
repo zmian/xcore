@@ -5,11 +5,19 @@
 //
 
 import UIKit
+import Combine
 
 extension SearchBarView {
     public enum SeparatorPosition {
         case top
         case bottom
+    }
+
+    public enum Action: Equatable {
+        case didBeginEditing
+        case didChangeText(String)
+        case didTapDone
+        case didTapCancel
     }
 }
 
@@ -19,6 +27,12 @@ final public class SearchBarView: UIView {
     private let searchBar = UISearchBar()
     private let topSeparatorView = SeparatorView()
     private let bottomSeparatorView = SeparatorView()
+
+    // Publisher
+    private let subject = PassthroughSubject<Action, Never>()
+    public var actionPublisher: AnyPublisher<Action, Never> {
+        subject.eraseToAnyPublisher()
+    }
 
     public var interitemSpacing: CGFloat = .defaultPadding {
         didSet {
@@ -59,7 +73,7 @@ final public class SearchBarView: UIView {
         get { searchBar.text }
         set {
             searchBar.text = newValue
-            didChangeText?(newValue ?? "")
+            subject.send(.didChangeText(newValue ?? ""))
         }
     }
 
@@ -73,15 +87,15 @@ final public class SearchBarView: UIView {
         set { searchBar.placeholderTextColor = newValue }
     }
 
-    private lazy var _searchFieldBackgroundColor: UIColor = {
+    private lazy var _searchTextFieldBackgroundColor: UIColor = {
         searchBar.searchTextFieldBackgroundColor ?? UIColor.appBackgroundDisabled.alpha(0.3)
     }()
 
-    @objc dynamic public var searchFieldBackgroundColor: UIColor {
-        get { _searchFieldBackgroundColor }
+    @objc dynamic public var searchTextFieldBackgroundColor: UIColor {
+        get { _searchTextFieldBackgroundColor }
         set {
-            _searchFieldBackgroundColor = newValue
-            updateSearchFieldBackgroundColorIfNeeded()
+            _searchTextFieldBackgroundColor = newValue
+            updateSearchTextFieldBackgroundColorIfNeeded()
         }
     }
 
@@ -165,7 +179,7 @@ final public class SearchBarView: UIView {
                 searchBar.searchBarStyle = .minimal
                 setSeparatorHidden(true, for: .top, .bottom)
                 magnifyingGlassSize = 14
-                updateSearchFieldBackgroundColorIfNeeded()
+                updateSearchTextFieldBackgroundColorIfNeeded()
         }
 
         // Update built-in magnifying glass so the tint matches the app tint color
@@ -174,12 +188,12 @@ final public class SearchBarView: UIView {
         stackView.setCustomSpacing(searchBarTrailingPadding, after: searchBar)
     }
 
-    private func updateSearchFieldBackgroundColorIfNeeded() {
+    private func updateSearchTextFieldBackgroundColorIfNeeded() {
         guard style != .minimal else {
             return
         }
 
-        searchBar.searchTextFieldBackgroundColor = searchFieldBackgroundColor
+        searchBar.searchTextFieldBackgroundColor = searchTextFieldBackgroundColor
     }
 
     private func setImage(assetIdentifier: ImageAssetIdentifier, for icon: UISearchBar.Icon, size: CGFloat? = nil) {
@@ -192,26 +206,6 @@ final public class SearchBarView: UIView {
 
         let scaledImage = image.scaled(to: CGSize(size), scalingMode: .aspectFit, tintColor: tintColor).withRenderingMode(.alwaysTemplate)
         searchBar.setImage(scaledImage, for: icon, state: .normal)
-    }
-
-    private var didBeginEditing: (() -> Void)?
-    public func didBeginEditing(_ callback: @escaping () -> Void) {
-        didBeginEditing = callback
-    }
-
-    private var didChangeText: ((String) -> Void)?
-    public func didChangeText(_ callback: @escaping (String) -> Void) {
-        didChangeText = callback
-    }
-
-    private var didTapDone: (() -> Void)?
-    public func didTapDone(_ callback: @escaping () -> Void) {
-        didTapDone = callback
-    }
-
-    private var didTapCancel: (() -> Void)?
-    public func didTapCancel(_ callback: @escaping () -> Void) {
-        didTapCancel = callback
     }
 }
 
@@ -258,17 +252,17 @@ extension SearchBarView {
 extension SearchBarView: UISearchBarDelegate {
     public func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
-        didBeginEditing?()
+        subject.send(.didBeginEditing)
     }
 
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        didChangeText?(searchText)
+        subject.send(.didChangeText(searchText))
     }
 
     public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         clear()
-        didTapCancel?()
-        didChangeText?("")
+        subject.send(.didTapCancel)
+        subject.send(.didChangeText(""))
     }
 
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
