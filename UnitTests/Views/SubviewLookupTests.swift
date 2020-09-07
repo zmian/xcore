@@ -27,7 +27,6 @@ final class SubviewLookupTests: ViewControllerTestCase {
         view.addSubview(searchBar)
         searchBar.layoutIfNeeded()
 
-        XCTAssertNotNil(searchBar.textField)
         searchBar.placeholder = "Hello, World!"
         XCTAssertEqual(searchBar.placeholder, "Hello, World!")
     }
