@@ -46,7 +46,10 @@ extension ImageSourceType: Codable {
         } else if let url = try? container.decode(String.self) {
             self = .url(url)
         } else {
-            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Failed to convert to ImageSourceType.")
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Failed to convert to ImageSourceType."
+            )
         }
     }
 

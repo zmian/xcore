@@ -34,7 +34,11 @@ extension UIImage.Fetcher {
         registered.removeCache()
     }
 
-    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ImageFetcher.ResultBlock) {
+    static func fetch(
+        _ image: ImageRepresentable,
+        in imageView: UIImageView?,
+        _ callback: @escaping ImageFetcher.ResultBlock
+    ) {
         registered.fetch(image, in: imageView, callback)
     }
 }

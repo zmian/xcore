@@ -23,12 +23,14 @@ public struct GradientImageTransform: ImageTransform {
     ///
     /// - Parameters:
     ///   - type: The style of gradient drawn. The default value is `.axial`.
-    ///   - colors: An array of `UIColor` objects defining the color of each gradient stop.
-    ///   - direction: The direction of the gradient when drawn in the layer’s coordinate space.
-    ///                The default value is `.topToBottom`.
-    ///   - locations: An optional array of `Double` defining the location of each gradient stop.
-    ///                The default value is `nil`.
-    ///   - blendMode: The blend mode to use for gradient overlay. The default value is `.normal`.
+    ///   - colors: An array of `UIColor` objects defining the color of each
+    ///             gradient stop.
+    ///   - direction: The direction of the gradient when drawn in the layer’s
+    ///                coordinate space. The default value is `.topToBottom`.
+    ///   - locations: An optional array of `Double` defining the location of each
+    ///                gradient stop. The default value is `nil`.
+    ///   - blendMode: The blend mode to use for gradient overlay. The default value
+    ///                is `.normal`.
     /// - Returns: A new image with gradient color overlay.
     public init(
         type: CAGradientLayerType = .axial,

@@ -13,7 +13,11 @@ final class LocalImageFetcher: ImageFetcher {
         !image.imageSource.isRemoteUrl
     }
 
-    func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
+    func fetch(
+        _ image: ImageRepresentable,
+        in imageView: UIImageView?,
+        _ callback: @escaping ResultBlock
+    ) {
         switch image.imageSource {
             case .uiImage(let image):
                 callback(.success((image, .memory)))

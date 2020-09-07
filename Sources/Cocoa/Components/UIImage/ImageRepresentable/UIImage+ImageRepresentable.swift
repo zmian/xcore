@@ -8,7 +8,10 @@ import UIKit
 
 extension UIImage {
     /// Fetch an image from the given source.
-    public class func fetch(_ source: ImageRepresentable, callback: @escaping (_ result: Result<UIImage, Error>) -> Void) {
+    public class func fetch(
+        _ source: ImageRepresentable,
+        callback: @escaping (_ result: Result<UIImage, Error>) -> Void
+    ) {
         UIImage.Fetcher.fetch(source, in: nil) { result in
             DispatchQueue.main.asyncSafe {
                 callback(result.trimCache())
@@ -17,7 +20,10 @@ extension UIImage {
     }
 
     /// Download multiple remote images.
-    public class func fetch(_ urls: [String], callback: @escaping (_ images: [(url: URL, image: UIImage)]) -> Void) {
+    public class func fetch(
+        _ urls: [String],
+        callback: @escaping (_ images: [(url: URL, image: UIImage)]) -> Void
+    ) {
         guard !urls.isEmpty else { return }
 
         var orderedObjects: [(url: URL, image: UIImage?)] = urls.compactMap(URL.init).filter { $0.host != nil }.compactMap { ($0, nil) }

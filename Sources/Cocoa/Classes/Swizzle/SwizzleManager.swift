@@ -13,8 +13,8 @@ final public class SwizzleManager {
 
     private init() { }
 
-    /// An entry point to enabled extra functionality for some properties
-    /// that Xcore swizzles. It also provides a hook swizzle additional selectors.
+    /// An entry point to enabled extra functionality for some properties that Xcore
+    /// swizzles. It also provides a hook swizzle additional selectors.
     ///
     /// **Example**
     /// Place any one of the snippet in your app:
@@ -57,9 +57,13 @@ final public class SwizzleManager {
     /// ```
     ///
     /// - Parameters:
-    ///   - options: A list of options to customize which Xcore classes to swizzle. The default value is `.all`.
+    ///   - options: A list of options to customize which Xcore classes to swizzle.
+    ///              The default value is `.all`.
     ///   - additionalSelectors: additional selectors to swizzle.
-    public static func start(options: SwizzleOptions = .all, _ additionalSelectors: @autoclosure () -> [() -> Void] = []) {
+    public static func start(
+        options: SwizzleOptions = .all,
+        _ additionalSelectors: @autoclosure () -> [() -> Void] = []
+    ) {
         guard !didSwizzle else { return }
         defer { didSwizzle = true }
 

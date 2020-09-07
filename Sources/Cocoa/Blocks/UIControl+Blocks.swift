@@ -5,7 +5,6 @@
 //
 
 import UIKit
-import ObjectiveC
 
 private class ControlClosureWrapper: NSObject, NSCopying {
     var closure: ((_ sender: AnyObject) -> Void)?

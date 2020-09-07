@@ -58,7 +58,11 @@ extension CompositeImageFetcher {
         image.imageSource.isValid
     }
 
-    func fetch(_ image: ImageRepresentable, in imageView: UIImageView?, _ callback: @escaping ResultBlock) {
+    func fetch(
+        _ image: ImageRepresentable,
+        in imageView: UIImageView?,
+        _ callback: @escaping ResultBlock
+    ) {
         guard image.imageSource.isValid else {
             #if DEBUG
             Console.error("Unable to fetch image because of invalid image source.")

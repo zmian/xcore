@@ -5,7 +5,6 @@
 //
 
 import UIKit
-import ObjectiveC
 
 extension UIGestureRecognizer: TargetActionBlockRepresentable {
     public typealias Sender = UIGestureRecognizer

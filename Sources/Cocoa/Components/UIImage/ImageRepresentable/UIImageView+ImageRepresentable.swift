@@ -10,12 +10,14 @@ extension UIImageView {
     /// Automatically detect and load the image from local or a remote url.
     ///
     /// - Parameters:
-    ///   - image:             The image to display.
-    ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
-    ///                        The image will only fade in when fetched from a remote url and not in memory cache.
-    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0,
-    ///                        the image is set without animation. The default value is `.slow`.
-    ///   - callback:          A block to invoke when finished setting the image.
+    ///   - image: The image to display.
+    ///   - alwaysAnimate: An option to always animate setting the image. The
+    ///                    default value is `false`. The image will only fade in
+    ///                    when fetched from a remote url and not in memory cache.
+    ///   - animationDuration: The total duration of the animation. If the specified
+    ///                        value is negative or `0`, the image is set without
+    ///                        animation. The default value is `.slow`.
+    ///   - callback: A block to invoke when finished setting the image.
     public func setImage(
         _ image: ImageRepresentable?,
         alwaysAnimate: Bool = false,
@@ -24,7 +26,10 @@ extension UIImageView {
     ) {
         cancelSetImageRequest()
 
-        guard let imageRepresentable = image, imageRepresentable.imageSource.isValid else {
+        guard
+            let imageRepresentable = image,
+            imageRepresentable.imageSource.isValid
+        else {
             self.image = nil
             callback?(nil)
             return
@@ -46,13 +51,15 @@ extension UIImageView {
     /// Automatically detect and load the image from local or a remote url.
     ///
     /// - Parameters:
-    ///   - image:             The image to display.
-    ///   - defaultImage:      The fallback image to display if `image` can't be loaded.
-    ///   - alwaysAnimate:     An option to always animate setting the image. The default value is `false`.
-    ///                        The image will only fade in when fetched from a remote url and not in memory cache.
-    ///   - animationDuration: The total duration of the animation. If the specified value is negative or 0,
-    ///                        the image is set without animation. The default value is `.slow`.
-    ///   - callback:          A block to invoke when finished setting the image.
+    ///   - image: The image to display.
+    ///   - defaultImage: The fallback image to display if `image` can't be loaded.
+    ///   - alwaysAnimate: An option to always animate setting the image. The
+    ///                    default value is `false`. The image will only fade in
+    ///                    when fetched from a remote url and not in memory cache.
+    ///   - animationDuration: The total duration of the animation. If the specified
+    ///                        value is negative or `0`, the image is set without
+    ///                        animation. The default value is `.slow`.
+    ///   - callback: A block to invoke when finished setting the image.
     public func setImage(
         _ image: ImageRepresentable?,
         default defaultImage: ImageRepresentable,
@@ -106,8 +113,8 @@ extension UIImageView {
             return
         }
 
-        // Ensure that we are not setting image to the incorrect image view
-        // instance in case it's being reused (e.g., UICollectionViewCell).
+        // Ensure that we are not setting image to the incorrect image view instance in
+        // case it's being reused (e.g., `UICollectionViewCell`).
         if let imageSource = imageRepresentableSource, imageSource != source.imageSource {
             return
         }

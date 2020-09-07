@@ -6,15 +6,18 @@
 
 import Intents
 
-final public class SiriShortcuts {
+public enum SiriShortcuts {
     public static let sharedSuggestions = Suggestions()
 }
+
+// MARK: - Domain
 
 extension SiriShortcuts {
     open class Domain: Hashable, Appliable {
         private var didUpdateDonations = false
         public let id: String
         private var dynamicIntents: (() -> [INIntent])?
+
         /// A list of intents managed by the domain.
         private var staticIntents: [INIntent] {
             didSet {

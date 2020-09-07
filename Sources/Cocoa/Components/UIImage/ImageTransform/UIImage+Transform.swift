@@ -62,7 +62,8 @@ extension UIImage {
     ///
     /// - Parameters:
     ///   - newSize: The size of the bounds the image must fit within.
-    ///   - scalingMode: The desired scaling mode. The default value is `.aspectFill`.
+    ///   - scalingMode: The desired scaling mode. The default value is
+    ///                  `.aspectFill`.
     ///   - tintColor: An optional tint color to apply. The default value is `nil`.
     ///
     /// - Returns: A new scaled image.
@@ -74,12 +75,14 @@ extension UIImage {
     ///
     /// - Parameters:
     ///   - type: The style of gradient drawn. The default value is `.axial`.
-    ///   - colors: An array of `UIColor` objects defining the color of each gradient stop.
-    ///   - direction: The direction of the gradient when drawn in the layer’s coordinate space.
-    ///                The default value is `.topToBottom`.
-    ///   - locations: An optional array of `Double` defining the location of each gradient stop.
-    ///                The default value is `nil`.
-    ///   - blendMode: The blend mode to use for gradient overlay. The default value is `.normal`.
+    ///   - colors: An array of `UIColor` objects defining the color of each
+    ///             gradient stop.
+    ///   - direction: The direction of the gradient when drawn in the layer’s
+    ///                coordinate space. The default value is `.topToBottom`.
+    ///   - locations: An optional array of `Double` defining the location of each
+    ///                gradient stop. The default value is `nil`.
+    ///   - blendMode: The blend mode to use for gradient overlay. The default value
+    ///                is `.normal`.
     /// - Returns: A new image with gradient color overlay.
     public func gradient(
         type: CAGradientLayerType = .axial,
