@@ -7,7 +7,6 @@
 import UIKit
 
 open class NavigationController: UINavigationController {
-    // swiftlint:disable:next weak_delegate
     private let zoomAnimatorNavigationControllerDelegate = ZoomAnimatorNavigationControllerDelegate()
     private let emptyBackBarButtonItem = UIBarButtonItem(title: "")
     /// A boolean value that determines whether the back button text is hidden.

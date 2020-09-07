@@ -8,6 +8,8 @@ import SwiftUI
 
 @main
 struct XcoreApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+
     var body: some Scene {
         WindowGroup {
             RootView()
@@ -15,13 +17,15 @@ struct XcoreApp: App {
     }
 }
 
-// @UIApplicationMain
-// final class AppDelegate: UIResponder, UIApplicationDelegate {
-//     var window: UIWindow?
-//
-//     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//         UIApplication.swizzle()
-//         Theme.start()
-//         return true
-//     }
-// }
+// MARK: - UIApplicationDelegate
+
+private final class AppDelegate: UIResponder, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        UIApplication.swizzle()
+        Theme.start()
+        return true
+    }
+}
