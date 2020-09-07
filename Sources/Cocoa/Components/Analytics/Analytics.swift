@@ -8,7 +8,7 @@ import Foundation
 
 // MARK: - AnalyticsEvent
 
-public protocol AnalyticsEvent {
+public protocol AnalyticsEventProtocol {
     /// The name of the event that is sent to analytics providers.
     var name: String { get }
 
@@ -17,8 +17,9 @@ public protocol AnalyticsEvent {
 
     /// An option to send this event to additional analytics providers.
     ///
-    /// For example, if a specific event should be tracked in Intercom
-    /// the said event can return `Intercom` as the additional provider.
+    /// For example, if a specific event should be tracked in Firebase, then, the
+    /// said event can return `Firebase` analytics provider as the additional
+    /// provider.
     var additionalProviders: [AnalyticsProvider]? { get }
 }
 
@@ -31,7 +32,7 @@ public protocol AnalyticsProvider {
     /// Track the given event.
     ///
     /// - Parameter event: The event to track.
-    func track(_ event: AnalyticsEvent)
+    func track(_ event: AnalyticsEventProtocol)
 }
 
 extension AnalyticsProvider {
@@ -42,7 +43,7 @@ extension AnalyticsProvider {
 
 // MARK: - Analytics
 
-open class Analytics<Event: AnalyticsEvent> {
+open class Analytics<Event: AnalyticsEventProtocol> {
     /// The registered list of providers.
     open private(set) var providers: [AnalyticsProvider] = []
 

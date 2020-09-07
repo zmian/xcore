@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct AppAnalyticsEvent: AnalyticsEvent, UserInfoContainer {
+public struct AnalyticsEvent: AnalyticsEventProtocol, UserInfoContainer {
     public let name: String
     public let properties: [String: Any]?
     public let additionalProviders: [AnalyticsProvider]?
@@ -26,7 +26,7 @@ public struct AppAnalyticsEvent: AnalyticsEvent, UserInfoContainer {
     }
 }
 
-extension AppAnalyticsEvent: ExpressibleByStringLiteral {
+extension AnalyticsEvent: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
         self.init(name: value)
     }
@@ -34,7 +34,7 @@ extension AppAnalyticsEvent: ExpressibleByStringLiteral {
 
 // MARK: - UserInfo
 
-extension UserInfoKey where Type == AppAnalyticsEvent {
+extension UserInfoKey where Type == AnalyticsEvent {
     /// An optional property indicating whether the event should be throttled and
     /// only fired once in the given session.
     ///
@@ -42,7 +42,7 @@ extension UserInfoKey where Type == AppAnalyticsEvent {
     public static var sessionId: Self { #function }
 }
 
-extension AppAnalyticsEvent {
+extension AnalyticsEvent {
     /// An optional property indicating whether the event should be throttled and
     /// only fired once in the given session.
     ///
