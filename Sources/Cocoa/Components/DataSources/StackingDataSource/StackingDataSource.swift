@@ -111,6 +111,13 @@ open class StackingDataSource: XCCollectionViewDataSource, XCCollectionViewTileL
             default:
                 let index = alertIndexFor(indexPath: indexPath)
                 let cell = cellProvider(collectionView, globalIndex, viewModel.item(at: index))
+                if viewModel.numberOfSections > 1 {
+                    let extendedStatusLabel = self.isExtended ? "Extended" : "Collapsed"
+                    cell.contentView.accessibilityLabel = [cell.contentView.accessibilityLabel, extendedStatusLabel].joined(separator: ", ")
+                    if !self.isExtended {
+                        cell.contentView.accessibilityHint = "Double tap to activate"
+                    }
+                }
                 return cell
         }
     }
