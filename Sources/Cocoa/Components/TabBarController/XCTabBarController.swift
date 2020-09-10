@@ -23,7 +23,7 @@ open class XCTabBarController: UITabBarController {
         delegate = self
         setupTabs()
     }
-    
+
     private func setupTabs() {
         tabBar.isTransparent = true
         tabBar.backgroundColor = Theme.current.backgroundColor

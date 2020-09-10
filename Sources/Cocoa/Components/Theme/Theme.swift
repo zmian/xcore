@@ -25,10 +25,10 @@ public struct Theme: Equatable {
     public var tintColor: UIColor
 
     /// The color for divider lines that hide any underlying content.
-    public let separatorColor: UIColor
+    public var separatorColor: UIColor
 
     /// The color for border that hide any underlying content.
-    public let borderColor: UIColor
+    public var borderColor: UIColor
 
     /// The color for toggle controls (e.g., Switch or Checkbox).
     public var toggleColor: UIColor
