@@ -51,6 +51,7 @@ final class WebViewToolbar: XCView {
         addSubview(backgroundView)
         backgroundColor = Theme.current.backgroundColor
         backgroundView.anchor.edges.equalToSuperview()
+
         addSubview(toolbar)
         toolbar.anchor.horizontally.equalToSuperview()
         toolbar.anchor.top.equalToSuperview()
