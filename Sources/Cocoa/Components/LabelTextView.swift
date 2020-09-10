@@ -41,6 +41,10 @@ open class LabelTextView: UITextView {
         #if canImport(Haring)
         isAccessibilityRotorHintEnabled = true
         #endif
+        isAccessibilityElement = true
+        // Disable line selection when view is
+        // tapped by user.
+        accessibilityTraits = .staticText
         dataDetectorTypes = .all
         textContainerInset = .zero
         textContainer.lineFragmentPadding = 0
@@ -139,5 +143,19 @@ extension LabelTextView {
     @objc open override dynamic var linkTextAttributes: [NSAttributedString.Key: Any]! {
         get { super.linkTextAttributes }
         set { super.linkTextAttributes = newValue }
+    }
+}
+
+// MARK: - Accessibility
+
+extension LabelTextView {
+    /// The accessibility trait value that the element takes based on the text style
+    /// it was given when created.
+    open override var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            let isTitle = font?.textStyle?.isTitle ?? false
+            return isTitle ? .header : super.accessibilityTraits
+        }
+        set { super.accessibilityTraits = newValue }
     }
 }

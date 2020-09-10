@@ -9,6 +9,7 @@ import UIKit
 public struct ImageAssetIdentifier: RawRepresentable, CustomStringConvertible, Equatable {
     public let rawValue: String
     public let bundle: Bundle
+    public var accessibilityLabel: String?
 
     /// A convenience initializer for `.xcassets` resource in the `.main` bundle.
     ///
@@ -16,6 +17,7 @@ public struct ImageAssetIdentifier: RawRepresentable, CustomStringConvertible, E
     public init(rawValue: String) {
         self.rawValue = rawValue
         self.bundle = .main
+        self.accessibilityLabel = nil
     }
 
     /// An initializer for `.xcassets` resource in the given `bundle`.
@@ -23,9 +25,12 @@ public struct ImageAssetIdentifier: RawRepresentable, CustomStringConvertible, E
     /// - Parameters:
     ///   - rawValue: The name of the resource in `.xcassets`.
     ///   - bundle: The bundle for the `.xcassets`.
-    public init(rawValue: String, bundle: Bundle) {
+    ///   - accessibilityLabel: A succinct label that identifies the accessibility
+    ///                         element, in a localized string.
+    public init(rawValue: String, bundle: Bundle, accessibilityLabel: String? = nil) {
         self.rawValue = rawValue
         self.bundle = bundle
+        self.accessibilityLabel = accessibilityLabel
     }
 
     public var description: String {

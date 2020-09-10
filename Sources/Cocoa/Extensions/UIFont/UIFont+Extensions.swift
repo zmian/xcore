@@ -81,6 +81,21 @@ extension UIFont {
     }
 }
 
+extension UIFont {
+    private struct AssociatedKey {
+        static var textStyle = "textStyle"
+    }
+
+    var _textStyle: UIFont.TextStyle? {
+        get { associatedObject(&AssociatedKey.textStyle) }
+        set { setAssociatedObject(&AssociatedKey.textStyle, value: newValue) }
+    }
+
+    public var textStyle: UIFont.TextStyle? {
+        _textStyle ?? fontDescriptor.object(forKey: .textStyle) as? UIFont.TextStyle
+    }
+}
+
 extension UIFont.TextStyle: CaseIterable {
     public static var allCases: [UIFont.TextStyle] = {
         [

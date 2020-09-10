@@ -76,6 +76,8 @@ extension UIFont {
             compatibleWith: traitCollection
         ).pointSize
 
-        return UIFont(name: name, size: preferredPointSize)!
+        return UIFont(name: name, size: preferredPointSize)!.apply {
+            $0._textStyle = style
+        }
     }
 }

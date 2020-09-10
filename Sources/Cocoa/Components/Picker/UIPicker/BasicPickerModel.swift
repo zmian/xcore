@@ -107,7 +107,7 @@ extension Picker {
         configuration: Configuration<UIDatePicker>? = nil,
         _ callback: @escaping (Date?) -> Void
     ) {
-        DatePicker.present(callback)
+        DatePicker.present(initialValue: date, configuration: configuration, callback)
     }
 }
 

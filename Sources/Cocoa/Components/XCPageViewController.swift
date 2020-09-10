@@ -42,6 +42,10 @@ open class XCPageViewController: UIViewController {
         didSet { _pageViewController?.isScrollEnabled = isScrollEnabled }
     }
 
+    open var scrollView: UIScrollView? {
+        _pageViewController?.scrollView
+    }
+
     /// Spacing between between pages. The default value is `0`.
     ///
     /// Page spacing is only valid if the transition style is `.scroll`.
@@ -147,27 +151,54 @@ extension XCPageViewController {
     ///
     /// - Parameters:
     ///   - index: The index of the view controller to be displayed.
-    ///   - direction: The navigation direction. The default value is `.forward`.
-    ///   - animated: A boolean value that indicates whether the transition is to be animated. The default value is `false`.
-    ///   - completion: A block to be called when setting the current view controller animation completes. The default value is `nil`.
-    open func setCurrentPage(_ index: Int, direction: UIPageViewController.NavigationDirection = .forward, animated: Bool = false, completion: ((Bool) -> Void)? = nil) {
-        guard viewControllers.count > index else { return }
+    ///   - direction: The navigation direction. The default value is `nil`, meaning
+    ///                automatically determine the direction.
+    ///   - animated: A boolean value that indicates whether the transition is to be
+    ///               animated. The default value is `false`.
+    ///   - completion: A block to be called when setting the current view
+    ///                 controller animation completes. The default value is `nil`.
+    open func setCurrentPage(
+        _ index: Int,
+        direction: UIPageViewController.NavigationDirection? = nil,
+        animated: Bool = false,
+        completion: ((Bool) -> Void)? = nil
+    ) {
+        guard viewControllers.count > index else {
+            return
+        }
+
         let viewControllerAtIndex = viewControllers[index]
-        pageViewController.setViewControllers([viewControllerAtIndex], direction: direction, animated: animated, completion: completion)
-        pageControl.currentPage = index
+        let direction = direction ?? (index > pageControl.currentPage ? .forward : .reverse)
+
+        pageViewController.setViewControllers(
+            [viewControllerAtIndex],
+            direction: direction,
+            animated: animated,
+            completion: { [weak self] finished in
+                self?.pageControl.currentPage = index
+                completion?(finished)
+            }
+        )
+
         updateStatusBar(for: index)
     }
 
-    open func removeViewController(_ viewController: UIViewController) {
-        guard let index = viewControllers.firstIndex(of: viewController) else { return }
+    open func remove(_ viewController: UIViewController) {
+        guard let index = viewControllers.firstIndex(of: viewController) else {
+            return
+        }
+
         viewControllers.remove(at: index)
         reloadData()
     }
 
-    open func replaceViewController(_ viewControllerToReplace: UIViewController, withViewControllers: [UIViewController]) {
-        guard let index = viewControllers.firstIndex(of: viewControllerToReplace) else { return }
+    open func replace(_ viewController: UIViewController, with newViewControllers: [UIViewController]) {
+        guard let index = viewControllers.firstIndex(of: viewController) else {
+            return
+        }
+
         viewControllers.remove(at: index)
-        viewControllers.insert(contentsOf: withViewControllers, at: index)
+        viewControllers.insert(contentsOf: newViewControllers, at: index)
         reloadData()
     }
 
@@ -216,10 +247,9 @@ extension XCPageViewController {
 
 // MARK: - XCUIPageViewController
 
-#warning("Remove this class and add support to UIPageViewController directly. Using Xcore.subview like scrollView in UISearchBar.")
 private final class XCUIPageViewController: UIPageViewController {
-    // Subclasses have to be responsible when using this setting
-    // as view controller count stays at one when the bounce is disabled.
+    // Subclasses have to be responsible when using this setting as view controller
+    // count stays at one when the bounce is disabled.
     var isBounceForSinglePageEnabled = true
 
     var isScrollEnabled = true {
@@ -228,7 +258,7 @@ private final class XCUIPageViewController: UIPageViewController {
         }
     }
 
-    private var scrollView: UIScrollView? {
+    var scrollView: UIScrollView? {
         didSet {
             scrollView?.bounces = isBounceForSinglePageEnabled
             scrollView?.isScrollEnabled = isScrollEnabled

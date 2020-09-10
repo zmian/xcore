@@ -168,11 +168,6 @@ open class WebViewController: UIViewController {
         webViewBottom?.inset(bottomInset)
     }
 
-    open override func viewSafeAreaInsetsDidChange() {
-        super.viewSafeAreaInsetsDidChange()
-        toolbar.updateHeight(isTabBarHidden: prefersTabBarHidden)
-    }
-
     private func setupProgressBar() {
         view.addSubview(progressBar)
         progressBar.anchor.make {
@@ -430,7 +425,11 @@ extension WebViewController {
         let doneBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done) { [weak self] _ in
             guard let strongSelf = self else { return }
             strongSelf.didTapDoneButton?(strongSelf.webView.url)
-            strongSelf.navigationController?.popViewController(animated: true)
+            if strongSelf.isModal {
+                strongSelf.dismiss(animated: true, completion: nil)
+            } else {
+                strongSelf.navigationController?.popViewController(animated: true)
+            }
         }
 
         doneBarButtonItem.accessibilityIdentifier = "webViewController doneButton"

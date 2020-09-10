@@ -45,8 +45,8 @@ final class DatePicker: DrawerScreen.Content, Appliable {
     }
 
     static func present(
-        initialValue date: Date? = nil,
-        configuration: Configuration<UIDatePicker>? = nil,
+        initialValue date: Date?,
+        configuration: Configuration<UIDatePicker>?,
         _ callback: @escaping (Date?) -> Void
     ) {
         let picker = DatePicker().apply {

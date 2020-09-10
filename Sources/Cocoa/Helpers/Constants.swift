@@ -17,15 +17,15 @@ extension TimeInterval {
     /// ```
     public static var fast: Self = 0.25
 
-    /// The normal duration to use for animations when the desired interval is
+    /// The default duration to use for animations when the desired interval is
     /// between `0.3...0.5` seconds.
     ///
     /// ```swift
-    /// UIView.animate(withDuration: .normal) {
+    /// UIView.animate(withDuration: .`default) {
     ///     ...
     /// }
     /// ```
-    public static var normal: Self = 0.35
+    public static var `default`: Self = 0.35
 
     /// The slow duration to use for animations when the desired interval is between
     /// `> 0.5` seconds.
@@ -223,3 +223,36 @@ public func name(of value: Any) -> String {
     let components = description.split(separator: ".").filter { !$0.hasPrefix(unwantedResult) }
     return components.joined(separator: ".")
 }
+
+// MARK: - Accessibility
+
+public struct AccessibilityReturnFocus {
+    private var focusedElement: Any?
+
+    public var hasElement: Bool {
+        return focusedElement != nil ? true : false
+    }
+
+    public mutating func addFocusedElement(_ tappedElement: Any? = nil) {
+        guard
+            let tappedElement = tappedElement
+        else {
+            focusedElement = UIAccessibility.focusedElement(using: .notificationVoiceOver)
+            return
+        }
+
+        focusedElement = tappedElement
+    }
+
+    public mutating func focusOnElement() {
+        UIAccessibility.post(notification: .layoutChanged, argument: focusedElement)
+        focusedElement = nil
+    }
+
+    public mutating func removeFocusedElement() {
+        UIAccessibility.post(notification: .screenChanged, argument: nil)
+        focusedElement = nil
+    }
+}
+
+public var accessibilityFocusedElement = AccessibilityReturnFocus()
