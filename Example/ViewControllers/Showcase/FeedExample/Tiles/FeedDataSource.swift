@@ -6,7 +6,7 @@
 
 import UIKit
 
-final class FeedDataSource: XCCollectionViewDataSource {
+final class FeedDataSource: XCCollectionViewDataSource, XCCollectionViewTileLayoutCustomizable {
     static var isRandomEnabled = false
     let cellCount = Int.random(in: 1...2)
     var sectionIndex: Int
@@ -70,5 +70,11 @@ final class FeedDataSource: XCCollectionViewDataSource {
         let footerView = collectionView.dequeueReusableSupplementaryView(.footer, for: globalIndexPath) as FeedTextHeaderFooterViewCell
         footerView.configure(title: "FOOTER!")
         return footerView
+    }
+
+    func sectionConfiguration(in layout: XCCollectionViewTileLayout, for section: Int) -> XCCollectionViewTileLayout.SectionConfiguration {
+        var configuration = layout.defaultSectionConfiguration
+        configuration.isShadowEnabled = false
+        return configuration
     }
 }
