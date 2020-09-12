@@ -6,16 +6,18 @@
 
 import Foundation
 
-public enum EncodingImageType {
-    case png
-    case jpeg(quality: CGFloat)
+extension UIImage {
+    public enum EncodingFormat {
+        case png
+        case jpeg(quality: CGFloat)
+    }
 }
 
 extension KeyedEncodingContainer {
     public mutating func encode(
         _ value: UIImage,
         forKey key: KeyedEncodingContainer.Key,
-        as type: EncodingImageType = .png
+        as type: UIImage.EncodingFormat = .png
     ) throws {
         var imageData: Data?
 
@@ -38,11 +40,18 @@ extension KeyedEncodingContainer {
 }
 
 extension KeyedDecodingContainer {
-    public func decode(_ type: UIImage.Type, forKey key: KeyedDecodingContainer.Key) throws -> UIImage {
+    public func decode(
+        _ type: UIImage.Type,
+        forKey key: KeyedDecodingContainer.Key
+    ) throws -> UIImage {
         let imageData = try decode(Data.self, forKey: key)
 
         guard let image = UIImage(data: imageData) else {
-            throw DecodingError.dataCorruptedError(forKey: key, in: self, debugDescription: "Failed to create UIImage instance.")
+            throw DecodingError.dataCorruptedError(
+                forKey: key,
+                in: self,
+                debugDescription: "Failed to create UIImage instance."
+            )
         }
 
         return image
@@ -57,7 +66,10 @@ extension SingleValueEncodingContainer {
     ///   the current context for this format.
     /// - Precondition: May not be called after a previous `self.encode(_:)`
     ///   call.
-    public mutating func encode(_ value: UIImage, as type: EncodingImageType = .png) throws {
+    public mutating func encode(
+        _ value: UIImage,
+        as type: UIImage.EncodingFormat = .png
+    ) throws {
         var imageData: Data?
 
         switch type {
