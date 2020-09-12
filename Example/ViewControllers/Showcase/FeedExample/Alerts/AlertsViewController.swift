@@ -131,7 +131,7 @@ private class AlertsViewModel: StackingDataSourceViewModel {
     func didTap(at index: IndexPath) { }
 
     var isShadowEnabled: Bool {
-        true
+        false
     }
 
     var isClearButtonHidden: Bool {
