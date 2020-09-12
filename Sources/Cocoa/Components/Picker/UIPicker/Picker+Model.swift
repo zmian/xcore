@@ -36,22 +36,17 @@ extension PickerModel {
         0
     }
 
-    public func pickerDidDismiss() {
-    }
+    public func pickerDidDismiss() { }
 
-    public func pickerDidTapDone() {
-    }
+    public func pickerDidTapDone() { }
 
-    public func pickerDidSelectValue(value: Int, at component: Int) {
-    }
+    public func pickerDidSelectValue(value: Int, at component: Int) { }
 
     public func pickerReloadComponents(on componentChanged: Int) -> [Int] {
         []
     }
 
-    public func pickerReloadAllComponents() {
-    }
+    public func pickerReloadAllComponents() { }
 
-    public func pickerDidCancel() {
-    }
+    public func pickerDidCancel() { }
 }

@@ -18,21 +18,20 @@ final class FeedViewController: XCComposedCollectionViewController {
             }
             composedDataSource.dataSources = newSources
 
-            // swiftlint:disable:next trailing_closure
-            collectionView.performBatchUpdates({
+            collectionView.performBatchUpdates {
                 collectionView.collectionViewLayout.invalidateLayout()
                 if removed {
                     collectionView.deleteSections(set)
                 } else {
                     collectionView.insertSections(set)
                 }
-            })
+            }
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .systemGroupedBackground
         collectionView.backgroundColor = .clear
         collectionView.contentInset.top = view.safeAreaInsets.top
 

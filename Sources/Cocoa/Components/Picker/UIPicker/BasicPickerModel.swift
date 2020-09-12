@@ -167,8 +167,7 @@ private final class BasicPickerModel<T: PickerOptions>: PickerModel {
         selectedItem = items[value]
     }
 
-    func pickerDidDismiss() {
-    }
+    func pickerDidDismiss() { }
 
     func pickerReloadAllComponents() {
         items = itemsProvider()
@@ -215,6 +214,5 @@ private final class BasicTextPickerModel: PickerModel {
         selectedOption = items[value]
     }
 
-    func pickerDidDismiss() {
-    }
+    func pickerDidDismiss() { }
 }

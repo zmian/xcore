@@ -35,9 +35,8 @@ final class AlertsViewController: XCComposedCollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .systemGroupedBackground
         collectionView.backgroundColor = .clear
-        collectionView.contentInset.top = view.safeAreaInsets.top
         layout = .init(XCCollectionViewTileLayout())
     }
 
@@ -50,17 +49,18 @@ final class AlertsViewController: XCComposedCollectionViewController {
         allDataSources.append(alertsDataSource(
             viewModel: AlertsViewModel(
                 identifier: "FirstAlerts",
-                alerts: severalAlerts
+                items: severalAlerts
             )
         ))
 
         for i in 3...6 {
             allDataSources.append(FeedDataSource(sectionIndex: i))
         }
+
         allDataSources.append(alertsDataSource(
             viewModel: AlertsViewModel(
                 identifier: "SecondAlerts",
-                alerts: manyAlerts
+                items: manyAlerts
             )
         ))
 
@@ -71,7 +71,7 @@ final class AlertsViewController: XCComposedCollectionViewController {
         allDataSources.append(alertsDataSource(
             viewModel: AlertsViewModel(
                 identifier: "ThirdAlerts",
-                composedAlerts: [twoAlerts, twoAlerts]
+                items: [twoAlerts, twoAlerts]
             )
         ))
 
@@ -100,27 +100,27 @@ final class AlertsViewController: XCComposedCollectionViewController {
 
 private class AlertsViewModel: StackingDataSourceViewModel {
     var tileIdentifier: String = ""
-    var composedAlerts: [[String]]
+    var items: [[String]]
 
-    convenience init(identifier: String, alerts: [String]) {
-        self.init(identifier: identifier, composedAlerts: alerts.map { [$0] })
+    convenience init(identifier: String, items: [String]) {
+        self.init(identifier: identifier, items: items.map { [$0] })
     }
 
-    init(identifier: String, composedAlerts: [[String]]) {
+    init(identifier: String, items: [[String]]) {
         self.tileIdentifier = identifier
-        self.composedAlerts = composedAlerts
+        self.items = items
     }
 
     public var numberOfSections: Int {
-        composedAlerts.count
+        items.count
     }
 
     public func itemsCount(for section: Int) -> Int {
-        composedAlerts.at(section)?.count ?? 0
+        items.at(section)?.count ?? 0
     }
 
     func item(at index: IndexPath) -> Any? {
-        composedAlerts.at(index.section)?.at(index.row)
+        items.at(index.section)?.at(index.row)
     }
 
     private var didChange: (() -> Void)?
@@ -128,8 +128,7 @@ private class AlertsViewModel: StackingDataSourceViewModel {
         didChange = callback
     }
 
-    func didTap(at index: IndexPath) {
-    }
+    func didTap(at index: IndexPath) { }
 
     var isShadowEnabled: Bool {
         true
@@ -140,7 +139,7 @@ private class AlertsViewModel: StackingDataSourceViewModel {
     }
 
     func clearAll() {
-        composedAlerts.removeAll()
+        items.removeAll()
         didChange?()
     }
 
