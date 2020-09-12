@@ -36,12 +36,12 @@ final class CurrencyFormatterTests: TestCase {
 
         // Puerto Rico
         CurrencyFormatter.shared.localeTest = .puertoRico
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1000.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
         assertEqual(dollarsAndCents(from: -10000.0), ("-$10,000.", "00"))
         assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
-        assertEqual(dollarsAndCents(from: 1000.0), ("$1000.", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // China
         CurrencyFormatter.shared.localeTest = .china
