@@ -18,9 +18,11 @@ struct RootView: View {
                             VStack(alignment: .leading) {
                                 Text(item.title)
                                 if let subtitle = item.subtitle {
+                                    Spacer()
+                                        .frame(height: 2)
                                     Text(subtitle)
                                         .foregroundColor(.secondary)
-                                        .font(.subheadline)
+                                        .font(.footnote)
                                 }
                             }
                         }

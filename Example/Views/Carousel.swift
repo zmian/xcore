@@ -103,8 +103,8 @@ private struct CarouselViewUIKit: UIViewRepresentable {
             $0.startAutoScrolling()
             $0.pageControl.apply {
                 $0.dotsPadding = .maximumPadding
-                $0.pageIndicatorTintColor = UIColor.black.alpha(0.3)
-                $0.currentPageIndicatorTintColor = .black
+                $0.pageIndicatorTintColor = UIColor.label.alpha(0.3)
+                $0.currentPageIndicatorTintColor = .label
             }
         }
     }
@@ -151,10 +151,10 @@ extension CarouselViewUIKit {
 
         override func commonInit() {
             super.commonInit()
-            contentView.backgroundColor = .lightGray
+            contentView.backgroundColor = .secondarySystemBackground
             contentView.addSubview(stackView)
             stackView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
+                make.edges.equalToSuperview().inset(.defaultPadding)
             }
         }
 
