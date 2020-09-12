@@ -2,7 +2,7 @@
 <img src="Resources/xcoreLogo.svg" alt="Xcore logo" height=100>
 </p>
 <p align="center">
-    <a href="https://travis-ci.org/zmian/xcore.swift"><img src="https://travis-ci.org/zmian/xcore.swift.svg?branch=master" alt="Master Branch Build Status"></a>
+    <a href="https://travis-ci.org/zmian/xcore.swift"><img src="https://travis-ci.org/zmian/xcore.swift.svg?branch=main" alt="Main Branch Build Status"></a>
   <a href="http://cocoapods.org/pods/Xcore"><img src="https://img.shields.io/cocoapods/v/Xcore.svg?style=flat" alt="CocoaPods Version Number"></a>
   <a href="http://cocoapods.org/pods/Xcore"><img src="https://img.shields.io/cocoapods/p/Xcore.svg?style=flat" alt="Supported Platform"></a>
     <a href="http://cocoapods.org/pods/Xcore"><img src="https://img.shields.io/cocoapods/l/Xcore.svg?style=flat" alt="License"></a>
@@ -76,4 +76,4 @@ Documentation is generated with [jazzy](https://github.com/realm/jazzy) and host
 
 ## License
 
-Xcore is released under the MIT license. [See LICENSE](https://github.com/zmian/xcore.swift/blob/master/LICENSE) for details.
+Xcore is released under the MIT license. [See LICENSE](https://github.com/zmian/xcore.swift/blob/main/LICENSE) for details.
