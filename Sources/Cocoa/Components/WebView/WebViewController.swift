@@ -112,6 +112,11 @@ open class WebViewController: UIViewController {
         didLoadView?()
     }
 
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIAccessibility.post(notification: .screenChanged, argument: nil)
+    }
+
     private func setupWebView() {
         view.addSubview(webView)
         view.backgroundColor = webView.scrollView.backgroundColor
