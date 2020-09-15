@@ -23,10 +23,10 @@ open class IconLabelCollectionView: UICollectionView {
         }
     }
 
-    open var isEditing = false {
+    open var isEditingMode = false {
         didSet {
-            guard oldValue != isEditing else { return }
-            tapGestureRecognizer.isEnabled = isEditing
+            guard oldValue != isEditingMode else { return }
+            tapGestureRecognizer.isEnabled = isEditingMode
             toggleVisibleCellsDeleteButtons()
         }
     }
@@ -117,7 +117,7 @@ open class IconLabelCollectionView: UICollectionView {
     }
 
     open override func reloadData() {
-        isEditing = false
+        isEditingMode = false
         super.reloadData()
     }
 
@@ -130,13 +130,13 @@ open class IconLabelCollectionView: UICollectionView {
             strongSelf.indexPathForItem(at: sender.location(in: strongSelf)) != nil
         else { return }
 
-        strongSelf.isEditing.toggle()
+        strongSelf.isEditingMode.toggle()
     }
 
     private lazy var tapGestureRecognizer = UITapGestureRecognizer().apply {
         $0.isEnabled = false
         $0.addAction { [weak self] _ in
-            self?.isEditing = false
+            self?.isEditingMode = false
         }
     }
 }
@@ -168,7 +168,7 @@ extension IconLabelCollectionView: UICollectionViewDelegate, UICollectionViewDat
 
     open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard allowsDeletion, let cell = cell as? Cell else { return }
-        cell.setDeleteButtonHidden(!isEditing)
+        cell.setDeleteButtonHidden(!isEditingMode)
     }
 
     // MARK: - Reordering
@@ -223,7 +223,7 @@ extension IconLabelCollectionView {
             addGestureRecognizer(longPressGestureRecognizer)
             hasLongPressGestureRecognizer = true
         } else if !allowsDeletion && hasLongPressGestureRecognizer {
-            isEditing = false
+            isEditingMode = false
             removeGestureRecognizer(tapGestureRecognizer)
             removeGestureRecognizer(longPressGestureRecognizer)
             hasLongPressGestureRecognizer = false
@@ -232,7 +232,7 @@ extension IconLabelCollectionView {
 
     private func toggleVisibleCellsDeleteButtons() {
         visibleCells.compactMap { $0 as? Cell }.forEach {
-            $0.setDeleteButtonHidden(!isEditing)
+            $0.setDeleteButtonHidden(!isEditingMode)
         }
     }
 }

@@ -230,7 +230,7 @@ public struct AccessibilityReturnFocus {
     private var focusedElement: Any?
 
     public var hasElement: Bool {
-        return focusedElement != nil ? true : false
+        focusedElement != nil
     }
 
     public mutating func addFocusedElement(_ tappedElement: Any? = nil) {

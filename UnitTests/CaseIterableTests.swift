@@ -9,9 +9,9 @@ import XCTest
 
 final class CaseIterableTests: TestCase {
     func testAllCases() {
-        XCTAssert(SomeClass.Counting.allCases.count == 3)
-        XCTAssert(SomeClass.NewCounting.allCases.count == 2)
-        XCTAssert(SomeStruct.Counting.allCases.count == 3)
+        XCTAssertEqual(SomeClass.Counting.allCases.count, 3)
+        XCTAssertEqual(SomeClass.NewCounting.allCases.count, 2)
+        XCTAssertEqual(SomeStruct.Counting.allCases.count, 3)
     }
 
     func testCount() {
@@ -56,8 +56,7 @@ extension SomeClass {
     }
 }
 
-private struct SomeStruct {
-}
+private struct SomeStruct { }
 
 extension SomeStruct {
     fileprivate enum Counting: String, CaseIterable {

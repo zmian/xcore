@@ -24,7 +24,7 @@ final class CurrencySymbolsOptionsTests: TestCase {
 
         for item in data {
             let returned = item.input.trimmingCurrencySymbols(item.manipulator, provider: provider)
-            XCTAssertTrue(returned == item.output, "Expected output to be \"\(item.output)\", instead found \"\(returned).\"")
+            XCTAssertEqual(returned, item.output)
         }
     }
 
@@ -43,7 +43,7 @@ final class CurrencySymbolsOptionsTests: TestCase {
 
         for item in data {
             let returned = item.input.contains(item.manipulator, provider: provider)
-            XCTAssertTrue(returned == item.output, "Expected output to be \"\(item.output)\", instead found \"\(returned).\"")
+            XCTAssertEqual(returned, item.output)
         }
     }
 }

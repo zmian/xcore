@@ -45,6 +45,9 @@ extension StackingDataSource {
         }
 
         func configure(didTapHide: @escaping () -> Void, didTapClear: @escaping () -> Void) {
+            if UIAccessibility.isVoiceOverRunning {
+                UIAccessibility.post(notification: .screenChanged, argument: hideButton)
+            }
             didTapHideAction = didTapHide
             didTapClearAction = didTapClear
         }

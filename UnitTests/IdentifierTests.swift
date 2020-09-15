@@ -20,12 +20,12 @@ final class IdentifierTests: TestCase {
         let data = try encoder.encode(values)
         let encodedValue = String(data: data, encoding: .utf8)!
         let expectedEncodedValue = "[\"1\",\"some_id\"]"
-        XCTAssert(encodedValue == expectedEncodedValue)
+        XCTAssertEqual(encodedValue, expectedEncodedValue)
 
         let decoder = JSONDecoder()
         let decodedValues = try decoder.decode([ID].self, from: data)
         for (index, value) in values.enumerated() {
-            XCTAssert(value == decodedValues[index])
+            XCTAssertEqual(value, decodedValues[index])
         }
     }
 }
