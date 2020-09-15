@@ -7,9 +7,35 @@
 import XCTest
 @testable import Xcore
 
-class TestCase: XCTestCase {
+class TestCase: XCTestCase { }
+
+// MARK: - Helpers
+
+func assert<T>(
+    _ input: T,
+    _ comparator: (T, T) -> Bool,
+    _ output: T,
+    file: StaticString = #file,
+    line: UInt = #line
+) {
+    XCTAssert(
+        comparator(input, output),
+        "Expected \(output), found \(input).",
+        file: file,
+        line: line
+    )
 }
 
-func expect<T>(_ input: T, _ comparator: (T, T) -> Bool, _ output: T) {
-    XCTAssert(comparator(input, output), "Expected \(output), found \(input).")
+func assertEqual<T1, T2>(
+    _ input: (T1, T2),
+    _ output: (T1, T2),
+    file: StaticString = #file,
+    line: UInt = #line
+) where T1: Equatable, T2: Equatable {
+    XCTAssertTrue(
+        input == output,
+        "Expected \(output), found \(input).",
+        file: file,
+        line: line
+    )
 }

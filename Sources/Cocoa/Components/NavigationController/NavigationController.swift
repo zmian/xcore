@@ -195,17 +195,12 @@ extension NavigationController: UINavigationControllerDelegate {
     }
 
     open func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if operation == .pop {
+            fromVC.viewWillPop(using: .backBarButton)
+        }
+
         willTransition?(fromVC, toVC)
         return zoomAnimatorNavigationControllerDelegate.navigationController(navigationController, animationControllerFor: operation, from: fromVC, to: toVC)
-    }
-}
-
-// MARK: - UINavigationBarDelegate
-
-extension NavigationController: UINavigationBarDelegate {
-    open func navigationBar(_ navigationBar: UINavigationBar, shouldPop item: UINavigationItem) -> Bool {
-        viewControllers.last?.viewWillPop(using: .backBarButton)
-        return true
     }
 }
 

@@ -164,7 +164,7 @@ extension UIColor {
         return UIColor(
             red: r.clamped(to: 0...255),
             green: g.clamped(to: 0...255),
-            blue:  b.clamped(to: 0...255),
+            blue: b.clamped(to: 0...255),
             alpha: a
         )
     }
