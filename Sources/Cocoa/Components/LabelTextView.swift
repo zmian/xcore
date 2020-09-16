@@ -153,6 +153,10 @@ extension LabelTextView {
     /// it was given when created.
     open override var accessibilityTraits: UIAccessibilityTraits {
         get {
+            guard UIAccessibility.isVoiceOverRunning else {
+                return super.accessibilityTraits == .link ? .button : super.accessibilityTraits
+            }
+
             let isTitle = font?.textStyle?.isTitle ?? false
             return isTitle ? .header : super.accessibilityTraits
         }
