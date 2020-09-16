@@ -90,8 +90,7 @@ open class LabelTextView: UITextView {
         isAccessibilityRotorHintEnabled = true
         #endif
         isAccessibilityElement = true
-        // Disable line selection when view is
-        // tapped by user.
+        // Disable line selection when view is tapped by user.
         accessibilityTraits = .staticText
         dataDetectorTypes = .all
         textContainerInset = .zero
