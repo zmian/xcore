@@ -6,25 +6,73 @@
 
 import UIKit
 
+// MARK: - Handlers
+
+extension LabelTextView {
+    /// - Parameters:
+    ///     - url: The URL to be processed.
+    ///     - text: The text associated with the text view instance.
+    public typealias URLTapBlock = (_ url: URL, _ text: String) -> Void
+
+    /// - Parameters:
+    ///     - url: The URL to be processed.
+    ///     - characterRange: The character range containing the URL.
+    ///     - attributedText: The text associated with the text view instance.
+    public typealias URLInteractionBlock = (
+        _ url: URL,
+        _ characterRange: NSRange,
+        _ attributedText: NSAttributedString
+    ) -> Bool
+
+    /// A block indicating if the user interaction with the given URL in the given
+    /// range of text is allowed.
+    ///
+    /// This method is called on only the first interaction with the URL link. For
+    /// example, this method is called when the user wants their first interaction
+    /// with a URL to display a list of actions they can take; if the user chooses
+    /// an open action from the list, this method is not called, because “open”
+    /// represents the second interaction with the same URL.
+    ///
+    /// # Important
+    /// Links in text views are interactive only if the text view is selectable but
+    /// non-editable. That is, if the value of the `UITextView.isSelectable`
+    /// property is `true` and the `isEditable` property is `false`.
+    ///
+    /// - Parameter callback: A block to invoke whenever user interacts with a link.
+    public func canInteractWithUrl(_ callback: URLInteractionBlock? = nil) {
+        self.canInteractWithUrl = callback
+    }
+
+    /// A convenience method to handle url taps.
+    ///
+    /// - Note: This method implements `canInteractWithUrl(_:)`, thus, if you
+    /// implement both the last implementation overrides existing ones.
+    public func didTapUrl(_ callback: URLTapBlock? = nil) {
+        canInteractWithUrl { url, range, attributedText in
+            guard let callback = callback else {
+                return true
+            }
+
+            callback(
+                url,
+                attributedText.attributedSubstring(from: range).string
+            )
+
+            return false
+        }
+    }
+}
+
+// MARK: - LabelTextView
+
 /// A `UITextView` subclass to be drop in replacement for `UILabel` for few
 /// extra properties like tappable urls while maintaining `UILabel` auto-sizing
 /// behavior.
 open class LabelTextView: UITextView {
-    public typealias URLTapActionBlock = (_ url: URL, _ text: String) -> Void
+    private var canInteractWithUrl: URLInteractionBlock?
 
     /// The default value is `false`.
     open var isSelectionEnabled = false
-
-    /// The default value is `true`.
-    open var isEmailLinkTapEnabled = true
-
-    /// The default value is ["http", "https"].
-    open var supportedUrlSchemes: [URL.Scheme] = [.http, .https]
-
-    private var didTapUrl: URLTapActionBlock?
-    open func didTapUrl(_ callback: URLTapActionBlock? = nil) {
-        self.didTapUrl = callback
-    }
 
     public override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
@@ -53,7 +101,7 @@ open class LabelTextView: UITextView {
         backgroundColor = .clear
         textAlignment = .left
         resistsSizeChange(axis: .vertical)
-        didTapUrl = Self.defaultDidTapUrlHandler
+        didTapUrl(Self.defaultDidTapUrlHandler)
     }
 
     open override var canBecomeFirstResponder: Bool {
@@ -62,41 +110,25 @@ open class LabelTextView: UITextView {
 }
 
 extension LabelTextView: UITextViewDelegate {
-    open func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        guard interaction == .invokeDefaultAction else {
+    open func textView(
+        _ textView: UITextView,
+        shouldInteractWith URL: URL,
+        in characterRange: NSRange,
+        interaction: UITextItemInteraction
+    ) -> Bool {
+        guard
+            interaction == .invokeDefaultAction,
+            let attributedText = attributedText
+        else {
             return false
         }
 
-        return handleUrlTapped(url: URL, characterRange: characterRange)
-    }
-
-    private func handleUrlTapped(url: URL, characterRange: NSRange) -> Bool {
-        if supportedUrlSchemes.contains(url.schemeType) {
-            notifyUrlTapped(url: url, characterRange: characterRange)
-            return false
-        }
-
-        if url.schemeType == .email {
-            return isEmailLinkTapEnabled
-        }
-
-        return true
-    }
-
-    private func notifyUrlTapped(url: URL, characterRange: NSRange) {
-        guard didTapUrl != nil else {
-            return
-        }
-
-        didTapUrl?(
-            url,
-            attributedText?.attributedSubstring(from: characterRange).string ?? ""
-        )
+        return canInteractWithUrl?(URL, characterRange, attributedText) ?? true
     }
 }
 
 extension LabelTextView {
-    public static var defaultDidTapUrlHandler: URLTapActionBlock?
+    public static var defaultDidTapUrlHandler: URLTapBlock?
 }
 
 // MARK: - UIAppearance Properties
@@ -154,6 +186,7 @@ extension LabelTextView {
     open override var accessibilityTraits: UIAccessibilityTraits {
         get {
             guard UIAccessibility.isVoiceOverRunning else {
+                // If the "show numbers" feature is one we want to show the label.
                 return super.accessibilityTraits == .link ? .button : super.accessibilityTraits
             }
 
