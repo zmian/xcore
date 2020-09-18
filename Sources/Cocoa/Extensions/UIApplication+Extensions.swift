@@ -140,6 +140,7 @@ extension UIApplication {
     /// Returns the app's first currently connected window scene.
     public var firstWindowScene: UIWindowScene? {
         connectedScenes
+            .lazy
             .filter { $0.activationState == .foregroundActive }
             .compactMap { $0 as? UIWindowScene }
             .first
