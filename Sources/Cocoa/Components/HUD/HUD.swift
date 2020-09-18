@@ -50,7 +50,12 @@ open class HUD: Appliable {
     }
 
     public init() {
-        window = UIWindow(frame: UIScreen.main.bounds)
+        if let windowScene = UIApplication.sharedOrNil?.firstWindowScene {
+            window = UIWindow(windowScene: windowScene)
+        } else {
+            window = UIWindow(frame: UIScreen.main.bounds)
+        }
+
         commonInit()
     }
 
