@@ -98,8 +98,8 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         didMoveItem = callback
     }
 
-    private var editActionsForCell: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> [UITableViewRowAction]?)?
-    open func editActionsForCell(_ callback: @escaping (_ indexPath: IndexPath, _ item: DynamicTableModel) -> [UITableViewRowAction]?) {
+    private var editActionsForCell: ((_ indexPath: IndexPath, _ item: DynamicTableModel) -> [UIContextualAction]?)?
+    open func editActionsForCell(_ callback: @escaping (_ indexPath: IndexPath, _ item: DynamicTableModel) -> [UIContextualAction]?) {
         editActionsForCell = callback
     }
 
@@ -344,24 +344,30 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         removeItems([indexPath])
     }
 
-    open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        var actions: [UITableViewRowAction] = []
+    open func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        var actions: [UIContextualAction] = []
 
         if allowsDeletion {
-            let delete = UITableViewRowAction(style: .default, title: rowActionDeleteTitle) { [weak self] action, index in
+            let delete = UIContextualAction(
+                style: .destructive,
+                title: rowActionDeleteTitle
+            ) { [weak self] action, view, completionHandler in
                 self?.removeItems([indexPath])
+                completionHandler(true)
             }
-            actions.append(delete)
+
             if let rowActionDeleteColor = rowActionDeleteColor {
                 delete.backgroundColor = rowActionDeleteColor
             }
+
+            actions.append(delete)
         }
 
         if let customActions = editActionsForCell?(indexPath, sections[indexPath]) {
             actions += customActions
         }
 
-        return actions
+        return actions.isEmpty ? nil : UISwipeActionsConfiguration(actions: actions)
     }
 
     // MARK: - Helpers
