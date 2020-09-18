@@ -78,7 +78,7 @@ extension Interstitial {
         override func hide(delay delayDuration: TimeInterval = 0, animated: Bool = true, _ completion: (() -> Void)? = nil) {
             isPresenting = false
             super.hide(delay: delayDuration, animated: animated) { [weak self] in
-                self?._navigationController?.removeFromContainerViewController()
+                self?._navigationController?.removeFromContainerView()
                 self?._navigationController = nil
                 completion?()
             }

@@ -33,9 +33,7 @@ import UIKit
         layer.cornerRadius = radius
         layer.maskedCorners = mask
         layer.masksToBounds = radius > 0
-        if #available(iOS 13.0, *) {
-            layer.cornerCurve = .continuous
-        }
+        layer.cornerCurve = .continuous
     }
 
     // MARK: - Fade Content

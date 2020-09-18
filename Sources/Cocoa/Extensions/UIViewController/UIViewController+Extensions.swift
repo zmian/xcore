@@ -35,7 +35,7 @@ extension UIViewController {
     }
 
     /// Removes the view controller from its parent.
-    open func removeFromContainerViewController() {
+    open func removeFromContainerView() {
         guard parent != nil else {
             return
         }
@@ -100,63 +100,12 @@ extension UIViewController {
         view.safeAreaInsets.bottom > 0
     }
 
-    /// Only `true` iff `isDeviceLandscape` and `isInterfaceLandscape` both are
-    /// `true`; otherwise, `false`.
-    public var isLandscape: Bool {
-        isDeviceLandscape && isInterfaceLandscape
-    }
-
-    public var isInterfaceLandscape: Bool {
-        UIApplication.sharedOrNil?.statusBarOrientation.isLandscape ?? false
-    }
-
-    /// Returns the physical orientation of the device.
-    public var isDeviceLandscape: Bool {
-        UIDevice.current.orientation.isLandscape
-    }
-
     /// This value represents the physical orientation of the device and may be
     /// different from the current orientation of your application’s user interface.
     ///
     /// - seealso: `UIDeviceOrientation` for descriptions of the possible values.
     public var deviceOrientation: UIDeviceOrientation {
         UIDevice.current.orientation
-    }
-
-    /// A function to display view controller over current view controller as modal.
-    open func presentViewControllerAsModal(_ viewControllerToPresent: UIViewController, animated: Bool, completion: (() -> Void)? = nil) {
-        let orginalStyle = viewControllerToPresent.modalPresentationStyle
-        if orginalStyle != .overCurrentContext {
-            viewControllerToPresent.modalPresentationStyle = .overCurrentContext
-        }
-
-        present(viewControllerToPresent, animated: animated, completion: completion)
-
-        if orginalStyle != .overCurrentContext {
-            viewControllerToPresent.modalPresentationStyle = orginalStyle
-        }
-    }
-
-    /// Presents a view controller modally using a custom transition.
-    ///
-    /// - Parameters:
-    ///   - viewControllerToPresent: The view controller to display over the current
-    ///                              view controller's content.
-    ///   - transitioningDelegate: The delegate object that provides transition
-    ///                            animator and interactive controller objects.
-    ///   - animated: Pass `true` to animate the presentation; otherwise, pass
-    ///               `false`.
-    ///   - completion: The block to execute after the presentation finishes.
-    open func presentViewControllerWithTransition(
-        _ viewControllerToPresent: UIViewController,
-        modalPresentationStyle: UIModalPresentationStyle = .custom,
-        transitioningDelegate: UIViewControllerTransitioningDelegate,
-        animated: Bool = true,
-        completion: (() -> Void)? = nil
-    ) {
-        viewControllerToPresent.transitioningDelegate = transitioningDelegate
-        viewControllerToPresent.modalPresentationStyle = modalPresentationStyle
-        present(viewControllerToPresent, animated: animated, completion: completion)
     }
 }
 
@@ -176,7 +125,7 @@ extension UIViewController {
     /// `UINavigationController`.
     private var canBeEmbeddedInNavigationController: Bool {
         switch self {
-            case is NavigationController,
+            case is UINavigationController,
                  is UITabBarController:
                 return false
             default:
