@@ -132,7 +132,7 @@ extension Theme {
         tintColor: .systemTint,
         separatorColor: .lightGray,
         borderColor: .lightGray,
-        toggleColor: .appleGreen,
+        toggleColor: .systemGreen,
         linkColor: .systemTint,
         textColor: .lightText,
         textColorSecondary: .lightGray,

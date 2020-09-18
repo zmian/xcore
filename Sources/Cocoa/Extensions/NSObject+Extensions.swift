@@ -13,6 +13,14 @@ extension NSObject {
 }
 
 extension NSObject {
+    func synchronized<T>(_ work: () throws -> T) rethrows -> T {
+        objc_sync_enter(self)
+        defer { objc_sync_exit(self) }
+        return try work()
+    }
+}
+
+extension NSObject {
     /// Returns the value for the property identified by a given key.
     ///
     /// The search pattern that `valueForKey:` uses to find the correct value
@@ -57,7 +65,7 @@ extension NSObject {
     ///            `aClass` is a Class object of the same type; otherwise, `.typeOf`
     ///            does direct check to ensure `aClass` is the same object and not a
     ///            subclass.
-    public func isType(of aClass: Swift.AnyClass, comparison: LookupComparison) -> Bool {
+    func isType(of aClass: Swift.AnyClass, comparison: LookupComparison) -> Bool {
         switch comparison {
             case .kindOf:
                 return isKind(of: aClass)
@@ -71,7 +79,7 @@ extension NSObject {
 
 extension NSObject {
     /// Returns a dictionary of the properties declared by the object.
-    public func propertyList() -> [String: String] {
+    func propertyList() -> [String: String] {
         var count: UInt32 = 0
 
         guard let properties = class_copyPropertyList(object_getClass(self), &count) else {

@@ -127,7 +127,7 @@ extension Theme {
             $0.accessoryTintColor = current.tintColor
             $0.checkboxOffTintColor = current.separatorColor
             $0.separatorColor = current.separatorColor
-            $0.rowActionDeleteColor = .appleRed
+            $0.rowActionDeleteColor = .systemRed
             $0.isEmptyCellsHidden = true
         }
 
