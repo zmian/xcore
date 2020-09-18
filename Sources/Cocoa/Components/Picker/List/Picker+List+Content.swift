@@ -25,7 +25,7 @@ extension Picker.List {
             self.style = .plain
         }
 
-        @available(*, unavailable, message: "Use init(model:)")
+        @available(*, unavailable)
         public required init?(coder aDecoder: NSCoder) {
             fatalError()
         }

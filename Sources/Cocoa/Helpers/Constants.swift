@@ -138,7 +138,7 @@ public enum AppConstants {
     }
 
     public static var navBarHeight: CGFloat {
-        if UIDevice.current.modelType.family == .pad, #available(iOS 12.0, *) {
+        if UIDevice.current.modelType.family == .pad {
             return 50
         }
 
