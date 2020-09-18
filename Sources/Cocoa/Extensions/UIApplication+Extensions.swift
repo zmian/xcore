@@ -132,11 +132,16 @@ extension UIApplication {
 
     /// A boolean property indicating the app's first key window.
     public var firstKeyWindow: UIWindow? {
+        firstWindowScene?
+            .windows
+            .first(\.isKeyWindow)
+    }
+
+    /// Returns the app's first currently connected window scene.
+    public var firstWindowScene: UIWindowScene? {
         connectedScenes
             .filter { $0.activationState == .foregroundActive }
             .compactMap { $0 as? UIWindowScene }
-            .first?
-            .windows
-            .first(\.isKeyWindow)
+            .first
     }
 }
