@@ -111,7 +111,7 @@ extension Configuration where Type: UIButton {
     public static var destructive: Self {
         let id: Identifier = .destructive
         return callout.extend(id: id) {
-            $0.backgroundColor = id.backgroundColor(or: .appleRed)
+            $0.backgroundColor = id.backgroundColor(or: .systemRed)
             $0.disabledBackgroundColor = id.disabledBackgroundColor(button: $0)
             configure($0, id)
         }

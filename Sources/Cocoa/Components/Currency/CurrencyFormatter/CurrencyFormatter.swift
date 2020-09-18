@@ -208,7 +208,7 @@ extension CurrencyFormatter {
 
         let needsDecimalConversion = shouldCleanString && allowDecimal
 
-        return synchronized(formatter) {
+        return formatter.synchronized {
             formatter.isDecimalEnabled = allowDecimal
 
             guard

@@ -69,7 +69,7 @@ extension UIApplication {
 // MARK: - TopViewController
 
 extension UIApplication {
-    open class func topViewController(_ base: UIViewController? = UIApplication.sharedOrNil?.firstKeyWindow?.rootViewController) -> UIViewController? {
+    open class func topViewController(_ base: UIViewController? = UIApplication.sharedOrNil?.firstSceneKeyWindow?.rootViewController) -> UIViewController? {
         if let nav = base as? UINavigationController {
             return topViewController(nav.visibleViewController)
         }
@@ -130,14 +130,25 @@ extension UIApplication {
         windows.reversed().first(keyPaths)
     }
 
-    /// A boolean property indicating the app's first key window.
-    public var firstKeyWindow: UIWindow? {
+    /// Iterates through app's first currently active scene's `windows` from top to
+    /// bottom and returns window matching the given `keyPaths`.
+    ///
+    /// - Returns: Returns an optional window object based on attributes options.
+    /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
+    public func sceneWindow(_ keyPaths: KeyPath<UIWindow, Bool>...) -> UIWindow? {
         firstWindowScene?
             .windows
-            .first(\.isKeyWindow)
+            .lazy
+            .reversed()
+            .first(keyPaths)
     }
 
-    /// Returns the app's first currently connected window scene.
+    /// Returns the app's first currently active scene's first key window.
+    public var firstSceneKeyWindow: UIWindow? {
+        sceneWindow(\.isKeyWindow)
+    }
+
+    /// Returns the app's first currently active window scene.
     public var firstWindowScene: UIWindowScene? {
         connectedScenes
             .lazy

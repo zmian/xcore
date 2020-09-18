@@ -40,7 +40,7 @@ extension ModallyPresentable where Self: UIViewController {
     public func present(presentingViewController: UIViewController? = nil) {
         guard
             let presentingViewController = presentingViewController ??
-                UIApplication.sharedOrNil?.firstKeyWindow?.topViewController ??
+                UIApplication.sharedOrNil?.firstSceneKeyWindow?.topViewController ??
                 UIApplication.sharedOrNil?.delegate?.window??.topViewController
         else {
             return
