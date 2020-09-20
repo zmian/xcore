@@ -103,7 +103,7 @@ extension NSAttributedString: StringRepresentable {
 
 // MARK: - TextAttributedTextRepresentable
 
-public protocol TextAttributedTextRepresentable: class {
+public protocol TextAttributedTextRepresentable: AnyObject {
     var text: String? { get set }
     var attributedText: NSAttributedString? { get set }
     func setText(_ string: StringRepresentable?)
