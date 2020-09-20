@@ -6,7 +6,7 @@
 
 import UIKit
 
-public protocol RouteHandler: class {
+public protocol RouteHandler: AnyObject {
     func route(to route: Router.Route<Self>, options: Router.Route<Self>.Options)
 }
 

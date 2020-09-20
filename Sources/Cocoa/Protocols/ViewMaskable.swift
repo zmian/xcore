@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-public protocol ViewMaskable: class {
+public protocol ViewMaskable: AnyObject {
     static func add(to superview: UIView) -> Self
     func dismiss(_ completion: (() -> Void)?)
     var preferredNavigationBarTintColor: UIColor { get }
