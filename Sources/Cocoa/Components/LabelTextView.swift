@@ -95,7 +95,7 @@ open class LabelTextView: UITextView {
         dataDetectorTypes = .all
         textContainerInset = .zero
         textContainer.lineFragmentPadding = 0
-        isEditable = false
+        isEditable = true
         isScrollEnabled = false
         backgroundColor = .clear
         textAlignment = .left
@@ -106,9 +106,22 @@ open class LabelTextView: UITextView {
     open override var canBecomeFirstResponder: Bool {
         isSelectionEnabled
     }
+
+    // On iOS 13, multiple links with rotor doesn't work. This workaround make them
+    // work by enabling `isEditable` to `true` when voice over is active and
+    // disabling `textViewShouldBeginEditing(_:)` to return `false`.
+    //
+    // `_userCanEdit` indicates the `true` intent of the edit function.
+    //
+    /// If you need to enable editing then set this to `true`.
+    public var shouldBeginEditing = false
 }
 
 extension LabelTextView: UITextViewDelegate {
+    public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        shouldBeginEditing
+    }
+
     open func textView(
         _ textView: UITextView,
         shouldInteractWith URL: URL,
