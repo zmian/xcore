@@ -103,6 +103,11 @@ open class LabelTextView: UITextView {
         didTapUrl(Self.defaultDidTapUrlHandler)
     }
 
+    public var didActivateAccessibleElement: (() -> Void)?
+    public func didActivateAccessibleElement(_ callback: @escaping () -> Void) {
+        didActivateAccessibleElement = callback
+    }
+
     open override var canBecomeFirstResponder: Bool {
         isSelectionEnabled
     }
@@ -206,5 +211,20 @@ extension LabelTextView {
             return isTitle ? .header : super.accessibilityTraits
         }
         set { super.accessibilityTraits = newValue }
+    }
+
+    open override func accessibilityActivate() -> Bool {
+        // If voice control is on, selecting the corresponding number
+        // will perform custom accessibility action
+        guard
+            !UIAccessibility.isVoiceOverRunning,
+            didActivateAccessibleElement != nil
+        else {
+            super.accessibilityActivate()
+            return true
+        }
+
+        didActivateAccessibleElement?()
+        return true
     }
 }
