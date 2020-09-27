@@ -6,7 +6,7 @@
 
 import Foundation
 
-struct EnvironmentArgumentsFeatureFlagProvider: FeatureFlagProvider {
+struct ProcessInfoEnvironmentVariablesFeatureFlagProvider: FeatureFlagProvider {
     func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value? {
         let argument = ProcessInfo.Argument(rawValue: key.rawValue)
 

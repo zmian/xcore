@@ -10,7 +10,7 @@ open class DynamicTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     private var allowsReordering: Bool { cellOptions.contains(.move) }
     private var allowsDeletion: Bool { cellOptions.contains(.delete) }
     private let emptyTableFooterView = UIView()
-    open var sections: [Section<DynamicTableModel>] = []
+    open var sections: [ListSection<DynamicTableModel>] = []
     open var cellOptions: CellOptions = .none
 
     /// A boolean value to determine whether the empty table view cells are hidden. The default value is `false`.
@@ -486,7 +486,7 @@ extension DynamicTableView {
     /// A convenience property to create a single section table view.
     open var items: [DynamicTableModel] {
         get { sections.first?.items ?? [] }
-        set { sections = [Section(items: newValue)] }
+        set { sections = [ListSection(items: newValue)] }
     }
 
     /// A convenience method to access `UISwitch` at the specified index path.

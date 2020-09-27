@@ -12,15 +12,15 @@ import Foundation
 ///
 /// ```swift
 /// enum Arguments {
-///     @EnvironmentArgument("referral")
+///     @ProcessInfoEnvironmentVariable("referral")
 ///     static var referral: String?
 ///
-///     @EnvironmentArgument("skipOnboarding", default: false)
+///     @ProcessInfoEnvironmentVariable("skipOnboarding", default: false)
 ///     static var skipOnboarding: Bool
 /// }
 /// ```
 @propertyWrapper
-public struct EnvironmentArgument<Value> {
+public struct ProcessInfoEnvironmentVariable<Value> {
     private let argument: ProcessInfo.Argument
     private let defaultValue: (() -> Value)?
 
@@ -35,7 +35,7 @@ public struct EnvironmentArgument<Value> {
     }
 }
 
-extension EnvironmentArgument where Value: ExpressibleByNilLiteral {
+extension ProcessInfoEnvironmentVariable where Value: ExpressibleByNilLiteral {
     public init(_ argument: ProcessInfo.Argument) {
         self.argument = argument
         self.defaultValue = nil

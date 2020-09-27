@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct Section<Element>: RangeReplaceableCollection, MutableCollection, ExpressibleByArrayLiteral {
+public struct ListSection<Element>: RangeReplaceableCollection, MutableCollection, ExpressibleByArrayLiteral {
     public var title: String?
     public var detail: String?
     public var items: [Element]
@@ -27,9 +27,12 @@ public struct Section<Element>: RangeReplaceableCollection, MutableCollection, E
         self.items = items
     }
 
-    public let startIndex = 0
+    public var startIndex: Int {
+        items.startIndex
+    }
+
     public var endIndex: Int {
-        items.count
+        items.endIndex
     }
 
     public subscript(index: Int) -> Element {

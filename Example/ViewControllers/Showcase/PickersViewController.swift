@@ -12,11 +12,7 @@ final class PickersViewController: DynamicTableViewController {
 
         title = "Pickers"
 
-        tableView.sections = [Section(items: items())]
-
-        tableView.configureCell { indexPath, cell, item in
-            cell.highlightedBackgroundColor = .appHighlightedBackground
-        }
+        tableView.sections = [.init(items: items())]
     }
 
     private func items() -> [DynamicTableModel] {
@@ -38,7 +34,7 @@ final class PickersViewController: DynamicTableViewController {
                     $0.view.backgroundColor = .clear
                 }
                 vc.tableView.sections = [
-                    Section(items: [
+                    .init(items: [
                         DynamicTableModel(title: "Option 1", subtitle: "FeedViewController demonstration") { _, _ in
                             let model = ExamplePickerListModel()
                             let list = Picker.List(model: model).apply {

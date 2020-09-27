@@ -8,14 +8,14 @@ import UIKit
 
 final class FeedTextViewCell: XCCollectionViewCell {
     private var titleLabel = UILabel().apply {
-        $0.font = .systemFont(size: 40)
+        $0.font = .systemFont(ofSize: 40)
         $0.numberOfLines = 1
         $0.textAlignment = .center
         $0.isMarkupEnabled = false
     }
 
     private var subtitleLabel = UILabel().apply {
-        $0.font = .systemFont(size: 20)
+        $0.font = .systemFont(ofSize: 20)
         $0.numberOfLines = 0
         $0.isMarkupEnabled = false
     }

@@ -93,5 +93,3 @@ extension ButtonsView {
         }
     }
 }
-
-private typealias Section = SwiftUI.Section

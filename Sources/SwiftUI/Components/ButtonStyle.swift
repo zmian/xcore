@@ -9,9 +9,9 @@ import SwiftUI
 // MARK: - Fill
 
 public struct FillButtonStyle: ButtonStyle {
-    @SwiftUI.Environment(\.defaultMinButtonHeight) var minHeight
-    @SwiftUI.Environment(\.defaultButtonCornerRadius) var cornerRadius
-    @SwiftUI.Environment(\.theme) var theme
+    @Environment(\.defaultMinButtonHeight) var minHeight
+    @Environment(\.defaultButtonCornerRadius) var cornerRadius
+    @Environment(\.theme) var theme
 
     public init() { }
 
@@ -31,9 +31,9 @@ public struct FillButtonStyle: ButtonStyle {
 // MARK: - Outline
 
 public struct OutlineButtonStyle: ButtonStyle {
-    @SwiftUI.Environment(\.defaultMinButtonHeight) var minHeight
-    @SwiftUI.Environment(\.defaultButtonCornerRadius) var cornerRadius
-    @SwiftUI.Environment(\.theme) var theme
+    @Environment(\.defaultMinButtonHeight) var minHeight
+    @Environment(\.defaultButtonCornerRadius) var cornerRadius
+    @Environment(\.theme) var theme
 
     public init() { }
 
@@ -55,8 +55,8 @@ public struct OutlineButtonStyle: ButtonStyle {
 // MARK: - Pill
 
 public struct PillButtonStyle: ButtonStyle {
-    @SwiftUI.Environment(\.defaultMinButtonHeight) var minHeight
-    @SwiftUI.Environment(\.theme) var theme
+    @Environment(\.defaultMinButtonHeight) var minHeight
+    @Environment(\.theme) var theme
 
     public init() { }
 
