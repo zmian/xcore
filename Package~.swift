@@ -8,7 +8,7 @@ let package = Package(
         .library(name: "Xcore", targets: ["Xcore"])
     ],
     dependencies: [
-        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.9.1")
+        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.9.1"),
     ],
     targets: [
         .target(name: "Xcore", path: "Sources"),

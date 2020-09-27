@@ -66,6 +66,7 @@
 		68BB29AA2469C96600F4C8CC /* MoneyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BB29A92469C96600F4C8CC /* MoneyTests.swift */; };
 		68BCA2DD2304B2B000424B85 /* SeparatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BCA2DC2304B2B000424B85 /* SeparatorViewController.swift */; };
 		68CA631F224C76760012DF31 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA631E224C76750012DF31 /* StringTests.swift */; };
+		68E852D7252102DA00B26CC8 /* ButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E852D6252102DA00B26CC8 /* ButtonsView.swift */; };
 		7118C4282326B93100821180 /* ExamplePickerListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7118C4272326B93100821180 /* ExamplePickerListModel.swift */; };
 		F2810725244D36A300EB23C0 /* DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2810724244D36A300EB23C0 /* DateTests.swift */; };
 /* End PBXBuildFile section */
@@ -155,6 +156,7 @@
 		68BB29A92469C96600F4C8CC /* MoneyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyTests.swift; sourceTree = "<group>"; };
 		68BCA2DC2304B2B000424B85 /* SeparatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorViewController.swift; sourceTree = "<group>"; };
 		68CA631E224C76750012DF31 /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
+		68E852D6252102DA00B26CC8 /* ButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsView.swift; sourceTree = "<group>"; };
 		7118C4272326B93100821180 /* ExamplePickerListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamplePickerListModel.swift; sourceTree = "<group>"; };
 		8D64F6471089E2220DD070CC /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
 		989B05E63B9D27BBB2D81B2C /* Pods-UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UITests/Pods-UITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 			children = (
 				68931EED2501C23800CC7253 /* RootView.swift */,
 				68931EF02501C26A00CC7253 /* Carousel.swift */,
+				68E852D6252102DA00B26CC8 /* ButtonsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -739,6 +742,7 @@
 				684B1EA1224C5218009F6197 /* App.swift in Sources */,
 				7118C4282326B93100821180 /* ExamplePickerListModel.swift in Sources */,
 				2F654D02241ABD1300499318 /* ExampleLabelInsetViewController.swift in Sources */,
+				68E852D7252102DA00B26CC8 /* ButtonsView.swift in Sources */,
 				2F9B4C7F22A19B0E00FB644E /* FeedViewController.swift in Sources */,
 				2F9B4C8222A19BB600FB644E /* FeedDataSource.swift in Sources */,
 				68931EEF2501C23800CC7253 /* RootView.swift in Sources */,

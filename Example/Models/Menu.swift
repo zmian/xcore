@@ -34,6 +34,7 @@ extension Menu: CaseIterable {
         dynamicTableView,
         separators,
         pickers,
+        buttonsUIKit,
         buttons,
         textViewController,
         feedViewController,
@@ -63,9 +64,16 @@ extension Menu {
         content: WrapUIViewController<PickersViewController>()
     )
 
+    static let buttonsUIKit = Self(
+        title: "Buttons",
+        subtitle: "UIKit",
+        content: WrapUIViewController<ButtonsViewController>()
+    )
+
     static let buttons = Self(
         title: "Buttons",
-        content: WrapUIViewController<ButtonsViewController>()
+        subtitle: "SwiftUI",
+        content: ButtonsView()
     )
 
     static let textViewController = Self(
