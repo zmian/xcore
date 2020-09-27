@@ -24,6 +24,7 @@ final class ButtonsViewController: UIViewController {
         }
 
         addCalloutButton()
+        addCaretButton()
         addPlainButton()
         addSystemButton()
     }
@@ -34,6 +35,17 @@ final class ButtonsViewController: UIViewController {
             $0.text = "Hello World"
             $0.action { _ in
                 print("callout button tapped")
+            }
+        }
+
+        stackView.addArrangedSubview(button)
+    }
+
+    private func addCaretButton() {
+        let button = UIButton().apply {
+            $0.configuration = .caret(in: .pill, text: "Hello World")
+            $0.action { _ in
+                print("caret button tapped")
             }
         }
 
