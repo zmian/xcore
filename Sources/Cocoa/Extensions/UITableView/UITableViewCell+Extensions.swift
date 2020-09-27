@@ -16,7 +16,7 @@ extension UITableViewCell {
 
     /// A boolean property to provide visual feedback when the cell is highlighted.
     /// The default value is `.none`.
-    open var highlightedAnimation: HighlightedAnimationOptions {
+    var highlightedAnimation: HighlightedAnimationOptions {
         get { associatedObject(&AssociatedKey.highlightedAnimation, default: .none) }
         set { setAssociatedObject(&AssociatedKey.highlightedAnimation, value: newValue) }
     }
@@ -26,7 +26,7 @@ extension UITableViewCell {
 
 extension UITableViewCell {
     /// The background color for the highlighted state.
-    @objc open dynamic var highlightedBackgroundColor: UIColor? {
+    @objc dynamic var highlightedBackgroundColor: UIColor? {
         get { backgroundColor(for: .highlighted) }
         set { setBackgroundColor(newValue, for: .highlighted) }
     }
@@ -39,13 +39,13 @@ extension UITableViewCell {
 
     /// The view to which the `highlightedBackgroundColor` is applied.
     /// The default value is `self`.
-    @objc open var highlightedBackgroundColorView: UIView {
+    @objc var highlightedBackgroundColorView: UIView {
         self
     }
 
     /// The view to which the `highlightedAnimation` is applied.
     /// The default value is `contentView`.
-    @objc open var highlightedAnimationView: UIView {
+    @objc var highlightedAnimationView: UIView {
         contentView
     }
 }
