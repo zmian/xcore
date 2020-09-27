@@ -23,21 +23,11 @@ extension UITableView {
     }
 
     private func register<T: UITableViewCell>(_ cell: T.Type) {
-        guard let nib = UINib(named: String(describing: cell), bundle: Bundle(for: T.self)) else {
-            register(cell, forCellReuseIdentifier: T.reuseIdentifier)
-            return
-        }
-
-        register(nib, forCellReuseIdentifier: T.reuseIdentifier)
+        register(cell, forCellReuseIdentifier: T.reuseIdentifier)
     }
 
     private func registerHeaderFooterView<T: UITableViewHeaderFooterView>(_ view: T.Type) {
-        guard let nib = UINib(named: String(describing: view), bundle: Bundle(for: T.self)) else {
-            register(view, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
-            return
-        }
-
-        register(nib, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
+        register(view, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
     }
 
     private func registerIfNeeded<T: UITableViewCell>(_ cell: T.Type) {
@@ -58,7 +48,7 @@ extension UITableView {
     ///
     /// - Parameter indexPath: An index number that identifies a section of the table.
     /// - Returns: The header view associated with the section, or `nil` if the section does not have a header view.
-    public func headerView<T: UITableViewHeaderFooterView>(forSection section: Int) -> T? {
+    func headerView<T: UITableViewHeaderFooterView>(forSection section: Int) -> T? {
         headerView(forSection: section) as? T
     }
 
@@ -66,14 +56,14 @@ extension UITableView {
     ///
     /// - Parameter indexPath: An index number that identifies a section of the table.
     /// - Returns: The header view associated with the section, or `nil` if the section does not have a header view.
-    public func footerView<T: UITableViewHeaderFooterView>(forSection section: Int) -> T? {
+    func footerView<T: UITableViewHeaderFooterView>(forSection section: Int) -> T? {
         footerView(forSection: section) as? T
     }
 
     /// Returns a reusable header or footer view instance for the class inferred by the return type.
     ///
     /// - Returns: A reusable `UITableViewHeaderFooterView` instance.
-    public func dequeueReusableHeaderFooterView<T: UITableViewHeaderFooterView>() -> T {
+    func dequeueReusableHeaderFooterView<T: UITableViewHeaderFooterView>() -> T {
         registerHeaderFooterViewIfNeeded(T.self)
 
         guard let view = dequeueReusableHeaderFooterView(withIdentifier: T.reuseIdentifier) as? T else {
@@ -87,7 +77,7 @@ extension UITableView {
     ///
     /// - Parameter indexPath: The index path specifying the location of the cell in the table view.
     /// - Returns: A reusable `UITableViewCell` instance.
-    public func dequeueReusableCell<T: UITableViewCell>(for indexPath: IndexPath) -> T {
+    func dequeueReusableCell<T: UITableViewCell>(for indexPath: IndexPath) -> T {
         registerIfNeeded(T.self)
 
         guard let cell = dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
