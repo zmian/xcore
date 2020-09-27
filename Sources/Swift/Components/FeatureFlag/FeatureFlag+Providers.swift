@@ -11,7 +11,7 @@ import Foundation
 extension FeatureFlag {
     /// The registered list of providers.
     private static var provider = CompositeFeatureFlagProvider([
-        EnvironmentArgumentsFeatureFlagProvider()
+        ProcessInfoEnvironmentVariablesFeatureFlagProvider()
     ])
 
     /// Register the given provider if it's not already registered.

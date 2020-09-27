@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct Environment: UserInfoContainer, MutableAppliable {
+public struct AppEnvironment: UserInfoContainer, MutableAppliable {
     public typealias Identifier = Xcore.Identifier<Self>
 
     /// A unique id for the environment.
@@ -31,7 +31,7 @@ public struct Environment: UserInfoContainer, MutableAppliable {
 
 // MARK: - Hashable
 
-extension Environment: Hashable {
+extension AppEnvironment: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -39,7 +39,7 @@ extension Environment: Hashable {
 
 // MARK: - Equatable
 
-extension Environment: Equatable {
+extension AppEnvironment: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
     }
@@ -47,7 +47,7 @@ extension Environment: Equatable {
 
 // MARK: - UserInfo
 
-extension UserInfoKey where Type == Environment {
+extension UserInfoKey where Type == AppEnvironment {
     /// The host name of the API.
     fileprivate static var apiHostName: Self { #function }
 
@@ -55,7 +55,7 @@ extension UserInfoKey where Type == Environment {
     fileprivate static var webHostName: Self { #function }
 }
 
-extension Environment {
+extension AppEnvironment {
     /// The host name of the API.
     public var apiHostName: String {
         get {

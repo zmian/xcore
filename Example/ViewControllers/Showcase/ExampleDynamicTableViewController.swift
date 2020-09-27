@@ -14,14 +14,14 @@ final class ExampleDynamicTableViewController: DynamicTableViewController {
         tableView.cellOptions = [.delete]
 
         tableView.sections = [
-            Section(
+            .init(
                 title: "Section 1",
                 detail: "Important notice about the footer can be displayed here.",
                 items: [
                     .init(title: "Hummingbird", subtitle: "Hummingbirds are New World birds that constitute the family Trochilidae. They are among the {#ff0000|smallest of birds}, most species measuring in the 7.5–13 cm range.")
                 ]
             ),
-            Section(
+            .init(
                 title: "Birds",
                 items: [
                     .init(title: "Hummingbird", subtitle: "Hummingbirds are New World birds that constitute the family Trochilidae. They are among the {#ff0000|smallest of birds}, most species measuring in the 7.5–13 cm range."),

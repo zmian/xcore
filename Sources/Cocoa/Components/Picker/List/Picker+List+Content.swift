@@ -115,7 +115,7 @@ extension Picker.List {
             let hasSections = !tableView.sections.isEmpty
 
             tableView.sections = [
-                Section(items: model.items)
+                ListSection(items: model.items)
             ]
 
             if hasSections {
