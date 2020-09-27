@@ -8,20 +8,12 @@ import Foundation
 import CryptoKit
 
 extension Data {
-    public func md5() -> String {
-        Insecure.MD5.hash(data: self).hexEncodedString()
-    }
-
     public func sha256() -> String {
         SHA256.hash(data: self).hexEncodedString()
     }
 }
 
 extension String {
-    public func md5() -> String? {
-        data(using: .utf8)?.md5()
-    }
-
     public func sha256() -> String? {
         data(using: .utf8)?.sha256()
     }

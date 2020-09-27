@@ -16,7 +16,7 @@ import ObjectiveC
 /// - Parameters:
 ///   - url:  The url to open.
 ///   - from: A view controller that wants to open the url.
-public func open(url: URL, from viewController: UIViewController) {
+func open(url: URL, from viewController: UIViewController) {
     let vc = SFSafariViewController(url: url)
     viewController.present(vc, animated: true, completion: nil)
 }
