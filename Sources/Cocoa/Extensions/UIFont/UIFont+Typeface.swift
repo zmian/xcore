@@ -7,18 +7,6 @@
 import UIKit
 
 extension UIFont {
-    /// Creates and returns a font object for the specified typeface.
-    public convenience init(
-        typeface: Typeface,
-        weight: Weight = .regular,
-        trait: Trait = .normal,
-        size: CGFloat
-    ) {
-        let name = typeface.name(weight: weight, trait: trait)
-        precondition(name != Typeface.systemFontId, "Please use .systemFont() method.")
-        self.init(name: name, size: size)!
-    }
-
     public struct Typeface {
         private let block: (Weight, Trait) -> String
 
@@ -38,18 +26,18 @@ extension UIFont.Typeface {
     static var systemFontId = "XCAppleSystemUIFont"
 
     public static var system: Self {
-        .init { (weight, trait) -> String in
+        .init { weight, trait in
             /// This is special name and it will be interpreted at the callsite.
             systemFontId
         }
     }
 
     public static var avenir: Self {
-        .init { (weight, trait) -> String in
+        .init { weight, trait in
             var name = "AvenirNext"
 
             switch weight {
-                case .ultraLight, .light, .thin:
+                case .ultraLight, .thin, .light:
                     name += "-UltraLight"
                 case .medium:
                     name += "-Medium"
@@ -73,7 +61,7 @@ extension UIFont.Typeface {
     }
 
     public static var helveticaNeue: Self {
-        .init { (weight, trait) -> String in
+        .init { weight, trait in
             var name = "HelveticaNeue"
             var spacer = ""
 
@@ -102,7 +90,7 @@ extension UIFont.Typeface {
     }
 
     public static func custom(_ namePrefix: String) -> Self {
-        .init { (weight, trait) -> String in
+        .init { weight, trait in
             var name = namePrefix
 
             switch weight {
