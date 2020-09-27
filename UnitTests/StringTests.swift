@@ -8,16 +8,6 @@ import XCTest
 @testable import Xcore
 
 final class StringTests: TestCase {
-    func testMD5Hash() {
-        let string1 = "Hello World"
-        XCTAssertEqual(string1.md5()!, "b10a8db164e0754105b7a99be72e3fe5")
-
-        let string2 = "hello world"
-        XCTAssertEqual(string2.md5()!, "5eb63bbbe01eeed093cb22bb8f5acdc3")
-
-        XCTAssertNotEqual(string1.md5()!, string2.md5()!)
-    }
-
     func testSha256Hash() {
         let string1 = "Hello World"
         XCTAssertEqual(string1.sha256()!, "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e")
