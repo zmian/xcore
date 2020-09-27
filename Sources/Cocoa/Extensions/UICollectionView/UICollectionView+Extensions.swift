@@ -6,6 +6,17 @@
 
 import UIKit
 
+extension UICollectionView {
+    /// The total number of items in all the sections.
+    var numberOfItemsInAllSections: Int {
+        var items = 0
+        for i in 0..<numberOfSections {
+            items += numberOfItems(inSection: i)
+        }
+        return items
+    }
+}
+
 // MARK: - Selected Cells
 
 extension UICollectionView {
