@@ -6,29 +6,13 @@
 
 import Foundation
 
-extension UIImage {
-    public enum EncodingFormat {
-        case png
-        case jpeg(quality: CGFloat)
-    }
-}
-
 extension KeyedEncodingContainer {
     public mutating func encode(
         _ value: UIImage,
         forKey key: KeyedEncodingContainer.Key,
-        as type: UIImage.EncodingFormat = .png
+        as format: UIImage.EncodingFormat = .png
     ) throws {
-        var imageData: Data?
-
-        switch type {
-            case .png:
-                imageData = value.pngData()
-            case .jpeg(let quality):
-                imageData = value.jpegData(compressionQuality: quality)
-        }
-
-        guard let data = imageData else {
+        guard let data = value.data(using: format) else {
             throw EncodingError.invalidValue(value, .init(
                 codingPath: [],
                 debugDescription: "Failed to convert UIImage instance to Data.")
@@ -68,18 +52,9 @@ extension SingleValueEncodingContainer {
     ///   call.
     public mutating func encode(
         _ value: UIImage,
-        as type: UIImage.EncodingFormat = .png
+        as format: UIImage.EncodingFormat = .png
     ) throws {
-        var imageData: Data?
-
-        switch type {
-            case .png:
-                imageData = value.pngData()
-            case .jpeg(let quality):
-                imageData = value.jpegData(compressionQuality: quality)
-        }
-
-        guard let data = imageData else {
+        guard let data = value.data(using: format) else {
             throw EncodingError.invalidValue(value, .init(
                 codingPath: [],
                 debugDescription: "Failed to convert UIImage instance to Data.")

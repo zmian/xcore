@@ -71,3 +71,24 @@ extension UIImage {
         self.init(cgImage: image.cgImage!)
     }
 }
+
+// MARK: - EncodingFormat
+
+extension UIImage {
+    public enum EncodingFormat {
+        case png
+        case jpeg(quality: CGFloat)
+    }
+
+    /// Returns a data object that contains the specified image in given format.
+    ///
+    /// - Parameter format: The encoding format.
+    public func data(using format: EncodingFormat) -> Data? {
+        switch format {
+            case .png:
+                return pngData()
+            case let .jpeg(quality):
+                return jpegData(compressionQuality: quality)
+        }
+    }
+}
