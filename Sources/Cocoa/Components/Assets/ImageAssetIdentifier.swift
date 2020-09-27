@@ -106,11 +106,6 @@ extension ImageAssetIdentifier {
         .init(rawValue: name, bundle: .xcore)
     }
 
-    // MARK: - Private
-    static var collectionViewCellDeleteIcon: Self { propertyName() }
-    static var reorderTableViewCellShadowTop: Self { propertyName() }
-    static var reorderTableViewCellShadowBottom: Self { propertyName() }
-
     // MARK: - Carets
     static var caretDirectionUp: Self { propertyName() }
     static var caretDirectionDown: Self { propertyName() }

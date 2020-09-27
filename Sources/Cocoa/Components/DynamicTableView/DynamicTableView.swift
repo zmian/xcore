@@ -6,16 +6,12 @@
 
 import UIKit
 
-open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewDataSource {
+open class DynamicTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     private var allowsReordering: Bool { cellOptions.contains(.move) }
     private var allowsDeletion: Bool { cellOptions.contains(.delete) }
     private let emptyTableFooterView = UIView()
     open var sections: [Section<DynamicTableModel>] = []
-    open var cellOptions: CellOptions = .none {
-        didSet {
-            isReorderingEnabled = allowsReordering
-        }
-    }
+    open var cellOptions: CellOptions = .none
 
     /// A boolean value to determine whether the empty table view cells are hidden. The default value is `false`.
     @objc open dynamic var isEmptyCellsHidden = false {
@@ -198,7 +194,6 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
     private func setupTableView() {
         super.delegate = self
         dataSource = self
-        reorderDelegate = self
         backgroundColor = .clear
         // There is UIKit bug that causes `UITableView` to jump when using
         // `estimatedRowHeight` and reloading cells/sections or the entire table view.
@@ -210,7 +205,6 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
         // autosizing cells using `custom sizing cell`.
         estimatedRowHeight = isUsingCustomSelfSizing ? 0 : 100
         rowHeight = UITableView.automaticDimension
-        isReorderingEnabled = allowsReordering
     }
 
     open func overrideRegisteredClass(_ cell: DynamicTableViewCell.Type) {
@@ -238,10 +232,7 @@ open class DynamicTableView: ReorderTableView, UITableViewDelegate, UITableViewD
             cell.separatorInset = UIEdgeInsets(left: isLastRow ? UIScreen.main.bounds.size.max : 0)
         }
 
-        if item.userInfo[DynamicTableView.reorderTableViewDummyItemIdentifier] == nil {
-            configureCell?(indexPath, cell, item)
-        }
-
+        configureCell?(indexPath, cell, item)
         return cell
     }
 
@@ -515,37 +506,6 @@ extension DynamicTableView {
         }
 
         return nil
-    }
-}
-
-// MARK: - ReorderTableViewDelegate
-
-extension DynamicTableView: ReorderTableViewDelegate {
-    private static var reorderTableViewDummyItemIdentifier: String {
-        "_Xcore_ReorderTableView_Dummy_Item_Identifier_"
-    }
-
-    // This method is called when starting the re-ording process. You insert a blank row object into your
-    // data source and return the object you want to save for later. This method is only called once.
-    open func saveObjectAndInsertBlankRow(at indexPath: IndexPath) -> Any {
-        let item = sections[indexPath]
-        sections[indexPath] = DynamicTableModel(userInfo: [DynamicTableView.reorderTableViewDummyItemIdentifier: true])
-        return item
-    }
-
-    // This method is called when the selected row is dragged to a new position. You simply update your
-    // data source to reflect that the rows have switched places. This can be called multiple times
-    // during the reordering process.
-    open func draggedRow(from indexPath: IndexPath, toIndexPath: IndexPath) {
-        sections.moveElement(from: indexPath, to: toIndexPath)
-    }
-
-    // This method is called when the selected row is released to its new position. The object is the same
-    // object you returned in `saveObjectAndInsertBlankRow:atIndexPath:`. Simply update the data source so the
-    // object is in its new position. You should do any saving/cleanup here.
-    open func finishedDragging(from indexPath: IndexPath, toIndexPath: IndexPath, with object: Any) {
-        items[toIndexPath.row] = object as! DynamicTableModel
-        didMoveItem?(indexPath, toIndexPath, items[toIndexPath.row])
     }
 }
 
