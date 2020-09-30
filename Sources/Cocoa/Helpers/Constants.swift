@@ -223,36 +223,3 @@ public func name(of value: Any) -> String {
     let components = description.split(separator: ".").filter { !$0.hasPrefix(unwantedResult) }
     return components.joined(separator: ".")
 }
-
-// MARK: - Accessibility
-
-public struct AccessibilityReturnFocus {
-    private var focusedElement: Any?
-
-    public var hasElement: Bool {
-        focusedElement != nil
-    }
-
-    public mutating func addFocusedElement(_ tappedElement: Any? = nil) {
-        guard
-            let tappedElement = tappedElement
-        else {
-            focusedElement = UIAccessibility.focusedElement(using: .notificationVoiceOver)
-            return
-        }
-
-        focusedElement = tappedElement
-    }
-
-    public mutating func focusOnElement() {
-        UIAccessibility.post(notification: .layoutChanged, argument: focusedElement)
-        focusedElement = nil
-    }
-
-    public mutating func removeFocusedElement() {
-        UIAccessibility.post(notification: .screenChanged, argument: nil)
-        focusedElement = nil
-    }
-}
-
-public var accessibilityFocusedElement = AccessibilityReturnFocus()
