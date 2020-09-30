@@ -19,7 +19,7 @@ extension Sequence {
     /// block.
     ///
     /// - Parameter uniqueProperty: `unique` criteria is determined by the value
-    ///                             returned by this block.
+    ///             returned by this block.
     /// - Returns: Return an `Array` containing only the unique elements of `self`,
     ///            in order, that satisfy the predicate `uniqueProperty`.
     public func unique<T: Hashable>(_ uniqueProperty: (Iterator.Element) -> T) -> [Iterator.Element] {

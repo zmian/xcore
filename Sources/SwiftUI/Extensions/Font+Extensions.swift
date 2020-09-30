@@ -7,7 +7,7 @@
 import SwiftUI
 
 extension Font {
-    /// Returns default app typeface that scales relative to the given `style`.
+    /// Returns default app that scales relative to the given `style`.
     ///
     /// - Parameters:
     ///   - style: The text style for which to return a font descriptor. See Text
@@ -20,6 +20,15 @@ extension Font {
         weight: UIFont.Weight = .regular,
         trait: UIFont.Trait = .normal
     ) -> Font {
+        let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
+
+        guard typeface != UIFont.Typeface.systemFontId else {
+            return system(
+                TextStyle(style),
+                design: trait == .monospace ? .monospaced : .default
+            )
+        }
+
         let pointSize = UIFontDescriptor.preferredFontDescriptor(
             withTextStyle: style
         ).pointSize
@@ -27,16 +36,42 @@ extension Font {
         #if swift(>=5.3)
         if #available(iOS 14.0, *) {
             return .custom(
-                UIFont.defaultAppTypeface.name(weight: weight, trait: trait),
+                typeface,
                 size: pointSize,
                 relativeTo: TextStyle(style)
             )
         }
         #endif
         return .custom(
-            UIFont.defaultAppTypeface.name(weight: weight, trait: trait),
+            typeface,
             size: UIFontMetrics.default.scaledValue(for: pointSize)
         )
+    }
+
+    /// Specifies default app font to use, along with the style, weight, and any
+    /// design parameters you want applied to the text.
+    ///
+    /// - Parameters:
+    ///   - size: The point size of the font.
+    ///   - weight: The weight of the font. The default value is `.regular`.
+    ///   - trait: The trait of the font. The default value is `.normal`.
+    /// - Returns: The new font object.
+    public static func app(
+        size: CGFloat,
+        weight: UIFont.Weight = .regular,
+        trait: UIFont.Trait = .normal
+    ) -> Font {
+        let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
+
+        if typeface == UIFont.Typeface.systemFontId {
+            return system(
+                size: size,
+                weight: Weight(weight),
+                design: trait == .monospace ? .monospaced : .default
+            )
+        }
+
+        return custom(typeface, size: size)
     }
 }
 

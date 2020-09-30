@@ -6,11 +6,11 @@
 
 import UIKit
 
-public protocol Colorable {
+protocol Colorable {
     var color: UIColor { get }
 }
 
-public protocol CollectionViewLayoutRepresentable {
+protocol CollectionViewLayoutRepresentable {
     var itemSize: CGSize { get set }
     var scrollDirection: UICollectionView.ScrollDirection { get }
 }
@@ -19,7 +19,7 @@ extension UICollectionViewFlowLayout: CollectionViewLayoutRepresentable { }
 
 extension UIScrollView {
     /// A convenience function to cross fade between two color in given items.
-    open func crossFadeColor(previousIndex: Int, items: [Colorable]) -> UIColor {
+    func crossFadeColor(previousIndex: Int, items: [Colorable]) -> UIColor {
         var span = currentScrollingDirection.isHorizontal ? frame.width : frame.height
         var offset = currentScrollingDirection.isHorizontal ? contentOffset.x : contentOffset.y
 
