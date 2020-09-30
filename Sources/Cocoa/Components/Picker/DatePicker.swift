@@ -38,7 +38,9 @@ final class DatePicker: DrawerScreen.Content, Appliable {
 
     private lazy var pickerView = UIDatePicker().apply {
         if #available(iOS 14.0, *) {
+            #if swift(>=5.3)
             $0.preferredDatePickerStyle = .inline
+            #endif
         } else if #available(iOS 13.4, *) {
             $0.preferredDatePickerStyle = .wheels
         }

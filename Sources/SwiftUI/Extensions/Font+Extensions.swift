@@ -24,18 +24,20 @@ extension Font {
             withTextStyle: style
         ).pointSize
 
+        #if swift(>=5.3)
         if #available(iOS 14.0, *) {
             return .custom(
                 UIFont.defaultAppTypeface.name(weight: weight, trait: trait),
                 size: pointSize,
                 relativeTo: TextStyle(style)
             )
-        } else {
-            return .custom(
-                UIFont.defaultAppTypeface.name(weight: weight, trait: trait),
-                size: UIFontMetrics.default.scaledValue(for: pointSize)
-            )
         }
+        #else
+        return .custom(
+            UIFont.defaultAppTypeface.name(weight: weight, trait: trait),
+            size: UIFontMetrics.default.scaledValue(for: pointSize)
+        )
+        #endif
     }
 }
 
@@ -76,17 +78,25 @@ extension Font.TextStyle {
             case .title1:
                 self = .title
             case .title2:
+                #if swift(>=5.3)
                 if #available(iOS 14.0, *) {
                     self = .title2
                 } else {
                     self = .title
                 }
+                #else
+                self = .title
+                #endif
             case .title3:
+                #if swift(>=5.3)
                 if #available(iOS 14.0, *) {
                     self = .title3
                 } else {
                     self = .title
                 }
+                #else
+                self = .title
+                #endif
             case .headline:
                 self = .headline
             case .subheadline:
@@ -100,11 +110,15 @@ extension Font.TextStyle {
             case .caption1:
                 self = .caption
             case .caption2:
+                #if swift(>=5.3)
                 if #available(iOS 14.0, *) {
                     self = .caption2
                 } else {
                     self = .caption
                 }
+                #else
+                self = .caption
+                #endif
             default:
                 self = .body
         }
