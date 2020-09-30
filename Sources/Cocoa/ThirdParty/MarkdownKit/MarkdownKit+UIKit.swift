@@ -25,7 +25,7 @@ extension MarkupText {
     /// ```
     @objc(MarkupTextAppearance)
     final public class Appearance: NSObject {
-        public var font: UIFont = .app(style: .body)
+        public var font: UIFont = .app(.body)
         public var textColor: UIColor = .black
         public var isLabelEnabled: Bool = false
         public var isTextViewEnabled: Bool = false

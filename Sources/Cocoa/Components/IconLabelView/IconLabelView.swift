@@ -40,7 +40,7 @@ open class IconLabelView: XCView {
     }
 
     public let titleLabel = UILabel().apply {
-        $0.font = .app(style: .body)
+        $0.font = .app(.body)
         $0.textAlignment = .center
         $0.textColor = Theme.current.textColor
         $0.numberOfLines = 0
@@ -49,7 +49,7 @@ open class IconLabelView: XCView {
     }
 
     public let subtitleLabel = UILabel().apply {
-        $0.font = .app(style: .subheadline)
+        $0.font = .app(.subheadline)
         $0.textAlignment = .center
         $0.textColor = Theme.current.textColorSecondary
         $0.numberOfLines = 0

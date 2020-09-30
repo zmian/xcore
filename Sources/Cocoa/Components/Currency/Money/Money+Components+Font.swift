@@ -43,7 +43,7 @@ extension Money.Components {
         }
 
         public init(_ style: UIFont.TextStyle) {
-            self.init(.app(style: style))
+            self.init(.app(style))
         }
 
         public init(_ font: UIFont?) {
@@ -63,7 +63,7 @@ extension Money.Components.Font {
     /// directly. If an existing style doesn't fit your need create an alias here
     /// like `.body` to ensure consistency.
     public static func superscript(_ style: UIFont.TextStyle) -> Self {
-        superscript(UIFont.app(style: style))
+        superscript(.app(style))
     }
 
     /// Superscript based layout derived from the given major unit size.

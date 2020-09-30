@@ -67,7 +67,7 @@ extension Identifier where Type: UIButton {
     }
 
     public func font(button: UIButton) -> UIFont {
-        attributes(\.font) ?? button.titleLabel?.font ?? .app(style: .body)
+        attributes(\.font) ?? button.titleLabel?.font ?? .app(.body)
     }
 
     public func tintColor(button: UIButton) -> UIColor {

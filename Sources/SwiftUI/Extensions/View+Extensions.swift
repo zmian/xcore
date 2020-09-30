@@ -28,10 +28,10 @@ extension View {
     ///     VStack {
     ///         Ellipse()
     ///             .fill(Color.purple)
-    ///             .frame(size: 200)
+    ///             .frame(200)
     ///         Ellipse()
     ///             .fill(Color.blue)
-    ///             .frame(size: 100)
+    ///             .frame(100)
     ///     }
     ///
     /// ![A screenshot showing the effect of frame size options: a purple
@@ -43,7 +43,7 @@ extension View {
     /// frame.
     ///
     ///     Text("Hello world!")
-    ///         .frame(size: 200, alignment: .topLeading)
+    ///         .frame(200, alignment: .topLeading)
     ///         .border(Color.gray)
     ///
     /// In the example above, the text is positioned at the top, leading corner
@@ -63,7 +63,7 @@ extension View {
     ///
     /// - Returns: A view with fixed dimensions of `width` and `height`, for the
     ///   parameters that are non-`nil`.
-    public func frame(size: CGFloat? = nil, alignment: Alignment = .center) -> some View {
+    public func frame(_ size: CGFloat?, alignment: Alignment = .center) -> some View {
         frame(width: size, height: size, alignment: alignment)
     }
 }
