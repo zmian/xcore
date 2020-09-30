@@ -60,7 +60,7 @@ extension CarouselViewController {
 
         private lazy var titleLabel = UILabel().apply {
             $0.text = "Default Text"
-            $0.font = .app(style: .body)
+            $0.font = .app(.body)
             $0.textColor = .label
             $0.textAlignment = .center
             $0.resistsSizeChange()
