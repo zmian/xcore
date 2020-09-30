@@ -6,6 +6,7 @@
 
 import SwiftUI
 
+#if swift(>=5.3)
 @available(iOS 14.0, *)
 public struct IconAfterLabelStyle: LabelStyle {
     private let axis: Axis
@@ -57,3 +58,4 @@ public struct IconBeforeLabelStyle: LabelStyle {
         }
     }
 }
+#endif
