@@ -92,15 +92,9 @@ extension NSMutableAttributedString {
         to value: T,
         range: NSRange
     ) {
-        var paragraphStyle = attribute(
-            .paragraphStyle,
-            at: 0,
-            longestEffectiveRange: nil,
-            in: range
-        ) as? NSMutableParagraphStyle ?? NSMutableParagraphStyle()
-
+        var paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle[keyPath: keyPath] = value
-        replaceAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
     }
 
     private func range(of text: String?) -> NSRange {
