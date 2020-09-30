@@ -14,11 +14,6 @@ extension UIAccessibility {
             element == nil
         }
 
-        public mutating func focus() {
-            UIAccessibility.post(notification: .layoutChanged, argument: element)
-            element = nil
-        }
-
         /// A method to store the last focused element, so later we can ask voice-over
         /// to return focus to it.
         ///
@@ -32,6 +27,11 @@ extension UIAccessibility {
             }
 
             self.element = tappedElement
+        }
+
+        public mutating func focus() {
+            UIAccessibility.post(notification: .layoutChanged, argument: element)
+            element = nil
         }
 
         public mutating func reset() {
