@@ -16,9 +16,13 @@ extension Biometrics {
         case faceID
 
         fileprivate init() {
-            let type = LAContext().biometryType
+            let context = LAContext()
+            // `context.biometryType` property is set only after the call to
+            // `canEvaluatePolicy(_:error:)` method, and is set no matter what the call
+            // returns.
+            _ = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
 
-            switch type {
+            switch context.biometryType {
                 case .touchID:
                     self = .touchID
                 case .faceID:
@@ -26,7 +30,7 @@ extension Biometrics {
                 case .none:
                     self = .none
                 @unknown default:
-                    warnUnknown(type)
+                    warnUnknown(context.biometryType)
                     self = .none
             }
         }
