@@ -32,12 +32,11 @@ extension Font {
                 relativeTo: TextStyle(style)
             )
         }
-        #else
+        #endif
         return .custom(
             UIFont.defaultAppTypeface.name(weight: weight, trait: trait),
             size: UIFontMetrics.default.scaledValue(for: pointSize)
         )
-        #endif
     }
 }
 

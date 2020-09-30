@@ -13,7 +13,7 @@ extension Theme {
             $0.highlightedAnimation = .scale
             $0.configurationAttributes.apply {
                 // Styles Updates
-                $0[.base].font = .app(style: .body)
+                $0[.base].font = .app(.body)
                 $0[.base].textColor = current.buttonTextColor
                 $0[.base].tintColor = current.tintColor
 
@@ -23,7 +23,7 @@ extension Theme {
                 $0[.pill].backgroundColor = .gray
 
                 // Toggle Styles
-                $0[.checkbox].font = .app(style: .caption2)
+                $0[.checkbox].font = .app(.caption2)
                 $0[.checkbox].tintColor = current.toggleColor
                 $0[.radioButton].tintColor = current.toggleColor
             }
@@ -35,7 +35,7 @@ extension Theme {
         }
 
         LabelTextView.appearance().apply {
-            $0.font = .app(style: .body)
+            $0.font = .app(.body)
         }
 
         #warning("TODO: Fix the defaults so it matches the system defaults.")
