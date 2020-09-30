@@ -20,7 +20,7 @@ extension UIFont {
     ///     category information. The default value is `nil`.
     /// - Returns: The new scaled font object.
     public static func app(
-        style: UIFont.TextStyle,
+        _ style: UIFont.TextStyle,
         weight: Weight = .regular,
         trait: Trait = .normal,
         compatibleWith traitCollection: UITraitCollection? = nil

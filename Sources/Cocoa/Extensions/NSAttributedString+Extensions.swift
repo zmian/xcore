@@ -48,7 +48,7 @@ extension NSMutableAttributedString {
 // MARK: - Chaining Attributes
 
 extension NSMutableAttributedString {
-    open func underline(_ text: String?, style: NSUnderlineStyle = .single) -> Self {
+    open func underline(_ text: String? = nil, style: NSUnderlineStyle = .single) -> Self {
         addAttribute(.underlineStyle, value: style.rawValue, range: range(of: text))
         return self
     }

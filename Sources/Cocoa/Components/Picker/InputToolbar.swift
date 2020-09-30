@@ -64,7 +64,7 @@ final public class InputToolbar: XCView {
     }
 
     private let titleLabel = UILabel().apply {
-        $0.font = .app(style: .caption1)
+        $0.font = .app(.caption1)
         $0.adjustsFontSizeToFitWidth = true
         $0.textAlignment = .center
     }

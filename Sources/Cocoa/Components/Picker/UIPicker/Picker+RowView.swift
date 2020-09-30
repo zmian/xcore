@@ -33,12 +33,12 @@ extension Picker {
         static let height: CGFloat = 50
 
         private let titleLabel = UILabel().apply {
-            $0.font = .app(style: .body)
+            $0.font = .app(.body)
             $0.textAlignment = .center
         }
 
         private let subtitleLabel = UILabel().apply {
-            $0.font = .app(style: .caption1)
+            $0.font = .app(.caption1)
             $0.textAlignment = .center
         }
 

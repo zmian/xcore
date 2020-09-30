@@ -98,7 +98,7 @@ extension Theme {
             // SearchBar Cancel button normal state
              $0.setTitleTextAttributes([
                 .foregroundColor: current.tintColor,
-                .font: UIFont.app(style: .body)
+                .font: UIFont.app(.body)
             ], for: .normal)
 
             // SearchBar Cancel button disabled state
@@ -110,7 +110,7 @@ extension Theme {
         // SearchBar text attributes
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [
             .foregroundColor: current.textColor,
-            .font: UIFont.app(style: .body)
+            .font: UIFont.app(.body)
         ]
 
         UISearchBar.appearance().placeholderTextColor = current.textColor.alpha(0.5)
@@ -118,11 +118,11 @@ extension Theme {
 
     private static func setDynamicTableViewTheme() {
         DynamicTableView.appearance().apply {
-            $0.headerFont = .app(style: .caption1)
+            $0.headerFont = .app(.caption1)
             $0.headerTextColor = current.textColor
-            $0.footerFont = .app(style: .caption1)
+            $0.footerFont = .app(.caption1)
             $0.footerTextColor = current.textColorSecondary
-            $0.accessoryFont = .app(style: .subheadline)
+            $0.accessoryFont = .app(.subheadline)
             $0.accessoryTextColor = current.textColorSecondary
             $0.accessoryTintColor = current.tintColor
             $0.checkboxOffTintColor = current.separatorColor
@@ -167,7 +167,7 @@ extension Theme {
             $0.highlightedAnimation = .scale
             $0.configurationAttributes.apply {
                 // Styles Updates
-                $0[.base].font = .app(style: .body)
+                $0[.base].font = .app(.body)
                 $0[.base].textColor = current.buttonTextColor
                 $0[.base].tintColor = current.tintColor
 
@@ -177,7 +177,7 @@ extension Theme {
                 $0[.pill].backgroundColor = current.buttonBackgroundColorPill
 
                 // Toggle Styles
-                $0[.checkbox].font = .app(style: .caption2)
+                $0[.checkbox].font = .app(.caption2)
                 $0[.checkbox].tintColor = current.toggleColor
                 $0[.radioButton].tintColor = current.toggleColor
             }
@@ -186,7 +186,7 @@ extension Theme {
         LabelTextView.appearance().apply {
             $0.linkTextAttributes = [.foregroundColor: current.linkColor]
             $0.textColor = current.textColor
-            $0.font = .app(style: .body)
+            $0.font = .app(.body)
         }
 
         Picker.RowView.appearance().apply {

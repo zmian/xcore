@@ -44,12 +44,12 @@ extension UILabel {
         return "Sphinx".size(withFont: font).height * CGFloat(numberOfLines)
     }
 
-    open func setLineSpacing(_ spacing: CGFloat) {
+    open func lineSpacing(_ spacing: CGFloat) {
         attributedText = mutableAttributedString()?.lineSpacing(spacing)
     }
 
     open func underline() {
-        attributedText = mutableAttributedString()?.underline(nil)
+        attributedText = mutableAttributedString()?.underline()
     }
 
     private func mutableAttributedString() -> NSMutableAttributedString? {

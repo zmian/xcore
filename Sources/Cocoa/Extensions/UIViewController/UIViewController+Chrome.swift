@@ -20,8 +20,8 @@ extension UIViewController {
     /// ```
     @objc(UIViewControllerDefaultAppearance)
     final public class DefaultAppearance: NSObject {
-        /// The default value is `.app(style: .body)`
-        public lazy var font: UIFont = .app(style: .body)
+        /// The default value is `.app(.body)`
+        public lazy var font: UIFont = .app(.body)
         /// The default value is `.appTint`.
         public lazy var tintColor: UIColor = .appTint
         /// The default value is `.transparent`.

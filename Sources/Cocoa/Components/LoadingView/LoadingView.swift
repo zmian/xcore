@@ -23,13 +23,13 @@ final public class LoadingView: XCView {
     public let lhsImageView = UIImageView()
     public let rhsImageView = UIImageView()
     public let titleLabel = UILabel().apply {
-        $0.font = .app(style: .footnote)
+        $0.font = .app(.footnote)
         $0.textColor = .white
         $0.textAlignment = .center
         $0.numberOfLines = 0
     }
     public let footerLabel = UILabel().apply {
-        $0.font = .app(style: .caption2)
+        $0.font = .app(.caption2)
         $0.textColor = UIColor.white.alpha(0.7)
         $0.textAlignment = .center
         $0.numberOfLines = 0

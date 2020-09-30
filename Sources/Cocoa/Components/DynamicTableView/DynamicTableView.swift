@@ -34,11 +34,11 @@ open class DynamicTableView: UITableView, UITableViewDelegate, UITableViewDataSo
     /// A boolean value to determine whether the last table view cell separator is hidden. The default value is `false`.
     @objc open dynamic var isLastCellSeparatorHidden = false
 
-    @objc open dynamic var headerFont: UIFont = .app(style: .caption1)
+    @objc open dynamic var headerFont: UIFont = .app(.caption1)
     @objc open dynamic var headerTextColor: UIColor = .black
-    @objc open dynamic var footerFont: UIFont = .app(style: .caption1)
+    @objc open dynamic var footerFont: UIFont = .app(.caption1)
     @objc open dynamic var footerTextColor: UIColor = .darkGray
-    @objc open dynamic var accessoryFont: UIFont = .app(style: .subheadline)
+    @objc open dynamic var accessoryFont: UIFont = .app(.subheadline)
     @objc open dynamic var accessoryTextColor: UIColor = .appleGray
     @objc open dynamic var accessoryTintColor: UIColor = .appTint
     @objc open dynamic var accessoryTextMaxWidth: CGFloat = 0

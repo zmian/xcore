@@ -46,7 +46,7 @@ extension Picker.List {
                     cell.imageSize = 30
                     cell.avatarCornerRadius = 0
                     cell.avatarBorderWidth = 0
-                    cell.subtitleFont = .app(style: .caption1)
+                    cell.subtitleFont = .app(.caption1)
                     strongSelf.model.configure(indexPath: indexPath, cell: cell, item: item)
                 }
                 $0.didScroll { [weak self] scrollView in
