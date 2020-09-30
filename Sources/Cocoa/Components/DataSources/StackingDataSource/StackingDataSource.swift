@@ -26,7 +26,6 @@ open class StackingDataSource: XCCollectionViewDataSource, XCCollectionViewTileL
             _isExtended = newValue
             let reloadSet = IndexSet(integersIn: globalSection...(globalSection + allSectionsCount - 1))
 
-            // swiftlint:disable:next trailing_closure
             collectionView?.performBatchUpdates({
                 collectionView?.collectionViewLayout.invalidateLayout()
                 collectionView?.reloadSections(reloadSet)

@@ -13,7 +13,7 @@ extension INIntent {
     /// Converts `self` into appropriate intent and donates it as an interaction to
     /// the system so that the intent can be suggested in the future or turned into
     /// a voice shortcut for quickly running the task in the future.
-    public var interaction: INInteraction {
+    var interaction: INInteraction {
         INInteraction(intent: self, response: nil).apply {
             guard let customIdentifier = customIdentifier else { return }
             $0.identifier = customIdentifier
@@ -33,7 +33,7 @@ extension INIntent {
     ///
     /// The group identifier is used to match group of intents that can be deleted
     /// if an intent is removed.
-    public var groupIdentifier: String? {
+    var groupIdentifier: String? {
         get { associatedObject(&AssociatedKey.groupIdentifier) }
         set { setAssociatedObject(&AssociatedKey.groupIdentifier, value: newValue) }
     }
@@ -42,7 +42,7 @@ extension INIntent {
     ///
     /// The custom identifier is used to match with the donation so the interaction
     /// can be deleted if an intent is removed.
-    public var customIdentifier: String? {
+    var customIdentifier: String? {
         get { associatedObject(&AssociatedKey.customIdentifier) }
         set { setAssociatedObject(&AssociatedKey.customIdentifier, value: newValue) }
     }

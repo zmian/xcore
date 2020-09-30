@@ -12,8 +12,8 @@ extension UIFont {
     /// Scaled version of default app typeface.
     ///
     /// - Parameters:
-    ///   - style: The text style for which to return a font descriptor. See Text
-    ///     Styles for valid values.
+    ///   - style: The text style for which to return a font descriptor. See text
+    ///     styles for valid values.
     ///   - weight: The weight of the font. The default value is `.regular`.
     ///   - trait: The trait of the font. The default value is `.normal`.
     ///   - traitCollection: The trait collection containing the content size
