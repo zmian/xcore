@@ -27,7 +27,7 @@ extension UIFont.Typeface {
 
     public static var system: Self {
         .init { weight, trait in
-            /// This is special name and it will be interpreted at the callsite.
+            // This is special name and it will be interpreted at the callsite.
             systemFontId
         }
     }
