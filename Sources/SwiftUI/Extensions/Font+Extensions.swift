@@ -25,7 +25,7 @@ extension Font {
         guard typeface != UIFont.Typeface.systemFontId else {
             return system(
                 TextStyle(style),
-                design: trait == .monospace ? .monospaced : .default
+                design: trait == .monospaced ? .monospaced : .default
             )
         }
 
@@ -67,7 +67,7 @@ extension Font {
             return system(
                 size: size,
                 weight: Weight(weight),
-                design: trait == .monospace ? .monospaced : .default
+                design: trait == .monospaced ? .monospaced : .default
             )
         }
 

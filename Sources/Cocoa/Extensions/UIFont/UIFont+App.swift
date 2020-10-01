@@ -28,7 +28,7 @@ extension UIFont {
         let typeface = defaultAppTypeface.name(weight: weight, trait: trait)
 
         if typeface == Typeface.systemFontId {
-            // TODO: Handle monospace and italic traits.
+            // TODO: Handle monospaced and italic traits.
             return preferredFont(forTextStyle: style, compatibleWith: traitCollection)
         }
 
