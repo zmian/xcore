@@ -68,7 +68,7 @@ Replace `'${PODS_ROOT}/../Vendor'` with location of your frameworks directory.
 
 You can find [the documentation here](https://zmian.github.io/xcore.swift).
 
-Documentation is generated with [jazzy](https://github.com/realm/jazzy) and hosted on [GitHub-Pages](https://pages.github.com). To regenerate documentation, run `./scripts/build_docs.sh` from the root directory in the repo.
+Documentation is generated with [jazzy](https://github.com/realm/jazzy) and hosted on [GitHub-Pages](https://pages.github.com). To regenerate documentation, run `./Scripts/build_docs.sh` from the root directory in the repo.
 
 ## Author
 

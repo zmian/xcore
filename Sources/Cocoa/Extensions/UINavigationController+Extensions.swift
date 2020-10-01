@@ -236,7 +236,7 @@ extension UINavigationController {
     ///     navigation stack, this method throws an exception.
     ///   - transition: A property that indicates how the push animation is to be
     ///     animated, for example, fade in or slide in from right.
-    open func pushViewController(_ viewController: UIViewController, with transition: CATransition?) {
+    func pushViewController(_ viewController: UIViewController, with transition: CATransition?) {
         guard let transition = transition else {
             return pushViewController(viewController, animated: true)
         }
@@ -261,7 +261,7 @@ extension UINavigationController {
     ///             to be animated, for example, fade out or slide out to right.
     /// - Returns: The view controller that was popped from the stack.
     @discardableResult
-    open func popViewController(with transition: CATransition?) -> UIViewController? {
+    func popViewController(with transition: CATransition?) -> UIViewController? {
         guard let transition = transition else {
             return popViewController(animated: true)
         }
