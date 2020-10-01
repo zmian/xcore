@@ -38,16 +38,16 @@ extension UIImage {
         }
 
         public static var rectangle: Self {
-            rectangle(size: 50)
+            rectangle(50)
         }
 
-        public static func rectangle(size: CGSize) -> Self {
+        public static func rectangle(_ size: CGSize) -> Self {
             .init(rect: .init(size)) { shape, context in
                 context.fill(shape.rect)
             }
         }
 
-        public static func ellipse(size: CGSize) -> Self {
+        public static func ellipse(_ size: CGSize) -> Self {
             .init(rect: .init(size)) { shape, context in
                 context.fillEllipse(in: shape.rect)
             }
