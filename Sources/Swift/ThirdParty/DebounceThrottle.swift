@@ -26,7 +26,7 @@ extension TimeInterval {
 ///   - queue: The queue to perform the action on. The defaults value is `.main`.
 ///   - action: A function to debounce. Can't accept any arguments.
 /// - Returns: A new function that will only call `action` if `delay` time passes between invocations.
-public func debounce(delay: DispatchTimeInterval, queue: DispatchQueue = .main, action: @escaping (() -> Void)) -> () -> Void {
+func debounce(delay: DispatchTimeInterval, queue: DispatchQueue = .main, action: @escaping (() -> Void)) -> () -> Void {
     var currentWorkItem: DispatchWorkItem?
 
     return {
@@ -45,7 +45,7 @@ public func debounce(delay: DispatchTimeInterval, queue: DispatchQueue = .main, 
 ///   - queue: The queue to perform the action on. The defaults value is `.main`.
 ///   - action: A function to debounce. Can accept one argument.
 /// - Returns: A new function that will only call `action` if `delay` time passes between invocations.
-public func debounce<T>(delay: DispatchTimeInterval, queue: DispatchQueue = .main, action: @escaping ((T) -> Void)) -> (T) -> Void {
+func debounce<T>(delay: DispatchTimeInterval, queue: DispatchQueue = .main, action: @escaping ((T) -> Void)) -> (T) -> Void {
     var currentWorkItem: DispatchWorkItem?
     return { (p1: T) in
         currentWorkItem?.cancel()
@@ -63,7 +63,7 @@ public func debounce<T>(delay: DispatchTimeInterval, queue: DispatchQueue = .mai
 ///   - queue: The queue to perform the action on. The defaults value is `.main`.
 ///   - action: A function to debounce. Can accept two arguments.
 /// - Returns: A new function that will only call `action` if `delay` time passes between invocations.
-public func debounce<T, U>(delay: DispatchTimeInterval, queue: DispatchQueue = .main, action: @escaping ((T, U) -> Void)) -> (T, U) -> Void {
+func debounce<T, U>(delay: DispatchTimeInterval, queue: DispatchQueue = .main, action: @escaping ((T, U) -> Void)) -> (T, U) -> Void {
     var currentWorkItem: DispatchWorkItem?
     return { (p1: T, p2: U) in
         currentWorkItem?.cancel()
@@ -104,7 +104,7 @@ public func throttle(delay: TimeInterval, queue: DispatchQueue = .main, action: 
 ///   - queue: The queue to perform the action on. The defaults value is `.main`.
 ///   - action: A function to throttle. Can accept one argument.
 /// - Returns: A new function that will only call `action` once every `delay` seconds, regardless of how often it is called.
-public func throttle<T>(delay: TimeInterval, queue: DispatchQueue = .main, action: @escaping ((T) -> Void)) -> (T) -> Void {
+func throttle<T>(delay: TimeInterval, queue: DispatchQueue = .main, action: @escaping ((T) -> Void)) -> (T) -> Void {
     var currentWorkItem: DispatchWorkItem?
     var lastFire: TimeInterval = 0
     return { (p1: T) in
@@ -127,7 +127,7 @@ public func throttle<T>(delay: TimeInterval, queue: DispatchQueue = .main, actio
 ///   - queue: The queue to perform the action on. The defaults value is `.main`.
 ///   - action: A function to throttle. Can accept two arguments.
 /// - Returns: A new function that will only call `action` once every `delay` seconds, regardless of how often it is called.
-public func throttle<T, U>(delay: TimeInterval, queue: DispatchQueue = .main, action: @escaping ((T, U) -> Void)) -> (T, U) -> Void {
+func throttle<T, U>(delay: TimeInterval, queue: DispatchQueue = .main, action: @escaping ((T, U) -> Void)) -> (T, U) -> Void {
     var currentWorkItem: DispatchWorkItem?
     var lastFire: TimeInterval = 0
     return { (p1: T, p2: U) in
