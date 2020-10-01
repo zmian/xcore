@@ -52,7 +52,7 @@ extension UIFont.Typeface {
             }
 
             switch trait {
-                case .normal, .monospace:
+                case .normal, .monospaced:
                     return name
                 case .italic:
                     return "\(name)Italic"
@@ -81,7 +81,7 @@ extension UIFont.Typeface {
             }
 
             switch trait {
-                case .normal, .monospace:
+                case .normal, .monospaced:
                     return name
                 case .italic:
                     return "\(name)\(spacer)Italic"
@@ -105,7 +105,7 @@ extension UIFont.Typeface {
             }
 
             switch trait {
-                case .normal, .monospace:
+                case .normal, .monospaced:
                     return name
                 case .italic:
                     return "\(name)Italic"

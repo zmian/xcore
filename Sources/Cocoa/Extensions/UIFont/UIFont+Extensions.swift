@@ -10,7 +10,7 @@ extension UIFont {
     public enum Trait {
         case normal
         case italic
-        case monospace
+        case monospaced
     }
 
     static func systemFont(size: CGFloat, weight: Weight = .regular, trait: Trait = .normal) -> UIFont {
@@ -19,7 +19,7 @@ extension UIFont {
                 return systemFont(ofSize: size, weight: weight)
             case .italic:
                 return italicSystemFont(ofSize: size)
-            case .monospace:
+            case .monospaced:
                 return monospacedDigitSystemFont(ofSize: size, weight: weight)
         }
     }
@@ -46,7 +46,7 @@ extension UIFont {
         traits(.traitItalic)
     }
 
-    func monospace() -> UIFont? {
+    func monospaced() -> UIFont? {
         traits(.traitMonoSpace)
     }
 }
