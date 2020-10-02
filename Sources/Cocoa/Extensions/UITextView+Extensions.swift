@@ -41,24 +41,29 @@ extension UITextView {
         else {
             return nil
         }
-        return self.textRange(from: start, to: end)
+
+        return textRange(from: start, to: end)
     }
 
-    /// Returns `UIAccessibilityElement` for all links inside current instance
-    /// it was given when created.
+    /// Returns `UIAccessibilityElement` for all links inside current instance it
+    /// was given when created.
     public var linkAccessibilityElements: [UIAccessibilityElement] {
         var linkElements: [UIAccessibilityElement] = []
+
         attributedText.enumerateAttribute(.link, in: NSRange(0..<attributedText.length)) { value, range, _ in
             guard value != nil else {
                 return
             }
+
             let element = UIAccessibilityElement(accessibilityContainer: self)
             element.accessibilityTraits = .link
             element.accessibilityValue = (value as? URL)?.absoluteString
+
             if let textRange = textRange(from: range) {
                 element.accessibilityFrameInContainerSpace = firstRect(for: textRange)
                 element.accessibilityLabel = self.text(in: textRange)
             }
+
             linkElements.append(element)
         }
 
