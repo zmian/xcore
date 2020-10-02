@@ -84,6 +84,10 @@ open class LabelTextView: UITextView {
         commonInit()
     }
 
+    // Voice Control accessibility elements holder for correct presentation
+    // of links inside LabelTextView.
+    private var accessibilityHolder: VoiceControlWrapper?
+
     private func commonInit() {
         delegate = self
         #if canImport(Haring)
@@ -101,6 +105,14 @@ open class LabelTextView: UITextView {
         textAlignment = .left
         resistsSizeChange(axis: .vertical)
         didTapUrl(Self.defaultDidTapUrlHandler)
+
+        accessibilityHolder = VoiceControlWrapper(textView: self)
+        addSubview(accessibilityHolder!)
+    }
+
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        accessibilityHolder?.frame = bounds
     }
 
     open override var canBecomeFirstResponder: Bool {
@@ -197,14 +209,47 @@ extension LabelTextView {
     /// it was given when created.
     open override var accessibilityTraits: UIAccessibilityTraits {
         get {
-            guard UIAccessibility.isVoiceOverRunning else {
-                // If the "show numbers" feature is one we want to show the label.
-                return super.accessibilityTraits == .link ? .button : super.accessibilityTraits
-            }
-
             let isTitle = font?.textStyle?.isTitle ?? false
             return isTitle ? .header : super.accessibilityTraits
         }
         set { super.accessibilityTraits = newValue }
+    }
+}
+
+/// Class for showing `accessibilityElements` avaliable for Voice Control
+/// and hidding them for VoiceOver.
+private class VoiceControlWrapper: XCView {
+    private weak var textView: UITextView?
+
+    init(textView: UITextView) {
+        self.textView = textView
+        super.init(frame: .zero)
+    }
+
+    @available(*, unavailable, message: "Use init(textView:)")
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+
+    override func commonInit() {
+        super.commonInit()
+        isUserInteractionEnabled = false
+    }
+
+    override var accessibilityElements: [Any]? {
+        get {
+            guard !UIAccessibility.isVoiceOverRunning else {
+                return nil
+            }
+
+            return super.accessibilityElements
+        }
+
+        set { super.accessibilityElements = newValue }
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        accessibilityElements = textView?.linkAccessibilityElements
     }
 }
