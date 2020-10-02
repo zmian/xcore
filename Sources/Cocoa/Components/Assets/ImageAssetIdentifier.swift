@@ -67,7 +67,7 @@ extension UIImage {
 // MARK: - UIImageView
 
 extension UIImageView {
-    public convenience init(assetIdentifier: ImageAssetIdentifier) {
+    public convenience init(assetIdentifier: ImageAssetIdentifier?) {
         self.init()
         setImage(assetIdentifier) { [weak self] image in
             guard let strongSelf = self else { return }
