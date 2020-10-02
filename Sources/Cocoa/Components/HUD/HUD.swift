@@ -68,6 +68,7 @@ open class HUD: Appliable {
 
     private func setDefaultWindowLevel() {
         windowLevel = .top
+        appearance?.adjustWindowAttributes?(window)
     }
 
     private lazy var adjustWindowAttributes: ((_ window: UIWindow) -> Void)? = { [weak self] _ in
@@ -380,6 +381,20 @@ extension HUD {
     /// ```
     final public class Appearance: Appliable {
         public var backgroundColor: UIColor = .white
+        fileprivate var adjustWindowAttributes: ((_ window: UIWindow) -> Void)?
+
+        /// A block to adjust window attributes (e.g., level or make it key) so this HUD
+        /// is displayed appropriately.
+        ///
+        /// For example, you can adjust the window level so this HUD is always shown
+        /// behind the passcode screen to ensure that this HUD is not shown before user
+        /// is fully authorized.
+        ///
+        /// - Note: By default, window level is set so it appears on the top of the
+        /// currently visible window.
+        public func adjustWindowAttributes(_ callback: @escaping (_ window: UIWindow) -> Void) {
+            adjustWindowAttributes = callback
+        }
     }
 
     private static var appearanceStorage: [String: Appearance] = [:]

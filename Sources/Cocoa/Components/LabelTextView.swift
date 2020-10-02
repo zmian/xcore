@@ -216,40 +216,41 @@ extension LabelTextView {
     }
 }
 
-/// Class for showing `accessibilityElements` avaliable for Voice Control
-/// and hidding them for VoiceOver.
-private class VoiceControlWrapper: XCView {
-    private weak var textView: UITextView?
+extension LabelTextView {
+    /// A class for showing `accessibilityElements` avaliable for Voice Control and
+    /// hidding them for `VoiceOver`.
+    private class VoiceControlWrapper: XCView {
+        private weak var textView: UITextView?
 
-    init(textView: UITextView) {
-        self.textView = textView
-        super.init(frame: .zero)
-    }
-
-    @available(*, unavailable, message: "Use init(textView:)")
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError()
-    }
-
-    override func commonInit() {
-        super.commonInit()
-        isUserInteractionEnabled = false
-    }
-
-    override var accessibilityElements: [Any]? {
-        get {
-            guard !UIAccessibility.isVoiceOverRunning else {
-                return nil
-            }
-
-            return super.accessibilityElements
+        init(textView: UITextView) {
+            self.textView = textView
+            super.init(frame: .zero)
         }
 
-        set { super.accessibilityElements = newValue }
-    }
+        @available(*, unavailable)
+        public required init?(coder aDecoder: NSCoder) {
+            fatalError()
+        }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        accessibilityElements = textView?.linkAccessibilityElements
+        override func commonInit() {
+            super.commonInit()
+            isUserInteractionEnabled = false
+        }
+
+        override var accessibilityElements: [Any]? {
+            get {
+                guard !UIAccessibility.isVoiceOverRunning else {
+                    return nil
+                }
+
+                return super.accessibilityElements
+            }
+            set { super.accessibilityElements = newValue }
+        }
+
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            accessibilityElements = textView?.linkAccessibilityElements
+        }
     }
 }
