@@ -78,7 +78,7 @@ extension Menu {
 
     static let textViewController = Self(
         title: "TextViewController",
-        content: WrapUIViewController<TextViewController>()
+        content: WrapUIViewController<ExampleTextViewController>()
     )
 
     static let feedViewController = Self(

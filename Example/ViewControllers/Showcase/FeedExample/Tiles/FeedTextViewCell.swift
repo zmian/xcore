@@ -11,13 +11,11 @@ final class FeedTextViewCell: XCCollectionViewCell {
         $0.font = .systemFont(ofSize: 40)
         $0.numberOfLines = 1
         $0.textAlignment = .center
-        $0.isMarkupEnabled = false
     }
 
     private var subtitleLabel = UILabel().apply {
         $0.font = .systemFont(ofSize: 20)
         $0.numberOfLines = 0
-        $0.isMarkupEnabled = false
     }
 
     func configure(title: String, subtitle: String) {
@@ -33,11 +31,11 @@ final class FeedTextViewCell: XCCollectionViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(subtitleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(.defaultPadding)
+            make.leading.trailing.equalToSuperview().inset(CGFloat.defaultPadding)
             make.top.equalToSuperview()
         }
         subtitleLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(.defaultPadding)
+            make.leading.trailing.equalToSuperview().inset(CGFloat.defaultPadding)
             make.top.equalTo(titleLabel.snp.bottom).offset(10)
             make.bottom.equalToSuperview()
         }

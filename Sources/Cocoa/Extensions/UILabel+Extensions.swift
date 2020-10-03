@@ -154,10 +154,24 @@ extension NSAttributedString {
     }
 }
 
+// MARK: - Accessibility
+
+extension UILabel {
+    /// The accessibility trait value that the element takes based on the text style
+    /// it was given when created.
+    open override var accessibilityTraits: UIAccessibilityTraits {
+        get {
+            let isTitle = font?.textStyle?.isTitle ?? false
+            return isTitle ? .header : super.accessibilityTraits
+        }
+        set { super.accessibilityTraits = newValue }
+    }
+}
+
 // MARK: - Swizzle
 
 extension UILabel {
-    static func swizzle_drawText_runOnceSwapSelectors() {
+    private static func swizzle_drawText_runOnceSwapSelectors() {
         swizzle(
             UILabel.self,
             originalSelector: #selector(UILabel.drawText(in:)),
@@ -170,18 +184,8 @@ extension UILabel {
             swizzledSelector: #selector(UILabel.swizzled_textRect(forBounds:limitedToNumberOfLines:))
         )
     }
-}
 
-// MARK: - Accessibility
-
-extension UILabel {
-    /// The accessibility trait value that the element takes based on the text style
-    /// it was given when created.
-    open override var accessibilityTraits: UIAccessibilityTraits {
-        get {
-            let isTitle = font?.textStyle?.isTitle ?? false
-            return isTitle ? .header : super.accessibilityTraits
-        }
-        set { super.accessibilityTraits = newValue }
+    static func runOnceSwapSelectors() {
+        swizzle_drawText_runOnceSwapSelectors()
     }
 }

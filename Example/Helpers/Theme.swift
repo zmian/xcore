@@ -29,11 +29,6 @@ extension Theme {
             }
         }
 
-        MarkupText.appearance.apply {
-            $0.isLabelEnabled = true
-            $0.isTextViewEnabled = true
-        }
-
         LabelTextView.appearance().apply {
             $0.font = .app(.body)
         }

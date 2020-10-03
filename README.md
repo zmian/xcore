@@ -1,5 +1,5 @@
 <p align="center">
-<img src="Resources/xcore_logo.svg" alt="Xcore logo" height=100>
+<img src="Resources/xcore_logo.svg" alt="Xcore logo" height=80>
 </p>
 <p align="center">
     <a href="https://travis-ci.org/zmian/xcore"><img src="https://travis-ci.org/zmian/xcore.svg?branch=main" alt="Main Branch Build Status"></a>

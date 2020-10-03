@@ -154,7 +154,7 @@ extension CarouselViewUIKit {
             contentView.backgroundColor = .secondarySystemBackground
             contentView.addSubview(stackView)
             stackView.snp.makeConstraints { make in
-                make.edges.equalToSuperview().inset(.defaultPadding)
+                make.edges.equalToSuperview().inset(CGFloat.defaultPadding)
             }
         }
 
