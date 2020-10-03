@@ -1,15 +1,15 @@
 <p align="center">
-<img src="Resources/xcoreLogo.svg" alt="Xcore logo" height=100>
+<img src="Resources/xcore_logo.svg" alt="Xcore logo" height=100>
 </p>
 <p align="center">
-    <a href="https://travis-ci.org/zmian/xcore.swift"><img src="https://travis-ci.org/zmian/xcore.swift.svg?branch=main" alt="Main Branch Build Status"></a>
+    <a href="https://travis-ci.org/zmian/xcore"><img src="https://travis-ci.org/zmian/xcore.svg?branch=main" alt="Main Branch Build Status"></a>
   <a href="http://cocoapods.org/pods/Xcore"><img src="https://img.shields.io/cocoapods/v/Xcore.svg?style=flat" alt="CocoaPods Version Number"></a>
   <a href="http://cocoapods.org/pods/Xcore"><img src="https://img.shields.io/cocoapods/p/Xcore.svg?style=flat" alt="Supported Platform"></a>
     <a href="http://cocoapods.org/pods/Xcore"><img src="https://img.shields.io/cocoapods/l/Xcore.svg?style=flat" alt="License"></a>
 </p>
 <h1></h1>
 
-Xcore is a collection of pure Swift and Cocoa Touch classes, extensions and components for rapid and safe iOS development. It provides a vast library of customizations and extensions to get tasks done with ease and bugs free. Check out the included example project and [documentation](https://zmian.github.io/xcore.swift) to see how.
+Xcore is a collection of hundreds of Swift extensions and components designed to minimize boilerplate to accomplish common tasks with ease. It is a framework to efficiently build and scale apps without compromising quality, maintainability and developer productivity. Check out the included example project and [documentation](https://zmian.github.io/xcore) to see how.
 
 ## Requirements
 * iOS 13.0+
@@ -29,7 +29,7 @@ pod 'Xcore'
 **Latest version**
 
 ```ruby
-pod 'Xcore', :git => 'https://github.com/zmian/xcore.swift'
+pod 'Xcore', :git => 'https://github.com/zmian/xcore'
 ```
 
 ### Third-Party Extensions
@@ -66,7 +66,7 @@ Replace `'${PODS_ROOT}/../Vendor'` with location of your frameworks directory.
 
 ## Documentation
 
-You can find [the documentation here](https://zmian.github.io/xcore.swift).
+You can find [the documentation here](https://zmian.github.io/xcore).
 
 Documentation is generated with [jazzy](https://github.com/realm/jazzy) and hosted on [GitHub-Pages](https://pages.github.com). To regenerate documentation, run `./Scripts/build_docs.sh` from the root directory in the repo.
 
@@ -76,4 +76,4 @@ Documentation is generated with [jazzy](https://github.com/realm/jazzy) and host
 
 ## License
 
-Xcore is released under the MIT license. [See LICENSE](https://github.com/zmian/xcore.swift/blob/main/LICENSE) for details.
+Xcore is released under the MIT license. [See LICENSE](https://github.com/zmian/xcore/blob/main/LICENSE) for details.
