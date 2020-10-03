@@ -84,15 +84,11 @@ final public class SwizzleManager {
         }
 
         if options.contains(.label) {
-            UILabel.swizzle_runOnceSwapSelectors()
+            UILabel.runOnceSwapSelectors()
         }
 
         if options.contains(.textField) {
             UITextField.runOnceSwapSelectors()
-        }
-
-        if options.contains(.textView) {
-            UITextView.swizzle_runOnceSwapSelectors()
         }
 
         if options.contains(.imageView) {

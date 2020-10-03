@@ -93,3 +93,10 @@ extension ButtonsView {
         }
     }
 }
+
+struct ButtonsView_Previews: PreviewProvider {
+    static var previews: some View {
+        ButtonsView()
+            .embedInNavigation()
+    }
+}

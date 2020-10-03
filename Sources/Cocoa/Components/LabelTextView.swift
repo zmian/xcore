@@ -90,9 +90,6 @@ open class LabelTextView: UITextView {
 
     private func commonInit() {
         delegate = self
-        #if canImport(Haring)
-        isAccessibilityRotorHintEnabled = true
-        #endif
         isAccessibilityElement = true
         // Disable line selection when view is tapped by user.
         accessibilityTraits = .staticText

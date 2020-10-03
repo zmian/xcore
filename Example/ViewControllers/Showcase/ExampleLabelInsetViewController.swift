@@ -84,8 +84,8 @@ final class ExampleLabelInsetViewController: UIViewController {
 
         view.addSubview(stackView)
         stackView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperviewSafeArea().inset(.maximumPadding)
-            $0.centerY.equalToSuperviewSafeArea()
+            $0.leading.trailing.equalToSuperview().inset(CGFloat.maximumPadding)
+            $0.centerY.equalToSuperview()
         }
     }
 }

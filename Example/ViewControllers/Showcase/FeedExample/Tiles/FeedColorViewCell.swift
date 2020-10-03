@@ -5,7 +5,6 @@
 //
 
 import UIKit
-import SnapKit
 
 final class FeedColorViewCell: XCCollectionViewCell {
     var heightConstraint: Constraint?
@@ -22,7 +21,7 @@ final class FeedColorViewCell: XCCollectionViewCell {
         contentView.addSubview(colorView)
         colorView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            heightConstraint = make.height.equalTo(0).priority(.defaultHigh).constraint
+            heightConstraint = make.height.equalTo(0).priority(.high).constraint
         }
     }
 }

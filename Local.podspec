@@ -16,6 +16,4 @@ Pod::Spec.new do |s|
   }
   s.dependency 'SDWebImage'
   s.dependency 'PromiseKit'
-  s.dependency 'Haring'
-  s.dependency 'SnapKit'
 end

@@ -3,8 +3,8 @@ use_frameworks!
 inhibit_all_warnings!
 
 target 'Example' do
-    pod 'Haring', :git => 'https://github.com/zmian/Haring'
     pod 'Xcore', :path => './Local.podspec', :inhibit_warnings => false
+    pod 'SnapKit'
 
     target 'UnitTests' do
         inherit! :search_paths

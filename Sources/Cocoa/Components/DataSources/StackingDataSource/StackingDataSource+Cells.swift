@@ -36,10 +36,10 @@ extension StackingDataSource {
 
         override func commonInit() {
             contentView.addSubview(stackView)
-            stackView.snp.makeConstraints { make in
-                make.height.equalTo(30)
-                make.leading.trailing.equalToSuperview().inset(.defaultPadding)
-                make.top.bottom.equalToSuperview()
+            stackView.anchor.make { make in
+                make.height.equalTo(CGFloat(30))
+                make.horizontally.equalToSuperview().inset(CGFloat.defaultPadding)
+                make.vertically.equalToSuperview()
             }
             layer.zPosition = -1000
         }
@@ -65,13 +65,13 @@ extension StackingDataSource {
             $0.axis = .vertical
             $0.alignment = .center
             $0.spacing = -2
-            firstBottomView.snp.makeConstraints { make in
+            firstBottomView.anchor.make { make in
                 make.height.equalTo(AppConstants.tileCornerRadius)
-                make.leading.trailing.equalToSuperview().inset(.minimumPadding)
+                make.horizontally.equalToSuperview().inset(CGFloat.minimumPadding)
             }
-            secondBottomView.snp.makeConstraints { make in
+            secondBottomView.anchor.make { make in
                 make.height.equalTo(AppConstants.tileCornerRadius)
-                make.leading.trailing.equalToSuperview().inset(.minimumPadding * 1.8)
+                make.horizontally.equalToSuperview().inset(.minimumPadding * 1.8)
             }
             secondBottomView.layer.zPosition = firstBottomView.layer.zPosition - 1
         }
@@ -95,9 +95,10 @@ extension StackingDataSource {
         override func commonInit() {
             contentView.addSubview(stackView)
             contentView.clipsToBounds = true
-            stackView.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(-1)
-                make.leading.trailing.bottom.equalToSuperview()
+            stackView.anchor.make { make in
+                make.top.equalToSuperview().inset(CGFloat(-1))
+                make.horizontally.equalToSuperview()
+                make.bottom.equalToSuperview()
             }
             layer.zPosition = -1000
         }

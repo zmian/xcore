@@ -6,33 +6,11 @@
 
 import UIKit
 
-extension ExampleTextViewController {
-    private enum Segment: Int, CaseIterable {
-        case excerpt
-        case markdown
-
-        var title: String {
-            "\(self)".uppercasedFirst()
-        }
-
-        var filename: String {
-            switch self {
-                case .excerpt:
-                    return "Excerpt.txt"
-                case .markdown:
-                    return "MarkdownAcidTest.txt"
-            }
-        }
-    }
-}
-
 final class ExampleTextViewController: TextViewController {
-    private let segmentedControl = UISegmentedControl(items: Segment.allCases.map { $0.title })
-
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "TextViewController"
-        setupSegmentedControl()
+
         contentInset = UIEdgeInsets(
             top: .maximumPadding + 58,
             left: .maximumPadding,
@@ -40,32 +18,12 @@ final class ExampleTextViewController: TextViewController {
             right: .maximumPadding
         )
 
-        setText(for: .excerpt)
-        segmentedControl.selectedSegmentIndex = 0
-    }
-
-    private func setupSegmentedControl() {
-        let blurView = BlurView()
-        view.addSubview(blurView)
-        blurView.addSubview(segmentedControl)
-
-        blurView.snp.makeConstraints {
-            $0.top.equalToSuperviewSafeArea()
-            $0.leading.trailing.equalToSuperview()
+        setText("Excerpt.txt") { string in
+            NSMutableAttributedString(string: string)
+                .link(
+                    url: URL(string: "https://theculturetrip.com/middle-east/articles/the-top-10-stories-from-1001-nights")!,
+                    text: "Source ▸"
+                )
         }
-
-        segmentedControl.snp.makeConstraints {
-            $0.edges.equalToSuperviewSafeArea().inset(.defaultPadding)
-        }
-
-        segmentedControl.addAction(.valueChanged) { [weak self] in
-            guard let strongSelf = self else { return }
-            let segment = Segment(rawValue: $0.selectedSegmentIndex)!
-            strongSelf.setText(for: segment)
-        }
-    }
-
-    private func setText(for segment: Segment) {
-        setText(segment.filename)
     }
 }
