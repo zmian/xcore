@@ -18,4 +18,7 @@ extension OptionSet {
     public func contains(any member: Self) -> Bool {
         !isDisjoint(with: member)
     }
+
+    /// Absent of options
+    public static var none: Self { [] }
 }

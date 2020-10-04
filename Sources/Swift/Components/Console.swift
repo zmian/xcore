@@ -171,7 +171,6 @@ extension Console {
         public static let info = Self(rawValue: 1 << 1)
         public static let warn = Self(rawValue: 1 << 2)
         public static let error = Self(rawValue: 1 << 3)
-        public static let none: Self = []
         public static let all: Self = [debug, info, warn, error]
 
         fileprivate var consoleDescription: String? {
@@ -202,7 +201,6 @@ extension Console {
         public static let functionName = Self(rawValue: 1 << 1)
         public static let lineNumber = Self(rawValue: 1 << 2)
         public static let date = Self(rawValue: 1 << 3)
-        public static let none: Self = []
         public static let all: Self = [className, functionName, lineNumber, date]
         public static let basic: Self = [className, lineNumber]
     }

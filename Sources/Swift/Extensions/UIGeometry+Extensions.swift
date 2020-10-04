@@ -293,7 +293,6 @@ extension UILayoutPriority {
 // MARK: - UIRectCorner - Extensions
 
 extension UIRectCorner {
-    public static let none: Self = []
     public static let top: Self = [.topLeft, .topRight]
     public static let bottom: Self = [.bottomLeft, .bottomRight]
 
@@ -321,7 +320,6 @@ extension UIRectCorner {
 // MARK: - CACornerMask - Extensions
 
 extension CACornerMask {
-    public static let none: Self = []
     public static let all: Self = [top, bottom]
     public static let top: Self = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     public static let bottom: Self = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
