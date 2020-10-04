@@ -66,6 +66,30 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
     }
 }
 
+// MARK: - Equatable
+
+extension CurrencyFormatter: Equatable {
+    public static func ==(lhs: CurrencyFormatter, rhs: CurrencyFormatter) -> Bool {
+        lhs.locale == rhs.locale &&
+        lhs.currencySymbol == rhs.currencySymbol &&
+        lhs.groupingSeparator == rhs.groupingSeparator &&
+        lhs.decimalSeparator == rhs.decimalSeparator &&
+        lhs.formatter.isEqual(rhs.formatter)
+    }
+}
+
+// MARK: - Hashable
+
+extension CurrencyFormatter: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(locale)
+        hasher.combine(currencySymbol)
+        hasher.combine(groupingSeparator)
+        hasher.combine(decimalSeparator)
+        hasher.combine(formatter)
+    }
+}
+
 // MARK: - Components
 
 extension CurrencyFormatter {
