@@ -7,7 +7,7 @@
 import SwiftUI
 
 extension Font {
-    /// Returns default app that scales relative to the given `style`.
+    /// Returns default app font that scales relative to the given `style`.
     ///
     /// - Parameters:
     ///   - style: The text style for which to return a font descriptor. See Text
@@ -48,8 +48,7 @@ extension Font {
         )
     }
 
-    /// Specifies default app font to use, along with the style, weight, and any
-    /// design parameters you want applied to the text.
+    /// Returns default app font with given `size`.
     ///
     /// - Parameters:
     ///   - size: The point size of the font.

@@ -22,7 +22,6 @@ struct SafeAreaLayoutGuideOptions: OptionSet {
     static let horizontal: Self = [leading, trailing]
 
     static let all: Self = [vertical, horizontal]
-    static let none: Self = []
 }
 
 extension SafeAreaLayoutGuideOptions {

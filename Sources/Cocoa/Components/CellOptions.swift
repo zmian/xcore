@@ -13,6 +13,5 @@ public struct CellOptions: OptionSet {
 
     public static let move = Self(rawValue: 1 << 0)
     public static let delete = Self(rawValue: 1 << 1)
-    public static let none: Self = []
     public static let all: Self = [move, delete]
 }
