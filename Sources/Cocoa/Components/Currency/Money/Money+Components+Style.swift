@@ -22,10 +22,14 @@ extension Money.Components {
             self.join = join
             self.range = range
         }
+    }
+}
 
-        public static func ==(lhs: Self, rhs: Self) -> Bool {
-            lhs.id == rhs.id
-        }
+// MARK: - Equatable
+
+extension Money.Components.Style: Equatable {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
     }
 }
 
