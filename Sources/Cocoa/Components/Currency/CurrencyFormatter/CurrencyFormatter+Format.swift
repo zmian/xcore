@@ -120,6 +120,7 @@ extension Money {
     }
 }
 
+#if swift(>=5.3)
 // MARK: - View
 
 extension Money: View {
@@ -161,3 +162,4 @@ if let minorUnitRange = components.range(style: money.style).minorUnit {
 
 return attributedString
 */
+#endif

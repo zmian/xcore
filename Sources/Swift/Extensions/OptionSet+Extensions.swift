@@ -19,6 +19,6 @@ extension OptionSet {
         !isDisjoint(with: member)
     }
 
-    /// Absent of options
+    /// Returns an empty set `[]`.
     public static var none: Self { [] }
 }

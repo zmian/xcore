@@ -6,6 +6,7 @@
 
 import SwiftUI
 
+#if swift(>=5.3)
 // MARK: - Unwrap
 
 extension View {
@@ -82,3 +83,4 @@ extension View {
         }
     }
 }
+#endif
