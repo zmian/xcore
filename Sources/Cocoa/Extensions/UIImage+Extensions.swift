@@ -68,7 +68,11 @@ extension UIImage {
             shape.draw(shape, context)
         }
 
-        self.init(cgImage: image.cgImage!)
+        self.init(
+            cgImage: image.cgImage!,
+            scale: image.scale,
+            orientation: image.imageOrientation
+        )
     }
 }
 
