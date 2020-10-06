@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 // MARK: - ImageAssetIdentifier
 
@@ -49,6 +50,26 @@ extension ImageAssetIdentifier: ExpressibleByStringLiteral {
 extension ImageAssetIdentifier: ImageRepresentable {
     public var imageSource: ImageSourceType {
         .url(rawValue)
+    }
+}
+
+// MARK: - Image
+
+extension Image {
+    public init(assetIdentifier: ImageAssetIdentifier) {
+        guard let accessibilityLabel = assetIdentifier.accessibilityLabel else {
+            self.init(
+                assetIdentifier.rawValue,
+                bundle: assetIdentifier.bundle
+            )
+            return
+        }
+
+        self.init(
+            assetIdentifier.rawValue,
+            bundle: assetIdentifier.bundle,
+            label: Text(accessibilityLabel)
+        )
     }
 }
 
