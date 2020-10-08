@@ -6,6 +6,19 @@
 
 import SwiftUI
 
+// MARK: - Theme
+
+private struct ThemeKey: EnvironmentKey {
+    static var defaultValue: Theme = .current
+}
+
+extension EnvironmentValues {
+    public var theme: Theme {
+        get { self[ThemeKey.self] }
+        set { self[ThemeKey.self] = newValue }
+    }
+}
+
 // MARK: - DefaultMinButtonHeight
 
 private struct DefaultMinButtonHeightKey: EnvironmentKey {
@@ -46,15 +59,18 @@ extension EnvironmentValues {
     }
 }
 
-// MARK: - Theme
+// MARK: - View Helpers
 
-private struct ThemeKey: EnvironmentKey {
-    static var defaultValue: Theme = .current
-}
+extension View {
+    public func theme(_ theme: Theme) -> some View {
+        environment(\.theme, theme)
+    }
 
-extension EnvironmentValues {
-    public var theme: Theme {
-        get { self[ThemeKey.self] }
-        set { self[ThemeKey.self] = newValue }
+    public func defaultMinButtonHeight(_ value: CGFloat) -> some View {
+        environment(\.defaultMinButtonHeight, value)
+    }
+
+    public func defaultButtonCornerRadius(_ value: CGFloat) -> some View {
+        environment(\.defaultButtonCornerRadius, value)
     }
 }
