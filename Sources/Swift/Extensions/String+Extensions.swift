@@ -345,3 +345,13 @@ extension String {
         return (size, numberOfLines)
     }
 }
+
+// MARK: - Accessibility
+
+extension String {
+    public var symbolsStripped: String {
+        /// Returns a string without the unwanted symbols for accessibility labels.
+        let validCharacters = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890/().,%$")
+        return self.filter { validCharacters.contains($0) }
+    }
+}
