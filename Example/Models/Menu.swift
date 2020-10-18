@@ -22,7 +22,9 @@ struct Menu: Identifiable {
         self.title = title
         self.subtitle = subtitle
         self.content = {
-            AnyView(content().navigationTitle(title))
+            content()
+                .navigationTitle(title)
+                .eraseToAnyView()
         }
     }
 }
