@@ -9,8 +9,12 @@ import SwiftUI
 struct ButtonsView: View {
     var body: some View {
         List {
+            fillStates
+            outlineStates
+            pillStates
             callout
             pills
+            others
             builtin
         }
         .listStyle(InsetGroupedListStyle())
@@ -18,6 +22,69 @@ struct ButtonsView: View {
 }
 
 extension ButtonsView {
+    private var fillStates: some View {
+        Section(header: Text("Fill Button")) {
+            button {
+                Text("FillButtonStyle")
+            }
+            .buttonStyle(FillButtonStyle())
+
+            button {
+                Text("FillButtonStyle")
+            }
+            .buttonStyle(FillButtonStyle())
+            .environment(\.isEnabled, false)
+
+            button {
+                Text("FillButtonStyle")
+            }
+            .buttonStyle(FillButtonStyle())
+            .defaultButtonCornerRadius(0)
+        }
+    }
+
+    private var outlineStates: some View {
+        Section(header: Text("Outline Button")) {
+            button {
+                Text("OutlineButtonStyle")
+            }
+            .buttonStyle(OutlineButtonStyle())
+
+            button {
+                Text("OutlineButtonStyle")
+            }
+            .buttonStyle(OutlineButtonStyle())
+            .environment(\.isEnabled, false)
+
+            button {
+                Text("OutlineButtonStyle")
+            }
+            .buttonStyle(OutlineButtonStyle())
+            .defaultButtonCornerRadius(0)
+        }
+    }
+
+    private var pillStates: some View {
+        Section(header: Text("Pill Button")) {
+            button {
+                Text("PillButtonStyle")
+            }
+            .buttonStyle(PillButtonStyle())
+
+            button {
+                Text("PillButtonStyle")
+            }
+            .buttonStyle(PillButtonStyle())
+            .environment(\.isEnabled, false)
+
+            button {
+                Text("PillButtonStyle")
+            }
+            .buttonStyle(PillButtonStyle())
+            .defaultButtonCornerRadius(0)
+        }
+    }
+
     private var callout: some View {
         Section(header: Text("Callout")) {
             button {
@@ -60,6 +127,27 @@ extension ButtonsView {
             }
         }
         .buttonStyle(PillButtonStyle())
+    }
+
+    private var others: some View {
+        Section(header: Text("Others")) {
+            button {
+                HStack {
+                    Text("BorderlessButtonStyle")
+                    Image(systemName: "chevron.right")
+                }
+            }
+            .buttonStyle(BorderlessButtonStyle())
+
+            button {
+                HStack {
+                    Text("BorderlessButtonStyle")
+                    Image(systemName: "chevron.right")
+                }
+            }
+            .buttonStyle(BorderlessButtonStyle())
+            .environment(\.isEnabled, false)
+        }
     }
 
     private var builtin: some View {

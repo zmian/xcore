@@ -35,7 +35,7 @@ extension EnvironmentValues {
 // MARK: - DefaultButtonCornerRadius
 
 private struct DefaultButtonCornerRadiusKey: EnvironmentKey {
-    static var defaultValue: CGFloat = 8
+    static var defaultValue: CGFloat = AppConstants.cornerRadius
 }
 
 extension EnvironmentValues {

@@ -9,68 +9,122 @@ import SwiftUI
 // MARK: - Fill
 
 public struct FillButtonStyle: ButtonStyle {
-    @Environment(\.defaultMinButtonHeight) var minHeight
-    @Environment(\.defaultButtonCornerRadius) var cornerRadius
-    @Environment(\.theme) var theme
-
     public init() { }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .frame(minHeight: minHeight)
-            .padding(.horizontal)
-            .foregroundColor(.white)
-            .background(Color(theme.buttonTextColor))
-            .cornerRadius(cornerRadius)
-            .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
-            .opacity(configuration.isPressed ? 0.8 : 1)
-            .animation(.spring())
+        StyleBody(configuration: configuration)
+    }
+
+    private struct StyleBody: View {
+        let configuration: ButtonStyleConfiguration
+        @Environment(\.defaultMinButtonHeight) private var minHeight
+        @Environment(\.defaultButtonCornerRadius) private var cornerRadius
+        @Environment(\.theme) private var theme
+        @Environment(\.isEnabled) private var isEnabled: Bool
+
+        var body: some View {
+            configuration.label
+                .frame(minHeight: minHeight)
+                .padding(.horizontal)
+                .foregroundColor(
+                    Color(
+                        isEnabled ?
+                            .white :
+                            UIColor.black.alpha(0.2)
+                    )
+                )
+                .background(
+                    Color(
+                        isEnabled ?
+                            self.theme.buttonBackgroundColor :
+                            (self.theme.isDark ? UIColor.white.alpha(0.1) : .appBackgroundDisabled)
+                    )
+                )
+                .cornerRadius(cornerRadius)
+                .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
+                .opacity(configuration.isPressed ? 0.8 : 1)
+                .animation(.default)
+        }
     }
 }
 
 // MARK: - Outline
 
 public struct OutlineButtonStyle: ButtonStyle {
-    @Environment(\.defaultMinButtonHeight) var minHeight
-    @Environment(\.defaultButtonCornerRadius) var cornerRadius
-    @Environment(\.theme) var theme
-
     public init() { }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .frame(minHeight: minHeight)
-            .padding(.horizontal)
-            .foregroundColor(Color(theme.buttonTextColor))
-            .background(
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .stroke(Color(theme.buttonTextColor))
+        StyleBody(configuration: configuration)
+    }
+
+    private struct StyleBody: View {
+        let configuration: ButtonStyleConfiguration
+        @Environment(\.defaultMinButtonHeight) private var minHeight
+        @Environment(\.defaultButtonCornerRadius) private var cornerRadius
+        @Environment(\.theme) private var theme
+        @Environment(\.isEnabled) private var isEnabled: Bool
+
+        var body: some View {
+            configuration.label
+                .frame(minHeight: minHeight)
+                .padding(.horizontal)
+                .foregroundColor(color)
+                .background(
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(color)
+                )
+                .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
+                .opacity(configuration.isPressed ? 0.8 : 1)
+                .animation(.default)
+        }
+
+        private var color: Color {
+            Color(
+                isEnabled ?
+                    self.theme.buttonTextColor :
+                    self.theme.isDark ? UIColor.white.alpha(0.1) : UIColor.black.alpha(0.2)
             )
-            .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
-            .opacity(configuration.isPressed ? 0.8 : 1)
-            .animation(.spring())
+        }
     }
 }
 
 // MARK: - Pill
 
 public struct PillButtonStyle: ButtonStyle {
-    @Environment(\.defaultMinButtonHeight) var minHeight
-    @Environment(\.theme) var theme
-
     public init() { }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .frame(minHeight: minHeight)
-            .padding(.horizontal)
-            .foregroundColor(.white)
-            .background(
-                Capsule()
-                    .fill(Color(theme.buttonTextColor))
-            )
-            .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
-            .opacity(configuration.isPressed ? 0.8 : 1)
-            .animation(.spring())
+        StyleBody(configuration: configuration)
+    }
+
+    private struct StyleBody: View {
+        let configuration: ButtonStyleConfiguration
+        @Environment(\.defaultMinButtonHeight) private var minHeight
+        @Environment(\.theme) private var theme
+        @Environment(\.isEnabled) private var isEnabled: Bool
+
+        var body: some View {
+            configuration.label
+                .frame(minHeight: minHeight)
+                .padding(.horizontal)
+                .foregroundColor(
+                    Color(
+                        isEnabled ?
+                            .white :
+                            UIColor.black.alpha(0.2)
+                    )
+                )
+                .background(
+                    Capsule()
+                        .fill(Color(
+                            isEnabled ?
+                                self.theme.buttonBackgroundColor :
+                                (self.theme.isDark ? UIColor.white.alpha(0.1) : .appBackgroundDisabled)
+                        ))
+                )
+                .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
+                .opacity(configuration.isPressed ? 0.8 : 1)
+                .animation(.default)
+        }
     }
 }
