@@ -34,7 +34,6 @@ extension Theme {
         setSystemComponentsTheme()
         setNavigationBarBackButtonTheme()
         setSearchBarTheme()
-        setDynamicTableViewTheme()
         setComponentsTheme()
         return true
     }
@@ -62,8 +61,8 @@ extension Theme {
         }
 
         UIPageControl.appearance().apply {
-            $0.pageIndicatorTintColor = current.tintColor
-            $0.currentPageIndicatorTintColor = current.toggleColor
+            $0.pageIndicatorTintColor = .appleGray
+            $0.currentPageIndicatorTintColor = current.tintColor
             $0.backgroundColor = .clear
         }
 
@@ -116,37 +115,9 @@ extension Theme {
         UISearchBar.appearance().placeholderTextColor = current.textColor.alpha(0.5)
     }
 
-    private static func setDynamicTableViewTheme() {
-        DynamicTableView.appearance().apply {
-            $0.headerFont = .app(.caption1)
-            $0.headerTextColor = current.textColor
-            $0.footerFont = .app(.caption1)
-            $0.footerTextColor = current.textColorSecondary
-            $0.accessoryFont = .app(.subheadline)
-            $0.accessoryTextColor = current.textColorSecondary
-            $0.accessoryTintColor = current.tintColor
-            $0.checkboxOffTintColor = current.separatorColor
-            $0.separatorColor = current.separatorColor
-            $0.rowActionDeleteColor = .systemRed
-            $0.isEmptyCellsHidden = true
-        }
-
-        DynamicTableViewCell.appearance().apply {
-            $0.titleTextColor = current.textColor
-            $0.subtitleTextColor = current.textColorSecondary
-            $0.contentInset = UIEdgeInsets(top: 9, left: 15, bottom: 10, right: 15)
-            $0.textImageSpacing = .defaultPadding
-        }
-
-        IconLabelView.appearance().apply {
-            $0.titleTextColor = current.textColor
-            $0.subtitleTextColor = current.textColorSecondary
-        }
-
-        BlurView.appearance().blurOpacity = 0.8
-    }
-
     private static func setComponentsTheme() {
+        BlurView.appearance().blurOpacity = 0.8
+
         SeparatorView.appearance().tintColor = current.separatorColor
 
         UIViewController.defaultAppearance.apply {
@@ -181,11 +152,6 @@ extension Theme {
             $0.linkTextAttributes = [.foregroundColor: current.linkColor]
             $0.textColor = current.textColor
             $0.font = .app(.body)
-        }
-
-        Picker.RowView.appearance().apply {
-            $0.titleTextColor = current.textColor
-            $0.subtitleTextColor = current.textColorSecondary
         }
     }
 }

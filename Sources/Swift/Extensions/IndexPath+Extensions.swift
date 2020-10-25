@@ -10,10 +10,6 @@ extension IndexPath {
     public static var zero: Self {
         .init(item: 0, section: 0)
     }
-
-    public func with(_ globalSection: Int) -> Self {
-        .init(row: row, section: globalSection + section)
-    }
 }
 
 extension IndexPath {
@@ -33,15 +29,5 @@ extension IndexPath {
         }
 
         return IndexPath(row: item + 1, section: section)
-    }
-
-    public func next(in tableView: UITableView) -> Self? {
-        let rowsInSection = tableView.numberOfRows(inSection: section)
-
-        guard row + 1 < rowsInSection else {
-            return nil
-        }
-
-        return IndexPath(row: row + 1, section: section)
     }
 }

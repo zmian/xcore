@@ -68,24 +68,26 @@ final class ExampleLabelInsetViewController: UIViewController {
             $0.borderColor = .quaternarySystemFill
             $0.borderWidth = 1
             $0.roundCorners(.all, radius: Constants.cornerRadius)
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        label3.snp.makeConstraints { make in
-            make.width.equalTo(100)
-        }
+        NSLayoutConstraint.activate([
+            label3.widthAnchor.constraint(equalToConstant: 100),
+            label4.widthAnchor.constraint(equalToConstant: 100),
+            label4.heightAnchor.constraint(equalToConstant: 100),
+            label5.widthAnchor.constraint(equalToConstant: 150),
+            label5.heightAnchor.constraint(equalToConstant: 200)
+        ])
 
-        label4.snp.makeConstraints { make in
-            make.size.equalTo(100)
-        }
-        label5.snp.makeConstraints { make in
-            make.height.equalTo(200)
-            make.width.equalTo(150)
+        [label3, label4, label5].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
         view.addSubview(stackView)
-        stackView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(CGFloat.maximumPadding)
-            $0.centerY.equalToSuperview()
-        }
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .maximumPadding),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.maximumPadding),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 }

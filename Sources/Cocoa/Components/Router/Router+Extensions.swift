@@ -81,24 +81,3 @@ extension UIViewController {
         return navigationController._navigationControllerRouter
     }
 }
-
-// MARK: - XCCollectionViewDataSource
-
-extension XCCollectionViewDataSource {
-    public var router: Router {
-        guard let collectionView = collectionView else {
-            return Router(navigationController: nil)
-        }
-
-        guard let router = collectionView.viewController?.router else {
-            #if DEBUG
-            if isDebuggerAttached {
-                fatalError("Datasource doesn't have a view controller.")
-            }
-            #endif
-            return Router(navigationController: nil)
-        }
-
-        return router
-    }
-}

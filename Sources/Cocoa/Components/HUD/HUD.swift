@@ -24,7 +24,8 @@ open class HUD: Appliable {
     private lazy var viewController = ViewController().apply {
         $0.backgroundColor = appearance?.backgroundColor ?? backgroundColor
     }
-    var view: UIView {
+
+    public var view: UIView {
         viewController.view
     }
 

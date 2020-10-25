@@ -296,7 +296,7 @@ extension UIRectCorner {
     public static let top: Self = [.topLeft, .topRight]
     public static let bottom: Self = [.bottomLeft, .bottomRight]
 
-    init(_ corner: CACornerMask) {
+    public init(_ corner: CACornerMask) {
         self = .none
 
         if corner.contains(.layerMinXMinYCorner) {
@@ -324,7 +324,7 @@ extension CACornerMask {
     public static let top: Self = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     public static let bottom: Self = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
 
-    init(_ corner: UIRectCorner) {
+    public init(_ corner: UIRectCorner) {
         self = .none
 
         if corner.contains(.topLeft) {

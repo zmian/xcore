@@ -113,7 +113,7 @@ extension UIViewController {
 
 extension UIViewController {
     /// Embed in navigation controller if needed.
-    func embedInNavigationControllerIfNeeded() -> UIViewController {
+    public func embedInNavigationControllerIfNeeded() -> UIViewController {
         guard canBeEmbeddedInNavigationController else {
             return self
         }

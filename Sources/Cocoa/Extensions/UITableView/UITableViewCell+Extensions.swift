@@ -26,7 +26,7 @@ extension UITableViewCell {
 
 extension UITableViewCell {
     /// The background color for the highlighted state.
-    @objc dynamic var highlightedBackgroundColor: UIColor? {
+    @objc dynamic public var highlightedBackgroundColor: UIColor? {
         get { backgroundColor(for: .highlighted) }
         set { setBackgroundColor(newValue, for: .highlighted) }
     }

@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.version               = '1.0.0'
   s.license               = 'MIT'
   s.summary               = 'Swift Toolbox'
-  s.homepage              = 'https://github.com/zmian/xcore.swift'
+  s.homepage              = 'https://github.com/zmian/xcore'
   s.authors               = { 'Zeeshan Mian' => 'https://twitter.com/zmian' }
   s.source                = { :path => './' }
   s.source_files          = 'Sources/**/*.swift'
@@ -15,5 +15,4 @@ Pod::Spec.new do |s|
     'SWIFT_INSTALL_OBJC_HEADER' => 'NO'
   }
   s.dependency 'SDWebImage'
-  s.dependency 'PromiseKit'
 end
