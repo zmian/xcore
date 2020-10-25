@@ -33,16 +33,10 @@ struct Menu: Identifiable {
 
 extension Menu: CaseIterable {
     static var allCases: [Self] = [
-        dynamicTableView,
         separators,
-        pickers,
         buttonsUIKit,
         buttons,
         textViewController,
-        feedViewController,
-        alertsViewController,
-        carouselUIKit,
-        carousel,
         labelInset
     ]
 }
@@ -50,20 +44,9 @@ extension Menu: CaseIterable {
 // MARK: - Items
 
 extension Menu {
-    static let dynamicTableView = Self(
-        title: "Dynamic Table View",
-        subtitle: "Data-driven table view",
-        content: WrapUIViewController<ExampleDynamicTableViewController>()
-    )
-
     static let separators = Self(
         title: "Separators",
         content: WrapUIViewController<SeparatorViewController>()
-    )
-
-    static let pickers = Self(
-        title: "Pickers",
-        content: WrapUIViewController<PickersViewController>()
     )
 
     static let buttonsUIKit = Self(
@@ -81,32 +64,6 @@ extension Menu {
     static let textViewController = Self(
         title: "TextViewController",
         content: WrapUIViewController<ExampleTextViewController>()
-    )
-
-    static let feedViewController = Self(
-        title: "FeedViewController",
-        content: WrapUIViewController<FeedViewController>()
-    )
-
-    static let alertsViewController = Self(
-        title: "AlertsViewController",
-        content: WrapUIViewController<AlertsViewController>()
-    )
-
-    static let carouselUIKit = Self(
-        title: "Carousel",
-        subtitle: "UIKit",
-        content: WrapUIViewController<CarouselViewController>()
-    )
-
-    static let carousel = Self(
-        title: "Carousel",
-        subtitle: "SwiftUI",
-        content: Carousel(items: [
-            .init(title: "First Item", image: r(.blueJay)),
-            .init(title: "Second Item", image: r(.blueJay)),
-            .init(title: "Third Item", image: r(.blueJay))
-        ])
     )
 
     static let labelInset = Self(

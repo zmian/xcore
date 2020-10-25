@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct Frequency: UserInfoContainer, MutableAppliable, CustomAnalyticsValueConvertible, PickerOptions {
+public struct Frequency: UserInfoContainer, MutableAppliable, CustomAnalyticsValueConvertible {
     public typealias Identifier = Xcore.Identifier<Self>
 
     /// A unique id for the frequency.

@@ -10,7 +10,7 @@ public class Router {
     private weak var navigationController: UINavigationController?
     private var routeHandlers: [String: Any] = [:]
 
-    init(navigationController: UINavigationController?) {
+    public init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
     }
 

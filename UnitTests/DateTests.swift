@@ -5,30 +5,12 @@
 //
 
 import XCTest
-import PromiseKit
 @testable import Xcore
 
 final class DateTest: XCTestCase {
     override func setUp() {
         super.setUp()
         Calendar.default = .iso
-    }
-
-    func testRemoteDate() {
-        var date: Date?
-        let syncExpectation = expectation(description: "sync_date")
-
-        firstly {
-            Date.serverDate.sync(force: true)
-        }.done {
-            date = $0
-            syncExpectation.fulfill()
-        }.catch { error in
-            syncExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 60, handler: nil)
-        XCTAssertEqual(Date.serverDate.date, date)
     }
 
     private let customFormats: [Date.Format.Custom] = [
@@ -824,28 +806,6 @@ final class DateTest: XCTestCase {
         let thisYear = DateInterval.thisYear
         XCTAssert(thisYear.start == Date().startOf(.year))
         XCTAssert(thisYear.end == Date().endOf(.year))
-    }
-}
-
-extension Date {
-    fileprivate static var serverDate = Remote(expirationDuration: 36000) {
-        .init { seal in
-            firstly {
-                after(seconds: 1)
-            }.then {
-                Promise.value("2020-04-19")
-            }.done { dateString in
-                struct ParsingError: Error { }
-
-                guard let date = Date(from: dateString, format: .yearMonthDayDash) else {
-                    throw ParsingError()
-                }
-
-                seal.fulfill(date)
-            }.catch { error in
-                seal.reject(error)
-            }
-        }
     }
 }
 

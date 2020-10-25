@@ -12,6 +12,7 @@ extension View {
     }
 
     /// Wraps this view with a type eraser.
+    ///
     /// - Returns: An `AnyView` wrapping this view.
     public func eraseToAnyView() -> AnyView {
         AnyView(self)

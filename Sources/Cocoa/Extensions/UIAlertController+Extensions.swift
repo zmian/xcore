@@ -25,7 +25,7 @@ extension UIPopoverPresentationController {
 
 /// Displays an instance of `UIAlertController` with the given `title` and
 /// `message`, and an OK button to dismiss it.
-public func alert(title: String = "", message: String = "") {
+func alert(title: String = "", message: String = "") {
     UIAlertController(title: title, message: message, preferredStyle: .alert).apply {
         let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         $0.addAction(cancelAction)
@@ -68,7 +68,7 @@ extension UIAlertController {
     ///                          addition to the provided array of actions. The
     ///                          default value is `true`.
     @discardableResult
-    public static func present(
+    static func present(
         actions: [UIAlertAction],
         title: String? = nil,
         message: String? = nil,
@@ -101,85 +101,6 @@ extension UIAlertController {
 }
 
 extension UIAlertController {
-    /// A convenience method to display an action sheet with list of specified items
-    /// that conforms to `PickerOptions` protocol.
-    ///
-    /// **Example:**
-    ///
-    /// ```swift
-    /// enum CompassPoint: Int, CaseIterable, PickerOptionsEnum {
-    ///     case north
-    ///     case south
-    ///     case east
-    ///     case west
-    /// }
-    ///
-    /// UIAlertController.present(sourceView: button) { (item: CompassPoint) -> Void in
-    ///     print("selected item:" item)
-    /// }
-    /// ```
-    ///
-    /// - Parameters:
-    ///   - sourceView: A source view that presented the alert. A required property
-    ///                 for iPad support.
-    ///   - handler: A block to invoke when an item is selected.
-    @discardableResult
-    public static func present<T: PickerOptionsEnum>(
-        sourceView: PopoverPresentationSourceView,
-        _ handler: @escaping (_ item: T) -> Void
-    ) -> UIAlertController {
-        let items = T.allCases
-        let actions = items.map { item in
-            UIAlertAction(title: item.title, style: .default) { _ in
-                handler(item)
-            }
-        }
-
-        return present(actions: actions, sourceView: sourceView)
-    }
-
-    /// A convenience method to display an action sheet with list of specified items
-    /// that conforms to `PickerOptions` protocol.
-    ///
-    /// **Example:**
-    ///
-    /// ```swift
-    /// ```swift
-    /// struct Menu: PickerOptions {
-    ///     let name: String
-    ///     let amount: Double
-    /// }
-    ///
-    /// let items = [
-    ///     Menu(name: "Caffè Latte", amount: 2.95),
-    ///     Menu(name: "Cappuccino", amount: 3.45),
-    ///     Menu(name: "Caffè Mocha", amount: 3.45)
-    /// ]
-    ///
-    /// UIAlertController.present(items, sourceView: button) { (item: Menu) -> Void in
-    ///     print("selected item:" item)
-    /// }
-    /// ```
-    ///
-    /// - Parameters:
-    ///   - sourceView: A source view that presented the alert. A required property
-    ///                 for iPad support.
-    ///   - handler: A block to invoke when an item is selected.
-    @discardableResult
-    public static func present<T: PickerOptions>(
-        _ items: [T],
-        sourceView: PopoverPresentationSourceView,
-        _ handler: @escaping (_ item: T) -> Void
-    ) -> UIAlertController {
-        let actions = items.map { item in
-            UIAlertAction(title: item.title, style: .default) { _ in
-                handler(item)
-            }
-        }
-
-        return present(actions: actions, sourceView: sourceView)
-    }
-
     /// A convenience method to display an action sheet with list of specified
     /// items.
     ///
@@ -197,7 +118,7 @@ extension UIAlertController {
     ///                 for iPad support.
     ///   - handler: A block to invoke when an item is selected.
     @discardableResult
-    public static func present(
+    static func present(
         _ items: [String],
         title: String? = nil,
         message: String? = nil,
