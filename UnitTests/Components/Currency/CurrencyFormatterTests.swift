@@ -12,141 +12,141 @@ final class CurrencyFormatterTests: TestCase {
     func testDollarsAndCents() {
         // US - Default
         CurrencyFormatter.shared.localeTest = .usa
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // India - Hindi
         CurrencyFormatter.shared.localeTest = .indiaHindi
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // India - Sanskrit
         CurrencyFormatter.shared.localeTest = .indiaSanskrit
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$१,०००.", "००"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$१.", "००"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$०.", "००"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$१.", "००"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$१,०००.", "००"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$१,०००.", "००"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$१.", "००"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$०.", "००"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$१.", "००"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$१,०००.", "००"))
 
         // Puerto Rico
         CurrencyFormatter.shared.localeTest = .puertoRico
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -10000.0) == ("-$10,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1000.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -10000.0), ("-$10,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // China
         CurrencyFormatter.shared.localeTest = .china
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // Canada - Fr
         CurrencyFormatter.shared.localeTest = .canadaFr
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1 000,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1 000,", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1 000,", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1,", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0,", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1,", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1 000,", "00"))
 
         // Canada - En
         CurrencyFormatter.shared.localeTest = .canadaEn
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // UK
         CurrencyFormatter.shared.localeTest = .uk
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // Mexico
         CurrencyFormatter.shared.localeTest = .mexico
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -10000.0) == ("-$10,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -10000.0), ("-$10,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // Brazil
         CurrencyFormatter.shared.localeTest = .brazil
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1.000,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1.000,", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1.000,", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1,", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0,", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1,", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1.000,", "00"))
 
         // Germany
         CurrencyFormatter.shared.localeTest = .germany
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1.000,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1.000,", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1.000,", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1,", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0,", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1,", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1.000,", "00"))
 
         // Japan
         CurrencyFormatter.shared.localeTest = .japan
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // Pakistan - Urdu
         CurrencyFormatter.shared.localeTest = .pakistanUrdu
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // Pakistan - Punjabi
         CurrencyFormatter.shared.localeTest = .pakistanPunjabi
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$۱٬۰۰۰٫", "۰۰"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$۱٫", "۰۰"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$۰٫", "۰۰"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$۱٫", "۰۰"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$۱٬۰۰۰٫", "۰۰"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$۱٬۰۰۰٫", "۰۰"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$۱٫", "۰۰"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$۰٫", "۰۰"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$۱٫", "۰۰"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$۱٬۰۰۰٫", "۰۰"))
 
         // Switzerland
         CurrencyFormatter.shared.localeTest = .switzerland
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1’000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1’000.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1’000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1’000.", "00"))
 
         // Ireland
         CurrencyFormatter.shared.localeTest = .ireland
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1,000.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1.", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // Indonesia
         CurrencyFormatter.shared.localeTest = .indonesia
-        XCTAssertTrue(dollarsAndCents(from: -1000.0) == ("-$1.000,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: -1.0) == ("-$1,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 0.0) == ("$0,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1.0) == ("$1,", "00"))
-        XCTAssertTrue(dollarsAndCents(from: 1000.0) == ("$1.000,", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1.000,", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1,", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0,", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1,", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1.000,", "00"))
     }
 
     func testCurrencyWithoutDecimals() {
@@ -193,6 +193,8 @@ final class CurrencyFormatterTests: TestCase {
         }
     }
 }
+
+// MARK: - Helpers
 
 extension CurrencyFormatterTests {
     fileprivate enum Locale: String, CaseIterable {

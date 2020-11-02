@@ -54,6 +54,8 @@ extension ExtensibleByAssociatedObject {
     }
 }
 
+// MARK: - AssociationPolicy
+
 public enum AssociationPolicy {
     /// Specifies a weak reference to the associated object.
     case weak

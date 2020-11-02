@@ -24,7 +24,8 @@ open class HUD: Appliable {
     private lazy var viewController = ViewController().apply {
         $0.backgroundColor = appearance?.backgroundColor ?? backgroundColor
     }
-    var view: UIView {
+
+    public var view: UIView {
         viewController.view
     }
 
@@ -50,7 +51,12 @@ open class HUD: Appliable {
     }
 
     public init() {
-        window = UIWindow(frame: UIScreen.main.bounds)
+        if let windowScene = UIApplication.sharedOrNil?.firstWindowScene {
+            window = UIWindow(windowScene: windowScene)
+        } else {
+            window = UIWindow(frame: UIScreen.main.bounds)
+        }
+
         commonInit()
     }
 
@@ -68,6 +74,7 @@ open class HUD: Appliable {
 
     private func setDefaultWindowLevel() {
         windowLevel = .top
+        appearance?.adjustWindowAttributes?(window)
     }
 
     private lazy var adjustWindowAttributes: ((_ window: UIWindow) -> Void)? = { [weak self] _ in
@@ -109,7 +116,7 @@ open class HUD: Appliable {
             case .style(let value):
                 viewController.statusBarStyle = value
             case .inherit:
-                let value = UIApplication.sharedOrNil?.keyWindow?.topViewController?.preferredStatusBarStyle
+                let value = UIApplication.sharedOrNil?.firstSceneKeyWindow?.topViewController?.preferredStatusBarStyle
                 viewController.statusBarStyle = value ?? .default
         }
     }
@@ -380,6 +387,20 @@ extension HUD {
     /// ```
     final public class Appearance: Appliable {
         public var backgroundColor: UIColor = .white
+        fileprivate var adjustWindowAttributes: ((_ window: UIWindow) -> Void)?
+
+        /// A block to adjust window attributes (e.g., level or make it key) so this HUD
+        /// is displayed appropriately.
+        ///
+        /// For example, you can adjust the window level so this HUD is always shown
+        /// behind the passcode screen to ensure that this HUD is not shown before user
+        /// is fully authorized.
+        ///
+        /// - Note: By default, window level is set so it appears on the top of the
+        /// currently visible window.
+        public func adjustWindowAttributes(_ callback: @escaping (_ window: UIWindow) -> Void) {
+            adjustWindowAttributes = callback
+        }
     }
 
     private static var appearanceStorage: [String: Appearance] = [:]

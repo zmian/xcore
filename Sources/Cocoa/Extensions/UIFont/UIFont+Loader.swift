@@ -7,7 +7,7 @@
 import UIKit
 
 extension UIFont {
-    public enum LoaderError: Error {
+    enum LoaderError: Error {
         case fontNotFound
         case remoteFontUrlDetected
         case failedToCreateFont
@@ -20,7 +20,7 @@ extension UIFont {
     /// - Parameters:
     ///   - fontName: The font name to register.
     ///   - fontUrl: The local url where the font is located.
-    public static func registerIfNeeded(fontName: String, url fontUrl: URL) throws {
+    static func registerIfNeeded(fontName: String, url fontUrl: URL) throws {
         let name = fontName.deletingPathExtension
 
         // Check if the given font is not already registered with font manager before
@@ -37,7 +37,7 @@ extension UIFont {
     /// - Parameters:
     ///   - fontName: The font name to unregister.
     ///   - fontUrl: The local url where the font is located.
-    public static func unregisterIfExists(fontName: String, url fontUrl: URL) throws {
+    static func unregisterIfExists(fontName: String, url fontUrl: URL) throws {
         let name = fontName.deletingPathExtension
 
         // Check if the given font is registered with font manager before
@@ -53,12 +53,15 @@ extension UIFont {
     ///
     /// - Parameters:
     ///   - fontUrl: The font url to be registered.
-    ///   - unregisterOldFirstIfExists: An option to unregister old font first if it exists.
-    ///                                 This is useful if the same font is updated, then unregistering
-    ///                                 the font from font manager first, then registering the new font again.
-    ///                                 The default value is `false`.
+    ///   - unregisterOldFirstIfExists: An option to unregister old font first if it
+    ///     exists. This is useful if the same font is updated, then unregistering
+    ///     the font from font manager first, then registering the new font again.
+    ///     The default value is `false`.
     /// - Returns: Returns the post script name of the font.
-    public static func register(url fontUrl: URL, unregisterOldFirstIfExists: Bool = false) throws -> String {
+    static func register(
+        url fontUrl: URL,
+        unregisterOldFirstIfExists: Bool = false
+    ) throws -> String {
         let (cgFont, fontName) = try metadata(from: fontUrl)
 
         // Check if the given font is already registered with font manager.
@@ -91,7 +94,7 @@ extension UIFont {
     /// Unregisters the font at given url with the font manager.
     ///
     /// - Parameter fontUrl: The font url to be unregistered.
-    public static func unregister(url fontUrl: URL) throws {
+    static func unregister(url fontUrl: URL) throws {
         let (cgFont, fontName) = try metadata(from: fontUrl)
         try unregister(cgFont: cgFont, fontName: fontName)
     }

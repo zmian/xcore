@@ -6,6 +6,8 @@
 
 import UIKit
 
+// MARK: - Edges
+
 extension NSLayoutConstraint {
     public struct Edges {
         public let top: NSLayoutConstraint
@@ -45,15 +47,23 @@ extension NSLayoutConstraint {
             trailing.constant = value
         }
 
-        public func activate() {
+        @discardableResult
+        public func activate() -> Self {
             constraints.activate()
+            return self
         }
 
-        public func deactivate() {
+        @discardableResult
+        public func deactivate() -> Self {
             constraints.deactivate()
+            return self
         }
     }
+}
 
+// MARK: - Size
+
+extension NSLayoutConstraint {
     public struct Size {
         public let width: NSLayoutConstraint
         public let height: NSLayoutConstraint
@@ -87,12 +97,16 @@ extension NSLayoutConstraint {
             height.isActive = height.constant != 0
         }
 
-        public func activate() {
+        @discardableResult
+        public func activate() -> Self {
             constraints.activate()
+            return self
         }
 
-        public func deactivate() {
+        @discardableResult
+        public func deactivate() -> Self {
             constraints.deactivate()
+            return self
         }
     }
 }

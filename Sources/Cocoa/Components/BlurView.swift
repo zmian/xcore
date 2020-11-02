@@ -30,7 +30,7 @@ public class BlurView: XCView {
     ///
     /// - Note:
     /// When this property is `true` it only enables blur effect when
-    /// `UIAccessibilityIsReduceTransparencyEnabled()` is `false`. Otherwise,
+    /// `UIAccessibilityIsReduceTransparencyEnabled()` is `false`; otherwise,
     /// `blurEffectDisabledBackgroundColor` value is used instead of the blur effect.
     public var isBlurEffectEnabled = true {
         didSet {

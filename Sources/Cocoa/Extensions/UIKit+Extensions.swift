@@ -10,13 +10,13 @@ import ObjectiveC
 
 /// Attempts to open the resource at the specified URL.
 ///
-/// Requests are made using `SafariViewController` if available;
-/// otherwise it uses `UIApplication:openURL`.
+/// Requests are made using `SafariViewController` if available; otherwise, it
+/// uses `UIApplication:openURL`.
 ///
 /// - Parameters:
 ///   - url:  The url to open.
 ///   - from: A view controller that wants to open the url.
-public func open(url: URL, from viewController: UIViewController) {
+func open(url: URL, from viewController: UIViewController) {
     let vc = SFSafariViewController(url: url)
     viewController.present(vc, animated: true, completion: nil)
 }

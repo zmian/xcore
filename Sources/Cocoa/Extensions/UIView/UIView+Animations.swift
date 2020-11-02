@@ -71,7 +71,7 @@ extension UIView {
         withDuration duration: TimeInterval = .fast,
         _ animations: @escaping () -> Void
     ) {
-        animateFromCurrentState(withDuration: duration, animations: animations) {}
+        animateFromCurrentState(withDuration: duration, animations: animations) { }
     }
 
     public static func animateFromCurrentState(
@@ -222,10 +222,7 @@ extension UIView {
 
 extension NSObjectProtocol where Self: UIView {
     public func withFadeAnimation(_ block: (_ view: Self) -> Void) {
-        CATransition().apply {
-            $0.duration = .default
-            $0.timingFunction = .easeInEaseOut
-            $0.type = .fade
+        CATransition.fade.apply {
             layer.add($0, forKey: "fade")
             block(self)
         }

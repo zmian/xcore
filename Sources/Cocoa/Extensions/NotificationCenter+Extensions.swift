@@ -221,7 +221,6 @@ extension NotificationCenter.Event {
     }
 
     @discardableResult
-    @available(iOS 13.0, *)
     public func accessibilityDifferentiateWithoutColorStatusDidChange(_ callback: @escaping () -> Void) -> NSObjectProtocol {
         observe(Notification.Name(rawValue: UIAccessibility.differentiateWithoutColorDidChangeNotification), callback)
     }
@@ -248,7 +247,7 @@ extension NotificationCenter.Event {
     }
 }
 
-// MARK: NotificationObject
+// MARK: - NotificationObject
 
 public protocol NotificationObject {
     var name: Notification.Name { get }

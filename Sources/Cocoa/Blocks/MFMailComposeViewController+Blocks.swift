@@ -6,7 +6,6 @@
 
 import UIKit
 import MessageUI
-import ObjectiveC
 
 extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
@@ -57,7 +56,9 @@ extension MFMailComposeViewController {
         }
     }
 
-    public func didFinishWithResult(_ handler: @escaping (_ controller: MFMailComposeViewController, _ result: Result) -> Void) {
+    public func didFinishWithResult(
+        _ handler: @escaping (_ controller: MFMailComposeViewController, _ result: Result) -> Void
+    ) {
         mailComposeDelegate = self
         actionHandlerWrapper = ClosureWrapper(handler)
     }

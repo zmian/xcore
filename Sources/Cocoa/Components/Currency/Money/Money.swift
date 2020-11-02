@@ -42,6 +42,19 @@ public struct Money: Equatable, Hashable, MutableAppliable {
         shouldSuperscriptMinorUnit = Self.appearance().shouldSuperscriptMinorUnit
     }
 
+    public init?(_ amount: Double?) {
+        guard let amount = amount else {
+            return nil
+        }
+
+        self.init(amount)
+    }
+
+    /// The currency formatter used to format the amount.
+    ///
+    /// The default value is `.shared`.
+    public var formatter: CurrencyFormatter = .shared
+
     /// The style used to format money components.
     ///
     /// The default value is `.default`.
@@ -75,7 +88,7 @@ public struct Money: Equatable, Hashable, MutableAppliable {
     public var shouldSuperscriptMinorUnit: Bool
 
     public var accessibilityLabel: String {
-        CurrencyFormatter.shared.string(from: amount, style: style)
+        formatter.string(from: amount, style: style)
     }
 }
 
@@ -107,7 +120,7 @@ extension Money: ExpressibleByIntegerLiteral {
 
 extension Money: CustomStringConvertible {
     public var description: String {
-        CurrencyFormatter.shared.string(from: self)
+        formatter.string(from: self)
     }
 }
 
@@ -115,7 +128,7 @@ extension Money: CustomStringConvertible {
 
 extension Money: StringRepresentable {
     public var stringSource: StringSourceType {
-        .attributedString(CurrencyFormatter.shared.attributedString(from: self))
+        .attributedString(formatter.attributedString(from: self))
     }
 }
 
@@ -178,6 +191,12 @@ extension Money {
         sign(.default)
     }
 
+    /// Signed positive amount with (`"+"`), minus (`""`) and `0` amount omits
+    /// `+` or `-` sign.
+    public func positiveSigned() -> Self {
+        sign(.init(plus: amount == 0 ? "" : "+", minus: ""))
+    }
+
     /// Zero amount will be displayed as "--".
     ///
     /// See: `zeroString` to customize the default value.
@@ -188,10 +207,10 @@ extension Money {
     }
 
     public func attributedString(format: String? = nil) -> NSAttributedString {
-        CurrencyFormatter.shared.attributedString(from: self, format: format)
+        formatter.attributedString(from: self, format: format)
     }
 
     public func string(format: String? = nil) -> String {
-        CurrencyFormatter.shared.string(from: self, format: format)
+        formatter.string(from: self, format: format)
     }
 }

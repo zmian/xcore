@@ -5,9 +5,8 @@
 //
 
 import AVFoundation
-import ObjectiveC
 
-// MARK: Current Playback Time monitoring
+// MARK: - Current Playback Time monitoring
 
 extension AVPlayer {
     public var isPlaying: Bool {
@@ -87,7 +86,7 @@ extension CMTime {
     }
 }
 
-// MARK: RemoteOrLocalInstantiable
+// MARK: - RemoteOrLocalInstantiable
 
 // Convenience methods for initializing videos
 

@@ -18,7 +18,7 @@ extension URL {
         self.init(string: string)
     }
 
-    /// GraphQL operation name associated with the request.
+    /// Query value associated with the request.
     ///
     /// ```
     /// let url = URL(string: "https://example.com/?q=HelloWorld")!

@@ -19,7 +19,7 @@ final public class UserDefaultsAnalyticsProvider: AnalyticsProvider {
         self.suiteName = named ?? name(of: UserDefaultsAnalyticsProvider.self)
     }
 
-    public func track(_ event: AnalyticsEvent) {
+    public func track(_ event: AnalyticsEventProtocol) {
         let properties = event.properties ?? [:]
         userDefaults.set(properties, forKey: event.name)
     }

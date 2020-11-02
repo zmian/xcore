@@ -1,52 +1,25 @@
 PODS:
-  - Haring (2.0.8)
-  - PromiseKit (6.13.1):
-    - PromiseKit/CorePromise (= 6.13.1)
-    - PromiseKit/Foundation (= 6.13.1)
-    - PromiseKit/UIKit (= 6.13.1)
-  - PromiseKit/CorePromise (6.13.1)
-  - PromiseKit/Foundation (6.13.1):
-    - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.13.1):
-    - PromiseKit/CorePromise
   - SDWebImage (5.8.1):
     - SDWebImage/Core (= 5.8.1)
   - SDWebImage/Core (5.8.1)
-  - SnapKit (5.0.1)
   - Xcore (1.0.0):
-    - Haring
-    - PromiseKit
     - SDWebImage
-    - SnapKit
 
 DEPENDENCIES:
-  - Haring (from `https://github.com/zmian/Haring`)
   - Xcore (from `./Local.podspec`)
 
 SPEC REPOS:
   trunk:
-    - PromiseKit
     - SDWebImage
-    - SnapKit
 
 EXTERNAL SOURCES:
-  Haring:
-    :git: https://github.com/zmian/Haring
   Xcore:
     :path: "./Local.podspec"
 
-CHECKOUT OPTIONS:
-  Haring:
-    :commit: 27af7e9908d7ff6118897a6ff9394eb56c6480ff
-    :git: https://github.com/zmian/Haring
-
 SPEC CHECKSUMS:
-  Haring: 77ee0c4f94a40975849bf336af93174f189b8de7
-  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   SDWebImage: e3eae2eda88578db0685a0c88597fdadd9433f05
-  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  Xcore: dc051b7e971e735969268cc23bcd5a93703eb1f5
+  Xcore: 6b1e39d67189b89b36bdcc8037dbf31ab6ee84c7
 
-PODFILE CHECKSUM: b726407381b1d3271828c106e076ee9a697a08e1
+PODFILE CHECKSUM: 94b7096eabff908ee4afc97167ff28ec2f4a3250
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.0

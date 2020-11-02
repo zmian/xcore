@@ -13,6 +13,14 @@ extension NSObject {
 }
 
 extension NSObject {
+    func synchronized<T>(_ work: () throws -> T) rethrows -> T {
+        objc_sync_enter(self)
+        defer { objc_sync_exit(self) }
+        return try work()
+    }
+}
+
+extension NSObject {
     /// Returns the value for the property identified by a given key.
     ///
     /// The search pattern that `valueForKey:` uses to find the correct value
@@ -36,12 +44,12 @@ extension NSObject {
     }
 }
 
-// MARK: LookupComparison
+// MARK: - Lookup Comparison
 
 extension NSObject {
     public enum LookupComparison {
-        /// Indicates whether the receiver is an instance of given class or an
-        /// instance of any class that inherits from that class.
+        /// Indicates whether the receiver is an instance of given class or an instance
+        /// of any class that inherits from that class.
         case kindOf
 
         /// The dynamic type.
@@ -50,11 +58,14 @@ extension NSObject {
 
     /// - Parameters:
     ///   - aClass: A class object representing the Objective-C class to be tested.
-    ///   - comparison: The comparison option to use when comparing `self` to `aClass`.
+    ///   - comparison: The comparison option to use when comparing `self` to
+    ///                 `aClass`.
     ///
-    /// - Returns: When option is `.kindOf` then this method returns true if `aClass` is a Class object of the same type.
-    ///            Otherwise, `.typeOf` does direct check to ensure `aClass` is the same object and not a subclass.
-    public func isType(of aClass: Swift.AnyClass, comparison: LookupComparison) -> Bool {
+    /// - Returns: When option is `.kindOf` then this method returns true if
+    ///            `aClass` is a Class object of the same type; otherwise, `.typeOf`
+    ///            does direct check to ensure `aClass` is the same object and not a
+    ///            subclass.
+    func isType(of aClass: Swift.AnyClass, comparison: LookupComparison) -> Bool {
         switch comparison {
             case .kindOf:
                 return isKind(of: aClass)
@@ -64,11 +75,11 @@ extension NSObject {
     }
 }
 
-// MARK: Property List
+// MARK: - Property List
 
 extension NSObject {
     /// Returns a dictionary of the properties declared by the object.
-    public func propertyList() -> [String: String] {
+    func propertyList() -> [String: String] {
         var count: UInt32 = 0
 
         guard let properties = class_copyPropertyList(object_getClass(self), &count) else {

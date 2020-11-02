@@ -188,7 +188,7 @@ extension Array where Element: Equatable {
 extension Array where Element: RawRepresentable {
     /// Return an array containing all corresponding `rawValue`s of `self`.
     public var rawValues: [Element.RawValue] {
-        map { $0.rawValue }
+        map(\.rawValue)
     }
 }
 
@@ -210,31 +210,9 @@ extension Array where Element == String? {
     ///                        this sequence. The default value is an empty string.
     /// - Returns: A single, concatenated string.
     public func joined(separator: String = "") -> String {
-        lazy.compactMap { $0 }.filter { !$0.isBlank }.joined(separator: separator)
-    }
-}
-
-extension Array {
-    func binarySearch<T>(target: T, transform: (Element) -> T, _ comparison: (T, T) -> ComparisonResult) -> Int? {
-        var localRange = 0..<count
-
-        while localRange.startIndex < localRange.endIndex {
-            // Find the middle point in the array within the given range
-            let midIndex: Int = localRange.startIndex + (localRange.endIndex - localRange.startIndex) / 2
-            let comparableObject = transform(self[midIndex])
-            let result = comparison(comparableObject, target)
-            switch result {
-                case .orderedSame:
-                    // If we found our search key, return the index
-                    return midIndex
-                case .orderedAscending:
-                    // If the middle value is less than the target, look at the right half
-                    localRange = (midIndex + 1)..<localRange.endIndex
-                case .orderedDescending:
-                    // If the midle value is greater than the target, look at the left half
-                    localRange = localRange.startIndex..<midIndex
-            }
-        }
-        return nil
+        lazy
+            .compactMap { $0 }
+            .filter { !$0.isBlank }
+            .joined(separator: separator)
     }
 }

@@ -10,24 +10,24 @@ import XCTest
 final class ReflectionTests: TestCase {
     func testName() {
         let myViewControllerInstance = MyViewController()
-        XCTAssert(typeName(of: myViewControllerInstance) == "UnitTests.MyViewController")
-        XCTAssert(typeName(of: MyViewController.self) == "UnitTests.MyViewController")
-        XCTAssert(typeName(of: MyView.self) == "UnitTests.MyView")
-        XCTAssert(MyProtocolClass().typeName == "UnitTests.MyProtocolClass")
-        XCTAssert(MyProtocolClass().instanceName == "UnitTests.MyProtocolClass")
-        XCTAssert(MyProtocolClass.staticTypeName_1 == "UnitTests.MyProtocolClass")
-        XCTAssert(MyProtocolClass.staticTypeName_2 == "UnitTests.MyProtocolClass")
+        XCTAssertEqual(typeName(of: myViewControllerInstance), "UnitTests.MyViewController")
+        XCTAssertEqual(typeName(of: MyViewController.self), "UnitTests.MyViewController")
+        XCTAssertEqual(typeName(of: MyView.self), "UnitTests.MyView")
+        XCTAssertEqual(MyProtocolClass().typeName, "UnitTests.MyProtocolClass")
+        XCTAssertEqual(MyProtocolClass().instanceName, "UnitTests.MyProtocolClass")
+        XCTAssertEqual(MyProtocolClass.staticTypeName_1, "UnitTests.MyProtocolClass")
+        XCTAssertEqual(MyProtocolClass.staticTypeName_2, "UnitTests.MyProtocolClass")
 
         // Class
-        XCTAssert(typeName(of: DynamicTableView.self) == "Xcore.DynamicTableView")
-        XCTAssert(typeName(of: DynamicTableView()) == "Xcore.DynamicTableView")
+        XCTAssertEqual(typeName(of: DynamicTableView.self), "Xcore.DynamicTableView")
+        XCTAssertEqual(typeName(of: DynamicTableView()), "Xcore.DynamicTableView")
         // Enum
-        XCTAssert(typeName(of: FeatureFlag.self) == "Xcore.FeatureFlag")
-        XCTAssert(typeName(of: StringSourceType.self) == "Xcore.StringSourceType")
-        XCTAssert(typeName(of: StringSourceType.string("Hello")) == "Xcore.StringSourceType")
+        XCTAssertEqual(typeName(of: FeatureFlag.self), "Xcore.FeatureFlag")
+        XCTAssertEqual(typeName(of: StringSourceType.self), "Xcore.StringSourceType")
+        XCTAssertEqual(typeName(of: StringSourceType.string("Hello")), "Xcore.StringSourceType")
         // Struct
-        XCTAssert(typeName(of: Version.self) == "Xcore.Version")
-        XCTAssert(typeName(of: Version(rawValue: "1.0.0")) == "Xcore.Version")
+        XCTAssertEqual(typeName(of: Version.self), "Xcore.Version")
+        XCTAssertEqual(typeName(of: Version(rawValue: "1.0.0")), "Xcore.Version")
     }
 }
 

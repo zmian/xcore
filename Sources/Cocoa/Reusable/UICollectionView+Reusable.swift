@@ -23,21 +23,11 @@ extension UICollectionView {
     }
 
     private func register<T: UICollectionViewCell>(_ cell: T.Type) {
-        guard let nib = UINib(named: String(describing: cell), bundle: Bundle(for: T.self)) else {
-            register(cell, forCellWithReuseIdentifier: T.reuseIdentifier)
-            return
-        }
-
-        register(nib, forCellWithReuseIdentifier: T.reuseIdentifier)
+        register(cell, forCellWithReuseIdentifier: T.reuseIdentifier)
     }
 
     private func registerSupplementaryView<T: UICollectionReusableView>(kind: SupplementaryViewKind, view: T.Type) {
-        guard let nib = UINib(named: String(describing: view), bundle: Bundle(for: T.self)) else {
-            register(view, forSupplementaryViewOfKind: kind.rawValue, withReuseIdentifier: T.reuseIdentifier)
-            return
-        }
-
-        register(nib, forSupplementaryViewOfKind: kind.rawValue, withReuseIdentifier: T.reuseIdentifier)
+        register(view, forSupplementaryViewOfKind: kind.rawValue, withReuseIdentifier: T.reuseIdentifier)
     }
 
     private func registerIfNeeded<T: UICollectionViewCell>(_ cell: T.Type) {

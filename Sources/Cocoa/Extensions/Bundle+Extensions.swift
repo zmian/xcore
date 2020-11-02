@@ -7,15 +7,17 @@
 import UIKit
 
 extension Bundle {
-    /// Returns the `Bundle` object with which the specified class name is associated.
+    /// Returns the `Bundle` object with which the specified class name is
+    /// associated.
     ///
-    /// The `Bundle` object that dynamically loaded `forClassName` (a loadable bundle),
-    /// the `Bundle` object for the framework in which `forClassName` is defined, or the
-    /// main bundle object if `forClassName` was not dynamically loaded or is not defined
-    /// in a framework.
+    /// The `Bundle` object that dynamically loaded `forClassName` (a loadable
+    /// bundle), the `Bundle` object for the framework in which `forClassName` is
+    /// defined, or the main bundle object if `forClassName` was not dynamically
+    /// loaded or is not defined in a framework.
     ///
-    /// This method creates and returns a new `Bundle` object if there is no existing
-    /// bundle associated with `forClassName`. Otherwise, the existing instance is returned.
+    /// This method creates and returns a new `Bundle` object if there is no
+    /// existing bundle associated with `forClassName`; otherwise, the existing
+    /// instance is returned.
     public convenience init?(forClassName className: String) {
         guard let aClass = NSClassFromString(className) else {
             return nil

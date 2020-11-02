@@ -18,7 +18,7 @@ final public class HapticFeedback {
         self.createGenerator = generator
         // Workaround for compiler error (Variable 'self.triggerBlock' used before being
         // initialized).
-        self.triggerBlock = {}
+        self.triggerBlock = { }
         self.customTriggerBlock(trigger)
     }
 
@@ -99,17 +99,9 @@ extension HapticFeedback {
             case .heavy:
                 return heavyImpactFeedbackGenerator
             case .soft:
-                if #available(iOS 13.0, *) {
-                    return .softImpactFeedbackGenerator
-                } else {
-                    return .lightImpactFeedbackGenerator
-                }
+                return .softImpactFeedbackGenerator
             case .rigid:
-                if #available(iOS 13.0, *) {
-                    return .rigidImpactFeedbackGenerator
-                } else {
-                    return .heavyImpactFeedbackGenerator
-                }
+                return .rigidImpactFeedbackGenerator
             @unknown default:
                 fatalError(because: .unknownCaseDetected(style))
         }
@@ -126,9 +118,9 @@ extension HapticFeedback {
     public static let selection = HapticFeedback(UISelectionFeedbackGenerator()) { $0.selectionChanged() }
 }
 
-extension HapticFeedback {
-    // MARK: - UIImpactFeedbackGenerator
+// MARK: - UIImpactFeedbackGenerator
 
+extension HapticFeedback {
     private static let lightImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .light)) {
         $0.impactOccurred()
     }
@@ -141,17 +133,17 @@ extension HapticFeedback {
         $0.impactOccurred()
     }
 
-    @available(iOS 13.0, *)
     private static let softImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .soft)) {
         $0.impactOccurred()
     }
 
-    @available(iOS 13.0, *)
     private static let rigidImpactFeedbackGenerator = HapticFeedback(UIImpactFeedbackGenerator(style: .rigid)) {
         $0.impactOccurred()
     }
+}
 
-    // MARK: - UINotificationFeedbackGenerator
+// MARK: - UINotificationFeedbackGenerator
 
+extension HapticFeedback {
     private static let notificationFeedbackGenerator = HapticFeedback(UINotificationFeedbackGenerator()) { _ in }
 }

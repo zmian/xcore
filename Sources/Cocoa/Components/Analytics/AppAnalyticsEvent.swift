@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct AppAnalyticsEvent: AnalyticsEvent, UserInfoContainer {
+public struct AppAnalyticsEvent: AnalyticsEventProtocol, UserInfoContainer {
     public let name: String
     public let properties: [String: Any]?
     public let additionalProviders: [AnalyticsProvider]?

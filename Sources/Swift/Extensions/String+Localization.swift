@@ -25,7 +25,7 @@ public struct StringsFile: RawRepresentable, Equatable {
     /// - Parameters:
     ///   - rawValue: The name of the `.strings` file.
     ///   - fallbackBundle: The bundle to use if the given `.strings` file isn't
-    ///                     found in the `.main` bundle.
+    ///     found in the `.main` bundle.
     public init(rawValue: String, fallback fallbackBundle: Bundle) {
         self.rawValue = rawValue
 
@@ -44,41 +44,38 @@ extension StringsFile: ExpressibleByStringLiteral {
 }
 
 extension String {
-    /// Use this method to localize your strings from a specific file without
-    /// arguments.
+    /// Returns a localized string, from a specific file without arguments.
     ///
     /// - Parameters:
     ///   - file: The name of the `.strings` file.
     ///   - comment: The comment to place above the key-value pair in the strings file.
-    /// - Returns: It returns the translation found in the provided `.strings`
-    ///            file. If the translation cannot be found it will return its
-    ///            own value.
-    public func localized(file: StringsFile, comment: String = "") -> String {
+    /// - Returns: It returns the translation found in the provided `.strings` file.
+    ///   If the translation cannot be found it will return its own value.
+    public func localized(file: StringsFile? = nil, comment: String = "") -> String {
         NSLocalizedString(
             self,
-            tableName: file.rawValue,
-            bundle: file.bundle,
+            tableName: file?.rawValue,
+            bundle: file?.bundle ?? .main,
             comment: comment
         )
     }
 
-    /// Use this method to localize your strings from a specific file with
-    /// arguments.
+    /// Returns a localized string, from a specific file with arguments.
     ///
     /// - Parameters:
     ///   - file: The name of the `.strings` file.
     ///   - comment: The comment to place above the key-value pair in the strings file.
     ///   - arguments: Pass the arguments you want to replace your strings
-    ///                placeholders with.
-    /// - Returns: It returns the translation found in the provided `.strings`
-    ///            file with the arguments inserted. If the translation cannot
-    ///            be found it will return its own value.
-    public func localized(file: StringsFile, comment: String = "", _ arguments: CVarArg...) -> String {
+    ///     placeholders with.
+    /// - Returns: It returns the translation found in the provided `.strings` file
+    ///   with the arguments inserted. If the translation cannot be found it will
+    ///   return its own value.
+    public func localized(file: StringsFile? = nil, comment: String = "", _ arguments: CVarArg...) -> String {
         String(
             format: NSLocalizedString(
                 self,
-                tableName: file.rawValue,
-                bundle: file.bundle,
+                tableName: file?.rawValue,
+                bundle: file?.bundle ?? .main,
                 comment: ""
             ),
             arguments: arguments

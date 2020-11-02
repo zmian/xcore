@@ -8,10 +8,11 @@ import UIKit
 import ObjectiveC
 
 extension UIButton {
-    /// This configuration exists to allow some of the properties
-    /// to be configured to match app's appearance style.
-    /// The `UIAppearance` protocol doesn't work when the stored properites
-    /// are set using associated object.
+    /// This configuration exists to allow some of the properties to be configured
+    /// to match app's appearance style.
+    ///
+    /// The `UIAppearance` protocol doesn't work when the stored properites are set
+    /// using associated object.
     ///
     /// **For example:**
     ///
@@ -85,16 +86,18 @@ extension UIButton {
         set { setAssociatedObject(&AssociatedKey.borderColors, value: newValue) }
     }
 
-    /// A boolean property to provide visual feedback when the
-    /// button is highlighted. The default value is `.none`.
+    /// A boolean property to provide visual feedback when the button is
+    /// highlighted. The default value is `.none`.
     open var highlightedAnimation: HighlightedAnimationOptions {
         get { associatedObject(&AssociatedKey.highlightedAnimation, default: defaultAppearance.highlightedAnimation) }
         set { setAssociatedObject(&AssociatedKey.highlightedAnimation, value: newValue) }
     }
 
-    /// A boolean value that determines whether the `backgroundColor` changes when the button is highlighted.
+    /// A boolean value that determines whether the `backgroundColor` changes when
+    /// the button is highlighted.
     ///
-    /// If true, the `backgroundColor` is drawn darker when the button is highlighted. The default value is `true`.
+    /// If true, the `backgroundColor` is drawn darker when the button is
+    /// highlighted. The default value is `true`.
     @objc open dynamic var adjustsBackgroundColorWhenHighlighted: Bool {
         get { associatedObject(&AssociatedKey.adjustsBackgroundColorWhenHighlighted, default: true) }
         set { setAssociatedObject(&AssociatedKey.adjustsBackgroundColorWhenHighlighted, value: newValue) }
@@ -116,6 +119,7 @@ extension UIButton {
     }
 
     /// A property to set the height of the button automatically.
+    ///
     /// The default value is `false`.
     @objc open dynamic var isHeightSetAutomatically: Bool {
         get { associatedObject(&AssociatedKey.isHeightSetAutomatically, default: defaultAppearance.isHeightSetAutomatically) }
@@ -199,7 +203,7 @@ extension UIButton {
 }
 
 extension UIButton {
-    // MARK: Background Color
+    // MARK: - Background Color
 
     @objc open func backgroundColor(for state: UIControl.State) -> UIColor? {
         guard let color = backgroundColors[state.rawValue] else {
@@ -241,7 +245,7 @@ extension UIButton {
         }
     }
 
-    // MARK: Border Color
+    // MARK: - Border Color
 
     @objc open func borderColor(for state: UIControl.State) -> UIColor? {
         guard let color = borderColors[state.rawValue] else {
@@ -280,7 +284,7 @@ extension UIButton {
     }
 }
 
-// MARK: Convenience Aliases
+// MARK: - Convenience Aliases
 
 extension UIButton {
     /// The image used for the normal state.
@@ -349,7 +353,8 @@ extension UIButton {
         set { setBackgroundColor(newValue, for: .disabled) }
     }
 
-    /// Add space between `text` and `image` while preserving the `intrinsicContentSize` and respecting `sizeToFit`.
+    /// Add space between `text` and `image` while preserving the
+    /// `intrinsicContentSize` and respecting `sizeToFit`.
     @IBInspectable
     public var textImageSpacing: CGFloat {
         get {
@@ -372,8 +377,9 @@ extension UIButton {
     /// Sets the image on **background thread** to use for the specified state.
     ///
     /// - Parameters:
-    ///   - named:  The remote image url or local image name to use for the specified state.
-    ///   - state:  The state that uses the specified image.
+    ///   - named: The remote image url or local image name to use for the
+    ///            specified state.
+    ///   - state: The state that uses the specified image.
     public func image(_ named: ImageRepresentable?, for state: UIControl.State) {
         guard let named = named else {
             setImage(nil, for: .normal)
@@ -385,17 +391,13 @@ extension UIButton {
         }
     }
 
-    // MARK: Underline
+    // MARK: - Underline
 
     @objc open func underline() {
-        if let attributedText = titleLabel?.attributedText {
-            setAttributedTitle(NSMutableAttributedString(attributedString: attributedText).underline(attributedText.string), for: .normal)
-        } else if let text = titleLabel?.text {
-            setAttributedTitle(NSMutableAttributedString(string: text).underline(text), for: .normal)
-        }
+        titleLabel?.underline()
     }
 
-    // MARK: Reset
+    // MARK: - Reset
 
     @objc open func removeInsets() {
         contentEdgeInsets = 0
@@ -416,11 +418,15 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
     /// Creates and returns a new button of the specified type with action handler.
     ///
     /// - Parameters:
-    ///   - image:            The image to use for the normal state.
+    ///   - image: The image to use for the normal state.
     ///   - highlightedImage: The image to use for the highlighted state.
-    ///   - handler:          The block to invoke when the button is tapped.
+    ///   - handler: The block to invoke when the button is tapped.
     /// - Returns: A newly created button.
-    public init(image: UIImage?, highlightedImage: UIImage? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
+    public init(
+        image: UIImage?,
+        highlightedImage: UIImage? = nil,
+        _ handler: ((_ sender: Self) -> Void)? = nil
+    ) {
         self.init(type: .custom)
         setImage(image, for: .normal)
         setImage(highlightedImage, for: .highlighted)
@@ -445,7 +451,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
         }
     }
 
-    // MARK: Lifecycle Callbacks
+    // MARK: - Lifecycle Callbacks
 
     public func didSelect(_ callback: @escaping (_ sender: Self) -> Void) {
         didSelect = { sender in
@@ -490,9 +496,9 @@ extension UIButton {
     /// A convenience method to pass the `touchUpInside` event to the
     /// `UICollectionViewDelegate.didSelectItemAt` method.
     ///
-    /// This convenience method omits the need to create a callback for
-    /// the button and have the cell listen for it and then manually call the
-    /// `didSelectItemAt` logic in multiple places.
+    /// This convenience method omits the need to create a callback for the button
+    /// and have the cell listen for it and then manually call the `didSelectItemAt`
+    /// logic in multiple places.
     @objc open func forwardTouchUpInsideActionToCollectionViewDelegate() {
         action { [weak self] _ in
             guard let strongSelf = self, let cell = strongSelf.collectionViewCell else { return }
@@ -505,7 +511,7 @@ extension UIButton {
     }
 }
 
-// MARK: Hit Area
+// MARK: - Hit Area
 
 extension UIButton {
     /// Increase button touch area.
@@ -564,12 +570,11 @@ extension UIButton {
     }
 }
 
-// MARK: Lifecycle Events
+// MARK: - Lifecycle Events
 
 extension UIButton {
     // A method that is called when the state changes.
-    @objc open func stateDidChange(_ state: UIControl.State) {
-    }
+    @objc open func stateDidChange(_ state: UIControl.State) { }
 
     @objc private func swizzled_isSelectedSetter(newValue: Bool) {
         let oldValue = isSelected
@@ -614,7 +619,7 @@ extension UIButton {
     }
 }
 
-// MARK: Swizzle
+// MARK: - Swizzle
 
 extension UIButton {
     static func runOnceSwapSelectors() {
@@ -635,7 +640,5 @@ extension UIButton {
             originalSelector: #selector(setter: UIButton.isEnabled),
             swizzledSelector: #selector(UIButton.swizzled_isEnabledSetter(newValue:))
         )
-
-        UIButton.swizzle_runOnceSwapSelectors()
     }
 }

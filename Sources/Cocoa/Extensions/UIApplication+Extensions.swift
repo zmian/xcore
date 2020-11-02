@@ -66,10 +66,10 @@ extension UIApplication {
     }
 }
 
-// MARK: TopViewController
+// MARK: - TopViewController
 
 extension UIApplication {
-    open class func topViewController(_ base: UIViewController? = UIApplication.sharedOrNil?.keyWindow?.rootViewController) -> UIViewController? {
+    open class func topViewController(_ base: UIViewController? = UIApplication.sharedOrNil?.firstSceneKeyWindow?.rootViewController) -> UIViewController? {
         if let nav = base as? UINavigationController {
             return topViewController(nav.visibleViewController)
         }
@@ -111,7 +111,7 @@ extension UIApplication {
     }
 }
 
-// MARK: UIWindow - TopViewController
+// MARK: - UIWindow - TopViewController
 
 extension UIWindow {
     /// The view controller at the top of the window's `rootViewController` stack.
@@ -128,5 +128,32 @@ extension UIApplication {
     /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
     public func window(_ keyPaths: KeyPath<UIWindow, Bool>...) -> UIWindow? {
         windows.reversed().first(keyPaths)
+    }
+
+    /// Iterates through app's first currently active scene's `windows` from top to
+    /// bottom and returns window matching the given `keyPaths`.
+    ///
+    /// - Returns: Returns an optional window object based on attributes options.
+    /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
+    public func sceneWindow(_ keyPaths: KeyPath<UIWindow, Bool>...) -> UIWindow? {
+        firstWindowScene?
+            .windows
+            .lazy
+            .reversed()
+            .first(keyPaths)
+    }
+
+    /// Returns the app's first currently active scene's first key window.
+    public var firstSceneKeyWindow: UIWindow? {
+        sceneWindow(\.isKeyWindow)
+    }
+
+    /// Returns the app's first currently active window scene.
+    public var firstWindowScene: UIWindowScene? {
+        connectedScenes
+            .lazy
+            .filter { $0.activationState == .foregroundActive }
+            .compactMap { $0 as? UIWindowScene }
+            .first
     }
 }

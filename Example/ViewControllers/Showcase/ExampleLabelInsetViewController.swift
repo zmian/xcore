@@ -6,11 +6,18 @@
 
 import Foundation
 
+extension ExampleLabelInsetViewController {
+    private enum Constants {
+        static let padding: CGFloat = 8
+        static let cornerRadius: CGFloat = 13
+    }
+}
+
 final class ExampleLabelInsetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "UILabel + ContentInset"
-        view.backgroundColor = Theme.current.backgroundColor
+        view.backgroundColor = .systemBackground
         setupContentView()
     }
 
@@ -18,62 +25,69 @@ final class ExampleLabelInsetViewController: UIViewController {
         let label = UILabel().apply {
             $0.text = "This has horizontal inset"
             $0.contentInset = UIEdgeInsets(horizontal: .maximumPadding)
-            $0.backgroundColor = .gray
+            $0.backgroundColor = .tertiarySystemBackground
             $0.numberOfLines = 0
         }
         let label2 = UILabel().apply {
             $0.text = "This has horizontal and vertical inset."
             $0.contentInset = .maximumPadding
-            $0.backgroundColor = .gray
+            $0.backgroundColor = .tertiarySystemBackground
             $0.numberOfLines = 0
         }
         let label3 = UILabel().apply {
             $0.text = "100w constrained."
             $0.contentInset = UIEdgeInsets(horizontal: .maximumPadding)
-            $0.backgroundColor = .gray
+            $0.backgroundColor = .tertiarySystemBackground
             $0.numberOfLines = 0
         }
         let label4 = UILabel().apply {
             $0.text = "100h 100w constrained."
             $0.contentInset = UIEdgeInsets(horizontal: .maximumPadding)
-            $0.backgroundColor = .gray
+            $0.backgroundColor = .tertiarySystemBackground
             $0.numberOfLines = 0
         }
         let label5 = UILabel().apply {
-            $0.text = "This is label is constrained to 300h 150w."
+            $0.text = "This is label is constrained to 200h 150w."
             $0.contentInset = UIEdgeInsets(horizontal: .maximumPadding)
-            $0.backgroundColor = .gray
+            $0.backgroundColor = .tertiarySystemBackground
             $0.numberOfLines = 0
         }
         let stackView = UIStackView(arrangedSubviews: [
+            SpacerView(height: Constants.padding),
             label,
             label2,
             label3,
             label4,
-            label5
+            label5,
+            SpacerView(height: Constants.padding)
         ]).apply {
             $0.axis = .vertical
             $0.alignment = .center
-            $0.backgroundColor = .blue
-            $0.spacing = 10
+            $0.spacing = Constants.padding
+            $0.backgroundColor = .secondarySystemBackground
+            $0.borderColor = .quaternarySystemFill
+            $0.borderWidth = 1
+            $0.roundCorners(.all, radius: Constants.cornerRadius)
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        label3.snp.makeConstraints { make in
-            make.width.equalTo(100.0)
-        }
+        NSLayoutConstraint.activate([
+            label3.widthAnchor.constraint(equalToConstant: 100),
+            label4.widthAnchor.constraint(equalToConstant: 100),
+            label4.heightAnchor.constraint(equalToConstant: 100),
+            label5.widthAnchor.constraint(equalToConstant: 150),
+            label5.heightAnchor.constraint(equalToConstant: 200)
+        ])
 
-        label4.snp.makeConstraints { make in
-            make.size.equalTo(100.0)
-        }
-        label5.snp.makeConstraints { make in
-            make.height.equalTo(300.0)
-            make.width.equalTo(150.0)
+        [label3, label4, label5].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
         view.addSubview(stackView)
-        stackView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperviewSafeArea().inset(.maximumPadding)
-            $0.centerY.equalToSuperviewSafeArea()
-        }
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .maximumPadding),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.maximumPadding),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 }

@@ -194,7 +194,7 @@ extension Theme {
         disabledBackgroundColor: .darkGray,
         buttonTextColor: .systemBackground,
         buttonBackgroundColor: .link,
-        buttonBackgroundColorSecondary: .systemGray,
+        buttonBackgroundColorSecondary: .systemTint,
         buttonBackgroundColorPill: .systemTint,
         buttonSelectedBackgroundColor: .systemTint,
         statusBarStyle: .default,

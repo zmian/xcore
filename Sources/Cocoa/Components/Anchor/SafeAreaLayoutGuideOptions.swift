@@ -6,23 +6,22 @@
 
 import UIKit
 
-public struct SafeAreaLayoutGuideOptions: OptionSet {
-    public let rawValue: Int
+struct SafeAreaLayoutGuideOptions: OptionSet {
+    let rawValue: Int
 
-    public init(rawValue: Int) {
+    init(rawValue: Int) {
         self.rawValue = rawValue
     }
 
-    public static let top = Self(rawValue: 1 << 0)
-    public static let bottom = Self(rawValue: 1 << 1)
-    public static let leading = Self(rawValue: 1 << 2)
-    public static let trailing = Self(rawValue: 1 << 3)
+    static let top = Self(rawValue: 1 << 0)
+    static let bottom = Self(rawValue: 1 << 1)
+    static let leading = Self(rawValue: 1 << 2)
+    static let trailing = Self(rawValue: 1 << 3)
 
-    public static let vertical: Self = [top, bottom]
-    public static let horizontal: Self = [leading, trailing]
+    static let vertical: Self = [top, bottom]
+    static let horizontal: Self = [leading, trailing]
 
-    public static let all: Self = [vertical, horizontal]
-    public static let none: Self = []
+    static let all: Self = [vertical, horizontal]
 }
 
 extension SafeAreaLayoutGuideOptions {

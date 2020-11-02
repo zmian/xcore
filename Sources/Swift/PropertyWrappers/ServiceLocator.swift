@@ -13,7 +13,7 @@ import Foundation
 ///
 /// ```swift
 /// // 1. Create a service protocol
-/// protocol ProfileServiceProtocol: class {
+/// protocol ProfileServiceProtocol: AnyObject {
 ///     func avatarDidChange(_ image: UIImage)
 /// }
 ///
@@ -47,7 +47,7 @@ import Foundation
 /// ```
 @propertyWrapper
 public struct Inject<Service> {
-    public init() {}
+    public init() { }
 
     public var wrappedValue: Service {
         ServiceLocator.resolve()
@@ -62,7 +62,7 @@ public struct Inject<Service> {
 ///
 /// ```swift
 /// // 1. Create a service protocol
-/// protocol ProfileServiceProtocol: class {
+/// protocol ProfileServiceProtocol: AnyObject {
 ///     func avatarDidChange(_ image: UIImage)
 /// }
 ///

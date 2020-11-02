@@ -6,10 +6,10 @@
 
 import UIKit
 
-// MARK: Axis
+// MARK: - Axis
 
 extension Anchor {
-    public class Axis<T> {
+    class Axis<T> {
         fileprivate unowned var owningView: UIView
         fileprivate var attribute: Attributes
 
@@ -23,23 +23,23 @@ extension Anchor {
         }
     }
 
-    public class XAxis: Axis<XAxisType> {}
-    public class YAxis: Axis<YAxisType> {}
-    public class DimensionAxis: Axis<DimensionAxisType> {}
-    public class SizeAxis: DimensionAxis {}
-    public class EdgesAxis: Axis<EdgesAxisType> {}
-    public class CenterAxis: Axis<CenterAxisType> {}
+    class XAxis: Axis<XAxisType> { }
+    class YAxis: Axis<YAxisType> { }
+    class DimensionAxis: Axis<DimensionAxisType> { }
+    class SizeAxis: DimensionAxis { }
+    class EdgesAxis: Axis<EdgesAxisType> { }
+    class CenterAxis: Axis<CenterAxisType> { }
 
-    public enum XAxisType {}
-    public enum YAxisType {}
-    public enum DimensionAxisType {}
-    public enum EdgesAxisType {}
-    public enum CenterAxisType {}
+    enum XAxisType { }
+    enum YAxisType { }
+    enum DimensionAxisType { }
+    enum EdgesAxisType { }
+    enum CenterAxisType { }
 }
 
 extension Anchor.Axis {
-    public class Modifier {
-        public var constraints: [NSLayoutConstraint]
+    class Modifier {
+        var constraints: [NSLayoutConstraint]
         private var constant = 0
         private var priority: UILayoutPriority = .required
 
@@ -53,7 +53,7 @@ extension Anchor.Axis {
         /// - Parameter value: The layout priority.
         /// - Returns: `self`.
         @discardableResult
-        public func priority(_ value: UILayoutPriority) -> Modifier {
+        func priority(_ value: UILayoutPriority) -> Modifier {
             for (index, constraint) in constraints.reversed().enumerated() {
                 guard constraint.priority.rawValue > value.rawValue else {
                     constraint.priority = value
@@ -86,7 +86,7 @@ extension Anchor.Axis {
         /// - Parameter value: The inset value.
         /// - Returns: `self`.
         @discardableResult
-        public func inset(_ value: CGFloat) -> Modifier {
+        func inset(_ value: CGFloat) -> Modifier {
             constraints.forEach {
                 $0.constant = value
             }
@@ -99,7 +99,7 @@ extension Anchor.Axis {
         /// - Parameter value: The inset value.
         /// - Returns: `self`.
         @discardableResult
-        public func inset(_ value: UIEdgeInsets) -> Modifier {
+        func inset(_ value: UIEdgeInsets) -> Modifier {
             constraints.firstAttribute(.top)?.constant = value.top
             constraints.firstAttribute(.bottom)?.constant = value.bottom
             constraints.firstAttribute(.leading)?.constant = value.left
@@ -118,7 +118,7 @@ extension Anchor.Axis {
         ///
         /// - Returns: `self`.
         @discardableResult
-        public func activate() -> Modifier {
+        func activate() -> Modifier {
             constraints.activate()
             return self
         }
@@ -134,41 +134,41 @@ extension Anchor.Axis {
         ///
         /// - Returns: `self`.
         @discardableResult
-        public func deactivate() -> Modifier {
+        func deactivate() -> Modifier {
             constraints.deactivate()
             return self
         }
     }
 }
 
-public class Anchor {
+class Anchor {
     private unowned var view: UIView
 
     fileprivate init(view: UIView) {
         self.view = view
     }
 
-    public private(set) lazy var top = YAxis(view: view, attribute: .top)
-    public private(set) lazy var bottom = YAxis(view: view, attribute: .bottom)
+    private(set) lazy var top = YAxis(view: view, attribute: .top)
+    private(set) lazy var bottom = YAxis(view: view, attribute: .bottom)
 
-    public private(set) lazy var leading = XAxis(view: view, attribute: .leading)
-    public private(set) lazy var trailing = XAxis(view: view, attribute: .trailing)
+    private(set) lazy var leading = XAxis(view: view, attribute: .leading)
+    private(set) lazy var trailing = XAxis(view: view, attribute: .trailing)
 
-    public private(set) lazy var width = DimensionAxis(view: view, attribute: .width)
-    public private(set) lazy var height = DimensionAxis(view: view, attribute: .height)
+    private(set) lazy var width = DimensionAxis(view: view, attribute: .width)
+    private(set) lazy var height = DimensionAxis(view: view, attribute: .height)
 
-    public private(set) lazy var centerX = XAxis(view: view, attribute: .centerX)
-    public private(set) lazy var centerY = YAxis(view: view, attribute: .centerY)
+    private(set) lazy var centerX = XAxis(view: view, attribute: .centerX)
+    private(set) lazy var centerY = YAxis(view: view, attribute: .centerY)
 
-    public private(set) lazy var firstBaseline = YAxis(view: view, attribute: .firstBaseline)
-    public private(set) lazy var lastBaseline = YAxis(view: view, attribute: .lastBaseline)
+    private(set) lazy var firstBaseline = YAxis(view: view, attribute: .firstBaseline)
+    private(set) lazy var lastBaseline = YAxis(view: view, attribute: .lastBaseline)
 
-    public private(set) lazy var edges = EdgesAxis(view: view, attribute: .edges)
-    public private(set) lazy var size = SizeAxis(view: view, attribute: .size)
-    public private(set) lazy var center = CenterAxis(view: view, attribute: .center)
+    private(set) lazy var edges = EdgesAxis(view: view, attribute: .edges)
+    private(set) lazy var size = SizeAxis(view: view, attribute: .size)
+    private(set) lazy var center = CenterAxis(view: view, attribute: .center)
 
-    public private(set) lazy var vertically = YAxis(view: view, attribute: .vertical)
-    public private(set) lazy var horizontally = XAxis(view: view, attribute: .horizontal)
+    private(set) lazy var vertically = YAxis(view: view, attribute: .vertical)
+    private(set) lazy var horizontally = XAxis(view: view, attribute: .horizontal)
 }
 
 extension Anchor {
@@ -386,107 +386,107 @@ extension Anchor.Axis {
     }
 }
 
-// MARK: Equal
+// MARK: - Equal
 
 extension Anchor.Axis {
     @discardableResult
-    public func equalToSuperview(file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func equalToSuperview(file: StaticString = #file, line: UInt = #line) -> Modifier {
         .init(constraints: constraint(.equal, to: owningView.superview!, file: file, line: line))
     }
 
     @discardableResult
-    public func equalTo(_ other: Anchor.Axis<T>, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func equalTo(_ other: Anchor.Axis<T>, file: StaticString = #file, line: UInt = #line) -> Modifier {
         .init(constraints: constraint(.equal, to: other, file: file, line: line))
     }
 
     @discardableResult
-    public func equalTo(_ other: UIView, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func equalTo(_ other: UIView, file: StaticString = #file, line: UInt = #line) -> Modifier {
         equalTo(copy(for: other), file: file, line: line)
     }
 }
 
-// MARK: LessThanOrEqual
+// MARK: - LessThanOrEqual
 
 extension Anchor.Axis {
     @discardableResult
-    public func lessThanOrEqualToSuperview(file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func lessThanOrEqualToSuperview(file: StaticString = #file, line: UInt = #line) -> Modifier {
         .init(constraints: constraint(.lessThanOrEqual, to: owningView.superview!, file: file, line: line))
     }
 
     @discardableResult
-    public func lessThanOrEqualTo(_ other: Anchor.Axis<T>, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func lessThanOrEqualTo(_ other: Anchor.Axis<T>, file: StaticString = #file, line: UInt = #line) -> Modifier {
         .init(constraints: constraint(.lessThanOrEqual, to: other, file: file, line: line))
     }
 
     @discardableResult
-    public func lessThanOrEqualTo(_ other: UIView, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func lessThanOrEqualTo(_ other: UIView, file: StaticString = #file, line: UInt = #line) -> Modifier {
         lessThanOrEqualTo(copy(for: other), file: file, line: line)
     }
 }
 
-// MARK: GreaterThanOrEqual
+// MARK: - GreaterThanOrEqual
 
 extension Anchor.Axis {
     @discardableResult
-    public func greaterThanOrEqualToSuperview(file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func greaterThanOrEqualToSuperview(file: StaticString = #file, line: UInt = #line) -> Modifier {
         .init(constraints: constraint(.greaterThanOrEqual, to: owningView.superview!, file: file, line: line))
     }
 
     @discardableResult
-    public func greaterThanOrEqualTo(_ other: Anchor.Axis<T>, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func greaterThanOrEqualTo(_ other: Anchor.Axis<T>, file: StaticString = #file, line: UInt = #line) -> Modifier {
         .init(constraints: constraint(.greaterThanOrEqual, to: other, file: file, line: line))
     }
 
     @discardableResult
-    public func greaterThanOrEqualTo(_ other: UIView, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func greaterThanOrEqualTo(_ other: UIView, file: StaticString = #file, line: UInt = #line) -> Modifier {
         greaterThanOrEqualTo(copy(for: other), file: file, line: line)
     }
 }
 
 extension Anchor.EdgesAxis {
     @discardableResult
-    public func equalToSuperviewSafeArea(file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func equalToSuperviewSafeArea(file: StaticString = #file, line: UInt = #line) -> Modifier {
         .init(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: .all, file: file, line: line))
     }
 
     @discardableResult
-    public func equalTo(_ safeArea: SafeAreaLayoutGuideOptions, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func equalTo(_ safeArea: SafeAreaLayoutGuideOptions, file: StaticString = #file, line: UInt = #line) -> Modifier {
         .init(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: safeArea, file: file, line: line))
     }
 }
 
 extension Anchor.XAxis {
     @discardableResult
-    public func equalToSuperviewSafeArea(file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func equalToSuperviewSafeArea(file: StaticString = #file, line: UInt = #line) -> Modifier {
         .init(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: .all, file: file, line: line))
     }
 
     @discardableResult
-    public func equalTo(_ safeArea: SafeAreaLayoutGuideOptions, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func equalTo(_ safeArea: SafeAreaLayoutGuideOptions, file: StaticString = #file, line: UInt = #line) -> Modifier {
         .init(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: safeArea, file: file, line: line))
     }
 }
 
 extension Anchor.YAxis {
     @discardableResult
-    public func equalToSuperviewSafeArea(file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func equalToSuperviewSafeArea(file: StaticString = #file, line: UInt = #line) -> Modifier {
         .init(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: .all, file: file, line: line))
     }
 
     @discardableResult
-    public func equalTo(_ safeArea: SafeAreaLayoutGuideOptions, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func equalTo(_ safeArea: SafeAreaLayoutGuideOptions, file: StaticString = #file, line: UInt = #line) -> Modifier {
         .init(constraints: constraint(.equal, to: owningView.superview!, safeAreaLayoutGuideOptions: safeArea, file: file, line: line))
     }
 }
 
 extension Anchor.DimensionAxis {
     @discardableResult
-    open func equalTo(_ value: CGFloat, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func equalTo(_ value: CGFloat, file: StaticString = #file, line: UInt = #line) -> Modifier {
         equalTo(CGSize(value), file: file, line: line)
     }
 
     @discardableResult
-    open func equalTo(_ value: CGSize, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func equalTo(_ value: CGSize, file: StaticString = #file, line: UInt = #line) -> Modifier {
         owningView.translatesAutoresizingMaskIntoConstraints = false
 
         var constraints: [NSLayoutConstraint] = []
@@ -509,12 +509,12 @@ extension Anchor.DimensionAxis {
 
 extension Anchor.DimensionAxis {
     @discardableResult
-    open func greaterThanOrEqualTo(_ value: CGFloat, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func greaterThanOrEqualTo(_ value: CGFloat, file: StaticString = #file, line: UInt = #line) -> Modifier {
         greaterThanOrEqualTo(CGSize(value), file: file, line: line)
     }
 
     @discardableResult
-    open func greaterThanOrEqualTo(_ value: CGSize, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func greaterThanOrEqualTo(_ value: CGSize, file: StaticString = #file, line: UInt = #line) -> Modifier {
         owningView.translatesAutoresizingMaskIntoConstraints = false
 
         var constraints: [NSLayoutConstraint] = []
@@ -537,12 +537,12 @@ extension Anchor.DimensionAxis {
 
 extension Anchor.DimensionAxis {
     @discardableResult
-    open func lessThanOrEqualTo(_ value: CGFloat, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func lessThanOrEqualTo(_ value: CGFloat, file: StaticString = #file, line: UInt = #line) -> Modifier {
         greaterThanOrEqualTo(CGSize(value), file: file, line: line)
     }
 
     @discardableResult
-    open func lessThanOrEqualTo(_ value: CGSize, file: StaticString = #file, line: UInt = #line) -> Modifier {
+    func lessThanOrEqualTo(_ value: CGSize, file: StaticString = #file, line: UInt = #line) -> Modifier {
         owningView.translatesAutoresizingMaskIntoConstraints = false
 
         var constraints: [NSLayoutConstraint] = []

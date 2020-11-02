@@ -5,7 +5,6 @@
 //
 
 import UIKit
-import ObjectiveC
 
 private class ControlClosureWrapper: NSObject, NSCopying {
     var closure: ((_ sender: AnyObject) -> Void)?
@@ -38,7 +37,7 @@ extension UIControl: ControlTargetActionBlockRepresentable {
     }
 }
 
-public protocol ControlTargetActionBlockRepresentable: class {
+public protocol ControlTargetActionBlockRepresentable: AnyObject {
     associatedtype Sender
     func addAction(_ event: UIControl.Event, _ handler: @escaping (_ sender: Sender) -> Void)
     func removeAction(_ event: UIControl.Event)

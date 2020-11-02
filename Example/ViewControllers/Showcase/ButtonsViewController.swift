@@ -10,6 +10,7 @@ final class ButtonsViewController: UIViewController {
     private let stackView = UIStackView().apply {
         $0.axis = .vertical
         $0.spacing = .maximumPadding
+        $0.translatesAutoresizingMaskIntoConstraints = false
     }
 
     override func viewDidLoad() {
@@ -18,12 +19,14 @@ final class ButtonsViewController: UIViewController {
         view.backgroundColor = Theme.current.backgroundColor
 
         view.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(.maximumPadding * 2)
-            make.centerY.equalToSuperview()
-        }
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .maximumPadding * 2),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.maximumPadding * 2),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
 
         addCalloutButton()
+        addCaretButton()
         addPlainButton()
         addSystemButton()
     }
@@ -34,6 +37,17 @@ final class ButtonsViewController: UIViewController {
             $0.text = "Hello World"
             $0.action { _ in
                 print("callout button tapped")
+            }
+        }
+
+        stackView.addArrangedSubview(button)
+    }
+
+    private func addCaretButton() {
+        let button = UIButton().apply {
+            $0.configuration = .caret(in: .pill, text: "Hello World")
+            $0.action { _ in
+                print("caret button tapped")
             }
         }
 

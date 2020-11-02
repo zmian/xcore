@@ -33,18 +33,15 @@ extension WKWebsiteDataStore {
     }
 }
 
+// MARK: - AllWebsiteCacheTypes
+
 extension WKWebsiteDataStore {
     private static func allWebsiteCacheTypes() -> Set<String> {
-        var result: Set<String> = [
+        [
+            WKWebsiteDataTypeFetchCache,
             WKWebsiteDataTypeDiskCache,
             WKWebsiteDataTypeMemoryCache,
             WKWebsiteDataTypeOfflineWebApplicationCache
         ]
-
-        if #available(iOS 11.3, *) {
-            result.insert(WKWebsiteDataTypeFetchCache)
-        }
-
-        return result
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 extension Money {
     /// A structure representing components of the given amount and constructs money
     /// from their constituent parts.
-    public struct Components: CustomStringConvertible {
+    public struct Components: Equatable, CustomStringConvertible {
         public typealias Range = (majorUnit: NSRange?, minorUnit: NSRange?)
 
         /// The amount of money.

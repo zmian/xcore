@@ -28,8 +28,18 @@ extension ImageSourceType.CacheType {
 final class ImageDownloader {
     typealias CancelToken = () -> Void
 
-    /// Downloads the image at the given URL, if not present in cache or return the cached version otherwise.
-    static func load(url: URL, completion: @escaping (_ image: UIImage?, _ data: Data?, _ error: Error?, _ finished: Bool, _ cacheType: ImageSourceType.CacheType) -> Void) -> CancelToken? {
+    /// Downloads the image at the given URL, if not present in cache or return the
+    /// cached version otherwise.
+    static func load(
+        url: URL,
+        completion: @escaping (
+            _ image: UIImage?,
+            _ data: Data?,
+            _ error: Error?,
+            _ finished: Bool,
+            _ cacheType: ImageSourceType.CacheType
+        ) -> Void
+    ) -> CancelToken? {
         let token = SDWebImageManager.shared.loadImage(
             with: url,
             options: [.avoidAutoSetImage],
@@ -42,7 +52,15 @@ final class ImageDownloader {
     }
 
     /// Downloads the image from the given url.
-    static func download(url: URL, completion: @escaping (_ image: UIImage?, _ data: Data?, _ error: Error?, _ finished: Bool) -> Void) {
+    static func download(
+        url: URL,
+        completion: @escaping (
+            _ image: UIImage?,
+            _ data: Data?,
+            _ error: Error?,
+            _ finished: Bool
+        ) -> Void
+    ) {
         SDWebImageDownloader.shared.downloadImage(
             with: url,
             options: [],

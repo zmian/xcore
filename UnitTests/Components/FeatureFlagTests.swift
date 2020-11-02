@@ -9,29 +9,29 @@ import XCTest
 
 final class FeatureFlagTests: TestCase {
     func testGetValue() {
-        XCTAssert(TestFeature.flag(.validBool).value(default: false) == true)
-        XCTAssert(TestFeature.flag(.invalidBool).value(default: false) == false)
+        XCTAssertEqual(TestFeature.flag(.validBool).value(default: false), true)
+        XCTAssertEqual(TestFeature.flag(.invalidBool).value(default: false), false)
 
-        XCTAssert(TestFeature.flag(.validInt).value(default: 0) == Int(1213))
-        XCTAssert(TestFeature.flag(.invalidInt).value(default: 0) == Int(0))
+        XCTAssertEqual(TestFeature.flag(.validInt).value(default: 0), Int(1213))
+        XCTAssertEqual(TestFeature.flag(.invalidInt).value(default: 0), Int(0))
 
-        XCTAssert(TestFeature.flag(.validFloat).value(default: 0) == Float(20.34))
-        XCTAssert(TestFeature.flag(.invalidFloat).value(default: 0) == Float(0))
+        XCTAssertEqual(TestFeature.flag(.validFloat).value(default: 0), Float(20.34))
+        XCTAssertEqual(TestFeature.flag(.invalidFloat).value(default: 0), Float(0))
 
-        XCTAssert(TestFeature.flag(.validDouble).value(default: 0) == Double(100.76))
-        XCTAssert(TestFeature.flag(.invalidDouble).value(default: 0) == Double(0))
+        XCTAssertEqual(TestFeature.flag(.validDouble).value(default: 0), Double(100.76))
+        XCTAssertEqual(TestFeature.flag(.invalidDouble).value(default: 0), Double(0))
 
         let defaultUrl = URL(string: "https://github.com/zmian/xcore.swift")!
-        XCTAssert(TestFeature.flag(.validUrl).value(default: defaultUrl) == URL(string: "https://swift.org/")!)
-        XCTAssert(TestFeature.flag(.invalidUrl).value(default: defaultUrl) == defaultUrl)
+        XCTAssertEqual(TestFeature.flag(.validUrl).value(default: defaultUrl), URL(string: "https://swift.org/")!)
+        XCTAssertEqual(TestFeature.flag(.invalidUrl).value(default: defaultUrl), defaultUrl)
 
         let defaultString = "hello world"
-        XCTAssert(TestFeature.flag(.validString).value(default: defaultString) == "dark")
-        XCTAssert(TestFeature.flag(.invalidString).value(default: defaultString) == defaultString)
+        XCTAssertEqual(TestFeature.flag(.validString).value(default: defaultString), "dark")
+        XCTAssertEqual(TestFeature.flag(.invalidString).value(default: defaultString), defaultString)
 
         let defaultArray: [String] = ["swift", "objc"]
-        XCTAssert(TestFeature.flag(.validArray).value(default: defaultArray) == ["red", "blue", "green"])
-        XCTAssert(TestFeature.flag(.invalidArray).value(default: defaultArray) == defaultArray)
+        XCTAssertEqual(TestFeature.flag(.validArray).value(default: defaultArray), ["red", "blue", "green"])
+        XCTAssertEqual(TestFeature.flag(.invalidArray).value(default: defaultArray), defaultArray)
 
         let validDictionary = [
             "name": "zmian",
@@ -40,20 +40,17 @@ final class FeatureFlagTests: TestCase {
         ]
 
         let defaultDictionary: [String: String] = ["hello": "world"]
-        XCTAssert(TestFeature.flag(.validDictionary).value(default: defaultDictionary) == validDictionary)
-        XCTAssert(TestFeature.flag(.invalidDictionary).value(default: defaultDictionary) == defaultDictionary)
+        XCTAssertEqual(TestFeature.flag(.validDictionary).value(default: defaultDictionary), validDictionary)
+        XCTAssertEqual(TestFeature.flag(.invalidDictionary).value(default: defaultDictionary), defaultDictionary)
 
         let expectedValueDark = TestFeature.flag(.validRawRepresentable).value(default: TestTheme.light)
-        let shouldBeDarkTheme = expectedValueDark == .dark
-        XCTAssert(shouldBeDarkTheme)
+        XCTAssertEqual(expectedValueDark, .dark)
 
         let expectedValueLight = TestFeature.flag(.invalidRawRepresentable1).value(default: TestTheme.light)
-        let shouldBeLightTheme = expectedValueLight == .light
-        XCTAssert(shouldBeLightTheme)
+        XCTAssertEqual(expectedValueLight, .light)
 
         let expectedValueDark2 = TestFeature.flag(.invalidRawRepresentable2).value(default: TestTheme.dark)
-        let shouldBeDarkTheme2 = expectedValueDark2 == .dark
-        XCTAssert(shouldBeDarkTheme2)
+        XCTAssertEqual(expectedValueDark2, .dark)
     }
 }
 

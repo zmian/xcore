@@ -5,6 +5,9 @@
 //
 
 import UIKit
+import SwiftUI
+
+// MARK: - ImageAssetIdentifier
 
 public struct ImageAssetIdentifier: RawRepresentable, CustomStringConvertible, Equatable {
     public let rawValue: String
@@ -50,7 +53,27 @@ extension ImageAssetIdentifier: ImageRepresentable {
     }
 }
 
-// MARK: - Convenience Extensions
+// MARK: - Image
+
+extension Image {
+    public init(assetIdentifier: ImageAssetIdentifier) {
+        guard let accessibilityLabel = assetIdentifier.accessibilityLabel else {
+            self.init(
+                assetIdentifier.rawValue,
+                bundle: assetIdentifier.bundle
+            )
+            return
+        }
+
+        self.init(
+            assetIdentifier.rawValue,
+            bundle: assetIdentifier.bundle,
+            label: Text(accessibilityLabel)
+        )
+    }
+}
+
+// MARK: - UIImage
 
 extension UIImage {
     public convenience init(assetIdentifier: ImageAssetIdentifier) {
@@ -62,8 +85,10 @@ extension UIImage {
     }
 }
 
+// MARK: - UIImageView
+
 extension UIImageView {
-    public convenience init(assetIdentifier: ImageAssetIdentifier) {
+    public convenience init(assetIdentifier: ImageAssetIdentifier?) {
         self.init()
         setImage(assetIdentifier) { [weak self] image in
             guard let strongSelf = self else { return }
@@ -72,12 +97,16 @@ extension UIImageView {
     }
 }
 
+// MARK: - UIBarButtonItem
+
 extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
     public init(assetIdentifier: ImageAssetIdentifier, accessibilityIdentifier: String? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
         self.init(image: UIImage(assetIdentifier: assetIdentifier), handler)
         self.accessibilityIdentifier = accessibilityIdentifier
     }
 }
+
+// MARK: - UIButton
 
 extension ControlTargetActionBlockRepresentable where Self: UIButton {
     public init(assetIdentifier: ImageAssetIdentifier, accessibilityIdentifier: String? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
@@ -91,25 +120,20 @@ public func r(_ assetIdentifier: ImageAssetIdentifier) -> ImageAssetIdentifier {
     assetIdentifier
 }
 
-// MARK: - Xcore Buit-in Assets
+// MARK: - Buit-in Assets
 
 extension ImageAssetIdentifier {
     private static func propertyName(_ name: String = #function) -> Self {
         .init(rawValue: name, bundle: .xcore)
     }
 
-    // MARK: Private
-    static var collectionViewCellDeleteIcon: Self { propertyName() }
-    static var reorderTableViewCellShadowTop: Self { propertyName() }
-    static var reorderTableViewCellShadowBottom: Self { propertyName() }
-
-    // MARK: Carets
+    // MARK: - Carets
     static var caretDirectionUp: Self { propertyName() }
     static var caretDirectionDown: Self { propertyName() }
     static var caretDirectionBack: Self { propertyName() }
     static var caretDirectionForward: Self { propertyName() }
 
-    // MARK: Shared UI Elements
+    // MARK: - Shared UI Elements
     public static var closeIcon = propertyName("closeIcon")
     public static var closeIconFilled = propertyName("closeIconFilled")
 
@@ -121,14 +145,14 @@ extension ImageAssetIdentifier {
     /// `LaunchScreenView`.
     public static var launchScreenIcon: Self { #function }
 
-    // MARK: Navigation
+    // MARK: - Navigation
 
     /// Icon used to replace navigation bar back arrow
     public static var navigationBarBackArrow: Self { propertyName() }
     public static var navigationBackArrow: Self { propertyName() }
     public static var navigationForwardArrow: Self { propertyName() }
 
-    // MARK: Arrows
+    // MARK: - Arrows
     public static var arrowRightIcon: Self { propertyName() }
     public static var arrowLeftIcon: Self { propertyName() }
 
@@ -139,17 +163,17 @@ extension ImageAssetIdentifier {
     public static var searchIcon = propertyName("searchIcon")
 }
 
-// MARK: - Xcore Buit-in Overridable Assets
+// MARK: - Buit-in Overridable Assets
 
 extension ImageAssetIdentifier {
-    // MARK: Checkmarks
+    // MARK: - Checkmarks
     public static var checkmarkIcon = propertyName("checkmarkIcon")
     public static var checkmarkIconFilled = propertyName("checkmarkIconFilled")
     public static var checkmarkIconUnfilled = propertyName("checkmarkIconUnfilled")
 
     public static var moreIcon = propertyName("moreIcon")
 
-    // MARK: Biometrics ID
+    // MARK: - Biometrics ID
     public static var biometricsFaceIDIcon = propertyName("biometricsFaceIDIcon")
     public static var biometricsTouchIDIcon = propertyName("biometricsTouchIDIcon")
 }

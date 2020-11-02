@@ -9,18 +9,19 @@ import Foundation
 extension Sequence where Iterator.Element: Hashable {
     /// Return an `Array` containing only the unique elements of `self` in order.
     public func unique() -> [Iterator.Element] {
-        var seen: [Iterator.Element: Bool] = [:]
-        return filter { seen.updateValue(true, forKey: $0) == nil }
+        unique { $0 }
     }
 }
 
 extension Sequence {
     /// Return an `Array` containing only the unique elements of `self`,
-    /// in order, where `unique` criteria is determined by the `uniqueProperty` block.
+    /// in order, where `unique` criteria is determined by the `uniqueProperty`
+    /// block.
     ///
-    /// - Parameter uniqueProperty: `unique` criteria is determined by the value returned by this block.
+    /// - Parameter uniqueProperty: `unique` criteria is determined by the value
+    ///             returned by this block.
     /// - Returns: Return an `Array` containing only the unique elements of `self`,
-    /// in order, that satisfy the predicate `uniqueProperty`.
+    ///            in order, that satisfy the predicate `uniqueProperty`.
     public func unique<T: Hashable>(_ uniqueProperty: (Iterator.Element) -> T) -> [Iterator.Element] {
         var seen: [T: Bool] = [:]
         return filter { seen.updateValue(true, forKey: uniqueProperty($0)) == nil }
@@ -93,9 +94,9 @@ extension RangeReplaceableCollection {
 }
 
 extension RangeReplaceableCollection where Element: Equatable, Index == Int {
-    /// Remove element by value.
+    /// Removes given element by value from the collection.
     ///
-    /// - Returns: true if removed; false otherwise
+    /// - Returns: `true` if removed; `false` otherwise
     @discardableResult
     public mutating func remove(_ element: Element) -> Bool {
         for (index, elementToCompare) in enumerated() where element == elementToCompare {
@@ -105,9 +106,25 @@ extension RangeReplaceableCollection where Element: Equatable, Index == Int {
         return false
     }
 
-    /// Remove elements by value.
+    /// Removes given elements by value from the collection.
     public mutating func remove(_ elements: [Element]) {
         elements.forEach { remove($0) }
+    }
+
+    // MARK: - Non-mutating
+
+    /// Removes given element by value from the collection.
+    public func removing(_ element: Element) -> Self {
+        var copy = self
+        copy.remove(element)
+        return copy
+    }
+
+    /// Removes given elements by value from the collection.
+    public func removing(_ elements: [Element]) -> Self {
+        var copy = self
+        copy.remove(elements)
+        return copy
     }
 
     /// Move an element in `self` to a specific index.

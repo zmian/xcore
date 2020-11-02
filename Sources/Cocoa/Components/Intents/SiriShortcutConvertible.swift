@@ -6,7 +6,7 @@
 
 import Intents
 
-public protocol SiriShortcutConvertible {
+protocol SiriShortcutConvertible {
     associatedtype IntentType: INIntent
 
     /// The Siri Shortcuts intent.

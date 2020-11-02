@@ -67,14 +67,17 @@ open class TextViewController: XCScrollViewController {
     ///
     /// - Parameters:
     ///   - filename: The filename.
-    ///   - bundle: The bundle containing the specified filename. If you specify
-    ///             `nil`, this method looks in the main bundle of the current
-    ///             application. The default value is `nil`.
-    open func setText(_ filename: String, bundle: Bundle? = nil) {
+    ///   - bundle: The bundle containing the specified filename. The default value
+    ///     is `.main`.
+    ///   - transform: A block to transform the text once it's been parsed.
+    open func setText(
+        _ filename: String,
+        bundle: Bundle = .main,
+        _ transform: ((String) -> StringRepresentable)? = nil
+    ) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             let name = filename.lastPathComponent.deletingPathExtension
             let ext = filename.pathExtension
-            let bundle = bundle ?? Bundle.main
 
             guard
                 let path = bundle.path(forResource: name, ofType: ext),
@@ -83,8 +86,10 @@ open class TextViewController: XCScrollViewController {
                 return
             }
 
+            let finalContent = transform?(content) ?? content
+
             DispatchQueue.main.async { [weak self] in
-                self?.text = content
+                self?.text = finalContent
             }
         }
     }

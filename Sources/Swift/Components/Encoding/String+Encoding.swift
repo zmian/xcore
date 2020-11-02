@@ -16,7 +16,7 @@ extension String {
     ///   - options: The options to use for the decoding. The default value is `[]`.
     public init?(base64Encoded: String, options: Data.Base64DecodingOptions = []) {
         guard
-            let decodedData = Data.init(base64Encoded: base64Encoded, options: options),
+            let decodedData = Data(base64Encoded: base64Encoded, options: options),
             let decodedString = String(data: decodedData, encoding: .utf8)
         else {
             return nil

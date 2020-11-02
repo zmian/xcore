@@ -36,10 +36,12 @@ public struct CompositeImageTransform: ImageTransform, ExpressibleByArrayLiteral
 
 extension CompositeImageTransform {
     public var id: String {
-        transforms.map { $0.id }.joined(separator: "_")
+        transforms.map(\.id).joined(separator: "_")
     }
 
     public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
-        transforms.reduce(image) { $1.transform($0, source: source) }
+        transforms.reduce(image) {
+            $1.transform($0, source: source)
+        }
     }
 }

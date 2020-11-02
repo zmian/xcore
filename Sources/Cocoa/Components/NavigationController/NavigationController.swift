@@ -7,8 +7,6 @@
 import UIKit
 
 open class NavigationController: UINavigationController {
-    // swiftlint:disable:next weak_delegate
-    private let zoomAnimatorNavigationControllerDelegate = ZoomAnimatorNavigationControllerDelegate()
     private let emptyBackBarButtonItem = UIBarButtonItem(title: "")
     /// A boolean value that determines whether the back button text is hidden.
     /// The default value is `true`.
@@ -190,7 +188,6 @@ extension NavigationController: UINavigationControllerDelegate {
     }
 
     open func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-        zoomAnimatorNavigationControllerDelegate.navigationController(navigationController, didShow: viewController, animated: animated)
         updateNavigationBar(for: viewController, didShow: true)
     }
 
@@ -200,26 +197,6 @@ extension NavigationController: UINavigationControllerDelegate {
         }
 
         willTransition?(fromVC, toVC)
-        return zoomAnimatorNavigationControllerDelegate.navigationController(navigationController, animationControllerFor: operation, from: fromVC, to: toVC)
-    }
-}
-
-// MARK: - UINavigationControllerDelegate Forward Calls
-
-extension NavigationController {
-    open override func responds(to aSelector: Selector!) -> Bool {
-        if zoomAnimatorNavigationControllerDelegate.responds(to: aSelector) {
-            return true
-        }
-
-        return super.responds(to: aSelector)
-    }
-
-    open override func forwardingTarget(for aSelector: Selector!) -> Any? {
-        if zoomAnimatorNavigationControllerDelegate.responds(to: aSelector) {
-            return zoomAnimatorNavigationControllerDelegate
-        }
-
-        return super.forwardingTarget(for: aSelector)
+        return nil
     }
 }

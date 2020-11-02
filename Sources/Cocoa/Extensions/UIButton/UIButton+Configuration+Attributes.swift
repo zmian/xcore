@@ -23,7 +23,7 @@ extension UIButton.Configuration {
     public struct AttributesStorage: MutableAppliable {
         private var storage: [Identifier: Attributes] = [:]
 
-        init() {}
+        init() { }
 
         /// Returns the attributes for the given identifier.
         ///
@@ -67,7 +67,7 @@ extension Identifier where Type: UIButton {
     }
 
     public func font(button: UIButton) -> UIFont {
-        attributes(\.font) ?? button.titleLabel?.font ?? .app(style: .body)
+        attributes(\.font) ?? button.titleLabel?.font ?? .app(.body)
     }
 
     public func tintColor(button: UIButton) -> UIColor {

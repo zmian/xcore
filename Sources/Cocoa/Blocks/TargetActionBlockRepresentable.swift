@@ -5,9 +5,8 @@
 //
 
 import UIKit
-import ObjectiveC
 
-public protocol TargetActionBlockRepresentable: class {
+public protocol TargetActionBlockRepresentable: AnyObject {
     associatedtype Sender
 
     /// Add action handler when the item is selected.

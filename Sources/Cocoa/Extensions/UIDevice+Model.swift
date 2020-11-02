@@ -6,6 +6,8 @@
 
 import UIKit
 
+// MARK: - Version
+
 extension UIDevice {
     /// A strongly typed current version of the operating system.
     ///
@@ -40,10 +42,12 @@ extension UIDevice {
     }
 }
 
+// MARK: - Model
+
 extension UIDevice {
-    public indirect enum ModelType: CustomStringConvertible {
+    public indirect enum Model: CustomStringConvertible {
         case unknown(String)
-        case simulator(ModelType)
+        case simulator(Model)
 
         // iPhone
         case iPhone2G
@@ -117,9 +121,9 @@ extension UIDevice {
         case homePod
 
         fileprivate init(identifier: String) {
-            var value: ModelType {
+            var value: Self {
                 switch identifier {
-                    // iPhone
+                    // MARK: - iPhone
 
                     case "iPhone1,1":
                         return .iPhone2G
@@ -170,7 +174,7 @@ extension UIDevice {
                     case "iPhone12,5":
                         return .iPhone11ProMax
 
-                    // iPad
+                    // MARK: - iPad
 
                     case "iPad1,1", "iPad1,2":
                         return .iPad_1
@@ -215,7 +219,7 @@ extension UIDevice {
                     case "iPad8,5", "iPad8,6", "iPad8,7", "iPad8,8":
                         return .iPadPro_12Inch_3
 
-                    // Apple Watch
+                    // MARK: - Apple Watch
 
                     case "Watch1,1":
                         return .appleWatchSeries0_38mm
@@ -242,7 +246,7 @@ extension UIDevice {
                     case "Watch5,2", "Watch5,4":
                         return .appleWatchSeries5_44mm
 
-                    // Apple TV
+                    // MARK: - Apple TV
 
                     case "AppleTV1,1":
                         return .appleTV1
@@ -255,7 +259,7 @@ extension UIDevice {
                     case "AppleTV6,2":
                         return .appleTV4K
 
-                    // iPod
+                    // MARK: - iPod
 
                     case "iPod1,1":
                         return .iPodTouch1
@@ -270,7 +274,7 @@ extension UIDevice {
                     case "iPod7,1":
                         return .iPodTouch6
 
-                    // HomePod
+                    // MARK: - HomePod
 
                     case "AudioAccessory1,1":
                         return .homePod
@@ -374,48 +378,47 @@ extension UIDevice {
     }
 }
 
-extension UIDevice.ModelType {
+// MARK: - Family
+
+extension UIDevice.Model {
+    /// A structure representing device family (e.g., Mac or Phone).
     public enum Family: Equatable, CustomStringConvertible {
-        case phone
-        case pad
-        case watch
-        case tv
         case carPlay
-        case pod
-        case desktop
-        case unknown
+        case mac
+        case pad
+        case phone
+        case tv
+        case watch
+        case unspecified
 
-        fileprivate init(device: UIDevice, identifier: String) {
-            #if os(macOS)
-                self = .desktop
+        fileprivate init(device: UIDevice) {
+            #if os(macOS) || targetEnvironment(macCatalyst)
+                self = .mac
                 return
-            #else
-                if identifier.starts(with: "Watch") {
-                    self = .watch
-                    return
-                }
-
-                if identifier.starts(with: "iPod") {
-                    self = .pod
-                    return
-                }
-
+            #elseif os(watchOS)
+                self = .watch
+                return
+            #elseif os(iOS) || os(tvOS)
                 switch device.userInterfaceIdiom {
-                    case .phone:
-                        self = .phone
-                    case .pad:
-                        self = .pad
-                    case .tv:
-                        self = .tv
                     case .carPlay:
                         self = .carPlay
+                    #if swift(>=5.3)
+                    case .mac:
+                        self = .mac
+                    #endif
+                    case .pad:
+                        self = .pad
+                    case .phone:
+                        self = .phone
+                    case .tv:
+                        self = .tv
                     case .unspecified:
-                        self = .unknown
+                        self = .unspecified
                     @unknown default:
                         #if DEBUG
                         fatalError(because: .unknownCaseDetected(device.userInterfaceIdiom))
                         #else
-                        self = .unknown
+                        self = .unspecified
                         #endif
                 }
             #endif
@@ -423,28 +426,28 @@ extension UIDevice.ModelType {
 
         public var description: String {
             switch self {
-                case .phone:
-                    return "iPhone"
-                case .pad:
-                    return "iPad"
-                case .watch:
-                    return "Apple Watch"
-                case .tv:
-                    return "Apple TV"
                 case .carPlay:
                     return "CarPlay"
-                case .pod:
-                    return "iPod"
-                case .desktop:
+                case .mac:
                     return "Mac"
-                case .unknown:
-                    return "Unknown"
+                case .pad:
+                    return "iPad"
+                case .phone:
+                    return "iPhone"
+                case .tv:
+                    return "Apple TV"
+                case .watch:
+                    return "Apple Watch"
+                case .unspecified:
+                    return "Unspecified"
             }
         }
     }
 }
 
-extension UIDevice.ModelType {
+// MARK: - Screen Size
+
+extension UIDevice.Model {
     public enum ScreenSize {
         case iPhone4
         case iPhone5
@@ -506,17 +509,21 @@ extension UIDevice.ModelType {
     }
 }
 
-extension UIDevice.ModelType.ScreenSize: Comparable {
-    public static func ==(lhs: UIDevice.ModelType.ScreenSize, rhs: UIDevice.ModelType.ScreenSize) -> Bool {
+// MARK: - Screen Size: Comparable
+
+extension UIDevice.Model.ScreenSize: Comparable {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.size.max == rhs.size.max && lhs.size.min == rhs.size.min
     }
 
-    public static func <(lhs: UIDevice.ModelType.ScreenSize, rhs: UIDevice.ModelType.ScreenSize) -> Bool {
+    public static func <(lhs: Self, rhs: Self) -> Bool {
         lhs.size.max < rhs.size.max && lhs.size.min < rhs.size.min
     }
 }
 
-extension UIDevice.ModelType {
+// MARK: - Model: Instance Properties
+
+extension UIDevice.Model {
     /// The model identifier of the current device (e.g., `iPhone9,2`).
     public var identifier: String {
         let id = UIDevice.internalIdentifier
@@ -530,7 +537,7 @@ extension UIDevice.ModelType {
 
     /// The family name of the current device (e.g., iPhone or Apple TV).
     public var family: Family {
-        .init(device: UIDevice.current, identifier: UIDevice.internalIdentifier)
+        .init(device: UIDevice.current)
     }
 
     /// The screen size associated with the model.
@@ -542,6 +549,8 @@ extension UIDevice.ModelType {
         .init()
     }
 }
+
+// MARK: - Device: Model Property
 
 extension UIDevice {
     /// A strongly typed model type of the current device.
@@ -565,7 +574,7 @@ extension UIDevice {
     ///     ...
     /// }
     /// ```
-    public var modelType: ModelType {
+    public var modelType: Model {
         .init(identifier: Self.internalIdentifier)
     }
 

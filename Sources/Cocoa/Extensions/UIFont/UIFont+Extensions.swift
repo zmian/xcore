@@ -10,31 +10,27 @@ extension UIFont {
     public enum Trait {
         case normal
         case italic
-        case monospace
+        case monospaced
     }
 
-    public static func systemFont(size: CGFloat, weight: Weight = .regular, trait: Trait = .normal) -> UIFont {
+    static func systemFont(size: CGFloat, weight: Weight = .regular, trait: Trait = .normal) -> UIFont {
         switch trait {
             case .normal:
                 return systemFont(ofSize: size, weight: weight)
             case .italic:
                 return italicSystemFont(ofSize: size)
-            case .monospace:
+            case .monospaced:
                 return monospacedDigitSystemFont(ofSize: size, weight: weight)
         }
     }
 }
 
 extension UIFont {
-    func apply(_ trait: Trait) -> UIFont {
-        trait == .monospace ? monospacedDigitFont : self
-    }
-
     /// Returns a font matching the given font descriptor.
     ///
     /// - Parameter traits: The new symbolic traits.
     /// - Returns: The new font matching the given font descriptor.
-    public func traits(_ traits: UIFontDescriptor.SymbolicTraits...) -> UIFont? {
+    func traits(_ traits: UIFontDescriptor.SymbolicTraits...) -> UIFont? {
         guard let descriptor = fontDescriptor.withSymbolicTraits(UIFontDescriptor.SymbolicTraits(traits)) else {
             return nil
         }
@@ -42,21 +38,21 @@ extension UIFont {
         return UIFont(descriptor: descriptor, size: 0)
     }
 
-    public func bold() -> UIFont? {
+    func bold() -> UIFont? {
         traits(.traitBold)
     }
 
-    public func italic() -> UIFont? {
+    func italic() -> UIFont? {
         traits(.traitItalic)
     }
 
-    public func monospace() -> UIFont? {
+    func monospaced() -> UIFont? {
         traits(.traitMonoSpace)
     }
 }
 
 extension UIFont {
-    public var monospacedDigitFont: UIFont {
+    var monospacedDigitFont: UIFont {
         let featureSettings = [[
             UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType,
             UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector

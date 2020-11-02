@@ -4,6 +4,8 @@
 // MIT license, see LICENSE file for details
 //
 
+import Foundation
+
 // MARK: - Type Based Constants
 
 extension TimeInterval {
@@ -88,7 +90,7 @@ extension UIColor {
     /// Returns default system tint color.
     public static var systemTint: UIColor {
         struct Static {
-            static let tintColor = UIView().tintColor ?? .appleBlue
+            static let tintColor = UIView().tintColor ?? .systemBlue
         }
 
         return Static.tintColor
@@ -107,10 +109,9 @@ extension UIColor {
     @nonobjc static var appleGray: UIColor { .init(hex: "EBF2FB") }
     @nonobjc static var appleTealBlue: UIColor { .init(hex: "5AC8FA") }
     @nonobjc static var appleBlue: UIColor { .init(hex: "007AFF") }
-    @nonobjc static var applePurple: UIColor { .init(hex: "5856D6") }
-    @nonobjc static var appleGreen: UIColor { .init(hex: "4CD964") }
-    @nonobjc static var appleRed: UIColor { .init(hex: "FF3B30") }
 }
+
+// MARK: - URL
 
 extension URL {
     public static var mailApp: Self { URL(string: "message://")! }
@@ -130,7 +131,12 @@ public enum AppConstants {
     public static var φ: CGFloat { 0.618 }
 
     public static var statusBarHeight: CGFloat {
-        UIApplication.sharedOrNil?.statusBarFrame.height ?? 20
+        UIApplication
+            .sharedOrNil?
+            .firstSceneKeyWindow?
+            .windowScene?
+            .statusBarManager?
+            .statusBarFrame.height ?? 44
     }
 
     public static var statusBarPlusNavBarHeight: CGFloat {
@@ -138,7 +144,7 @@ public enum AppConstants {
     }
 
     public static var navBarHeight: CGFloat {
-        if UIDevice.current.modelType.family == .pad, #available(iOS 12.0, *) {
+        if UIDevice.current.modelType.family == .pad {
             return 50
         }
 
@@ -181,7 +187,7 @@ extension AppConstants {
     }
 
     public static var iPhone6ScreenSize: CGSize {
-        UIDevice.ModelType.ScreenSize.iPhone6.size
+        UIDevice.Model.ScreenSize.iPhone6.size
     }
 
     /// A convenience function to get relative value for given device based on iPhone 6 width.
@@ -199,60 +205,3 @@ extension AppConstants {
         return max(0.0, remaining)
     }
 }
-
-// MARK: - Global
-
-/// Returns the name of a `type` as a string.
-///
-/// - Parameter value: The value for which to get the dynamic type name.
-/// - Returns: A string containing the name of `value`'s dynamic type.
-public func name(of value: Any) -> String {
-    let kind = value is Any.Type ? value : Swift.type(of: value)
-    let description = String(reflecting: kind)
-
-    // Swift compiler bug causing unexpected result when getting a String describing
-    // a type created inside a function.
-    //
-    // https://bugs.swift.org/browse/SR-6787
-
-    let unwantedResult = "(unknown context at "
-    guard description.contains(unwantedResult) else {
-        return description
-    }
-
-    let components = description.split(separator: ".").filter { !$0.hasPrefix(unwantedResult) }
-    return components.joined(separator: ".")
-}
-
-// MARK: - Accessibility
-
-public struct AccessibilityReturnFocus {
-    private var focusedElement: Any?
-
-    public var hasElement: Bool {
-        return focusedElement != nil ? true : false
-    }
-
-    public mutating func addFocusedElement(_ tappedElement: Any? = nil) {
-        guard
-            let tappedElement = tappedElement
-        else {
-            focusedElement = UIAccessibility.focusedElement(using: .notificationVoiceOver)
-            return
-        }
-
-        focusedElement = tappedElement
-    }
-
-    public mutating func focusOnElement() {
-        UIAccessibility.post(notification: .layoutChanged, argument: focusedElement)
-        focusedElement = nil
-    }
-
-    public mutating func removeFocusedElement() {
-        UIAccessibility.post(notification: .screenChanged, argument: nil)
-        focusedElement = nil
-    }
-}
-
-public var accessibilityFocusedElement = AccessibilityReturnFocus()

@@ -21,13 +21,15 @@ final class SeparatorViewController: UIViewController {
         ]).apply {
             $0.axis = .vertical
             $0.spacing = .maximumPadding
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
         view.addSubview(stackView)
-        stackView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperviewSafeArea().inset(.maximumPadding)
-            $0.centerY.equalToSuperviewSafeArea()
-        }
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .maximumPadding),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.maximumPadding),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
     private func createSeparatorsVertical() -> UIStackView {
@@ -44,9 +46,8 @@ final class SeparatorViewController: UIViewController {
             $0.axis = .horizontal
             $0.spacing = .maximumPadding
             $0.distribution = .equalSpacing
-            $0.snp.makeConstraints {
-                $0.height.equalTo(200)
-            }
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.heightAnchor.constraint(equalToConstant: 200).activate()
         }
     }
 
@@ -58,9 +59,8 @@ final class SeparatorViewController: UIViewController {
         }
 
         let freeSeparator = SeparatorView(backgroundColor: .systemBlue, automaticallySetThickness: false).apply {
-            $0.snp.makeConstraints { make in
-                make.height.equalTo(12)
-            }
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.heightAnchor.constraint(equalToConstant: 12).activate()
         }
 
         let bigDotsSeparator = SeparatorView(backgroundColor: .systemGreen).apply {

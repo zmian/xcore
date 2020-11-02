@@ -26,7 +26,7 @@ import UIKit
 ///     class var reuseIdentifier: String { "ProfileCell" }
 /// }
 /// ```
-public protocol Reusable: class {
+public protocol Reusable: AnyObject {
     /// The reuse identifier to use when registering and dequeuing a reusable view.
     static var reuseIdentifier: String { get }
 }

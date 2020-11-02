@@ -7,9 +7,9 @@
 import Foundation
 
 public struct PrintAnalyticsProvider: AnalyticsProvider {
-    public init() {}
+    public init() { }
 
-    public func track(_ event: AnalyticsEvent) {
+    public func track(_ event: AnalyticsEventProtocol) {
         let (enabled, containsValue) = ProcessInfo.Arguments.isAnalyticsDebugEnabled
 
         guard enabled else {
@@ -25,7 +25,7 @@ public struct PrintAnalyticsProvider: AnalyticsProvider {
         }
     }
 
-    private func log(_ event: AnalyticsEvent) {
+    private func log(_ event: AnalyticsEventProtocol) {
         var propertiesString = ""
 
         if let properties = event.properties, !properties.isEmpty {

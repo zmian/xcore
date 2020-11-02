@@ -27,7 +27,8 @@ extension ModallyPresentable {
 extension ModallyPresentable where Self: UIViewController {
     /// Returns a bar button item that dismisses `self`.
     public func dismissBarButtonItem() -> UIBarButtonItem {
-        UIBarButtonItem(barButtonSystemItem: .cancel).apply {
+        UIBarButtonItem(assetIdentifier: .closeIcon).apply {
+            $0.accessibilityLabel = "Dismiss"
             $0.accessibilityIdentifier = "dismissButton"
             $0.addAction { [weak self] _ in
                 self?.dismiss(animated: true)
@@ -39,7 +40,7 @@ extension ModallyPresentable where Self: UIViewController {
     public func present(presentingViewController: UIViewController? = nil) {
         guard
             let presentingViewController = presentingViewController ??
-                UIApplication.sharedOrNil?.keyWindow?.topViewController ??
+                UIApplication.sharedOrNil?.firstSceneKeyWindow?.topViewController ??
                 UIApplication.sharedOrNil?.delegate?.window??.topViewController
         else {
             return

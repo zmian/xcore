@@ -80,11 +80,11 @@ extension PluginImage {
 
 extension PluginImage: MutableCollection, RangeReplaceableCollection, BidirectionalCollection {
     var startIndex: Int {
-        0
+        plugins.startIndex
     }
 
     var endIndex: Int {
-        plugins.count
+        plugins.endIndex
     }
 
     subscript(index: Int) -> ImageRepresentablePlugin {
@@ -92,26 +92,16 @@ extension PluginImage: MutableCollection, RangeReplaceableCollection, Bidirectio
         set { plugins[index] = newValue }
     }
 
-    /// Returns the position immediately after the given index.
-    ///
-    /// - Parameter i: A valid index of the collection. `i` must be less than
-    /// `endIndex`.
-    /// - Returns: The index value immediately after `i`.
     func index(after i: Int) -> Int {
-        i + 1
+        plugins.index(after: i)
     }
 
-    /// Returns the position immediately before the given index.
-    ///
-    /// - Parameter i: A valid index of the collection. `i` must be greater than
-    ///   `startIndex`.
-    /// - Returns: The index value immediately before `i`.
     func index(before i: Int) -> Int {
-        i - 1
+        plugins.index(before: i)
     }
 
-    func makeIterator() -> ArrayIterator<ImageRepresentablePlugin> {
-        .init(plugins)
+    func makeIterator() -> Array<ImageRepresentablePlugin>.Iterator {
+        plugins.makeIterator()
     }
 
     mutating func replaceSubrange<C: Collection>(_ subRange: Range<Int>, with newElements: C) where C.Iterator.Element == Element {

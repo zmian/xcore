@@ -33,9 +33,7 @@ import UIKit
         layer.cornerRadius = radius
         layer.maskedCorners = mask
         layer.masksToBounds = radius > 0
-        if #available(iOS 13.0, *) {
-            layer.cornerCurve = .continuous
-        }
+        layer.cornerCurve = .continuous
     }
 
     // MARK: - Fade Content
@@ -376,7 +374,7 @@ extension UIView {
     /// - Parameters:
     ///   - className: The class name of the child view (e.g., `UIImageView`).
     ///   - comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
-    /// - Returns: The child view if exists; otherwise `nil`.
+    /// - Returns: The child view if exists; otherwise, `nil`.
     open func firstSubview(withClassName className: String, comparison: LookupComparison = .kindOf) -> UIView? {
         guard let aClass = NSClassFromString(className) else {
             return nil
@@ -390,7 +388,7 @@ extension UIView {
     /// - Parameters:
     ///   - className: The class name of the child views (e.g., `UIImageView`).
     ///   - comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
-    /// - Returns: The child views if exists; otherwise empty array.
+    /// - Returns: The child views if exists; otherwise, empty array.
     open func subviews(withClassName className: String, comparison: LookupComparison = .kindOf) -> [UIView] {
         guard let aClass = NSClassFromString(className) else {
             return []
@@ -404,7 +402,7 @@ extension UIView {
     /// - Parameters:
     ///   - aClass: The class name of the child view (e.g., `UIImageView`).
     ///   - comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
-    /// - Returns: The child view if exists; otherwise `nil`.
+    /// - Returns: The child view if exists; otherwise, `nil`.
     open func firstSubview<T: UIView>(withClass aClass: T.Type, comparison: LookupComparison = .kindOf) -> T? {
         firstSubview { $0.isType(of: aClass, comparison: comparison) } as? T
     }
@@ -414,7 +412,7 @@ extension UIView {
     /// - Parameters:
     ///   - aClass: The class name of the child view (e.g., `UIImageView`).
     ///   - comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
-    /// - Returns: The child view if exists; otherwise `nil`.
+    /// - Returns: The child view if exists; otherwise, `nil`.
     open func subviews<T: UIView>(withClass aClass: T.Type, comparison: LookupComparison = .kindOf) -> [T] {
         subviews { $0.isType(of: aClass, comparison: comparison) } as? [T] ?? []
     }

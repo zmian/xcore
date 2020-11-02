@@ -32,35 +32,40 @@ extension StringProtocol {
 // MARK: - `at(:)`
 
 extension String {
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
+    /// Returns the `Substring` at the specified range iff it is within bounds;
+    /// otherwise, `nil`.
     ///
     /// e.g., `"Hello world"[..<5] // → "Hello"`
     public func at(_ range: PartialRangeUpTo<Int>) -> Substring? {
         hasIndex(range) ? self[range] : nil
     }
 
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
+    /// Returns the `Substring` at the specified range iff it is within bounds;
+    /// otherwise, `nil`.
     ///
     /// e.g., `"Hello world"[...4] // → "Hello"`
     public func at(_ range: PartialRangeThrough<Int>) -> Substring? {
         hasIndex(range) ? self[range] : nil
     }
 
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
+    /// Returns the `Substring` at the specified range iff it is within bounds;
+    /// otherwise, `nil`.
     ///
     /// e.g., `"Hello world"[0...] // → "Hello world"`
     public func at(_ range: PartialRangeFrom<Int>) -> Substring? {
         hasIndex(range) ? self[range] : nil
     }
 
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
+    /// Returns the `Substring` at the specified range iff it is within bounds;
+    /// otherwise, `nil`.
     ///
     /// e.g., `"Hello world"[0..<5] // → "Hello"`
     public func at(_ range: CountableRange<Int>) -> Substring? {
         hasIndex(range) ? self[range] : nil
     }
 
-    /// Returns the `Substring` at the specified range iff it is within bounds, otherwise `nil`.
+    /// Returns the `Substring` at the specified range iff it is within bounds;
+    /// otherwise, `nil`.
     ///
     /// e.g., `"Hello world"[0...4] // → "Hello"`
     public func at(range: CountableClosedRange<Int>) -> Substring? {

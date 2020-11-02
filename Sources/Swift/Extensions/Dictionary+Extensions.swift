@@ -12,17 +12,18 @@ extension Dictionary {
         case keepExisting
     }
 
-    /// Merges the given dictionary into this dictionary, using the given
-    /// strategy to determine the value for any duplicate keys.
+    /// Merges the given dictionary into this dictionary, using the given strategy
+    /// to determine the value for any duplicate keys.
     ///
-    /// Use the given strategy to select a value to use in the updated
-    /// dictionary, or to combine existing and new values. As the key-values
-    /// pairs in other are merged with this dictionary, the strategy is
-    /// used to handle the duplicate keys that are encountered.
+    /// Use the given strategy to select a value to use in the updated dictionary,
+    /// or to combine existing and new values. As the key-values pairs in other are
+    /// merged with this dictionary, the strategy is used to handle the duplicate
+    /// keys that are encountered.
     ///
     /// - Parameters:
     ///   - other: A dictionary to merge.
-    ///   - strategy: The strategy to use when duplicate keys are encountered. The default value is `.replaceExisting`.
+    ///   - strategy: The strategy to use when duplicate keys are encountered. The
+    ///               default value is `.replaceExisting`.
     public mutating func merge(_ other: Dictionary, strategy: MergingStrategy = .replaceExisting) {
         switch strategy {
             case .replaceExisting:
@@ -35,15 +36,17 @@ extension Dictionary {
     /// Creates a dictionary by merging the given dictionary into this dictionary,
     /// using the given strategy to determine the value for any duplicate keys.
     ///
-    /// Use the given strategy to select a value to use in the returned
-    /// dictionary, or to combine existing and new values. As the key-values
-    /// pairs in other are merged with this dictionary, the strategy is
-    /// used to handle the duplicate keys that are encountered.
+    /// Use the given strategy to select a value to use in the returned dictionary,
+    /// or to combine existing and new values. As the key-values pairs in other are
+    /// merged with this dictionary, the strategy is used to handle the duplicate
+    /// keys that are encountered.
     ///
     /// - Parameters:
     ///   - other: A dictionary to merge.
-    ///   - strategy: The strategy to use when duplicate keys are encountered. The default value is `.replaceExisting`.
-    /// - Returns: A new dictionary with the combined keys and values of this dictionary and other.
+    ///   - strategy: The strategy to use when duplicate keys are encountered. The
+    ///               default value is `.replaceExisting`.
+    /// - Returns: A new dictionary with the combined keys and values of this
+    ///            dictionary and other.
     public func merging(_ other: Dictionary, strategy: MergingStrategy = .replaceExisting) -> Dictionary {
         switch strategy {
             case .replaceExisting:
@@ -53,17 +56,18 @@ extension Dictionary {
         }
     }
 
-    /// Merges the given dictionary into this dictionary, using the given
-    /// strategy to determine the value for any duplicate keys.
+    /// Merges the given dictionary into this dictionary, using the given strategy
+    /// to determine the value for any duplicate keys.
     ///
-    /// Use the given strategy to select a value to use in the updated
-    /// dictionary, or to combine existing and new values. As the key-values
-    /// pairs in other are merged with this dictionary, the strategy is
-    /// used to handle the duplicate keys that are encountered.
+    /// Use the given strategy to select a value to use in the updated dictionary,
+    /// or to combine existing and new values. As the key-values pairs in other are
+    /// merged with this dictionary, the strategy is used to handle the duplicate
+    /// keys that are encountered.
     ///
     /// - Parameters:
     ///   - other: A dictionary to merge.
-    ///   - strategy: The strategy to use when duplicate keys are encountered. The default value is `.replaceExisting`.
+    ///   - strategy: The strategy to use when duplicate keys are encountered. The
+    ///               default value is `.replaceExisting`.
     public mutating func merge(_ other: Dictionary?, strategy: MergingStrategy = .replaceExisting) {
         guard let other = other else {
             return
@@ -75,15 +79,17 @@ extension Dictionary {
     /// Creates a dictionary by merging the given dictionary into this dictionary,
     /// using the given strategy to determine the value for any duplicate keys.
     ///
-    /// Use the given strategy to select a value to use in the returned
-    /// dictionary, or to combine existing and new values. As the key-values
-    /// pairs in other are merged with this dictionary, the strategy is
-    /// used to handle the duplicate keys that are encountered.
+    /// Use the given strategy to select a value to use in the returned dictionary,
+    /// or to combine existing and new values. As the key-values pairs in other are
+    /// merged with this dictionary, the strategy is used to handle the duplicate
+    /// keys that are encountered.
     ///
     /// - Parameters:
     ///   - other: A dictionary to merge.
-    ///   - strategy: The strategy to use when duplicate keys are encountered. The default value is `.replaceExisting`.
-    /// - Returns: A new dictionary with the combined keys and values of this dictionary and other.
+    ///   - strategy: The strategy to use when duplicate keys are encountered. The
+    ///               default value is `.replaceExisting`.
+    /// - Returns: A new dictionary with the combined keys and values of this
+    ///            dictionary and other.
     public func merging(_ other: Dictionary?, strategy: MergingStrategy = .replaceExisting) -> Dictionary {
         guard let other = other else {
             return self
@@ -191,8 +197,9 @@ extension Dictionary {
     /// Returns a dictionary containing, in order, the elements of the sequence that
     /// satisfy the given predicate.
     ///
-    /// In this example, `filterPairs` is used to include filter out key named "age."
+    /// In this example, `filterPairs` is used to include filter out key named `"age"`.
     ///
+    /// ```swift
     /// var parameter: [String: Any] = [
     ///     "name": "Vivien",
     ///     "age": 21,
@@ -224,7 +231,7 @@ extension Dictionary where Key: RawRepresentable, Key.RawValue: Hashable {
     }
 }
 
-// MARK: Operators
+// MARK: - Operators
 
 public func +<Key, Value> (lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
     lhs.merging(rhs)
@@ -242,7 +249,7 @@ public func +=<Key, Value>(lhs: inout [Key: Value], rhs: [Key: Value]) {
     lhs.merge(rhs)
 }
 
-// MARK: Equatable
+// MARK: - Equatable
 
 public func ==<Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
     guard let lhs = lhs as? [Key: Value], let rhs = rhs as? [Key: Value] else {
@@ -260,7 +267,7 @@ public func !=<Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
     return !NSDictionary(dictionary: lhs).isEqual(to: rhs)
 }
 
-// MARK: OptionalType
+// MARK: - OptionalType
 
 // Credit: https://stackoverflow.com/a/45462046
 

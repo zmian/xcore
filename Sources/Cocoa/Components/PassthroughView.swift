@@ -10,15 +10,15 @@ import UIKit
 ///
 /// - Note: It won't pass touch events to any subviews that have
 /// `isUserInteractionEnabled` flag set to `false`.
-open class PassthroughView: UIView {
+class PassthroughView: UIView {
     private var _ignoreTouchesPrecondition: () -> Bool = { true }
 
     /// A method to check certain condition for ignoring touches.
-    open func ignoreTouchesPrecondition(_ condition: @escaping () -> Bool) {
+    func ignoreTouchesPrecondition(_ condition: @escaping () -> Bool) {
         _ignoreTouchesPrecondition = condition
     }
 
-    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         guard let view = super.hitTest(point, with: event), view != self else {
             return nil
         }
@@ -31,15 +31,15 @@ open class PassthroughView: UIView {
 ///
 /// - Note: It won't pass touch events to any subviews that have
 /// `isUserInteractionEnabled` flag set to `false`.
-open class PassthroughStackView: UIStackView {
+class PassthroughStackView: UIStackView {
     private var _ignoreTouchesPrecondition: () -> Bool = { true }
 
     /// A method to check certain condition for ignoring touches.
-    open func ignoreTouchesPrecondition(_ condition: @escaping () -> Bool) {
+    func ignoreTouchesPrecondition(_ condition: @escaping () -> Bool) {
         _ignoreTouchesPrecondition = condition
     }
 
-    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         guard let view = super.hitTest(point, with: event), view != self else {
             return nil
         }
