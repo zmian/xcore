@@ -33,7 +33,6 @@ extension Theme {
 
         LabelTextView.appearance().apply {
             $0.font = .app(.body)
-            $0.textColor = .red
         }
     }
 }
