@@ -152,6 +152,7 @@ extension LabelTextView: UITextViewDelegate {
 }
 
 extension LabelTextView {
+    /// Default handler.
     public static var defaultDidTapUrlHandler: URLTapBlock?
 }
 
