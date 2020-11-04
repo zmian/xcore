@@ -8,6 +8,7 @@ import UIKit
 
 open class NavigationController: UINavigationController {
     private let emptyBackBarButtonItem = UIBarButtonItem(title: "")
+
     /// A boolean value that determines whether the back button text is hidden.
     /// The default value is `true`.
     public var hideBackButtonText = true {
@@ -22,9 +23,10 @@ open class NavigationController: UINavigationController {
         preferredInterfaceOrientations = .portrait
         delegate = self
 
-        // Overriding `animationControllerFor` method disables the native swipe back
-        // gesture. Setting the delegate to `nil` restores the regular behavior.
-        interactivePopGestureRecognizer?.delegate = nil
+        // Overriding `navigationController(_:animationControllerFor:from:to:)` method
+        // disables the native swipe back gesture. Setting the delegate to `self`
+        // restores the regular behavior.
+        interactivePopGestureRecognizer?.delegate = self
     }
 
     open override func awakeFromNib() {
@@ -202,5 +204,16 @@ extension NavigationController: UINavigationControllerDelegate {
 
         willTransition?(fromVC, toVC)
         return nil
+    }
+}
+
+// MARK: - Swipe Back Gesture
+
+extension NavigationController: UIGestureRecognizerDelegate {
+    open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        // Unfortunately, attempting to swipe on root view controller will freeze the
+        // app and requires the app to be restarted to function normally. This check
+        // ensures correct behavior is applied.
+        viewControllers.count > 1
     }
 }
