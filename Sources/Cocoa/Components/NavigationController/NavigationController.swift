@@ -21,6 +21,10 @@ open class NavigationController: UINavigationController {
         isAutorotateEnabled = false
         preferredInterfaceOrientations = .portrait
         delegate = self
+
+        // Overriding `animationControllerFor` method disables the native swipe back
+        // gesture. Setting the delegate to `nil` restores the regular behavior.
+        interactivePopGestureRecognizer?.delegate = nil
     }
 
     open override func awakeFromNib() {
