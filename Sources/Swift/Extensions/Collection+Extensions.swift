@@ -93,9 +93,9 @@ extension RangeReplaceableCollection {
 }
 
 extension RangeReplaceableCollection where Element: Equatable, Index == Int {
-    /// Remove element by value.
+    /// Removes given element by value from the collection.
     ///
-    /// - Returns: true if removed; false otherwise
+    /// - Returns: `true` if removed; `false` otherwise
     @discardableResult
     public mutating func remove(_ element: Element) -> Bool {
         for (index, elementToCompare) in enumerated() where element == elementToCompare {
@@ -105,9 +105,25 @@ extension RangeReplaceableCollection where Element: Equatable, Index == Int {
         return false
     }
 
-    /// Remove elements by value.
+    /// Removes given elements by value from the collection.
     public mutating func remove(_ elements: [Element]) {
         elements.forEach { remove($0) }
+    }
+
+    // MARK: - Non-mutating
+
+    /// Removes given element by value from the collection.
+    public func removing(_ element: Element) -> Self {
+        var copy = self
+        copy.remove(element)
+        return copy
+    }
+
+    /// Removes given elements by value from the collection.
+    public func removing(_ elements: [Element]) -> Self {
+        var copy = self
+        copy.remove(elements)
+        return copy
     }
 
     /// Move an element in `self` to a specific index.
