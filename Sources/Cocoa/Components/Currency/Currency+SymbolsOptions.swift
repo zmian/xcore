@@ -88,7 +88,7 @@ extension String {
             pattern += "\(provider.decimalSeparator)"
         }
 
-        return replace("[\(pattern)]+", with: "")
+        return replacing("[\(pattern)]+", with: "")
     }
 
     /// Returns true iff other is non-empty and contained within `self` by
