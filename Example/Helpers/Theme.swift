@@ -34,10 +34,6 @@ extension Theme {
             $0.isTextViewEnabled = true
         }
 
-        LabelTextView.appearance().apply {
-            $0.font = .app(style: .body)
-        }
-
         #warning("TODO: Fix the defaults so it matches the system defaults.")
 //        set(light: .light, dark: .dark)
     }
