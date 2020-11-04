@@ -184,12 +184,6 @@ extension Theme {
             }
         }
 
-        LabelTextView.appearance().apply {
-            $0.linkTextAttributes = [.foregroundColor: current.linkColor]
-            $0.textColor = current.textColor
-            $0.font = .app(style: .body)
-        }
-
         Picker.RowView.appearance().apply {
             $0.titleTextColor = current.textColor
             $0.subtitleTextColor = current.textColorSecondary
