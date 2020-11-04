@@ -88,7 +88,7 @@ extension NSObject {
             }
 
             let name = String(cString: property_getName(property))
-            result[name] = attributes.replace("[\"T@]+", with: "")
+            result[name] = attributes.replacing("[\"T@]+", with: "")
         }
 
         free(properties)

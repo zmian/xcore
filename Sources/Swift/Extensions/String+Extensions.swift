@@ -107,17 +107,18 @@ extension String {
 
     /// Normalize multiple whitespaces and trim whitespaces and new line characters in `self`.
     public func trimmed() -> String {
-        replace("[ ]+", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
+        replacing("[ ]+", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    /// Searches for pattern matches in the string and replaces them with replacement.
-    public func replace(_ pattern: String, with: String, options: String.CompareOptions = .regularExpression) -> String {
+    /// Searches for pattern matches in the string and replaces them with
+    /// replacement.
+    public func replacing(_ pattern: String, with: String, options: String.CompareOptions = .regularExpression) -> String {
         replacingOccurrences(of: pattern, with: with, options: options, range: nil)
     }
 
     /// Trim whitespaces from start and end and normalize multiple whitespaces into one and then replace them with the given string.
     public func replaceWhitespaces(with string: String) -> String {
-        trimmingCharacters(in: .whitespaces).replace("[ ]+", with: string)
+        trimmingCharacters(in: .whitespaces).replacing("[ ]+", with: string)
     }
 
     /// Determine whether the string is a valid url.
