@@ -17,7 +17,6 @@
 		68054FC124300EA50089C94C /* IdentifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68054FC024300EA50089C94C /* IdentifierTests.swift */; };
 		68262E4622A320D00011431A /* FeatureFlagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68262E4522A320D00011431A /* FeatureFlagTests.swift */; };
 		6836600522987F1D00FDE45B /* ButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6836600222987F1D00FDE45B /* ButtonsViewController.swift */; };
-		6836600722987F1D00FDE45B /* ExampleTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6836600422987F1D00FDE45B /* ExampleTextViewController.swift */; };
 		6836600B22987F3700FDE45B /* Imports.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6836600822987F3700FDE45B /* Imports.swift */; };
 		6836600C22987F3700FDE45B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6836600922987F3700FDE45B /* Theme.swift */; };
 		6836600D22987F3700FDE45B /* Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6836600A22987F3700FDE45B /* Swizzle.swift */; };
@@ -86,7 +85,6 @@
 		68054FC024300EA50089C94C /* IdentifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierTests.swift; sourceTree = "<group>"; };
 		68262E4522A320D00011431A /* FeatureFlagTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlagTests.swift; sourceTree = "<group>"; };
 		6836600222987F1D00FDE45B /* ButtonsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsViewController.swift; sourceTree = "<group>"; };
-		6836600422987F1D00FDE45B /* ExampleTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleTextViewController.swift; sourceTree = "<group>"; };
 		6836600822987F3700FDE45B /* Imports.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Imports.swift; sourceTree = "<group>"; };
 		6836600922987F3700FDE45B /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		6836600A22987F3700FDE45B /* Swizzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swizzle.swift; sourceTree = "<group>"; };
@@ -199,7 +197,6 @@
 			children = (
 				68BCA2DC2304B2B000424B85 /* SeparatorViewController.swift */,
 				6836600222987F1D00FDE45B /* ButtonsViewController.swift */,
-				6836600422987F1D00FDE45B /* ExampleTextViewController.swift */,
 				2F654D01241ABD1300499318 /* ExampleLabelInsetViewController.swift */,
 			);
 			path = Showcase;
@@ -676,7 +673,6 @@
 				68E852D7252102DA00B26CC8 /* ButtonsView.swift in Sources */,
 				68931EEF2501C23800CC7253 /* RootView.swift in Sources */,
 				6836600C22987F3700FDE45B /* Theme.swift in Sources */,
-				6836600722987F1D00FDE45B /* ExampleTextViewController.swift in Sources */,
 				6836600B22987F3700FDE45B /* Imports.swift in Sources */,
 				68931EEE2501C23800CC7253 /* Menu.swift in Sources */,
 				684B1ECA224C544A009F6197 /* ImageAssetIdentifier.swift in Sources */,

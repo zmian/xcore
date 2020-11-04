@@ -147,11 +147,5 @@ extension Theme {
                 $0[.radioButton].tintColor = current.toggleColor
             }
         }
-
-        LabelTextView.appearance().apply {
-            $0.linkTextAttributes = [.foregroundColor: current.linkColor]
-            $0.textColor = current.textColor
-            $0.font = .app(.body)
-        }
     }
 }

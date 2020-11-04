@@ -29,10 +29,6 @@ extension Theme {
             }
         }
 
-        LabelTextView.appearance().apply {
-            $0.font = .app(.body)
-        }
-
         #warning("TODO: Fix the defaults so it matches the system defaults.")
 //        set(light: .light, dark: .dark)
     }
