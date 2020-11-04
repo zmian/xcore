@@ -36,7 +36,6 @@ extension Menu: CaseIterable {
         separators,
         buttonsUIKit,
         buttons,
-        textViewController,
         labelInset
     ]
 }
@@ -59,11 +58,6 @@ extension Menu {
         title: "Buttons",
         subtitle: "SwiftUI",
         content: ButtonsView()
-    )
-
-    static let textViewController = Self(
-        title: "TextViewController",
-        content: WrapUIViewController<ExampleTextViewController>()
     )
 
     static let labelInset = Self(
