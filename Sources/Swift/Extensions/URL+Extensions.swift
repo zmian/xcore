@@ -43,7 +43,7 @@ extension URL {
             return self
         }
 
-        let urlString = absoluteString.replace("#\(fragment)", with: "")
+        let urlString = absoluteString.replacing("#\(fragment)", with: "")
         return URL(string: urlString) ?? self
     }
 }

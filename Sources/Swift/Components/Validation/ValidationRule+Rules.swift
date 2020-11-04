@@ -159,7 +159,7 @@ extension ValidationRule where Input == String {
     public static var ssn: Self {
         .init(
             pattern: "^(?!000)(?!666)^([0-8]\\d{2})((?!00)(\\d{2}))((?!0000)(\\d{4}))",
-            transform: { $0.replace("-", with: "") }
+            transform: { $0.replacing("-", with: "") }
         )
     }
 
@@ -179,7 +179,7 @@ extension ValidationRule where Input == String {
     public static var itin: Self {
         .init(
             pattern: "^(9\\d{2})([ \\-]?)(7\\d|8[0-8]|9[0-2]|9[4-9])([ \\-]?)(\\d{4})$",
-            transform: { $0.replace("-", with: "") }
+            transform: { $0.replacing("-", with: "") }
         )
     }
 
