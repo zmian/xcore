@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 // MARK: - CGFloat - Extensions
 
@@ -341,6 +342,76 @@ extension CACornerMask {
 
         if corner.contains(.bottomRight) {
             self.insert(.layerMaxXMaxYCorner)
+        }
+    }
+}
+
+// MARK: - EdgeInsets - Extensions
+
+extension EdgeInsets {
+    public static let zero = Self(0)
+
+    public init(_ value: CGFloat) {
+        self = EdgeInsets(top: value, leading: value, bottom: value, trailing: value)
+    }
+
+    public init(top: CGFloat) {
+        self = EdgeInsets(top: top, leading: 0, bottom: 0, trailing: 0)
+    }
+
+    public init(leading: CGFloat) {
+        self = EdgeInsets(top: 0, leading: leading, bottom: 0, trailing: 0)
+    }
+
+    public init(bottom: CGFloat) {
+        self = EdgeInsets(top: 0, leading: 0, bottom: bottom, trailing: 0)
+    }
+
+    public init(trailing: CGFloat) {
+        self = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: trailing)
+    }
+
+    public init(horizontal: CGFloat, vertical: CGFloat) {
+        self = EdgeInsets(top: vertical, leading: horizontal, bottom: vertical, trailing: horizontal)
+    }
+
+    public init(horizontal: CGFloat) {
+        self = EdgeInsets(top: 0, leading: horizontal, bottom: 0, trailing: horizontal)
+    }
+
+    public init(horizontal: CGFloat, top: CGFloat) {
+        self = EdgeInsets(top: top, leading: horizontal, bottom: 0, trailing: horizontal)
+    }
+
+    public init(horizontal: CGFloat, bottom: CGFloat) {
+        self = EdgeInsets(top: 0, leading: horizontal, bottom: bottom, trailing: horizontal)
+    }
+
+    public init(vertical: CGFloat) {
+        self = EdgeInsets(top: vertical, leading: 0, bottom: vertical, trailing: 0)
+    }
+
+    public init(vertical: CGFloat, leading: CGFloat) {
+        self = EdgeInsets(top: vertical, leading: leading, bottom: vertical, trailing: 0)
+    }
+
+    public init(vertical: CGFloat, trailing: CGFloat) {
+        self = EdgeInsets(top: vertical, leading: 0, bottom: vertical, trailing: trailing)
+    }
+
+    public var horizontal: CGFloat {
+        get { leading + trailing }
+        set {
+            leading = newValue
+            trailing = newValue
+        }
+    }
+
+    public var vertical: CGFloat {
+        get { top + bottom }
+        set {
+            top = newValue
+            bottom = newValue
         }
     }
 }

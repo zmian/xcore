@@ -23,6 +23,7 @@ extension View {
         }
     }
 }
+#endif
 
 // MARK: - Condition
 
@@ -44,7 +45,7 @@ extension View {
     /// Applies modifier when given condition is satisfied.
     func when<Content>(
         _ condition: @autoclosure () -> Bool,
-        _ modifier: () -> Content
+        @ViewBuilder _ modifier: () -> Content
     ) -> some View where Content: ViewModifier {
         Group {
             if condition() {
@@ -72,7 +73,7 @@ extension View {
     /// Add content when given condition is satisfied.
     func when<Content>(
         _ condition: @autoclosure () -> Bool,
-        _ content: () -> Content
+        @ViewBuilder _ content: () -> Content
     ) -> some View where Content: View {
         Group {
             if condition() {
@@ -82,5 +83,18 @@ extension View {
             }
         }
     }
+
+    /// Add content when given condition is satisfied.
+    public func when<Content>(
+        _ condition: Bool,
+        @ViewBuilder _ content: (Self) -> Content
+    ) -> some View where Content: View {
+        Group {
+            if condition {
+                content(self)
+            } else {
+                self
+            }
+        }
+    }
 }
-#endif
