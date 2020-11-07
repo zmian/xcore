@@ -56,6 +56,26 @@ extension Bundle {
         info(forKey: kCFBundleVersionKey)
     }
 
+    /// The version and build number of the bundle.
+    ///
+    /// For example, `"1.0 (300)"`
+    public var versionBuildNumber: String {
+        "\(versionNumber) (\(buildNumber))"
+    }
+
+    /// The OS version.
+    ///
+    /// For example, `"iOS 14.0.1"`
+    public var osVersion: String {
+        var systemName = UIDevice.current.systemName
+
+        if systemName == "iPhone OS" {
+            systemName = "iOS"
+        }
+
+        return "\(systemName) \(UIDevice.current.systemVersion)"
+    }
+
     /// Returns common bundle information.
     ///
     /// **Sample output:**
@@ -66,16 +86,10 @@ extension Bundle {
     /// Version 1.0 (300) // App Version and Build number
     /// ```
     public var info: String {
-        var systemName = UIDevice.current.systemName
-
-        if systemName == "iPhone OS" {
-            systemName = "iOS"
-        }
-
         return """
-        \(systemName) \(UIDevice.current.systemVersion)
+        \(osVersion)
         \(UIDevice.current.modelType)
-        Version \(versionNumber) (\(buildNumber))"
+        Version \(versionBuildNumber)"
         """
     }
 }
