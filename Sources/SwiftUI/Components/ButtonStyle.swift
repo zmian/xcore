@@ -128,3 +128,15 @@ public struct PillButtonStyle: ButtonStyle {
         }
     }
 }
+
+// MARK: - Scale and Opacity
+
+public struct ScaleEffectButtonStyle: ButtonStyle {
+    public init() { }
+
+    public func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
+            .opacity(configuration.isPressed ? 0.8 : 1)
+    }
+}
