@@ -74,3 +74,16 @@ extension View {
         frame(width: size, height: size, alignment: alignment)
     }
 }
+
+// MARK: - On Tap
+
+extension View {
+    /// Returns a version of `self` that will perform `action` when `self` is
+    /// triggered.
+    public func onTap(action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            self
+        }
+        .buttonStyle(ScaleEffectButtonStyle())
+    }
+}
