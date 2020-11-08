@@ -138,5 +138,6 @@ public struct ScaleEffectButtonStyle: ButtonStyle {
         configuration.label
             .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
             .opacity(configuration.isPressed ? 0.8 : 1)
+            .animation(.default)
     }
 }
