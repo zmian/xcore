@@ -194,6 +194,8 @@ final class CarouselCollectionView
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        adjustInfiniteScrollContentOffset()
+
         guard !ignoreScrollEventsCallbacks else { return }
         didScroll?(currentIndex, previousIndex, scrollView)
 
@@ -211,8 +213,6 @@ final class CarouselCollectionView
         guard let item = item(at: currentIndex) else {
             return
         }
-
-        adjustInfiniteScrollContentOffset()
 
         previousIndex = currentIndex
         if !ignoreScrollEventsCallbacks {
@@ -315,7 +315,6 @@ extension CarouselCollectionView {
             return
         }
 
-        adjustInfiniteScrollContentOffset()
         setCurrentIndex(currentIndex + 1)
     }
 
@@ -358,11 +357,11 @@ extension CarouselCollectionView {
     private func adjustInfiniteScrollContentOffset() {
         guard style == .infiniteScroll else { return }
         // If we are standing on the begining or end of the scroll view we need to place
-        // the offset in the same spot (page) but  with a next and a previous page
+        // the offset in the same spot (page) but with a next and a previous page
         // within the scroll
         let lastPage = numberOfItems(inSection: 0)
         let lastPageOffset = CGFloat(lastPage - 1) * bounds.width
-        if contentOffset.x == lastPageOffset || contentOffset.x == 0 {
+        if contentOffset.x >= lastPageOffset || contentOffset.x <= 0 {
             contentOffset = CGPoint(x: offset(forPage: currentIndex), y: 0)
         }
     }
