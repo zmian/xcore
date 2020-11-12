@@ -214,6 +214,8 @@ final class CarouselCollectionView
             return
         }
 
+        adjustInfiniteScrollContentOffset()
+
         previousIndex = currentIndex
         if !ignoreScrollEventsCallbacks {
             didChangeCurrentItem?(currentIndex, item)
@@ -241,6 +243,8 @@ final class CarouselCollectionView
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         guard let autoScrollTimer = autoScrollTimer else { return }
         startAutoScrolling(autoScrollTimer.timeInterval)
+
+        adjustInfiniteScrollContentOffset()
     }
 
     private func item(at index: Int) -> Cell.Model? {
@@ -319,6 +323,7 @@ extension CarouselCollectionView {
             return
         }
 
+        adjustInfiniteScrollContentOffset()
         setCurrentIndex(currentIndex + 1)
     }
 
