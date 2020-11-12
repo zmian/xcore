@@ -6,24 +6,23 @@
 
 import SwiftUI
 
-#if swift(>=5.3)
 // MARK: - Unwrap
 
 extension View {
-    func unwrap<Value, Content>(
+    public func unwrap<Value, Content>(
         _ value: Value?,
         _ content: (Self, Value) -> Content
     ) -> some View where Content: View {
         Group {
-            if let value = value {
-                content(self, value)
+            // TODO: Xcode 12 switch to if let.
+            if value != nil {
+                content(self, value!)
             } else {
                 self
             }
         }
     }
 }
-#endif
 
 // MARK: - Condition
 
@@ -91,6 +90,20 @@ extension View {
     ) -> some View where Content: View {
         Group {
             if condition {
+                content(self)
+            } else {
+                self
+            }
+        }
+    }
+
+    /// Add content when given condition is satisfied.
+    public func when<Content>(
+        _ condition: Binding<Bool>,
+        @ViewBuilder _ content: (Self) -> Content
+    ) -> some View where Content: View {
+        Group {
+            if condition.wrappedValue {
                 content(self)
             } else {
                 self
