@@ -252,6 +252,10 @@ final class CarouselCollectionView
     func setCurrentIndex(_ index: Int, animated: Bool = true, completion: (() -> Void)? = nil) {
         guard currentIndex != index else { return }
 
+        if style == .default, index > (numberOfItems - 1) || index < 0 {
+            return
+        }
+
         layoutIfNeeded()
         CATransaction.animation({
             ignoreScrollEventsCallbacks = true
