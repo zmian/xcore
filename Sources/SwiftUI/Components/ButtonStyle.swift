@@ -24,7 +24,7 @@ public struct FillButtonStyle: ButtonStyle {
 
         var body: some View {
             configuration.label
-                .frame(minHeight: minHeight)
+                .frame(maxWidth: .infinity, minHeight: minHeight)
                 .padding(.horizontal)
                 .foregroundColor(
                     Color(
@@ -34,13 +34,15 @@ public struct FillButtonStyle: ButtonStyle {
                     )
                 )
                 .background(
-                    Color(
-                        isEnabled ?
-                            self.theme.buttonBackgroundColor :
-                            (self.theme.isDark ? UIColor.white.alpha(0.1) : .appBackgroundDisabled)
-                    )
+                    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                        .fill(
+                            Color(
+                                isEnabled ?
+                                    self.theme.buttonBackgroundColor :
+                                    (self.theme.isDark ? UIColor.white.alpha(0.1) : .appBackgroundDisabled)
+                            )
+                        )
                 )
-                .cornerRadius(cornerRadius)
                 .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
                 .opacity(configuration.isPressed ? 0.8 : 1)
                 .animation(.default)
@@ -66,11 +68,11 @@ public struct OutlineButtonStyle: ButtonStyle {
 
         var body: some View {
             configuration.label
-                .frame(minHeight: minHeight)
+                .frame(maxWidth: .infinity, minHeight: minHeight)
                 .padding(.horizontal)
                 .foregroundColor(color)
                 .background(
-                    RoundedRectangle(cornerRadius: cornerRadius)
+                    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                         .stroke(color)
                 )
                 .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
@@ -105,7 +107,7 @@ public struct PillButtonStyle: ButtonStyle {
 
         var body: some View {
             configuration.label
-                .frame(minHeight: minHeight)
+                .frame(maxWidth: .infinity, minHeight: minHeight)
                 .padding(.horizontal)
                 .foregroundColor(
                     Color(
@@ -115,7 +117,7 @@ public struct PillButtonStyle: ButtonStyle {
                     )
                 )
                 .background(
-                    Capsule()
+                    Capsule(style: .continuous)
                         .fill(Color(
                             isEnabled ?
                                 self.theme.buttonBackgroundColor :
