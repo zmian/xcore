@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 public struct HighlightedAnimationOptions: OptionSet {
     public let rawValue: Int
@@ -14,11 +15,11 @@ public struct HighlightedAnimationOptions: OptionSet {
     }
 
     public static let scale = Self(rawValue: 1 << 0)
-    public static let alpha = Self(rawValue: 1 << 1)
-    public static let all: Self = [scale, alpha]
+    public static let opacity = Self(rawValue: 1 << 1)
+    public static let all: Self = [scale, opacity]
 }
 
-// MARK: - Convenience
+// MARK: - UIKit
 
 extension HighlightedAnimationOptions {
     func animate(_ button: UIButton) {
@@ -29,11 +30,26 @@ extension HighlightedAnimationOptions {
         guard !isEmpty else { return }
 
         let transform: CGAffineTransform = contains(.scale) ? (isHighlighted ? .defaultScale : .identity) : transitionView.transform
-        let alpha: CGFloat = contains(.alpha) ? (isHighlighted ? 0.9 : 1) : transitionView.alpha
+        let opacity: CGFloat = contains(.opacity) ? (isHighlighted ? 0.9 : 1) : transitionView.alpha
 
         UIView.animateFromCurrentState {
             transitionView.transform = transform
-            transitionView.alpha = alpha
+            transitionView.alpha = opacity
+        }
+    }
+}
+
+// MARK: - SwiftUI
+
+extension View {
+    func scaleOpacityEffect(_ isPressed: Bool, options: HighlightedAnimationOptions = .all) -> some View {
+        let opacity = options.contains(.opacity) ? (isPressed ? 0.8 : 1) : 1
+        let scale: CGFloat = options.contains(.scale) ? (isPressed ? 0.95 : 1) : 1
+
+        return withAnimation(.spring()) {
+            self
+                .scaleEffect(scale)
+                .opacity(opacity)
         }
     }
 }
