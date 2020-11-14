@@ -6,46 +6,37 @@
 
 import SwiftUI
 
+// MARK: - Scale and Opacity
+
+public struct ScaleEffectButtonStyle: ButtonStyle {
+    public init() { }
+
+    public func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .scaleOpacityEffect(configuration.isPressed)
+    }
+}
+
 // MARK: - Fill
 
 public struct FillButtonStyle: ButtonStyle {
     public init() { }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
-        StyleBody(configuration: configuration)
+        FillStyleBody(configuration: configuration) {
+            RoundedRectangle(cornerRadius: $0.cornerRadius, style: .continuous)
+        }
     }
+}
 
-    private struct StyleBody: View {
-        let configuration: ButtonStyleConfiguration
-        @Environment(\.defaultMinButtonHeight) private var minHeight
-        @Environment(\.defaultButtonCornerRadius) private var cornerRadius
-        @Environment(\.theme) private var theme
-        @Environment(\.isEnabled) private var isEnabled: Bool
+// MARK: - Pill
 
-        var body: some View {
-            configuration.label
-                .frame(maxWidth: .infinity, minHeight: minHeight)
-                .padding(.horizontal)
-                .foregroundColor(
-                    Color(
-                        isEnabled ?
-                            .white :
-                            UIColor.black.alpha(0.2)
-                    )
-                )
-                .background(
-                    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                        .fill(
-                            Color(
-                                isEnabled ?
-                                    self.theme.buttonBackgroundColor :
-                                    (self.theme.isDark ? UIColor.white.alpha(0.1) : .appBackgroundDisabled)
-                            )
-                        )
-                )
-                .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
-                .opacity(configuration.isPressed ? 0.8 : 1)
-                .animation(.default)
+public struct PillButtonStyle: ButtonStyle {
+    public init() { }
+
+    public func makeBody(configuration: Self.Configuration) -> some View {
+        FillStyleBody(configuration: configuration) { _ in
+            Capsule(style: .continuous)
         }
     }
 }
@@ -56,10 +47,10 @@ public struct OutlineButtonStyle: ButtonStyle {
     public init() { }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
-        StyleBody(configuration: configuration)
+        InternalBody(configuration: configuration)
     }
 
-    private struct StyleBody: View {
+    private struct InternalBody: View {
         let configuration: ButtonStyleConfiguration
         @Environment(\.defaultMinButtonHeight) private var minHeight
         @Environment(\.defaultButtonCornerRadius) private var cornerRadius
@@ -73,73 +64,46 @@ public struct OutlineButtonStyle: ButtonStyle {
                 .foregroundColor(color)
                 .background(
                     RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                        .stroke(color)
+                        .strokeBorder(color, lineWidth: AppConstants.hairline)
                 )
-                .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
-                .opacity(configuration.isPressed ? 0.8 : 1)
-                .animation(.default)
+                .scaleOpacityEffect(configuration.isPressed)
         }
 
         private var color: Color {
             Color(
                 isEnabled ?
-                    self.theme.buttonTextColor :
+                    self.theme.textColor :
                     self.theme.isDark ? UIColor.white.alpha(0.1) : UIColor.black.alpha(0.2)
             )
         }
     }
 }
 
-// MARK: - Pill
+// MARK: - Helper
 
-public struct PillButtonStyle: ButtonStyle {
-    public init() { }
+private struct FillStyleBody<S: Shape>: View {
+    @Environment(\.defaultMinButtonHeight) private var minHeight
+    @Environment(\.defaultButtonCornerRadius) var cornerRadius
+    @Environment(\.theme) private var theme
+    @Environment(\.isEnabled) private var isEnabled: Bool
 
-    public func makeBody(configuration: Self.Configuration) -> some View {
-        StyleBody(configuration: configuration)
-    }
+    let configuration: ButtonStyleConfiguration
+    let shape: (Self) -> S
 
-    private struct StyleBody: View {
-        let configuration: ButtonStyleConfiguration
-        @Environment(\.defaultMinButtonHeight) private var minHeight
-        @Environment(\.theme) private var theme
-        @Environment(\.isEnabled) private var isEnabled: Bool
-
-        var body: some View {
-            configuration.label
-                .frame(maxWidth: .infinity, minHeight: minHeight)
-                .padding(.horizontal)
-                .foregroundColor(
-                    Color(
-                        isEnabled ?
-                            .white :
-                            UIColor.black.alpha(0.2)
-                    )
-                )
-                .background(
-                    Capsule(style: .continuous)
-                        .fill(Color(
-                            isEnabled ?
-                                self.theme.buttonBackgroundColor :
-                                (self.theme.isDark ? UIColor.white.alpha(0.1) : .appBackgroundDisabled)
-                        ))
-                )
-                .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
-                .opacity(configuration.isPressed ? 0.8 : 1)
-                .animation(.default)
-        }
-    }
-}
-
-// MARK: - Scale and Opacity
-
-public struct ScaleEffectButtonStyle: ButtonStyle {
-    public init() { }
-
-    public func makeBody(configuration: Self.Configuration) -> some View {
+    var body: some View {
         configuration.label
-            .scaleEffect(CGFloat(configuration.isPressed ? 0.95 : 1))
-            .opacity(configuration.isPressed ? 0.8 : 1)
-            .animation(.default)
+            .frame(maxWidth: .infinity, minHeight: minHeight)
+            .padding(.horizontal)
+            .foregroundColor(Color(
+                isEnabled ? theme.backgroundColor : UIColor.black.alpha(0.2)
+            ))
+            .background(
+                shape(self).fill(Color(
+                    isEnabled ?
+                        (configuration.isPressed ? self.theme.textColor.darker(0.1) : self.theme.textColor) :
+                        (self.theme.isDark ? UIColor.white.alpha(0.1) : .appBackgroundDisabled)
+                ))
+            )
+            .scaleOpacityEffect(configuration.isPressed, options: .scale)
     }
 }
