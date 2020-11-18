@@ -45,6 +45,19 @@ extension EnvironmentValues {
     }
 }
 
+// MARK: - DefaultOulineButtonBorderColor
+
+extension EnvironmentValues {
+    private struct DefaultOutlineButtonBorderColorKey: EnvironmentKey {
+        static var defaultValue: Color?
+    }
+
+    public var defaultOutlineButtonBorderColor: Color? {
+        get { self[DefaultOutlineButtonBorderColorKey.self] }
+        set { self[DefaultOutlineButtonBorderColorKey.self] = newValue }
+    }
+}
+
 // MARK: - DefaultAppTypeface
 
 extension EnvironmentValues {

@@ -1,7 +1,7 @@
 PODS:
-  - SDWebImage (5.9.4):
-    - SDWebImage/Core (= 5.9.4)
-  - SDWebImage/Core (5.9.4)
+  - SDWebImage (5.9.5):
+    - SDWebImage/Core (= 5.9.5)
+  - SDWebImage/Core (5.9.5)
   - Xcore (1.0.0):
     - SDWebImage
 
@@ -17,7 +17,7 @@ EXTERNAL SOURCES:
     :path: "./Local.podspec"
 
 SPEC CHECKSUMS:
-  SDWebImage: b69257f4ab14e9b6a2ef53e910fdf914d8f757c1
+  SDWebImage: 0b2ba0d56479bf6a45ecddbfd5558bea93150d25
   Xcore: 6b1e39d67189b89b36bdcc8037dbf31ab6ee84c7
 
 PODFILE CHECKSUM: 94b7096eabff908ee4afc97167ff28ec2f4a3250
