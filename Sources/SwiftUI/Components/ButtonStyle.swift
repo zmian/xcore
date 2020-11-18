@@ -36,7 +36,7 @@ public struct PillButtonStyle: ButtonStyle {
 
     public func makeBody(configuration: Self.Configuration) -> some View {
         FillStyleBody(configuration: configuration) { _ in
-            Capsule(style: .continuous)
+            Capsule()
         }
     }
 }
