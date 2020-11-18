@@ -67,13 +67,14 @@ extension Bundle {
     ///
     /// For example, `"iOS 14.0.1"`
     public var osVersion: String {
+        let version = ProcessInfo.processInfo.operatingSystemVersion
         var systemName = UIDevice.current.systemName
 
         if systemName == "iPhone OS" {
             systemName = "iOS"
         }
 
-        return "\(systemName) \(UIDevice.current.systemVersion)"
+        return "\(systemName) \(version.semverDescription)"
     }
 
     /// Returns common bundle information.
@@ -86,7 +87,7 @@ extension Bundle {
     /// Version 1.0 (300) // App Version and Build number
     /// ```
     public var info: String {
-        return """
+        """
         \(osVersion)
         \(UIDevice.current.modelType)
         Version \(versionBuildNumber)"
@@ -98,5 +99,21 @@ extension Bundle {
     /// Returns the first URL for the specified common directory in the user domain.
     public static func url(for directory: FileManager.SearchPathDirectory) -> URL? {
         FileManager.default.url(for: directory)
+    }
+}
+
+extension OperatingSystemVersion {
+    /// Returns system version formatted in accordance with Semantic Versioning.
+    ///
+    /// `<major>.<minor>.<patch>`
+    ///
+    /// ```
+    /// 1     -> 1.0.0
+    /// 1.0   -> 1.0.0
+    /// 1.1   -> 1.1.0
+    /// 1.0.2 -> 1.0.2
+    /// ```
+    fileprivate var semverDescription: String {
+        "\(majorVersion).\(minorVersion).\(patchVersion)"
     }
 }

@@ -54,6 +54,7 @@ public struct OutlineButtonStyle: ButtonStyle {
         let configuration: ButtonStyleConfiguration
         @Environment(\.defaultMinButtonHeight) private var minHeight
         @Environment(\.defaultButtonCornerRadius) private var cornerRadius
+        @Environment(\.defaultOutlineButtonBorderColor) private var _borderColor
         @Environment(\.theme) private var theme
         @Environment(\.isEnabled) private var isEnabled: Bool
 
@@ -64,13 +65,26 @@ public struct OutlineButtonStyle: ButtonStyle {
                 .foregroundColor(color)
                 .background(
                     RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                        .strokeBorder(color, lineWidth: AppConstants.hairline)
+                        .strokeBorder(borderColor, lineWidth: .onePixel)
                 )
+                .contentShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
                 .scaleOpacityEffect(configuration.isPressed)
         }
 
         private var color: Color {
             Color(
+                isEnabled ?
+                    self.theme.textColor :
+                    self.theme.isDark ? UIColor.white.alpha(0.1) : UIColor.black.alpha(0.2)
+            )
+        }
+
+        private var borderColor: Color {
+            if isEnabled, let color = _borderColor {
+                return color
+            }
+
+            return Color(
                 isEnabled ?
                     self.theme.textColor :
                     self.theme.isDark ? UIColor.white.alpha(0.1) : UIColor.black.alpha(0.2)
@@ -104,6 +118,7 @@ private struct FillStyleBody<S: Shape>: View {
                         (self.theme.isDark ? UIColor.white.alpha(0.1) : .appBackgroundDisabled)
                 ))
             )
+            .contentShape(shape(self))
             .scaleOpacityEffect(configuration.isPressed, options: .scale)
     }
 }
