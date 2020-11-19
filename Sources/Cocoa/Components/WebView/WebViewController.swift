@@ -67,6 +67,12 @@ open class WebViewController: UIViewController {
     /// The default value is `false`.
     public var automaticallyOverrideBackButtonToPopWebPages = false
 
+    /// An array of schemes to open them by `appExtensionSafeOpen()` when they
+    /// are called from website as navigation action.
+    ///
+    /// The default value is `[.sms, .email, .tel]`.
+    public var navigationActionSupportedSchemes: [URL.Scheme] = [.sms, .email, .tel]
+
     public var isToolbarHidden = true {
         didSet {
             updateToolbarIfNeeded()
@@ -341,7 +347,17 @@ extension WebViewController: WKNavigationDelegate {
 
     open func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         style.evaluateJavaScript(webView)
-        decisionHandler(.allow)
+        if
+            let url = navigationAction.request.url,
+            let scheme = url.scheme,
+            navigationActionSupportedSchemes.contains(URL.Scheme(rawValue: scheme)),
+            UIApplication.sharedOrNil?.canOpenURL(url) ?? false
+        {
+            UIApplication.sharedOrNil?.appExtensionSafeOpen(url)
+            decisionHandler(.cancel)
+        } else {
+            decisionHandler(.allow)
+        }
     }
 
     open func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
