@@ -21,7 +21,9 @@ final class CarouselViewController: UIViewController {
     private let items = [
         Item(title: "First Item", image: r(.blueJay)),
         Item(title: "Second Item", image: r(.blueJay)),
-        Item(title: "Third Item", image: r(.blueJay))
+        Item(title: "Third Item", image: r(.blueJay)),
+        Item(title: "Fourth Item", image: r(.blueJay)),
+        Item(title: "Fifth Item", image: r(.blueJay))
     ]
 
     private let carouselView = CarouselView<ItemCell>().apply {
