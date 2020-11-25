@@ -42,7 +42,7 @@ extension HighlightedAnimationOptions {
 // MARK: - SwiftUI
 
 extension View {
-    func scaleOpacityEffect(_ isPressed: Bool, options: HighlightedAnimationOptions = .all) -> some View {
+    public func scaleOpacityEffect(_ isPressed: Bool, options: HighlightedAnimationOptions = .all) -> some View {
         let opacity = options.contains(.opacity) ? (isPressed ? 0.8 : 1) : 1
         let scale: CGFloat = options.contains(.scale) ? (isPressed ? 0.95 : 1) : 1
 

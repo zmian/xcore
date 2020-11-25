@@ -310,17 +310,21 @@ extension UIViewController {
     }
 }
 
-// MARK: - Pop
+// MARK: - Dismiss
 
 @objc extension UIViewController {
-    @objc public enum PopMethod: Int {
+    @objc public enum DismissMethod: Int {
+        /// View controller dismissed using back button.
         case backBarButton
+        /// View controller dismissed using back swipe gesture.
         case swipeBackGesture
+        /// View controller was in modal presentation and it was dismissed either using
+        /// dismiss button or pull down gesture.
+        case modalDismissal
     }
 
-    /// Called to notify the view controller that it will pop using back button or
-    /// back swipe gesture.
-    open func viewWillPop(using method: PopMethod) { }
+    /// Called to notify the view controller that it will dismiss using the given method.
+    open func viewWillDismiss(using method: DismissMethod) { }
 }
 
 // MARK: - ObstructableView

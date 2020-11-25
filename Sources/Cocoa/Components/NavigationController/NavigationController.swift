@@ -29,6 +29,22 @@ open class NavigationController: UINavigationController {
         interactivePopGestureRecognizer?.delegate = self
     }
 
+    private var isPresentedAsModal = false
+
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        isPresentedAsModal = isModal
+    }
+
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if isPresentedAsModal {
+            viewControllers.forEach {
+                $0.viewWillDismiss(using: .modalDismissal)
+            }
+        }
+    }
+
     open override func awakeFromNib() {
         backButtonTextOverride()
         super.awakeFromNib()
@@ -72,8 +88,9 @@ open class NavigationController: UINavigationController {
 
 extension NavigationController {
     /// Returns a bar button item that dismisses `self`.
-    private func dismissButtonItem() -> UIBarButtonItem {
-        UIBarButtonItem(barButtonSystemItem: .done).apply {
+    private func dismissBarButtonItem() -> UIBarButtonItem {
+        UIBarButtonItem(assetIdentifier: .closeIcon).apply {
+            $0.accessibilityLabel = "Dismiss"
             $0.accessibilityIdentifier = "dismissButton"
             $0.addAction { [weak self] _ in
                 self?.dismiss(animated: true)
@@ -110,7 +127,7 @@ extension NavigationController: UINavigationControllerDelegate {
         // Modal Presentation Support
         if didShow, isModal, let viewController = viewControllers.last, viewController.navigationItem.rightBarButtonItem == nil {
             if viewControllers.count == 1, !viewController.prefersDismissButtonHiddenWhenPresentedModally {
-                viewController.navigationItem.rightBarButtonItem = dismissButtonItem()
+                viewController.navigationItem.rightBarButtonItem = dismissBarButtonItem()
             }
         }
 
@@ -184,7 +201,7 @@ extension NavigationController: UINavigationControllerDelegate {
             }
 
             if !context.isCancelled, let dismissingViewController = context.viewController(forKey: .from) {
-                dismissingViewController.viewWillPop(using: .swipeBackGesture)
+                dismissingViewController.viewWillDismiss(using: .swipeBackGesture)
             }
 
             strongSelf.updateNavigationBar(for: viewController)
@@ -199,7 +216,7 @@ extension NavigationController: UINavigationControllerDelegate {
 
     open func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if operation == .pop {
-            fromVC.viewWillPop(using: .backBarButton)
+            fromVC.viewWillDismiss(using: .backBarButton)
         }
 
         willTransition?(fromVC, toVC)
