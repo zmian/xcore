@@ -19,7 +19,7 @@ extension Interstitial.Item.DisplayPolicy {
         return .init(
             dismissable: dictionary["dismissable"] as? Bool ?? isDismissable,
             replayDelay: dictionary["replayDelay"] as? TimeInterval ?? replayDelay,
-            precondition: isEnabled ? precondition : { _ in false }
+            precondition: isEnabled ? precondition : { false }
         )
     }
 
@@ -53,7 +53,7 @@ extension Interstitial.Item.DisplayPolicy {
 
 // MARK: - Identifier
 
-extension Identifier where Type == Interstitial {
+extension Interstitial.Identifier {
     fileprivate static var startsWithSeparator: String { "*" }
 
     /// A convenience initializer for formatting interstitial id with `"startsWith"`

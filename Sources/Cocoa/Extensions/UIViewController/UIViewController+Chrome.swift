@@ -297,9 +297,9 @@ extension UIViewController {
         return attributes
     }
 
-    /// The default value is `true`.
+    /// The default value is `false`.
     open var prefersDismissButtonHiddenWhenPresentedModally: Bool {
-        true
+        false
     }
 
     public static var defaultNavigationBarTextAttributes: [NSAttributedString.Key: Any] {

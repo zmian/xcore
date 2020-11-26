@@ -79,7 +79,7 @@ extension Router.Route.Options {
     }
 
     /// Show the view controller on the given navigation controller.
-    func display(_ vc: UIViewController, navigationController: UINavigationController) {
+    func show(_ vc: UIViewController, navigationController: UINavigationController) {
         guard isModal else {
             navigationController.pushViewController(vc, animated: isAnimated)
             return
@@ -92,7 +92,7 @@ extension Router.Route.Options {
     }
 
     /// Show the list of view controller on the given navigation controller.
-    func display(_ vcs: [UIViewController], navigationController: UINavigationController) {
+    func show(_ vcs: [UIViewController], navigationController: UINavigationController) {
         guard isModal else {
             navigationController.pushViewController(vcs, animated: isAnimated)
             return

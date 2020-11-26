@@ -7,12 +7,12 @@
 import UIKit
 
 extension Router {
-    public enum RouteKind {
+    public enum RouteType {
         case viewController(UIViewController)
 
         case custom((UINavigationController) -> Void)
 
-        public static var custom: RouteKind {
+        public static var custom: Self {
             custom { _ in }
         }
     }

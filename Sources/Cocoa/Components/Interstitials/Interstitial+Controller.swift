@@ -26,16 +26,6 @@ extension Interstitial {
 
         public var isPageControlEnabled = true
 
-        public var userState: Interstitial.UserState = .existing {
-            didSet {
-                guard oldValue != userState else {
-                    return
-                }
-
-                didChangeUserState?(userState)
-            }
-        }
-
         /// A boolean property indicating whether interstitial items are currently being
         /// presented.
         public var isPresenting: Bool {
@@ -113,7 +103,7 @@ extension Interstitial {
         }
 
         private func present(interstitial: Interstitial.Item, animated: Bool = true) {
-            let vc = interstitial.viewController(userState: userState)
+            let vc = interstitial.viewController()
             vc.didComplete = { [weak self] in
                 guard let strongSelf = self else { return }
                 strongSelf.didComplete(interstitial: interstitial)
@@ -132,12 +122,6 @@ extension Interstitial {
         }
 
         // MARK: - Hooks
-
-        private var didChangeUserState: ((Interstitial.UserState) -> Void)?
-        /// A block invoked when interstitial user state is changed.
-        public func didChangeUserState(_ callback: @escaping (Interstitial.UserState) -> Void) {
-            didChangeUserState = callback
-        }
 
         private var didShowInterstitial: (() -> Void)?
         /// A block invoked when an interstitial is presented.
@@ -163,7 +147,7 @@ extension Interstitial.Controller {
         }
         #endif
 
-        return interstitial.displayPolicy.precondition(userState) && shouldShow(interstitial)
+        return interstitial.displayPolicy.precondition() && shouldShow(interstitial)
     }
 
     private func shouldShow(_ item: Interstitial.Item) -> Bool {
@@ -206,7 +190,6 @@ extension Interstitial.Controller {
         interstitials.removeAll()
         displayTimestamp.removeAll()
         sessionInterstitials = [:]
-        userState = .existing
         dismissIfNeeded()
     }
 }

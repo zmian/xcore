@@ -10,12 +10,12 @@ extension Interstitial {
     public struct Item {
         public let id: Interstitial.Identifier
         private let _displayPolicy: DisplayPolicy
-        private var _viewController: (_ userState: Interstitial.UserState) -> InterstitialCompatibleViewController
+        private var _viewController: () -> InterstitialCompatibleViewController
 
         public init(
             id: Interstitial.Identifier,
             displayPolicy: DisplayPolicy,
-            viewController: @escaping (_ userState: Interstitial.UserState) -> InterstitialCompatibleViewController
+            viewController: @escaping () -> InterstitialCompatibleViewController
         ) {
             self.id = id
             self._displayPolicy = displayPolicy
@@ -24,7 +24,7 @@ extension Interstitial {
 
         public init(
             id: Interstitial.Identifier,
-            viewController: @escaping (_ userState: Interstitial.UserState) -> InterstitialCompatibleViewController
+            viewController: @escaping () -> InterstitialCompatibleViewController
         ) {
             self.id = id
             self._displayPolicy = .always
@@ -35,8 +35,8 @@ extension Interstitial {
             _displayPolicy.updateFromFeatureFlag(id: id)
         }
 
-        public func viewController(userState: Interstitial.UserState) -> InterstitialCompatibleViewController {
-            let vc = _viewController(userState).apply {
+        public func viewController() -> InterstitialCompatibleViewController {
+            let vc = _viewController().apply {
                 $0.interstitialId = id
             }
 

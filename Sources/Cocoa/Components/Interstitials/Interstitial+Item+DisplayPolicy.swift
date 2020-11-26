@@ -18,24 +18,24 @@ extension Interstitial.Item {
         public let replayDelay: TimeInterval?
 
         /// This method is invoked before this interstitial item is presented.
-        public let precondition: (_ userState: Interstitial.UserState) -> Bool
+        public let precondition: () -> Bool
 
         public init(
             dismissable: Bool = false,
             replayDelay: TimeInterval? = nil,
-            precondition: @escaping (_ userState: Interstitial.UserState) -> Bool
+            precondition: @escaping () -> Bool
         ) {
             self.isDismissable = dismissable
             self.replayDelay = replayDelay
             self.precondition = precondition
         }
 
-        public static func precondition(_ condition: @escaping (_ userState: Interstitial.UserState) -> Bool) -> Self {
+        public static func precondition(_ condition: @escaping () -> Bool) -> Self {
             .init(precondition: condition)
         }
 
         public static var never: Self {
-            .init(precondition: { _ in false })
+            .init(precondition: { false })
         }
 
         public static var always: Self {
@@ -43,7 +43,7 @@ extension Interstitial.Item {
         }
 
         public static func always(dismissable: Bool) -> Self {
-            .init(dismissable: dismissable, precondition: { _ in true })
+            .init(dismissable: dismissable, precondition: { true })
         }
     }
 }
