@@ -86,28 +86,28 @@ extension Router {
     /// ```
     public struct Route<Type: RouteHandler> {
         public var id: String
-        public var configure: (Type) -> RouteKind
+        public var configure: (Type) -> RouteType
 
-        public init(id: String? = nil, _ configure: @escaping ((Type) -> RouteKind)) {
+        public init(id: String? = nil, _ configure: @escaping ((Type) -> RouteType)) {
             self.id = id ?? "___defaultId___"
             self.configure = configure
         }
 
         public init(id: String? = nil, _ configure: @escaping ((Type) -> UIViewController)) {
             self.id = id ?? "___defaultId___"
-            self.configure = { router -> RouteKind in
+            self.configure = { router -> RouteType in
                 .viewController(configure(router))
             }
         }
 
         public init(_ configure: @autoclosure @escaping () -> UIViewController) {
-            self.init { _ -> RouteKind in
+            self.init { _ -> RouteType in
                 .viewController(configure())
             }
         }
 
         public static func custom(id: String? = nil, _ configure: @escaping (Type) -> Void) -> Self {
-            .init(id: id) { router -> RouteKind in
+            .init(id: id) { router -> RouteType in
                 configure(router)
                 return .custom
             }
@@ -119,7 +119,7 @@ extension Router {
 
 extension Router.Route {
     static func _group(_ routes: [Self], options: Self.Options) -> Self {
-        .init { router -> Router.RouteKind in
+        .init { router -> Router.RouteType in
             var viewControllers: [UIViewController] = []
 
             for route in routes {
@@ -138,7 +138,7 @@ extension Router.Route {
                     return
                 }
 
-                options.display(viewControllers, navigationController: navigationController)
+                options.show(viewControllers, navigationController: navigationController)
             }
         }
     }

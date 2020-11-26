@@ -7,11 +7,13 @@
 import UIKit
 
 public protocol RouteHandler: AnyObject {
-    func route(to route: Router.Route<Self>, options: Router.Route<Self>.Options)
+    typealias Options = Router.Route<Self>.Options
+
+    func route(to route: Router.Route<Self>, options: Options)
 }
 
 extension RouteHandler {
-    public func route(to route: Router.Route<Self>, options: Router.Route<Self>.Options = .push) {
+    public func route(to route: Router.Route<Self>, options: Options = .push) {
         guard let navigationController = navigationController else {
             #if DEBUG
             Console.log("Unable to find \"navigationController\".")
@@ -19,17 +21,21 @@ extension RouteHandler {
             return
         }
 
-        let routeKind = route.configure(self)
+        let routeType = route.configure(self)
 
-        switch routeKind {
+        switch routeType {
             case .viewController(let vc):
-                options.display(vc, navigationController: navigationController)
+                options.show(vc, navigationController: navigationController)
             case .custom(let block):
                 block(navigationController)
         }
     }
 
-    public func route(to routes: [Router.Route<Self>], options: Router.Route<Self>.Options = .push) {
+    public func route(to viewController: UIViewController, options: Options = .push) {
+        route(to: .init(viewController), options: options)
+    }
+
+    public func route(to routes: [Router.Route<Self>], options: Options = .push) {
         route(to: ._group(routes, options: options), options: options)
     }
 }
