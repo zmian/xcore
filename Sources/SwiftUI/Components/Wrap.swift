@@ -6,26 +6,48 @@
 
 import SwiftUI
 
-// MARK: - UIViewControllerRepresentable
+// MARK: - UIViewController Wrapper
 
-public struct WrapUIViewController<Content: UIViewController>: UIViewControllerRepresentable {
-    public init() { }
+extension UIViewController {
+    private struct Wrapper<Content: UIViewController>: UIViewControllerRepresentable {
+        private let content: () -> Content
 
-    public func makeUIViewController(context: Context) -> Content {
-        Content()
+        public init(_ content: @escaping () -> Content) {
+            self.content = content
+        }
+
+        public func makeUIViewController(context: Context) -> Content {
+            content()
+        }
+
+        public func updateUIViewController(_ uiViewController: Content, context: Context) { }
     }
 
-    public func updateUIViewController(_ uiViewController: Content, context: Context) {}
+    /// Embed this view controller in `SwiftUI.View`.
+    public func embedInView() -> some View {
+        Wrapper { self }
+    }
 }
 
-// MARK: - UIViewRepresentable
+// MARK: - UIView Wrapper
 
-public struct WrapUIView<Content: UIView>: UIViewRepresentable {
-    public init() { }
+extension UIView {
+    private struct Wrapper<Content: UIView>: UIViewRepresentable {
+        private let content: () -> Content
 
-    public func makeUIView(context: Context) -> Content {
-        Content()
+        public init(_ content: @escaping () -> Content) {
+            self.content = content
+        }
+
+        public func makeUIView(context: Context) -> Content {
+            content()
+        }
+
+        public func updateUIView(_ uiView: Content, context: Context) { }
     }
 
-    public func updateUIView(_ uiView: Content, context: Context) {}
+    /// Embed this view in `SwiftUI.View`.
+    public func embedInView() -> some View {
+        Wrapper { self }
+    }
 }

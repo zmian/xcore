@@ -45,13 +45,13 @@ extension Menu: CaseIterable {
 extension Menu {
     static let separators = Self(
         title: "Separators",
-        content: WrapUIViewController<SeparatorViewController>()
+        content: SeparatorViewController().embedInView()
     )
 
     static let buttonsUIKit = Self(
         title: "Buttons",
         subtitle: "UIKit",
-        content: WrapUIViewController<ButtonsViewController>()
+        content: ButtonsViewController().embedInView()
     )
 
     static let buttons = Self(
@@ -63,6 +63,6 @@ extension Menu {
     static let labelInset = Self(
         title: "Label Inset",
         subtitle: "Label extension to enable \"contentInset\".",
-        content: WrapUIViewController<ExampleLabelInsetViewController>()
+        content: ExampleLabelInsetViewController().embedInView()
     )
 }
