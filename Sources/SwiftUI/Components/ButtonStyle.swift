@@ -56,7 +56,7 @@ public struct OutlineButtonStyle: ButtonStyle {
         @Environment(\.defaultButtonCornerRadius) private var cornerRadius
         @Environment(\.defaultOutlineButtonBorderColor) private var _borderColor
         @Environment(\.theme) private var theme
-        @Environment(\.isEnabled) private var isEnabled: Bool
+        @Environment(\.isEnabled) private var isEnabled
 
         var body: some View {
             configuration.label
@@ -99,7 +99,7 @@ private struct FillStyleBody<S: Shape>: View {
     @Environment(\.defaultMinButtonHeight) private var minHeight
     @Environment(\.defaultButtonCornerRadius) var cornerRadius
     @Environment(\.theme) private var theme
-    @Environment(\.isEnabled) private var isEnabled: Bool
+    @Environment(\.isEnabled) private var isEnabled
 
     let configuration: ButtonStyleConfiguration
     let shape: (Self) -> S
