@@ -6,7 +6,7 @@
 
 import UIKit
 
-final class XCDataSourceSizeCalculator: UICollectionView {
+final public class XCDataSourceSizeCalculator: UICollectionView {
     private static let sharedInstance = XCDataSourceSizeCalculator(frame: .zero, collectionViewLayout: UICollectionViewLayout())
 
     static func estimatedItemSize(in dataSource: XCCollectionViewComposedDataSource, at indexPath: IndexPath, availableWidth: CGFloat) -> CGSize {
@@ -34,11 +34,11 @@ final class XCDataSourceSizeCalculator: UICollectionView {
         return .zero
     }
 
-    override func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
+    public override func dequeueReusableCell(withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionViewCell {
         CollectionViewDequeueCache.shared.dequeueCell(identifier: identifier)
     }
 
-    override func dequeueReusableSupplementaryView(ofKind elementKind: String, withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionReusableView {
+    public override func dequeueReusableSupplementaryView(ofKind elementKind: String, withReuseIdentifier identifier: String, for indexPath: IndexPath) -> UICollectionReusableView {
         CollectionViewDequeueCache.shared.dequeueSupplementaryView(kind: elementKind, identifier: identifier)
     }
 }
