@@ -6,6 +6,29 @@
 
 import UIKit
 
+/// A structure representing constants related to theming of the app.
+///
+/// - Note: Any instance of the theme doesn't not represent `light` or `dark`
+/// modes. As per iOS, it's the responsibility of `UIColor` object to declare
+/// dynamic version.
+///
+/// If parts of the app requires a certain screen to always be in darker mode
+/// you should use the iOS API to force `UITraitCollection` to always be `.dark`
+/// mode.
+///
+/// If some screens are always in darker appearance, meaning dark blue when
+/// color scheme is `.light` and black when color scheme is `.dark` then you
+/// should create a new theme instance that represent such conditions. One
+/// possible solution is to name this instance `midnight` to indicate that this
+/// theme instance will always reflect darker appearance.
+///
+/// ```swift
+/// extension Theme {
+///     /// A theme that has midnight appearance when color scheme is `.light` and
+///     /// darker appearance when color scheme is `.dark`.
+///     public static let midnight: Theme(...)
+/// }
+/// ```
 @dynamicMemberLookup
 public struct Theme: MutableAppliable, UserInfoContainer {
     public typealias Identifier = Xcore.Identifier<Self>
