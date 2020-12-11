@@ -10,7 +10,7 @@ import SwiftUI
 
 extension EnvironmentValues {
     private struct ThemeKey: EnvironmentKey {
-        static var defaultValue: Theme = .current
+        static var defaultValue: Theme = .default
     }
 
     public var theme: Theme {

@@ -96,20 +96,6 @@ extension UIColor {
 
         return Static.tintColor
     }
-
-    /// Returns default app tint color.
-    @nonobjc public static var appTint: UIColor = .systemTint
-
-    /// The color for app borders or divider lines that hide any underlying content.
-    @nonobjc public static var appSeparator = UIColor(hex: "DFE9F5")
-    @nonobjc public static var appHighlightedBackground = appSeparator
-    @nonobjc public static var appBackgroundDisabled = appleGray
-}
-
-extension UIColor {
-    @nonobjc static var appleGray: UIColor { .init(hex: "EBF2FB") }
-    @nonobjc static var appleTealBlue: UIColor { .init(hex: "5AC8FA") }
-    @nonobjc static var appleBlue: UIColor { .init(hex: "007AFF") }
 }
 
 // MARK: - URL

@@ -18,3 +18,14 @@ public struct ElementPosition: OptionSet {
     public static let tertiary = Self(rawValue: 1 << 2)
     public static let quaternary = Self(rawValue: 1 << 3)
 }
+
+// MARK: - ButtonStyle
+
+public enum ButtonIdentifierTag {}
+public typealias ButtonIdentifier = Identifier<ButtonIdentifierTag>
+
+extension ButtonIdentifier {
+    public static var fill: Self { #function }
+    public static var pill: Self { #function }
+    public static var outline: Self { #function }
+}

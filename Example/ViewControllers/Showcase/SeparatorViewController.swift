@@ -10,7 +10,7 @@ final class SeparatorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Separators"
-        view.backgroundColor = .white
+        view.backgroundColor = Theme.backgroundColor
         setupContentView()
     }
 
@@ -36,12 +36,12 @@ final class SeparatorViewController: UIViewController {
         UIStackView(arrangedSubviews: [
             SeparatorView(axis: .vertical),
             SeparatorView(style: .dot, axis: .vertical),
-            SeparatorView(axis: .vertical, backgroundColor: .red),
-            SeparatorView(axis: .vertical, backgroundColor: UIColor.black.alpha(0.2)),
-            SeparatorView(style: .dot, axis: .vertical, backgroundColor: .red),
-            SeparatorView(style: .dot, axis: .vertical, backgroundColor: UIColor.blue.alpha(0.2)),
-            SeparatorView(style: .dash(value: [2, 4]), axis: .vertical, backgroundColor: .black),
-            SeparatorView(axis: .vertical, backgroundColor: .blue, thickness: 4)
+            SeparatorView(axis: .vertical, backgroundColor: .systemRed),
+            SeparatorView(axis: .vertical, backgroundColor: UIColor.label.alpha(0.2)),
+            SeparatorView(style: .dot, axis: .vertical, backgroundColor: .systemRed),
+            SeparatorView(style: .dot, axis: .vertical, backgroundColor: UIColor.systemBlue.alpha(0.2)),
+            SeparatorView(style: .dash(value: [2, 4]), axis: .vertical, backgroundColor: .label),
+            SeparatorView(axis: .vertical, backgroundColor: .systemBlue, thickness: 4)
         ]).apply {
             $0.axis = .horizontal
             $0.spacing = .maximumPadding
@@ -58,7 +58,7 @@ final class SeparatorViewController: UIViewController {
             $0.style = .dash(value: [1, 15, 10, 20])
         }
 
-        let freeSeparator = SeparatorView(backgroundColor: .blue, automaticallySetThickness: false).apply {
+        let freeSeparator = SeparatorView(backgroundColor: .systemBlue, automaticallySetThickness: false).apply {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.heightAnchor.constraint(equalToConstant: 12).activate()
         }
@@ -71,14 +71,14 @@ final class SeparatorViewController: UIViewController {
         return UIStackView(arrangedSubviews: [
             SeparatorView(),
             SeparatorView(style: .dot),
-            SeparatorView(backgroundColor: .red),
-            SeparatorView(backgroundColor: UIColor.black.alpha(0.2)),
-            SeparatorView(style: .dot, backgroundColor: .red),
-            SeparatorView(style: .dot, backgroundColor: UIColor.blue.alpha(0.2)),
-            SeparatorView(style: .dash(value: [2, 5]), backgroundColor: .black),
-            SeparatorView(backgroundColor: .black, thickness: 5),
-            SeparatorView(style: .plain, backgroundColor: .black, thickness: 2),
-            SeparatorView(style: .dot, backgroundColor: .black, thickness: 2),
+            SeparatorView(backgroundColor: .systemRed),
+            SeparatorView(backgroundColor: UIColor.label.alpha(0.2)),
+            SeparatorView(style: .dot, backgroundColor: .systemRed),
+            SeparatorView(style: .dot, backgroundColor: UIColor.systemBlue.alpha(0.2)),
+            SeparatorView(style: .dash(value: [2, 5]), backgroundColor: .label),
+            SeparatorView(backgroundColor: .label, thickness: 5),
+            SeparatorView(style: .plain, backgroundColor: .label, thickness: 2),
+            SeparatorView(style: .dot, backgroundColor: .label, thickness: 2),
             appliedSeparator,
             freeSeparator,
             bigDotsSeparator

@@ -7,82 +7,59 @@
 import UIKit
 
 extension Theme {
-    private static var didSet = false
-
-    /// A method to set light and dark theme.
+    /// A method to set system components default appearance using the given theme.
     ///
-    /// - Note: This method can only be called once. Any subsequent calls will be
-    /// ignored.
-    ///
-    /// - Parameters:
-    ///   - light: The nonadaptable light theme for the interface.
-    ///   - dark: The nonadaptable dark theme for the interface.
-    ///   - current: The current theme. The default value is `.light`.
-    /// - Returns: `true` if first call; otherwise, `false`.
-    @discardableResult
-    public static func set(light: Theme, dark: Theme, current: Theme? = nil) -> Bool {
-        guard !didSet else {
-            return false
-        }
-
-        didSet = true
-
-        self.light = light
-        self.dark = dark
-        self.current = current ?? light
-
-        setSystemComponentsTheme()
-        setNavigationBarBackButtonTheme()
-        setSearchBarTheme()
-        setComponentsTheme()
-        return true
+    /// - Parameter theme: The theme to set.
+    public static func set(_ theme: Theme) {
+        self.default = theme
+        setSystemComponentsTheme(theme)
+        setNavigationBarBackButtonTheme(theme)
+        setSearchBarTheme(theme)
+        setComponentsTheme(theme)
     }
 
-    private static func setSystemComponentsTheme() {
-        UIColor.appTint = current.tintColor
-        UIColor.appSeparator = current.separatorColor
-
-        UIApplication.sharedOrNil?.delegate?.window??.tintColor = current.tintColor
+    private static func setSystemComponentsTheme(_ theme: Theme) {
+        UIApplication.sharedOrNil?.delegate?.window??.tintColor = theme.accentColor
         UIBarButtonItem.appearance().setTitleTextAttributes(UIViewController.defaultNavigationBarTextAttributes, for: .normal)
 
         UINavigationBar.appearance().apply {
             $0.titleTextAttributes = UIViewController.defaultNavigationBarTextAttributes
-            $0.tintColor = current.tintColor
-            $0.barTintColor = .white
-            $0.barStyle = .black
+            $0.tintColor = theme.accentColor
+            $0.barTintColor = theme.backgroundColor
+            $0.barStyle = .default
             $0.isTranslucent = true
         }
 
         UIToolbar.appearance().apply {
-            $0.tintColor = current.tintColor
-            $0.barTintColor = .white
-            $0.barStyle = .black
+            $0.tintColor = theme.accentColor
+            $0.barTintColor = theme.backgroundColor
+            $0.barStyle = .default
             $0.isTranslucent = true
         }
 
         UIPageControl.appearance().apply {
-            $0.pageIndicatorTintColor = .appleGray
-            $0.currentPageIndicatorTintColor = current.tintColor
+            $0.pageIndicatorTintColor = .systemGray6
+            $0.currentPageIndicatorTintColor = theme.accentColor
             $0.backgroundColor = .clear
         }
 
         UISwitch.appearance().apply {
-            $0.tintColor = current.textColor.alpha(0.08)
-            $0.onTintColor = current.toggleColor
+            $0.tintColor = theme.textColor.alpha(0.08)
+            $0.onTintColor = theme.toggleColor
         }
 
         UISlider.appearance().apply {
-            $0.maximumTrackTintColor = current.textColor.alpha(0.16)
+            $0.maximumTrackTintColor = theme.textColor.alpha(0.16)
         }
 
         UITabBar.appearance().apply {
-            $0.tintColor = current.tintColor
-            $0.borderColor = current.separatorColor
+            $0.tintColor = theme.accentColor
+            $0.borderColor = theme.separatorColor
             $0.borderWidth = .onePixel
         }
     }
 
-    private static func setNavigationBarBackButtonTheme() {
+    private static func setNavigationBarBackButtonTheme(_ theme: Theme) {
         UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).apply {
             $0.backIndicatorImage = UIImage(assetIdentifier: .navigationBarBackArrow)
             $0.backIndicatorTransitionMaskImage = UIImage(assetIdentifier: .navigationBarBackArrow)
@@ -92,36 +69,36 @@ extension Theme {
             .setBackButtonTitlePositionAdjustment(UIOffset(horizontal: 10, vertical: 0), for: .default)
     }
 
-    private static func setSearchBarTheme() {
+    private static func setSearchBarTheme(_ theme: Theme) {
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).apply {
             // SearchBar Cancel button normal state
              $0.setTitleTextAttributes([
-                .foregroundColor: current.tintColor,
+                .foregroundColor: theme.accentColor,
                 .font: UIFont.app(.body)
             ], for: .normal)
 
             // SearchBar Cancel button disabled state
             $0.setTitleTextAttributes([
-                .foregroundColor: current.tintColor.alpha(0.5)
+                .foregroundColor: theme.accentColor.alpha(0.5)
             ], for: .disabled)
         }
 
         // SearchBar text attributes
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [
-            .foregroundColor: current.textColor,
+            .foregroundColor: theme.textColor,
             .font: UIFont.app(.body)
         ]
 
-        UISearchBar.appearance().placeholderTextColor = current.textColor.alpha(0.5)
+        UISearchBar.appearance().placeholderTextColor = theme.textColor.alpha(0.5)
     }
 
-    private static func setComponentsTheme() {
+    private static func setComponentsTheme(_ theme: Theme) {
         BlurView.appearance().blurOpacity = 0.8
 
-        SeparatorView.appearance().tintColor = current.separatorColor
+        SeparatorView.appearance().tintColor = theme.separatorColor
 
         UIViewController.defaultAppearance.apply {
-            $0.tintColor = current.tintColor
+            $0.tintColor = theme.accentColor
             $0.prefersTabBarHidden = true
         }
 
@@ -133,18 +110,18 @@ extension Theme {
             $0.configurationAttributes.apply {
                 // Styles Updates
                 $0[.base].font = .app(.body)
-                $0[.base].textColor = current.buttonTextColor
-                $0[.base].tintColor = current.tintColor
+                $0[.base].textColor = theme.linkColor
+                $0[.base].tintColor = theme.accentColor
 
-                $0[.callout].textColor = .white
-                $0[.callout].backgroundColor = current.buttonBackgroundColor
-                $0[.calloutSecondary].backgroundColor = current.buttonBackgroundColorSecondary
-                $0[.pill].backgroundColor = current.buttonBackgroundColorPill
+                $0[.callout].textColor = .label
+                $0[.callout].backgroundColor = theme.buttonBackgroundColor(.fill, .primary)
+                $0[.calloutSecondary].backgroundColor = theme.buttonBackgroundColor(.fill, .secondary)
+                $0[.pill].backgroundColor = theme.buttonBackgroundColor(.pill, .primary)
 
                 // Toggle Styles
                 $0[.checkbox].font = .app(.caption2)
-                $0[.checkbox].tintColor = current.toggleColor
-                $0[.radioButton].tintColor = current.toggleColor
+                $0[.checkbox].tintColor = theme.toggleColor
+                $0[.radioButton].tintColor = theme.toggleColor
             }
         }
     }

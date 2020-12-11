@@ -20,7 +20,7 @@ extension InterstitialCompatibleViewController {
     public func didDismiss() { }
 
     public var theme: Theme {
-        .current
+        .default
     }
 }
 

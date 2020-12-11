@@ -72,7 +72,7 @@ extension Identifier where Type: UIButton {
 
     public func tintColor(button: UIButton) -> UIColor {
         guard let color = attributes(\.tintColor) else {
-            return button.tintColor ?? .appTint
+            return button.tintColor ?? Theme.accentColor
         }
 
         return color
@@ -96,7 +96,7 @@ extension Identifier where Type: UIButton {
 
     public func disabledBackgroundColor(button: UIButton) -> UIColor {
         guard let color = attributes(\.disabledBackgroundColor) else {
-            return .appBackgroundDisabled
+            return Theme.default.buttonDisabledBackgroundColor(.fill)
         }
 
         return color

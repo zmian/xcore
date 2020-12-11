@@ -71,7 +71,7 @@ final public class SeparatorView: UIView {
     }
 
     @objc public dynamic override var backgroundColor: UIColor? {
-        get { _backgroundColor ?? .appSeparator }
+        get { _backgroundColor ?? Theme.separatorColor }
         set { _backgroundColor = newValue }
     }
 
@@ -134,6 +134,10 @@ final public class SeparatorView: UIView {
         }
         shapeLayer.strokeColor = self.backgroundColor?.cgColor
         lineCap = .round
+    }
+
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        shapeLayer.strokeColor = backgroundColor?.cgColor
     }
 
     private func updatePath() {
