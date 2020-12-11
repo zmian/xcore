@@ -220,6 +220,30 @@ extension UIColor {
     }
 }
 
+// MARK: - Color Scheme Mode
+
+extension UIColor {
+    /// Creates a color object that generates its color data dynamically using the
+    /// specified colors.
+    ///
+    /// - Parameters:
+    ///   - light: The color for light mode.
+    ///   - dark: The color for dark mode.
+    public convenience init(
+        light: @autoclosure @escaping () -> UIColor,
+        dark: @autoclosure @escaping () -> UIColor
+    ) {
+        self.init {
+            switch $0.userInterfaceStyle {
+                case .dark:
+                    return dark()
+                default:
+                    return light()
+            }
+        }
+    }
+}
+
 extension Array where Element: UIColor {
     /// The Quartz color reference that corresponds to the receiver’s color.
     public var cgColor: [CGColor] {
