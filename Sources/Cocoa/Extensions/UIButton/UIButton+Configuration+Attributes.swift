@@ -80,23 +80,23 @@ extension Identifier where Type: UIButton {
 
     public func textColor(button: UIButton) -> UIColor {
         guard let color = attributes(\.textColor) else {
-            return tintColor(button: button)
+            return Theme.default.buttonTextColor(.fill, .normal)
         }
 
         return color
     }
 
-    public func backgroundColor(button: UIButton) -> UIColor {
+    public var backgroundColor: UIColor {
         guard let color = attributes(\.backgroundColor) else {
-            return tintColor(button: button)
+            return Theme.default.buttonBackgroundColor(.fill, .normal)
         }
 
         return color
     }
 
-    public func disabledBackgroundColor(button: UIButton) -> UIColor {
+    public var disabledBackgroundColor: UIColor {
         guard let color = attributes(\.disabledBackgroundColor) else {
-            return Theme.default.buttonDisabledBackgroundColor(.fill)
+            return Theme.default.buttonBackgroundColor(.fill, .disabled)
         }
 
         return color

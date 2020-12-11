@@ -30,7 +30,6 @@ extension Identifier where Type: UIButton {
     public static var plain: Self { #function }
     public static var callout: Self { #function }
     public static var calloutSecondary: Self { #function }
-    public static var destructive: Self { #function }
     public static var pill: Self { #function }
     public static var caret: Self { #function }
     public static var radioButton: Self { #function }
@@ -79,7 +78,7 @@ extension Configuration where Type: UIButton {
         let id: Identifier = .callout
         return .init(id: id) {
             var textColor = textColor ?? id.textColor(button: $0)
-            let backgroundColor = backgroundColor ?? id.backgroundColor(button: $0)
+            let backgroundColor = backgroundColor ?? id.backgroundColor
 
             if backgroundColor == textColor {
                 textColor = backgroundColor.isLight() ? Theme.accentColor : .white
@@ -88,7 +87,7 @@ extension Configuration where Type: UIButton {
             $0.titleLabel?.font = font ?? id.font(button: $0)
             $0.setTitleColor(textColor, for: .normal)
             $0.backgroundColor = backgroundColor
-            $0.disabledBackgroundColor = id.disabledBackgroundColor(button: $0)
+            $0.disabledBackgroundColor = id.disabledBackgroundColor
             $0.cornerRadius = id.cornerRadius
             configure($0, id)
         }
@@ -101,18 +100,9 @@ extension Configuration where Type: UIButton {
             if let textColor = id.textColor {
                 $0.setTitleColor(textColor, for: .normal)
             }
-            $0.backgroundColor = id.backgroundColor(button: $0)
-            $0.disabledBackgroundColor = id.disabledBackgroundColor(button: $0)
+            $0.backgroundColor = id.backgroundColor
+            $0.disabledBackgroundColor = id.disabledBackgroundColor
             $0.layer.borderColor = id.borderColor(button: $0).cgColor
-            configure($0, id)
-        }
-    }
-
-    public static var destructive: Self {
-        let id: Identifier = .destructive
-        return callout.extend(id: id) {
-            $0.backgroundColor = id.backgroundColor(or: .systemRed)
-            $0.disabledBackgroundColor = id.disabledBackgroundColor(button: $0)
             configure($0, id)
         }
     }
@@ -122,8 +112,8 @@ extension Configuration where Type: UIButton {
         return callout.extend(id: id) {
             $0.setContentCompressionResistancePriority(.required, for: .horizontal)
             $0.titleLabel?.lineBreakMode = .byTruncatingTail
-            $0.backgroundColor = id.backgroundColor(button: $0)
-            $0.disabledBackgroundColor = id.disabledBackgroundColor(button: $0)
+            $0.backgroundColor = id.backgroundColor
+            $0.disabledBackgroundColor = id.disabledBackgroundColor
             $0.cornerRadius = $0.defaultAppearance.height / 2
             configure($0, id)
         }

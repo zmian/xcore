@@ -29,3 +29,9 @@ extension ButtonIdentifier {
     public static var pill: Self { #function }
     public static var outline: Self { #function }
 }
+
+public enum ButtonState {
+    case normal
+    case pressed
+    case disabled
+}
