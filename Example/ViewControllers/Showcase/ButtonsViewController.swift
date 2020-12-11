@@ -16,7 +16,7 @@ final class ButtonsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Buttons"
-        view.backgroundColor = .white
+        view.backgroundColor = Theme.backgroundColor
 
         view.addSubview(stackView)
         NSLayoutConstraint.activate([

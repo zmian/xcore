@@ -51,12 +51,13 @@ public struct OutlineButtonStyle: ButtonStyle {
     }
 
     private struct InternalBody: View {
-        let configuration: ButtonStyleConfiguration
         @Environment(\.defaultMinButtonHeight) private var minHeight
         @Environment(\.defaultButtonCornerRadius) private var cornerRadius
         @Environment(\.defaultOutlineButtonBorderColor) private var _borderColor
         @Environment(\.theme) private var theme
         @Environment(\.isEnabled) private var isEnabled
+        private let id: ButtonIdentifier = .outline
+        let configuration: ButtonStyleConfiguration
 
         var body: some View {
             configuration.label
@@ -72,7 +73,11 @@ public struct OutlineButtonStyle: ButtonStyle {
         }
 
         private var foregroundColor: Color {
-            Color(isEnabled ? theme.textColor : theme.textSecondaryColor)
+            Color(
+                isEnabled ?
+                theme.buttonTextColor(id, configuration.isPressed ? .pressed : .normal) :
+                theme.buttonTextColor(id, .disabled)
+            )
         }
 
         private var borderColor: Color {
@@ -101,18 +106,25 @@ private struct FillStyleBody<S: Shape>: View {
         configuration.label
             .frame(maxWidth: .infinity, minHeight: minHeight)
             .padding(.horizontal)
-            .foregroundColor(Color(
-                isEnabled ? theme.backgroundColor : UIColor.black.alpha(0.2)
-            ))
+            .foregroundColor(foregroundColor)
             .background(shape(self).fill(backgroundColor))
             .contentShape(shape(self))
             .scaleOpacityEffect(configuration.isPressed, options: .scale)
     }
 
+    private var foregroundColor: Color {
+        Color(
+            isEnabled ?
+            theme.buttonTextColor(id, configuration.isPressed ? .pressed : .normal) :
+            theme.buttonTextColor(id, .disabled)
+        )
+    }
+
     private var backgroundColor: Color {
-        Color(isEnabled ?
-            (configuration.isPressed ? theme.buttonPressedBackgroundColor(id) : theme.buttonBackgroundColor(id)) :
-            theme.buttonDisabledBackgroundColor(id)
+        Color(
+            isEnabled ?
+            theme.buttonBackgroundColor(id, configuration.isPressed ? .pressed : .normal) :
+            theme.buttonBackgroundColor(id, .disabled)
         )
     }
 }

@@ -9,7 +9,7 @@ import UIKit
 @dynamicMemberLookup
 public struct Theme: MutableAppliable, UserInfoContainer {
     public typealias Identifier = Xcore.Identifier<Self>
-    public typealias ButtonColor = (ButtonIdentifier, ElementPosition) -> UIColor
+    public typealias ButtonColor = (ButtonIdentifier, ButtonState, ElementPosition) -> UIColor
 
     /// A unique id for the theme.
     public var id: Identifier
@@ -65,10 +65,9 @@ public struct Theme: MutableAppliable, UserInfoContainer {
     /// The color for content layered on top of secondary backgrounds.
     public var backgroundTertiaryColor: UIColor
 
-    // MARK: - Buttons
+    // MARK: - Button
+    public var buttonTextColor: ButtonColor
     public var buttonBackgroundColor: ButtonColor
-    public var buttonPressedBackgroundColor: ButtonColor
-    public var buttonDisabledBackgroundColor: ButtonColor
 
     // MARK: - Chrome
     public var statusBarStyle: UIStatusBarStyle
@@ -102,9 +101,8 @@ public struct Theme: MutableAppliable, UserInfoContainer {
         backgroundTertiaryColor: UIColor,
 
         // Button
+        buttonTextColor: @escaping ButtonColor,
         buttonBackgroundColor: @escaping ButtonColor,
-        buttonPressedBackgroundColor: @escaping ButtonColor,
-        buttonDisabledBackgroundColor: @escaping ButtonColor,
 
         // Chrome
         statusBarStyle: UIStatusBarStyle,
@@ -137,9 +135,8 @@ public struct Theme: MutableAppliable, UserInfoContainer {
         self.backgroundTertiaryColor = backgroundTertiaryColor
 
         // Button
+        self.buttonTextColor = buttonTextColor
         self.buttonBackgroundColor = buttonBackgroundColor
-        self.buttonPressedBackgroundColor = buttonPressedBackgroundColor
-        self.buttonDisabledBackgroundColor = buttonDisabledBackgroundColor
 
         // Chrome
         self.statusBarStyle = statusBarStyle
@@ -153,16 +150,12 @@ public struct Theme: MutableAppliable, UserInfoContainer {
 // MARK: - Convenience
 
 extension Theme {
-    public func buttonBackgroundColor(_ id: ButtonIdentifier) -> UIColor {
-        buttonBackgroundColor(id, .primary)
+    public func buttonBackgroundColor(_ id: ButtonIdentifier, _ state: ButtonState = .normal) -> UIColor {
+        buttonBackgroundColor(id, state, .primary)
     }
 
-    public func buttonPressedBackgroundColor(_ id: ButtonIdentifier) -> UIColor {
-        buttonPressedBackgroundColor(id, .primary)
-    }
-
-    public func buttonDisabledBackgroundColor(_ id: ButtonIdentifier) -> UIColor {
-        buttonDisabledBackgroundColor(id, .primary)
+    public func buttonTextColor(_ id: ButtonIdentifier, _ state: ButtonState = .normal) -> UIColor {
+        buttonTextColor(id, state, .primary)
     }
 }
 
@@ -228,15 +221,32 @@ extension Theme {
         backgroundSecondaryColor: .secondarySystemBackground,
         backgroundTertiaryColor: .tertiarySystemBackground,
 
-        // Button
-        buttonBackgroundColor: { _, _ in
-            .systemTint
+        // Button Text
+        buttonTextColor: { style, state, position in
+            switch (style, state, position) {
+                case (.outline, .normal, _),
+                     (.outline, .pressed, _):
+                    return .label
+
+                case (_, .normal, _):
+                    return .white
+                case (_, .pressed, _):
+                    return .white
+                case (_, .disabled, _):
+                    return .systemGray4
+            }
         },
-        buttonPressedBackgroundColor: { _, _ in
-            .systemTint
-        },
-        buttonDisabledBackgroundColor: { _, _ in
-            .secondarySystemBackground
+
+        // Button Background
+        buttonBackgroundColor: { style, state, position in
+            switch (style, state, position) {
+                case (_, .normal, _):
+                    return .systemTint
+                case (_, .pressed, _):
+                    return .systemTint
+                case (_, .disabled, _):
+                    return .secondarySystemBackground
+            }
         },
 
         // Chrome

@@ -113,10 +113,10 @@ extension Theme {
                 $0[.base].textColor = theme.linkColor
                 $0[.base].tintColor = theme.accentColor
 
-                $0[.callout].textColor = .label
-                $0[.callout].backgroundColor = theme.buttonBackgroundColor(.fill, .primary)
-                $0[.calloutSecondary].backgroundColor = theme.buttonBackgroundColor(.fill, .secondary)
-                $0[.pill].backgroundColor = theme.buttonBackgroundColor(.pill, .primary)
+                $0[.callout].textColor = .white
+                $0[.callout].backgroundColor = theme.buttonBackgroundColor(.fill)
+                $0[.calloutSecondary].backgroundColor = theme.buttonBackgroundColor(.fill, .normal, .secondary)
+                $0[.pill].backgroundColor = theme.buttonBackgroundColor(.pill)
 
                 // Toggle Styles
                 $0[.checkbox].font = .app(.caption2)
