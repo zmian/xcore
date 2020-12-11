@@ -137,7 +137,10 @@ final public class SeparatorView: UIView {
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        shapeLayer.strokeColor = backgroundColor?.cgColor
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            shapeLayer.strokeColor = backgroundColor?.cgColor
+        }
     }
 
     private func updatePath() {
