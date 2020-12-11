@@ -41,7 +41,7 @@ public struct CheckboxToggleStyle: ToggleStyle {
             .resizable()
             .frame(24)
             .foregroundColor(
-                configuration.isOn ? .accentColor : Color(.appSeparator)
+                configuration.isOn ? .accentColor : Color(Theme.separatorColor)
             )
             .onTapGesture {
                 configuration.isOn.toggle()

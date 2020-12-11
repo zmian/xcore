@@ -6,151 +6,241 @@
 
 import UIKit
 
-// MARK: - IDs
+@dynamicMemberLookup
+public struct Theme: MutableAppliable, UserInfoContainer {
+    public typealias Identifier = Xcore.Identifier<Self>
+    public typealias ButtonColor = (ButtonIdentifier, ElementPosition) -> UIColor
 
-extension Identifier where Type == Theme {
-    public static var light: Self { #function }
-    public static var dark: Self { #function }
-}
-
-// MARK: - Theme
-
-public struct Theme: Equatable {
     /// A unique id for the theme.
-    public let id: Identifier<Self>
+    public var id: Identifier
 
-    /// A boolean value indicating whether the theme appearance is dark.
-    public let isDark: Bool
+    /// A color that represents the system or application accent color.
+    public var accentColor: UIColor
 
-    /// The main brand color for interface callout content.
-    public let tintColor: UIColor
+    /// The color for divider lines that hides any underlying content.
+    public var separatorColor: UIColor
 
-    /// The color for divider lines that hide any underlying content.
-    public let separatorColor: UIColor
-
-    /// The color for border that hide any underlying content.
-    public let borderColor: UIColor
+    /// The color for border lines that hides any underlying content.
+    public var borderColor: UIColor
 
     /// The color for toggle controls (e.g., Switch or Checkbox).
-    public let toggleColor: UIColor
+    public var toggleColor: UIColor
 
     /// The color for links.
-    public let linkColor: UIColor
+    public var linkColor: UIColor
+
+    /// The color for placeholder text in controls or text views.
+    public var placeholderTextColor: UIColor
+
+    // MARK: - Sentiment Color
+
+    /// The color for representing positive sentiment.
+    public var positiveSentimentColor: UIColor
+
+    /// The color for representing negative sentiment.
+    public var negativeSentimentColor: UIColor
 
     // MARK: - Text
 
-    /// The color for text labels containing primary content.
-    public let textColor: UIColor
+    /// The color for text labels that contain primary content.
+    public var textColor: UIColor
 
-    /// The color for text labels containing secondary content.
-    public let textColorSecondary: UIColor
+    /// The color for text labels that contain secondary content.
+    public var textSecondaryColor: UIColor
+
+    /// The color for text labels that contain tertiary content.
+    public var textTertiaryColor: UIColor
+
+    /// The color for text labels that contain quaternary content.
+    public var textQuaternaryColor: UIColor
+
+    // MARK: - Background
 
     /// The color for the main background of your interface.
-    public let backgroundColor: UIColor
+    public var backgroundColor: UIColor
+
+    /// The color for content layered on top of the main background.
+    public var backgroundSecondaryColor: UIColor
+
+    /// The color for content layered on top of secondary backgrounds.
+    public var backgroundTertiaryColor: UIColor
 
     // MARK: - Buttons
-    public let buttonTextColor: UIColor
-    public let buttonBackgroundColor: UIColor
-    public let buttonBackgroundColorSecondary: UIColor
-    public let buttonBackgroundColorPill: UIColor
-    public let buttonSelectedBackgroundColor: UIColor
-    public let statusBarStyle: UIStatusBarStyle
-    public let chrome: Chrome.Style
+    public var buttonBackgroundColor: ButtonColor
+    public var buttonPressedBackgroundColor: ButtonColor
+    public var buttonDisabledBackgroundColor: ButtonColor
+
+    // MARK: - Chrome
+    public var statusBarStyle: UIStatusBarStyle
+    public var chrome: Chrome.Style
+
+    /// Additional info which may be used to describe the theme further.
+    public var userInfo: UserInfo
 
     public init(
-        id: Identifier<Theme>,
-        dark: Bool? = nil,
-        tintColor: UIColor,
+        id: Identifier,
+        accentColor: UIColor,
         separatorColor: UIColor,
         borderColor: UIColor,
         toggleColor: UIColor,
         linkColor: UIColor,
+        placeholderTextColor: UIColor,
+
+        // Sentiment
+        positiveSentimentColor: UIColor,
+        negativeSentimentColor: UIColor,
+
+        // Text
         textColor: UIColor,
-        textColorSecondary: UIColor,
+        textSecondaryColor: UIColor,
+        textTertiaryColor: UIColor,
+        textQuaternaryColor: UIColor,
+
+        // Background
         backgroundColor: UIColor,
-        buttonTextColor: UIColor,
-        buttonBackgroundColor: UIColor,
-        buttonBackgroundColorSecondary: UIColor,
-        buttonBackgroundColorPill: UIColor,
-        buttonSelectedBackgroundColor: UIColor,
+        backgroundSecondaryColor: UIColor,
+        backgroundTertiaryColor: UIColor,
+
+        // Button
+        buttonBackgroundColor: @escaping ButtonColor,
+        buttonPressedBackgroundColor: @escaping ButtonColor,
+        buttonDisabledBackgroundColor: @escaping ButtonColor,
+
+        // Chrome
         statusBarStyle: UIStatusBarStyle,
-        chrome: Chrome.Style? = nil
+        chrome: Chrome.Style,
+
+        // UserInfo
+        userInfo: UserInfo = [:]
     ) {
-        let isDark = dark ?? (id == .dark)
         self.id = id
-        self.isDark = isDark
-        self.tintColor = tintColor
+        self.accentColor = accentColor
         self.separatorColor = separatorColor
         self.borderColor = borderColor
         self.toggleColor = toggleColor
         self.linkColor = linkColor
+        self.placeholderTextColor = placeholderTextColor
+
+        // Sentiment
+        self.positiveSentimentColor = positiveSentimentColor
+        self.negativeSentimentColor = negativeSentimentColor
+
+        // Text
         self.textColor = textColor
-        self.textColorSecondary = textColorSecondary
+        self.textSecondaryColor = textSecondaryColor
+        self.textTertiaryColor = textTertiaryColor
+        self.textQuaternaryColor = textQuaternaryColor
+
+        // Background
         self.backgroundColor = backgroundColor
-        self.buttonTextColor = buttonTextColor
+        self.backgroundSecondaryColor = backgroundSecondaryColor
+        self.backgroundTertiaryColor = backgroundTertiaryColor
+
+        // Button
         self.buttonBackgroundColor = buttonBackgroundColor
-        self.buttonBackgroundColorSecondary = buttonBackgroundColorSecondary
-        self.buttonBackgroundColorPill = buttonBackgroundColorPill
-        self.buttonSelectedBackgroundColor = buttonSelectedBackgroundColor
+        self.buttonPressedBackgroundColor = buttonPressedBackgroundColor
+        self.buttonDisabledBackgroundColor = buttonDisabledBackgroundColor
+
+        // Chrome
         self.statusBarStyle = statusBarStyle
-        self.chrome = chrome ?? (isDark ? .color(backgroundColor) : .blurred)
+        self.chrome = chrome
+
+        // UserInfo
+        self.userInfo = userInfo
+    }
+}
+
+// MARK: - Convenience
+
+extension Theme {
+    public func buttonBackgroundColor(_ id: ButtonIdentifier) -> UIColor {
+        buttonBackgroundColor(id, .primary)
+    }
+
+    public func buttonPressedBackgroundColor(_ id: ButtonIdentifier) -> UIColor {
+        buttonPressedBackgroundColor(id, .primary)
+    }
+
+    public func buttonDisabledBackgroundColor(_ id: ButtonIdentifier) -> UIColor {
+        buttonDisabledBackgroundColor(id, .primary)
+    }
+}
+
+// MARK: - KeyPath
+
+extension Theme {
+    public static subscript<T>(dynamicMember keyPath: KeyPath<Self, T>) -> T {
+        `default`[keyPath: keyPath]
+    }
+
+    public static subscript<T>(dynamicMember keyPath: WritableKeyPath<Self, T>) -> T {
+        get { `default`[keyPath: keyPath] }
+        set { `default`[keyPath: keyPath] = newValue }
+    }
+}
+
+// MARK: - Hashable
+
+extension Theme: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
+// MARK: - Equatable
+
+extension Theme: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
     }
 }
 
 // MARK: - Default
 
 extension Theme {
-    /// The current theme for the interface.
-    internal(set) public static var current: Theme = .light
+    /// The default theme for the interface.
+    public static var `default`: Theme = .system
 
-    /// The nonadaptable light theme for the interface.
+    /// The system theme using [UI Element Colors] for the interface.
     ///
-    /// This theme does not adapt to changes in the underlying trait environment.
-    internal(set) public static var light: Theme = .init(
-        id: .light,
-        tintColor: .systemTint,
-        separatorColor: .lightGray,
-        borderColor: .lightGray,
-        toggleColor: .systemTint,
-        linkColor: .systemTint,
-        textColor: .black,
-        textColorSecondary: .lightGray,
-        backgroundColor: .white,
-        buttonTextColor: .systemTint,
-        buttonBackgroundColor: .systemTint,
-        buttonBackgroundColorSecondary: .systemTint,
-        buttonBackgroundColorPill: .systemTint,
-        buttonSelectedBackgroundColor: .systemTint,
-        statusBarStyle: .default
-    )
-
-    /// The nonadaptable dark theme for the interface.
-    ///
-    /// This theme does not adapt to changes in the underlying trait environment.
-    internal(set) public static var dark: Theme = .init(
-        id: .dark,
-        tintColor: .systemTint,
-        separatorColor: .lightGray,
-        borderColor: .lightGray,
+    /// [UI Element Colors]: https://developer.apple.com/documentation/uikit/uicolor/ui_element_colors
+    private static let system = Theme(
+        id: "system",
+        accentColor: .systemTint,
+        separatorColor: .separator,
+        borderColor: .separator,
         toggleColor: .systemGreen,
-        linkColor: .systemTint,
-        textColor: .lightText,
-        textColorSecondary: .lightGray,
-        backgroundColor: .black,
-        buttonTextColor: .systemTint,
-        buttonBackgroundColor: .systemTint,
-        buttonBackgroundColorSecondary: .systemTint,
-        buttonBackgroundColorPill: .systemTint,
-        buttonSelectedBackgroundColor: .systemTint,
-        statusBarStyle: .lightContent
+        linkColor: .link,
+        placeholderTextColor: .placeholderText,
+
+        // Sentiment
+        positiveSentimentColor: .systemGreen,
+        negativeSentimentColor: .systemRed,
+
+        // Text
+        textColor: .label,
+        textSecondaryColor: .secondaryLabel,
+        textTertiaryColor: .tertiaryLabel,
+        textQuaternaryColor: .quaternaryLabel,
+
+        // Background
+        backgroundColor: .systemBackground,
+        backgroundSecondaryColor: .secondarySystemBackground,
+        backgroundTertiaryColor: .tertiarySystemBackground,
+
+        // Button
+        buttonBackgroundColor: { _, _ in
+            .systemTint
+        },
+        buttonPressedBackgroundColor: { _, _ in
+            .systemTint
+        },
+        buttonDisabledBackgroundColor: { _, _ in
+            .secondarySystemBackground
+        },
+
+        // Chrome
+        statusBarStyle: .default,
+        chrome: .blurred
     )
-}
-
-// MARK: - UIView
-
-extension UIView {
-    /// Called when the app theme property changes.
-    ///
-    /// In your implementation, refresh the view rendering as needed.
-    @objc open func themeDidChange() { }
 }

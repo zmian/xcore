@@ -31,14 +31,14 @@ final public class LinePageControl: XCView {
         CGFloat(currentPage) * stepSize + dotSize
     }
 
-    @objc dynamic public var fillColor: UIColor = .appleGray {
+    @objc dynamic public var fillColor: UIColor = .systemGray6 {
         didSet {
             guard oldValue != fillColor else { return }
             dotsAndLinesBackgroundView.fillColor = fillColor.cgColor
         }
     }
 
-    @objc dynamic public var progressGradient: [UIColor] = [.appleTealBlue, .appleBlue] {
+    @objc dynamic public var progressGradient: [UIColor] = [.systemTeal, .systemBlue] {
         didSet {
             guard oldValue != progressGradient else { return }
             updateGradientColors(for: gradientView)

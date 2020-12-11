@@ -6,6 +6,8 @@
 
 extension Theme {
     public static func start() {
+        set(.default)
+
         UIButton.defaultAppearance.apply {
             $0.configuration = .callout
             $0.height = AppConstants.uiControlsHeight
@@ -14,8 +16,8 @@ extension Theme {
             $0.configurationAttributes.apply {
                 // Styles Updates
                 $0[.base].font = .app(.body)
-                $0[.base].textColor = current.buttonTextColor
-                $0[.base].tintColor = current.tintColor
+                $0[.base].textColor = Theme.linkColor
+                $0[.base].tintColor = Theme.accentColor
 
                 $0[.callout].textColor = .white
                 $0[.callout].backgroundColor = .orange
@@ -24,12 +26,9 @@ extension Theme {
 
                 // Toggle Styles
                 $0[.checkbox].font = .app(.caption2)
-                $0[.checkbox].tintColor = current.toggleColor
-                $0[.radioButton].tintColor = current.toggleColor
+                $0[.checkbox].tintColor = Theme.toggleColor
+                $0[.radioButton].tintColor = Theme.toggleColor
             }
         }
-
-        #warning("TODO: Fix the defaults so it matches the system defaults.")
-//        set(light: .light, dark: .dark)
     }
 }

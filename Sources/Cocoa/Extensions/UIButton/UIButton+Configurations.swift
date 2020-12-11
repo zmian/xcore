@@ -15,14 +15,14 @@ extension Identifier where Type: UIButton {
     /// ```swift
     /// UIButton.defaultAppearance.apply {
     ///     $0.styleAttributes.style(.base).setFont(.appButton())
-    ///     $0.styleAttributes.style(.base).setTextColor(.appTint)
+    ///     $0.styleAttributes.style(.base).setTextColor(.systemBlue)
     ///
     ///     let plainStyleFont = $0.styleAttributes.style(.plain).font(button: UIButton())
     ///     // print(".appButton()", plainStyleFont == .appButton())
     ///     // true
     ///
     ///     let plainStyleTextColor = $0.styleAttributes.style(.plain).textColor(button: UIButton())
-    ///     // print(".appTint", plainStyleTextColor == .appTint)
+    ///     // print(".systemBlue", plainStyleTextColor == .systemBlue)
     ///     // true
     /// }
     /// ```
@@ -82,7 +82,7 @@ extension Configuration where Type: UIButton {
             let backgroundColor = backgroundColor ?? id.backgroundColor(button: $0)
 
             if backgroundColor == textColor {
-                textColor = backgroundColor.isLight() ? .appTint : .white
+                textColor = backgroundColor.isLight() ? Theme.accentColor : .white
             }
 
             $0.titleLabel?.font = font ?? id.font(button: $0)

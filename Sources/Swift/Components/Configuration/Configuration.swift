@@ -18,7 +18,6 @@ import UIKit
 ///     static var header: Configuration {
 ///         .init(id: #function) {
 ///             $0.font = .app(.title1)
-///             $0.textColor = Theme.current.textColor
 ///             $0.numberOfLines = 0
 ///         }
 ///     }

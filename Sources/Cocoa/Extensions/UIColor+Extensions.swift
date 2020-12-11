@@ -142,7 +142,7 @@ extension UIColor {
         }
     }
 
-    func isLight(threshold: CGFloat = 0.6) -> Bool {
+    public func isLight(threshold: CGFloat = 0.6) -> Bool {
         var white: CGFloat = 0
         getWhite(&white, alpha: nil)
         return white > threshold

@@ -23,7 +23,7 @@ public struct FillButtonStyle: ButtonStyle {
     public init() { }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
-        FillStyleBody(configuration: configuration) {
+        FillStyleBody(id: .fill, configuration: configuration) {
             RoundedRectangle(cornerRadius: $0.cornerRadius, style: .continuous)
         }
     }
@@ -35,7 +35,7 @@ public struct PillButtonStyle: ButtonStyle {
     public init() { }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
-        FillStyleBody(configuration: configuration) { _ in
+        FillStyleBody(id: .pill, configuration: configuration) { _ in
             Capsule()
         }
     }
@@ -62,7 +62,7 @@ public struct OutlineButtonStyle: ButtonStyle {
             configuration.label
                 .frame(maxWidth: .infinity, minHeight: minHeight)
                 .padding(.horizontal)
-                .foregroundColor(color)
+                .foregroundColor(foregroundColor)
                 .background(
                     RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                         .strokeBorder(borderColor, lineWidth: .onePixel)
@@ -71,12 +71,8 @@ public struct OutlineButtonStyle: ButtonStyle {
                 .scaleOpacityEffect(configuration.isPressed)
         }
 
-        private var color: Color {
-            Color(
-                isEnabled ?
-                    self.theme.textColor :
-                    self.theme.isDark ? UIColor.white.alpha(0.1) : UIColor.black.alpha(0.2)
-            )
+        private var foregroundColor: Color {
+            Color(isEnabled ? theme.textColor : theme.textSecondaryColor)
         }
 
         private var borderColor: Color {
@@ -84,11 +80,7 @@ public struct OutlineButtonStyle: ButtonStyle {
                 return color
             }
 
-            return Color(
-                isEnabled ?
-                    self.theme.textColor :
-                    self.theme.isDark ? UIColor.white.alpha(0.1) : UIColor.black.alpha(0.2)
-            )
+            return foregroundColor
         }
     }
 }
@@ -101,6 +93,7 @@ private struct FillStyleBody<S: Shape>: View {
     @Environment(\.theme) private var theme
     @Environment(\.isEnabled) private var isEnabled
 
+    let id: ButtonIdentifier
     let configuration: ButtonStyleConfiguration
     let shape: (Self) -> S
 
@@ -111,14 +104,15 @@ private struct FillStyleBody<S: Shape>: View {
             .foregroundColor(Color(
                 isEnabled ? theme.backgroundColor : UIColor.black.alpha(0.2)
             ))
-            .background(
-                shape(self).fill(Color(
-                    isEnabled ?
-                        (configuration.isPressed ? self.theme.textColor.darker(0.1) : self.theme.textColor) :
-                        (self.theme.isDark ? UIColor.white.alpha(0.1) : .appBackgroundDisabled)
-                ))
-            )
+            .background(shape(self).fill(backgroundColor))
             .contentShape(shape(self))
             .scaleOpacityEffect(configuration.isPressed, options: .scale)
+    }
+
+    private var backgroundColor: Color {
+        Color(isEnabled ?
+            (configuration.isPressed ? theme.buttonPressedBackgroundColor(id) : theme.buttonBackgroundColor(id)) :
+            theme.buttonDisabledBackgroundColor(id)
+        )
     }
 }
