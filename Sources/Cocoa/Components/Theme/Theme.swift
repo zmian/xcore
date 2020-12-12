@@ -58,9 +58,16 @@ public struct Theme: MutableAppliable, UserInfoContainer {
     // MARK: - Sentiment Color
 
     /// The color for representing positive sentiment.
+    ///
+    /// Use sentiment colors for items that represent positive or negative outcomes.
+    /// Use this color to for outcomes, such as the validation succeeded.
     public var positiveSentimentColor: UIColor
 
     /// The color for representing negative sentiment.
+    ///
+    /// Use sentiment colors for items that represent positive or negative outcomes.
+    /// Use this color to for outcomes, such as the validation failed or require
+    /// user's attention.
     public var negativeSentimentColor: UIColor
 
     // MARK: - Text
@@ -87,6 +94,19 @@ public struct Theme: MutableAppliable, UserInfoContainer {
 
     /// The color for content layered on top of secondary backgrounds.
     public var backgroundTertiaryColor: UIColor
+
+    // MARK: - Grouped Background
+
+    /// The color for the main background of your grouped interface.
+    public var groupedBackgroundColor: UIColor
+
+    /// The color for content layered on top of the main background of your grouped
+    /// interface.
+    public var groupedBackgroundSecondaryColor: UIColor
+
+    /// The color for content layered on top of secondary backgrounds of your
+    /// grouped interface.
+    public var groupedBackgroundTertiaryColor: UIColor
 
     // MARK: - Button
     public var buttonTextColor: ButtonColor
@@ -123,6 +143,11 @@ public struct Theme: MutableAppliable, UserInfoContainer {
         backgroundSecondaryColor: UIColor,
         backgroundTertiaryColor: UIColor,
 
+        // Grouped Background
+        groupedBackgroundColor: UIColor,
+        groupedBackgroundSecondaryColor: UIColor,
+        groupedBackgroundTertiaryColor: UIColor,
+
         // Button
         buttonTextColor: @escaping ButtonColor,
         buttonBackgroundColor: @escaping ButtonColor,
@@ -156,6 +181,11 @@ public struct Theme: MutableAppliable, UserInfoContainer {
         self.backgroundColor = backgroundColor
         self.backgroundSecondaryColor = backgroundSecondaryColor
         self.backgroundTertiaryColor = backgroundTertiaryColor
+
+        // Grouped Background
+        self.groupedBackgroundColor = groupedBackgroundColor
+        self.groupedBackgroundSecondaryColor = groupedBackgroundSecondaryColor
+        self.groupedBackgroundTertiaryColor = groupedBackgroundTertiaryColor
 
         // Button
         self.buttonTextColor = buttonTextColor
@@ -243,6 +273,11 @@ extension Theme {
         backgroundColor: .systemBackground,
         backgroundSecondaryColor: .secondarySystemBackground,
         backgroundTertiaryColor: .tertiarySystemBackground,
+
+        // Grouped Background
+        groupedBackgroundColor: .systemGroupedBackground,
+        groupedBackgroundSecondaryColor: .secondarySystemGroupedBackground,
+        groupedBackgroundTertiaryColor: .tertiarySystemGroupedBackground,
 
         // Button Text
         buttonTextColor: { style, state, position in

@@ -89,7 +89,7 @@ extension Theme {
             .font: UIFont.app(.body)
         ]
 
-        UISearchBar.appearance().placeholderTextColor = theme.textColor.alpha(0.5)
+        UISearchBar.appearance().placeholderTextColor = theme.placeholderTextColor
     }
 
     private static func setComponentsTheme(_ theme: Theme) {
@@ -110,13 +110,7 @@ extension Theme {
             $0.configurationAttributes.apply {
                 // Styles Updates
                 $0[.base].font = .app(.body)
-                $0[.base].textColor = theme.linkColor
                 $0[.base].tintColor = theme.accentColor
-
-                $0[.callout].textColor = .white
-                $0[.callout].backgroundColor = theme.buttonBackgroundColor(.fill)
-                $0[.calloutSecondary].backgroundColor = theme.buttonBackgroundColor(.fill, .normal, .secondary)
-                $0[.pill].backgroundColor = theme.buttonBackgroundColor(.pill)
 
                 // Toggle Styles
                 $0[.checkbox].font = .app(.caption2)

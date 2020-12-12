@@ -43,6 +43,23 @@ extension Identifier where Type: UIButton {
         .base
     }
 
+    private var theme: Theme {
+        .default
+    }
+
+    private var id: (ButtonIdentifier, ElementPosition) {
+        switch self {
+            case .callout:
+                return (.fill, .primary)
+            case .calloutSecondary:
+                return (.fill, .secondary)
+            case .pill:
+                return (.pill, .primary)
+            default:
+                return (.init(rawValue: rawValue), .primary)
+        }
+    }
+
     private var attributes: UIButton.Configuration.Attributes {
         get { UIButton.defaultAppearance.configurationAttributes[.init(rawValue: rawValue)] }
         set { UIButton.defaultAppearance.configurationAttributes[.init(rawValue: rawValue)] = newValue }
@@ -80,7 +97,7 @@ extension Identifier where Type: UIButton {
 
     public func textColor(button: UIButton) -> UIColor {
         guard let color = attributes(\.textColor) else {
-            return Theme.default.buttonTextColor(.fill, .normal)
+            return theme.buttonTextColor(id.0, .normal, id.1)
         }
 
         return color
@@ -88,7 +105,7 @@ extension Identifier where Type: UIButton {
 
     public var backgroundColor: UIColor {
         guard let color = attributes(\.backgroundColor) else {
-            return Theme.default.buttonBackgroundColor(.fill, .normal)
+            return theme.buttonBackgroundColor(id.0, .normal, id.1)
         }
 
         return color
@@ -96,15 +113,15 @@ extension Identifier where Type: UIButton {
 
     public var disabledBackgroundColor: UIColor {
         guard let color = attributes(\.disabledBackgroundColor) else {
-            return Theme.default.buttonBackgroundColor(.fill, .disabled)
+            return theme.buttonBackgroundColor(id.0, .disabled, id.1)
         }
 
         return color
     }
 
-    public func selectedColor(button: UIButton) -> UIColor {
+    public var selectedColor: UIColor {
         guard let color = attributes(\.selectedColor) else {
-            return tintColor(button: button)
+            return theme.buttonBackgroundColor(id.0, .pressed, id.1)
         }
 
         return color
