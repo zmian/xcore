@@ -282,7 +282,7 @@ extension Configuration where Type: UIButton {
     ) -> Self {
         let id: Identifier = .radioButton
         return .init(id: id) {
-            let selectedColor = selectedColor ?? id.selectedColor(button: $0)
+            let selectedColor = selectedColor ?? id.selectedColor
             let borderColor = (borderColor ?? id.borderColor(button: $0)).cgColor
 
             $0.accessibilityIdentifier = "radioButton"

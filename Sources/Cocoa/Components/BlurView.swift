@@ -8,7 +8,7 @@ import UIKit
 
 public class BlurView: XCView {
     private var observer: NSObjectProtocol?
-    private var style: UIBlurEffect.Style = .light
+    private var style: UIBlurEffect.Style = .regular
     private lazy var blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: style))
     private lazy var blurBackView = UIView().apply {
         $0.backgroundColor = blurColor
@@ -55,12 +55,12 @@ public class BlurView: XCView {
 
     /// A property to determine color for the blur effect.
     ///
-    /// The default value is `.white`.
+    /// The default value is `Theme.backgroundColor`.
     ///
     /// - Note:
     /// This property is only used when `isBlurEffectEnabled` is `true` and
     /// `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
-    @objc public dynamic var blurColor: UIColor = .white {
+    @objc public dynamic var blurColor: UIColor = Theme.backgroundColor {
         didSet {
             blurBackView.backgroundColor = blurColor
         }
@@ -69,17 +69,17 @@ public class BlurView: XCView {
     /// The background color to use when `UIAccessibilityIsReduceTransparencyEnabled()`
     /// is `true`.
     ///
-    /// The default value is `.white`.
+    /// The default value is `Theme.backgroundColor`.
     ///
     /// - Note:
     /// This property is only used when `isBlurEffectEnabled` is `true` and
     /// `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
-    @objc public dynamic var blurEffectDisabledBackgroundColor: UIColor = .white
+    @objc public dynamic var blurEffectDisabledBackgroundColor: UIColor = Theme.backgroundColor
 
     /// The `UIVisualEffect` to use when `UIAccessibilityIsReduceTransparencyEnabled()`
     /// is `false`.
     ///
-    /// The default value is `.light`.
+    /// The default value is `.regular`.
     ///
     /// - Note:
     /// This property is only used when `isBlurEffectEnabled` is `true` and
@@ -89,7 +89,7 @@ public class BlurView: XCView {
         set { blurEffectView.effect = newValue }
     }
 
-    public init(style: UIBlurEffect.Style = .light) {
+    public init(style: UIBlurEffect.Style = .regular) {
         self.style = style
         super.init(frame: .zero)
     }
