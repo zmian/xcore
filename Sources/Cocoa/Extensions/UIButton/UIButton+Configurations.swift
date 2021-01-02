@@ -54,7 +54,7 @@ extension Configuration where Type: UIButton {
     ) -> Self {
         let id: Identifier = .plain
         return .init(id: id) {
-            let textColor = textColor ?? id.textColor(button: $0)
+            let textColor = textColor ?? id.textColor
             $0.titleLabel?.font = font ?? id.font(button: $0)
             $0.contentEdgeInsets = .zero
             $0.isHeightSetAutomatically = false
@@ -77,7 +77,7 @@ extension Configuration where Type: UIButton {
     ) -> Self {
         let id: Identifier = .callout
         return .init(id: id) {
-            var textColor = textColor ?? id.textColor(button: $0)
+            var textColor = textColor ?? id.textColor
             let backgroundColor = backgroundColor ?? id.backgroundColor
 
             if backgroundColor == textColor {
@@ -96,13 +96,10 @@ extension Configuration where Type: UIButton {
     public static var calloutSecondary: Self {
         let id: Identifier = .calloutSecondary
         return callout.extend(id: id) {
-            // TODO: Need to inherit from parent without explicit check.
-            if let textColor = id.textColor {
-                $0.setTitleColor(textColor, for: .normal)
-            }
+            $0.setTitleColor(id.textColor, for: .normal)
             $0.backgroundColor = id.backgroundColor
             $0.disabledBackgroundColor = id.disabledBackgroundColor
-            $0.layer.borderColor = id.borderColor(button: $0).cgColor
+            $0.borderColor = id.borderColor
             configure($0, id)
         }
     }
@@ -202,7 +199,7 @@ extension Configuration where Type: UIButton {
     ) -> Self {
         let id: Identifier = .caret
         return configuration.extend(id: id) {
-            let textColor = textColor ?? configuration.id.textColor(button: $0)
+            let textColor = textColor ?? configuration.id.textColor
             let font = font ?? configuration.id.font(button: $0)
             $0.titleLabel?.numberOfLines = 1
 
@@ -234,7 +231,7 @@ extension Configuration where Type: UIButton {
         return .init(id: id) {
             let normalColor = normalColor ?? id.tintColor(button: $0)
             let selectedColor = selectedColor ?? id.tintColor(button: $0)
-            let textColor = textColor ?? id.textColor(button: $0)
+            let textColor = textColor ?? id.textColor
             let font = font ?? id.font(button: $0)
 
             $0.accessibilityIdentifier = "checkboxButton"
@@ -283,7 +280,7 @@ extension Configuration where Type: UIButton {
         let id: Identifier = .radioButton
         return .init(id: id) {
             let selectedColor = selectedColor ?? id.selectedColor
-            let borderColor = (borderColor ?? id.borderColor(button: $0)).cgColor
+            let borderColor = (borderColor ?? id.borderColor).cgColor
 
             $0.accessibilityIdentifier = "radioButton"
             $0.layer.borderWidth = borderWidth
