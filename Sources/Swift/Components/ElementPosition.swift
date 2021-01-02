@@ -25,6 +25,7 @@ public enum ButtonIdentifierTag {}
 public typealias ButtonIdentifier = Identifier<ButtonIdentifierTag>
 
 extension ButtonIdentifier {
+    public static var plain: Self { #function }
     public static var fill: Self { #function }
     public static var pill: Self { #function }
     public static var outline: Self { #function }

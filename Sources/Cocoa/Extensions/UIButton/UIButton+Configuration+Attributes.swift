@@ -95,7 +95,7 @@ extension Identifier where Type: UIButton {
         return color
     }
 
-    public func textColor(button: UIButton) -> UIColor {
+    public var textColor: UIColor {
         guard let color = attributes(\.textColor) else {
             return theme.buttonTextColor(id.0, .normal, id.1)
         }
@@ -127,9 +127,9 @@ extension Identifier where Type: UIButton {
         return color
     }
 
-    public func borderColor(button: UIButton) -> UIColor {
+    public var borderColor: UIColor {
         guard let color = attributes(\.borderColor) else {
-            return tintColor(button: button)
+            return Theme.borderColor
         }
 
         return color
@@ -146,10 +146,5 @@ extension Identifier where Type: UIButton {
     /// otherwise, returns the `defaultValue`.
     public func backgroundColor(or defaultValue: @autoclosure () -> UIColor) -> UIColor {
         attributes.backgroundColor ?? defaultValue()
-    }
-
-    /// Returns the text color if it is explicitly set for this identifier.
-    public var textColor: UIColor? {
-        attributes.textColor
     }
 }
