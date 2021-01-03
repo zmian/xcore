@@ -93,13 +93,13 @@ extension ButtonsView {
             .buttonStyle(FillButtonStyle())
 
             button {
-                Label("FillButtonStyle", systemImage: "chevron.right")
+                Label("FillButtonStyle", systemImage: .chevronRight)
                     .labelStyle(IconAfterLabelStyle())
             }
             .buttonStyle(FillButtonStyle())
 
             button {
-                Label("FillButtonStyle", systemImage: "heart.fill")
+                Label("FillButtonStyle", systemImage: .heartFill)
                     .imageScale(.large)
                     .padding(.vertical)
                     .labelStyle(IconBeforeLabelStyle(axis: .vertical))
