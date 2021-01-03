@@ -88,3 +88,95 @@ extension View {
         .buttonStyle(ScaleEffectButtonStyle())
     }
 }
+
+// MARK: - Colors
+
+extension View {
+    /// Sets the color that the view uses for foreground elements.
+    public func foregroundColor(_ color: UIColor) -> some View {
+        foregroundColor(Color(color))
+    }
+
+    /// Sets the background color behind this view.
+    public func backgroundColor(_ color: UIColor, edgesIgnoringSafeArea: Edge.Set = .all) -> some View {
+        background(
+            Color(color)
+                .edgesIgnoringSafeArea(edgesIgnoringSafeArea)
+        )
+    }
+}
+
+// MARK: - Hidden
+
+extension View {
+    /// Hide or show the view based on a boolean value.
+    ///
+    /// Example for visibility:
+    ///
+    /// ```
+    /// Text("Label")
+    ///     .hidden(true)
+    /// ```
+    ///
+    /// Example for complete removal:
+    ///
+    /// ```
+    /// Text("Label")
+    ///     .hidden(true, remove: true)
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - hidden: Set to `false` to show the view. Set to `true` to hide the view.
+    ///   - remove: Boolean value indicating whether or not to remove the view.
+    @ViewBuilder
+    public func hidden(_ hidden: Bool, remove: Bool = false) -> some View {
+        if hidden {
+            if !remove {
+                self.hidden()
+            }
+        } else {
+            self
+        }
+    }
+}
+
+// MARK: - Corner Radius
+
+extension View {
+    /// Clips the view to its bounding frame, with the specified corner radius.
+    ///
+    /// By default, a view’s bounding frame only affects its layout, so any content
+    /// that extends beyond the edges of the frame remains visible. Use the
+    /// `cornerRadius(_:corners:)` modifier to hide any content that extends beyond
+    /// these edges while applying a corner radius.
+    ///
+    /// The following code applies a corner radius of 20 to a square image to top
+    /// edges only:
+    ///
+    /// ```swift
+    /// Image("walnuts")
+    ///     .cornerRadius(20, corners: .top)
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - radius: The corner radius.
+    ///   - corners: The corners to apply the radius.
+    /// - Returns: A view that clips this view to its bounding frame.
+    public func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape(RoundedCorner(radius: radius, corners: corners))
+    }
+}
+
+private struct RoundedCorner: Shape {
+    let radius: CGFloat
+    let corners: UIRectCorner
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: corners,
+            cornerRadii: CGSize(radius)
+        )
+        return Path(path.cgPath)
+    }
+}
