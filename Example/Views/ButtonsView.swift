@@ -122,7 +122,7 @@ extension ButtonsView {
             button {
                 HStack {
                     Text("PillButtonStyle")
-                    Image(systemName: "chevron.right")
+                    Image(system: .chevronRight)
                 }
             }
         }
@@ -134,7 +134,7 @@ extension ButtonsView {
             button {
                 HStack {
                     Text("BorderlessButtonStyle")
-                    Image(systemName: "chevron.right")
+                    Image(system: .chevronRight)
                 }
             }
             .buttonStyle(BorderlessButtonStyle())
@@ -142,7 +142,7 @@ extension ButtonsView {
             button {
                 HStack {
                     Text("BorderlessButtonStyle")
-                    Image(systemName: "chevron.right")
+                    Image(system: .chevronRight)
                 }
             }
             .buttonStyle(BorderlessButtonStyle())

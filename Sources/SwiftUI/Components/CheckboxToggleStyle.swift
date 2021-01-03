@@ -37,7 +37,7 @@ public struct CheckboxToggleStyle: ToggleStyle {
     }
 
     private func toggle(_ configuration: Self.Configuration) -> some View {
-        Image(systemName: configuration.isOn ? "checkmark.circle.fill" : "circle")
+        Image(system: configuration.isOn ? .checkmarkCircleFill : .circle)
             .resizable()
             .frame(24)
             .foregroundColor(
