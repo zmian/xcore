@@ -6,7 +6,6 @@
 
 import SwiftUI
 
-#if swift(>=5.3)
 @available(iOS 14.0, *)
 public struct IconAfterLabelStyle: LabelStyle {
     private let axis: Axis
@@ -15,20 +14,19 @@ public struct IconAfterLabelStyle: LabelStyle {
         self.axis = axis
     }
 
+    @ViewBuilder
     public func makeBody(configuration: Self.Configuration) -> some View {
-        Group {
-            switch axis {
-                case .horizontal:
-                    HStack {
-                        configuration.title
-                        configuration.icon
-                    }
-                case .vertical:
-                    VStack(alignment: .center, spacing: 8) {
-                        configuration.title
-                        configuration.icon
-                    }
-            }
+        switch axis {
+            case .horizontal:
+                HStack {
+                    configuration.title
+                    configuration.icon
+                }
+            case .vertical:
+                VStack {
+                    configuration.title
+                    configuration.icon
+                }
         }
     }
 }
@@ -41,21 +39,19 @@ public struct IconBeforeLabelStyle: LabelStyle {
         self.axis = axis
     }
 
+    @ViewBuilder
     public func makeBody(configuration: Self.Configuration) -> some View {
-        Group {
-            switch axis {
-                case .horizontal:
-                    HStack {
-                        configuration.icon
-                        configuration.title
-                    }
-                case .vertical:
-                    VStack(alignment: .center, spacing: 8) {
-                        configuration.icon
-                        configuration.title
-                    }
-            }
+        switch axis {
+            case .horizontal:
+                HStack {
+                    configuration.icon
+                    configuration.title
+                }
+            case .vertical:
+                VStack {
+                    configuration.icon
+                    configuration.title
+                }
         }
     }
 }
-#endif

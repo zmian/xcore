@@ -6,7 +6,6 @@
 
 import SwiftUI
 
-#if swift(>=5.3)
 @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension Label where Title == Text, Icon == Image {
     /// Creates a label with a system icon image and a title generated from a
@@ -29,4 +28,3 @@ extension Label where Title == Text, Icon == Image {
         self.init(title, systemImage: systemImage.rawValue)
     }
 }
-#endif

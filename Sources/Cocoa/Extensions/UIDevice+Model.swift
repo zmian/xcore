@@ -402,10 +402,8 @@ extension UIDevice.Model {
                 switch device.userInterfaceIdiom {
                     case .carPlay:
                         self = .carPlay
-                    #if swift(>=5.3)
                     case .mac:
                         self = .mac
-                    #endif
                     case .pad:
                         self = .pad
                     case .phone:
