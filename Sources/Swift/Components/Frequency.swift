@@ -19,7 +19,7 @@ public struct Frequency: UserInfoContainer, MutableAppliable, CustomAnalyticsVal
     public let analyticsValue: String
 
     /// The data interval associated with this frequency.
-    public let dateInterval: DateInterval
+    public var dateInterval: DateInterval
 
     /// Additional info which may be used to describe the frequency further.
     public var userInfo: UserInfo
