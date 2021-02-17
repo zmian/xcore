@@ -222,7 +222,10 @@ extension UIViewController {
     /// The default value is `true`.
     @objc open var isSwipeBackGestureEnabled: Bool {
         get { associatedObject(&AssociatedKey.isSwipeBackGestureEnabled, default: true) }
-        set { setAssociatedObject(&AssociatedKey.isSwipeBackGestureEnabled, value: newValue) }
+        set {
+            setAssociatedObject(&AssociatedKey.isSwipeBackGestureEnabled, value: newValue)
+            setNeedsNavigationBarAppearanceUpdate()
+        }
     }
 
     /// A convenience property to set `prefersTabBarHidden` without subclassing.
