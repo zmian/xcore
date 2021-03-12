@@ -99,6 +99,10 @@ final public class SwizzleManager {
             UISearchBar.runOnceSwapSelectors()
         }
 
+        if options.contains(.tableViewCell) {
+            UITableViewCell.runOnceSwapSelectors()
+        }
+
         if options.contains(.collectionViewCell) {
             UICollectionViewCell.runOnceSwapSelectors()
         }
@@ -129,10 +133,11 @@ extension SwizzleManager {
         public static let textView = Self(rawValue: 1 << 4)
         public static let imageView = Self(rawValue: 1 << 5)
         public static let searchBar = Self(rawValue: 1 << 6)
-        public static let collectionViewCell = Self(rawValue: 1 << 7)
-        public static let viewController = Self(rawValue: 1 << 8)
-        public static let userContentController = Self(rawValue: 1 << 9)
-        public static let chrome = Self(rawValue: 1 << 10)
+        public static let tableViewCell = Self(rawValue: 1 << 7)
+        public static let collectionViewCell = Self(rawValue: 1 << 8)
+        public static let viewController = Self(rawValue: 1 << 9)
+        public static let userContentController = Self(rawValue: 1 << 10)
+        public static let chrome = Self(rawValue: 1 << 11)
         public static let all: Self = [
             view,
             button,
@@ -141,6 +146,7 @@ extension SwizzleManager {
             textView,
             imageView,
             searchBar,
+            tableViewCell,
             collectionViewCell,
             viewController,
             userContentController,
