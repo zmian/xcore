@@ -17,7 +17,7 @@ struct XcoreApp: App {
     }
 }
 
-// MARK: - UIApplicationDelegate
+// MARK: - Delegate
 
 private final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(
