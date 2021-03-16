@@ -69,10 +69,10 @@ extension UITableViewCell {
     }
 }
 
-// MARK: - Swizzled Methods
+// MARK: - Highlighted Background Color
 
 extension UITableViewCell {
-    func _setHighlighted(_ highlighted: Bool, animated: Bool) {
+    @objc func swizzled_setHighlighted(_ highlighted: Bool, animated: Bool) {
         highlightedAnimation.animate(highlightedAnimationView, isHighlighted: highlighted)
 
         guard let highlightedBackgroundColor = highlightedBackgroundColor else {
@@ -89,5 +89,17 @@ extension UITableViewCell {
         UIView.animateFromCurrentState(withDuration: animated ? 0.15 : 0) {
             self.highlightedBackgroundColorView.backgroundColor = newBackgroundColor
         }
+    }
+}
+
+// MARK: - Swizzle
+
+extension UITableViewCell {
+    static func runOnceSwapSelectors() {
+        swizzle(
+            UITableViewCell.self,
+            originalSelector: #selector(UITableViewCell.setHighlighted(_:animated:)),
+            swizzledSelector: #selector(UITableViewCell.swizzled_setHighlighted(_:animated:))
+        )
     }
 }
