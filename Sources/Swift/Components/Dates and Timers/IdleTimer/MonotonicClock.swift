@@ -44,11 +44,18 @@ extension MonotonicClock {
 
         init(interval: TimeInterval, queue: DispatchQueue = .main, block: @escaping () -> Void) {
             self.queue = queue
-            self.workItem = DispatchWorkItem {
-                block()
-            }
+            self.workItem = DispatchWorkItem(block: block)
 
-            queue.asyncAfter(deadline: .now() + .milliseconds(Int(interval * 1000)), execute: workItem)
+            queue.asyncAfter(deadline: .now() + .milliseconds(Int(interval * 1000))) { [weak self] in
+                guard
+                    let strongSelf = self,
+                    !strongSelf.workItem.isCancelled
+                else {
+                    return
+                }
+
+                strongSelf.workItem.perform()
+            }
         }
 
         func invalidate() {

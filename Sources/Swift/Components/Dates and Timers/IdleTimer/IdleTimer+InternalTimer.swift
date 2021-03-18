@@ -11,11 +11,14 @@ extension IdleTimer {
         private var tokens: [NSObjectProtocol?] = []
         private var uptime = MonotonicClock.Uptime()
         private var timer: MonotonicClock.Timer?
-        private let timeoutHandler: () -> Void
+        private let onTimeout: () -> Void
 
-        /// The timeout duration in seconds, after which `timeoutHandler` is invoked.
+        /// The timeout duration in seconds, after which `onTimeout` is invoked.
         var timeoutDuration: TimeInterval {
             didSet {
+                guard oldValue != timeoutDuration else {
+                    return
+                }
                 restart()
             }
         }
@@ -23,33 +26,45 @@ extension IdleTimer {
         /// Creates a new instance of `IdleTimer`.
         ///
         /// - Parameters:
-        ///   - duration: The timeout duration in seconds, after which `timeoutHandler`
-        ///               is invoked.
-        ///   - timeoutHandler: The closure to invoke after timeout duration has passed.
-        init(timeoutAfter duration: TimeInterval, handler timeoutHandler: @escaping () -> Void) {
+        ///   - duration: The timeout duration in seconds, after which `onTimeout` is
+        ///     invoked.
+        ///   - onTimeout: The closure to invoke after timeout duration has passed.
+        init(timeoutAfter duration: TimeInterval, onTimeout: @escaping () -> Void) {
             self.timeoutDuration = duration
-            self.timeoutHandler = timeoutHandler
+            self.onTimeout = onTimeout
             restart()
             setupObservers()
         }
 
         private func setupObservers() {
-            tokens.append(NotificationCenter.on.applicationDidEnterBackground { [weak self] in
-                self?.uptime.saveValue()
-            })
+            on(UIApplication.didEnterBackgroundNotification) {
+                $0.uptime.saveValue()
+            }
 
-            tokens.append(NotificationCenter.on.applicationWillEnterForeground { [weak self] in
-                self?.handleExpirationIfNeeded()
+            on(UIApplication.willEnterForegroundNotification) {
+                $0.handleExpirationIfNeeded()
+            }
+        }
+
+        private func on(_ event: Notification.Name, work: @escaping (InternalTimer) -> Void) {
+            tokens.append(NotificationCenter.on.observe(event) { [weak self] in
+                guard
+                    let strongSelf = self,
+                    strongSelf.timeoutDuration > 0
+                else {
+                    return
+                }
+
+                work(strongSelf)
             })
         }
 
         private func handleExpirationIfNeeded() {
-            guard uptime.elapsed(timeoutDuration) else {
-                restart()
-                return
+            if uptime.elapsed(timeoutDuration) {
+                return onTimeout()
             }
 
-            timeoutHandler()
+            restart()
         }
 
         deinit {
@@ -66,7 +81,7 @@ extension IdleTimer {
             }
 
             timer = MonotonicClock.Timer(interval: timeoutDuration) { [weak self] in
-                self?.timeoutHandler()
+                self?.onTimeout()
             }
         }
 

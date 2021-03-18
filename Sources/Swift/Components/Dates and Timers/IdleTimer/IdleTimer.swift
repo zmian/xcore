@@ -13,17 +13,21 @@ public enum IdleTimer { }
 // MARK: - API
 
 extension IdleTimer {
+    private static let windowContainer = WindowContainer()
+
     /// Updates existing or creates a new timeout gesture for given `window` object.
     ///
     /// You can observe the timeout event using
     /// `UIApplication.didTimeOutUserInteractionNotification`.
-    public static func setUserInteractionTimeout(duration: TimeInterval, for window: UIWindow?) {
-        guard let existingGesture = window?.gestureRecognizers?.firstElement(type: IdleTimer.Gesture.self) else {
-            let newGesture = IdleTimer.Gesture(timeoutAfter: duration)
-            window?.addGestureRecognizer(newGesture)
+    public static func setUserInteractionTimeout(duration: TimeInterval? = nil, for window: UIWindow?) {
+        guard let window = window else {
             return
         }
 
-        existingGesture.timeoutDuration = duration
+        windowContainer.add(window)
+
+        if let duration = duration {
+            windowContainer.timeoutDuration = duration
+        }
     }
 }
