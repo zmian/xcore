@@ -31,7 +31,6 @@ struct RootView: View {
             }
             .listStyle(InsetGroupedListStyle())
             .environment(\.defaultMinListRowHeight, 55)
-            .environment(\.horizontalSizeClass, .regular)
             .navigationTitle("Showcase")
         }
     }
