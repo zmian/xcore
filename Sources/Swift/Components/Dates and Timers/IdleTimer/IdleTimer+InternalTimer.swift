@@ -44,6 +44,10 @@ extension IdleTimer {
             on(UIApplication.willEnterForegroundNotification) {
                 $0.handleExpirationIfNeeded()
             }
+
+            on(UIApplication.willTimeOutIdleTimerNotification) {
+                $0.handleVOAnnouncement()
+            }
         }
 
         private func on(_ event: Notification.Name, work: @escaping (InternalTimer) -> Void) {
@@ -57,6 +61,12 @@ extension IdleTimer {
 
                 work(strongSelf)
             })
+        }
+
+        private func handleVOAnnouncement() {
+            if UIAccessibility.isVoiceOverRunning {
+                UIAccessibility.post(notification: .announcement, argument: "You will be logged out in 30 seconds, double tap anywhere on the screen to continue the session.")
+            }
         }
 
         private func handleExpirationIfNeeded() {
