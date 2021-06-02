@@ -4,6 +4,8 @@
 // MIT license, see LICENSE file for details
 //
 
+import UIKit
+
 public struct Shadow {
     /// The color of the layer’s shadow. Animatable.
     ///

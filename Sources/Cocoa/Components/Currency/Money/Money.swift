@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import Foundation
+import UIKit
 
 /// A structure representing money type and set of attributes to formats the
 /// output.

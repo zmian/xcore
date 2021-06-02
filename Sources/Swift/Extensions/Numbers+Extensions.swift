@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 // MARK: - Int
 
