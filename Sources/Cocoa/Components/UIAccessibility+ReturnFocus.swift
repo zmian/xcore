@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import Foundation
+import UIKit
 
 extension UIAccessibility {
     public struct ReturnFocus {

@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import Foundation
+import UIKit
 
 extension Money.Components {
     /// A structure representing fonts used to display money components.

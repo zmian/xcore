@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import Foundation
+import UIKit
 
 public protocol InterstitialCompatibleViewController: UIViewController, ObstructableView {
     var didComplete: (() -> Void)? { get set }
