@@ -8,9 +8,13 @@ import Foundation
 
 // MARK: - Bundle
 
-private class XcoreMarker { }
 extension Bundle {
+    private class XcoreMarker {}
     public static var xcore: Bundle {
-        .init(for: XcoreMarker.self)
+        #if SWIFT_PACKAGE
+        return .module
+        #else
+        return .init(for: XcoreMarker.self)
+        #endif
     }
 }
