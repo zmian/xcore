@@ -7,7 +7,6 @@
 import SwiftUI
 
 /// A progress view that visually indicates its progress using a horizontal bar.
-@available(iOS 14.0, *)
 public struct HorizontalBarProgressViewStyle: ProgressViewStyle {
     private let height: CGFloat?
 
@@ -38,7 +37,6 @@ public struct HorizontalBarProgressViewStyle: ProgressViewStyle {
     }
 }
 
-@available(iOS 14.0, *)
 struct HorizontalBarProgressViewStyle_Previews: PreviewProvider {
     static var previews: some View {
         Group {

@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "Xcore",
-    platforms: [.iOS(.v13)],
+    platforms: [.iOS(.v14)],
     products: [
         .library(name: "Xcore", targets: ["Xcore"])
     ],
@@ -24,5 +24,4 @@ let package = Package(
     ]
 )
 
-        //,
-        // .testTarget(name: "UnitTests", dependencies: ["Xcore"], path: "UnitTests")
+// .testTarget(name: "UnitTests", dependencies: ["Xcore"], path: "UnitTests")

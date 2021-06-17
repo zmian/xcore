@@ -28,6 +28,10 @@ public enum Count: Equatable, ExpressibleByIntegerLiteral, CustomStringConvertib
     case infinite
     case times(Int)
 
+    public static var once: Self {
+        .times(1)
+    }
+
     public init(integerLiteral value: Int) {
         self = .times(value)
     }

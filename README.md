@@ -12,9 +12,9 @@
 Xcore is a collection of hundreds of Swift extensions and components designed to minimize boilerplate to accomplish common tasks with ease. It is a framework to efficiently build and scale apps without compromising quality, maintainability and developer productivity. Check out the included example project and [documentation](https://zmian.github.io/xcore) to see how.
 
 ## Requirements
-* iOS 13.0+
-* Xcode 12.0+
-* Swift 5.3+
+* iOS 14.0+
+* Xcode 12.5+
+* Swift 5.4+
 
 ## Installation
 
