@@ -22,6 +22,17 @@ extension View {
     }
 }
 
+// MARK: - Apply
+
+extension View {
+    @ViewBuilder
+    public func apply<Content>(
+        @ViewBuilder _ content: (Self) -> Content
+    ) -> some View where Content: View {
+        content(self)
+    }
+}
+
 // MARK: - Condition
 
 extension View {
