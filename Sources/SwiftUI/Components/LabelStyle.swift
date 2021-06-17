@@ -6,7 +6,6 @@
 
 import SwiftUI
 
-@available(iOS 14.0, *)
 public struct IconAfterLabelStyle: LabelStyle {
     private let axis: Axis
 
@@ -31,7 +30,6 @@ public struct IconAfterLabelStyle: LabelStyle {
     }
 }
 
-@available(iOS 14.0, *)
 public struct IconBeforeLabelStyle: LabelStyle {
     private let axis: Axis
 
