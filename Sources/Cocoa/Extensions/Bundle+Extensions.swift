@@ -65,7 +65,7 @@ extension Bundle {
 
     /// The OS version.
     ///
-    /// For example, `"iOS 14.0.1"`
+    /// For example, `"iOS 15.0.1"`
     public var osVersion: String {
         let version = ProcessInfo.processInfo.operatingSystemVersion
         var systemName = UIDevice.current.systemName

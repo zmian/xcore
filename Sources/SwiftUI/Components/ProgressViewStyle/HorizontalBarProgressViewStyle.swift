@@ -47,21 +47,31 @@ struct HorizontalBarProgressViewStyle_Previews: PreviewProvider {
                 .accentColor(.green)
 
             ProgressView(value: 0.8)
-                .progressViewStyle(HorizontalBarProgressViewStyle())
+                .progressViewStyle(.horizontalBar)
 
             ProgressView(value: 0.0)
-                .progressViewStyle(HorizontalBarProgressViewStyle())
+                .progressViewStyle(.horizontalBar)
 
             ProgressView(value: 1.0)
-                .progressViewStyle(HorizontalBarProgressViewStyle())
+                .progressViewStyle(.horizontalBar)
                 .accentColor(.yellow)
 
             ProgressView(value: 0.8)
-                .progressViewStyle(HorizontalBarProgressViewStyle())
+                .progressViewStyle(.horizontalBar)
                 .accentColor(.green)
         }
         .padding(20)
         .backgroundColor(.black)
         .previewLayout(.sizeThatFits)
+    }
+}
+
+// MARK: - Convenience
+
+extension ProgressViewStyle where Self == HorizontalBarProgressViewStyle {
+    public static var horizontalBar: Self { Self() }
+
+    public static func horizontalBar(height: CGFloat?) -> Self {
+        Self(height: height)
     }
 }

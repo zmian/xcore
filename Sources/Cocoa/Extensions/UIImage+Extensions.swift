@@ -81,7 +81,7 @@ extension UIImage {
 extension UIImage {
     public enum EncodingFormat {
         case png
-        case jpeg(quality: CGFloat)
+        case jpeg(quality: Double)
     }
 
     /// Returns a data object that contains the specified image in given format.

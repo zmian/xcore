@@ -6,6 +6,7 @@
 
 import UIKit
 
+#warning("fixme. remove this now it's supported")
 /// A concrete wrapper for enabling implicit member expressions.
 public struct MetaStaticMember<Base> {
     public let base: Base

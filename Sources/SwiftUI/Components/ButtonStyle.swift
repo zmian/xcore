@@ -128,3 +128,21 @@ private struct FillStyleBody<S: Shape>: View {
         )
     }
 }
+
+// MARK: - Convenience
+
+extension ButtonStyle where Self == FillButtonStyle {
+    public static var fill: Self { Self() }
+}
+
+extension ButtonStyle where Self == PillButtonStyle {
+    public static var pill: Self { Self() }
+}
+
+extension ButtonStyle where Self == OutlineButtonStyle {
+    public static var outline: Self { Self() }
+}
+
+extension ButtonStyle where Self == ScaleEffectButtonStyle {
+    public static var scaleEffect: Self { Self() }
+}

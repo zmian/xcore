@@ -17,7 +17,7 @@ struct ButtonsView: View {
             others
             builtin
         }
-        .listStyle(InsetGroupedListStyle())
+        .listStyle(.insetGrouped)
     }
 }
 
@@ -27,18 +27,18 @@ extension ButtonsView {
             button {
                 Text("FillButtonStyle")
             }
-            .buttonStyle(FillButtonStyle())
+            .buttonStyle(.fill)
 
             button {
                 Text("FillButtonStyle")
             }
-            .buttonStyle(FillButtonStyle())
+            .buttonStyle(.fill)
             .environment(\.isEnabled, false)
 
             button {
                 Text("FillButtonStyle")
             }
-            .buttonStyle(FillButtonStyle())
+            .buttonStyle(.fill)
             .defaultButtonCornerRadius(0)
         }
     }
@@ -48,18 +48,18 @@ extension ButtonsView {
             button {
                 Text("OutlineButtonStyle")
             }
-            .buttonStyle(OutlineButtonStyle())
+            .buttonStyle(.outline)
 
             button {
                 Text("OutlineButtonStyle")
             }
-            .buttonStyle(OutlineButtonStyle())
+            .buttonStyle(.outline)
             .environment(\.isEnabled, false)
 
             button {
                 Text("OutlineButtonStyle")
             }
-            .buttonStyle(OutlineButtonStyle())
+            .buttonStyle(.outline)
             .defaultButtonCornerRadius(0)
         }
     }
@@ -69,18 +69,18 @@ extension ButtonsView {
             button {
                 Text("PillButtonStyle")
             }
-            .buttonStyle(PillButtonStyle())
+            .buttonStyle(.pill)
 
             button {
                 Text("PillButtonStyle")
             }
-            .buttonStyle(PillButtonStyle())
+            .buttonStyle(.pill)
             .environment(\.isEnabled, false)
 
             button {
                 Text("PillButtonStyle")
             }
-            .buttonStyle(PillButtonStyle())
+            .buttonStyle(.pill)
             .defaultButtonCornerRadius(0)
         }
     }
@@ -90,26 +90,26 @@ extension ButtonsView {
             button {
                 Text("FillButtonStyle")
             }
-            .buttonStyle(FillButtonStyle())
+            .buttonStyle(.fill)
 
             button {
                 Label("FillButtonStyle", systemImage: .chevronRight)
-                    .labelStyle(IconAfterLabelStyle())
+                    .labelStyle(.iconAfter)
             }
-            .buttonStyle(FillButtonStyle())
+            .buttonStyle(.fill)
 
             button {
                 Label("FillButtonStyle", systemImage: .heartFill)
                     .imageScale(.large)
                     .padding(.vertical)
-                    .labelStyle(IconBeforeLabelStyle(axis: .vertical))
+                    .labelStyle(.iconBefore(axis: .vertical))
             }
-            .buttonStyle(FillButtonStyle())
+            .buttonStyle(.fill)
 
             button {
                 Text("OutlineButtonStyle")
             }
-            .buttonStyle(OutlineButtonStyle())
+            .buttonStyle(.outline)
         }
     }
 
@@ -126,7 +126,7 @@ extension ButtonsView {
                 }
             }
         }
-        .buttonStyle(PillButtonStyle())
+        .buttonStyle(.pill)
     }
 
     private var others: some View {
@@ -137,7 +137,7 @@ extension ButtonsView {
                     Image(system: .chevronRight)
                 }
             }
-            .buttonStyle(BorderlessButtonStyle())
+            .buttonStyle(.borderless)
 
             button {
                 HStack {
@@ -145,7 +145,7 @@ extension ButtonsView {
                     Image(system: .chevronRight)
                 }
             }
-            .buttonStyle(BorderlessButtonStyle())
+            .buttonStyle(.borderless)
             .environment(\.isEnabled, false)
         }
     }
@@ -164,12 +164,12 @@ extension ButtonsView {
             button {
                 Text("BorderlessButtonStyle")
             }
-            .buttonStyle(BorderlessButtonStyle())
+            .buttonStyle(.borderless)
 
             button {
                 Text("PlainButtonStyle")
             }
-            .buttonStyle(PlainButtonStyle())
+            .buttonStyle(.plain)
         }
     }
 
