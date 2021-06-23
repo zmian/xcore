@@ -78,4 +78,17 @@ final class ValidationRuleTests: TestCase {
         XCTAssertFalse("secret".validate(rule: .range(8...50)))
         XCTAssertTrue("secret123".validate(rule: .range(8...50)))
     }
+
+    func testDataDector() {
+        XCTAssertTrue("http://example.com".validate(rule: .isValid(.link)))
+        XCTAssertTrue("https://example.com".validate(rule: .isValid(.link)))
+        XCTAssertTrue("example.com".validate(rule: .isValid(.link)))
+        XCTAssertTrue("www.example.com".validate(rule: .isValid(.link)))
+        XCTAssertFalse("example".validate(rule: .isValid(.link)))
+        XCTAssertFalse("http:www.example.com".validate(rule: .isValid(.link)))
+        XCTAssertTrue("www.example.com/file[/].html".validate(rule: .isValid(.link)))
+        XCTAssertFalse("https://example.com".validate(rule: .isValid(.phoneNumber)))
+
+        XCTAssertTrue("(800) MY–APPLE".validate(rule: .isValid(.phoneNumber)))
+    }
 }
