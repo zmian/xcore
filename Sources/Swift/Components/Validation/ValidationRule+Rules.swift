@@ -6,6 +6,13 @@
 
 import Foundation
 
+extension ValidationRule {
+    /// No validation rule is applied.
+    public static var none: Self {
+        .init { _ in true }
+    }
+}
+
 // MARK: - Input: Collection
 
 extension ValidationRule where Input: Collection {
@@ -144,8 +151,6 @@ extension ValidationRule where Input == String {
 
 extension ValidationRule where Input == String {
     /// A validation rule that checks whether the input is not blank.
-    ///
-    /// - Returns: The validation rule.
     public static var notBlank: Self {
         .init { !$0.isBlank }
     }
@@ -185,8 +190,49 @@ extension ValidationRule where Input == String {
 
     public static var name: Self {
         .init { input in
-            let range = 2...50
+            let range = 1...50
             return range.contains(input.count) && !input.isMatch("[0-9]")
+        }
+    }
+
+    /// A validation rule that checks whether the input is equal to the given
+    /// range.
+    ///
+    /// - Parameter range: The range of the input.
+    /// - Returns: The validation rule.
+    public static func number<T: RangeExpression>(range: T) -> Self where T.Bound == Int {
+        .init { range.contains($0.count) && $0.isMatch("[0-9]") }
+    }
+
+    /// A validation rule that checks whether the input is equal to the given
+    /// count.
+    ///
+    /// - Parameter count: The maximum count of the input.
+    /// - Returns: The validation rule.
+    public static func number(count: Int) -> Self {
+        number(range: 1...count)
+    }
+}
+
+// MARK: - Data Detector
+
+extension ValidationRule where Input == String {
+    /// A validation rule that checks whether the input is equal to the given
+    /// data detector type.
+    ///
+    /// - Parameter value: The value to compare against input.
+    /// - Returns: The validation rule.
+    public static func isValid(_ type: NSTextCheckingResult.CheckingType) -> Self {
+        .init { input in
+            guard let detector = try? NSDataDetector(types: type.rawValue) else {
+                return false
+            }
+
+            if let match = detector.firstMatch(in: input, options: [], range: NSRange(location: 0, length: input.count)) {
+                return match.range.length == input.count
+            }
+
+            return false
         }
     }
 }
