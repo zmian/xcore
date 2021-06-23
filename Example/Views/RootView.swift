@@ -29,7 +29,7 @@ struct RootView: View {
                     }
                 }
             }
-            .listStyle(InsetGroupedListStyle())
+            .listStyle(.insetGrouped)
             .environment(\.defaultMinListRowHeight, 55)
             .navigationTitle("Showcase")
         }

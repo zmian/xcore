@@ -85,7 +85,7 @@ extension View {
         Button(action: action) {
             self
         }
-        .buttonStyle(ScaleEffectButtonStyle())
+        .buttonStyle(.scaleEffect)
     }
 }
 

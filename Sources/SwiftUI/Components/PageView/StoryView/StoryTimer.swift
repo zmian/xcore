@@ -81,6 +81,6 @@ final class StoryTimer: ObservableObject {
     }
 
     func progress(for index: Int) -> CGFloat {
-        min(max((CGFloat(progress) - CGFloat(index)), 0), 1)
+        min(max((progress - CGFloat(index)), 0), 1)
     }
 }

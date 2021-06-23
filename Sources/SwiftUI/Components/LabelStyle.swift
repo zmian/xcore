@@ -53,3 +53,21 @@ public struct IconBeforeLabelStyle: LabelStyle {
         }
     }
 }
+
+// MARK: - Convenience
+
+extension LabelStyle where Self == IconBeforeLabelStyle {
+    public static var iconBefore: Self { Self() }
+
+    public static func iconBefore(axis: Axis) -> Self {
+        Self(axis: axis)
+    }
+}
+
+extension LabelStyle where Self == IconAfterLabelStyle {
+    public static var iconAfter: Self { Self() }
+
+    public static func iconAfter(axis: Axis) -> Self {
+        Self(axis: axis)
+    }
+}

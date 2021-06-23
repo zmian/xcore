@@ -33,17 +33,10 @@ extension Font {
             withTextStyle: style
         ).pointSize
 
-        if #available(iOS 14.0, *) {
-            return .custom(
-                typeface,
-                size: pointSize,
-                relativeTo: TextStyle(style)
-            )
-        }
-
         return .custom(
             typeface,
-            size: UIFontMetrics.default.scaledValue(for: pointSize)
+            size: pointSize,
+            relativeTo: TextStyle(style)
         )
     }
 
@@ -110,17 +103,9 @@ extension Font.TextStyle {
             case .title1:
                 self = .title
             case .title2:
-                if #available(iOS 14.0, *) {
-                    self = .title2
-                } else {
-                    self = .title
-                }
+                self = .title2
             case .title3:
-                if #available(iOS 14.0, *) {
-                    self = .title3
-                } else {
-                    self = .title
-                }
+                self = .title3
             case .headline:
                 self = .headline
             case .subheadline:
@@ -134,11 +119,7 @@ extension Font.TextStyle {
             case .caption1:
                 self = .caption
             case .caption2:
-                if #available(iOS 14.0, *) {
-                    self = .caption2
-                } else {
-                    self = .caption
-                }
+                self = .caption2
             default:
                 self = .body
         }

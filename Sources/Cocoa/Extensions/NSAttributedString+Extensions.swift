@@ -191,7 +191,7 @@ extension NSAttributedString {
     ///            default value is `.normal`.
     public convenience init(
         string: String,
-        spacer: String = "  ",
+        spacer: String = " ",
         font: UIFont,
         color: UIColor,
         direction: CaretDirection = .forward,
@@ -235,7 +235,6 @@ extension NSAttributedString {
 // MARK: - CaretDirection
 
 extension NSAttributedString {
-    #warning("FIXME: Remove these and move to SFSymbols")
     public enum CaretDirection {
         case none
         case up
@@ -263,9 +262,9 @@ extension NSAttributedString {
                 case .none:
                     return 0
                 case .up, .down:
-                    return 2
+                    return 1
                 case .back, .forward:
-                    return 0
+                    return -0.5
             }
         }
     }
