@@ -89,7 +89,7 @@ open class NavigationController: UINavigationController {
 extension NavigationController {
     /// Returns a bar button item that dismisses `self`.
     private func dismissBarButtonItem() -> UIBarButtonItem {
-        UIBarButtonItem(assetIdentifier: .closeIcon).apply {
+        UIBarButtonItem(system: .xMark).apply {
             $0.accessibilityLabel = "Dismiss"
             $0.accessibilityIdentifier = "dismissButton"
             $0.addAction { [weak self] _ in

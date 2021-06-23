@@ -49,14 +49,14 @@ extension Biometrics {
         }
 
         /// The asset associated with biometry authentication.
-        public var assetIdentifier: ImageAssetIdentifier {
+        public var assetIdentifier: SystemAssetIdentifier {
             switch self {
                 case .none:
                     return ""
                 case .touchID:
-                    return .biometricsTouchIDIcon
+                    return .touchid
                 case .faceID:
-                    return .biometricsFaceIDIcon
+                    return .faceid
             }
         }
     }

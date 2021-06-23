@@ -127,16 +127,7 @@ extension ImageAssetIdentifier {
         .init(rawValue: name, bundle: .xcore)
     }
 
-    // MARK: - Carets
-    static var caretDirectionUp: Self { propertyName() }
-    static var caretDirectionDown: Self { propertyName() }
-    static var caretDirectionBack: Self { propertyName() }
-    static var caretDirectionForward: Self { propertyName() }
-
     // MARK: - Shared UI Elements
-    public static var closeIcon = propertyName("closeIcon")
-    public static var closeIconFilled = propertyName("closeIconFilled")
-
     public static var disclosureIndicator: Self { propertyName() }
     public static var disclosureIndicatorFilled: Self { propertyName() }
 
@@ -157,23 +148,4 @@ extension ImageAssetIdentifier {
     public static var arrowLeftIcon: Self { propertyName() }
 
     public static var filterSelectionIndicatorArrowIcon: Self { propertyName() }
-    public static var info: Self { propertyName() }
-    public static var locationIcon: Self { propertyName() }
-    public static var validationErrorIcon: Self { propertyName() }
-    public static var searchIcon = propertyName("searchIcon")
-}
-
-// MARK: - Buit-in Overridable Assets
-
-extension ImageAssetIdentifier {
-    // MARK: - Checkmarks
-    public static var checkmarkIcon = propertyName("checkmarkIcon")
-    public static var checkmarkIconFilled = propertyName("checkmarkIconFilled")
-    public static var checkmarkIconUnfilled = propertyName("checkmarkIconUnfilled")
-
-    public static var moreIcon = propertyName("moreIcon")
-
-    // MARK: - Biometrics ID
-    public static var biometricsFaceIDIcon = propertyName("biometricsFaceIDIcon")
-    public static var biometricsTouchIDIcon = propertyName("biometricsTouchIDIcon")
 }

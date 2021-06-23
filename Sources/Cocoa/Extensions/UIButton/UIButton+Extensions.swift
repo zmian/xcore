@@ -25,36 +25,11 @@ extension UIButton {
     /// ```
     @objc(UIButtonDefaultAppearance)
     final public class DefaultAppearance: NSObject {
-        public var configuration: Configuration = .none
-        public var height: CGFloat = 50
-        public var isHeightSetAutomatically = false
         public var highlightedAnimation: HighlightedAnimationOptions = .none
-        /// The default attributes for the button configurations.
-        public var configurationAttributes = Configuration.AttributesStorage()
-
-        /// A boolean value indicating whether `configure` replaces existing
-        /// configuration block call or extend it.
-        ///
-        /// The default value is `true`, meaning extend.
-        public var shouldExtendExistingConfigureBlock = true
-        var _configure: ((UIButton, Configuration.Identifier) -> Void)?
-        public func configure(_ callback: @escaping (UIButton, Configuration.Identifier) -> Void) {
-            guard
-                shouldExtendExistingConfigureBlock,
-                let existingConfigureBlock = _configure
-            else {
-                self._configure = callback
-                return
-            }
-
-            self._configure = { button, id in
-                existingConfigureBlock(button, id)
-                callback(button, id)
-            }
-        }
-
         fileprivate override init() { }
     }
+
+    @objc public dynamic static let defaultAppearance = DefaultAppearance()
 }
 
 extension UIButton {
@@ -67,11 +42,6 @@ extension UIButton {
         static var didEnable = "didEnable"
         static var highlightedAnimation = "highlightedAnimation"
         static var adjustsBackgroundColorWhenHighlighted = "adjustsBackgroundColorWhenHighlighted"
-        static var configuration = "configuration"
-        static var heightConstraint = "heightConstraint"
-        static var initialText = "initialText"
-        static var isHeightSetAutomatically = "isHeightSetAutomatically"
-        static var observeHeightSetAutomaticallySetter = "observeHeightSetAutomaticallySetter"
     }
 
     private typealias StateType = UInt
@@ -89,7 +59,7 @@ extension UIButton {
     /// A boolean property to provide visual feedback when the button is
     /// highlighted. The default value is `.none`.
     open var highlightedAnimation: HighlightedAnimationOptions {
-        get { associatedObject(&AssociatedKey.highlightedAnimation, default: defaultAppearance.highlightedAnimation) }
+        get { associatedObject(&AssociatedKey.highlightedAnimation, default: Self.defaultAppearance.highlightedAnimation) }
         set { setAssociatedObject(&AssociatedKey.highlightedAnimation, value: newValue) }
     }
 
@@ -101,104 +71,6 @@ extension UIButton {
     @objc open dynamic var adjustsBackgroundColorWhenHighlighted: Bool {
         get { associatedObject(&AssociatedKey.adjustsBackgroundColorWhenHighlighted, default: true) }
         set { setAssociatedObject(&AssociatedKey.adjustsBackgroundColorWhenHighlighted, value: newValue) }
-    }
-}
-
-extension UIButton {
-    public typealias Configuration = Xcore.Configuration<UIButton>
-    @objc public dynamic static let defaultAppearance = DefaultAppearance()
-
-    var defaultAppearance: DefaultAppearance {
-        Self.defaultAppearance
-    }
-
-    // MARK: - Height
-
-    @objc public dynamic static var height: CGFloat {
-        defaultAppearance.height
-    }
-
-    /// A property to set the height of the button automatically.
-    ///
-    /// The default value is `false`.
-    @objc open dynamic var isHeightSetAutomatically: Bool {
-        get { associatedObject(&AssociatedKey.isHeightSetAutomatically, default: defaultAppearance.isHeightSetAutomatically) }
-        set {
-            setAssociatedObject(&AssociatedKey.isHeightSetAutomatically, value: newValue)
-            guard observeHeightSetAutomaticallySetter else { return }
-            updateHeightConstraintIfNeeded()
-        }
-    }
-
-    private var observeHeightSetAutomaticallySetter: Bool {
-        get { associatedObject(&AssociatedKey.observeHeightSetAutomaticallySetter, default: true) }
-        set { setAssociatedObject(&AssociatedKey.observeHeightSetAutomaticallySetter, value: newValue) }
-    }
-
-    private var heightConstraint: NSLayoutConstraint? {
-        get { associatedObject(&AssociatedKey.heightConstraint) }
-        set { setAssociatedObject(&AssociatedKey.heightConstraint, value: newValue) }
-    }
-
-    private func updateHeightConstraintIfNeeded() {
-        guard isHeightSetAutomatically else {
-            heightConstraint?.deactivate()
-            return
-        }
-
-        if heightConstraint == nil {
-            heightConstraint = heightAnchor.constraint(equalToConstant: UIButton.height)
-            heightConstraint?.priority = .required - 1
-        }
-
-        heightConstraint?.activate()
-    }
-
-    /// The configuration associated with the button.
-    ///
-    /// The default value is `.none`.
-    open var configuration: Configuration {
-        get { associatedObject(&AssociatedKey.configuration, default: defaultAppearance.configuration) }
-        set {
-            setAssociatedObject(&AssociatedKey.configuration, value: newValue)
-            updateConfigurationIfNeeded()
-        }
-    }
-
-    private var initialText: String? {
-        get { associatedObject(&AssociatedKey.initialText) }
-        set { setAssociatedObject(&AssociatedKey.initialText, value: newValue) }
-    }
-
-    public convenience init(text: String? = nil, configuration: Configuration) {
-        self.init(frame: .zero)
-        self.configuration = configuration
-        self.initialText = text
-        commonInit()
-    }
-
-    private func commonInit() {
-        updateConfigurationIfNeeded()
-        if let initialText = initialText {
-            self.text = initialText
-        }
-    }
-
-    private func updateConfigurationIfNeeded() {
-        observeHeightSetAutomaticallySetter = false
-        contentEdgeInsets = UIEdgeInsets(horizontal: .defaultPadding)
-        prepareForReuse()
-        apply(configuration)
-        updateHeightConstraintIfNeeded()
-        observeHeightSetAutomaticallySetter = true
-    }
-
-    @objc open func prepareForReuse() {
-        setAttributedTitle(nil, for: .normal)
-        setTitleColor(nil, for: .highlighted)
-        backgroundColor = nil
-        highlightedAnimation = defaultAppearance.highlightedAnimation
-        isHeightSetAutomatically = defaultAppearance.isHeightSetAutomatically
     }
 }
 
@@ -399,12 +271,6 @@ extension UIButton {
 
     // MARK: - Reset
 
-    @objc open func removeInsets() {
-        contentEdgeInsets = 0
-        titleEdgeInsets = 0
-        imageEdgeInsets = 0
-    }
-
     @objc open dynamic var contentTintColor: UIColor {
         get { tintColor }
         set {
@@ -422,7 +288,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
     ///   - highlightedImage: The image to use for the highlighted state.
     ///   - handler: The block to invoke when the button is tapped.
     /// - Returns: A newly created button.
-    public init(
+    init(
         image: UIImage?,
         highlightedImage: UIImage? = nil,
         _ handler: ((_ sender: Self) -> Void)? = nil
@@ -435,19 +301,6 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
         imageView?.enableSmoothScaling()
         if let handler = handler {
             addAction(.touchUpInside, handler)
-        }
-    }
-
-    /// Creates and returns a new button of the specified type with action handler.
-    ///
-    /// - Parameters:
-    ///   - imageNamed: A string to identify a local or a remote image.
-    ///   - handler: The block to invoke when the button is tapped.
-    /// - Returns: A newly created button.
-    public init(imageNamed: ImageRepresentable, _ handler: ((_ sender: Self) -> Void)? = nil) {
-        self.init(image: nil, handler)
-        imageView?.setImage(imageNamed) { [weak self] image in
-            self?.setImage(image, for: .normal)
         }
     }
 
