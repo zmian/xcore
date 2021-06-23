@@ -6,64 +6,54 @@
 
 import UIKit
 
-#warning("fixme. remove this now it's supported")
-/// A concrete wrapper for enabling implicit member expressions.
-public struct MetaStaticMember<Base> {
-    public let base: Base
+// MARK: - Convenience
 
-    public init(_ base: Base) {
-        self.base = base
-    }
-}
-
-extension ImageTransform {
-    public typealias Member = MetaStaticMember<Self>
-
-    /// Wraps the transform into member type.
-    public func wrap() -> Member {
-        Member(self)
-    }
-}
-
-extension MetaStaticMember where Base: ImageTransform {
+extension ImageTransform where Self == TintColorImageTransform {
     /// Creating arbitrarily-colored icons from a black-with-alpha master image.
-    public static func tintColor(_ color: UIColor) -> TintColorImageTransform.Member {
-        TintColorImageTransform(tintColor: color).wrap()
+    public static func tintColor(_ color: UIColor) -> Self {
+        Self(tintColor: color)
     }
+}
 
-    public static func alpha(_ value: CGFloat) -> AlphaImageTransform.Member {
-        AlphaImageTransform(alpha: value).wrap()
+extension ImageTransform where Self == AlphaImageTransform {
+    public static func alpha(_ value: CGFloat) -> Self {
+        Self(alpha: value)
     }
+}
 
-    public static func cornerRadius(_ value: CGFloat) -> CornerRadiusImageTransform.Member {
-        CornerRadiusImageTransform(cornerRadius: value).wrap()
+extension ImageTransform where Self == CornerRadiusImageTransform {
+    public static func cornerRadius(_ value: CGFloat) -> Self {
+        Self(cornerRadius: value)
     }
+}
 
+extension ImageTransform where Self == ColorizeImageTransform {
     /// Colorize image with given color.
     ///
     /// - Parameters:
     ///   - color: The color to use when coloring.
     ///   - kind: The kind of colorize type method to use.
     /// - Returns: The processed `UIImage` object.
-    public static func colorize(
-        _ color: UIColor,
-        kind: ColorizeImageTransform.Kind
-    ) -> ColorizeImageTransform.Member {
-        ColorizeImageTransform(color: color, kind: kind).wrap()
+    public static func colorize(_ color: UIColor, kind: Self.Kind) -> Self {
+        Self(color: color, kind: kind)
     }
+}
 
+extension ImageTransform where Self == BackgroundImageTransform {
     public static func background(
         _ color: UIColor,
         preferredSize: CGSize,
         alignment: UIControl.ContentHorizontalAlignment = .center
-    ) -> BackgroundImageTransform.Member {
-        BackgroundImageTransform(
+    ) -> Self {
+        Self(
             color: color,
             preferredSize: preferredSize,
             alignment: alignment
-        ).wrap()
+        )
     }
+}
 
+extension ImageTransform where Self == CompositeImageTransform {
     /// Scales an image to fit within a bounds of the given size.
     ///
     /// - Parameters:
@@ -77,8 +67,8 @@ extension MetaStaticMember where Base: ImageTransform {
         to newSize: CGSize,
         scalingMode: ResizeImageTransform.ScalingMode = .aspectFill,
         tintColor: UIColor? = nil
-    ) -> CompositeImageTransform.Member {
-        var transformer: CompositeImageTransform = [
+    ) -> Self {
+        var transformer: Self = [
             ResizeImageTransform(to: newSize, scalingMode: scalingMode)
         ]
 
@@ -86,9 +76,11 @@ extension MetaStaticMember where Base: ImageTransform {
             transformer.add(TintColorImageTransform(tintColor: tintColor))
         }
 
-        return transformer.wrap()
+        return transformer
     }
+}
 
+extension ImageTransform where Self == GradientImageTransform {
     /// Applies gradient color overlay to `self`.
     ///
     /// - Parameters:
@@ -108,13 +100,13 @@ extension MetaStaticMember where Base: ImageTransform {
         direction: GradientDirection = .topToBottom,
         locations: [Double]? = nil,
         blendMode: CGBlendMode = .normal
-    ) -> GradientImageTransform.Member {
-        GradientImageTransform(
+    ) -> Self {
+        Self(
             type: type,
             colors: colors,
             direction: direction,
             locations: locations,
             blendMode: blendMode
-        ).wrap()
+        )
     }
 }

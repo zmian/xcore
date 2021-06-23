@@ -36,34 +36,4 @@ extension ImageRepresentable {
     public func transform(_ value: ImageTransform) -> ImageRepresentable {
         append(value)
     }
-
-    /// Returns `ImageRepresentable` instance with the given transform.
-    ///
-    /// **Usage**:
-    ///
-    /// ```swift
-    /// func setIcon(_ icon: ImageRepresentable) {
-    ///     let newIcon = icon
-    ///         .alignment(.leading)
-    ///         .transform(.tintColor(.white))
-    ///         .alignment(.trailing) // last one wins when using plugin.
-    ///
-    ///     let iconView = UIImageView()
-    ///     iconView.setImage(newIcon)
-    ///
-    ///     let transform: ImageTransform = newIcon.plugin()!
-    ///     print(transform.id)
-    ///     // "TintColorImageTransform-tintColor:(#FFFFFF)"
-    ///
-    ///     let alignment: ImageRepresentableAlignment = newIcon.plugin()!
-    ///     print(alignment)
-    ///     // "trailing"
-    /// }
-    /// ```
-    ///
-    /// - Parameter transform: The transform for the image.
-    /// - Returns: An `ImageRepresentable` instance.
-    public func transform<T: ImageTransform>(_ transform: T.Member) -> ImageRepresentable {
-        append(transform.base)
-    }
 }
