@@ -250,6 +250,11 @@ extension Double {
             return
         }
 
+        if let cgfloat = value as? CGFloat {
+            self.init(cgfloat)
+            return
+        }
+
         if let float = value as? Float {
             self.init(float)
             return

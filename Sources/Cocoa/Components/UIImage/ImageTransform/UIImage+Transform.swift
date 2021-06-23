@@ -11,10 +11,6 @@ extension UIImage {
         transform.transform(self)
     }
 
-    public func applying<T: ImageTransform>(_ transform: T.Member) -> UIImage {
-        applying(transform.base)
-    }
-
     /// Process the image using the given transform.
     ///
     /// - Parameters:
