@@ -33,7 +33,6 @@ final class ButtonsViewController: UIViewController {
 
     private func addCalloutButton() {
         let button = UIButton().apply {
-            $0.configuration = .callout
             $0.text = "Hello World"
             $0.action { _ in
                 print("callout button tapped")
@@ -45,7 +44,12 @@ final class ButtonsViewController: UIViewController {
 
     private func addCaretButton() {
         let button = UIButton().apply {
-            $0.configuration = .caret(in: .pill, text: "Hello World")
+            $0.attributedText = NSAttributedString(
+                string: "Continue",
+                font: .app(.body),
+                color: .systemPink,
+                direction: .forward
+            )
             $0.action { _ in
                 print("caret button tapped")
             }

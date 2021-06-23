@@ -59,8 +59,9 @@ extension Interstitial {
 
 extension Interstitial.Item {
     private func dismissButton(for vc: InterstitialCompatibleViewController) -> UIBarButtonItem {
-        UIBarButtonItem(assetIdentifier: .closeIcon).apply {
+        UIBarButtonItem(system: .xMark).apply {
             $0.accessibilityLabel = "Dismiss"
+            $0.accessibilityIdentifier = "dismissButton"
             $0.tintColor = vc.theme.accentColor
             $0.addAction { [weak vc] _ in
                 guard let vc = vc else { return }
