@@ -58,6 +58,7 @@ final class ValidationRuleTests: TestCase {
         XCTAssertTrue("Xcore Swift".validate(rule: rule))
         XCTAssertTrue("John Doe".validate(rule: rule))
         XCTAssertTrue("XC".validate(rule: rule))
+        XCTAssertTrue("Z".validate(rule: rule))
 
         // Invalid
         XCTAssertFalse("2".validate(rule: rule))
@@ -77,6 +78,18 @@ final class ValidationRuleTests: TestCase {
         XCTAssertTrue("John Doe".validate(rule: .range(1...)))
         XCTAssertFalse("secret".validate(rule: .range(8...50)))
         XCTAssertTrue("secret123".validate(rule: .range(8...50)))
+    }
+
+    func testCount() {
+        XCTAssertTrue("1234".validate(rule: .count(4)))
+        XCTAssertTrue("s123".validate(rule: .count(4)))
+        XCTAssertFalse("1234".validate(rule: .count(3)))
+        XCTAssertFalse("1234".validate(rule: .count(50)))
+
+        XCTAssertTrue("1234".validate(rule: .number(count: 4)))
+        XCTAssertFalse("s123".validate(rule: .number(count: 4)))
+        XCTAssertFalse("1234".validate(rule: .number(count: 3)))
+        XCTAssertFalse("1234".validate(rule: .number(count: 50)))
     }
 
     func testDataDector() {
