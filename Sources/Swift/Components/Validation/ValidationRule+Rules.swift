@@ -34,6 +34,19 @@ extension ValidationRule where Input: Collection {
         .init { range.contains($0.count) }
     }
 
+    /// A validation rule that checks whether the input count matches given count.
+    ///
+    /// ```swift
+    /// let accountLastFour = 1234
+    /// accountLastFour.validate(rule: .count(4))
+    /// ```
+    ///
+    /// - Parameter count: The input count.
+    /// - Returns: The validation rule.
+    public static func count(_ count: Int) -> Self {
+        .init { $0.count == count }
+    }
+
     /// A validation rule that checks whether the input is not empty.
     ///
     /// - Returns: The validation rule.
@@ -145,6 +158,14 @@ extension ValidationRule where Input == String {
             return other.isSuperset(of: input)
         }
     }
+
+    /// A validation rule that checks whether the input equals given set.
+    ///
+    /// - Parameter other: The character set of the input.
+    /// - Returns: The validation rule.
+    public static func equal(_ other: CharacterSet) -> Self {
+        .init { other == CharacterSet(charactersIn: $0) }
+    }
 }
 
 // MARK: - Regex Based Rules
@@ -189,10 +210,11 @@ extension ValidationRule where Input == String {
     }
 
     public static var name: Self {
-        .init { input in
-            let range = 1...50
-            return range.contains(input.count) && !input.isMatch("[0-9]")
-        }
+        name(range: 1...50)
+    }
+
+    public static func name<T: RangeExpression>(range: T) -> Self where T.Bound == Int {
+        self.range(range) && subset(of: .numbers.inverted)
     }
 
     /// A validation rule that checks whether the input is equal to the given
@@ -201,16 +223,16 @@ extension ValidationRule where Input == String {
     /// - Parameter range: The range of the input.
     /// - Returns: The validation rule.
     public static func number<T: RangeExpression>(range: T) -> Self where T.Bound == Int {
-        .init { range.contains($0.count) && $0.isMatch("[0-9]") }
+        self.range(range) && subset(of: .numbers)
     }
 
     /// A validation rule that checks whether the input is equal to the given
     /// count.
     ///
-    /// - Parameter count: The maximum count of the input.
+    /// - Parameter count: The input count.
     /// - Returns: The validation rule.
     public static func number(count: Int) -> Self {
-        number(range: 1...count)
+        self.count(count) && subset(of: .numbers)
     }
 }
 
