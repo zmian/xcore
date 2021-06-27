@@ -48,8 +48,9 @@ struct AnyDynamicTextFieldStyle: DynamicTextFieldStyle {
     private var _makeBody: (Self.Configuration) -> AnyView
 
     init<S: DynamicTextFieldStyle>(_ style: S) {
-        _makeBody = { configuration in
-            AnyView(style.makeBody(configuration: configuration))
+        _makeBody = {
+            style.makeBody(configuration: $0)
+                .eraseToAnyView()
         }
     }
 

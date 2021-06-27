@@ -14,7 +14,6 @@ public struct DecimalTextFieldFormatter: TextFieldFormatter {
     private let numberFormatter = NumberFormatter().apply {
         $0.allowsFloats = true
         $0.numberStyle = .decimal
-        $0.maximumFractionDigits = 15
     }
 
     public func string(from value: Double) -> String {
