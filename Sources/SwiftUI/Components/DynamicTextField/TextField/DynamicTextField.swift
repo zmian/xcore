@@ -182,3 +182,93 @@ extension DynamicTextField {
         self.onCommit = onCommit
     }
 }
+
+// MARK: - Convenience Inits
+
+extension DynamicTextField where Formatter == PassthroughTextFieldFormatter {
+    /// Creates a text field with a text label generated from a localized title
+    /// string.
+    ///
+    /// - Parameters:
+    ///   - titleKey: The key for the localized title of the text field,
+    ///     describing its purpose.
+    ///   - text: The text to display and edit.
+    ///   - onEditingChanged: The action to perform when the user
+    ///     begins editing `text` and after the user finishes editing `text`.
+    ///     The closure receives a Boolean value that indicates the editing
+    ///     status: `true` when the user begins editing, `false` when they
+    ///     finish.
+    ///   - onCommit: An action to perform when the user performs an action
+    ///     (for example, when the user presses the Return key) while the text
+    ///     field has focus.
+    public init(
+        _ titleKey: LocalizedStringKey,
+        value: Binding<String>,
+        onEditingChanged: @escaping (Bool) -> Void = { _ in },
+        onCommit: @escaping () -> Void = {}
+    ) {
+        let configuration = TextFieldConfiguration<Formatter>.text
+        self.placeholder = .left(.left(titleKey))
+        self._value = value
+        self._isSecure = State(initialValue: configuration.secureTextEntry != .no)
+        self.configuration = configuration
+        self.onEditingChanged = onEditingChanged
+        self.onCommit = onCommit
+    }
+
+    /// Creates a text field with a text label generated from a title string.
+    ///
+    /// - Parameters:
+    ///   - title: The title of the text view, describing its purpose.
+    ///   - value: The value to display and edit.
+    ///   - onEditingChanged: The action to perform when the user
+    ///     begins editing `text` and after the user finishes editing `text`.
+    ///     The closure receives a Boolean value that indicates the editing
+    ///     status: `true` when the user begins editing, `false` when they
+    ///     finish.
+    ///   - onCommit: An action to perform when the user performs an action
+    ///     (for example, when the user presses the Return key) while the text
+    ///     field has focus.
+    public init<S>(
+        _ title: S,
+        value: Binding<String>,
+        onEditingChanged: @escaping (Bool) -> Void = { _ in },
+        onCommit: @escaping () -> Void = {}
+    ) where S: StringProtocol {
+        let configuration = TextFieldConfiguration<Formatter>.text
+        self.placeholder = .left(.right(String(title)))
+        self._value = value
+        self._isSecure = State(initialValue: configuration.secureTextEntry != .no)
+        self.configuration = configuration
+        self.onEditingChanged = onEditingChanged
+        self.onCommit = onCommit
+    }
+
+    /// Creates a text field with a text label generated from a title string.
+    ///
+    /// - Parameters:
+    ///   - value: The value to display and edit.
+    ///   - onEditingChanged: The action to perform when the user
+    ///     begins editing `text` and after the user finishes editing `text`.
+    ///     The closure receives a Boolean value that indicates the editing
+    ///     status: `true` when the user begins editing, `false` when they
+    ///     finish.
+    ///   - onCommit: An action to perform when the user performs an action
+    ///     (for example, when the user presses the Return key) while the text
+    ///     field has focus.
+    ///   - label: The label of the text field, describing its purpose.
+    public init<Label: View>(
+        value: Binding<String>,
+        onEditingChanged: @escaping (Bool) -> Void = { _ in },
+        onCommit: @escaping () -> Void = {},
+        @ViewBuilder label: () -> Label
+    ) {
+        let configuration = TextFieldConfiguration<Formatter>.text
+        self.placeholder = .right(label().eraseToAnyView())
+        self._value = value
+        self._isSecure = State(initialValue: configuration.secureTextEntry != .no)
+        self.configuration = configuration
+        self.onEditingChanged = onEditingChanged
+        self.onCommit = onCommit
+    }
+}

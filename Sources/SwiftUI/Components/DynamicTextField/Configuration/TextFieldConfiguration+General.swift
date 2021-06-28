@@ -7,6 +7,11 @@
 import SwiftUI
 
 extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatter {
+    /// Freeform text
+    public static var text: Self {
+        .init(id: #function)
+    }
+
     /// Email
     public static var emailAddress: Self {
         .init(
