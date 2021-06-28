@@ -40,6 +40,7 @@ struct InternalTextField<Label>: View where Label: View {
                 withoutFloating
             } else {
                 withFloating
+                    .frame(height: textFieldHeight + labelHeight)
             }
         }
         .apply {
@@ -49,7 +50,6 @@ struct InternalTextField<Label>: View where Label: View {
                 $0
             }
         }
-        .frame(height: textFieldHeight + labelHeight)
     }
 
     private var withoutFloating: some View {

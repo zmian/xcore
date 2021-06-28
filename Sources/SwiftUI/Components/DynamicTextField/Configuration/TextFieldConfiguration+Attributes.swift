@@ -6,14 +6,14 @@
 
 import SwiftUI
 
-public struct TextFieldAttributes {
-    public let placeholderColor: Color
-    public let placeholderErrorColor: Color
-    public let placeholderSuccessColor: Color
-    public let errorColor: Color
-    public let successColor: Color
-    public let disabledColor: Color?
-    public let disableFloatingPlaceholder: Bool
+public struct TextFieldAttributes: MutableAppliable {
+    public var placeholderColor: Color
+    public var placeholderErrorColor: Color
+    public var placeholderSuccessColor: Color
+    public var errorColor: Color
+    public var successColor: Color
+    public var disabledColor: Color?
+    public var disableFloatingPlaceholder: Bool
 
     public init(
         placeholderColor: Color = Color(.placeholderText),
@@ -52,5 +52,9 @@ extension EnvironmentValues {
 extension View {
     public func textFieldAttributes(_ attributes: TextFieldAttributes) -> some View {
         environment(\.textFieldAttributes, attributes)
+    }
+
+    public func textFieldAttributes(_ transform: @escaping (inout TextFieldAttributes) -> Void) -> some View {
+        transformEnvironment(\.textFieldAttributes, transform: transform)
     }
 }
