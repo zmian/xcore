@@ -91,15 +91,44 @@ private struct DefaultDynamicTextFieldStyle: DynamicTextFieldStyle {
 // MARK: - Prominent Style
 
 public struct ProminentDynamicTextFieldStyle: DynamicTextFieldStyle {
-    init() {}
+    public struct Options: OptionSet {
+        public let rawValue: Int
+        public init(rawValue: Int) {
+            self.rawValue = rawValue
+        }
+
+        public static let bordered = Self(rawValue: 1 << 0)
+        public static let elevated = Self(rawValue: 1 << 1)
+    }
+
+    private let cornerRadius: CGFloat
+    private let options: Options
+
+    init(cornerRadius: CGFloat, options: Options) {
+        self.cornerRadius = cornerRadius
+        self.options = options
+    }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
-        EnvironmentReader(\.theme) { theme in
-            configuration.label
-                .padding(.minimumPadding)
-                .backgroundColor(theme.backgroundColor)
-                .cornerRadius(AppConstants.tileCornerRadius)
-                .border(cornerRadius: AppConstants.tileCornerRadius)
+        EnvironmentReader(\.textFieldAttributes) { attributes in
+            EnvironmentReader(\.theme) { theme in
+                configuration.label
+                    .apply {
+                        if attributes.disableFloatingPlaceholder {
+                            $0.padding(.horizontal, .minimumPadding)
+                                .padding(.vertical, .defaultPadding)
+                        } else {
+                            $0.padding(.minimumPadding)
+                        }
+                    }
+                    .when(options.contains(.elevated)) {
+                        $0.backgroundColor(theme.backgroundSecondaryColor)
+                    }
+                    .cornerRadius(cornerRadius)
+                    .when(options.contains(.bordered)) {
+                        $0.border(cornerRadius: cornerRadius, width: 0.5)
+                    }
+            }
         }
     }
 }
@@ -138,7 +167,14 @@ public struct LineDynamicTextFieldStyle: DynamicTextFieldStyle {
 // MARK: - Convenience
 
 extension DynamicTextFieldStyle where Self == ProminentDynamicTextFieldStyle {
-    public static var prominent: Self { Self() }
+    public static var prominent: Self { prominent() }
+
+    public static func prominent(
+        cornerRadius: CGFloat = AppConstants.tileCornerRadius,
+        options: Self.Options = .elevated
+    ) -> Self {
+        Self(cornerRadius: cornerRadius, options: options)
+    }
 }
 
 extension DynamicTextFieldStyle where Self == LineDynamicTextFieldStyle {

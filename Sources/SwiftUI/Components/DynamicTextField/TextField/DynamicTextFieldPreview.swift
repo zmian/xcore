@@ -64,7 +64,7 @@ private struct ProminentFieldPreview: View {
     var body: some View {
         VStack(spacing: .maximumPadding) {
             DynamicTextField("SSN", value: $text, configuration: .ssn)
-                .dynamicTextFieldStyle(.prominent)
+                .dynamicTextFieldStyle(.prominent(options: .elevated))
                 .readSize {
                     height = $0.height
                 }
@@ -84,7 +84,14 @@ struct DynamicTextField_Previews: PreviewProvider {
         Group {
             DefaultFieldPreview()
             LineFieldPreview()
-            ProminentFieldPreview()
+
+            ZStack {
+                Color(UIColor.systemBackground)
+                ProminentFieldPreview()
+                    .textFieldAttributes {
+                        $0.disableFloatingPlaceholder = true
+                    }
+            }
         }
         .padding()
         .previewLayout(.sizeThatFits)
