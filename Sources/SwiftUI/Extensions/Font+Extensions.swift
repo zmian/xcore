@@ -22,11 +22,17 @@ extension Font {
     ) -> Font {
         let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
 
-        guard typeface != UIFont.Typeface.systemFontId else {
-            return system(
+        if typeface == UIFont.Typeface.systemFontId {
+            var font = system(
                 TextStyle(style),
                 design: trait == .monospaced ? .monospaced : .default
-            )
+            ).weight(.init(weight))
+
+            if trait == .italic {
+                font = font.italic()
+            }
+
+            return font
         }
 
         let pointSize = UIFontDescriptor.preferredFontDescriptor(
@@ -55,11 +61,17 @@ extension Font {
         let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
 
         if typeface == UIFont.Typeface.systemFontId {
-            return system(
+            var font = system(
                 size: size,
                 weight: Weight(weight),
                 design: trait == .monospaced ? .monospaced : .default
             )
+
+            if trait == .italic {
+                font = font.italic()
+            }
+
+            return font
         }
 
         return custom(typeface, size: size)
