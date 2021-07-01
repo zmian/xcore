@@ -16,17 +16,17 @@ extension Font {
     ///   - trait: The trait of the font. The default value is `.normal`.
     /// - Returns: The new scaled font object.
     public static func app(
-        _ style: UIFont.TextStyle,
-        weight: UIFont.Weight = .regular,
+        _ style: TextStyle,
+        weight: Weight = .regular,
         trait: UIFont.Trait = .normal
     ) -> Font {
-        let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
+        let typeface = UIFont.defaultAppTypeface.name(weight: .init(weight), trait: trait)
 
         if typeface == UIFont.Typeface.systemFontId {
             var font = system(
-                TextStyle(style),
+                style,
                 design: trait == .monospaced ? .monospaced : .default
-            ).weight(.init(weight))
+            ).weight(weight)
 
             if trait == .italic {
                 font = font.italic()
@@ -36,14 +36,10 @@ extension Font {
         }
 
         let pointSize = UIFontDescriptor.preferredFontDescriptor(
-            withTextStyle: style
+            withTextStyle: .init(style)
         ).pointSize
 
-        return .custom(
-            typeface,
-            size: pointSize,
-            relativeTo: TextStyle(style)
-        )
+        return .custom(typeface, size: pointSize, relativeTo: style)
     }
 
     /// Returns default app font with given `size`.
@@ -55,15 +51,15 @@ extension Font {
     /// - Returns: The new font object.
     public static func app(
         size: CGFloat,
-        weight: UIFont.Weight = .regular,
+        weight: Weight = .regular,
         trait: UIFont.Trait = .normal
     ) -> Font {
-        let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
+        let typeface = UIFont.defaultAppTypeface.name(weight: .init(weight), trait: trait)
 
         if typeface == UIFont.Typeface.systemFontId {
             var font = system(
                 size: size,
-                weight: Weight(weight),
+                weight: weight,
                 design: trait == .monospaced ? .monospaced : .default
             )
 
@@ -80,8 +76,8 @@ extension Font {
 
 // MARK: - Helpers
 
-extension Font.Weight {
-    fileprivate init(_ weight: UIFont.Weight) {
+extension UIFont.Weight {
+    fileprivate init(_ weight: Font.Weight) {
         switch weight {
             case .ultraLight:
                 self = .ultraLight
@@ -107,13 +103,13 @@ extension Font.Weight {
     }
 }
 
-extension Font.TextStyle {
-    fileprivate init(_ textStyle: UIFont.TextStyle) {
+extension UIFont.TextStyle {
+    fileprivate init(_ textStyle: Font.TextStyle) {
         switch textStyle {
             case .largeTitle:
                 self = .largeTitle
-            case .title1:
-                self = .title
+            case .title:
+                self = .title1
             case .title2:
                 self = .title2
             case .title3:
@@ -128,8 +124,8 @@ extension Font.TextStyle {
                 self = .callout
             case .footnote:
                 self = .footnote
-            case .caption1:
-                self = .caption
+            case .caption:
+                self = .caption1
             case .caption2:
                 self = .caption2
             default:

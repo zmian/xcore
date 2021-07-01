@@ -20,7 +20,7 @@ extension UIFont {
     ///     category information. The default value is `nil`.
     /// - Returns: The new scaled font object.
     public static func app(
-        _ style: UIFont.TextStyle,
+        _ style: TextStyle,
         weight: Weight = .regular,
         trait: Trait = .normal,
         compatibleWith traitCollection: UITraitCollection? = nil
@@ -56,7 +56,7 @@ extension UIFont {
         let typeface = defaultAppTypeface.name(weight: weight, trait: trait)
 
         if typeface == Typeface.systemFontId {
-            return .systemFont(size: size, weight: weight, trait: trait)
+            return .system(size: size, weight: weight, trait: trait)
         }
 
         return UIFont(name: typeface, size: size)!
