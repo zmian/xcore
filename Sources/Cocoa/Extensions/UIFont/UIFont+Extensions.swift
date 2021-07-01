@@ -13,7 +13,7 @@ extension UIFont {
         case monospaced
     }
 
-    static func systemFont(size: CGFloat, weight: Weight = .regular, trait: Trait = .normal) -> UIFont {
+    static func system(size: CGFloat, weight: Weight = .regular, trait: Trait = .normal) -> UIFont {
         switch trait {
             case .normal:
                 return systemFont(ofSize: size, weight: weight)
