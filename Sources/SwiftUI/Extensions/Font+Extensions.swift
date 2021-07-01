@@ -77,7 +77,7 @@ extension Font {
 // MARK: - Helpers
 
 extension UIFont.Weight {
-    fileprivate init(_ weight: Font.Weight) {
+    init(_ weight: Font.Weight) {
         switch weight {
             case .ultraLight:
                 self = .ultraLight

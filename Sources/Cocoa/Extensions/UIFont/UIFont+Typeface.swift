@@ -4,7 +4,11 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import SwiftUI
+
+extension Font {
+    public typealias Typeface = UIFont.Typeface
+}
 
 extension UIFont {
     public struct Typeface {
@@ -16,6 +20,10 @@ extension UIFont {
 
         public func name(weight: Weight, trait: Trait = .normal) -> String {
             block(weight, trait)
+        }
+
+        public func name(weight: Font.Weight, trait: UIFont.Trait = .normal) -> String {
+            block(.init(weight), trait)
         }
     }
 }
