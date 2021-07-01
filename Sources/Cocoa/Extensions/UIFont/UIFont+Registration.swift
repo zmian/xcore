@@ -7,7 +7,7 @@
 import UIKit
 
 extension UIFont {
-    enum LoaderError: Error {
+    public enum RegistrationError: Error {
         case fontNotFound
         case remoteFontUrlDetected
         case failedToCreateFont
@@ -15,12 +15,32 @@ extension UIFont {
         case failedToUnregisterFont
     }
 
+    /// Registers the fonts if they are not already registered with the font
+    /// manager.
+    ///
+    /// - Parameters:
+    ///   - fontNames: The list of font names to register.
+    ///   - bundle: The bundle where font is located.
+    public static func registerIfNeeded(_ fontNames: String..., bundle: Bundle = .main) throws {
+        try fontNames.forEach {
+            let name = $0.deletingPathExtension
+            let ext = $0.pathExtension
+
+            guard let url = bundle.url(forResource: name, withExtension: ext) else {
+                throw RegistrationError.fontNotFound
+            }
+
+            try UIFont.registerIfNeeded($0, url: url)
+        }
+    }
+
     /// Registers the font if it's not already registered with the font manager.
     ///
     /// - Parameters:
-    ///   - fontName: The font name to register.
+    ///   - fontName: The PostScript name of the font used to check whether the font
+    ///     can be registered.
     ///   - fontUrl: The local url where the font is located.
-    static func registerIfNeeded(fontName: String, url fontUrl: URL) throws {
+    public static func registerIfNeeded(_ fontName: String, url fontUrl: URL) throws {
         let name = fontName.deletingPathExtension
 
         // Check if the given font is not already registered with font manager before
@@ -35,9 +55,10 @@ extension UIFont {
     /// Unregister the font if it's registered with the font manager.
     ///
     /// - Parameters:
-    ///   - fontName: The font name to unregister.
+    ///   - fontName: The PostScript name of the font used to check whether the font
+    ///     can be unregistered.
     ///   - fontUrl: The local url where the font is located.
-    static func unregisterIfExists(fontName: String, url fontUrl: URL) throws {
+    public static func unregisterIfExists(_ fontName: String, url fontUrl: URL) throws {
         let name = fontName.deletingPathExtension
 
         // Check if the given font is registered with font manager before
@@ -46,7 +67,7 @@ extension UIFont {
             return
         }
 
-        _ = try unregister(url: fontUrl)
+        try unregister(url: fontUrl)
     }
 
     /// Registers the font at given url with the font manager.
@@ -58,20 +79,22 @@ extension UIFont {
     ///     the font from font manager first, then registering the new font again.
     ///     The default value is `false`.
     /// - Returns: Returns the post script name of the font.
-    static func register(
+    public static func register(
         url fontUrl: URL,
         unregisterOldFirstIfExists: Bool = false
     ) throws -> String {
-        let (cgFont, fontName) = try metadata(from: fontUrl)
+        let (fontName, cgFont) = try metadata(from: fontUrl)
 
         // Check if the given font is already registered with font manager.
         let exists = !fontNames(forFamilyName: fontName).isEmpty
 
         if exists {
             if unregisterOldFirstIfExists {
-                try unregister(cgFont: cgFont, fontName: fontName)
+                try unregister(fontName, cgFont: cgFont)
             } else {
-                Console.info("Font \"\(fontName)\" already registered.")
+                #if DEBUG
+                Console.info("\"\(fontName)\" font already registered.")
+                #endif
                 return fontName
             }
         }
@@ -81,63 +104,76 @@ extension UIFont {
         guard CTFontManagerRegisterGraphicsFont(cgFont, &fontError) else {
             if let fontError = fontError?.takeRetainedValue() {
                 let errorDescription = CFErrorCopyDescription(fontError)
+                #if DEBUG
                 Console.error("Failed to register font \"\(fontName)\" with font manager: \(String(describing: errorDescription))")
+                #endif
             }
 
-            throw LoaderError.failedToRegisterFont
+            throw RegistrationError.failedToRegisterFont
         }
 
+        #if DEBUG
         Console.info("Successfully registered font \"\(fontName)\".")
+        #endif
         return fontName
     }
 
     /// Unregisters the font at given url with the font manager.
     ///
     /// - Parameter fontUrl: The font url to be unregistered.
-    static func unregister(url fontUrl: URL) throws {
-        let (cgFont, fontName) = try metadata(from: fontUrl)
-        try unregister(cgFont: cgFont, fontName: fontName)
+    private static func unregister(url fontUrl: URL) throws {
+        let (fontName, cgFont) = try metadata(from: fontUrl)
+        try unregister(fontName, cgFont: cgFont)
     }
 
     /// Unregisters the specified font with the font manager.
     ///
     /// - Parameter fontUrl: The font to be unregistered.
-    private static func unregister(cgFont: CGFont, fontName: String) throws {
+    private static func unregister(_ fontName: String, cgFont: CGFont) throws {
         // Check if the given font is registered with font manager before
         // attempting to unregister.
         guard !fontNames(forFamilyName: fontName).isEmpty else {
-            Console.info("Font \"\(fontName)\" isn't registered.")
+            #if DEBUG
+            Console.info("\"\(fontName)\" font isn't registered.")
+            #endif
             return
         }
 
         var fontError: Unmanaged<CFError>?
-
         CTFontManagerUnregisterGraphicsFont(cgFont, &fontError)
 
         if let fontError = fontError?.takeRetainedValue() {
             let errorDescription = CFErrorCopyDescription(fontError)
+            #if DEBUG
             Console.error("Failed to unregister font \"\(fontName)\" with font manager: \(String(describing: errorDescription))")
-            throw LoaderError.failedToUnregisterFont
+            #endif
+            throw RegistrationError.failedToUnregisterFont
         }
 
+        #if DEBUG
         Console.info("Successfully unregistered font \"\(fontName)\".")
+        #endif
     }
 
-    private static func metadata(from fontUrl: URL) throws -> (cgFont: CGFont, postScriptName: String) {
+    /// Returns PostScript name of font and `CGFont` object from the given url.
+    ///
+    /// - Parameter fontUrl: The font url to extract the metadata for.
+    /// - Returns: Returns a tuple containing PostScript name of the font and
+    ///            `CGFont`.
+    private static func metadata(from fontUrl: URL) throws -> (postScriptName: String, cgFont: CGFont) {
         guard fontUrl.schemeType == .file else {
-            throw LoaderError.remoteFontUrlDetected
+            throw RegistrationError.remoteFontUrlDetected
         }
 
         guard
-            let fontData = NSData(contentsOf: fontUrl),
-            let dataProvider = CGDataProvider(data: fontData),
+            let dataProvider = CGDataProvider(url: fontUrl as CFURL),
             let cgFont = CGFont(dataProvider),
             let postScriptName = cgFont.postScriptName
         else {
-            throw LoaderError.failedToCreateFont
+            throw RegistrationError.failedToCreateFont
         }
 
         let fontName = String(describing: postScriptName)
-        return (cgFont, fontName)
+        return (fontName, cgFont)
     }
 }
