@@ -137,7 +137,7 @@ extension Money: View {
                 .unwrap(foregroundColor) { view, value in
                     view.foregroundColor(SwiftUI.Color(value))
                 }
-//                .when(shouldSuperscriptMinorUnit) {
+//                .applyIf(shouldSuperscriptMinorUnit) {
 //                    EmptyView()
 //                }
         }
