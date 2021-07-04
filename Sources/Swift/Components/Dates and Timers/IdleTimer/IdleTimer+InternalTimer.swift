@@ -73,7 +73,7 @@ extension IdleTimer {
 
         private func restart() {
             if let timer = timer {
-                timer.invalidate()
+                timer.cancel()
             }
 
             guard timeoutDuration > 0 else {

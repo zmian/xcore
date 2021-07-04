@@ -8,6 +8,8 @@ import Foundation
 
 // MARK: - Namespace
 
+/// A monotonic clock is a time source that won't ever jump forward or backward
+/// (due to NTP or Daylight Savings Time updates).
 enum MonotonicClock { }
 
 // MARK: - Uptime
@@ -58,7 +60,8 @@ extension MonotonicClock {
             }
         }
 
-        func invalidate() {
+        /// Cancels the current work item asynchronously.
+        func cancel() {
             workItem.cancel()
         }
     }
