@@ -62,12 +62,13 @@ public final class Screen: ObservableObject {
 // MARK: - Environment Support
 
 extension EnvironmentValues {
-    private struct Key: EnvironmentKey {
+    private struct ScreenKey: EnvironmentKey {
         static var defaultValue: Screen = .main
     }
 
+    /// An object representing the device’s screen.
     public var screen: Screen {
-        get { self[Key.self] }
-        set { self[Key.self] = newValue }
+        get { self[ScreenKey.self] }
+        set { self[ScreenKey.self] = newValue }
     }
 }
