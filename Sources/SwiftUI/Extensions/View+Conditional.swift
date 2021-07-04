@@ -12,7 +12,7 @@ extension View {
     @ViewBuilder
     public func unwrap<Value, Content>(
         _ value: Value?,
-        _ content: (Self, Value) -> Content
+        @ViewBuilder content: (Self, Value) -> Content
     ) -> some View where Content: View {
         if let value = value {
             content(self, value)
@@ -27,72 +27,33 @@ extension View {
 extension View {
     @ViewBuilder
     public func apply<Content>(
-        @ViewBuilder _ content: (Self) -> Content
+        @ViewBuilder content: (Self) -> Content
     ) -> some View where Content: View {
         content(self)
     }
 }
 
-// MARK: - Condition
+// MARK: - Conditional Apply
 
 extension View {
     /// Applies modifier when given condition is satisfied.
     @ViewBuilder
-    func when<Content>(
-        _ condition: @autoclosure () -> Bool,
-        _ modifier: @autoclosure () -> Content
-    ) -> some View where Content: ViewModifier {
-        if condition() {
-            self.modifier(modifier())
-        } else {
-            self
-        }
-    }
-
-    /// Applies modifier when given condition is satisfied.
-    @ViewBuilder
-    func when<Content>(
-        _ condition: @autoclosure () -> Bool,
-        @ViewBuilder _ modifier: () -> Content
-    ) -> some View where Content: ViewModifier {
-        if condition() {
-            self.modifier(modifier())
-        } else {
-            self
-        }
-    }
-
-    /// Add content when given condition is satisfied.
-    @ViewBuilder
-    func when<Content>(
-        _ condition: @autoclosure () -> Bool,
-        _ content: @autoclosure () -> Content
-    ) -> some View where Content: View {
-        if condition() {
-            content()
-        } else {
-            self
-        }
-    }
-
-    /// Add content when given condition is satisfied.
-    @ViewBuilder
-    func when<Content>(
-        _ condition: @autoclosure () -> Bool,
-        @ViewBuilder _ content: () -> Content
-    ) -> some View where Content: View {
-        if condition() {
-            content()
-        } else {
-            self
-        }
-    }
-
-    /// Add content when given condition is satisfied.
-    @ViewBuilder
-    public func when<Content>(
+    func applyIf<Modifier>(
         _ condition: Bool,
-        @ViewBuilder _ content: (Self) -> Content
+        @ViewBuilder modifier: () -> Modifier
+    ) -> some View where Modifier: ViewModifier {
+        if condition {
+            self.modifier(modifier())
+        } else {
+            self
+        }
+    }
+
+    /// Adds content when given condition is satisfied.
+    @ViewBuilder
+    public func applyIf<Content>(
+        _ condition: Bool,
+        @ViewBuilder content: (Self) -> Content
     ) -> some View where Content: View {
         if condition {
             content(self)
@@ -101,11 +62,11 @@ extension View {
         }
     }
 
-    /// Add content when given condition is satisfied.
+    /// Adds content when given condition is satisfied.
     @ViewBuilder
-    public func when<Content>(
+    public func applyIf<Content>(
         _ condition: Binding<Bool>,
-        @ViewBuilder _ content: (Self) -> Content
+        @ViewBuilder content: (Self) -> Content
     ) -> some View where Content: View {
         if condition.wrappedValue {
             content(self)

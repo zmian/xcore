@@ -121,11 +121,11 @@ public struct ProminentDynamicTextFieldStyle: DynamicTextFieldStyle {
                             $0.padding(.minimumPadding)
                         }
                     }
-                    .when(options.contains(.elevated)) {
+                    .applyIf(options.contains(.elevated)) {
                         $0.backgroundColor(theme.backgroundSecondaryColor)
                     }
                     .cornerRadius(cornerRadius)
-                    .when(options.contains(.bordered)) {
+                    .applyIf(options.contains(.bordered)) {
                         $0.border(cornerRadius: cornerRadius, width: 0.5)
                     }
             }
