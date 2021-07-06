@@ -24,31 +24,31 @@ final class ExampleLabelInsetViewController: UIViewController {
     private func setupContentView() {
         let label = UILabel().apply {
             $0.text = "This has horizontal inset"
-            $0.contentInset = UIEdgeInsets(horizontal: .maximumPadding)
+            $0.contentInset = UIEdgeInsets(horizontal: .s6)
             $0.backgroundColor = .tertiarySystemBackground
             $0.numberOfLines = 0
         }
         let label2 = UILabel().apply {
             $0.text = "This has horizontal and vertical inset."
-            $0.contentInset = .maximumPadding
+            $0.contentInset = .s6
             $0.backgroundColor = .tertiarySystemBackground
             $0.numberOfLines = 0
         }
         let label3 = UILabel().apply {
             $0.text = "100w constrained."
-            $0.contentInset = UIEdgeInsets(horizontal: .maximumPadding)
+            $0.contentInset = UIEdgeInsets(horizontal: .s6)
             $0.backgroundColor = .tertiarySystemBackground
             $0.numberOfLines = 0
         }
         let label4 = UILabel().apply {
             $0.text = "100h 100w constrained."
-            $0.contentInset = UIEdgeInsets(horizontal: .maximumPadding)
+            $0.contentInset = UIEdgeInsets(horizontal: .s6)
             $0.backgroundColor = .tertiarySystemBackground
             $0.numberOfLines = 0
         }
         let label5 = UILabel().apply {
             $0.text = "This is label is constrained to 200h 150w."
-            $0.contentInset = UIEdgeInsets(horizontal: .maximumPadding)
+            $0.contentInset = UIEdgeInsets(horizontal: .s6)
             $0.backgroundColor = .tertiarySystemBackground
             $0.numberOfLines = 0
         }
@@ -85,8 +85,8 @@ final class ExampleLabelInsetViewController: UIViewController {
 
         view.addSubview(stackView)
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .maximumPadding),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.maximumPadding),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .s6),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.s6),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }

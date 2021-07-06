@@ -20,14 +20,14 @@ final class SeparatorViewController: UIViewController {
             createSeparatorsHorizontal()
         ]).apply {
             $0.axis = .vertical
-            $0.spacing = .maximumPadding
+            $0.spacing = .s6
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
         view.addSubview(stackView)
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .maximumPadding),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.maximumPadding),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .s6),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.s6),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
@@ -44,7 +44,7 @@ final class SeparatorViewController: UIViewController {
             SeparatorView(axis: .vertical, backgroundColor: .systemBlue, thickness: 4)
         ]).apply {
             $0.axis = .horizontal
-            $0.spacing = .maximumPadding
+            $0.spacing = .s6
             $0.distribution = .equalSpacing
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.heightAnchor.constraint(equalToConstant: 200).activate()
@@ -84,7 +84,7 @@ final class SeparatorViewController: UIViewController {
             bigDotsSeparator
         ]).apply {
             $0.axis = .vertical
-            $0.spacing = .maximumPadding
+            $0.spacing = .s6
         }
     }
 }

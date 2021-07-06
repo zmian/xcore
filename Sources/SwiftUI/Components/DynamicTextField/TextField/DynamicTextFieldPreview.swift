@@ -13,7 +13,7 @@ private struct DefaultFieldPreview: View {
     @State private var text: String = ""
 
     var body: some View {
-        VStack(spacing: .maximumPadding) {
+        VStack(spacing: .s6) {
             DynamicTextField(value: $text, configuration: .emailAddress) {
                 Label("Email Address", systemImage: .mail)
             }
@@ -37,7 +37,7 @@ private struct LineFieldPreview: View {
     @State private var text: String = "hello@example.com"
 
     var body: some View {
-        VStack(spacing: .maximumPadding) {
+        VStack(spacing: .s6) {
             DynamicTextField(value: $text, configuration: .emailAddress) {
                 Label("Email Address", systemImage: .mail)
             }
@@ -62,7 +62,7 @@ private struct ProminentFieldPreview: View {
     @State private var text: String = ""
 
     var body: some View {
-        VStack(spacing: .maximumPadding) {
+        VStack(spacing: .s6) {
             DynamicTextField("SSN", value: $text, configuration: .ssn)
                 .dynamicTextFieldStyle(.prominent(options: .elevated))
                 .readSize {

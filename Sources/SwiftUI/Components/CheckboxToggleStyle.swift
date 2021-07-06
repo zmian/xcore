@@ -29,7 +29,7 @@ public struct CheckboxToggleStyle: ToggleStyle {
             } else {
                 toggle(configuration)
                 Spacer()
-                    .frame(width: .defaultPadding)
+                    .frame(width: .s4)
                 configuration.label
                 Spacer()
             }
