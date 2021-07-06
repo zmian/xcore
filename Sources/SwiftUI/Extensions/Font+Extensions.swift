@@ -20,7 +20,7 @@ extension Font {
         weight: Weight = .regular,
         trait: UIFont.Trait = .normal
     ) -> Font {
-        let typeface = UIFont.defaultAppTypeface.name(weight: .init(weight), trait: trait)
+        let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
 
         if typeface == UIFont.Typeface.systemFontId {
             var font = system(
@@ -54,7 +54,7 @@ extension Font {
         weight: Weight = .regular,
         trait: UIFont.Trait = .normal
     ) -> Font {
-        let typeface = UIFont.defaultAppTypeface.name(weight: .init(weight), trait: trait)
+        let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
 
         if typeface == UIFont.Typeface.systemFontId {
             var font = system(
