@@ -22,7 +22,7 @@ extension UIFont {
             block(weight, trait)
         }
 
-        public func name(weight: Font.Weight, trait: UIFont.Trait = .normal) -> String {
+        public func name(weight: Font.Weight, trait: Trait = .normal) -> String {
             block(.init(weight), trait)
         }
     }
