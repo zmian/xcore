@@ -23,3 +23,16 @@ extension View {
         }
     }
 }
+
+extension TextAlignment {
+    var horizontal: HorizontalAlignment {
+        switch self {
+            case .leading:
+                return .leading
+            case .trailing:
+                return .trailing
+            case .center:
+                return .center
+        }
+    }
+}
