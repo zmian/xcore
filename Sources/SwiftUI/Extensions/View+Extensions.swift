@@ -37,14 +37,24 @@ extension View {
 
 extension View {
     /// Sets the color that the view uses for foreground elements.
+    @_disfavoredOverload
     public func foregroundColor(_ color: UIColor) -> some View {
         foregroundColor(Color(color))
     }
 
     /// Sets the background color behind this view.
+    @_disfavoredOverload
     public func backgroundColor(_ color: UIColor, edgesIgnoringSafeArea: Edge.Set = .all) -> some View {
         background(
             Color(color)
+                .edgesIgnoringSafeArea(edgesIgnoringSafeArea)
+        )
+    }
+
+    /// Sets the background color behind this view.
+    public func backgroundColor(_ color: Color, edgesIgnoringSafeArea: Edge.Set = .all) -> some View {
+        background(
+            color
                 .edgesIgnoringSafeArea(edgesIgnoringSafeArea)
         )
     }
