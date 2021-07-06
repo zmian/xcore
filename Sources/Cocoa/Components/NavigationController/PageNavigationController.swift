@@ -50,8 +50,8 @@ open class PageNavigationController: NavigationController {
 
         pageControl.anchor.make {
             $0.center.equalToSuperview()
-            $0.leading.greaterThanOrEqualToSuperview().inset(CGFloat.maximumPadding)
-            $0.trailing.lessThanOrEqualToSuperview().inset(CGFloat.maximumPadding)
+            $0.leading.greaterThanOrEqualToSuperview().inset(CGFloat.s6)
+            $0.trailing.lessThanOrEqualToSuperview().inset(CGFloat.s6)
         }
     }
 }

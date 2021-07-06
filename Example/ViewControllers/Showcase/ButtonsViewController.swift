@@ -9,7 +9,7 @@ import UIKit
 final class ButtonsViewController: UIViewController {
     private let stackView = UIStackView().apply {
         $0.axis = .vertical
-        $0.spacing = .maximumPadding
+        $0.spacing = .s6
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
 
@@ -20,8 +20,8 @@ final class ButtonsViewController: UIViewController {
 
         view.addSubview(stackView)
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .maximumPadding * 2),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.maximumPadding * 2),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .s6 * 2),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.s6 * 2),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
 

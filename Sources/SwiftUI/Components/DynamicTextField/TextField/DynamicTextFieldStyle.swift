@@ -115,10 +115,10 @@ public struct ProminentDynamicTextFieldStyle: DynamicTextFieldStyle {
                 configuration.label
                     .apply {
                         if attributes.disableFloatingPlaceholder {
-                            $0.padding(.horizontal, .minimumPadding)
-                                .padding(.vertical, .defaultPadding)
+                            $0.padding(.horizontal, .s2)
+                                .padding(.vertical, .s4)
                         } else {
-                            $0.padding(.minimumPadding)
+                            $0.padding(.s2)
                         }
                     }
                     .applyIf(options.contains(.elevated)) {
@@ -155,7 +155,7 @@ public struct LineDynamicTextFieldStyle: DynamicTextFieldStyle {
                     return Color(theme.separatorColor)
                 }()
 
-                VStack(alignment: .leading, spacing: .minimumPadding) {
+                VStack(alignment: .leading, spacing: .s2) {
                     configuration.label
                     color.frame(height: height ?? .onePixel)
                 }

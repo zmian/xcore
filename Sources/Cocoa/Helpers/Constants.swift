@@ -63,9 +63,18 @@ extension CGAffineTransform {
 // MARK: - CGFloat
 
 extension CGFloat {
-    public static let minimumPadding: Self = 8
-    public static let defaultPadding: Self = 15
-    public static let maximumPadding: Self = 30
+    /// Spacing with the default value of `4` at a normal dynamic type setting.
+    public static var s1: Self = 4
+    /// Spacing with the default value of `8` at a normal dynamic type setting.
+    public static var s2: Self = 8
+    /// Spacing with the default value of `12` at a normal dynamic type setting.
+    public static var s3: Self = 12
+    /// Spacing with the default value of `16` at a normal dynamic type setting.
+    public static var s4: Self = 16
+    /// Spacing with the default value of `24` at a normal dynamic type setting.
+    public static var s5: Self = 24
+    /// Spacing with the default value of `32` at a normal dynamic type setting.
+    public static var s6: Self = 32
 
     /// A convenience method to return `1` pixel relative to the screen scale.
     public static var onePixel: Self {
@@ -80,9 +89,18 @@ extension CGFloat {
 // MARK: - UIEdgeInsets
 
 extension UIEdgeInsets {
-    public static let minimumPadding = Self(.minimumPadding)
-    public static let defaultPadding = Self(.defaultPadding)
-    public static let maximumPadding = Self(.maximumPadding)
+    /// Spacing with the default value of `4` at a normal dynamic type setting.
+    public static var s1: Self { .init(.s1) }
+    /// Spacing with the default value of `8` at a normal dynamic type setting.
+    public static var s2: Self { .init(.s2) }
+    /// Spacing with the default value of `12` at a normal dynamic type setting.
+    public static var s3: Self { .init(.s3) }
+    /// Spacing with the default value of `16` at a normal dynamic type setting.
+    public static var s4: Self { .init(.s4) }
+    /// Spacing with the default value of `24` at a normal dynamic type setting.
+    public static var s5: Self { .init(.s5) }
+    /// Spacing with the default value of `32` at a normal dynamic type setting.
+    public static var s6: Self { .init(.s6) }
 }
 
 // MARK: - UIColor
