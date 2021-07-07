@@ -13,7 +13,6 @@ public struct IconAfterLabelStyle: LabelStyle {
         self.axis = axis
     }
 
-    @ViewBuilder
     public func makeBody(configuration: Self.Configuration) -> some View {
         switch axis {
             case .horizontal:
@@ -37,7 +36,6 @@ public struct IconBeforeLabelStyle: LabelStyle {
         self.axis = axis
     }
 
-    @ViewBuilder
     public func makeBody(configuration: Self.Configuration) -> some View {
         switch axis {
             case .horizontal:

@@ -25,6 +25,7 @@ extension View {
 // MARK: - Apply
 
 extension View {
+    /// Returns `self` as a parameter to the given content block.
     @ViewBuilder
     public func apply<Content>(
         @ViewBuilder content: (Self) -> Content
@@ -36,7 +37,12 @@ extension View {
 // MARK: - Conditional Apply
 
 extension View {
-    /// Applies modifier when given condition is satisfied.
+    /// Applies modifier if given condition is satisfied.
+    ///
+    /// - Parameters:
+    ///   - condition: The condition that must be `true` in order to apply given
+    ///     modifier.
+    ///   - modifier: The modifier to apply.
     @ViewBuilder
     func applyIf<Modifier>(
         _ condition: Bool,
@@ -49,7 +55,12 @@ extension View {
         }
     }
 
-    /// Adds content when given condition is satisfied.
+    /// Adds content if given condition is satisfied.
+    ///
+    /// - Parameters:
+    ///   - condition: The condition that must be `true` in order to apply given
+    ///     content.
+    ///   - content: The content to add.
     @ViewBuilder
     public func applyIf<Content>(
         _ condition: Bool,
@@ -62,7 +73,12 @@ extension View {
         }
     }
 
-    /// Adds content when given condition is satisfied.
+    /// Adds content if given condition is satisfied.
+    ///
+    /// - Parameters:
+    ///   - condition: The binding that must be `true` in order to apply given
+    ///     content.
+    ///   - content: The content to add.
     @ViewBuilder
     public func applyIf<Content>(
         _ condition: Binding<Bool>,
