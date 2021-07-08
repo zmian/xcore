@@ -34,7 +34,7 @@ extension View {
     public func backgroundColor(_ color: UIColor, edgesIgnoringSafeArea: Edge.Set = .all) -> some View {
         background(
             Color(color)
-                .edgesIgnoringSafeArea(edgesIgnoringSafeArea)
+                .ignoresSafeArea(edges: edgesIgnoringSafeArea)
         )
     }
 
@@ -42,7 +42,7 @@ extension View {
     public func backgroundColor(_ color: Color, edgesIgnoringSafeArea: Edge.Set = .all) -> some View {
         background(
             color
-                .edgesIgnoringSafeArea(edgesIgnoringSafeArea)
+                .ignoresSafeArea(edges: edgesIgnoringSafeArea)
         )
     }
 }

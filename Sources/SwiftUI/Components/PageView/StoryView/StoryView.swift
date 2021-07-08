@@ -32,7 +32,7 @@ public struct StoryView<Content, Page>: View where Content: View, Page: Identifi
             ZStack(alignment: .top) {
                 content(pages[Int(storyTimer.progress)])
                     .frame(width: width)
-                    .edgesIgnoringSafeArea(.all)
+                    .ignoresSafeArea()
                     .animation(.none)
 
                 progressIndicator
@@ -41,7 +41,7 @@ public struct StoryView<Content, Page>: View where Content: View, Page: Identifi
                     advanceView(isLeft: true)
                     advanceView(isLeft: false)
                 }
-                .edgesIgnoringSafeArea(.all)
+                .ignoresSafeArea()
             }
             .onAppear(perform: storyTimer.start)
             .onDisappear(perform: storyTimer.stop)

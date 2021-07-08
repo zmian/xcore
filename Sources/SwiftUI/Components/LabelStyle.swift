@@ -6,10 +6,12 @@
 
 import SwiftUI
 
+// MARK: - Icon After
+
 public struct IconAfterLabelStyle: LabelStyle {
     private let axis: Axis
 
-    public init(axis: Axis = .horizontal) {
+    init(axis: Axis = .horizontal) {
         self.axis = axis
     }
 
@@ -29,10 +31,12 @@ public struct IconAfterLabelStyle: LabelStyle {
     }
 }
 
+// MARK: - Icon Before
+
 public struct IconBeforeLabelStyle: LabelStyle {
     private let axis: Axis
 
-    public init(axis: Axis = .horizontal) {
+    init(axis: Axis = .horizontal) {
         self.axis = axis
     }
 
@@ -48,6 +52,27 @@ public struct IconBeforeLabelStyle: LabelStyle {
                     configuration.icon
                     configuration.title
                 }
+        }
+    }
+}
+
+// MARK: - Settings Icon
+
+public struct SettingsIconLabelStyle: LabelStyle {
+    var tint: Color
+
+    public func makeBody(configuration: Self.Configuration) -> some View {
+        Label {
+            configuration.title
+        } icon: {
+            configuration.icon
+                .imageScale(.small)
+                .foregroundColor(.white)
+                .background(
+                    RoundedRectangle(cornerRadius: 6, style: .continuous)
+                        .fill(tint)
+                        .frame(28)
+                )
         }
     }
 }
@@ -67,5 +92,11 @@ extension LabelStyle where Self == IconAfterLabelStyle {
 
     public static func iconAfter(axis: Axis) -> Self {
         Self(axis: axis)
+    }
+}
+
+extension LabelStyle where Self == SettingsIconLabelStyle {
+    public static func settingsIcon(tint: Color) -> Self {
+        Self(tint: tint)
     }
 }
