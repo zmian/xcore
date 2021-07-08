@@ -66,9 +66,7 @@ extension CapsuleView {
         systemImage: SystemAssetIdentifier? = nil,
         @ViewBuilder label: @escaping () -> Label
     ) where S: StringProtocol {
-        self.image = systemImage
-        self.title = Text(title)
-        self.label = label
+        self.init(Text(title), systemImage: systemImage, label: label)
     }
 }
 
