@@ -27,6 +27,22 @@ struct Menu: Identifiable {
                 .eraseToAnyView()
         }
     }
+
+    init<Content: View>(
+        id: UUID = UUID(),
+        title: String,
+        subtitle: String? = nil,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.id = id
+        self.title = title
+        self.subtitle = subtitle
+        self.content = {
+            content()
+                .navigationTitle(title)
+                .eraseToAnyView()
+        }
+    }
 }
 
 // MARK: - CaseIterable
@@ -36,6 +52,7 @@ extension Menu: CaseIterable {
         separators,
         buttonsUIKit,
         buttons,
+        capsules,
         labelInset
     ]
 }
@@ -58,6 +75,18 @@ extension Menu {
         title: "Buttons",
         subtitle: "SwiftUI",
         content: ButtonsView()
+    )
+
+    static let capsules = Self(
+        title: "Capsule",
+        subtitle: "SwiftUI",
+        content: {
+            if #available(iOS 15.0, *) {
+                CapsuleViewPreviews()
+            } else {
+                EmptyView()
+            }
+        }
     )
 
     static let labelInset = Self(
