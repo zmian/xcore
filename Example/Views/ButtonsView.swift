@@ -33,7 +33,7 @@ extension ButtonsView {
                 Text("FillButtonStyle")
             }
             .buttonStyle(.fill)
-            .environment(\.isEnabled, false)
+            .disabled(true)
 
             button {
                 Text("FillButtonStyle")
@@ -54,7 +54,7 @@ extension ButtonsView {
                 Text("OutlineButtonStyle")
             }
             .buttonStyle(.outline)
-            .environment(\.isEnabled, false)
+            .disabled(true)
 
             button {
                 Text("OutlineButtonStyle")
@@ -75,7 +75,7 @@ extension ButtonsView {
                 Text("PillButtonStyle")
             }
             .buttonStyle(.pill)
-            .environment(\.isEnabled, false)
+            .disabled(true)
 
             button {
                 Text("PillButtonStyle")
@@ -146,7 +146,7 @@ extension ButtonsView {
                 }
             }
             .buttonStyle(.borderless)
-            .environment(\.isEnabled, false)
+            .disabled(true)
         }
     }
 

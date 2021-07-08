@@ -142,7 +142,7 @@ public struct CapsuleViewPreviews: View {
 
                 CapsuleView("Do Not Disturb", subtitle: "On", systemImage: .moonFill)
                     .foregroundColor(.indigo)
-                    .environment(\.colorScheme, .dark)
+                    .colorScheme(.dark)
 
                 CapsuleView("No Internet Connection", systemImage: .boltSlashFill)
                     .foregroundColor(.orange)
@@ -154,7 +154,7 @@ public struct CapsuleViewPreviews: View {
                 CapsuleView("9:41 AM", systemImage: .bellFill)
             }
         }
-        .environment(\.colorScheme, .light)
+        .colorScheme(.light)
     }
 }
 #endif
