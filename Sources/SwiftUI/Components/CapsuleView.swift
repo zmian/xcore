@@ -114,9 +114,19 @@ extension CapsuleView where Label == Never {
 
 // MARK: - Previews
 
+#if DEBUG
 @available(iOS 15.0, *)
 struct CapsuleView_Previews: PreviewProvider {
     static var previews: some View {
+        CapsuleViewPreviews()
+    }
+}
+
+@available(iOS 15.0, *)
+public struct CapsuleViewPreviews: View {
+    public init() {}
+
+    public var body: some View {
         ZStack {
             Color(.systemBackground)
                 .ignoresSafeArea()
@@ -147,3 +157,4 @@ struct CapsuleView_Previews: PreviewProvider {
         .environment(\.colorScheme, .light)
     }
 }
+#endif
