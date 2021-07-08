@@ -13,7 +13,7 @@ public protocol TextFieldFormatter {
     /// Returns a string containing the formatted value of the given value.
     ///
     /// - Parameter value: A value that is parsed to create the returned string.
-   func string(from value: Value) -> String
+    func string(from value: Value) -> String
 
     /// Returns a value created by parsing the given string.
     ///
