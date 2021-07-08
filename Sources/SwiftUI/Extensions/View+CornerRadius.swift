@@ -29,7 +29,7 @@ extension View {
     /// - Returns: A view that clips this view to its bounding frame with the
     ///   specified corner radius.
     public func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape(RoundedCorner(radius: radius, corners: corners))
+        clipShape(RoundedRectangleCorner(radius: radius, corners: corners))
     }
 
     /// Clips this view to its bounding frame, with the specified corner radius.
@@ -56,21 +56,5 @@ extension View {
     ///   specified corner radius.
     public func cornerRadius(_ radius: CGFloat, style: RoundedCornerStyle) -> some View {
         clipShape(RoundedRectangle(cornerRadius: radius, style: style))
-    }
-}
-
-// MARK: - Shape
-
-private struct RoundedCorner: Shape {
-    let radius: CGFloat
-    let corners: UIRectCorner
-
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(
-            roundedRect: rect,
-            byRoundingCorners: corners,
-            cornerRadii: CGSize(radius)
-        )
-        return Path(path.cgPath)
     }
 }
