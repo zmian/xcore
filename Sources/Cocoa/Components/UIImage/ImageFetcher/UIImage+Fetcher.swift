@@ -9,7 +9,7 @@ import UIKit
 // MARK: - Namespace
 
 extension UIImage {
-    public enum Fetcher { }
+    public enum Fetcher {}
 }
 
 // MARK: - Registration

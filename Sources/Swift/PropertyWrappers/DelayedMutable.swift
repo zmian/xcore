@@ -30,7 +30,7 @@ import Foundation
 public struct DelayedMutable<Value> {
     private var value: Value?
 
-    public init() { }
+    public init() {}
 
     public var wrappedValue: Value {
         get {

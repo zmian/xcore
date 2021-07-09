@@ -8,7 +8,7 @@ import UIKit
 
 // MARK: - Namespace
 
-public enum LaunchScreen { }
+public enum LaunchScreen {}
 
 // MARK: - View
 

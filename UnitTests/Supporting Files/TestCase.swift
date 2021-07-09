@@ -7,7 +7,7 @@
 import XCTest
 @testable import Xcore
 
-class TestCase: XCTestCase { }
+class TestCase: XCTestCase {}
 
 // MARK: - Helpers
 

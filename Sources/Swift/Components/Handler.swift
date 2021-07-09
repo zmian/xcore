@@ -8,7 +8,7 @@ import Foundation
 
 // MARK: - Namespace
 
-public enum Handler { }
+public enum Handler {}
 
 // MARK: - Completion
 
@@ -16,7 +16,7 @@ extension Handler {
     public class Completion {
         private let lifecycle = Lifecycle()
 
-        public init() { }
+        public init() {}
 
         public func notifyShow() {
             lifecycle.notifyStart()
@@ -57,7 +57,7 @@ extension Handler {
         private var start: (() -> Void)?
         private var end: (() -> Void)?
 
-        public init() { }
+        public init() {}
 
         public func notifyStart() {
             didNotifyStart = true

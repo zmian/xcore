@@ -13,7 +13,7 @@ import UIKit
 /// The default `reuseIdentifier` value is conforming class name.
 ///
 /// ```swift
-/// class ProfileCollectionViewCell: UICollectionViewCell { }
+/// class ProfileCollectionViewCell: UICollectionViewCell {}
 ///
 /// print(ProfileCollectionViewCell.reuseIdentifier)
 ///
@@ -37,6 +37,6 @@ extension Reusable {
     }
 }
 
-extension UICollectionReusableView: Reusable { }
-extension UITableViewCell: Reusable { }
-extension UITableViewHeaderFooterView: Reusable { }
+extension UICollectionReusableView: Reusable {}
+extension UITableViewCell: Reusable {}
+extension UITableViewHeaderFooterView: Reusable {}

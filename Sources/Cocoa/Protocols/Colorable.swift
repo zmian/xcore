@@ -15,7 +15,7 @@ protocol CollectionViewLayoutRepresentable {
     var scrollDirection: UICollectionView.ScrollDirection { get }
 }
 
-extension UICollectionViewFlowLayout: CollectionViewLayoutRepresentable { }
+extension UICollectionViewFlowLayout: CollectionViewLayoutRepresentable {}
 
 extension UIScrollView {
     /// A convenience function to cross fade between two color in given items.

@@ -6,7 +6,7 @@
 
 import Foundation
 
-public protocol ExtensibleByAssociatedObject { }
+public protocol ExtensibleByAssociatedObject {}
 
 extension ExtensibleByAssociatedObject {
     /// Returns the value associated with a given object for a given key.
@@ -96,4 +96,4 @@ public enum AssociationPolicy {
     }
 }
 
-extension NSObject: ExtensibleByAssociatedObject { }
+extension NSObject: ExtensibleByAssociatedObject {}

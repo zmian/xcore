@@ -18,7 +18,7 @@ extension Router {
     /// **Routes Declaration**
     ///
     /// ```swift
-    /// final class AuthenticationRouter: RouteHandler { }
+    /// final class AuthenticationRouter: RouteHandler {}
     ///
     /// extension Router.Route where Type == AuthenticationRouter {
     ///     static var login: Self {
@@ -26,7 +26,7 @@ extension Router {
     ///     }
     /// }
     ///
-    /// final class MainRouter: RouteHandler { }
+    /// final class MainRouter: RouteHandler {}
     ///
     /// extension Router.Route where Type == MainRouter {
     ///     static var home: Self {

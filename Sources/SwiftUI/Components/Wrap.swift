@@ -20,7 +20,7 @@ extension UIViewController {
             content()
         }
 
-        public func updateUIViewController(_ uiViewController: Content, context: Context) { }
+        public func updateUIViewController(_ uiViewController: Content, context: Context) {}
     }
 
     /// Embed this view controller in `SwiftUI.View`.
@@ -43,7 +43,7 @@ extension UIView {
             content()
         }
 
-        public func updateUIView(_ uiView: Content, context: Context) { }
+        public func updateUIView(_ uiView: Content, context: Context) {}
     }
 
     /// Embed this view in `SwiftUI.View`.

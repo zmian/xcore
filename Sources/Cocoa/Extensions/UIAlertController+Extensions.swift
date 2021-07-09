@@ -6,10 +6,10 @@
 
 import UIKit
 
-public protocol PopoverPresentationSourceView { }
+public protocol PopoverPresentationSourceView {}
 
-extension UIView: PopoverPresentationSourceView { }
-extension UIBarButtonItem: PopoverPresentationSourceView { }
+extension UIView: PopoverPresentationSourceView {}
+extension UIBarButtonItem: PopoverPresentationSourceView {}
 
 extension UIPopoverPresentationController {
     public func setSourceView(_ sourceView: PopoverPresentationSourceView) {

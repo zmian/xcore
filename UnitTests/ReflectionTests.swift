@@ -35,9 +35,9 @@ func typeName(of value: Any) -> String {
     name(of: value)
 }
 
-private class MyViewController: UIViewController { }
-private class MyView: UIView { }
-private protocol MyProtocol { }
+private class MyViewController: UIViewController {}
+private class MyView: UIView {}
+private protocol MyProtocol {}
 extension MyProtocol {
     var instanceName: String {
         name(of: self)
@@ -56,4 +56,4 @@ extension MyProtocol {
     }
 }
 
-private class MyProtocolClass: MyProtocol { }
+private class MyProtocolClass: MyProtocol {}

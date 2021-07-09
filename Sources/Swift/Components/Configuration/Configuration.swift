@@ -74,7 +74,7 @@ extension UILabel {
 
 // MARK: - ConfigurationInitializable
 
-public protocol ConfigurationInitializable { }
+public protocol ConfigurationInitializable {}
 
 extension ConfigurationInitializable where Self: UIView {
     public init(configuration: Configuration<Self>) {
@@ -83,8 +83,8 @@ extension ConfigurationInitializable where Self: UIView {
     }
 }
 
-extension UIView: ConfigurationInitializable { }
-extension UIBarButtonItem: ConfigurationInitializable { }
+extension UIView: ConfigurationInitializable {}
+extension UIBarButtonItem: ConfigurationInitializable {}
 
 extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
     public init(configuration: Configuration<Self>, _ handler: ((_ sender: Self) -> Void)? = nil) {

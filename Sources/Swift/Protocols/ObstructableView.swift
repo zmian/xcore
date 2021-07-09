@@ -11,4 +11,4 @@ import UIKit
 ///
 /// Such information is useful when certain actions can't be triggered,
 /// for example, in-app deep-linking routing.
-public protocol ObstructableView { }
+public protocol ObstructableView {}

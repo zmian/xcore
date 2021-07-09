@@ -20,7 +20,7 @@ final public class AnimationRunLoop {
     private var animations: ((_ progress: Double) -> Void)?
     private var completion: (() -> Void)?
 
-    public init() { }
+    public init() {}
 
     public func start(
         duration: TimeInterval,

@@ -17,7 +17,7 @@ public protocol InterstitialCompatibleViewController: UIViewController, Obstruct
 }
 
 extension InterstitialCompatibleViewController {
-    public func didDismiss() { }
+    public func didDismiss() {}
 
     public var theme: Theme {
         .default

@@ -36,7 +36,7 @@ final class CaseIterableTests: TestCase {
     }
 }
 
-private final class SomeClass { }
+private final class SomeClass {}
 
 extension SomeClass {
     fileprivate enum Counting: String, CaseIterable {
@@ -56,7 +56,7 @@ extension SomeClass {
     }
 }
 
-private struct SomeStruct { }
+private struct SomeStruct {}
 
 extension SomeStruct {
     fileprivate enum Counting: String, CaseIterable {

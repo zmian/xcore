@@ -7,7 +7,7 @@
 import Foundation
 
 public struct PrintAnalyticsProvider: AnalyticsProvider {
-    public init() { }
+    public init() {}
 
     public func track(_ event: AnalyticsEventProtocol) {
         let (enabled, containsValue) = ProcessInfo.Arguments.isAnalyticsDebugEnabled

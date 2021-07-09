@@ -15,7 +15,7 @@ import UIKit
 /// The default `storyboardId` value is `UIViewController`'s class name:
 ///
 /// ```swift
-/// class SettingsViewController: UIViewController { }
+/// class SettingsViewController: UIViewController {}
 ///
 /// print(SettingsViewController.storyboardId)
 /// // "SettingsViewController"
@@ -60,4 +60,4 @@ extension StoryboardInstantiable where Self: UIViewController {
     }
 }
 
-extension UIViewController: StoryboardInstantiable { }
+extension UIViewController: StoryboardInstantiable {}
