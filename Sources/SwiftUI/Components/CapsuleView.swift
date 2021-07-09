@@ -116,13 +116,6 @@ extension CapsuleView where Label == Never {
 
 #if DEBUG
 @available(iOS 15.0, *)
-struct CapsuleView_Previews: PreviewProvider {
-    static var previews: some View {
-        CapsuleViewPreviews()
-    }
-}
-
-@available(iOS 15.0, *)
 public struct CapsuleViewPreviews: View {
     public init() {}
 
@@ -155,6 +148,15 @@ public struct CapsuleViewPreviews: View {
             }
         }
         .colorScheme(.light)
+    }
+}
+
+// MARK: - Preview Provider
+
+@available(iOS 15.0, *)
+struct CapsuleView_Previews: PreviewProvider {
+    static var previews: some View {
+        CapsuleViewPreviews()
     }
 }
 #endif
