@@ -8,7 +8,7 @@ import SwiftUI
 
 // MARK: - Namespace
 
-public enum Popup { }
+public enum Popup {}
 
 // MARK: - Dismiss Methods
 
@@ -80,7 +80,7 @@ extension Popup.Style {
             alignment: edge == .top ? .top : .bottom,
             animation: .spring(),
             transition: .move(edge: edge),
-            dismissAfter: 2.5
+            dismissAfter: 2
         )
     }
 }
