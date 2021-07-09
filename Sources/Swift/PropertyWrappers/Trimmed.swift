@@ -10,7 +10,7 @@ import Foundation
 //
 /// Trims whitespaces from wrapped value.
 ///
-/// **Usage:**
+/// **Usage**
 ///
 /// ```swift
 /// struct Post {

@@ -9,7 +9,7 @@ import UIKit
 extension ImageRepresentable {
     /// Returns `ImageRepresentable` instance with the given transform.
     ///
-    /// **Usage**:
+    /// **Usage**
     ///
     /// ```swift
     /// func setIcon(_ icon: ImageRepresentable) {

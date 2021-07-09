@@ -8,7 +8,7 @@ import Foundation
 
 /// Environment argument wrapped value.
 ///
-/// **Usage:**
+/// **Usage**
 ///
 /// ```swift
 /// enum Arguments {

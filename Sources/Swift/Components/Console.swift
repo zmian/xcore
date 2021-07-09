@@ -9,6 +9,7 @@ import Foundation
 final public class Console {
     /// The default value is `.all`.
     public static var levelOptions: LevelOptions = .all
+
     /// The default value is `.basic`.
     public static var prefixOptions: PrefixOptions = .basic
 
@@ -16,97 +17,91 @@ final public class Console {
     /// and terminated by terminator, into the standard output.
     ///
     /// - Parameters:
-    ///   - items:        Items to write to standard output.
-    ///   - condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
-    ///   - separator:    The separator to use between items. The default value is `" "`.
-    ///   - terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
-    ///   - className:    The name of the class where this log is executed. The default value is extracted from `#file`.
-    ///   - functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
-    ///   - lineNumber:   The line number where this log is executed. The default value is of `#line`.
-    public static func log(_ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, functionName: String = #function, lineNumber: Int = #line) {
-        internalPrint(level: .debug, items: items, condition: condition, separator: separator, terminator: terminator, className: className, functionName: functionName, lineNumber: lineNumber)
+    ///   - items: Items to write to standard output.
+    ///   - condition: To achieve assert like behavior, you can pass condition that
+    ///     must be met to write ouput.
+    ///   - separator: The separator to use between items.
+    ///   - terminator: To print without a trailing newline, pass `terminator: ""`.
+    ///   - context: The source where this log is executed.
+    public static func log(_ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", context: SourceContext = .init()) {
+        internalPrint(level: .debug, items: items, condition: condition, separator: separator, terminator: terminator, context: context)
     }
 
     /// Writes the textual representations of info message, separated by separator
     /// and terminated by terminator, into the standard output.
     ///
     /// - Parameters:
-    ///   - items:        Items to write to standard output.
-    ///   - condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
-    ///   - separator:    The separator to use between items. The default value is `" "`.
-    ///   - terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
-    ///   - className:    The name of the class where this log is executed. The default value is extracted from `#file`.
-    ///   - functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
-    ///   - lineNumber:   The line number where this log is executed. The default value is of `#line`.
-    public static func info(_ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, functionName: String = #function, lineNumber: Int = #line) {
-        internalPrint(level: .info, items: items, condition: condition, separator: separator, terminator: terminator, className: className, functionName: functionName, lineNumber: lineNumber)
+    ///   - items: Items to write to standard output.
+    ///   - condition: To achieve assert like behavior, you can pass condition that
+    ///     must be met to write ouput.
+    ///   - separator: The separator to use between items.
+    ///   - terminator: To print without a trailing newline, pass `terminator: ""`.
+    ///   - context: The source where this log is executed.
+    public static func info(_ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", context: SourceContext = .init()) {
+        internalPrint(level: .info, items: items, condition: condition, separator: separator, terminator: terminator, context: context)
     }
 
-    /// Writes the textual representations of warning message, separated by separator
-    /// and terminated by terminator, into the standard output.
+    /// Writes the textual representations of warning message, separated by
+    /// separator and terminated by terminator, into the standard output.
     ///
     /// - Parameters:
-    ///   - items:        Items to write to standard output.
-    ///   - condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
-    ///   - separator:    The separator to use between items. The default value is `" "`.
-    ///   - terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
-    ///   - className:    The name of the class where this log is executed. The default value is extracted from `#file`.
-    ///   - functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
-    ///   - lineNumber:   The line number where this log is executed. The default value is of `#line`.
-    public static func warn(_ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, functionName: String = #function, lineNumber: Int = #line) {
-        internalPrint(level: .warn, items: items, condition: condition, separator: separator, terminator: terminator, className: className, functionName: functionName, lineNumber: lineNumber)
+    ///   - items: Items to write to standard output.
+    ///   - condition: To achieve assert like behavior, you can pass condition that
+    ///     must be met to write ouput.
+    ///   - separator: The separator to use between items.
+    ///   - terminator: To print without a trailing newline, pass `terminator: ""`.
+    ///   - context: The source where this log is executed.
+    public static func warn(_ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", context: SourceContext = .init()) {
+        internalPrint(level: .warn, items: items, condition: condition, separator: separator, terminator: terminator, context: context)
     }
 
     /// Writes the textual representations of error message, separated by separator
     /// and terminated by terminator, into the standard output.
     ///
     /// - Parameters:
-    ///   - items:        Items to write to standard output.
-    ///   - condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
-    ///   - separator:    The separator to use between items. The default value is `" "`.
-    ///   - terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
-    ///   - className:    The name of the class where this log is executed. The default value is extracted from `#file`.
-    ///   - functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
-    ///   - lineNumber:   The line number where this log is executed. The default value is of `#line`.
-    public static func error(_ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, functionName: String = #function, lineNumber: Int = #line) {
-        internalPrint(level: .error, items: items, condition: condition, separator: separator, terminator: terminator, className: className, functionName: functionName, lineNumber: lineNumber)
+    ///   - items: Items to write to standard output.
+    ///   - condition: To achieve assert like behavior, you can pass condition that
+    ///     must be met to write ouput.
+    ///   - separator: The separator to use between items.
+    ///   - terminator: To print without a trailing newline, pass `terminator: ""`.
+    ///   - context: The source where this log is executed.
+    public static func error(_ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", context: SourceContext = .init()) {
+        internalPrint(level: .error, items: items, condition: condition, separator: separator, terminator: terminator, context: context)
     }
 
-    /// Writes the textual representations of items, separated by separator and terminated by terminator,
-    /// into the standard output.
+    /// Writes the textual representations of items, separated by separator and
+    /// terminated by terminator, into the standard output.
     ///
     /// - Parameters:
-    ///   - level:        The log level option. The default value is `.debug`.
-    ///   - items:        Items to write to standard output.
-    ///   - condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
-    ///   - separator:    The separator to use between items. The default value is `" "`.
-    ///   - terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
-    ///   - className:    The name of the class where this log is executed. The default value is extracted from `#file`.
-    ///   - functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
-    ///   - lineNumber:   The line number where this log is executed. The default value is of `#line`.
-    public static func print(level: LevelOptions = .debug, _ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, functionName: String = #function, lineNumber: Int = #line) {
-        internalPrint(level: level, items: items, condition: condition, separator: separator, terminator: terminator, className: className, functionName: functionName, lineNumber: lineNumber)
+    ///   - level: The log level option. The default value is `.debug`.
+    ///   - items: Items to write to standard output.
+    ///   - condition: To achieve assert like behavior, you can pass condition that
+    ///     must be met to write ouput.
+    ///   - separator: The separator to use between items.
+    ///   - terminator: To print without a trailing newline, pass `terminator: ""`.
+    ///   - context: The source where this log is executed.
+    public static func print(level: LevelOptions = .debug, _ items: Any..., condition: Bool = true, separator: String = " ", terminator: String = "\n", context: SourceContext = .init()) {
+        internalPrint(level: level, items: items, condition: condition, separator: separator, terminator: terminator, context: context)
     }
 }
 
 extension Console {
-    /// Writes the textual representations of items, separated by separator and terminated by terminator,
-    /// into the standard output.
+    /// Writes the textual representations of items, separated by separator and
+    /// terminated by terminator, into the standard output.
     ///
     /// - Parameters:
-    ///   - level:        The log level option.
-    ///   - items:        Items to write to standard output.
-    ///   - condition:    To achieve assert like behavior, you can pass condition that must be met to write ouput.
-    ///   - separator:    The separator to use between items. The default value is `" "`.
-    ///   - terminator:   To print without a trailing newline, pass `terminator: ""`. The default value is `"\n"`.
-    ///   - className:    The name of the class where this log is executed. The default value is extracted from `#file`.
-    ///   - functionName: The name of the function where this log is executed. The default value is extracted of `#function`.
-    ///   - lineNumber:   The line number where this log is executed. The default value is of `#line`.
-    private static func internalPrint(level: LevelOptions, items: [Any], condition: Bool = true, separator: String = " ", terminator: String = "\n", className: String = #file, functionName: String = #function, lineNumber: Int = #line) {
+    ///   - level: The log level option.
+    ///   - items: Items to write to standard output.
+    ///   - condition: To achieve assert like behavior, you can pass condition that
+    ///     must be met to write ouput.
+    ///   - separator: The separator to use between items.
+    ///   - terminator: To print without a trailing newline, pass `terminator: ""`.
+    ///   - context: The source where this log is executed.
+    private static func internalPrint(level: LevelOptions, items: [Any], condition: Bool = true, separator: String = " ", terminator: String = "\n", context: SourceContext) {
         guard levelOptions.contains(level) && condition else { return }
 
         let items = items.map { "\($0)" }.joined(separator: separator)
-        let prefix = prefixOptions(level: level, className: className, functionName: functionName, lineNumber: lineNumber)
+        let prefix = prefixOptions(level: level, context: context)
 
         if prefix.isEmpty {
             Swift.print(items, terminator: terminator)
@@ -115,7 +110,7 @@ extension Console {
         }
     }
 
-    private static func prefixOptions(level: LevelOptions, className: String, functionName: String, lineNumber: Int) -> String {
+    private static func prefixOptions(level: LevelOptions, context: SourceContext) -> String {
         var result: String = ""
 
         if prefixOptions.isEmpty && level.consoleDescription == nil {
@@ -132,17 +127,17 @@ extension Console {
         }
 
         if contains(.className) {
-            result += className.lastPathComponent.deletingPathExtension
+            result += context.class.lastPathComponent.deletingPathExtension
         }
 
         if contains(.functionName) {
             let separator = contains(.className) ? "." : ""
-            result += "\(separator)\(functionName)"
+            result += "\(separator)\(context.function)"
         }
 
         if contains(.lineNumber) {
             let separator = contains(.className) || contains(.functionName) ? ":" : ""
-            result += "\(separator)\(lineNumber)"
+            result += "\(separator)\(context.line)"
         }
 
         if !prefixOptions.isEmpty {
