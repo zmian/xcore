@@ -19,7 +19,7 @@ public final class Timeout {
     public init(after interval: TimeInterval, callback: (() -> Void)? = nil) {
         self.didTimeout = interval == 0
         self.callback = callback
-        timer = Timer.schedule(delay: interval) { [weak self] in
+        timer = Timer.after(interval) { [weak self] in
             self?.notify()
         }
     }

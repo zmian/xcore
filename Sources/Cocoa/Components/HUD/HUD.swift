@@ -267,7 +267,7 @@ open class HUD: Appliable {
             return setHidden(hide, animated: animated, completion)
         }
 
-        delay(by: delayDuration) { [weak self] in
+        Timer.after(delayDuration) { [weak self] in
             self?.setHidden(hide, animated: animated, completion)
         }
     }

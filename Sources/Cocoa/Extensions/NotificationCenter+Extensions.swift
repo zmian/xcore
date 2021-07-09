@@ -132,7 +132,7 @@ extension NotificationCenter {
             return
         }
 
-        delay(by: delayInterval) {
+        Timer.after(delayInterval) {
             NotificationCenter.default.post(name: name, object: object, userInfo: userInfo)
         }
     }
