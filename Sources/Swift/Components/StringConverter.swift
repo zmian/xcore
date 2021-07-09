@@ -34,11 +34,7 @@ public struct StringConverter {
     }
 
     private var url: URL? {
-        guard let url = URL(string: string) else {
-            return nil
-        }
-
-        return url
+        URL(string: string)
     }
 
     private var json: Any? {
