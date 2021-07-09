@@ -19,7 +19,7 @@ public enum ImageRepresentableAlignment: ImageRepresentablePlugin {
 extension ImageRepresentable {
     /// Returns `ImageRepresentable` instance with the given alignment.
     ///
-    /// **Usage**:
+    /// **Usage**
     ///
     /// ```swift
     /// func setIcon(_ icon: ImageRepresentable) {

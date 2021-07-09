@@ -379,7 +379,7 @@ extension HUD {
     /// to match app's appearance style. The `UIAppearance` protocol doesn't work
     /// when the stored properites are set using associated object.
     ///
-    /// **Usage:**
+    /// **Usage**
     ///
     /// ```swift
     /// HUD.appearance().backgroundColor = .gray

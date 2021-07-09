@@ -70,11 +70,9 @@ extension FatalReason {
 @_transparent
 public func fatalError(
     because reason: FatalReason,
-    function: StaticString = #function,
-    file: StaticString = #file,
-    line: UInt = #line
+    context: SourceContext = .init()
 ) -> Never {
-    fatalError("\(function): \(reason)", file: file, line: line)
+    fatalError("\(context.function): \(reason)", file: context.file, line: context.line)
 }
 
 /// Prints a warning message in debug mode.
@@ -89,13 +87,8 @@ public func fatalError(
 ///   - line: The line number to print along with `message`. The default is the
 ///     line number where `unknown(:function:file:line:)` is called.
 @_transparent
-public func warnUnknown(
-    _ value: Any,
-    file: String = #file,
-    function: String = #function,
-    line: Int = #line
-) {
+public func warnUnknown(_ value: Any, context: SourceContext = .init()) {
     #if DEBUG
-    Console.warn("Unknown value detected: \(value)", className: file, functionName: function, lineNumber: line)
+    Console.warn("Unknown value detected: \(value)", context: context)
     #endif
 }
