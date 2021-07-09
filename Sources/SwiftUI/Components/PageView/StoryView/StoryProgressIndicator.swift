@@ -8,7 +8,7 @@ import SwiftUI
 
 /// Continuous progress indicator
 struct StoryProgressIndicator: View {
-    @Environment(\.storyProgressIndicatorColor) var color
+    @Environment(\.storyProgressIndicatorColor) private var color
     private let progress: CGFloat
 
     init(progress: CGFloat) {

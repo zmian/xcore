@@ -60,10 +60,10 @@ extension UICollectionView {
             rawValue
         }
 
-        // swiftlint:disable inconsistent_naming_header_view inconsistent_naming_footer_view
+        // swiftlint:disable inc_header_view inc_footer_view
         public static let header = Self(rawValue: UICollectionView.elementKindSectionHeader)
         public static let footer = Self(rawValue: UICollectionView.elementKindSectionFooter)
-        // swiftlint:enable inconsistent_naming_header_view inconsistent_naming_footer_view
+        // swiftlint:enable inc_header_view inc_footer_view
     }
 }
 

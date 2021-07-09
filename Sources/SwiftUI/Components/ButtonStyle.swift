@@ -94,6 +94,7 @@ public struct OutlineButtonStyle: ButtonStyle {
 
 private struct FillStyleBody<S: Shape>: View {
     @Environment(\.defaultMinButtonHeight) private var minHeight
+    // swiftlint:disable:next sui_icc_env_private
     @Environment(\.defaultButtonCornerRadius) var cornerRadius
     @Environment(\.theme) private var theme
     @Environment(\.isEnabled) private var isEnabled

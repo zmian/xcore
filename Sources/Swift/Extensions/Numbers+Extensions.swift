@@ -173,7 +173,7 @@ extension Double {
 
     private typealias Abbrevation = (suffix: String, threshold: Double, divisor: Double)
 
-    // swiftlint:disable comma comma_space double_space
+    // swiftlint:disable comma icc_comma_space icc_double_space
     private static let abbreviations: [Abbrevation] = [
        ("",                0,              1),
        ("K",           1_000,          1_000),
@@ -183,7 +183,7 @@ extension Double {
        ("B",   1_000_000_000,  1_000_000_000),
        ("B", 999_999_999_999, 10_000_000_000)
     ]
-    // swiftlint:enable comma comma_space double_space
+    // swiftlint:enable comma icc_comma_space icc_double_space
 
     /// Abbreviate `self` to smaller format.
     ///

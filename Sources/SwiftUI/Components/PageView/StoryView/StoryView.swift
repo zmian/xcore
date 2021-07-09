@@ -7,7 +7,7 @@
 import SwiftUI
 
 public struct StoryView<Content, Page>: View where Content: View, Page: Identifiable {
-    @Environment(\.storyProgressIndicatorInsets) var insets
+    @Environment(\.storyProgressIndicatorInsets) private var insets
     @ObservedObject private var storyTimer: StoryTimer
     private let pages: [Page]
     private let content: (Page) -> Content

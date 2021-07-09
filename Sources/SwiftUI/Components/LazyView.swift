@@ -29,7 +29,7 @@ public struct LazyView<Content>: View where Content: View {
         self.content = content
     }
 
-    public var body: Content {
+    public var body: some View {
         content()
     }
 }
