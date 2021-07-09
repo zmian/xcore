@@ -17,25 +17,42 @@ import Foundation
 /// ```
 ///
 /// - SeeAlso: https://forums.swift.org/t/9505
-public struct SourceContext {
+public struct SourceContext: CustomStringConvertible {
     public let file: StaticString
+    public let fileId: StaticString
+    public let filePath: StaticString
+    public let function: StaticString
     public let line: UInt
     public let column: UInt
-    public let function: StaticString
 
     public init(
         file: StaticString = #file,
+        fileId: StaticString = #fileID,
+        filePath: StaticString = #filePath,
+        function: StaticString = #function,
         line: UInt = #line,
-        column: UInt = #column,
-        function: StaticString = #function
+        column: UInt = #column
     ) {
         self.file = file
+        self.fileId = fileId
+        self.filePath = filePath
+        self.function = function
         self.line = line
         self.column = column
-        self.function = function
     }
 
     public var `class`: String {
         "\(file)".lastPathComponent.deletingPathExtension
+    }
+
+    public var description: String {
+        """
+        file:     "\(file)"
+        fileId:   "\(fileId)"
+        filePath: "\(filePath)"
+        function: "\(function)"
+        line:     \(line)
+        column:   \(column)
+        """
     }
 }
