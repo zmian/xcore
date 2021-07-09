@@ -10,20 +10,17 @@ extension Popup {
     /// A representation of an alert presentation.
     struct AlertContent<A>: View where A: View {
         @Environment(\.theme) private var theme
-        @Environment(\.popupTextAlignment) private var textAlignment
-        @Environment(\.popupAlertWidth) private var width
-        @Environment(\.popupAlertCornerRadius) private var cornerRadius
-
+        @Environment(\.popupAlertAttributes) private var attributes
         @Binding private var isPresented: Bool
         private let dismissMethods: Popup.DismissMethods
-        private let title: String
-        private let message: String?
+        private let title: Text
+        private let message: Text?
         private let actions: A
 
         init(
             isPresented: Binding<Bool>,
-            title: String,
-            message: String,
+            title: Text,
+            message: Text?,
             dismissMethods: Popup.DismissMethods,
             actions: () -> A
         ) {
@@ -37,27 +34,27 @@ extension Popup {
         var body: some View {
             ZStack(alignment: .topTrailing) {
                 VStack(spacing: .s4) {
-                    VStack(alignment: textAlignment.horizontal, spacing: .s2) {
-                        Text(title)
+                    VStack(alignment: alignment, spacing: .s2) {
+                        title
                             .fontWeight(.medium)
                             .foregroundColor(theme.textColor)
 
                         if let message = message {
-                            Text(message)
+                            message
                                 .foregroundColor(theme.textSecondaryColor)
                         }
                     }
-                    .frame(maxWidth: .infinity, alignment: .init(horizontal: textAlignment.horizontal, vertical: .center))
+                    .frame(maxWidth: .infinity, alignment: .init(horizontal: alignment, vertical: .center))
                     .fixedSize(horizontal: false, vertical: true)
-                    .multilineTextAlignment(textAlignment)
+                    .multilineTextAlignment(attributes.textAlignment)
 
                     actions
                 }
                 .padding(.s4)
                 .padding(.top, .s4)
-                .frame(width: width)
+                .frame(width: attributes.width)
                 .background(Color(theme.backgroundColor))
-                .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+                .cornerRadius(attributes.cornerRadius, style: .continuous)
                 .floatingShadow()
 
                 if dismissMethods.contains(.xmark) {
@@ -71,6 +68,10 @@ extension Popup {
                 }
             }
         }
+
+        private var alignment: HorizontalAlignment {
+            attributes.textAlignment.horizontal
+        }
     }
 }
 
@@ -83,8 +84,8 @@ struct PopupAlertContent_Previews: PreviewProvider {
         return Group {
             Popup.AlertContent(
                 isPresented: .constant(false),
-                title: L.title,
-                message: L.message,
+                title: Text(L.title),
+                message: Text(L.message),
                 dismissMethods: .xmark
             ) {
                 HStack {
@@ -102,8 +103,8 @@ struct PopupAlertContent_Previews: PreviewProvider {
 
             Popup.AlertContent(
                 isPresented: .constant(false),
-                title: L.title,
-                message: L.message,
+                title: Text(L.title),
+                message: Text(L.message),
                 dismissMethods: .xmark
             ) {
                 EmptyView()
