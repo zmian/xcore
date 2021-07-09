@@ -6,6 +6,7 @@
 
 import SwiftUI
 
+#if DEBUG
 // MARK: - Default Style
 
 private struct DefaultFieldPreview: View {
@@ -77,23 +78,38 @@ private struct ProminentFieldPreview: View {
     }
 }
 
-// MARK: - Preview Provider
+// MARK: - Previews
 
-struct DynamicTextField_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            DefaultFieldPreview()
-            LineFieldPreview()
+@available(iOS 15.0, *)
+public struct DynamicTextFieldPreviews: View {
+    public init() {}
 
-            ZStack {
-                Color(UIColor.systemBackground)
+    public var body: some View {
+        List {
+            Section("Default Style") {
+                DefaultFieldPreview()
+            }
+
+            Section("Line Style") {
+                LineFieldPreview()
+            }
+
+            Section("Prominent Style") {
                 ProminentFieldPreview()
                     .textFieldAttributes {
                         $0.disableFloatingPlaceholder = true
                     }
             }
         }
-        .padding()
-        .previewLayout(.sizeThatFits)
     }
 }
+
+// MARK: - Preview Provider
+
+@available(iOS 15.0, *)
+struct DynamicTextField_Previews: PreviewProvider {
+    static var previews: some View {
+        DynamicTextFieldPreviews()
+    }
+}
+#endif

@@ -53,6 +53,8 @@ extension Menu: CaseIterable {
         buttonsUIKit,
         buttons,
         capsules,
+        popups,
+        textFields,
         labelInset
     ]
 }
@@ -60,26 +62,25 @@ extension Menu: CaseIterable {
 // MARK: - Items
 
 extension Menu {
-    static let separators = Self(
+    private static let separators = Self(
         title: "Separators",
+        subtitle: "UIKit",
         content: SeparatorViewController().embedInView()
     )
 
-    static let buttonsUIKit = Self(
+    private static let buttonsUIKit = Self(
         title: "Buttons",
         subtitle: "UIKit",
         content: ButtonsViewController().embedInView()
     )
 
-    static let buttons = Self(
+    private static let buttons = Self(
         title: "Buttons",
-        subtitle: "SwiftUI",
         content: ButtonsView()
     )
 
-    static let capsules = Self(
+    private static let capsules = Self(
         title: "Capsule",
-        subtitle: "SwiftUI",
         content: {
             if #available(iOS 15.0, *) {
                 CapsuleViewPreviews()
@@ -89,7 +90,29 @@ extension Menu {
         }
     )
 
-    static let labelInset = Self(
+    private static let popups = Self(
+        title: "Popups",
+        content: {
+            if #available(iOS 15.0, *) {
+                PopupPreviews()
+            } else {
+                EmptyView()
+            }
+        }
+    )
+
+    private static let textFields = Self(
+        title: "TextFields",
+        content: {
+            if #available(iOS 15.0, *) {
+                DynamicTextFieldPreviews()
+            } else {
+                EmptyView()
+            }
+        }
+    )
+
+    private static let labelInset = Self(
         title: "Label Inset",
         subtitle: "Label extension to enable \"contentInset\".",
         content: ExampleLabelInsetViewController().embedInView()
