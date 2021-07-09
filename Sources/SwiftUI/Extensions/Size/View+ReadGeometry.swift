@@ -8,7 +8,7 @@ import SwiftUI
 
 private struct GeometryPreferenceKey: PreferenceKey {
     static var defaultValue: GeometryProxyWrapper?
-    static func reduce(value: inout Value, nextValue: () -> Value) { }
+    static func reduce(value: inout Value, nextValue: () -> Value) {}
 }
 
 extension View {

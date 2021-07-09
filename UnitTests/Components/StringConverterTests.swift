@@ -118,7 +118,7 @@ private struct ConvertValue {
         StringConverter(storage[item]!)
     }
 
-    struct InvalidString { }
+    struct InvalidString {}
 }
 
 // MARK: - ConvertItem

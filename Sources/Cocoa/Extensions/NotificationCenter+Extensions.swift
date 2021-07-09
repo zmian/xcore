@@ -141,7 +141,7 @@ extension NotificationCenter {
 // MARK: - ON Namespace
 
 extension NotificationCenter {
-    public struct Event { }
+    public struct Event {}
 
     public static var on: Event {
         .init()

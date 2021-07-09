@@ -26,7 +26,7 @@ extension UIButton {
     @objc(UIButtonDefaultAppearance)
     final public class DefaultAppearance: NSObject {
         public var highlightedAnimation: HighlightedAnimationOptions = .none
-        fileprivate override init() { }
+        fileprivate override init() {}
     }
 
     @objc public dynamic static let defaultAppearance = DefaultAppearance()
@@ -427,7 +427,7 @@ extension UIButton {
 
 extension UIButton {
     // A method that is called when the state changes.
-    @objc open func stateDidChange(_ state: UIControl.State) { }
+    @objc open func stateDidChange(_ state: UIControl.State) {}
 
     @objc private func swizzled_isSelectedSetter(newValue: Bool) {
         let oldValue = isSelected

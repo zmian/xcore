@@ -8,7 +8,7 @@ import UIKit
 
 // MARK: - Namespace
 
-public enum IdleTimer { }
+public enum IdleTimer {}
 
 // MARK: - API
 

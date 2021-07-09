@@ -47,7 +47,7 @@ open class Analytics<Event: AnalyticsEventProtocol> {
     /// The registered list of providers.
     open private(set) var providers: [AnalyticsProvider] = []
 
-    public init() { }
+    public init() {}
 
     /// Register the given provider if it's not already registered.
     ///

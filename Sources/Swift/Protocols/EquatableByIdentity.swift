@@ -6,7 +6,7 @@
 
 /// A protocol that auto-implements `Equatable` by using class instance
 /// identity.
-public protocol EquatableByIdentity: AnyObject, Equatable { }
+public protocol EquatableByIdentity: AnyObject, Equatable {}
 
 extension EquatableByIdentity {
     public static func ==(lhs: Self, rhs: Self) -> Bool {

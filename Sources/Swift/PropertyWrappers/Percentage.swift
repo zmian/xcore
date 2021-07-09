@@ -107,4 +107,4 @@ extension Percentage {
     }
 }
 
-extension Percentage: Codable { }
+extension Percentage: Codable {}

@@ -167,9 +167,9 @@ extension TextAttributedTextRepresentable where Self: UIView {
 
 // MARK: - TextAttributedTextRepresentable Conformance
 
-extension UILabel: TextAttributedTextRepresentable { }
-extension UIButton: TextAttributedTextRepresentable { }
-extension UITextField: TextAttributedTextRepresentable { }
+extension UILabel: TextAttributedTextRepresentable {}
+extension UIButton: TextAttributedTextRepresentable {}
+extension UITextField: TextAttributedTextRepresentable {}
 extension UITextView {
     public func setText(_ string: StringRepresentable?) {
         guard let string = string else {

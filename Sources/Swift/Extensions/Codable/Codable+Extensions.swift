@@ -8,10 +8,10 @@ import Foundation
 
 // MARK: - Appliable
 
-extension JSONDecoder: Appliable { }
-extension JSONEncoder: Appliable { }
-extension PropertyListDecoder: Appliable { }
-extension PropertyListEncoder: Appliable { }
+extension JSONDecoder: Appliable {}
+extension JSONEncoder: Appliable {}
+extension PropertyListDecoder: Appliable {}
+extension PropertyListEncoder: Appliable {}
 
 // MARK: - KeyedDecodingContainer
 

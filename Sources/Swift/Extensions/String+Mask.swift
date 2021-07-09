@@ -37,7 +37,7 @@ extension String {
             fileprivate func string(count: Int, separator: String, suffix: Bool) -> String {
                 let length = self.length(basedOn: count)
 
-                if case .equal = self { } else if length == 0 {
+                if case .equal = self {} else if length == 0 {
                     return ""
                 }
 

@@ -18,7 +18,7 @@ final public class HapticFeedback {
         self.createGenerator = generator
         // Workaround for compiler error (Variable 'self.triggerBlock' used before being
         // initialized).
-        self.triggerBlock = { }
+        self.triggerBlock = {}
         self.customTriggerBlock(trigger)
     }
 

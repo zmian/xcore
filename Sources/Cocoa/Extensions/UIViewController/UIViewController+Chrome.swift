@@ -30,7 +30,7 @@ extension UIViewController {
         public lazy var preferredNavigationBarBackground: Chrome.Style = .blurred
         /// The default value is `false`.
         public lazy var prefersTabBarHidden: Bool = false
-        fileprivate override init() { }
+        fileprivate override init() {}
     }
 }
 
@@ -324,7 +324,7 @@ extension UIViewController {
     }
 
     /// Called to notify the view controller that it will dismiss using the given method.
-    open func viewWillDismiss(using method: DismissMethod) { }
+    open func viewWillDismiss(using method: DismissMethod) {}
 }
 
 // MARK: - ObstructableView

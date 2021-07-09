@@ -147,11 +147,11 @@ extension Either: ExpressibleByIntegerLiteral where Right == IntegerLiteralType 
 
 // MARK: - Hashable
 
-extension Either: Hashable where Left: Hashable, Right: Hashable { }
+extension Either: Hashable where Left: Hashable, Right: Hashable {}
 
 // MARK: - Equatable
 
-extension Either: Equatable where Left: Equatable, Right: Equatable { }
+extension Either: Equatable where Left: Equatable, Right: Equatable {}
 
 // MARK: - CustomStringConvertible
 

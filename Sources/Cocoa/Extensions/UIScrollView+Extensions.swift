@@ -63,7 +63,7 @@ extension UIScrollView {
 }
 
 extension UIScrollView {
-    private final class ContentSizeResolverView: UIView { }
+    private final class ContentSizeResolverView: UIView {}
 
     /// A method to resolve scroll view content size for the given axis.
     ///

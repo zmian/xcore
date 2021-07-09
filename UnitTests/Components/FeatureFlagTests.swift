@@ -105,7 +105,7 @@ private struct CustomFeatureFlag: FeatureFlagProvider {
         StringConverter(storage[key.rawValue]!)
     }
 
-    struct InvalidString { }
+    struct InvalidString {}
 }
 
 // MARK: - FeatureFlag

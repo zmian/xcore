@@ -9,7 +9,7 @@ import SwiftUI
 // MARK: - Scale and Opacity
 
 public struct ScaleEffectButtonStyle: ButtonStyle {
-    public init() { }
+    public init() {}
 
     public func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
@@ -20,7 +20,7 @@ public struct ScaleEffectButtonStyle: ButtonStyle {
 // MARK: - Fill
 
 public struct FillButtonStyle: ButtonStyle {
-    public init() { }
+    public init() {}
 
     public func makeBody(configuration: Self.Configuration) -> some View {
         FillStyleBody(id: .fill, configuration: configuration) {
@@ -32,7 +32,7 @@ public struct FillButtonStyle: ButtonStyle {
 // MARK: - Pill
 
 public struct PillButtonStyle: ButtonStyle {
-    public init() { }
+    public init() {}
 
     public func makeBody(configuration: Self.Configuration) -> some View {
         FillStyleBody(id: .pill, configuration: configuration) { _ in
@@ -44,7 +44,7 @@ public struct PillButtonStyle: ButtonStyle {
 // MARK: - Outline
 
 public struct OutlineButtonStyle: ButtonStyle {
-    public init() { }
+    public init() {}
 
     public func makeBody(configuration: Self.Configuration) -> some View {
         InternalBody(configuration: configuration)
