@@ -38,7 +38,7 @@ import Foundation
 /// class Model {
 ///     // Use the @Inject property wrapper and the service locator will resolve the
 ///     // service.
-///     @Inject private var profileService: ProfileService
+///     @Inject private var profileService: ProfileServiceProtocol
 ///
 ///     func avatarChanged(_ image: UIImage) {
 ///         profileService.avatarDidChange(image)
@@ -87,7 +87,7 @@ public struct Inject<Service> {
 /// class Model {
 ///     // Use the @Inject property wrapper and the service locator will resolve the
 ///     // service.
-///     @Inject private var profileService: ProfileService
+///     @Inject private var profileService: ProfileServiceProtocol
 ///
 ///     func avatarChanged(_ image: UIImage) {
 ///         profileService.avatarDidChange(image)
