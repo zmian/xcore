@@ -78,38 +78,36 @@ private struct ProminentFieldPreview: View {
     }
 }
 
-// MARK: - Previews
-
-@available(iOS 15.0, *)
-public struct DynamicTextFieldPreviews: View {
-    public init() {}
-
-    public var body: some View {
-        List {
-            Section("Default Style") {
-                DefaultFieldPreview()
-            }
-
-            Section("Line Style") {
-                LineFieldPreview()
-            }
-
-            Section("Prominent Style") {
-                ProminentFieldPreview()
-                    .textFieldAttributes {
-                        $0.disableFloatingPlaceholder = true
-                    }
-            }
-        }
-    }
-}
-
 // MARK: - Preview Provider
 
 @available(iOS 15.0, *)
 struct DynamicTextField_Previews: PreviewProvider {
     static var previews: some View {
-        DynamicTextFieldPreviews()
+        Samples.dynamicTextFieldPreviews
+    }
+}
+
+extension Samples {
+    @available(iOS 15.0, *)
+    public static var dynamicTextFieldPreviews: some View {
+        LazyView {
+            List {
+                Section("Default Style") {
+                    DefaultFieldPreview()
+                }
+
+                Section("Line Style") {
+                    LineFieldPreview()
+                }
+
+                Section("Prominent Style") {
+                    ProminentFieldPreview()
+                        .textFieldAttributes {
+                            $0.disableFloatingPlaceholder = true
+                        }
+                }
+            }
+        }
     }
 }
 #endif

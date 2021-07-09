@@ -112,51 +112,49 @@ extension CapsuleView where Label == Never {
     }
 }
 
-// MARK: - Previews
-
 #if DEBUG
-@available(iOS 15.0, *)
-public struct CapsuleViewPreviews: View {
-    public init() {}
-
-    public var body: some View {
-        ZStack {
-            Color(.systemBackground)
-                .ignoresSafeArea()
-
-            VStack(spacing: .s6) {
-                CapsuleView("Apple Pencil") {
-                    HStack {
-                        Text("100%")
-                        Image(system: .battery100Bolt)
-                            .renderingMode(.original)
-                    }
-                }
-
-                CapsuleView("Do Not Disturb", subtitle: "On", systemImage: .moonFill)
-                    .foregroundColor(.indigo)
-                    .colorScheme(.dark)
-
-                CapsuleView("No Internet Connection", systemImage: .boltSlashFill)
-                    .foregroundColor(.orange)
-
-                CapsuleView("Mail pasted from Photos")
-
-                CapsuleView("Dismiss")
-
-                CapsuleView("9:41 AM", systemImage: .bellFill)
-            }
-        }
-        .colorScheme(.light)
-    }
-}
-
 // MARK: - Preview Provider
 
 @available(iOS 15.0, *)
 struct CapsuleView_Previews: PreviewProvider {
     static var previews: some View {
-        CapsuleViewPreviews()
+        Samples.capsuleViewPreviews
+            .colorScheme(.light)
+    }
+}
+
+extension Samples {
+    @available(iOS 15.0, *)
+    public static var capsuleViewPreviews: some View {
+        LazyView {
+            ZStack {
+                Color(.systemBackground)
+                    .ignoresSafeArea()
+
+                VStack(spacing: .s6) {
+                    CapsuleView("Apple Pencil") {
+                        HStack {
+                            Text("100%")
+                            Image(system: .battery100Bolt)
+                                .renderingMode(.original)
+                        }
+                    }
+
+                    CapsuleView("Do Not Disturb", subtitle: "On", systemImage: .moonFill)
+                        .foregroundColor(.indigo)
+                        .colorScheme(.dark)
+
+                    CapsuleView("No Internet Connection", systemImage: .boltSlashFill)
+                        .foregroundColor(.orange)
+
+                    CapsuleView("Mail pasted from Photos")
+
+                    CapsuleView("Dismiss")
+
+                    CapsuleView("9:41 AM", systemImage: .bellFill)
+                }
+            }
+        }
     }
 }
 #endif
