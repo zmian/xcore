@@ -8,16 +8,14 @@ import SwiftUI
 
 #if DEBUG
 @available(iOS 15.0, *)
-public struct PopupPreviews: View {
-    private let L = SampleStrings.locationAlert
+private struct PopupPreviews: View {
+    private let L = Samples.Strings.locationAlert
     @Environment(\.theme) private var theme
     @State private var presentSystemAlert = false
     @State private var presentAlert = false
     @State private var presentToast = false
 
-    public init() {}
-
-    public var body: some View {
+    var body: some View {
         List {
             row(
                 "Show System Alert",
@@ -74,6 +72,13 @@ struct Popup_Previews: PreviewProvider {
     static var previews: some View {
         PopupPreviews()
             .embedInNavigation()
+    }
+}
+
+extension Samples {
+    @available(iOS 15.0, *)
+    public static var popupPreviews: some View {
+        PopupPreviews()
     }
 }
 #endif

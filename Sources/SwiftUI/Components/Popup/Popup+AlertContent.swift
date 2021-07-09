@@ -79,7 +79,7 @@ extension Popup {
 
 struct PopupAlertContent_Previews: PreviewProvider {
     static var previews: some View {
-        let L = SampleStrings.deleteMessageAlert
+        let L = Samples.Strings.deleteMessageAlert
 
         return Group {
             Popup.AlertContent(

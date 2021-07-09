@@ -83,7 +83,7 @@ extension Menu {
         title: "Capsule",
         content: {
             if #available(iOS 15.0, *) {
-                CapsuleViewPreviews()
+                Samples.capsuleViewPreviews
             } else {
                 EmptyView()
             }
@@ -94,7 +94,7 @@ extension Menu {
         title: "Popups",
         content: {
             if #available(iOS 15.0, *) {
-                PopupPreviews()
+                Samples.popupPreviews
             } else {
                 EmptyView()
             }
@@ -105,7 +105,7 @@ extension Menu {
         title: "TextFields",
         content: {
             if #available(iOS 15.0, *) {
-                DynamicTextFieldPreviews()
+                Samples.dynamicTextFieldPreviews
             } else {
                 EmptyView()
             }
