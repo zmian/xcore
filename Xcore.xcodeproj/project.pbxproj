@@ -52,6 +52,7 @@
 		68BB29AA2469C96600F4C8CC /* MoneyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BB29A92469C96600F4C8CC /* MoneyTests.swift */; };
 		68BCA2DD2304B2B000424B85 /* SeparatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BCA2DC2304B2B000424B85 /* SeparatorViewController.swift */; };
 		68C5F0B22698A929006FAD3D /* ServiceLocatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C5F0B12698A929006FAD3D /* ServiceLocatorTests.swift */; };
+		68C5F0B62698C04A006FAD3D /* SourceContextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C5F0B52698C04A006FAD3D /* SourceContextTests.swift */; };
 		68CA631F224C76760012DF31 /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68CA631E224C76750012DF31 /* StringTests.swift */; };
 		68E852D7252102DA00B26CC8 /* ButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68E852D6252102DA00B26CC8 /* ButtonsView.swift */; };
 		F2810725244D36A300EB23C0 /* DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2810724244D36A300EB23C0 /* DateTests.swift */; };
@@ -128,6 +129,7 @@
 		68BB29A92469C96600F4C8CC /* MoneyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoneyTests.swift; sourceTree = "<group>"; };
 		68BCA2DC2304B2B000424B85 /* SeparatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorViewController.swift; sourceTree = "<group>"; };
 		68C5F0B12698A929006FAD3D /* ServiceLocatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceLocatorTests.swift; sourceTree = "<group>"; };
+		68C5F0B52698C04A006FAD3D /* SourceContextTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourceContextTests.swift; sourceTree = "<group>"; };
 		68CA631E224C76750012DF31 /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		68E852D6252102DA00B26CC8 /* ButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsView.swift; sourceTree = "<group>"; };
 		8D64F6471089E2220DD070CC /* Pods-UnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				6842D8FF26914E150000FEB2 /* BoxTests.swift */,
 				688B66602276890900AD0C1A /* ConfigurationTests.swift */,
 				684019D4236F5FC600B83DB8 /* UIControlBlocksTests.swift */,
+				68C5F0B52698C04A006FAD3D /* SourceContextTests.swift */,
 				688C357B2273DED400CF3FCB /* DictionaryTests.swift */,
 				688B665E2275511400AD0C1A /* NumbersTests.swift */,
 				68C5F0B12698A929006FAD3D /* ServiceLocatorTests.swift */,
@@ -638,6 +641,7 @@
 				68C5F0B22698A929006FAD3D /* ServiceLocatorTests.swift in Sources */,
 				6842D90026914E150000FEB2 /* BoxTests.swift in Sources */,
 				68A9366F22C69E7200CB01BD /* StringConverterTests.swift in Sources */,
+				68C5F0B62698C04A006FAD3D /* SourceContextTests.swift in Sources */,
 				687A9062227517E6000B7C82 /* ValidationRuleTests.swift in Sources */,
 				68054FBF243004C60089C94C /* ImageRepresentableTests.swift in Sources */,
 				68BB29AA2469C96600F4C8CC /* MoneyTests.swift in Sources */,
