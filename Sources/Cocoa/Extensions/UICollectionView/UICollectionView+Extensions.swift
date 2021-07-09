@@ -147,7 +147,7 @@ extension UICollectionView {
             timer.invalidate()
         }
 
-        cellLookupTimers[key] = Timer.schedule(repeatInterval: 0.1) { [weak self] in
+        cellLookupTimers[key] = Timer.every(0.1) { [weak self] in
             guard let strongSelf = self, let cell = strongSelf.cell(kind: kind) else { return }
             block(cell)
             strongSelf.cellLookupTimers[key]?.invalidate()

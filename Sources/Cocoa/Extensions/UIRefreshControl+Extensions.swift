@@ -31,7 +31,7 @@ extension UIRefreshControl {
     ///   - completion: A closure to execute after end refreshing.
     open func endRefreshing(after timeoutInterval: TimeInterval, completion: (() -> Void)? = nil) {
         timeoutTimer?.invalidate()
-        timeoutTimer = Timer.schedule(delay: timeoutInterval) { [weak self] in
+        timeoutTimer = Timer.after(timeoutInterval) { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.endRefreshing()
             completion?()
