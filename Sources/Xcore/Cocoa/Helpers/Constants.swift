@@ -149,7 +149,7 @@ public enum AppConstants {
     }
 
     public static var navBarHeight: CGFloat {
-        if UIDevice.current.modelType.family == .pad {
+        if Device.userInterfaceIdiom == .pad {
             return 50
         }
 
@@ -172,7 +172,7 @@ public enum AppConstants {
 
 extension AppConstants {
     public static var supportsHomeIndicator: Bool {
-        UIDevice.current.capability.contains(.homeIndicator)
+        Device.capability.contains(.homeIndicator)
     }
 
     public static var homeIndicatorHeightIfPresent: CGFloat {
@@ -180,19 +180,19 @@ extension AppConstants {
     }
 
     public static var smallScreenSize: Bool {
-        let model = UIDevice.current.modelType
-        guard model.family == .phone else {
+        guard Device.userInterfaceIdiom == .phone else {
             return false
         }
-        return model.screenSize <= .iPhone5
+
+        return Device.screen.referenceSize <= .iPhone5
     }
 
     public static var mediumScreenSize: Bool {
-        UIDevice.current.modelType.screenSize.size.max <= iPhone6ScreenSize.max
+        Device.screen.referenceSize.size.max <= iPhone6ScreenSize.max
     }
 
     public static var iPhone6ScreenSize: CGSize {
-        UIDevice.Model.ScreenSize.iPhone6.size
+        Screen.ReferenceSize.iPhone6.size
     }
 
     /// A convenience function to get relative value for given device based on iPhone 6 width.

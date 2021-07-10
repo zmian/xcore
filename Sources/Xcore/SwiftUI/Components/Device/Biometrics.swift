@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import SwiftUI
 import LocalAuthentication
 
 // MARK: - Kind
@@ -62,6 +62,9 @@ extension Biometrics {
     }
 }
 
+// MARK: - Biometrics
+
+/// A structure representing the biometrics for the device.
 public struct Biometrics {
     /// Indicates that the device owner can authenticate using biometry (e.g.,
     /// Touch ID or Face ID).
@@ -75,7 +78,7 @@ public struct Biometrics {
     /// of the permission status. For example, Face ID requires permission prompt.
     /// If user denies the permission, then the returned value is still `.faceID`.
     /// If you need to check if biometrics authentication is available then use
-    /// `UIDevice.current.biometrics.isAvailable`.
+    /// `Device.biometrics.isAvailable`.
     public var kind: Kind {
         let kind = Kind()
 
@@ -83,7 +86,7 @@ public struct Biometrics {
             return kind
         }
 
-        return UIDevice.current.modelType.screenSize.iPhoneXSeries ? .faceID : .touchID
+        return Device.screen.referenceSize.iPhoneXSeries ? .faceID : .touchID
     }
 }
 
@@ -128,9 +131,9 @@ extension Biometrics {
     }
 }
 
-// MARK: - UIDevice
+// MARK: - Device
 
-extension UIDevice {
+extension Device {
     public var biometrics: Biometrics {
         .init()
     }

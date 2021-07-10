@@ -11,7 +11,7 @@ import Combine
 @dynamicMemberLookup
 public final class Screen: ObservableObject {
     /// Returns the screen object representing the device’s screen.
-    public static let main = Screen()
+    static let main = Screen()
 
     /// The bounding rectangle of the screen, measured in points.
     public var bounds: CGRect {
@@ -35,9 +35,38 @@ public final class Screen: ObservableObject {
         #endif
     }
 
-    /// The width and height of the screen.
+    /// The size of the screen, measured in points.
     public var size: CGSize {
         bounds.size
+    }
+
+    /// The reference size associated with the screen.
+    public var referenceSize: ReferenceSize {
+        .init(screen: self)
+    }
+
+    /// The brightness level of the screen.
+    ///
+    /// This property is only supported on the main screen. The value of this
+    /// property should be a number between `0.0` and `1.0`, inclusive.
+    ///
+    /// Brightness changes made by an app remain in effect until the device is
+    /// locked, regardless of whether the app is closed. The system brightness
+    /// (which the user can set in Settings or Control Center) is restored the next
+    /// time the display is turned on.
+    public var brightness: CGFloat {
+        get {
+            #if os(iOS) || targetEnvironment(macCatalyst)
+            return UIScreen.main.brightness
+            #else
+            return 1
+            #endif
+        }
+        set {
+            #if os(iOS) || targetEnvironment(macCatalyst)
+            UIScreen.main.brightness = newValue
+            #endif
+        }
     }
 
     public static subscript<T>(dynamicMember keyPath: KeyPath<Screen, T>) -> T {
@@ -56,19 +85,5 @@ public final class Screen: ObservableObject {
                 self?.objectWillChange.send()
             }
         #endif
-    }
-}
-
-// MARK: - Environment Support
-
-extension EnvironmentValues {
-    private struct ScreenKey: EnvironmentKey {
-        static var defaultValue: Screen = .main
-    }
-
-    /// An object representing the device’s screen.
-    public var screen: Screen {
-        get { self[ScreenKey.self] }
-        set { self[ScreenKey.self] = newValue }
     }
 }
