@@ -4,6 +4,8 @@
 // MIT license, see LICENSE file for details
 //
 
+import UIKit
+
 extension Theme {
     public static func start() {
         set(.default)

@@ -10,13 +10,13 @@ import XCTest
 final class ReflectionTests: TestCase {
     func testName() {
         let myViewControllerInstance = MyViewController()
-        XCTAssertEqual(typeName(of: myViewControllerInstance), "UnitTests.MyViewController")
-        XCTAssertEqual(typeName(of: MyViewController.self), "UnitTests.MyViewController")
-        XCTAssertEqual(typeName(of: MyView.self), "UnitTests.MyView")
-        XCTAssertEqual(MyProtocolClass().typeName, "UnitTests.MyProtocolClass")
-        XCTAssertEqual(MyProtocolClass().instanceName, "UnitTests.MyProtocolClass")
-        XCTAssertEqual(MyProtocolClass.staticTypeName_1, "UnitTests.MyProtocolClass")
-        XCTAssertEqual(MyProtocolClass.staticTypeName_2, "UnitTests.MyProtocolClass")
+        XCTAssertEqual(typeName(of: myViewControllerInstance), "XcoreTests.MyViewController")
+        XCTAssertEqual(typeName(of: MyViewController.self), "XcoreTests.MyViewController")
+        XCTAssertEqual(typeName(of: MyView.self), "XcoreTests.MyView")
+        XCTAssertEqual(MyProtocolClass().typeName, "XcoreTests.MyProtocolClass")
+        XCTAssertEqual(MyProtocolClass().instanceName, "XcoreTests.MyProtocolClass")
+        XCTAssertEqual(MyProtocolClass.staticTypeName_1, "XcoreTests.MyProtocolClass")
+        XCTAssertEqual(MyProtocolClass.staticTypeName_2, "XcoreTests.MyProtocolClass")
 
         // Class
         XCTAssertEqual(typeName(of: BlurView.self), "Xcore.BlurView")

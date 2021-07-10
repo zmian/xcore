@@ -10,7 +10,7 @@ import XCTest
 final class SourceContextTests: TestCase {
     func testOutput() {
         let context = SourceContext()
-        let fileId = "UnitTests/SourceContextTests.swift"
+        let fileId = "XcoreTests/SourceContextTests.swift"
         let function = "testOutput()"
         let line: UInt = 12
         let column: UInt = 36

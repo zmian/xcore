@@ -14,21 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FFAD385424F6C2AFE7298369EA64856E"
-               BuildableName = "Xcore.framework"
-               BlueprintName = "Xcore"
-               ReferencedContainer = "container:Pods/Pods.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "684B1E9D224C5218009F6197"
+               BlueprintIdentifier = "6899D1042699216300D26721"
                BuildableName = "Example.app"
                BlueprintName = "Example"
                ReferencedContainer = "container:Xcore.xcodeproj">
@@ -46,24 +32,14 @@
       <Testables>
          <TestableReference
             skipped = "NO"
+            parallelizable = "YES"
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "684B1EB0224C5218009F6197"
-               BuildableName = "UITests.xctest"
-               BlueprintName = "UITests"
-               ReferencedContainer = "container:Xcore.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "684B1CF5224C4CAA009F6197"
-               BuildableName = "UnitTests.xctest"
-               BlueprintName = "UnitTests"
-               ReferencedContainer = "container:Xcore.xcodeproj">
+               BlueprintIdentifier = "XcoreTests"
+               BuildableName = "XcoreTests"
+               BlueprintName = "XcoreTests"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -82,7 +58,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "684B1E9D224C5218009F6197"
+            BlueprintIdentifier = "6899D1042699216300D26721"
             BuildableName = "Example.app"
             BlueprintName = "Example"
             ReferencedContainer = "container:Xcore.xcodeproj">
@@ -106,7 +82,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "684B1E9D224C5218009F6197"
+            BlueprintIdentifier = "6899D1042699216300D26721"
             BuildableName = "Example.app"
             BlueprintName = "Example"
             ReferencedContainer = "container:Xcore.xcodeproj">

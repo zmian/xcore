@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 
 import PackageDescription
 
@@ -14,14 +14,8 @@ let package = Package(
     targets: [
         .target(
             name: "Xcore",
-            dependencies: ["SDWebImage"],
-            path: "Sources",
-            exclude: ["Supporting Files/Info.plist"],
-            resources: [
-                .process("Supporting Files/Assets.xcassets")
-            ]
-        )
+            dependencies: ["SDWebImage"]
+        ),
+        .testTarget(name: "XcoreTests", dependencies: ["Xcore"])
     ]
 )
-
-// .testTarget(name: "UnitTests", dependencies: ["Xcore"], path: "UnitTests")
