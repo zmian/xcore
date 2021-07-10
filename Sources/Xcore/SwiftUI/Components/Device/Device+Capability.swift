@@ -4,10 +4,10 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import SwiftUI
 
-extension UIDevice {
-    /// A type to return the capabilities of the device.
+extension Device {
+    /// A structure representing the device’s capabilities.
     public struct Capability: OptionSet {
         public let rawValue: Int
 
@@ -15,9 +15,9 @@ extension UIDevice {
             self.rawValue = rawValue
         }
 
-        /// - SeeAlso: `UIDevice.current.biometrics.isAvailable` and `UIDevice.current.biometrics.kind`.
+        /// - SeeAlso: `Device.current.biometrics.isAvailable` and `Device.current.biometrics.kind`.
         public static let touchID = Capability(rawValue: 1 << 0)
-        /// - SeeAlso: `UIDevice.current.biometrics.isAvailable` and `UIDevice.current.biometrics.kind`.
+        /// - SeeAlso: `Device.current.biometrics.isAvailable` and `Device.current.biometrics.kind`.
         public static let faceID = Capability(rawValue: 1 << 1)
         public static let notch = Capability(rawValue: 1 << 2)
         public static let homeIndicator = Capability(rawValue: 1 << 3)
@@ -25,7 +25,7 @@ extension UIDevice {
     }
 }
 
-extension UIDevice {
+extension Device {
     public var capability: Capability {
         var capability: Capability = []
 
@@ -50,7 +50,7 @@ extension UIDevice {
     }
 }
 
-extension UIDevice {
+extension Device {
     private var hasTopNotch: Bool {
         // Notch: 44 on iPhone X, XS, XS Max, XR.
         // No Notch: 24 on iPad Pro 12.9" 3rd generation, 20 on iPhone 8

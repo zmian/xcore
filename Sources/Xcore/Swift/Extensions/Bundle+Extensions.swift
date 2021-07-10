@@ -46,35 +46,26 @@ extension Bundle {
         info(forKey: kCFBundleIdentifierKey)
     }
 
-    /// The version number of the bundle.
+    /// The version number of the bundle (e.g., `"1.0"`).
     public var versionNumber: String {
         info(forKey: "CFBundleShortVersionString")
     }
 
-    /// The build number of the bundle.
+    /// The build number of the bundle (e.g., `"300"`).
     public var buildNumber: String {
         info(forKey: kCFBundleVersionKey)
     }
 
-    /// The version and build number of the bundle.
-    ///
-    /// For example, `"1.0 (300)"`
+    /// The version and build number of the bundle (e.g., `"1.0 (300)"`).
     public var versionBuildNumber: String {
         "\(versionNumber) (\(buildNumber))"
     }
 
-    /// The OS version.
-    ///
-    /// For example, `"iOS 15.0.1"`
+    /// The OS version (e.g., `"iOS 15.0.1"`).
     public var osVersion: String {
-        let version = ProcessInfo.processInfo.operatingSystemVersion
-        var systemName = UIDevice.current.systemName
-
-        if systemName == "iPhone OS" {
-            systemName = "iOS"
-        }
-
-        return "\(systemName) \(version.semverDescription)"
+        let name = Device.current.osName
+        let version = Device.current.osVersion
+        return "\(name) \(version.semanticDescription)"
     }
 
     /// Returns common bundle information.
@@ -82,14 +73,14 @@ extension Bundle {
     /// **Sample output:**
     ///
     /// ```swift
-    /// iOS 12.1.0        // OS Version
+    /// iOS 15.0.1        // OS Version
     /// iPhone X          // Device
     /// Version 1.0 (300) // App Version and Build number
     /// ```
     public var info: String {
         """
         \(osVersion)
-        \(UIDevice.current.modelType)
+        \(Device.current.model.name)
         Version \(versionBuildNumber)"
         """
     }
@@ -99,21 +90,5 @@ extension Bundle {
     /// Returns the first URL for the specified common directory in the user domain.
     public static func url(for directory: FileManager.SearchPathDirectory) -> URL? {
         FileManager.default.url(for: directory)
-    }
-}
-
-extension OperatingSystemVersion {
-    /// Returns system version formatted in accordance with Semantic Versioning.
-    ///
-    /// `<major>.<minor>.<patch>`
-    ///
-    /// ```
-    /// 1     -> 1.0.0
-    /// 1.0   -> 1.0.0
-    /// 1.1   -> 1.1.0
-    /// 1.0.2 -> 1.0.2
-    /// ```
-    fileprivate var semverDescription: String {
-        "\(majorVersion).\(minorVersion).\(patchVersion)"
     }
 }

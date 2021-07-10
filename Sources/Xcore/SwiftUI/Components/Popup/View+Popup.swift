@@ -112,10 +112,10 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
     private var popupContent: some View {
         ZStack {
             // Host Content Dim Overlay
-            EnvironmentReader(\.screen) { screen in
+            EnvironmentReader(\.device) { device in
                 if isPresented {
                     Color(white: 0, opacity: 0.20)
-                        .frame(width: screen.size.width, height: screen.size.height)
+                        .frame(width: device.screen.size.width, height: device.screen.size.height)
                         .ignoresSafeArea()
                         .transition(.opacity.animation(.easeInOut(duration: 0.15)))
                         .onTapGestureIf(dismissMethods.contains(.tapOutside)) {
