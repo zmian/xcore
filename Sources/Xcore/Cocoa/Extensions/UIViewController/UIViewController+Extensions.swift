@@ -103,7 +103,7 @@ extension UIViewController {
     /// This value represents the physical orientation of the device and may be
     /// different from the current orientation of your application’s user interface.
     ///
-    /// - seealso: `UIDeviceOrientation` for descriptions of the possible values.
+    /// - SeeAlso: `UIDeviceOrientation` for descriptions of the possible values.
     public var deviceOrientation: UIDeviceOrientation {
         UIDevice.current.orientation
     }

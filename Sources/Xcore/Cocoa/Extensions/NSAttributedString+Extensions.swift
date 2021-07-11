@@ -124,10 +124,10 @@ extension NSAttributedString {
     ///   - string: The string for the new attributed string.
     ///   - image: The image for the new attributed string.
     ///   - baselineOffset: The value indicating the `image` offset from the
-    ///                     baseline. The default value is `0`.
+    ///     baseline. The default value is `0`.
     ///   - attributes: The attributes for the new attributed string. For a list of
-    ///                 attributes that you can include in this dictionary, see
-    ///                 `Character Attributes`.
+    ///     attributes that you can include in this dictionary, see
+    ///     `Character Attributes`.
     public convenience init(
         string: String? = nil,
         image: UIImage,
@@ -151,7 +151,7 @@ extension NSAttributedString {
     /// - Parameters:
     ///   - image: The image for the new attributed string.
     ///   - baselineOffset: The value indicating the `image` offset from the
-    ///                     baseline. The default value is `0`.
+    ///     baseline. The default value is `0`.
     private convenience init(
         image: UIImage,
         baselineOffset: CGFloat = 0
@@ -183,12 +183,12 @@ extension NSAttributedString {
     /// - Parameters:
     ///   - string: The string for the new attributed string.
     ///   - spacer: The spacer between the caret `direction` and the `string`. The
-    ///             default value is two spaces `"  "`.
+    ///     default value is two spaces `"  "`.
     ///   - font: The font for the `string`.
     ///   - color: The color for the caret and the `string`.
     ///   - direction: The caret direction to use. The default value is `.forward`.
     ///   - state: The state for which to generate the new attributed string. The
-    ///            default value is `.normal`.
+    ///     default value is `.normal`.
     public convenience init(
         string: String,
         spacer: String = " ",

@@ -53,7 +53,7 @@ struct CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArrayLite
 
 extension CompositeFeatureFlagProvider {
     var id: String {
-        providers.map { $0.id }.joined(separator: "_")
+        providers.map(\.id).joined(separator: "_")
     }
 
     func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value? {

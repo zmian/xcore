@@ -56,10 +56,9 @@ extension INCurrencyAmount {
     /// - Parameters:
     ///   - amount: The decimal number representing the amount of money.
     ///   - currencyCode: The ISO 4217 currency code to apply to the specified
-    ///                   amount. You can get a list of possible currency codes
-    ///                   using the isoCurrencyCodes method of NSLocale. For
-    ///                   example, the string “USD” corresponds to United States
-    ///                   dollars.
+    ///     amount. You can get a list of possible currency codes using the
+    ///     `isoCurrencyCodes` method of `Locale`. For example, the string “USD”
+    ///     corresponds to United States dollars.
     public convenience init(amount: NSDecimalNumber, currencyCode: Locale.CurrencyCode = .usd) {
         self.init(amount: amount, currencyCode: currencyCode.rawValue)
     }
@@ -69,10 +68,9 @@ extension INCurrencyAmount {
     /// - Parameters:
     ///   - amount: The decimal number representing the amount of money.
     ///   - currencyCode: The ISO 4217 currency code to apply to the specified
-    ///                   amount. You can get a list of possible currency codes
-    ///                   using the isoCurrencyCodes method of NSLocale. For
-    ///                   example, the string “USD” corresponds to United States
-    ///                   dollars.
+    ///     amount. You can get a list of possible currency codes using the
+    ///     `isoCurrencyCodes` method of `Locale`. For example, the string “USD”
+    ///     corresponds to United States dollars.
     public convenience init(amount: FloatLiteralType, currencyCode: Locale.CurrencyCode = .usd) {
         self.init(amount: NSDecimalNumber(value: amount), currencyCode: currencyCode)
     }
@@ -84,7 +82,7 @@ extension INBalanceAmount {
     /// - Parameters:
     ///   - amount: The monetary amount to assign to the balance.
     ///   - currencyCode: The ISO 4217 currency code that applies to the monetary
-    ///                   amount.
+    ///     amount.
     public convenience init(amount: Double, currencyCode: Locale.CurrencyCode = .usd) {
         self.init(amount: NSDecimalNumber(decimal: Decimal(amount)), currencyCode: currencyCode.rawValue)
     }

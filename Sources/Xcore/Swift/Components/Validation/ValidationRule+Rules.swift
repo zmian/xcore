@@ -16,7 +16,8 @@ extension ValidationRule {
 // MARK: - Input: Collection
 
 extension ValidationRule where Input: Collection {
-    /// A validation rule that checks whether the input count is contained within the range expression.
+    /// A validation rule that checks whether the input count is contained within
+    /// the range expression.
     ///
     /// This validation rule can be used guard minimum or maximum length:
     ///

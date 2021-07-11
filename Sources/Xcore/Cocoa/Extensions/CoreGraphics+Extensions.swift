@@ -17,13 +17,13 @@ extension CGContext {
     /// - Parameters:
     ///   - image: The image to draw.
     ///   - rect: The rectangle, in user space coordinates, in which to draw the
-    ///           image.
+    ///     image.
     ///   - byTiling: If `true`, this method fills the context's entire clipping
-    ///               region by tiling many copies of the image, and the `rect`
-    ///               parameter defines the origin and size of the tiling pattern.
+    ///     region by tiling many copies of the image, and the `rect` parameter
+    ///     defines the origin and size of the tiling pattern.
     ///
-    ///               If `false` (the default), this method draws a single copy of
-    ///               the image in the area defined by the `rect` parameter.
+    ///     If `false` (the default), this method draws a single copy of the image
+    ///     in the area defined by the `rect` parameter.
     public func draw(_ image: UIImage, in rect: CGRect, byTiling: Bool = false) {
         draw(image.cgImage!, in: rect, byTiling: byTiling)
     }

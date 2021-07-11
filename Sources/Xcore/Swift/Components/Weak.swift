@@ -7,6 +7,7 @@
 import Foundation
 
 /// A generic class to hold a weak reference to a type `T`.
+///
 /// This is useful for holding a reference to nullable object.
 ///
 /// ```swift

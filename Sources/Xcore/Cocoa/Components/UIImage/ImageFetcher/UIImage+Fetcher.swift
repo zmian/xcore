@@ -64,7 +64,7 @@ extension UIImageView {
     /// Cancel any pending or in-flight image fetch/set request dispatched via
     /// `setImage(_:alwaysAnimate:animationDuration:_:)` method.
     ///
-    /// - seealso: `setImage(_:alwaysAnimate:animationDuration:_:)`
+    /// - SeeAlso: `setImage(_:alwaysAnimate:animationDuration:_:)`
     public func cancelSetImageRequest() {
         sd_cancelCurrentImageLoad()
         _imageFetcherCancelBlock?()

@@ -8,8 +8,8 @@ import Foundation
 
 extension Sequence where Iterator.Element: Hashable {
     /// Return an `Array` containing only the unique elements of `self` in order.
-    public func unique() -> [Iterator.Element] {
-        unique { $0 }
+    public func uniqued() -> [Iterator.Element] {
+        uniqued { $0 }
     }
 }
 
@@ -22,24 +22,27 @@ extension Sequence {
     ///             returned by this block.
     /// - Returns: Return an `Array` containing only the unique elements of `self`,
     ///            in order, that satisfy the predicate `uniqueProperty`.
-    public func unique<T: Hashable>(_ uniqueProperty: (Iterator.Element) -> T) -> [Iterator.Element] {
+    public func uniqued<T: Hashable>(_ uniqueProperty: (Iterator.Element) -> T) -> [Iterator.Element] {
         var seen: [T: Bool] = [:]
         return filter { seen.updateValue(true, forKey: uniqueProperty($0)) == nil }
     }
 }
 
 extension Array where Element: Hashable {
-    /// Modify `self` in-place such that only the unique elements of `self` in order are remaining.
-    public mutating func uniqueInPlace() {
-        self = unique()
+    /// Modify `self` in-place such that only the unique elements of `self` in order
+    /// are remaining.
+    public mutating func unique() {
+        self = uniqued()
     }
 
-    /// Modify `self` in-place such that only the unique elements of `self` in order are remaining,
-    /// where `unique` criteria is determined by the `uniqueProperty` block.
+    /// Modify `self` in-place such that only the unique elements of `self` in order
+    /// are remaining, where `unique` criteria is determined by the `uniqueProperty`
+    /// block.
     ///
-    /// - Parameter uniqueProperty: `unique` criteria is determined by the value returned by this block.
-    public mutating func uniqueInPlace<T: Hashable>(_ uniqueProperty: (Element) -> T) {
-        self = unique(uniqueProperty)
+    /// - Parameter uniqueProperty: `unique` criteria is determined by the value
+    ///             returned by this block.
+    public mutating func unique<T: Hashable>(_ uniqueProperty: (Element) -> T) {
+        self = uniqued(uniqueProperty)
     }
 }
 
@@ -82,9 +85,8 @@ extension RangeReplaceableCollection {
     /// ```
     ////
     /// - Parameter predicate: A closure that takes an element of the sequence as
-    ///                        its argument and returns a Boolean value indicating
-    ///                        whether the element should be removed from the
-    ///                        collection.
+    ///             its argument and returns a Boolean value indicating whether the
+    ///             element should be removed from the collection.
     /// - Returns: A collection of the elements that are removed.
     public mutating func removingAll(where predicate: (Element) throws -> Bool) rethrows -> Self {
         let result = try filter(predicate)
@@ -148,7 +150,7 @@ extension Sequence {
     /// Returns the first element of the sequence that satisfies the given predicate.
     ///
     /// - Parameter keyPaths: A list of `keyPaths` that are used to find an element
-    ///                       in the sequence.
+    ///             in the sequence.
     ///
     /// - Returns: The first element of the sequence that satisfies predicate, or
     ///            `nil` if there is no element that satisfies predicate.
@@ -164,7 +166,7 @@ extension Sequence {
     /// Returns the first element of the sequence that satisfies the given predicate.
     ///
     /// - Parameter keyPaths: A list of `keyPaths` that are used to find an element
-    ///                       in the sequence.
+    ///             in the sequence.
     ///
     /// - Returns: The first element of the sequence that satisfies predicate, or
     ///            `nil` if there is no element that satisfies predicate.

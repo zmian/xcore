@@ -319,7 +319,7 @@ extension String {
         return expectedRect.size
     }
 
-    /// - seealso: http://stackoverflow.com/a/30040937
+    /// - SeeAlso: http://stackoverflow.com/a/30040937
     public func numberOfLines(_ font: UIFont, constrainedToSize: CGSize) -> (size: CGSize, numberOfLines: Int) {
         let textStorage = NSTextStorage(string: self, attributes: [.font: font])
 

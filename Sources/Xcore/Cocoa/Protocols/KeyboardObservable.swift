@@ -108,9 +108,11 @@ extension UIViewController {
     /// method swizzling. Registering notifications in `viewDidLoad` results in
     /// unexpected keyboard behavior: when leveraging
     /// `interactivePopGestureRecognizer` to swipe back while the keyboard is
-    /// presented, keyboard will not dismiss in concurrent with the popping progress.
+    /// presented, keyboard will not dismiss in concurrent with the popping
+    /// progress.
     func _addKeyboardNotificationObservers() {
-        // Only add the keyboard notification observers if self conforms to `KeyboardObservable`.
+        // Only add the keyboard notification observers if self conforms to
+        // `KeyboardObservable`.
         guard (self as? KeyboardObservable) != nil else {
             return
         }
@@ -180,7 +182,8 @@ extension UIView {
     /// view that conforms to `KeyboardObservable` using `layoutSubviews` method
     /// swizzling.
     func _addKeyboardNotificationObservers() {
-        // Only add the keyboard notification observers if self conforms to `KeyboardObservable`.
+        // Only add the keyboard notification observers if self conforms to
+        // `KeyboardObservable`.
         guard (self as? KeyboardObservable) != nil else {
             return
         }

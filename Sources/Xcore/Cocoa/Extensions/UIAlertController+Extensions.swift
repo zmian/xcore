@@ -56,17 +56,16 @@ extension UIAlertController {
     /// - Parameters:
     ///   - actions: A an array of `UIAlertAction` to display.
     ///   - title: The title of the alert. Use this string to get the user’s
-    ///            attention and communicate the reason for the alert.
+    ///     attention and communicate the reason for the alert.
     ///   - message: Descriptive text that provides additional details about the
-    ///              reason for the alert.
+    ///     reason for the alert.
     ///   - sourceView: A source view that presented the alert. A required property
-    ///                 for iPad support.
+    ///     for iPad support.
     ///   - style: The style to use when presenting the alert controller. Use this
-    ///            parameter to configure the alert controller as an action sheet or
-    ///            as a modal alert. The default value is `.actionSheet`.
+    ///     parameter to configure the alert controller as an action sheet or as a
+    ///     modal alert. The default value is `.actionSheet`.
     ///   - appendsCancelAction: An item to automatically append cancel action in
-    ///                          addition to the provided array of actions. The
-    ///                          default value is `true`.
+    ///     addition to the provided array of actions. The default value is `true`.
     @discardableResult
     static func present(
         actions: [UIAlertAction],
@@ -115,7 +114,7 @@ extension UIAlertController {
     ///
     /// - Parameters:
     ///   - sourceView: A source view that presented the alert. A required property
-    ///                 for iPad support.
+    ///     for iPad support.
     ///   - handler: A block to invoke when an item is selected.
     @discardableResult
     static func present(

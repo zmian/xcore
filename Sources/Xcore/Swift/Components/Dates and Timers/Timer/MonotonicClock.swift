@@ -23,6 +23,7 @@ extension MonotonicClock {
             begin = DispatchTime.now().uptimeNanoseconds
         }
 
+        // TODO: Bring `DispatchTime.seconds(elapsedSince:)` in the fold here as well.
         mutating func elapsed(_ duration: TimeInterval) -> Bool {
             let diffInNanoseconds = DispatchTime.now().uptimeNanoseconds - begin
             let diff = TimeInterval(diffInNanoseconds) / 1_000_000_000

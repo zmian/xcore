@@ -36,7 +36,7 @@ extension Array {
     /// let chunks = array.splitBy(5)
     /// print(chunks) // [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12]]
     /// ```
-    /// - seealso: https://gist.github.com/ericdke/fa262bdece59ff786fcb
+    /// - SeeAlso: https://gist.github.com/ericdke/fa262bdece59ff786fcb
     public func splitBy(_ subSize: Int) -> [[Element]] {
         stride(from: 0, to: count, by: subSize).map { startIndex in
             let endIndex = index(startIndex, offsetBy: subSize, limitedBy: count) ?? startIndex + (count - startIndex)
