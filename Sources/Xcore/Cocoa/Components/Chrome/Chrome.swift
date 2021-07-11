@@ -17,7 +17,7 @@ import UIKit
 /// These design elements are provided by the underlying system — whether it be an operating system,
 /// a website, or an application — and surround the user's data.
 ///
-/// - seealso: https://www.nngroup.com/articles/browser-and-gui-chrome/
+/// - SeeAlso: https://www.nngroup.com/articles/browser-and-gui-chrome/
 final public class Chrome {
     /// Sets a background view for the (status || nav) bar.
     ///

@@ -16,8 +16,8 @@ extension Int {
     }
 
     public func pad(by amount: Int) -> String {
-        Int.numberFormatter.minimumIntegerDigits = amount
-        return Int.numberFormatter.string(from: NSNumber(value: self))!
+        Self.numberFormatter.minimumIntegerDigits = amount
+        return Self.numberFormatter.string(from: NSNumber(value: self))!
     }
 }
 
@@ -34,8 +34,8 @@ extension FixedWidthInteger {
     /// ```
     ///
     /// - Parameter transform: A mapping closure. `transform` accepts an element of
-    ///                        `self` as its parameter and returns a transformed
-    ///                        value of the same or of a different type.
+    ///             `self` as its parameter and returns a transformed value of the
+    ///             same or of a different type.
     /// - Returns: An array containing the transformed elements of `self`.
     /// - Complexity: O(_n_).
     public func map<T>(transform: (Self) throws -> T) rethrows -> [T] {
@@ -71,7 +71,11 @@ extension FloatingPoint {
     }
 }
 
+// MARK: - Sum
+
 extension Sequence where Iterator.Element: AdditiveArithmetic {
+    /// Returns the running sum of all elements in the collection.
+    ///
     /// ```swift
     /// [1, 1, 1, 1, 1, 1].runningSum() // -> [1, 2, 3, 4, 5, 6]
     /// ```
@@ -81,12 +85,15 @@ extension Sequence where Iterator.Element: AdditiveArithmetic {
         }
     }
 
+    /// Returns the sum of all elements in the collection.
     public func sum() -> Element {
         reduce(.zero, +)
     }
 }
 
 extension Sequence {
+    /// Returns the sum of all elements in the collection using the given closure.
+    ///
     /// ```swift
     /// struct Expense {
     ///     let title: String
@@ -110,6 +117,8 @@ extension Sequence {
         }
     }
 }
+
+// MARK: - Average
 
 extension Collection where Iterator.Element: BinaryInteger {
     /// Returns the average of all elements in the collection.
@@ -149,7 +158,7 @@ extension Decimal {
     ///   - scale: How many decimal places.
     ///   - mode: The rounding mode to use.
     /// - Returns: The new rounded number.
-    public func rounded(_ scale: Int, mode: RoundingMode = .plain) -> Decimal {
+    public func rounded(_ scale: Int, mode: RoundingMode = .plain) -> Self {
         var value = self
         var result: Decimal = 0
         NSDecimalRound(&result, &value, scale, mode)
@@ -309,7 +318,11 @@ extension Double {
     }
 }
 
+// MARK: - Comparable
+
 extension Comparable {
+    /// Returns a copy of `self` clamped to the given limiting range.
+    ///
     /// ```swift
     /// 30.clamped(to: 0...10) // returns 10
     /// 3.0.clamped(to: 0.0...10.0) // returns 3.0

@@ -19,7 +19,7 @@ public struct ElementPosition: OptionSet {
     public static let quaternary = Self(rawValue: 1 << 3)
 }
 
-// MARK: - ButtonStyle
+// MARK: - ButtonIdentifier
 
 public enum ButtonIdentifierTag {}
 public typealias ButtonIdentifier = Identifier<ButtonIdentifierTag>
@@ -30,6 +30,8 @@ extension ButtonIdentifier {
     public static var pill: Self { #function }
     public static var outline: Self { #function }
 }
+
+// MARK: - ButtonState
 
 public enum ButtonState {
     case normal

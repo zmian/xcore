@@ -13,9 +13,9 @@ extension CATransaction {
     ///
     /// - Parameters:
     ///   - animations: The block that have animations that must be completed before
-    ///                 completion handler is called.
+    ///     completion handler is called.
     ///   - completion: A block object called when animations for this transaction
-    ///                 group are completed.
+    ///     group are completed.
     public static func animation(_ animations: () -> Void, completion: (() -> Void)?) {
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)
@@ -25,7 +25,8 @@ extension CATransaction {
 
     /// Disables transition animation.
     ///
-    /// - Parameter actionsWithoutAnimation: The transition code that you want to perform without animation.
+    /// - Parameter actionsWithoutAnimation: The transition code that you want to
+    ///             perform without animation.
     public static func performWithoutAnimation(_ actionsWithoutAnimation: () -> Void) {
         CATransaction.begin()
         CATransaction.setDisableActions(true)

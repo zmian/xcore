@@ -51,7 +51,7 @@ final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
 
 extension CompositeImageFetcher {
     var id: String {
-        fetchers.map { $0.id }.joined(separator: "_")
+        fetchers.map(\.id).joined(separator: "_")
     }
 
     func canHandle(_ image: ImageRepresentable) -> Bool {

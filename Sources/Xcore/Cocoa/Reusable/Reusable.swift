@@ -20,7 +20,9 @@ import UIKit
 /// "ProfileCollectionViewCell"
 ///
 /// ```
+///
 /// If you want to provide your own custom `reuseIdentifier` you can do so like:
+///
 /// ```swift
 /// class ProfileCollectionViewCell: UICollectionViewCell {
 ///     class var reuseIdentifier: String { "ProfileCell" }

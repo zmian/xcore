@@ -11,7 +11,7 @@ extension UIWindow {
     ///
     /// Useful in KeyPaths (e.g., `UIApplication.shared.window(\.isVisible)`)
     ///
-    /// - SeeAlso: https://forums.swift.org/t/key-path-expressions-as-functions/19587/46
+    /// - SeeAlso: https://forums.swift.org/t/19587/46
     public var isVisible: Bool {
         !isHidden
     }

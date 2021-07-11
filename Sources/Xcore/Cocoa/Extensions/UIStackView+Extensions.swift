@@ -26,12 +26,13 @@ extension UIStackView {
     ///
     /// - Parameters:
     ///   - view: The view to be moved from the array of views arranged by the
-    ///           stack.
+    ///     stack.
     ///   - stackIndex: The index where the stack moves the new view in its
-    ///                 `arrangedSubviews` array.
-    ///                 This value must not be greater than the number of views
-    ///                 currently in this array. If the index is out of bounds, this
-    ///                 method throws an `internalInconsistencyException` exception.
+    ///     `arrangedSubviews` array.
+    ///
+    ///     This value must not be greater than the number of views currently in
+    ///     this array. If the index is out of bounds, this method throws an
+    ///     `internalInconsistencyException` exception.
     open func moveArrangedSubview(_ view: UIView, at stackIndex: Int) {
         guard arrangedSubviews.at(stackIndex) != view else { return }
         let insertionIndex = stackIndex.clamped(to: 0...arrangedSubviews.count - 1)
@@ -81,7 +82,7 @@ extension UIStackView {
     /// Adds the list of views to the end of the `arrangedSubviews` array.
     ///
     /// - Parameter subviews: The views to be added to the array of views arranged
-    ///                       by the stack view.
+    ///             by the stack view.
     public func addArrangedSubviews(_ subviews: [UIView]) {
         subviews.forEach {
             addArrangedSubview($0)

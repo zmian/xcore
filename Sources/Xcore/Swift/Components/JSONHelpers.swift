@@ -7,7 +7,8 @@
 import Foundation
 
 public enum JSONHelpers {
-    /// Automatically detect and load the JSON from local(mainBundle) or a remote url.
+    /// Automatically detect and load the JSON from local(main bundle) or a remote
+    /// url.
     public static func remoteOrLocalJSONFile(_ named: String, callback: @escaping ((Any?) -> Void)) {
         if let url = URL(string: named), url.host != nil {
             DispatchQueue.global().async {
