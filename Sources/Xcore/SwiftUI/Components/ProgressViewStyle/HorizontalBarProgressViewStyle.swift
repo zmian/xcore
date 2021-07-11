@@ -10,7 +10,7 @@ import SwiftUI
 public struct HorizontalBarProgressViewStyle: ProgressViewStyle {
     private let height: CGFloat?
 
-    public init(height: CGFloat? = nil) {
+    init(height: CGFloat? = nil) {
         self.height = height
     }
 
