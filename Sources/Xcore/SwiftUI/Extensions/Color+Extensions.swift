@@ -45,6 +45,27 @@ extension Color {
     ///   - light: The color for light color scheme.
     ///   - dark: The color for dark color scheme.
     public init(
+        light: @autoclosure @escaping () -> Color,
+        dark: @autoclosure @escaping () -> Color
+    ) {
+        self.init(UIColor {
+            switch $0.userInterfaceStyle {
+                case .dark:
+                    return UIColor(dark())
+                default:
+                    return UIColor(light())
+            }
+        })
+    }
+
+    /// Creates a color object that generates its color data dynamically using the
+    /// specified colors.
+    ///
+    /// - Parameters:
+    ///   - light: The color for light color scheme.
+    ///   - dark: The color for dark color scheme.
+    @_disfavoredOverload
+    public init(
         light: @autoclosure @escaping () -> UIColor,
         dark: @autoclosure @escaping () -> UIColor
     ) {
