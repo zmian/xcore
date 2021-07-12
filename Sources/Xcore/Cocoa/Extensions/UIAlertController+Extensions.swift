@@ -103,7 +103,7 @@ extension UIAlertController {
     /// A convenience method to display an action sheet with list of specified
     /// items.
     ///
-    /// **Example:**
+    /// **Usage**
     ///
     /// ```swift
     /// let items = ["Year", "Month", "Day"]

@@ -60,8 +60,8 @@ extension Money.Components.Font {
     /// Superscript based layout derived from the given major unit size.
     ///
     /// - Note: Consider using the pre-existing styles instead of using this method
-    /// directly. If an existing style doesn't fit your need create an alias here
-    /// like `.body` to ensure consistency.
+    ///   directly. If an existing style doesn't fit your need create an alias here
+    ///   like `.body` to ensure consistency.
     public static func superscript(_ style: UIFont.TextStyle) -> Self {
         superscript(.app(style))
     }
@@ -69,8 +69,8 @@ extension Money.Components.Font {
     /// Superscript based layout derived from the given major unit size.
     ///
     /// - Note: Consider using the pre-existing styles instead of using this method
-    /// directly. If an existing style doesn't fit your need create an alias here
-    /// like `.body` to ensure consistency.
+    ///   directly. If an existing style doesn't fit your need create an alias here
+    ///   like `.body` to ensure consistency.
     public static func superscript(_ font: UIFont) -> Self {
         let majorUnitSize = font.pointSize
 

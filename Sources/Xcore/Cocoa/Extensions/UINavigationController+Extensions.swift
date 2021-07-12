@@ -258,7 +258,7 @@ extension UINavigationController {
     /// tool bar accordingly. For information on how the navigation bar is updated.
     ///
     /// - Parameter transition: A property that indicates how the pop animation is
-    ///             to be animated, for example, fade out or slide out to right.
+    ///   to be animated, for example, fade out or slide out to right.
     /// - Returns: The view controller that was popped from the stack.
     @discardableResult
     func popViewController(with transition: CATransition?) -> UIViewController? {

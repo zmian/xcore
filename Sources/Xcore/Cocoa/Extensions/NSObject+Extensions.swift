@@ -24,7 +24,8 @@ extension NSObject {
     /// Returns the value for the property identified by a given key.
     ///
     /// The search pattern that `valueForKey:` uses to find the correct value
-    /// to return is described in **Accessor Search Patterns** in **Key-Value Coding Programming Guide**.
+    /// to return is described in **Accessor Search Patterns** in **Key-Value Coding
+    /// Programming Guide**.
     ///
     /// - Parameter key: The name of one of the receiver's properties.
     /// - Returns: The value for the property identified by key.
@@ -38,7 +39,8 @@ extension NSObject {
         return nil
     }
 
-    /// Return `true` if the `self` has the property of given `name`; otherwise, `false`.
+    /// Return `true` if the `self` has the property of given `name`; otherwise,
+    /// `false`.
     open func hasProperty(withName name: String) -> Bool {
         safeValue(forKey: name) != nil
     }
@@ -59,12 +61,10 @@ extension NSObject {
     /// - Parameters:
     ///   - aClass: A class object representing the Objective-C class to be tested.
     ///   - comparison: The comparison option to use when comparing `self` to
-    ///                 `aClass`.
-    ///
+    ///     `aClass`.
     /// - Returns: When option is `.kindOf` then this method returns true if
-    ///            `aClass` is a Class object of the same type; otherwise, `.typeOf`
-    ///            does direct check to ensure `aClass` is the same object and not a
-    ///            subclass.
+    ///   `aClass` is a Class object of the same type; otherwise, `.typeOf` does
+    ///   direct check to ensure `aClass` is the same object and not a subclass.
     func isType(of aClass: Swift.AnyClass, comparison: LookupComparison) -> Bool {
         switch comparison {
             case .kindOf:

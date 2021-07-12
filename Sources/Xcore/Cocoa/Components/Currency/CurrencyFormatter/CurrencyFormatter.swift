@@ -97,8 +97,8 @@ extension CurrencyFormatter {
         var majorUnitString = "0"
         var minorUnitString = "00"
 
-        // Important to ensure decimal is enabled since the formatter is shared
-        // instance potentially mutated by other code.
+        // Important to ensure decimal is enabled since the formatter is shared instance
+        // potentially mutated by other code.
         formatter.isDecimalEnabled = true
 
         let amountString = with(sign: sign) {
@@ -144,7 +144,7 @@ extension CurrencyFormatter {
     ///   - style: The style to format the result.
     ///   - sign: The sign to use when formatting the result.
     /// - Returns: A string representation of a given value formatted using the
-    ///            given style.
+    ///   given style.
     public func string(
         from value: Decimal,
         style: Money.Components.Style = .default,
@@ -161,7 +161,7 @@ extension CurrencyFormatter {
     ///   - style: The style to format the result.
     ///   - sign: The sign to use when formatting the result.
     /// - Returns: A string representation of a given value formatted using the
-    ///            given style.
+    ///   given style.
     public func string(
         from value: Int,
         style: Money.Components.Style = .default,
@@ -178,7 +178,7 @@ extension CurrencyFormatter {
     ///   - style: The style to format the result.
     ///   - sign: The sign to use when formatting the result.
     /// - Returns: A string representation of a given value formatted using the
-    ///            given style.
+    ///   given style.
     public func string(
         from value: Double,
         style: Money.Components.Style = .default,
@@ -190,9 +190,9 @@ extension CurrencyFormatter {
     /// Returns a numeric representation by parsing the given string.
     ///
     /// - Parameter string: A string that is parsed to generate the returned numeric
-    ///                     value.
+    ///   value.
     /// - Returns: A numeric representation by parsing the given string, or `nil` if
-    ///            no single number could be parsed.
+    ///   no single number could be parsed.
     public func decimal(from string: String) -> Decimal? {
         if let decimalValue = Decimal(string: string) {
             return decimalValue
@@ -204,9 +204,9 @@ extension CurrencyFormatter {
     /// Returns a numeric representation by parsing the given string.
     ///
     /// - Parameter string: A string that is parsed to generate the returned numeric
-    ///                     value.
+    ///   value.
     /// - Returns: A numeric representation by parsing the given string, or `nil` if
-    ///            no single number could be parsed.
+    ///   no single number could be parsed.
     public func double(from string: String) -> Double? {
         if let doubleValue = Double(string) {
             return doubleValue

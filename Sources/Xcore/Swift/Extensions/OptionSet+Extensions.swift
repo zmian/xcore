@@ -12,8 +12,7 @@ extension OptionSet {
     ///
     /// - Parameter member: A set of the same type as the current set.
     /// - Returns: `true` if the set has any elements in common with other;
-    ///            otherwise, `false`.
-    ///
+    ///   otherwise, `false`.
     /// - SeeAlso: `isDisjoint(with:)`
     public func contains(any member: Self) -> Bool {
         !isDisjoint(with: member)

@@ -12,8 +12,8 @@ extension ColorizeImageTransform {
         ///
         /// This is similar to Photoshop's **Color** layer blend mode.
         ///
-        /// This is perfect for non-greyscale source images, and images that have
-        /// both highlights and shadows that should be preserved.
+        /// This is perfect for non-greyscale source images, and images that have both
+        /// highlights and shadows that should be preserved.
         ///
         /// White will stay white and black will stay black as the lightness of the
         /// image is preserved.
@@ -46,14 +46,12 @@ public struct ColorizeImageTransform: ImageTransform {
 }
 
 extension ColorizeImageTransform {
-    // Credit: http://stackoverflow.com/a/34547445
-
     /// Colorize image with given tint color.
     ///
     /// This is similar to Photoshop's **Color** layer blend mode.
     ///
-    /// This is perfect for non-greyscale source images, and images that have
-    /// both highlights and shadows that should be preserved.
+    /// This is perfect for non-greyscale source images, and images that have both
+    /// highlights and shadows that should be preserved.
     ///
     /// White will stay white and black will stay black as the lightness of the
     /// image is preserved.
@@ -66,12 +64,14 @@ extension ColorizeImageTransform {
     ///
     /// - Parameter tintColor: The color used to colorize `self`.
     /// - Returns: A colorized image.
+    /// - SeeAlso: http://stackoverflow.com/a/34547445
     private func colorize(_ image: UIImage, tintColor: UIColor) -> UIImage {
         let rect = CGRect(image.size)
         let cgImage = image.cgImage!
 
         return draw(rect) { context in
-            // Draw black background - workaround to preserve color of partially transparent pixels
+            // Draw black background - workaround to preserve color of partially transparent
+            // pixels
             context.setBlendMode(.normal)
             UIColor.black.setFill()
             context.fill(rect)
@@ -80,7 +80,8 @@ extension ColorizeImageTransform {
             context.setBlendMode(.normal)
             context.draw(cgImage, in: rect)
 
-            // Tint image (loosing alpha) - the luminosity of the original image is preserved
+            // Tint image (loosing alpha) - the luminosity of the original image is
+            // preserved
             context.setBlendMode(.color)
             tintColor.setFill()
             context.fill(rect)

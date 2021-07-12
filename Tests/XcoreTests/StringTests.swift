@@ -19,10 +19,10 @@ final class StringTests: TestCase {
     }
 
     func testMasked() {
-        let email = "support@apple.com"
-        XCTAssertEqual(email.formatted(.masked), "s•••@apple.com")
-        XCTAssertEqual(email.formatted(.masked(count: .same)), "s••••••@apple.com")
-        XCTAssertEqual(email.formatted(.masked(count: .equal(2))), "s••@apple.com")
+        let email = "support@example.com"
+        XCTAssertEqual(email.formatted(.masked), "s•••@example.com")
+        XCTAssertEqual(email.formatted(.masked(count: .same)), "s••••••@example.com")
+        XCTAssertEqual(email.formatted(.masked(count: .equal(2))), "s••@example.com")
 
         let string1 = "Hello World"
         XCTAssertEqual(string1.formatted(.masked), "•••••••••••")

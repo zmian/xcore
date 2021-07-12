@@ -61,8 +61,8 @@ extension UIFont {
     public static func unregisterIfExists(_ fontName: String, url fontUrl: URL) throws {
         let name = fontName.deletingPathExtension
 
-        // Check if the given font is registered with font manager before
-        // attempting to unregister.
+        // Check if the given font is registered with font manager before attempting to
+        // unregister.
         guard !fontNames(forFamilyName: name).isEmpty else {
             return
         }
@@ -130,8 +130,8 @@ extension UIFont {
     ///
     /// - Parameter fontUrl: The font to be unregistered.
     private static func unregister(_ fontName: String, cgFont: CGFont) throws {
-        // Check if the given font is registered with font manager before
-        // attempting to unregister.
+        // Check if the given font is registered with font manager before attempting to
+        // unregister.
         guard !fontNames(forFamilyName: fontName).isEmpty else {
             #if DEBUG
             Console.info("\"\(fontName)\" font isn't registered.")
@@ -159,7 +159,7 @@ extension UIFont {
     ///
     /// - Parameter fontUrl: The font url to extract the metadata for.
     /// - Returns: Returns a tuple containing PostScript name of the font and
-    ///            `CGFont`.
+    ///   `CGFont`.
     private static func metadata(from fontUrl: URL) throws -> (postScriptName: String, cgFont: CGFont) {
         guard fontUrl.schemeType == .file else {
             throw RegistrationError.remoteFontUrlDetected

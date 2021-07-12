@@ -43,18 +43,15 @@ extension NotificationCenter {
     ///     If you pass `nil`, the notification center doesn’t use a
     ///     notification’s name to decide whether to add the block to the
     ///     operation queue.
-    ///
     ///   - object: The object whose notifications the observer wants to receive;
     ///     that is, only notifications sent by this sender are delivered to the
     ///     the observer.
     ///
     ///     If you pass `nil`, the notification center doesn’t use a notification’s
     ///     sender to decide whether to deliver it to the observer.
-    ///
     ///   - queue: The operation queue to which block should be added.
     ///
     ///     If you pass `nil`, the block is run synchronously on the posting thread.
-    ///
     ///   - callback: The block to be executed when the notification is received.
     ///
     ///     The block is copied by the notification center and (the copy) held until
@@ -82,18 +79,15 @@ extension NotificationCenter {
     ///     If you pass `nil`, the notification center doesn’t use a
     ///     notification’s name to decide whether to add the block to the
     ///     operation queue.
-    ///
     ///   - object: The object whose notifications the observer wants to receive;
     ///     that is, only notifications sent by this sender are delivered to the
     ///     the observer.
     ///
     ///     If you pass `nil`, the notification center doesn’t use a notification’s
     ///     sender to decide whether to deliver it to the observer.
-    ///
     ///   - queue: The operation queue to which block should be added.
     ///
     ///     If you pass `nil`, the block is run synchronously on the posting thread.
-    ///
     ///   - callback: The block to be executed when the notification is received.
     ///
     ///     The block is copied by the notification center and (the copy) held until
@@ -120,7 +114,7 @@ extension NotificationCenter {
     ///   - object: The object posting the notification.
     ///   - userInfo: Optional information about the notification.
     ///   - delayInterval: A delay interval before posting the notification. The
-    ///                    default value is `0`.
+    ///     default value is `0`.
     public static func post(
         _ name: Notification.Name,
         object: Any? = nil,

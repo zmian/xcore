@@ -124,9 +124,8 @@ extension SiriShortcuts.Domain {
     /// Prepares and removes any outdate intents in `SiriShortcuts.Suggestions` for
     /// this domain.
     ///
-    /// - Note:
-    /// You must call `SiriShortcuts.Suggestions.update()` to register the
-    /// newly replaced suggestions with Siri.
+    /// - Note: You must call `SiriShortcuts.Suggestions.update()` to register the
+    ///   newly replaced suggestions with Siri.
     func prepareSuggestions() {
         SiriShortcuts.sharedSuggestions.replace(intents: intents(), groupIdentifier: id)
     }

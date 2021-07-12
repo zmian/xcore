@@ -62,10 +62,11 @@ extension Interstitial.Identifier {
     /// For example, id with value of `"terms*123"` will match with any interstitial
     /// item that starts with `"terms"`.
     ///
-    /// - Parameter suffix: The string that is ignored for FeatureFlag configuration
-    ///                     lookup.
-    /// - Parameter startsWith: The string that is used for FeatureFlag
-    ///                         configuration lookup.
+    /// - Parameters:
+    ///   - suffix: The string that is ignored for `FeatureFlag` configuration
+    ///     lookup.
+    ///   - startsWith: The string that is used for `FeatureFlag` configuration
+    ///     lookup.
     public init(_ suffix: String, startsWith: String) {
         self.init(rawValue: "\(startsWith)\(Self.startsWithSeparator)\(suffix)")
     }

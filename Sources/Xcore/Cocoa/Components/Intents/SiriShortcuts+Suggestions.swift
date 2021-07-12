@@ -20,11 +20,10 @@ extension SiriShortcuts {
     /// shortcut to Siri. Your app can provide this option by making a shortcut
     /// suggestion.
     ///
-    /// - Note:
-    /// Shortcut suggestions are available to the user only in the **Settings** app
-    /// under the **Siri & Search** section. This differs from donated shortcuts,
-    /// which Siri shows to the user in places such as Spotlight search, Lock
-    /// Screen, and the Siri watch face.
+    /// - Note: Shortcut suggestions are available to the user only in the
+    ///   **Settings** app under the **Siri & Search** section. This differs from
+    ///   donated shortcuts, which Siri shows to the user in places such as
+    ///   Spotlight search, Lock Screen, and the Siri watch face.
     ///
     /// - SeeAlso: https://developer.apple.com/documentation/sirikit/shortcut_management/suggesting_shortcuts_to_users
     final class Suggestions: Appliable {

@@ -45,7 +45,7 @@ extension Image {
     /// a custom symbol image from your app’s asset catalog, use `init(_:)` instead.
     ///
     /// - Parameter system: The name of the system symbol image. Use the SF Symbols
-    ///             app to look up the names of system symbol images.
+    ///   app to look up the names of system symbol images.
     public init(system: SystemAssetIdentifier) {
         self.init(systemName: system.rawValue)
     }
@@ -57,7 +57,7 @@ extension UIImage {
     /// Creates an image object that contains a system symbol image.
     ///
     /// - Parameter system: The name of the system symbol image. Use the SF Symbols
-    ///             app to look up the names of system symbol images.
+    ///   app to look up the names of system symbol images.
     public convenience init(system: SystemAssetIdentifier) {
         self.init(systemName: system.rawValue)!
     }
@@ -101,8 +101,12 @@ extension UIImageView {
 // MARK: - UIBarButtonItem
 
 extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
-    public init(system: SystemAssetIdentifier, accessibilityIdentifier: String? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
-        self.init(image: UIImage(system: system), handler)
+    public init(
+        system: SystemAssetIdentifier,
+        accessibilityIdentifier: String? = nil,
+        action: ((_ sender: Self) -> Void)? = nil
+    ) {
+        self.init(image: UIImage(system: system), action)
         self.accessibilityIdentifier = accessibilityIdentifier
     }
 }
@@ -110,8 +114,12 @@ extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
 // MARK: - UIButton
 
 extension ControlTargetActionBlockRepresentable where Self: UIButton {
-    public init(system: SystemAssetIdentifier, accessibilityIdentifier: String? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
-        self.init(image: UIImage(system: system), handler)
+    public init(
+        system: SystemAssetIdentifier,
+        accessibilityIdentifier: String? = nil,
+        action: ((_ sender: Self) -> Void)? = nil
+    ) {
+        self.init(image: UIImage(system: system), action)
         self.accessibilityIdentifier = accessibilityIdentifier
     }
 }

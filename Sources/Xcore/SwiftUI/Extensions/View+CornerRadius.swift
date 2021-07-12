@@ -25,7 +25,6 @@ extension View {
     /// - Parameters:
     ///   - radius: The corner radius.
     ///   - corners: The corners to apply the radius.
-    ///
     /// - Returns: A view that clips this view to its bounding frame with the
     ///   specified corner radius.
     public func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
@@ -51,7 +50,6 @@ extension View {
     /// view.](SwiftUI-View-cornerRadius.png)
     ///
     /// - Parameter radius: The corner radius.
-    ///
     /// - Returns: A view that clips this view to its bounding frame with the
     ///   specified corner radius.
     public func cornerRadius(_ radius: CGFloat, style: RoundedCornerStyle) -> some View {

@@ -29,7 +29,7 @@ public struct ImageAssetIdentifier: RawRepresentable, CustomStringConvertible, E
     ///   - rawValue: The name of the resource in `.xcassets`.
     ///   - bundle: The bundle for the `.xcassets`.
     ///   - accessibilityLabel: A succinct label that identifies the accessibility
-    ///                         element, in a localized string.
+    ///     element, in a localized string.
     public init(rawValue: String, bundle: Bundle, accessibilityLabel: String? = nil) {
         self.rawValue = rawValue
         self.bundle = bundle
@@ -77,11 +77,19 @@ extension Image {
 
 extension UIImage {
     public convenience init(assetIdentifier: ImageAssetIdentifier) {
-        self.init(named: assetIdentifier.rawValue, in: assetIdentifier.bundle, compatibleWith: nil)!
+        self.init(
+            named: assetIdentifier.rawValue,
+            in: assetIdentifier.bundle, compatibleWith: nil
+        )!
     }
 
-    public static func tinted(assetIdentifier: ImageAssetIdentifier, tintColor: UIColor, renderingMode: UIImage.RenderingMode = .alwaysOriginal) -> UIImage {
-        UIImage(assetIdentifier: assetIdentifier).tintColor(tintColor).withRenderingMode(renderingMode)
+    public static func tinted(
+        assetIdentifier: ImageAssetIdentifier,
+        color: UIColor,
+        renderingMode: UIImage.RenderingMode = .alwaysOriginal
+    ) -> UIImage {
+        UIImage(assetIdentifier: assetIdentifier)
+            .tintColor(color).withRenderingMode(renderingMode)
     }
 }
 
@@ -100,8 +108,12 @@ extension UIImageView {
 // MARK: - UIBarButtonItem
 
 extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
-    public init(assetIdentifier: ImageAssetIdentifier, accessibilityIdentifier: String? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
-        self.init(image: UIImage(assetIdentifier: assetIdentifier), handler)
+    public init(
+        assetIdentifier: ImageAssetIdentifier,
+        accessibilityIdentifier: String? = nil,
+        action: ((_ sender: Self) -> Void)? = nil
+    ) {
+        self.init(image: UIImage(assetIdentifier: assetIdentifier), action)
         self.accessibilityIdentifier = accessibilityIdentifier
     }
 }
@@ -109,8 +121,12 @@ extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
 // MARK: - UIButton
 
 extension ControlTargetActionBlockRepresentable where Self: UIButton {
-    public init(assetIdentifier: ImageAssetIdentifier, accessibilityIdentifier: String? = nil, _ handler: ((_ sender: Self) -> Void)? = nil) {
-        self.init(image: UIImage(assetIdentifier: assetIdentifier), handler)
+    public init(
+        assetIdentifier: ImageAssetIdentifier,
+        accessibilityIdentifier: String? = nil,
+        action: ((_ sender: Self) -> Void)? = nil
+    ) {
+        self.init(image: UIImage(assetIdentifier: assetIdentifier), action)
         self.accessibilityIdentifier = accessibilityIdentifier
     }
 }

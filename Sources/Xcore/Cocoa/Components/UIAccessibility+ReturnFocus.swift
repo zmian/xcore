@@ -18,8 +18,8 @@ extension UIAccessibility {
         /// to return focus to it.
         ///
         /// - Parameter tappedElement: An element to store as the last focused element.
-        ///             If `element` value is `nil`, then element that is currently
-        ///             focused by the specified assistive technology is used instead.
+        ///   If `element` value is `nil`, then element that is currently focused by the
+        ///   specified assistive technology is used instead.
         public mutating func update(_ tappedElement: Any? = nil) {
             guard let tappedElement = tappedElement else {
                 self.element = UIAccessibility.focusedElement(using: .notificationVoiceOver)

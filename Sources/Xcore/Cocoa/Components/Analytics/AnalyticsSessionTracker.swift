@@ -24,8 +24,8 @@ final public class AnalyticsSessionTracker {
     /// Initialize an instance of analytics session tracker.
     ///
     /// - Parameter sessionExpirationDuration: Allowed time in seconds for the user
-    /// to be considered in the same session when the app enters foreground. The
-    /// default value is `30` seconds.
+    ///   to be considered in the same session when the app enters foreground. The
+    ///   default value is `30` seconds.
     public init(sessionExpirationDuration: TimeInterval = 30) {
         self.sessionExpirationDuration = sessionExpirationDuration
         addNotificationObservers()
@@ -70,7 +70,7 @@ final public class AnalyticsSessionTracker {
     ///
     /// - Parameter value: A value to insert into the set.
     /// - Returns: `false` if the given `value` already present; otherwise, returns
-    ///            `true`, and adds the `value` to the set.
+    ///   `true`, and adds the `value` to the set.
     public func insert(_ value: String) -> Bool {
         values.insert(value).inserted
     }

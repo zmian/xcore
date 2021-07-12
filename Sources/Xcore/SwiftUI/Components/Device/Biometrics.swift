@@ -75,10 +75,10 @@ public struct Biometrics {
     /// The type of biometric authentication supported.
     ///
     /// - Note: This property returns the actual capability of the device regardless
-    /// of the permission status. For example, Face ID requires permission prompt.
-    /// If user denies the permission, then the returned value is still `.faceID`.
-    /// If you need to check if biometrics authentication is available then use
-    /// `Device.biometrics.isAvailable`.
+    ///   of the permission status. For example, Face ID requires permission prompt.
+    ///   If user denies the permission, then the returned value is still `.faceID`.
+    ///   If you need to check if biometrics authentication is available then use
+    ///   `Device.biometrics.isAvailable`.
     public var kind: Kind {
         let kind = Kind()
 
@@ -96,7 +96,7 @@ extension Biometrics {
     /// Evaluates the user authentication with biometry policy.
     ///
     /// - Parameter completion: A closure that is executed when policy evaluation
-    ///                         finishes.
+    ///   finishes.
     public func authenticate(_ completion: @escaping (_ success: Bool) -> Void) {
         guard isAvailable else {
             return

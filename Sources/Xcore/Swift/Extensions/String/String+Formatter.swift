@@ -35,11 +35,11 @@ extension String.BlockFormatStyle {
     /// Automatically detects a valid email address and apply email masking.
     ///
     /// ```swift
-    /// print("hello@icloud.com".formatted(.masked))
-    /// // Prints "h•••@icloud.com"
+    /// print("hello@example.com".formatted(.masked))
+    /// // Prints "h•••@example.com"
     ///
-    /// print("hello@icloud.com".formatted(.masked(count: .same)))
-    /// // Prints "h••••@icloud.com"
+    /// print("hello@example.com".formatted(.masked(count: .same)))
+    /// // Prints "h••••@example.com"
     ///
     /// print("Hello World".formatted(.masked))
     /// // Prints "•••••••••••"
@@ -51,11 +51,11 @@ extension String.BlockFormatStyle {
     /// Automatically detects a valid email address and apply email masking.
     ///
     /// ```swift
-    /// print("hello@icloud.com".formatted(.masked))
-    /// // Prints "h•••@icloud.com"
+    /// print("hello@example.com".formatted(.masked))
+    /// // Prints "h•••@example.com"
     ///
-    /// print("hello@icloud.com".formatted(.masked(count: .same)))
-    /// // Prints "h••••@icloud.com"
+    /// print("hello@example.com".formatted(.masked(count: .same)))
+    /// // Prints "h••••@example.com"
     ///
     /// print("Hello World".formatted(.masked))
     /// // Prints "•••••••••••"

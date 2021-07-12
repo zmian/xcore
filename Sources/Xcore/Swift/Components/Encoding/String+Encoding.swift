@@ -13,7 +13,7 @@ extension String {
     ///
     /// - Parameters:
     ///   - base64Encoded: The string instance to decode.
-    ///   - options: The options to use for the decoding. The default value is `[]`.
+    ///   - options: The options to use for the decoding.
     public init?(base64Encoded: String, options: Data.Base64DecodingOptions = []) {
         guard
             let decodedData = Data(base64Encoded: base64Encoded, options: options),
@@ -27,8 +27,7 @@ extension String {
 
     /// Returns Base64 representation of `self`.
     ///
-    /// - Parameter options: The options to use for the encoding. The default value
-    ///                      is `[]`.
+    /// - Parameter options: The options to use for the encoding.
     /// - Returns: The Base-64 encoded string.
     public func base64Encoded(options: Data.Base64EncodingOptions = []) -> String? {
         data(using: .utf8)?.base64EncodedString(options: options)
@@ -70,8 +69,7 @@ extension Data {
 
     /// Returns hexadecimal representation of `self`.
     ///
-    /// - Parameter options: The options to use for the encoding. The default value
-    ///                      is `[]`.
+    /// - Parameter options: The options to use for the encoding.
     /// - Returns: The hexadecimal encoded string.
     public func hexEncodedString(options: HexEncodingOptions = []) -> String {
         if options.contains(.raw) {

@@ -10,7 +10,7 @@ import Foundation
 /// the value is always between `0` and `100` and support for addition and
 /// subtraction.
 ///
-/// # Example Usage
+/// **Usage**
 ///
 /// ```swift
 /// let sliderValue: Percentage = 0.5

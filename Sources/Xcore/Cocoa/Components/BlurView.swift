@@ -28,10 +28,10 @@ public class BlurView: XCView {
     ///
     /// The default value is `true`.
     ///
-    /// - Note:
-    /// When this property is `true` it only enables blur effect when
-    /// `UIAccessibilityIsReduceTransparencyEnabled()` is `false`; otherwise,
-    /// `blurEffectDisabledBackgroundColor` value is used instead of the blur effect.
+    /// - Note: When this property is `true` it only enables blur effect when
+    ///   `UIAccessibilityIsReduceTransparencyEnabled()` is `false`; otherwise,
+    ///   `blurEffectDisabledBackgroundColor` value is used instead of the blur
+    ///   effect.
     public var isBlurEffectEnabled = true {
         didSet {
             guard oldValue != isBlurEffectEnabled else { return }
@@ -44,9 +44,8 @@ public class BlurView: XCView {
     ///
     /// The default value is `1`.
     ///
-    /// - Note:
-    /// This property is only used when `isBlurEffectEnabled` is `true` and
-    /// `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
+    /// - Note: This property is only used when `isBlurEffectEnabled` is `true` and
+    ///   `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
     @objc public dynamic var blurOpacity: CGFloat = 1 {
         didSet {
             blurBackView.alpha = 1 - blurOpacity
@@ -57,33 +56,30 @@ public class BlurView: XCView {
     ///
     /// The default value is `Theme.backgroundColor`.
     ///
-    /// - Note:
-    /// This property is only used when `isBlurEffectEnabled` is `true` and
-    /// `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
+    /// - Note: This property is only used when `isBlurEffectEnabled` is `true` and
+    ///   `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
     @objc public dynamic var blurColor: UIColor = Theme.backgroundColor {
         didSet {
             blurBackView.backgroundColor = blurColor
         }
     }
 
-    /// The background color to use when `UIAccessibilityIsReduceTransparencyEnabled()`
-    /// is `true`.
+    /// The background color to use when
+    /// `UIAccessibilityIsReduceTransparencyEnabled()` is `true`.
     ///
     /// The default value is `Theme.backgroundColor`.
     ///
-    /// - Note:
-    /// This property is only used when `isBlurEffectEnabled` is `true` and
-    /// `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
+    /// - Note: This property is only used when `isBlurEffectEnabled` is `true` and
+    ///   `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
     @objc public dynamic var blurEffectDisabledBackgroundColor: UIColor = Theme.backgroundColor
 
-    /// The `UIVisualEffect` to use when `UIAccessibilityIsReduceTransparencyEnabled()`
-    /// is `false`.
+    /// The `UIVisualEffect` to use when
+    /// `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
     ///
     /// The default value is `.regular`.
     ///
-    /// - Note:
-    /// This property is only used when `isBlurEffectEnabled` is `true` and
-    /// `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
+    /// - Note: This property is only used when `isBlurEffectEnabled` is `true` and
+    ///   `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
     @objc public dynamic var effect: UIVisualEffect? {
         get { blurEffectView.effect }
         set { blurEffectView.effect = newValue }

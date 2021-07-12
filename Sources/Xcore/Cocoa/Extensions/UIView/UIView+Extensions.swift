@@ -29,9 +29,9 @@ import UIKit
         }
     }
 
-    open func roundCorners(_ mask: CACornerMask, radius: CGFloat) {
+    open func cornerRadius(_ radius: CGFloat, corners: CACornerMask) {
         layer.cornerRadius = radius
-        layer.maskedCorners = mask
+        layer.maskedCorners = corners
         layer.masksToBounds = radius > 0
         layer.cornerCurve = .continuous
     }
@@ -39,7 +39,11 @@ import UIKit
     // MARK: - Fade Content
 
     @discardableResult
-    open func fadeHead(rect: CGRect, startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 0.03)) -> CAGradientLayer {
+    open func fadeHead(
+        rect: CGRect,
+        startPoint: CGPoint = CGPoint(x: 0.5, y: 0),
+        endPoint: CGPoint = CGPoint(x: 0.5, y: 0.03)
+    ) -> CAGradientLayer {
         CAGradientLayer().apply {
             $0.frame = rect
             $0.colors = [UIColor.clear.cgColor, UIColor.white.cgColor]
@@ -50,7 +54,11 @@ import UIKit
     }
 
     @discardableResult
-    open func fadeTail(rect: CGRect, startPoint: CGPoint = CGPoint(x: 0.5, y: 0.93), endPoint: CGPoint = CGPoint(x: 0.5, y: 1)) -> CAGradientLayer {
+    open func fadeTail(
+        rect: CGRect,
+        startPoint: CGPoint = CGPoint(x: 0.5, y: 0.93),
+        endPoint: CGPoint = CGPoint(x: 0.5, y: 1)
+    ) -> CAGradientLayer {
         CAGradientLayer().apply {
             $0.frame = rect
             $0.colors = [UIColor.white.cgColor, UIColor.clear.cgColor]
@@ -61,7 +69,12 @@ import UIKit
     }
 
     @discardableResult
-    open func addGradient(_ colors: [UIColor], startPoint: CGPoint = CGPoint(x: 0, y: 1), endPoint: CGPoint = CGPoint(x: 1, y: 1), locations: [Int] = [0, 1]) -> CAGradientLayer {
+    open func addGradient(
+        _ colors: [UIColor],
+        startPoint: CGPoint = CGPoint(x: 0, y: 1),
+        endPoint: CGPoint = CGPoint(x: 1, y: 1),
+        locations: [Int] = [0, 1]
+    ) -> CAGradientLayer {
         CAGradientLayer().apply {
             $0.colors = colors.map { $0.cgColor }
             $0.startPoint = startPoint
@@ -93,7 +106,12 @@ import UIKit
 
     // Credit: http://stackoverflow.com/a/23157272
     @discardableResult
-    open func addBorder(edges: UIRectEdge, color: UIColor = .white, thickness: CGFloat = 1, inset: UIEdgeInsets = 0) -> [UIView] {
+    open func addBorder(
+        edges: UIRectEdge,
+        color: UIColor = .white,
+        thickness: CGFloat = 1,
+        inset: UIEdgeInsets = 0
+    ) -> [UIView] {
         var borders = [UIView]()
         let allEdges = edges.contains(.all)
         let metrics = [
@@ -185,14 +203,14 @@ import UIKit
 @objc extension UIView {
     /// Takes a snapshot of the complete view hierarchy as visible onscreen.
     ///
-    /// - Parameter afterScreenUpdates:
-    ///     A boolean value that indicates whether the snapshot should be rendered
-    ///     after recent changes have been incorporated. Specify the value false if
-    ///     you want to render a snapshot in the view hierarchy’s current state, which
-    ///     might not include recent changes. A Boolean value that indicates whether the
-    ///     snapshot should be rendered after recent changes have been incorporated.
-    ///     Specify the value `false` if you want to render a snapshot in the view hierarchy’s
-    ///     current state, which might not include recent changes. The default value is `false`.
+    /// - Parameter afterScreenUpdates: A boolean value that indicates whether the
+    ///   snapshot should be rendered after recent changes have been incorporated.
+    ///   Specify the value false if you want to render a snapshot in the view
+    ///   hierarchy’s current state, which might not include recent changes. A
+    ///   Boolean value that indicates whether the snapshot should be rendered after
+    ///   recent changes have been incorporated. Specify the value `false` if you
+    ///   want to render a snapshot in the view hierarchy’s current state, which
+    ///   might not include recent changes. The default value is `false`.
     /// - Returns: `UIImage` of the snapshot.
     open func snapshotImage(afterScreenUpdates: Bool = false) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
@@ -204,14 +222,14 @@ import UIKit
 
     /// Takes a snapshot of the complete view hierarchy as visible onscreen.
     ///
-    /// - Parameter afterScreenUpdates:
-    ///     A boolean value that indicates whether the snapshot should be rendered
-    ///     after recent changes have been incorporated. Specify the value false if
-    ///     you want to render a snapshot in the view hierarchy’s current state, which
-    ///     might not include recent changes. A Boolean value that indicates whether the
-    ///     snapshot should be rendered after recent changes have been incorporated.
-    ///     Specify the value `false` if you want to render a snapshot in the view hierarchy’s
-    ///     current state, which might not include recent changes. The default value is `false`.
+    /// - Parameter afterScreenUpdates: A boolean value that indicates whether the
+    ///   snapshot should be rendered after recent changes have been incorporated.
+    ///   Specify the value false if you want to render a snapshot in the view
+    ///   hierarchy’s current state, which might not include recent changes. A
+    ///   Boolean value that indicates whether the snapshot should be rendered after
+    ///   recent changes have been incorporated. Specify the value `false` if you
+    ///   want to render a snapshot in the view hierarchy’s current state, which
+    ///   might not include recent changes. The default value is `false`.
     /// - Returns: `UIImageView` of the snapshot.
     open func snapshotImageView(afterScreenUpdates: Bool = false) -> UIImageView {
         let image = snapshotImage(afterScreenUpdates: afterScreenUpdates)
@@ -316,9 +334,9 @@ extension UIView {
     ///         ...
     ///     }
     ///
-    /// - Parameter predicate: A closure that takes a subview in `self` as
-    ///   its argument and returns a boolean value indicating whether the
-    ///   subview is a match.
+    /// - Parameter predicate: A closure that takes a subview in `self` as its
+    ///   argument and returns a boolean value indicating whether the subview is a
+    ///   match.
     /// - Returns: The first subview of the `self` that satisfies `predicate`,
     ///   or `nil` if there is no subview that satisfies `predicate`.
     open func firstSubview(where predicate: (UIView) throws -> Bool) rethrows -> UIView? {
@@ -346,11 +364,11 @@ extension UIView {
     ///         ...
     ///     }
     ///
-    /// - Parameter predicate: A closure that takes a subview in `self` as
-    ///   its argument and returns a boolean value indicating whether the
-    ///   subview is a match.
-    /// - Returns: An array of subviews that satisfies `predicate`,
-    ///   or `[]` if there is no subview that satisfies `predicate`.
+    /// - Parameter predicate: A closure that takes a subview in `self` as its
+    ///   argument and returns a boolean value indicating whether the subview is a
+    ///   match.
+    /// - Returns: An array of subviews that satisfies `predicate`, or `[]` if there
+    ///   is no subview that satisfies `predicate`.
     open func subviews(where predicate: (UIView) throws -> Bool) rethrows -> [UIView] {
         var result = [UIView]()
 
@@ -373,9 +391,12 @@ extension UIView {
     ///
     /// - Parameters:
     ///   - className: The class name of the child view (e.g., `UIImageView`).
-    ///   - comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
+    ///   - comparison: The comparison option to use when looking for the subview.
     /// - Returns: The child view if exists; otherwise, `nil`.
-    open func firstSubview(withClassName className: String, comparison: LookupComparison = .kindOf) -> UIView? {
+    open func firstSubview(
+        withClassName className: String,
+        comparison: LookupComparison = .kindOf
+    ) -> UIView? {
         guard let aClass = NSClassFromString(className) else {
             return nil
         }
@@ -387,9 +408,12 @@ extension UIView {
     ///
     /// - Parameters:
     ///   - className: The class name of the child views (e.g., `UIImageView`).
-    ///   - comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
+    ///   - comparison: The comparison option to use when looking for the subview.
     /// - Returns: The child views if exists; otherwise, empty array.
-    open func subviews(withClassName className: String, comparison: LookupComparison = .kindOf) -> [UIView] {
+    open func subviews(
+        withClassName className: String,
+        comparison: LookupComparison = .kindOf
+    ) -> [UIView] {
         guard let aClass = NSClassFromString(className) else {
             return []
         }
@@ -401,9 +425,12 @@ extension UIView {
     ///
     /// - Parameters:
     ///   - aClass: The class name of the child view (e.g., `UIImageView`).
-    ///   - comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
+    ///   - comparison: The comparison option to use when looking for the subview.
     /// - Returns: The child view if exists; otherwise, `nil`.
-    open func firstSubview<T: UIView>(withClass aClass: T.Type, comparison: LookupComparison = .kindOf) -> T? {
+    open func firstSubview<T: UIView>(
+        withClass aClass: T.Type,
+        comparison: LookupComparison = .kindOf
+    ) -> T? {
         firstSubview { $0.isType(of: aClass, comparison: comparison) } as? T
     }
 
@@ -411,9 +438,12 @@ extension UIView {
     ///
     /// - Parameters:
     ///   - aClass: The class name of the child view (e.g., `UIImageView`).
-    ///   - comparison: The comparison option to use when looking for the subview. The default value is `.kindOf`.
+    ///   - comparison: The comparison option to use when looking for the subview.
     /// - Returns: The child view if exists; otherwise, `nil`.
-    open func subviews<T: UIView>(withClass aClass: T.Type, comparison: LookupComparison = .kindOf) -> [T] {
+    open func subviews<T: UIView>(
+        withClass aClass: T.Type,
+        comparison: LookupComparison = .kindOf
+    ) -> [T] {
         subviews { $0.isType(of: aClass, comparison: comparison) } as? [T] ?? []
     }
 }
@@ -423,7 +453,7 @@ extension UIView {
     ///
     /// - Parameters:
     ///   - view: The view to be temporarily added. After being added, this view
-    ///           appears on top of any other subviews.
+    ///     appears on top of any other subviews.
     ///   - interval: The interval after the given `view` is removed.
     ///   - animated: An option to animate the adding and removing of the `view`.
     public func addSubview(_ view: UIView, removeAfter interval: TimeInterval, animated: Bool = true) {
@@ -452,7 +482,8 @@ extension UIView {
     ///
     /// - Parameters:
     ///   - attribute: The attribute to use to find the constraint.
-    ///   - onlyActive: An option to determine if should find only the active constraint. The default value is `true`.
+    ///   - onlyActive: An option to determine if should find only the active
+    ///     constraint.
     /// - Returns: A constraint if exists for the specified attribute.
     public func constraint(forAttribute attribute: NSLayoutConstraint.Attribute, onlyActive: Bool = true) -> NSLayoutConstraint? {
         constraints.first { constraint in
@@ -531,8 +562,7 @@ extension UIView {
     /// this property to `false`.
     ///
     /// - Parameter value: A Boolean value indicating whether the receiver subviews
-    ///                    are an accessibility elements that an assistive
-    ///                    application can access.
+    ///   are an accessibility elements that an assistive application can access.
     public func makeSubviewsAccessible(_ value: Bool) {
         isAccessibilityElement = value
 

@@ -14,8 +14,8 @@ public final class Timeout {
     /// Creates an instance of the `Timeout`.
     ///
     /// - Parameters:
-    ///     - interval: The timeout interval before `callback` is invoked.
-    ///     - callback: A closure to invoke after given timeout `interval`.
+    ///   - interval: The timeout interval before `callback` is invoked.
+    ///   - callback: A closure to invoke after given timeout `interval`.
     public init(after interval: TimeInterval, callback: (() -> Void)? = nil) {
         self.didTimeout = interval == 0
         self.callback = callback

@@ -34,8 +34,8 @@ extension FixedWidthInteger {
     /// ```
     ///
     /// - Parameter transform: A mapping closure. `transform` accepts an element of
-    ///             `self` as its parameter and returns a transformed value of the
-    ///             same or of a different type.
+    ///   `self` as its parameter and returns a transformed value of the same or of
+    ///   a different type.
     /// - Returns: An array containing the transformed elements of `self`.
     /// - Complexity: O(_n_).
     public func map<T>(transform: (Self) throws -> T) rethrows -> [T] {
@@ -142,8 +142,8 @@ extension Collection where Element == Decimal {
 }
 
 extension Decimal {
-    /// Returns this value rounded to an integral value using the specified
-    /// rounding rule.
+    /// Returns this value rounded to an integral value using the specified rounding
+    /// rule.
     ///
     /// The following example rounds a value using four different rounding rules:
     ///
@@ -206,9 +206,8 @@ extension Double {
     /// 132456  // -> 132.5K
     /// ```
     ///
-    /// - Parameter threshold: An optional property to only apply abbreviation
-    ///                        if `self` is greater then given threshold.
-    ///                        The default value is `nil`.
+    /// - Parameter threshold: An optional property to only apply abbreviation if
+    ///   `self` is greater then given threshold.
     /// - Returns: Abbreviated version of `self`.
     public func abbreviate(threshold: Double? = nil) -> String {
         if let threshold = threshold, self <= threshold {

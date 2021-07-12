@@ -82,7 +82,7 @@ extension UIStackView {
     /// Adds the list of views to the end of the `arrangedSubviews` array.
     ///
     /// - Parameter subviews: The views to be added to the array of views arranged
-    ///             by the stack view.
+    ///   by the stack view.
     public func addArrangedSubviews(_ subviews: [UIView]) {
         subviews.forEach {
             addArrangedSubview($0)

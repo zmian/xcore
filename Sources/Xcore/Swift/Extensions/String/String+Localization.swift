@@ -48,7 +48,8 @@ extension String {
     ///
     /// - Parameters:
     ///   - file: The name of the `.strings` file.
-    ///   - comment: The comment to place above the key-value pair in the strings file.
+    ///   - comment: The comment to place above the key-value pair in the strings
+    ///     file.
     /// - Returns: It returns the translation found in the provided `.strings` file.
     ///   If the translation cannot be found it will return its own value.
     public func localized(file: StringsFile? = nil, comment: String = "") -> String {
@@ -64,7 +65,8 @@ extension String {
     ///
     /// - Parameters:
     ///   - file: The name of the `.strings` file.
-    ///   - comment: The comment to place above the key-value pair in the strings file.
+    ///   - comment: The comment to place above the key-value pair in the strings
+    ///     file.
     ///   - arguments: Pass the arguments you want to replace your strings
     ///     placeholders with.
     /// - Returns: It returns the translation found in the provided `.strings` file

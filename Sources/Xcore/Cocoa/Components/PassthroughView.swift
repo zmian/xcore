@@ -9,7 +9,7 @@ import UIKit
 /// Pass UI events through the stack view.
 ///
 /// - Note: It won't pass touch events to any subviews that have
-/// `isUserInteractionEnabled` flag set to `false`.
+///   `isUserInteractionEnabled` flag set to `false`.
 class PassthroughView: UIView {
     private var _ignoreTouchesPrecondition: () -> Bool = { true }
 
@@ -30,7 +30,7 @@ class PassthroughView: UIView {
 /// Pass UI events through the view.
 ///
 /// - Note: It won't pass touch events to any subviews that have
-/// `isUserInteractionEnabled` flag set to `false`.
+///   `isUserInteractionEnabled` flag set to `false`.
 class PassthroughStackView: UIStackView {
     private var _ignoreTouchesPrecondition: () -> Bool = { true }
 

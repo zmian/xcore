@@ -70,7 +70,7 @@ extension NSLayoutConstraint {
     /// Creates a new constraint with the given priority.
     ///
     /// - Parameter priority: The priority that should be set for the new
-    ///                       constraint.
+    ///   constraint.
     /// - Returns: The new activated constraint with the provided `priority` value.
     @discardableResult
     func createWithPriority( _ priority: UILayoutPriority) -> NSLayoutConstraint {
@@ -94,8 +94,9 @@ extension NSLayoutConstraint {
     /// Creates a new constraint with the given multiplier.
     ///
     /// - Parameter multiplier: The multiplier that should be set for the new
-    ///                         constraint.
-    /// - Returns: The new activated constraint with the provided `multiplier` value.
+    ///   constraint.
+    /// - Returns: The new activated constraint with the provided `multiplier`
+    ///   value.
     @discardableResult
     func createWithMultiplier( _ multiplier: CGFloat) -> NSLayoutConstraint {
         let newConstraint = NSLayoutConstraint(

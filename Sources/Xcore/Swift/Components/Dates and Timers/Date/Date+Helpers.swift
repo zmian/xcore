@@ -228,7 +228,7 @@ extension Date {
     ///   - component: Component to get the value for.
     ///   - calendar: The calendar to use for retrieval.
     ///
-    /// **Example**
+    /// **Usage**
     ///
     /// ```swift
     /// let date = Date(year: 2020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
@@ -300,7 +300,7 @@ extension Date {
     ///   - date: A component to calculate to date.
     ///   - calendar: The calendar to calculate the number.
     ///
-    /// **Example**
+    /// **Usage**
     ///
     /// ```swift
     /// let date = Date(year: 2019, month: 3, day: 4, hour: 2, minute: 22, second: 44)
@@ -333,7 +333,7 @@ extension Date {
     ///
     /// - Parameter calendar: The calendar used to calculate time zone.
     ///
-    /// **Example**
+    /// **Usage**
     ///
     /// ```swift
     /// let result = Date.timeZoneOffset(calendar: .usEastern)

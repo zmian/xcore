@@ -37,10 +37,9 @@ extension FileManager {
     ///   - path: The path component to add.
     ///   - directory: The directory in which the given `path` is constructed.
     ///   - options: The options that are applied to when appending path. See
-    ///              `FileManager.Options` for possible values. The default value
-    ///              is `.none`.
+    ///     `FileManager.Options` for possible values. The default value is `.none`.
     /// - Returns: Returns a `URL` constructed by appending the given path component
-    ///            relative to the specified directory.
+    ///   relative to the specified directory.
     open func appending(
         path: String,
         relativeTo directory: SearchPathDirectory,
