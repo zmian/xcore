@@ -78,7 +78,7 @@ extension String {
                 self,
                 tableName: file?.rawValue,
                 bundle: file?.bundle ?? .main,
-                comment: ""
+                comment: comment
             ),
             arguments: arguments
         )
