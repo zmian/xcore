@@ -7,6 +7,7 @@
 import SwiftUI
 
 #if DEBUG
+
 // MARK: - Default Style
 
 private struct DefaultFieldPreview: View {

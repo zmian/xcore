@@ -103,7 +103,7 @@ extension Timer {
 // MARK: - Pause and Resume
 
 extension Timer {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var timerPauseDate = "timerPauseDate"
         static var timerPreviousFireDate = "timerPreviousFireDate"
     }

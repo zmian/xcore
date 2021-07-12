@@ -18,7 +18,7 @@ import UIKit
 /// a website, or an application — and surround the user's data.
 ///
 /// - SeeAlso: https://www.nngroup.com/articles/browser-and-gui-chrome/
-final public class Chrome {
+public enum Chrome {
     /// Sets a background view for the (status || nav) bar.
     ///
     /// - Parameters:
@@ -79,7 +79,7 @@ extension Chrome {
                     return true
                 case .blurred:
                     return false
-                case .color(let color):
+                case let .color(color):
                     return color.alpha == 0
             }
         }
@@ -90,7 +90,7 @@ extension Chrome {
                     return "transparent"
                 case .blurred:
                     return "blurred"
-                case .color(let color):
+                case let .color(color):
                     return "color(\(color.hex))"
             }
         }
@@ -136,7 +136,7 @@ extension Chrome {
             view.apply {
                 $0.isHidden = self == .transparent
                 $0.isBlurEffectEnabled = self == .blurred
-                if case .color(let color) = self {
+                if case let .color(color) = self {
                     $0.backgroundColor = color
                 }
             }
@@ -148,7 +148,7 @@ extension Chrome {
 
 extension Chrome {
     @objc(ChromeStyle)
-    final public class Style: NSObject {
+    public final class Style: NSObject {
         public let type: BackgroundStyle
 
         @available(*, unavailable)

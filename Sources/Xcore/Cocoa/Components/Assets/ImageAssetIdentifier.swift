@@ -144,6 +144,7 @@ extension ImageAssetIdentifier {
     }
 
     // MARK: - Shared UI Elements
+
     public static var disclosureIndicator: Self { propertyName() }
     public static var disclosureIndicatorFilled: Self { propertyName() }
 
@@ -160,6 +161,7 @@ extension ImageAssetIdentifier {
     public static var navigationForwardArrow: Self { propertyName() }
 
     // MARK: - Arrows
+
     public static var arrowRightIcon: Self { propertyName() }
     public static var arrowLeftIcon: Self { propertyName() }
 

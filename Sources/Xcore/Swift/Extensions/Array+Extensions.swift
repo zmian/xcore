@@ -146,7 +146,7 @@ extension Array where Element: Equatable {
     /// - Parameter preferredOrder: The ordered elements, which will be used to sort
     ///   the sequence’s elements.
     public mutating func sort(by preferredOrder: Self) {
-        sort { (a, b) -> Bool in
+        sort { a, b -> Bool in
             guard
                 let first = preferredOrder.firstIndex(of: a),
                 let second = preferredOrder.firstIndex(of: b)
@@ -175,7 +175,7 @@ extension Array where Element: Equatable {
     ///   the sequence’s elements.
     /// - Returns: A sorted array of the sequence’s elements.
     public func sorted(by preferredOrder: Self) -> Self {
-        sorted { (a, b) -> Bool in
+        sorted { a, b -> Bool in
             guard
                 let first = preferredOrder.firstIndex(of: a),
                 let second = preferredOrder.firstIndex(of: b)

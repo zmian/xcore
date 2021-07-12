@@ -9,7 +9,7 @@ import UIKit
 // MARK: - isContentModeAutomaticallyAdjusted
 
 extension UIImageView {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var isContentModeAutomaticallyAdjusted = "isContentModeAutomaticallyAdjusted"
     }
 
@@ -44,7 +44,8 @@ extension UIImageView {
 // MARK: - Swizzle
 
 extension UIImageView {
-    @objc private func swizzled_setHighlightedImage(_ image: UIImage?) {
+    @objc
+    private func swizzled_setHighlightedImage(_ image: UIImage?) {
         swizzled_setHighlightedImage(image)
         // Force update the highlighted image.
         //
@@ -58,17 +59,20 @@ extension UIImageView {
 
     // `AdjustContentModeIfNeeded` related swizzle calls.
 
-    @objc private func swizzled_layoutSubviews() {
+    @objc
+    private func swizzled_layoutSubviews() {
         swizzled_layoutSubviews()
         adjustContentModeIfNeeded()
     }
 
-    @objc private func swizzled_setImage(_ image: UIImage?) {
+    @objc
+    private func swizzled_setImage(_ image: UIImage?) {
         swizzled_setImage(image)
         adjustContentModeIfNeeded()
     }
 
-    @objc private func swizzled_setBounds(_ bounds: CGRect) {
+    @objc
+    private func swizzled_setBounds(_ bounds: CGRect) {
         swizzled_setBounds(bounds)
         adjustContentModeIfNeeded()
     }

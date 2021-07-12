@@ -40,7 +40,7 @@ public enum Count: Equatable, ExpressibleByIntegerLiteral, CustomStringConvertib
         switch self {
             case .infinite:
                 return "infinite"
-            case .times(let count):
+            case let .times(count):
                 return "\(count)"
         }
     }

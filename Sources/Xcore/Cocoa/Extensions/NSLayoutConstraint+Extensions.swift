@@ -73,7 +73,7 @@ extension NSLayoutConstraint {
     ///   constraint.
     /// - Returns: The new activated constraint with the provided `priority` value.
     @discardableResult
-    func createWithPriority( _ priority: UILayoutPriority) -> NSLayoutConstraint {
+    func createWithPriority(_ priority: UILayoutPriority) -> NSLayoutConstraint {
         let newConstraint = NSLayoutConstraint(
             item: firstItem!,
             attribute: firstAttribute,
@@ -98,7 +98,7 @@ extension NSLayoutConstraint {
     /// - Returns: The new activated constraint with the provided `multiplier`
     ///   value.
     @discardableResult
-    func createWithMultiplier( _ multiplier: CGFloat) -> NSLayoutConstraint {
+    func createWithMultiplier(_ multiplier: CGFloat) -> NSLayoutConstraint {
         let newConstraint = NSLayoutConstraint(
             item: firstItem!,
             attribute: firstAttribute,
@@ -163,7 +163,7 @@ extension Array where Element: NSLayoutConstraint {
 }
 
 extension NSLayoutConstraint {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var anchorAttributes = "anchorAttributes"
     }
 

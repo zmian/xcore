@@ -6,7 +6,7 @@
 
 import Foundation
 
-final public class Console {
+public enum Console {
     /// The default value is `.all`.
     public static var levelOptions: LevelOptions = .all
 
@@ -98,7 +98,7 @@ extension Console {
     ///   - terminator: To print without a trailing newline, pass `terminator: ""`.
     ///   - context: The source where this log is executed.
     private static func internalPrint(level: LevelOptions, items: [Any], condition: Bool = true, separator: String = " ", terminator: String = "\n", context: SourceContext) {
-        guard levelOptions.contains(level) && condition else { return }
+        guard levelOptions.contains(level), condition else { return }
 
         let items = items.map { "\($0)" }.joined(separator: separator)
         let prefix = prefixOptions(level: level, context: context)
@@ -113,7 +113,7 @@ extension Console {
     private static func prefixOptions(level: LevelOptions, context: SourceContext) -> String {
         var result: String = ""
 
-        if prefixOptions.isEmpty && level.consoleDescription == nil {
+        if prefixOptions.isEmpty, level.consoleDescription == nil {
             return result
         }
 

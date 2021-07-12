@@ -61,7 +61,7 @@ extension CurrencyFormatter {
     private func _attributedStringWithoutColor(from money: Money) -> NSMutableAttributedString {
         let amount = money.amount
 
-        if amount == 0 && !money.shouldDisplayZero {
+        if amount == 0, !money.shouldDisplayZero {
             return NSMutableAttributedString(string: " " + money.zeroString)
         }
 
@@ -124,7 +124,7 @@ extension Money {
 
 extension Money: View {
     public var body: some View {
-        if amount == 0 && !shouldDisplayZero {
+        if amount == 0, !shouldDisplayZero {
             Text(zeroString)
         } else {
             let components = formatter.components(from: amount, sign: sign)
@@ -147,17 +147,17 @@ extension Money: View {
 // TODO: Add support for "shouldSuperscriptMinorUnit"
 
 /*
- extension String {
-     func rangeFromNSRange(nsRange : NSRange) -> Range<String.Index>? {
-         Range(nsRange, in: self)
-     }
+  extension String {
+      func rangeFromNSRange(nsRange : NSRange) -> Range<String.Index>? {
+          Range(nsRange, in: self)
+      }
+  }
+
+ let amount = money.amount
+
+ if let minorUnitRange = components.range(style: money.style).minorUnit {
+     attributedString.setAttributes(minorUnitFont(money), range: minorUnitRange)
  }
 
-let amount = money.amount
-
-if let minorUnitRange = components.range(style: money.style).minorUnit {
-    attributedString.setAttributes(minorUnitFont(money), range: minorUnitRange)
-}
-
-return attributedString
-*/
+ return attributedString
+ */

@@ -6,7 +6,8 @@
 
 import UIKit
 
-@objc extension UIView {
+@objc
+extension UIView {
     open var viewController: UIViewController? {
         responder()
     }
@@ -76,7 +77,7 @@ import UIKit
         locations: [Int] = [0, 1]
     ) -> CAGradientLayer {
         CAGradientLayer().apply {
-            $0.colors = colors.map { $0.cgColor }
+            $0.colors = colors.map(\.cgColor)
             $0.startPoint = startPoint
             $0.endPoint = endPoint
             $0.locations = locations.map { NSNumber(value: $0) }
@@ -98,7 +99,8 @@ import UIKit
 
 // MARK: - Borders
 
-@objc extension UIView {
+@objc
+extension UIView {
     var onePixel: CGFloat {
         let scale = window?.screen.scale ?? UIScreen.main.scale
         return 1 / scale
@@ -133,12 +135,14 @@ import UIKit
         if edges.contains(.top) || allEdges {
             let top = border(tag: "top")
             addSubview(top)
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|-insetTop-[top(==thickness)]",
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "V:|-insetTop-[top(==thickness)]",
                 options: [],
                 metrics: metrics,
                 views: ["top": top]
             ).activate()
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-insetLeft-[top]-insetRight-|",
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "H:|-insetLeft-[top]-insetRight-|",
                 options: [],
                 metrics: metrics,
                 views: ["top": top]
@@ -149,12 +153,14 @@ import UIKit
         if edges.contains(.left) || allEdges {
             let left = border(tag: "left")
             addSubview(left)
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-insetLeft-[left(==thickness)]",
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "H:|-insetLeft-[left(==thickness)]",
                 options: [],
                 metrics: metrics,
                 views: ["left": left]
             ).activate()
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|-insetTop-[left]-insetBottom-|",
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "V:|-insetTop-[left]-insetBottom-|",
                 options: [],
                 metrics: metrics,
                 views: ["left": left]
@@ -165,12 +171,14 @@ import UIKit
         if edges.contains(.right) || allEdges {
             let right = border(tag: "right")
             addSubview(right)
-            NSLayoutConstraint.constraints(withVisualFormat: "H:[right(==thickness)]-insetRight-|",
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "H:[right(==thickness)]-insetRight-|",
                 options: [],
                 metrics: metrics,
                 views: ["right": right]
             ).activate()
-            NSLayoutConstraint.constraints(withVisualFormat: "V:|-insetTop-[right]-insetBottom-|",
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "V:|-insetTop-[right]-insetBottom-|",
                 options: [],
                 metrics: metrics,
                 views: ["right": right]
@@ -181,12 +189,14 @@ import UIKit
         if edges.contains(.bottom) || allEdges {
             let bottom = border(tag: "bottom")
             addSubview(bottom)
-            NSLayoutConstraint.constraints(withVisualFormat: "V:[bottom(==thickness)]-insetBottom-|",
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "V:[bottom(==thickness)]-insetBottom-|",
                 options: [],
                 metrics: metrics,
                 views: ["bottom": bottom]
             ).activate()
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-insetLeft-[bottom]-insetRight-|",
+            NSLayoutConstraint.constraints(
+                withVisualFormat: "H:|-insetLeft-[bottom]-insetRight-|",
                 options: [],
                 metrics: metrics,
                 views: ["bottom": bottom]
@@ -200,7 +210,8 @@ import UIKit
 
 // MARK: - Snapshot
 
-@objc extension UIView {
+@objc
+extension UIView {
     /// Takes a snapshot of the complete view hierarchy as visible onscreen.
     ///
     /// - Parameter afterScreenUpdates: A boolean value that indicates whether the
@@ -245,7 +256,8 @@ import UIKit
 
 // MARK: - Size
 
-@objc extension UIView {
+@objc
+extension UIView {
     open var sizeFittingScreenWidth: CGSize {
         sizeFitting(width: UIScreen.main.bounds.width)
     }

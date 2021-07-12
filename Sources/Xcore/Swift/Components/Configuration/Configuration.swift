@@ -32,7 +32,7 @@ import UIKit
 public struct Configuration<Type> {
     public typealias Identifier = Xcore.Identifier<Type>
     public let id: Identifier
-    private let _configure: ((Type) -> Void)
+    private let _configure: (Type) -> Void
 
     public init(id: Identifier? = nil, _ configure: @escaping ((Type) -> Void)) {
         self.id = id ?? "___defaultId___"

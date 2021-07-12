@@ -7,7 +7,7 @@
 import UIKit
 
 extension UITabBar {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var isTransparent = "isTransparent"
         static var borderColor = "borderColor"
         static var borderWidth = "borderWidth"
@@ -36,7 +36,7 @@ extension UITabBar {
         set { setValue(newValue, forKey: "_hidesShadow") }
     }
 
-    @objc dynamic open override var borderWidth: CGFloat {
+    @objc open override dynamic var borderWidth: CGFloat {
         get { associatedObject(&AssociatedKey.borderWidth, default: 0) }
         set {
             setAssociatedObject(&AssociatedKey.borderWidth, value: newValue)
@@ -44,7 +44,7 @@ extension UITabBar {
         }
     }
 
-    @objc dynamic open override var borderColor: UIColor {
+    @objc open override dynamic var borderColor: UIColor {
         get { associatedObject(&AssociatedKey.borderColor, default: layer.borderColor?.uiColor ?? .black) }
         set {
             setAssociatedObject(&AssociatedKey.borderColor, value: newValue)

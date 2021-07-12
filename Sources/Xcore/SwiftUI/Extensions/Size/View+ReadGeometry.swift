@@ -35,10 +35,10 @@ extension View {
 private struct GeometryProxyWrapper: Equatable {
     let base: GeometryProxy
 
-    static func == (lhs: GeometryProxyWrapper, rhs: GeometryProxyWrapper) -> Bool {
+    static func ==(lhs: GeometryProxyWrapper, rhs: GeometryProxyWrapper) -> Bool {
         lhs.base.size == rhs.base.size &&
-        lhs.base.safeAreaInsets == rhs.base.safeAreaInsets &&
-        lhs.base.frame(in: .global) == rhs.base.frame(in: .global) &&
-        lhs.base.frame(in: .local) == rhs.base.frame(in: .local)
+            lhs.base.safeAreaInsets == rhs.base.safeAreaInsets &&
+            lhs.base.frame(in: .global) == rhs.base.frame(in: .global) &&
+            lhs.base.frame(in: .local) == rhs.base.frame(in: .local)
     }
 }

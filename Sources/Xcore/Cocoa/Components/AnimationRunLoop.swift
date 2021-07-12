@@ -12,7 +12,7 @@ import UIKit
 /// "in-flight" animation value for the animated properties. Without "in-flight"
 /// animation values we are unable to observe content inset to make adjustments
 /// to UI.
-final public class AnimationRunLoop {
+public final class AnimationRunLoop {
     private var displayLink: CADisplayLink?
     private var beginTime: CFTimeInterval = 0
     private var endTime: CFTimeInterval = 0
@@ -44,7 +44,8 @@ final public class AnimationRunLoop {
         endTime = duration + beginTime
     }
 
-    @objc private func step(_ displayLink: CADisplayLink) {
+    @objc
+    private func step(_ displayLink: CADisplayLink) {
         let now = CACurrentMediaTime()
         var percent = (now - beginTime) / duration
         percent = min(1, max(0, percent))

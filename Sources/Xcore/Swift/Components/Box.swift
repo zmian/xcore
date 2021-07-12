@@ -50,7 +50,7 @@ extension Box: Hashable where Value: Hashable {
 }
 
 extension Box: Equatable where Value: Equatable {
-    public static func == (lhs: Box<Value>, rhs: Box<Value>) -> Bool {
+    public static func ==(lhs: Box<Value>, rhs: Box<Value>) -> Bool {
         lhs.value == rhs.value
     }
 }

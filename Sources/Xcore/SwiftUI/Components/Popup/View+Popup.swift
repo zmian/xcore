@@ -58,7 +58,7 @@ extension View {
         @ViewBuilder actions: @escaping () -> A,
         onDismiss: (() -> Void)? = nil
     ) -> some View where A: View, S1: StringProtocol, S2: StringProtocol {
-        popup(Text(title), message: message.map { Text.init($0) }, isPresented: isPresented, actions: actions)
+        popup(Text(title), message: message.map { Text($0) }, isPresented: isPresented, actions: actions)
     }
 }
 

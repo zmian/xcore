@@ -123,7 +123,7 @@ extension Router.Route {
             var viewControllers: [UIViewController] = []
 
             for route in routes {
-                guard case .viewController(let vc) = route.configure(router) else {
+                guard case let .viewController(vc) = route.configure(router) else {
                     #if DEBUG
                     Console.log("Route \(route.id) contains custom route. This will lead to unexpected behavior. Please handle the use case separately.")
                     #endif

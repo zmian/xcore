@@ -15,11 +15,13 @@ private class ControlClosureWrapper: NSObject, NSCopying {
         self.event = event
     }
 
-    @objc func copy(with zone: NSZone?) -> Any {
+    @objc
+    func copy(with zone: NSZone?) -> Any {
         ControlClosureWrapper(event: event, closure: closure)
     }
 
-    @objc func invoke(_ sender: AnyObject) {
+    @objc
+    func invoke(_ sender: AnyObject) {
         closure?(sender)
     }
 }
@@ -27,7 +29,7 @@ private class ControlClosureWrapper: NSObject, NSCopying {
 extension UIControl: ControlTargetActionBlockRepresentable {
     public typealias Sender = UIControl
 
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var actionHandler = "actionHandler"
     }
 

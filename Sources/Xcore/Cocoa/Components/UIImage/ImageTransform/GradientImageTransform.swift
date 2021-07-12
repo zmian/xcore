@@ -14,7 +14,7 @@ public struct GradientImageTransform: ImageTransform {
     private let blendMode: CGBlendMode
 
     public var id: String {
-        let hex = colors.map { $0.hex }.joined(separator: ",")
+        let hex = colors.map(\.hex).joined(separator: ",")
         let loc = locations?.map { "\($0)" }.joined(separator: ",") ?? "nil"
         return "\(transformName)-type:(\(type.rawValue))-colors:(\(hex))-direction:(\(direction))-locations:(\(loc))-blendMode:(\(blendMode.rawValue))"
     }
@@ -52,7 +52,7 @@ public struct GradientImageTransform: ImageTransform {
         let layer = CAGradientLayer().apply {
             $0.frame = rect
             $0.type = type
-            $0.colors = colors.map { $0.cgColor }
+            $0.colors = colors.map(\.cgColor)
             $0.locations = locations?.map {
                 NSNumber(value: $0)
             }

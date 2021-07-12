@@ -19,7 +19,7 @@ extension UIViewController {
     /// UIViewController.defaultAppearance.tintColor = .gray
     /// ```
     @objc(UIViewControllerDefaultAppearance)
-    final public class DefaultAppearance: NSObject {
+    public final class DefaultAppearance: NSObject {
         /// The default value is `.app(.body)`
         public lazy var font: UIFont = .app(.body)
         /// The default value is `Theme.accentColor`.
@@ -34,7 +34,8 @@ extension UIViewController {
     }
 }
 
-@objc extension UIViewController {
+@objc
+extension UIViewController {
     public dynamic static let defaultAppearance = DefaultAppearance()
 
     private var defaultAppearance: DefaultAppearance {
@@ -43,7 +44,7 @@ extension UIViewController {
 }
 
 extension UIViewController {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var supportedInterfaceOrientations = "supportedInterfaceOrientations"
         static var preferredInterfaceOrientationForPresentation = "preferredInterfaceOrientationForPresentation"
         static var preferredStatusBarStyle = "preferredStatusBarStyle"
@@ -246,7 +247,8 @@ extension UIViewController {
     }
 }
 
-@objc extension UIViewController {
+@objc
+extension UIViewController {
     /// The default value is of property `isTabBarHidden` if it's set; otherwise,
     /// `false`.
     open var prefersTabBarHidden: Bool {
@@ -312,8 +314,10 @@ extension UIViewController {
 
 // MARK: - Dismiss
 
-@objc extension UIViewController {
-    @objc public enum DismissMethod: Int {
+@objc
+extension UIViewController {
+    @objc
+    public enum DismissMethod: Int {
         /// View controller dismissed using back button.
         case backBarButton
         /// View controller dismissed using back swipe gesture.
@@ -329,7 +333,8 @@ extension UIViewController {
 
 // MARK: - ObstructableView
 
-@objc extension UIViewController {
+@objc
+extension UIViewController {
     /// A property to indicate that view controller is obstructing the screen.
     ///
     /// Such information is useful when certain actions can't be triggered, for

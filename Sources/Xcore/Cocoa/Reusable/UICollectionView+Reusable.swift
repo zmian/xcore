@@ -7,7 +7,7 @@
 import UIKit
 
 extension UICollectionView {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var registeredCells = "registeredCells"
         static var registeredSupplementaryViews = "registeredSupplementaryViews"
     }

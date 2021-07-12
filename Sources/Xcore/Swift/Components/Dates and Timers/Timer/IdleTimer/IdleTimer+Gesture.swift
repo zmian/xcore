@@ -30,7 +30,7 @@ extension NotificationCenter.Event {
 // MARK: - Gesture
 
 extension IdleTimer {
-    final private class Gesture: UIGestureRecognizer {
+    private final class Gesture: UIGestureRecognizer {
         private let onTouchesEnded: () -> Void
 
         init(onTouchesEnded: @escaping () -> Void) {

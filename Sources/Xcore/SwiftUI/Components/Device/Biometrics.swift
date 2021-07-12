@@ -108,7 +108,7 @@ extension Biometrics {
         // - SeeAlso: `NSFaceIDUsageDescription` in `Info.plist` file.
         let context = LAContext()
         context.localizedFallbackTitle = ""
-        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: " ") { success, error in
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: " ") { success, _ in
             DispatchQueue.main.async {
                 completion(success)
             }
@@ -123,7 +123,7 @@ extension Biometrics {
         let context = LAContext()
         context.localizedFallbackTitle = ""
         context.interactionNotAllowed = true
-        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: " ") { success, error in
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: " ") { _, _ in
             DispatchQueue.main.async {
                 completion()
             }

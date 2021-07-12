@@ -51,7 +51,7 @@ extension FileManager {
 
         directoryUrl = directoryUrl.appendingPathComponent(path, isDirectory: true)
 
-        if case .createIfNotExists(let resourceValue) = options {
+        if case let .createIfNotExists(resourceValue) = options {
             try createIfNotExists(directoryUrl, resourceValue: resourceValue)
         }
 

@@ -76,7 +76,7 @@ extension Theme {
     private static func setSearchBarTheme(_ theme: Theme) {
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).apply {
             // SearchBar Cancel button normal state
-             $0.setTitleTextAttributes([
+            $0.setTitleTextAttributes([
                 .foregroundColor: theme.accentColor,
                 .font: UIFont.app(.body)
             ], for: .normal)

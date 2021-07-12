@@ -13,10 +13,10 @@ import Foundation
 /// ```swift
 /// let views = [Weak<UIView>]()
 /// ```
-final public class Weak<Value: AnyObject> {
+public final class Weak<Value: AnyObject> {
     public weak var value: Value?
 
-    public init (_ value: Value) {
+    public init(_ value: Value) {
         self.value = value
     }
 }

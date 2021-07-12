@@ -90,28 +90,28 @@ extension Date {
         let formatter: DateFormatter
 
         switch format {
-            case .date(let dateStyle):
+            case let .date(dateStyle):
                 formatter = cache.dateFormatter(
                     dateStyle: dateStyle,
                     doesRelativeDateFormatting: doesRelativeDateFormatting,
                     calendar: calendar
                 )
-            case .time(let timeStyle):
+            case let .time(timeStyle):
                 formatter = cache.dateFormatter(
                     timeStyle: timeStyle,
                     doesRelativeDateFormatting: doesRelativeDateFormatting,
                     calendar: calendar
                 )
-            case .dateTime(let style):
+            case let .dateTime(style):
                 formatter = cache.dateFormatter(
                     dateStyle: style,
                     timeStyle: style,
                     doesRelativeDateFormatting: doesRelativeDateFormatting,
                     calendar: calendar
                 )
-            case .iso8601(let options):
+            case let .iso8601(options):
                 return cache.dateFormatter(options: options, calendar: calendar).string(from: self)
-            case .custom(let customFormat):
+            case let .custom(customFormat):
                 var ordinalDay: String {
                     cache.numberFormatter.locale = calendar.locale
                     let day = NSNumber(value: component(.day, in: calendar))
@@ -218,7 +218,7 @@ extension Date {
     /// - Parameters:
     ///   - components: DateComponents object that contains adjustment values.
     ///   - calendar: The calendar to use for adjustment.
-    public func adjusting(_ components: DateComponents, in calendar: Calendar = .default) -> Date  {
+    public func adjusting(_ components: DateComponents, in calendar: Calendar = .default) -> Date {
         calendar.date(byAdding: components, to: self)!
     }
 
@@ -311,9 +311,9 @@ extension Date {
     /// ```
     public func numberOf(_ component: Calendar.Component, to date: Date, in calendar: Calendar = .default) -> Int {
         #if DEBUG
-            return calendar.dateComponents([component], from: self, to: date).value(for: component)!
+        return calendar.dateComponents([component], from: self, to: date).value(for: component)!
         #else
-            return calendar.dateComponents([component], from: self, to: date).value(for: component) ?? 0
+        return calendar.dateComponents([component], from: self, to: date).value(for: component) ?? 0
         #endif
     }
 

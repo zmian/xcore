@@ -44,7 +44,7 @@ extension UIImage.Fetcher {
 }
 
 extension UIImageView {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var imageRepresentableSource = "imageRepresentableSource"
         static var imageFetcherCancelBlock = "imageFetcherCancelBlock"
     }

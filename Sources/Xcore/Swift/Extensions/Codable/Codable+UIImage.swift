@@ -15,8 +15,8 @@ extension KeyedEncodingContainer {
         guard let data = value.data(using: format) else {
             throw EncodingError.invalidValue(value, .init(
                 codingPath: [],
-                debugDescription: "Failed to convert UIImage instance to Data.")
-            )
+                debugDescription: "Failed to convert UIImage instance to Data."
+            ))
         }
 
         try encode(data, forKey: key)
@@ -57,8 +57,8 @@ extension SingleValueEncodingContainer {
         guard let data = value.data(using: format) else {
             throw EncodingError.invalidValue(value, .init(
                 codingPath: [],
-                debugDescription: "Failed to convert UIImage instance to Data.")
-            )
+                debugDescription: "Failed to convert UIImage instance to Data."
+            ))
         }
 
         try encode(data)

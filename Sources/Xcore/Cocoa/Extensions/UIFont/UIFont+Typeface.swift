@@ -34,7 +34,7 @@ extension UIFont.Typeface {
     static var systemFontId = "XCAppleSystemUIFont"
 
     public static var system: Self {
-        .init { weight, trait in
+        .init { _, _ in
             // This is special name and it will be interpreted at the callsite.
             systemFontId
         }

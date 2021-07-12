@@ -113,7 +113,7 @@ open class HUD: Appliable {
 
     private func setNeedsStatusBarAppearanceUpdate() {
         switch preferredStatusBarStyle {
-            case .style(let value):
+            case let .style(value):
                 viewController.statusBarStyle = value
             case .inherit:
                 let value = UIApplication.sharedOrNil?.firstSceneKeyWindow?.topViewController?.preferredStatusBarStyle
@@ -384,7 +384,7 @@ extension HUD {
     /// HUD.appearance().backgroundColor = .gray
     /// LaunchScreen.View.appearance().backgroundColor = .blue
     /// ```
-    final public class Appearance: Appliable {
+    public final class Appearance: Appliable {
         public var backgroundColor: UIColor = .white
         fileprivate var adjustWindowAttributes: ((_ window: UIWindow) -> Void)?
 
@@ -415,7 +415,7 @@ extension HUD {
         return proxy
     }
 
-    fileprivate var appearance: Appearance? {
+    private var appearance: Appearance? {
         let instanceName = name(of: self)
 
         // Return the type proxy if exists.

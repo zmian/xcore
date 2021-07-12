@@ -24,7 +24,7 @@ public struct CompositeImageTransform: ImageTransform, ExpressibleByArrayLiteral
 
     /// Removes the given transform.
     public mutating func remove(_ transform: ImageTransform) {
-        let ids = transforms.map { $0.id }
+        let ids = transforms.map(\.id)
 
         guard let index = ids.firstIndex(of: transform.id) else {
             return

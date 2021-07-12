@@ -149,11 +149,11 @@ extension String.BlockFormatStyle {
             switch self {
                 case .same:
                     return Swift.max(0, count)
-                case .min(let value):
+                case let .min(value):
                     return Swift.max(value, count)
-                case .max(let value):
+                case let .max(value):
                     return Swift.min(value, Swift.max(0, count))
-                case .equal(let value):
+                case let .equal(value):
                     return value
             }
         }

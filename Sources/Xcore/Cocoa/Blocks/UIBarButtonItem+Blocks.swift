@@ -9,7 +9,7 @@ import UIKit
 extension UIBarButtonItem: TargetActionBlockRepresentable {
     public typealias Sender = UIBarButtonItem
 
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var actionHandler = "actionHandler"
     }
 

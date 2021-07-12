@@ -182,17 +182,15 @@ extension Double {
 
     private typealias Abbrevation = (suffix: String, threshold: Double, divisor: Double)
 
-    // swiftlint:disable comma icc_comma_space icc_double_space
     private static let abbreviations: [Abbrevation] = [
-       ("",                0,              1),
-       ("K",           1_000,          1_000),
-       ("K",         100_000,          1_000),
-       ("M",         499_000,      1_000_000),
-       ("M",     999_999_999,     10_000_000),
-       ("B",   1_000_000_000,  1_000_000_000),
-       ("B", 999_999_999_999, 10_000_000_000)
+        ("", 0, 1),
+        ("K", 1000, 1000),
+        ("K", 100_000, 1000),
+        ("M", 499_000, 1_000_000),
+        ("M", 999_999_999, 10_000_000),
+        ("B", 1_000_000_000, 1_000_000_000),
+        ("B", 999_999_999_999, 10_000_000_000)
     ]
-    // swiftlint:enable comma icc_comma_space icc_double_space
 
     /// Abbreviate `self` to smaller format.
     ///
@@ -234,7 +232,7 @@ extension Double {
         return Double.abbrevationNumberFormatter.string(from: NSNumber(value: value)) ?? "\(self)"
     }
 
-    private static let testValues: [Double] = [598, -999, 1000, -1284, 9940, 9980, 39900, 99880, 399880, 999898, 999999, 1456384, 12383474, 987, 1200, 12000, 120000, 1200000, 1340, 132456, 9_000_000_000, 16_000_000, 160_000_000, 999_000_000]
+    private static let testValues: [Double] = [598, -999, 1000, -1284, 9940, 9980, 39900, 99880, 399_880, 999_898, 999_999, 1_456_384, 12_383_474, 987, 1200, 12000, 120_000, 1_200_000, 1340, 132_456, 9_000_000_000, 16_000_000, 160_000_000, 999_000_000]
 }
 
 extension Double {

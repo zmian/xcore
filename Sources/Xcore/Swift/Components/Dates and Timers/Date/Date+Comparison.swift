@@ -70,17 +70,17 @@ extension Date {
                 return `is`(.next(.day), in: calendar)
             case .yesterday:
                 return `is`(.previous(.day), in: calendar)
-            case .next(let granularity):
+            case let .next(granularity):
                 let next = Date().adjusting(granularity, by: 1, in: calendar)
                 return isSame(next, granularity: granularity, in: calendar)
-            case .previous(let granularity):
+            case let .previous(granularity):
                 let previous = Date().adjusting(granularity, by: -1, in: calendar)
                 return isSame(previous, granularity: granularity, in: calendar)
-            case .past(let granularity):
+            case let .past(granularity):
                 return isBefore(Date(), granularity: granularity, in: calendar)
-            case .current(let granularity):
+            case let .current(granularity):
                 return isSame(Date(), granularity: granularity, in: calendar)
-            case .future(let granularity):
+            case let .future(granularity):
                 return isAfter(Date(), granularity: granularity, in: calendar)
         }
     }
@@ -166,6 +166,6 @@ extension Date {
         in calendar: Calendar = .default
     ) -> Bool {
         isAfter(interval.start, orEqual: orEqual, granularity: granularity, in: calendar) &&
-        isBefore(interval.end, orEqual: orEqual, granularity: granularity, in: calendar)
+            isBefore(interval.end, orEqual: orEqual, granularity: granularity, in: calendar)
     }
 }

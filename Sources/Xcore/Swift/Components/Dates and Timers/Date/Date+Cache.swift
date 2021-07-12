@@ -42,13 +42,13 @@ extension Date {
             isLenient: Bool = true
         ) -> DateFormatter {
             let key = """
-                \(format)
-                \(doesRelativeDateFormatting)
-                \(calendar.identifier)
-                \(calendar.timeZone.identifier)
-                \(calendar.locale?.identifier ?? "")
-                \(isLenient)
-                """.sha256() ?? ""
+            \(format)
+            \(doesRelativeDateFormatting)
+            \(calendar.identifier)
+            \(calendar.timeZone.identifier)
+            \(calendar.locale?.identifier ?? "")
+            \(isLenient)
+            """.sha256() ?? ""
 
             if let formatter = get(key: key) as? DateFormatter {
                 return formatter
@@ -74,14 +74,14 @@ extension Date {
             isLenient: Bool = true
         ) -> DateFormatter {
             let key = """
-                \(dateStyle.rawValue)
-                \(timeStyle.rawValue)
-                \(doesRelativeDateFormatting)
-                \(calendar.identifier)
-                \(calendar.timeZone.identifier)
-                \(calendar.locale?.identifier ?? "")
-                \(isLenient.hashValue)
-                """.sha256() ?? ""
+            \(dateStyle.rawValue)
+            \(timeStyle.rawValue)
+            \(doesRelativeDateFormatting)
+            \(calendar.identifier)
+            \(calendar.timeZone.identifier)
+            \(calendar.locale?.identifier ?? "")
+            \(isLenient.hashValue)
+            """.sha256() ?? ""
 
             if let formatter = get(key: key) as? DateFormatter {
                 return formatter
@@ -105,9 +105,9 @@ extension Date {
             calendar: Calendar
         ) -> ISO8601DateFormatter {
             let key = """
-                \(options.rawValue)
-                \(calendar.timeZone.identifier)
-                """.sha256() ?? ""
+            \(options.rawValue)
+            \(calendar.timeZone.identifier)
+            """.sha256() ?? ""
 
             if let formatter = get(key: key) as? ISO8601DateFormatter {
                 return formatter

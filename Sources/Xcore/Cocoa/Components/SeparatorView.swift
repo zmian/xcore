@@ -22,7 +22,7 @@ extension SeparatorView {
     }
 }
 
-final public class SeparatorView: UIView {
+public final class SeparatorView: UIView {
     public override class var layerClass: AnyClass {
         CAShapeLayer.self
     }
@@ -70,12 +70,12 @@ final public class SeparatorView: UIView {
         }
     }
 
-    @objc public dynamic override var backgroundColor: UIColor? {
+    @objc public override dynamic var backgroundColor: UIColor? {
         get { _backgroundColor ?? Theme.separatorColor }
         set { _backgroundColor = newValue }
     }
 
-    @objc public dynamic override var tintColor: UIColor! {
+    @objc public override dynamic var tintColor: UIColor! {
         get { backgroundColor }
         set { backgroundColor = newValue }
     }
@@ -161,12 +161,12 @@ final public class SeparatorView: UIView {
         switch style {
             case .plain:
                 shapeLayer.lineDashPattern = nil
-            case .dot(let spacing):
+            case let .dot(spacing):
                 shapeLayer.lineDashPattern = [
                     NSNumber(value: 0.001),
                     NSNumber(value: spacing * Float(patternLineWidth) * 2.0)
                 ]
-            case .dash(let value):
+            case let .dash(value):
                 shapeLayer.lineDashPattern = value.map { NSNumber(value: $0) }
         }
     }

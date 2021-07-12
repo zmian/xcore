@@ -162,7 +162,7 @@ private enum ConvertItem: String {
 // MARK: - ConvertItem
 
 extension ConvertItem {
-    fileprivate var storageValue: StringConverter? {
+    private var storageValue: StringConverter? {
         ConvertValue().value(for: self)
     }
 

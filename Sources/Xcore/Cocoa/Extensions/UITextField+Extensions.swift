@@ -22,7 +22,7 @@ extension UITextField {
 }
 
 extension UITextField {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var contentInset = "contentInset"
         static var isInsertionCursorEnabled = "isInsertionCursorEnabled"
     }
@@ -65,17 +65,20 @@ extension UITextField {
 
     //  Add support for content inset
 
-    @objc private func swizzled_textRect(forBounds bounds: CGRect) -> CGRect {
+    @objc
+    private func swizzled_textRect(forBounds bounds: CGRect) -> CGRect {
         swizzled_textRect(forBounds: bounds.inset(by: contentInset))
     }
 
-    @objc private func swizzled_editingRect(forBounds bounds: CGRect) -> CGRect {
+    @objc
+    private func swizzled_editingRect(forBounds bounds: CGRect) -> CGRect {
         swizzled_editingRect(forBounds: bounds.inset(by: contentInset))
     }
 
     // Add support for disabling insertion cursor
 
-    @objc private func swizzled_caretRect(for position: UITextPosition) -> CGRect {
+    @objc
+    private func swizzled_caretRect(for position: UITextPosition) -> CGRect {
         guard isInsertionCursorEnabled else {
             return .zero
         }

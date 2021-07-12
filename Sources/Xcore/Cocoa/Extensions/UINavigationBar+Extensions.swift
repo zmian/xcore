@@ -7,7 +7,7 @@
 import UIKit
 
 extension UINavigationBar {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var isTransparent = "isTransparent"
         static var prefersNavigationBarBackground = "prefersNavigationBarBackground"
     }

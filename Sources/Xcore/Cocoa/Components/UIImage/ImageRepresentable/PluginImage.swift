@@ -54,7 +54,7 @@ struct PluginImage: ImageRepresentable {
 
     /// Removes the given plugin.
     mutating func remove(_ plugin: ImageRepresentablePlugin) {
-        let ids = plugins.map { $0.id }
+        let ids = plugins.map(\.id)
 
         guard let index = ids.firstIndex(of: plugin.id) else {
             return

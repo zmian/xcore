@@ -113,6 +113,7 @@ extension CapsuleView where Label == Never {
 }
 
 #if DEBUG
+
 // MARK: - Preview Provider
 
 @available(iOS 15.0, *)

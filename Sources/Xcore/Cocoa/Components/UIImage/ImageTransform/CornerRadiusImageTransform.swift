@@ -19,7 +19,7 @@ public struct CornerRadiusImageTransform: ImageTransform {
 
     public func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage {
         let rect = CGRect(image.size)
-        return UIGraphicsImageRenderer(bounds: rect).image { rendererContext in
+        return UIGraphicsImageRenderer(bounds: rect).image { _ in
             UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius).addClip()
             image.draw(in: rect)
         }

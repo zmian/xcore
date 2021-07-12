@@ -517,8 +517,8 @@ final class DateTest: XCTestCase {
         XCTAssertEqual(56, date.numberOf(.weekOfYear, to: anotherDate))
         XCTAssertEqual(397, date.numberOf(.day, to: anotherDate))
         XCTAssertEqual(9551, date.numberOf(.hour, to: anotherDate))
-        XCTAssertEqual(573083, date.numberOf(.minute, to: anotherDate))
-        XCTAssertEqual(34384991, date.numberOf(.second, to: anotherDate))
+        XCTAssertEqual(573_083, date.numberOf(.minute, to: anotherDate))
+        XCTAssertEqual(34_384_991, date.numberOf(.second, to: anotherDate))
     }
 
     func testTimeZone() {

@@ -9,7 +9,7 @@ import UIKit
 // MARK: - Highlighted Animation
 
 extension UITableViewCell {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var backgroundColors = "backgroundColors"
         static var highlightedAnimation = "highlightedAnimation"
     }
@@ -26,7 +26,7 @@ extension UITableViewCell {
 
 extension UITableViewCell {
     /// The background color for the highlighted state.
-    @objc dynamic public var highlightedBackgroundColor: UIColor? {
+    @objc public dynamic var highlightedBackgroundColor: UIColor? {
         get { backgroundColor(for: .highlighted) }
         set { setBackgroundColor(newValue, for: .highlighted) }
     }
@@ -72,7 +72,8 @@ extension UITableViewCell {
 // MARK: - Highlighted Background Color
 
 extension UITableViewCell {
-    @objc func swizzled_setHighlighted(_ highlighted: Bool, animated: Bool) {
+    @objc
+    func swizzled_setHighlighted(_ highlighted: Bool, animated: Bool) {
         highlightedAnimation.animate(highlightedAnimationView, isHighlighted: highlighted)
 
         guard let highlightedBackgroundColor = highlightedBackgroundColor else {

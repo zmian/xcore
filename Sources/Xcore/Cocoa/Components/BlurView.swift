@@ -127,7 +127,7 @@ public class BlurView: XCView {
 
 extension BlurView {
     public override func addSubview(_ view: UIView) {
-        guard isBlurEffectEnabled && !isReduceTransparencyEnabled else {
+        guard isBlurEffectEnabled, !isReduceTransparencyEnabled else {
             super.addSubview(view)
             return
         }
@@ -136,7 +136,7 @@ extension BlurView {
     }
 
     public override func bringSubviewToFront(_ view: UIView) {
-        guard isBlurEffectEnabled && !isReduceTransparencyEnabled else {
+        guard isBlurEffectEnabled, !isReduceTransparencyEnabled else {
             super.bringSubviewToFront(view)
             return
         }
@@ -145,7 +145,7 @@ extension BlurView {
     }
 
     public override func sendSubviewToBack(_ view: UIView) {
-        guard isBlurEffectEnabled && !isReduceTransparencyEnabled else {
+        guard isBlurEffectEnabled, !isReduceTransparencyEnabled else {
             super.sendSubviewToBack(view)
             return
         }

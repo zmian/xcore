@@ -69,7 +69,8 @@ extension UIView {
 
 // MARK: - Transition
 
-@objc extension UIView {
+@objc
+extension UIView {
     /// Creates a transition animation for the receiver.
     public func transition(
         duration: TimeInterval,
@@ -90,7 +91,8 @@ extension UIView {
 }
 
 extension UIView {
-    @objc open func setHidden(
+    @objc
+    open func setHidden(
         _ hide: Bool,
         animated: Bool,
         duration: TimeInterval = .default,
@@ -113,7 +115,8 @@ extension UIView {
         }
     }
 
-    @objc open func setAlpha(
+    @objc
+    open func setAlpha(
         _ value: CGFloat,
         animated: Bool = false,
         duration: TimeInterval = .fast,
@@ -131,7 +134,8 @@ extension UIView {
 // MARK: - BackgroundColor
 
 extension UIView {
-    @objc open func animateBackgroundColor(to color: UIColor?, duration: Double = .default) {
+    @objc
+    open func animateBackgroundColor(to color: UIColor?, duration: Double = .default) {
         guard let color = color else { return }
         CABasicAnimation(keyPath: "fillColor").apply {
             $0.timingFunction = .easeInEaseOut
@@ -147,7 +151,8 @@ extension UIView {
 // MARK: - Rotating
 
 extension UIView {
-    @objc open func startRotating(duration: Double = 1, clockwise: Bool = true) {
+    @objc
+    open func startRotating(duration: Double = 1, clockwise: Bool = true) {
         let animationKey = "xcore.rotation"
 
         guard layer.animation(forKey: animationKey) == nil else {
@@ -165,7 +170,8 @@ extension UIView {
         layer.add(animation, forKey: animationKey)
     }
 
-    @objc open func stopRotating() {
+    @objc
+    open func stopRotating() {
         let animationKey = "xcore.rotation"
 
         guard layer.animation(forKey: animationKey) != nil else {

@@ -114,10 +114,10 @@ extension UIEdgeInsets {
 
 extension UIEdgeInsets {
     public static func +=(lhs: inout Self, rhs: Self) {
-        lhs.top    += rhs.top
-        lhs.left   += rhs.left
+        lhs.top += rhs.top
+        lhs.left += rhs.left
         lhs.bottom += rhs.bottom
-        lhs.right  += rhs.right
+        lhs.right += rhs.right
     }
 
     public static func +=(lhs: inout Self, rhs: CGFloat) {
@@ -146,17 +146,17 @@ extension UIEdgeInsets {
 
 extension UIEdgeInsets {
     public static func -=(lhs: inout Self, rhs: Self) {
-        lhs.top    -= rhs.top
-        lhs.left   -= rhs.left
+        lhs.top -= rhs.top
+        lhs.left -= rhs.left
         lhs.bottom -= rhs.bottom
-        lhs.right  -= rhs.right
+        lhs.right -= rhs.right
     }
 
     public static func -=(lhs: inout Self, rhs: CGFloat) {
-        lhs.top    -= rhs
-        lhs.left   -= rhs
+        lhs.top -= rhs
+        lhs.left -= rhs
         lhs.bottom -= rhs
-        lhs.right  -= rhs
+        lhs.right -= rhs
     }
 
     public static func -(lhs: Self, rhs: Self) -> Self {

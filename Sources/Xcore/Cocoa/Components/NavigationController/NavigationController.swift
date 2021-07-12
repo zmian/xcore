@@ -146,12 +146,12 @@ extension NavigationController: UINavigationControllerDelegate {
         func update(item: UIBarButtonItem?) {
             guard let item = item else { return }
             // If current tint color is default color then switch over to the preferred tint color
-            if item.tintColor == defaultTintColor && item.tintColor != viewController.preferredNavigationBarTintColor {
+            if item.tintColor == defaultTintColor, item.tintColor != viewController.preferredNavigationBarTintColor {
                 item.tintColor = viewController.preferredNavigationBarTintColor
             }
 
             // If current text color is default color then switch over to the preferred tint color
-            if item.textColor == defaultTintColor && item.textColor != viewController.preferredNavigationBarTintColor {
+            if item.textColor == defaultTintColor, item.textColor != viewController.preferredNavigationBarTintColor {
                 item.textColor = viewController.preferredNavigationBarTintColor
             }
 

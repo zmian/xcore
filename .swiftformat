@@ -1,0 +1,73 @@
+# Format Options
+--allman false
+--assetliterals visual-width
+--beforemarks typealias
+--binarygrouping none
+--categorymark "MARK: - %c"
+--classthreshold 0
+--closingparen balanced
+--commas inline
+--conflictmarkers reject
+--decimalgrouping 3,6
+--elseposition same-line
+--emptybraces no-space
+--enumthreshold 0
+--exponentcase lowercase
+--exponentgrouping disabled
+--extensionacl on-declarations
+--extensionlength 0
+--extensionmark "MARK: - %t: %c"
+--fractiongrouping disabled
+--fragment false
+--funcattributes prev-line
+--groupedextension "MARK: - %c"
+--guardelse auto
+--header ignore
+--hexgrouping none
+--hexliteralcase lowercase
+--ifdef no-indent
+--importgrouping alpha
+--indent 4
+--indentcase true
+--lifecycle
+--linebreaks lf
+--markextensions always
+--marktypes always
+--maxwidth none
+--modifierorder open, public, private, final, override, convenience, dynamic
+--nevertrailing
+--nospaceoperators ...,..<
+--nowrapoperators
+--octalgrouping none
+--operatorfunc no-space
+--organizetypes actor,class,enum,struct
+--patternlet hoist
+--ranges no-space
+--redundanttype inferred
+--self init-only
+--selfrequired
+--semicolons never
+--shortoptionals always
+--smarttabs enabled
+--stripunusedargs closure-only
+--structthreshold 0
+--tabwidth 4
+--trailingclosures
+--trimwhitespace always
+--typeattributes prev-line
+--typemark "MARK: - %t"
+--varattributes preserve
+--voidtype void
+--wraparguments before-first
+--wrapcollections before-first
+--wrapconditions preserve
+--wrapparameters before-first
+--wrapreturntype preserve
+--xcodeindentation disabled
+--yodaswap always
+
+# File Options
+--exclude Pods, Generated
+
+# Rules Toggle
+--disable sortedImports, sortedSwitchCases, redundantSelf, organizeDeclarations
