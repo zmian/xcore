@@ -46,7 +46,7 @@ extension FeatureFlag.Key {
     /// Returns the value of the key from registered list of feature flag providers.
     ///
     /// - Parameter defaultValue: The value returned if the providers list doesn't
-    ///                           contain value.
+    ///   contain value.
     /// - Returns: The value for the key.
     public func value<T>(default defaultValue: @autoclosure () -> T) -> T {
         currentValue?.get() ?? defaultValue()
@@ -55,7 +55,7 @@ extension FeatureFlag.Key {
     /// Returns the value of the key from registered list of feature flag providers.
     ///
     /// - Parameter defaultValue: The value returned if the providers list doesn't
-    ///                           contain value.
+    ///   contain value.
     /// - Returns: The value for the key.
     public func value<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
         currentValue?.get() ?? defaultValue()

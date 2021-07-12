@@ -42,9 +42,9 @@ extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
 
     /// Add action handler when the item is selected.
     ///
-    /// - Parameter handler: The block to invoke when the item is selected.
-    public func addAction(_ handler: @escaping (_ sender: Self) -> Void) {
-        setActionHandler(handler)
+    /// - Parameter action: The block to invoke when the item is selected.
+    public func addAction(_ action: @escaping (_ sender: Self) -> Void) {
+        setActionHandler(action)
     }
 
     /// Removes action handler from `self`.

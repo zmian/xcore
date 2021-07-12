@@ -9,7 +9,7 @@ import Foundation
 /// A type that can be used to represent a version and compared using the
 /// relational operators `<`, `<=`, `>=`, and `>`.
 ///
-/// # Example Usage
+/// **Usage**
 ///
 /// ```swift
 /// // Sample code to add an extension to compare operating system version

@@ -8,7 +8,7 @@ import UIKit
 
 /// A protocol to observe keyboard frame changes.
 ///
-/// # Example Usage:
+/// **Usage**
 ///
 /// ```swift
 /// class MyViewController: UIViewController, KeyboardObservable {
@@ -31,7 +31,7 @@ public protocol KeyboardObservable {
     /// Use this method to adjust your layout to accommodate keyboard frame changes.
     ///
     /// - Parameter payload: The payload associated with keyboard frame visibility
-    ///                      changes notification.
+    ///   changes notification.
     func keyboardFrameDidChange(_ payload: KeyboardPayload)
 }
 
@@ -56,8 +56,8 @@ public struct KeyboardPayload {
     /// The duration of the animation in seconds.
     public let animationDuration: Double
 
-    /// The `UIView.AnimationCurve` that defines how the keyboard will be animated
-    /// onto or off the screen.
+    /// The animation curve that defines how the keyboard will be animated onto or
+    /// off the screen.
     public let animationCurve: UIView.AnimationCurve
 
     /// A Boolean indicating whether the keyboard belongs to the current app.

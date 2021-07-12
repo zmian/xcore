@@ -62,8 +62,8 @@ final public class HapticFeedback {
     /// Engine return to its idle state.
     ///
     /// - Note: The `prepare()` method is optional; however, it is highly
-    /// recommended. Calling this method helps ensure that your feedback has the
-    /// lowest possible latency.
+    ///   recommended. Calling this method helps ensure that your feedback has the
+    ///   lowest possible latency.
     public func prepare() {
         createGeneratorIfNeeded()
         generator?.prepare()

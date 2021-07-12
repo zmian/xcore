@@ -21,7 +21,7 @@ public struct Shadow {
     /// The offset (in points) of the layer’s shadow. Animatable.
     ///
     /// The default value of this property is (`0.0, -3.0`).
-    public let offset: CGSize
+    public let offset: CGPoint
 
     /// The blur radius (in points) used to render the layer’s shadow. Animatable.
     ///
@@ -53,7 +53,7 @@ public struct Shadow {
     public init(
         color: UIColor = .black,
         opacity: CGFloat = 0,
-        offset: CGSize = CGSize(width: 0, height: -3),
+        offset: CGPoint = CGPoint(x: 0, y: -3),
         radius: CGFloat = 3,
         path: CGPath? = nil
     ) {
@@ -81,7 +81,7 @@ extension CALayer {
     public func addShadow(_ shadow: Shadow) {
         shadowColor = shadow.color.cgColor
         shadowOpacity = Float(shadow.opacity)
-        shadowOffset = shadow.offset
+        shadowOffset = .init(width: shadow.offset.x, height: shadow.offset.y)
         shadowRadius = shadow.radius
         if let path = shadow.path {
             shadowPath = path

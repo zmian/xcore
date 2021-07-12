@@ -23,7 +23,7 @@ extension Date.Format {
     public enum SymbolStyle: String {
         /// Formats full representation of the symbol in calendar.
         ///
-        /// # Month Name Format
+        /// **Month Name Format**
         ///
         /// ```swift
         /// let monthName = Date().string(format: .monthName(.full))
@@ -33,7 +33,7 @@ extension Date.Format {
         /// // "September", "October", "November", "December".
         /// ```
         ///
-        /// # Weekday Name Format
+        /// **Weekday Name Format**
         ///
         /// ```swift
         /// let weekdayName = Date().string(format: .weekdayName(.full))
@@ -46,7 +46,7 @@ extension Date.Format {
 
         /// Formats short representation of the symbol in calendar.
         ///
-        /// # Month Name Format
+        /// **Month Name Format**
         ///
         /// ```swift
         /// let monthName = Date().string(format: .monthName(.short))
@@ -56,7 +56,7 @@ extension Date.Format {
         /// // "Nov", "Dec".
         /// ```
         ///
-        /// # Weekday Name Format
+        /// **Weekday Name Format**
         ///
         /// ```swift
         /// let weekdayName = Date().string(format: .weekdayName(.short))
@@ -68,7 +68,7 @@ extension Date.Format {
 
         /// Formats very short representation of the symbol in calendar.
         ///
-        /// # Month Name Format
+        /// **Month Name Format**
         ///
         /// ```swift
         /// let monthName = Date().string(format: .monthName(.veryShort))
@@ -77,7 +77,7 @@ extension Date.Format {
         /// // name such as: "J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D".
         /// ```
         ///
-        /// # Weekday Name Format
+        /// **Weekday Name Format**
         ///
         /// ```swift
         /// let weekdayName = Date().string(format: .weekdayName(.veryShort))

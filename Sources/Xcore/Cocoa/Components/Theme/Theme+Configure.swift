@@ -20,7 +20,11 @@ extension Theme {
 
     private static func setSystemComponentsTheme(_ theme: Theme) {
         UIApplication.sharedOrNil?.delegate?.window??.tintColor = theme.accentColor
-        UIBarButtonItem.appearance().setTitleTextAttributes(UIViewController.defaultNavigationBarTextAttributes, for: .normal)
+
+        UIBarButtonItem.appearance().setTitleTextAttributes(
+            UIViewController.defaultNavigationBarTextAttributes,
+            for: .normal
+        )
 
         UINavigationBar.appearance().apply {
             $0.titleTextAttributes = UIViewController.defaultNavigationBarTextAttributes

@@ -12,12 +12,12 @@ extension DispatchQueue {
         OperationQueue.current?.underlyingQueue?.label
     }
 
-    /// Submits a work item to a dispatch queue. If already on the dispatch queue then executes
-    /// the work item right away.
+    /// Submits a work item to a dispatch queue. If already on the dispatch queue
+    /// then executes the work item right away.
     ///
     /// - Parameter work: The work item to be invoked on the queue.
     func asyncSafe(execute work: @escaping @convention(block) () -> Void) {
-        if DispatchQueue.currentLabel == label {
+        if Self.currentLabel == label {
             work()
             return
         }
@@ -25,12 +25,12 @@ extension DispatchQueue {
         async(execute: work)
     }
 
-    /// Submits a work item to a dispatch queue. If already on the dispatch queue then executes
-    /// the work item right away.
+    /// Submits a work item to a dispatch queue. If already on the dispatch queue
+    /// then executes the work item right away.
     ///
     /// - Parameter work: The work item to be invoked on the queue.
     func syncSafe(execute work: @escaping @convention(block) () -> Void) {
-        if DispatchQueue.currentLabel == label {
+        if Self.currentLabel == label {
             work()
             return
         }

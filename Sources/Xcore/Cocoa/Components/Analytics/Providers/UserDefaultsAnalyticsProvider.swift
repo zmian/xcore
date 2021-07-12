@@ -14,7 +14,7 @@ final public class UserDefaultsAnalyticsProvider: AnalyticsProvider {
     /// Creates an analytics provider object with the specified database name.
     ///
     /// - Parameter named: The database name. Specifying `nil` defaults to database
-    ///                    named: `UserDefaultsAnalyticsProvider`.
+    ///   named: `UserDefaultsAnalyticsProvider`.
     public init(named: String? = nil) {
         self.suiteName = named ?? name(of: UserDefaultsAnalyticsProvider.self)
     }

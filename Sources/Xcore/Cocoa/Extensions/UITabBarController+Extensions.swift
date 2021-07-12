@@ -14,13 +14,13 @@ extension UITabBarController {
         newFrame.origin.y = view.frame.maxY + offsetY
         tabBar.isHidden = false
 
-        UIView.animate(withDuration: animated ? 0.35 : 0.0, delay: 0, options: .beginFromCurrentState, animations: {
+        UIView.animate(withDuration: animated ? 0.35 : 0.0, delay: 0, options: .beginFromCurrentState) {
             self.tabBar.frame = newFrame
-        }, completion: { complete in
+        } completion: { complete in
             if complete {
                 self.tabBar.isHidden = hide
             }
-        })
+        }
     }
 }
 

@@ -8,7 +8,7 @@ import Foundation
 
 /// A type that can be used to represent a finite or infinite count.
 ///
-/// # Example Usage
+/// **Usage**
 ///
 /// ```swift
 /// var count: Count = .infinite

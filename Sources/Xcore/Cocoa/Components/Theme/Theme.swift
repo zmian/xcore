@@ -9,8 +9,8 @@ import UIKit
 /// A structure representing constants related to theming of the app.
 ///
 /// - Note: Any instance of the theme doesn't not represent `light` or `dark`
-/// modes. As per iOS, it's the responsibility of `UIColor` object to declare
-/// dynamic version.
+///   modes. As per iOS, it's the responsibility of `UIColor` object to declare
+///   dynamic version.
 ///
 /// If parts of the app requires a certain screen to always be in darker mode
 /// you should use the iOS API to force `UITraitCollection` to always be `.dark`

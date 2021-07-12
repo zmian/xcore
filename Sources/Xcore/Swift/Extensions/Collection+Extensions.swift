@@ -14,14 +14,13 @@ extension Sequence where Iterator.Element: Hashable {
 }
 
 extension Sequence {
-    /// Return an `Array` containing only the unique elements of `self`,
-    /// in order, where `unique` criteria is determined by the `uniqueProperty`
-    /// block.
+    /// Return an `Array` containing only the unique elements of `self`, in order,
+    /// where `unique` criteria is determined by the `uniqueProperty` block.
     ///
     /// - Parameter uniqueProperty: `unique` criteria is determined by the value
-    ///             returned by this block.
+    ///   returned by this block.
     /// - Returns: Return an `Array` containing only the unique elements of `self`,
-    ///            in order, that satisfy the predicate `uniqueProperty`.
+    ///   in order, that satisfy the predicate `uniqueProperty`.
     public func uniqued<T: Hashable>(_ uniqueProperty: (Iterator.Element) -> T) -> [Iterator.Element] {
         var seen: [T: Bool] = [:]
         return filter { seen.updateValue(true, forKey: uniqueProperty($0)) == nil }
@@ -40,7 +39,7 @@ extension Array where Element: Hashable {
     /// block.
     ///
     /// - Parameter uniqueProperty: `unique` criteria is determined by the value
-    ///             returned by this block.
+    ///   returned by this block.
     public mutating func unique<T: Hashable>(_ uniqueProperty: (Element) -> T) {
         self = uniqued(uniqueProperty)
     }
@@ -58,9 +57,8 @@ extension Collection {
     /// ```
     ///
     /// - Parameter predicate: A closure that takes an element of the sequence as
-    ///                        its argument and returns a Boolean value indicating
-    ///                        whether the element should be included in the
-    ///                        returned count.
+    ///   its argument and returns a Boolean value indicating whether the element
+    ///   should be included in the returned count.
     /// - Returns: A count of elements that satisfy the given predicate.
     /// - Complexity: O(_n_), where _n_ is the length of the sequence.
     public func count(where predicate: (Element) throws -> Bool) rethrows -> Int {
@@ -85,8 +83,8 @@ extension RangeReplaceableCollection {
     /// ```
     ////
     /// - Parameter predicate: A closure that takes an element of the sequence as
-    ///             its argument and returns a Boolean value indicating whether the
-    ///             element should be removed from the collection.
+    ///   its argument and returns a Boolean value indicating whether the element
+    ///   should be removed from the collection.
     /// - Returns: A collection of the elements that are removed.
     public mutating func removingAll(where predicate: (Element) throws -> Bool) rethrows -> Self {
         let result = try filter(predicate)
@@ -147,13 +145,13 @@ extension RangeReplaceableCollection where Element: Equatable, Index == Int {
 }
 
 extension Sequence {
-    /// Returns the first element of the sequence that satisfies the given predicate.
+    /// Returns the first element of the sequence that satisfies the given
+    /// predicate.
     ///
     /// - Parameter keyPaths: A list of `keyPaths` that are used to find an element
-    ///             in the sequence.
-    ///
+    ///   in the sequence.
     /// - Returns: The first element of the sequence that satisfies predicate, or
-    ///            `nil` if there is no element that satisfies predicate.
+    ///   `nil` if there is no element that satisfies predicate.
     /// - Complexity: O(_n_), where _n_ is the length of the sequence.
     func first(_ keyPaths: KeyPath<Element, Bool>...) -> Element? {
         first { element in
@@ -163,13 +161,13 @@ extension Sequence {
         }
     }
 
-    /// Returns the first element of the sequence that satisfies the given predicate.
+    /// Returns the first element of the sequence that satisfies the given
+    /// predicate.
     ///
     /// - Parameter keyPaths: A list of `keyPaths` that are used to find an element
-    ///             in the sequence.
-    ///
+    ///   in the sequence.
     /// - Returns: The first element of the sequence that satisfies predicate, or
-    ///            `nil` if there is no element that satisfies predicate.
+    ///   `nil` if there is no element that satisfies predicate.
     /// - Complexity: O(_n_), where _n_ is the length of the sequence.
     func first(_ keyPaths: [KeyPath<Element, Bool>]) -> Element? {
         first { element in

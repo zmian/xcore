@@ -11,8 +11,8 @@ public protocol TargetActionBlockRepresentable: AnyObject {
 
     /// Add action handler when the item is selected.
     ///
-    /// - Parameter handler: The block to invoke when the item is selected.
-    func addAction(_ handler: @escaping (_ sender: Sender) -> Void)
+    /// - Parameter action: The block to invoke when the item is selected.
+    func addAction(_ action: @escaping (_ sender: Sender) -> Void)
 
     /// Removes action handler from `self`.
     func removeAction()

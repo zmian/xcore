@@ -8,7 +8,7 @@ import UIKit
 
 #if DEBUG
 extension String {
-    /// # Usage
+    /// **Usage**
     ///
     /// ```swift
     /// func generateSystemIdentifiers() {

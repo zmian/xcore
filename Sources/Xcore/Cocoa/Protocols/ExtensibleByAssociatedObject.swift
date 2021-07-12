@@ -21,12 +21,16 @@ extension ExtensibleByAssociatedObject {
     ///
     /// - Parameters:
     ///   - key: The key for the association.
-    ///   - defaultValue: The default value to return if there is no associated value.
+    ///   - defaultValue: The default value to return if there is no associated
+    ///     value.
     ///   - defaultValueAssociationPolicy: An optional value to save the
-    ///                                    `defaultValue` so the next call will have
-    ///                                     the associated object.
+    ///     `defaultValue` so the next call will have the associated object.
     /// - Returns: The value associated with the key for object.
-    public func associatedObject<T>(_ key: UnsafeRawPointer, default defaultValue: @autoclosure () -> T, policy defaultValueAssociationPolicy: AssociationPolicy? = nil) -> T {
+    public func associatedObject<T>(
+        _ key: UnsafeRawPointer,
+        default defaultValue: @autoclosure () -> T,
+        policy defaultValueAssociationPolicy: AssociationPolicy? = nil
+    ) -> T {
         guard let value = objc_getAssociatedObject(self, key) as? T else {
             let defaultValue = defaultValue()
 
@@ -46,10 +50,14 @@ extension ExtensibleByAssociatedObject {
     /// - Parameters:
     ///   - key: The key for the association.
     ///   - value: The value to associate with the key for object. Pass `nil` to
-    ///            remove an existing association.
+    ///     remove an existing association.
     ///   - associationPolicy: The policy for the association. The default value is
-    ///                        `.strong`.
-    public func setAssociatedObject<T>(_ key: UnsafeRawPointer, value: T?, policy associationPolicy: AssociationPolicy = .strong) {
+    ///     `.strong`.
+    public func setAssociatedObject<T>(
+        _ key: UnsafeRawPointer,
+        value: T?,
+        policy associationPolicy: AssociationPolicy = .strong
+    ) {
         objc_setAssociatedObject(self, key, value, associationPolicy.rawValue)
     }
 }

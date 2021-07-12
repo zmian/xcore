@@ -49,25 +49,25 @@ open class FadeAnimator: TransitionAnimator {
 
         context.to.view.alpha = 0
         bounceContainerView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-        UIView.animate(withDuration: fadeInDuration, animations: {
+        UIView.animate(withDuration: fadeInDuration) {
             context.to.view.alpha = 1
             bounceContainerView.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.2, animations: {
+        } completion: { _ in
+            UIView.animate(withDuration: 0.2) {
                 bounceContainerView.transform = .identity
-            }, completion: { _ in
+            } completion: { _ in
                 context.completeTransition()
-            })
-        })
+            }
+        }
     }
 
     private func animateFadeIn(context: TransitionContext) {
         context.to.view.alpha = 0
-        UIView.animate(withDuration: fadeInDuration, animations: {
+        UIView.animate(withDuration: fadeInDuration) {
             context.to.view.alpha = 1
-        }, completion: { _ in
+        } completion: { _ in
             context.completeTransition()
-        })
+        }
     }
 
     // MARK: - FadeOut
@@ -78,19 +78,19 @@ open class FadeAnimator: TransitionAnimator {
             return
         }
 
-        UIView.animate(withDuration: fadeOutDuration, animations: {
+        UIView.animate(withDuration: fadeOutDuration) {
             context.from.view.alpha = 0
             bounceContainerView.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        }, completion: { _ in
+        } completion: { _ in
             context.completeTransition()
-        })
+        }
     }
 
     private func animateFadeOut(context: TransitionContext) {
-        UIView.animate(withDuration: fadeOutDuration, animations: {
+        UIView.animate(withDuration: fadeOutDuration) {
             context.from.view.alpha = 0
-        }, completion: { _ in
+        } completion: { _ in
             context.completeTransition()
-        })
+        }
     }
 }

@@ -96,7 +96,7 @@ extension AVPlayer {
     /// `AVPlayerItem` as it becomes the player's `currentItem`.
     ///
     /// - Parameter remoteOrLocalName: The local filename from `Bundle.main` or
-    ///             remote url.
+    ///   remote url.
     /// - Returns: An instance of an `AVPlayer`.
     public convenience init?(remoteOrLocalName: String) {
         guard let playerItem = AVPlayerItem(remoteOrLocalName: remoteOrLocalName) else {

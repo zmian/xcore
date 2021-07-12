@@ -25,12 +25,12 @@ extension CATransaction {
 
     /// Disables transition animation.
     ///
-    /// - Parameter actionsWithoutAnimation: The transition code that you want to
-    ///             perform without animation.
-    public static func performWithoutAnimation(_ actionsWithoutAnimation: () -> Void) {
+    /// - Parameter work: The transition code that you want to perform without
+    ///   animation.
+    public static func performWithoutAnimation(_ work: () -> Void) {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
-        actionsWithoutAnimation()
+        work()
         CATransaction.commit()
     }
 }

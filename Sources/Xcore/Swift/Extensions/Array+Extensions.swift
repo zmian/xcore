@@ -66,12 +66,12 @@ extension Array {
 }
 
 extension Array where Element: NSObjectProtocol {
-    /// Returns the first index where the specified value appears in the
-    /// collection.
+    /// Returns the first index where the specified value appears in the collection.
     ///
-    /// After using `firstIndex(of:)` to find the position of a particular element in
-    /// a collection, you can use it to access the element by subscripting. This
-    /// example shows how you can pop one of the view controller from the `UINavigationController`.
+    /// After using `firstIndex(of:)` to find the position of a particular element
+    /// in a collection, you can use it to access the element by subscripting. This
+    /// example shows how you can pop one of the view controller from the
+    /// `UINavigationController`.
     ///
     /// ```swift
     /// let navigationController = UINavigationController()
@@ -87,12 +87,12 @@ extension Array where Element: NSObjectProtocol {
         firstIndex { $0.isKind(of: elementType) }
     }
 
-    /// Returns the last index where the specified value appears in the
-    /// collection.
+    /// Returns the last index where the specified value appears in the collection.
     ///
     /// After using `lastIndex(of:)` to find the position of a particular element in
     /// a collection, you can use it to access the element by subscripting. This
-    /// example shows how you can pop one of the view controller from the `UINavigationController`.
+    /// example shows how you can pop one of the view controller from the
+    /// `UINavigationController`.
     ///
     /// ```swift
     /// let navigationController = UINavigationController()
@@ -132,7 +132,8 @@ extension Array where Element: NSObjectProtocol {
 }
 
 extension Array where Element: Equatable {
-    /// Sorts the collection in place, using the given preferred order as the comparison between elements.
+    /// Sorts the collection in place, using the given preferred order as the
+    /// comparison between elements.
     ///
     /// ```swift
     /// let preferredOrder = ["Z", "A", "B", "C", "D"]
@@ -142,7 +143,8 @@ extension Array where Element: Equatable {
     /// // Prints ["Z", "A", "B", "C", "D", "W"]
     /// ```
     ///
-    /// - Parameter preferredOrder: The ordered elements, which will be used to sort the sequence’s elements.
+    /// - Parameter preferredOrder: The ordered elements, which will be used to sort
+    ///   the sequence’s elements.
     public mutating func sort(by preferredOrder: Self) {
         sort { (a, b) -> Bool in
             guard
@@ -158,8 +160,8 @@ extension Array where Element: Equatable {
 
     // Credit: https://stackoverflow.com/a/51683055
 
-    /// Returns the elements of the sequence, sorted using the given preferred order as the
-    /// comparison between elements.
+    /// Returns the elements of the sequence, sorted using the given preferred order
+    /// as the comparison between elements.
     ///
     /// ```swift
     /// let preferredOrder = ["Z", "A", "B", "C", "D"]
@@ -169,7 +171,8 @@ extension Array where Element: Equatable {
     /// // Prints ["Z", "A", "B", "C", "D", "W"]
     /// ```
     ///
-    /// - Parameter preferredOrder: The ordered elements, which will be used to sort the sequence’s elements.
+    /// - Parameter preferredOrder: The ordered elements, which will be used to sort
+    ///   the sequence’s elements.
     /// - Returns: A sorted array of the sequence’s elements.
     public func sorted(by preferredOrder: Self) -> Self {
         sorted { (a, b) -> Bool in
@@ -207,7 +210,7 @@ extension Array where Element == String? {
     /// ```
     ///
     /// - Parameter separator: A string to insert between each of the elements in
-    ///                        this sequence. The default value is an empty string.
+    ///   this sequence. The default value is an empty string.
     /// - Returns: A single, concatenated string.
     public func joined(separator: String = "") -> String {
         lazy

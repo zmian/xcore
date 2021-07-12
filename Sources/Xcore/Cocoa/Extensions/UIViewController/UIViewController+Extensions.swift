@@ -11,9 +11,9 @@ extension UIViewController {
     ///
     /// - Parameters:
     ///   - childViewController: The view controller to add as a child view
-    ///                          controller.
+    ///     controller.
     ///   - containerView: A container view where this child view controller will be
-    ///                    added. The default value is view controller's view.
+    ///     added. The default value is view controller's view.
     open func addViewController(
         _ childViewController: UIViewController,
         containerView: UIView? = nil,

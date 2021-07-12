@@ -23,7 +23,7 @@ extension Dictionary {
     /// - Parameters:
     ///   - other: A dictionary to merge.
     ///   - strategy: The strategy to use when duplicate keys are encountered. The
-    ///               default value is `.replaceExisting`.
+    ///     default value is `.replaceExisting`.
     public mutating func merge(_ other: Dictionary, strategy: MergingStrategy = .replaceExisting) {
         switch strategy {
             case .replaceExisting:
@@ -44,9 +44,9 @@ extension Dictionary {
     /// - Parameters:
     ///   - other: A dictionary to merge.
     ///   - strategy: The strategy to use when duplicate keys are encountered. The
-    ///               default value is `.replaceExisting`.
+    ///     default value is `.replaceExisting`.
     /// - Returns: A new dictionary with the combined keys and values of this
-    ///            dictionary and other.
+    ///   dictionary and other.
     public func merging(_ other: Dictionary, strategy: MergingStrategy = .replaceExisting) -> Dictionary {
         switch strategy {
             case .replaceExisting:
@@ -67,7 +67,7 @@ extension Dictionary {
     /// - Parameters:
     ///   - other: A dictionary to merge.
     ///   - strategy: The strategy to use when duplicate keys are encountered. The
-    ///               default value is `.replaceExisting`.
+    ///     default value is `.replaceExisting`.
     public mutating func merge(_ other: Dictionary?, strategy: MergingStrategy = .replaceExisting) {
         guard let other = other else {
             return
@@ -87,9 +87,9 @@ extension Dictionary {
     /// - Parameters:
     ///   - other: A dictionary to merge.
     ///   - strategy: The strategy to use when duplicate keys are encountered. The
-    ///               default value is `.replaceExisting`.
+    ///     default value is `.replaceExisting`.
     /// - Returns: A new dictionary with the combined keys and values of this
-    ///            dictionary and other.
+    ///   dictionary and other.
     public func merging(_ other: Dictionary?, strategy: MergingStrategy = .replaceExisting) -> Dictionary {
         guard let other = other else {
             return self
@@ -185,10 +185,9 @@ extension Dictionary {
     /// // ]
     /// ```
     ///
-    /// - Parameter transform: A mapping closure. `transform` accepts an
-    ///                        element of this sequence as its parameter and returns
-    ///                        a transformed value of the same or of a different
-    ///                        type.
+    /// - Parameter transform: A mapping closure. `transform` accepts an element of
+    ///   this sequence as its parameter and returns a transformed value of the same
+    ///   or of a different type.
     /// - Returns: A dictionary containing the transformed key value pairs.
     public func mapPairs<K: Hashable, T>(_ transform: (Element) throws -> (K, T)) rethrows -> [K: T] {
         [K: T](uniqueKeysWithValues: try map(transform))
@@ -197,7 +196,8 @@ extension Dictionary {
     /// Returns a dictionary containing, in order, the elements of the sequence that
     /// satisfy the given predicate.
     ///
-    /// In this example, `filterPairs` is used to include filter out key named `"age"`.
+    /// In this example, `filterPairs` is used to include filter out key named
+    /// `"age"`.
     ///
     /// ```swift
     /// var parameter: [String: Any] = [
@@ -215,9 +215,8 @@ extension Dictionary {
     /// ```
     ///
     /// - Parameter includeElement: A closure that takes an element of the sequence
-    ///                             as its argument and returns a boolean value
-    ///                             indicating whether the element should be
-    ///                             included in the returned dictionary.
+    ///   as its argument and returns a boolean value indicating whether the element
+    ///   should be included in the returned dictionary.
     /// - Returns: An array of the elements that `isIncluded` allowed.
     /// - Complexity: O(_n_), where _n_ is the length of the sequence.
     public func filterPairs(_ includeElement: (Element) throws -> Bool) rethrows -> [Key: Value] {

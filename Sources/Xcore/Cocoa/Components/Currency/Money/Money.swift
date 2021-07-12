@@ -9,7 +9,7 @@ import UIKit
 /// A structure representing money type and set of attributes to formats the
 /// output.
 ///
-/// # Example
+/// **Usage**
 ///
 /// ```swift
 /// let amount = Money(120.30)
@@ -22,7 +22,7 @@ import UIKit
 /// amountLabel.setText(amount)
 /// ```
 ///
-/// # Using Custom Formats
+/// **Using Custom Formats**
 ///
 /// ```swift
 /// let monthlyPayment = Money(9.99)

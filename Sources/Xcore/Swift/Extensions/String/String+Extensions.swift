@@ -105,7 +105,8 @@ extension String {
         components(separatedBy: .newlines)
     }
 
-    /// Normalize multiple whitespaces and trim whitespaces and new line characters in `self`.
+    /// Normalize multiple whitespaces and trim whitespaces and new line characters
+    /// in `self`.
     public func trimmed() -> String {
         replacing("[ ]+", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
     }
@@ -116,7 +117,8 @@ extension String {
         replacingOccurrences(of: pattern, with: with, options: options, range: nil)
     }
 
-    /// Trim whitespaces from start and end and normalize multiple whitespaces into one and then replace them with the given string.
+    /// Trim whitespaces from start and end and normalize multiple whitespaces into
+    /// one and then replace them with the given string.
     public func replaceWhitespaces(with string: String) -> String {
         trimmingCharacters(in: .whitespaces).replacing("[ ]+", with: string)
     }
@@ -137,8 +139,8 @@ extension String {
 
     /// Drops the given `prefix` from `self`.
     ///
-    /// - Returns: String without the specified `prefix` or nil if `prefix`
-    ///            doesn't exists.
+    /// - Returns: String without the specified `prefix` or nil if `prefix` doesn't
+    /// exists.
     public func stripPrefix(_ prefix: String) -> String? {
         guard hasPrefix(prefix) else { return nil }
         return String(dropFirst(prefix.count))
@@ -182,9 +184,9 @@ extension String {
     /// ```
     ///
     /// - Parameters:
-    ///     - length: The maximum length of the string.
-    ///     - position: The truncation position option.
-    ///     - ellipsis: A `String` that will be appended in the truncation position.
+    ///   - length: The maximum length of the string.
+    ///   - position: The truncation position option.
+    ///   - ellipsis: A `String` that will be appended in the truncation position.
     public func truncate(_ length: Int, position: TruncationPosition = .tail, ellipsis: String = "...") -> String {
         guard count > length else { return self }
 
@@ -225,7 +227,8 @@ extension String {
         nsString.pathExtension
     }
 
-    /// Returns a new string made by appending to the receiver a given path component.
+    /// Returns a new string made by appending to the receiver a given path
+    /// component.
     ///
     /// The following table illustrates the effect of this method on a variety of
     /// different paths, assuming that aString is supplied as “`scratch.tiff`”:
@@ -246,7 +249,7 @@ extension String {
     ///
     /// - Parameter component: The path component to append to the receiver.
     /// - Returns: A new string made by appending `component` to the receiver,
-    ///            preceded if necessary by a path separator.
+    ///   preceded if necessary by a path separator.
     public func appendingPathComponent(_ component: Any?) -> String {
         guard let component = component else {
             return self
@@ -294,16 +297,16 @@ extension String {
     /// Returns the height of the string constrained by specified font and size.
     ///
     /// - Note: If you would like to calculate size in one dimension only you can do
-    /// so by using `.greatestFiniteMagnitude` value for the opposite dimension.
+    ///   so by using `.greatestFiniteMagnitude` value for the opposite dimension.
     ///
     /// **For example:**
     ///
     /// `CGSize(width: 20, height: .greatestFiniteMagnitude)`
     ///
     /// - Parameters:
-    ///     - font: The font to use for calculating size.
-    ///     - options: The rendering options for the string when it is drawn.
-    ///     - constrainedToSize: The maximum size the string will be drawn in.
+    ///   - font: The font to use for calculating size.
+    ///   - options: The rendering options for the string when it is drawn.
+    ///   - constrainedToSize: The maximum size the string will be drawn in.
     public func size(
         withFont font: UIFont,
         options: NSStringDrawingOptions = .usesLineFragmentOrigin,
@@ -320,7 +323,10 @@ extension String {
     }
 
     /// - SeeAlso: http://stackoverflow.com/a/30040937
-    public func numberOfLines(_ font: UIFont, constrainedToSize: CGSize) -> (size: CGSize, numberOfLines: Int) {
+    public func numberOfLines(
+        _ font: UIFont,
+        constrainedToSize: CGSize
+    ) -> (size: CGSize, numberOfLines: Int) {
         let textStorage = NSTextStorage(string: self, attributes: [.font: font])
 
         let textContainer = NSTextContainer(size: constrainedToSize)

@@ -218,8 +218,7 @@ extension ValidationRule where Input == String {
         self.range(range) && subset(of: .numbers.inverted)
     }
 
-    /// A validation rule that checks whether the input is equal to the given
-    /// range.
+    /// A validation rule that checks whether the input is equal to the given range.
     ///
     /// - Parameter range: The range of the input.
     /// - Returns: The validation rule.
@@ -227,8 +226,7 @@ extension ValidationRule where Input == String {
         self.range(range) && subset(of: .numbers)
     }
 
-    /// A validation rule that checks whether the input is equal to the given
-    /// count.
+    /// A validation rule that checks whether the input is equal to the given count.
     ///
     /// - Parameter count: The input count.
     /// - Returns: The validation rule.
@@ -240,8 +238,8 @@ extension ValidationRule where Input == String {
 // MARK: - Data Detector
 
 extension ValidationRule where Input == String {
-    /// A validation rule that checks whether the input is equal to the given
-    /// data detector type.
+    /// A validation rule that checks whether the input is equal to the given data
+    /// detector type.
     ///
     /// - Parameter value: The value to compare against input.
     /// - Returns: The validation rule.

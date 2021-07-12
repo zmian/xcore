@@ -7,7 +7,8 @@
 import Foundation
 
 extension Locale {
-    /// - Note:
+    /// Returns `en_US` locale.
+    ///
     /// **For DateFormatter:**
     ///
     /// In most cases the best locale to choose is `"en_US_POSIX"`, a locale that's
@@ -21,7 +22,8 @@ extension Locale {
     /// - SeeAlso: https://developer.apple.com/library/archive/qa/qa1480/_index.html
     public static let us = Locale(identifier: "en_US")
 
-    /// - Note:
+    /// Returns `en_US_POSIX` locale.
+    ///
     /// **For DateFormatter:**
     ///
     /// In most cases the best locale to choose is `"en_US_POSIX"`, a locale that's
@@ -35,7 +37,7 @@ extension Locale {
     /// - SeeAlso: https://developer.apple.com/library/archive/qa/qa1480/_index.html
     public static let usPosix = Locale(identifier: "en_US_POSIX")
 
-    /// English (United Kingdom), `en_GB`
+    /// Returns `en_GB` (English, United Kingdom) locale.
     public static let uk = Locale(identifier: "en_GB")
 }
 

@@ -67,7 +67,7 @@ final class ExampleLabelInsetViewController: UIViewController {
             $0.backgroundColor = .secondarySystemBackground
             $0.borderColor = .quaternarySystemFill
             $0.borderWidth = 1
-            $0.roundCorners(.all, radius: Constants.cornerRadius)
+            $0.cornerRadius(Constants.cornerRadius, corners: .all)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 

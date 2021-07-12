@@ -82,15 +82,18 @@ extension UICollectionView {
     ///
     /// - Parameters:
     ///   - kind: A string specifying the kind of supplementary view whose layout
-    ///           attributes you want. Layout classes are responsible for defining
-    ///           the kinds of supplementary views they support.
+    ///     attributes you want. Layout classes are responsible for defining the
+    ///     kinds of supplementary views they support.
     ///   - indexPath: The index path of the supplementary view. The interpretation
-    ///                of this value depends on how the layout implements the view.
-    ///                For example, a view associated with a section might contain
-    ///                just a section value.
+    ///     of this value depends on how the layout implements the view. For
+    ///     example, a view associated with a section might contain just a section
+    ///     value.
     /// - Returns: The layout attributes of the supplementary view or `nil` if the
-    ///            specified supplementary view does not exist.
-    open func layoutAttributesForSupplementaryElement(ofKind kind: SupplementaryViewKind, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    ///   specified supplementary view does not exist.
+    open func layoutAttributesForSupplementaryElement(
+        ofKind kind: SupplementaryViewKind,
+        at indexPath: IndexPath
+    ) -> UICollectionViewLayoutAttributes? {
         guard isValid(indexPath: indexPath) else {
             return nil
         }
@@ -102,12 +105,15 @@ extension UICollectionView {
     /// inferred by the return type.
     ///
     /// - Parameters:
-    ///   - kind:      The kind of supplementary view to locate.
+    ///   - kind: The kind of supplementary view to locate.
     ///   - indexPath: The index path specifying the location of the supplementary
-    ///                view in the collection view.
+    ///     view in the collection view.
     /// - Returns: The specified supplementary view or `nil` if the view could not
-    ///            be found.
-    open func supplementaryView<T: UICollectionReusableView>(_ kind: SupplementaryViewKind, at indexPath: IndexPath) -> T? {
+    ///   be found.
+    open func supplementaryView<T: UICollectionReusableView>(
+        _ kind: SupplementaryViewKind,
+        at indexPath: IndexPath
+    ) -> T? {
         supplementaryView(forElementKind: kind.rawValue, at: indexPath) as? T
     }
 
@@ -115,14 +121,21 @@ extension UICollectionView {
     /// inferred by the return type.
     ///
     /// - Parameters:
-    ///   - kind:      The kind of supplementary view to retrieve.
+    ///   - kind: The kind of supplementary view to retrieve.
     ///   - indexPath: The index path specifying the location of the supplementary
-    ///                view in the collection view.
+    ///     view in the collection view.
     /// - Returns: A reusable `UICollectionReusableView` instance.
-    open func dequeueReusableSupplementaryView<T: UICollectionReusableView>(_ kind: SupplementaryViewKind, for indexPath: IndexPath) -> T {
+    open func dequeueReusableSupplementaryView<T: UICollectionReusableView>(
+        _ kind: SupplementaryViewKind,
+        for indexPath: IndexPath
+    ) -> T {
         registerSupplementaryViewIfNeeded(kind: kind, view: T.self)
 
-        guard let view = dequeueReusableSupplementaryView(ofKind: kind.rawValue, withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
+        guard let view = dequeueReusableSupplementaryView(
+            ofKind: kind.rawValue,
+            withReuseIdentifier: T.reuseIdentifier,
+            for: indexPath
+        ) as? T else {
             fatalError(because: .dequeueFailed(for: "UICollectionReusableView", identifier: T.reuseIdentifier))
         }
 
@@ -133,12 +146,15 @@ extension UICollectionView {
     /// the return type.
     ///
     /// - Parameter indexPath: The index path specifying the location of the cell in
-    ///                        the collection view.
+    ///   the collection view.
     /// - Returns: A reusable `UICollectionViewCell` instance.
     open func dequeueReusableCell<T: UICollectionViewCell>(for indexPath: IndexPath) -> T {
         registerIfNeeded(T.self)
 
-        guard let cell = dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as? T else {
+        guard let cell = dequeueReusableCell(
+            withReuseIdentifier: T.reuseIdentifier,
+            for: indexPath
+        ) as? T else {
             fatalError(because: .dequeueFailed(for: "UICollectionViewCell", identifier: T.reuseIdentifier))
         }
 
@@ -154,8 +170,11 @@ extension UICollectionViewLayout {
     ///   - kind: A string that identifies the type of the supplementary view.
     ///   - indexPath: The index path of the view.
     /// - Returns: A layout attributes object containing the information to apply to
-    ///            the supplementary view.
-    public func layoutAttributesForSupplementaryView(ofKind kind: UICollectionView.SupplementaryViewKind, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    ///   the supplementary view.
+    public func layoutAttributesForSupplementaryView(
+        ofKind kind: UICollectionView.SupplementaryViewKind,
+        at indexPath: IndexPath
+    ) -> UICollectionViewLayoutAttributes? {
         layoutAttributesForSupplementaryView(ofKind: kind.rawValue, at: indexPath)
     }
 }

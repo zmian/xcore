@@ -291,7 +291,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
     init(
         image: UIImage?,
         highlightedImage: UIImage? = nil,
-        _ handler: ((_ sender: Self) -> Void)? = nil
+        _ action: ((_ sender: Self) -> Void)? = nil
     ) {
         self.init(type: .custom)
         setImage(image, for: .normal)
@@ -299,8 +299,8 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
         imageView?.contentMode = .scaleAspectFit
         imageView?.tintColor = tintColor
         imageView?.enableSmoothScaling()
-        if let handler = handler {
-            addAction(.touchUpInside, handler)
+        if let action = action {
+            addAction(.touchUpInside, action)
         }
     }
 

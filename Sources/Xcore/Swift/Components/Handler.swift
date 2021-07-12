@@ -73,8 +73,8 @@ extension Handler {
         public func onStart(_ callback: @escaping () -> Void) -> Self {
             start = callback
 
-            // If already called start then trigger the callback immediately. This can happen
-            // if the start happens before the callback was attached.
+            // If already called start then trigger the callback immediately. This can
+            // happen if the start happens before the callback was attached.
             if didNotifyStart {
                 callback()
             }

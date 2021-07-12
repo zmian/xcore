@@ -247,7 +247,7 @@ extension UIColor {
     /// interface style into account.
     ///
     /// - Parameter userInterfaceStyle: The style to use when resolving the color
-    ///             information.
+    ///   information.
     /// - Returns: The version of the color to display for the specified style.
     public func resolve(for userInterfaceStyle: UIUserInterfaceStyle) -> UIColor {
         resolvedColor(with: .init(userInterfaceStyle: userInterfaceStyle))

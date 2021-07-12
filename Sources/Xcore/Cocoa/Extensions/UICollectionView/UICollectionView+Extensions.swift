@@ -37,12 +37,11 @@ extension UICollectionView {
 extension UICollectionView {
     /// Returns all the cells of the collection view in the given visible section.
     ///
-    /// - Parameter section: The index of the section for which you want a count of
-    ///                      the items.
-    /// - Returns: The cell objects at the corresponding section or nil if the
-    ///            section is not visible or indexPath is out of range.
-    ///
     /// - Note: Only the visible cells are returned.
+    /// - Parameter section: The index of the section for which you want a count of
+    ///   the items.
+    /// - Returns: The cell objects at the corresponding section or nil if the
+    ///   section is not visible or indexPath is out of range.
     open func cells(inSection section: Int) -> [UICollectionViewCell] {
         guard section < numberOfSections else {
             return []
@@ -64,8 +63,8 @@ extension UICollectionView {
     /// Returns the first cell of the collection view that satisfies the given
     /// predicate.
     ///
-    /// The following example uses the `cell(where:)` method to find the first
-    /// cell of class type `PhotoCell`:
+    /// The following example uses the `cell(where:)` method to find the first cell
+    /// of class type `PhotoCell`:
     ///
     /// ```swift
     /// if let cell = collectionView.cell(where: { $0.isKind(of: PhotoCell.self) }) {
@@ -73,13 +72,12 @@ extension UICollectionView {
     /// }
     /// ```
     ///
+    /// - Note: Only the visible cells are queried.
     /// - Parameter predicate: A closure that takes a cell of the collection view as
-    ///   its argument and returns a boolean value indicating whether the
-    ///   element is a match.
+    ///   its argument and returns a boolean value indicating whether the element is
+    ///   a match.
     /// - Returns: The first cell of the collection view that satisfies `predicate`,
     ///   or `nil` if there is no cell that satisfies `predicate`.
-    ///
-    /// - Note: Only the visible cells are queried.
     open func cell(where predicate: (UICollectionViewCell) -> Bool) -> UICollectionViewCell? {
         for section in 0..<numberOfSections {
             for item in 0..<numberOfItems(inSection: section) {
@@ -134,12 +132,11 @@ extension UICollectionView {
     /// }
     /// ```
     ///
+    /// - Note: The block will be called only once when the cell is avaiable.
     /// - Parameters:
     ///   - kind: The kind of cell to find.
     ///   - block: The block to invoke when the first cell of the collection view
-    ///            that satisfies the given type becomes available.
-    ///
-    /// - Note: The block will be called only once when the cell is avaiable.
+    ///     that satisfies the given type becomes available.
     public func cell<T: UICollectionViewCell>(kind: T.Type, _ block: @escaping (T) -> Void) {
         let key = NSStringFromClass(kind)
 
@@ -172,12 +169,11 @@ extension UICollectionView {
     /// - Parameters:
     ///   - indexPath: The index path of the item to select.
     ///   - animated: Specify `true` to animate the change in the selection or
-    ///               `false` to make the change without animating it.
+    ///     `false` to make the change without animating it.
     ///   - scrollPosition: An option that specifies where the item should be
-    ///                     positioned when scrolling finishes. For a list of
-    ///                     possible values, see `UICollectionViewScrollPosition`.
+    ///     positioned when scrolling finishes.
     ///   - shouldNotifyDelegate: An option to specify whether the delegate methods
-    ///                           to be called.
+    ///     to be called.
     @objc open func selectItem(
         at indexPath: IndexPath,
         animated: Bool,
@@ -216,9 +212,9 @@ extension UICollectionView {
     /// - Parameters:
     ///   - indexPath: The index path of the item to deselect.
     ///   - animated: Specify `true` to animate the change in the selection or
-    ///               `false` to make the change without animating it.
+    ///     `false` to make the change without animating it.
     ///   - shouldNotifyDelegate: An option to specify whether the delegate methods
-    ///                           to be called.
+    ///     to be called.
     @objc open func deselectItem(
         at indexPath: IndexPath,
         animated: Bool,
@@ -233,7 +229,8 @@ extension UICollectionView {
         }
 
         // Ask the delegate method if deselection for the given index path is allowed.
-        // If the delegate method for `shouldDeselectItemAt` is not implemented the default value is `true`.
+        // If the delegate method for `shouldDeselectItemAt` is not implemented the
+        // default value is `true`.
         let shouldDeselect = delegate.collectionView?(self, shouldDeselectItemAt: indexPath) ?? true
 
         guard shouldDeselect else {

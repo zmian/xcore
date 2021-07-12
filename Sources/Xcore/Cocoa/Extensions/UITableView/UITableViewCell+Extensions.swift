@@ -86,7 +86,7 @@ extension UITableViewCell {
 
         let newBackgroundColor = highlighted ? highlightedBackgroundColor : normalBackgroundColor
 
-        UIView.animateFromCurrentState(withDuration: animated ? 0.15 : 0) {
+        UIView.animateFromCurrentState(duration: animated ? 0.15 : 0) {
             self.highlightedBackgroundColorView.backgroundColor = newBackgroundColor
         }
     }

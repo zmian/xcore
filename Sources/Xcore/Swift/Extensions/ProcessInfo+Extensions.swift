@@ -125,7 +125,7 @@ extension ProcessInfo.Argument {
     /// Returns the value of the key from registered list of feature flag providers.
     ///
     /// - Parameter defaultValue: The value returned if the providers list doesn't
-    ///                           contain value.
+    ///   contain value.
     /// - Returns: The value for the key.
     public func get<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
         if let rawValue: String = get(), let value = T(rawValue: rawValue) {

@@ -22,8 +22,8 @@ public struct ValidationRule<Input> {
     /// ```
     ///
     /// - Parameter input: The input against which to evaluate `self`.
-    /// - Returns: `true` if given `input` matches the conditions specified by `self`,
-    ///            otherwise `false`.
+    /// - Returns: `true` if given `input` matches the conditions specified by
+    ///   `self`, otherwise `false`.
     public func validate(_ input: Input) -> Bool {
         block(input)
     }
@@ -71,7 +71,7 @@ extension String {
     ///
     /// - Parameter rule: The rule against which to evaluate `self`.
     /// - Returns: `true` if `self` matches the conditions specified by the given
-    ///            `rule`; otherwise, `false`.
+    ///   `rule`; otherwise, `false`.
     public func validate(rule: ValidationRule<String>) -> Bool {
         rule.validate(self)
     }

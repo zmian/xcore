@@ -9,7 +9,7 @@ import Foundation
 /// The inject property wrapper responsible for communicating with
 /// `ServiceLocator` to inject given service.
 ///
-/// # Sample usage
+/// **Usage**
 ///
 /// ```swift
 /// // 1. Create a service protocol
@@ -58,7 +58,7 @@ public struct Inject<Service> {
 
 /// The service locator, responsible for registering and resolving services.
 ///
-/// # Sample usage
+/// **Usage**
 ///
 /// ```swift
 /// // 1. Create a service protocol
