@@ -53,7 +53,7 @@ extension UIView {
     public static func animateFromCurrentState(
         duration: TimeInterval = .fast,
         animations: @escaping () -> Void,
-        completion: @escaping () -> Void = {}
+        completion: ((Bool) -> Void)? = nil
     ) {
         UIView.animate(
             withDuration: duration,
@@ -61,8 +61,8 @@ extension UIView {
             options: .beginFromCurrentState
         ) {
             animations()
-        } completion: { _ in
-            completion()
+        } completion: {
+            completion?($0)
         }
     }
 }
@@ -75,7 +75,7 @@ extension UIView {
         duration: TimeInterval,
         options: UIView.AnimationOptions = [.transitionCrossDissolve],
         animations: @escaping () -> Void,
-        completion: @escaping () -> Void = {}
+        completion: ((Bool) -> Void)? = nil
     ) {
         var options = options
         options.insert(.allowAnimatedContent)
@@ -83,8 +83,8 @@ extension UIView {
 
         UIView.transition(with: self, duration: duration, options: options) {
             animations()
-        } completion: { _ in
-            completion()
+        } completion: {
+            completion?($0)
         }
     }
 }
