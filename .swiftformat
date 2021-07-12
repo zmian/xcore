@@ -1,4 +1,5 @@
 # Format Options
+--minversion 0.48.9
 --allman false
 --assetliterals visual-width
 --beforemarks typealias
