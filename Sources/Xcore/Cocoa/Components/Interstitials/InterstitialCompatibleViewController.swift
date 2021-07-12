@@ -50,7 +50,7 @@ extension InterstitialCompatibleViewController {
 }
 
 extension Interstitial {
-    fileprivate struct AssociatedKey {
+    fileprivate enum AssociatedKey {
         static var interstitialId = "InterstitialCompatibleViewController.interstitialId"
     }
 }

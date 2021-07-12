@@ -9,7 +9,7 @@ import UIKit
 // MARK: - Highlighted Animation
 
 extension UICollectionReusableView {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var backgroundColors = "backgroundColors"
         static var highlightedAnimation = "highlightedAnimation"
     }
@@ -37,7 +37,8 @@ extension UICollectionReusableView {
         set { setBackgroundColor(newValue, for: .normal) }
     }
 
-    @objc open func setHighlighted(_ highlighted: Bool, animated: Bool) {
+    @objc
+    open func setHighlighted(_ highlighted: Bool, animated: Bool) {
         highlightedAnimation.animate(highlightedAnimationView, isHighlighted: highlighted)
 
         guard let highlightedBackgroundColor = highlightedBackgroundColor else {

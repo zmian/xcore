@@ -25,11 +25,11 @@ extension ProcessInfo {
 // MARK: - In-memory
 
 extension ProcessInfo {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var inMemoryEnvironmentStorage = "inMemoryEnvironmentStorage"
     }
 
-    fileprivate var inMemoryEnvironmentStorage: [String: String] {
+    private var inMemoryEnvironmentStorage: [String: String] {
         get { associatedObject(&AssociatedKey.inMemoryEnvironmentStorage, default: [:]) }
         set { setAssociatedObject(&AssociatedKey.inMemoryEnvironmentStorage, value: newValue) }
     }
@@ -58,7 +58,7 @@ extension ProcessInfo {
         /// environment from which the process was launched.
         public var exists: Bool {
             ProcessInfo.shared.contains(key: rawValue) ||
-            ProcessInfo.shared.inMemoryEnvironmentStorage.keys.contains(rawValue)
+                ProcessInfo.shared.inMemoryEnvironmentStorage.keys.contains(rawValue)
         }
 
         /// The variable value in the environment from which the process was launched.
@@ -169,9 +169,9 @@ extension ProcessInfo.Arguments {
     public static var isAllInterstitialsEnabled: Bool {
         get {
             #if DEBUG
-                return argument("XCAllInterstitialsEnabled").exists
+            return argument("XCAllInterstitialsEnabled").exists
             #else
-                return false
+            return false
             #endif
         }
         set { argument("XCAllInterstitialsEnabled").set(newValue) }

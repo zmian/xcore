@@ -69,7 +69,7 @@ extension SiriShortcuts {
 
         /// Removes all previous donations and then donates them again.
         func updateDonations() {
-            removeAllDonations { [weak self] error in
+            removeAllDonations { [weak self] _ in
                 self?.donate()
             }
 
@@ -112,7 +112,7 @@ extension SiriShortcuts {
             hasher.combine(id)
         }
 
-        static func == (lhs: Domain, rhs: Domain) -> Bool {
+        static func ==(lhs: Domain, rhs: Domain) -> Bool {
             lhs.id == rhs.id
         }
     }

@@ -9,7 +9,7 @@ import UIKit
 extension UIGestureRecognizer: TargetActionBlockRepresentable {
     public typealias Sender = UIGestureRecognizer
 
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var actionHandler = "actionHandler"
     }
 

@@ -25,7 +25,8 @@ extension NSLayoutConstraint {
 }
 
 extension NSLayoutAnchor {
-    @objc func constraint(_ relation: NSLayoutConstraint.Relation, anchor: NSLayoutAnchor) -> NSLayoutConstraint {
+    @objc
+    func constraint(_ relation: NSLayoutConstraint.Relation, anchor: NSLayoutAnchor) -> NSLayoutConstraint {
         switch relation {
             case .equal:
                 return constraint(equalTo: anchor)

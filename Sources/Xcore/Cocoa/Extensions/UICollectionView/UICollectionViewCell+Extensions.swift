@@ -29,7 +29,8 @@ extension UICollectionViewCell {
     ///                     `[]`.
     ///   - shouldNotifyDelegate: An option to specify whether the delegate methods
     ///                           to be called.
-    @objc open func select(
+    @objc
+    open func select(
         animated: Bool,
         scrollPosition: UICollectionView.ScrollPosition = [],
         shouldNotifyDelegate: Bool
@@ -62,7 +63,8 @@ extension UICollectionViewCell {
     ///               `false` to make the change without animating it.
     ///   - shouldNotifyDelegate: An option to specify whether the delegate methods
     ///                           to be called.
-    @objc open func deselect(animated: Bool, shouldNotifyDelegate: Bool) {
+    @objc
+    open func deselect(animated: Bool, shouldNotifyDelegate: Bool) {
         guard
             let collectionView = collectionView,
             let indexPath = collectionView.indexPath(for: self)
@@ -85,7 +87,8 @@ extension UICollectionViewCell {
 // MARK: - Highlighted Background Color
 
 extension UICollectionViewCell {
-    @objc private func swizzled_isHighlightedSetter(newValue: Bool) {
+    @objc
+    private func swizzled_isHighlightedSetter(newValue: Bool) {
         let oldValue = isHighlighted
         swizzled_isHighlightedSetter(newValue: newValue)
         guard oldValue != isHighlighted else { return }

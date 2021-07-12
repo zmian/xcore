@@ -58,16 +58,16 @@ extension View {
     @ViewBuilder
     public func onTapGesture(count: Int = 1, simultaneous: Bool, perform action: @escaping () -> Void) -> some View {
         #if os(tvOS)
-            // `TapGesture` isn't supported on tvOS.
-            self
+        // `TapGesture` isn't supported on tvOS.
+        self
         #else
-            if simultaneous {
-                simultaneousGesture(TapGesture(count: count).onEnded {
-                    action()
-                })
-            } else {
-                onTapGesture(count: count, perform: action)
-            }
+        if simultaneous {
+            simultaneousGesture(TapGesture(count: count).onEnded {
+                action()
+            })
+        } else {
+            onTapGesture(count: count, perform: action)
+        }
         #endif
     }
 

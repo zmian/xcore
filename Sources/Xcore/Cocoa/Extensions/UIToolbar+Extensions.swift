@@ -7,7 +7,7 @@
 import UIKit
 
 extension UIToolbar {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var isTransparent = "isTransparent"
     }
 

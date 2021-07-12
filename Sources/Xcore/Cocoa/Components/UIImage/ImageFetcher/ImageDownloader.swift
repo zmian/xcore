@@ -25,7 +25,7 @@ extension ImageSourceType.CacheType {
 /// An internal class to download remote images.
 ///
 /// Currently, it uses `SDWebImage` for download requests.
-final class ImageDownloader {
+enum ImageDownloader {
     typealias CancelToken = () -> Void
 
     /// Downloads the image at the given URL, if not present in cache or return the
@@ -44,7 +44,7 @@ final class ImageDownloader {
             with: url,
             options: [.avoidAutoSetImage],
             progress: nil
-        ) { image, data, error, cacheType, finished, url in
+        ) { image, data, error, cacheType, finished, _ in
             completion(image, data, error, finished, .init(cacheType))
         }
 

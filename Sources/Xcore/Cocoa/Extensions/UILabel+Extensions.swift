@@ -9,7 +9,7 @@ import UIKit
 // MARK: - Content Inset
 
 extension UILabel {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var contentInset = "contentInset"
     }
 
@@ -22,11 +22,13 @@ extension UILabel {
         }
     }
 
-    @objc private func swizzled_drawText(in rect: CGRect) {
+    @objc
+    private func swizzled_drawText(in rect: CGRect) {
         swizzled_drawText(in: rect.inset(by: contentInset))
     }
 
-    @objc private func swizzled_textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+    @objc
+    private func swizzled_textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
         let textRect = swizzled_textRect(forBounds: bounds.inset(by: contentInset), limitedToNumberOfLines: numberOfLines)
         return CGRect(origin: textRect.origin, size: CGSize(width: textRect.size.width + contentInset.horizontal, height: textRect.height + contentInset.vertical))
     }
@@ -111,7 +113,7 @@ extension UILabel {
         let attributedString = NSMutableAttributedString(attributedString: attributedText)
         let range = NSRange(location: 0, length: attributedString.string.count)
 
-        attributedString.enumerateAttribute(.font, in: range) { font, range, stop in
+        attributedString.enumerateAttribute(.font, in: range) { font, range, _ in
             if let font = font as? UIFont {
                 let normalizedSize = floor(font.pointSize * scaleFactor * 10) / 10
                 let newFont = font.withSize(normalizedSize)

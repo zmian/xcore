@@ -41,7 +41,7 @@ struct CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArrayLite
 
     /// Removes the given provider.
     mutating func remove(_ provider: FeatureFlagProvider) {
-        let ids = providers.map { $0.id }
+        let ids = providers.map(\.id)
 
         guard let index = ids.firstIndex(of: provider.id) else {
             return

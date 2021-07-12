@@ -109,10 +109,12 @@ public struct Theme: MutableAppliable, UserInfoContainer {
     public var groupedBackgroundTertiaryColor: UIColor
 
     // MARK: - Button
+
     public var buttonTextColor: ButtonColor
     public var buttonBackgroundColor: ButtonColor
 
     // MARK: - Chrome
+
     public var statusBarStyle: UIStatusBarStyle
     public var chrome: Chrome.Style
 
@@ -236,7 +238,7 @@ extension Theme: Hashable {
 // MARK: - Equatable
 
 extension Theme: Equatable {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
     }
 }

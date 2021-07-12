@@ -30,7 +30,7 @@ extension UIImage {
         var downloadedImages = 0
 
         orderedObjects.forEach { object in
-            ImageDownloader.download(url: object.url) { image, data, error, finished in
+            ImageDownloader.download(url: object.url) { image, _, _, finished in
                 downloadedImages += 1
 
                 if let image = image, finished {

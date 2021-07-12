@@ -24,7 +24,7 @@ extension UIButton {
     /// UIButton.defaultAppearance.highlightedAnimation = .scale
     /// ```
     @objc(UIButtonDefaultAppearance)
-    final public class DefaultAppearance: NSObject {
+    public final class DefaultAppearance: NSObject {
         public var highlightedAnimation: HighlightedAnimationOptions = .none
         fileprivate override init() {}
     }
@@ -33,7 +33,7 @@ extension UIButton {
 }
 
 extension UIButton {
-    fileprivate struct AssociatedKey {
+    fileprivate enum AssociatedKey {
         static var touchAreaEdgeInsets = "touchAreaEdgeInsets"
         static var backgroundColors = "backgroundColors"
         static var borderColors = "borderColors"
@@ -77,7 +77,8 @@ extension UIButton {
 extension UIButton {
     // MARK: - Background Color
 
-    @objc open func backgroundColor(for state: UIControl.State) -> UIColor? {
+    @objc
+    open func backgroundColor(for state: UIControl.State) -> UIColor? {
         guard let color = backgroundColors[state.rawValue] else {
             return nil
         }
@@ -85,7 +86,8 @@ extension UIButton {
         return color
     }
 
-    @objc open func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControl.State) {
+    @objc
+    open func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControl.State) {
         backgroundColors[state.rawValue] = backgroundColor
 
         if state == .normal {
@@ -119,7 +121,8 @@ extension UIButton {
 
     // MARK: - Border Color
 
-    @objc open func borderColor(for state: UIControl.State) -> UIColor? {
+    @objc
+    open func borderColor(for state: UIControl.State) -> UIColor? {
         guard let color = borderColors[state.rawValue] else {
             return nil
         }
@@ -127,7 +130,8 @@ extension UIButton {
         return color
     }
 
-    @objc open func setBorderColor(_ borderColor: UIColor?, for state: UIControl.State) {
+    @objc
+    open func setBorderColor(_ borderColor: UIColor?, for state: UIControl.State) {
         borderColors[state.rawValue] = borderColor
 
         if state == .normal {
@@ -265,7 +269,8 @@ extension UIButton {
 
     // MARK: - Underline
 
-    @objc open func underline() {
+    @objc
+    open func underline() {
         titleLabel?.underline()
     }
 
@@ -352,7 +357,8 @@ extension UIButton {
     /// This convenience method omits the need to create a callback for the button
     /// and have the cell listen for it and then manually call the `didSelectItemAt`
     /// logic in multiple places.
-    @objc open func forwardTouchUpInsideActionToCollectionViewDelegate() {
+    @objc
+    open func forwardTouchUpInsideActionToCollectionViewDelegate() {
         action { [weak self] _ in
             guard let strongSelf = self, let cell = strongSelf.collectionViewCell else { return }
             cell.select(animated: false, shouldNotifyDelegate: true)
@@ -392,7 +398,8 @@ extension UIButton {
         }
     }
 
-    @objc open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+    @objc
+    open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         if touchAreaEdgeInsets == 0 || !isUserInteractionEnabled || !isEnabled || isHidden {
             return super.point(inside: point, with: event)
         }
@@ -403,7 +410,8 @@ extension UIButton {
 
     // Increase button touch area to be 44 points
     // See: http://stackoverflow.com/a/27683614
-    @objc open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    @objc
+    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if !isUserInteractionEnabled || !isEnabled || isHidden {
             return super.hitTest(point, with: event)
         }
@@ -413,11 +421,11 @@ extension UIButton {
 
         if largeBounds.size.width < minimumSize.width {
             let difference = minimumSize.width - largeBounds.size.width
-            largeBounds = largeBounds.inset(by: UIEdgeInsets(horizontal: -difference/2))
+            largeBounds = largeBounds.inset(by: UIEdgeInsets(horizontal: -difference / 2))
         }
         if largeBounds.size.height < minimumSize.height {
             let difference = minimumSize.height - largeBounds.size.height
-            largeBounds = largeBounds.inset(by: UIEdgeInsets(vertical: -difference/2))
+            largeBounds = largeBounds.inset(by: UIEdgeInsets(vertical: -difference / 2))
         }
         return largeBounds.contains(point) ? self : nil
     }
@@ -427,9 +435,11 @@ extension UIButton {
 
 extension UIButton {
     // A method that is called when the state changes.
-    @objc open func stateDidChange(_ state: UIControl.State) {}
+    @objc
+    open func stateDidChange(_ state: UIControl.State) {}
 
-    @objc private func swizzled_isSelectedSetter(newValue: Bool) {
+    @objc
+    private func swizzled_isSelectedSetter(newValue: Bool) {
         let oldValue = isSelected
         swizzled_isSelectedSetter(newValue: newValue)
         guard oldValue != isSelected else { return }
@@ -437,7 +447,8 @@ extension UIButton {
         didSelect?(self)
     }
 
-    @objc private func swizzled_isHighlightedSetter(newValue: Bool) {
+    @objc
+    private func swizzled_isHighlightedSetter(newValue: Bool) {
         let oldValue = isHighlighted
         swizzled_isHighlightedSetter(newValue: newValue)
         guard oldValue != isHighlighted else { return }
@@ -449,7 +460,8 @@ extension UIButton {
         highlightedAnimation.animate(self)
     }
 
-    @objc private func swizzled_isEnabledSetter(newValue: Bool) {
+    @objc
+    private func swizzled_isEnabledSetter(newValue: Bool) {
         let oldValue = isEnabled
         swizzled_isEnabledSetter(newValue: newValue)
         guard oldValue != isEnabled else { return }
@@ -460,7 +472,8 @@ extension UIButton {
         didEnable?(self)
     }
 
-    @objc open func setEnabled(_ enable: Bool, animated: Bool) {
+    @objc
+    open func setEnabled(_ enable: Bool, animated: Bool) {
         guard !animated else {
             self.isEnabled = enable
             return

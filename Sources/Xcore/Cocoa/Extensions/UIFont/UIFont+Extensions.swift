@@ -78,7 +78,7 @@ extension UIFont {
 }
 
 extension UIFont {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var textStyle = "textStyle"
     }
 

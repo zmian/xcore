@@ -32,7 +32,7 @@ extension Router {
 // MARK: - UIViewController
 
 extension UINavigationController {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var router = "router"
     }
 

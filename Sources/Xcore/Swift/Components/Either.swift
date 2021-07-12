@@ -33,7 +33,7 @@ extension Either {
 
 extension Either {
     public var left: Left? {
-        guard case .left(let left) = self else {
+        guard case let .left(left) = self else {
             return nil
         }
 
@@ -41,7 +41,7 @@ extension Either {
     }
 
     public var right: Right? {
-        guard case .right(let right) = self else {
+        guard case let .right(right) = self else {
             return nil
         }
 

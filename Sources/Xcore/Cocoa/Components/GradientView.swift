@@ -148,7 +148,7 @@ open class GradientLayer: CALayer {
                 colors = [colors[0], colors[0]]
             }
 
-            gradient.colors = colors.map { $0.cgColor }
+            gradient.colors = colors.map(\.cgColor)
         }
     }
 
@@ -226,7 +226,7 @@ public enum GradientDirection {
                 return (CGPoint(x: 0.0, y: 1.0), CGPoint(x: 1.0, y: 0.0))
             case .bottomRightToTopLeft:
                 return (CGPoint(x: 1.0, y: 1.0), CGPoint(x: 0.0, y: 0.0))
-            case .custom(let start, let end):
+            case let .custom(start, end):
                 return (start, end)
         }
     }

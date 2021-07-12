@@ -150,7 +150,7 @@ final class CurrencyFormatterTests: TestCase {
     }
 
     func testCurrencyWithoutDecimals() {
-        let amounts = [-1000.0, -1.0, 0.0, 1.0, 1000.0, 2000.88, 150555.0, 4627042]
+        let amounts = [-1000.0, -1.0, 0.0, 1.0, 1000.0, 2000.88, 150_555.0, 4_627_042]
 
         for locale in Locale.allCases {
             CurrencyFormatter.shared.localeTest = locale
@@ -172,7 +172,7 @@ final class CurrencyFormatterTests: TestCase {
     }
 
     func testCurrencyWithDecimals() {
-        let amounts: [Double] = [-1000, -1, 0, 1, 1000, 200088, 150555, 4627042]
+        let amounts: [Double] = [-1000, -1, 0, 1, 1000, 200_088, 150_555, 4_627_042]
 
         for locale in Locale.allCases {
             CurrencyFormatter.shared.localeTest = locale

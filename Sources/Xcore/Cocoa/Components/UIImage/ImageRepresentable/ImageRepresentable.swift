@@ -16,14 +16,14 @@ public enum ImageSourceType: Equatable {
         switch self {
             case .uiImage:
                 return true
-            case .url(let value):
+            case let .url(value):
                 return !value.isBlank
         }
     }
 
     public var isRemoteUrl: Bool {
         guard
-            case .url(let rawValue) = self,
+            case let .url(rawValue) = self,
             let url = URL(string: rawValue),
             url.host != nil,
             url.schemeType != .file
@@ -57,9 +57,9 @@ extension ImageSourceType: Codable {
         var container = encoder.singleValueContainer()
 
         switch self {
-            case .url(let value):
+            case let .url(value):
                 try container.encode(value)
-            case .uiImage(let image):
+            case let .uiImage(image):
                 try container.encode(image)
         }
     }
@@ -100,7 +100,7 @@ extension ImageRepresentable {
         switch imageSource {
             case .uiImage:
                 return nil
-            case .url(let value):
+            case let .url(value):
                 let bundlePrefix = bundle.bundleIdentifier ?? ""
                 return bundlePrefix + value
         }
@@ -120,7 +120,7 @@ extension Optional where Wrapped == ImageRepresentable {
         switch self {
             case .none:
                 return other == nil
-            case .some(let this):
+            case let .some(this):
                 guard let other = other else {
                     return false
                 }
@@ -133,7 +133,7 @@ extension Optional where Wrapped == ImageRepresentable {
         switch self {
             case .none:
                 return false
-            case .some(let this):
+            case let .some(this):
                 return this.isEqual(other)
         }
     }

@@ -39,7 +39,7 @@ final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
 
     /// Removes the given fetcher.
     func remove(_ fetcher: ImageFetcher) {
-        let ids = fetchers.map { $0.id }
+        let ids = fetchers.map(\.id)
 
         guard let index = ids.firstIndex(of: fetcher.id) else {
             return

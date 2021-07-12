@@ -71,10 +71,10 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
 extension CurrencyFormatter: Equatable {
     public static func ==(lhs: CurrencyFormatter, rhs: CurrencyFormatter) -> Bool {
         lhs.locale == rhs.locale &&
-        lhs.currencySymbol == rhs.currencySymbol &&
-        lhs.groupingSeparator == rhs.groupingSeparator &&
-        lhs.decimalSeparator == rhs.decimalSeparator &&
-        lhs.formatter.isEqual(rhs.formatter)
+            lhs.currencySymbol == rhs.currencySymbol &&
+            lhs.groupingSeparator == rhs.groupingSeparator &&
+            lhs.decimalSeparator == rhs.decimalSeparator &&
+            lhs.formatter.isEqual(rhs.formatter)
     }
 }
 
@@ -102,7 +102,7 @@ extension CurrencyFormatter {
         formatter.isDecimalEnabled = true
 
         let amountString = with(sign: sign) {
-             formatter.string(from: NSDecimalNumber(decimal: amount))!
+            formatter.string(from: NSDecimalNumber(decimal: amount))!
         }
 
         let pieces = amountString.components(separatedBy: decimalSeparator)

@@ -28,8 +28,8 @@ final class ImageRepresentableTests: TestCase {
             switch value {
                 case .url:
                     XCTAssertEqual(value, decodedValues[index])
-                case .uiImage(let expectedImage):
-                    if case .uiImage(let decodedImage) = decodedValues[index] {
+                case let .uiImage(expectedImage):
+                    if case let .uiImage(decodedImage) = decodedValues[index] {
                         // Double converting it to PNG so the conversion passes matches.
                         let expectedImageData = UIImage(data: expectedImage.pngData()!)!.pngData()!
                         let decodedImageData = decodedImage.pngData()!

@@ -152,7 +152,7 @@ extension Dictionary {
 
 extension Dictionary where Value: Equatable {
     public func keys(forValue value: Value) -> [Key] {
-        filter { $1 == value }.map { $0.0 }
+        filter { $1 == value }.map(\.0)
     }
 }
 
@@ -232,11 +232,11 @@ extension Dictionary where Key: RawRepresentable, Key.RawValue: Hashable {
 
 // MARK: - Operators
 
-public func +<Key, Value> (lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
+public func + <Key, Value>(lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
     lhs.merging(rhs)
 }
 
-public func +<Key, Value> (lhs: [Key: Value], rhs: [Key: Value]?) -> [Key: Value] {
+public func + <Key, Value>(lhs: [Key: Value], rhs: [Key: Value]?) -> [Key: Value] {
     guard let rhs = rhs else {
         return lhs
     }
@@ -244,13 +244,13 @@ public func +<Key, Value> (lhs: [Key: Value], rhs: [Key: Value]?) -> [Key: Value
     return lhs + rhs
 }
 
-public func +=<Key, Value>(lhs: inout [Key: Value], rhs: [Key: Value]) {
+public func += <Key, Value>(lhs: inout [Key: Value], rhs: [Key: Value]) {
     lhs.merge(rhs)
 }
 
 // MARK: - Equatable
 
-public func ==<Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
+public func == <Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
     guard let lhs = lhs as? [Key: Value], let rhs = rhs as? [Key: Value] else {
         return false
     }
@@ -258,7 +258,7 @@ public func ==<Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
     return NSDictionary(dictionary: lhs).isEqual(to: rhs)
 }
 
-public func !=<Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
+public func != <Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
     guard let lhs = lhs as? [Key: Value], let rhs = rhs as? [Key: Value] else {
         return true
     }

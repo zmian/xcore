@@ -279,16 +279,16 @@ extension UINavigationController {
     // controller.
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         topViewController?.preferredInterfaceOrientations ??
-        preferredInterfaceOrientations ??
-        topViewController?.supportedInterfaceOrientations ??
-        super.supportedInterfaceOrientations
+            preferredInterfaceOrientations ??
+            topViewController?.supportedInterfaceOrientations ??
+            super.supportedInterfaceOrientations
     }
 
     open override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         topViewController?.interfaceOrientationForPresentation ??
-        interfaceOrientationForPresentation ??
-        topViewController?.preferredInterfaceOrientationForPresentation ??
-        super.preferredInterfaceOrientationForPresentation
+            interfaceOrientationForPresentation ??
+            topViewController?.preferredInterfaceOrientationForPresentation ??
+            super.preferredInterfaceOrientationForPresentation
     }
 
     // Setting `preferredStatusBarStyle` works.
@@ -311,29 +311,29 @@ extension UINavigationController {
 
     open override var shouldAutorotate: Bool {
         topViewController?.isAutorotateEnabled ??
-        isAutorotateEnabled ??
-        topViewController?.shouldAutorotate ??
-        super.shouldAutorotate
+            isAutorotateEnabled ??
+            topViewController?.shouldAutorotate ??
+            super.shouldAutorotate
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         topViewController?.statusBarStyle ??
-        statusBarStyle ??
-        topViewController?.preferredStatusBarStyle ??
-        super.preferredStatusBarStyle
+            statusBarStyle ??
+            topViewController?.preferredStatusBarStyle ??
+            super.preferredStatusBarStyle
     }
 
     open override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         topViewController?.statusBarUpdateAnimation ??
-        statusBarUpdateAnimation ??
-        topViewController?.preferredStatusBarUpdateAnimation ??
-        super.preferredStatusBarUpdateAnimation
+            statusBarUpdateAnimation ??
+            topViewController?.preferredStatusBarUpdateAnimation ??
+            super.preferredStatusBarUpdateAnimation
     }
 
     open override var prefersStatusBarHidden: Bool {
         topViewController?.isStatusBarHidden ??
-        isStatusBarHidden ??
-        topViewController?.prefersStatusBarHidden ??
-        super.prefersStatusBarHidden
+            isStatusBarHidden ??
+            topViewController?.prefersStatusBarHidden ??
+            super.prefersStatusBarHidden
     }
 }

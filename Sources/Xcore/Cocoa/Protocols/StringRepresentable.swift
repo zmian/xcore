@@ -14,9 +14,9 @@ public enum StringSourceType: Equatable, CustomStringConvertible {
 
     public var description: String {
         switch self {
-            case .string(let value):
+            case let .string(value):
                 return value
-            case .attributedString(let value):
+            case let .attributedString(value):
                 return value.string
         }
     }
@@ -35,9 +35,9 @@ extension StringSourceType: Codable {
         var container = encoder.singleValueContainer()
 
         switch self {
-            case .string(let value):
+            case let .string(value):
                 try container.encode(value)
-            case .attributedString(let value):
+            case let .attributedString(value):
                 try container.encode(value.string)
         }
     }
@@ -62,7 +62,7 @@ extension Optional where Wrapped == StringRepresentable {
         switch self {
             case .none:
                 return other == nil
-            case .some(let this):
+            case let .some(this):
                 guard let other = other else {
                     return false
                 }
@@ -75,7 +75,7 @@ extension Optional where Wrapped == StringRepresentable {
         switch self {
             case .none:
                 return false
-            case .some(let this):
+            case let .some(this):
                 return this.isEqual(other)
         }
     }
@@ -131,9 +131,9 @@ extension TextAttributedTextRepresentable {
         }
 
         switch string.stringSource {
-            case .string(let string):
+            case let .string(string):
                 text = string
-            case .attributedString(let attributedString):
+            case let .attributedString(attributedString):
                 attributedText = attributedString
         }
     }
@@ -180,9 +180,9 @@ extension UITextView {
         }
 
         switch string.stringSource {
-            case .string(let string):
+            case let .string(string):
                 text = string
-            case .attributedString(let attributedString):
+            case let .attributedString(attributedString):
                 attributedText = attributedString
         }
     }

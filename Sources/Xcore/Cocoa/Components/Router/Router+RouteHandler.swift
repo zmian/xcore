@@ -24,9 +24,9 @@ extension RouteHandler {
         let routeType = route.configure(self)
 
         switch routeType {
-            case .viewController(let vc):
+            case let .viewController(vc):
                 options.show(vc, navigationController: navigationController)
-            case .custom(let block):
+            case let .custom(block):
                 block(navigationController)
         }
     }
@@ -40,7 +40,7 @@ extension RouteHandler {
     }
 }
 
-private struct RouteHandlerAssociatedKey {
+private enum RouteHandlerAssociatedKey {
     static var navigationController = "navigationController"
 }
 

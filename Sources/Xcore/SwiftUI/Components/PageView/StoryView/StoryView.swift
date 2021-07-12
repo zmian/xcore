@@ -84,7 +84,7 @@ public struct StoryView<Content, Page>: View where Content: View, Page: Identifi
 
 struct StoryView_Previews: PreviewProvider {
     static var previews: some View {
-            makeColorStoryView()
+        makeColorStoryView()
     }
 
     private static func makeColorStoryView() -> some View {

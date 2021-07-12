@@ -25,7 +25,7 @@ extension UIViewController {
         )
     }
 
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var didAddFauxChrome = "didAddFauxChrome"
     }
 
@@ -34,7 +34,8 @@ extension UIViewController {
         set { setAssociatedObject(&AssociatedKey.didAddFauxChrome, value: newValue) }
     }
 
-    @objc private func swizzled_viewWillAppear(_ animated: Bool) {
+    @objc
+    private func swizzled_viewWillAppear(_ animated: Bool) {
         swizzled_viewWillAppear(animated)
 
         if !didAddFauxChrome, navigationController is NavigationController {
@@ -70,7 +71,8 @@ extension UIViewController {
         setNeedsNavigationBarAppearanceUpdate()
     }
 
-    @objc private func swizzled_setNeedsStatusBarAppearanceUpdate() {
+    @objc
+    private func swizzled_setNeedsStatusBarAppearanceUpdate() {
         swizzled_setNeedsStatusBarAppearanceUpdate()
         Chrome.setBackground(style: preferredStatusBarBackground, for: .statusBar, in: self)
     }

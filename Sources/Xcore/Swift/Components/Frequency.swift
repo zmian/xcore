@@ -77,7 +77,7 @@ extension Frequency {
         return months(from: firstMonth, to: currentMonth, in: calendar)
     }
 
-    private static func months(from startDate: Date, to endDate: Date, in calendar: Calendar = .default) -> [Self]  {
+    private static func months(from startDate: Date, to endDate: Date, in calendar: Calendar = .default) -> [Self] {
         let startYear = startDate.component(.year, in: calendar)
         let endYear = endDate.component(.year, in: calendar)
         var year = "\(startYear)"
@@ -94,7 +94,7 @@ extension Frequency {
             let interval = startDate.interval(for: .month, adjustedBy: i, in: calendar)
             let monthId = "month_\(i + 1)"
 
-            result.append(Self.init(
+            result.append(Self(
                 id: .init(rawValue: "\(year)_\(monthId)"),
                 title: interval.start.string(format: .monthName, in: calendar),
                 analyticsValue: monthId,

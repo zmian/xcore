@@ -7,7 +7,7 @@
 import UIKit
 
 extension Interstitial {
-    final public class Controller: Appliable {
+    public final class Controller: Appliable {
         private let displayTimestamp: DisplayTimestamp
         private var interstitials = [Interstitial.Item]()
         private lazy var hud = HUD().apply {
@@ -19,7 +19,7 @@ extension Interstitial {
         /// Store all interstitials and their completion status in a given session. A
         /// session begins when the navigation controller is presented and ends when it
         /// is dismissed.
-        private var sessionInterstitials: [Interstitial.Item: Bool] = [ : ]
+        private var sessionInterstitials: [Interstitial.Item: Bool] = [:]
         private var currentInterstitialIndex: Int {
             sessionInterstitials.filter { $0.1 == true }.count
         }

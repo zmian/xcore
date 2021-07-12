@@ -37,7 +37,7 @@ extension ImageTransform {
 }
 
 extension ImageTransform {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
     }
 }

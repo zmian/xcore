@@ -9,7 +9,7 @@ import UIKit
 // MARK: - KeyValueMap.Store
 
 extension KeyValueMap {
-    final public class Store {
+    public final class Store {
         private var storage: Set<KeyValueMap>
 
         public init(_ storage: Set<KeyValueMap> = []) {

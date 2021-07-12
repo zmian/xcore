@@ -7,7 +7,7 @@
 import Foundation
 
 /// An analytics provider that can be used for unit tests.
-final public class UserDefaultsAnalyticsProvider: AnalyticsProvider {
+public final class UserDefaultsAnalyticsProvider: AnalyticsProvider {
     private let suiteName: String
     private lazy var userDefaults = UserDefaults(suiteName: suiteName)!
 

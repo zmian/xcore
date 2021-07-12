@@ -16,7 +16,7 @@ extension AVPlayer {
     public func currentTime(_ block: @escaping (_ seconds: Int, _ formattedTime: String) -> Void) -> Any {
         let interval = CMTime(value: 1, timescale: 1)
 
-        return addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+        return addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] _ in
             guard let strongSelf = self else { return }
             let currentTime = strongSelf.currentTime()
             let normalizedTime = Double(currentTime.value) / Double(currentTime.timescale)
@@ -38,7 +38,7 @@ extension AVPlayer {
 }
 
 extension AVPlayer {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var playerRepeat = "playerRepeat"
     }
 

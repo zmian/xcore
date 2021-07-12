@@ -149,11 +149,13 @@ extension UIViewController {
         )
     }
 
-    @objc private func keyboardWillShow(_ notification: Notification) {
+    @objc
+    private func keyboardWillShow(_ notification: Notification) {
         internalKeyboardFrameDidChange(notification, willShow: true)
     }
 
-    @objc private func keyboardWillHide(_ notification: Notification) {
+    @objc
+    private func keyboardWillHide(_ notification: Notification) {
         internalKeyboardFrameDidChange(notification, willShow: false)
     }
 
@@ -203,11 +205,13 @@ extension UIView {
         )
     }
 
-    @objc private func keyboardWillShow(_ notification: Notification) {
+    @objc
+    private func keyboardWillShow(_ notification: Notification) {
         internalKeyboardFrameDidChange(notification, willShow: true)
     }
 
-    @objc private func keyboardWillHide(_ notification: Notification) {
+    @objc
+    private func keyboardWillHide(_ notification: Notification) {
         internalKeyboardFrameDidChange(notification, willShow: false)
     }
 

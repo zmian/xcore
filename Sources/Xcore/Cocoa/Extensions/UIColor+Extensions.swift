@@ -58,17 +58,17 @@ extension UIColor {
         let b: CGFloat
         let a: CGFloat
 
-        let isRGBA = CGFloat(hex & 0xFF000000) != 0
+        let isRGBA = CGFloat(hex & 0xff000000) != 0
 
         if isRGBA {
-            r = CGFloat((hex & 0xFF000000) >> 24) / 255
-            g = CGFloat((hex & 0xFF0000)   >> 16) / 255
-            b = CGFloat((hex & 0xFF00)     >>  8) / 255
-            a = preferredAlpha ?? CGFloat((hex & 0xFF)) / 255
+            r = CGFloat((hex & 0xff000000) >> 24) / 255
+            g = CGFloat((hex & 0xff0000) >> 16) / 255
+            b = CGFloat((hex & 0xff00) >> 8) / 255
+            a = preferredAlpha ?? CGFloat(hex & 0xff) / 255
         } else {
-            r = CGFloat((hex & 0xFF0000)   >> 16) / 255
-            g = CGFloat((hex & 0xFF00)     >>  8) / 255
-            b = CGFloat((hex & 0xFF)            ) / 255
+            r = CGFloat((hex & 0xff0000) >> 16) / 255
+            g = CGFloat((hex & 0xff00) >> 8) / 255
+            b = CGFloat(hex & 0xff) / 255
             a = preferredAlpha ?? 1
         }
 

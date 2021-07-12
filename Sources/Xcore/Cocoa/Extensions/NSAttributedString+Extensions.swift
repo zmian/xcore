@@ -9,8 +9,9 @@ import UIKit
 // MARK: - NSAttributedString Extension
 
 extension NSAttributedString {
-    @objc public func lineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
-         NSMutableAttributedString(attributedString: self).lineSpacing(spacing)
+    @objc
+    public func lineSpacing(_ spacing: CGFloat) -> NSMutableAttributedString {
+        NSMutableAttributedString(attributedString: self).lineSpacing(spacing)
     }
 
     public var attributesDescription: String {

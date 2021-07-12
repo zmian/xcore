@@ -144,7 +144,7 @@ extension Money {
     /// ```swift
     /// Money.appearance().shouldSuperscriptMinorUnit = true
     /// ```
-    final public class Appearance: Appliable {
+    public final class Appearance: Appliable {
         public var shouldSuperscriptMinorUnit = false
     }
 

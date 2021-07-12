@@ -46,22 +46,22 @@ extension UITabBarController {
     // controller.
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         selectedViewController?.preferredInterfaceOrientations ??
-        preferredInterfaceOrientations ??
-        selectedViewController?.supportedInterfaceOrientations ??
-        super.supportedInterfaceOrientations
+            preferredInterfaceOrientations ??
+            selectedViewController?.supportedInterfaceOrientations ??
+            super.supportedInterfaceOrientations
     }
 
     open override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         selectedViewController?.interfaceOrientationForPresentation ??
-        interfaceOrientationForPresentation ??
-        selectedViewController?.preferredInterfaceOrientationForPresentation ??
-        super.preferredInterfaceOrientationForPresentation
+            interfaceOrientationForPresentation ??
+            selectedViewController?.preferredInterfaceOrientationForPresentation ??
+            super.preferredInterfaceOrientationForPresentation
     }
 
     open override var shouldAutorotate: Bool {
         selectedViewController?.isAutorotateEnabled ??
-        isAutorotateEnabled ??
-        selectedViewController?.shouldAutorotate ??
-        super.shouldAutorotate
+            isAutorotateEnabled ??
+            selectedViewController?.shouldAutorotate ??
+            super.shouldAutorotate
     }
 }

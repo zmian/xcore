@@ -172,13 +172,13 @@ class Anchor {
 }
 
 extension Anchor {
-    func make(_ block: ((Anchor) -> Void)) {
+    func make(_ block: (Anchor) -> Void) {
         block(self)
     }
 }
 
 extension UIView {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var anchor = "anchor"
     }
 

@@ -25,7 +25,7 @@ final class RemoteImageFetcher: ImageFetcher {
         _ callback: @escaping ResultBlock
     ) {
         guard
-            case .url(let value) = image.imageSource,
+            case let .url(value) = image.imageSource,
             let url = URL(string: value),
             url.host != nil
         else {
@@ -33,7 +33,7 @@ final class RemoteImageFetcher: ImageFetcher {
             return
         }
 
-        let cancelToken = ImageDownloader.load(url: url) { image, data, error, finished, cacheType in
+        let cancelToken = ImageDownloader.load(url: url) { image, _, error, finished, cacheType in
             guard finished else {
                 return
             }

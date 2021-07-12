@@ -25,9 +25,11 @@ open class XCPageViewController: UIViewController {
     public let pageControl = UIPageControl().apply {
         $0.isUserInteractionEnabled = false
     }
+
     private var _pageViewController: XCUIPageViewController? {
         pageViewController as? XCUIPageViewController
     }
+
     open private(set) var pageViewController: UIPageViewController!
     open var viewControllers: [UIViewController] = [] {
         didSet {

@@ -89,7 +89,7 @@ extension UIAlertController {
         }
 
         if appendsCancelAction {
-            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { [weak alertController] action in
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { [weak alertController] _ in
                 alertController?.dismiss(animated: true)
             })
         }

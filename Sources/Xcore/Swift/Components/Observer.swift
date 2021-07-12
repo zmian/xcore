@@ -120,15 +120,15 @@ extension Observer: Equatable {
         return lhs.equals(rhsOwner)
     }
 
-    static func ==<T>(lhs: T, rhs: Observer) -> Bool where T: AnyObject, T: Equatable {
+    static func == <T>(lhs: T, rhs: Observer) -> Bool where T: AnyObject, T: Equatable {
         rhs.equals(lhs)
     }
 
-    static func ==<T>(lhs: Observer, rhs: T) -> Bool where T: AnyObject, T: Equatable {
+    static func == <T>(lhs: Observer, rhs: T) -> Bool where T: AnyObject, T: Equatable {
         lhs.equals(rhs)
     }
 
-    static func ==<T>(lhs: T?, rhs: Observer) -> Bool where T: AnyObject, T: Equatable {
+    static func == <T>(lhs: T?, rhs: Observer) -> Bool where T: AnyObject, T: Equatable {
         guard let lhs = lhs else {
             return false
         }
@@ -137,7 +137,7 @@ extension Observer: Equatable {
     }
 }
 
-private func ==<T>(lhs: Observer?, rhs: T) -> Bool where T: AnyObject, T: Equatable {
+private func == <T>(lhs: Observer?, rhs: T) -> Bool where T: AnyObject, T: Equatable {
     guard let lhs = lhs else {
         return false
     }

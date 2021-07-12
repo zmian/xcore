@@ -272,7 +272,7 @@ extension String {
             return results.map {
                 nsString.substring(with: $0.range)
             }
-        } catch let error {
+        } catch {
             #if DEBUG
             print("Invalid regex: \(error.localizedDescription)")
             #endif

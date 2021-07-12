@@ -34,11 +34,11 @@ final class PercentageTests: TestCase {
         // NOTE: This is true as the rhs is first normalized and
         // then the equality is checked. See below:
         XCTAssertEqual(Percentage.max - 900, -800) // x
-        XCTAssertEqual(Percentage.max - 900, 0)    // y
+        XCTAssertEqual(Percentage.max - 900, 0) // y
 
         // x and y both yields same result. Here is why:
         XCTAssertEqual(Percentage.max - 900, Percentage(rawValue: -800)) // x
-        XCTAssertEqual(Percentage.max - 900, Percentage(rawValue: 0))    // y
+        XCTAssertEqual(Percentage.max - 900, Percentage(rawValue: 0)) // y
 
         // More details
         let a = Percentage(rawValue: -800)

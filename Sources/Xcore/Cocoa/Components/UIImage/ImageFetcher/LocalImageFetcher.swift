@@ -19,9 +19,9 @@ final class LocalImageFetcher: ImageFetcher {
         _ callback: @escaping ResultBlock
     ) {
         switch image.imageSource {
-            case .uiImage(let image):
+            case let .uiImage(image):
                 callback(.success((image, .memory)))
-            case .url(let value):
+            case let .url(value):
                 if let image = UIImage(named: value, in: image.bundle, compatibleWith: nil) {
                     callback(.success((image, .memory)))
                     return

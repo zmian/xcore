@@ -38,7 +38,7 @@ extension MFMailComposeViewController {
         }
     }
 
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var actionHandler = "actionHandler"
         static var shouldAutoDismiss = "shouldAutoDismiss"
     }

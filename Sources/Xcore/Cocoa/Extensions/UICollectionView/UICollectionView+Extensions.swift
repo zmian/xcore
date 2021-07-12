@@ -114,7 +114,7 @@ extension UICollectionView {
 // MARK: - Cell Lookup, using timer
 
 extension UICollectionView {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var cellLookupTimers = "cellLookupTimers"
     }
 
@@ -174,7 +174,8 @@ extension UICollectionView {
     ///     positioned when scrolling finishes.
     ///   - shouldNotifyDelegate: An option to specify whether the delegate methods
     ///     to be called.
-    @objc open func selectItem(
+    @objc
+    open func selectItem(
         at indexPath: IndexPath,
         animated: Bool,
         scrollPosition: ScrollPosition,
@@ -215,7 +216,8 @@ extension UICollectionView {
     ///     `false` to make the change without animating it.
     ///   - shouldNotifyDelegate: An option to specify whether the delegate methods
     ///     to be called.
-    @objc open func deselectItem(
+    @objc
+    open func deselectItem(
         at indexPath: IndexPath,
         animated: Bool,
         shouldNotifyDelegate: Bool

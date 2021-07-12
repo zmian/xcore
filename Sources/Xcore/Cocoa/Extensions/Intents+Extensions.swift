@@ -24,7 +24,7 @@ extension INIntent {
 // MARK: - Identifiers
 
 extension INIntent {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var groupIdentifier = "groupIdentifier"
         static var customIdentifier = "customIdentifier"
     }

@@ -33,7 +33,7 @@ extension Handler {
         }
 
         @discardableResult
-        public func onHide(_ callback: @escaping () -> Void) -> Self  {
+        public func onHide(_ callback: @escaping () -> Void) -> Self {
             lifecycle.onEnd(callback)
             return self
         }
@@ -83,7 +83,7 @@ extension Handler {
         }
 
         @discardableResult
-        public func onEnd(_ callback: @escaping () -> Void) -> Self  {
+        public func onEnd(_ callback: @escaping () -> Void) -> Self {
             end = callback
 
             // If already called end then trigger the callback immediately. This can happen

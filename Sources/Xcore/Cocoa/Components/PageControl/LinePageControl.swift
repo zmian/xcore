@@ -6,7 +6,7 @@
 
 import UIKit
 
-final public class LinePageControl: XCView {
+public final class LinePageControl: XCView {
     private let dotSize: CGFloat = 10
     private let lineSize: CGFloat = 2
     private var progressConstraint: NSLayoutConstraint?
@@ -31,14 +31,14 @@ final public class LinePageControl: XCView {
         CGFloat(currentPage) * stepSize + dotSize
     }
 
-    @objc dynamic public var fillColor: UIColor = .systemGray6 {
+    @objc public dynamic var fillColor: UIColor = .systemGray6 {
         didSet {
             guard oldValue != fillColor else { return }
             dotsAndLinesBackgroundView.fillColor = fillColor.cgColor
         }
     }
 
-    @objc dynamic public var progressGradient: [UIColor] = [.systemTeal, .systemBlue] {
+    @objc public dynamic var progressGradient: [UIColor] = [.systemTeal, .systemBlue] {
         didSet {
             guard oldValue != progressGradient else { return }
             updateGradientColors(for: gradientView)
@@ -118,7 +118,7 @@ final public class LinePageControl: XCView {
     }
 
     private func updateGradientColors(for gradientView: CAGradientLayer) {
-        gradientView.colors = progressGradient.map { $0.cgColor }
+        gradientView.colors = progressGradient.map(\.cgColor)
     }
 
     private func updateDotsAndLines(shape: CAShapeLayer) {

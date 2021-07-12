@@ -9,7 +9,7 @@ import UIKit
 // MARK: - End refreshing with timeout
 
 extension UIRefreshControl {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var timeoutTimer = "timeoutTimer"
     }
 

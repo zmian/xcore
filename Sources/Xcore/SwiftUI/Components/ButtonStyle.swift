@@ -75,8 +75,8 @@ public struct OutlineButtonStyle: ButtonStyle {
         private var foregroundColor: Color {
             Color(
                 isEnabled ?
-                theme.buttonTextColor(id, configuration.isPressed ? .pressed : .normal) :
-                theme.buttonTextColor(id, .disabled)
+                    theme.buttonTextColor(id, configuration.isPressed ? .pressed : .normal) :
+                    theme.buttonTextColor(id, .disabled)
             )
         }
 
@@ -116,16 +116,16 @@ private struct FillStyleBody<S: Shape>: View {
     private var foregroundColor: Color {
         Color(
             isEnabled ?
-            theme.buttonTextColor(id, configuration.isPressed ? .pressed : .normal) :
-            theme.buttonTextColor(id, .disabled)
+                theme.buttonTextColor(id, configuration.isPressed ? .pressed : .normal) :
+                theme.buttonTextColor(id, .disabled)
         )
     }
 
     private var backgroundColor: Color {
         Color(
             isEnabled ?
-            theme.buttonBackgroundColor(id, configuration.isPressed ? .pressed : .normal) :
-            theme.buttonBackgroundColor(id, .disabled)
+                theme.buttonBackgroundColor(id, configuration.isPressed ? .pressed : .normal) :
+                theme.buttonBackgroundColor(id, .disabled)
         )
     }
 }

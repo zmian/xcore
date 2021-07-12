@@ -78,7 +78,7 @@ extension CGFloat {
 
     /// A convenience method to return `1` pixel relative to the screen scale.
     public static var onePixel: Self {
-        struct Static {
+        enum Static {
             static let onePixel = UIView().onePixel
         }
 
@@ -108,7 +108,7 @@ extension UIEdgeInsets {
 extension UIColor {
     /// Returns default system tint color.
     public static var systemTint: UIColor {
-        struct Static {
+        enum Static {
             static let tintColor = UIView().tintColor ?? .systemBlue
         }
 

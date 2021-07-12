@@ -28,7 +28,7 @@ extension UIViewController {
 }
 
 extension UIViewController {
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var didAddKeyboardNotificationObservers = "didAddKeyboardNotificationObservers"
     }
 
@@ -37,7 +37,8 @@ extension UIViewController {
         set { setAssociatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, value: newValue) }
     }
 
-    @objc private func swizzled_viewDidAppear(_ animated: Bool) {
+    @objc
+    private func swizzled_viewDidAppear(_ animated: Bool) {
         swizzled_viewDidAppear(animated)
         // Swizzled `viewDidAppear` and `viewWillDisappear` for keyboard notifications.
         // Registering keyboard notifications in `viewDidLoad` results in unexpected
@@ -49,7 +50,8 @@ extension UIViewController {
         }
     }
 
-    @objc private func swizzled_viewWillDisappear(_ animated: Bool) {
+    @objc
+    private func swizzled_viewWillDisappear(_ animated: Bool) {
         swizzled_viewWillDisappear(animated)
         if didAddKeyboardNotificationObservers {
             _removeKeyboardNotificationObservers()
@@ -69,7 +71,7 @@ extension UIView {
         )
     }
 
-    private struct AssociatedKey {
+    private enum AssociatedKey {
         static var didAddKeyboardNotificationObservers = "didAddKeyboardNotificationObservers"
     }
 
@@ -78,7 +80,8 @@ extension UIView {
         set { setAssociatedObject(&AssociatedKey.didAddKeyboardNotificationObservers, value: newValue) }
     }
 
-    @objc private func swizzled_view_layoutSubviews() {
+    @objc
+    private func swizzled_view_layoutSubviews() {
         swizzled_view_layoutSubviews()
         if !didAddKeyboardNotificationObservers {
             _addKeyboardNotificationObservers()
