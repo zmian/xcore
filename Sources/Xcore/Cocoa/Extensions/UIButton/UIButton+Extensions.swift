@@ -79,11 +79,7 @@ extension UIButton {
 
     @objc
     open func backgroundColor(for state: UIControl.State) -> UIColor? {
-        guard let color = backgroundColors[state.rawValue] else {
-            return nil
-        }
-
-        return color
+        backgroundColors[state.rawValue]
     }
 
     @objc
@@ -110,7 +106,10 @@ extension UIButton {
             }
         }
 
-        guard let finalBackgroundColor = newBackgroundColor, super.backgroundColor != finalBackgroundColor else {
+        guard
+            let finalBackgroundColor = newBackgroundColor,
+            super.backgroundColor != finalBackgroundColor
+        else {
             return
         }
 
@@ -123,11 +122,7 @@ extension UIButton {
 
     @objc
     open func borderColor(for state: UIControl.State) -> UIColor? {
-        guard let color = borderColors[state.rawValue] else {
-            return nil
-        }
-
-        return color
+        borderColors[state.rawValue]
     }
 
     @objc
@@ -150,7 +145,10 @@ extension UIButton {
             }
         }
 
-        guard let finalBorderColor = newBorderColor, super.layer.borderColor != finalBorderColor.cgColor else {
+        guard
+            let finalBorderColor = newBorderColor,
+            super.layer.borderColor != finalBorderColor.cgColor
+        else {
             return
         }
 
@@ -254,7 +252,7 @@ extension UIButton {
     ///
     /// - Parameters:
     ///   - named: The remote image url or local image name to use for the
-    ///            specified state.
+    ///     specified state.
     ///   - state: The state that uses the specified image.
     public func image(_ named: ImageRepresentable?, for state: UIControl.State) {
         guard let named = named else {
@@ -379,7 +377,7 @@ extension UIButton {
     /// let button = UIButton()
     /// button.touchAreaEdgeInsets = UIEdgeInsets(-10)
     /// ```
-    /// See: http://stackoverflow.com/a/32002161
+    /// - SeeAlso: http://stackoverflow.com/a/32002161
     @objc open var touchAreaEdgeInsets: UIEdgeInsets {
         get {
             guard let value: NSValue = associatedObject(&AssociatedKey.touchAreaEdgeInsets) else {
@@ -409,7 +407,7 @@ extension UIButton {
     }
 
     // Increase button touch area to be 44 points
-    // See: http://stackoverflow.com/a/27683614
+    // - SeeAlso: http://stackoverflow.com/a/27683614
     @objc
     open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if !isUserInteractionEnabled || !isEnabled || isHidden {

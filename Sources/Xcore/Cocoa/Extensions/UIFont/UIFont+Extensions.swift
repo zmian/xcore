@@ -13,14 +13,18 @@ extension UIFont {
         case monospaced
     }
 
-    static func system(size: CGFloat, weight: Weight = .regular, trait: Trait = .normal) -> UIFont {
+    static func system(
+        size: CGFloat,
+        weight: Weight = .regular,
+        trait: Trait = .normal
+    ) -> UIFont {
         switch trait {
             case .normal:
                 return systemFont(ofSize: size, weight: weight)
             case .italic:
                 return italicSystemFont(ofSize: size)
             case .monospaced:
-                return monospacedDigitSystemFont(ofSize: size, weight: weight)
+                return monospacedSystemFont(ofSize: size, weight: weight)
         }
     }
 }
@@ -31,11 +35,9 @@ extension UIFont {
     /// - Parameter traits: The new symbolic traits.
     /// - Returns: The new font matching the given font descriptor.
     func traits(_ traits: UIFontDescriptor.SymbolicTraits...) -> UIFont? {
-        guard let descriptor = fontDescriptor.withSymbolicTraits(UIFontDescriptor.SymbolicTraits(traits)) else {
-            return nil
+        fontDescriptor.withSymbolicTraits(.init(traits)).map {
+            UIFont(descriptor: $0, size: 0)
         }
-
-        return UIFont(descriptor: descriptor, size: 0)
     }
 
     func bold() -> UIFont? {
@@ -120,6 +122,6 @@ extension UIFont.TextStyle: CaseIterable {
     }()
 
     public var isTitle: Bool {
-        UIFont.TextStyle.headerStyles.contains(self)
+        Self.headerStyles.contains(self)
     }
 }

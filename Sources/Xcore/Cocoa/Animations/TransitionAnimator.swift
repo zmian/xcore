@@ -65,7 +65,7 @@ open class TransitionAnimator: NSObject, UIViewControllerTransitioningDelegate, 
         }
 
         // Orientation bug fix
-        // See: http://stackoverflow.com/a/20061872/351305
+        // SeeAlso: http://stackoverflow.com/a/20061872/351305
         context.from.view.frame = context.containerView.bounds
         context.to.view.frame = context.containerView.bounds
 

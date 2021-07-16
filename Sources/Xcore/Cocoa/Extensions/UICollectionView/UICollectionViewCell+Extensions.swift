@@ -23,12 +23,11 @@ extension UICollectionViewCell {
     ///
     /// - Parameters:
     ///   - animated: Specify `true` to animate the change in the selection or
-    ///               `false` to make the change without animating it.
+    ///     `false` to make the change without animating it.
     ///   - scrollPosition: An option that specifies where the item should be
-    ///                     positioned when scrolling finishes. The default value is
-    ///                     `[]`.
+    ///     positioned when scrolling finishes.
     ///   - shouldNotifyDelegate: An option to specify whether the delegate methods
-    ///                           to be called.
+    ///     to be called.
     @objc
     open func select(
         animated: Bool,
@@ -60,9 +59,9 @@ extension UICollectionViewCell {
     ///
     /// - Parameters:
     ///   - animated: Specify `true` to animate the change in the selection or
-    ///               `false` to make the change without animating it.
+    ///     `false` to make the change without animating it.
     ///   - shouldNotifyDelegate: An option to specify whether the delegate methods
-    ///                           to be called.
+    ///     to be called.
     @objc
     open func deselect(animated: Bool, shouldNotifyDelegate: Bool) {
         guard

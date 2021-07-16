@@ -24,11 +24,9 @@ extension UICollectionView {
     ///
     /// - Returns: An array of `UICollectionViewCell` objects.
     open var selectedCells: [UICollectionViewCell] {
-        guard let indexPaths = indexPathsForSelectedItems else {
-            return []
-        }
-
-        return indexPaths.compactMap(cellForItem)
+        indexPathsForSelectedItems.map {
+            $0.compactMap(cellForItem)
+        } ?? []
     }
 }
 

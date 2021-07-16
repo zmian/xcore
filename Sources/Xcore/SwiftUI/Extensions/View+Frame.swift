@@ -19,14 +19,16 @@ extension View {
     /// ellipse is laid out in a frame with only a fixed height, so it occupies
     /// that height, and whatever width the layout system offers to its parent.
     ///
-    ///     VStack {
-    ///         Ellipse()
-    ///             .fill(Color.purple)
-    ///             .frame(200)
-    ///         Ellipse()
-    ///             .fill(Color.blue)
-    ///             .frame(100)
-    ///     }
+    /// ```swift
+    /// VStack {
+    ///     Ellipse()
+    ///         .fill(Color.purple)
+    ///         .frame(200)
+    ///     Ellipse()
+    ///         .fill(Color.blue)
+    ///         .frame(100)
+    /// }
+    /// ```
     ///
     /// ![A screenshot showing the effect of frame size options: a purple
     /// ellipse shows the effect of a fixed frame size, while a blue ellipse
@@ -36,9 +38,11 @@ extension View {
     /// `The alignment` parameter specifies this view's alignment within the
     /// frame.
     ///
-    ///     Text("Hello world!")
-    ///         .frame(200, alignment: .topLeading)
-    ///         .border(Color.gray)
+    /// ```swift
+    /// Text("Hello world!")
+    ///     .frame(200, alignment: .topLeading)
+    ///     .border(Color.gray)
+    /// ```
     ///
     /// In the example above, the text is positioned at the top, leading corner
     /// of the frame. If the text is taller than the frame, its bounds may
@@ -54,7 +58,6 @@ extension View {
     ///   - alignment: The alignment of this view inside the resulting view.
     ///     `alignment` applies if this view is smaller than the size given by
     ///     the resulting frame.
-    ///
     /// - Returns: A view with fixed dimensions of `width` and `height`, for the
     ///   parameters that are non-`nil`.
     public func frame(_ size: CGFloat?, alignment: Alignment = .center) -> some View {

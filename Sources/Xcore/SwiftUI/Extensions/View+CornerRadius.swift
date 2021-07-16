@@ -40,11 +40,13 @@ extension View {
     ///
     /// The following code applies a corner radius of 25 to a text view:
     ///
-    ///     Text("Rounded Corners")
-    ///         .frame(width: 175, height: 75)
-    ///         .foregroundColor(Color.white)
-    ///         .background(Color.black)
-    ///         .cornerRadius(25, style: .continuous)
+    /// ```swift
+    /// Text("Rounded Corners")
+    ///     .frame(width: 175, height: 75)
+    ///     .foregroundColor(Color.white)
+    ///     .background(Color.black)
+    ///     .cornerRadius(25, style: .continuous)
+    /// ```
     ///
     /// ![A screenshot of a rectangle with rounded corners bounding a text
     /// view.](SwiftUI-View-cornerRadius.png)
