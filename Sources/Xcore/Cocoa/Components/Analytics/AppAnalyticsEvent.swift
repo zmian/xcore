@@ -38,7 +38,7 @@ extension UserInfoKey where Type == AppAnalyticsEvent {
     /// An optional property indicating whether the event should be throttled and
     /// only fired once in the given session.
     ///
-    /// See: `Analytics.session` for session information.
+    /// - SeeAlso: `Analytics.session` for session information.
     public static var sessionId: Self { #function }
 }
 
@@ -48,7 +48,7 @@ extension AppAnalyticsEvent {
     ///
     /// The default value is `nil`, which means to not throttle.
     ///
-    /// See: `Analytics.session` for session information.
+    /// - SeeAlso: `Analytics.session` for session information.
     public var sessionId: String? {
         get { self[userInfoKey: .sessionId] }
         set { self[userInfoKey: .sessionId] = newValue }

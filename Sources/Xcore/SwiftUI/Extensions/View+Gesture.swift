@@ -31,21 +31,25 @@ extension View {
     /// color from the `colors` array whenever the user clicks or taps on the
     /// view twice:
     ///
-    ///     struct TapGestureExample: View {
-    ///         let colors: [Color] = [.gray, .red, .orange, .yellow,
-    ///                                .green, .blue, .purple, .pink]
-    ///         @State private var fgColor: Color = .gray
+    /// ```swift
+    /// struct TapGestureExample: View {
+    ///     @State private var fgColor: Color = .gray
+    ///     let colors: [Color] = [
+    ///         .gray, .red, .orange, .yellow,
+    ///         .green, .blue, .purple, .pink
+    ///     ]
     ///
-    ///         var body: some View {
-    ///             Image(systemName: "heart.fill")
-    ///                 .resizable()
-    ///                 .frame(width: 200, height: 200)
-    ///                 .foregroundColor(fgColor)
-    ///                 .onTapGesture(count: 2, simultaneous: true) {
-    ///                     fgColor = colors.randomElement()!
-    ///                 }
-    ///         }
+    ///     var body: some View {
+    ///         Image(systemName: "heart.fill")
+    ///             .resizable()
+    ///             .frame(width: 200, height: 200)
+    ///             .foregroundColor(fgColor)
+    ///             .onTapGesture(count: 2, simultaneous: true) {
+    ///                 fgColor = colors.randomElement()!
+    ///             }
     ///     }
+    /// }
+    /// ```
     ///
     /// ![A screenshot of a view of a heart.](SwiftUI-View-TapGesture.png)
     ///

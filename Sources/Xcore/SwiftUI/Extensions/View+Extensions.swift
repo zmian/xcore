@@ -62,14 +62,14 @@ extension View {
     ///
     /// Example for visibility:
     ///
-    /// ```
+    /// ```swift
     /// Text("Label")
     ///     .hidden(true)
     /// ```
     ///
     /// Example for complete removal:
     ///
-    /// ```
+    /// ```swift
     /// Text("Label")
     ///     .hidden(true, remove: true)
     /// ```

@@ -8,7 +8,7 @@ import SwiftUI
 
 /// A view that reads an environment value of a key path.
 ///
-/// ```
+/// ```swift
 /// EnvironmentReader(\.theme) { theme in
 ///     Color(theme.backgroundColor)
 /// }

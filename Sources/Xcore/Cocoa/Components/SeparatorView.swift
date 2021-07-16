@@ -120,7 +120,11 @@ public final class SeparatorView: UIView {
         commonInit()
     }
 
-    private func commonInit(backgroundColor: UIColor? = nil, automaticallySetThickness: Bool = true, thickness: CGFloat? = nil) {
+    private func commonInit(
+        backgroundColor: UIColor? = nil,
+        automaticallySetThickness: Bool = true,
+        thickness: CGFloat? = nil
+    ) {
         super.backgroundColor = .clear
         self.automaticallySetThickness = automaticallySetThickness
         self.thickness = thickness

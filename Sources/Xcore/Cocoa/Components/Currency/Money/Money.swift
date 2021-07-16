@@ -199,7 +199,7 @@ extension Money {
 
     /// Zero amount will be displayed as "--".
     ///
-    /// See: `zeroString` to customize the default value.
+    /// - SeeAlso: `zeroString` to customize the default value.
     public func dasherizeZero() -> Self {
         applying {
             $0.shouldDisplayZero = false

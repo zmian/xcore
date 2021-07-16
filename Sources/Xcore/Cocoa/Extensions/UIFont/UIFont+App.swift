@@ -28,8 +28,16 @@ extension UIFont {
         let typeface = defaultAppTypeface.name(weight: weight, trait: trait)
 
         if typeface == Typeface.systemFontId {
-            // TODO: Handle monospaced and italic traits.
-            return preferredFont(forTextStyle: style, compatibleWith: traitCollection)
+            let normal = preferredFont(forTextStyle: style, compatibleWith: traitCollection)
+
+            switch trait {
+                case .normal:
+                    return normal
+                case .italic:
+                    return normal.traits(.traitItalic) ?? normal
+                case .monospaced:
+                    return normal.traits(.traitMonoSpace) ?? normal
+            }
         }
 
         let preferredPointSize = UIFontDescriptor.preferredFontDescriptor(

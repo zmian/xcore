@@ -127,18 +127,35 @@ open class XCPageViewController: UIViewController {
 // MARK: - UIPageViewControllerDataSource & UIPageViewControllerDelegate
 
 extension XCPageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-    open func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+    open func pageViewController(
+        _ pageViewController: UIPageViewController,
+        viewControllerAfter viewController: UIViewController
+    ) -> UIViewController? {
         let indexOfCurrentVC = indexOf(viewController)
         return indexOfCurrentVC < viewControllers.count - 1 ? viewControllers[indexOfCurrentVC + 1] : nil
     }
 
-    open func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+    open func pageViewController(
+        _ pageViewController: UIPageViewController,
+        viewControllerBefore viewController: UIViewController
+    ) -> UIViewController? {
         let indexOfCurrentVC = indexOf(viewController)
         return indexOfCurrentVC > 0 ? viewControllers[indexOfCurrentVC - 1] : nil
     }
 
-    open func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        guard completed, let newViewController = pageViewController.viewControllers?.first else { return }
+    open func pageViewController(
+        _ pageViewController: UIPageViewController,
+        didFinishAnimating finished: Bool,
+        previousViewControllers: [UIViewController],
+        transitionCompleted completed: Bool
+    ) {
+        guard
+            completed,
+            let newViewController = pageViewController.viewControllers?.first
+        else {
+            return
+        }
+
         let index = indexOf(newViewController)
         pageControl.currentPage = index
         updateStatusBar(for: index)
@@ -154,11 +171,11 @@ extension XCPageViewController {
     /// - Parameters:
     ///   - index: The index of the view controller to be displayed.
     ///   - direction: The navigation direction. The default value is `nil`, meaning
-    ///                automatically determine the direction.
+    ///     automatically determine the direction.
     ///   - animated: A boolean value that indicates whether the transition is to be
-    ///               animated. The default value is `false`.
+    ///     animated. The default value is `false`.
     ///   - completion: A block to be called when setting the current view
-    ///                 controller animation completes. The default value is `nil`.
+    ///     controller animation completes. The default value is `nil`.
     open func setCurrentPage(
         _ index: Int,
         direction: UIPageViewController.NavigationDirection? = nil,
@@ -195,7 +212,10 @@ extension XCPageViewController {
         reloadData()
     }
 
-    open func replace(_ viewController: UIViewController, with newViewControllers: [UIViewController]) {
+    open func replace(
+        _ viewController: UIViewController,
+        with newViewControllers: [UIViewController]
+    ) {
         guard let index = viewControllers.firstIndex(of: viewController) else {
             return
         }

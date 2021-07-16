@@ -79,7 +79,8 @@ extension UIImage {
     public convenience init(assetIdentifier: ImageAssetIdentifier) {
         self.init(
             named: assetIdentifier.rawValue,
-            in: assetIdentifier.bundle, compatibleWith: nil
+            in: assetIdentifier.bundle,
+            compatibleWith: nil
         )!
     }
 
