@@ -133,13 +133,13 @@ private struct ShareSheetView: UIViewControllerRepresentable {
 
 // MARK: - Presenter
 
-final class ShareSheetViewPresenter: UIViewController {
-    var isPresented: Binding<Bool>
-    var items: [Any]
-    var activities: [UIActivity]?
-    var excludedActivityTypes: [UIActivity.ActivityType]?
-    var onComplete: ((UIActivity.ActivityType) -> Void)?
-    var onDismiss: (() -> Void)?
+private final class ShareSheetViewPresenter: UIViewController {
+    fileprivate var isPresented: Binding<Bool>
+    private let items: [Any]
+    private let activities: [UIActivity]?
+    private let excludedActivityTypes: [UIActivity.ActivityType]?
+    private let onComplete: ((UIActivity.ActivityType) -> Void)?
+    private let onDismiss: (() -> Void)?
 
     init(
         isPresented: Binding<Bool>,
