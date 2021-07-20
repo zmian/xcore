@@ -31,10 +31,12 @@ private struct PopupPreviews: View {
                 toggle: $presentAlert
             )
 
+            ShowPartDetail()
+
             row(
                 "Show Toast",
                 color: .green,
-                image: .number2Circle,
+                image: .number3Circle,
                 toggle: $presentToast
             )
         }
@@ -80,5 +82,38 @@ extension Samples {
     public static var popupPreviews: some View {
         PopupPreviews()
     }
+}
+
+private struct ShowPartDetail: View {
+    @State private var popupDetail: InventoryItem?
+
+    var body: some View {
+        Button("Show Part Details") {
+            popupDetail = InventoryItem(
+                id: "0123456789",
+                partNumber: "Z-1234A",
+                quantity: 100,
+                name: "Widget"
+            )
+        }
+        .popup(item: $popupDetail) { detail in
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Part Number: \(detail.partNumber)")
+                Text("Name: \(detail.name)")
+                Text("Quantity On-Hand: \(detail.quantity)")
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                popupDetail = nil
+            }
+        }
+    }
+}
+
+private struct InventoryItem: Identifiable {
+    var id: String
+    let partNumber: String
+    let quantity: Int
+    let name: String
 }
 #endif
