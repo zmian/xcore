@@ -13,7 +13,7 @@ extension View {
     /// `true`.
     ///
     /// Use this method when you want to present a popup view to the user when a
-    /// Boolean value you provide is true. The example below displays a modal view
+    /// Boolean value you provide is `true`. The example below displays a popup view
     /// of the mockup for a software license agreement when the user toggles the
     /// `isShowingPopup` variable by clicking or tapping on the "Show License
     /// Agreement" button:
@@ -68,7 +68,7 @@ extension View {
     /// Presents a popup using the given item as a data source for the popup's
     /// content.
     ///
-    /// Use this method when you need to present a modal view with content from a
+    /// Use this method when you need to present a popup view with content from a
     /// custom data source. The example below shows a custom data source
     /// `InventoryItem` that the `content` closure uses to populate the display the
     /// action popup shows to the user:

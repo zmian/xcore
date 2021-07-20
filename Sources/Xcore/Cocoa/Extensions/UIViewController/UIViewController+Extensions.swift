@@ -91,7 +91,7 @@ extension UIViewController {
 
     /// A boolean value indicating whether the view is currently loaded into memory
     /// and presented on the screen.
-    public var isPresented: Bool {
+    public var isCurrentlyPresented: Bool {
         isViewLoaded && view.window != nil
     }
 
