@@ -19,7 +19,7 @@ extension Theme {
     }
 
     private static func setSystemComponentsTheme(_ theme: Theme) {
-        UIApplication.sharedOrNil?.delegate?.window??.tintColor = theme.accentColor
+        UIApplication.sharedOrNil?.delegate?.window??.tintColor = theme.tintColor
 
         UIBarButtonItem.appearance().setTitleTextAttributes(
             UIViewController.defaultNavigationBarTextAttributes,
@@ -28,14 +28,14 @@ extension Theme {
 
         UINavigationBar.appearance().apply {
             $0.titleTextAttributes = UIViewController.defaultNavigationBarTextAttributes
-            $0.tintColor = theme.accentColor
+            $0.tintColor = theme.tintColor
             $0.barTintColor = theme.backgroundColor
             $0.barStyle = .default
             $0.isTranslucent = true
         }
 
         UIToolbar.appearance().apply {
-            $0.tintColor = theme.accentColor
+            $0.tintColor = theme.tintColor
             $0.barTintColor = theme.backgroundColor
             $0.barStyle = .default
             $0.isTranslucent = true
@@ -43,7 +43,7 @@ extension Theme {
 
         UIPageControl.appearance().apply {
             $0.pageIndicatorTintColor = .systemGray6
-            $0.currentPageIndicatorTintColor = theme.accentColor
+            $0.currentPageIndicatorTintColor = theme.tintColor
             $0.backgroundColor = .clear
         }
 
@@ -57,7 +57,7 @@ extension Theme {
         }
 
         UITabBar.appearance().apply {
-            $0.tintColor = theme.accentColor
+            $0.tintColor = theme.tintColor
             $0.borderColor = theme.separatorColor
             $0.borderWidth = .onePixel
         }
@@ -77,13 +77,13 @@ extension Theme {
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).apply {
             // SearchBar Cancel button normal state
             $0.setTitleTextAttributes([
-                .foregroundColor: theme.accentColor,
+                .foregroundColor: theme.tintColor,
                 .font: UIFont.app(.body)
             ], for: .normal)
 
             // SearchBar Cancel button disabled state
             $0.setTitleTextAttributes([
-                .foregroundColor: theme.accentColor.alpha(0.5)
+                .foregroundColor: theme.tintColor.alpha(0.5)
             ], for: .disabled)
         }
 
@@ -102,7 +102,7 @@ extension Theme {
         SeparatorView.appearance().tintColor = theme.separatorColor
 
         UIViewController.defaultAppearance.apply {
-            $0.tintColor = theme.accentColor
+            $0.tintColor = theme.tintColor
             $0.prefersTabBarHidden = true
         }
 

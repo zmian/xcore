@@ -22,8 +22,8 @@ extension UIViewController {
     public final class DefaultAppearance: NSObject {
         /// The default value is `.app(.body)`
         public lazy var font: UIFont = .app(.body)
-        /// The default value is `Theme.accentColor`.
-        public lazy var tintColor: UIColor = Theme.accentColor
+        /// The default value is `Theme.tintColor`.
+        public lazy var tintColor: UIColor = Theme.tintColor
         /// The default value is `.transparent`.
         public lazy var preferredStatusBarBackground: Chrome.Style = .transparent
         /// The default value is `.blurred`.
@@ -265,7 +265,7 @@ extension UIViewController {
         false
     }
 
-    /// The default value is `Theme.accentColor`.
+    /// The default value is `Theme.tintColor`.
     open var preferredNavigationBarTintColor: UIColor {
         defaultAppearance.tintColor
     }

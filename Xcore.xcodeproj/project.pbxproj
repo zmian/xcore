@@ -240,7 +240,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# If SwiftLint isn't installed then exit early.\nif ! which swiftlint >/dev/null; then\n    echo \"error: SwiftLint is not installed, Run 'brew install swiftlint'\"\n    exit 0\nfi\n\n# SwiftLint should have minimum version\ncurrentver=\"$(swiftlint version)\"\nminrequiredver=\"0.43.1\"\n\nif [ \"$(printf '%s\\n' \"$minrequiredver\" \"$currentver\" | sort -V | head -n1)\" = \"$minrequiredver\" ]; then\n    swiftlint\nelse\n    echo \"error: Your SwiftLint version $currentver is outdated. Requires at least version $minrequiredver, Run 'brew upgrade swiftlint'\"\nfi\n";
+			shellScript = "# Adds support for Apple Silicon brew directory.\nexport PATH=\"$PATH:/opt/homebrew/bin\"\n\n# If SwiftLint isn't installed then exit early.\nif ! which swiftlint >/dev/null; then\n    echo \"error: SwiftLint is not installed, Run 'brew install swiftlint'\"\n    exit 0\nfi\n\n# SwiftLint should have minimum version\ncurrentver=\"$(swiftlint version)\"\nminrequiredver=\"0.43.1\"\n\nif [ \"$(printf '%s\\n' \"$minrequiredver\" \"$currentver\" | sort -V | head -n1)\" = \"$minrequiredver\" ]; then\n    swiftlint\nelse\n    echo \"error: Your SwiftLint version $currentver is outdated. Requires at least version $minrequiredver, Run 'brew upgrade swiftlint'\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

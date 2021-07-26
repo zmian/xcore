@@ -37,8 +37,8 @@ public struct Theme: MutableAppliable, UserInfoContainer {
     /// A unique id for the theme.
     public var id: Identifier
 
-    /// A color that represents the system or application accent color.
-    public var accentColor: UIColor
+    /// A color that represents the system or application tint color.
+    public var tintColor: UIColor
 
     /// The color for divider lines that hides any underlying content.
     public var separatorColor: UIColor
@@ -123,7 +123,7 @@ public struct Theme: MutableAppliable, UserInfoContainer {
 
     public init(
         id: Identifier,
-        accentColor: UIColor,
+        tintColor: UIColor,
         separatorColor: UIColor,
         borderColor: UIColor,
         toggleColor: UIColor,
@@ -162,7 +162,7 @@ public struct Theme: MutableAppliable, UserInfoContainer {
         userInfo: UserInfo = [:]
     ) {
         self.id = id
-        self.accentColor = accentColor
+        self.tintColor = tintColor
         self.separatorColor = separatorColor
         self.borderColor = borderColor
         self.toggleColor = toggleColor
@@ -254,7 +254,7 @@ extension Theme {
     /// [UI Element Colors]: https://developer.apple.com/documentation/uikit/uicolor/ui_element_colors
     private static let system = Theme(
         id: "system",
-        accentColor: .systemTint,
+        tintColor: .systemTint,
         separatorColor: .separator,
         borderColor: .separator,
         toggleColor: .systemGreen,
