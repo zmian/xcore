@@ -62,7 +62,7 @@ extension Interstitial.Item {
         UIBarButtonItem(system: .xMark).apply {
             $0.accessibilityLabel = "Dismiss"
             $0.accessibilityIdentifier = "dismissButton"
-            $0.tintColor = vc.theme.accentColor
+            $0.tintColor = vc.theme.tintColor
             $0.addAction { [weak vc] _ in
                 guard let vc = vc else { return }
                 vc.didDismiss()

@@ -1,3 +1,8 @@
+excluded:
+  - Pods
+  - Carthage
+  - .build
+
 disabled_rules:
   - cyclomatic_complexity
   - file_length
@@ -9,13 +14,11 @@ disabled_rules:
   - line_length
   - missing_docs
   - nesting
-  - opening_brace
   - todo
   - type_body_length
   - type_name
   - identifier_name
   - large_tuple
-  - switch_case_alignment
   - unused_optional_binding
   - discarded_notification_center_observer
   - unused_closure_parameter
@@ -25,8 +28,6 @@ disabled_rules:
   - weak_delegate
 opt_in_rules:
   - switch_case_on_newline
-  # - unneeded_parentheses_in_closure_argument
-  # - trailing_closure
   - closure_spacing
   - contains_over_first_not_nil
   - discouraged_object_literal
@@ -34,15 +35,15 @@ opt_in_rules:
   - first_where
   - implicit_return
   - joined_default_parameter
-  # - modifier_order
   - no_extension_access_modifier
   - overridden_super_call
   - redundant_nil_coalescing
   - syntactic_sugar
   - toggle_bool
-excluded:
-  - Pods
-  - Carthage
+
+switch_case_alignment:
+  indented_cases: true
+
 custom_rules:
   icc_import_xcore:
     name: "Import Xcore"
@@ -197,3 +198,15 @@ custom_rules:
     name: "Inconsistent Coding Convention"
     regex: "\\@(Environment|SwiftUI.Environment)\\(\\\\.theme\\) private var theme: Theme"
     message: "Remove type from the right hand of the environment variable (e.g., `@Environment(\\.theme) private var theme`)."
+
+  icc_button_closure:
+    included: ".*.swift"
+    name: "Inconsistent Coding Convention"
+    regex: "Button\\(action\\: \\{"
+    message: "Please use the trailing closure syntax (e.g., `Button {} label: {}`)."
+
+  icc_file_header:
+    included: ".*.swift"
+    name: "Inconsistent Coding Convention"
+    regex: "// File.swift"
+    message: "Please update the file name."
