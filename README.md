@@ -13,7 +13,8 @@ Xcore is a collection of hundreds of Swift extensions and components designed to
 
 ## Contents
 - [Requirements](#requirements)
-- [Getting Started](#getting-started)
+- [Makefile](#makefile)
+- [Installation](#installation)
 - [Documentation](#documentation)
 
 ## Requirements
