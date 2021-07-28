@@ -11,12 +11,43 @@
 
 Xcore is a collection of hundreds of Swift extensions and components designed to minimize boilerplate to accomplish common tasks with ease. It is a framework to efficiently build and scale apps without compromising quality, maintainability and developer productivity. Check out the included example project and [documentation](https://zmian.github.io/xcore) to see how.
 
+## Contents
+- [Requirements](#requirements)
+- [Getting Started](#getting-started)
+- [Documentation](#documentation)
+
 ## Requirements
 * iOS 14.0+
-* Xcode 12.5+
-* Swift 5.4+
+* Xcode 13.0+
+* Swift 5.5+
+
+**Additional Requirements**
+
+* [Swift Package Manager](https://cocoapods.org/)
+* [SwiftLint][swiftlint-link]
+* [SwiftFormat][swiftformat-link]
+
+## Makefile
+We use make file to provide some useful shortcuts. Run any of the below commands at the project root level.
+
+- `make test` Runs all tests
+- `make lint` Runs SwiftLint
+- `make format` Runs SwiftFormat
 
 ## Installation
+
+### Swift Package Manager
+Xcore is available through Swift Package Manager. To integrate it into a project, add it as a dependency within your `Package.swift` manifest:
+
+```swift
+let package = Package(
+    ...
+    dependencies: [        
+        .package(name: "Xcore", url: "https://github.com/zmian/xcore", .branch("main"))
+    ],
+    ...
+)
+```
 
 ### CocoaPods
 
@@ -77,3 +108,6 @@ Documentation is generated with [jazzy](https://github.com/realm/jazzy) and host
 ## License
 
 Xcore is released under the MIT license. [See LICENSE](https://github.com/zmian/xcore/blob/main/LICENSE) for details.
+
+[swiftlint-link]: https://github.com/realm/SwiftLint
+[swiftformat-link]: https://github.com/nicklockwood/SwiftFormat

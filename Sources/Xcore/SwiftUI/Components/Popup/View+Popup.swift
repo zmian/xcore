@@ -129,7 +129,7 @@ extension View {
         modifier(PopupViewModifier(
             isPresented: .init {
                 item.wrappedValue != nil
-            } set: { newValue in
+            } set: { _ in
                 item.wrappedValue = nil
             },
             style: style,

@@ -31,18 +31,18 @@ extension View {
 
     /// Sets the background color behind this view.
     @_disfavoredOverload
-    public func backgroundColor(_ color: UIColor, edgesIgnoringSafeArea: Edge.Set = .all) -> some View {
+    public func backgroundColor(_ color: UIColor, ignoresSafeAreaEdges edges: Edge.Set = .all) -> some View {
         background(
             Color(color)
-                .ignoresSafeArea(edges: edgesIgnoringSafeArea)
+                .ignoresSafeArea(edges: edges)
         )
     }
 
     /// Sets the background color behind this view.
-    public func backgroundColor(_ color: Color, edgesIgnoringSafeArea: Edge.Set = .all) -> some View {
+    public func backgroundColor(_ color: Color, ignoresSafeAreaEdges edges: Edge.Set = .all) -> some View {
         background(
             color
-                .ignoresSafeArea(edges: edgesIgnoringSafeArea)
+                .ignoresSafeArea(edges: edges)
         )
     }
 }
