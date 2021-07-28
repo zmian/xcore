@@ -181,7 +181,7 @@ private final class ShareSheetViewPresenter: UIViewController {
         ).apply {
             $0.excludedActivityTypes = excludedActivityTypes
             $0.popoverPresentationController?.sourceView = view
-            $0.completionWithItemsHandler = { [weak self] type, completed, _, error in
+            $0.completionWithItemsHandler = { [weak self] type, completed, _, _ in
                 guard let strongSelf = self else { return }
 
                 strongSelf.isPresented.wrappedValue = false
