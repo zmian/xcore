@@ -23,7 +23,7 @@ Xcore is a collection of hundreds of Swift extensions and components designed to
 
 **Additional Requirements**
 
-* [Swift Package Manager](https://cocoapods.org/)
+* [Swift Package Manager](https://swift.org/package-manager/)
 * [SwiftLint][swiftlint-link]
 * [SwiftFormat][swiftformat-link]
 
@@ -42,7 +42,7 @@ Xcore is available through Swift Package Manager. To integrate it into a project
 ```swift
 let package = Package(
     ...
-    dependencies: [        
+    dependencies: [
         .package(name: "Xcore", url: "https://github.com/zmian/xcore", .branch("main"))
     ],
     ...
