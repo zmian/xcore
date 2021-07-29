@@ -55,7 +55,7 @@ extension Menu: CaseIterable {
         capsules,
         popups,
         textFields,
-        shareSheet,
+        activitySheet,
         labelInset
     ]
 }
@@ -113,9 +113,9 @@ extension Menu {
         }
     )
 
-    private static let shareSheet = Self(
-        title: "Share Sheet",
-        content: ShareSheetView()
+    private static let activitySheet = Self(
+        title: "Activity Sheet",
+        content: ActivitySheetView()
     )
 
     private static let labelInset = Self(
