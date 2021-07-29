@@ -6,18 +6,18 @@
 
 import SwiftUI
 
-struct ShareSheetView: View {
-    @State private var isShowingShareSheet = false
+struct ActivitySheetView: View {
+    @State private var isShowingActivitySheet = false
 
     var body: some View {
         List {
             Button {
-                isShowingShareSheet = true
+                isShowingActivitySheet = true
             } label: {
                 Label("Share License Agreement", systemImage: .squareAndArrowUp)
             }
         }
-        .shareSheet(isPresented: $isShowingShareSheet, items: ["License Agreement..."]) {
+        .activitySheet(isPresented: $isShowingActivitySheet, items: ["License Agreement..."]) {
             print("onComplete", $0)
         } onDismiss: {
             print("onDismiss")
@@ -25,9 +25,9 @@ struct ShareSheetView: View {
     }
 }
 
-struct ShareSheetView_Previews: PreviewProvider {
+struct ActivitySheetView_Previews: PreviewProvider {
     static var previews: some View {
-        ShareSheetView()
+        ActivitySheetView()
             .embedInNavigation()
     }
 }

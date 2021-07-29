@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6824A98426992A4E000B0289 /* Xcore in Frameworks */ = {isa = PBXBuildFile; productRef = 6824A98326992A4E000B0289 /* Xcore */; };
-		6868EE9526A76C4700ED7A5F /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868EE9426A76C4700ED7A5F /* ShareSheetView.swift */; };
+		6868EE9526A76C4700ED7A5F /* ActivitySheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6868EE9426A76C4700ED7A5F /* ActivitySheetView.swift */; };
 		6899D1092699216300D26721 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6899D1082699216300D26721 /* App.swift */; };
 		6899D10D2699216400D26721 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6899D10C2699216400D26721 /* Assets.xcassets */; };
 		6899D1102699216400D26721 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6899D10F2699216400D26721 /* Preview Assets.xcassets */; };
@@ -26,7 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6868EE9426A76C4700ED7A5F /* ShareSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
+		6868EE9426A76C4700ED7A5F /* ActivitySheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitySheetView.swift; sourceTree = "<group>"; };
 		6899D1052699216300D26721 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6899D1082699216300D26721 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		6899D10C2699216400D26721 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				6899D11C2699236600D26721 /* RootView.swift */,
-				6868EE9426A76C4700ED7A5F /* ShareSheetView.swift */,
+				6868EE9426A76C4700ED7A5F /* ActivitySheetView.swift */,
 				6899D1212699236600D26721 /* ButtonsView.swift */,
 				6899D11D2699236600D26721 /* ViewControllers */,
 			);
@@ -256,7 +256,7 @@
 				6899D1302699236600D26721 /* Theme.swift in Sources */,
 				6899D12A2699236600D26721 /* ButtonsViewController.swift in Sources */,
 				6899D12D2699236600D26721 /* ImageAssetIdentifier.swift in Sources */,
-				6868EE9526A76C4700ED7A5F /* ShareSheetView.swift in Sources */,
+				6868EE9526A76C4700ED7A5F /* ActivitySheetView.swift in Sources */,
 				6899D1292699236600D26721 /* ExampleLabelInsetViewController.swift in Sources */,
 				6899D12C2699236600D26721 /* ButtonsView.swift in Sources */,
 				6899D12B2699236600D26721 /* SeparatorViewController.swift in Sources */,

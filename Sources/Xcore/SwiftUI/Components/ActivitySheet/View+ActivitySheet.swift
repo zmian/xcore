@@ -7,26 +7,26 @@
 import SwiftUI
 
 extension View {
-    /// Presents a share sheet when a binding to a Boolean value that you provide is
-    /// `true`.
+    /// Presents an activity sheet when a binding to a Boolean value that you
+    /// provide is `true`.
     ///
-    /// Use this method when you want to present a share sheet to the user when a
-    /// Boolean value you provide is `true`. The example below displays a share
-    /// sheet with software license agreement when the user toggles the
-    /// `isShowingShareSheet` variable by clicking or tapping on the "Share License
-    /// Agreement" button:
+    /// Use this method when you want to present an activity sheet to the user when
+    /// a Boolean value you provide is `true`. The example below displays an
+    /// activity sheet with software license agreement when the user toggles the
+    /// `isShowingActivitySheet` variable by clicking or tapping on the "Share
+    /// License Agreement" button:
     ///
     /// ```swift
-    /// struct ShareLicenseAgreement: View {
-    ///     @State private var isShowingShareSheet = false
+    /// struct LicenseAgreement: View {
+    ///     @State private var isShowingActivitySheet = false
     ///
     ///     var body: some View {
     ///         Button {
-    ///             isShowingShareSheet.toggle()
+    ///             isShowingActivitySheet.toggle()
     ///         } label: {
     ///             Text("Share License Agreement")
     ///         }
-    ///         .shareSheet(isPresented: $isShowingShareSheet, items: ["License Agreement..."]) {
+    ///         .activitySheet(isPresented: $isShowingActivitySheet, items: ["License Agreement..."]) {
     ///             print("onComplete", $0)
     ///         } onDismiss: {
     ///             print("onDismiss")
@@ -37,7 +37,7 @@ extension View {
     ///
     /// - Parameters:
     ///   - isPresented: A binding to a Boolean value that determines whether to
-    ///     present the share sheet.
+    ///     present the activity sheet.
     ///   - items: The array of data objects on which to perform the activity. The
     ///     type of objects in the array is variable and dependent on the data your
     ///     application manages. For example, the data might consist of one or more
@@ -58,8 +58,8 @@ extension View {
     ///     the user to print a specific image.
     ///   - onComplete: The closure to execute when user completes sharing the given
     ///     items.
-    ///   - onDismiss: The closure to execute when dismissing the share sheet.
-    public func shareSheet(
+    ///   - onDismiss: The closure to execute when dismissing the activity sheet.
+    public func activitySheet(
         isPresented: Binding<Bool>,
         items: [Any],
         activities: [UIActivity]? = nil,
@@ -67,7 +67,7 @@ extension View {
         onComplete: ((UIActivity.ActivityType) -> Void)? = nil,
         onDismiss: (() -> Void)? = nil
     ) -> some View {
-        modifier(ShareSheetViewModifer(
+        modifier(ActivitySheetViewModifer(
             isPresented: isPresented,
             items: items,
             activities: activities,
@@ -80,7 +80,7 @@ extension View {
 
 // MARK: - View Modifier
 
-private struct ShareSheetViewModifer: ViewModifier {
+private struct ActivitySheetViewModifer: ViewModifier {
     var isPresented: Binding<Bool>
     var items: [Any]
     var activities: [UIActivity]?
@@ -90,7 +90,7 @@ private struct ShareSheetViewModifer: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .background(ShareSheetView(
+            .background(ActivitySheetView(
                 isPresented: isPresented,
                 items: items,
                 activities: activities,
@@ -103,7 +103,7 @@ private struct ShareSheetViewModifer: ViewModifier {
 
 // MARK: - View
 
-private struct ShareSheetView: UIViewControllerRepresentable {
+private struct ActivitySheetView: UIViewControllerRepresentable {
     var isPresented: Binding<Bool>
     var items: [Any]
     var activities: [UIActivity]?
@@ -111,7 +111,7 @@ private struct ShareSheetView: UIViewControllerRepresentable {
     var onComplete: ((UIActivity.ActivityType) -> Void)?
     var onDismiss: (() -> Void)?
 
-    func makeUIViewController(context: Context) -> ShareSheetViewPresenter {
+    func makeUIViewController(context: Context) -> ActivitySheetViewPresenter {
         .init(
             isPresented: isPresented,
             items: items,
@@ -123,7 +123,7 @@ private struct ShareSheetView: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(
-        _ uiViewController: ShareSheetViewPresenter,
+        _ uiViewController: ActivitySheetViewPresenter,
         context: Context
     ) {
         uiViewController.isPresented = isPresented
@@ -133,7 +133,7 @@ private struct ShareSheetView: UIViewControllerRepresentable {
 
 // MARK: - Presenter
 
-private final class ShareSheetViewPresenter: UIViewController {
+private final class ActivitySheetViewPresenter: UIViewController {
     fileprivate var isPresented: Binding<Bool>
     private let items: [Any]
     private let activities: [UIActivity]?
