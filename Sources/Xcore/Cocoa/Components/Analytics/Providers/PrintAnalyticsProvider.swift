@@ -29,7 +29,7 @@ public struct PrintAnalyticsProvider: AnalyticsProvider {
         var propertiesString = ""
 
         if let properties = event.properties, !properties.isEmpty {
-            propertiesString = JSONHelpers.stringify(properties, prettyPrinted: true)
+            propertiesString = JSONHelpers.stringify(properties, options: [.sortedKeys, .prettyPrinted])
             propertiesString = "\nproperties: \(propertiesString)"
         }
 
