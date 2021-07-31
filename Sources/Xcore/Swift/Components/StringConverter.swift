@@ -42,7 +42,7 @@ public struct StringConverter {
             return nil
         }
 
-        return JSONHelpers.parse(jsonString: string)
+        return JSONHelpers.decode(string)
     }
 
     private var nsNumber: NSNumber? {
