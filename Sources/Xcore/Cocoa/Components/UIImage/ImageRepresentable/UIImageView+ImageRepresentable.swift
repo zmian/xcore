@@ -11,13 +11,12 @@ extension UIImageView {
     ///
     /// - Parameters:
     ///   - image: The image to display.
-    ///   - alwaysAnimate: An option to always animate setting the image. The
-    ///                    default value is `false`. The image will only fade in
-    ///                    when fetched from a remote url and not in memory cache.
+    ///   - alwaysAnimate: An option to always animate setting the image. The image
+    ///     will only fade in when fetched from a remote url and not in memory
+    ///     cache.
     ///   - animationDuration: The total duration of the animation. If the specified
-    ///                        value is negative or `0`, the image is set without
-    ///                        animation. The default value is `.slow`.
-    ///   - callback: A block to invoke when finished setting the image.
+    ///     value is negative or `0`, the image is set without animation.
+    ///   - callback: A closure to invoke when finished setting the image.
     public func setImage(
         _ image: ImageRepresentable?,
         alwaysAnimate: Bool = false,
@@ -53,13 +52,12 @@ extension UIImageView {
     /// - Parameters:
     ///   - image: The image to display.
     ///   - defaultImage: The fallback image to display if `image` can't be loaded.
-    ///   - alwaysAnimate: An option to always animate setting the image. The
-    ///                    default value is `false`. The image will only fade in
-    ///                    when fetched from a remote url and not in memory cache.
+    ///   - alwaysAnimate: An option to always animate setting the image. The image
+    ///     will only fade in when fetched from a remote url and not in memory
+    ///     cache.
     ///   - animationDuration: The total duration of the animation. If the specified
-    ///                        value is negative or `0`, the image is set without
-    ///                        animation. The default value is `.slow`.
-    ///   - callback: A block to invoke when finished setting the image.
+    ///     value is negative or `0`, the image is set without animation.
+    ///   - callback: A closure to invoke when finished setting the image.
     public func setImage(
         _ image: ImageRepresentable?,
         default defaultImage: ImageRepresentable,

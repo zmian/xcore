@@ -25,9 +25,9 @@ extension UIView {
     ///     attachment. The default value is `0`.
     ///   - options: A mask of options indicating how you want to perform the
     ///     animations. The default value is `.allowUserInteraction`.
-    ///   - animations: A block object containing the changes to commit to the
+    ///   - animations: A closure object containing the changes to commit to the
     ///     views.
-    ///   - completion: A block object to be executed when the animation sequence
+    ///   - completion: A closure object to be executed when the animation sequence
     ///     ends.
     @_disfavoredOverload
     public static func animate(

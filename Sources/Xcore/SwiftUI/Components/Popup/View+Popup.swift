@@ -206,7 +206,7 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
     /// A property indicating the popup style.
     private let style: Popup.Style
 
-    /// A block containing the content of popup.
+    /// A closure containing the content of popup.
     private let content: () -> PopupContent
 
     /// A property indicating all of the ways popup can be dismissed.

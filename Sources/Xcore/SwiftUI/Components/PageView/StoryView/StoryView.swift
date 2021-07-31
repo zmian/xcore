@@ -72,7 +72,7 @@ public struct StoryView<Content, Page>: View where Content: View, Page: Identifi
             }
     }
 
-    /// A block invoked on every cycle completion.
+    /// A closure invoked on every cycle completion.
     ///
     /// - Parameter callback: The block to execute with a parameter indicating
     ///   remaining number of cycles.

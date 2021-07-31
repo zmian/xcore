@@ -15,7 +15,7 @@ extension String {
 
         /// An initializer to format given input string.
         ///
-        /// - Parameter format: A block to format the input string.
+        /// - Parameter format: A closure to format the input string.
         public init(_ format: @escaping (String) -> String) {
             self.format = format
         }

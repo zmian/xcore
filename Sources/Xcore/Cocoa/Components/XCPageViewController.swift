@@ -174,7 +174,7 @@ extension XCPageViewController {
     ///     automatically determine the direction.
     ///   - animated: A boolean value that indicates whether the transition is to be
     ///     animated. The default value is `false`.
-    ///   - completion: A block to be called when setting the current view
+    ///   - completion: A closure to be called when setting the current view
     ///     controller animation completes. The default value is `nil`.
     open func setCurrentPage(
         _ index: Int,

@@ -16,9 +16,9 @@ final class RemoteImageFetcher: ImageFetcher {
     /// - Parameters:
     ///   - image: The image requested to be fetched.
     ///   - imageView: An optional property if this image will be set on the image
-    ///                view.
-    ///   - callback: A block with the `UIImage` object and cache type if image
-    ///               successfully fetched; otherwise, `nil`.
+    ///     view.
+    ///   - callback: A closure with the `UIImage` object and cache type if image
+    ///     successfully fetched; otherwise, `nil`.
     func fetch(
         _ image: ImageRepresentable,
         in imageView: UIImageView?,
