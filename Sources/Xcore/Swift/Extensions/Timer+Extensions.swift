@@ -24,13 +24,13 @@ extension Timer {
     ///    - interval: The number of seconds between firings of the timer. If
     ///      interval is less than or equal to `0.0`, this method chooses the
     ///      nonnegative value of `0.0001` seconds instead.
-    ///    - block: A block to be executed when the timer fires.
+    ///    - work: A closure to be executed when the timer fires.
     /// - Returns: A new Timer object, configured according to the specified
     ///   parameters.
     @discardableResult
-    public class func after(_ interval: TimeInterval, _ block: @escaping () -> Void) -> Timer {
+    public class func after(_ interval: TimeInterval, _ work: @escaping () -> Void) -> Timer {
         Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { _ in
-            block()
+            work()
         }
     }
 
@@ -54,13 +54,13 @@ extension Timer {
     ///    - interval: The number of seconds between firings of the timer. If
     ///      interval is less than or equal to `0.0`, this method chooses the
     ///      nonnegative value of `0.0001` seconds instead.
-    ///    - block: A block to be executed when the timer fires.
+    ///    - work: A closure to be executed when the timer fires.
     /// - Returns: A new Timer object, configured according to the specified
     ///   parameters.
     @discardableResult
-    public class func every(_ interval: TimeInterval, _ block: @escaping () -> Void) -> Timer {
+    public class func every(_ interval: TimeInterval, _ work: @escaping () -> Void) -> Timer {
         Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
-            block()
+            work()
         }
     }
 
@@ -88,14 +88,14 @@ extension Timer {
     ///    - interval: The number of seconds between firings of the timer. If
     ///      interval is less than or equal to `0.0`, this method chooses the
     ///      nonnegative value of `0.0001` seconds instead.
-    ///    - block: A block to be executed when the timer fires. The block takes a
+    ///    - work: A closure to be executed when the timer fires. The block takes a
     ///      single `Timer` parameter and has no return value.
     /// - Returns: A new Timer object, configured according to the specified
     ///   parameters.
     @discardableResult
-    public class func every(_ interval: TimeInterval, _ block: @escaping (Timer) -> Void) -> Timer {
+    public class func every(_ interval: TimeInterval, _ work: @escaping (Timer) -> Void) -> Timer {
         Timer.scheduledTimer(withTimeInterval: interval, repeats: true) {
-            block($0)
+            work($0)
         }
     }
 }

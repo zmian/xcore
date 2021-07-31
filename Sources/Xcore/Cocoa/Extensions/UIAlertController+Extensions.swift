@@ -115,7 +115,7 @@ extension UIAlertController {
     /// - Parameters:
     ///   - sourceView: A source view that presented the alert. A required property
     ///     for iPad support.
-    ///   - handler: A block to invoke when an item is selected.
+    ///   - handler: A closure to invoke when an item is selected.
     @discardableResult
     static func present(
         _ items: [String],

@@ -124,13 +124,13 @@ extension Interstitial {
         // MARK: - Hooks
 
         private var didShowInterstitial: (() -> Void)?
-        /// A block invoked when an interstitial is presented.
+        /// A closure invoked when an interstitial is presented.
         public func didShowInterstitial(_ callback: @escaping () -> Void) {
             didShowInterstitial = callback
         }
 
         private var didDismissAllInterstitials: (() -> Void)?
-        /// A block invoked when all interstitials are dismissed.
+        /// A closure invoked when all interstitials are dismissed.
         public func didDismissAllInterstitials(_ callback: @escaping () -> Void) {
             didDismissAllInterstitials = callback
         }

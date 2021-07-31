@@ -32,7 +32,7 @@ extension NotificationCenter {
     }
 
     /// Adds an entry to the notification center's dispatch table that includes a
-    /// notification queue and a block to add to the queue, and an optional
+    /// notification queue and a closure to add to the queue, and an optional
     /// notification name and sender.
     ///
     /// - Parameters:
@@ -68,7 +68,7 @@ extension NotificationCenter {
     }
 
     /// Adds an entry to the notification center's dispatch table that includes a
-    /// notification queue and a block to add to the queue, and an optional
+    /// notification queue and a closure to add to the queue, and an optional
     /// notification name and sender.
     ///
     /// - Parameters:

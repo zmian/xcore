@@ -14,7 +14,7 @@ extension CATransaction {
     /// - Parameters:
     ///   - animations: The block that have animations that must be completed before
     ///     completion handler is called.
-    ///   - completion: A block object called when animations for this transaction
+    ///   - completion: A closure object called when animations for this transaction
     ///     group are completed.
     public static func animation(_ animations: () -> Void, completion: (() -> Void)?) {
         CATransaction.begin()
