@@ -42,3 +42,19 @@ extension AdaptiveURL {
         set { self[userInfoKey: .shouldAdaptAppearance] = newValue }
     }
 }
+
+// MARK: - Equatable
+
+extension AdaptiveURL: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        String(reflecting: lhs) == String(reflecting: rhs)
+    }
+}
+
+// MARK: - Hashable
+
+extension AdaptiveURL: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(String(reflecting: self))
+    }
+}
