@@ -26,24 +26,3 @@ extension DecodingFormatStyle {
         Self(decode)
     }
 }
-
-//struct Example: Decodable, Equatable {
-//    enum CodingKeys: CodingKey {
-//        case value
-//    }
-//
-//    let value: String
-//
-//    init(value: String) {
-//        self.value = value
-//    }
-//
-//    init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        value = try container.decode(.value, format: .block { input in
-//            if input.value as? Bool {
-//
-//            }
-//        })
-//    }
-//}
