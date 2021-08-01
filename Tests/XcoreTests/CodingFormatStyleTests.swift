@@ -375,4 +375,42 @@ final class CodingFormatStyleTests: TestCase {
         let example3 = try JSONDecoder().decode(Example.self, from: data3)
         XCTAssertEqual(example1, example3)
     }
+
+    func testFormatter() throws {
+        struct Example: Codable, Equatable {
+            static let dateFormatter = DateFormatter().apply {
+                $0.dateFormat = "dd-MM-yyyy"
+            }
+
+            enum CodingKeys: CodingKey {
+                case value
+            }
+
+            let value: Date
+
+            init(value: Date) {
+                self.value = value
+            }
+
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                value = try container.decode(.value, format: .formatter(Self.dateFormatter))
+            }
+
+            func encode(to encoder: Encoder) throws {
+                var container = encoder.container(keyedBy: CodingKeys.self)
+                try container.encode(value, forKey: .value, format: .formatter(Self.dateFormatter))
+            }
+        }
+
+        // Decode
+        let data1 = try XCTUnwrap(#"{"value": "06-11-2014"}"#.data(using: .utf8))
+        let example1 = try JSONDecoder().decode(Example.self, from: data1)
+        XCTAssertEqual(example1.value, Date(year: 2014, month: 11, day: 06))
+
+        // Encode
+        let data2 = try JSONEncoder().encode(Example(value: Date(year: 2014, month: 11, day: 06)))
+        let example2 = try JSONDecoder().decode(Example.self, from: data2)
+        XCTAssertEqual(example1, example2)
+    }
 }
