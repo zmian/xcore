@@ -3,6 +3,7 @@
 // Copyright © 2021 Xcore
 // MIT license, see LICENSE file for details
 //
+// swiftlint:disable opening_brace
 
 import Foundation
 
@@ -10,7 +11,8 @@ import Foundation
 
 /// A structure to decode string to output using block based format style.
 public struct RawRepresentableDecodingFormatStyle<Output>: DecodingFormatStyle
-    where Output: RawRepresentable, Output.RawValue == String {
+    where Output: RawRepresentable, Output.RawValue == String
+{
     public typealias Options = StringCodingFormatStyle.Options
 
     private let options: Options
@@ -42,7 +44,8 @@ public struct RawRepresentableDecodingFormatStyle<Output>: DecodingFormatStyle
 
 extension DecodingFormatStyle {
     public static func rawValue<Output>(options: Self.Options) -> Self
-        where Self == RawRepresentableDecodingFormatStyle<Output> {
+        where Self == RawRepresentableDecodingFormatStyle<Output>
+    {
         Self(options: options)
     }
 }
