@@ -814,20 +814,20 @@ extension Calendar {
         identifier: .gregorian
     ).applying {
         $0.timeZone = .gmt
-        $0.locale = Locale(identifier: "es")
+        $0.locale = .es
     }
 
     fileprivate static let turkey = Self(
         identifier: .gregorian
     ).applying {
-        $0.timeZone = TimeZone(identifier: "Europe/Istanbul")!
-        $0.locale = Locale(identifier: "TR")
+        $0.timeZone = .istanbul
+        $0.locale = .tr
     }
 
     fileprivate static let usEastern = Self(
         identifier: .gregorian
     ).applying {
-        $0.timeZone = TimeZone(identifier: "America/New_York")!
+        $0.timeZone = .eastern
         $0.locale = .current
     }
 }
