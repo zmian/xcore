@@ -5,6 +5,7 @@
 //
 
 import Foundation
+@_exported import AnyCodable
 
 // MARK: - Bundle
 
@@ -16,5 +17,11 @@ extension Bundle {
         #else
         return .init(for: XcoreMarker.self)
         #endif
+    }
+}
+
+extension AnyCodable {
+    public static func from(_ value: Any) -> Self {
+        self.init(value)
     }
 }
