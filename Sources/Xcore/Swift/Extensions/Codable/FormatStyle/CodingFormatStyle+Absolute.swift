@@ -6,15 +6,13 @@
 
 import Foundation
 
-/// Returns the absolute value of the input and output.
-public struct AbsoluteValueCodingFormatStyle<Input>: CodingFormatStyle where Input: Comparable, Input: SignedNumeric {
-    public typealias Output = Input
-
-    public func decode(_ value: Output) throws -> Input {
+/// Returns the absolute value of the input.
+public struct AbsoluteValueCodingFormatStyle<Value>: CodingFormatStyle where Value: Comparable, Value: SignedNumeric {
+    public func decode(_ value: Value) throws -> Value {
         abs(value)
     }
 
-    public func encode(_ value: Input) throws -> Output {
+    public func encode(_ value: Value) throws -> Value {
         abs(value)
     }
 }
