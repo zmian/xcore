@@ -9,10 +9,10 @@ import Foundation
 extension Array {
     /// Returns a random subarray of given length.
     ///
-    /// - Parameter count: Number of random elements to return.
-    /// - Returns: Random subarray of length n.
-    public func randomElements(count: Int = 1) -> Self {
-        let size = count
+    /// - Parameter length: Number of random elements to return.
+    /// - Returns: Random subarray of length _n_.
+    public func randomElements(length: Int = 1) -> Self {
+        let size = length
         let count = self.count
 
         if size >= count {
