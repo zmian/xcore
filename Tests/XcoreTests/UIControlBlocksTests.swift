@@ -69,7 +69,7 @@ private final class MockButton: XCView {
     }
 
     func tap() {
-        button.sendActions(for: .touchUpInside)
+        button.simulateSendAction(.touchUpInside)
     }
 
     func removeAddAction() {
@@ -86,5 +86,32 @@ extension MockButton {
 
     func removeAction() {
         button.action(nil)
+    }
+}
+
+// MARK: - Helper
+
+extension UIControl {
+    /// Simulate send action for testing target.
+    ///
+    /// When ``sendActions(for:)`` is called on a ``UIControl``, the control will
+    /// call the ``UIApplication``'s ``sendAction(_:to:from:for:)`` to deliver the
+    /// event to the registered target. See [overview] of the issue and solution
+    /// [snippet].
+    ///
+    /// Testing a library without any Host Application, there is no
+    /// ``UIApplication`` object. Hence, the ``.touchUpInside`` event is not
+    /// dispatched and the observe method does not get called.
+    ///
+    /// [overview]: https://stackoverflow.com/a/39856918
+    /// [snippet]: https://stackoverflow.com/a/58521288
+    fileprivate func simulateSendAction(_ event: UIControl.Event) {
+        for target in allTargets {
+            let target = target as NSObjectProtocol
+            for actionName in actions(forTarget: target, forControlEvent: event) ?? [] {
+                let selector = Selector(actionName)
+                target.perform(selector, with: self)
+            }
+        }
     }
 }
