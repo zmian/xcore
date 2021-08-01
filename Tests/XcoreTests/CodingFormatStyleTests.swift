@@ -448,7 +448,7 @@ final class CodingFormatStyleTests: TestCase {
         }
 
         // Decode
-        let data1 = try XCTUnwrap(#"{"value": "06-11-2014"}"#.data(using: .utf8))
+        let data1 = try XCTUnwrap(#"{"value": "11-06-2014"}"#.data(using: .utf8))
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         XCTAssertEqual(example1.value, Date(year: 2014, month: 06, day: 11))
 
