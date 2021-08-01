@@ -46,7 +46,7 @@ extension AdaptiveURL {
 // MARK: - Equatable
 
 extension AdaptiveURL: Equatable {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
         String(reflecting: lhs) == String(reflecting: rhs)
     }
 }

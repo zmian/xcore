@@ -26,7 +26,7 @@ extension Empty: Comparable {
         false
     }
 
-    public static func > (lhs: Self, rhs: Self) -> Bool {
+    public static func >(lhs: Self, rhs: Self) -> Bool {
         false
     }
 }
