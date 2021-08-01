@@ -424,6 +424,7 @@ final class CodingFormatStyleTests: TestCase {
         struct Example: Codable, Equatable {
             static let dateFormatter = DateFormatter().apply {
                 $0.dateFormat = "dd-MM-yyyy"
+                $0.timeZone = Calendar.default.timeZone
             }
 
             enum CodingKeys: CodingKey {
