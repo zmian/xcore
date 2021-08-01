@@ -517,12 +517,3 @@ extension CodingUserInfoKey {
         CodingUserInfoKey(rawValue: #function)!
     }
 }
-
-extension Calendar {
-    fileprivate static let usEastern = Self(
-        identifier: .gregorian
-    ).applying {
-        $0.timeZone = TimeZone(identifier: "America/New_York")!
-        $0.locale = .current
-    }
-}
