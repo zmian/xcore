@@ -42,6 +42,14 @@ extension Locale {
 }
 
 extension Locale {
+    /// Returns `tr` (Turkish, Turkey) locale.
+    public static let tr = Locale(identifier: "tr")
+
+    /// Returns `es` (Spanish) locale.
+    public static let es = Locale(identifier: "es")
+}
+
+extension Locale {
     public static func printAvailableIdentifiers() {
         print("Identifier,Description")
         availableIdentifiers.forEach {

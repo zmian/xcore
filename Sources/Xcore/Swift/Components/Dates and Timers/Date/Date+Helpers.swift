@@ -39,7 +39,7 @@ extension Date {
             second: second
         )
 
-        self = calendar.date(from: dateComponent)!
+        self = dateComponent.date!
     }
 
     /// Initializes a Date object from a given date string and format.

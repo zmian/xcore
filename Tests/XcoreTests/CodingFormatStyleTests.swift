@@ -450,10 +450,10 @@ final class CodingFormatStyleTests: TestCase {
         // Decode
         let data1 = try XCTUnwrap(#"{"value": "11-06-2014"}"#.data(using: .utf8))
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
-        XCTAssertEqual(example1.value, Date(year: 2014, month: 06, day: 11))
+        XCTAssertEqual(example1.value, Date(year: 2014, month: 6, day: 11))
 
         // Encode
-        let data2 = try JSONEncoder().encode(Example(value: Date(year: 2014, month: 06, day: 11)))
+        let data2 = try JSONEncoder().encode(Example(value: Date(year: 2014, month: 6, day: 11)))
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
         XCTAssertEqual(example1, example2)
     }
@@ -472,7 +472,12 @@ final class CodingFormatStyleTests: TestCase {
 
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-                value = try container.decode(.value, format: .date())
+
+                if let format = decoder.userInfo[.dateFormat] as? Date.Format.Custom {
+                    value = try container.decode(.value, format: .date(formats: format))
+                } else {
+                    value = try container.decode(.value, format: .date())
+                }
             }
 
             func encode(to encoder: Encoder) throws {
@@ -484,15 +489,40 @@ final class CodingFormatStyleTests: TestCase {
         // Decode
         let data1 = try XCTUnwrap(#"{"value": "2014-06-11"}"#.data(using: .utf8))
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
-        XCTAssertEqual(example1.value, Date(year: 2014, month: 06, day: 11, calendar: .iso))
+        XCTAssertEqual(example1.value, Date(year: 2014, month: 6, day: 11, calendar: .iso))
 
         // Invalid
         let data2 = try XCTUnwrap(#"{"value": "2014"}"#.data(using: .utf8))
         XCTAssertThrowsError(try JSONDecoder().decode(Example.self, from: data2))
 
+        // Dynamically passing date format via the decoder
+        let jsonDecoder = JSONDecoder().apply {
+            $0.userInfo[.dateFormat] = Date.Format.Custom.yearMonthDash
+        }
+        let data3 = try XCTUnwrap(#"{"value": "2014-06"}"#.data(using: .utf8))
+        let example3 = try jsonDecoder.decode(Example.self, from: data3)
+        XCTAssertEqual(example3.value, Date(year: 2014, month: 6, day: 1, calendar: .iso))
+
         // Encode
-        let data3 = try JSONEncoder().encode(Example(value: Date(year: 2014, month: 06, day: 11, calendar: .iso)))
-        let example3 = try JSONDecoder().decode(Example.self, from: data3)
-        XCTAssertEqual(example1, example3)
+        let data4 = try JSONEncoder().encode(Example(value: Date(year: 2014, month: 06, day: 11, calendar: .iso)))
+        let example4 = try JSONDecoder().decode(Example.self, from: data4)
+        XCTAssertEqual(example1, example4)
+    }
+}
+
+// MARK: - Helpers
+
+extension CodingUserInfoKey {
+    fileprivate static var dateFormat: Self {
+        CodingUserInfoKey(rawValue: #function)!
+    }
+}
+
+extension Calendar {
+    fileprivate static let usEastern = Self(
+        identifier: .gregorian
+    ).applying {
+        $0.timeZone = TimeZone(identifier: "America/New_York")!
+        $0.locale = .current
     }
 }
