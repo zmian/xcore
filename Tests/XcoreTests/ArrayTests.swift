@@ -63,8 +63,8 @@ final class ArrayTests: TestCase {
 
     func testRandomElements() {
         let values = [132, 2432, 35435, 455]
-        let randomValue1 = values.randomElements(count: 17)
-        let randomValue2 = values.randomElements(count: 2)
+        let randomValue1 = values.randomElements(length: 17)
+        let randomValue2 = values.randomElements(length: 2)
 
         XCTAssertEqual(randomValue1.count, values.count)
         XCTAssertEqual(randomValue2.count, 2)
@@ -72,8 +72,8 @@ final class ArrayTests: TestCase {
 
     func testEmptyRandomElements() {
         let values: [Int] = []
-        let randomValue1 = values.randomElements(count: 17)
-        let randomValue2 = values.randomElements(count: 2)
+        let randomValue1 = values.randomElements(length: 17)
+        let randomValue2 = values.randomElements(length: 2)
 
         XCTAssertEqual(randomValue1.count, values.count)
         XCTAssertEqual(randomValue2.count, 0)

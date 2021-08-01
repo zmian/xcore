@@ -154,11 +154,22 @@ extension String {
 
         return String(dropFirst(count - last))
     }
+}
+
+// MARK: - Random
+
+extension String {
+    /// Returns random elements of the string of the given length.
+    ///
+    /// - Parameter length: Number of random elements to return.
+    public func random(length: Int) -> String {
+        String((0..<length).map { _ in randomElement()! })
+    }
 
     /// Returns a random alphanumerics string of the given length.
     public static func randomAlphanumerics(length: Int) -> String {
-        let seed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        return String((0..<length).map { _ in seed.randomElement()! })
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+            .random(length: length)
     }
 }
 
