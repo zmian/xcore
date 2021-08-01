@@ -250,4 +250,47 @@ final class CodingFormatStyleTests: TestCase {
         let example3 = try JSONDecoder().decode(Example.self, from: data3)
         XCTAssertEqual(example1, example3)
     }
+
+    func testBlock() throws {
+        struct Example: Decodable, Equatable {
+            enum CodingKeys: CodingKey {
+                case value
+            }
+
+            enum Style {
+                case style1
+                case style2
+            }
+
+            let value: Style
+
+            init(value: Style) {
+                self.value = value
+            }
+
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                value = try container.decode(.value, format: .block { input in
+                    switch input as? String {
+                        case "first":
+                            return .style1
+                        case "second":
+                            return .style2
+                        default:
+                            struct InvalidValue: Error {}
+                            throw InvalidValue()
+                    }
+                })
+            }
+        }
+
+        // Valid
+        let data1 = try XCTUnwrap(#"{"value": "first"}"#.data(using: .utf8))
+        let example1 = try JSONDecoder().decode(Example.self, from: data1)
+        XCTAssertEqual(example1.value, .style1)
+
+        // Invalid
+        let data2 = try XCTUnwrap(#"{"value": "foobaz"}"#.data(using: .utf8))
+        XCTAssertThrowsError(try JSONDecoder().decode(Example.self, from: data2))
+    }
 }
