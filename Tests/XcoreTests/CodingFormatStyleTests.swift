@@ -293,4 +293,52 @@ final class CodingFormatStyleTests: TestCase {
         let data2 = try XCTUnwrap(#"{"value": "foobaz"}"#.data(using: .utf8))
         XCTAssertThrowsError(try JSONDecoder().decode(Example.self, from: data2))
     }
+
+    func testStringBlock() throws {
+        struct Example: Codable, Equatable {
+            enum CodingKeys: CodingKey {
+                case value
+            }
+
+            let value: UIColor
+            let isBlueColor: Bool
+
+            init(value: UIColor, isBlueColor: Bool) {
+                self.value = value
+                self.isBlueColor = isBlueColor
+            }
+
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                value = try container.decode(.value, format: .string(UIColor.init(hex:)))
+                isBlueColor = try container.decode(.value, format: .string { hex in
+                    hex == "0000FF" || hex == "#0000FF"
+                })
+            }
+
+            func encode(to encoder: Encoder) throws {
+                var container = encoder.container(keyedBy: CodingKeys.self)
+                try container.encode(value, forKey: .value, format: .string { color in
+                    color.hex
+                })
+            }
+        }
+
+        // Valid
+        let data1 = try XCTUnwrap(#"{"value": "0000FF"}"#.data(using: .utf8))
+        let example1 = try JSONDecoder().decode(Example.self, from: data1)
+        XCTAssertEqual(example1.value, UIColor(hex: "0000FF"))
+        XCTAssertEqual(example1.isBlueColor, true)
+
+        // Invalid
+        let data2 = try XCTUnwrap(#"{"value": "foobaz"}"#.data(using: .utf8))
+        let example2 = try JSONDecoder().decode(Example.self, from: data2)
+        XCTAssertEqual(example2.value, UIColor(hex: "000000"))
+        XCTAssertEqual(example2.isBlueColor, false)
+
+        // Encode
+        let data3 = try JSONEncoder().encode(Example(value: UIColor(hex: "0000FF"), isBlueColor: true))
+        let example3 = try JSONDecoder().decode(Example.self, from: data3)
+        XCTAssertEqual(example1, example3)
+    }
 }
