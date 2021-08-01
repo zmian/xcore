@@ -36,7 +36,7 @@ extension StringCodingFormatStyle {
 public struct StringCodingFormatStyle: CodingFormatStyle {
     private let options: Options
 
-    fileprivate init(options: Options) {
+    init(options: Options) {
         self.options = options
     }
 
