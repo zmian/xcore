@@ -251,6 +251,40 @@ final class CodingFormatStyleTests: TestCase {
         XCTAssertEqual(example1, example3)
     }
 
+    func testStringEnum() throws {
+        struct Example: Codable, Equatable {
+            enum CodingKeys: CodingKey {
+                case value
+            }
+
+            enum Style: String, Codable {
+                case style1
+                case style2
+            }
+
+            let value: Style
+
+            init(value: Style) {
+                self.value = value
+            }
+
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                value = try container.decode(.value, format: .rawValue(options: .camelcase))
+            }
+        }
+
+        // Decode
+        let data1 = try XCTUnwrap(#"{"value": "STYLE2"}"#.data(using: .utf8))
+        let example1 = try JSONDecoder().decode(Example.self, from: data1)
+        XCTAssertEqual(example1.value, .style2)
+
+        // Encode
+        let data2 = try JSONEncoder().encode(Example(value: .style2))
+        let example2 = try JSONDecoder().decode(Example.self, from: data2)
+        XCTAssertEqual(example1, example2)
+    }
+
     func testBlock() throws {
         struct Example: Decodable, Equatable {
             enum CodingKeys: CodingKey {
