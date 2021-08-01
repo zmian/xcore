@@ -29,7 +29,7 @@ extension StringCodingFormatStyle {
         /// Converts the value to title case.
         public static let titlecase = Options(rawValue: 1 << 6)
         /// Throws if the string is blank.
-        public static let blankThrows = Options(rawValue: 1 << 6)
+        public static let blankThrows = Options(rawValue: 1 << 7)
     }
 }
 

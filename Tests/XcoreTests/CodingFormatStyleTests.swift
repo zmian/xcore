@@ -285,6 +285,50 @@ final class CodingFormatStyleTests: TestCase {
         XCTAssertEqual(example1, example2)
     }
 
+    func testBlockStringEnum() throws {
+        struct Example: Codable, Equatable {
+            enum CodingKeys: String, CodingKey {
+                case value = "isPending"
+            }
+
+            enum Status: String, Codable {
+                case pending
+                case scheduled
+            }
+
+            let value: Status
+
+            init(value: Status) {
+                self.value = value
+            }
+
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                value = try container.decode(.value, format: .block { value in
+                    if let status = value as? String {
+                        return Status(rawValue: status)
+                    }
+
+                    guard let isPending = value as? Bool else {
+                        return nil
+                    }
+
+                    return isPending ? .pending : .scheduled
+                })
+            }
+        }
+
+        // Decode
+        let data1 = try XCTUnwrap(#"{"isPending": false}"#.data(using: .utf8))
+        let example1 = try JSONDecoder().decode(Example.self, from: data1)
+        XCTAssertEqual(example1.value, .scheduled)
+
+        // Encode
+        let data2 = try JSONEncoder().encode(Example(value: .scheduled))
+        let example2 = try JSONDecoder().decode(Example.self, from: data2)
+        XCTAssertEqual(example1, example2)
+    }
+
     func testBlock() throws {
         struct Example: Decodable, Equatable {
             enum CodingKeys: CodingKey {
@@ -406,11 +450,49 @@ final class CodingFormatStyleTests: TestCase {
         // Decode
         let data1 = try XCTUnwrap(#"{"value": "06-11-2014"}"#.data(using: .utf8))
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
-        XCTAssertEqual(example1.value, Date(year: 2014, month: 11, day: 06))
+        XCTAssertEqual(example1.value, Date(year: 2014, month: 06, day: 11))
 
         // Encode
-        let data2 = try JSONEncoder().encode(Example(value: Date(year: 2014, month: 11, day: 06)))
+        let data2 = try JSONEncoder().encode(Example(value: Date(year: 2014, month: 06, day: 11)))
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
         XCTAssertEqual(example1, example2)
+    }
+
+    func testDate() throws {
+        struct Example: Codable, Equatable {
+            enum CodingKeys: CodingKey {
+                case value
+            }
+
+            let value: Date
+
+            init(value: Date) {
+                self.value = value
+            }
+
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                value = try container.decode(.value, format: .date())
+            }
+
+            func encode(to encoder: Encoder) throws {
+                var container = encoder.container(keyedBy: CodingKeys.self)
+                try container.encode(value, forKey: .value, format: .date())
+            }
+        }
+
+        // Decode
+        let data1 = try XCTUnwrap(#"{"value": "2014-06-11"}"#.data(using: .utf8))
+        let example1 = try JSONDecoder().decode(Example.self, from: data1)
+        XCTAssertEqual(example1.value, Date(year: 2014, month: 06, day: 11, calendar: .iso))
+
+        // Invalid
+        let data2 = try XCTUnwrap(#"{"value": "2014"}"#.data(using: .utf8))
+        XCTAssertThrowsError(try JSONDecoder().decode(Example.self, from: data2))
+
+        // Encode
+        let data3 = try JSONEncoder().encode(Example(value: Date(year: 2014, month: 06, day: 11, calendar: .iso)))
+        let example3 = try JSONDecoder().decode(Example.self, from: data3)
+        XCTAssertEqual(example1, example3)
     }
 }

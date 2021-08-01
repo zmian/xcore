@@ -8,21 +8,25 @@ import Foundation
 
 /// A structure to decode given value to output using block based format style.
 public struct BlockDecodingFormatStyle<Output>: DecodingFormatStyle {
-    private let decode: (Any) throws -> Output
+    private let decode: (Any) throws -> Output?
 
-    fileprivate init(_ decode: @escaping (Any) throws -> Output) {
+    fileprivate init(_ decode: @escaping (Any) throws -> Output?) {
         self.decode = decode
     }
 
     public func decode(_ value: AnyCodable) throws -> Output {
-        try decode(value.value)
+        guard let result = try decode(value.value) else {
+            throw CodingFormatStyleError.invalidValue
+        }
+
+        return result
     }
 }
 
 // MARK: - Convenience
 
 extension DecodingFormatStyle {
-    public static func block<Output>(_ decode: @escaping (Any) throws -> Output) -> Self where Self == BlockDecodingFormatStyle<Output> {
+    public static func block<Output>(_ decode: @escaping (Any) throws -> Output?) -> Self where Self == BlockDecodingFormatStyle<Output> {
         Self(decode)
     }
 }
