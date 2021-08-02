@@ -61,3 +61,47 @@ extension Failable: CustomStringConvertible where Value: CustomStringConvertible
         value?.description ?? "Optional(nil)"
     }
 }
+
+// MARK: - Array
+
+extension Array {
+    public func flatten<Value>() -> [Value] where Element == Failable<Value> {
+        compactMap(\.value)
+    }
+}
+
+// MARK: - JSONDecoder
+
+extension JSONDecoder {
+    /// The strategy to use for decoding collections.
+    public enum FailableDecodingStrategy {
+        /// Throw upon encountering non-decodable values. This is the default strategy.
+        case `throw`
+
+        /// Decodes partial elements.
+        case lenient
+    }
+
+    /// Decodes a top-level value of the given type from the given JSON representation.
+    ///
+    /// - Parameters:
+    ///   - type: The type of the value to decode.
+    ///   - data: The data to decode from.
+    ///   - strategy: The strategy used to decode the given data.
+    /// - Returns: A value of the requested type.
+    /// - Throws: `DecodingError.dataCorrupted` if values requested from the payload
+    ///   are corrupted, or if the given data is not valid JSON.
+    /// - Throws: An error if any value throws an error during decoding.
+    open func decode<T>(
+        _ type: T.Type,
+        from data: Data,
+        strategy: FailableDecodingStrategy
+    ) throws -> T where T: Decodable & InitializableBySequence, T.Element: Decodable {
+        switch strategy {
+            case .throw:
+                return try decode(type, from: data)
+            case .lenient:
+                return T(try decode([Failable<T.Element>].self, from: data).flatten())
+        }
+    }
+}
