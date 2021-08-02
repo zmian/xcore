@@ -285,7 +285,7 @@ final class CodingFormatStyleTests: TestCase {
         XCTAssertEqual(example1, example2)
     }
 
-    func testBlockStringEnum() throws {
+    func testMapStringEnum() throws {
         struct Example: Codable, Equatable {
             enum CodingKeys: String, CodingKey {
                 case value = "isPending"
@@ -304,7 +304,7 @@ final class CodingFormatStyleTests: TestCase {
 
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-                value = try container.decode(.value, format: .block { value in
+                value = try container.decode(.value, format: .map { value in
                     if let status = value as? String {
                         return Status(rawValue: status)
                     }
@@ -329,7 +329,7 @@ final class CodingFormatStyleTests: TestCase {
         XCTAssertEqual(example1, example2)
     }
 
-    func testBlock() throws {
+    func testMap() throws {
         struct Example: Decodable, Equatable {
             enum CodingKeys: CodingKey {
                 case value
@@ -348,7 +348,7 @@ final class CodingFormatStyleTests: TestCase {
 
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-                value = try container.decode(.value, format: .block { input in
+                value = try container.decode(.value, format: .map { input in
                     switch input as? String {
                         case "first":
                             return .style1
@@ -372,7 +372,7 @@ final class CodingFormatStyleTests: TestCase {
         XCTAssertThrowsError(try JSONDecoder().decode(Example.self, from: data2))
     }
 
-    func testStringBlock() throws {
+    func testStringMap() throws {
         struct Example: Codable, Equatable {
             enum CodingKeys: CodingKey {
                 case value
