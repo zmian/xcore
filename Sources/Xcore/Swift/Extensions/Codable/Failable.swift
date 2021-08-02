@@ -78,7 +78,7 @@ extension JSONDecoder {
         /// Throw upon encountering non-decodable values. This is the default strategy.
         case `throw`
 
-        /// Decodes partial elements.
+        /// Decodes values that are decodable and ignore the non-decodable values.
         case lenient
     }
 
