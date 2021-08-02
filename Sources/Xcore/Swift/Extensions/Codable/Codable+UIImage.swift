@@ -9,12 +9,12 @@ import UIKit
 extension KeyedEncodingContainer {
     public mutating func encode(
         _ value: UIImage,
-        forKey key: KeyedEncodingContainer.Key,
-        as format: UIImage.EncodingFormat = .png
+        forKey key: Key,
+        format: UIImage.EncodingFormat = .png
     ) throws {
         guard let data = value.data(using: format) else {
             throw EncodingError.invalidValue(value, .init(
-                codingPath: [],
+                codingPath: [key],
                 debugDescription: "Failed to convert UIImage instance to Data."
             ))
         }
@@ -24,10 +24,7 @@ extension KeyedEncodingContainer {
 }
 
 extension KeyedDecodingContainer {
-    public func decode(
-        _ type: UIImage.Type,
-        forKey key: KeyedDecodingContainer.Key
-    ) throws -> UIImage {
+    public func decode(_ key: Key) throws -> UIImage {
         let imageData = try decode(Data.self, forKey: key)
 
         guard let image = UIImage(data: imageData) else {
@@ -52,7 +49,7 @@ extension SingleValueEncodingContainer {
     ///   call.
     public mutating func encode(
         _ value: UIImage,
-        as format: UIImage.EncodingFormat = .png
+        format: UIImage.EncodingFormat = .png
     ) throws {
         guard let data = value.data(using: format) else {
             throw EncodingError.invalidValue(value, .init(
