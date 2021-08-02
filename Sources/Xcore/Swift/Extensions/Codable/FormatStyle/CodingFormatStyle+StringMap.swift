@@ -9,7 +9,7 @@ import Foundation
 // MARK: - Decoding
 
 /// A structure to decode string to output using block based format style.
-public struct StringBlockDecodingFormatStyle<Output>: DecodingFormatStyle {
+public struct StringMapDecodingFormatStyle<Output>: DecodingFormatStyle {
     private let decode: (String) throws -> Output?
 
     fileprivate init(_ decode: @escaping (String) throws -> Output?) {
@@ -31,7 +31,7 @@ public struct StringBlockDecodingFormatStyle<Output>: DecodingFormatStyle {
 // MARK: - Convenience
 
 extension DecodingFormatStyle {
-    public static func string<Output>(_ decode: @escaping (String) throws -> Output?) -> Self where Self == StringBlockDecodingFormatStyle<Output> {
+    public static func string<Output>(_ decode: @escaping (String) throws -> Output?) -> Self where Self == StringMapDecodingFormatStyle<Output> {
         Self(decode)
     }
 }
@@ -39,7 +39,7 @@ extension DecodingFormatStyle {
 // MARK: - Encoding
 
 /// A structure to encode input to string using block based format style.
-public struct StringBlockEncodingFormatStyle<Input>: EncodingFormatStyle {
+public struct StringMapEncodingFormatStyle<Input>: EncodingFormatStyle {
     private let encode: (Input) throws -> String?
 
     fileprivate init(_ encode: @escaping (Input) throws -> String?) {
@@ -58,7 +58,7 @@ public struct StringBlockEncodingFormatStyle<Input>: EncodingFormatStyle {
 // MARK: - Convenience
 
 extension EncodingFormatStyle {
-    public static func string<Input>(_ encode: @escaping (Input) throws -> String?) -> Self where Self == StringBlockEncodingFormatStyle<Input> {
+    public static func string<Input>(_ encode: @escaping (Input) throws -> String?) -> Self where Self == StringMapEncodingFormatStyle<Input> {
         Self(encode)
     }
 }
