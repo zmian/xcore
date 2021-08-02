@@ -28,6 +28,15 @@ final class FailableTests: TestCase {
         XCTAssertEqual(pets1, pets2)
     }
 
+    func testWithFailableDecodingStrategy() throws {
+        let pets = try JSONDecoder().decode([Pet].self, from: json, strategy: .lenient)
+
+        XCTAssertEqual(pets.count, 1)
+        XCTAssertEqual(pets.first?.name, "Zeus")
+        XCTAssertEqual(pets.first?.age, 3)
+        XCTAssertNotNil(pets.last) // Count is == 1 so last == first
+    }
+
     // MARK: - Helpers
 
     private let json = """
@@ -37,7 +46,7 @@ final class FailableTests: TestCase {
     ]
     """.data(using: .utf8)!
 
-    private struct Pet: Codable, Equatable {
+    private struct Pet: Codable, Equatable, Hashable {
         let name: String
         let age: Int
     }

@@ -7,3 +7,12 @@
 public protocol InitializableByEmptyConstructor: AnyObject {
     init()
 }
+
+// MARK: - InitializableBySequence
+
+public protocol InitializableBySequence: Sequence {
+    @inlinable init<S>(_ elements: S) where S: Sequence, Element == S.Element
+}
+
+extension Array: InitializableBySequence {}
+extension Set: InitializableBySequence {}

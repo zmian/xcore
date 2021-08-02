@@ -21,6 +21,8 @@ public final class Weak<Value: AnyObject> {
     }
 }
 
+// MARK: - Equatable
+
 extension Weak: Equatable {
     public static func ==(lhs: Weak, rhs: Weak) -> Bool {
         lhs.value === rhs.value
@@ -31,11 +33,31 @@ extension Weak: Equatable {
     }
 }
 
+// MARK: - Hashable
+
 extension Weak: Hashable where Value: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(value)
     }
 }
+
+// MARK: - Hashable
+
+extension Weak: Comparable where Value: Comparable {
+    public static func <(lhs: Weak, rhs: Weak) -> Bool {
+        guard let lhs = lhs.value else { return false }
+        guard let rhs = rhs.value else { return false }
+        return lhs < rhs
+    }
+
+    public static func >(lhs: Weak, rhs: Weak) -> Bool {
+        guard let lhs = lhs.value else { return false }
+        guard let rhs = rhs.value else { return false }
+        return lhs > rhs
+    }
+}
+
+// MARK: - Flatten
 
 extension RangeReplaceableCollection where Index == Int {
     /// Removes all elements where the `value` is deallocated.
