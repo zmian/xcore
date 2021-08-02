@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-public protocol InitializableByEmptyConstructor: AnyObject {
+public protocol InitializableByEmptyConstructor {
     init()
 }
 
