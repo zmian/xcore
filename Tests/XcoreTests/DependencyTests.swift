@@ -98,11 +98,11 @@ private struct NoopPasteboardClient: PasteboardClient {
     }
 }
 
-private struct PasteboardClientKey: DependencyKey {
-    static let defaultValue: PasteboardClient = NoopPasteboardClient()
-}
-
 extension DependencyValues {
+    private struct PasteboardClientKey: DependencyKey {
+        static let defaultValue: PasteboardClient = NoopPasteboardClient()
+    }
+
     fileprivate var pasteboard: PasteboardClient {
         get { self[PasteboardClientKey.self] }
         set { self[PasteboardClientKey.self] = newValue }
@@ -130,11 +130,11 @@ extension MyPasteboard {
     }
 }
 
-private struct MyPasteboardClientKey: DependencyVariantKey {
-    static let defaultValue: MyPasteboard = .failing
-}
-
 extension DependencyValues {
+    private struct MyPasteboardClientKey: DependencyVariantKey {
+        static let defaultValue: MyPasteboard = .failing
+    }
+
     fileprivate var myPasteboard: MyPasteboard {
         get { self[MyPasteboardClientKey.self] }
         set { self[MyPasteboardClientKey.self] = newValue }

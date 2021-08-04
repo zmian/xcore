@@ -120,11 +120,11 @@ public struct DependencyValues {
     /// that key:
     ///
     /// ```swift
-    /// private struct MyDependencyKey: DependencyKey {
-    ///     static let defaultValue: String = "Default value"
-    /// }
-    ///
     /// extension DependencyValues {
+    ///     private struct MyDependencyKey: DependencyKey {
+    ///         static let defaultValue: String = "Default value"
+    ///     }
+    ///
     ///     var myCustomValue: String {
     ///         get { self[MyDependencyKey.self] }
     ///         set { self[MyDependencyKey.self] = newValue }

@@ -74,13 +74,12 @@ public protocol DependencyVariant {
 ///     }
 /// }
 ///
-/// // 3. Create dependency variants key
-/// private struct PasteboardClientKey: DependencyVariantKey {
-///     static let defaultValue: Pasteboard = .failing
-/// }
-///
-/// // 4. Create dependency values property
+/// // 3. Create dependency values property
 /// extension DependencyValues {
+///     private struct PasteboardClientKey: DependencyVariantKey {
+///         static let defaultValue: Pasteboard = .failing
+///     }
+///
 ///     var pasteboard: Pasteboard {
 ///         get { self[PasteboardClientKey.self] }
 ///         set { self[PasteboardClientKey.self] = newValue }
