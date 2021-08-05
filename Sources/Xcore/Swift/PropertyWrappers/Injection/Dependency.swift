@@ -172,7 +172,9 @@ public struct DependencyValues {
             if !isSetterOnKeyPathCalled {
                 // If app is running in testing mode fail the test.
                 if ProcessInfo.Arguments.isTesting {
-                    internal_XCTFail("You must explicitly set the value of \"\(K.Value.self)\" dependency when testing.")
+                    let dependencyName = "\"\(K.Value.self)\""
+                    let example = "\"DependencyValues.set(\\.pastboard, .stub)\""
+                    internal_XCTFail("You are trying to access \(dependencyName) dependency in this test case without assigning it. You can set this dependency as: \(example)")
                     return K.defaultValue
                 }
             }
