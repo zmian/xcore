@@ -32,6 +32,25 @@ import Foundation
 ///         set { self[MyDependencyKey.self] = newValue }
 ///     }
 /// }
+///
+/// class MyTests: TestCase {
+///     // Reset all of the `DependencyValues` storage.
+///     func setUp() async throws {
+///         DependencyValues.resetAll()
+///     }
+///
+///     func testPasteboard() throws {
+///         struct ViewModel {
+///             @Dependency(\.myCustomValue) var myCustomValue
+///         }
+///
+///         let viewModel = ViewModel()
+///         XCTAssertEqual(viewModel.myCustomValue, "Failing value")
+///
+///         DependencyValues.set(\.myCustomValue, "hello")
+///         XCTAssertEqual(viewModel.myCustomValue, "hello")
+///     }
+/// }
 /// ```
 public protocol DependencyKey {
     /// The associated type representing the type of the dependency key's
@@ -112,6 +131,10 @@ public struct DependencyValues {
     static var shared = Self()
     var storage: [ObjectIdentifier: Any] = [:]
 
+    // Subscripts setter on key-path calls getter of the destination property.
+    // https://bugs.swift.org/browse/SR-10203
+    private var isSetterOnKeyPathCalled = false
+
     /// Accesses the dependency value associated with a custom key.
     ///
     /// Create custom dependency values by defining a key that conforms to the
@@ -132,21 +155,54 @@ public struct DependencyValues {
     /// }
     /// ```
     public subscript<K>(key: K.Type) -> K.Value where K: DependencyKey {
-        get { storage[ObjectIdentifier(key)] as? K.Value ?? K.defaultValue }
-        set {
+        get {
             let key = ObjectIdentifier(key)
-            storage[key] = newValue
+
+            // If we have stored value for the given key, return and exit.
+            if let value = storage[key] as? K.Value {
+                return value
+            }
+
+            #if DEBUG
+            // When we are calling set key path using
+            // `DependencyValues.set(\.myCustomValue, "hello")` it invokes the getter first
+            // and in testing mode it incorrectly fails the tests when trying to set the
+            // dependency explicitly.
+            // See: https://bugs.swift.org/browse/SR-10203
+            if !isSetterOnKeyPathCalled {
+                // If app is running in testing mode fail the test.
+                if ProcessInfo.Arguments.isTesting {
+                    internal_XCTFail("You must explicitly set the value of \"\(K.Value.self)\" dependency when testing.")
+                    return K.defaultValue
+                }
+            }
+            #endif
+
+            // If app is running in normal mode, return the `default` value.
+            return K.defaultValue
+        }
+        set {
+            storage[ObjectIdentifier(key)] = newValue
         }
     }
 
     @discardableResult
     public static func set<V>(_ keyPath: WritableKeyPath<Self, V>, _ value: V) -> Self {
+        shared.isSetterOnKeyPathCalled = true
         shared[keyPath: keyPath] = value
+        shared.isSetterOnKeyPathCalled = false
         return shared
     }
 
     @discardableResult
     public static func get<V>(_ keyPath: KeyPath<Self, V>) -> V {
         shared[keyPath: keyPath]
+    }
+
+    /// Reset all of the ``DependencyValues`` storage.
+    public static func resetAll() {
+        // We are clearing all of the dependencies, which will force next access to go
+        // through the `getter` in the `subscript` function above.
+        shared.storage = [:]
     }
 }
