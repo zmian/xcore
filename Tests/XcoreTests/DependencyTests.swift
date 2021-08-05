@@ -8,7 +8,7 @@ import XCTest
 @testable import Xcore
 
 final class DependencyTests: TestCase {
-    func testDefault() throws {
+    func testProtocolDependency() throws {
         struct ViewModel {
             @Dependency(\.pasteboard) var pasteboard
 
@@ -18,7 +18,6 @@ final class DependencyTests: TestCase {
         }
 
         let viewModel = ViewModel()
-        XCTAssertEqual(viewModel.pasteboard.id, "noop")
 
         DependencyValues.set(\.pasteboard, LivePasteboardClient())
         XCTAssertEqual(viewModel.pasteboard.id, "live")
@@ -27,18 +26,18 @@ final class DependencyTests: TestCase {
         XCTAssertEqual(viewModel.pasteboard.id, "noop")
 
         // nil out the pasteboard
-        UIPasteboard.general.string = nil
-        XCTAssertNil(UIPasteboard.general.string)
+        globalPasteboard = nil
+        XCTAssertNil(globalPasteboard)
 
         viewModel.copy()
-        XCTAssertNil(UIPasteboard.general.string) // current client is noop
+        XCTAssertNil(globalPasteboard) // current client is noop
 
         DependencyValues.set(\.pasteboard, LivePasteboardClient())
         viewModel.copy()
-        XCTAssertEqual(UIPasteboard.general.string, "hello") // current client is live
+        XCTAssertEqual(globalPasteboard, "hello") // current client is live
     }
 
-    func testDependencyVariant() {
+    func testStructDependency() {
         struct ViewModel {
             @Dependency(\.myPasteboard) var pasteboard
 
@@ -48,33 +47,33 @@ final class DependencyTests: TestCase {
         }
 
         let viewModel = ViewModel()
-        XCTAssertEqual(viewModel.pasteboard.id, "failing")
 
         DependencyValues.set(\.myPasteboard, .live)
         XCTAssertEqual(viewModel.pasteboard.id, "live")
 
-        DependencyValues.set(\.myPasteboard, .failing)
-        XCTAssertEqual(viewModel.pasteboard.id, "failing")
+        DependencyValues.set(\.myPasteboard, .noop)
+        XCTAssertEqual(viewModel.pasteboard.id, "noop")
 
         // nil out the pasteboard
-        UIPasteboard.general.string = nil
-        XCTAssertNil(UIPasteboard.general.string)
+        globalPasteboard = nil
+        XCTAssertNil(globalPasteboard)
 
         DependencyValues.set(\.myPasteboard, .live)
         viewModel.copy()
-        XCTAssertEqual(UIPasteboard.general.string, "hello") // current client is live
+        XCTAssertEqual(globalPasteboard, "hello") // current client is live
 
-        // Force all of the variant dependencies to be failing.
-        DependencyValues.resetAll(toVariant: .failing)
-        XCTAssertEqual(viewModel.pasteboard.id, "failing")
+        // Reset dependencies values.
+        DependencyValues.resetAll()
 
         XCTExpectFailure()
         viewModel.copy()
-        XCTAssertNil(UIPasteboard.general.string) // current client is failing
+        XCTAssertEqual(globalPasteboard, "hello") // current client is live
     }
 }
 
 // MARK: - Helpers
+
+private var globalPasteboard: String?
 
 private protocol PasteboardClient {
     var id: String { get }
@@ -86,7 +85,7 @@ private struct LivePasteboardClient: PasteboardClient {
     let id = "live"
 
     func copy(_ text: String) {
-        UIPasteboard.general.string = text
+        globalPasteboard = text
     }
 }
 
@@ -100,7 +99,7 @@ private struct NoopPasteboardClient: PasteboardClient {
 
 extension DependencyValues {
     private struct PasteboardClientKey: DependencyKey {
-        static let defaultValue: PasteboardClient = NoopPasteboardClient()
+        static let defaultValue: PasteboardClient = LivePasteboardClient()
     }
 
     fileprivate var pasteboard: PasteboardClient {
@@ -109,9 +108,9 @@ extension DependencyValues {
     }
 }
 
-// MARK: - Dependency Variant
+// MARK: - Dependency with Struct
 
-private struct MyPasteboard: DependencyVariant {
+private struct MyPasteboard {
     let id: String
     let copy: (String) -> Void
 }
@@ -119,20 +118,18 @@ private struct MyPasteboard: DependencyVariant {
 extension MyPasteboard {
     static var live: Self {
         .init(id: #function) {
-            UIPasteboard.general.string = $0
+            globalPasteboard = $0
         }
     }
 
-    static var failing: Self {
-        .init(id: #function) { _ in
-            XCTFail("MyPasteboard is unimplemented")
-        }
+    static var noop: Self {
+        .init(id: #function) { _ in }
     }
 }
 
 extension DependencyValues {
-    private struct MyPasteboardClientKey: DependencyVariantKey {
-        static let defaultValue: MyPasteboard = .failing
+    private struct MyPasteboardClientKey: DependencyKey {
+        static let defaultValue: MyPasteboard = .live
     }
 
     fileprivate var myPasteboard: MyPasteboard {
