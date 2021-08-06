@@ -512,6 +512,36 @@ final class MirrorTests: TestCase {
         let expected2 = Mirror.TypeInfo(kind: .unknown, isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
     }
+
+    func testWithMirror() throws {
+        struct Value: Equatable, Codable {
+            var id: String = ""
+            var name: String?
+            var age: Float?
+        }
+
+        let mirror = Mirror(reflecting: Value())
+
+        for (label, value) in mirror.children {
+            let label = try XCTUnwrap(label)
+
+            let type = Mirror.type(of: value)
+
+            switch label {
+                case "id":
+                    let expected = Mirror.TypeInfo(kind: .string, isOptional: false, isCodable: true)
+                    XCTAssertEqual(type, expected)
+                case "name":
+                    let expected = Mirror.TypeInfo(kind: .string, isOptional: true, isCodable: true)
+                    XCTAssertEqual(type, expected)
+                case "age":
+                    let expected = Mirror.TypeInfo(kind: .numeric(.float), isOptional: true, isCodable: true)
+                    XCTAssertEqual(type, expected)
+                default:
+                    XCTFail("Unhandled label: \(label)")
+            }
+        }
+    }
 }
 
 // MARK: - Helpers
