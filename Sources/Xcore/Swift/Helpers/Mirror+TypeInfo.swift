@@ -112,20 +112,20 @@ extension Mirror {
 
 // Credit: https://forums.swift.org/t/35479/36
 
-enum RawRepresentableMarker<T> {}
-enum StringRawRepresentableMarker<T> {}
-enum IntRawRepresentableMarker<T> {}
-enum UIntRawRepresentableMarker<T> {}
-enum FloatRawRepresentableMarker<T> {}
-enum DoubleRawRepresentableMarker<T> {}
-enum CGFloatRawRepresentableMarker<T> {}
-enum BoolRawRepresentableMarker<T> {}
+private enum RawRepresentableMarker<T> {}
+private enum StringRawRepresentableMarker<T> {}
+private enum IntRawRepresentableMarker<T> {}
+private enum UIntRawRepresentableMarker<T> {}
+private enum FloatRawRepresentableMarker<T> {}
+private enum DoubleRawRepresentableMarker<T> {}
+private enum CGFloatRawRepresentableMarker<T> {}
+private enum BoolRawRepresentableMarker<T> {}
 
 // ConformanceMarker
-protocol ConformanceMarker {}
-protocol OptionalConformanceMarker {}
-protocol ConformanceMarker2 {}
-protocol OptionalConformanceMarker2 {}
+private protocol ConformanceMarker {}
+private protocol OptionalConformanceMarker {}
+private protocol ConformanceMarker2 {}
+private protocol OptionalConformanceMarker2 {}
 
 // MARK: - RawRepresentableMarker
 
