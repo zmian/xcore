@@ -58,10 +58,11 @@ extension Mirror.TypeInfo {
 extension Mirror {
     public static func type<T>(of value: T) -> TypeInfo {
         let type = Swift.type(of: value)
-        let isCodable = type is Codable.Type
+        let anyType = Swift.type(of: value as Any)
+        let isCodable = anyType is Codable.Type
 
         var kind: TypeInfo.Kind {
-            switch type {
+            switch anyType {
                 case is Void.Type, is Void?.Type:
                     return .void
                 case is Bool.Type, is Bool?.Type:
@@ -112,125 +113,102 @@ extension Mirror {
 
 // Credit: https://forums.swift.org/t/35479/36
 
-private enum RawRepresentableMarker<T> {}
-private enum StringRawRepresentableMarker<T> {}
-private enum IntRawRepresentableMarker<T> {}
-private enum UIntRawRepresentableMarker<T> {}
-private enum FloatRawRepresentableMarker<T> {}
-private enum DoubleRawRepresentableMarker<T> {}
-private enum CGFloatRawRepresentableMarker<T> {}
-private enum BoolRawRepresentableMarker<T> {}
+private protocol Conforming {}
+private protocol ConformingOptional {}
+private protocol ConformingOptional2 {}
+private protocol ConformingOptional2Optional {}
 
 // ConformanceMarker
 private protocol ConformanceMarker {}
-private protocol OptionalConformanceMarker {}
-private protocol ConformanceMarker2 {}
-private protocol OptionalConformanceMarker2 {}
+extension ConformanceMarker {
+    static var conforms: Bool {
+        Self.self is Conforming.Type ||
+        Self.self is ConformingOptional.Type ||
+        Self.self is ConformingOptional2.Type ||
+        Self.self is ConformingOptional2Optional.Type
+    }
+}
+
+private enum RawRepresentableMarker<T>: ConformanceMarker {}
+private enum StringRawRepresentableMarker<T>: ConformanceMarker {}
+private enum IntRawRepresentableMarker<T>: ConformanceMarker {}
+private enum UIntRawRepresentableMarker<T>: ConformanceMarker {}
+private enum FloatRawRepresentableMarker<T>: ConformanceMarker {}
+private enum DoubleRawRepresentableMarker<T>: ConformanceMarker {}
+private enum CGFloatRawRepresentableMarker<T>: ConformanceMarker {}
+private enum BoolRawRepresentableMarker<T>: ConformanceMarker {}
 
 // MARK: - RawRepresentableMarker
 
-extension RawRepresentableMarker: ConformanceMarker where T: RawRepresentable {}
-extension RawRepresentableMarker: OptionalConformanceMarker where T: OptionalType, T.Wrapped: RawRepresentable {}
+extension RawRepresentableMarker: Conforming where T: RawRepresentable {}
+extension RawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable {}
 // StringRawRepresentableMarker
 // - enum Color: String { case red, green, blue }
 // - StringRawRepresentableMarker<Color>.self
-extension StringRawRepresentableMarker: ConformanceMarker where T: RawRepresentable, T.RawValue == String {}
+extension StringRawRepresentableMarker: Conforming where T: RawRepresentable, T.RawValue == String {}
 // - struct Color: RawRepresentable { let rawValue: String? }
 // - StringRawRepresentableMarker<Color>.self
-extension StringRawRepresentableMarker: ConformanceMarker2 where T: RawRepresentable, T.RawValue == String? {}
+extension StringRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == String? {}
 // - enum Color: String { case red, green, blue }
 // - StringRawRepresentableMarker<Optional<Color>>.self
-extension StringRawRepresentableMarker: OptionalConformanceMarker where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == String {}
+extension StringRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == String {}
 // - struct Color: RawRepresentable { let rawValue: String? }
 // - StringRawRepresentableMarker<Optional<Color>>.self
-extension StringRawRepresentableMarker: OptionalConformanceMarker2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == String? {}
+extension StringRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == String? {}
 // IntRawRepresentableMarker
-extension IntRawRepresentableMarker: ConformanceMarker where T: RawRepresentable, T.RawValue == Int {}
-extension IntRawRepresentableMarker: ConformanceMarker2 where T: RawRepresentable, T.RawValue == Int? {}
-extension IntRawRepresentableMarker: OptionalConformanceMarker where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Int {}
-extension IntRawRepresentableMarker: OptionalConformanceMarker2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Int? {}
+extension IntRawRepresentableMarker: Conforming where T: RawRepresentable, T.RawValue == Int {}
+extension IntRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == Int? {}
+extension IntRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Int {}
+extension IntRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Int? {}
 // UIntRawRepresentableMarker
-extension UIntRawRepresentableMarker: ConformanceMarker where T: RawRepresentable, T.RawValue == UInt {}
-extension UIntRawRepresentableMarker: ConformanceMarker2 where T: RawRepresentable, T.RawValue == UInt? {}
-extension UIntRawRepresentableMarker: OptionalConformanceMarker where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == UInt {}
-extension UIntRawRepresentableMarker: OptionalConformanceMarker2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == UInt? {}
+extension UIntRawRepresentableMarker: Conforming where T: RawRepresentable, T.RawValue == UInt {}
+extension UIntRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == UInt? {}
+extension UIntRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == UInt {}
+extension UIntRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == UInt? {}
 // FloatRawRepresentableMarker
-extension FloatRawRepresentableMarker: ConformanceMarker where T: RawRepresentable, T.RawValue == Float {}
-extension FloatRawRepresentableMarker: ConformanceMarker2 where T: RawRepresentable, T.RawValue == Float? {}
-extension FloatRawRepresentableMarker: OptionalConformanceMarker where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Float {}
-extension FloatRawRepresentableMarker: OptionalConformanceMarker2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Float? {}
+extension FloatRawRepresentableMarker: Conforming where T: RawRepresentable, T.RawValue == Float {}
+extension FloatRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == Float? {}
+extension FloatRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Float {}
+extension FloatRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Float? {}
 // DoubleRawRepresentableMarker
-extension DoubleRawRepresentableMarker: ConformanceMarker where T: RawRepresentable, T.RawValue == Double {}
-extension DoubleRawRepresentableMarker: ConformanceMarker2 where T: RawRepresentable, T.RawValue == Double? {}
-extension DoubleRawRepresentableMarker: OptionalConformanceMarker where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Double {}
-extension DoubleRawRepresentableMarker: OptionalConformanceMarker2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Double? {}
+extension DoubleRawRepresentableMarker: Conforming where T: RawRepresentable, T.RawValue == Double {}
+extension DoubleRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == Double? {}
+extension DoubleRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Double {}
+extension DoubleRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Double? {}
 // CGFloatRawRepresentableMarker
-extension CGFloatRawRepresentableMarker: ConformanceMarker where T: RawRepresentable, T.RawValue == CGFloat {}
-extension CGFloatRawRepresentableMarker: ConformanceMarker2 where T: RawRepresentable, T.RawValue == CGFloat? {}
-extension CGFloatRawRepresentableMarker: OptionalConformanceMarker where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == CGFloat {}
-extension CGFloatRawRepresentableMarker: OptionalConformanceMarker2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == CGFloat? {}
+extension CGFloatRawRepresentableMarker: Conforming where T: RawRepresentable, T.RawValue == CGFloat {}
+extension CGFloatRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == CGFloat? {}
+extension CGFloatRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == CGFloat {}
+extension CGFloatRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == CGFloat? {}
 // BoolRawRepresentableMarker
-extension BoolRawRepresentableMarker: ConformanceMarker where T: RawRepresentable, T.RawValue == Bool {}
-extension BoolRawRepresentableMarker: ConformanceMarker2 where T: RawRepresentable, T.RawValue == Bool? {}
-extension BoolRawRepresentableMarker: OptionalConformanceMarker where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Bool {}
-extension BoolRawRepresentableMarker: OptionalConformanceMarker2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Bool? {}
+extension BoolRawRepresentableMarker: Conforming where T: RawRepresentable, T.RawValue == Bool {}
+extension BoolRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == Bool? {}
+extension BoolRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Bool {}
+extension BoolRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Bool? {}
 
-// swiftlint:disable opening_brace
 private func rawRepresentableRawValueType<T>(_ t: T.Type) -> Mirror.TypeInfo.Kind.RawValue? {
-    if StringRawRepresentableMarker<T>.self is ConformanceMarker.Type ||
-        StringRawRepresentableMarker<T>.self is ConformanceMarker2.Type ||
-        StringRawRepresentableMarker<T>.self is OptionalConformanceMarker.Type ||
-        StringRawRepresentableMarker<T>.self is OptionalConformanceMarker2.Type
-    {
+    if StringRawRepresentableMarker<T>.conforms {
         return .string
-    } else if IntRawRepresentableMarker<T>.self is ConformanceMarker.Type ||
-        IntRawRepresentableMarker<T>.self is ConformanceMarker2.Type ||
-        IntRawRepresentableMarker<T>.self is OptionalConformanceMarker.Type ||
-        IntRawRepresentableMarker<T>.self is OptionalConformanceMarker2.Type
-    {
+    } else if IntRawRepresentableMarker<T>.conforms {
         return .numeric(.int)
-    } else if UIntRawRepresentableMarker<T>.self is ConformanceMarker.Type ||
-        UIntRawRepresentableMarker<T>.self is ConformanceMarker2.Type ||
-        UIntRawRepresentableMarker<T>.self is OptionalConformanceMarker.Type ||
-        UIntRawRepresentableMarker<T>.self is OptionalConformanceMarker2.Type
-    {
+    } else if UIntRawRepresentableMarker<T>.conforms {
         return .numeric(.uint)
-    } else if FloatRawRepresentableMarker<T>.self is ConformanceMarker.Type ||
-        FloatRawRepresentableMarker<T>.self is ConformanceMarker2.Type ||
-        FloatRawRepresentableMarker<T>.self is OptionalConformanceMarker.Type ||
-        FloatRawRepresentableMarker<T>.self is OptionalConformanceMarker2.Type
-    {
+    } else if FloatRawRepresentableMarker<T>.conforms {
         return .numeric(.float)
-    } else if DoubleRawRepresentableMarker<T>.self is ConformanceMarker.Type ||
-        DoubleRawRepresentableMarker<T>.self is ConformanceMarker2.Type ||
-        DoubleRawRepresentableMarker<T>.self is OptionalConformanceMarker.Type ||
-        DoubleRawRepresentableMarker<T>.self is OptionalConformanceMarker2.Type
-    {
+    } else if DoubleRawRepresentableMarker<T>.conforms {
         return .numeric(.double)
-    } else if CGFloatRawRepresentableMarker<T>.self is ConformanceMarker.Type ||
-        CGFloatRawRepresentableMarker<T>.self is ConformanceMarker2.Type ||
-        CGFloatRawRepresentableMarker<T>.self is OptionalConformanceMarker.Type ||
-        CGFloatRawRepresentableMarker<T>.self is OptionalConformanceMarker2.Type
-    {
+    } else if CGFloatRawRepresentableMarker<T>.conforms {
         // Map CGFloat to Double
         // https://github.com/apple/swift-evolution/blob/main/proposals/0307-allow-interchangeable-use-of-double-cgfloat-types.md
         return .numeric(.double)
-    } else if BoolRawRepresentableMarker<T>.self is ConformanceMarker.Type ||
-        BoolRawRepresentableMarker<T>.self is ConformanceMarker2.Type ||
-        BoolRawRepresentableMarker<T>.self is OptionalConformanceMarker.Type ||
-        BoolRawRepresentableMarker<T>.self is OptionalConformanceMarker2.Type
-    {
+    } else if BoolRawRepresentableMarker<T>.conforms {
         return .bool
-    } else if RawRepresentableMarker<T>.self is ConformanceMarker.Type ||
-        RawRepresentableMarker<T>.self is OptionalConformanceMarker.Type
-    {
+    } else if RawRepresentableMarker<T>.conforms {
         return .some
     } else {
         return nil
     }
 }
-
-// swiftlint:enable opening_brace
 
 // MARK: - OptionalMarker
 
