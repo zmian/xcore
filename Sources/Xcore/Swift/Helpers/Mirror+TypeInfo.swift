@@ -103,8 +103,8 @@ extension Mirror {
     }
 
     /// Returns `true` when given value is optional; otherwise, `false`.
+    ///
     /// - Parameter value: The value for which to check if is of type ``Optional``.
-    /// - Returns: Returns `true` when given value is optional; otherwise, `false`.
     public static func isOptional<T>(_ value: T) -> Bool {
         value is OptionalMarker
     }
