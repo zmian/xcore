@@ -514,10 +514,30 @@ final class MirrorTests: TestCase {
     }
 
     func testWithMirror() throws {
+        // Non-RawRepresentable
+        enum Style1: Equatable, Codable {
+            case one
+            case two
+        }
+
+        // RawRepresentable<String>
+        enum Style2: String, Codable {
+            case one
+            case two
+        }
+
+        // RawRepresentable<Empty>
+        struct Style3: RawRepresentable, Equatable, Codable {
+            let rawValue: String
+        }
+
         struct Value: Equatable, Codable {
             var id: String = ""
             var name: String?
             var age: Float?
+            var style1: Style1 = .two
+            var style2: Style2?
+            var style3: Style3?
         }
 
         let mirror = Mirror(reflecting: Value())
@@ -537,6 +557,21 @@ final class MirrorTests: TestCase {
                 case "age":
                     let expected = Mirror.TypeInfo(kind: .numeric(.float), isOptional: true, isCodable: true)
                     XCTAssertEqual(type, expected)
+                case "style1":
+                    let expected = Mirror.TypeInfo(kind: .unknown, isOptional: false, isCodable: true)
+                    XCTAssertEqual(type, expected)
+                case "style2":
+                    let expected = Mirror.TypeInfo(kind: .rawRepresentable(.string), isOptional: true, isCodable: true)
+                    XCTAssertEqual(type.isCodable, expected.isCodable)
+                    XCTAssertEqual(type.isOptional, expected.isOptional)
+                    XCTExpectFailure("RawRepresentable types are not resolved when using Mirror(reflecting:)")
+                    XCTAssertEqual(type.kind, expected.kind)
+                case "style3":
+                    let expected = Mirror.TypeInfo(kind: .rawRepresentable(.some), isOptional: true, isCodable: true)
+                    XCTAssertEqual(type.isCodable, expected.isCodable)
+                    XCTAssertEqual(type.isOptional, expected.isOptional)
+                    XCTExpectFailure("RawRepresentable types are not resolved when using Mirror(reflecting:)")
+                    XCTAssertEqual(type.kind, expected.kind)
                 default:
                     XCTFail("Unhandled label: \(label)")
             }
