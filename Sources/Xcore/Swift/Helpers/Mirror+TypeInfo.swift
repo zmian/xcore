@@ -96,6 +96,15 @@ extension Mirror {
                         return .rawRepresentable(result)
                     }
 
+                    // TODO: Fix
+                    // Doesn't work when `rawRepresentable` is a property and the parent is children
+                    // are returned using `Mirror(reflecting:)`.
+                    // See: `MirrorTests.testWithMirror` the test case.
+                    //
+                    // else if let result = rawRepresentableRawValue(anyType) {
+                    //     return .rawRepresentable(result)
+                    // }
+
                     return .unknown
             }
         }
@@ -208,6 +217,10 @@ private func rawRepresentableRawValueType<T>(_ t: T.Type) -> Mirror.TypeInfo.Kin
     } else {
         return nil
     }
+}
+
+private func rawRepresentableRawValue<T>(_ t: T) -> Mirror.TypeInfo.Kind.RawValue? {
+    rawRepresentableRawValueType(type(of: t))
 }
 
 // MARK: - OptionalMarker
