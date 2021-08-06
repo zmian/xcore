@@ -97,9 +97,9 @@ extension Mirror {
                     }
 
                     // TODO: Fix
-                    // Doesn't work when `rawRepresentable` is a property and the parent is children
+                    // Doesn't work when `rawRepresentable` is a property and the parent children
                     // are returned using `Mirror(reflecting:)`.
-                    // See: `MirrorTests.testWithMirror` the test case.
+                    // See: `MirrorTests.testWithMirror` test case.
                     //
                     // else if let result = rawRepresentableRawValue(anyType) {
                     //     return .rawRepresentable(result)
