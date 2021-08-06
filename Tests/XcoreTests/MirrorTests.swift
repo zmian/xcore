@@ -9,52 +9,54 @@ import XCTest
 
 final class MirrorTests: TestCase {
     func testIsOptional() {
-        struct Cat {}
-        XCTAssertFalse(Mirror.isOptional(Cat.self))
+        struct Value {}
+        XCTAssertFalse(Mirror.isOptional(Value.self))
 
-        let cat = Cat()
-        XCTAssertFalse(Mirror.isOptional(cat))
+        let value = Value()
+        XCTAssertFalse(Mirror.isOptional(value))
 
-        let optionalCat: Cat? = nil
-        XCTAssertTrue(Mirror.isOptional(optionalCat))
+        let optionalValue: Value? = nil
+        XCTAssertTrue(Mirror.isOptional(optionalValue))
+
+        let optionalValueType: Value?.Type? = nil
+        XCTAssertTrue(Mirror.isOptional(optionalValueType))
     }
 
     // RawValue: String
 
     func testEnumRawValueString() {
-        enum Color: String, Codable {
-            case red
-            case green
-            case blue
+        enum Value: String, Codable {
+            case one
+            case two
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.string), isOptional: true, isCodable: true)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color.blue
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value.two
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.string), isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
     }
 
     func testRawRepresentableString() {
-        struct Color: RawRepresentable, Codable {
+        struct Value: RawRepresentable, Codable {
             let rawValue: String?
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.string), isOptional: true, isCodable: true)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color(rawValue: "blue")
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value(rawValue: "blue")
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.string), isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
     }
@@ -62,39 +64,38 @@ final class MirrorTests: TestCase {
     // RawValue: Int
 
     func testEnumRawValueInt() {
-        enum Color: Int, Codable {
-            case red
-            case green
-            case blue
+        enum Value: Int, Codable {
+            case one
+            case two
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.int)), isOptional: true, isCodable: true)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color.blue
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value.two
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.int)), isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
     }
 
     func testRawRepresentableInt() {
-        struct Color: RawRepresentable, Codable {
+        struct Value: RawRepresentable, Codable {
             let rawValue: Int?
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.int)), isOptional: true, isCodable: true)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color(rawValue: 2)
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value(rawValue: 2)
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.int)), isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
     }
@@ -102,39 +103,38 @@ final class MirrorTests: TestCase {
     // RawValue: UInt
 
     func testEnumRawValueUInt() {
-        enum Color: UInt, Codable {
-            case red
-            case green
-            case blue
+        enum Value: UInt, Codable {
+            case one
+            case two
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.uint)), isOptional: true, isCodable: true)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color.blue
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value.two
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.uint)), isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
     }
 
     func testRawRepresentableUInt() {
-        struct Color: RawRepresentable, Codable {
+        struct Value: RawRepresentable, Codable {
             let rawValue: UInt?
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.uint)), isOptional: true, isCodable: true)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color(rawValue: 2)
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value(rawValue: 2)
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.uint)), isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
     }
@@ -142,39 +142,38 @@ final class MirrorTests: TestCase {
     // RawValue: Float
 
     func testEnumRawValueFloat() {
-        enum Color: Float, Codable {
-            case red
-            case green
-            case blue
+        enum Value: Float, Codable {
+            case one
+            case two
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.float)), isOptional: true, isCodable: true)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color.blue
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value.two
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.float)), isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
     }
 
     func testRawRepresentableFloat() {
-        struct Color: RawRepresentable, Codable {
+        struct Value: RawRepresentable, Codable {
             let rawValue: Float?
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.float)), isOptional: true, isCodable: true)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color(rawValue: 2)
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value(rawValue: 2)
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.float)), isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
     }
@@ -182,57 +181,56 @@ final class MirrorTests: TestCase {
     // RawValue: Double
 
     func testEnumRawValueDouble() {
-        enum Color: Double {
-            case red
-            case green
-            case blue
+        enum Value: Double {
+            case one
+            case two
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.double)), isOptional: true, isCodable: false)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color.blue
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value.two
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.double)), isOptional: false, isCodable: false)
         XCTAssertEqual(actual2, expected2)
     }
 
     func testRawRepresentableDouble() {
-        struct Color: RawRepresentable {
+        struct Value: RawRepresentable {
             let rawValue: Double? // Optional
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.double)), isOptional: true, isCodable: false)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color(rawValue: 2)
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value(rawValue: 2)
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.double)), isOptional: false, isCodable: false)
         XCTAssertEqual(actual2, expected2)
     }
 
     func testRawRepresentableDoubleNonOptional() {
-        struct Color: RawRepresentable {
+        struct Value: RawRepresentable {
             let rawValue: Double // Non-Optional
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.double)), isOptional: true, isCodable: false)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color(rawValue: 2)
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value(rawValue: 2)
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.double)), isOptional: false, isCodable: false)
         XCTAssertEqual(actual2, expected2)
     }
@@ -240,19 +238,19 @@ final class MirrorTests: TestCase {
     // RawValue: Bool
 
     func testRawRepresentableBool() {
-        struct Color: RawRepresentable {
+        struct Value: RawRepresentable {
             let rawValue: Bool?
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.bool), isOptional: true, isCodable: false)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color(rawValue: false)
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value(rawValue: false)
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.bool), isOptional: false, isCodable: false)
         XCTAssertEqual(actual2, expected2)
     }
@@ -260,39 +258,38 @@ final class MirrorTests: TestCase {
     // RawValue: CGFloat
 
     func testEnumRawValueCGFloat() {
-        enum Color: CGFloat, Codable {
-            case red
-            case green
-            case blue
+        enum Value: CGFloat, Codable {
+            case one
+            case two
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.double)), isOptional: true, isCodable: true)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color.blue
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value.two
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.double)), isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
     }
 
     func testRawRepresentableCGFloat() {
-        struct Color: RawRepresentable {
+        struct Value: RawRepresentable {
             let rawValue: CGFloat?
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.double)), isOptional: true, isCodable: false)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color(rawValue: 2)
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value(rawValue: 2)
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.numeric(.double)), isOptional: false, isCodable: false)
         XCTAssertEqual(actual2, expected2)
     }
@@ -300,24 +297,24 @@ final class MirrorTests: TestCase {
     // RawValue: Some
 
     func testRawRepresentableSome() {
-        enum Value {
+        enum Raw {
             case this
             case that
         }
 
-        struct Color: RawRepresentable {
-            let rawValue: Value
+        struct Value: RawRepresentable {
+            let rawValue: Raw
         }
 
         // Optional
-        let color1: Color? = nil
-        let actual1 = Mirror.type(of: color1)
+        let value1: Value? = nil
+        let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .rawRepresentable(.some), isOptional: true, isCodable: false)
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let color2 = Color(rawValue: .this)
-        let actual2 = Mirror.type(of: color2)
+        let value2 = Value(rawValue: .this)
+        let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .rawRepresentable(.some), isOptional: false, isCodable: false)
         XCTAssertEqual(actual2, expected2)
     }
@@ -501,16 +498,16 @@ final class MirrorTests: TestCase {
     // Unknown
 
     func testUnknown() {
-        struct Color: OtherProtocol, Codable {}
+        struct Value: SomeProtocol, Codable {}
 
         // Optional
-        let value1: Color? = nil
+        let value1: Value? = nil
         let actual1 = Mirror.type(of: value1)
         let expected1 = Mirror.TypeInfo(kind: .unknown, isOptional: true, isCodable: true)
         XCTAssertEqual(actual1, expected1)
 
         // Optional
-        let value2 = Color()
+        let value2 = Value()
         let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .unknown, isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
@@ -519,4 +516,4 @@ final class MirrorTests: TestCase {
 
 // MARK: - Helpers
 
-private protocol OtherProtocol {}
+private protocol SomeProtocol {}
