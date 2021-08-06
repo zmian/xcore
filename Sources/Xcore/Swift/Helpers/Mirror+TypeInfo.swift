@@ -212,7 +212,9 @@ private func rawRepresentableRawValueType<T>(_ t: T.Type) -> Mirror.TypeInfo.Kin
         CGFloatRawRepresentableMarker<T>.self is OptionalConformanceMarker.Type ||
         CGFloatRawRepresentableMarker<T>.self is OptionalConformanceMarker2.Type
     {
-        return .numeric(.double) // map CGFloat to double
+        // Map CGFloat to Double
+        // https://github.com/apple/swift-evolution/blob/main/proposals/0307-allow-interchangeable-use-of-double-cgfloat-types.md
+        return .numeric(.double)
     } else if BoolRawRepresentableMarker<T>.self is ConformanceMarker.Type ||
         BoolRawRepresentableMarker<T>.self is ConformanceMarker2.Type ||
         BoolRawRepresentableMarker<T>.self is OptionalConformanceMarker.Type ||
@@ -229,10 +231,6 @@ private func rawRepresentableRawValueType<T>(_ t: T.Type) -> Mirror.TypeInfo.Kin
 }
 
 // swiftlint:enable opening_brace
-
-private func rawRepresentableRawValue<T>(_ t: T) -> Mirror.TypeInfo.Kind.RawValue? {
-    rawRepresentableRawValueType(T.self)
-}
 
 // MARK: - OptionalMarker
 
