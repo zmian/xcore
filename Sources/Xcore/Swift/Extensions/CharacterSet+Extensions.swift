@@ -62,7 +62,7 @@ extension CharacterSet {
                 continue
             }
             let base = (plane + k) << 3
-            for j in 0 ..< 8 where w & 1 << j != 0 {
+            for j in 0..<8 where w & 1 << j != 0 {
                 result.append(base + j)
             }
         }

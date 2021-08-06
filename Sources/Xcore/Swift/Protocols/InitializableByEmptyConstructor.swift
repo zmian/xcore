@@ -11,7 +11,8 @@ public protocol InitializableByEmptyConstructor {
 // MARK: - InitializableBySequence
 
 public protocol InitializableBySequence: Sequence {
-    @inlinable init<S>(_ elements: S) where S: Sequence, Element == S.Element
+    @inlinable
+    init<S>(_ elements: S) where S: Sequence, Element == S.Element
 }
 
 extension Array: InitializableBySequence {}

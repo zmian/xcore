@@ -1,4 +1,5 @@
 #if DEBUG
+// swiftformat:disable all
 // swiftlint:disable all
 // https://github.com/pointfreeco/xctest-dynamic-overlay
 // Renamed the function to avoid collisions and changed the access control to
