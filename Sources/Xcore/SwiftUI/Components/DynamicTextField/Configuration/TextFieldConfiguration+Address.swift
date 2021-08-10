@@ -7,13 +7,29 @@
 import SwiftUI
 
 extension TextFieldConfiguration {
+    /// An enumeration representing postal address components.
     public enum AddressComponent: String {
+        /// The street address in a postal address.
         case street
+
+        /// The street name in a postal address.
         case street1
+
+        /// The street line 2 is for the apartment, suite, unit number, or other address
+        /// designation that is not part of the postal address.
         case street2
+
+        /// The city name in a postal address.
         case city
+
+        /// The state name in a postal address.
         case state
+
+        /// The postal code in a postal address.
         case postalCode
+
+        /// The country or region name in a postal address.
+        case country
     }
 }
 
@@ -34,6 +50,8 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
                 return addressState
             case .postalCode:
                 return .postalCode
+            case .country:
+                return .country
         }
     }
 
@@ -106,6 +124,18 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
             spellChecking: .no,
             keyboard: .numberPad,
             textContentType: .postalCode
+        )
+    }
+
+    /// Country
+    private static var country: Self {
+        .init(
+            id: #function,
+            autocapitalization: .words,
+            autocorrection: .default,
+            spellChecking: .default,
+            keyboard: .default,
+            textContentType: .countryName
         )
     }
 }
