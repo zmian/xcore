@@ -6,10 +6,8 @@
 
 import Foundation
 
-public struct PrintAnalyticsProvider: AnalyticsProvider {
-    public init() {}
-
-    public func track(_ event: AnalyticsEventProtocol) {
+struct PrintAnalyticsProvider: AnalyticsProvider {
+    func track(_ event: AnalyticsEventProtocol) {
         let (enabled, containsValue) = ProcessInfo.Arguments.isAnalyticsDebugEnabled
 
         guard enabled else {
