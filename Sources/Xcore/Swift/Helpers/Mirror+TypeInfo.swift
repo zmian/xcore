@@ -132,9 +132,9 @@ private protocol ConformanceMarker {}
 extension ConformanceMarker {
     static var conforms: Bool {
         Self.self is Conforming.Type ||
-        Self.self is ConformingOptional.Type ||
-        Self.self is ConformingOptional2.Type ||
-        Self.self is ConformingOptional2Optional.Type
+            Self.self is ConformingOptional.Type ||
+            Self.self is ConformingOptional2.Type ||
+            Self.self is ConformingOptional2Optional.Type
     }
 }
 

@@ -10,6 +10,7 @@ import Foundation
 public final class UserDefaultsAnalyticsProvider: AnalyticsProvider {
     private let suiteName: String
     private lazy var userDefaults = UserDefaults(suiteName: suiteName)!
+    private var isEnabled = true
 
     /// Creates an analytics provider object with the specified database name.
     ///
@@ -20,6 +21,10 @@ public final class UserDefaultsAnalyticsProvider: AnalyticsProvider {
     }
 
     public func track(_ event: AnalyticsEventProtocol) {
+        guard isEnabled else {
+            return
+        }
+
         let properties = event.properties ?? [:]
         userDefaults.set(properties, forKey: event.name)
     }
@@ -40,7 +45,12 @@ public final class UserDefaultsAnalyticsProvider: AnalyticsProvider {
         userDefaults.removeObject(forKey: eventName)
     }
 
-    public func removeAll() {
+    public func setEnabled(_ enable: Bool) {
+        isEnabled = enable
+    }
+
+    /// Removes all of the events.
+    public func reset() {
         userDefaults.removePersistentDomain(forName: suiteName)
     }
 }
