@@ -26,6 +26,8 @@ public struct AppAnalyticsEvent: AnalyticsEventProtocol, UserInfoContainer {
     }
 }
 
+// MARK: - ExpressibleByStringLiteral
+
 extension AppAnalyticsEvent: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
         self.init(name: value)
