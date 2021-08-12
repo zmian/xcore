@@ -52,7 +52,7 @@ extension Device {
         return WKInterfaceDevice.current().systemName
         #elseif os(macOS)
         #warning("TODO: Implement")
-        return ""
+        return "macOS"
         #endif
     }
 

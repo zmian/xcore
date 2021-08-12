@@ -158,7 +158,7 @@ extension ProcessInfo.Arguments {
     }
 
     public static var isAnalyticsDebugEnabled: (enabled: Bool, contains: String?) {
-        guard isDebuggerAttached else {
+        guard AppInfo.isDebuggerAttached else {
             return (false, nil)
         }
 
