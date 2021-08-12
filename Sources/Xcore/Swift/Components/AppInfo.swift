@@ -52,18 +52,23 @@ extension AppInfo {
 
 extension AppInfo {
     public enum Distribution {
-        case debug
-        case testFlight
+        /// App has been installed from the App Store.
         case appStore
+
+        /// App has been installed from TestFlight.
+        case testFlight
+
+        /// App has been installed by some other mechanism (Ad-Hoc, Enterprise, etc.)
+        case other
     }
 
     /// A property to determine whether the app distribution.
     public static var distribution: Distribution {
         #if targetEnvironment(simulator)
-        return .debug
+        return .other
         #else
         if hasEmbeddedMobileProvision {
-            return .debug
+            return .other
         } else if Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt" {
             return .testFlight
         } else {
