@@ -68,6 +68,11 @@ extension Bundle {
         return "\(name) \(version.semanticDescription)"
     }
 
+    /// The device language.
+    public var deviceLanguage: String {
+        preferredLocalizations.first ?? ""
+    }
+
     /// Returns common bundle information.
     ///
     /// **Sample output:**

@@ -123,13 +123,13 @@ open class Analytics<Event: AnalyticsEventProtocol> {
         var providers = self.providers
 
         #if DEBUG
-        if isDebuggerAttached {
+        if AppInfo.isDebuggerAttached {
             providers.append(PrintAnalyticsProvider())
         }
         #endif
 
         if let additionalProviders = additionalProviders, !additionalProviders.isEmpty {
-            providers = (providers + additionalProviders).unique(\.id)
+            providers = (providers + additionalProviders).uniqued(\.id)
         }
 
         return providers

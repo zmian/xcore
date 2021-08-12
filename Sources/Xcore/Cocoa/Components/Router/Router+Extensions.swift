@@ -59,7 +59,7 @@ extension UIViewController {
     public var router: Router {
         guard let router = _router else {
             #if DEBUG
-            if isDebuggerAttached {
+            if AppInfo.isDebuggerAttached {
                 fatalError("Router requires a navigation controller.")
             }
             #endif
