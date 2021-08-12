@@ -8,7 +8,7 @@ import SwiftUI
 
 // MARK: - Namespace
 
-enum AppInfo {}
+public enum AppInfo {}
 
 // MARK: - isDebuggerAttached
 
