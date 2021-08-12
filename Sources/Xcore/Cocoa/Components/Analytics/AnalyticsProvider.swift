@@ -7,6 +7,45 @@
 import Foundation
 
 /// A type that can track events.
+///
+/// **Usage**
+///
+/// An example of Segment analytics provider:
+///
+/// ```swift
+/// import Segment
+///
+/// struct SegmentAnalyticsProvider: AnalyticsProvider {
+///     init(writeKey: String) {
+///         let configuration = AnalyticsConfiguration(writeKey: writeKey).apply {
+///             $0.trackApplicationLifecycleEvents = true
+///             $0.trackDeepLinks = true
+///             $0.trackPushNotifications = true
+///         }
+///         Segment.Analytics.setup(with: configuration)
+///     }
+///
+///     func track(_ event: AnalyticsEventProtocol) {
+///         segment.track(event.name, properties: event.properties)
+///     }
+///
+///     func identify(userId: String, traits: [String: Any]) {
+///         segment.identify(userId, traits: traits)
+///     }
+///
+///     func setEnabled(_ enable: Bool) {
+///         enable ? segment.enable() : segment.disable()
+///     }
+///
+///     func reset() {
+///         segment.reset()
+///     }
+///
+///     private var segment: Segment.Analytics {
+///         Segment.Analytics.shared()
+///     }
+/// }
+/// ```
 public protocol AnalyticsProvider {
     /// A unique id for the analytics provider.
     var id: String { get }
