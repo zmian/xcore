@@ -62,7 +62,7 @@ extension AppInfo {
         case other
     }
 
-    /// A property to determine whether the app distribution.
+    /// A property to determine the app distribution channel.
     public static var distribution: Distribution {
         #if targetEnvironment(simulator)
         return .other
@@ -87,8 +87,8 @@ extension AppInfo {
 // MARK: - User Agent
 
 extension AppInfo {
-    /// Returns formatted string suitable to use in all networking requests for
-    /// `User-Agent` header.
+    /// Returns formatted string suitable to use as `User-Agent` header in
+    /// networking requests.
     ///
     /// ```
     /// Format:  "executable/appVersionNumber (appBundleId; build:appBuildNumber; deviceModel; osNameVersion) language_region"

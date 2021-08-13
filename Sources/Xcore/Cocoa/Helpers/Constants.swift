@@ -119,7 +119,14 @@ extension UIColor {
 // MARK: - URL
 
 extension URL {
+    /// A URL to launch the default **Mail** app.
     public static var mailApp: Self { URL(string: "message://")! }
+
+    /// A URL to launch the **Settings** app and displays the app’s custom settings,
+    /// if it has any.
+    public static var settingsApp: Self {
+        URL(string: UIApplication.openSettingsURLString)!
+    }
 }
 
 // MARK: - Character

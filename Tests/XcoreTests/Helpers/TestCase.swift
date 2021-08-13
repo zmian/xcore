@@ -7,7 +7,12 @@
 import XCTest
 @testable import Xcore
 
-class TestCase: XCTestCase {}
+class TestCase: XCTestCase {
+    public override func setUp() {
+        super.setUp()
+        DependencyValues.resetAll()
+    }
+}
 
 // MARK: - Helpers
 
