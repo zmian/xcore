@@ -26,11 +26,14 @@ final class AppInfoTests: TestCase {
     }
 
     func testUserAgent() {
+        let appVersionNumber = Bundle.main.versionNumber
+        let appBuildNumber = Bundle.main.buildNumber
         let osNameVersion = Bundle.main.osVersion
         let deviceModel = Device.current.model.identifier
+
         XCTAssertEqual(
             AppInfo.userAgent,
-            "xctest/13.0 (com.apple.dt.xctest.tool; build:19166.2; \(deviceModel); \(osNameVersion)) en_US"
+            "xctest/\(appVersionNumber) (com.apple.dt.xctest.tool; build:\(appBuildNumber); \(deviceModel); \(osNameVersion)) en_US"
         )
     }
 }
