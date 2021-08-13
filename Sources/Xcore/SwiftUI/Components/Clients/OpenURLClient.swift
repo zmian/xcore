@@ -69,14 +69,12 @@ extension OpenURLClient {
                 return
             }
 
-            // Non-standard urls should always be opened using system.
-            if ![.http, .https].contains(url.schemeType) {
-                if app.canOpenURL(url) {
-                    app.appExtensionSafeOpen(url)
-                }
-            } else if let navigationController = app.topNavigationController {
+            // Attempt to open standard urls using in-app Safari.
+            if [.http, .https].contains(url.schemeType), let nvc = app.topNavigationController {
                 let vc = SFSafariViewController(url: url)
-                navigationController.pushViewController(vc, animated: true)
+                nvc.pushViewController(vc, animated: true)
+            } else if app.canOpenURL(url) {
+                app.appExtensionSafeOpen(url)
             }
         }
     }
