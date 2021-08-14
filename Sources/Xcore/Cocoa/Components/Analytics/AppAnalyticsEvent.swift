@@ -38,7 +38,7 @@ extension AppAnalyticsEvent: ExpressibleByStringLiteral {
 
 extension AppAnalyticsEvent: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
-            lhs.name == rhs.name &&
+        lhs.name == rhs.name &&
             lhs.properties == rhs.properties &&
             isEqual(lhs.additionalProviders, rhs.additionalProviders) &&
             lhs.userInfo == rhs.userInfo
