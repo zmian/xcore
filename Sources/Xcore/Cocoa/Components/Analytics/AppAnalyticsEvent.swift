@@ -59,6 +59,23 @@ extension AppAnalyticsEvent: Hashable {
     }
 }
 
+// MARK: - Helpers
+
+extension AppAnalyticsEvent {
+    public func mergingProperties(_ otherProperties: [String: Any]) -> Self {
+        .init(
+            name: name,
+            properties: properties.merging(otherProperties),
+            additionalProviders: additionalProviders,
+            userInfo: userInfo
+        )
+    }
+
+    public func mergingProperties(_ otherProperties: [String: Any?]) -> Self {
+        mergingProperties(otherProperties.flatten())
+    }
+}
+
 // MARK: - UserInfo
 
 extension UserInfoKey where Type == AppAnalyticsEvent {
