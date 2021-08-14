@@ -106,14 +106,14 @@ extension SiriShortcuts {
             }
         }
 
-        // MARK: - Hashable & Equatable
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(id)
-        }
+        // MARK: - Equatable & Hashable
 
         static func ==(lhs: Domain, rhs: Domain) -> Bool {
             lhs.id == rhs.id
+        }
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
         }
     }
 }

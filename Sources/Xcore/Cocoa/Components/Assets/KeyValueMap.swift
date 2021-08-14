@@ -73,19 +73,19 @@ public struct KeyValueMap<Type, Value>: UserInfoContainer, MutableAppliable {
     }
 }
 
-// MARK: - Hashable
-
-extension KeyValueMap: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(key)
-    }
-}
-
 // MARK: - Equatable
 
 extension KeyValueMap: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.key == rhs.key
+    }
+}
+
+// MARK: - Hashable
+
+extension KeyValueMap: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(key)
     }
 }
 

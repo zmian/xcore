@@ -34,29 +34,6 @@ extension AppAnalyticsEvent: ExpressibleByStringLiteral {
     }
 }
 
-// MARK: - UserInfo
-
-extension UserInfoKey where Type == AppAnalyticsEvent {
-    /// An optional property indicating whether the event should be throttled and
-    /// only fired once in the given session.
-    ///
-    /// - SeeAlso: `Analytics.session` for session information.
-    public static var sessionId: Self { #function }
-}
-
-extension AppAnalyticsEvent {
-    /// An optional property indicating whether the event should be throttled and
-    /// only fired once in the given session.
-    ///
-    /// The default value is `nil`, which means to not throttle.
-    ///
-    /// - SeeAlso: `Analytics.session` for session information.
-    public var sessionId: String? {
-        get { self[userInfoKey: .sessionId] }
-        set { self[userInfoKey: .sessionId] = newValue }
-    }
-}
-
 // MARK: - Equatable
 
 extension AppAnalyticsEvent: Equatable {
@@ -79,5 +56,28 @@ extension AppAnalyticsEvent: Hashable {
         hasher.combine(name)
         hasher.combine(additionalProviders.map(\.id))
         hasher.combine(String(reflecting: self))
+    }
+}
+
+// MARK: - UserInfo
+
+extension UserInfoKey where Type == AppAnalyticsEvent {
+    /// An optional property indicating whether the event should be throttled and
+    /// only fired once in the given session.
+    ///
+    /// - SeeAlso: `Analytics.session` for session information.
+    public static var sessionId: Self { #function }
+}
+
+extension AppAnalyticsEvent {
+    /// An optional property indicating whether the event should be throttled and
+    /// only fired once in the given session.
+    ///
+    /// The default value is `nil`, which means to not throttle.
+    ///
+    /// - SeeAlso: `Analytics.session` for session information.
+    public var sessionId: String? {
+        get { self[userInfoKey: .sessionId] }
+        set { self[userInfoKey: .sessionId] = newValue }
     }
 }
