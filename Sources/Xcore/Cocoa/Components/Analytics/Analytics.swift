@@ -57,7 +57,7 @@ open class Analytics<Event: AnalyticsEventProtocol> {
     }
 
     /// Returns list of final providers to use for tracking.
-    private func finalProviders(including additionalProviders: [AnalyticsProvider]? = nil) -> [AnalyticsProvider] {
+    private func finalProviders(including additionalProviders: [AnalyticsProvider]) -> [AnalyticsProvider] {
         var providers = self.providers
 
         #if DEBUG
@@ -66,11 +66,7 @@ open class Analytics<Event: AnalyticsEventProtocol> {
         }
         #endif
 
-        if let additionalProviders = additionalProviders, !additionalProviders.isEmpty {
-            providers = (providers + additionalProviders).uniqued(\.id)
-        }
-
-        return providers
+        return (providers + additionalProviders).uniqued(\.id)
     }
 
     /// A method to identify all registered providers with given user id and traits.

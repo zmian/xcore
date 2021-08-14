@@ -25,8 +25,7 @@ public final class UserDefaultsAnalyticsProvider: AnalyticsProvider {
             return
         }
 
-        let properties = event.properties ?? [:]
-        userDefaults.set(properties, forKey: event.name)
+        userDefaults.set(event.properties, forKey: event.name)
     }
 
     public func contains(_ eventName: String) -> Bool {

@@ -8,15 +8,15 @@ import Foundation
 
 public struct AppAnalyticsEvent: AnalyticsEventProtocol, UserInfoContainer {
     public let name: String
-    public let properties: [String: Any]?
-    public let additionalProviders: [AnalyticsProvider]?
+    public let properties: [String: Any]
+    public let additionalProviders: [AnalyticsProvider]
     /// Additional info which may be used to describe the analytics event further.
     public var userInfo: UserInfo
 
     public init(
         name: String,
-        properties: [String: Any]? = nil,
-        additionalProviders: [AnalyticsProvider]? = nil,
+        properties: [String: Any] = [:],
+        additionalProviders: [AnalyticsProvider] = [],
         userInfo: UserInfo = [:]
     ) {
         self.name = name
@@ -61,27 +61,14 @@ extension AppAnalyticsEvent {
 
 extension AppAnalyticsEvent: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
-        let equalProperties: Bool
-
-        if let lhsP = lhs.properties, let rhsP = rhs.properties {
-            equalProperties = lhsP == rhsP
-        } else {
-            equalProperties = lhs.properties == nil && rhs.properties == nil
-        }
-
-        return
             lhs.name == rhs.name &&
-            equalProperties &&
+            lhs.properties == rhs.properties &&
             isEqual(lhs.additionalProviders, rhs.additionalProviders) &&
             lhs.userInfo == rhs.userInfo
     }
 
-    private static func isEqual(_ lhs: [AnalyticsProvider]?, _ rhs: [AnalyticsProvider]?) -> Bool {
-        guard let lhs = lhs, let rhs = rhs else {
-            return lhs == nil && rhs == nil
-        }
-
-        return lhs.map(\.id) == rhs.map(\.id)
+    private static func isEqual(_ lhs: [AnalyticsProvider], _ rhs: [AnalyticsProvider]) -> Bool {
+        lhs.map(\.id) == rhs.map(\.id)
     }
 }
 
@@ -90,11 +77,7 @@ extension AppAnalyticsEvent: Equatable {
 extension AppAnalyticsEvent: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(name)
-
-        if let ids = additionalProviders?.map(\.id) {
-            hasher.combine(ids)
-        }
-
+        hasher.combine(additionalProviders.map(\.id))
         hasher.combine(String(reflecting: self))
     }
 }
