@@ -26,8 +26,8 @@ struct PrintAnalyticsProvider: AnalyticsProvider {
     private func log(_ event: AnalyticsEventProtocol) {
         var propertiesString = ""
 
-        if let properties = event.properties, !properties.isEmpty {
-            propertiesString = JSONHelpers.stringify(properties, options: [.sortedKeys, .prettyPrinted])
+        if !event.properties.isEmpty {
+            propertiesString = JSONHelpers.stringify(event.properties, options: [.sortedKeys, .prettyPrinted])
             propertiesString = "\nproperties: \(propertiesString)"
         }
 
