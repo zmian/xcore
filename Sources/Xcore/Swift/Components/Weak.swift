@@ -41,7 +41,7 @@ extension Weak: Hashable where Value: Hashable {
     }
 }
 
-// MARK: - Hashable
+// MARK: - Comparable
 
 extension Weak: Comparable where Value: Comparable {
     public static func <(lhs: Weak, rhs: Weak) -> Bool {

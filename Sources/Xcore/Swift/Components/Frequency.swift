@@ -47,19 +47,19 @@ extension Frequency: CustomStringConvertible {
     }
 }
 
-// MARK: - Hashable
-
-extension Frequency: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-}
-
 // MARK: - Equatable
 
 extension Frequency: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
+    }
+}
+
+// MARK: - Hashable
+
+extension Frequency: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 

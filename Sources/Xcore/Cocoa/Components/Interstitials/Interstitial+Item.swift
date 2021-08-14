@@ -72,18 +72,18 @@ extension Interstitial.Item {
     }
 }
 
-// MARK: - Hashable
-
-extension Interstitial.Item: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-}
-
 // MARK: - Equatable
 
 extension Interstitial.Item: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
+    }
+}
+
+// MARK: - Hashable
+
+extension Interstitial.Item: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

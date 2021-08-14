@@ -227,19 +227,19 @@ extension Theme {
     }
 }
 
-// MARK: - Hashable
-
-extension Theme: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-}
-
 // MARK: - Equatable
 
 extension Theme: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
+    }
+}
+
+// MARK: - Hashable
+
+extension Theme: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 
