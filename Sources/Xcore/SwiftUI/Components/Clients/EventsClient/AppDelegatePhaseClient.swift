@@ -222,93 +222,22 @@ extension AppDelegatePhase {
 ///
 /// **Usage**
 ///
-/// 1. Send events to `AppDelegatePhaseClient`
-///
 /// ```swift
-/// final class AppDelegate: UIResponder, UIApplicationDelegate {
+/// // 1. Send events to `AppDelegatePhaseClient`
+///
+/// final class AppDelegate: PhaseForwarderAppDelegate {
 ///     @Dependency(\.appDelegatePhase) var appPhase
 ///
-///     func application(
-///         _ application: UIApplication,
-///         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-///     ) -> Bool {
-///         appPhase.send(.finishedLaunching)
-///         return true
-///     }
-///
-///     // MARK: - Responding to App Life-Cycle Events
-///
-///     func applicationDidBecomeActive(_ application: UIApplication) {
-///         appPhase.send(.didBecomeActive)
-///     }
-///
-///     func applicationWillResignActive(_ application: UIApplication) {
-///         appPhase.send(.willResignActive)
-///     }
-///
-///     func applicationDidEnterBackground(_ application: UIApplication) {
-///         appPhase.send(.didEnterBackground)
-///     }
-///
-///     func applicationWillEnterForeground(_ application: UIApplication) {
-///         appPhase.send(.willEnterForeground)
-///     }
-///
-///     func applicationWillTerminate(_ application: UIApplication) {
-///         appPhase.send(.willTerminate)
-///     }
-///
-///     // MARK: - Handling Remote Notification Registration
-///
-///     func application(
-///         _ application: UIApplication,
-///         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
-///     ) {
-///         appPhase.send(.remoteNotificationsRegistered(.success(deviceToken)))
-///     }
-///
-///     func application(
-///         _ application: UIApplication,
-///         didFailToRegisterForRemoteNotificationsWithError error: Error
-///     ) {
-///         appPhase.send(.remoteNotificationsRegistered(.failure(error as NSError)))
-///     }
-///
-///     func application(
-///         _ application: UIApplication,
-///         didReceiveRemoteNotification userInfo: [AnyHashable: Any],
-///         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
-///     ) {
-///         appPhase.send(.remoteNotificationReceived(userInfo: userInfo))
-///         completionHandler(.noData)
-///     }
-///
-///     // MARK: - Opening a URL-Specified Resource
-///
-///     func application(
-///         _ application: UIApplication,
-///         open url: URL,
-///         options: [UIApplication.OpenURLOptionsKey: Any] = [:]
-///     ) -> Bool {
-///         appPhase.send(.openUrl(url, options: options))
-///         return true
-///     }
-///
-///     // MARK: - Continuing User Activity and Handling Quick Actions
-///
-///     func application(
-///         _ application: UIApplication,
-///         continue userActivity: NSUserActivity,
-///         restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
-///     ) -> Bool {
-///         appPhase.send(.continueUserActivity(userActivity, handler: restorationHandler))
-///         return true
+///     override init() {
+///         super.init()
+///         send = { [weak self] in
+///             self?.appPhase.send($0)
+///         }
 ///     }
 /// }
-/// ```
-/// 2. Receive events from `AppDelegatePhaseClient`
 ///
-/// ```swift
+/// // 2. Receive events from `AppDelegatePhaseClient`
+///
 /// struct SegmentAnalyticsProvider: AnalyticsProvider {
 ///     @Dependency(\.appDelegatePhase) private var appPhase
 ///     private var cancellable: AnyCancellable?
