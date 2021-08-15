@@ -4,17 +4,17 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import SwiftUI
 
 /// A class to forward app delegate phase events to the given send method.
 ///
 /// **Usage**
 ///
 /// ```swift
-/// // 1. Send events to `AppDelegatePhaseClient`
+/// // 1. Create AppDelegate to send events to `AppPhaseClient`
 ///
 /// final class AppDelegate: PhaseForwarderAppDelegate {
-///     @Dependency(\.appDelegatePhase) var appPhase
+///     @Dependency(\.appPhase) var appPhase
 ///
 ///     override init() {
 ///         super.init()
@@ -24,10 +24,28 @@ import UIKit
 ///     }
 /// }
 ///
-/// // 2. Receive events from `AppDelegatePhaseClient`
+/// // 2. Create App to send events to `AppPhaseClient`
+///
+/// @main
+/// struct ExampleApp: App {
+///     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+///     @Environment(\.scenePhase) private var scenePhase
+///
+///     var body: some Scene {
+///         WindowGroup {
+///             ContentView()
+///                 .onChange(of: scenePhase) { phase in
+///                     // Forward all of the events to `AppPhaseClient`.
+///                     AppPhase(phase).map(appDelegate.appPhase.send)
+///                 }
+///         }
+///     }
+/// }
+///
+/// // 3. Receive events from `AppPhaseClient`
 ///
 /// struct SegmentAnalyticsProvider: AnalyticsProvider {
-///     @Dependency(\.appDelegatePhase) private var appPhase
+///     @Dependency(\.appPhase) var appPhase
 ///     private var cancellable: AnyCancellable?
 ///
 ///     ...
@@ -55,28 +73,28 @@ import UIKit
 /// }
 /// ```
 open class PhaseForwarderAppDelegate: UIResponder, UIApplicationDelegate {
-    public var send: (AppDelegatePhase) -> Void = { _ in }
+    public var send: (AppPhase) -> Void = { _ in }
 
     open func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        send(.finishedLaunching)
+        send(.launched)
         return true
     }
 
     // MARK: - Responding to App Life-Cycle Events
 
     open func applicationDidBecomeActive(_ application: UIApplication) {
-        send(.didBecomeActive)
+        send(.active)
     }
 
     open func applicationWillResignActive(_ application: UIApplication) {
-        send(.willResignActive)
+        send(.inactive)
     }
 
     open func applicationDidEnterBackground(_ application: UIApplication) {
-        send(.didEnterBackground)
+        send(.background)
     }
 
     open func applicationWillEnterForeground(_ application: UIApplication) {

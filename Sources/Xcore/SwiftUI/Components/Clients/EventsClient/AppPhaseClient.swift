@@ -4,41 +4,66 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import SwiftUI
 
 /// An indication of a app’s operational state.
-public enum AppDelegatePhase: Hashable, CustomStringConvertible {
+public enum AppPhase: Hashable, CustomStringConvertible {
     /// Event invoked when the launch process is almost done and the app is almost
     /// ready to run.
     ///
     /// See documentation for [more info].
     ///
     /// [more info]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622921-application
-    case finishedLaunching
+    case launched
 
     // MARK: - Responding to App Life-Cycle Events
 
-    /// Event invoked when the app has become active.
+    /// Event invoked when the scene is in the foreground and interactive.
+    ///
+    /// An active scene isn’t necessarily front-most. For example, a macOS window
+    /// might be active even if it doesn’t currently have focus. Nevertheless, all
+    /// scenes should operate normally in this phase.
+    ///
+    /// An app or custom scene in this phase contains at least one active scene
+    /// instance.
     ///
     /// See documentation for [more info].
     ///
-    /// [more info]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622956-applicationdidbecomeactive
-    case didBecomeActive
+    /// [more info]: https://developer.apple.com/documentation/swiftui/scenephase/active
+    case active
 
-    /// Event invoked when the app is about to become inactive.
+    /// Event invoked when the scene is in the foreground but should pause its work.
+    ///
+    /// A scene in this phase doesn’t receive events and should pause timers and
+    /// free any unnecessary resources. The scene might be completely hidden in the
+    /// user interface or otherwise unavailable to the user. In macOS, scenes only
+    /// pass through this phase temporarily on their way to the `background` phase.
+    ///
+    /// An app or custom scene in this phase contains no scene instances in the
+    /// `active` phase.
     ///
     /// See documentation for [more info].
     ///
-    /// [more info]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622950-applicationwillresignactive
-    case willResignActive
+    /// [more info]: https://developer.apple.com/documentation/swiftui/scenephase/inactive
+    case inactive
 
-    /// Event invoked when the app is now in the background.
+    /// Event invoked when the scene isn’t currently visible in the UI.
+    ///
+    /// Do as little as possible in a scene that’s in the background phase. The
+    /// background phase can precede termination, so do any cleanup work immediately
+    /// upon entering this state. For example, close any open files and network
+    /// connections. However, a scene can also return to the `active` phase from the
+    /// background.
+    ///
+    /// Expect an app that enters the background phase to terminate.
     ///
     /// See documentation for [more info].
     ///
-    /// [more info]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground
-    case didEnterBackground
+    /// [more info]: https://developer.apple.com/documentation/swiftui/scenephase/background
+    case background
 
+    /// TODO: ⚠️ Need to wire this event up, ``SwiftUI.ScenePhase`` doesn't have equivalent.
+    ///
     /// Event invoked when the app is about to enter the foreground.
     ///
     /// See documentation for [more info].
@@ -131,19 +156,36 @@ public enum AppDelegatePhase: Hashable, CustomStringConvertible {
     case continueUserActivity(NSUserActivity, handler: ([UIUserActivityRestoring]?) -> Void)
 }
 
+// MARK: - Convenience
+
+extension AppPhase {
+    public init?(_ phase: ScenePhase) {
+        switch phase {
+            case .active:
+                self = .active
+            case .inactive:
+                self = .inactive
+            case .background:
+                self = .background
+            @unknown default:
+                return nil
+        }
+    }
+}
+
 // MARK: - CustomStringConvertible
 
-extension AppDelegatePhase {
+extension AppPhase {
     public var description: String {
         switch self {
-            case .finishedLaunching:
-                return "finishedLaunching"
-            case .didBecomeActive:
-                return "didBecomeActive"
-            case .willResignActive:
-                return "willResignActive"
-            case .didEnterBackground:
-                return "didEnterBackground"
+            case .launched:
+                return "launched"
+            case .active:
+                return "active"
+            case .inactive:
+                return "inactive"
+            case .background:
+                return "background"
             case .willEnterForeground:
                 return "willEnterForeground"
             case .willTerminate:
@@ -164,14 +206,14 @@ extension AppDelegatePhase {
 
 // MARK: - Equatable
 
-extension AppDelegatePhase {
+extension AppPhase {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         switch (lhs, rhs) {
             case
-                (.finishedLaunching, .finishedLaunching),
-                (.didBecomeActive, .didBecomeActive),
-                (.willResignActive, .willResignActive),
-                (.didEnterBackground, .didEnterBackground),
+                (.launched, .launched),
+                (.active, .active),
+                (.inactive, .inactive),
+                (.background, .background),
                 (.willEnterForeground, .willEnterForeground),
                 (.willTerminate, .willTerminate):
                 return true
@@ -191,13 +233,13 @@ extension AppDelegatePhase {
 
 // MARK: - Hashable
 
-extension AppDelegatePhase {
+extension AppPhase {
     public func hash(into hasher: inout Hasher) {
         switch self {
-            case .finishedLaunching,
-                 .didBecomeActive,
-                 .willResignActive,
-                 .didEnterBackground,
+            case .launched,
+                 .active,
+                 .inactive,
+                 .background,
                  .willEnterForeground,
                  .willTerminate:
                 hasher.combine(description)
@@ -223,10 +265,10 @@ extension AppDelegatePhase {
 /// **Usage**
 ///
 /// ```swift
-/// // 1. Send events to `AppDelegatePhaseClient`
+/// // 1. Create AppDelegate to send events to `AppPhaseClient`
 ///
 /// final class AppDelegate: PhaseForwarderAppDelegate {
-///     @Dependency(\.appDelegatePhase) var appPhase
+///     @Dependency(\.appPhase) var appPhase
 ///
 ///     override init() {
 ///         super.init()
@@ -236,10 +278,28 @@ extension AppDelegatePhase {
 ///     }
 /// }
 ///
-/// // 2. Receive events from `AppDelegatePhaseClient`
+/// // 2. Create App to send events to `AppPhaseClient`
+///
+/// @main
+/// struct ExampleApp: App {
+///     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+///     @Environment(\.scenePhase) private var scenePhase
+///
+///     var body: some Scene {
+///         WindowGroup {
+///             ContentView()
+///                 .onChange(of: scenePhase) { phase in
+///                     // Forward all of the events to `AppPhaseClient`.
+///                     AppPhase(phase).map(appDelegate.appPhase.send)
+///                 }
+///         }
+///     }
+/// }
+///
+/// // 3. Receive events from `AppPhaseClient`
 ///
 /// struct SegmentAnalyticsProvider: AnalyticsProvider {
-///     @Dependency(\.appDelegatePhase) private var appPhase
+///     @Dependency(\.appPhase) var appPhase
 ///     private var cancellable: AnyCancellable?
 ///
 ///     ...
@@ -266,25 +326,25 @@ extension AppDelegatePhase {
 ///     }
 /// }
 /// ```
-public typealias AppDelegatePhaseClient = EventsClient<AppDelegatePhase>
+public typealias AppPhaseClient = EventsClient<AppPhase>
 
 extension DependencyValues {
-    private struct AppDelegatePhaseClientKey: DependencyKey {
-        static let defaultValue: AppDelegatePhaseClient = .live
+    private struct AppPhaseClientKey: DependencyKey {
+        static let defaultValue: AppPhaseClient = .live
     }
 
     /// Provides functionality for sending and receiving events for app’s
     /// operational state.
-    public var appDelegatePhase: AppDelegatePhaseClient {
-        get { self[AppDelegatePhaseClientKey.self] }
-        set { self[AppDelegatePhaseClientKey.self] = newValue }
+    public var appPhase: AppPhaseClient {
+        get { self[AppPhaseClientKey.self] }
+        set { self[AppPhaseClientKey.self] = newValue }
     }
 
     /// Provides functionality for sending and receiving events for app’s
     /// operational state.
     @discardableResult
-    public static func appDelegatePhase(_ value: AppDelegatePhaseClient) -> Self.Type {
-        set(\.appDelegatePhase, value)
+    public static func appPhase(_ value: AppPhaseClient) -> Self.Type {
+        set(\.appPhase, value)
         return Self.self
     }
 }
