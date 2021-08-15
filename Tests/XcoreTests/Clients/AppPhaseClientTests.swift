@@ -8,29 +8,32 @@ import XCTest
 import Combine
 @testable import Xcore
 
-final class AppDelegatePhaseClientTests: TestCase {
+final class AppPhaseClientTests: TestCase {
     func testDefault() {
-        DependencyValues.appDelegatePhase(.live)
+        DependencyValues.appPhase(.live)
 
         var viewModel = ViewModel()
-        var receivedPhase: AppDelegatePhase?
+        var receivedPhase: AppPhase?
         viewModel.receive { receivedPhase = $0 }
 
-        viewModel.send(.finishedLaunching)
-        XCTAssertEqual(receivedPhase, .finishedLaunching)
+        viewModel.send(.launched)
+        XCTAssertEqual(receivedPhase, .launched)
+
+        viewModel.send(.background)
+        XCTAssertEqual(receivedPhase, .background)
     }
 }
 
-extension AppDelegatePhaseClientTests {
+extension AppPhaseClientTests {
     private struct ViewModel {
-        @Dependency(\.appDelegatePhase) private var appPhase
+        @Dependency(\.appPhase) private var appPhase
         private var cancellable: AnyCancellable?
 
-        func send(_ phase: AppDelegatePhase) {
+        func send(_ phase: AppPhase) {
             appPhase.send(phase)
         }
 
-        mutating func receive(_ callback: @escaping (AppDelegatePhase) -> Void) {
+        mutating func receive(_ callback: @escaping (AppPhase) -> Void) {
             cancellable = appPhase.receive.sink { phase in
                 callback(phase)
             }
