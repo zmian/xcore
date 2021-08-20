@@ -101,32 +101,42 @@ public struct ProminentDynamicTextFieldStyle: DynamicTextFieldStyle {
         public static let elevated = Self(rawValue: 1 << 1)
     }
 
-    private let cornerRadius: CGFloat
+    private let shape: AnyInsettableShape
     private let options: Options
+    private let horizontalPadding: CGFloat
 
-    init(cornerRadius: CGFloat, options: Options) {
-        self.cornerRadius = cornerRadius
+    init<S: InsettableShape>(options: Options, shape: S, horizontalPadding: CGFloat? = nil) {
+        self.shape = AnyInsettableShape(shape)
         self.options = options
+
+        if let horizontalPadding = horizontalPadding {
+            self.horizontalPadding = horizontalPadding
+        } else if S.self == Capsule.self {
+            self.horizontalPadding = .s4
+        } else {
+            self.horizontalPadding = .s3
+        }
     }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
         EnvironmentReader(\.textFieldAttributes) { attributes in
             EnvironmentReader(\.theme) { theme in
                 configuration.label
+                    .padding(.horizontal, horizontalPadding)
                     .apply {
                         if attributes.disableFloatingPlaceholder {
-                            $0.padding(.horizontal, .s2)
-                                .padding(.vertical, .s4)
+                            $0.padding(.vertical, .s4)
                         } else {
-                            $0.padding(.s2)
+                            $0.padding(.vertical, .s2)
                         }
                     }
                     .applyIf(options.contains(.elevated)) {
                         $0.backgroundColor(theme.backgroundSecondaryColor)
                     }
-                    .cornerRadius(cornerRadius)
+                    .clipShape(shape)
+                    .contentShape(shape)
                     .applyIf(options.contains(.bordered)) {
-                        $0.border(cornerRadius: cornerRadius, width: 0.5)
+                        $0.border(shape, width: 0.5)
                     }
             }
         }
@@ -173,7 +183,18 @@ extension DynamicTextFieldStyle where Self == ProminentDynamicTextFieldStyle {
         cornerRadius: CGFloat = AppConstants.tileCornerRadius,
         options: Self.Options = .elevated
     ) -> Self {
-        Self(cornerRadius: cornerRadius, options: options)
+        prominent(
+            options: options,
+            shape: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+        )
+    }
+
+    public static func prominent<S: InsettableShape>(
+        options: Self.Options = .elevated,
+        shape: S,
+        horizontalPadding: CGFloat? = nil
+    ) -> Self {
+        Self(options: options, shape: shape, horizontalPadding: horizontalPadding)
     }
 }
 

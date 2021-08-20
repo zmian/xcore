@@ -64,16 +64,29 @@ private struct ProminentFieldPreview: View {
     @State private var text: String = ""
 
     var body: some View {
-        VStack(spacing: .s6) {
-            DynamicTextField("SSN", value: $text, configuration: .ssn)
-                .dynamicTextFieldStyle(.prominent(options: .elevated))
-                .readSize {
-                    height = $0.height
-                }
+        VStack {
+            VStack(spacing: .s6) {
+                DynamicTextField("SSN", value: $text, configuration: .ssn)
+                    .dynamicTextFieldStyle(.prominent(options: .elevated))
+                    .readSize {
+                        height = $0.height
+                    }
 
-            Text("Text Field Height \(height)")
-                .font(.footnote)
-                .foregroundColor(.secondary)
+                Text("Text Field Height \(height)")
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+            }
+            VStack(spacing: .s6) {
+                DynamicTextField("SSN", value: $text, configuration: .ssn)
+                    .dynamicTextFieldStyle(.prominent(options: .bordered, shape: Capsule()))
+                    .readSize {
+                        height = $0.height
+                    }
+
+                Text("Text Field Height \(height)")
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+            }
         }
         .padding()
     }
@@ -92,7 +105,7 @@ extension Samples {
     @available(iOS 15.0, *)
     public static var dynamicTextFieldPreviews: some View {
         LazyView {
-            List {
+            VStack {
                 Section("Default Style") {
                     DefaultFieldPreview()
                 }
