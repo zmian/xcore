@@ -6,42 +6,39 @@
 
 import SwiftUI
 
-public struct StoryView<Content, Page>: View where Content: View, Page: Identifiable {
+public struct StoryView<Page, Content, Background>: View where Page: Identifiable, Content: View, Background: View {
     @Environment(\.storyProgressIndicatorInsets) private var insets
     @ObservedObject private var storyTimer: StoryTimer
     private let pages: [Page]
     private let content: (Page) -> Content
-
-    public init(
-        interval: TimeInterval = 4,
-        cycle: Count = .infinite,
-        pages: [Page],
-        @ViewBuilder content: @escaping (Page) -> Content
-    ) {
-        self.storyTimer = .init(
-            pagesCount: pages.count,
-            interval: interval,
-            cycle: cycle
-        )
-        self.pages = pages
-        self.content = content
-    }
+    private let background: (Page) -> Background
 
     public var body: some View {
         AxisGeometryReader { width in
             ZStack(alignment: .top) {
-                content(pages[Int(storyTimer.progress)])
-                    .frame(width: width)
-                    .ignoresSafeArea()
-                    .animation(.none)
+                // Background
+                if Background.self != Never.self {
+                    background(pages[Int(storyTimer.progress)])
+                        .frame(width: width)
+                        .ignoresSafeArea()
+                        .animation(.none)
+                }
 
-                progressIndicator
-
+                // Tap to advance or rewind
                 HStack(spacing: 0) {
                     advanceView(isLeft: true)
                     advanceView(isLeft: false)
                 }
                 .ignoresSafeArea()
+
+                // Content
+                content(pages[Int(storyTimer.progress)])
+                    .frame(width: width)
+                    .ignoresSafeArea()
+                    .animation(.none)
+
+                // Progress Indicator
+                progressIndicator
             }
             .onAppear(perform: storyTimer.start)
             .onDisappear(perform: storyTimer.stop)
@@ -81,6 +78,46 @@ public struct StoryView<Content, Page>: View where Content: View, Page: Identifi
         return self
     }
 }
+
+// MARK: - Inits
+
+extension StoryView {
+    public init(
+        interval: TimeInterval = 4,
+        cycle: Count = .infinite,
+        pages: [Page],
+        @ViewBuilder content: @escaping (Page) -> Content,
+        @ViewBuilder background: @escaping (Page) -> Background
+    ) {
+        self.storyTimer = .init(
+            pagesCount: pages.count,
+            interval: interval,
+            cycle: cycle
+        )
+        self.pages = pages
+        self.content = content
+        self.background = background
+    }
+}
+
+extension StoryView where Background == Never {
+    public init(
+        interval: TimeInterval = 4,
+        cycle: Count = .infinite,
+        pages: [Page],
+        @ViewBuilder content: @escaping (Page) -> Content
+    ) {
+        self.init(
+            interval: interval,
+            cycle: cycle,
+            pages: pages,
+            content: content,
+            background: { _ in fatalError() }
+        )
+    }
+}
+
+// MARK: - Previews
 
 struct StoryView_Previews: PreviewProvider {
     static var previews: some View {

@@ -16,14 +16,33 @@ extension StoryView where Page == IdentifiableString {
     public init(
         interval: TimeInterval = 4,
         pages: [String],
-        @ViewBuilder content: @escaping (String) -> Content
+        @ViewBuilder content: @escaping (String) -> Content,
+        @ViewBuilder background: @escaping (String) -> Background
     ) {
         self.init(
             interval: interval,
             pages: pages.map(IdentifiableString.init(id:)),
             content: { page in
                 content(page.id)
+            },
+            background: { page in
+                background(page.id)
             }
+        )
+    }
+}
+
+extension StoryView where Page == IdentifiableString, Background == Never {
+    public init(
+        interval: TimeInterval = 4,
+        pages: [String],
+        @ViewBuilder content: @escaping (String) -> Content
+    ) {
+        self.init(
+            interval: interval,
+            pages: pages,
+            content: content,
+            background: { _ in fatalError() }
         )
     }
 }
