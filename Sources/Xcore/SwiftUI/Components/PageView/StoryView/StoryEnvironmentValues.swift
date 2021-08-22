@@ -9,26 +9,26 @@ import SwiftUI
 // MARK: - Progress Indicator Color
 
 extension EnvironmentValues {
-    private struct ColorKey: EnvironmentKey {
+    private struct StoryProgressIndicatorColorKey: EnvironmentKey {
         static var defaultValue: Color?
     }
 
     var storyProgressIndicatorColor: Color? {
-        get { self[ColorKey.self] }
-        set { self[ColorKey.self] = newValue }
+        get { self[StoryProgressIndicatorColorKey.self] }
+        set { self[StoryProgressIndicatorColorKey.self] = newValue }
     }
 }
 
 // MARK: - Progress Indicator Insets
 
 extension EnvironmentValues {
-    private struct InsetsKey: EnvironmentKey {
+    private struct StoryProgressIndicatorInsetsKey: EnvironmentKey {
         static var defaultValue: EdgeInsets?
     }
 
     var storyProgressIndicatorInsets: EdgeInsets? {
-        get { self[InsetsKey.self] }
-        set { self[InsetsKey.self] = newValue }
+        get { self[StoryProgressIndicatorInsetsKey.self] }
+        set { self[StoryProgressIndicatorInsetsKey.self] = newValue }
     }
 }
 
