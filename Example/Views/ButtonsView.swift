@@ -11,9 +11,8 @@ struct ButtonsView: View {
         List {
             fillStates
             outlineStates
-            pillStates
             callout
-            pills
+            capsules
             others
             builtin
         }
@@ -23,83 +22,82 @@ struct ButtonsView: View {
 
 extension ButtonsView {
     private var fillStates: some View {
-        Section(header: Text("Fill Button")) {
+        Section(header: Text("Fill Prominence")) {
             button {
-                Text("FillButtonStyle")
+                Text("Fill")
             }
             .buttonStyle(.fill)
 
             button {
-                Text("FillButtonStyle")
+                Text("Fill Disabled")
             }
             .buttonStyle(.fill)
             .disabled(true)
 
             button {
-                Text("FillButtonStyle")
+                Text("Fill Hard Edges")
             }
-            .buttonStyle(.fill)
-            .defaultButtonCornerRadius(0)
+            .buttonStyle(.fill(cornerRadius: 0))
+
+            button {
+                Text("Capsule")
+            }
+            .buttonStyle(.capsule)
+
+            button {
+                Text("Capsule Disabled")
+            }
+            .buttonStyle(.capsule)
+            .disabled(true)
         }
     }
 
     private var outlineStates: some View {
-        Section(header: Text("Outline Button")) {
+        Section(header: Text("Outline Prominence")) {
             button {
-                Text("OutlineButtonStyle")
+                Text("Outline")
             }
             .buttonStyle(.outline)
 
             button {
-                Text("OutlineButtonStyle")
+                Text("Outline Disabled")
             }
             .buttonStyle(.outline)
             .disabled(true)
 
             button {
-                Text("OutlineButtonStyle")
+                Text("Outline Hard Edges")
             }
-            .buttonStyle(.outline)
-            .defaultButtonCornerRadius(0)
-        }
-    }
-
-    private var pillStates: some View {
-        Section(header: Text("Pill Button")) {
-            button {
-                Text("PillButtonStyle")
-            }
-            .buttonStyle(.pill)
+            .buttonStyle(.outline(cornerRadius: 0))
 
             button {
-                Text("PillButtonStyle")
+                Text("Capsule Outline")
             }
-            .buttonStyle(.pill)
+            .buttonStyle(.capsuleOutline)
+
+            button {
+                Text("Capsule Outline Disabled")
+            }
+            .buttonStyle(.capsuleOutline)
             .disabled(true)
-
-            button {
-                Text("PillButtonStyle")
-            }
-            .buttonStyle(.pill)
-            .defaultButtonCornerRadius(0)
         }
     }
 
     private var callout: some View {
         Section(header: Text("Callout")) {
             button {
-                Text("FillButtonStyle")
+                Text("Fill")
             }
             .buttonStyle(.fill)
 
             button {
-                Label("FillButtonStyle", systemImage: .chevronRight)
+                Label("Fill", systemImage: .chevronRight)
                     .labelStyle(.iconAfter)
             }
             .buttonStyle(.fill)
 
             button {
-                Label("FillButtonStyle", systemImage: .heartFill)
+                Label("Fill", systemImage: .heartFill)
                     .imageScale(.large)
                     .padding(.vertical)
                     .labelStyle(.iconBefore(axis: .vertical))
@@ -107,33 +105,33 @@ extension ButtonsView {
             .buttonStyle(.fill)
 
             button {
-                Text("OutlineButtonStyle")
+                Text("Outline")
             }
             .buttonStyle(.outline)
         }
     }
 
-    private var pills: some View {
-        Section(header: Text("Pill")) {
+    private var capsules: some View {
+        Section(header: Text("Capsule")) {
             button {
-                Text("PillButtonStyle")
+                Text("Capsule")
             }
 
             button {
                 HStack {
-                    Text("PillButtonStyle")
+                    Text("Capsule")
                     Image(system: .chevronRight)
                 }
             }
         }
-        .buttonStyle(.pill)
+        .buttonStyle(.capsule)
     }
 
     private var others: some View {
         Section(header: Text("Others")) {
             button {
                 HStack {
-                    Text("BorderlessButtonStyle")
+                    Text("Borderless")
                     Image(system: .chevronRight)
                 }
             }
@@ -141,7 +139,7 @@ extension ButtonsView {
 
             button {
                 HStack {
-                    Text("BorderlessButtonStyle")
+                    Text("Borderless")
                     Image(system: .chevronRight)
                 }
             }
@@ -162,12 +160,12 @@ extension ButtonsView {
             .buttonStyle(DefaultButtonStyle())
 
             button {
-                Text("BorderlessButtonStyle")
+                Text("Borderless")
             }
             .buttonStyle(.borderless)
 
             button {
-                Text("PlainButtonStyle")
+                Text("Plain")
             }
             .buttonStyle(.plain)
         }

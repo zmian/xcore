@@ -32,19 +32,6 @@ extension EnvironmentValues {
     }
 }
 
-// MARK: - DefaultButtonCornerRadius
-
-extension EnvironmentValues {
-    private struct DefaultButtonCornerRadiusKey: EnvironmentKey {
-        static var defaultValue: CGFloat = AppConstants.cornerRadius
-    }
-
-    public var defaultButtonCornerRadius: CGFloat {
-        get { self[DefaultButtonCornerRadiusKey.self] }
-        set { self[DefaultButtonCornerRadiusKey.self] = newValue }
-    }
-}
-
 // MARK: - DefaultOulineButtonBorderColor
 
 extension EnvironmentValues {
@@ -81,9 +68,5 @@ extension View {
 
     public func defaultMinButtonHeight(_ value: CGFloat) -> some View {
         environment(\.defaultMinButtonHeight, value)
-    }
-
-    public func defaultButtonCornerRadius(_ value: CGFloat) -> some View {
-        environment(\.defaultButtonCornerRadius, value)
     }
 }
