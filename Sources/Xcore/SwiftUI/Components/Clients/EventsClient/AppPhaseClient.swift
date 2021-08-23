@@ -207,15 +207,15 @@ extension AppPhase {
 // MARK: - Equatable
 
 extension AppPhase {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
         switch (lhs, rhs) {
             case
-                (.launched, .launched),
-                (.active, .active),
-                (.inactive, .inactive),
-                (.background, .background),
-                (.willEnterForeground, .willEnterForeground),
-                (.willTerminate, .willTerminate):
+            (.launched, .launched),
+            (.active, .active),
+            (.inactive, .inactive),
+            (.background, .background),
+            (.willEnterForeground, .willEnterForeground),
+            (.willTerminate, .willTerminate):
                 return true
             case let (.remoteNotificationsRegistered(lhs), .remoteNotificationsRegistered(rhs)):
                 return lhs == rhs
