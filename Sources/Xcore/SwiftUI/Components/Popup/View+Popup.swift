@@ -217,7 +217,7 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
 
     func body(content: Content) -> some View {
         content
-            .overlay(popupContent)
+            .overlay(popupBody)
             .onChange(of: isPresented) { isPresented in
                 if isPresented {
                     setupAutomaticDismissalIfNeeded()
@@ -227,32 +227,36 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
             }
     }
 
-    private var popupContent: some View {
-        ZStack {
-            // Host Content Dim Overlay
-            EnvironmentReader(\.device) { device in
-                if isPresented {
-                    Color(white: 0, opacity: 0.20)
-                        .frame(width: device.screen.size.width, height: device.screen.size.height)
-                        .ignoresSafeArea()
-                        .transition(.opacity.animation(.easeInOut(duration: 0.15)))
-                        .onTapGestureIf(dismissMethods.contains(.tapOutside)) {
-                            isPresented = false
-                        }
-                }
-            }
+    private var popupBody: some View {
+        popupDimmedBackground
+            .overlay(popupContent)
+    }
 
-            // Popup Content
-            GeometryReader { geometry in
-                if isPresented {
-                    content()
-                        .animation(style.animation)
-                        .transition(style.transition)
-                        .frame(width: geometry.size.width, height: geometry.size.height, alignment: style.alignment)
-                        .onTapGestureIf(dismissMethods.contains(.tapInside)) {
-                            isPresented = false
-                        }
-                }
+    private var popupContent: some View {
+        GeometryReader { geometry in
+            if isPresented {
+                content()
+                    .animation(style.animation)
+                    .transition(style.transition)
+                    .frame(width: geometry.size.width, height: geometry.size.height, alignment: style.alignment)
+                    .onTapGestureIf(dismissMethods.contains(.tapInside)) {
+                        isPresented = false
+                    }
+            }
+        }
+    }
+
+    /// Host Content Dim Overlay
+    private var popupDimmedBackground: some View {
+        EnvironmentReader(\.device) { device in
+            if isPresented {
+                Color(white: 0, opacity: 0.20)
+                    .frame(width: device.screen.size.width, height: device.screen.size.height)
+                    .ignoresSafeArea()
+                    .transition(.opacity.animation(.easeInOut(duration: 0.15)))
+                    .onTapGestureIf(dismissMethods.contains(.tapOutside)) {
+                        isPresented = false
+                    }
             }
         }
     }
