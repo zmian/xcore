@@ -149,8 +149,14 @@ extension ProcessInfo {
 // MARK: - Built-in Arguments
 
 extension ProcessInfo.Arguments {
+    /// A boolean value to determine whether the app is running tests.
     public static var isTesting: Bool {
         argument("XCTestConfigurationFilePath").exists
+    }
+
+    /// A boolean value to determine whether the app is running in previews.
+    public static var isRunningInPreviews: Bool {
+        argument("XCODE_RUNNING_FOR_PREVIEWS").exists
     }
 
     public static var isDebug: Bool {
