@@ -8,7 +8,7 @@ import UIKit
 
 extension Popup {
     public final class HUD: Xcore.HUD {
-        override init() {
+        public override init() {
             super.init()
             backgroundColor = .clear
             windowLabel = "Popup Window"
