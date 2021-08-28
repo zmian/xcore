@@ -88,61 +88,6 @@ private struct DefaultDynamicTextFieldStyle: DynamicTextFieldStyle {
     }
 }
 
-// MARK: - Prominent Style
-
-public struct ProminentDynamicTextFieldStyle: DynamicTextFieldStyle {
-    public struct Options: OptionSet {
-        public let rawValue: Int
-        public init(rawValue: Int) {
-            self.rawValue = rawValue
-        }
-
-        public static let bordered = Self(rawValue: 1 << 0)
-        public static let elevated = Self(rawValue: 1 << 1)
-    }
-
-    private let shape: AnyInsettableShape
-    private let options: Options
-    private let horizontalPadding: CGFloat
-
-    init<S: InsettableShape>(options: Options, shape: S, horizontalPadding: CGFloat? = nil) {
-        self.shape = AnyInsettableShape(shape)
-        self.options = options
-
-        if let horizontalPadding = horizontalPadding {
-            self.horizontalPadding = horizontalPadding
-        } else if S.self == Capsule.self {
-            self.horizontalPadding = .s4
-        } else {
-            self.horizontalPadding = .s3
-        }
-    }
-
-    public func makeBody(configuration: Self.Configuration) -> some View {
-        EnvironmentReader(\.textFieldAttributes) { attributes in
-            EnvironmentReader(\.theme) { theme in
-                configuration.label
-                    .padding(.horizontal, horizontalPadding)
-                    .apply {
-                        if attributes.disableFloatingPlaceholder {
-                            $0.padding(.vertical, .s4)
-                        } else {
-                            $0.padding(.vertical, .s2)
-                        }
-                    }
-                    .applyIf(options.contains(.elevated)) {
-                        $0.backgroundColor(theme.backgroundSecondaryColor)
-                    }
-                    .clipShape(shape)
-                    .contentShape(shape)
-                    .applyIf(options.contains(.bordered)) {
-                        $0.border(shape, width: 0.5)
-                    }
-            }
-        }
-    }
-}
-
 // MARK: - Line Style
 
 public struct LineDynamicTextFieldStyle: DynamicTextFieldStyle {
@@ -175,28 +120,6 @@ public struct LineDynamicTextFieldStyle: DynamicTextFieldStyle {
 }
 
 // MARK: - Convenience
-
-extension DynamicTextFieldStyle where Self == ProminentDynamicTextFieldStyle {
-    public static var prominent: Self { prominent() }
-
-    public static func prominent(
-        cornerRadius: CGFloat = AppConstants.tileCornerRadius,
-        options: Self.Options = .elevated
-    ) -> Self {
-        prominent(
-            options: options,
-            shape: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-        )
-    }
-
-    public static func prominent<S: InsettableShape>(
-        options: Self.Options = .elevated,
-        shape: S,
-        horizontalPadding: CGFloat? = nil
-    ) -> Self {
-        Self(options: options, shape: shape, horizontalPadding: horizontalPadding)
-    }
-}
 
 extension DynamicTextFieldStyle where Self == LineDynamicTextFieldStyle {
     public static var line: Self { line() }

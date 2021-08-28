@@ -67,7 +67,7 @@ private struct ProminentFieldPreview: View {
         VStack {
             VStack(spacing: .s6) {
                 DynamicTextField("SSN", value: $text, configuration: .ssn)
-                    .dynamicTextFieldStyle(.prominent(options: .elevated))
+                    .dynamicTextFieldStyle(.prominent(.fill))
                     .readSize {
                         height = $0.height
                     }
@@ -78,7 +78,7 @@ private struct ProminentFieldPreview: View {
             }
             VStack(spacing: .s6) {
                 DynamicTextField("SSN", value: $text, configuration: .ssn)
-                    .dynamicTextFieldStyle(.prominent(options: .bordered, shape: Capsule()))
+                    .dynamicTextFieldStyle(.prominent(.outline, shape: Capsule()))
                     .readSize {
                         height = $0.height
                     }
