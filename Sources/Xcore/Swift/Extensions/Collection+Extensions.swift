@@ -177,3 +177,19 @@ extension Sequence {
         }
     }
 }
+
+// MARK: - NSPredicate
+
+extension Collection {
+    /// Returns an array containing, in order, the elements of the sequence that
+    /// satisfy the given predicate.
+    public func filter(with predicate: NSPredicate) -> [Element] {
+        filter(predicate.evaluate(with:))
+    }
+
+    /// Returns the first element of the sequence that satisfies the given
+    /// predicate.
+    public func first(with predicate: NSPredicate) -> Element? {
+        first(where: predicate.evaluate(with:))
+    }
+}
