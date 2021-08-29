@@ -48,6 +48,45 @@ extension URL {
     }
 }
 
+// MARK: - Matches
+
+extension URL {
+    /// A boolean property indicating whether the url's host matches given domain.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let url = URL(string: "https://www.example.com")!
+    /// print(url.matches("example.com")) // true
+    /// print(url.matches("example.org")) // false
+    ///
+    /// let url = URL(string: "https://api.example.com")!
+    /// print(url.matches("example.com")) // true
+    /// print(url.matches("example.com", includingSubdomains: false)) // false
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - domain: The domain name to evaluate against the `host` property.
+    ///   - includingSubdomains: A property to indicate if `domain` doesn't match,
+    ///     attempt to evaluate subdomains against the `host` property to find a
+    ///     match.
+    /// - Returns: `true` if matches; otherwise, `false`.
+    public func matches(_ domain: String, includingSubdomains: Bool = true) -> Bool {
+        if matches(host: domain) {
+            return true
+        } else if includingSubdomains {
+            return matches(host: "*.\(domain)")
+        } else {
+            return false
+        }
+    }
+
+    private func matches(host: String) -> Bool {
+        NSPredicate(format: "SELF LIKE %@", host)
+            .evaluate(with: self.host)
+    }
+}
+
 // MARK: - Scheme
 
 extension URL {
