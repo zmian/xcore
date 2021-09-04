@@ -38,13 +38,26 @@ extension URL {
     ///
     /// If the URL has no fragment (e.g., `http://www.example.com`),
     /// then this function will return the URL unchanged.
-    public func deletingFragment() -> URL {
+    public func removingFragment() -> URL {
         guard let fragment = fragment else {
             return self
         }
 
         let urlString = absoluteString.replacing("#\(fragment)", with: "")
         return URL(string: urlString) ?? self
+    }
+
+    /// Returns string representation of the URL without scheme if present;
+    /// otherwise, `absoluteString`.
+    public func removingScheme() -> String {
+        guard
+            scheme != nil,
+            let resource = (self as NSURL).resourceSpecifier
+        else {
+            return absoluteString
+        }
+
+        return String(resource.dropFirst(2))
     }
 }
 

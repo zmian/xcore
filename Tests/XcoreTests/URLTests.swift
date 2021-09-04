@@ -14,16 +14,16 @@ final class URLTests: TestCase {
         XCTAssertEqual(url.queryItem(named: "x"), nil)
     }
 
-    func testDeletingFragment() {
+    func testRemovingFragment() {
         let url1 = URL(string: "https://example.com/#hero")!
-        XCTAssertEqual(url1.deletingFragment(), URL(string: "https://example.com/")!)
+        XCTAssertEqual(url1.removingFragment(), URL(string: "https://example.com/")!)
 
         let url2 = URL(string: "https://example.com#hero")!
-        XCTAssertEqual(url2.deletingFragment(), URL(string: "https://example.com")!)
+        XCTAssertEqual(url2.removingFragment(), URL(string: "https://example.com")!)
 
         // Unchanged url.
         let url3 = URL(string: "https://example.com/?q=HelloWorld")!
-        XCTAssertEqual(url3.deletingFragment(), url3)
+        XCTAssertEqual(url3.removingFragment(), url3)
     }
 
     func testScheme() {
@@ -34,6 +34,24 @@ final class URLTests: TestCase {
         XCTAssertEqual(URL.Scheme.tel, "tel")
         XCTAssertEqual(URL.Scheme.sms, "sms")
         XCTAssertEqual(URL.Scheme.email, "mailto")
+    }
+
+    func testRemovingScheme() {
+        let url1 = URL(string: "https://www.example.com/?q=HelloWorld")!
+        let url2 = URL(string: "http://welcome.hello.example.com/?q=HelloWorld")!
+        let url3 = URL(string: "www.hello.example.com/?q=HelloWorld")!
+        let url4 = URL(string: "hello.example.com")!
+        let url5 = URL(string: "mail.app")!
+        let url6 = URL(string: "file://mail.app")!
+        let url7 = URL(string: "mailto://mail.app")!
+
+        XCTAssertEqual(url1.removingScheme(), "www.example.com/?q=HelloWorld")
+        XCTAssertEqual(url2.removingScheme(), "welcome.hello.example.com/?q=HelloWorld")
+        XCTAssertEqual(url3.removingScheme(), "www.hello.example.com/?q=HelloWorld")
+        XCTAssertEqual(url4.removingScheme(), "hello.example.com")
+        XCTAssertEqual(url5.removingScheme(), "mail.app")
+        XCTAssertEqual(url6.removingScheme(), "mail.app")
+        XCTAssertEqual(url7.removingScheme(), "mail.app")
     }
 
     func testMatcheFound() {
