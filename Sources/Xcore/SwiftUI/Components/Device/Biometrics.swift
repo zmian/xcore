@@ -138,3 +138,65 @@ extension Device {
         .init()
     }
 }
+
+// MARK: - Errors
+
+extension LAError: CustomStringConvertible {
+    public var description: String {
+        switch self {
+            case LAError.authenticationFailed:
+                return "authenticationFailed"
+            case LAError.userCancel:
+                return "userCancel"
+            case LAError.userFallback:
+                return "userFallback"
+            case LAError.systemCancel:
+                return "systemCancel"
+            case LAError.passcodeNotSet:
+                return "passcodeNotSet"
+            case LAError.appCancel:
+                return "appCancel"
+            case LAError.invalidContext:
+                return "invalidContext"
+            case LAError.biometryNotAvailable:
+                return "biometryNotAvailable"
+            case LAError.biometryNotEnrolled:
+                return "biometryNotEnrolled"
+            case LAError.biometryLockout:
+                return "biometryLockout"
+            case LAError.notInteractive:
+                return "notInteractive"
+            default:
+                return "unknown"
+        }
+    }
+
+    public var localizedDescription: String {
+        switch self {
+            case LAError.authenticationFailed:
+                return "Authentication was not successful because user failed to provide valid credentials."
+            case LAError.userCancel:
+                return "Authentication was canceled by user (e.g. tapped Cancel button)."
+            case LAError.userFallback:
+                return "Authentication was canceled because the user tapped the fallback button (Enter Password)."
+            case LAError.systemCancel:
+                return "Authentication was canceled by system (e.g. another application went to foreground)."
+            case LAError.passcodeNotSet:
+                return "Authentication could not start because passcode is not set on the device."
+            case LAError.appCancel:
+                return "Authentication was canceled by application (e.g. invalidate was called while authentication was in progress)."
+            case LAError.invalidContext:
+                return "LAContext passed to this call has been previously invalidated."
+            case LAError.biometryNotAvailable:
+                return "Authentication could not start because biometry is not available on the device."
+            case LAError.biometryNotEnrolled:
+                return "Authentication could not start because biometry has no enrolled identities."
+            case LAError.biometryLockout:
+                return "Authentication was not successful because there were too many failed biometry attempts and biometry is now locked. Passcode is now required to unlock biometry."
+            case LAError.notInteractive:
+                return "Authentication failed because it would require showing UI which has been forbidden by using \"interactionNotAllowed\" property."
+            default:
+                return "Authentication failed for unknown reason."
+        }
+    }
+}
