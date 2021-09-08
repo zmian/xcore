@@ -193,6 +193,41 @@ extension Dictionary {
         [K: T](uniqueKeysWithValues: try map(transform))
     }
 
+    /// Returns an array containing the non-nil results of calling the given
+    /// transformation with each element of this sequence.
+    ///
+    /// In this example, `compactMapPairs` is used to convert the parameter
+    /// dictionary keys to their corresponding raw values.
+    ///
+    /// ```swift
+    /// enum Keys: String {
+    ///     case name = "full_name"
+    ///     case age
+    ///     case language
+    /// }
+    ///
+    /// var parameter: [Keys: Any] = [
+    ///     .name: "Vivien",
+    ///     .age: 21,
+    ///     .language: "English"
+    /// ]
+    ///
+    /// let result = parameter.compactMapPairs { ($0.key.rawValue, $0.value) }
+    ///
+    /// //  'result' [String: Any] = [
+    /// //     "full_name": "Vivien",
+    /// //     "age": 21,
+    /// //     "language": "English"
+    /// // ]
+    /// ```
+    ///
+    /// - Parameter transform: A closure that accepts an element of this sequence as
+    ///   its argument and returns an optional value.
+    /// - Returns: A dictionary containing the transformed key value pairs.
+    public func compactMapPairs<K: Hashable, T>(_ transform: (Element) throws -> (K, T)?) rethrows -> [K: T] {
+        [K: T](uniqueKeysWithValues: try compactMap(transform))
+    }
+
     /// Returns a dictionary containing, in order, the elements of the sequence that
     /// satisfy the given predicate.
     ///
