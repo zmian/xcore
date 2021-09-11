@@ -29,6 +29,5 @@ extension View {
     ///   loading state.
     public func isLoading(_ loading: Bool) -> some View {
         environment(\.isLoading, loading)
-            .disabled(false)
     }
 }

@@ -125,7 +125,7 @@ extension View {
         dismissMethods: Popup.DismissMethods = [.tapOutside],
         @ViewBuilder content: @escaping (Item) -> Content,
         onDismiss: (() -> Void)? = nil
-    ) -> some View where Item: Identifiable, Content: View {
+    ) -> some View where Content: View {
         modifier(PopupViewModifier(
             isPresented: .init {
                 item.wrappedValue != nil
@@ -137,7 +137,9 @@ extension View {
             style: style,
             dismissMethods: dismissMethods,
             content: {
-                content(item.wrappedValue!)
+                if let item = item.wrappedValue {
+                    content(item)
+                }
             },
             onDismiss: onDismiss
         ))
