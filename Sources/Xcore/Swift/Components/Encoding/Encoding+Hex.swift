@@ -38,12 +38,29 @@ extension Data {
         public static let raw = Self(rawValue: 1 << 0)
         public static let uppercase = Self(rawValue: 1 << 1)
     }
+}
 
+extension DataProtocol where Self == Data {
     /// Returns hexadecimal representation of `self`.
     ///
     /// - Parameter options: The options to use for the encoding.
     /// - Returns: The hexadecimal encoded string.
-    public func hexEncodedString(options: HexEncodingOptions = []) -> String {
+    public func hexEncodedString(options: Data.HexEncodingOptions = []) -> String {
+        if options.contains(.raw) {
+            return String(format: "%@", self as CVarArg)
+        }
+
+        let format = options.contains(.uppercase) ? "%02hhX" : "%02hhx"
+        return map { String(format: format, $0) }.joined()
+    }
+}
+
+extension DataProtocol where Iterator: Sequence, Self: CVarArg {
+    /// Returns hexadecimal representation of `self`.
+    ///
+    /// - Parameter options: The options to use for the encoding.
+    /// - Returns: The hexadecimal encoded string.
+    public func hexEncodedString(options: Data.HexEncodingOptions = []) -> String {
         if options.contains(.raw) {
             return String(format: "%@", self as CVarArg)
         }
