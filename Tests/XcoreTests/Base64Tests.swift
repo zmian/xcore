@@ -28,5 +28,6 @@ final class Base64Tests: TestCase {
         XCTAssertEqual(string1, "hello world".base64Encoded())
         XCTAssertEqual(string1.base64UrlToUInt8Array(), bytes)
         XCTAssertEqual(bytes.base64EncodedString(), string1)
+        XCTAssertEqual(bytes.base64UrlEncodedString(), string1.base64ToBase64UrlEncoded())
     }
 }
