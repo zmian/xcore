@@ -78,6 +78,16 @@ extension Array where Element == UInt8 {
     /// - Parameter options: The options to use for the encoding.
     /// - Returns: The Base-64 encoded string.
     public func base64EncodedString(options: Data.Base64EncodingOptions = []) -> String {
-        Data(self).base64EncodedString(options: options)
+        Data(self)
+            .base64EncodedString(options: options)
+    }
+
+    /// Returns Base64 URL encoded string.
+    ///
+    /// - Parameter options: The options to use for the encoding.
+    /// - Returns: The Base-64 URL encoded string.
+    public func base64UrlEncodedString(options: Data.Base64EncodingOptions = []) -> String {
+        base64EncodedString(options: options)
+            .base64ToBase64UrlEncoded()
     }
 }
