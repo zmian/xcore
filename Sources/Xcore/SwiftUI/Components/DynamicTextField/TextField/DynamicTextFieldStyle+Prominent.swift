@@ -7,9 +7,23 @@
 import SwiftUI
 
 public struct ProminentDynamicTextFieldStyle<S: InsettableShape>: DynamicTextFieldStyle {
-    public enum Prominence {
+    public enum Prominence: Equatable {
         case fill
-        case outline
+        case outline(OutlineValidationColor)
+
+        public static var outline: Self {
+            outline(.automatic)
+        }
+
+        public enum OutlineValidationColor {
+            /// If `disableFloatingPlaceholder` attributes is set to `true` then validation
+            /// color is applied to the border; otherwise, ignored.
+            case automatic
+            /// Enable validation color border.
+            case enable
+            /// Disable validation color border.
+            case disable
+        }
     }
 
     private let shape: S
@@ -55,8 +69,13 @@ extension ProminentDynamicTextFieldStyle {
                 }
                 .clipShape(shape)
                 .contentShape(shape)
-                .applyIf(prominence == .outline) {
-                    $0.border(shape, width: 0.5)
+                .apply {
+                    if case .outline = prominence {
+                        let color = outlineBorderColor
+                        $0.border(shape, width: color == nil ? 0.5 : 1, color: color)
+                    } else {
+                        $0
+                    }
                 }
         }
 
@@ -79,6 +98,25 @@ extension ProminentDynamicTextFieldStyle {
                 }
 
                 return padding
+            }
+        }
+
+        private var outlineBorderColor: Color? {
+            guard case let .outline(validationColor) = prominence else {
+                return nil
+            }
+
+            var color: Color? {
+                configuration.isValid ? nil : attributes.errorColor
+            }
+
+            switch validationColor {
+                case .automatic:
+                    return attributes.disableFloatingPlaceholder ? color : nil
+                case .enable:
+                    return color
+                case .disable:
+                    return nil
             }
         }
     }
