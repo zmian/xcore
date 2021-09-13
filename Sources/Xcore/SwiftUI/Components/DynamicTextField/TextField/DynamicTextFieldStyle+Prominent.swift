@@ -30,7 +30,7 @@ public struct ProminentDynamicTextFieldStyle<S: InsettableShape>: DynamicTextFie
     private let prominence: Prominence
     private let padding: EdgeInsets?
 
-    init(
+    public init(
         _ prominence: Prominence,
         shape: S,
         padding: EdgeInsets? = nil
