@@ -9,7 +9,7 @@ let package = Package(
         .library(name: "Xcore", targets: ["Xcore"])
     ],
     dependencies: [
-        .package(url: "https://github.com/SDWebImage/SDWebImage", from: "5.8.2"),
+        .package(name: "SDWebImage", url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.8.2"),
         .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.1")
     ],
     targets: [
