@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-// MARK: - Convenience
+// MARK: - View Extension
 
 extension View {
     /// A View modifier that wraps the content in an `VStack` and aligns the content
