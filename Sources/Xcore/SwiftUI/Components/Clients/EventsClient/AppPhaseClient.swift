@@ -13,8 +13,15 @@ public enum AppPhase: Hashable, CustomStringConvertible {
     ///
     /// See documentation for [more info].
     ///
+    /// - Parameter options: A dictionary indicating the reason the app was launched
+    ///   (if any). The contents of this dictionary may be empty in situations where
+    ///   the user launched the app directly. For information about the possible
+    ///   keys in this dictionary and how to handle them, see
+    ///   [UIApplication.LaunchOptionsKey].
+    ///
     /// [more info]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622921-application
-    case launched
+    /// [UIApplication.LaunchOptionsKey]: https://developer.apple.com/documentation/uikit/uiapplication/launchoptionskey
+    case launched(launchOptions: [UIApplication.LaunchOptionsKey: Any]?)
 
     // MARK: - Responding to App Life-Cycle Events
 
