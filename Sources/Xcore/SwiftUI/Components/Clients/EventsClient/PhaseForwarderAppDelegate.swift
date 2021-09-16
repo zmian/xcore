@@ -79,7 +79,7 @@ open class PhaseForwarderAppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        send(.launched)
+        send(.launched(launchOptions: launchOptions))
         return true
     }
 
