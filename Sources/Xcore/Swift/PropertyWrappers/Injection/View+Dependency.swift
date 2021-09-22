@@ -4,7 +4,6 @@
 // MIT license, see LICENSE file for details
 //
 
-#if DEBUG
 import SwiftUI
 
 // MARK: - Dependency View
@@ -61,4 +60,3 @@ private struct DependencyWriter<Content>: View where Content: View {
         content()
     }
 }
-#endif
