@@ -4,7 +4,6 @@
 // MIT license, see LICENSE file for details
 //
 
-#if DEBUG
 import Foundation
 
 extension Samples {
@@ -23,4 +22,3 @@ extension Samples {
         )
     }
 }
-#endif
