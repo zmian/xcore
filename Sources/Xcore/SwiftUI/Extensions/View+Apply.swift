@@ -55,37 +55,39 @@ extension View {
         }
     }
 
-    /// Adds content if given condition is satisfied.
+    /// Applies the given transform if the given condition evaluates to `true`.
     ///
     /// - Parameters:
-    ///   - condition: The condition that must be `true` in order to apply given
-    ///     content.
-    ///   - content: The content to add.
+    ///   - condition: The condition to evaluate.
+    ///   - transform: The transform to apply to the source `View`.
+    /// - Returns: Either the original view or the transformed view if the condition
+    ///   is `true`.
     @ViewBuilder
     public func applyIf<Content>(
         _ condition: Bool,
-        @ViewBuilder content: (Self) -> Content
+        @ViewBuilder transform: (Self) -> Content
     ) -> some View where Content: View {
         if condition {
-            content(self)
+            transform(self)
         } else {
             self
         }
     }
 
-    /// Adds content if given condition is satisfied.
+    /// Applies the given transform if the given condition evaluates to `true`.
     ///
     /// - Parameters:
-    ///   - condition: The binding that must be `true` in order to apply given
-    ///     content.
-    ///   - content: The content to add.
+    ///   - condition: The condition to evaluate.
+    ///   - transform: The transform to apply to the source `View`.
+    /// - Returns: Either the original view or the transformed view if the condition
+    ///   is `true`.
     @ViewBuilder
     public func applyIf<Content>(
         _ condition: Binding<Bool>,
-        @ViewBuilder content: (Self) -> Content
+        @ViewBuilder transform: (Self) -> Content
     ) -> some View where Content: View {
         if condition.wrappedValue {
-            content(self)
+            transform(self)
         } else {
             self
         }
