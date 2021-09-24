@@ -116,7 +116,7 @@ extension Mirror {
     ///
     /// - Parameter value: The value for which to check if is of type ``Optional``.
     public static func isOptional<T>(_ value: T) -> Bool {
-        value is OptionalMarker
+        value is OptionalTypeMarker || value is OptionalTypeMarker.Type
     }
 }
 
@@ -222,8 +222,3 @@ private func rawRepresentableRawValueType<T>(_ t: T.Type) -> Mirror.TypeInfo.Kin
 private func rawRepresentableRawValue<T>(_ t: T) -> Mirror.TypeInfo.Kind.RawValue? {
     rawRepresentableRawValueType(type(of: t))
 }
-
-// MARK: - OptionalMarker
-
-private protocol OptionalMarker {}
-extension Optional: OptionalMarker {}
