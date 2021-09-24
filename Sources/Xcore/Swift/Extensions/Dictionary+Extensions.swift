@@ -301,20 +301,7 @@ public func != <Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
     return !NSDictionary(dictionary: lhs).isEqual(to: rhs)
 }
 
-// MARK: - OptionalType
-
-// Credit: https://stackoverflow.com/a/45462046
-
-public protocol OptionalType {
-    associatedtype Wrapped
-    var wrapped: Wrapped? { get }
-}
-
-extension Optional: OptionalType {
-    public var wrapped: Wrapped? {
-        self
-    }
-}
+// MARK: - Flatten
 
 extension Dictionary where Value: OptionalType {
     /// Removes `nil` values from `self`.
