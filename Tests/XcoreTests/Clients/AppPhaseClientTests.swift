@@ -16,8 +16,8 @@ final class AppPhaseClientTests: TestCase {
         var receivedPhase: AppPhase?
         viewModel.receive { receivedPhase = $0 }
 
-        viewModel.send(.launched)
-        XCTAssertEqual(receivedPhase, .launched)
+        viewModel.send(.launched(launchOptions: nil))
+        XCTAssertEqual(receivedPhase, .launched(launchOptions: nil))
 
         viewModel.send(.background)
         XCTAssertEqual(receivedPhase, .background)

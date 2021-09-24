@@ -116,7 +116,7 @@ extension Mirror {
     ///
     /// - Parameter value: The value for which to check if is of type ``Optional``.
     public static func isOptional<T>(_ value: T) -> Bool {
-        value is OptionalTypeMarker
+        value is OptionalTypeMarker || value is OptionalTypeMarker.Type
     }
 }
 
