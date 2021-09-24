@@ -8,8 +8,28 @@ import Foundation
 
 // MARK: - OptionalTypeMarker
 
-public protocol OptionalTypeMarker {}
-extension Optional: OptionalTypeMarker {}
+public protocol OptionalTypeMarker {
+    /// A boolean value that determines whether the wrapped value is `nil`.
+    var isNil: Bool { get }
+}
+
+extension Optional: OptionalTypeMarker {
+    public var isNil: Bool {
+        switch self {
+            case .none:
+                return true
+            case .some:
+                return false
+        }
+    }
+
+    /// A boolean value that determines whether the wrapped value is not `nil`.
+    ///
+    /// Useful in KeyPaths to allow for negation.
+    public var isNotNil: Bool {
+        !isNil
+    }
+}
 
 // MARK: - OptionalType
 
