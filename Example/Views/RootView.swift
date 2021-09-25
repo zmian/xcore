@@ -11,7 +11,7 @@ struct RootView: View {
 
     var body: some View {
         Form {
-            Section(header: Text("Components"), footer: Text("A demonstration of components included in Xcore.")) {
+            Section {
                 ForEach(items) { item in
                     NavigationLink(destination: item.content()) {
                         VStack(alignment: .leading) {
@@ -26,6 +26,10 @@ struct RootView: View {
                         }
                     }
                 }
+            } header: {
+                Text("Components")
+            } footer: {
+                Text("A demonstration of components included in Xcore.")
             }
         }
         .listStyle(.insetGrouped)
