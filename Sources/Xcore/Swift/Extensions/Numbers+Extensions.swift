@@ -329,3 +329,19 @@ extension Comparable {
         min(max(self, limits.lowerBound), limits.upperBound)
     }
 }
+
+// MARK: - Formatted
+
+extension Double {
+    private static let formatter = NumberFormatter().apply {
+        $0.numberStyle = .decimal
+    }
+
+    func formattedString() -> String {
+        if #available(iOS 15.0, *) {
+            return formatted()
+        } else {
+            return Self.formatter.string(from: NSNumber(value: self)) ?? ""
+        }
+    }
+}

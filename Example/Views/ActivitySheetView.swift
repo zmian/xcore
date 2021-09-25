@@ -25,6 +25,8 @@ struct ActivitySheetView: View {
     }
 }
 
+// MARK: - Previews
+
 struct ActivitySheetView_Previews: PreviewProvider {
     static var previews: some View {
         ActivitySheetView()
