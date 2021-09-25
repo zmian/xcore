@@ -180,6 +180,8 @@ extension ButtonsView {
     }
 }
 
+// MARK: - Previews
+
 struct ButtonsView_Previews: PreviewProvider {
     static var previews: some View {
         ButtonsView()
