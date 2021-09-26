@@ -38,7 +38,7 @@ extension XStack where Title == Text, Value == Never {
 }
 
 extension XStack where Title == Text {
-    /// Creates a stack with a title generated from a string and a custom value.
+    /// Creates a stack with a title generated from a string and a value.
     ///
     /// ```swift
     /// XStack("Favorite") {
@@ -58,7 +58,7 @@ extension XStack where Title == Text {
 }
 
 extension XStack where Title == Text {
-    /// Creates a stack with a title generated from a string and a custom value.
+    /// Creates a stack with a title generated from a string and a value.
     ///
     /// ```swift
     /// XStack("Favorite", value: Image(system: .star))
