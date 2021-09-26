@@ -59,7 +59,7 @@ public struct XStackStyleConfiguration {
     public let title: Title
     public let value: Value
 
-    var isSingleView: Bool {
+    public var isSingleView: Bool {
         title.isEmpty || value.isEmpty
     }
 }
