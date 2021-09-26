@@ -66,12 +66,12 @@ struct HorizontalBarProgressViewStyle_Previews: PreviewProvider {
     }
 }
 
-// MARK: - Convenience
+// MARK: - Dot Syntax Support
 
 extension ProgressViewStyle where Self == HorizontalBarProgressViewStyle {
-    public static var horizontalBar: Self { Self() }
+    public static var horizontalBar: Self { .init() }
 
     public static func horizontalBar(height: CGFloat?) -> Self {
-        Self(height: height)
+        .init(height: height)
     }
 }
