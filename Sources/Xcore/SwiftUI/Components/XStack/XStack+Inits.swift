@@ -25,12 +25,12 @@ extension XStack where Value == Never {
 }
 
 extension XStack where Title == Text, Value == Never {
-    /// Creates a stack with a title.
+    /// Creates a stack with a title generated from a string.
     ///
     /// ```swift
-    /// XStack(title: "Version")
+    /// XStack("Version")
     /// ```
-    public init(title: String) {
+    public init<S>(_ title: S) where S: StringProtocol {
         self.init {
             Text(title)
         }
@@ -38,14 +38,17 @@ extension XStack where Title == Text, Value == Never {
 }
 
 extension XStack where Title == Text {
-    /// Creates a stack with a title string and a custom value.
+    /// Creates a stack with a title generated from a string and a custom value.
     ///
     /// ```swift
-    /// XStack(title: "Favorite") {
+    /// XStack("Favorite") {
     ///     Image(system: .star)
     /// }
     /// ```
-    public init(title: String, @ViewBuilder value: @escaping () -> Value) {
+    public init<S>(
+        _ title: S,
+        @ViewBuilder value: @escaping () -> Value
+    ) where S: StringProtocol {
         self.init {
             Text(title)
         } value: {
@@ -55,12 +58,12 @@ extension XStack where Title == Text {
 }
 
 extension XStack where Title == Text {
-    /// Creates a stack with a title string and a custom value.
+    /// Creates a stack with a title generated from a string and a custom value.
     ///
     /// ```swift
-    /// XStack(title: "Favorite", value: Image(system: .star))
+    /// XStack("Favorite", value: Image(system: .star))
     /// ```
-    public init(title: String, value: Value) {
+    public init<S>(_ title: S, value: Value) where S: StringProtocol {
         self.init {
             Text(title)
         } value: {
@@ -70,12 +73,12 @@ extension XStack where Title == Text {
 }
 
 extension XStack where Title == Text, Value == Text? {
-    /// Creates a stack with a title and a value.
+    /// Creates a stack with a title and a value generated from a string.
     ///
     /// ```swift
-    /// XStack(title: "First Name", value: "John")
+    /// XStack("First Name", value: "John")
     /// ```
-    public init(title: String, value: String?) {
+    public init<S1, S2>(_ title: S1, value: S2?) where S1: StringProtocol, S2: StringProtocol {
         self.init {
             Text(title)
         } value: {
@@ -87,12 +90,13 @@ extension XStack where Title == Text, Value == Text? {
 // MARK: - Money
 
 extension XStack where Title == Text, Value == Money? {
-    /// Creates a stack with a title and a value represented as Money.
+    /// Creates a stack with a title generated from a string and a value formatted
+    /// as money.
     ///
     /// ```swift
-    /// XStack(title: "Price", money: 10) // formats the value as "$10.00"
+    /// XStack("Price", money: 10) // formats the value as "$10.00"
     /// ```
-    public init(title: String, money: Double?) {
+    public init<S>(_ title: S, money: Double?) where S: StringProtocol {
         self.init {
             Text(title)
         } value: {
@@ -104,12 +108,13 @@ extension XStack where Title == Text, Value == Money? {
 // MARK: - Double
 
 extension XStack where Title == Text, Value == Text? {
-    /// Creates a stack with a title and a value formatted using number formatter.
+    /// Creates a stack with a title generated from a string and a value formatted
+    /// using number formatter.
     ///
     /// ```swift
-    /// XStack(title: "Quantity", value: 1000) // formats the value as "1,000"
+    /// XStack("Quantity", value: 1000) // formats the value as "1,000"
     /// ```
-    public init(title: String, value: Double?) {
+    public init<S>(_ title: S, value: Double?) where S: StringProtocol {
         self.init {
             Text(title)
         } value: {
@@ -121,12 +126,13 @@ extension XStack where Title == Text, Value == Text? {
 // MARK: - Image
 
 extension XStack where Title == Text, Value == Image {
-    /// Creates a stack with a title string and a value as the given image.
+    /// Creates a stack with a title generated from a string and a value with a
+    /// system image.
     ///
     /// ```swift
-    /// XStack(title: "Favorite", systemImage: .star)
+    /// XStack("Favorite", systemImage: .star)
     /// ```
-    public init(title: String, systemImage: SystemAssetIdentifier) {
+    public init<S>(_ title: S, systemImage: SystemAssetIdentifier) where S: StringProtocol {
         self.init {
             Text(title)
         } value: {
@@ -134,12 +140,13 @@ extension XStack where Title == Text, Value == Image {
         }
     }
 
-    /// Creates a stack with a title string and a value as the given image.
+    /// Creates a stack with a title generated from a string and a value with an
+    /// image.
     ///
     /// ```swift
-    /// XStack(title: "Favorite", image: .disclosureIndicator)
+    /// XStack("Favorite", image: .disclosureIndicator)
     /// ```
-    public init(title: String, image: ImageAssetIdentifier) {
+    public init<S>(_ title: S, image: ImageAssetIdentifier) where S: StringProtocol {
         self.init {
             Text(title)
         } value: {
@@ -149,7 +156,7 @@ extension XStack where Title == Text, Value == Image {
 }
 
 extension XStack where Value == Image {
-    /// Creates a stack with a title and a value as the given image.
+    /// Creates a stack with a title and a value with an image.
     ///
     /// ```swift
     /// XStack(image: Image(system: .docOnDoc)) {
@@ -172,7 +179,7 @@ extension XStack where Value == Image {
         }
     }
 
-    /// Creates a stack with a title and a value as the given system image.
+    /// Creates a stack with a title and a value with a system image.
     ///
     /// ```swift
     /// XStack(systemImage: .docOnDoc) {
@@ -194,20 +201,20 @@ extension XStack where Value == Image {
 
 // MARK: - Title & Subtitle
 
-extension XStack where Title == _XStackTSSV {
-    /// Creates a stack with a title, subtitle and a value using the given closure.
+extension XStack {
+    /// Creates a stack with a title and subtitle generated from string and a value.
     ///
     /// ```swift
-    /// XStack(title: "Apple", subtitle: "AAPL") {
+    /// XStack("Apple", subtitle: "AAPL") {
     ///     Image(system: .docOnDoc)
     /// }
     /// ```
-    public init(
-        title: String,
-        subtitle: String,
+    public init<S1, S2>(
+        _ title: S1,
+        subtitle: S2,
         spacing: CGFloat? = nil,
         @ViewBuilder value: @escaping () -> Value
-    ) {
+    ) where Title == _XStackTSSV<S1, S2>, S1: StringProtocol, S2: StringProtocol {
         self.init {
             _XStackTSSV(
                 title: title,
@@ -218,27 +225,46 @@ extension XStack where Title == _XStackTSSV {
             value()
         }
     }
-}
 
-extension XStack where Title == _XStackTSSV {
-    /// Creates a stack with a title, subtitle and a value using the given closure.
+    /// Creates a stack with a title and subtitle generated from string and a value.
     ///
     /// ```swift
-    /// XStack(title: "Apple", subtitle: "AAPL", value: Image(system: .docOnDoc))
+    /// XStack("Apple", subtitle: "AAPL", value: Image(system: .docOnDoc))
     /// ```
-    public init(title: String, subtitle: String, value: Value) {
-        self.init(title: title, subtitle: subtitle, value: { value })
+    public init<S1, S2>(
+        _ title: S1,
+        subtitle: S2,
+        value: Value
+    ) where Title == _XStackTSSV<S1, S2>, S1: StringProtocol, S2: StringProtocol {
+        self.init(title, subtitle: subtitle, value: { value })
     }
-}
 
-extension XStack where Title == _XStackTSSV, Value == Image {
-    /// Creates a stack with a title, subtitle and a value using the given closure.
+    /// Creates a stack with a title and subtitle generated from string and a value
+    /// with a system image.
     ///
     /// ```swift
-    /// XStack(title: "Apple", subtitle: "AAPL", systemImage: .docOnDoc)
+    /// XStack("Apple", subtitle: "AAPL", systemImage: .docOnDoc)
     /// ```
-    public init(title: String, subtitle: String, systemImage: SystemAssetIdentifier) {
-        self.init(title: title, subtitle: subtitle, value: Image(system: systemImage))
+    public init<S1, S2>(
+        _ title: S1,
+        subtitle: S2,
+        systemImage: SystemAssetIdentifier
+    ) where Value == Image, Title == _XStackTSSV<S1, S2>, S1: StringProtocol, S2: StringProtocol {
+        self.init(title, subtitle: subtitle, value: Image(system: systemImage))
+    }
+
+    /// Creates a stack with a title and subtitle generated from string and a value
+    /// with an image.
+    ///
+    /// ```swift
+    /// XStack("Apple", subtitle: "AAPL", image: .disclosureIndicator)
+    /// ```
+    public init<S1, S2>(
+        _ title: S1,
+        subtitle: S2,
+        image: ImageAssetIdentifier
+    ) where Value == Image, Title == _XStackTSSV<S1, S2>, S1: StringProtocol, S2: StringProtocol {
+        self.init(title, subtitle: subtitle, value: Image(assetIdentifier: image))
     }
 }
 
@@ -247,10 +273,10 @@ extension XStack where Title == _XStackTSSV, Value == Image {
 /// This view is an implementation detail of XStack. Don't use it.
 ///
 /// :nodoc:
-public struct _XStackTSSV: View {
+public struct _XStackTSSV<S1: StringProtocol, S2: StringProtocol>: View {
     @Environment(\.theme) private var theme
-    var title: String
-    var subtitle: String
+    var title: S1
+    var subtitle: S2
     var spacing: CGFloat?
 
     public var body: some View {
