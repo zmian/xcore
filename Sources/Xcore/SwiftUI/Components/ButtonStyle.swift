@@ -104,7 +104,7 @@ extension ProminentButtonStyle {
     }
 }
 
-// MARK: - Convenience
+// MARK: - Dot Syntax Support
 
 extension ButtonStyle {
     public static func fill<S: InsettableShape>(shape: S) -> Self where Self == ProminentButtonStyle<S> {
@@ -153,5 +153,5 @@ extension ButtonStyle where Self == ProminentButtonStyle<Capsule> {
 }
 
 extension ButtonStyle where Self == ScaleEffectButtonStyle {
-    public static var scaleEffect: Self { Self() }
+    public static var scaleEffect: Self { .init() }
 }

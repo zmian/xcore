@@ -72,6 +72,8 @@ extension EnvironmentValues {
     }
 }
 
+// MARK: - View Helper
+
 extension View {
     /// Sets the style for text field within this view to a style with a custom
     /// appearance and standard interaction behavior.
@@ -119,7 +121,7 @@ public struct LineDynamicTextFieldStyle: DynamicTextFieldStyle {
     }
 }
 
-// MARK: - Convenience
+// MARK: - Dot Syntax Support
 
 extension DynamicTextFieldStyle where Self == LineDynamicTextFieldStyle {
     public static var line: Self { line() }

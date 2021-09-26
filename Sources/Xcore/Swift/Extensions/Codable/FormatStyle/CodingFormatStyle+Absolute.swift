@@ -17,44 +17,44 @@ public struct AbsoluteValueCodingFormatStyle<Value>: CodingFormatStyle where Val
     }
 }
 
-// MARK: - Convenience
+// MARK: - Dot Syntax Support
 
 extension DecodingFormatStyle where Self == AbsoluteValueCodingFormatStyle<Double> {
     /// Returns the absolute value of the input and output.
-    public static var absolute: Self { Self() }
+    public static var absolute: Self { .init() }
 }
 
 extension EncodingFormatStyle where Self == AbsoluteValueCodingFormatStyle<Double> {
     /// Returns the absolute value of the input and output.
-    public static var absolute: Self { Self() }
+    public static var absolute: Self { .init() }
 }
 
 extension DecodingFormatStyle where Self == AbsoluteValueCodingFormatStyle<Float> {
     /// Returns the absolute value of the input and output.
-    public static var absolute: Self { Self() }
+    public static var absolute: Self { .init() }
 }
 
 extension EncodingFormatStyle where Self == AbsoluteValueCodingFormatStyle<Float> {
     /// Returns the absolute value of the input and output.
-    public static var absolute: Self { Self() }
+    public static var absolute: Self { .init() }
 }
 
 extension DecodingFormatStyle where Self == AbsoluteValueCodingFormatStyle<Decimal> {
     /// Returns the absolute value of the input and output.
-    public static var absolute: Self { Self() }
+    public static var absolute: Self { .init() }
 }
 
 extension EncodingFormatStyle where Self == AbsoluteValueCodingFormatStyle<Decimal> {
     /// Returns the absolute value of the input and output.
-    public static var absolute: Self { Self() }
+    public static var absolute: Self { .init() }
 }
 
 extension DecodingFormatStyle where Self == AbsoluteValueCodingFormatStyle<Int> {
     /// Returns the absolute value of the input and output.
-    public static var absolute: Self { Self() }
+    public static var absolute: Self { .init() }
 }
 
 extension EncodingFormatStyle where Self == AbsoluteValueCodingFormatStyle<Int> {
     /// Returns the absolute value of the input and output.
-    public static var absolute: Self { Self() }
+    public static var absolute: Self { .init() }
 }
