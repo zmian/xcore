@@ -56,10 +56,14 @@ public struct XStackStyleConfiguration {
         }
     }
 
+    /// A view that represents the title of the stack.
     public let title: Title
+
+    /// A view that represents the value of the stack.
     public let value: Value
 
-    public var isSingleView: Bool {
+    /// A boolean that indicates whether the stack view either have title or value.
+    public var isSingleChild: Bool {
         title.isEmpty || value.isEmpty
     }
 }
@@ -87,7 +91,7 @@ private struct DefaultXStackStyle: XStackStyle {
     var spacing: CGFloat? = .s5
 
     func makeBody(configuration: Self.Configuration) -> some View {
-        HStack(alignment: alignment, spacing: configuration.isSingleView ? 0 : spacing) {
+        HStack(alignment: alignment, spacing: configuration.isSingleChild ? 0 : spacing) {
             configuration.title
             Spacer(minLength: 0)
             configuration.value
