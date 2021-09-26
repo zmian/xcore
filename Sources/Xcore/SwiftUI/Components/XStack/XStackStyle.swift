@@ -62,7 +62,7 @@ public struct XStackStyleConfiguration {
     /// A view that represents the value of the stack.
     public let value: Value
 
-    /// A boolean that indicates whether the stack view either have title or value.
+    /// A boolean that indicates whether the stack either have title or value.
     public var isSingleChild: Bool {
         title.isEmpty || value.isEmpty
     }
