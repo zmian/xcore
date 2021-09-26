@@ -53,7 +53,7 @@ extension Menu: CaseIterable {
         buttonsUIKit,
         buttons,
         capsules,
-        labels,
+        xstack,
         popups,
         textFields,
         activitySheet,
@@ -92,9 +92,9 @@ extension Menu {
         }
     )
 
-    private static let labels = Self(
-        title: "Labels",
-        content: LabelView()
+    private static let xstack = Self(
+        title: "XStack",
+        content: XStackView()
     )
 
     private static let popups = Self(
