@@ -6,6 +6,36 @@
 
 import SwiftUI
 
+// MARK: - configuration
+
+extension XStack where Title == XStackStyleConfiguration.Title, Value == XStackStyleConfiguration.Value {
+    /// Creates a stack based on a stack style configuration.
+    ///
+    /// You can use this initializer within the ``makeBody(configuration:)`` method
+    /// of a ``XStackStyle`` to create an instance of the styled stack. This is
+    /// useful for custom stack styles that only modify the current stack style,
+    /// as opposed to implementing a brand new style.
+    ///
+    /// For example, the following style adds a red border around the stack, but
+    /// otherwise preserves the toggle’s current style:
+    ///
+    /// ```swift
+    /// struct RedBorderedXStackStyle: XStackStyle {
+    ///     func makeBody(configuration: Configuration) -> some View {
+    ///         XStack(configuration)
+    ///             .border(Color.red)
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// - Parameter configuration: A stack style configuration.
+    public init(_ configuration: XStackStyleConfiguration) {
+        self.init(title: { configuration.title }, value: { configuration.value })
+    }
+}
+
+// MARK: - Title Only
+
 extension XStack where Value == Never {
     /// Creates a stack with a title.
     ///
