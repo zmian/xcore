@@ -23,17 +23,17 @@ struct XStackView: View {
                 .multilineTextAlignment(.trailing)
             }
 
-            XStack(title: "Version")
+            XStack("Version")
 
-            XStack(title: "Version", value: Bundle.main.versionBuildNumber)
+            XStack("Version", value: Bundle.main.versionBuildNumber)
                 .xstackStyle(.keyTitle)
 
-            XStack(title: "First Name", value: "John")
+            XStack("First Name", value: "John")
                 .xstackStyle(.keyValue)
 
-            XStack(title: "Price", money: 10)
+            XStack("Price", money: 10)
 
-            XStack(title: "Quantity", value: 1000)
+            XStack("Quantity", value: 1000)
                 .foregroundColor(theme.textSecondaryColor)
 
             favorites
@@ -44,15 +44,15 @@ struct XStackView: View {
 
     @ViewBuilder
     private var favorites: some View {
-        XStack(title: "Favorite") {
+        XStack("Favorite") {
             Image(system: .star)
         }
 
-        XStack(title: "Favorite", value: Image(system: .star))
+        XStack("Favorite", value: Image(system: .star))
 
-        XStack(title: "Favorite", systemImage: .star)
+        XStack("Favorite", systemImage: .star)
 
-        XStack(title: "Favorite", image: .disclosureIndicator)
+        XStack("Favorite", image: .disclosureIndicator)
     }
 
     @ViewBuilder
@@ -75,13 +75,13 @@ struct XStackView: View {
             }
         }
 
-        XStack(title: "Apple", subtitle: "AAPL") {
+        XStack("Apple", subtitle: "AAPL") {
             Image(system: .docOnDoc)
         }
 
-        XStack(title: "Apple", subtitle: "AAPL", value: Image(system: .docOnDoc))
+        XStack("Apple", subtitle: "AAPL", value: Image(system: .docOnDoc))
 
-        XStack(title: "Apple", subtitle: "AAPL", systemImage: .docOnDoc)
+        XStack("Apple", subtitle: "AAPL", systemImage: .docOnDoc)
     }
 }
 
