@@ -6,12 +6,12 @@
 
 import SwiftUI
 
-struct LabelView: View {
+struct XStackView: View {
     @Environment(\.theme) private var theme
 
     var body: some View {
         List {
-            Label {
+            XStack {
                 Text(
                     """
                     Apple Inc. is an American multinational technology company that specializes in \
@@ -22,44 +22,42 @@ struct LabelView: View {
                 )
                 .multilineTextAlignment(.trailing)
             }
-            .labelStyle(.titleOnly)
 
-            Label("Version")
+            XStack(title: "Version")
 
-            Label("Version", value: Bundle.main.versionBuildNumber)
-                .labelStyle(.keyTitle)
+            XStack(title: "Version", value: Bundle.main.versionBuildNumber)
+                .xstackStyle(.keyTitle)
 
-            Label("First Name", value: "John")
-                .labelStyle(.keyValue)
+            XStack(title: "First Name", value: "John")
+                .xstackStyle(.keyValue)
 
-            Label("Price", money: 10)
+            XStack(title: "Price", money: 10)
 
-            Label("Quantity", value: 1000)
+            XStack(title: "Quantity", value: 1000)
                 .foregroundColor(theme.textSecondaryColor)
 
             favorites
 
             complexView
         }
-        .labelStyle(.row)
     }
 
     @ViewBuilder
     private var favorites: some View {
-        Label("Favorite") {
+        XStack(title: "Favorite") {
             Image(system: .star)
         }
 
-        Label("Favorite", icon: Image(system: .star))
+        XStack(title: "Favorite", value: Image(system: .star))
 
-        Label("Favorite", systemImage: .star)
+        XStack(title: "Favorite", systemImage: .star)
 
-        Label("Favorite", image: .disclosureIndicator)
+        XStack(title: "Favorite", image: .disclosureIndicator)
     }
 
     @ViewBuilder
     private var complexView: some View {
-        Label(image: Image(system: .docOnDoc)) {
+        XStack(image: Image(system: .docOnDoc)) {
             VStack(alignment: .leading) {
                 Text("Apple")
                 Text("AAPL")
@@ -68,7 +66,7 @@ struct LabelView: View {
             }
         }
 
-        Label(systemImage: .docOnDoc) {
+        XStack(systemImage: .docOnDoc) {
             VStack(alignment: .leading) {
                 Text("Apple")
                 Text("AAPL")
@@ -77,28 +75,28 @@ struct LabelView: View {
             }
         }
 
-        Label("Apple", subtitle: "AAPL") {
+        XStack(title: "Apple", subtitle: "AAPL") {
             Image(system: .docOnDoc)
         }
 
-        Label("Apple", subtitle: "AAPL", icon: Image(system: .docOnDoc))
+        XStack(title: "Apple", subtitle: "AAPL", value: Image(system: .docOnDoc))
 
-        Label("Apple", subtitle: "AAPL", systemImage: .docOnDoc)
+        XStack(title: "Apple", subtitle: "AAPL", systemImage: .docOnDoc)
     }
 }
 
 // MARK: - Previews
 
-struct LabelView_Previews: PreviewProvider {
+struct XStackView_Previews: PreviewProvider {
     static var previews: some View {
-        LabelView()
+        XStackView()
             .embedInNavigation()
     }
 }
 
 // MARK: - KeyValue
 
-struct KeyValueLabelStyle: LabelStyle {
+struct KeyValueXStackStyle: XStackStyle {
     @Environment(\.theme) private var theme
     var isTitleKey: Bool
 
@@ -109,7 +107,7 @@ struct KeyValueLabelStyle: LabelStyle {
                     $0.foregroundColor(theme.textSecondaryColor)
                 }
             Spacer()
-            configuration.icon
+            configuration.value
                 .symbol(.chevronRight)
                 .applyIf(isTitleKey) {
                     $0.foregroundColor(theme.textSecondaryColor)
@@ -120,41 +118,8 @@ struct KeyValueLabelStyle: LabelStyle {
 
 // MARK: - Dot Syntax Support
 
-extension LabelStyle where Self == KeyValueLabelStyle {
+extension XStackStyle where Self == KeyValueXStackStyle {
     static var keyTitle: Self { .init(isTitleKey: true) }
 
     static var keyValue: Self { .init(isTitleKey: false) }
-}
-
-// MARK: - Row
-
-struct RowLabelStyle: LabelStyle {
-    var alignment: VerticalAlignment
-    var spacing: CGFloat?
-
-    func makeBody(configuration: Self.Configuration) -> some View {
-        HStack(alignment: alignment, spacing: spacing) {
-            configuration.title
-            Spacer()
-            configuration.icon
-        }
-    }
-}
-
-// MARK: - Dot Syntax Support
-
-extension LabelStyle where Self == RowLabelStyle {
-    static var row: Self { row() }
-
-    /// Sets the style for `XStack` within this view to a style with a custom
-    /// appearance and standard interaction behavior.
-    static func row(
-        alignment: VerticalAlignment = .center,
-        spacing: CGFloat? = .s5
-    ) -> Self {
-        RowLabelStyle(
-            alignment: alignment,
-            spacing: spacing
-        )
-    }
 }
