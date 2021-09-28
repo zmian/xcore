@@ -20,7 +20,7 @@ public protocol XStackStyle {
 
 /// The properties of an XStack.
 public struct XStackStyleConfiguration {
-    /// A type-erased title view of an XStack.
+    /// A type-erased title view of a stack.
     public struct Title: View {
         public let body: Either<AnyView, EmptyView>
 
@@ -38,7 +38,7 @@ public struct XStackStyleConfiguration {
         }
     }
 
-    /// A type-erased value view of an XStack.
+    /// A type-erased value view of a stack.
     public struct Value: View {
         public let body: Either<AnyView, EmptyView>
 
@@ -74,8 +74,9 @@ struct AnyXStackStyle: XStackStyle {
     private var _makeBody: (Self.Configuration) -> AnyView
 
     init<S: XStackStyle>(style: S) {
-        _makeBody = { configuration in
-            AnyView(style.makeBody(configuration: configuration))
+        _makeBody = {
+            style.makeBody(configuration: $0)
+                .eraseToAnyView()
         }
     }
 

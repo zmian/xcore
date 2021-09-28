@@ -19,6 +19,15 @@ public protocol DynamicTextFieldStyle {
 // MARK: - Configuration
 
 public struct DynamicTextFieldStyleConfiguration {
+    /// A type-erased input field of a text field.
+    public struct TextField: View {
+        public let body: AnyView
+
+        init<Content: View>(_ content: Content) {
+            body = content.eraseToAnyView()
+        }
+    }
+
     /// A type-erased label of a text field.
     public struct Label: View {
         public let body: AnyView
@@ -28,12 +37,17 @@ public struct DynamicTextFieldStyleConfiguration {
         }
     }
 
+    /// A view that represents the text field.
+    public let textField: TextField
+
+    /// A view that represents the label of the text field.
     public let label: Label
 
+    /// A property representing text field configuration.
     public let configuration: TextFieldConfiguration<AnyTextFieldFormatter>
 
     /// The text currently present in the text field.
-    public let text: String
+    @Binding public var text: String
 
     /// A boolean property indicating whether the text field entry is valid.
     public let isValid: Bool
@@ -79,54 +93,5 @@ extension View {
     /// appearance and standard interaction behavior.
     public func dynamicTextFieldStyle<S: DynamicTextFieldStyle>(_ style: S) -> some View {
         environment(\.dynamicTextFieldStyle, AnyDynamicTextFieldStyle(style))
-    }
-}
-
-// MARK: - Default Style
-
-private struct DefaultDynamicTextFieldStyle: DynamicTextFieldStyle {
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-    }
-}
-
-// MARK: - Line Style
-
-public struct LineDynamicTextFieldStyle: DynamicTextFieldStyle {
-    private let withValidationColors: Bool
-    private let height: CGFloat?
-
-    init(withValidationColors: Bool = true, height: CGFloat? = nil) {
-        self.withValidationColors = withValidationColors
-        self.height = height
-    }
-
-    public func makeBody(configuration: Self.Configuration) -> some View {
-        EnvironmentReader(\.textFieldAttributes) { attributes in
-            EnvironmentReader(\.theme) { theme in
-                let color: Color = {
-                    if withValidationColors, configuration.isFocused {
-                        return configuration.isValid ? attributes.successColor : attributes.errorColor
-                    }
-
-                    return Color(theme.separatorColor)
-                }()
-
-                VStack(alignment: .leading, spacing: .s2) {
-                    configuration.label
-                    color.frame(height: height ?? .onePixel)
-                }
-            }
-        }
-    }
-}
-
-// MARK: - Dot Syntax Support
-
-extension DynamicTextFieldStyle where Self == LineDynamicTextFieldStyle {
-    public static var line: Self { line() }
-
-    public static func line(withValidationColors: Bool = true, height: CGFloat? = nil) -> Self {
-        Self(withValidationColors: withValidationColors, height: height)
     }
 }

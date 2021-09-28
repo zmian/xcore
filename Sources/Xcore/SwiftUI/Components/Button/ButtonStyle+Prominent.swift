@@ -6,17 +6,6 @@
 
 import SwiftUI
 
-// MARK: - Scale and Opacity
-
-public struct ScaleEffectButtonStyle: ButtonStyle {
-    public init() {}
-
-    public func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .scaleOpacityEffect(configuration.isPressed)
-    }
-}
-
 public struct ProminentButtonStyle<S: InsettableShape>: ButtonStyle {
     private let id: ButtonIdentifier
     private let prominence: ButtonProminence
@@ -150,8 +139,4 @@ extension ButtonStyle where Self == ProminentButtonStyle<Capsule> {
     public static var capsuleOutline: Self {
         .outline(shape: Capsule())
     }
-}
-
-extension ButtonStyle where Self == ScaleEffectButtonStyle {
-    public static var scaleEffect: Self { .init() }
 }
