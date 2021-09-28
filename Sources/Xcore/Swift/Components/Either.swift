@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import Foundation
+import SwiftUI
 
 /// A value that represents either a left or a right value, including an
 /// associated value in each case.
@@ -162,6 +162,19 @@ extension Either: CustomStringConvertible where Left: CustomStringConvertible, R
                 return String(describing: value)
             case let .right(value):
                 return String(describing: value)
+        }
+    }
+}
+
+// MARK: - View
+
+extension Either: View where Left: View, Right: View {
+    public var body: some View {
+        switch self {
+            case let .left(leftView):
+                leftView
+            case let .right(rightView):
+                rightView
         }
     }
 }

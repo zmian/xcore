@@ -22,17 +22,17 @@ public protocol XStackStyle {
 public struct XStackStyleConfiguration {
     /// A type-erased title view of an XStack.
     public struct Title: View {
-        public let body: _ConditionalContent<AnyView, EmptyView>
+        public let body: Either<AnyView, EmptyView>
 
         /// A boolean that indicates whether the title view is an empty view.
         public let isEmpty: Bool
 
         init<Content: View>(content: @autoclosure () -> Content) {
             if Content.self != Never.self {
-                body = ViewBuilder.buildEither(first: content().eraseToAnyView())
+                body = .left(content().eraseToAnyView())
                 isEmpty = false
             } else {
-                body = ViewBuilder.buildEither(second: EmptyView())
+                body = .right(EmptyView())
                 isEmpty = true
             }
         }
@@ -40,17 +40,17 @@ public struct XStackStyleConfiguration {
 
     /// A type-erased value view of an XStack.
     public struct Value: View {
-        public let body: _ConditionalContent<AnyView, EmptyView>
+        public let body: Either<AnyView, EmptyView>
 
         /// A boolean that indicates whether the value view is an empty view.
         public let isEmpty: Bool
 
         init<Content: View>(content: @autoclosure () -> Content) {
             if Content.self != Never.self {
-                body = ViewBuilder.buildEither(first: content().eraseToAnyView())
+                body = .left(content().eraseToAnyView())
                 isEmpty = false
             } else {
-                body = ViewBuilder.buildEither(second: EmptyView())
+                body = .right(EmptyView())
                 isEmpty = true
             }
         }
