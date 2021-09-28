@@ -23,7 +23,7 @@ private struct DetermineMaximumSize: View {
     fileprivate typealias Key = MaximumSizePreferenceKey
 
     fileprivate struct MaximumSizePreferenceKey: PreferenceKey {
-        static var defaultValue: CGSize = 0
+        static var defaultValue: CGSize = .zero
 
         static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
             value = CGSize(

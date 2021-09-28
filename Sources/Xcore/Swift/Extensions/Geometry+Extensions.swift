@@ -178,24 +178,6 @@ extension UIEdgeInsets {
     }
 }
 
-// MARK: - CGSize - ExpressibleByFloatLiteral
-
-extension CGSize: ExpressibleByFloatLiteral {
-    public init(floatLiteral value: FloatLiteralType) {
-        let value = CGFloat(value)
-        self = CGSize(width: value, height: value)
-    }
-}
-
-// MARK: - CGSize - ExpressibleByIntegerLiteral
-
-extension CGSize: ExpressibleByIntegerLiteral {
-    public init(integerLiteral value: IntegerLiteralType) {
-        let value = CGFloat(value)
-        self = CGSize(width: value, height: value)
-    }
-}
-
 // MARK: - CGSize - Extensions
 
 extension CGSize {

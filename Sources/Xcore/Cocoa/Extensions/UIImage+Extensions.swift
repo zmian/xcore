@@ -38,7 +38,7 @@ extension UIImage {
         }
 
         public static var rectangle: Self {
-            rectangle(50)
+            rectangle(.init(50))
         }
 
         public static func rectangle(_ size: CGSize) -> Self {
