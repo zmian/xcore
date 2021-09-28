@@ -352,7 +352,7 @@ extension String {
         var numberOfLines = 0
         var index = 0
         var lineRange = NSRange(location: 0, length: 0)
-        var size: CGSize = 0
+        var size: CGSize = .zero
 
         while index < layoutManager.numberOfGlyphs {
             numberOfLines += 1
