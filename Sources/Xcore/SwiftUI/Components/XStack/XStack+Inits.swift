@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-// MARK: - configuration
+// MARK: - Configuration
 
 extension XStack where Title == XStackStyleConfiguration.Title, Value == XStackStyleConfiguration.Value {
     /// Creates a stack based on a stack style configuration.
@@ -17,7 +17,7 @@ extension XStack where Title == XStackStyleConfiguration.Title, Value == XStackS
     /// as opposed to implementing a brand new style.
     ///
     /// For example, the following style adds a red border around the stack, but
-    /// otherwise preserves the toggle’s current style:
+    /// otherwise preserves the stack’s current style:
     ///
     /// ```swift
     /// struct RedBorderedXStackStyle: XStackStyle {

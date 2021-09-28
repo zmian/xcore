@@ -20,7 +20,7 @@ extension View {
     }
 }
 
-// MARK: - Colors
+// MARK: - BackgroundColor
 
 extension View {
     /// Sets the background color behind this view.
@@ -32,12 +32,44 @@ extension View {
     }
 
     /// Sets the background color behind this view.
+    public func backgroundColor(ignoresSafeAreaEdges edges: Edge.Set = .all, _ color: () -> Color) -> some View {
+        background(
+            color()
+                .ignoresSafeArea(edges: edges)
+        )
+    }
+
+    /// Sets the background color behind this view.
     @_disfavoredOverload
     public func backgroundColor(_ color: UIColor, ignoresSafeAreaEdges edges: Edge.Set = .all) -> some View {
         background(
             Color(color)
                 .ignoresSafeArea(edges: edges)
         )
+    }
+
+    /// Sets the background color behind this view.
+    @_disfavoredOverload
+    public func backgroundColor(ignoresSafeAreaEdges edges: Edge.Set = .all, _ color: () -> UIColor) -> some View {
+        background(
+            Color(color())
+                .ignoresSafeArea(edges: edges)
+        )
+    }
+}
+
+// MARK: - ForegroundColor
+
+extension View {
+    /// Sets the color that the view uses for foreground elements.
+    public func foregroundColor(_ color: () -> Color) -> some View {
+        foregroundColor(color())
+    }
+
+    /// Sets the color that the view uses for foreground elements.
+    @_disfavoredOverload
+    public func foregroundColor(_ color: () -> UIColor) -> some View {
+        foregroundColor(Color(color()))
     }
 
     /// Sets the color that the view uses for foreground elements.

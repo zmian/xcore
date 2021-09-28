@@ -20,6 +20,7 @@ extension TextFieldConfiguration {
     }
 }
 
+/// A structure representing text field configuration.
 public struct TextFieldConfiguration<Formatter: TextFieldFormatter>: Equatable, Identifiable, UserInfoContainer, MutableAppliable {
     public typealias ID = Identifier<Self>
 

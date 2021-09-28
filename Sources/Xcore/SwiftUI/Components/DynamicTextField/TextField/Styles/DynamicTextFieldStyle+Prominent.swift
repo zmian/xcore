@@ -62,7 +62,7 @@ extension ProminentDynamicTextFieldStyle {
         let padding: EdgeInsets?
 
         var body: some View {
-            configuration.label
+            DynamicTextField.default(configuration)
                 .padding(finalPadding)
                 .applyIf(prominence == .fill) {
                     $0.backgroundColor(theme.backgroundSecondaryColor)
