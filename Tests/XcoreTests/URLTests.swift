@@ -54,6 +54,42 @@ final class URLTests: TestCase {
         XCTAssertEqual(url7.removingScheme(), "mail.app")
     }
 
+    func testRemovingQueryItems() {
+        let url1 = URL(string: "https://www.example.com/?q=HelloWorld")!
+        let url2 = URL(string: "http://welcome.hello.example.com/?q=HelloWorld&lang=swift")!
+        let url3 = URL(string: "www.hello.example.com/?q=HelloWorld")!
+        let url4 = URL(string: "hello.example.com")!
+        let url5 = URL(string: "mail.app")!
+        let url6 = URL(string: "file://mail.app")!
+        let url7 = URL(string: "mailto://mail.app")!
+
+        XCTAssertEqual(url1.removingQueryItems(), URL(string: "https://www.example.com/")!)
+        XCTAssertEqual(url2.removingQueryItems(), URL(string: "http://welcome.hello.example.com/")!)
+        XCTAssertEqual(url3.removingQueryItems(), URL(string: "www.hello.example.com/")!)
+        XCTAssertEqual(url4.removingQueryItems(), URL(string: "hello.example.com")!)
+        XCTAssertEqual(url5.removingQueryItems(), URL(string: "mail.app")!)
+        XCTAssertEqual(url6.removingQueryItems(), URL(string: "file://mail.app")!)
+        XCTAssertEqual(url7.removingQueryItems(), URL(string: "mailto://mail.app")!)
+    }
+
+    func testRemovingQueryItemNamed() {
+        let url1 = URL(string: "https://www.example.com/?q=HelloWorld")!
+        let url2 = URL(string: "http://welcome.hello.example.com/?q=HelloWorld&lang=swift")!
+        let url3 = URL(string: "www.hello.example.com/?q=HelloWorld")!
+        let url4 = URL(string: "hello.example.com")!
+        let url5 = URL(string: "mail.app")!
+        let url6 = URL(string: "file://mail.app")!
+        let url7 = URL(string: "mailto://mail.app")!
+
+        XCTAssertEqual(url1.removingQueryItem(named: "q"), URL(string: "https://www.example.com/")!)
+        XCTAssertEqual(url2.removingQueryItem(named: "lang"), URL(string: "http://welcome.hello.example.com/?q=HelloWorld")!)
+        XCTAssertEqual(url3.removingQueryItem(named: "q"), URL(string: "www.hello.example.com/")!)
+        XCTAssertEqual(url4.removingQueryItem(named: "q"), URL(string: "hello.example.com")!)
+        XCTAssertEqual(url5.removingQueryItem(named: "q"), URL(string: "mail.app")!)
+        XCTAssertEqual(url6.removingQueryItem(named: "q"), URL(string: "file://mail.app")!)
+        XCTAssertEqual(url7.removingQueryItem(named: "q"), URL(string: "mailto://mail.app")!)
+    }
+
     func testMatcheFound() {
         let domain = "example.com"
         let url1 = URL(string: "https://www.example.com/?q=HelloWorld")!
