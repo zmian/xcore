@@ -34,6 +34,48 @@ extension URL {
 }
 
 extension URL {
+    /// Query value associated with the request.
+    ///
+    /// ```
+    /// let url = URL(string: "https://example.com/?q=HelloWorld")!
+    /// print(url.removingQueryItems()) // "https://example.com"
+    /// ```
+    public func removingQueryItems() -> URL {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
+            return self
+        }
+
+        components.query = nil
+
+        return components.url ?? self
+    }
+
+    /// Query value associated with the request.
+    ///
+    /// ```
+    /// let url = URL(string: "https://example.com/?q=HelloWorld&lang=swift")!
+    /// print(url.removingQueryItem(named: "q")) // "https://example.com/?lang=swift"
+    /// ```
+    public func removingQueryItem(named name: String) -> URL {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
+            return self
+        }
+
+        if var queryItems = components.queryItems {
+            queryItems.removeAll { item in
+                item.name == name
+            }
+
+            if queryItems.isEmpty {
+                components.queryItems = nil
+            } else {
+                components.queryItems = queryItems
+            }
+        }
+
+        return components.url ?? self
+    }
+
     /// Returns a URL constructed by removing the fragment from self.
     ///
     /// If the URL has no fragment (e.g., `http://www.example.com`),
