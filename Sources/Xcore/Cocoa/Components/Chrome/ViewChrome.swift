@@ -9,22 +9,37 @@ import SwiftUI
 // MARK: - View Helpers
 
 extension View {
+    /// Configures the status bar background.
+    ///
+    /// - Parameter background: The background style for the status bar.
     public func statusBarBackground(_ background: ViewChrome.Background) -> some View {
         chrome(.init(bar: .statusBar, background: background))
     }
 
+    /// Configures the status bar background color.
+    ///
+    /// - Parameter background: The background color for the status bar.
     public func statusBarBackground(_ background: Color) -> some View {
         statusBarBackground(.colored(background))
     }
 
+    /// Configures the navigation bar background.
+    ///
+    /// - Parameter background: The background style for the navigation bar.
     public func navigationBarBackground(_ background: ViewChrome.Background) -> some View {
         chrome(.init(bar: .navigationBar, background: background))
     }
 
+    /// Configures the navigation bar background color.
+    ///
+    /// - Parameter background: The background color for the navigation bar.
     public func navigationBarBackground(_ background: Color) -> some View {
         navigationBarBackground(.colored(background))
     }
 
+    /// Configures the view's chrome.
+    ///
+    /// - Parameter chrome: The chrome of the view.
     private func chrome(_ chrome: ViewChrome) -> some View {
         modifier(ViewChromeModifier(chrome: chrome))
     }
