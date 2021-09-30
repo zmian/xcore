@@ -80,8 +80,17 @@ extension ViewChrome {
     /// An enumeration representing the background style of the element.
     public enum Background: Hashable, CustomStringConvertible {
         case transparent
-        case blurred
+        case blurred(UIBlurEffect.Style)
         case colored(Color)
+        case view(AnyView)
+
+        public static var blurred: Self {
+            .blurred(.prominent)
+        }
+
+        public static func view<V: View>(_ view: V) -> Self {
+            Self.view(view.eraseToAnyView())
+        }
 
         public var description: String {
             switch self {
@@ -91,7 +100,17 @@ extension ViewChrome {
                     return "blurred"
                 case let .colored(color):
                     return "colored(\(UIColor(color).hex))"
+                case .view:
+                    return "view"
             }
+        }
+
+        public static func ==(lhs: Self, rhs: Self) -> Bool {
+            String(reflecting: lhs) == String(reflecting: rhs)
+        }
+
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(String(reflecting: self))
         }
     }
 }
@@ -109,17 +128,21 @@ private struct ViewChromeModifier: ViewModifier {
                 switch chrome.background {
                     case .transparent:
                         EmptyView()
-                    case .blurred:
-                        BlurEffectView()
-                            .frame(height: height(geometry))
-                            .ignoresSafeArea()
+                    case let .blurred(style):
+                        bar(BlurEffectView(style: style), in: geometry)
                     case let .colored(color):
-                        color
-                            .frame(height: height(geometry))
-                            .ignoresSafeArea()
+                        bar(color, in: geometry)
+                    case let .view(view):
+                        bar(view, in: geometry)
                 }
             }
         }
+    }
+
+    private func bar<V: View>(_ view: V, in geometry: GeometryProxy) -> some View {
+        view
+            .frame(height: height(geometry))
+            .ignoresSafeArea()
     }
 
     private func height(_ geometry: GeometryProxy) -> CGFloat {
