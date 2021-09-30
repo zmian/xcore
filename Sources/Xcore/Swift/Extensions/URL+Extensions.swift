@@ -34,7 +34,7 @@ extension URL {
 }
 
 extension URL {
-    /// Query value associated with the request.
+    /// Removes all the query items.
     ///
     /// ```
     /// let url = URL(string: "https://example.com/?q=HelloWorld")!
@@ -50,7 +50,7 @@ extension URL {
         return components.url ?? self
     }
 
-    /// Query value associated with the request.
+    /// Removes all the query items that match the given name.
     ///
     /// ```
     /// let url = URL(string: "https://example.com/?q=HelloWorld&lang=swift")!
