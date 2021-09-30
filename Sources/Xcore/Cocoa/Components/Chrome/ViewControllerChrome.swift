@@ -6,51 +6,51 @@
 
 import UIKit
 
-/// Application Chrome
-///
-/// This class provide the ability to customize Status Bar and Navigation Bar.
+/// A enumeration to customize Status Bar and Navigation Bar.
 ///
 /// **Why the name Chrome?**
 ///
 /// Chrome is the visual design elements that give users information about or
-/// commands to operate on the screen's content (as opposed to being part of that content).
-/// These design elements are provided by the underlying system — whether it be an operating system,
-/// a website, or an application — and surround the user's data.
+/// commands to operate on the screen's content (as opposed to being part of
+/// that content). These design elements are provided by the underlying system
+/// — whether it be an operating system, a website, or an application — and
+/// surround the user's data.
 ///
 /// - SeeAlso: https://www.nngroup.com/articles/browser-and-gui-chrome/
-public enum Chrome {
+public enum ViewControllerChrome {
     /// Sets a background view for the (status || nav) bar.
     ///
     /// - Parameters:
     ///   - style: The style of (status || nav) bar background.
-    ///   - element: The type of element to change the background for.
+    ///   - bar: The type of bar to change the background for.
     ///   - viewController: `UIViewController` the (status || nav) bar should be changed for.
-    static func setBackground(style: Style, for element: Element, in viewController: UIViewController) {
+    static func setBackground(_ style: Style, for bar: Bar, in viewController: UIViewController) {
         guard viewController.isViewLoaded else {
             return
         }
 
-        if element == .navBar, viewController.prefersNavigationBarHidden {
+        if bar == .navigationBar, viewController.prefersNavigationBarHidden {
             return
         }
 
-        let view = style.type.subview(of: viewController.view, for: element)
-        style.type.configure(view: view)
+        let view = style.background.subview(of: viewController.view, for: bar)
+        style.background.configure(view: view)
     }
 }
 
-// MARK: - Element
+// MARK: - Bar
 
-extension Chrome {
-    public enum Element: String {
+extension ViewControllerChrome {
+    /// An enumeration representing the elements of the chrome to customize.
+    public enum Bar: String, Hashable {
         case statusBar
-        case navBar
+        case navigationBar
 
         fileprivate func height(for view: UIView) -> CGFloat {
             switch self {
                 case .statusBar:
                     return AppConstants.statusBarHeight
-                case .navBar:
+                case .navigationBar:
                     let noStatusBar = view.viewController.map {
                         $0.isModal && $0.modalPresentationStyle == .pageSheet
                     } ?? false
@@ -59,19 +59,20 @@ extension Chrome {
         }
 
         fileprivate func tag(for view: UIView) -> Int {
-            let element = "Chrome.Element.\(rawValue)BackgroundView"
-            return -(element.hashValue ^ view.hashValue)
+            let bar = "Chrome.Bar.\(rawValue)BackgroundView"
+            return -(bar.hashValue ^ view.hashValue)
         }
     }
 }
 
-// MARK: - BackgroundStyle
+// MARK: - Background
 
-extension Chrome {
-    public enum BackgroundStyle: Equatable, CustomStringConvertible {
+extension ViewControllerChrome {
+    /// An enumeration representing the background style of the element.
+    public enum Background: Equatable, CustomStringConvertible {
         case transparent
         case blurred
-        case color(UIColor)
+        case colored(UIColor)
 
         public var isTransparent: Bool {
             switch self {
@@ -79,7 +80,7 @@ extension Chrome {
                     return true
                 case .blurred:
                     return false
-                case let .color(color):
+                case let .colored(color):
                     return color.alpha == 0
             }
         }
@@ -90,35 +91,35 @@ extension Chrome {
                     return "transparent"
                 case .blurred:
                     return "blurred"
-                case let .color(color):
-                    return "color(\(color.hex))"
+                case let .colored(color):
+                    return "colored(\(color.hex))"
             }
         }
 
-        public static func ==(lhs: BackgroundStyle, rhs: BackgroundStyle) -> Bool {
+        public static func ==(lhs: Self, rhs: Self) -> Bool {
             switch (lhs, rhs) {
                 case (.transparent, .transparent):
                     return true
                 case (.blurred, .blurred):
                     return true
-                case (.color, .color):
+                case (.colored, .colored):
                     return true
                 default:
                     return false
             }
         }
 
-        fileprivate func subview(of superview: UIView, for element: Element) -> BlurView {
-            guard let existingView = superview.viewWithTag(element.tag(for: superview)) as? BlurView else {
-                return addAsSubview(to: superview, for: element)
+        fileprivate func subview(of superview: UIView, for bar: Bar) -> BlurView {
+            guard let existingView = superview.viewWithTag(bar.tag(for: superview)) as? BlurView else {
+                return addAsSubview(to: superview, for: bar)
             }
 
             return existingView
         }
 
-        private func addAsSubview(to superview: UIView, for element: Element) -> BlurView {
+        private func addAsSubview(to superview: UIView, for bar: Bar) -> BlurView {
             let view = BlurView().apply {
-                $0.tag = element.tag(for: superview)
+                $0.tag = bar.tag(for: superview)
                 $0.isUserInteractionEnabled = false
             }.apply(configure)
 
@@ -126,7 +127,7 @@ extension Chrome {
             view.anchor.make {
                 $0.horizontally.equalToSuperview()
                 $0.top.equalToSuperview()
-                $0.height.equalTo(element.height(for: view))
+                $0.height.equalTo(bar.height(for: view))
             }
 
             return view
@@ -136,7 +137,7 @@ extension Chrome {
             view.apply {
                 $0.isHidden = self == .transparent
                 $0.isBlurEffectEnabled = self == .blurred
-                if case let .color(color) = self {
+                if case let .colored(color) = self {
                     $0.backgroundColor = color
                 }
             }
@@ -146,18 +147,18 @@ extension Chrome {
 
 // MARK: - Style
 
-extension Chrome {
+extension ViewControllerChrome {
     @objc(ChromeStyle)
     public final class Style: NSObject {
-        public let type: BackgroundStyle
+        public let background: Background
 
         @available(*, unavailable)
         override init() {
             fatalError()
         }
 
-        private init(_ type: BackgroundStyle) {
-            self.type = type
+        private init(_ background: Background) {
+            self.background = background
             super.init()
         }
 
@@ -169,16 +170,16 @@ extension Chrome {
             .init(.blurred)
         }
 
-        public static func color(_ color: UIColor) -> Style {
-            .init(.color(color))
+        public static func colored(_ color: UIColor) -> Style {
+            .init(.colored(color))
         }
 
         public var isTransparent: Bool {
-            type.isTransparent
+            background.isTransparent
         }
 
         public override var description: String {
-            type.description
+            background.description
         }
 
         public override func isEqual(_ object: Any?) -> Bool {
@@ -186,7 +187,7 @@ extension Chrome {
                 return false
             }
 
-            return type == object.type
+            return background == object.background
         }
     }
 }

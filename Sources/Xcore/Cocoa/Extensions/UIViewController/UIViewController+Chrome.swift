@@ -7,6 +7,8 @@
 import UIKit
 
 extension UIViewController {
+    public typealias Chrome = ViewControllerChrome
+
     /// This configuration exists to allow some of the properties to be configured
     /// to match app's appearance style.
     ///
