@@ -18,9 +18,17 @@ extension View {
 
     /// Configures the status bar background color.
     ///
-    /// - Parameter background: The background color for the status bar.
-    public func statusBarBackground(_ background: Color) -> some View {
-        statusBarBackground(.colored(background))
+    /// - Parameter color: The background color for the status bar.
+    public func statusBarBackground(_ color: Color) -> some View {
+        statusBarBackground(.colored(color))
+    }
+
+    /// Configures the status bar background view.
+    ///
+    /// - Parameter view: The background view for the status bar.
+    @_disfavoredOverload
+    public func statusBarBackground<V: View>(_ view: V) -> some View {
+        statusBarBackground(.view(view))
     }
 
     /// Configures the navigation bar background.
@@ -32,9 +40,17 @@ extension View {
 
     /// Configures the navigation bar background color.
     ///
-    /// - Parameter background: The background color for the navigation bar.
-    public func navigationBarBackground(_ background: Color) -> some View {
-        navigationBarBackground(.colored(background))
+    /// - Parameter color: The background color for the navigation bar.
+    public func navigationBarBackground(_ color: Color) -> some View {
+        navigationBarBackground(.colored(color))
+    }
+
+    /// Configures the navigation bar background view.
+    ///
+    /// - Parameter view: The background view for the navigation bar.
+    @_disfavoredOverload
+    public func navigationBarBackground<V: View>(_ view: V) -> some View {
+        navigationBarBackground(.view(view))
     }
 
     /// Configures the view's chrome.
