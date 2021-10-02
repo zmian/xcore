@@ -64,12 +64,12 @@ extension String {
     /// A function to remove specified currency symbols (`$ , .`) from `self`.
     ///
     /// ```swift
-    /// $2,000.88 -> 200088   // "$2,000.8".trimmingCurrencySymbols(.all)
-    /// $2,000.88 -> 2,000.88 // "$2,000.8".trimmingCurrencySymbols(.currencySymbol)
-    /// $2,000.88 -> $2000.88 // "$2,000.8".trimmingCurrencySymbols(.groupingSeparator)
-    /// $2,000.88 -> $2,00088 // "$2,000.8".trimmingCurrencySymbols(.decimalSeparator)
-    /// $2,000.88 -> 2000.88  // "$2,000.8".trimmingCurrencySymbols([.currencySymbol, .groupingSeparator])
-    /// $2,000.88 -> 2000.88  // "$2,000.8".trimmingCurrencySymbols(.specialCharacters)
+    /// $2,000.88 → 200088   // "$2,000.8".trimmingCurrencySymbols(.all)
+    /// $2,000.88 → 2,000.88 // "$2,000.8".trimmingCurrencySymbols(.currencySymbol)
+    /// $2,000.88 → $2000.88 // "$2,000.8".trimmingCurrencySymbols(.groupingSeparator)
+    /// $2,000.88 → $2,00088 // "$2,000.8".trimmingCurrencySymbols(.decimalSeparator)
+    /// $2,000.88 → 2000.88  // "$2,000.8".trimmingCurrencySymbols([.currencySymbol, .groupingSeparator])
+    /// $2,000.88 → 2000.88  // "$2,000.8".trimmingCurrencySymbols(.specialCharacters)
     /// ```
     public func trimmingCurrencySymbols(_ options: Currency.SymbolsOptions, provider: Currency.SymbolsProvider) -> String {
         guard !options.isEmpty else { return self }
@@ -95,15 +95,15 @@ extension String {
     /// case-sensitive, non-literal search.
     ///
     /// ```swift
-    /// true  -> ("$2,000.88").contains(.all),
-    /// true  -> ("$2,000.88").contains([.currencySymbol, .groupingSeparator, .decimalSeparator]),
-    /// true  -> ("$2,000.88").contains(.currencySymbol),
-    /// true  -> ("$2,000.88").contains(.groupingSeparator),
-    /// true  -> ("$2,000.88").contains(.decimalSeparator),
-    /// true  -> ("$2,000.88").contains([.currencySymbol, .groupingSeparator]),
-    /// true  -> ("$2,000.88").contains(.specialCharacters),
-    /// false -> ("2000.88").contains(.specialCharacters),
-    /// false -> ("200088").contains(.all)
+    /// true  → ("$2,000.88").contains(.all),
+    /// true  → ("$2,000.88").contains([.currencySymbol, .groupingSeparator, .decimalSeparator]),
+    /// true  → ("$2,000.88").contains(.currencySymbol),
+    /// true  → ("$2,000.88").contains(.groupingSeparator),
+    /// true  → ("$2,000.88").contains(.decimalSeparator),
+    /// true  → ("$2,000.88").contains([.currencySymbol, .groupingSeparator]),
+    /// true  → ("$2,000.88").contains(.specialCharacters),
+    /// false → ("2000.88").contains(.specialCharacters),
+    /// false → ("200088").contains(.all)
     /// ```
     public func contains(_ other: Currency.SymbolsOptions, provider: Currency.SymbolsProvider) -> Bool {
         guard !other.isEmpty else { return false }

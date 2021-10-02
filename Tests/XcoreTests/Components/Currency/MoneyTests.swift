@@ -36,13 +36,13 @@ final class MoneyTests: TestCase {
 
         let amount5 = Money(120)
             .style(.default)
-            .sign(.init(plus: "+", minus: "-"))
+            .sign(.init(positive: "+", negative: "-"))
 
         XCTAssertEqual(String(describing: amount5), "+$120.00")
 
         let amount6 = Money(-120)
             .style(.default)
-            .sign(.init(plus: "+", minus: "-"))
+            .sign(.init(positive: "+", negative: "-"))
 
         XCTAssertEqual(String(describing: amount6), "-$120.00")
     }
