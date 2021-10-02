@@ -96,92 +96,114 @@ extension Money.Components.Font {
 // MARK: - Built-in
 
 extension Money.Components.Font {
+    /// A font with the large title text style.
     public static var largeTitle: Self {
         largeTitle(superscript: false)
     }
 
-    public static var title1: Self {
-        title1(superscript: false)
+    /// A font with the title text style.
+    public static var title: Self {
+        title(superscript: false)
     }
 
+    /// Create a font for second level hierarchical headings.
     public static var title2: Self {
         title2(superscript: false)
     }
 
+    /// Create a font for third level hierarchical headings.
     public static var title3: Self {
         title3(superscript: false)
     }
 
+    /// A font with the headline text style.
     public static var headline: Self {
         headline(superscript: false)
     }
 
+    /// A font with the subheadline text style.
     public static var subheadline: Self {
         subheadline(superscript: false)
     }
 
+    /// A font with the body text style.
     public static var body: Self {
         body(superscript: false)
     }
 
+    /// A font with the callout text style.
     public static var callout: Self {
         callout(superscript: false)
     }
 
+    /// A font with the footnote text style.
     public static var footnote: Self {
         footnote(superscript: false)
     }
 
-    public static var caption1: Self {
-        caption1(superscript: false)
+    /// A font with the caption text style.
+    public static var caption: Self {
+        caption(superscript: false)
     }
 
+    /// Create a font with the alternate caption text style.
     public static var caption2: Self {
         caption2(superscript: false)
     }
 }
 
 extension Money.Components.Font {
+    /// A font with the large title text style.
     public static func largeTitle(superscript: Bool) -> Self {
         superscript ? .superscript(.largeTitle) : .init(.largeTitle)
     }
 
-    public static func title1(superscript: Bool) -> Self {
+    /// A font with the title text style.
+    public static func title(superscript: Bool) -> Self {
         superscript ? .superscript(.title1) : .init(.title1)
     }
 
+    /// Create a font for second level hierarchical headings.
     public static func title2(superscript: Bool) -> Self {
         superscript ? .superscript(.title2) : .init(.title2)
     }
 
+    /// Create a font for third level hierarchical headings.
     public static func title3(superscript: Bool) -> Self {
         superscript ? .superscript(.title3) : .init(.title3)
     }
 
+    /// A font with the headline text style.
     public static func headline(superscript: Bool) -> Self {
         superscript ? .superscript(.headline) : .init(.headline)
     }
 
+    /// A font with the subheadline text style.
     public static func subheadline(superscript: Bool) -> Self {
         superscript ? .superscript(.subheadline) : .init(.subheadline)
     }
 
+    /// A font with the body text style.
     public static func body(superscript: Bool) -> Self {
         superscript ? .superscript(.body) : .init(.body)
     }
 
+    /// A font with the callout text style.
     public static func callout(superscript: Bool) -> Self {
         superscript ? .superscript(.callout) : .init(.callout)
     }
 
+    /// A font with the footnote text style.
     public static func footnote(superscript: Bool) -> Self {
         superscript ? .superscript(.footnote) : .init(.footnote)
     }
 
-    public static func caption1(superscript: Bool) -> Self {
+    /// A font with the caption text style.
+    public static func caption(superscript: Bool) -> Self {
         superscript ? .superscript(.caption1) : .init(.caption1)
     }
 
+    /// Create a font with the alternate caption text style.
     public static func caption2(superscript: Bool) -> Self {
         superscript ? .superscript(.caption2) : .init(.caption2)
     }

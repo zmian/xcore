@@ -9,15 +9,15 @@ import Foundation
 extension Money {
     /// A structure representing signs (+/-) used to display money.
     public struct Sign: Hashable {
-        /// The string used to represent a plus sign.
-        public let plus: String
+        /// The string used to represent a positive sign for positive values.
+        public let positive: String
 
-        /// The string used to represent a minus sign.
-        public let minus: String
+        /// The string used to represent a negative sign for negative values.
+        public let negative: String
 
-        public init(plus: String, minus: String) {
-            self.plus = plus
-            self.minus = minus
+        public init(positive: String, negative: String) {
+            self.positive = positive
+            self.negative = negative
         }
     }
 }
@@ -39,7 +39,7 @@ extension Money.Sign {
     /// print(amount) // "-$120.30"
     /// ```
     public static var `default`: Self {
-        .init(plus: "", minus: "-")
+        .init(positive: "", negative: "-")
     }
 
     /// ```swift
@@ -56,7 +56,7 @@ extension Money.Sign {
     /// print(amount) // "-$120.30"
     /// ```
     public static var both: Self {
-        .init(plus: "+", minus: "-")
+        .init(positive: "+", negative: "-")
     }
 
     /// ```swift
@@ -73,6 +73,6 @@ extension Money.Sign {
     /// print(amount) // "$120.30"
     /// ```
     public static var none: Self {
-        .init(plus: "", minus: "")
+        .init(positive: "", negative: "")
     }
 }

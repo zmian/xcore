@@ -266,8 +266,8 @@ extension CurrencyFormatter {
     private func with<T>(sign: Money.Sign, _ block: () -> T) -> T {
         let existingPositivePrefix = formatter.positivePrefix
         let existingNegativePrefix = formatter.negativePrefix
-        formatter.positivePrefix = sign.plus + formatter.currencySymbol
-        formatter.negativePrefix = sign.minus + formatter.currencySymbol
+        formatter.positivePrefix = sign.positive + formatter.currencySymbol
+        formatter.negativePrefix = sign.negative + formatter.currencySymbol
         let result = block()
         formatter.positivePrefix = existingPositivePrefix
         formatter.negativePrefix = existingNegativePrefix

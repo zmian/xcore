@@ -193,14 +193,27 @@ extension Money {
         }
     }
 
+    /// ```swift
+    /// // When the amount is positive then the output is "".
+    /// let amount = Money(120.30)
+    ///     .sign(.default) // ← Specifying sign output
+    ///
+    /// print(amount) // "$120.30"
+    ///
+    /// // When the amount is negative then the output is "-".
+    /// let amount = Money(-120.30)
+    ///     .sign(.default) // ← Specifying sign output
+    ///
+    /// print(amount) // "-$120.30"
+    /// ```
     public func signed() -> Self {
         sign(.default)
     }
 
-    /// Signed positive amount with (`"+"`), minus (`""`) and `0` amount omits
+    /// Signed positive amount with (`"+"`), negative (`""`) and `0` amount omits
     /// `+` or `-` sign.
-    public func positiveSigned() -> Self {
-        sign(.init(plus: amount == 0 ? "" : "+", minus: ""))
+    public func onlyPositiveSigned() -> Self {
+        sign(.init(positive: amount == 0 ? "" : "+", negative: ""))
     }
 
     /// Zero amount will be displayed as "--".
