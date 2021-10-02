@@ -36,6 +36,28 @@ extension Money {
     }
 }
 
+// MARK: - UIColor
+
+extension Money.Color {
+    @_disfavoredOverload
+    public init(
+        positive: UIColor,
+        negative: UIColor,
+        zero: UIColor
+    ) {
+        self.init(
+            positive: .init(positive),
+            negative: .init(negative),
+            zero: .init(zero)
+        )
+    }
+
+    @_disfavoredOverload
+    public init(_ color: UIColor) {
+        self.init(.init(color))
+    }
+}
+
 // MARK: - Built-in
 
 extension Money.Color {
