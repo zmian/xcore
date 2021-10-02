@@ -4,7 +4,6 @@
 // MIT license, see LICENSE file for details
 //
 
-import Foundation
 import SwiftUI
 
 extension CurrencyFormatter {
@@ -55,7 +54,7 @@ extension CurrencyFormatter {
             return attributedString
         }
 
-        return attributedString.foregroundColor(foregroundColor)
+        return attributedString.foregroundColor(UIColor(foregroundColor))
     }
 
     private func _attributedStringWithoutColor(from money: Money) -> NSMutableAttributedString {
@@ -103,12 +102,12 @@ extension CurrencyFormatter {
 }
 
 extension Money {
-    fileprivate var foregroundColor: UIColor? {
+    fileprivate var foregroundColor: SwiftUI.Color? {
         guard color != .none else {
             return nil
         }
 
-        var foregroundColor: UIColor
+        var foregroundColor: SwiftUI.Color
 
         if amount == 0 {
             foregroundColor = color.zero
@@ -134,8 +133,8 @@ extension Money: View {
                 .unwrap(font.majorUnit) { view, value in
                     view.font(SwiftUI.Font(value))
                 }
-                .unwrap(foregroundColor) { view, value in
-                    view.foregroundColor(SwiftUI.Color(value))
+                .unwrap(foregroundColor) { view, color in
+                    view.foregroundColor(color)
                 }
 //                .applyIf(shouldSuperscriptMinorUnit) {
 //                    EmptyView()

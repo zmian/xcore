@@ -80,6 +80,10 @@ public struct Money: Equatable, Hashable, MutableAppliable {
     /// The default value is `--`.
     public var zeroString: String = "--"
 
+    /// A boolean property indicating whether `0` amount should be shown or
+    /// `zeroString` property value should be used instead.
+    ///
+    /// The default value is `true`, meaning to display `0` amount.
     public var shouldDisplayZero = true
 
     /// A property to indicate whether the minor unit is rendered as superscript.
@@ -87,6 +91,7 @@ public struct Money: Equatable, Hashable, MutableAppliable {
     /// The default value is `false`.
     public var shouldSuperscriptMinorUnit: Bool
 
+    /// A succinct label in a localized string that describes its contents
     public var accessibilityLabel: String {
         formatter.string(from: amount, style: style)
     }
@@ -181,9 +186,10 @@ extension Money {
         }
     }
 
+    @_disfavoredOverload
     public func color(_ color: UIColor) -> Self {
         applying {
-            $0.color = .init(color)
+            $0.color = .init(.init(color))
         }
     }
 

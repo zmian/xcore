@@ -10,8 +10,8 @@ extension Money.Components {
     /// A structure representing formatting used to display money components.
     public struct Style {
         public let id: Identifier<Self>
-        let join: (Money.Components) -> String
-        let range: (Money.Components) -> Range
+        public let join: (Money.Components) -> String
+        public let range: (Money.Components) -> Range
 
         public init(
             id: Identifier<Self>,
@@ -119,7 +119,7 @@ extension Money.Components.Style {
     ///
     /// - Parameters:
     ///   - threshold: A property to only apply abbreviation if `self` is greater
-    ///                then given threshold.
+    ///     then given threshold.
     ///   - fallback: The formatting style to use when threshold isn't reached.
     /// - Returns: Abbreviated version of `self`.
     public static func abbreviation(threshold: Decimal, fallback: Self = .default) -> Self {
