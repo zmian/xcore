@@ -9,7 +9,7 @@ import SwiftUI
 
 // MARK: - SystemAssetIdentifier
 
-public struct SystemAssetIdentifier: RawRepresentable, CustomStringConvertible, Equatable {
+public struct SystemAssetIdentifier: RawRepresentable, CustomStringConvertible, Hashable {
     public let rawValue: String
 
     /// An initializer for system symbol image.
