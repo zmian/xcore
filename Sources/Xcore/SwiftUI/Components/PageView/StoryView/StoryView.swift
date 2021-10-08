@@ -38,9 +38,9 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
                 // Progress Indicator
                 progressIndicator
             }
-            .onAppear(perform: storyTimer.start)
-            .onDisappear(perform: storyTimer.stop)
         }
+        .onAppear(perform: storyTimer.start)
+        .onDisappear(perform: storyTimer.stop)
     }
 
     private var progressIndicator: some View {
