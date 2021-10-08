@@ -31,8 +31,33 @@ final class StoryTimer: ObservableObject {
     }
 
     func start() {
+        guard cancellable == nil else {
+            return
+        }
+
         cancellable = publisher.autoconnect().sink { [weak self] _ in
             self?.updateProgress()
+        }
+    }
+
+    func stop() {
+        cancellable?.cancel()
+        cancellable = nil
+    }
+
+    func advance(by number: Int) {
+        let newProgress = max((Int(progress) + number) % pagesCount, 0)
+        progress = Double(newProgress)
+        restartIfNeeded()
+    }
+
+    func progress(for index: Int) -> CGFloat {
+        min(max(progress - CGFloat(index), 0), 1)
+    }
+
+    private func restartIfNeeded() {
+        if cancellable == nil {
+            start()
         }
     }
 
@@ -61,26 +86,5 @@ final class StoryTimer: ObservableObject {
         }
 
         progress = newProgress
-    }
-
-    private func restartIfNeeded() {
-        if cancellable == nil {
-            start()
-        }
-    }
-
-    func stop() {
-        cancellable?.cancel()
-        cancellable = nil
-    }
-
-    func advance(by number: Int) {
-        let newProgress = max((Int(progress) + number) % pagesCount, 0)
-        progress = Double(newProgress)
-        restartIfNeeded()
-    }
-
-    func progress(for index: Int) -> CGFloat {
-        min(max(progress - CGFloat(index), 0), 1)
     }
 }
