@@ -85,21 +85,6 @@ struct AnyXStackStyle: XStackStyle {
     }
 }
 
-// MARK: - Default Style
-
-private struct DefaultXStackStyle: XStackStyle {
-    var alignment: VerticalAlignment = .center
-    var spacing: CGFloat? = .s5
-
-    func makeBody(configuration: Self.Configuration) -> some View {
-        HStack(alignment: alignment, spacing: configuration.isSingleChild ? 0 : spacing) {
-            configuration.title
-            Spacer(minLength: 0)
-            configuration.value
-        }
-    }
-}
-
 // MARK: - Environment Key
 
 extension EnvironmentValues {
@@ -125,10 +110,12 @@ extension View {
     /// Sets the style for `XStack` within this view to a style with a custom
     /// appearance and standard interaction behavior.
     public func xstackStyle(
+        dim: XStackDimContent = .none,
         alignment: VerticalAlignment = .center,
         spacing: CGFloat? = .s5
     ) -> some View {
         xstackStyle(DefaultXStackStyle(
+            dim: dim,
             alignment: alignment,
             spacing: spacing
         ))
