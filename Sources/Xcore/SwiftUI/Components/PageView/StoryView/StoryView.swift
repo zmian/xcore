@@ -14,30 +14,28 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
     private let background: (Page) -> Background
 
     public var body: some View {
-        AxisGeometryReader { width in
-            ZStack(alignment: .top) {
-                // Background
-                if Background.self != Never.self {
-                    background(pages[Int(storyTimer.progress)])
-                        .frame(width: width)
-                        .ignoresSafeArea()
-                        .animation(.none)
-                }
-
-                // Tap to advance or rewind
-                HStack(spacing: 0) {
-                    advanceView(isLeft: true)
-                    advanceView(isLeft: false)
-                }
-                .ignoresSafeArea()
-
-                // Content
-                content(pages[Int(storyTimer.progress)])
-                    .frame(width: width)
-
-                // Progress Indicator
-                progressIndicator
+        ZStack(alignment: .top) {
+            // Background
+            if Background.self != Never.self {
+                background(pages[Int(storyTimer.progress)])
+                    .frame(maxWidth: .infinity)
+                    .ignoresSafeArea()
+                    .animation(.none)
             }
+
+            // Tap to advance or rewind
+            HStack(spacing: 0) {
+                advanceView(isLeft: true)
+                advanceView(isLeft: false)
+            }
+            .ignoresSafeArea()
+
+            // Content
+            content(pages[Int(storyTimer.progress)])
+                .frame(maxWidth: .infinity)
+
+            // Progress Indicator
+            progressIndicator
         }
         .onAppear(perform: storyTimer.start)
         .onDisappear(perform: storyTimer.stop)
