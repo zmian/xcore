@@ -26,10 +26,10 @@ struct XStackView: View {
             XStack("Version")
 
             XStack("Version", value: Bundle.main.versionBuildNumber)
-                .xstackStyle(.keyTitle)
+                .xstackStyle(dim: .value)
 
             XStack("First Name", value: "John")
-                .xstackStyle(.keyValue)
+                .xstackStyle(dim: .title)
 
             XStack("Price", money: 10)
 
@@ -92,34 +92,4 @@ struct XStackView_Previews: PreviewProvider {
         XStackView()
             .embedInNavigation()
     }
-}
-
-// MARK: - KeyValue
-
-struct KeyValueXStackStyle: XStackStyle {
-    @Environment(\.theme) private var theme
-    var isTitleKey: Bool
-
-    public func makeBody(configuration: Self.Configuration) -> some View {
-        HStack(spacing: .s5) {
-            configuration.title
-                .applyIf(!isTitleKey) {
-                    $0.foregroundColor(theme.textSecondaryColor)
-                }
-            Spacer()
-            configuration.value
-                .symbol(.chevronRight)
-                .applyIf(isTitleKey) {
-                    $0.foregroundColor(theme.textSecondaryColor)
-                }
-        }
-    }
-}
-
-// MARK: - Dot Syntax Support
-
-extension XStackStyle where Self == KeyValueXStackStyle {
-    static var keyTitle: Self { .init(isTitleKey: true) }
-
-    static var keyValue: Self { .init(isTitleKey: false) }
 }
