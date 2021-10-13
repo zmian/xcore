@@ -37,19 +37,19 @@ private struct AbbreviatedNumberFormatter {
     /// Abbreviates `value` to compact format:
     ///
     /// ```swift
-    /// 987     // -> 987
-    /// 1200    // -> 1.2K
-    /// 12000   // -> 12K
-    /// 120000  // -> 120K
-    /// 1200000 // -> 1.2M
-    /// 1340    // -> 1.3K
-    /// 132456  // -> 132.5K
+    /// 987     // → 987
+    /// 1200    // → 1.2K
+    /// 12000   // → 12K
+    /// 120000  // → 120K
+    /// 1200000 // → 1.2M
+    /// 1340    // → 1.3K
+    /// 132456  // → 132.5K
     /// ```
     ///
     /// - Parameters:
     ///   - value: The value to abbreviate.
-    ///   - threshold: An optional property to only apply abbreviation if `value` is
-    ///     greater then given threshold.
+    ///   - threshold: An optional property to only abbreviate if `value` is
+    ///     greater then this value.
     ///   - thresholdAbs: A boolean property indicating whether threshold is of
     ///     absolute value (e.g., `"abs(value)"`).
     ///   - locale: The locale used to format the grouping and decimal separators.
@@ -97,13 +97,13 @@ extension Double {
     /// Abbreviates `value` to compact format:
     ///
     /// ```swift
-    /// 987     // -> 987
-    /// 1200    // -> 1.2K
-    /// 12000   // -> 12K
-    /// 120000  // -> 120K
-    /// 1200000 // -> 1.2M
-    /// 1340    // -> 1.3K
-    /// 132456  // -> 132.5K
+    /// 987     // → 987
+    /// 1200    // → 1.2K
+    /// 12000   // → 12K
+    /// 120000  // → 120K
+    /// 1200000 // → 1.2M
+    /// 1340    // → 1.3K
+    /// 132456  // → 132.5K
     /// ```
     ///
     /// - Parameters:
