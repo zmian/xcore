@@ -42,11 +42,14 @@ extension Locale {
 }
 
 extension Locale {
-    /// Returns `tr` (Turkish, Turkey) locale.
-    public static let tr = Locale(identifier: "tr")
+    /// Returns `fr` (French) locale.
+    public static let fr = Locale(identifier: "fr")
 
     /// Returns `es` (Spanish) locale.
     public static let es = Locale(identifier: "es")
+
+    /// Returns `tr` (Turkish, Turkey) locale.
+    public static let tr = Locale(identifier: "tr")
 }
 
 extension Locale {
