@@ -305,9 +305,9 @@ extension XStack {
 /// :nodoc:
 public struct _XStackTSSV<S1: StringProtocol, S2: StringProtocol>: View {
     @Environment(\.theme) private var theme
-    var title: S1
-    var subtitle: S2
-    var spacing: CGFloat?
+    let title: S1
+    let subtitle: S2
+    let spacing: CGFloat?
 
     public var body: some View {
         VStack(alignment: .leading, spacing: spacing) {
