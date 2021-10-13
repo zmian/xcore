@@ -152,6 +152,9 @@ extension Date.Format.Custom {
     /// `LLL dd` (e.g., Jun 04)
     public static let monthDayShortSpace: Self = "LLL dd"
 
+    /// `LLL d, yyyy` (e.g., Jun 4, 2020)
+    public static let monthDayYearShort: Self = "LLL d, yyyy"
+
     /// `MMMM d, yyyy` (e.g., June 4, 2020)
     public static let monthDayYearFull: Self = "MMMM d, yyyy"
 
