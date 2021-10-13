@@ -118,15 +118,22 @@ extension Money.Components.Style {
     /// ```
     ///
     /// - Parameters:
-    ///   - threshold: A property to only apply abbreviation if `self` is greater
-    ///     then given threshold.
+    ///   - threshold: A property to only abbreviate if `amount` is greater then
+    ///     this value.
+    ///   - thresholdAbs: A boolean property indicating whether threshold is of
+    ///     absolute value (e.g., `"abs(value)"`).
     ///   - fallback: The formatting style to use when threshold isn't reached.
     /// - Returns: Abbreviated version of `self`.
-    public static func abbreviation(threshold: Decimal, fallback: Self = .default) -> Self {
+    public static func abbreviation(
+        threshold: Decimal,
+        thresholdAbs: Bool = true,
+        fallback: Self = .default
+    ) -> Self {
         func canAbbreviation(amount: Decimal) -> (amount: Double, threshold: Double)? {
+            let compareAmount = thresholdAbs ? abs(amount) : amount
+
             guard
-                amount >= 1000,
-                amount >= threshold,
+                compareAmount >= threshold,
                 let amountValue = Double(exactly: NSDecimalNumber(decimal: amount.rounded(2))),
                 let thresholdValue = Double(exactly: NSDecimalNumber(decimal: threshold))
             else {
@@ -143,7 +150,11 @@ extension Money.Components.Style {
                     return fallback.join($0)
                 }
 
-                return $0.currencySymbol + value.amount.abbreviate(threshold: value.threshold)
+                return $0.currencySymbol + value.amount.abbreviate(
+                    threshold: value.threshold,
+                    thresholdAbs: thresholdAbs,
+                    locale: CurrencyFormatter.shared.locale
+                )
             },
             range: {
                 guard canAbbreviation(amount: $0.amount) != nil else {

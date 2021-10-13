@@ -171,68 +171,6 @@ extension Double {
         let divisor = pow(10.0, Double(scale))
         return (self * divisor).rounded() / divisor
     }
-
-    // Adopted from: http://stackoverflow.com/a/35504720
-    private static let abbrevationNumberFormatter = NumberFormatter().apply {
-        $0.allowsFloats = true
-        $0.minimumIntegerDigits = 1
-        $0.minimumFractionDigits = 0
-        $0.maximumFractionDigits = 1
-    }
-
-    private typealias Abbrevation = (suffix: String, threshold: Double, divisor: Double)
-
-    private static let abbreviations: [Abbrevation] = [
-        ("", 0, 1),
-        ("K", 1000, 1000),
-        ("K", 100_000, 1000),
-        ("M", 499_000, 1_000_000),
-        ("M", 999_999_999, 10_000_000),
-        ("B", 1_000_000_000, 1_000_000_000),
-        ("B", 999_999_999_999, 10_000_000_000)
-    ]
-
-    /// Abbreviate `self` to smaller format.
-    ///
-    /// ```swift
-    /// 987     // -> 987
-    /// 1200    // -> 1.2K
-    /// 12000   // -> 12K
-    /// 120000  // -> 120K
-    /// 1200000 // -> 1.2M
-    /// 1340    // -> 1.3K
-    /// 132456  // -> 132.5K
-    /// ```
-    ///
-    /// - Parameter threshold: An optional property to only apply abbreviation if
-    ///   `self` is greater then given threshold.
-    /// - Returns: Abbreviated version of `self`.
-    public func abbreviate(threshold: Double? = nil) -> String {
-        if let threshold = threshold, self <= threshold {
-            return "\(self)"
-        }
-
-        let startValue = abs(self)
-
-        let abbreviation: Abbrevation = {
-            var prevAbbreviation = Double.abbreviations[0]
-
-            for tmpAbbreviation in Double.abbreviations {
-                if startValue < tmpAbbreviation.threshold {
-                    break
-                }
-                prevAbbreviation = tmpAbbreviation
-            }
-            return prevAbbreviation
-        }()
-
-        let value = self / abbreviation.divisor
-        Double.abbrevationNumberFormatter.positiveSuffix = abbreviation.suffix
-        Double.abbrevationNumberFormatter.negativeSuffix = abbreviation.suffix
-        return Double.abbrevationNumberFormatter.string(from: NSNumber(value: value)) ?? "\(self)"
-    }
-
-    private static let testValues: [Double] = [598, -999, 1000, -1284, 9940, 9980, 39900, 99880, 399_880, 999_898, 999_999, 1_456_384, 12_383_474, 987, 1200, 12000, 120_000, 1_200_000, 1340, 132_456, 9_000_000_000, 16_000_000, 160_000_000, 999_000_000]
 }
 
 extension Double {
