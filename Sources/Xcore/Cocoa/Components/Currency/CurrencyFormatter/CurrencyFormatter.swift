@@ -16,9 +16,9 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
         $0.locale = locale
         $0.positiveFormat = "¤#,##0.00"
         $0.negativeFormat = "-¤#,##0.00"
-        // We need to add the $-Symbol manually in order to support different locals but
-        // keep $ sign at the correct position to keep the design consistent
-        // (i.e., Germany: 1.000,11 $ -> $1.000,11).
+        // We need to manually override the currency symbol in order to support
+        // different locals but keep currency symbol at the correct position to keep the
+        // design consistent (e.g., German (de) locale: "1.000,11 $" → "$1.000,11").
         $0.currencySymbol = currencySymbol
         $0.isDecimalEnabled = true
     }
