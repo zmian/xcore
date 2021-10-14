@@ -48,7 +48,13 @@ extension Locale {
     /// Returns `es` (Spanish) locale.
     public static let es = Locale(identifier: "es")
 
-    /// Returns `tr` (Turkish, Turkey) locale.
+    /// Returns `de` (German) locale.
+    public static let de = Locale(identifier: "de")
+
+    /// Returns `de_DE` (German, Germany) locale.
+    public static let deDE = Locale(identifier: "de_DE")
+
+    /// Returns `tr` (Turkish) locale.
     public static let tr = Locale(identifier: "tr")
 }
 
