@@ -126,7 +126,7 @@ extension XStack where Title == Text, Value == Money? {
     /// ```swift
     /// XStack("Price", money: 10) // formats the value as "$10.00"
     /// ```
-    public init<S>(_ title: S, money: Double?) where S: StringProtocol {
+    public init<S>(_ title: S, money: Decimal?) where S: StringProtocol {
         self.init {
             Text(title)
         } value: {
@@ -140,7 +140,8 @@ extension XStack where Title == Text, Value == Money? {
     /// ```swift
     /// XStack("Price", money: 10) // formats the value as "$10.00"
     /// ```
-    public init<S>(_ title: S, money: Decimal?) where S: StringProtocol {
+    @_disfavoredOverload
+    public init<S>(_ title: S, money: Double?) where S: StringProtocol {
         self.init {
             Text(title)
         } value: {

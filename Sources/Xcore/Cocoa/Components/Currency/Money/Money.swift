@@ -46,10 +46,11 @@ public struct Money: Equatable, Hashable, MutableAppliable {
         guard let amount = amount else {
             return nil
         }
-        
+
         self.init(amount)
     }
 
+    @_disfavoredOverload
     public init?(_ amount: Double?) {
         guard let amount = amount else {
             return nil
