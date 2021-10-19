@@ -133,6 +133,20 @@ extension XStack where Title == Text, Value == Money? {
             Money(money)
         }
     }
+
+    /// Creates a stack with a title generated from a string and a value formatted
+    /// as money.
+    ///
+    /// ```swift
+    /// XStack("Price", money: 10) // formats the value as "$10.00"
+    /// ```
+    public init<S>(_ title: S, money: Decimal?) where S: StringProtocol {
+        self.init {
+            Text(title)
+        } value: {
+            Money(money)
+        }
+    }
 }
 
 // MARK: - Double
