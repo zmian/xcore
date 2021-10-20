@@ -256,12 +256,12 @@ extension XStack {
     /// ```
     public init<S1, S2>(
         _ title: S1,
-        subtitle: S2,
+        subtitle: S2?,
         spacing: CGFloat? = nil,
         @ViewBuilder value: @escaping () -> Value
-    ) where Title == _XStackTSSV<S1, S2>, S1: StringProtocol, S2: StringProtocol {
+    ) where Title == _XIVTSSV<S2>, S1: StringProtocol, S2: StringProtocol {
         self.init {
-            _XStackTSSV(
+            _XIVTSSV(
                 title: title,
                 subtitle: subtitle,
                 spacing: spacing
@@ -278,10 +278,11 @@ extension XStack {
     /// ```
     public init<S1, S2>(
         _ title: S1,
-        subtitle: S2,
+        subtitle: S2?,
+        spacing: CGFloat? = nil,
         value: Value
-    ) where Title == _XStackTSSV<S1, S2>, S1: StringProtocol, S2: StringProtocol {
-        self.init(title, subtitle: subtitle, value: { value })
+    ) where Title == _XIVTSSV<S2>, S1: StringProtocol, S2: StringProtocol {
+        self.init(title, subtitle: subtitle, spacing: spacing, value: { value })
     }
 
     /// Creates a stack with a title and subtitle generated from string and a value
@@ -292,10 +293,11 @@ extension XStack {
     /// ```
     public init<S1, S2>(
         _ title: S1,
-        subtitle: S2,
-        systemImage: SystemAssetIdentifier
-    ) where Value == Image, Title == _XStackTSSV<S1, S2>, S1: StringProtocol, S2: StringProtocol {
-        self.init(title, subtitle: subtitle, value: Image(system: systemImage))
+        subtitle: S2?,
+        systemImage: SystemAssetIdentifier,
+        spacing: CGFloat? = nil
+    ) where Value == Image, Title == _XIVTSSV<S2>, S1: StringProtocol, S2: StringProtocol {
+        self.init(title, subtitle: subtitle, spacing: spacing, value: Image(system: systemImage))
     }
 
     /// Creates a stack with a title and subtitle generated from string and a value
@@ -306,32 +308,10 @@ extension XStack {
     /// ```
     public init<S1, S2>(
         _ title: S1,
-        subtitle: S2,
-        image: ImageAssetIdentifier
-    ) where Value == Image, Title == _XStackTSSV<S1, S2>, S1: StringProtocol, S2: StringProtocol {
-        self.init(title, subtitle: subtitle, value: Image(assetIdentifier: image))
-    }
-}
-
-// MARK: - Internal Views
-
-/// This view is an implementation detail of XStack. Don't use it.
-///
-/// :nodoc:
-public struct _XStackTSSV<S1: StringProtocol, S2: StringProtocol>: View {
-    @Environment(\.theme) private var theme
-    let title: S1
-    let subtitle: S2
-    let spacing: CGFloat?
-
-    public var body: some View {
-        VStack(alignment: .leading, spacing: spacing) {
-            Text(title)
-                .foregroundColor(theme.textColor)
-            Text(subtitle)
-                .font(.app(.footnote))
-                .truncationMode(.middle)
-        }
-        .multilineTextAlignment(.leading)
+        subtitle: S2?,
+        image: ImageAssetIdentifier,
+        spacing: CGFloat? = nil
+    ) where Value == Image, Title == _XIVTSSV<S2>, S1: StringProtocol, S2: StringProtocol {
+        self.init(title, subtitle: subtitle, spacing: spacing, value: Image(assetIdentifier: image))
     }
 }
