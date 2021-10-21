@@ -397,3 +397,19 @@ extension EdgeInsets {
         }
     }
 }
+
+// MARK: - Edge.Set
+
+extension Edge.Set {
+    /// `.leading`, `.trailing`, `.bottom`.
+    public static let allButTop: Self = [.horizontal, .bottom]
+
+    /// `.leading`, `.trailing`, `.top`.
+    public static let allButBottom: Self = [.horizontal, .top]
+
+    /// `.leading`, `.top`, `.bottom`.
+    public static let allButTrailing: Self = [.leading, .vertical]
+
+    /// `.trailing`, `.top`, `.bottom`.
+    public static let allButLeading: Self = [.trailing, .vertical]
+}
