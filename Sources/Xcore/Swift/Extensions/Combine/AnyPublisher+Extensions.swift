@@ -104,7 +104,7 @@ extension Publisher {
     ///
     /// ```swift
     /// fetchFriends()
-    ///     .pipe { [weak self] result in
+    ///     .passthrough { [weak self] result in
     ///         self?.log(result)
     ///     }
     /// }
@@ -147,7 +147,7 @@ extension Publisher {
     ///
     /// ```swift
     /// fetchFriends()
-    ///     .pipe { [weak self] result in
+    ///     .passthrough { [weak self] result in
     ///         self?.log(result)
     ///     }
     /// }
