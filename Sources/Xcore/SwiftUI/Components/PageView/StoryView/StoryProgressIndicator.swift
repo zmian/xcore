@@ -18,7 +18,7 @@ struct StoryProgressIndicator: View {
     var body: some View {
         ProgressView(value: progress)
             .progressViewStyle(.horizontalBar(height: 2))
-            .accentColor(color ?? .white)
+            .accentColor(color ?? .accentColor)
             .animation(.linear)
     }
 }
