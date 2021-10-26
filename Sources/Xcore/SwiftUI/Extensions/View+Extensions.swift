@@ -143,3 +143,8 @@ public func Spacer(height: CGFloat) -> some View {
     Spacer()
         .frame(height: height)
 }
+
+public func Spacer(width: CGFloat) -> some View {
+    Spacer()
+        .frame(width: width)
+}
