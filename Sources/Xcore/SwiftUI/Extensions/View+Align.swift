@@ -38,14 +38,14 @@ private struct VerticalAlignmentViewModifier: ViewModifier {
             switch alignment {
                 case .top:
                     content
-                    Spacer(minHeight: 0)
+                    Spacer(minLength: 0)
                 case .bottom:
-                    Spacer(minHeight: 0)
+                    Spacer(minLength: 0)
                     content
                 case .center:
-                    Spacer(minHeight: 0)
+                    Spacer(minLength: 0)
                     content
-                    Spacer(minHeight: 0)
+                    Spacer(minLength: 0)
                 default:
                     content
             }
@@ -69,14 +69,14 @@ private struct HorizontalAlignmentViewModifier: ViewModifier {
             switch alignment {
                 case .leading:
                     content
-                    Spacer(minHeight: 0)
+                    Spacer(minLength: 0)
                 case .trailing:
-                    Spacer(minHeight: 0)
+                    Spacer(minLength: 0)
                     content
                 case .center:
-                    Spacer(minHeight: 0)
+                    Spacer(minLength: 0)
                     content
-                    Spacer(minHeight: 0)
+                    Spacer(minLength: 0)
                 default:
                     content
             }
