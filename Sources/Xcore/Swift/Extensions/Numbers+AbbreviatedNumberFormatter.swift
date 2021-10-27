@@ -7,7 +7,7 @@
 import Foundation
 
 private struct AbbreviatedNumberFormatter {
-    private typealias Abbreviation = (suffix: String, threshold: Double, divisor: Double)
+    private typealias Abbreviation = (suffix: String, threshold: Decimal, divisor: Decimal)
 
     private let formatter = NumberFormatter().apply {
         $0.numberStyle = .decimal
@@ -55,8 +55,8 @@ private struct AbbreviatedNumberFormatter {
     ///   - locale: The locale used to format the grouping and decimal separators.
     /// - Returns: Abbreviated version of the `value`.
     func string(
-        from value: Double,
-        threshold: Double? = nil,
+        from value: Decimal,
+        threshold: Decimal? = nil,
         thresholdAbs: Bool = true,
         locale: Locale? = nil
     ) -> String {
@@ -83,11 +83,48 @@ private struct AbbreviatedNumberFormatter {
         formatter.positiveSuffix = abbreviation.suffix
         formatter.negativeSuffix = abbreviation.suffix
         formatter.locale = locale ?? .current
-        return formatter.string(from: NSNumber(value: value)) ?? "\(value)"
+        return formatter.string(from: NSDecimalNumber(decimal: value)) ?? "\(value)"
     }
 }
 
 // MARK: - Convenience
+
+extension Decimal {
+    private static let abbreviatedNumberFormatter = AbbreviatedNumberFormatter()
+
+    /// Returns a string representation of the abbreviation of the given value.
+    ///
+    /// Abbreviates `value` to compact format:
+    ///
+    /// ```swift
+    /// 987     // → 987
+    /// 1200    // → 1.2K
+    /// 12000   // → 12K
+    /// 120000  // → 120K
+    /// 1200000 // → 1.2M
+    /// 1340    // → 1.3K
+    /// 132456  // → 132.5K
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - threshold: An optional property to only abbreviate if `value` is
+    ///     greater then this value.
+    ///   - thresholdAbs: A boolean property indicating whether threshold is of
+    ///     absolute value (e.g., `"abs(value)"`).
+    ///   - locale: The locale used to format the grouping and decimal separators.
+    /// - Returns: Abbreviated version of the `value`.
+    public func abbreviate(
+        threshold: Decimal? = nil,
+        thresholdAbs: Bool = true,
+        locale: Locale? = nil
+    ) -> String {
+        Self.abbreviatedNumberFormatter.string(
+            from: self,
+            threshold: threshold,
+            locale: locale
+        )
+    }
+}
 
 extension Double {
     private static let abbreviatedNumberFormatter = AbbreviatedNumberFormatter()
@@ -119,8 +156,8 @@ extension Double {
         locale: Locale? = nil
     ) -> String {
         Self.abbreviatedNumberFormatter.string(
-            from: self,
-            threshold: threshold,
+            from: Decimal(self),
+            threshold: threshold.map { Decimal($0) },
             locale: locale
         )
     }
