@@ -130,6 +130,50 @@ final class CodingFormatStyleTests: TestCase {
         XCTAssertEqual(example4.value, 123.0)
     }
 
+    func testDecimal() throws {
+        struct Example: Codable, Equatable {
+            enum CodingKeys: CodingKey {
+                case value
+            }
+
+            let value: Decimal
+
+            init(value: Decimal) {
+                self.value = value
+            }
+
+            init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                value = try container.decode(.value, format: .decimal)
+            }
+
+            func encode(to encoder: Encoder) throws {
+                var container = encoder.container(keyedBy: CodingKeys.self)
+                try container.encode(value, forKey: .value, format: .decimal)
+            }
+        }
+
+        // Decode from Double
+        let data1 = try XCTUnwrap(#"{"value": 123.45}"#.data(using: .utf8))
+        let example1 = try JSONDecoder().decode(Example.self, from: data1)
+        XCTAssertEqual(example1.value, 123.45)
+
+        // Decode from String
+        let data2 = try XCTUnwrap(#"{"value": "123.45"}"#.data(using: .utf8))
+        let example2 = try JSONDecoder().decode(Example.self, from: data2)
+        XCTAssertEqual(example2.value, 123.45)
+
+        // Encode
+        let data3 = try JSONEncoder().encode(Example(value: 123.45))
+        let example3 = try JSONDecoder().decode(Example.self, from: data3)
+        XCTAssertEqual(example1, example3)
+
+        // Decode from Int
+        let data4 = try XCTUnwrap(#"{"value": 123}"#.data(using: .utf8))
+        let example4 = try JSONDecoder().decode(Example.self, from: data4)
+        XCTAssertEqual(example4.value, 123.0)
+    }
+
     func testAbsoluteValue() throws {
         struct Example: Codable, Equatable {
             enum CodingKeys: CodingKey {

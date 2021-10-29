@@ -28,6 +28,10 @@ public struct DecimalCodingFormatStyle: CodingFormatStyle {
             return Decimal(value)
         }
 
+        if let value = value as? Double {
+            return Decimal(value)
+        }
+
         if
             let value = value as? String,
             let decimal = Self.numberFormatter.number(from: value)?.decimalValue
