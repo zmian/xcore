@@ -13,7 +13,7 @@ final class DecimalTests: TestCase {
 
         XCTAssertEqual(Decimal(6).rounded(precision: 2), 6)
 
-        XCTAssertEqual(x.rounded(.toNearestOrAwayFromZero, precision: 2), 6.50)
+        XCTAssertEqual(x.rounded(.toNearestOrAwayFromZero, precision: 2), 6.5)
 
         // Equivalent to the C 'round' function:
         XCTAssertEqual(x.rounded(.toNearestOrAwayFromZero), 7.0)
@@ -26,6 +26,9 @@ final class DecimalTests: TestCase {
 
         // Equivalent to the C 'floor' function:
         XCTAssertEqual(x.rounded(.down), 6.0)
+
+        // Equivalent to the C 'schoolbook rounding':
+        XCTAssertEqual(x.rounded(), 7.0)
     }
 
     func testDecimalRound() {
@@ -48,5 +51,14 @@ final class DecimalTests: TestCase {
         var z = Decimal(6.5)
         z.round(.down)
         XCTAssertEqual(z, 6.0)
+
+        // Equivalent to the C 'schoolbook rounding':
+        var w1 = 6.5
+        w1.round()
+        XCTAssertEqual(w1, 7.0)
+
+        var w2 = Decimal(6.5)
+        w2.round(precision: 2)
+        XCTAssertEqual(w2, 6.5)
     }
 }
