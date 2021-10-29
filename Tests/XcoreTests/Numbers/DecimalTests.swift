@@ -11,9 +11,9 @@ final class DecimalTests: TestCase {
     func testDecimalRounded() {
         let x = Decimal(6.5)
 
-        XCTAssertEqual(Decimal(6).rounded(precision: 2), 6)
+        XCTAssertEqual(Decimal(6).rounded(fractionDigits: 2), 6)
 
-        XCTAssertEqual(x.rounded(.toNearestOrAwayFromZero, precision: 2), 6.5)
+        XCTAssertEqual(x.rounded(.toNearestOrAwayFromZero, fractionDigits: 2), 6.5)
 
         // Equivalent to the C 'round' function:
         XCTAssertEqual(x.rounded(.toNearestOrAwayFromZero), 7.0)
@@ -58,7 +58,11 @@ final class DecimalTests: TestCase {
         XCTAssertEqual(w1, 7.0)
 
         var w2 = Decimal(6.5)
-        w2.round(precision: 2)
+        w2.round(fractionDigits: 2)
         XCTAssertEqual(w2, 6.5)
+
+        var w3 = Decimal(6.56873)
+        w3.round(fractionDigits: 2)
+        XCTAssertEqual(w3, 6.57)
     }
 }

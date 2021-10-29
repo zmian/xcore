@@ -51,13 +51,14 @@ extension Decimal {
     ///
     /// - Parameters:
     ///   - rule: The rounding rule to use.
-    ///   - precision: The number of digits result can have after its decimal point.
+    ///   - fractionDigits: The number of digits result can have after its decimal
+    ///     point.
     public mutating func round(
         _ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero,
-        precision: Int = 0
+        fractionDigits: Int = 0
     ) {
         var original = self
-        NSDecimalRound(&self, &original, precision, .init(rule, for: self))
+        NSDecimalRound(&self, &original, fractionDigits, .init(rule, for: self))
     }
 
     /// Returns this value rounded to an integral value using the specified rounding
@@ -103,14 +104,15 @@ extension Decimal {
     ///
     /// - Parameters:
     ///   - rule: The rounding rule to use.
-    ///   - precision: The number of digits result can have after its decimal point.
+    ///   - fractionDigits: The number of digits result can have after its decimal
+    ///     point.
     /// - Returns: The integral value found by rounding using `rule`.
     public func rounded(
         _ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero,
-        precision: Int = 0
+        fractionDigits: Int = 0
     ) -> Self {
         var copy = self
-        copy.round(rule, precision: precision)
+        copy.round(rule, fractionDigits: fractionDigits)
         return copy
     }
 }

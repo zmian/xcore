@@ -70,6 +70,18 @@ final class NumbersTests: TestCase {
         XCTAssertEqual(Double(Double(2.5) as Any), 2.5)
     }
 
+    func testDouble_formatted() {
+        XCTAssertEqual(Double(1).formatted(fractionDigits: 2), "1.00")
+        XCTAssertEqual(Double(1.09).formatted(fractionDigits: 2), "1.09")
+        XCTAssertEqual(Double(1.9).formatted(fractionDigits: 2), "1.90")
+        XCTAssertEqual(Double(1.1345).formatted(fractionDigits: 2), "1.13")
+        XCTAssertEqual(Double(1.1355).formatted(fractionDigits: 2), "1.14")
+        XCTAssertEqual(Double(1.1355).formatted(fractionDigits: 3), "1.136")
+
+        // trunc
+        XCTAssertEqual(Double(1.1355).formatted(.towardZero, fractionDigits: 3), "1.135")
+    }
+
     func testAbbreviate() {
         let values1: [(Double, String)] = [
             (987, "987"),
