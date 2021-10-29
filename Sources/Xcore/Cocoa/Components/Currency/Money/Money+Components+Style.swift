@@ -135,7 +135,7 @@ extension Money.Components.Style {
             guard
                 amount >= 1000,
                 compareAmount >= threshold,
-                let amountValue = Double(exactly: NSDecimalNumber(decimal: amount.rounded(precision: 2))),
+                let amountValue = Double(exactly: NSDecimalNumber(decimal: amount.rounded(fractionDigits: 2))),
                 let thresholdValue = Double(exactly: NSDecimalNumber(decimal: threshold))
             else {
                 return nil
