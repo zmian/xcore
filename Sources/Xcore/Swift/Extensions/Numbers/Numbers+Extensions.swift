@@ -141,31 +141,6 @@ extension Collection where Element == Decimal {
     }
 }
 
-extension Decimal {
-    /// Returns this value rounded to an integral value using the specified rounding
-    /// rule.
-    ///
-    /// The following example rounds a value using four different rounding rules:
-    ///
-    /// ```swift
-    /// let x = Decimal(6.5)
-    ///
-    /// print(x.rounded(2))
-    /// // Prints "6.50"
-    /// ```
-    ///
-    /// - Parameters:
-    ///   - scale: How many decimal places.
-    ///   - mode: The rounding mode to use.
-    /// - Returns: The new rounded number.
-    public func rounded(_ scale: Int, mode: RoundingMode = .plain) -> Self {
-        var value = self
-        var result: Decimal = 0
-        NSDecimalRound(&result, &value, scale, mode)
-        return result
-    }
-}
-
 extension Double {
     public func rounded(_ scale: Int) -> Double {
         let divisor = pow(10.0, Double(scale))
