@@ -64,11 +64,6 @@ final class NumbersTests: TestCase {
         XCTAssertEqual(values, expected)
     }
 
-    func testDecimalRounding() {
-        let x = Decimal(6.5)
-        XCTAssertEqual(x.rounded(2), 6.50)
-    }
-
     func testDoubleInit() {
         XCTAssertEqual(Double("2.5" as Any), 2.5)
         XCTAssertEqual(Double(CGFloat(2.5) as Any), 2.5)
@@ -163,8 +158,8 @@ final class NumbersTests: TestCase {
 
     func testAbbreviateThreshold() {
         let values: [(Double, String)] = [
-            (1_000_000, "1000000.0"),
-            (9000, "9000.0"),
+            (1_000_000, "1000000"),
+            (9000, "9000"),
             (105_000_000, "105M"),
             (140_800_200_000, "140.8B"),
             (170_400_800_000_000, "170.4T"),
