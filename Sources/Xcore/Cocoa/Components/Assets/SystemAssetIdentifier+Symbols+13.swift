@@ -693,13 +693,13 @@ extension SystemAssetIdentifier {
     /// `rectangle.fill`
     public static var rectangleFill: Self { "rectangle.fill" }
     /// `triangle`
-    public static var Triangle: Self { "triangle" }
+    public static var triangle: Self { "triangle" }
     /// `triangle.fill`
-    public static var TriangleFill: Self { "triangle.fill" }
+    public static var triangleFill: Self { "triangle.fill" }
     /// `triangle.lefthalf.fill`
-    public static var TriangleLeftHalfFill: Self { "triangle.lefthalf.fill" }
+    public static var triangleLeftHalfFill: Self { "triangle.lefthalf.fill" }
     /// `triangle.righthalf.fill`
-    public static var TriangleRightHalfFill: Self { "triangle.righthalf.fill" }
+    public static var triangleRightHalfFill: Self { "triangle.righthalf.fill" }
     /// `hexagon`
     public static var hexagon: Self { "hexagon" }
     /// `hexagon.fill`
