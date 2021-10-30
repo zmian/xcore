@@ -48,6 +48,6 @@ extension EncodingFormatStyle {
     public static func formatter<Output>(_ formatter: Formatter) -> Self
         where Self == FormatterCodingFormatStyle<Output>
     {
-        Self(formatter)
+        .init(formatter)
     }
 }

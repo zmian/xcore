@@ -44,14 +44,14 @@ extension DecodingFormatStyle where Self == DateCodingFormatStyle {
         calendar: Calendar = .iso,
         formats: [Date.Format.Custom] = [.yearMonthDayDash, .iso8601, .iso8601Local]
     ) -> Self {
-        Self(calendar: calendar, formats: formats)
+        .init(calendar: calendar, formats: formats)
     }
 
     public static func date(
         calendar: Calendar = .iso,
         formats: Date.Format.Custom...
     ) -> Self {
-        Self(calendar: calendar, formats: formats)
+        .init(calendar: calendar, formats: formats)
     }
 }
 
@@ -60,13 +60,13 @@ extension EncodingFormatStyle where Self == DateCodingFormatStyle {
         calendar: Calendar = .iso,
         formats: [Date.Format.Custom] = [.yearMonthDayDash, .iso8601, .iso8601Local]
     ) -> Self {
-        Self(calendar: calendar, formats: formats)
+        .init(calendar: calendar, formats: formats)
     }
 
     public static func date(
         calendar: Calendar = .iso,
         formats: Date.Format.Custom...
     ) -> Self {
-        Self(calendar: calendar, formats: formats)
+        .init(calendar: calendar, formats: formats)
     }
 }

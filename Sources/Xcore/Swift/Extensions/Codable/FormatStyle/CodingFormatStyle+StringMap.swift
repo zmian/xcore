@@ -59,6 +59,6 @@ public struct StringMapEncodingFormatStyle<Input>: EncodingFormatStyle {
 
 extension EncodingFormatStyle {
     public static func string<Input>(_ encode: @escaping (Input) throws -> String?) -> Self where Self == StringMapEncodingFormatStyle<Input> {
-        Self(encode)
+        .init(encode)
     }
 }

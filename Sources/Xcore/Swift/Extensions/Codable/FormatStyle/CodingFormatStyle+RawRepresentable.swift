@@ -46,6 +46,6 @@ extension DecodingFormatStyle {
     public static func rawValue<Output>(options: Self.Options) -> Self
         where Self == RawRepresentableDecodingFormatStyle<Output>
     {
-        Self(options: options)
+        .init(options: options)
     }
 }

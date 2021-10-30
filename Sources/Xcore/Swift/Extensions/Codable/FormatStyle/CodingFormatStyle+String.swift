@@ -106,20 +106,20 @@ public struct StringCodingFormatStyle: CodingFormatStyle {
 
 extension DecodingFormatStyle where Self == StringCodingFormatStyle {
     public static var string: Self {
-        string(options: .none)
+        .init(options: .none)
     }
 
     public static func string(options: Self.Options) -> Self {
-        Self(options: options)
+        .init(options: options)
     }
 }
 
 extension EncodingFormatStyle where Self == StringCodingFormatStyle {
     public static var string: Self {
-        string(options: .none)
+        .init(options: .none)
     }
 
     public static func string(options: Self.Options) -> Self {
-        Self(options: options)
+        .init(options: options)
     }
 }

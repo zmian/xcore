@@ -37,13 +37,17 @@ public struct BoolCodingFormatStyle: CodingFormatStyle {
 // MARK: - Convenience
 
 extension DecodingFormatStyle where Self == BoolCodingFormatStyle {
-    public static var bool: Self { Self(encodeAsString: false) }
+    public static var bool: Self {
+        .init(encodeAsString: false)
+    }
 }
 
 extension EncodingFormatStyle where Self == BoolCodingFormatStyle {
-    public static var bool: Self { Self(encodeAsString: false) }
+    public static var bool: Self {
+        .init(encodeAsString: false)
+    }
 
     public static func bool(asString: Bool) -> Self {
-        Self(encodeAsString: asString)
+        .init(encodeAsString: asString)
     }
 }
