@@ -50,13 +50,17 @@ public struct DecimalCodingFormatStyle: CodingFormatStyle {
 // MARK: - Convenience
 
 extension DecodingFormatStyle where Self == DecimalCodingFormatStyle {
-    public static var decimal: Self { Self(encodeAsString: false) }
+    public static var decimal: Self {
+        .init(encodeAsString: false)
+    }
 }
 
 extension EncodingFormatStyle where Self == DecimalCodingFormatStyle {
-    public static var decimal: Self { Self(encodeAsString: false) }
+    public static var decimal: Self {
+        .init(encodeAsString: false)
+    }
 
     public static func decimal(asString: Bool) -> Self {
-        Self(encodeAsString: asString)
+        .init(encodeAsString: asString)
     }
 }

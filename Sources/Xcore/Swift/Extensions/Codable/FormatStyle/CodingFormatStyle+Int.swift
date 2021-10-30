@@ -42,13 +42,17 @@ public struct IntCodingFormatStyle: CodingFormatStyle {
 // MARK: - Convenience
 
 extension DecodingFormatStyle where Self == IntCodingFormatStyle {
-    public static var int: Self { Self(encodeAsString: false) }
+    public static var int: Self {
+        .init(encodeAsString: false)
+    }
 }
 
 extension EncodingFormatStyle where Self == IntCodingFormatStyle {
-    public static var int: Self { Self(encodeAsString: false) }
+    public static var int: Self {
+        .init(encodeAsString: false)
+    }
 
     public static func int(asString: Bool) -> Self {
-        Self(encodeAsString: asString)
+        .init(encodeAsString: asString)
     }
 }

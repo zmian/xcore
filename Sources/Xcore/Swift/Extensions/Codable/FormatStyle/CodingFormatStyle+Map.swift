@@ -27,6 +27,6 @@ public struct MapDecodingFormatStyle<Output>: DecodingFormatStyle {
 
 extension DecodingFormatStyle {
     public static func map<Output>(_ decode: @escaping (Any) throws -> Output?) -> Self where Self == MapDecodingFormatStyle<Output> {
-        Self(decode)
+        .init(decode)
     }
 }

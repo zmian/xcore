@@ -46,13 +46,17 @@ public struct DoubleCodingFormatStyle: CodingFormatStyle {
 // MARK: - Convenience
 
 extension DecodingFormatStyle where Self == DoubleCodingFormatStyle {
-    public static var double: Self { Self(encodeAsString: false) }
+    public static var double: Self {
+        .init(encodeAsString: false)
+    }
 }
 
 extension EncodingFormatStyle where Self == DoubleCodingFormatStyle {
-    public static var double: Self { Self(encodeAsString: false) }
+    public static var double: Self {
+        .init(encodeAsString: false)
+    }
 
     public static func double(asString: Bool) -> Self {
-        Self(encodeAsString: asString)
+        .init(encodeAsString: asString)
     }
 }

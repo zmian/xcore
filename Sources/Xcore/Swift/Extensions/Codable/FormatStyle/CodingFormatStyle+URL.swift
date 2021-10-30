@@ -54,12 +54,12 @@ extension DecodingFormatStyle where Self == URLCodingFormatStyle {
     }
 
     public static func url(allowed allowedCharacters: CharacterSet) -> Self {
-        Self(allowed: allowedCharacters)
+        .init(allowed: allowedCharacters)
     }
 }
 
 extension EncodingFormatStyle where Self == URLCodingFormatStyle {
     public static var url: Self {
-        Self(allowed: nil)
+        .init(allowed: nil)
     }
 }
