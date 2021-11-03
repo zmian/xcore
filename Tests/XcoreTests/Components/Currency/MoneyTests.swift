@@ -26,7 +26,7 @@ final class MoneyTests: TestCase {
         let amount3 = Money(-120)
             .style(.default)
 
-        XCTAssertEqual(String(describing: amount3), "$120.00")
+        XCTAssertEqual(String(describing: amount3), "-$120.00")
 
         let amount4 = Money(-120)
             .style(.default)
@@ -45,6 +45,9 @@ final class MoneyTests: TestCase {
             .sign(.init(positive: "+", negative: "-"))
 
         XCTAssertEqual(String(describing: amount6), "-$120.00")
+
+        let amount7 = Money(-120)
+        XCTAssertEqual(amount7.string(), "-$120.00")
     }
 
     func testMoneyStyles_removeMinorUnit() {
