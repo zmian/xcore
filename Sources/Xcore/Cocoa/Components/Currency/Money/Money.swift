@@ -76,8 +76,8 @@ public struct Money: Equatable, Hashable, MutableAppliable {
 
     /// The sign (+/-) used to format money components.
     ///
-    /// The default value is `.none`.
-    public var sign: Sign = .none
+    /// The default value is `.default`.
+    public var sign: Sign = .default
 
     /// A property to indicate whether the color changes based on the amount.
     public var color: Color = .none
