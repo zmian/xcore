@@ -184,23 +184,14 @@ extension Double {
 }
 
 extension Double {
+    @_disfavoredOverload
     public init?(_ value: Any?) {
         guard let value = value else {
             return nil
         }
 
-        if let string = value as? String {
-            self.init(string)
-            return
-        }
-
-        if let integer = value as? Int {
-            self.init(integer)
-            return
-        }
-
-        if let double = value as? Double {
-            self.init(double)
+        if let value = value as? LosslessStringConvertible {
+            self.init(value.description)
             return
         }
 
@@ -209,53 +200,8 @@ extension Double {
             return
         }
 
-        if let float = value as? Float {
-            self.init(float)
-            return
-        }
-
-        if let int64 = value as? Int64 {
-            self.init(int64)
-            return
-        }
-
-        if let int32 = value as? Int32 {
-            self.init(int32)
-            return
-        }
-
-        if let int16 = value as? Int16 {
-            self.init(int16)
-            return
-        }
-
-        if let int8 = value as? Int8 {
-            self.init(int8)
-            return
-        }
-
-        if let uInt = value as? UInt {
-            self.init(uInt)
-            return
-        }
-
-        if let uInt64 = value as? UInt64 {
-            self.init(uInt64)
-            return
-        }
-
-        if let uInt32 = value as? UInt32 {
-            self.init(uInt32)
-            return
-        }
-
-        if let uInt16 = value as? UInt16 {
-            self.init(uInt16)
-            return
-        }
-
-        if let uInt8 = value as? UInt8 {
-            self.init(uInt8)
+        if let decimal = value as? Decimal {
+            self.init((decimal as NSDecimalNumber).stringValue)
             return
         }
 

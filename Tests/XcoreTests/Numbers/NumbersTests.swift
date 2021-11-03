@@ -67,7 +67,12 @@ final class NumbersTests: TestCase {
     func testDoubleInit() {
         XCTAssertEqual(Double("2.5" as Any), 2.5)
         XCTAssertEqual(Double(CGFloat(2.5) as Any), 2.5)
+        XCTAssertEqual(Double(CGFloat(0.07) as Any), 0.07)
         XCTAssertEqual(Double(Double(2.5) as Any), 2.5)
+        XCTAssertEqual(Double(Double(0.07) as Any), 0.07)
+        XCTAssertEqual(Double(Decimal(0.07) as Any), 0.07)
+        XCTAssertEqual(Double(Int(-7) as Any), -7)
+        XCTAssertEqual(Double(UInt(7) as Any), 7)
     }
 
     func testDouble_formatted() {
