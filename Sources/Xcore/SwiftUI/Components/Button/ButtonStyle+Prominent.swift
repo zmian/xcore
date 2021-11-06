@@ -55,7 +55,7 @@ extension ProminentButtonStyle {
                 .contentShape(shape)
                 .scaleOpacityEffect(configuration.isPressed, options: .scale)
                 .allowsHitTesting(!isLoading)
-                .overlayLoader(isLoading)
+                .overlayLoader(isLoading, tint: foregroundContentColor)
         }
 
         @ViewBuilder
@@ -71,7 +71,11 @@ extension ProminentButtonStyle {
         }
 
         private var foregroundColor: Color {
-            isLoading ? .clear : Color(
+            isLoading ? .clear : foregroundContentColor
+        }
+
+        private var foregroundContentColor: Color {
+            Color(
                 isEnabled ?
                     theme.buttonTextColor(id, configuration.isPressed ? .pressed : .normal) :
                     theme.buttonTextColor(id, .disabled)
