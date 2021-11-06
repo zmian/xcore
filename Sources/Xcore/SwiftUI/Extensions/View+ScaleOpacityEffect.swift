@@ -6,14 +6,23 @@
 
 import SwiftUI
 
+/// An enumeration representing the animation effect on press.
 public enum PressedAnimationEffect: Hashable {
+    /// Changes view opacity on press.
     case opacity
+
+    /// Changes view scale on press with anchor point indicating the starting
+    /// position for the scale operation.
     case scale(anchor: UnitPoint)
 
+    /// Changes view scale on press with center anchor point for the scale
+    /// operation.
     public static var scale: Self {
         .scale(anchor: .center)
     }
 
+    /// The anchor point with a default of center that indicates the starting
+    /// position for the scale operation.
     fileprivate var anchor: UnitPoint {
         switch self {
             case .opacity:
@@ -23,6 +32,8 @@ public enum PressedAnimationEffect: Hashable {
         }
     }
 
+    /// A boolean property indicating whether `self` is equals to `scale`, ignoring
+    /// the anchor position.
     fileprivate var isScale: Bool {
         if case .scale = self {
             return true
@@ -35,6 +46,11 @@ public enum PressedAnimationEffect: Hashable {
 extension View {
     /// Scales and sets the transparency of this view based on the given effects
     /// when `isPressed` is `true`
+    ///
+    /// - Parameters:
+    ///   - isPressed: A Boolean that indicates whether the user is currently
+    ///     pressing the view.
+    ///   - effects: A list of effects to apply when `isPressed` is `true`.
     public func scaleOpacityEffect(
         _ isPressed: Bool,
         effects: [PressedAnimationEffect] = [.opacity, .scale]
