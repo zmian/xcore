@@ -39,6 +39,7 @@ extension ProminentButtonStyle {
         @Environment(\.defaultOutlineButtonBorderColor) private var _borderColor
         @Environment(\.theme) private var theme
         @Environment(\.isEnabled) private var isEnabled
+        @Environment(\.isLoading) private var isLoading
 
         let id: ButtonIdentifier
         let prominence: ButtonProminence
@@ -53,6 +54,8 @@ extension ProminentButtonStyle {
                 .background(background)
                 .contentShape(shape)
                 .scaleOpacityEffect(configuration.isPressed, options: .scale)
+                .allowsHitTesting(!isLoading)
+                .overlayLoader(isLoading)
         }
 
         @ViewBuilder
@@ -68,7 +71,7 @@ extension ProminentButtonStyle {
         }
 
         private var foregroundColor: Color {
-            Color(
+            isLoading ? .clear : Color(
                 isEnabled ?
                     theme.buttonTextColor(id, configuration.isPressed ? .pressed : .normal) :
                     theme.buttonTextColor(id, .disabled)
