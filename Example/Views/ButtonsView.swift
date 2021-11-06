@@ -7,6 +7,8 @@
 import SwiftUI
 
 struct ButtonsView: View {
+    @State private var isLoading = true
+
     var body: some View {
         List {
             fillStates
@@ -17,6 +19,11 @@ struct ButtonsView: View {
             builtin
         }
         .listStyle(.insetGrouped)
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                isLoading = false
+            }
+        }
     }
 }
 
@@ -33,6 +40,12 @@ extension ButtonsView {
             }
             .buttonStyle(.fill)
             .disabled(true)
+
+            button {
+                Text("Fill")
+            }
+            .buttonStyle(.fill)
+            .isLoading(isLoading)
 
             button {
                 Text("Fill Hard Edges")
