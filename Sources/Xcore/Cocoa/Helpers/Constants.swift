@@ -24,7 +24,7 @@ extension TimeInterval {
     /// between `0.3...0.5` seconds.
     ///
     /// ```swift
-    /// UIView.animate(withDuration: .`default) {
+    /// UIView.animate(withDuration: .default) {
     ///     ...
     /// }
     /// ```
