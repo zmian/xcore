@@ -16,7 +16,7 @@ public struct HighlightedAnimationOptions: OptionSet {
 
     public static let scale = Self(rawValue: 1 << 0)
     public static let opacity = Self(rawValue: 1 << 1)
-    public static let all: Self = [scale, opacity]
+    public static let all: Self = [.scale, .opacity]
 }
 
 // MARK: - UIKit
