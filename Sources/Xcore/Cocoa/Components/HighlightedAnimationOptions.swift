@@ -5,7 +5,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 public struct HighlightedAnimationOptions: OptionSet {
     public let rawValue: Int
@@ -36,19 +35,5 @@ extension HighlightedAnimationOptions {
             transitionView.transform = transform
             transitionView.alpha = opacity
         }
-    }
-}
-
-// MARK: - SwiftUI
-
-extension View {
-    public func scaleOpacityEffect(_ isPressed: Bool, options: HighlightedAnimationOptions = .all) -> some View {
-        let opacity = options.contains(.opacity) ? (isPressed ? 0.8 : 1) : 1
-        let scale: CGFloat = options.contains(.scale) ? (isPressed ? 0.95 : 1) : 1
-
-        return self
-            .opacity(opacity)
-            .scaleEffect(scale)
-            .animation(.spring(), value: isPressed)
     }
 }
