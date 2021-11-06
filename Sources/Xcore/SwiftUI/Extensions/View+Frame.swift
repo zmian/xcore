@@ -63,4 +63,44 @@ extension View {
     public func frame(_ size: CGFloat?, alignment: Alignment = .center) -> some View {
         frame(width: size, height: size, alignment: alignment)
     }
+
+    /// Positions this view within an invisible frame having the specified size
+    /// constraints.
+    ///
+    /// If no maximum constraint is specified, the frame adopts the sizing behavior
+    /// of its child. If a maximum constraint is specified and the size proposed for
+    /// the frame by the parent is greater than the size of this view, the proposed
+    /// size, clamped to that maximum.
+    ///
+    /// - Parameters:
+    ///   - max: The maximum width and height of the resulting frame.
+    ///   - alignment: The alignment of this view inside the resulting frame. Note
+    ///     that most alignment values have no apparent effect when the size of the
+    ///     frame happens to match that of this view.
+    ///
+    /// - Returns: A view with flexible dimensions given by the call's non-`nil`
+    ///   parameters.
+    public func frame(max: CGFloat?, alignment: Alignment = .center) -> some View {
+        frame(maxWidth: max, maxHeight: max, alignment: alignment)
+    }
+
+    /// Positions this view within an invisible frame having the specified size
+    /// constraints.
+    ///
+    /// If no minimum constraint is specified, the frame adopts the sizing behavior
+    /// of its child. If a minimum constraint is specified and the size proposed for
+    /// the frame by the parent is less than the size of this view, the proposed
+    /// size, clamped to that minimum.
+    ///
+    /// - Parameters:
+    ///   - min: The minimum width and height of the resulting frame.
+    ///   - alignment: The alignment of this view inside the resulting frame.
+    ///     Note that most alignment values have no apparent effect when the
+    ///     size of the frame happens to match that of this view.
+    ///
+    /// - Returns: A view with flexible dimensions given by the call's non-`nil`
+    ///   parameters.
+    public func frame(min: CGFloat?, alignment: Alignment = .center) -> some View {
+        frame(minWidth: min, minHeight: min, alignment: alignment)
+    }
 }
