@@ -46,10 +46,9 @@ extension View {
         let opacity = options.contains(.opacity) ? (isPressed ? 0.8 : 1) : 1
         let scale: CGFloat = options.contains(.scale) ? (isPressed ? 0.95 : 1) : 1
 
-        return withAnimation(.easeInOut) {
-            self
-                .scaleEffect(scale)
-                .opacity(opacity)
-        }
+        return self
+            .opacity(opacity)
+            .scaleEffect(scale)
+            .animation(.spring(), value: isPressed)
     }
 }
