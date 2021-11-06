@@ -53,7 +53,7 @@ extension ProminentButtonStyle {
                 .foregroundColor(foregroundColor)
                 .background(background)
                 .contentShape(shape)
-                .scaleOpacityEffect(configuration.isPressed, options: .scale)
+                .scaleOpacityEffect(configuration.isPressed)
                 .overlayLoader(isLoading, tint: foregroundContentColor)
                 .allowsHitTesting(!isLoading)
         }
