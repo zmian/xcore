@@ -169,7 +169,7 @@ private struct ViewChromeModifier: ViewModifier {
                     return 0
                 }
 
-                return AppConstants.searchBarHeight
+                return AppConstants.statusBarHeight
             case .navigationBar:
                 return geometry.safeAreaInsets.top
         }
