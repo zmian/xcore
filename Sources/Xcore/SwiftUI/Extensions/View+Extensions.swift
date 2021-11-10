@@ -7,8 +7,13 @@
 import SwiftUI
 
 extension View {
-    /// Embed this view in navigation controller.
-    public func embedInNavigation() -> some View {
+    /// Embed this view in a navigation view.
+    ///
+    /// - Note: This method is internal on purpose to allow the app target to
+    ///   declare their own variant in case they want to use this method name to do
+    ///   apply any additional modifications (e.g., setting the navigation view style
+    ///   `.navigationViewStyle(.stack)`).
+    func embedInNavigation() -> some View {
         NavigationView { self }
     }
 
