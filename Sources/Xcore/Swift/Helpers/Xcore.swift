@@ -26,6 +26,7 @@ extension AnyCodable {
     }
 }
 
+#if SWIFT_PACKAGE
 // Fix for package depending on other packages fix
 // =============================================================================
 // TODO: Check previews under Xcode 14 to see if this is fixed?
@@ -40,7 +41,7 @@ private class CurrentBundleFinder {}
 // - SeeAlso: https://forums.swift.org/t/unable-to-find-bundle-in-package-target-tests-when-package-depends-on-another-package-containing-resources-accessed-via-bundle-module/43974/2
 extension Foundation.Bundle {
     /// Returns the resource bundle associated with the current Swift module.
-    static var myModule: Bundle = {
+    fileprivate static var myModule: Bundle = {
         let bundleName = "Xcore_\(name)"
         let localBundleName = "LocalPackages_\(name)"
 
@@ -75,3 +76,4 @@ extension Foundation.Bundle {
     }()
 }
 // =============================================================================
+#else
