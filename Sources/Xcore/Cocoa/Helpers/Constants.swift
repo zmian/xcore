@@ -189,7 +189,7 @@ public enum AppConstants {
     public static var cornerRadius: CGFloat = 6
 
     public static var popupPreferredWidth: CGFloat {
-        min(340, Device.screen.bounds.size.min * 0.9)
+        min(300, Device.screen.bounds.size.min * 0.8)
     }
 }
 
