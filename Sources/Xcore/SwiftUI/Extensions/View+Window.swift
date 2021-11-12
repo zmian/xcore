@@ -45,13 +45,17 @@ extension View {
         window(
             isPresented: .init {
                 item.wrappedValue != nil
-            } set: { newValue in
-                if !newValue {
+            } set: { isPresented in
+                if !isPresented {
                     item.wrappedValue = nil
                 }
             },
             style: style,
-            content: content
+            content: {
+                if let item = item.wrappedValue {
+                    content(item)
+                }
+            }
         )
     }
 }
