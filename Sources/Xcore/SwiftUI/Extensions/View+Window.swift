@@ -210,6 +210,7 @@ extension Window {
             content
                 // TODO: Is there better way to propagate all of the environment values to the window content view?
                 .environment(\.font, env.font)
+                .foregroundColor(env.theme.textColor)
                 .environment(\.isLoading, env.isLoading)
                 .environment(\.isEnabled, env.isEnabled)
                 .environment(\.defaultMinListRowHeight, env.defaultMinListRowHeight)

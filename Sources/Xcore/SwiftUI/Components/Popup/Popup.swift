@@ -37,19 +37,54 @@ extension Popup {
 // MARK: - Style
 
 extension Popup {
+    /// A structure representing the style of a popup.
     public struct Style {
+        /// The alignment of the popup inside the resulting view. Alignment applies if
+        /// the popup is smaller than the size given by the resulting frame.
         public let alignment: Alignment
+
+        /// The animation applied to all animatable values to the popup content.
         public let animation: Animation
+
+        /// The transition to associates with the popup.
         public let transition: AnyTransition
+
+        /// The style of the presenting window.
         public let windowStyle: WindowStyle
+
+        /// A property indicating whether which view edges expands out of its safe area.
+        ///
+        /// The default value is `[]`.
+        public let ignoresSafeAreaEdges: Edge.Set
+
+        /// A boolean value that indicates whether to enable full screen dimmed
+        /// background behind the popup content.
         public let allowDimming: Bool
+
+        /// A property indicating whether to automatically dismiss the popup after given
+        /// duration has passed.
         public let dismissAfter: Double?
 
+        /// Creates a popup style.
+        ///
+        /// - Parameters:
+        ///   - alignment: The alignment of the popup inside the resulting view.
+        ///     Alignment applies if the popup is smaller than the size given by the
+        ///     resulting frame.
+        ///   - animation: The animation applied to all animatable values to the popup
+        ///     content.
+        ///   - transition: The transition to associates with the popup.
+        ///   - windowStyle: The style of the presenting window.
+        ///   - allowDimming: A boolean value that indicates whether to enable full
+        ///     screen dimmed background behind the popup content.
+        ///   - dismissAfter: A property indicating whether which view edges expands out
+        ///     of its safe area.
         public init(
             alignment: Alignment,
             animation: Animation,
             transition: AnyTransition,
             windowStyle: WindowStyle = .init(label: "Popup Window"),
+            ignoresSafeAreaEdges: Edge.Set = [],
             allowDimming: Bool = true,
             dismissAfter: Double? = nil
         ) {
@@ -57,6 +92,7 @@ extension Popup {
             self.animation = animation
             self.transition = transition
             self.windowStyle = windowStyle
+            self.ignoresSafeAreaEdges = ignoresSafeAreaEdges
             self.allowDimming = allowDimming
             self.dismissAfter = dismissAfter
         }
@@ -98,6 +134,7 @@ extension Popup.Style {
         animation: .spring(),
         transition: .move(edge: .bottom)
             .animation(.linear(duration: 0.1)),
-        windowStyle: .init(label: "Sheet Window")
+        windowStyle: .init(label: "Sheet Window"),
+        ignoresSafeAreaEdges: .allButTop
     )
 }
