@@ -309,6 +309,7 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
                     .animation(style.animation)
                     .transition(style.transition)
                     .frame(max: .infinity, alignment: style.alignment)
+                    .ignoresSafeArea(edges: style.ignoresSafeAreaEdges)
                     .onTapGestureIf(dismissMethods.contains(.tapInside)) {
                         isContentPresented = false
                     }
