@@ -129,8 +129,8 @@ extension View {
         modifier(PopupViewModifier(
             isPresented: .init {
                 item.wrappedValue != nil
-            } set: { newValue in
-                if !newValue {
+            } set: { isPresented in
+                if !isPresented {
                     item.wrappedValue = nil
                 }
             },
