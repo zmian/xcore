@@ -22,7 +22,11 @@ extension EnvironmentValues {
 // MARK: - View Helpers
 
 extension View {
-    public func popupAlert(cornerRadius: CGFloat = 16, width: CGFloat = 300, textAlignment: TextAlignment = .center) -> some View {
+    public func popupAlert(
+        cornerRadius: CGFloat = 16,
+        width: CGFloat = 300,
+        textAlignment: TextAlignment = .center
+    ) -> some View {
         transformEnvironment(\.popupAlertAttributes) {
             $0.cornerRadius = cornerRadius
             $0.width = width

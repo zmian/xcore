@@ -11,7 +11,7 @@ import Foundation
 ///
 /// - SeeAlso: https://github.com/Thomvis/Construct/blob/main/Construct/Foundation/Memoize.swift
 public func replayNonNil<A, B>(_ f: @escaping (A) -> B?) -> (A) -> B? {
-    var memo: B? = nil
+    var memo: B?
     return {
         if let res = f($0) {
             memo = res

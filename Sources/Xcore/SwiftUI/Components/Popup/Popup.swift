@@ -41,17 +41,23 @@ extension Popup {
         public let alignment: Alignment
         public let animation: Animation
         public let transition: AnyTransition
+        public let windowStyle: WindowStyle
+        public let allowDimming: Bool
         public let dismissAfter: Double?
 
         public init(
             alignment: Alignment,
             animation: Animation,
             transition: AnyTransition,
+            windowStyle: WindowStyle = .init(label: "Popup Window"),
+            allowDimming: Bool = true,
             dismissAfter: Double? = nil
         ) {
             self.alignment = alignment
             self.animation = animation
             self.transition = transition
+            self.windowStyle = windowStyle
+            self.allowDimming = allowDimming
             self.dismissAfter = dismissAfter
         }
     }
@@ -80,7 +86,18 @@ extension Popup.Style {
             alignment: edge == .top ? .top : .bottom,
             animation: .spring(),
             transition: .move(edge: edge),
+            windowStyle: .init(isKey: false, label: "Toast Window"),
+            allowDimming: false,
             dismissAfter: 2
         )
     }
+
+    /// A style that moves the popup in from the bottom edge of the screen.
+    public static let sheet = Self(
+        alignment: .bottom,
+        animation: .spring(),
+        transition: .move(edge: .bottom)
+            .animation(.linear(duration: 0.1)),
+        windowStyle: .init(label: "Sheet Window")
+    )
 }
