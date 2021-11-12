@@ -281,7 +281,7 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
                 if isContentPresented == false {
                     // Added a delay as a workaround to prevent a swiftUI bug that breaks animations
                     // when it's wrapped in UIHostingController.
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                         isWindowPresented = false
                         isPresented = false
                         onDismiss?()
