@@ -25,6 +25,35 @@ extension View {
             content: LazyView(content())
         ))
     }
+
+    /// Presents a window using the given item as a data source for the window's
+    /// content.
+    ///
+    /// - Parameters:
+    ///   - item: A binding to an optional source of truth for the window. When
+    ///    `item` is non-`nil`, the system passes the item's content to the
+    ///     modifier's closure. You display this content in a window that you create
+    ///     that the system displays to the user. If `item` changes, the system
+    ///     replaces it with a new one.
+    ///   - style: A structure representing the style of a window.
+    ///   - content: A closure that returns the content of the window.
+    public func window<Item, Content: View>(
+        item: Binding<Item?>,
+        style: WindowStyle = .init(),
+        @ViewBuilder content: @escaping (Item) -> Content
+    ) -> some View {
+        window(
+            isPresented: .init {
+                item.wrappedValue != nil
+            } set: { newValue in
+                if !newValue {
+                    item.wrappedValue = nil
+                }
+            },
+            style: style,
+            content: content
+        )
+    }
 }
 
 // MARK: - Style
