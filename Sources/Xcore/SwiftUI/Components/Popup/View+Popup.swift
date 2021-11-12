@@ -158,7 +158,7 @@ extension View {
             style: .alert,
             dismissMethods: dismissMethods,
             content: {
-                Popup.AlertContent(
+                StandardPopupAlert(
                     isPresented: isPresented,
                     title: title,
                     message: message,

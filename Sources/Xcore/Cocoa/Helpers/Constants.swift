@@ -80,6 +80,9 @@ extension CGFloat {
     /// Spacing with the default value of `32` at a normal dynamic type setting.
     public static var s8: Self = 32
 
+    /// The default spacing value at a normal dynamic type setting.
+    public static var spacing: Self = .s5
+
     /// A convenience method to return `1` pixel relative to the screen scale.
     public static var onePixel: Self {
         enum Static {
@@ -109,6 +112,9 @@ extension UIEdgeInsets {
     public static var s7: Self { .init(.s7) }
     /// Spacing with the default value of `32` at a normal dynamic type setting.
     public static var s8: Self { .init(.s8) }
+
+    /// The default spacing value at a normal dynamic type setting.
+    public static var spacing: Self { .init(.spacing) }
 }
 
 // MARK: - UIColor
@@ -181,6 +187,10 @@ public enum AppConstants {
     public static var hairline: CGFloat = 0.5
     public static var tileCornerRadius: CGFloat = 11
     public static var cornerRadius: CGFloat = 6
+
+    public static var popupPreferredWidth: CGFloat {
+        min(340, Device.screen.bounds.size.min * 0.9)
+    }
 }
 
 // MARK: - Device
