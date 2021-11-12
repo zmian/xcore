@@ -14,6 +14,7 @@ private struct PopupPreviews: View {
     @State private var presentSystemAlert = false
     @State private var presentAlert = false
     @State private var presentToast = false
+    @State private var presentWindow = false
 
     var body: some View {
         List {
@@ -39,6 +40,13 @@ private struct PopupPreviews: View {
                 image: .number3Circle,
                 toggle: $presentToast
             )
+
+            row(
+                "Show Window",
+                color: .green,
+                image: .macWindow,
+                toggle: $presentWindow
+            )
         }
         .navigationTitle("Popups")
         .alert(L.title, isPresented: $presentSystemAlert) {
@@ -54,6 +62,18 @@ private struct PopupPreviews: View {
         }
         .popup(isPresented: $presentToast, style: .toast) {
             CapsuleView("Z’s AirPods", subtitle: "Connected", systemImage: .airpods)
+        }
+        .window(isPresented: $presentWindow) {
+            Button {
+                presentWindow = false
+            } label: {
+                CapsuleView("Tap to Hide Window", systemImage: .macWindow)
+                    .foregroundColor(.indigo)
+            }
+            .frame(height: 300)
+            .padding(.s8)
+            .backgroundColor(.systemBackground)
+            .cornerRadius(AppConstants.tileCornerRadius)
         }
     }
 

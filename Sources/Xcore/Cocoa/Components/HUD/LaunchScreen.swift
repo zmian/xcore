@@ -16,8 +16,8 @@ extension LaunchScreen {
     open class View: HUD {
         private let imageView = UIImageView(assetIdentifier: .launchScreenIcon)
 
-        public override init() {
-            super.init()
+        public override init(frame: CGRect?) {
+            super.init(frame: frame)
             windowLabel = "LaunchScreen Window"
             preferredStatusBarStyle = .lightContent
             add(imageView)

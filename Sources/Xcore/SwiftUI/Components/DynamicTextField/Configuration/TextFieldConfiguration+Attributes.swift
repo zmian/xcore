@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-public struct TextFieldAttributes: MutableAppliable {
+public struct TextFieldAttributes: Hashable, MutableAppliable {
     public var placeholderColor: Color
     public var placeholderErrorColor: Color
     public var placeholderSuccessColor: Color

@@ -60,7 +60,7 @@ struct DefaultDynamicTextFieldView: View {
                 }
                 .offset(y: placeholderOffsetY)
                 .scaleEffect(CGFloat(text.isEmpty ? 1.0 : 0.75), anchor: .topLeading)
-                .animation(.spring(response: .default, dampingFraction: 0.75))
+                .animation(.spring(response: .default, dampingFraction: 0.75), value: placeholderOffsetY)
 
             configuration.textField
                 .readSize {

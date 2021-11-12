@@ -43,8 +43,8 @@ extension Interstitial {
             _navigationController?.rootViewController as? InterstitialCompatibleViewController
         }
 
-        override init() {
-            super.init()
+        override init(frame: CGRect?) {
+            super.init(frame: frame)
             windowLabel = "Interstitial Window"
             adjustWindowAttributes {
                 $0.makeKey()

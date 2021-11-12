@@ -39,6 +39,14 @@ open class HUD: Appliable {
     /// The default value is `.normal`.
     open var duration: Duration = .default
 
+    /// The position of the window in the z-axis.
+    ///
+    /// Window levels provide a relative grouping of windows along the z-axis. All
+    /// windows assigned to the same window level appear in front of (or behind) all
+    /// windows assigned to a different window level. The ordering of windows within
+    /// a given window level is not guaranteed.
+    ///
+    /// The default value is `.top`.
     open var windowLevel: UIWindow.Level {
         get { window.windowLevel }
         set { setWindowLevel(newValue, animated: false) }
@@ -50,18 +58,19 @@ open class HUD: Appliable {
         set { window.accessibilityLabel = newValue }
     }
 
-    public init() {
-        if let windowScene = UIApplication.sharedOrNil?.firstWindowScene {
+    public convenience init() {
+        self.init(frame: nil)
+    }
+
+    public init(frame: CGRect? = nil) {
+        if let frame = frame {
+            window = UIWindow(frame: frame)
+        } else if let windowScene = UIApplication.sharedOrNil?.firstWindowScene {
             window = UIWindow(windowScene: windowScene)
         } else {
             window = UIWindow(frame: UIScreen.main.bounds)
         }
 
-        commonInit()
-    }
-
-    public init(frame: CGRect) {
-        window = UIWindow(frame: frame)
         commonInit()
     }
 
