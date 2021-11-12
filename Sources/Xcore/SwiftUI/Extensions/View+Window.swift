@@ -101,13 +101,18 @@ private struct Window<Content: View>: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context: Context) -> ViewController {
-        .init(isPresented: isPresented, style: style, content: content)
+        .init(
+            isPresented: isPresented,
+            style: style,
+            rootView: .init(content: content, context: context)
+        )
     }
 
     func updateUIViewController(_ viewController: ViewController, context: Context) {
         viewController.isPresented = isPresented
         viewController.style = style
-        viewController.content = content
+        viewController.rootView.content = content
+        viewController.rootView.context = context
         viewController.update()
     }
 }
@@ -119,16 +124,16 @@ extension Window {
         private var hud: HUD?
         var isPresented: Binding<Bool>
         var style: WindowStyle
-        var content: Content {
+        var rootView: RootView {
             didSet {
-                hud?.rootView = content
+                hud?.rootView = rootView
             }
         }
 
-        init(isPresented: Binding<Bool>, style: WindowStyle, content: Content) {
+        init(isPresented: Binding<Bool>, style: WindowStyle, rootView: RootView) {
             self.isPresented = isPresented
             self.style = style
-            self.content = content
+            self.rootView = rootView
             super.init(nibName: nil, bundle: nil)
         }
 
@@ -145,7 +150,7 @@ extension Window {
         func update() {
             if isPresented.wrappedValue {
                 if hud == nil {
-                    hud = HUD(rootView: content, style: style)
+                    hud = HUD(rootView: rootView, style: style)
                 }
 
                 hud?.show(animated: style.animated)
@@ -160,15 +165,17 @@ extension Window {
 // MARK: - HUD
 
 extension Window.ViewController {
+    fileprivate typealias RootView = Window.RootView<Content>
+
     private final class HUD: Xcore.HUD {
         private let hostingController: HostingController
 
-        var rootView: Content {
+        var rootView: RootView {
             get { hostingController.rootView }
             set { hostingController.rootView = newValue }
         }
 
-        init(rootView: Content, style: WindowStyle) {
+        init(rootView: RootView, style: WindowStyle) {
             self.hostingController = .init(rootView: rootView)
             super.init(frame: style.frame)
             backgroundColor = .clear
@@ -183,11 +190,44 @@ extension Window.ViewController {
             add(hostingController)
         }
 
-        private final class HostingController: UIHostingController<Content> {
+        private final class HostingController: UIHostingController<RootView> {
             override func viewDidLoad() {
                 super.viewDidLoad()
                 view.backgroundColor = .clear
             }
+        }
+    }
+}
+
+// MARK: - RootView
+
+extension Window {
+    fileprivate struct RootView<Content: View>: View {
+        var content: Content
+        var context: Window.Context
+
+        var body: some View {
+            content
+                // TODO: Is there better way to propagate all of the environment values to the window content view?
+                .environment(\.font, env.font)
+                .environment(\.isLoading, env.isLoading)
+                .environment(\.isEnabled, env.isEnabled)
+                .environment(\.defaultMinListRowHeight, env.defaultMinListRowHeight)
+                .environment(\.defaultMinListHeaderHeight, env.defaultMinListHeaderHeight)
+                .environment(\.defaultMinButtonHeight, env.defaultMinButtonHeight)
+                .environment(\.defaultOutlineButtonBorderColor, env.defaultOutlineButtonBorderColor)
+                .environment(\.textFieldAttributes, env.textFieldAttributes)
+                .environment(\.dynamicTextFieldStyle, env.dynamicTextFieldStyle)
+                .environment(\.storyProgressIndicatorColor, env.storyProgressIndicatorColor)
+                .environment(\.storyProgressIndicatorInsets, env.storyProgressIndicatorInsets)
+                .environment(\.popupAlertAttributes, env.popupAlertAttributes)
+                .environment(\.xstackStyle, env.xstackStyle)
+                .environment(\.theme, env.theme)
+                ._xtint(Color(env.theme.tintColor))
+        }
+
+        private var env: EnvironmentValues {
+            context.environment
         }
     }
 }

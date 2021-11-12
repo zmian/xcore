@@ -84,6 +84,21 @@ extension View {
     }
 }
 
+// MARK: - Tint & Accent Color
+
+extension View {
+    @available(iOS, introduced: 14, deprecated: 15, message: "Use .tint() and .accentColor() directly.")
+    @ViewBuilder
+    func _xtint(_ tint: Color?) -> some View {
+        if #available(iOS 15.0, *) {
+            self.tint(tint)
+                .accentColor(tint)
+        } else {
+            self.accentColor(tint)
+        }
+    }
+}
+
 // MARK: - Shadow
 
 extension View {
