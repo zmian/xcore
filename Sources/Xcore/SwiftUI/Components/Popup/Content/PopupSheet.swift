@@ -27,6 +27,11 @@ public struct PopupSheet<Content>: View where Content: View {
         .backgroundColor(theme.backgroundColor)
         .clipShape(RoundedRectangleCorner(radius: cornerRadius, corners: .top))
         .fixedSize(horizontal: false, vertical: true)
+        // Offset to ensure content is clipped and it's pinned properly.
+        // Using `ignoresSafeArea` makes the `safeAreaInsetsBottom` to always return 0
+        // which means then we would need to manually offset with hardcoded values for
+        // devices.
+        .offset(y: safeAreaInsetsBottom)
         .readGeometry {
             safeAreaInsetsBottom = $0.safeAreaInsets.bottom
         }
