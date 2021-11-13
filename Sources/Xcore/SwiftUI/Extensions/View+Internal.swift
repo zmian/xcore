@@ -23,22 +23,3 @@ extension View {
         }
     }
 }
-
-extension TextAlignment {
-    /// Returns an alignment position along the horizontal axis.
-    public var horizontal: HorizontalAlignment {
-        switch self {
-            case .leading:
-                return .leading
-            case .trailing:
-                return .trailing
-            case .center:
-                return .center
-        }
-    }
-
-    /// Returns an alignment in both axes.
-    public var alignment: Alignment {
-        .init(horizontal: horizontal, vertical: .center)
-    }
-}
