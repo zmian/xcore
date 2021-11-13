@@ -206,6 +206,8 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
         self.onDismiss = onDismiss
     }
 
+    private let duration: Double = 0.15
+
     @State private var workItem: DispatchWorkItem?
 
     /// A Boolean value that indicates whether to kick off series of events to
@@ -263,12 +265,8 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
                 if isPresented {
                     // 1. Present window
                     isWindowPresented = true
-
-                    DispatchQueue.main.async {
-                        // 2. Present window content
-                        isContentPresented = true
-                    }
-
+                    // 2. Present window content
+                    isContentPresented = true
                     // 3. Set up automatic dismissal of window if needed
                     setupAutomaticDismissalIfNeeded()
                 } else {
@@ -281,7 +279,7 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
                 if isContentPresented == false {
                     // Added a delay as a workaround to prevent a swiftUI bug that breaks animations
                     // when it's wrapped in UIHostingController.
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + duration + 0.01) {
                         isWindowPresented = false
                         isPresented = false
                         onDismiss?()
@@ -298,7 +296,7 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
                     Color(white: 0, opacity: 0.20)
                         .frame(max: .infinity)
                         .ignoresSafeArea()
-                        .transition(.opacity.animation(.easeInOut(duration: 0.15)))
+                        .transition(.opacity.animation(.easeInOut(duration: duration)))
                         .onTapGestureIf(dismissMethods.contains(.tapOutside)) {
                             isContentPresented = false
                         }
