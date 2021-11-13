@@ -14,17 +14,19 @@ extension UIFont {
     /// - Parameters:
     ///   - style: The text style for which to return a font descriptor. See text
     ///     styles for valid values.
-    ///   - weight: The weight of the font. The default value is `.regular`.
+    ///   - weight: The weight of the font. The default value is `nil`, meaning the
+    ///     system chooses default value based on the given text style.
     ///   - trait: The trait of the font. The default value is `.normal`.
     ///   - traitCollection: The trait collection containing the content size
     ///     category information. The default value is `nil`.
     /// - Returns: The new scaled font object.
     public static func app(
         _ style: TextStyle,
-        weight: Weight = .regular,
+        weight: Weight? = nil,
         trait: Trait = .normal,
         compatibleWith traitCollection: UITraitCollection? = nil
     ) -> UIFont {
+        let weight = weight.normalize(style: style)
         let typeface = defaultAppTypeface.name(weight: weight, trait: trait)
 
         if typeface == Typeface.systemFontId {
@@ -68,5 +70,28 @@ extension UIFont {
         }
 
         return UIFont(name: typeface, size: size)!
+    }
+}
+
+extension Optional where Wrapped == UIFont.Weight {
+    /// Returns non-optional font weight.
+    ///
+    /// - If `self` if non-nil then it returns `self`
+    /// - Otherwise, if style is non-nil then it returns default preferred weight
+    ///   based on Apple's Typography [Guidelines].
+    /// - Else, it returns `.regular` weight.
+    ///
+    /// [Guidelines]: https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/typography/#dynamic-type-sizes
+    fileprivate func normalize(style: UIFont.TextStyle?) -> Wrapped {
+        self ?? style?.defaultPreferredWeight() ?? .regular
+    }
+}
+
+extension UIFont.TextStyle {
+    /// Returns default preferred weight based on Apple's Typography [Guidelines].
+    ///
+    /// [Guidelines]: https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/typography/#dynamic-type-sizes
+    fileprivate func defaultPreferredWeight() -> UIFont.Weight {
+        self == .headline ? .semibold : .regular
     }
 }
