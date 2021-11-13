@@ -134,7 +134,6 @@ extension Popup.Style {
         animation: .spring(),
         transition: .move(edge: .bottom)
             .animation(.linear(duration: 0.1)),
-        windowStyle: .init(label: "Sheet Window"),
-        ignoresSafeAreaEdges: .allButTop
+        windowStyle: .init(label: "Sheet Window")
     )
 }
