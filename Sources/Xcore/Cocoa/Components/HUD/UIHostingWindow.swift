@@ -19,7 +19,7 @@ open class UIHostingWindow<Content: View>: UIWindow {
     /// inside the root view.
     public var passthroughNonContentTouches = true
 
-    /// A succinct label that identifies the HUD window.
+    /// A succinct label that identifies the window.
     open var windowLabel: String? {
         get { accessibilityLabel }
         set { accessibilityLabel = newValue }
