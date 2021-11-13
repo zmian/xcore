@@ -363,3 +363,15 @@ extension String {
         return (size, numberOfLines)
     }
 }
+
+extension String {
+    /// Returns `nil` if the string is empty.
+    public var nilIfEmpty: String? {
+        isEmpty ? nil : self
+    }
+
+    /// Returns `nil` if the string is blank.
+    public var nilIfBlank: String? {
+        isBlank ? nil : self
+    }
+}
