@@ -38,7 +38,7 @@ struct StandardPopupAlert<A>: View where A: View {
                     title
                         .fontWeight(.semibold)
                         .foregroundColor(theme.textColor)
-                        .accessibility(addTraits: .isHeader)
+                        .accessibilityAddTraits(.isHeader)
 
                     if let message = message {
                         message
