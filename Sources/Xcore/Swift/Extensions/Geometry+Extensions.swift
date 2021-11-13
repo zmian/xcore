@@ -333,6 +333,19 @@ extension CACornerMask {
 extension EdgeInsets {
     public static let zero = Self(0)
 
+    public init(_ edges: Edge.Set, _ length: CGFloat) {
+        func value(edge: Edge.Set) -> CGFloat {
+            edges.contains(edge) ? length : 0
+        }
+
+        self.init(
+            top: value(edge: .top),
+            leading: value(edge: .leading),
+            bottom: value(edge: .bottom),
+            trailing: value(edge: .trailing)
+        )
+    }
+
     public init(_ value: CGFloat) {
         self = .init(top: value, leading: value, bottom: value, trailing: value)
     }
