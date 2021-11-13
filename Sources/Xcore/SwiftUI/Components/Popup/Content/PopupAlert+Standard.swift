@@ -36,8 +36,9 @@ struct StandardPopupAlert<A>: View where A: View {
             VStack(spacing: .defaultSpacing) {
                 VStack(alignment: textAlignment.horizontal, spacing: .s2) {
                     title
-                        .fontWeight(.medium)
+                        .fontWeight(.semibold)
                         .foregroundColor(theme.textColor)
+                        .accessibility(addTraits: .isHeader)
 
                     if let message = message {
                         message
