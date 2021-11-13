@@ -128,9 +128,13 @@ private struct Window<Content: View>: UIViewControllerRepresentable {
     func updateUIViewController(_ viewController: ViewController, context: Context) {
         viewController.isPresented = isPresented
         viewController.style = style
-        viewController.rootView.content = content
         viewController.rootView.context = context
         viewController.update()
+
+        // Fixes an issue where animations are broken.
+        DispatchQueue.main.async {
+            viewController.rootView.content = content
+        }
     }
 }
 
