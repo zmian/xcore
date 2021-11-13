@@ -64,8 +64,8 @@ extension View {
 
 /// A structure representing the style of a window.
 public struct WindowStyle {
-    /// The frame rectangle of the newly created window.
-    public let frame: CGRect?
+    /// A succinct label that identifies the window.
+    public let label: String?
 
     /// The position of the window in the z-axis.
     ///
@@ -86,37 +86,21 @@ public struct WindowStyle {
     /// The default value is `true`.
     public let isKey: Bool
 
-    /// A succinct label that identifies the window.
-    public let label: String?
-
-    /// A boolean value that indicates whether to animate window show and hide
-    /// transitions.
-    ///
-    /// The default value is `true`.
-    public let animated: Bool
-
     /// Creates a window style.
     ///
     /// - Parameters:
-    ///   - frame: The frame rectangle of the newly created window.
+    ///   - label: A succinct label that identifies the window.
     ///   - level: The position of the window in the z-axis.
     ///   - isKey: A boolean value that indicates whether to make the receiver the
     ///     key window.
-    ///   - label: A succinct label that identifies the window.
-    ///   - animated: A boolean value that indicates whether to animate window show
-    ///     and hide transitions.
     public init(
-        frame: CGRect? = nil,
-        level: UIWindow.Level = .top,
-        isKey: Bool = true,
         label: String? = nil,
-        animated: Bool = true
+        level: UIWindow.Level = .topMost,
+        isKey: Bool = true
     ) {
-        self.frame = frame
+        self.label = label
         self.level = level
         self.isKey = isKey
-        self.label = label
-        self.animated = animated
     }
 }
 
@@ -154,12 +138,13 @@ private struct Window<Content: View>: UIViewControllerRepresentable {
 
 extension Window {
     final class ViewController: UIViewController {
-        private var hud: HUD?
+        private var hostingWindow: UIHostingWindow<RootView>?
+        fileprivate typealias RootView = Window.RootView<Content>
         var isPresented: Binding<Bool>
         var style: WindowStyle
         var rootView: RootView {
             didSet {
-                hud?.rootView = rootView
+                hostingWindow?.rootView = rootView
             }
         }
 
@@ -182,51 +167,16 @@ extension Window {
 
         func update() {
             if isPresented.wrappedValue {
-                if hud == nil {
-                    hud = HUD(rootView: rootView, style: style)
+                if hostingWindow == nil {
+                    hostingWindow = UIHostingWindow(rootView: rootView)
+                    hostingWindow?.windowLevel = style.level
+                    hostingWindow?.windowLabel = style.label
                 }
 
-                hud?.show(animated: style.animated)
+                hostingWindow?.show(isKey: style.isKey)
             } else {
-                hud?.hide(animated: style.animated)
-                hud = nil
-            }
-        }
-    }
-}
-
-// MARK: - HUD
-
-extension Window.ViewController {
-    fileprivate typealias RootView = Window.RootView<Content>
-
-    private final class HUD: Xcore.HUD {
-        private let hostingController: HostingController
-
-        var rootView: RootView {
-            get { hostingController.rootView }
-            set { hostingController.rootView = newValue }
-        }
-
-        init(rootView: RootView, style: WindowStyle) {
-            self.hostingController = .init(rootView: rootView)
-            super.init(frame: style.frame)
-            backgroundColor = .clear
-            windowLabel = style.label ?? "HUD"
-            adjustWindowAttributes {
-                if style.isKey {
-                    $0.makeKey()
-                }
-
-                $0.windowLevel = style.level
-            }
-            add(hostingController)
-        }
-
-        private final class HostingController: UIHostingController<RootView> {
-            override func viewDidLoad() {
-                super.viewDidLoad()
-                view.backgroundColor = .clear
+                hostingWindow?.hide()
+                hostingWindow = nil
             }
         }
     }
