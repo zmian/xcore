@@ -81,7 +81,7 @@ extension CGFloat {
     public static var s8: Self = 32
 
     /// The default spacing value at a normal dynamic type setting.
-    public static var spacing: Self = .s5
+    public static var defaultSpacing: Self = .s5
 
     /// A convenience method to return `1` pixel relative to the screen scale.
     public static var onePixel: Self {
@@ -114,7 +114,7 @@ extension UIEdgeInsets {
     public static var s8: Self { .init(.s8) }
 
     /// The default spacing value at a normal dynamic type setting.
-    public static var spacing: Self { .init(.spacing) }
+    public static var defaultSpacing: Self { .init(.defaultSpacing) }
 }
 
 // MARK: - UIColor

@@ -33,8 +33,8 @@ public struct PopupAlert<Content>: View where Content: View {
                     .multilineTextAlignment(textAlignment)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(.spacing)
-            .padding(.top, .spacing)
+            .padding(.defaultSpacing)
+            .padding(.top, .defaultSpacing)
             .frame(width: preferredWidth)
             .background(Color(theme.backgroundColor))
             .cornerRadius(cornerRadius, style: .continuous)
@@ -47,7 +47,7 @@ public struct PopupAlert<Content>: View where Content: View {
                     Image(system: .xMark)
                         .imageScale(.small)
                 }
-                .padding(.spacing)
+                .padding(.defaultSpacing)
             }
         }
     }
@@ -85,7 +85,7 @@ struct PopupAlert_Previews: PreviewProvider {
                 Text(L.message)
             }
         }
-        .padding(.spacing)
+        .padding(.defaultSpacing)
         .backgroundColor(.secondary.opacity(0.15))
         .previewLayout(.sizeThatFits)
     }
