@@ -112,7 +112,7 @@ extension View {
     public func xstackStyle(
         dim: XStackDimContent = .none,
         alignment: VerticalAlignment = .center,
-        spacing: CGFloat? = .s5
+        spacing: CGFloat? = .defaultSpacing
     ) -> some View {
         xstackStyle(DefaultXStackStyle(
             dim: dim,

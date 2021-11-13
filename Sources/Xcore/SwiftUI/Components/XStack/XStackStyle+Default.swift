@@ -25,7 +25,7 @@ struct DefaultXStackStyle: XStackStyle {
     @Environment(\.theme) private var theme
     var dim: XStackDimContent = .none
     var alignment: VerticalAlignment = .center
-    var spacing: CGFloat? = .s5
+    var spacing: CGFloat? = .defaultSpacing
 
     func makeBody(configuration: Self.Configuration) -> some View {
         HStack(alignment: alignment, spacing: configuration.isSingleChild ? 0 : spacing) {
