@@ -44,15 +44,11 @@ struct StandardPopupAlert<A>: View where A: View {
                             .foregroundColor(theme.textSecondaryColor)
                     }
                 }
-                .frame(maxWidth: .infinity, alignment: .init(horizontal: alignment, vertical: .center))
+                .frame(maxWidth: .infinity, alignment: textAlignment.alignment)
 
                 actions
             }
         }
-    }
-
-    private var alignment: HorizontalAlignment {
-        textAlignment.horizontal
     }
 }
 

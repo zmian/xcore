@@ -25,7 +25,8 @@ extension View {
 }
 
 extension TextAlignment {
-    var horizontal: HorizontalAlignment {
+    /// Returns an alignment position along the horizontal axis.
+    public var horizontal: HorizontalAlignment {
         switch self {
             case .leading:
                 return .leading
@@ -34,5 +35,10 @@ extension TextAlignment {
             case .center:
                 return .center
         }
+    }
+
+    /// Returns an alignment in both axes.
+    public var alignment: Alignment {
+        .init(horizontal: horizontal, vertical: .center)
     }
 }
