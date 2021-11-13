@@ -14,8 +14,8 @@ extension UIFont {
     /// - Parameters:
     ///   - style: The text style for which to return a font descriptor. See text
     ///     styles for valid values.
-    ///   - weight: The weight of the font. The default value is `nil`, meaning the
-    ///     system chooses default value based on the given text style.
+    ///   - weight: The weight of the font. If set to `nil`, the value is derived
+    ///    from the given text style.
     ///   - trait: The trait of the font. The default value is `.normal`.
     ///   - traitCollection: The trait collection containing the content size
     ///     category information. The default value is `nil`.

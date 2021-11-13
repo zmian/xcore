@@ -12,8 +12,8 @@ extension Font {
     /// - Parameters:
     ///   - style: The text style for which to return a font descriptor. See Text
     ///     Styles for valid values.
-    ///   - weight: The weight of the font. The default value is `nil`, meaning the
-    ///     system chooses default value based on the given text style.
+    ///   - weight: The weight of the font. If set to `nil`, the value is derived
+    ///    from the given text style.
     ///   - trait: The trait of the font. The default value is `.normal`.
     /// - Returns: The new scaled font object.
     public static func app(
@@ -50,8 +50,8 @@ extension Font {
     ///   - size: The point size of the font.
     ///   - textStyle: Scales the size relative to the text style. The default value
     ///     is `.body`.
-    ///   - weight: The weight of the font. The default value is `nil`, meaning the
-    ///     system chooses default value based on the given text style.
+    ///   - weight: The weight of the font. If set to `nil`, the value is derived
+    ///    from the given text style.
     ///   - trait: The trait of the font. The default value is `.normal`.
     /// - Returns: The new font object.
     public static func app(
@@ -103,8 +103,8 @@ extension Font {
     /// - Parameters:
     ///   - style: The text style for which to return a font descriptor. See Custom
     ///     Text Styles for valid values.
-    ///   - weight: The weight of the font. The default value is `nil`, meaning the
-    ///     system chooses default value based on the given text style.
+    ///   - weight: The weight of the font. If set to `nil`, the value is derived
+    ///    from the given text style.
     ///   - trait: The trait of the font. The default value is `.normal`.
     /// - Returns: The new scaled font object.
     public static func app(
