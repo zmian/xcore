@@ -6,44 +6,34 @@
 
 import UIKit
 
-/// Pass UI events through the stack view.
-///
-/// - Note: It won't pass touch events to any subviews that have
-///   `isUserInteractionEnabled` flag set to `false`.
-class PassthroughView: UIView {
-    private var _ignoreTouchesPrecondition: () -> Bool = { true }
+// MARK: - UIView
 
-    /// A method to check certain condition for ignoring touches.
-    func ignoreTouchesPrecondition(_ condition: @escaping () -> Bool) {
-        _ignoreTouchesPrecondition = condition
-    }
+class PassthroughView: UIView {
+    var passthroughTouches = true
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        guard let view = super.hitTest(point, with: event), view != self else {
-            return nil
-        }
+        let hitView = super.hitTest(point, with: event)
 
-        return _ignoreTouchesPrecondition() ? nil : view
+        if passthroughTouches {
+            return self == hitView ? nil : hitView
+        } else {
+            return hitView
+        }
     }
 }
 
-/// Pass UI events through the view.
-///
-/// - Note: It won't pass touch events to any subviews that have
-///   `isUserInteractionEnabled` flag set to `false`.
-class PassthroughStackView: UIStackView {
-    private var _ignoreTouchesPrecondition: () -> Bool = { true }
+// MARK: - UIWindow
 
-    /// A method to check certain condition for ignoring touches.
-    func ignoreTouchesPrecondition(_ condition: @escaping () -> Bool) {
-        _ignoreTouchesPrecondition = condition
-    }
+class PassthroughWindow: UIWindow {
+    var passthroughTouches = true
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        guard let view = super.hitTest(point, with: event), view != self else {
-            return nil
-        }
+        let hitView = super.hitTest(point, with: event)
 
-        return _ignoreTouchesPrecondition() ? nil : view
+        if passthroughTouches {
+            return rootViewController?.viewIfLoaded == hitView ? nil : hitView
+        } else {
+            return hitView
+        }
     }
 }

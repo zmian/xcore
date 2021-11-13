@@ -122,7 +122,7 @@ extension Popup.Style {
             alignment: edge == .top ? .top : .bottom,
             animation: .spring(),
             transition: .move(edge: edge),
-            windowStyle: .init(isKey: false, label: "Toast Window"),
+            windowStyle: .init(label: "Toast Window", isKey: false),
             allowDimming: false,
             dismissAfter: 2
         )
