@@ -184,7 +184,7 @@ extension UIFont.TextStyle {
 extension Optional where Wrapped == Font.Weight {
     /// Returns non-optional font weight.
     ///
-    /// - If `self` if non-nil then it returns `self`
+    /// - If `self` is non-nil then it returns `self`
     /// - Otherwise, if style is non-nil then it returns default preferred weight
     ///   based on Apple's Typography [Guidelines].
     /// - Else, it returns `.regular` weight.
