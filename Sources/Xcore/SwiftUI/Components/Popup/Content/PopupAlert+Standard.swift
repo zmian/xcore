@@ -33,7 +33,7 @@ struct StandardPopupAlert<A>: View where A: View {
 
     var body: some View {
         PopupAlert(isPresented: $isPresented, dismissMethods: dismissMethods) {
-            VStack(spacing: .spacing) {
+            VStack(spacing: .defaultSpacing) {
                 VStack(alignment: textAlignment.horizontal, spacing: .s2) {
                     title
                         .fontWeight(.medium)
@@ -87,7 +87,7 @@ struct StandardPopupAlert_Previews: PreviewProvider {
                 EmptyView()
             }
         }
-        .padding(.spacing)
+        .padding(.defaultSpacing)
         .frame(max: .infinity)
         .backgroundColor(.secondary.opacity(0.15))
         .previewLayout(.sizeThatFits)
