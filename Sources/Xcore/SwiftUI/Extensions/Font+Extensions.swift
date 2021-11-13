@@ -12,14 +12,16 @@ extension Font {
     /// - Parameters:
     ///   - style: The text style for which to return a font descriptor. See Text
     ///     Styles for valid values.
-    ///   - weight: The weight of the font. The default value is `.regular`.
+    ///   - weight: The weight of the font. The default value is `nil`, meaning the
+    ///     system chooses default value based on the given text style.
     ///   - trait: The trait of the font. The default value is `.normal`.
     /// - Returns: The new scaled font object.
     public static func app(
         _ style: TextStyle,
-        weight: Weight = .regular,
+        weight: Weight? = nil,
         trait: UIFont.Trait = .normal
     ) -> Font {
+        let weight = weight.normalize(style: style)
         let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
 
         if typeface == UIFont.Typeface.systemFontId {
@@ -48,15 +50,17 @@ extension Font {
     ///   - size: The point size of the font.
     ///   - textStyle: Scales the size relative to the text style. The default value
     ///     is `.body`.
-    ///   - weight: The weight of the font. The default value is `.regular`.
+    ///   - weight: The weight of the font. The default value is `nil`, meaning the
+    ///     system chooses default value based on the given text style.
     ///   - trait: The trait of the font. The default value is `.normal`.
     /// - Returns: The new font object.
     public static func app(
         size: CGFloat,
         relativeTo textStyle: TextStyle? = nil,
-        weight: Weight = .regular,
+        weight: Weight? = nil,
         trait: UIFont.Trait = .normal
     ) -> Font {
+        let weight = weight.normalize(style: textStyle)
         let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
 
         if typeface == UIFont.Typeface.systemFontId {
@@ -99,12 +103,13 @@ extension Font {
     /// - Parameters:
     ///   - style: The text style for which to return a font descriptor. See Custom
     ///     Text Styles for valid values.
-    ///   - weight: The weight of the font. The default value is `.regular`.
+    ///   - weight: The weight of the font. The default value is `nil`, meaning the
+    ///     system chooses default value based on the given text style.
     ///   - trait: The trait of the font. The default value is `.normal`.
     /// - Returns: The new scaled font object.
     public static func app(
         _ style: CustomTextStyle,
-        weight: Weight = .regular,
+        weight: Weight? = nil,
         trait: UIFont.Trait = .normal
     ) -> Font {
         .app(
@@ -173,5 +178,28 @@ extension UIFont.TextStyle {
             default:
                 self = .body
         }
+    }
+}
+
+extension Optional where Wrapped == Font.Weight {
+    /// Returns non-optional font weight.
+    ///
+    /// - If `self` if non-nil then it returns `self`
+    /// - Otherwise, if style is non-nil then it returns default preferred weight
+    ///   based on Apple's Typography [Guidelines].
+    /// - Else, it returns `.regular` weight.
+    ///
+    /// [Guidelines]: https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/typography/#dynamic-type-sizes
+    fileprivate func normalize(style: Font.TextStyle?) -> Wrapped {
+        self ?? style?.defaultPreferredWeight() ?? .regular
+    }
+}
+
+extension Font.TextStyle {
+    /// Returns default preferred weight based on Apple's Typography [Guidelines].
+    ///
+    /// [Guidelines]: https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/typography/#dynamic-type-sizes
+    fileprivate func defaultPreferredWeight() -> Font.Weight {
+        self == .headline ? .semibold : .regular
     }
 }
