@@ -34,7 +34,7 @@ struct StandardPopupAlert<A>: View where A: View {
     var body: some View {
         PopupAlert(isPresented: $isPresented, dismissMethods: dismissMethods) {
             VStack(spacing: .spacing) {
-                VStack(alignment: alignment, spacing: .s2) {
+                VStack(alignment: textAlignment.horizontal, spacing: .s2) {
                     title
                         .fontWeight(.medium)
                         .foregroundColor(theme.textColor)
