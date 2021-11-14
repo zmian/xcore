@@ -26,6 +26,8 @@ extension UIViewController {
         public lazy var font: UIFont = .app(.body)
         /// The default value is `Theme.tintColor`.
         public lazy var tintColor: UIColor = Theme.tintColor
+        /// The default value is `Theme.textColor`.
+        public lazy var navigationBarTitleColor: UIColor = Theme.textColor
         /// The default value is `.transparent`.
         public lazy var preferredStatusBarBackground: Chrome.Style = .transparent
         /// The default value is `.blurred`.
@@ -309,7 +311,7 @@ extension UIViewController {
     public static var defaultNavigationBarTextAttributes: [NSAttributedString.Key: Any] {
         [
             .font: defaultAppearance.font,
-            .foregroundColor: defaultAppearance.tintColor
+            .foregroundColor: defaultAppearance.navigationBarTitleColor
         ]
     }
 }
