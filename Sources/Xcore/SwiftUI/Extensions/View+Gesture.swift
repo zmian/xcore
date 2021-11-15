@@ -9,15 +9,27 @@ import SwiftUI
 // MARK: - On Tap
 
 extension View {
-    /// Returns a version of `self` that will perform `action` when `self` is
-    /// triggered.
-    public func onTap(action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            self
+    /// Conditionally wraps `self` in a button that will perform the given `action`
+    /// when `self` is triggered. If condition is false it returns the unmodified
+    /// `self` without being wrapped in the button.
+    ///
+    /// - Parameters:
+    ///   - condition: The condition that must be `true` in order to wrap `self` in
+    ///     a button and perform the given action.
+    ///   - action: The action to perform when the user triggers the button.
+    public func onTap(if condition: Bool = true, action: @escaping () -> Void) -> some View {
+        applyIf(condition) { label in
+            Button(action: action) {
+                label
+            }
+            .buttonStyle(.scaleEffect)
         }
-        .buttonStyle(.scaleEffect)
     }
+}
 
+// MARK: - On Tap Gesture
+
+extension View {
     /// Adds an action to perform when this view recognizes a tap gesture.
     ///
     /// Use this method to perform a specific `action` when the user clicks or

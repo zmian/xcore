@@ -170,18 +170,18 @@ extension XStack where Title == Text, Value == Text? {
 
 // MARK: - Image
 
-extension XStack where Title == Text, Value == Image {
+extension XStack where Title == Text, Value == Image? {
     /// Creates a stack with a title generated from a string and a value with a
     /// system image.
     ///
     /// ```swift
     /// XStack("Favorite", systemImage: .star)
     /// ```
-    public init<S>(_ title: S, systemImage: SystemAssetIdentifier) where S: StringProtocol {
+    public init<S>(_ title: S, systemImage: SystemAssetIdentifier?) where S: StringProtocol {
         self.init {
             Text(title)
         } value: {
-            Image(system: systemImage)
+            systemImage.map(Image.init(system:))
         }
     }
 
@@ -191,11 +191,11 @@ extension XStack where Title == Text, Value == Image {
     /// ```swift
     /// XStack("Favorite", image: .disclosureIndicator)
     /// ```
-    public init<S>(_ title: S, image: ImageAssetIdentifier) where S: StringProtocol {
+    public init<S>(_ title: S, image: ImageAssetIdentifier?) where S: StringProtocol {
         self.init {
             Text(title)
         } value: {
-            Image(assetIdentifier: image)
+            image.map(Image.init(assetIdentifier:))
         }
     }
 }
