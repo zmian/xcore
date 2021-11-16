@@ -8,14 +8,14 @@ import SwiftUI
 
 /// A standard representation of an alert presentation with title, message and
 /// actions.
-struct StandardPopupAlert<A>: View where A: View {
+public struct StandardPopupAlert<A>: View where A: View {
     @Environment(\.theme) private var theme
     @Environment(\.popupTextAlignment) private var textAlignment
     private let title: Text
     private let message: Text?
     private let actions: A
 
-    init(
+    public init(
         title: Text,
         message: Text?,
         actions: () -> A
@@ -25,7 +25,7 @@ struct StandardPopupAlert<A>: View where A: View {
         self.actions = actions()
     }
 
-    var body: some View {
+    public var body: some View {
         PopupAlert {
             VStack(spacing: .defaultSpacing) {
                 VStack(alignment: textAlignment.horizontal, spacing: .s2) {
