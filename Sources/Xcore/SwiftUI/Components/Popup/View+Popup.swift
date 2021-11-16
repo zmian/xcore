@@ -159,10 +159,8 @@ extension View {
             dismissMethods: dismissMethods,
             content: {
                 StandardPopupAlert(
-                    isPresented: isPresented,
                     title: title,
                     message: message,
-                    dismissMethods: dismissMethods,
                     actions: actions
                 )
             },
@@ -314,6 +312,9 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
                     .zIndex(2)
             }
         }
+        .popupDismissAction(
+            dismissMethods.contains(.xmark) ? PopupDismissAction { isContentPresented = false } : nil
+        )
     }
 
     private func setupAutomaticDismissalIfNeeded() {

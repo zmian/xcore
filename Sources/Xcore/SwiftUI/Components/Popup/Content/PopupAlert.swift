@@ -12,17 +12,10 @@ public struct PopupAlert<Content>: View where Content: View {
     @Environment(\.popupPreferredWidth) private var preferredWidth
     @Environment(\.popupCornerRadius) private var cornerRadius
     @Environment(\.popupTextAlignment) private var textAlignment
-    @Binding private var isPresented: Bool
-    private let dismissMethods: Popup.DismissMethods
+    @Environment(\.popupDismissAction) private var dismiss
     private let content: () -> Content
 
-    public init(
-        isPresented: Binding<Bool>,
-        dismissMethods: Popup.DismissMethods,
-        @ViewBuilder content: @escaping () -> Content
-    ) {
-        self._isPresented = isPresented
-        self.dismissMethods = dismissMethods
+    public init(@ViewBuilder content: @escaping () -> Content) {
         self.content = content
     }
 
@@ -40,9 +33,10 @@ public struct PopupAlert<Content>: View where Content: View {
             .cornerRadius(cornerRadius, style: .continuous)
             .floatingShadow()
 
-            if dismissMethods.contains(.xmark) {
+            // Add dismiss button if the environment dismiss action is set.
+            if let dismiss = dismiss {
                 Button {
-                    isPresented = false
+                    dismiss()
                 } label: {
                     Image(system: .xMark)
                         .imageScale(.small)
@@ -60,10 +54,7 @@ struct PopupAlert_Previews: PreviewProvider {
 
     static var previews: some View {
         Group {
-            PopupAlert(
-                isPresented: .constant(false),
-                dismissMethods: .xmark
-            ) {
+            PopupAlert {
                 HStack {
                     Button("Cancel") {
                         print("Cancel Tapped")
@@ -77,10 +68,7 @@ struct PopupAlert_Previews: PreviewProvider {
                 }
             }
 
-            PopupAlert(
-                isPresented: .constant(false),
-                dismissMethods: .xmark
-            ) {
+            PopupAlert {
                 Text(L.title)
                 Text(L.message)
             }
