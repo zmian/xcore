@@ -54,7 +54,7 @@ private struct PopupPreviews: View {
                 presentSystemAlert = false
             }
         }
-        .popup(L.title, message: L.message, isPresented: $presentAlert) {
+        .popup(L.title, message: L.message, isPresented: $presentAlert, dismissMethods: [.xmark, .tapOutside]) {
             Button("OK") {
                 presentAlert = false
             }
