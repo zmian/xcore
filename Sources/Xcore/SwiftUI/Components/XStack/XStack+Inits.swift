@@ -315,3 +315,18 @@ extension XStack {
         self.init(title, subtitle: subtitle, spacing: spacing, value: Image(assetIdentifier: image))
     }
 }
+
+extension XStack where Value == Never {
+    /// Creates a stack with a title and subtitle generated from strings.
+    ///
+    /// ```swift
+    /// XStack("Apple", subtitle: "AAPL")
+    /// ```
+    public init<S1, S2>(
+        _ title: S1,
+        subtitle: S2?,
+        spacing: CGFloat? = nil
+    ) where Title == _XIVTSSV<S2>, S1: StringProtocol, S2: StringProtocol {
+        self.init(title, subtitle: subtitle, spacing: spacing, value: { fatalError() })
+    }
+}
