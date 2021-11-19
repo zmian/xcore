@@ -77,8 +77,8 @@ extension Popup {
         ///   - windowStyle: The style of the presenting window.
         ///   - allowDimming: A boolean value that indicates whether to enable full
         ///     screen dimmed background behind the popup content.
-        ///   - dismissAfter: A property indicating whether which view edges expands out
-        ///     of its safe area.
+        ///   - dismissAfter: A property indicating whether the popup is automatically
+        ///     dismissed after the given duration.
         public init(
             alignment: Alignment,
             animation: Animation,
@@ -113,18 +113,18 @@ extension Popup.Style {
 
     /// A style that moves the popup in from the top edge of the screen.
     public static var toast: Self {
-        toast(edge: .top)
+        toast()
     }
 
     /// A style that moves the popup in from the specified edge of the screen.
-    public static func toast(edge: Edge) -> Self {
+    public static func toast(edge: Edge = .top, dismissAfter duration: Double = 2) -> Self {
         .init(
             alignment: edge == .top ? .top : .bottom,
             animation: .spring(),
             transition: .move(edge: edge),
             windowStyle: .init(label: "Toast Window", isKey: false),
             allowDimming: false,
-            dismissAfter: 2
+            dismissAfter: duration
         )
     }
 
