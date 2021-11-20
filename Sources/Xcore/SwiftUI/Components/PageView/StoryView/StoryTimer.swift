@@ -13,7 +13,7 @@ final class StoryTimer: ObservableObject {
     private let cycle: Count
     private var interval: TimeInterval
     private var pagesCount: Int
-    private let publisher: Timer.TimerPublisher
+    private let timer: Timer.TimerPublisher
     private var cancellable: AnyCancellable?
     private var cyclesCompleted = 0
     var onCycleComplete: ((_ remainingCycles: Count) -> Void)?
@@ -27,7 +27,7 @@ final class StoryTimer: ObservableObject {
         self.interval = interval
         self.cycle = cycle
         self.progress = 0
-        self.publisher = Timer.publish(every: 0.1, on: .main, in: .common)
+        self.timer = Timer.publish(every: 0.1, on: .main, in: .common)
     }
 
     func start() {
@@ -35,7 +35,7 @@ final class StoryTimer: ObservableObject {
             return
         }
 
-        cancellable = publisher.autoconnect().sink { [weak self] _ in
+        cancellable = timer.autoconnect().sink { [weak self] _ in
             self?.updateProgress()
         }
     }
