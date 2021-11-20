@@ -27,7 +27,7 @@ final class StoryTimer: ObservableObject {
         self.interval = interval
         self.cycle = cycle
         self.progress = 0
-        self.publisher = Timer.publish(every: 0.1, on: .main, in: .default)
+        self.publisher = Timer.publish(every: 0.1, on: .main, in: .common)
     }
 
     func start() {
