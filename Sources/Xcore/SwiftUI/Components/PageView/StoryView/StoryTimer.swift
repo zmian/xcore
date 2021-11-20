@@ -10,6 +10,7 @@ import Combine
 /// - SeeAlso: https://trailingclosure.com/swiftui-instagram-story-tutorial
 final class StoryTimer: ObservableObject {
     @Published var progress: Double
+    private let tick = 0.1
     private let cycle: Count
     private var interval: TimeInterval
     private var pagesCount: Int
@@ -27,7 +28,7 @@ final class StoryTimer: ObservableObject {
         self.interval = interval
         self.cycle = cycle
         self.progress = 0
-        self.timer = Timer.publish(every: 0.1, on: .main, in: .common)
+        self.timer = Timer.publish(every: tick, on: .main, in: .common)
     }
 
     func start() {
@@ -62,7 +63,7 @@ final class StoryTimer: ObservableObject {
     }
 
     private func updateProgress() {
-        var newProgress = progress + (0.1 / interval)
+        var newProgress = progress + (tick / interval)
 
         // Cycle complete
         if Int(newProgress) >= pagesCount {
