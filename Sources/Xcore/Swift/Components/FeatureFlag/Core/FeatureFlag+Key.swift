@@ -6,13 +6,6 @@
 
 import Foundation
 
-// MARK: - Namespace
-
-/// Use feature flags as an iterative approach to development.
-public enum FeatureFlag {}
-
-// MARK: - Key
-
 extension FeatureFlag {
     public struct Key: RawRepresentable, Equatable, UserInfoContainer {
         public let rawValue: String
@@ -40,11 +33,15 @@ extension FeatureFlag {
     }
 }
 
+// MARK: - ExpressibleByStringLiteral
+
 extension FeatureFlag.Key: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
         self.init(rawValue: value)
     }
 }
+
+// MARK: - CustomStringConvertible
 
 extension FeatureFlag.Key: CustomStringConvertible {
     public var description: String {
@@ -52,11 +49,15 @@ extension FeatureFlag.Key: CustomStringConvertible {
     }
 }
 
+// MARK: - CustomPlaygroundDisplayConvertible
+
 extension FeatureFlag.Key: CustomPlaygroundDisplayConvertible {
     public var playgroundDescription: Any {
         rawValue
     }
 }
+
+// MARK: - Hashable
 
 extension FeatureFlag.Key: Hashable {
     public func hash(into hasher: inout Hasher) {
