@@ -15,7 +15,7 @@ import Foundation
 ///     "id": "maintenance_mode",
 ///     "title": "Undergoing Maintenance",
 ///     "message": "We are undergoing maintenance. Thank you for your patience.",
-///     "dismissable": "true",
+///     "dismissable": true
 /// }
 /// ```
 ///
@@ -26,7 +26,7 @@ import Foundation
 ///     "id": "unsupported_app_version",
 ///     "title": "Unsupported App Version",
 ///     "message": "This version of the app is no longer supported. Please update to the latest version.",
-///     "dismissable": "false",
+///     "dismissable": false,
 ///     "image_url": "https://images.unsplash.com/photo-1604782206219-3b9576575203?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1394&q=80",
 ///     "cta_title": "Learn More",
 ///     "cta_url": "https://www.example.com"
