@@ -23,7 +23,7 @@ public enum FeatureFlags {
 extension FeatureFlags {
     /// Returns a system alert configuration (e.g., **Unsupported App Version**).
     public static func systemAlertConfiguration(key: Key = "system_alert_configuration") -> SystemAlertConfiguration? {
-        guard let alert = key.value(SystemAlertConfiguration.self) else {
+        guard let alert = key.decodedValue(SystemAlertConfiguration.self) else {
             return nil
         }
 
