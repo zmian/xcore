@@ -294,24 +294,24 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
                     Color(white: 0, opacity: 0.20)
                         .frame(max: .infinity)
                         .ignoresSafeArea()
-                        .transition(.opacity.animation(.easeInOut(duration: duration)))
                         .onTapGestureIf(dismissMethods.contains(.tapOutside)) {
                             isContentPresented = false
                         }
+                        .transition(.opacity)
                         .zIndex(1)
                 }
 
                 content()
-                    .animation(style.animation)
-                    .transition(style.transition)
                     .frame(max: .infinity, alignment: style.alignment)
                     .ignoresSafeArea(edges: style.ignoresSafeAreaEdges)
                     .onTapGestureIf(dismissMethods.contains(.tapInside)) {
                         isContentPresented = false
                     }
+                    .transition(style.transition)
                     .zIndex(2)
             }
         }
+        .animation(style.animation, value: isContentPresented)
         .popupDismissAction(
             dismissMethods.contains(.xmark) ? PopupDismissAction { isContentPresented = false } : nil
         )
