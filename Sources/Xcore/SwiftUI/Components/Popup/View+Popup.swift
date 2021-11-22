@@ -204,8 +204,6 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
         self.onDismiss = onDismiss
     }
 
-    private let duration: Double = 0.15
-
     @State private var workItem: DispatchWorkItem?
 
     /// A Boolean value that indicates whether to kick off series of events to
@@ -277,7 +275,7 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
                 if isContentPresented == false {
                     // Added a delay as a workaround to prevent a swiftUI bug that breaks animations
                     // when it's wrapped in UIHostingController.
-                    DispatchQueue.main.asyncAfter(deadline: .now() + duration + 0.01) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                         isWindowPresented = false
                         isPresented = false
                         onDismiss?()
