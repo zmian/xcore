@@ -204,43 +204,11 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
         self.onDismiss = onDismiss
     }
 
-    private let duration: Double = 0.20
-
     @State private var workItem: DispatchWorkItem?
 
-    /// A Boolean value that indicates whether to kick off series of events to
-    /// present this popup.
-    ///
-    /// **Show**
-    /// ```
-    /// // When isPresented = true
-    /// // To preseve display animations
-    /// // isPresented -> isWindowPresented -> isContentPresented
-    /// ```
-    /// **Hide**
-    /// ```
-    /// // When isPresented = false
-    /// // To preseve dismissal animations
-    /// // isPresented -> isContentPresented -> isWindowPresented
-    /// ```
-    @Binding private var isPresented: Bool
-
-    /// A Boolean value that indicates whether the view associated with this
+    /// A Boolean value that indicates whether the popup associated with this
     /// environment is currently being presented.
-    @State private var isWindowPresented: Bool = false
-
-    /// A Boolean value that indicates whether the popup content is currently being
-    /// presented.
-    ///
-    /// - Note: This state is a workaround to prevent a SwiftUI bug that breaks view
-    ///   animations when wrapped in ``UIHostingController``.
-    ///
-    ///   As a workaround when `isWindowPresented` is presented we toggle this
-    ///   property to `true` with ``DispatchQueue.main.async``. On dismiss, instead
-    ///   of setting `isWindowPresented` to `false` directly we set this property to
-    ///   `false` and then after `0.2` delay we set the `isWindowPresented` to
-    ///   `false` to ensure we get proper dismissal animations.
-    @State private var isContentPresented: Bool = false
+    @Binding private var isPresented: Bool
 
     /// A property indicating the popup style.
     private let style: Popup.Style
@@ -256,64 +224,46 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
 
     func body(content: Content) -> some View {
         content
-            .window(isPresented: $isWindowPresented, style: style.windowStyle) {
+            .window(isPresented: $isPresented, style: style.windowStyle) {
                 popupContent
             }
             .onChange(of: isPresented) { isPresented in
                 if isPresented {
-                    // 1. Present window
-                    isWindowPresented = true
-                    // 2. Present window content
-                    isContentPresented = true
-                    // 3. Set up automatic dismissal of window if needed
                     setupAutomaticDismissalIfNeeded()
                 } else {
-                    // This is only executed if `isPresented` is set to false by the calling code
-                    // (e.g., A button tap to dismiss popup.)
-                    isContentPresented = false
-                }
-            }
-            .onChange(of: isContentPresented) { isContentPresented in
-                if isContentPresented == false {
-                    // Added a delay as a workaround to prevent a swiftUI bug that breaks animations
-                    // when it's wrapped in UIHostingController.
-                    DispatchQueue.main.asyncAfter(deadline: .now() + duration + 0.01) {
-                        isWindowPresented = false
-                        isPresented = false
-                        onDismiss?()
-                    }
+                    onDismiss?()
                 }
             }
     }
 
     private var popupContent: some View {
         ZStack {
-            if isContentPresented {
+            if isPresented {
                 if style.allowDimming {
                     // Host Content Dim Overlay
                     Color(white: 0, opacity: 0.20)
                         .frame(max: .infinity)
                         .ignoresSafeArea()
                         .onTapGestureIf(dismissMethods.contains(.tapOutside)) {
-                            isContentPresented = false
+                            isPresented = false
                         }
-                        .transition(.opacity)
                         .zIndex(1)
+                        .transition(.opacity)
                 }
 
                 content()
                     .frame(max: .infinity, alignment: style.alignment)
                     .ignoresSafeArea(edges: style.ignoresSafeAreaEdges)
                     .onTapGestureIf(dismissMethods.contains(.tapInside)) {
-                        isContentPresented = false
+                        isPresented = false
                     }
-                    .transition(style.transition)
                     .zIndex(2)
+                    .transition(style.transition)
             }
         }
-        .animation(style.animation, value: isContentPresented)
+        .animation(style.animation, value: isPresented)
         .popupDismissAction(
-            dismissMethods.contains(.xmark) ? PopupDismissAction { isContentPresented = false } : nil
+            dismissMethods.contains(.xmark) ? PopupDismissAction { isPresented = false } : nil
         )
     }
 
@@ -325,10 +275,10 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
         workItem?.cancel()
 
         workItem = DispatchWorkItem {
-            isContentPresented = false
+            isPresented = false
         }
 
-        if isContentPresented, let work = workItem {
+        if isPresented, let work = workItem {
             DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: work)
         }
     }
