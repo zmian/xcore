@@ -48,20 +48,17 @@ extension View {
     ///   - dismissMethods: An option set specifying the dismissal methods for the
     ///     popup.
     ///   - content: A closure returning the content of the popup.
-    ///   - onDismiss: The closure to execute when dismissing the popup.
     public func popup<Content>(
         isPresented: Binding<Bool>,
         style: Popup.Style = .alert,
         dismissMethods: Popup.DismissMethods = [.tapOutside],
-        @ViewBuilder content: @escaping () -> Content,
-        onDismiss: (() -> Void)? = nil
+        @ViewBuilder content: @escaping () -> Content
     ) -> some View where Content: View {
         modifier(PopupViewModifier(
             isPresented: isPresented,
             style: style,
             dismissMethods: dismissMethods,
-            content: content,
-            onDismiss: onDismiss
+            content: content
         ))
     }
 
@@ -118,13 +115,11 @@ extension View {
     ///   - dismissMethods: An option set specifying the dismissal methods for the
     ///     popup.
     ///   - content: A closure returning the content of the popup.
-    ///   - onDismiss: The closure to execute when dismissing the popup.
     public func popup<Item, Content>(
         item: Binding<Item?>,
         style: Popup.Style = .alert,
         dismissMethods: Popup.DismissMethods = [.tapOutside],
-        @ViewBuilder content: @escaping (Item) -> Content,
-        onDismiss: (() -> Void)? = nil
+        @ViewBuilder content: @escaping (Item) -> Content
     ) -> some View where Content: View {
         modifier(PopupViewModifier(
             isPresented: .init {
@@ -140,8 +135,7 @@ extension View {
                 if let item = item.wrappedValue {
                     content(item)
                 }
-            },
-            onDismiss: onDismiss
+            }
         ))
     }
 
@@ -150,8 +144,7 @@ extension View {
         message: Text?,
         isPresented: Binding<Bool>,
         dismissMethods: Popup.DismissMethods = [.tapOutside],
-        @ViewBuilder actions: @escaping () -> A,
-        onDismiss: (() -> Void)? = nil
+        @ViewBuilder actions: @escaping () -> A
     ) -> some View where A: View {
         popup(
             isPresented: isPresented,
@@ -163,8 +156,7 @@ extension View {
                     message: message,
                     actions: actions
                 )
-            },
-            onDismiss: onDismiss
+            }
         )
     }
 
@@ -173,16 +165,14 @@ extension View {
         message: S2?,
         isPresented: Binding<Bool>,
         dismissMethods: Popup.DismissMethods = [.tapOutside],
-        @ViewBuilder actions: @escaping () -> A,
-        onDismiss: (() -> Void)? = nil
+        @ViewBuilder actions: @escaping () -> A
     ) -> some View where A: View, S1: StringProtocol, S2: StringProtocol {
         popup(
             Text(title),
             message: message.map { Text($0) },
             isPresented: isPresented,
             dismissMethods: dismissMethods,
-            actions: actions,
-            onDismiss: onDismiss
+            actions: actions
         )
     }
 }
@@ -194,14 +184,12 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
         isPresented: Binding<Bool>,
         style: Popup.Style,
         dismissMethods: Popup.DismissMethods,
-        @ViewBuilder content: @escaping () -> PopupContent,
-        onDismiss: (() -> Void)?
+        @ViewBuilder content: @escaping () -> PopupContent
     ) {
         self._isPresented = isPresented
         self.style = style
         self.dismissMethods = dismissMethods
         self.content = content
-        self.onDismiss = onDismiss
     }
 
     @State private var workItem: DispatchWorkItem?
@@ -219,9 +207,6 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
     /// A property indicating all of the ways popup can be dismissed.
     private let dismissMethods: Popup.DismissMethods
 
-    /// An action to perform when popup is dismissed.
-    private let onDismiss: (() -> Void)?
-
     func body(content: Content) -> some View {
         content
             .window(isPresented: $isPresented, style: style.windowStyle) {
@@ -230,8 +215,6 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
             .onChange(of: isPresented) { isPresented in
                 if isPresented {
                     setupAutomaticDismissalIfNeeded()
-                } else {
-                    onDismiss?()
                 }
             }
     }
