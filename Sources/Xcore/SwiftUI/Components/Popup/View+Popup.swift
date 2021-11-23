@@ -328,7 +328,7 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
             isContentPresented = false
         }
 
-        if isWindowPresented, let work = workItem {
+        if isContentPresented, let work = workItem {
             DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: work)
         }
     }
