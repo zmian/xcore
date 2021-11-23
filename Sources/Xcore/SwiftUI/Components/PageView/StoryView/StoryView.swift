@@ -47,7 +47,7 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
                 StoryProgressIndicator(progress: storyTimer.progress(for: index))
             }
         }
-        .padding(insets ?? .zero)
+        .padding(insets)
     }
 
     private func advanceView(isLeft: Bool) -> some View {
