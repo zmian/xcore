@@ -128,13 +128,14 @@ private struct Window<Content: View>: UIViewControllerRepresentable {
     func updateUIViewController(_ viewController: ViewController, context: Context) {
         viewController.isPresented = isPresented
         viewController.style = style
-        viewController.rootView.context = context
-        viewController.update()
+        viewController.hostingWindow.rootView.context = context
 
         // Fixes an issue where animations are broken.
         DispatchQueue.main.async {
-            viewController.rootView.content = content
+            viewController.hostingWindow.rootView.content = content
         }
+
+        viewController.update()
     }
 }
 
@@ -142,20 +143,19 @@ private struct Window<Content: View>: UIViewControllerRepresentable {
 
 extension Window {
     final class ViewController: UIViewController {
-        private var hostingWindow: UIHostingWindow<RootView>?
-        fileprivate typealias RootView = Window.RootView<Content>
+        var hostingWindow: UIHostingWindow<RootView<Content>>
         var isPresented: Binding<Bool>
         var style: WindowStyle
-        var rootView: RootView {
-            didSet {
-                hostingWindow?.rootView = rootView
-            }
-        }
 
-        init(isPresented: Binding<Bool>, style: WindowStyle, rootView: RootView) {
+        init(isPresented: Binding<Bool>, style: WindowStyle, rootView: RootView<Content>) {
             self.isPresented = isPresented
             self.style = style
-            self.rootView = rootView
+
+            hostingWindow = UIHostingWindow(rootView: rootView).apply {
+                $0.windowLevel = style.level
+                $0.windowLabel = style.label
+            }
+
             super.init(nibName: nil, bundle: nil)
         }
 
@@ -165,22 +165,15 @@ extension Window {
         }
 
         override func didMove(toParent parent: UIViewController?) {
-            super.didMove(toParent: parent)
             update()
+            super.didMove(toParent: parent)
         }
 
         func update() {
             if isPresented.wrappedValue {
-                if hostingWindow == nil {
-                    hostingWindow = UIHostingWindow(rootView: rootView)
-                    hostingWindow?.windowLevel = style.level
-                    hostingWindow?.windowLabel = style.label
-                }
-
-                hostingWindow?.show(isKey: style.isKey)
+                hostingWindow.show(isKey: style.isKey)
             } else {
-                hostingWindow?.hide()
-                hostingWindow = nil
+                hostingWindow.hide()
             }
         }
     }
