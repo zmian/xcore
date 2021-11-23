@@ -130,12 +130,19 @@ private struct Window<Content: View>: UIViewControllerRepresentable {
         viewController.style = style
         viewController.hostingWindow.rootView.context = context
 
-        // Fixes an issue where animations are broken.
+        // Fixes an issue where appear animations are broken.
         DispatchQueue.main.async {
             viewController.hostingWindow.rootView.content = content
         }
 
-        viewController.update()
+        if isPresented.wrappedValue {
+            viewController.update()
+        } else {
+            // Fixes an issue where disappear animations are broken.
+            DispatchQueue.main.asyncAfter(deadline: .now() + .default) {
+                viewController.update()
+            }
+        }
     }
 }
 
@@ -154,6 +161,7 @@ extension Window {
             hostingWindow = UIHostingWindow(rootView: rootView).apply {
                 $0.windowLevel = style.level
                 $0.windowLabel = style.label
+                $0.preferredKey = style.isKey
             }
 
             super.init(nibName: nil, bundle: nil)
@@ -165,16 +173,12 @@ extension Window {
         }
 
         override func didMove(toParent parent: UIViewController?) {
-            update()
             super.didMove(toParent: parent)
+            update()
         }
 
         func update() {
-            if isPresented.wrappedValue {
-                hostingWindow.show(isKey: style.isKey)
-            } else {
-                hostingWindow.hide()
-            }
+            hostingWindow.isPresented = isPresented.wrappedValue
         }
     }
 }
