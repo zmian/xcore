@@ -10,12 +10,13 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "SDWebImage", url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.8.2"),
-        .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.1")
+        .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.1"),
+        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", from: "4.2.2")
     ],
     targets: [
         .target(
             name: "Xcore",
-            dependencies: ["SDWebImage", "AnyCodable"]
+            dependencies: ["SDWebImage", "AnyCodable", "KeychainAccess"]
         ),
         .testTarget(name: "XcoreTests", dependencies: ["Xcore"])
     ]
