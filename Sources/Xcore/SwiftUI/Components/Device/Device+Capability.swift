@@ -54,7 +54,7 @@ extension Device {
     private var hasTopNotch: Bool {
         // Notch: 44 on iPhone X, XS, XS Max, XR.
         // No Notch: 24 on iPad Pro 12.9" 3rd generation, 20 on iPhone 8
-        AppConstants.statusBarHeight ?? 0 > 24
+        AppConstants.statusBarHeight > 24
     }
 
     private var hasHomeIndicator: Bool {
