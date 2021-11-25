@@ -16,7 +16,7 @@ final class StoryTimer: ObservableObject {
     private var pagesCount: Int
     private var cancellable: AnyCancellable?
     private var cyclesCompleted = 0
-    private var paused: Bool = false
+    private var paused = false
     var onCycleComplete: ((_ remainingCycles: Count) -> Void)?
 
     init(
@@ -49,11 +49,11 @@ final class StoryTimer: ObservableObject {
     }
 
     func resume() {
-        self.paused = false
+        paused = false
     }
 
     func pause() {
-        self.paused = true
+        paused = true
     }
 
     func advance(by number: Int) {
