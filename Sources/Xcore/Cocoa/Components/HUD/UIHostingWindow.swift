@@ -54,16 +54,31 @@ open class UIHostingWindow<Content: View>: UIWindow {
         }
     }
 
-    open func show(isKey: Bool = false) {
+    // MARK: - Presentation
+
+    public var preferredKey = false
+
+    public var isPresented: Bool {
+        get { isHidden }
+        set { newValue ? show() : hide() }
+    }
+
+    private func show() {
         windowLevel = .topMost
-        if isKey {
+        if preferredKey {
             makeKey()
         }
+
+        if windowScene == nil, let scene = UIApplication.sharedOrNil?.firstWindowScene {
+            windowScene = scene
+        }
+
         isHidden = false
     }
 
-    open func hide() {
+    private func hide() {
         isHidden = true
+        windowScene = nil
     }
 }
 

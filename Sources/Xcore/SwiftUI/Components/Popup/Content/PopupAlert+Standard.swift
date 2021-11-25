@@ -8,31 +8,25 @@ import SwiftUI
 
 /// A standard representation of an alert presentation with title, message and
 /// actions.
-struct StandardPopupAlert<A>: View where A: View {
+public struct StandardPopupAlert<A>: View where A: View {
     @Environment(\.theme) private var theme
     @Environment(\.popupTextAlignment) private var textAlignment
-    @Binding private var isPresented: Bool
-    private let dismissMethods: Popup.DismissMethods
     private let title: Text
     private let message: Text?
     private let actions: A
 
-    init(
-        isPresented: Binding<Bool>,
+    public init(
         title: Text,
         message: Text?,
-        dismissMethods: Popup.DismissMethods,
         actions: () -> A
     ) {
-        self._isPresented = isPresented
         self.title = title
         self.message = message
-        self.dismissMethods = dismissMethods
         self.actions = actions()
     }
 
-    var body: some View {
-        PopupAlert(isPresented: $isPresented, dismissMethods: dismissMethods) {
+    public var body: some View {
+        PopupAlert {
             VStack(spacing: .defaultSpacing) {
                 VStack(alignment: textAlignment.horizontal, spacing: .s2) {
                     title
@@ -61,10 +55,8 @@ struct StandardPopupAlert_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             StandardPopupAlert(
-                isPresented: .constant(false),
                 title: Text(L.title),
-                message: Text(L.message),
-                dismissMethods: .xmark
+                message: Text(L.message)
             ) {
                 HStack {
                     Button("Cancel") {
@@ -80,10 +72,8 @@ struct StandardPopupAlert_Previews: PreviewProvider {
             }
 
             StandardPopupAlert(
-                isPresented: .constant(false),
                 title: Text(L.title),
-                message: Text(L.message),
-                dismissMethods: .xmark
+                message: Text(L.message)
             ) {
                 EmptyView()
             }

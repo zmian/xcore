@@ -9,6 +9,14 @@ import Foundation
 public struct StringConverter {
     private let string: String
 
+    public init?(_ value: String?) {
+        guard let value = value else {
+            return nil
+        }
+
+        self.string = value
+    }
+
     public init<T: LosslessStringConvertible>(_ value: T) {
         self.string = value.description
     }
@@ -79,5 +87,44 @@ extension StringConverter {
 
     public func get<T>() -> T? where T: RawRepresentable, T.RawValue == String {
         T(rawValue: string)
+    }
+}
+
+// MARK: - JSONDecoder
+
+extension StringConverter {
+    /// Returns a value of the type you specify, decoded from an object.
+    ///
+    /// - Parameters:
+    ///   - type: The type of the value to decode from the string.
+    ///   - decoder: The decoder used to decode the data. If set to `nil`, it uses
+    ///     ``JSONDecoder`` with `convertFromSnakeCase` key decoding strategy.
+    /// - Returns: A value of the specified type, if the decoder can parse the data.
+    public func get<T>(_ type: T.Type = T.self, decoder: JSONDecoder? = nil) -> T? where T: Decodable {
+        guard let data = string.data(using: .utf8) else {
+            return nil
+        }
+
+        let decoder = decoder ?? makeDecoder()
+
+        do {
+            return try decoder.decode(T.self, from: data)
+        } catch {
+            #if DEBUG
+            if AppInfo.isDebuggerAttached {
+                print("Failed to decode \(type):")
+                print("---")
+                dump(error)
+                print("---")
+            }
+            #endif
+            return nil
+        }
+    }
+
+    private func makeDecoder() -> JSONDecoder {
+        JSONDecoder().apply {
+            $0.keyDecodingStrategy = .convertFromSnakeCase
+        }
     }
 }

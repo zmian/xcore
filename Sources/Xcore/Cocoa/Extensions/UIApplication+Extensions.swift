@@ -148,12 +148,53 @@ extension UIApplication {
         sceneWindow(\.isKeyWindow)
     }
 
-    /// Returns the app's first currently active window scene.
+    /// Returns the app's first window scene.
     public var firstWindowScene: UIWindowScene? {
+        windowScenes.first
+    }
+
+    /// Returns all of the connected window scenes sorted by from active state to
+    /// background state.
+    public var windowScenes: [UIWindowScene] {
         connectedScenes
             .lazy
-            .filter { $0.activationState == .foregroundActive }
             .compactMap { $0 as? UIWindowScene }
-            .first
+            .sorted { $0.activationState.sortOrder < $1.activationState.sortOrder }
+    }
+}
+
+// MARK: - ActivationState
+
+extension UIScene.ActivationState: CustomStringConvertible {
+    public var description: String {
+        switch self {
+            case .foregroundActive:
+                return "foregroundActive"
+            case .foregroundInactive:
+                return "foregroundInactive"
+            case .background:
+                return "background"
+            case .unattached:
+                return "unattached"
+            @unknown default:
+                warnUnknown(self)
+                return "unknown"
+        }
+    }
+
+    fileprivate var sortOrder: Int {
+        switch self {
+            case .foregroundActive:
+                return 0
+            case .foregroundInactive:
+                return 1
+            case .background:
+                return 2
+            case .unattached:
+                return 3
+            @unknown default:
+                warnUnknown(self)
+                return 4
+        }
     }
 }
