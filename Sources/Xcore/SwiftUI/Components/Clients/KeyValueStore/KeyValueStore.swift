@@ -8,20 +8,24 @@ import Foundation
 
 // MARK: - Client
 
-public protocol PreferencesClient {
-    typealias Key = PreferencesClientKey
+public protocol KeyValueStore {
+    typealias Key = KeyValueStoreKey
 
     func get(_ key: Key) -> String?
     func set(_ key: Key, value: String?)
 
     func set<T>(_ key: Key, value: T?)
+
+    /// Returns a boolean value indicating whether the store contains value for the
+    /// given key.
     func contains(_ key: Key) -> Bool
+
     func remove(_ key: Key)
 }
 
 // MARK: - Helpers: Get
 
-extension PreferencesClient {
+extension KeyValueStore {
     private func value(_ key: Key) -> StringConverter? {
         StringConverter(get(key))
     }
@@ -56,7 +60,7 @@ extension PreferencesClient {
 
 // MARK: - Helpers: Set
 
-extension PreferencesClient {
+extension KeyValueStore {
     public func set<T>(_ key: Key, value: T?) {
         guard let value = value else {
             return remove(key)
@@ -72,9 +76,7 @@ extension PreferencesClient {
 
 // MARK: - Helpers
 
-extension PreferencesClient {
-    /// Returns a boolean value indicating whether the Preferences contains the
-    /// given key.
+extension KeyValueStore {
     public func contains(_ key: Key) -> Bool {
         get(key) != nil
     }
@@ -87,18 +89,18 @@ extension PreferencesClient {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct PreferencesClientKey: DependencyKey {
-        static let defaultValue: PreferencesClient = .userDefaults
+    private struct KeyValueStoreKey: DependencyKey {
+        static let defaultValue: KeyValueStore = .userDefaults
     }
 
-    public var preferences: PreferencesClient {
-        get { self[PreferencesClientKey.self] }
-        set { self[PreferencesClientKey.self] = newValue }
+    public var keyValueStore: KeyValueStore {
+        get { self[KeyValueStoreKey.self] }
+        set { self[KeyValueStoreKey.self] = newValue }
     }
 
     @discardableResult
-    public static func preferences<P: PreferencesClient>(_ value: P) -> Self.Type {
-        set(\.preferences, value)
+    public static func keyValueStore<P: KeyValueStore>(_ value: P) -> Self.Type {
+        set(\.keyValueStore, value)
         return Self.self
     }
 }
