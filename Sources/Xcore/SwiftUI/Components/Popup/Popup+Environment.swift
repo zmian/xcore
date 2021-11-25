@@ -20,6 +20,10 @@ extension EnvironmentValues {
     private struct PopupTextAlignmentKey: EnvironmentKey {
         static var defaultValue: TextAlignment = .center
     }
+
+    private struct PopupDismissActionKey: EnvironmentKey {
+        static var defaultValue: PopupDismissAction?
+    }
 }
 
 // MARK: - Values
@@ -38,6 +42,11 @@ extension EnvironmentValues {
     var popupTextAlignment: TextAlignment {
         get { self[PopupTextAlignmentKey.self] }
         set { self[PopupTextAlignmentKey.self] = newValue }
+    }
+
+    var popupDismissAction: PopupDismissAction? {
+        get { self[PopupDismissActionKey.self] }
+        set { self[PopupDismissActionKey.self] = newValue }
     }
 }
 
@@ -59,5 +68,24 @@ extension View {
     /// value.
     public func popupTextAlignment(_ textAlignment: TextAlignment) -> some View {
         environment(\.popupTextAlignment, textAlignment)
+    }
+
+    /// Sets the dismiss action of popups within the environment to the specified
+    /// value.
+    func popupDismissAction(_ action: PopupDismissAction?) -> some View {
+        environment(\.popupDismissAction, action)
+    }
+}
+
+/// Provides functionality for dismissing a popup.
+struct PopupDismissAction {
+    private let dismiss: () -> Void
+
+    init(dismiss: @escaping () -> Void) {
+        self.dismiss = dismiss
+    }
+
+    func callAsFunction() {
+        dismiss()
     }
 }

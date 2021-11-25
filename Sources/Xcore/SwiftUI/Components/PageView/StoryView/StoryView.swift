@@ -47,13 +47,7 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
                 StoryProgressIndicator(progress: storyTimer.progress(for: index))
             }
         }
-        .apply {
-            if let insets = insets {
-                $0.padding(insets)
-            } else {
-                $0.padding()
-            }
-        }
+        .padding(insets)
     }
 
     private func advanceView(isLeft: Bool) -> some View {

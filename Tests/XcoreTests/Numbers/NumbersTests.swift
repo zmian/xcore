@@ -89,6 +89,7 @@ final class NumbersTests: TestCase {
 
     func testAbbreviate() {
         let values1: [(Double, String)] = [
+            (315.36, "315.36"),
             (987, "987"),
             (1200.0, "1.2K"),
             (12000.0, "12K"),
@@ -175,8 +176,9 @@ final class NumbersTests: TestCase {
 
     func testAbbreviateThreshold() {
         let values: [(Double, String)] = [
-            (1_000_000, "1000000"),
-            (9000, "9000"),
+            (315.36, "315.36"),
+            (1_000_000, "1,000,000"),
+            (9000, "9,000"),
             (105_000_000, "105M"),
             (140_800_200_000, "140.8B"),
             (170_400_800_000_000, "170.4T"),

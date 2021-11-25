@@ -6,8 +6,8 @@
 
 import Foundation
 
-private struct AbbreviatedNumberFormatter {
-    private typealias Abbreviation = (suffix: String, threshold: Decimal, divisor: Decimal)
+private struct AbbreviatedNumberFormatter<Number: DoubleDecimal> {
+    private typealias Abbreviation = (suffix: String, threshold: Number, divisor: Number)
 
     private let formatter = NumberFormatter().apply {
         $0.numberStyle = .decimal
@@ -55,19 +55,19 @@ private struct AbbreviatedNumberFormatter {
     ///   - locale: The locale used to format the grouping and decimal separators.
     /// - Returns: Abbreviated version of the `value`.
     func string(
-        from value: Decimal,
-        threshold: Decimal? = nil,
-        thresholdAbs: Bool = true,
-        locale: Locale? = nil
+        from value: Number,
+        threshold: Number?,
+        thresholdAbs: Bool,
+        locale: Locale?
     ) -> String {
-        let startValue = thresholdAbs ? abs(value) : value
-
-        if let threshold = threshold, startValue <= threshold {
-            return "\(value)"
-        }
-
         // Adopted from: http://stackoverflow.com/a/35504720
         let abbreviation: Abbreviation = {
+            let startValue = thresholdAbs ? abs(value) : value
+
+            if let threshold = threshold, startValue <= threshold {
+                return abbreviations[0]
+            }
+
             var prevAbbreviation = abbreviations[0]
 
             for tmpAbbreviation in abbreviations {
@@ -79,18 +79,19 @@ private struct AbbreviatedNumberFormatter {
             return prevAbbreviation
         }()
 
-        let value = value / abbreviation.divisor
+        let abbreviatedValue = value / abbreviation.divisor
         formatter.positiveSuffix = abbreviation.suffix
         formatter.negativeSuffix = abbreviation.suffix
+        formatter.maximumFractionDigits = value == abbreviatedValue ? 2 : 1
         formatter.locale = locale ?? .current
-        return formatter.string(from: NSDecimalNumber(decimal: value)) ?? "\(value)"
+        return formatter.string(from: abbreviatedValue.nsNumber) ?? "\(abbreviatedValue)"
     }
 }
 
 // MARK: - Convenience
 
 extension Decimal {
-    private static let abbreviatedNumberFormatter = AbbreviatedNumberFormatter()
+    private static let abbreviatedNumberFormatter = AbbreviatedNumberFormatter<Self>()
 
     /// Returns a string representation of the abbreviation of the given value.
     ///
@@ -121,13 +122,14 @@ extension Decimal {
         Self.abbreviatedNumberFormatter.string(
             from: self,
             threshold: threshold,
+            thresholdAbs: thresholdAbs,
             locale: locale
         )
     }
 }
 
 extension Double {
-    private static let abbreviatedNumberFormatter = AbbreviatedNumberFormatter()
+    private static let abbreviatedNumberFormatter = AbbreviatedNumberFormatter<Self>()
 
     /// Returns a string representation of the abbreviation of the given value.
     ///
@@ -156,9 +158,29 @@ extension Double {
         locale: Locale? = nil
     ) -> String {
         Self.abbreviatedNumberFormatter.string(
-            from: Decimal(self),
-            threshold: threshold.map { Decimal($0) },
+            from: self,
+            threshold: threshold,
+            thresholdAbs: thresholdAbs,
             locale: locale
         )
+    }
+}
+
+// MARK: - Helpers
+
+private protocol DoubleDecimal: SignedNumeric, Comparable {
+    var nsNumber: NSNumber { get }
+    static func / (lhs: Self, rhs: Self) -> Self
+}
+
+extension Double: DoubleDecimal {
+    fileprivate var nsNumber: NSNumber {
+        NSNumber(value: self)
+    }
+}
+
+extension Decimal: DoubleDecimal {
+    fileprivate var nsNumber: NSNumber {
+        NSDecimalNumber(decimal: self)
     }
 }

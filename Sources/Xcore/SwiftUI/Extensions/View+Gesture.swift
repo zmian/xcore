@@ -17,12 +17,33 @@ extension View {
     ///   - condition: The condition that must be `true` in order to wrap `self` in
     ///     a button and perform the given action.
     ///   - action: The action to perform when the user triggers the button.
-    public func onTap(if condition: Bool = true, action: @escaping () -> Void) -> some View {
+    public func onTap(
+        if condition: Bool = true,
+        scaleAnchor: UnitPoint = .center,
+        action: @escaping () -> Void
+    ) -> some View {
+        onTap(if: condition, style: .scaleEffect(anchor: scaleAnchor), action: action)
+    }
+
+    /// Conditionally wraps `self` in a button that will perform the given `action`
+    /// when `self` is triggered. If condition is false it returns the unmodified
+    /// `self` without being wrapped in the button.
+    ///
+    /// - Parameters:
+    ///   - condition: The condition that must be `true` in order to wrap `self` in
+    ///     a button and perform the given action.
+    ///   - style: Sets the button style.
+    ///   - action: The action to perform when the user triggers the button.
+    public func onTap<S>(
+        if condition: Bool = true,
+        style: S,
+        action: @escaping () -> Void
+    ) -> some View where S: ButtonStyle {
         applyIf(condition) { label in
             Button(action: action) {
                 label
             }
-            .buttonStyle(.scaleEffect)
+            .buttonStyle(style)
         }
     }
 }

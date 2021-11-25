@@ -7,11 +7,16 @@
 import SwiftUI
 
 public struct ScaleEffectButtonStyle: ButtonStyle {
-    public init() {}
+    private let anchor: UnitPoint
+
+    public init(anchor: UnitPoint = .center) {
+        self.anchor = anchor
+    }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .scaleOpacityEffect(configuration.isPressed)
+            .contentShape(Rectangle())
+            .scaleOpacityEffect(configuration.isPressed, effects: [.opacity, .scale(anchor: anchor)])
     }
 }
 
@@ -19,4 +24,8 @@ public struct ScaleEffectButtonStyle: ButtonStyle {
 
 extension ButtonStyle where Self == ScaleEffectButtonStyle {
     public static var scaleEffect: Self { .init() }
+
+    public static func scaleEffect(anchor: UnitPoint) -> Self {
+        .init(anchor: anchor)
+    }
 }

@@ -10,10 +10,10 @@ import SwiftUI
 
 extension EnvironmentValues {
     private struct StoryProgressIndicatorColorKey: EnvironmentKey {
-        static var defaultValue: Color?
+        static var defaultValue: Color = .accentColor
     }
 
-    var storyProgressIndicatorColor: Color? {
+    var storyProgressIndicatorColor: Color {
         get { self[StoryProgressIndicatorColorKey.self] }
         set { self[StoryProgressIndicatorColorKey.self] = newValue }
     }
@@ -23,10 +23,10 @@ extension EnvironmentValues {
 
 extension EnvironmentValues {
     private struct StoryProgressIndicatorInsetsKey: EnvironmentKey {
-        static var defaultValue: EdgeInsets?
+        static var defaultValue = EdgeInsets(horizontal: .defaultSpacing)
     }
 
-    var storyProgressIndicatorInsets: EdgeInsets? {
+    var storyProgressIndicatorInsets: EdgeInsets {
         get { self[StoryProgressIndicatorInsetsKey.self] }
         set { self[StoryProgressIndicatorInsetsKey.self] = newValue }
     }
@@ -35,16 +35,16 @@ extension EnvironmentValues {
 // MARK: - View Helpers
 
 extension View {
-    public func storyProgressIndicatorColor(_ color: Color?) -> some View {
+    public func storyProgressIndicatorColor(_ color: Color) -> some View {
         environment(\.storyProgressIndicatorColor, color)
     }
 
     @_disfavoredOverload
-    public func storyProgressIndicatorColor(_ color: UIColor?) -> some View {
-        storyProgressIndicatorColor(color.map(Color.init))
+    public func storyProgressIndicatorColor(_ color: UIColor) -> some View {
+        storyProgressIndicatorColor(Color(color))
     }
 
-    public func storyProgressIndicatorInsets(_ insets: EdgeInsets?) -> some View {
+    public func storyProgressIndicatorInsets(_ insets: EdgeInsets) -> some View {
         environment(\.storyProgressIndicatorInsets, insets)
     }
 }

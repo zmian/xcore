@@ -60,4 +60,16 @@ extension FeatureFlag.Key {
     public func value<T>(default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
         currentValue?.get() ?? defaultValue()
     }
+
+    /// Returns the value of the key, decoded from a JSON object, from registered
+    /// list of feature flag providers.
+    ///
+    /// - Parameters:
+    ///   - type: The type of the value to decode from the string.
+    ///   - decoder: The decoder used to decode the data. If set to `nil`, it uses
+    ///     ``JSONDecoder`` with `convertFromSnakeCase` key decoding strategy.
+    /// - Returns: A value of the specified type, if the decoder can parse the data.
+    public func decodedValue<T>(_ type: T.Type = T.self, decoder: JSONDecoder? = nil) -> T? where T: Decodable {
+        currentValue?.get(type, decoder: decoder)
+    }
 }

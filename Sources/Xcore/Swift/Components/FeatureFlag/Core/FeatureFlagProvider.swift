@@ -10,6 +10,7 @@ public protocol FeatureFlagProvider {
     /// A unique id for the feature flag provider.
     var id: String { get }
 
+    /// Returns value for the given key.
     func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value?
 }
 

@@ -522,7 +522,7 @@ final class DateTest: XCTestCase {
     }
 
     func testTimeZone() {
-        XCTAssertEqual(Date.timeZoneOffset(calendar: .usEastern), -4)
+        XCTAssertEqual(Date.timeZoneOffset(calendar: .usEastern), -5)
         XCTAssertEqual(Date.timeZoneOffset(calendar: .iso), 0)
         XCTAssertEqual(Date.timeZoneOffset(calendar: .turkey), 3)
     }
