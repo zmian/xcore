@@ -38,6 +38,11 @@ public struct StringConverter {
             return
         }
 
+        if let value = value as? Data, let dataString = String.init(data: value, encoding: .utf8) {
+            self.string = dataString
+            return
+        }
+
         return nil
     }
 
@@ -80,6 +85,8 @@ extension StringConverter {
                 return nsNumber as? T
             case is NSString.Type, is Optional<NSString>.Type:
                 return string as? T
+            case is Data.Type, is Optional<Data>.Type:
+                return string.data(using: .utf8) as? T
             default:
                 return json as? T
         }
