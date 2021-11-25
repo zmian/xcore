@@ -16,6 +16,7 @@ public protocol PreferencesClient {
 
     func set<T>(_ key: Key, value: T?)
     func contains(_ key: Key) -> Bool
+    func remove(_ key: Key)
 }
 
 // MARK: - Helpers: Get
@@ -56,16 +57,9 @@ extension PreferencesClient {
 // MARK: - Helpers: Set
 
 extension PreferencesClient {
-    /// Returns a boolean value indicating whether the Preferences contains the
-    /// given key.
-    public func contains(_ key: Key) -> Bool {
-        get(key) != nil
-    }
-
     public func set<T>(_ key: Key, value: T?) {
         guard let value = value else {
-            set(key, value: nil)
-            return
+            return remove(key)
         }
 
         set(key, value: StringConverter(value)?.get())
@@ -73,6 +67,20 @@ extension PreferencesClient {
 
     public func set<T>(_ key: Key, value: T?) where T: RawRepresentable, T.RawValue == String {
         set(key, value: value?.rawValue)
+    }
+}
+
+// MARK: - Helpers
+
+extension PreferencesClient {
+    /// Returns a boolean value indicating whether the Preferences contains the
+    /// given key.
+    public func contains(_ key: Key) -> Bool {
+        get(key) != nil
+    }
+
+    public func remove(_ key: Key) {
+        set(key, value: nil)
     }
 }
 
