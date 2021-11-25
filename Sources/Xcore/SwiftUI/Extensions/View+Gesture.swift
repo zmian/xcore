@@ -27,6 +27,38 @@ extension View {
     }
 }
 
+// MARK: - On Long Press Gesture
+
+extension View {
+    /// A method to add a press and hold behaviour to any view.
+    ///
+    /// In order to properly work inside a scroll view a `tapGesture` has to be also
+    /// added.
+    ///
+    /// Timer is used to avoid flickering (true and false values sent) when a scroll
+    /// action takes place.
+    public func pressAndHold(maxDuration: Double = 10, action: @escaping (Bool) -> Void) -> some View {
+        weak var clearTimer: Timer?
+
+        func startClearTimer(value: Bool) {
+            clearTimer = Timer.scheduledTimer(withTimeInterval: value ? 0.1 : 0, repeats: false, block: { _ in
+                action(value)
+            })
+            clearTimer?.resume()
+        }
+
+        return self
+            .onTapGesture {  }
+            .onLongPressGesture(minimumDuration: maxDuration, maximumDistance: 4, perform: {
+                clearTimer?.invalidate()
+                startClearTimer(value: false)
+            }, onPressingChanged: { changed in
+                clearTimer?.invalidate()
+                startClearTimer(value: changed)
+            })
+    }
+}
+
 // MARK: - On Tap Gesture
 
 extension View {
