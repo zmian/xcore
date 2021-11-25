@@ -6,7 +6,7 @@
 
 import Foundation
 
-public final class UserDefaultsPreferencesClient: PreferencesClient {
+public final class UserDefaultsKeyValueStore: KeyValueStore {
     private let userDefaults: UserDefaults
 
     public init(_ userDefaults: UserDefaults = .standard) {
@@ -24,11 +24,11 @@ public final class UserDefaultsPreferencesClient: PreferencesClient {
 
 // MARK: - Dot Syntax Support
 
-extension PreferencesClient where Self == UserDefaultsPreferencesClient {
-    /// Returns standard `UserDefaults` variant of `PreferencesClient`.
+extension KeyValueStore where Self == UserDefaultsKeyValueStore {
+    /// Returns standard `UserDefaults` variant of `KeyValueStore`.
     public static var userDefaults: Self { .init() }
 
-    /// Returns `UserDefaults` variant of `PreferencesClient`.
+    /// Returns `UserDefaults` variant of `KeyValueStore`.
     public static func userDefaults(_ userDefaults: UserDefaults) -> Self {
         .init(userDefaults)
     }
