@@ -9,6 +9,14 @@ import Foundation
 public struct StringConverter {
     private let string: String
 
+    public init?(_ value: String?) {
+        guard let value = value else {
+            return nil
+        }
+
+        self.string = value
+    }
+
     public init<T: LosslessStringConvertible>(_ value: T) {
         self.string = value.description
     }
