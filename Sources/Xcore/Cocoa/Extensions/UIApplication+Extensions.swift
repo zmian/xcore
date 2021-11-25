@@ -176,6 +176,9 @@ extension UIScene.ActivationState: CustomStringConvertible {
                 return "background"
             case .unattached:
                 return "unattached"
+            @unknown default:
+                warnUnknown(self)
+                return "unknown"
         }
     }
 
@@ -189,6 +192,9 @@ extension UIScene.ActivationState: CustomStringConvertible {
                 return 2
             case .unattached:
                 return 3
+            @unknown default:
+                warnUnknown(self)
+                return 4
         }
     }
 }
