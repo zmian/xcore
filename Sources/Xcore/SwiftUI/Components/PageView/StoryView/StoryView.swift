@@ -57,13 +57,13 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
             .onTapGesture {
                 storyTimer.advance(by: isLeft ? -1 : 1)
             }
-            .pressAndHold(action: { isPressing in
+            .onPressAndHold { isPressing in
                 if isPressing {
                     storyTimer.pause()
                 } else {
                     storyTimer.resume()
                 }
-            })
+            }
     }
 
     /// A closure invoked on every cycle completion.
