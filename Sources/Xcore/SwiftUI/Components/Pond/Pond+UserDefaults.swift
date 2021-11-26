@@ -6,7 +6,7 @@
 
 import Foundation
 
-public final class UserDefaultsPond: Pond {
+public struct UserDefaultsPond: Pond {
     private let userDefaults: UserDefaults
 
     public init(_ userDefaults: UserDefaults = .standard) {
