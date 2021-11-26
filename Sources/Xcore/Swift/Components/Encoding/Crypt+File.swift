@@ -10,8 +10,7 @@ extension Crypt {
     public struct File: CustomStringConvertible {
         public let name: String
         public let bundle: Bundle
-
-        fileprivate let code: String
+        fileprivate let code: Either<String, [UInt8]>
         fileprivate var url: URL {
             let components = name.split(separator: ".")
             let name = String(components[0])
@@ -25,7 +24,13 @@ extension Crypt {
         public init(name: String, bundle: Bundle = .main, code: String) {
             self.name = name
             self.bundle = bundle
-            self.code = code
+            self.code = .left(code)
+        }
+
+        public init(name: String, bundle: Bundle = .main, code: [UInt8]) {
+            self.name = name
+            self.bundle = bundle
+            self.code = .right(code)
         }
 
         public var description: String {
@@ -42,6 +47,11 @@ extension Crypt {
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
     public static func decrypt(file: File) throws -> Data {
-        try decrypt(contentsOf: file.url, secret: file.code)
+        switch file.code {
+            case let .left(secret):
+                return try decrypt(contentsOf: file.url, secret: secret)
+            case let .right(secret):
+                return try decrypt(contentsOf: file.url, secret: secret)
+        }
     }
 }
