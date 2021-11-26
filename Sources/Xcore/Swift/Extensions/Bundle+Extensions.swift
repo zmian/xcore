@@ -91,9 +91,51 @@ extension Bundle {
     }
 }
 
+// MARK: - URL
+
 extension Bundle {
     /// Returns the first URL for the specified common directory in the user domain.
     public static func url(for directory: FileManager.SearchPathDirectory) -> URL? {
         FileManager.default.url(for: directory)
+    }
+
+    /// Returns the file URL for the resource identified by the specified name and
+    /// file extension.
+    ///
+    /// - Parameter filename: The name of the file with extension
+    ///   (e.g., `"colors.json"`).
+    /// - Returns: The file URL for the resource file name or `nil` if the file
+    ///   could not be located.
+    public func url(filename: String) -> URL? {
+        let components = filename.split(separator: ".")
+
+        guard components.count == 2 else {
+            return nil
+        }
+
+        let name = String(components[0])
+        let ext = String(components[1])
+
+        return url(forResource: name, withExtension: ext)
+    }
+
+    /// Returns the full pathname for the resource identified by the specified name
+    /// and file extension.
+    ///
+    /// - Parameter filename: The name of the file with extension
+    ///   (e.g., `"colors.json"`).
+    /// - Returns: The full pathname for the resource file, or `nil` if the file
+    ///   could not be located.
+    public func path(filename: String) -> String? {
+        let components = filename.split(separator: ".")
+
+        guard components.count == 2 else {
+            return nil
+        }
+
+        let name = String(components[0])
+        let ext = String(components[1])
+
+        return path(forResource: name, ofType: ext)
     }
 }

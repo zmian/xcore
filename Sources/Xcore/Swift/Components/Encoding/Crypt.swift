@@ -10,6 +10,7 @@ import CryptoKit
 public enum Crypt {
     public enum Error: Swift.Error {
         case deobfuscationFailure
+        case urlNotFound
     }
 }
 
@@ -24,8 +25,8 @@ extension Crypt {
     /// - Returns: The original plaintext data that was sealed in the box, as long
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
-    public static func decrypt(contentsAt path: String, secret: String) throws -> Data {
-        try decrypt(contentsOf: URL(fileURLWithPath: path), secret: secret)
+    public static func decrypt(contentsAt path: String?, secret: String) throws -> Data {
+        try decrypt(contentsOf: path.map(URL.init(fileURLWithPath:)), secret: secret)
     }
 
     /// Decrypts the content at the given path and verifies its authenticity.
@@ -36,8 +37,8 @@ extension Crypt {
     /// - Returns: The original plaintext data that was sealed in the box, as long
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
-    public static func decrypt<D: ContiguousBytes>(contentsAt path: String, secret: D) throws -> Data {
-        try decrypt(contentsOf: URL(fileURLWithPath: path), secret: secret)
+    public static func decrypt<D: ContiguousBytes>(contentsAt path: String?, secret: D) throws -> Data {
+        try decrypt(contentsOf: path.map(URL.init(fileURLWithPath:)), secret: secret)
     }
 
     /// Decrypts the content at the given url and verifies its authenticity.
@@ -48,8 +49,12 @@ extension Crypt {
     /// - Returns: The original plaintext data that was sealed in the box, as long
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
-    public static func decrypt(contentsOf url: URL, secret: String) throws -> Data {
-        try decrypt(try Data(contentsOf: url), secret: secret)
+    public static func decrypt(contentsOf url: URL?, secret: String) throws -> Data {
+        guard let url = url else {
+            throw Error.urlNotFound
+        }
+
+        return try decrypt(try Data(contentsOf: url), secret: secret)
     }
 
     /// Decrypts the content at the given url and verifies its authenticity.
@@ -60,8 +65,12 @@ extension Crypt {
     /// - Returns: The original plaintext data that was sealed in the box, as long
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
-    public static func decrypt<D: ContiguousBytes>(contentsOf url: URL, secret: D) throws -> Data {
-        try decrypt(try Data(contentsOf: url), secret: secret)
+    public static func decrypt<D: ContiguousBytes>(contentsOf url: URL?, secret: D) throws -> Data {
+        guard let url = url else {
+            throw Error.urlNotFound
+        }
+
+        return try decrypt(try Data(contentsOf: url), secret: secret)
     }
 
     /// Decrypts the data and verifies its authenticity.
@@ -100,8 +109,8 @@ extension Crypt {
     ///   - path: The path to the content to encrypt.
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
-    public static func encrypt(contentsAt path: String, secret: String) throws -> Data {
-        try encrypt(contentsOf: URL(fileURLWithPath: path), secret: secret)
+    public static func encrypt(contentsAt path: String?, secret: String) throws -> Data {
+        try encrypt(contentsOf: path.map(URL.init(fileURLWithPath:)), secret: secret)
     }
 
     /// Secures the given plaintext content at the given path with encryption and an
@@ -111,8 +120,8 @@ extension Crypt {
     ///   - path: The path to the content to encrypt.
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
-    public static func encrypt<D: ContiguousBytes>(contentsAt path: String, secret: D) throws -> Data {
-        try encrypt(contentsOf: URL(fileURLWithPath: path), secret: secret)
+    public static func encrypt<D: ContiguousBytes>(contentsAt path: String?, secret: D) throws -> Data {
+        try encrypt(contentsOf: path.map(URL.init(fileURLWithPath:)), secret: secret)
     }
 
     /// Secures the given plaintext content at the given url with encryption and an
@@ -122,8 +131,12 @@ extension Crypt {
     ///   - path: The url of the content to encrypt.
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
-    public static func encrypt(contentsOf url: URL, secret: String) throws -> Data {
-        try encrypt(try Data(contentsOf: url), secret: secret)
+    public static func encrypt(contentsOf url: URL?, secret: String) throws -> Data {
+        guard let url = url else {
+            throw Error.urlNotFound
+        }
+
+        return try encrypt(try Data(contentsOf: url), secret: secret)
     }
 
     /// Secures the given plaintext content at the given url with encryption and an
@@ -133,8 +146,12 @@ extension Crypt {
     ///   - path: The url of the content to encrypt.
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
-    public static func encrypt<D: ContiguousBytes>(contentsOf url: URL, secret: D) throws -> Data {
-        try encrypt(try Data(contentsOf: url), secret: secret)
+    public static func encrypt<D: ContiguousBytes>(contentsOf url: URL?, secret: D) throws -> Data {
+        guard let url = url else {
+            throw Error.urlNotFound
+        }
+
+        return try encrypt(try Data(contentsOf: url), secret: secret)
     }
 
     /// Secures the given plaintext data with encryption and an authentication tag.
