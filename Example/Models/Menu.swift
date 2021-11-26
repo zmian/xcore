@@ -57,7 +57,8 @@ extension Menu: CaseIterable {
         popups,
         textFields,
         activitySheet,
-        labelInset
+        labelInset,
+        crypt
     ]
 }
 
@@ -128,5 +129,16 @@ extension Menu {
         title: "Label Inset",
         subtitle: "Label extension to enable \"contentInset\".",
         content: ExampleLabelInsetViewController().embedInView()
+    )
+
+    private static let crypt = Self(
+        title: "Crypt",
+        content: {
+            if #available(iOS 15.0, *) {
+                CryptView()
+            } else {
+                EmptyView()
+            }
+        }
     )
 }
