@@ -7,7 +7,7 @@
 import Foundation
 
 public protocol Pond {
-    typealias Key = PondKey
+    associatedtype Key: Identifiable where Key.ID == String
 
     func get<T>(_ type: T.Type, _ key: Key) -> T?
 
