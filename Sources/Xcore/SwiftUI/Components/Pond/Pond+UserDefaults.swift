@@ -6,7 +6,7 @@
 
 import Foundation
 
-public final class UserDefaultsKeyValueStore: KeyValueStore {
+public final class UserDefaultsPond: Pond {
     private let userDefaults: UserDefaults
 
     public init(_ userDefaults: UserDefaults = .standard) {
@@ -24,11 +24,11 @@ public final class UserDefaultsKeyValueStore: KeyValueStore {
 
 // MARK: - Dot Syntax Support
 
-extension KeyValueStore where Self == UserDefaultsKeyValueStore {
-    /// Returns standard `UserDefaults` variant of `KeyValueStore`.
+extension Pond where Self == UserDefaultsPond {
+    /// Returns standard `UserDefaults` variant of `Pond`.
     public static var userDefaults: Self { .init() }
 
-    /// Returns `UserDefaults` variant of `KeyValueStore`.
+    /// Returns `UserDefaults` variant of `Pond`.
     public static func userDefaults(_ userDefaults: UserDefaults) -> Self {
         .init(userDefaults)
     }
