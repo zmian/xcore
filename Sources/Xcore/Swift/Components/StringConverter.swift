@@ -92,12 +92,8 @@ extension StringConverter {
         }
     }
 
-    public func get<T>() -> T? where T: RawRepresentable {
-        guard let rawValue = get(T.RawValue.self) else {
-            return nil
-        }
-
-        return T(rawValue: rawValue)
+    public func get<T>() -> T? where T: RawRepresentable, T.RawValue == String {
+        T(rawValue: string)
     }
 }
 

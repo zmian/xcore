@@ -23,7 +23,7 @@ public protocol Pond {
 // MARK: - Helpers
 
 extension Pond {
-    public func set<T>(_ key: Key, value: T?) where T: RawRepresentable {
+    public func set<T>(_ key: Key, value: T?) where T: RawRepresentable, T.RawValue == String {
         set(key, value: value?.rawValue)
     }
 
@@ -51,7 +51,7 @@ extension Pond {
         value(key)?.get() ?? defaultValue()
     }
 
-    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable {
+    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
         value(key)?.get() ?? defaultValue()
     }
 
