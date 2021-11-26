@@ -7,7 +7,7 @@
 #if DEBUG
 import Foundation
 
-public struct FailingPond<Key>: Pond where Key: Identifiable, Key.ID == String {
+public struct FailingPond: Pond {
     public init() {}
 
     public func get<T>(_ type: T.Type, _ key: Key) -> T? {
@@ -31,10 +31,8 @@ public struct FailingPond<Key>: Pond where Key: Identifiable, Key.ID == String {
 
 // MARK: - Dot Syntax Support
 
-extension Pond {
+extension Pond where Self == FailingPond {
     /// Returns failing variant of `Pond`.
-    public static func failing<Key>() -> Self where Self == FailingPond<Key> {
-        .init()
-    }
+    public static var failing: Self { .init() }
 }
 #endif

@@ -44,6 +44,10 @@ public struct OpenURLClient: Hashable, Identifiable {
 
     /// Attempts to asynchronously open the resource at the specified URL.
     public func callAsFunction(_ url: URL?) {
+        guard let url = url else {
+            return
+        }
+
         open(.init(title: "", url: url))
     }
 
@@ -62,12 +66,11 @@ extension OpenURLClient {
     /// Returns system variant of `OpenURLClient`.
     public static var system: Self {
         .init { adaptiveUrl in
-            guard
-                let app = UIApplication.sharedOrNil,
-                let url = adaptiveUrl.url
-            else {
+            guard let app = UIApplication.sharedOrNil else {
                 return
             }
+
+            let url = adaptiveUrl.url
 
             // Attempt to open standard urls using in-app Safari.
             if [.http, .https].contains(url.schemeType), let nvc = app.topNavigationController {

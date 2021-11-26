@@ -7,7 +7,7 @@
 import Foundation
 import KeychainAccess
 
-public struct KeychainPond<Key>: Pond where Key: Identifiable, Key.ID == String {
+public struct KeychainPond: Pond {
     private let keychain: Keychain
 
     public init(_ keychain: Keychain) {
@@ -19,17 +19,37 @@ public struct KeychainPond<Key>: Pond where Key: Identifiable, Key.ID == String 
             case is Data.Type, is Optional<Data>.Type:
                 return try? keychain.getData(key.id) as? T
             default:
+                if Mirror.isCollection(T.self) {
+                    if let data = try? keychain.getData(key.id) {
+                        return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? T
+                    }
+                }
                 return StringConverter(keychain[key.id])?.get(type)
         }
     }
 
     public func set<T>(_ key: Key, value: T?) {
-        if value == nil {
-            remove(key)
-        } else if let data = value as? Data {
-            try? keychain.set(data, key: key.id)
-        } else {
-            keychain[key.id] = StringConverter(value as Any)?.get()
+        do {
+            if value == nil {
+                remove(key)
+            } else if let value = value as? Data {
+                try keychain.set(value, key: key.id)
+            } else if let value = StringConverter(value)?.get(String.self) {
+                try keychain.set(value, key: key.id)
+            } else if let value = value, Mirror.isCollection(value) {
+                let data = try NSKeyedArchiver.archivedData(withRootObject: value, requiringSecureCoding: false)
+                try keychain.set(data, key: key.id)
+            } else {
+                #if DEBUG
+                fatalError("Unable to save value for \(key.id).")
+                #endif
+            }
+        } catch {
+            #if DEBUG
+            fatalError(String(describing: error))
+            #else
+            // Return nothing to avoid leaking error details in production.
+            #endif
         }
     }
 
@@ -60,9 +80,9 @@ public struct KeychainPond<Key>: Pond where Key: Identifiable, Key.ID == String 
 
 // MARK: - Dot Syntax Support
 
-extension Pond {
+extension Pond where Self == KeychainPond {
     /// Returns `Keychain` variant of `Pond`.
-    public static func keychain<Key>(_ keychain: Keychain) -> Self where Self == KeychainPond<Key> {
+    public static func keychain(_ keychain: Keychain) -> Self {
         .init(keychain)
     }
 }

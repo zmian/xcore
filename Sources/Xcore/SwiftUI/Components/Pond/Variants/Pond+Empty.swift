@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct EmptyPond<Key>: Pond where Key: Identifiable, Key.ID == String {
+public struct EmptyPond: Pond {
     public init() {}
 
     public func get<T>(_ type: T.Type, _ key: Key) -> T? {
@@ -24,9 +24,7 @@ public struct EmptyPond<Key>: Pond where Key: Identifiable, Key.ID == String {
 
 // MARK: - Dot Syntax Support
 
-extension Pond {
+extension Pond where Self == EmptyPond {
     /// Returns empty variant of `Pond`.
-    public static func empty<Key>() -> Self where Self == EmptyPond<Key> {
-        .init()
-    }
+    public static var empty: Self { .init() }
 }

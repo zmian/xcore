@@ -7,10 +7,10 @@
 import Foundation
 import KeychainAccess
 
-public struct CompositePond<Key>: Pond where Key: Identifiable, Key.ID == String {
-    private let pond: (Key) -> AnyPond<Key>
+public struct CompositePond: Pond {
+    private let pond: (Key) -> Pond
 
-    public init(_ pond: @escaping (Key) -> AnyPond<Key>) {
+    public init(_ pond: @escaping (Key) -> Pond) {
         self.pond = pond
     }
 
@@ -33,9 +33,32 @@ public struct CompositePond<Key>: Pond where Key: Identifiable, Key.ID == String
 
 // MARK: - Dot Syntax Support
 
-extension Pond {
+extension Pond where Self == CompositePond {
     /// Returns composite variant of `Pond`.
-    public static func composite<Key>(_ pond: @escaping (Key) -> AnyPond<Key>) -> Self where Self == CompositePond<Key> {
+    public static func composite(_ pond: @escaping (Key) -> Pond) -> Self {
         .init(pond)
+    }
+
+    /// Returns composite variant of `Pond` with Keychain `accessGroup` and optional
+    /// ``UserDefaults`` `suiteName`.
+    ///
+    /// - Parameters:
+    ///   - accessGroup: A string indicating the access group for the Keychain
+    ///     items.
+    ///   - suiteName: Creates a user defaults object initialized with the defaults
+    ///     for the specified database name. The default value is `.standard`
+    /// - Returns: Returns composite variant of `Pond`.
+    public static func composite(accessGroup: String, suiteName: String? = nil) -> Self {
+        let defaults = suiteName.map { UserDefaults.init(suiteName: $0)! } ?? .standard
+        let userDefaults = UserDefaultsPond(defaults)
+
+        return composite { key in
+            switch key.storage {
+                case .userDefaults:
+                    return userDefaults
+                case let .keychain(policy):
+                    return KeychainPond(.keychain(accessGroup: accessGroup, policy: policy))
+            }
+        }
     }
 }

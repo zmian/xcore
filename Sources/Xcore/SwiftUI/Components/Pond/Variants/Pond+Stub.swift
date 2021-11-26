@@ -7,17 +7,38 @@
 #if DEBUG
 import Foundation
 
-public struct StubPond<Key>: Pond where Key: Identifiable, Key.ID == String {
-    private var storage: MutableBox<[String: String]> = .init([:])
+public struct StubPond: Pond {
+    private var storage: MutableBox<[String: Any]> = .init([:])
 
     public init() {}
 
     public func get<T>(_ type: T.Type, _ key: Key) -> T? {
-        StringConverter(storage[key.id])?.get(type)
+        switch T.self {
+            case is Data.Type, is Optional<Data>.Type:
+                return storage[key.id] as? T
+            default:
+                if Mirror.isCollection(T.self) {
+                    return storage[key.id] as? T
+                } else {
+                    return StringConverter(storage[key.id])?.get(type)
+                }
+        }
     }
 
     public func set<T>(_ key: Key, value: T?) {
-        storage[key.id] = StringConverter(value as Any)?.get()
+        if value == nil {
+            remove(key)
+        } else if let value = value as? Data {
+            storage[key.id] = value
+        } else if let value = value, Mirror.isCollection(value) {
+            storage[key.id] = value
+        } else if let value = StringConverter(value)?.get(String.self) {
+            storage[key.id] = value
+        } else {
+            #if DEBUG
+            fatalError("Unable to save value for \(key.id).")
+            #endif
+        }
     }
 
     public func remove(_ key: Key) {
@@ -35,10 +56,8 @@ public struct StubPond<Key>: Pond where Key: Identifiable, Key.ID == String {
 
 // MARK: - Dot Syntax Support
 
-extension Pond {
+extension Pond where Self == StubPond {
     /// Returns stub variant of `Pond`.
-    public static func stub<Key>() -> Self where Self == StubPond<Key> {
-        .init()
-    }
+    public static var stub: Self { .init() }
 }
 #endif
