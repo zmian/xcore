@@ -49,7 +49,7 @@ extension Crypt {
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
     public static func decrypt(_ data: Data, secret: String) throws -> Data {
-        try decrypt(data, secret: [UInt8](secret.utf8))
+        try decrypt(data, secret: secret.sha256Data())
     }
 
     /// Decrypts the data and verifies its authenticity.
@@ -99,7 +99,7 @@ extension Crypt {
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
     public static func encrypt(_ data: Data, secret: String) throws -> Data {
-        try encrypt(data, secret: [UInt8](secret.utf8))
+        try encrypt(data, secret: secret.sha256Data())
     }
 
     /// Secures the given plaintext data with encryption and an authentication tag.
@@ -124,7 +124,7 @@ extension Crypt {
     ///   - secret: Secret for obfuscation.
     /// - Returns: Obfuscated value in an array of `UInt8`.
     public static func obfuscate(_ string: String, secret: String) -> [UInt8] {
-        obfuscate(string, secret: [UInt8](secret.utf8))
+        obfuscate(string, secret: secret.sha256Data().bytes)
     }
 
     /// Obfuscates a given string with secret.
@@ -148,7 +148,7 @@ extension Crypt {
     ///   - secret: The secret that was used during obfucation.
     /// - Returns: Deobfuscated value of given obfuscated value.
     public static func deobfuscate(_ value: [UInt8], secret: String) throws -> String {
-        try deobfuscate(value, secret: [UInt8](secret.utf8))
+        try deobfuscate(value, secret: secret.sha256Data().bytes)
     }
 
     /// Deobfucates a previously obfuscated value.
@@ -190,5 +190,11 @@ extension Crypt {
     /// least one character from each set being present.
     public static func generateRandomPassword() -> String {
         SecCreateSharedWebCredentialPassword()! as String
+    }
+}
+
+extension String {
+    fileprivate func sha256Data() -> Data {
+        Data(utf8).sha256()
     }
 }

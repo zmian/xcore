@@ -48,7 +48,7 @@ extension Date {
             \(calendar.timeZone.identifier)
             \(calendar.locale?.identifier ?? "")
             \(isLenient)
-            """.sha256() ?? ""
+            """.sha256()
 
             if let formatter = get(key: key) as? DateFormatter {
                 return formatter
@@ -81,7 +81,7 @@ extension Date {
             \(calendar.timeZone.identifier)
             \(calendar.locale?.identifier ?? "")
             \(isLenient.hashValue)
-            """.sha256() ?? ""
+            """.sha256()
 
             if let formatter = get(key: key) as? DateFormatter {
                 return formatter
@@ -107,7 +107,7 @@ extension Date {
             let key = """
             \(options.rawValue)
             \(calendar.timeZone.identifier)
-            """.sha256() ?? ""
+            """.sha256()
 
             if let formatter = get(key: key) as? ISO8601DateFormatter {
                 return formatter

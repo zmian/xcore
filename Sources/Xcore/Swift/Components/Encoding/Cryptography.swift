@@ -22,12 +22,12 @@ extension Data {
 // MARK: - String
 
 extension String {
-    public func sha256() -> String? {
-        data(using: .utf8)?.sha256().hexEncodedString()
+    public func sha256() -> String {
+        Data(utf8).sha256().hexEncodedString()
     }
 
     public var bytes: [UInt8] {
-        data(using: .utf8)?.bytes ?? Array(utf8)
+        Data(utf8).bytes
     }
 }
 
