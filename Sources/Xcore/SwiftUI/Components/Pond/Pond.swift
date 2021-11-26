@@ -9,8 +9,7 @@ import Foundation
 public protocol Pond {
     typealias Key = PondKey
 
-    func get(_ key: Key) -> String?
-    func set(_ key: Key, value: String?)
+    func get<T>(_ type: T.Type, _ key: Key) -> T?
 
     func set<T>(_ key: Key, value: T?)
 
@@ -19,6 +18,18 @@ public protocol Pond {
     func contains(_ key: Key) -> Bool
 
     func remove(_ key: Key)
+}
+
+// MARK: - Helpers
+
+extension Pond {
+    public func set<T>(_ key: Key, value: T?) where T: RawRepresentable {
+        set(key, value: value?.rawValue)
+    }
+
+    public func contains(_ key: Key) -> Bool {
+        get(key) != nil
+    }
 }
 
 // MARK: - Helpers: Get
@@ -33,14 +44,14 @@ extension Pond {
     }
 
     public func get<T>(_ key: Key) -> T? {
-        value(key)?.get()
+        get(T.self, key)
     }
 
     public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T {
         value(key)?.get() ?? defaultValue()
     }
 
-    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
+    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable {
         value(key)?.get() ?? defaultValue()
     }
 
@@ -53,34 +64,6 @@ extension Pond {
     /// - Returns: A value of the specified type, if the decoder can parse the data.
     public func getDecoded<T>(_ key: Key, type: T.Type = T.self, decoder: JSONDecoder? = nil) -> T? where T: Decodable {
         value(key)?.get(type, decoder: decoder)
-    }
-}
-
-// MARK: - Helpers: Set
-
-extension Pond {
-    public func set<T>(_ key: Key, value: T?) {
-        guard let value = value else {
-            return remove(key)
-        }
-
-        set(key, value: StringConverter(value)?.get())
-    }
-
-    public func set<T>(_ key: Key, value: T?) where T: RawRepresentable, T.RawValue == String {
-        set(key, value: value?.rawValue)
-    }
-}
-
-// MARK: - Helpers
-
-extension Pond {
-    public func contains(_ key: Key) -> Bool {
-        get(key) != nil
-    }
-
-    public func remove(_ key: Key) {
-        set(key, value: nil)
     }
 }
 

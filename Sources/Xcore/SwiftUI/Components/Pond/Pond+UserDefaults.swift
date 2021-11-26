@@ -13,12 +13,16 @@ public final class UserDefaultsPond: Pond {
         self.userDefaults = userDefaults
     }
 
-    public func get(_ key: Key) -> String? {
-        userDefaults.string(forKey: key.id)
+    public func get<T>(_ type: T.Type, _ key: Key) -> T? {
+        StringConverter(userDefaults.string(forKey: key.id))?.get(type)
     }
 
-    public func set(_ key: Key, value: String?) {
+    public func set<T>(_ key: Key, value: T?) {
         userDefaults.set(value, forKey: key.id)
+    }
+
+    public func remove(_ key: Key) {
+        userDefaults.removeObject(forKey: key.id)
     }
 }
 
