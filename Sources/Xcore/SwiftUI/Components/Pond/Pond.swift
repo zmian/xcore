@@ -6,10 +6,8 @@
 
 import Foundation
 
-// MARK: - Client
-
-public protocol KeyValueStore {
-    typealias Key = KeyValueStoreKey
+public protocol Pond {
+    typealias Key = PondKey
 
     func get(_ key: Key) -> String?
     func set(_ key: Key, value: String?)
@@ -25,7 +23,7 @@ public protocol KeyValueStore {
 
 // MARK: - Helpers: Get
 
-extension KeyValueStore {
+extension Pond {
     private func value(_ key: Key) -> StringConverter? {
         StringConverter(get(key))
     }
@@ -60,7 +58,7 @@ extension KeyValueStore {
 
 // MARK: - Helpers: Set
 
-extension KeyValueStore {
+extension Pond {
     public func set<T>(_ key: Key, value: T?) {
         guard let value = value else {
             return remove(key)
@@ -76,7 +74,7 @@ extension KeyValueStore {
 
 // MARK: - Helpers
 
-extension KeyValueStore {
+extension Pond {
     public func contains(_ key: Key) -> Bool {
         get(key) != nil
     }
@@ -89,18 +87,18 @@ extension KeyValueStore {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct KeyValueStoreKey: DependencyKey {
-        static let defaultValue: KeyValueStore = .userDefaults
+    private struct PondKey: DependencyKey {
+        static let defaultValue: Pond = .userDefaults
     }
 
-    public var keyValueStore: KeyValueStore {
-        get { self[KeyValueStoreKey.self] }
-        set { self[KeyValueStoreKey.self] = newValue }
+    public var pond: Pond {
+        get { self[PondKey.self] }
+        set { self[PondKey.self] = newValue }
     }
 
     @discardableResult
-    public static func keyValueStore<P: KeyValueStore>(_ value: P) -> Self.Type {
-        set(\.keyValueStore, value)
+    public static func pond<P: Pond>(_ value: P) -> Self.Type {
+        set(\.pond, value)
         return Self.self
     }
 }

@@ -6,13 +6,13 @@
 
 import Foundation
 
-public protocol KeyValueStoreKey {
+public protocol PondKey {
     var id: String { get }
 }
 
 // MARK: - Auto Implementation for RawRepresentable
 
-extension KeyValueStoreKey where Self: RawRepresentable, RawValue == String {
+extension PondKey where Self: RawRepresentable, RawValue == String {
     public var id: RawValue {
         rawValue
     }
