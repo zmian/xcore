@@ -17,3 +17,5 @@ extension PondKey where Self: RawRepresentable, RawValue == String {
         rawValue
     }
 }
+
+extension PondKey where Self: Identifiable, ID == String {}
