@@ -38,7 +38,7 @@ public struct StringConverter {
             return
         }
 
-        if let value = value as? Data, let dataString = String.init(data: value, encoding: .utf8) {
+        if let value = value as? Data, let dataString = String(data: value, encoding: .utf8) {
             self.string = dataString
             return
         }
@@ -67,7 +67,7 @@ public struct StringConverter {
 }
 
 extension StringConverter {
-    public func get<T>() -> T? {
+    public func get<T>(_ type: T.Type = T.self) -> T? {
         switch T.self {
             case is String.Type, is Optional<String>.Type:
                 return string as? T
@@ -92,8 +92,12 @@ extension StringConverter {
         }
     }
 
-    public func get<T>() -> T? where T: RawRepresentable, T.RawValue == String {
-        T(rawValue: string)
+    public func get<T>() -> T? where T: RawRepresentable {
+        guard let rawValue = get(T.RawValue.self) else {
+            return nil
+        }
+
+        return T(rawValue: rawValue)
     }
 }
 
