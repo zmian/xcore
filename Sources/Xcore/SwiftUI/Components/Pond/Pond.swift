@@ -70,18 +70,18 @@ extension Pond {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct PondKey: DependencyKey {
-        static let defaultValue: Pond = .userDefaults
+    private struct XcorePondKey: DependencyKey {
+        static let defaultValue = AnyPond<PondKey>(.userDefaults())
     }
 
-    public var pond: Pond {
-        get { self[PondKey.self] }
-        set { self[PondKey.self] = newValue }
+    public var pond: AnyPond<PondKey> {
+        get { self[XcorePondKey.self] }
+        set { self[XcorePondKey.self] = newValue }
     }
 
     @discardableResult
-    public static func pond<P: Pond>(_ value: P) -> Self.Type {
-        set(\.pond, value)
+    public static func pond<P: Pond>(_ value: P) -> Self.Type where P.Key == PondKey {
+        set(\.pond, AnyPond(value))
         return Self.self
     }
 }
