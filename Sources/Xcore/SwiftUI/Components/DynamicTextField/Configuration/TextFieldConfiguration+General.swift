@@ -37,4 +37,15 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
             validation: .isValid(.phoneNumber)
         )
     }
+
+    /// Similar to text but no spell checking, auto capitalization or auto
+    /// correction.
+    public static var plain: Self {
+        .init(
+            id: #function,
+            autocapitalization: .none,
+            autocorrection: .no,
+            spellChecking: .no
+        )
+    }
 }
