@@ -9,7 +9,7 @@ import Foundation
 public struct AdaptiveURL: UserInfoContainer, MutableAppliable {
     /// The title of the URL.
     public let title: String
-    public let url: URL?
+    public let url: URL
     /// Additional info which may be used to describe the url further.
     public var userInfo: UserInfo
 
@@ -19,7 +19,7 @@ public struct AdaptiveURL: UserInfoContainer, MutableAppliable {
     ///   - title: The title of the URL.
     ///   - url: The url.
     ///   - userInfo: Additional info associated with the url.
-    public init(title: String, url: URL?, userInfo: UserInfo = [:]) {
+    public init(title: String, url: URL, userInfo: UserInfo = [:]) {
         self.title = title
         self.url = url
         self.userInfo = userInfo

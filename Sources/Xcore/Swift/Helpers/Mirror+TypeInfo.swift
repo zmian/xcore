@@ -118,6 +118,18 @@ extension Mirror {
     public static func isOptional<T>(_ value: T) -> Bool {
         value is OptionalTypeMarker || value is OptionalTypeMarker.Type
     }
+
+    // Credit: https://stackoverflow.com/a/46362808
+    public static func isCollection<T>(_ object: T) -> Bool {
+        let knownCollectionsTypes = ["Set", "Array", "Dictionary"]
+        let typeString = String(describing: Swift.type(of: object))
+
+        for type in knownCollectionsTypes where typeString.contains(type) {
+            return true
+        }
+
+        return false
+    }
 }
 
 // Credit: https://forums.swift.org/t/35479/36

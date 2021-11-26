@@ -21,7 +21,7 @@ public struct StringConverter {
         self.string = value.description
     }
 
-    public init?(_ value: Any) {
+    public init?<T>(_ value: T) {
         if let value = value as? LosslessStringConvertible {
             self.string = value.description
             return
@@ -35,6 +35,21 @@ public struct StringConverter {
 
         if let value = value as? NSNumber {
             self.string = value.stringValue
+            return
+        }
+
+        if let value = value as? Date {
+            self.string = value.timeIntervalSinceReferenceDate.description
+            return
+        }
+
+        if let value = value as? URL {
+            self.string = value.absoluteString
+            return
+        }
+
+        if let value = (value as? NSURL)?.absoluteString {
+            self.string = value
             return
         }
 
@@ -87,6 +102,16 @@ extension StringConverter {
                 return string as? T
             case is Data.Type, is Optional<Data>.Type:
                 return string.data(using: .utf8) as? T
+            case is URL.Type, is Optional<URL>.Type:
+                return URL(string: string) as? T
+            case is NSURL.Type, is Optional<NSURL>.Type:
+                return NSURL(string: string) as? T
+            case is Date.Type, is Optional<Date>.Type:
+                if let double = Double(string) {
+                    return Date(timeIntervalSinceReferenceDate: double) as? T
+                }
+
+                return nil
             default:
                 return json as? T
         }
@@ -112,7 +137,20 @@ extension StringConverter {
             return nil
         }
 
-        let decoder = decoder ?? makeDecoder()
+        return Self.get(type, from: data, decoder: decoder)
+    }
+
+    /// Returns a value of the type you specify, decoded from an object.
+    ///
+    /// - Parameters:
+    ///   - type: The type of the value to decode from the string.
+    ///   - decoder: The decoder used to decode the data. If set to `nil`, it uses
+    ///     ``JSONDecoder`` with `convertFromSnakeCase` key decoding strategy.
+    /// - Returns: A value of the specified type, if the decoder can parse the data.
+    static func get<T>(_ type: T.Type = T.self, from data: Data, decoder: JSONDecoder? = nil) -> T? where T: Decodable {
+        let decoder = decoder ?? JSONDecoder().apply {
+            $0.keyDecodingStrategy = .convertFromSnakeCase
+        }
 
         do {
             return try decoder.decode(T.self, from: data)
@@ -126,12 +164,6 @@ extension StringConverter {
             }
             #endif
             return nil
-        }
-    }
-
-    private func makeDecoder() -> JSONDecoder {
-        JSONDecoder().apply {
-            $0.keyDecodingStrategy = .convertFromSnakeCase
         }
     }
 }
