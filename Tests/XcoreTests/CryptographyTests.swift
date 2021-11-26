@@ -10,12 +10,12 @@ import XCTest
 final class CryptographyTests: TestCase {
     func testSha256HashString() {
         let string1 = "Hello World"
-        XCTAssertEqual(string1.sha256()!, "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e")
+        XCTAssertEqual(string1.sha256(), "a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e")
 
         let string2 = "hello world"
-        XCTAssertEqual(string2.sha256()!, "b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9")
+        XCTAssertEqual(string2.sha256(), "b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9")
 
-        XCTAssertNotEqual(string1.sha256()!, string2.sha256()!)
+        XCTAssertNotEqual(string1.sha256(), string2.sha256())
     }
 
     func testSha256HashData() {
