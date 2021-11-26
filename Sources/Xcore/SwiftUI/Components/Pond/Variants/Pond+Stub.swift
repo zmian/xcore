@@ -7,7 +7,7 @@
 #if DEBUG
 import Foundation
 
-public struct StubPond: Pond {
+public struct StubPond<Key>: Pond where Key: Identifiable, Key.ID == String {
     private var storage: MutableBox<[String: String]> = .init([:])
 
     public init() {}
@@ -35,8 +35,10 @@ public struct StubPond: Pond {
 
 // MARK: - Dot Syntax Support
 
-extension Pond where Self == StubPond {
+extension Pond {
     /// Returns stub variant of `Pond`.
-    public static var stub: Self { .init() }
+    public static func stub<Key>() -> Self where Self == StubPond<Key> {
+        .init()
+    }
 }
 #endif

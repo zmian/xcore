@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct UserDefaultsPond: Pond {
+public struct UserDefaultsPond<Key>: Pond where Key: Identifiable, Key.ID == String {
     private let userDefaults: UserDefaults
 
     public init(_ userDefaults: UserDefaults = .standard) {
@@ -28,12 +28,14 @@ public struct UserDefaultsPond: Pond {
 
 // MARK: - Dot Syntax Support
 
-extension Pond where Self == UserDefaultsPond {
+extension Pond {
     /// Returns standard `UserDefaults` variant of `Pond`.
-    public static var userDefaults: Self { .init() }
+    public static func userDefaults<Key>() -> Self where Self == UserDefaultsPond<Key> {
+        .init()
+    }
 
     /// Returns `UserDefaults` variant of `Pond`.
-    public static func userDefaults(_ userDefaults: UserDefaults) -> Self {
+    public static func userDefaults<Key>(_ userDefaults: UserDefaults) -> Self where Self == UserDefaultsPond<Key> {
         .init(userDefaults)
     }
 }

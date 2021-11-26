@@ -7,7 +7,7 @@
 import Foundation
 import KeychainAccess
 
-public struct KeychainPond: Pond {
+public struct KeychainPond<Key>: Pond where Key: Identifiable, Key.ID == String {
     private let keychain: Keychain
 
     public init(_ keychain: Keychain) {
@@ -60,9 +60,9 @@ public struct KeychainPond: Pond {
 
 // MARK: - Dot Syntax Support
 
-extension Pond where Self == KeychainPond {
+extension Pond {
     /// Returns `Keychain` variant of `Pond`.
-    public static func keychain(_ keychain: Keychain) -> Self {
+    public static func keychain<Key>(_ keychain: Keychain) -> Self where Self == KeychainPond<Key> {
         .init(keychain)
     }
 }
