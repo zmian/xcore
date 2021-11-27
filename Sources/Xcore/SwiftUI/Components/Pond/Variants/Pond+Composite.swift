@@ -49,7 +49,7 @@ extension Pond where Self == CompositePond {
     ///     for the specified database name. The default value is `.standard`
     /// - Returns: Returns composite variant of `Pond`.
     public static func composite(accessGroup: String, suiteName: String? = nil) -> Self {
-        composite(keychain: .keychain(accessGroup: accessGroup), suiteName: suiteName)
+        composite(keychain: .default(accessGroup: accessGroup), suiteName: suiteName)
     }
 
     /// Returns composite variant of `Pond` with Keychain `accessGroup` and optional

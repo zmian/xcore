@@ -31,7 +31,9 @@ extension KeychainAccess.AuthenticationPolicy: Hashable {}
 // MARK: - Inits
 
 extension Keychain {
-    public static func keychain(
+    /// A keychain with `service` set to bundle identifier with ".intents" removed
+    /// and `accessibility` set to `whenUnlockedThisDeviceOnly`.
+    public static func `default`(
         accessGroup: String,
         policy: AuthenticationPolicy = .none
     ) -> Keychain {
