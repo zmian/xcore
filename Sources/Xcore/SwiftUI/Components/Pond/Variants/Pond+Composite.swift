@@ -49,6 +49,20 @@ extension Pond where Self == CompositePond {
     ///     for the specified database name. The default value is `.standard`
     /// - Returns: Returns composite variant of `Pond`.
     public static func composite(accessGroup: String, suiteName: String? = nil) -> Self {
+        composite(keychain: .keychain(accessGroup: accessGroup), suiteName: suiteName)
+    }
+
+    /// Returns composite variant of `Pond` with Keychain `accessGroup` and optional
+    /// ``UserDefaults`` `suiteName`.
+    ///
+    /// - Parameters:
+    ///   - keychain: The Keychain to use for keys that are marked with `keychain`
+    ///     storage. Note, the policy is automatically applied to the given keychain
+    ///     to ensure key preference is preserved.
+    ///   - suiteName: Creates a user defaults object initialized with the defaults
+    ///     for the specified database name. The default value is `.standard`
+    /// - Returns: Returns composite variant of `Pond`.
+    public static func composite(keychain: Keychain, suiteName: String? = nil) -> Self {
         let defaults = suiteName.map { UserDefaults.init(suiteName: $0)! } ?? .standard
         let userDefaults = UserDefaultsPond(defaults)
 
@@ -57,7 +71,7 @@ extension Pond where Self == CompositePond {
                 case .userDefaults:
                     return userDefaults
                 case let .keychain(policy):
-                    return KeychainPond(.keychain(accessGroup: accessGroup, policy: policy))
+                    return KeychainPond(keychain.policy(policy))
             }
         }
     }
