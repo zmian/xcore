@@ -139,11 +139,26 @@ extension String {
 
     /// Drops the given `prefix` from `self`.
     ///
-    /// - Returns: String without the specified `prefix` or nil if `prefix` doesn't
-    /// exists.
-    public func stripPrefix(_ prefix: String) -> String? {
-        guard hasPrefix(prefix) else { return nil }
+    /// - Returns: String without the specified `prefix` or unmodified `self` if
+    ///   `prefix` doesn't exists.
+    public func droppingPrefix(_ prefix: String) -> String {
+        guard hasPrefix(prefix) else {
+            return self
+        }
+
         return String(dropFirst(prefix.count))
+    }
+
+    /// Drops the given `suffix` from `self`.
+    ///
+    /// - Returns: String without the specified `suffix` or unmodified `self` if
+    ///   `suffix` doesn't exists.
+    public func droppingSuffix(_ suffix: String) -> String {
+        guard hasSuffix(suffix) else {
+            return self
+        }
+
+        return String(dropLast(suffix.count))
     }
 
     /// Take last `x` characters from `self`.
