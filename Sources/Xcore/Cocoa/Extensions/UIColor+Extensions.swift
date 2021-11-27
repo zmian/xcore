@@ -76,13 +76,7 @@ extension UIColor {
     }
 
     private static func components(hex: String) -> Int64 {
-        var hexString = hex
-
-        if hexString.hasPrefix("#"), let cleanString = hexString.stripPrefix("#") {
-            hexString = cleanString
-        }
-
-        return Int64(hexString, radix: 16) ?? 0x000000
+        Int64(hex.droppingPrefix("#"), radix: 16) ?? 0x000000
     }
 
     private func components(normalize: Bool = true) -> (r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat) {
