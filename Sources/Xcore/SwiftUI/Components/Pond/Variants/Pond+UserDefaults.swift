@@ -29,11 +29,11 @@ public struct UserDefaultsPond: Pond {
     public func set<T>(_ key: Key, value: T?) {
         if value == nil {
             remove(key)
-        } else if let value = value, Mirror.isCollection(value) {
-            userDefaults.set(value, forKey: key.id)
         } else if let value = value as? Data {
             userDefaults.set(value, forKey: key.id)
         } else if let value = StringConverter(value)?.get(String.self) {
+            userDefaults.set(value, forKey: key.id)
+        } else if let value = value, Mirror.isCollection(value) {
             userDefaults.set(value, forKey: key.id)
         } else {
             #if DEBUG
