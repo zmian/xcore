@@ -36,7 +36,7 @@ public struct StubPond: Pond {
             storage[key.id] = value
         } else {
             #if DEBUG
-            fatalError("Unable to save value for \(key.id).")
+            fatalError("Unable to save value for \(key.id): \(String(describing: value))")
             #endif
         }
     }

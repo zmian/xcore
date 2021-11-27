@@ -37,7 +37,7 @@ public struct UserDefaultsPond: Pond {
             userDefaults.set(value, forKey: key.id)
         } else {
             #if DEBUG
-            fatalError("Unable to save value for \(key.id).")
+            fatalError("Unable to save value for \(key.id): \(String(describing: value))")
             #endif
         }
     }
