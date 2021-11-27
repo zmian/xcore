@@ -198,6 +198,16 @@ extension Crypt {
     public static func obfuscate(_ string: String, secret: [UInt8]) -> [UInt8] {
         zip(string.utf8, secret).map(^)
     }
+
+    /// Obfuscates a given data with secret.
+    ///
+    /// - Parameters:
+    ///   - data: Data to obfuscate.
+    ///   - secret: Secret for obfuscation.
+    /// - Returns: Obfuscated value in an array of `UInt8`.
+    public static func obfuscate(_ data: [UInt8], secret: [UInt8]) -> [UInt8] {
+        zip(data, secret).map(^)
+    }
 }
 
 // MARK: - Deobfuscate
@@ -210,7 +220,7 @@ extension Crypt {
     ///   - secret: The secret that was used during obfucation.
     /// - Returns: Deobfuscated value of given obfuscated value.
     public static func deobfuscate(_ value: [UInt8], secret: String) throws -> String {
-        try deobfuscate(value, secret: secret.sha256Data().bytes)
+        try deobfuscateString(value, secret: secret.sha256Data().bytes)
     }
 
     /// Deobfucates a previously obfuscated value.
@@ -219,7 +229,7 @@ extension Crypt {
     ///   - value: Obfuscated value to deobfuscate.
     ///   - secret: The secret that was used during obfucation.
     /// - Returns: Deobfuscated value of given obfuscated value.
-    public static func deobfuscate(_ value: [UInt8], secret: [UInt8]) throws -> String {
+    public static func deobfuscateString(_ value: [UInt8], secret: [UInt8]) throws -> String {
         let rawBytes = zip(value, secret).map(^)
 
         guard let value = String(bytes: rawBytes, encoding: .utf8) else {
@@ -227,6 +237,16 @@ extension Crypt {
         }
 
         return value
+    }
+
+    /// Deobfucates a previously obfuscated value.
+    ///
+    /// - Parameters:
+    ///   - value: Obfuscated value to deobfuscate.
+    ///   - secret: The secret that was used during obfucation.
+    /// - Returns: Deobfuscated value of given obfuscated value.
+    public static func deobfuscate(_ value: [UInt8], secret: [UInt8]) throws -> [UInt8] {
+        zip(value, secret).map(^)
     }
 }
 
@@ -257,6 +277,6 @@ extension Crypt {
 
 extension String {
     fileprivate func sha256Data() -> Data {
-        Data(utf8).sha256()
+        Data(utf8).base64EncodedData().sha256()
     }
 }
