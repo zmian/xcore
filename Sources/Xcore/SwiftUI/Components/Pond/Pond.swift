@@ -6,6 +6,11 @@
 
 import Foundation
 
+/// A protocol where the conforming types provide functionality for key value
+/// storage.
+///
+/// The library comes with few types out of the box: `UserDefaults`, `Keychain`,
+/// `Stub`, `Failing`, `Empty` and `Composite` types.
 public protocol Pond {
     typealias Key = PondKey
 
@@ -81,11 +86,13 @@ extension DependencyValues {
         }()
     }
 
+    /// Provide functionality for key value storage.
     public var pond: Pond {
         get { self[XcorePondKey.self] }
         set { self[XcorePondKey.self] = newValue }
     }
 
+    /// Provide functionality for key value storage.
     @discardableResult
     public static func pond(_ value: Pond) -> Self.Type {
         set(\.pond, value)
