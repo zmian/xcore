@@ -31,6 +31,19 @@ extension Pond {
     public func set<T>(_ key: Key, value: T?) where T: RawRepresentable, T.RawValue == String {
         set(key, value: value?.rawValue)
     }
+
+    public func setCodable<T: Codable>(_ key: Key, value: T?, encoder: JSONEncoder? = nil) {
+        do {
+            let data = try (encoder ?? JSONEncoder()).encode(value)
+            set(key, value: data)
+        } catch {
+            #if DEBUG
+            fatalError(String(describing: error))
+            #else
+            // Return nothing to avoid leaking error details in production.
+            #endif
+        }
+    }
 }
 
 // MARK: - Helpers: Get
@@ -59,7 +72,7 @@ extension Pond {
     ///   - decoder: The decoder used to decode the data. If set to `nil`, it uses
     ///     ``JSONDecoder`` with `convertFromSnakeCase` key decoding strategy.
     /// - Returns: A value of the specified type, if the decoder can parse the data.
-    public func getDecoded<T>(_ key: Key, type: T.Type = T.self, decoder: JSONDecoder? = nil) -> T? where T: Decodable {
+    public func getCodable<T>(_ key: Key, type: T.Type = T.self, decoder: JSONDecoder? = nil) -> T? where T: Decodable {
         if let data = get(Data.self, key) {
             return StringConverter.get(type, from: data, decoder: decoder)
         }

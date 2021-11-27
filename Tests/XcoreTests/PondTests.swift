@@ -95,7 +95,12 @@ extension PondTests {
         assertCases(for: Data("Hello World".utf8), pond: pond())
 
         try assertGetDefaultValue(with: pond())
-        try assertGetDecoded(with: pond())
+
+        // Codable
+        try assertGetCodable(with: pond())
+        try assertGetCodable2(with: pond())
+        try assertGetCodableArray(with: pond())
+        try assertGetCodableDictionary(with: pond())
     }
 
     private func assertGetDefaultValue(with pond: @autoclosure () -> Pond) throws {
@@ -107,11 +112,11 @@ extension PondTests {
         DependencyValues.pond(pond())
         model.pond.remove(.testValue)
 
-        XCTAssertNil(model.pond.getDecoded(.testValue, type: Example.self))
+        XCTAssertNil(model.pond.getCodable(.testValue, type: Example.self))
         XCTAssertEqual(model.pond.get(.testValue, default: "My Value"), "My Value")
     }
 
-    private func assertGetDecoded(with pond: @autoclosure () -> Pond) throws {
+    private func assertGetCodable(with pond: @autoclosure () -> Pond) throws {
         struct Example: Codable, Equatable {
             let value: String
         }
@@ -123,8 +128,53 @@ extension PondTests {
         DependencyValues.pond(pond())
         model.pond.set(.testValue, value: data)
 
-        let example = try XCTUnwrap(model.pond.getDecoded(.testValue, type: Example.self))
+        let example = try XCTUnwrap(model.pond.getCodable(.testValue, type: Example.self))
         XCTAssertEqual(example.value, "hello world")
+    }
+
+    private func assertGetCodable2(with pond: @autoclosure () -> Pond) throws {
+        struct Example: Codable, Equatable {
+            let value: String
+        }
+
+        let model = ViewModel()
+        DependencyValues.pond(pond())
+
+        let value = Example(value: "Swift")
+        model.pond.setCodable(.testValue, value: value)
+
+        let example = try XCTUnwrap(model.pond.getCodable(.testValue, type: Example.self))
+        XCTAssertEqual(example.value, "Swift")
+    }
+
+    private func assertGetCodableArray(with pond: @autoclosure () -> Pond) throws {
+        struct Example: Codable, Equatable {
+            let value: String
+        }
+
+        let model = ViewModel()
+        DependencyValues.pond(pond())
+
+        let values = [Example(value: "Swift"), Example(value: "Language")]
+        model.pond.setCodable(.testValue, value: values)
+
+        let examples = try XCTUnwrap(model.pond.getCodable(.testValue, type: [Example].self))
+        XCTAssertEqual(examples[0].value, "Swift")
+    }
+
+    private func assertGetCodableDictionary(with pond: @autoclosure () -> Pond) throws {
+        struct Example: Codable, Equatable {
+            let value: String
+        }
+
+        let model = ViewModel()
+        DependencyValues.pond(pond())
+
+        let values = ["language": Example(value: "Swift")]
+        model.pond.setCodable(.testValue, value: values)
+
+        let examples = try XCTUnwrap(model.pond.getCodable(.testValue, type: [String: Example].self))
+        XCTAssertEqual(examples["language"], Example(value: "Swift"))
     }
 }
 

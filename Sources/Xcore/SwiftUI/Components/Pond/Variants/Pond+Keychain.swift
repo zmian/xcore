@@ -41,7 +41,7 @@ public struct KeychainPond: Pond {
                 try keychain.set(data, key: key.id)
             } else {
                 #if DEBUG
-                fatalError("Unable to save value for \(key.id).")
+                fatalError("Unable to save value for \(key.id): \(String(describing: value))")
                 #endif
             }
         } catch {

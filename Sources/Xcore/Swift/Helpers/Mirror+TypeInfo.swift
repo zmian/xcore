@@ -121,14 +121,26 @@ extension Mirror {
 
     // Credit: https://stackoverflow.com/a/46362808
     public static func isCollection<T>(_ object: T) -> Bool {
+        collectionType(object) != nil
+    }
+
+    static func collectionType<T>(_ object: T) -> KnownCollectionType? {
         let knownCollectionsTypes = ["Set", "Array", "Dictionary"]
         let typeString = String(describing: Swift.type(of: object))
 
         for type in knownCollectionsTypes where typeString.contains(type) {
-            return true
+            if let knownType = KnownCollectionType(rawValue: type.camelcased()) {
+                return knownType
+            }
         }
 
-        return false
+        return nil
+    }
+
+    enum KnownCollectionType: String {
+        case set
+        case array
+        case dictionary
     }
 }
 
