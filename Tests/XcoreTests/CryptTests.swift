@@ -8,7 +8,7 @@ import XCTest
 @testable import Xcore
 
 final class CryptTests: TestCase {
-    func testObfuscate() throws {
+    func testObfuscateString() throws {
         let secret = Crypt.generateRandomPassword()
         let message = "Hello World"
 
@@ -21,6 +21,16 @@ final class CryptTests: TestCase {
         // Incorrect Secret
         let incorrectSecret = Crypt.generateRandomPassword()
         XCTAssertThrowsError(try Crypt.deobfuscate(obfuscated, secret: incorrectSecret))
+    }
+
+    func testObfuscateData() throws {
+        let secret = Crypt.generateSecureRandom().bytes
+        let message = Crypt.generateSecureRandom().bytes
+
+        let obfuscated = Crypt.obfuscate(message, secret: secret)
+        let deobfuscate = try Crypt.deobfuscate(obfuscated, secret: secret)
+
+        XCTAssertEqual(deobfuscate, message)
     }
 
     func testEncryptDecrypt_SecretData() throws {
