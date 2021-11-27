@@ -30,9 +30,9 @@ public struct StubPond: Pond {
             remove(key)
         } else if let value = value as? Data {
             storage[key.id] = value
-        } else if let value = value, Mirror.isCollection(value) {
-            storage[key.id] = value
         } else if let value = StringConverter(value)?.get(String.self) {
+            storage[key.id] = value
+        } else if let value = value, Mirror.isCollection(value) {
             storage[key.id] = value
         } else {
             #if DEBUG
