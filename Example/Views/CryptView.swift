@@ -8,7 +8,7 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct CryptView: View {
-    @State private var inputFilename: String = "config.json"
+    @State private var inputFilename: String = ""
     @State private var encryptionKey: String = ""
 
     var body: some View {
