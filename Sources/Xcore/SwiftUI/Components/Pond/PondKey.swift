@@ -83,21 +83,15 @@ extension PondKey {
         /// Value is persisted until the current user signs out (e.g., filter settings).
         case session
 
-        /// Value is associated with the app and persisted until the app is deleted.
-        case appPermanent
-
-        /// Value is associated with the current user and persisted until the app is
-        /// deleted (e.g., user visits count).
-        case userPermanent
+        /// Value is persisted until the app is deleted (e.g., user visits count).
+        case permanent
 
         public var description: String {
             switch self {
                 case .session:
                     return "Session"
-                case .appPermanent:
-                    return "App Permanent"
-                case .userPermanent:
-                    return "User Permanent"
+                case .permanent:
+                    return "Permanent"
             }
         }
     }
