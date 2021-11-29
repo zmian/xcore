@@ -46,7 +46,7 @@ public struct PondKey: Hashable, Identifiable, UserInfoContainer {
     public init(
         id: String,
         storage: Storage,
-        duration: PersistenceDuration = .appSession,
+        duration: PersistenceDuration = .session,
         userInfo: UserInfo = [:]
     ) {
         self.id = id
@@ -80,16 +80,11 @@ extension PondKey {
     /// An enumeration representing the persistence duration for the value of the
     /// key.
     public enum PersistenceDuration: Hashable, CustomStringConvertible {
-        /// Value is associated with the app and persisted until the current user signs
-        /// out.
-        case appSession
+        /// Value is persisted until the current user signs out (e.g., filter settings).
+        case session
 
         /// Value is associated with the app and persisted until the app is deleted.
         case appPermanent
-
-        /// Value is associated with the current user and persisted until the current
-        /// user signs out (e.g., filter settings).
-        case userSession
 
         /// Value is associated with the current user and persisted until the app is
         /// deleted (e.g., user visits count).
@@ -97,23 +92,12 @@ extension PondKey {
 
         public var description: String {
             switch self {
-                case .appSession:
-                    return "App Session"
+                case .session:
+                    return "Session"
                 case .appPermanent:
                     return "App Permanent"
-                case .userSession:
-                    return "User Session"
                 case .userPermanent:
                     return "User Permanent"
-            }
-        }
-
-        public var isSessionOnly: Bool {
-            switch self {
-                case .appSession, .userSession:
-                    return true
-                case .appPermanent, .userPermanent:
-                    return false
             }
         }
     }
