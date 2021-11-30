@@ -99,6 +99,24 @@ extension Publisher {
             .eraseToAnyPublisher()
     }
 
+    /// Turns any publisher into an ``AnyPublisher`` that cannot fail by wrapping
+    /// its output and failure into a result and then applying passed in function to
+    /// it.
+    ///
+    /// ```swift
+    /// case .buttonTapped:
+    ///     return environment.fetchUser(id: 1)
+    ///         .catchToResult()
+    ///         .done { result in
+    ///             // ...
+    ///         }
+    /// ```
+    ///
+    /// - Returns: An effect that wraps `self`.
+    public func catchToResult() -> AnyPublisher<Result<Output, Failure>, Never> {
+        catchToResult { $0 }
+    }
+
     /// Runs the given publisher after ``self`` and returns the failure and errors
     /// of ``self`` without any transformation.
     ///
@@ -163,6 +181,35 @@ extension Publisher {
         passthrough {
             publisher($0)?
                 .setFailureType(to: Failure.self)
+        }
+    }
+}
+
+extension AnyPublisher where Failure == Error {
+    /// Creates a new publisher by evaluating a throwing closure, capturing the
+    /// returned value or immediately fails with the given error.
+    ///
+    /// - Parameter body: A throwing closure to evaluate.
+    public init(catching body: () throws -> Output) {
+        do {
+            self.init(value: try body())
+        } catch {
+            self.init(error: error)
+        }
+    }
+
+    /// Creates any publisher that can supply a single value asynchronously in the
+    /// future by evaluating a throwing closure, capturing the returned value or
+    /// failing with the given error.
+    public static func future(
+        catching body: @escaping () throws -> Output
+    ) -> AnyPublisher {
+        .future { callback in
+            do {
+                callback(.success(try body()))
+            } catch {
+                callback(.failure(error))
+            }
         }
     }
 }
