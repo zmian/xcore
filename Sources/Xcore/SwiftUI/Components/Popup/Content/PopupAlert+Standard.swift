@@ -18,7 +18,7 @@ public struct StandardPopupAlert<A>: View where A: View {
     public init(
         _ title: Text,
         message: Text? = nil,
-        actions: () -> A
+        @ViewBuilder actions: () -> A
     ) {
         self.title = title
         self.message = message
@@ -28,7 +28,7 @@ public struct StandardPopupAlert<A>: View where A: View {
     public init(
         _ title: String,
         message: String? = nil,
-        actions: () -> A
+        @ViewBuilder actions: () -> A
     ) {
         self.init(
             Text(title),
