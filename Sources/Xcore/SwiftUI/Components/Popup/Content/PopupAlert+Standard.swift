@@ -66,10 +66,7 @@ struct StandardPopupAlert_Previews: PreviewProvider {
 
     static var previews: some View {
         Group {
-            StandardPopupAlert(
-                title: Text(L.title),
-                message: Text(L.message)
-            ) {
+            StandardPopupAlert(L.title, message: L.message) {
                 HStack {
                     Button("Cancel") {
                         print("Cancel Tapped")
@@ -83,10 +80,7 @@ struct StandardPopupAlert_Previews: PreviewProvider {
                 }
             }
 
-            StandardPopupAlert(
-                title: Text(L.title),
-                message: Text(L.message)
-            ) {
+            StandardPopupAlert(L.title, message: L.message) {
                 EmptyView()
             }
         }

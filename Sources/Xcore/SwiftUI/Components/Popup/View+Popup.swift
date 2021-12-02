@@ -151,11 +151,7 @@ extension View {
             style: .alert,
             dismissMethods: dismissMethods,
             content: {
-                StandardPopupAlert(
-                    title: title,
-                    message: message,
-                    actions: actions
-                )
+                StandardPopupAlert(title, message: message, actions: actions)
             }
         )
     }
