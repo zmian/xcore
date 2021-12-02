@@ -16,13 +16,25 @@ public struct StandardPopupAlert<A>: View where A: View {
     private let actions: A
 
     public init(
-        title: Text,
-        message: Text?,
+        _ title: Text,
+        message: Text? = nil,
         actions: () -> A
     ) {
         self.title = title
         self.message = message
         self.actions = actions()
+    }
+
+    public init(
+        _ title: String,
+        message: String? = nil,
+        actions: () -> A
+    ) {
+        self.init(
+            Text(title),
+            message: message.map(Text.init),
+            actions: actions
+        )
     }
 
     public var body: some View {
