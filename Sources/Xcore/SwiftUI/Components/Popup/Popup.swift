@@ -13,7 +13,7 @@ public enum Popup {}
 // MARK: - Dismiss Methods
 
 extension Popup {
-    public struct DismissMethods: OptionSet {
+    public struct DismissMethods: OptionSet, Hashable {
         public let rawValue: Int
 
         public init(rawValue: Int) {
@@ -38,7 +38,7 @@ extension Popup {
 
 extension Popup {
     /// A structure representing the style of a popup.
-    public struct Style {
+    public struct Style: Hashable {
         /// The alignment of the popup inside the resulting view. Alignment applies if
         /// the popup is smaller than the size given by the resulting frame.
         public let alignment: Alignment
@@ -96,6 +96,34 @@ extension Popup {
             self.allowDimming = allowDimming
             self.dismissAfter = dismissAfter
         }
+    }
+}
+
+// MARK: - Equatable
+
+extension Popup.Style {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.alignment == rhs.alignment &&
+        lhs.animation == rhs.animation &&
+        lhs.windowStyle == rhs.windowStyle &&
+        lhs.ignoresSafeAreaEdges == rhs.ignoresSafeAreaEdges &&
+        lhs.allowDimming == rhs.allowDimming &&
+        lhs.dismissAfter == rhs.dismissAfter &&
+        String(reflecting: lhs.transition) == String(reflecting: rhs.transition)
+    }
+}
+
+// MARK: - Hashable
+
+extension Popup.Style {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(String(reflecting: alignment))
+        hasher.combine(String(reflecting: animation))
+        hasher.combine(String(reflecting: transition))
+        hasher.combine(windowStyle)
+        hasher.combine(String(reflecting: ignoresSafeAreaEdges))
+        hasher.combine(allowDimming)
+        hasher.combine(dismissAfter)
     }
 }
 
