@@ -57,7 +57,7 @@ extension FileManager {
     open func appending(
         path: String,
         relativeTo directory: SearchPathDirectory,
-        options: CreationOptions = .none
+        options: CreationOptions
     ) throws -> URL {
         var directoryUrl = try url(
             for: directory,
