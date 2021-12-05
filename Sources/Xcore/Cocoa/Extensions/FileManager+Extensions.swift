@@ -88,6 +88,7 @@ extension FileManager {
     }
 
     /// Removes the file or directory relative to the given directory.
+    @discardableResult
     open func removeItem(_ path: String, relativeTo directory: SearchPathDirectory, isDirectory: Bool = true) -> Bool {
         guard var directoryUrl = url(for: directory) else {
             // No need to remove as it doesn't exists.
