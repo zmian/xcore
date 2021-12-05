@@ -144,27 +144,8 @@ extension ImageAssetIdentifier {
         .init(rawValue: name, bundle: .xcore)
     }
 
-    // MARK: - Shared UI Elements
-
-    public static var disclosureIndicator: Self { propertyName() }
-    public static var disclosureIndicatorFilled: Self { propertyName() }
-
-    /// Launch screen view uses this to automatically display the launch screen
-    /// icon. This must be present in `.main` bundle before using the
-    /// `LaunchScreenView`.
-    public static var launchScreenIcon: Self { #function }
-
     // MARK: - Navigation
 
     /// Icon used to replace navigation bar back arrow
     public static var navigationBarBackArrow: Self { propertyName() }
-    public static var navigationBackArrow: Self { propertyName() }
-    public static var navigationForwardArrow: Self { propertyName() }
-
-    // MARK: - Arrows
-
-    public static var arrowRightIcon: Self { propertyName() }
-    public static var arrowLeftIcon: Self { propertyName() }
-
-    public static var filterSelectionIndicatorArrowIcon: Self { propertyName() }
 }
