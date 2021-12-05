@@ -10,7 +10,7 @@ import KeychainAccess
 
 final class PondTests: TestCase {
     func testPond_Basic_Stub() throws {
-        try assertBasicCases(with: .stub)
+        try assertBasicCases(with: .inMemory)
     }
 
     func testPond_Basic_UserDefaults() throws {
@@ -20,7 +20,7 @@ final class PondTests: TestCase {
 
     func testPond_Basic_Composit() throws {
         let suite = try XCTUnwrap(UserDefaults(suiteName: "pond_test"))
-        let stub = StubPond()
+        let stub = InMemoryPond()
         let userDefaults = UserDefaultsPond(suite)
 
         try assertBasicCases(with: .composite { key in
