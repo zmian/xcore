@@ -82,6 +82,11 @@ extension FileManager {
 }
 
 extension FileManager {
+    open func url(path: String, relativeTo directory: SearchPathDirectory, isDirectory: Bool = true) -> URL? {
+        url(for: directory)?
+            .appendingPathComponent(path, isDirectory: isDirectory)
+    }
+
     /// Removes the file or directory relative to the given directory.
     open func removeItem(_ path: String, relativeTo directory: SearchPathDirectory, isDirectory: Bool = true) -> Bool {
         guard var directoryUrl = url(for: directory) else {
