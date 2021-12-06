@@ -5,6 +5,7 @@
 //
 
 import SwiftUI
+import Combine
 
 /// A class to forward app delegate phase events to the given send method.
 ///
@@ -73,6 +74,7 @@ import SwiftUI
 /// }
 /// ```
 open class PhaseForwarderAppDelegate: UIResponder, UIApplicationDelegate {
+    private var cancellable: AnyCancellable?
     public var send: (AppPhase) -> Void = { _ in }
 
     open func application(
@@ -80,26 +82,11 @@ open class PhaseForwarderAppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         send(.launched(launchOptions: launchOptions))
+        addObservers()
         return true
     }
 
     // MARK: - Responding to App Life-Cycle Events
-
-    open func applicationDidBecomeActive(_ application: UIApplication) {
-        send(.active)
-    }
-
-    open func applicationWillResignActive(_ application: UIApplication) {
-        send(.inactive)
-    }
-
-    open func applicationDidEnterBackground(_ application: UIApplication) {
-        send(.background)
-    }
-
-    open func applicationWillEnterForeground(_ application: UIApplication) {
-        send(.willEnterForeground)
-    }
 
     open func applicationWillTerminate(_ application: UIApplication) {
         send(.willTerminate)
@@ -150,5 +137,54 @@ open class PhaseForwarderAppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         send(.continueUserActivity(userActivity, handler: restorationHandler))
         return true
+    }
+}
+
+// MARK: - Phase Using Notifications
+
+extension PhaseForwarderAppDelegate {
+    private enum ListenerEvent {
+        case willEnterForeground
+        case active
+        case inactive
+        case background
+        case memoryWarning
+        case significantTimeChange
+    }
+
+    private func addObservers() {
+        cancellable = Publishers.MergeMany(
+            NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
+                .map { _ in ListenerEvent.willEnterForeground },
+            NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
+                .map { _ in ListenerEvent.active },
+            NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
+                .map { _ in ListenerEvent.inactive },
+            NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
+                .map { _ in ListenerEvent.background },
+            NotificationCenter.default.publisher(for: UIApplication.didReceiveMemoryWarningNotification)
+                .map { _ in ListenerEvent.memoryWarning },
+            NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)
+                .map { _ in ListenerEvent.significantTimeChange }
+        ).sink { [weak self] event in
+            self?.onListenerEvent(event)
+        }
+    }
+
+    private func onListenerEvent(_ event: ListenerEvent) {
+        switch event {
+            case .willEnterForeground:
+                send(.willEnterForeground)
+            case .active:
+                send(.active)
+            case .inactive:
+                send(.inactive)
+            case .background:
+                send(.background)
+            case .memoryWarning:
+                send(.memoryWarning)
+            case .significantTimeChange:
+                send(.significantTimeChange)
+        }
     }
 }
