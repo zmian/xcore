@@ -15,6 +15,7 @@ extension PondKey {
         .init(id: #function, storage: .userDefaults, duration: .permanent)
     }
 
+    /// Returns last saved system force refresh hash.
     fileprivate static var lastSystemForceRefreshHash: Self {
         .init(id: #function, storage: .userDefaults, duration: .permanent)
     }
