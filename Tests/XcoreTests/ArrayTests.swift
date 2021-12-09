@@ -151,13 +151,13 @@ final class ArrayTests: TestCase {
         }
 
         let button = UIButton().apply {
-            $0.text = "World!"
+            $0.setTitle("World!", for: .normal)
         }
 
-        let value1 = [label1.text, label2.text, label3.text, button.text].joined(separator: ", ")
+        let value1 = [label1.text, label2.text, label3.text, button.title(for: .normal)].joined(separator: ", ")
         XCTAssertEqual(value1, "Hello, World!")
 
-        let value2 = [label1.text, label2.text, label3.text, button.text].joined()
+        let value2 = [label1.text, label2.text, label3.text, button.title(for: .normal)].joined()
         XCTAssertEqual(value2, "HelloWorld!")
     }
 }

@@ -119,19 +119,6 @@ extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
     }
 }
 
-// MARK: - UIButton
-
-extension ControlTargetActionBlockRepresentable where Self: UIButton {
-    public init(
-        assetIdentifier: ImageAssetIdentifier,
-        accessibilityIdentifier: String? = nil,
-        action: ((_ sender: Self) -> Void)? = nil
-    ) {
-        self.init(image: UIImage(assetIdentifier: assetIdentifier), action)
-        self.accessibilityIdentifier = accessibilityIdentifier
-    }
-}
-
 /// A convenience function to get resource.
 public func r(_ assetIdentifier: ImageAssetIdentifier) -> ImageAssetIdentifier {
     assetIdentifier
@@ -143,9 +130,4 @@ extension ImageAssetIdentifier {
     private static func propertyName(_ name: String = #function) -> Self {
         .init(rawValue: name, bundle: .xcore)
     }
-
-    // MARK: - Navigation
-
-    /// Icon used to replace navigation bar back arrow
-    public static var navigationBarBackArrow: Self { propertyName() }
 }

@@ -111,19 +111,6 @@ extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
     }
 }
 
-// MARK: - UIButton
-
-extension ControlTargetActionBlockRepresentable where Self: UIButton {
-    public init(
-        system: SystemAssetIdentifier,
-        accessibilityIdentifier: String? = nil,
-        action: ((_ sender: Self) -> Void)? = nil
-    ) {
-        self.init(image: UIImage(system: system), action)
-        self.accessibilityIdentifier = accessibilityIdentifier
-    }
-}
-
 /// A convenience function to get resource.
 public func r(_ system: SystemAssetIdentifier) -> SystemAssetIdentifier {
     system
