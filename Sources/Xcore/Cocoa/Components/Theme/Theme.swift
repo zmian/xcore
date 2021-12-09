@@ -126,7 +126,6 @@ public struct Theme: MutableAppliable, UserInfoContainer {
     // MARK: - Chrome
 
     public var statusBarStyle: UIStatusBarStyle
-    public var chrome: ViewControllerChrome.Style
 
     /// Additional info which may be used to describe the theme further.
     public var userInfo: UserInfo
@@ -167,7 +166,6 @@ public struct Theme: MutableAppliable, UserInfoContainer {
 
         // Chrome
         statusBarStyle: UIStatusBarStyle,
-        chrome: ViewControllerChrome.Style,
 
         // UserInfo
         userInfo: UserInfo = [:]
@@ -207,7 +205,6 @@ public struct Theme: MutableAppliable, UserInfoContainer {
 
         // Chrome
         self.statusBarStyle = statusBarStyle
-        self.chrome = chrome
 
         // UserInfo
         self.userInfo = userInfo
@@ -323,7 +320,6 @@ extension Theme {
         },
 
         // Chrome
-        statusBarStyle: .default,
-        chrome: .blurred
+        statusBarStyle: .default
     )
 }

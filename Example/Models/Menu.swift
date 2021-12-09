@@ -50,14 +50,12 @@ struct Menu: Identifiable {
 extension Menu: CaseIterable {
     static var allCases: [Self] = [
         separators,
-        buttonsUIKit,
         buttons,
         capsules,
         xstack,
         popups,
         textFields,
         activitySheet,
-        labelInset,
         crypt
     ]
 }
@@ -69,12 +67,6 @@ extension Menu {
         title: "Separators",
         subtitle: "UIKit",
         content: SeparatorViewController().embedInView()
-    )
-
-    private static let buttonsUIKit = Self(
-        title: "Buttons",
-        subtitle: "UIKit",
-        content: ButtonsViewController().embedInView()
     )
 
     private static let buttons = Self(
@@ -123,12 +115,6 @@ extension Menu {
     private static let activitySheet = Self(
         title: "Activity Sheet",
         content: ActivitySheetView()
-    )
-
-    private static let labelInset = Self(
-        title: "Label Inset",
-        subtitle: "Label extension to enable \"contentInset\".",
-        content: ExampleLabelInsetViewController().embedInView()
     )
 
     private static let crypt = Self(

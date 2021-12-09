@@ -7,8 +7,6 @@
 import UIKit
 
 extension UIViewController {
-    public typealias Chrome = ViewControllerChrome
-
     /// This configuration exists to allow some of the properties to be configured
     /// to match app's appearance style.
     ///
@@ -28,12 +26,6 @@ extension UIViewController {
         public lazy var tintColor: UIColor = Theme.tintColor
         /// The default value is `Theme.textColor`.
         public lazy var navigationBarTitleColor: UIColor = Theme.textColor
-        /// The default value is `.transparent`.
-        public lazy var preferredStatusBarBackground: Chrome.Style = .transparent
-        /// The default value is `.blurred`.
-        public lazy var preferredNavigationBarBackground: Chrome.Style = .blurred
-        /// The default value is `false`.
-        public lazy var prefersTabBarHidden: Bool = false
         fileprivate override init() {}
     }
 }
@@ -54,9 +46,7 @@ extension UIViewController {
         static var preferredStatusBarStyle = "preferredStatusBarStyle"
         static var preferredStatusBarUpdateAnimation = "preferredStatusBarUpdateAnimation"
         static var prefersStatusBarHidden = "prefersStatusBarHidden"
-        static var isTabBarHidden = "isTabBarHidden"
         static var shouldAutorotate = "shouldAutorotate"
-        static var isSwipeBackGestureEnabled = "isSwipeBackGestureEnabled"
     }
 
     /// A convenience property to set `supportedInterfaceOrientations` without
@@ -220,94 +210,10 @@ extension UIViewController {
         get { associatedObject(&AssociatedKey.shouldAutorotate) }
         set { setAssociatedObject(&AssociatedKey.shouldAutorotate, value: newValue) }
     }
-
-    /// A boolean value indicating whether the swipe gesture to peek or pop view
-    /// controller is enabled.
-    ///
-    /// The default value is `true`.
-    @objc open var isSwipeBackGestureEnabled: Bool {
-        get { associatedObject(&AssociatedKey.isSwipeBackGestureEnabled, default: true) }
-        set { setAssociatedObject(&AssociatedKey.isSwipeBackGestureEnabled, value: newValue) }
-    }
-
-    /// A convenience property to set `prefersTabBarHidden` without subclassing.
-    ///
-    /// This is useful when you don't have access to the actual class source code
-    /// and need to show/hide tab bar.
-    ///
-    /// The default value is `nil` which means use the `prefersTabBarHidden` value.
-    ///
-    /// Setting this value on an instance of `UINavigationController` sets it for
-    /// all of it's view controllers. And, any of its view controllers can override
-    /// this on as needed basis.
-    ///
-    /// ```swift
-    /// let vc = UIImagePickerController()
-    /// vc.isTabBarHidden = false
-    /// ```
-    open var isTabBarHidden: Bool? {
-        get { associatedObject(&AssociatedKey.isTabBarHidden) }
-        set { setAssociatedObject(&AssociatedKey.isTabBarHidden, value: newValue) }
-    }
 }
 
 @objc
 extension UIViewController {
-    /// The default value is of property `isTabBarHidden` if it's set; otherwise,
-    /// `false`.
-    open var prefersTabBarHidden: Bool {
-        isTabBarHidden ?? defaultAppearance.prefersTabBarHidden
-    }
-
-    /// The default value is `false`.
-    open var prefersNavigationBarHidden: Bool {
-        false
-    }
-
-    /// The default value is `false`.
-    open var prefersNavigationBarFadeAnimation: Bool {
-        false
-    }
-
-    /// The default value is `Theme.tintColor`.
-    open var preferredNavigationBarTintColor: UIColor {
-        defaultAppearance.tintColor
-    }
-
-    /// The default value is `.transparent`.
-    open var preferredStatusBarBackground: Chrome.Style {
-        if prefersStatusBarHidden {
-            return .transparent
-        }
-
-        return defaultAppearance.preferredStatusBarBackground
-    }
-
-    /// The default value is `.blurred`.
-    open var preferredNavigationBarBackground: Chrome.Style {
-        if prefersNavigationBarHidden {
-            return .transparent
-        }
-
-        return defaultAppearance.preferredNavigationBarBackground
-    }
-
-    /// Display attributes for the bar’s title text.
-    ///
-    /// You can specify the font, text color, text shadow color, and text shadow
-    /// offset for the title in the text attributes dictionary, using the text
-    /// attribute keys described in Character Attributes.
-    open var preferredNavigationBarTitleAttributes: [NSAttributedString.Key: Any] {
-        var attributes = UIViewController.defaultNavigationBarTextAttributes
-        attributes[.foregroundColor] = preferredNavigationBarTintColor
-        return attributes
-    }
-
-    /// The default value is `false`.
-    open var prefersDismissButtonHiddenWhenPresentedModally: Bool {
-        false
-    }
-
     public static var defaultNavigationBarTextAttributes: [NSAttributedString.Key: Any] {
         [
             .font: defaultAppearance.font,
