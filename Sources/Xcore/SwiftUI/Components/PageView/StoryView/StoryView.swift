@@ -57,7 +57,9 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
             .onTapGesture {
                 storyTimer.advance(by: isLeft ? -1 : 1)
             }
-            .onPressAndHold { isPressing in
+            .onLongPressGesture(minimumDuration: 10, maximumDistance: 10) {
+                storyTimer.pause()
+            } onPressingChanged: { isPressing in
                 if isPressing {
                     storyTimer.pause()
                 } else {
