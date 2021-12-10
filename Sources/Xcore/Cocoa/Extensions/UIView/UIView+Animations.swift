@@ -198,27 +198,3 @@ extension NSObjectProtocol where Self: UILabel {
         withFadeAnimation { $0.text = text }
     }
 }
-
-extension NSObjectProtocol where Self: UIButton {
-    /// Temporarily set the text.
-    ///
-    /// - Parameters:
-    ///   - temporaryText: The text to set temporarily.
-    ///   - interval: The interval after the given temporary text is removed.
-    public func setTemporaryText(
-        _ temporaryText: String?,
-        removeAfter interval: TimeInterval = 1
-    ) {
-        let originalText = text
-        let originalUserInteraction = isUserInteractionEnabled
-
-        text = temporaryText
-        isUserInteractionEnabled = false
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + interval) { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.text = originalText
-            strongSelf.isUserInteractionEnabled = originalUserInteraction
-        }
-    }
-}

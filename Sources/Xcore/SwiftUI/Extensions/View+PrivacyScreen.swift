@@ -30,7 +30,7 @@ extension View {
     /// }
     /// ```
     /// - Parameter content: The privacy screen content view.
-    public func privacyScreen<Content: View>(_ content: @escaping () -> Content) -> some View {
+    public func privacyScreen<Content: View>(@ViewBuilder content: @escaping () -> Content) -> some View {
         modifier(PrivacyScreenViewModifier(screen: content))
     }
 
@@ -56,7 +56,7 @@ extension View {
     /// ```
     /// - Parameter content: The privacy screen content view.
     public func privacyScreen<Content: View>(_ content: @autoclosure @escaping () -> Content) -> some View {
-        privacyScreen(content)
+        privacyScreen { content() }
     }
 }
 

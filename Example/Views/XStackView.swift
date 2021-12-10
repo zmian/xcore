@@ -52,7 +52,7 @@ struct XStackView: View {
 
         XStack("Favorite", systemImage: .star)
 
-        XStack("Favorite", image: .disclosureIndicator)
+        XStack("Favorite", image: .blueJay)
     }
 
     @ViewBuilder

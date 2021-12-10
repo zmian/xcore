@@ -69,8 +69,6 @@ public enum AppPhase: Hashable, CustomStringConvertible {
     /// [more info]: https://developer.apple.com/documentation/swiftui/scenephase/background
     case background
 
-    /// TODO: ⚠️ Need to wire this event up, ``SwiftUI.ScenePhase`` doesn't have equivalent.
-    ///
     /// Event invoked when the app is about to enter the foreground.
     ///
     /// See documentation for [more info].
@@ -84,6 +82,23 @@ public enum AppPhase: Hashable, CustomStringConvertible {
     ///
     /// [more info]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623111-applicationwillterminate
     case willTerminate
+
+    /// Event invoked when the app receives a memory warning from the system.
+    ///
+    /// See documentation for [more info].
+    ///
+    /// [more info]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623063-applicationdidreceivememorywarni
+    case memoryWarning
+
+    /// Event invoked when there is a significant change in the time.
+    ///
+    /// Examples of significant time changes include the arrival of midnight, an
+    /// update of the time by a carrier, and the change to daylight savings time.
+    ///
+    /// See documentation for [more info].
+    ///
+    /// [more info]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622992-applicationsignificanttimechange
+    case significantTimeChange
 
     // MARK: - Handling Remote Notification Registration
 
@@ -197,6 +212,10 @@ extension AppPhase {
                 return "willEnterForeground"
             case .willTerminate:
                 return "willTerminate"
+            case .memoryWarning:
+                return "memoryWarning"
+            case .significantTimeChange:
+                return "significantTimeChange"
             case let .remoteNotificationsRegistered(.success(token)):
                 return "remoteNotificationsRegistered(.success(\(token.hexEncodedString())))"
             case let .remoteNotificationsRegistered(.failure(error)):
@@ -248,7 +267,9 @@ extension AppPhase {
                  .inactive,
                  .background,
                  .willEnterForeground,
-                 .willTerminate:
+                 .willTerminate,
+                 .memoryWarning,
+                 .significantTimeChange:
                 hasher.combine(description)
             case let .remoteNotificationsRegistered(value):
                 hasher.combine(value)

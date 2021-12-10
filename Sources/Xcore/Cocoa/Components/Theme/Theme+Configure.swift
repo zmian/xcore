@@ -13,8 +13,6 @@ extension Theme {
     public static func set(_ theme: Theme) {
         self.default = theme
         setSystemComponentsTheme(theme)
-        setNavigationBarBackButtonTheme(theme)
-        setSearchBarTheme(theme)
         setComponentsTheme(theme)
     }
 
@@ -63,39 +61,6 @@ extension Theme {
         }
     }
 
-    private static func setNavigationBarBackButtonTheme(_ theme: Theme) {
-        UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).apply {
-            $0.backIndicatorImage = UIImage(assetIdentifier: .navigationBarBackArrow)
-            $0.backIndicatorTransitionMaskImage = UIImage(assetIdentifier: .navigationBarBackArrow)
-        }
-
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [NavigationController.self])
-            .setBackButtonTitlePositionAdjustment(UIOffset(horizontal: 10, vertical: 0), for: .default)
-    }
-
-    private static func setSearchBarTheme(_ theme: Theme) {
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).apply {
-            // SearchBar Cancel button normal state
-            $0.setTitleTextAttributes([
-                .foregroundColor: theme.tintColor,
-                .font: UIFont.app(.body)
-            ], for: .normal)
-
-            // SearchBar Cancel button disabled state
-            $0.setTitleTextAttributes([
-                .foregroundColor: theme.tintColor.alpha(0.5)
-            ], for: .disabled)
-        }
-
-        // SearchBar text attributes
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [
-            .foregroundColor: theme.textColor,
-            .font: UIFont.app(.body)
-        ]
-
-        UISearchBar.appearance().placeholderTextColor = theme.placeholderTextColor
-    }
-
     private static func setComponentsTheme(_ theme: Theme) {
         BlurView.appearance().blurOpacity = 0.8
 
@@ -103,11 +68,6 @@ extension Theme {
 
         UIViewController.defaultAppearance.apply {
             $0.tintColor = theme.tintColor
-            $0.prefersTabBarHidden = true
-        }
-
-        UIButton.defaultAppearance.apply {
-            $0.highlightedAnimation = .scale
         }
     }
 }

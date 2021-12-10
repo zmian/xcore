@@ -119,19 +119,6 @@ extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
     }
 }
 
-// MARK: - UIButton
-
-extension ControlTargetActionBlockRepresentable where Self: UIButton {
-    public init(
-        assetIdentifier: ImageAssetIdentifier,
-        accessibilityIdentifier: String? = nil,
-        action: ((_ sender: Self) -> Void)? = nil
-    ) {
-        self.init(image: UIImage(assetIdentifier: assetIdentifier), action)
-        self.accessibilityIdentifier = accessibilityIdentifier
-    }
-}
-
 /// A convenience function to get resource.
 public func r(_ assetIdentifier: ImageAssetIdentifier) -> ImageAssetIdentifier {
     assetIdentifier
@@ -143,28 +130,4 @@ extension ImageAssetIdentifier {
     private static func propertyName(_ name: String = #function) -> Self {
         .init(rawValue: name, bundle: .xcore)
     }
-
-    // MARK: - Shared UI Elements
-
-    public static var disclosureIndicator: Self { propertyName() }
-    public static var disclosureIndicatorFilled: Self { propertyName() }
-
-    /// Launch screen view uses this to automatically display the launch screen
-    /// icon. This must be present in `.main` bundle before using the
-    /// `LaunchScreenView`.
-    public static var launchScreenIcon: Self { #function }
-
-    // MARK: - Navigation
-
-    /// Icon used to replace navigation bar back arrow
-    public static var navigationBarBackArrow: Self { propertyName() }
-    public static var navigationBackArrow: Self { propertyName() }
-    public static var navigationForwardArrow: Self { propertyName() }
-
-    // MARK: - Arrows
-
-    public static var arrowRightIcon: Self { propertyName() }
-    public static var arrowLeftIcon: Self { propertyName() }
-
-    public static var filterSelectionIndicatorArrowIcon: Self { propertyName() }
 }

@@ -32,7 +32,7 @@ public struct PopupSheet<Content>: View where Content: View {
         // which means then we would need to manually offset with hardcoded values for
         // devices.
         .offset(y: safeAreaInsetsBottom)
-        .readGeometry {
+        .readGeometryChange {
             safeAreaInsetsBottom = $0.safeAreaInsets.bottom
         }
     }

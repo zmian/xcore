@@ -6,14 +6,27 @@
 
 import SwiftUI
 
-private struct GeometryPreferenceKey: PreferenceKey {
-    static var defaultValue: GeometryProxyWrapper?
-    static func reduce(value: inout Value, nextValue: () -> Value) {}
+extension View {
+    public func readOffsetY(_ offset: Binding<CGFloat>) -> some View {
+        readGeometry {
+            offset.wrappedValue = $0.frame(in: .global).minY
+        }
+    }
 }
 
 extension View {
-    /// Adds a modifier for this view that fires an action when view's geometry changes.
+    /// Adds a modifier for this view that fires an action with geometry proxy.
     public func readGeometry(perform action: @escaping (GeometryProxy) -> Void) -> some View {
+        background(
+            GeometryReader { geometry -> Color in
+                action(geometry)
+                return Color.clear
+            }
+        )
+    }
+
+    /// Adds a modifier for this view that fires an action when view's geometry changes.
+    public func readGeometryChange(perform action: @escaping (GeometryProxy) -> Void) -> some View {
         background(
             GeometryReader { geometry in
                 Color.clear
@@ -28,6 +41,13 @@ extension View {
             action(proxy)
         }
     }
+}
+
+// MARK: - PreferenceKey
+
+private struct GeometryPreferenceKey: PreferenceKey {
+    static var defaultValue: GeometryProxyWrapper?
+    static func reduce(value: inout Value, nextValue: () -> Value) {}
 }
 
 // MARK: - Wrapper

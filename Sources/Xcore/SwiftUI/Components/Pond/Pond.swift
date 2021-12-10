@@ -10,7 +10,13 @@ import Foundation
 /// storage.
 ///
 /// The library comes with few types out of the box: `UserDefaults`, `Keychain`,
-/// `Stub`, `Failing`, `Empty` and `Composite` types.
+/// `InMemory`, `Failing`, `Empty` and `Composite` types.
+///
+/// To allow testability, reliability and predictability for persisting various
+/// types of data ranging from tokens to perishable user preferences. The
+/// library comes with few types out of the box to provide consolidated Key
+/// Value Storage API for Keychain (secure storage), In-Memory (ephemeral
+/// storage), and UserDefaults (non-sensitive storage).
 public protocol Pond {
     typealias Key = PondKey
 

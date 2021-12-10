@@ -16,13 +16,25 @@ public struct StandardPopupAlert<A>: View where A: View {
     private let actions: A
 
     public init(
-        title: Text,
-        message: Text?,
-        actions: () -> A
+        _ title: Text,
+        message: Text? = nil,
+        @ViewBuilder actions: () -> A
     ) {
         self.title = title
         self.message = message
         self.actions = actions()
+    }
+
+    public init(
+        _ title: String,
+        message: String? = nil,
+        @ViewBuilder actions: () -> A
+    ) {
+        self.init(
+            Text(title),
+            message: message.map(Text.init),
+            actions: actions
+        )
     }
 
     public var body: some View {
@@ -54,10 +66,7 @@ struct StandardPopupAlert_Previews: PreviewProvider {
 
     static var previews: some View {
         Group {
-            StandardPopupAlert(
-                title: Text(L.title),
-                message: Text(L.message)
-            ) {
+            StandardPopupAlert(L.title, message: L.message) {
                 HStack {
                     Button("Cancel") {
                         print("Cancel Tapped")
@@ -71,10 +80,7 @@ struct StandardPopupAlert_Previews: PreviewProvider {
                 }
             }
 
-            StandardPopupAlert(
-                title: Text(L.title),
-                message: Text(L.message)
-            ) {
+            StandardPopupAlert(L.title, message: L.message) {
                 EmptyView()
             }
         }

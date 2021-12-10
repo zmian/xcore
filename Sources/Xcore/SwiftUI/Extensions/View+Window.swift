@@ -63,7 +63,7 @@ extension View {
 // MARK: - Style
 
 /// A structure representing the style of a window.
-public struct WindowStyle {
+public struct WindowStyle: Hashable {
     /// A succinct label that identifies the window.
     public let label: String?
 
