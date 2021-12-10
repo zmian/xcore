@@ -28,6 +28,11 @@ final class StoryTimer: ObservableObject {
         self.interval = interval
         self.cycle = cycle
         self.progress = 0
+        start()
+    }
+
+    deinit {
+        stop()
     }
 
     func start() {
