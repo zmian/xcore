@@ -30,7 +30,7 @@ extension KeychainAccess.AuthenticationPolicy: Hashable {}
 
 // MARK: - Inits
 
-extension Keychain {
+extension KeychainAccess.Keychain {
     /// A keychain with `service` set to bundle identifier with ".intents" removed
     /// and `accessibility` set to `whenUnlockedThisDeviceOnly`.
     public static func `default`(
@@ -44,4 +44,16 @@ extension Keychain {
         .accessibility(.whenUnlockedThisDeviceOnly)
         .policy(policy)
     }
+}
+
+// MARK: - AuthenticationPolicy
+
+extension KeychainAccess.AuthenticationPolicy {
+    /// Constraint to access an item with either `biometryCurrentSet` or device
+    /// passcode.
+    ///
+    /// Touch ID must be available and enrolled with at least one finger, or Face ID
+    /// available and enrolled. The item is invalidated if fingers are added or
+    /// removed for Touch ID, or if the user re-enrolls for Face ID.
+    public static let userPresenceCurrentSet: Self = [.biometryCurrentSet, .or, .devicePasscode]
 }

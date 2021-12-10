@@ -118,7 +118,7 @@ extension UIViewController {
             return self
         }
 
-        return NavigationController(rootViewController: self)
+        return UINavigationController(rootViewController: self)
     }
 
     /// A boolean value indicating whether the `self` can be embedded in

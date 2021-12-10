@@ -18,8 +18,6 @@
 		6899D1182699232700D26721 /* Excerpt.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6899D1172699232700D26721 /* Excerpt.txt */; };
 		6899D1272699236600D26721 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6899D11A2699236600D26721 /* Menu.swift */; };
 		6899D1282699236600D26721 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6899D11C2699236600D26721 /* RootView.swift */; };
-		6899D1292699236600D26721 /* ExampleLabelInsetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6899D11E2699236600D26721 /* ExampleLabelInsetViewController.swift */; };
-		6899D12A2699236600D26721 /* ButtonsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6899D11F2699236600D26721 /* ButtonsViewController.swift */; };
 		6899D12B2699236600D26721 /* SeparatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6899D1202699236600D26721 /* SeparatorViewController.swift */; };
 		6899D12C2699236600D26721 /* ButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6899D1212699236600D26721 /* ButtonsView.swift */; };
 		6899D12D2699236600D26721 /* ImageAssetIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6899D1232699236600D26721 /* ImageAssetIdentifier.swift */; };
@@ -40,8 +38,6 @@
 		6899D1172699232700D26721 /* Excerpt.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Excerpt.txt; sourceTree = "<group>"; };
 		6899D11A2699236600D26721 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		6899D11C2699236600D26721 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
-		6899D11E2699236600D26721 /* ExampleLabelInsetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleLabelInsetViewController.swift; sourceTree = "<group>"; };
-		6899D11F2699236600D26721 /* ButtonsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsViewController.swift; sourceTree = "<group>"; };
 		6899D1202699236600D26721 /* SeparatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorViewController.swift; sourceTree = "<group>"; };
 		6899D1212699236600D26721 /* ButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsView.swift; sourceTree = "<group>"; };
 		6899D1232699236600D26721 /* ImageAssetIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageAssetIdentifier.swift; sourceTree = "<group>"; };
@@ -135,8 +131,6 @@
 		6899D11D2699236600D26721 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				6899D11E2699236600D26721 /* ExampleLabelInsetViewController.swift */,
-				6899D11F2699236600D26721 /* ButtonsViewController.swift */,
 				6899D1202699236600D26721 /* SeparatorViewController.swift */,
 			);
 			path = ViewControllers;
@@ -264,10 +258,8 @@
 				6899D12F2699236600D26721 /* Exports.swift in Sources */,
 				6899D1092699216300D26721 /* App.swift in Sources */,
 				6899D1302699236600D26721 /* Theme.swift in Sources */,
-				6899D12A2699236600D26721 /* ButtonsViewController.swift in Sources */,
 				6899D12D2699236600D26721 /* ImageAssetIdentifier.swift in Sources */,
 				6868EE9526A76C4700ED7A5F /* ActivitySheetView.swift in Sources */,
-				6899D1292699236600D26721 /* ExampleLabelInsetViewController.swift in Sources */,
 				6899D12C2699236600D26721 /* ButtonsView.swift in Sources */,
 				680D4C9E273B6EC80084C556 /* View+Extensions.swift in Sources */,
 				681443B526FFDF5500BB5EE1 /* XStackView.swift in Sources */,

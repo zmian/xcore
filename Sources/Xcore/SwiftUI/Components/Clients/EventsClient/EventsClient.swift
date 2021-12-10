@@ -8,7 +8,7 @@ import UIKit
 import Combine
 
 /// Provides functionality for sending and receiving events.
-public struct EventsClient<Event> where Event: Hashable & CustomStringConvertible {
+public struct EventsClient<Event> {
     /// Send events.
     public var send: (Event) -> Void
 

@@ -13,6 +13,13 @@ extension Result where Success == Void {
     }
 }
 
+extension Result where Success == Empty {
+    /// A success, storing a `Success` value.
+    public static var success: Self {
+        .success(Empty())
+    }
+}
+
 extension Result {
     /// Returns the value associated with `.success` case.
     public var value: Success? {

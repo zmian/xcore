@@ -46,7 +46,9 @@ public struct KeychainPond: Pond {
             }
         } catch {
             #if DEBUG
-            fatalError(String(describing: error))
+            if AppInfo.isDebuggerAttached {
+                print(String(describing: error))
+            }
             #else
             // Return nothing to avoid leaking error details in production.
             #endif

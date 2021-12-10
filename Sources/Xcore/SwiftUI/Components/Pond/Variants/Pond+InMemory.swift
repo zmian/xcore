@@ -7,7 +7,7 @@
 #if DEBUG
 import Foundation
 
-public struct StubPond: Pond {
+public struct InMemoryPond: Pond {
     private var storage: MutableBox<[String: Any]> = .init([:])
 
     public init() {}
@@ -56,8 +56,8 @@ public struct StubPond: Pond {
 
 // MARK: - Dot Syntax Support
 
-extension Pond where Self == StubPond {
-    /// Returns stub variant of `Pond`.
-    public static var stub: Self { .init() }
+extension Pond where Self == InMemoryPond {
+    /// Returns inMemory variant of `Pond`.
+    public static var inMemory: Self { .init() }
 }
 #endif
