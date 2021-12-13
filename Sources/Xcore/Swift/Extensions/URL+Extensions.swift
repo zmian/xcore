@@ -120,6 +120,33 @@ extension URL {
         return components.url ?? self
     }
 
+    /// Replaces value of given list of query items with the new provided value.
+    ///
+    /// ```
+    /// let url = URL(string: "https://example.com/?q=HelloWorld&lang=swift")!
+    /// print(url.replacingQueryItems(["q", "swift"], with: "xxxx")) // "https://example.com/?q=xxxx&lang=xxxx"
+    /// ```
+    public func replacingQueryItems(_ names: [String], with value: String) -> URL {
+        guard
+            !names.isEmpty,
+            var components = URLComponents(url: self, resolvingAgainstBaseURL: true)
+        else {
+            return self
+        }
+
+        if var queryItems = components.queryItems, !queryItems.isEmpty {
+            for (index, item) in queryItems.enumerated() {
+                for name in names where item.name == name {
+                    queryItems[index].value = value
+                }
+            }
+
+            components.queryItems = queryItems
+        }
+
+        return components.url ?? self
+    }
+
     /// Returns a URL constructed by removing the fragment from self.
     ///
     /// If the URL has no fragment (e.g., `http://www.example.com`),
