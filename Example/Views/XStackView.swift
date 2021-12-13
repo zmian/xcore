@@ -8,37 +8,55 @@ import SwiftUI
 
 struct XStackView: View {
     @Environment(\.theme) private var theme
+    @State private var isPresented = false
 
     var body: some View {
-        List {
-            XStack {
-                Text(
-                    """
-                    Apple Inc. is an American multinational technology company that specializes in \
-                    consumer electronics, computer software, and online services. Apple is the \
-                    world's largest technology company by revenue and, since January 2021, the \
-                    world's most valuable company.
-                    """
-                )
-                .multilineTextAlignment(.trailing)
+        VStack {
+            XStack("Apple", subtitle: "AAPL") {
+                Button {
+                    isPresented = true
+                } label: {
+                    Image(system: .infoCircle)
+                }
+            }
+            .popup(isPresented: $isPresented) {
+                Text("Hello")
+
+                Button("Dismiss") {
+                    isPresented = false
+                }
             }
 
-            XStack("Version")
+            List {
+                XStack {
+                    Text(
+                        """
+                        Apple Inc. is an American multinational technology company that specializes in \
+                        consumer electronics, computer software, and online services. Apple is the \
+                        world's largest technology company by revenue and, since January 2021, the \
+                        world's most valuable company.
+                        """
+                    )
+                    .multilineTextAlignment(.trailing)
+                }
 
-            XStack("Version", value: Bundle.main.versionBuildNumber)
-                .xstackStyle(dim: .value)
+                XStack("Version")
 
-            XStack("First Name", value: "John")
-                .xstackStyle(dim: .title)
+                XStack("Version", value: Bundle.main.versionBuildNumber)
+                    .xstackStyle(dim: .value)
 
-            XStack("Price", money: 10)
+                XStack("First Name", value: "John")
+                    .xstackStyle(dim: .title)
 
-            XStack("Quantity", value: 1000)
-                .foregroundColor(theme.textSecondaryColor)
+                XStack("Price", money: 10)
 
-            favorites
+                XStack("Quantity", value: 1000)
+                    .foregroundColor(theme.textSecondaryColor)
 
-            complexView
+                favorites
+
+                complexView
+            }
         }
     }
 
@@ -80,8 +98,6 @@ struct XStackView: View {
         }
 
         XStack("Apple", subtitle: "AAPL", value: Image(system: .docOnDoc))
-
-        XStack("Apple", subtitle: "AAPL", systemImage: .docOnDoc)
     }
 }
 
