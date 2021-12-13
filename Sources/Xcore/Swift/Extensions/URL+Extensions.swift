@@ -50,6 +50,28 @@ extension URL {
         return components.url ?? self
     }
 
+    /// Removes all the query items that are in the given list.
+    ///
+    /// ```
+    /// let url = URL(string: "https://example.com/?q=HelloWorld&lang=swift")!
+    /// print(url.removingQueryItems(["q", "lang"]) // "https://example.com/"
+    /// ```
+    public func removingQueryItems(_ names: [String]) -> URL {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: false) else {
+            return self
+        }
+
+        components.queryItems?.removeAll { item in
+            names.contains(item.name)
+        }
+
+        if components.queryItems?.isEmpty == true {
+            components.queryItems = nil
+        }
+
+        return components.url ?? self
+    }
+
     /// Removes all the query items that match the given name.
     ///
     /// ```
@@ -71,6 +93,28 @@ extension URL {
             } else {
                 components.queryItems = queryItems
             }
+        }
+
+        return components.url ?? self
+    }
+
+    /// Replaces value of all query items that match the given name.
+    ///
+    /// ```
+    /// let url = URL(string: "https://example.com/?q=HelloWorld&lang=swift")!
+    /// print(url.replacingQueryItem(named: "q", with: "World")) // "https://example.com/?q=World&lang=swift"
+    /// ```
+    public func replacingQueryItem(named name: String, with value: String) -> URL {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
+            return self
+        }
+
+        if var queryItems = components.queryItems, !queryItems.isEmpty {
+            for (index, item) in queryItems.enumerated() where item.name == name {
+                queryItems[index].value = value
+            }
+
+            components.queryItems = queryItems
         }
 
         return components.url ?? self
