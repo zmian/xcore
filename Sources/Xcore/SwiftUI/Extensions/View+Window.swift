@@ -19,11 +19,15 @@ extension View {
         style: WindowStyle = .init(),
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
-        background(Window(
-            isPresented: isPresented,
-            style: style,
-            content: LazyView(content())
-        ))
+        overlay(
+            Color.clear
+                .frame(0)
+                .background(Window(
+                    isPresented: isPresented,
+                    style: style,
+                    content: LazyView(content())
+                ))
+        )
     }
 
     /// Presents a window using the given item as a data source for the window's
