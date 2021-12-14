@@ -37,12 +37,17 @@ public struct Money: Equatable, Hashable, MutableAppliable {
     /// The amount of money.
     public var amount: Decimal
 
-    public let precision: Int
+    public let fractionLength: ClosedRange<Int>
+
+    @_disfavoredOverload
+    public init(_ amount: Decimal, fractionLength: ClosedRange<Int> = 2...2) {
+        self.amount = amount
+        self.fractionLength = fractionLength
+        shouldSuperscriptMinorUnit = Self.appearance().shouldSuperscriptMinorUnit
+    }
 
     public init(_ amount: Decimal, precision: Int = 2) {
-        self.amount = amount
-        self.precision = precision
-        shouldSuperscriptMinorUnit = Self.appearance().shouldSuperscriptMinorUnit
+        self.init(amount, fractionLength: precision...precision)
     }
 
     public init?(_ amount: Decimal?, precision: Int = 2) {
@@ -105,7 +110,7 @@ public struct Money: Equatable, Hashable, MutableAppliable {
 
     /// A succinct label in a localized string that describes its contents
     public var accessibilityLabel: String {
-        formatter.string(from: amount, precision: precision, style: style)
+        formatter.string(from: amount, fractionLength: fractionLength, style: style)
     }
 }
 
@@ -137,7 +142,7 @@ extension Money: ExpressibleByIntegerLiteral {
 
 extension Money: CustomStringConvertible {
     public var description: String {
-        formatter.string(from: self, precision: precision)
+        formatter.string(from: self, fractionLength: fractionLength)
     }
 }
 
@@ -242,6 +247,6 @@ extension Money {
     }
 
     public func string(format: String? = nil) -> String {
-        formatter.string(from: self, precision: precision, format: format)
+        formatter.string(from: self, fractionLength: fractionLength, format: format)
     }
 }

@@ -93,14 +93,16 @@ extension CurrencyFormatter: Hashable {
 // MARK: - Components
 
 extension CurrencyFormatter {
-    public func components(from amount: Decimal, precision: Int, sign: Money.Sign = .default) -> Money.Components {
+    public func components(from amount: Decimal, fractionLength limits: ClosedRange<Int>, sign: Money.Sign = .default) -> Money.Components {
         var majorUnitString = "0"
         var minorUnitString = "00"
 
         // Important to ensure decimal is enabled since the formatter is shared instance
         // potentially mutated by other code.
         formatter.isDecimalEnabled = true
-        formatter.maximumFractionDigits = precision
+
+        formatter.minimumFractionDigits = limits.lowerBound
+        formatter.maximumFractionDigits = limits.upperBound
 
         let amountString = with(sign: sign) {
             formatter.string(from: NSDecimalNumber(decimal: amount))!
@@ -148,11 +150,11 @@ extension CurrencyFormatter {
     ///   given style.
     public func string(
         from value: Decimal,
-        precision: Int,
+        fractionLength limits: ClosedRange<Int>,
         style: Money.Components.Style = .default,
         sign: Money.Sign = .default
     ) -> String {
-        components(from: value, precision: precision, sign: sign).joined(style: style)
+        components(from: value, fractionLength: limits, sign: sign).joined(style: style)
     }
 
     /// Returns a string representation of a given value formatted using the given
@@ -166,11 +168,11 @@ extension CurrencyFormatter {
     ///   given style.
     public func string(
         from value: Int,
-        precision: Int,
+        fractionLength limits: ClosedRange<Int>,
         style: Money.Components.Style = .default,
         sign: Money.Sign = .default
     ) -> String {
-        string(from: Decimal(value), precision: precision, style: style, sign: sign)
+        string(from: Decimal(value), fractionLength: limits, style: style, sign: sign)
     }
 
     /// Returns a string representation of a given value formatted using the given
@@ -184,11 +186,11 @@ extension CurrencyFormatter {
     ///   given style.
     public func string(
         from value: Double,
-        precision: Int,
+        fractionLength limits: ClosedRange<Int>,
         style: Money.Components.Style = .default,
         sign: Money.Sign = .default
     ) -> String {
-        string(from: Decimal(value), precision: precision, style: style, sign: sign)
+        string(from: Decimal(value), fractionLength: limits, style: style, sign: sign)
     }
 
     /// Returns a numeric representation by parsing the given string.
