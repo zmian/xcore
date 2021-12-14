@@ -7,6 +7,13 @@
 import SwiftUI
 
 extension Font {
+    /// Creates a font from a UIKit font.
+    ///
+    /// - Parameter font: A UIFont instance from which to create a font.
+    public init(uiFont font: UIFont) {
+        self.init(font as CTFont)
+    }
+
     /// Returns default app font that scales relative to the given `style`.
     ///
     /// - Parameters:
