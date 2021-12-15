@@ -1,8 +1,7 @@
 //
-// File.swift
-//
-// Created by Luís Machado on 15/12/2021.
-// Copyright © 2021 Domain Money. All rights reserved.
+// Xcore
+// Copyright © 2021 Xcore
+// MIT license, see LICENSE file for details
 //
 
 import Foundation
