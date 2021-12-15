@@ -107,7 +107,6 @@ extension OpenURLClient {
     private final class InAppSafariViewController: SFSafariViewController {
         private var hud = HUD().apply {
             $0.backgroundColor = .clear
-            $0.passthroughNonContentTouches = true
             $0.windowLabel = "OpenURL Window"
 
             $0.adjustWindowAttributes {
