@@ -53,4 +53,3 @@ extension Mask where Self == PhoneNumberMask {
 extension Mask where Self == SSNMask {
     public static var ssn: Self { Self() }
 }
-
