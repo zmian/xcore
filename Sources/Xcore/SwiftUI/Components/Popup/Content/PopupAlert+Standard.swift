@@ -8,38 +8,33 @@ import SwiftUI
 
 /// A standard representation of an alert presentation with title, message and
 /// actions.
-public struct StandardPopupAlert<A>: View where A: View {
+public struct StandardPopupAlert<Header, Footer>: View where Header: View, Footer: View {
     @Environment(\.theme) private var theme
     @Environment(\.popupTextAlignment) private var textAlignment
     private let title: Text
     private let message: Text?
-    private let actions: A
+    private let header: () -> Header
+    private let footer: () -> Footer
 
     public init(
         _ title: Text,
         message: Text? = nil,
-        @ViewBuilder actions: () -> A
+        @ViewBuilder header: @escaping () -> Header,
+        @ViewBuilder footer: @escaping () -> Footer
     ) {
         self.title = title
         self.message = message
-        self.actions = actions()
-    }
-
-    public init(
-        _ title: String,
-        message: String? = nil,
-        @ViewBuilder actions: () -> A
-    ) {
-        self.init(
-            Text(title),
-            message: message.map(Text.init),
-            actions: actions
-        )
+        self.header = header
+        self.footer = footer
     }
 
     public var body: some View {
         PopupAlert {
             VStack(spacing: .defaultSpacing) {
+                if Header.self != Never.self {
+                    header()
+                }
+
                 VStack(alignment: textAlignment.horizontal, spacing: .s2) {
                     title
                         .fontWeight(.semibold)
@@ -53,9 +48,40 @@ public struct StandardPopupAlert<A>: View where A: View {
                 }
                 .frame(maxWidth: .infinity, alignment: textAlignment.alignment)
 
-                actions
+                if Footer.self != Never.self {
+                    footer()
+                }
             }
         }
+    }
+}
+
+// MARK: - Inits
+
+extension StandardPopupAlert where Header == Never {
+    public init(
+        _ title: Text,
+        message: Text? = nil,
+        @ViewBuilder footer: @escaping () -> Footer
+    ) {
+        self.init(
+            title,
+            message: message,
+            header: { fatalError() },
+            footer: footer
+        )
+    }
+
+    public init(
+        _ title: String,
+        message: String? = nil,
+        @ViewBuilder footer: @escaping () -> Footer
+    ) {
+        self.init(
+            Text(title),
+            message: message.map(Text.init),
+            footer: footer
+        )
     }
 }
 

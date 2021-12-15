@@ -13,6 +13,7 @@ private struct PopupPreviews: View {
     @Environment(\.theme) private var theme
     @State private var presentSystemAlert = false
     @State private var presentAlert = false
+    @State private var presentAlertWithHeader = false
     @State private var presentToast = false
     @State private var presentWindow = false
 
@@ -30,6 +31,13 @@ private struct PopupPreviews: View {
                 color: .indigo,
                 image: .number1Circle,
                 toggle: $presentAlert
+            )
+
+            row(
+                "Show Alert with Header",
+                color: .indigo,
+                image: .number1Circle,
+                toggle: $presentAlertWithHeader
             )
 
             ShowPartDetail()
@@ -59,6 +67,19 @@ private struct PopupPreviews: View {
                 presentAlert = false
             }
             .buttonStyle(.fill)
+        }
+        .popup(isPresented: $presentAlertWithHeader) {
+            StandardPopupAlert(Text(L.title), message: Text(L.message)) {
+                Image(system: .locationSlashFill)
+                    .resizable()
+                    .frame(50)
+            } footer: {
+                Button("OK") {
+                    presentAlertWithHeader = false
+                }
+                .buttonStyle(.fill)
+            }
+            .popupPreferredWidth(400)
         }
         .popup(isPresented: $presentToast, style: .toast) {
             CapsuleView("Z’s AirPods", subtitle: "Connected", systemImage: .airpods)
