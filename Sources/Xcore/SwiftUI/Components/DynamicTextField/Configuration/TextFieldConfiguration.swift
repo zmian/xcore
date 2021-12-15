@@ -153,3 +153,31 @@ extension TextFieldConfiguration where Formatter == AnyTextFieldFormatter {
         )
     }
 }
+
+extension TextFieldConfiguration where Formatter == CustomTextFieldFormatter {
+    public init(
+        id: ID,
+        autocapitalization: UITextAutocapitalizationType = .sentences,
+        autocorrection: UITextAutocorrectionType = .default,
+        spellChecking: UITextSpellCheckingType = .default,
+        keyboard: UIKeyboardType = .default,
+        textContentType: UITextContentType? = nil,
+        secureTextEntry: SecureTextEntry = .no,
+        isEditable: Bool = true,
+        validation: ValidationRule<String> = .none,
+        mask: Mask
+    ) {
+        self.init(
+            id: id,
+            autocapitalization: autocapitalization,
+            autocorrection: autocorrection,
+            spellChecking: spellChecking,
+            keyboard: keyboard,
+            textContentType: textContentType,
+            secureTextEntry: secureTextEntry,
+            isEditable: isEditable,
+            validation: validation,
+            formatter: Formatter(mask)
+        )
+    }
+}
