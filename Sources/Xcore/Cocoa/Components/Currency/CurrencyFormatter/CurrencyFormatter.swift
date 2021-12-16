@@ -93,7 +93,11 @@ extension CurrencyFormatter: Hashable {
 // MARK: - Components
 
 extension CurrencyFormatter {
-    public func components(from amount: Decimal, fractionLength limits: ClosedRange<Int>, sign: Money.Sign = .default) -> Money.Components {
+    public func components(
+        from amount: Decimal,
+        fractionLength limits: ClosedRange<Int> = 2...2,
+        sign: Money.Sign = .default
+    ) -> Money.Components {
         var majorUnitString = "0"
         var minorUnitString = "00"
 
@@ -144,6 +148,7 @@ extension CurrencyFormatter {
     ///
     /// - Parameters:
     ///   - value: The value to format.
+    ///   - limits: The limits of digits after the decimal separator.
     ///   - style: The style to format the result.
     ///   - sign: The sign to use when formatting the result.
     /// - Returns: A string representation of a given value formatted using the
@@ -162,6 +167,7 @@ extension CurrencyFormatter {
     ///
     /// - Parameters:
     ///   - value: The value to format.
+    ///   - limits: The limits of digits after the decimal separator.
     ///   - style: The style to format the result.
     ///   - sign: The sign to use when formatting the result.
     /// - Returns: A string representation of a given value formatted using the
@@ -180,6 +186,7 @@ extension CurrencyFormatter {
     ///
     /// - Parameters:
     ///   - value: The value to format.
+    ///   - limits: The limits of digits after the decimal separator.
     ///   - style: The style to format the result.
     ///   - sign: The sign to use when formatting the result.
     /// - Returns: A string representation of a given value formatted using the

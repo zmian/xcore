@@ -37,40 +37,35 @@ public struct Money: Equatable, Hashable, MutableAppliable {
     /// The amount of money.
     public var amount: Decimal
 
-    public let fractionLength: ClosedRange<Int>
-
-    @_disfavoredOverload
-    public init(_ amount: Decimal, fractionLength: ClosedRange<Int> = 2...2) {
+    public init(_ amount: Decimal) {
         self.amount = amount
-        self.fractionLength = fractionLength
         shouldSuperscriptMinorUnit = Self.appearance().shouldSuperscriptMinorUnit
     }
 
-    public init(_ amount: Decimal, precision: Int = 2) {
-        self.init(amount, fractionLength: precision...precision)
-    }
-
-    public init?(_ amount: Decimal?, precision: Int = 2) {
+    public init?(_ amount: Decimal?) {
         guard let amount = amount else {
             return nil
         }
 
-        self.init(amount, precision: precision)
+        self.init(amount)
     }
 
     @_disfavoredOverload
-    public init?(_ amount: Double?, precision: Int = 2) {
+    public init?(_ amount: Double?) {
         guard let amount = amount else {
             return nil
         }
 
-        self.init(amount, precision: precision)
+        self.init(amount)
     }
 
     /// The currency formatter used to format the amount.
     ///
     /// The default value is `.shared`.
     public var formatter: CurrencyFormatter = .shared
+
+    /// The limits of digits after the decimal separator.
+    public var fractionLength: ClosedRange<Int> = 2...2
 
     /// The style used to format money components.
     ///
@@ -179,6 +174,16 @@ extension Money {
 // MARK: - Chaining Syntactic Syntax
 
 extension Money {
+    public func fractionLength(_ limit: Int) -> Self {
+        fractionLength(limit...limit)
+    }
+
+    public func fractionLength(_ limits: ClosedRange<Int>) -> Self {
+        applying {
+            $0.fractionLength = limits
+        }
+    }
+
     public func style(_ style: Components.Style) -> Self {
         applying {
             $0.style = style
