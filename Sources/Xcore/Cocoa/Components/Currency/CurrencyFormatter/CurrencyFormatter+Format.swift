@@ -13,7 +13,11 @@ extension CurrencyFormatter {
     /// - Parameters:
     ///   - money: The money to format.
     /// - Returns: A string representation of the given money.
-    public func string(from money: Money, fractionLength limits: ClosedRange<Int>, format: String? = nil) -> String {
+    public func string(
+        from money: Money,
+        fractionLength limits: ClosedRange<Int>,
+        format: String? = nil
+    ) -> String {
         let amountString = components(
             from: money.amount,
             fractionLength: limits,
