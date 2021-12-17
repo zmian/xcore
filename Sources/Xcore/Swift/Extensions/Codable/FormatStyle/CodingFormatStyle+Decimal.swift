@@ -9,6 +9,7 @@ import Foundation
 public struct DecimalCodingFormatStyle: CodingFormatStyle {
     private static let numberFormatter = NumberFormatter().apply {
         $0.locale = .us
+        $0.maximumFractionDigits = Int.maxFractionDigits
     }
 
     private let encodeAsString: Bool
