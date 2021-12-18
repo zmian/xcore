@@ -7,6 +7,8 @@
 import Foundation
 
 public struct DoubleCodingFormatStyle: CodingFormatStyle {
+    public static var defaultEncodeAsString = false
+
     private static let numberFormatter = NumberFormatter().apply {
         $0.locale = .us
         $0.maximumFractionDigits = Int.maxFractionDigits
@@ -48,13 +50,13 @@ public struct DoubleCodingFormatStyle: CodingFormatStyle {
 
 extension DecodingFormatStyle where Self == DoubleCodingFormatStyle {
     public static var double: Self {
-        .init(encodeAsString: false)
+        .init(encodeAsString: Self.defaultEncodeAsString)
     }
 }
 
 extension EncodingFormatStyle where Self == DoubleCodingFormatStyle {
     public static var double: Self {
-        .init(encodeAsString: false)
+        .init(encodeAsString: Self.defaultEncodeAsString)
     }
 
     public static func double(asString: Bool) -> Self {
