@@ -28,7 +28,6 @@ final class StoryTimer: ObservableObject {
         self.interval = interval
         self.cycle = cycle
         self.progress = 0
-        start()
     }
 
     deinit {
@@ -43,6 +42,7 @@ final class StoryTimer: ObservableObject {
         cancellable = Timer
             .publish(every: tick, on: .main, in: .common)
             .autoconnect()
+            .merge(with: Just(Date()))
             .sink { [weak self] _ in
                 self?.updateProgress()
             }
