@@ -64,12 +64,12 @@ extension String {
     /// A function to remove specified currency symbols (`$ , .`) from `self`.
     ///
     /// ```swift
-    /// $2,000.88 → 200088   // "$2,000.8".trimmingCurrencySymbols(.all)
-    /// $2,000.88 → 2,000.88 // "$2,000.8".trimmingCurrencySymbols(.currencySymbol)
-    /// $2,000.88 → $2000.88 // "$2,000.8".trimmingCurrencySymbols(.groupingSeparator)
-    /// $2,000.88 → $2,00088 // "$2,000.8".trimmingCurrencySymbols(.decimalSeparator)
-    /// $2,000.88 → 2000.88  // "$2,000.8".trimmingCurrencySymbols([.currencySymbol, .groupingSeparator])
-    /// $2,000.88 → 2000.88  // "$2,000.8".trimmingCurrencySymbols(.specialCharacters)
+    /// $2,000.88 → 200088   // "$2,000.88".trimmingCurrencySymbols(.all)
+    /// $2,000.88 → 2,000.88 // "$2,000.88".trimmingCurrencySymbols(.currencySymbol)
+    /// $2,000.88 → $2000.88 // "$2,000.88".trimmingCurrencySymbols(.groupingSeparator)
+    /// $2,000.88 → $2,00088 // "$2,000.88".trimmingCurrencySymbols(.decimalSeparator)
+    /// $2,000.88 → 2000.88  // "$2,000.88".trimmingCurrencySymbols([.currencySymbol, .groupingSeparator])
+    /// $2,000.88 → 2000.88  // "$2,000.88".trimmingCurrencySymbols(.specialCharacters)
     /// ```
     public func trimmingCurrencySymbols(_ options: Currency.SymbolsOptions, provider: Currency.SymbolsProvider) -> String {
         guard !options.isEmpty else { return self }
