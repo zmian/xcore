@@ -240,9 +240,7 @@ extension Theme {
 
 extension Theme: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
-        // Comparing just "id" will prevent SwiftUI environment from propagating changes
-        // to the hierarchy when theme changes (e.g., just text color).
-        String(reflecting: lhs) == String(reflecting: rhs)
+        lhs.id == rhs.id
     }
 }
 
