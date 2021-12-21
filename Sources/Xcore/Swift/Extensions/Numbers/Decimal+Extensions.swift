@@ -41,11 +41,11 @@ extension Decimal {
     /// // w1 == 7.0
     /// ```
     ///
-    /// Use the precision parameter to customize the output:
+    /// Use the fraction digits parameter to customize the output:
     ///
     /// ```swift
     /// var w2 = Decimal(6.5)
-    /// w2.round(precision: 2)
+    /// w2.round(fractionDigits: 2)
     /// // w2 == 6.50
     /// ```
     ///
@@ -95,7 +95,7 @@ extension Decimal {
     /// // Prints "7.0"
     /// ```
     ///
-    /// Use the precision parameter to customize the output:
+    /// Use the fraction digits parameter to customize the output:
     ///
     /// ```swift
     /// print(x.rounded(2))
