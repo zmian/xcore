@@ -15,17 +15,30 @@ public struct _XIVTSSV<S: StringProtocol>: View {
     @Environment(\.theme) private var theme
     let title: Text
     let subtitle: S?
+    let subtitleColor: UIColor?
     let spacing: CGFloat?
 
-    init<S1: StringProtocol>(title: S1, subtitle: S?, spacing: CGFloat?) {
+    init<S1: StringProtocol>(
+        title: S1,
+        subtitle: S?,
+        subtitleColor: UIColor? = nil,
+        spacing: CGFloat?
+    ) {
         self.title = Text(title)
         self.subtitle = subtitle
+        self.subtitleColor = subtitleColor
         self.spacing = spacing
     }
 
-    init(title: Text, subtitle: S?, spacing: CGFloat?) {
+    init(
+        title: Text,
+        subtitle: S?,
+        subtitleColor: UIColor? = nil,
+        spacing: CGFloat?
+    ) {
         self.title = title
         self.subtitle = subtitle
+        self.subtitleColor = subtitleColor
         self.spacing = spacing
     }
 
@@ -37,7 +50,7 @@ public struct _XIVTSSV<S: StringProtocol>: View {
                 Text(subtitle)
                     .font(.app(.footnote))
                     .truncationMode(.middle)
-                    .foregroundColor(theme.textSecondaryColor)
+                    .foregroundColor(subtitleColor ?? theme.textSecondaryColor)
             }
         }
         .multilineTextAlignment(.leading)
