@@ -9,6 +9,8 @@ import Foundation
 /// A mutable collection you use to temporarily store transient key-value pairs
 /// that are subject to eviction when resources are low.
 open class Cache<Key: Hashable, Value> {
+    /// The keys of the cache.
+    public private (set) var keys = Set<Key>()
     private let cache = NSCache<KeyWrapper<Key>, ValueWrapper>()
     private let delegate = DelegateWrapper<Value>()
 
@@ -32,6 +34,16 @@ open class Cache<Key: Hashable, Value> {
         delegate.willEvictValue = action
     }
 
+    /// Returns a Boolean value indicating whether the cache contains the value for
+    /// the given key.
+    ///
+    /// - Parameter key: The key to look up in the cache.
+    /// - Returns: The value associated with key, or `nil` if no value is associated
+    ///   with key.
+    open func contains(forKey key: Key) -> Bool {
+        value(forKey: key) != nil
+    }
+
     /// Returns the value associated with a given key.
     ///
     /// - Parameter key: An object identifying the value.
@@ -50,6 +62,7 @@ open class Cache<Key: Hashable, Value> {
     ///   - value: The value to be stored in the cache.
     ///   - key: The key with which to associate the value.
     open func setValue(_ value: Value, forKey key: Key) {
+        keys.insert(key)
         cache.setObject(ValueWrapper(value), forKey: KeyWrapper(key))
     }
 
@@ -78,6 +91,7 @@ open class Cache<Key: Hashable, Value> {
     ///   - key: The key with which to associate the value.
     ///   - cost: The cost with which to associate the key-value pair.
     open func setValue(_ value: Value, forKey key: Key, cost: Int) {
+        keys.insert(key)
         cache.setObject(ValueWrapper(value), forKey: KeyWrapper(key), cost: cost)
     }
 
@@ -85,11 +99,13 @@ open class Cache<Key: Hashable, Value> {
     ///
     /// - Parameter key: The key identifying the value to be removed.
     open func remove(_ key: Key) {
+        keys.remove(key)
         cache.removeObject(forKey: KeyWrapper(key))
     }
 
     /// Empties the cache.
     open func removeAll() {
+        keys.removeAll()
         cache.removeAllObjects()
     }
 
