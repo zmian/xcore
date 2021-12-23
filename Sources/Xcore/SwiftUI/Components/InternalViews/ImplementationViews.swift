@@ -36,8 +36,8 @@ public struct _XIVTSSV: View {
             if let subtitle = subtitle {
                 subtitle
                     .font(.app(.footnote))
-                    .truncationMode(.middle)
                     .foregroundColor(theme.textSecondaryColor)
+                    .truncationMode(.middle)
             }
         }
         .multilineTextAlignment(.leading)
