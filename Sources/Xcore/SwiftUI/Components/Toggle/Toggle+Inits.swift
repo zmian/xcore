@@ -18,7 +18,7 @@ extension Toggle {
         subtitle: S2?,
         isOn: Binding<Bool>,
         spacing: CGFloat? = nil
-    ) where Label == _XIVTSSV<S2>, S1: StringProtocol, S2: StringProtocol {
+    ) where Label == _XIVTSSV, S1: StringProtocol, S2: StringProtocol {
         self.init(isOn: isOn) {
             _XIVTSSV(
                 title: title,
@@ -35,12 +35,12 @@ extension Toggle {
     ///   - title: A text that describes the purpose of the toggle.
     ///   - subtitle: A string that provides further information about the toggle.
     ///   - isOn: A binding to a property that determines whether the toggle is on or off.
-    public init<S>(
+    public init(
         _ title: Text,
-        subtitle: S?,
+        subtitle: Text?,
         isOn: Binding<Bool>,
         spacing: CGFloat? = nil
-    ) where Label == _XIVTSSV<S>, S: StringProtocol {
+    ) where Label == _XIVTSSV {
         self.init(isOn: isOn) {
             _XIVTSSV(
                 title: title,
