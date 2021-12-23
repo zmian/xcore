@@ -130,7 +130,7 @@ final class DateTest: XCTestCase {
                 case .monthYearFull:
                     expectedResult = "June 2020"
                 case .monthDayYearSlashTime:
-                    expectedResult = "06/04/2020 - 11:11AM"
+                    expectedResult = "06/04/2020 - 11:11 AM"
                 default:
                     expectedResult = ""
                     XCTFail("Unknown format")
