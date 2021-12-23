@@ -257,6 +257,7 @@ extension XStack {
     public init<S1, S2>(
         _ title: S1,
         subtitle: S2?,
+        subtitleColor: UIColor? = nil,
         spacing: CGFloat? = nil,
         @ViewBuilder value: @escaping () -> Value
     ) where Title == _XIVTSSV<S2>, S1: StringProtocol, S2: StringProtocol {
@@ -264,6 +265,7 @@ extension XStack {
             _XIVTSSV(
                 title: title,
                 subtitle: subtitle,
+                subtitleColor: subtitleColor,
                 spacing: spacing
             )
         } value: {
@@ -279,10 +281,11 @@ extension XStack {
     public init<S1, S2>(
         _ title: S1,
         subtitle: S2?,
+        subtitleColor: UIColor? = nil,
         spacing: CGFloat? = nil,
         value: Value
     ) where Title == _XIVTSSV<S2>, S1: StringProtocol, S2: StringProtocol {
-        self.init(title, subtitle: subtitle, spacing: spacing, value: { value })
+        self.init(title, subtitle: subtitle, subtitleColor: subtitleColor, spacing: spacing, value: { value })
     }
 
     /// Creates a stack with a title and subtitle generated from string and a value
