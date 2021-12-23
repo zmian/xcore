@@ -244,9 +244,9 @@ extension XStack where Value == Image {
     }
 }
 
-// MARK: - Title & Subtitle
+// MARK: - Title & Subtitle with Strings
 
-extension XStack {
+extension XStack where Title == _XIVTSSV {
     /// Creates a stack with a title and subtitle generated from string and a value.
     ///
     /// ```swift
@@ -257,15 +257,13 @@ extension XStack {
     public init<S1, S2>(
         _ title: S1,
         subtitle: S2?,
-        subtitleColor: UIColor? = nil,
         spacing: CGFloat? = nil,
         @ViewBuilder value: @escaping () -> Value
-    ) where Title == _XIVTSSV<S2>, S1: StringProtocol, S2: StringProtocol {
+    ) where S1: StringProtocol, S2: StringProtocol {
         self.init {
             _XIVTSSV(
                 title: title,
                 subtitle: subtitle,
-                subtitleColor: subtitleColor,
                 spacing: spacing
             )
         } value: {
@@ -281,11 +279,10 @@ extension XStack {
     public init<S1, S2>(
         _ title: S1,
         subtitle: S2?,
-        subtitleColor: UIColor? = nil,
         spacing: CGFloat? = nil,
         value: Value
-    ) where Title == _XIVTSSV<S2>, S1: StringProtocol, S2: StringProtocol {
-        self.init(title, subtitle: subtitle, subtitleColor: subtitleColor, spacing: spacing, value: { value })
+    ) where S1: StringProtocol, S2: StringProtocol {
+        self.init(title, subtitle: subtitle, spacing: spacing, value: { value })
     }
 
     /// Creates a stack with a title and subtitle generated from string and a value
@@ -299,7 +296,7 @@ extension XStack {
         subtitle: S2?,
         systemImage: SystemAssetIdentifier,
         spacing: CGFloat? = nil
-    ) where Value == Image, Title == _XIVTSSV<S2>, S1: StringProtocol, S2: StringProtocol {
+    ) where Value == Image, S1: StringProtocol, S2: StringProtocol {
         self.init(title, subtitle: subtitle, spacing: spacing, value: Image(system: systemImage))
     }
 
@@ -314,12 +311,84 @@ extension XStack {
         subtitle: S2?,
         image: ImageAssetIdentifier,
         spacing: CGFloat? = nil
-    ) where Value == Image, Title == _XIVTSSV<S2>, S1: StringProtocol, S2: StringProtocol {
+    ) where Value == Image, S1: StringProtocol, S2: StringProtocol {
         self.init(title, subtitle: subtitle, spacing: spacing, value: Image(assetIdentifier: image))
     }
 }
 
-extension XStack where Value == Never {
+// MARK: - Title & Subtitle with Text
+
+extension XStack where Title == _XIVTSSV {
+    /// Creates a stack with a title and subtitle generated from string and a value.
+    ///
+    /// ```swift
+    /// XStack(Text("Apple"), subtitle: Text("AAPL").foregroundColor(.green)) {
+    ///     Image(system: .docOnDoc)
+    /// }
+    /// ```
+    public init(
+        _ title: Text,
+        subtitle: Text?,
+        spacing: CGFloat? = nil,
+        @ViewBuilder value: @escaping () -> Value
+    ) {
+        self.init {
+            _XIVTSSV(
+                title: title,
+                subtitle: subtitle,
+                spacing: spacing
+            )
+        } value: {
+            value()
+        }
+    }
+
+    /// Creates a stack with a title and subtitle generated from string and a value.
+    ///
+    /// ```swift
+    /// XStack(Text("Apple"), subtitle: Text("AAPL").foregroundColor(.green), value: Image(system: .docOnDoc))
+    /// ```
+    public init(
+        _ title: Text,
+        subtitle: Text?,
+        spacing: CGFloat? = nil,
+        value: Value
+    ) {
+        self.init(title, subtitle: subtitle, spacing: spacing, value: { value })
+    }
+
+    /// Creates a stack with a title and subtitle generated from string and a value
+    /// with a system image.
+    ///
+    /// ```swift
+    /// XStack(Text("Apple"), subtitle: Text("AAPL").foregroundColor(.green), systemImage: .docOnDoc)
+    /// ```
+    public init(
+        _ title: Text,
+        subtitle: Text?,
+        systemImage: SystemAssetIdentifier,
+        spacing: CGFloat? = nil
+    ) where Value == Image {
+        self.init(title, subtitle: subtitle, spacing: spacing, value: Image(system: systemImage))
+    }
+
+    /// Creates a stack with a title and subtitle generated from string and a value
+    /// with an image.
+    ///
+    /// ```swift
+    /// XStack(Text("Apple"), subtitle: Text("AAPL").font(.caption), image: .disclosureIndicator)
+    /// ```
+    public init(
+        _ title: Text,
+        subtitle: Text?,
+        image: ImageAssetIdentifier,
+        spacing: CGFloat? = nil
+    ) where Value == Image {
+        self.init(title, subtitle: subtitle, spacing: spacing, value: Image(assetIdentifier: image))
+    }
+}
+
+extension XStack where Title == _XIVTSSV, Value == Never {
     /// Creates a stack with a title and subtitle generated from strings.
     ///
     /// ```swift
@@ -329,7 +398,20 @@ extension XStack where Value == Never {
         _ title: S1,
         subtitle: S2?,
         spacing: CGFloat? = nil
-    ) where Title == _XIVTSSV<S2>, S1: StringProtocol, S2: StringProtocol {
+    ) where S1: StringProtocol, S2: StringProtocol {
+        self.init(title, subtitle: subtitle, spacing: spacing, value: { fatalError() })
+    }
+
+    /// Creates a stack with a title and subtitle generated from strings.
+    ///
+    /// ```swift
+    /// XStack("Apple", subtitle: "AAPL")
+    /// ```
+    public init(
+        _ title: Text,
+        subtitle: Text?,
+        spacing: CGFloat? = nil
+    ) {
         self.init(title, subtitle: subtitle, spacing: spacing, value: { fatalError() })
     }
 }
