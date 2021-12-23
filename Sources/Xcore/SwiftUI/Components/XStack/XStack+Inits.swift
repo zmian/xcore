@@ -322,7 +322,13 @@ extension XStack where Title == _XIVTSSV {
     /// Creates a stack with a title and subtitle generated from string and a value.
     ///
     /// ```swift
-    /// XStack(Text("Apple"), subtitle: Text("AAPL").foregroundColor(.green)) {
+    /// var subtitle: Text {
+    ///     Text("AAPL")
+    ///         .font(.caption)
+    ///         .foregroundColor(.green)
+    /// }
+    ///
+    /// XStack(Text("Apple"), subtitle: subtitle) {
     ///     Image(system: .docOnDoc)
     /// }
     /// ```
@@ -346,7 +352,13 @@ extension XStack where Title == _XIVTSSV {
     /// Creates a stack with a title and subtitle generated from string and a value.
     ///
     /// ```swift
-    /// XStack(Text("Apple"), subtitle: Text("AAPL").foregroundColor(.green), value: Image(system: .docOnDoc))
+    /// var subtitle: Text {
+    ///     Text("AAPL")
+    ///         .font(.caption)
+    ///         .foregroundColor(.green)
+    /// }
+    ///
+    /// XStack(Text("Apple"), subtitle: subtitle, value: Image(system: .docOnDoc))
     /// ```
     public init(
         _ title: Text,
@@ -361,7 +373,13 @@ extension XStack where Title == _XIVTSSV {
     /// with a system image.
     ///
     /// ```swift
-    /// XStack(Text("Apple"), subtitle: Text("AAPL").foregroundColor(.green), systemImage: .docOnDoc)
+    /// var subtitle: Text {
+    ///     Text("AAPL")
+    ///         .font(.caption)
+    ///         .foregroundColor(.green)
+    /// }
+    ///
+    /// XStack(Text("Apple"), subtitle: subtitle, systemImage: .docOnDoc)
     /// ```
     public init(
         _ title: Text,
@@ -376,7 +394,13 @@ extension XStack where Title == _XIVTSSV {
     /// with an image.
     ///
     /// ```swift
-    /// XStack(Text("Apple"), subtitle: Text("AAPL").font(.caption), image: .disclosureIndicator)
+    /// var subtitle: Text {
+    ///     Text("AAPL")
+    ///         .font(.caption)
+    ///         .foregroundColor(.green)
+    /// }
+    ///
+    /// XStack(Text("Apple"), subtitle: subtitle, image: .disclosureIndicator)
     /// ```
     public init(
         _ title: Text,
@@ -405,7 +429,13 @@ extension XStack where Title == _XIVTSSV, Value == Never {
     /// Creates a stack with a title and subtitle generated from strings.
     ///
     /// ```swift
-    /// XStack("Apple", subtitle: "AAPL")
+    /// var subtitle: Text {
+    ///     Text("AAPL")
+    ///         .font(.caption)
+    ///         .foregroundColor(.green)
+    /// }
+    ///
+    /// XStack(Text("Apple"), subtitle: subtitle)
     /// ```
     public init(
         _ title: Text,
