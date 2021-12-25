@@ -20,6 +20,10 @@ public struct LineDynamicTextFieldStyle: DynamicTextFieldStyle {
             EnvironmentReader(\.theme) { theme in
                 let color: Color = {
                     if withValidationColors, configuration.isFocused {
+                        if configuration.text.isEmpty {
+                            return Color(theme.separatorColor)
+                        }
+
                         return configuration.isValid ? attributes.successColor : attributes.errorColor
                     }
 
