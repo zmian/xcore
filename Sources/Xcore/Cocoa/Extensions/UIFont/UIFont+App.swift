@@ -36,9 +36,9 @@ extension UIFont {
                 case .normal:
                     return normal
                 case .italic:
-                    return normal.traits(.traitItalic) ?? normal
+                    return normal.withTraits(.traitItalic) ?? normal
                 case .monospaced:
-                    return normal.traits(.traitMonoSpace) ?? normal
+                    return normal.withTraits(.traitMonoSpace) ?? normal
             }
         }
 
