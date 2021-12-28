@@ -190,6 +190,14 @@ extension ValidationRule where Input == String {
         )
     }
 
+    /// A validation rule that checks whether the input is a valid phone number.
+    public static var phoneNumber: Self {
+        .init {
+            let sanitizedNumber = $0.replacing("-", with: "")
+            return isValid(.phoneNumber).validate(sanitizedNumber) && sanitizedNumber.count == 10
+        }
+    }
+
     /// A validation rule that checks whether the input is a valid ITIN.
     ///
     /// **Individual Taxpayer Identification Number**
