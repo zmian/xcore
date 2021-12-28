@@ -135,35 +135,8 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
         textContentType: UITextContentType? = nil,
         secureTextEntry: SecureTextEntry = .no,
         isEditable: Bool = true,
-        validation: ValidationRule<String> = .none
-    ) {
-        self.init(
-            id: id,
-            autocapitalization: autocapitalization,
-            autocorrection: autocorrection,
-            spellChecking: spellChecking,
-            keyboard: keyboard,
-            textContentType: textContentType,
-            secureTextEntry: secureTextEntry,
-            isEditable: isEditable,
-            validation: validation,
-            formatter: Formatter()
-        )
-    }
-}
-
-extension TextFieldConfiguration where Formatter == MaskTextFieldFormatter {
-    public init(
-        id: ID,
-        autocapitalization: UITextAutocapitalizationType = .sentences,
-        autocorrection: UITextAutocorrectionType = .default,
-        spellChecking: UITextSpellCheckingType = .default,
-        keyboard: UIKeyboardType = .default,
-        textContentType: UITextContentType? = nil,
-        secureTextEntry: SecureTextEntry = .no,
-        isEditable: Bool = true,
         validation: ValidationRule<String> = .none,
-        mask: Mask
+        mask: Mask? = nil
     ) {
         self.init(
             id: id,

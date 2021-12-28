@@ -8,12 +8,18 @@ import Foundation
 
 /// A formatter that passthrough their textual representations.
 public struct PassthroughTextFieldFormatter: TextFieldFormatter {
+    private let mask: Mask?
+
+    public init(_ mask: Mask? = nil) {
+        self.mask = mask
+    }
+
     public func string(from value: String) -> String {
-        value
+        mask?.string(from: value) ?? value
     }
 
     public func value(from string: String) -> String {
-        string
+        mask?.value(from: string) ?? string
     }
 
     public func shouldChange(to string: String) -> Bool {

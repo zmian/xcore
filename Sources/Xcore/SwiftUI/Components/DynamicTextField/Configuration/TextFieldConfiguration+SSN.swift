@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-extension TextFieldConfiguration where Formatter == MaskTextFieldFormatter {
+extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatter {
     /// Social Security Number (SSN)
     public static var ssn: Self {
         .init(
@@ -21,9 +21,7 @@ extension TextFieldConfiguration where Formatter == MaskTextFieldFormatter {
             mask: .ssn
         )
     }
-}
 
-extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatter {
     /// Social Security Number (SSN) Last 4 Digits
     public static var ssnLastFour: Self {
         .init(
