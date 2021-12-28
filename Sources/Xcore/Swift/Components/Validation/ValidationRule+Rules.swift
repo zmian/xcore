@@ -191,7 +191,7 @@ extension ValidationRule where Input == String {
     }
 
     /// A validation rule that checks whether the input is a valid phone number.
-    public static func phoneNumber(length: Int?) -> Self {
+    public static func phoneNumber(length: Int? = nil) -> Self {
         .init {
             let sanitizedNumber = $0.replacing("-", with: "")
             let isValidNumber = isValid(.phoneNumber).validate(sanitizedNumber)

@@ -37,9 +37,9 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
     }
 }
 
-extension TextFieldConfiguration where Formatter == CustomTextFieldFormatter {
+extension TextFieldConfiguration where Formatter == MaskTextFieldFormatter {
     /// Phone Number
-    public static func phoneNumber(length: Int?) -> Self {
+    public static func phoneNumber(length: Int? = nil) -> Self {
         .init(
             id: "phoneNumber",
             autocapitalization: .none,
