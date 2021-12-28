@@ -13,9 +13,14 @@ extension CurrencyFormatter {
     /// - Parameters:
     ///   - money: The money to format.
     /// - Returns: A string representation of the given money.
-    public func string(from money: Money, format: String? = nil) -> String {
+    public func string(
+        from money: Money,
+        fractionLength limits: ClosedRange<Int>,
+        format: String? = nil
+    ) -> String {
         let amountString = components(
             from: money.amount,
+            fractionLength: limits,
             sign: money.sign
         )
         .joined(style: money.style)
@@ -64,7 +69,7 @@ extension CurrencyFormatter {
             return NSMutableAttributedString(string: " " + money.zeroString)
         }
 
-        let components = self.components(from: amount, sign: money.sign)
+        let components = self.components(from: amount, fractionLength: money.fractionLength, sign: money.sign)
         let joinedAmount = components.joined(style: money.style)
 
         let attributedString = NSMutableAttributedString(
@@ -126,7 +131,7 @@ extension Money: View {
         if amount == 0, !shouldDisplayZero {
             Text(zeroString)
         } else {
-            let components = formatter.components(from: amount, sign: sign)
+            let components = formatter.components(from: amount, fractionLength: fractionLength, sign: sign)
             let joinedAmount = components.joined(style: style)
 
             Text(joinedAmount)

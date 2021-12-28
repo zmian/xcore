@@ -84,6 +84,27 @@ extension View {
     }
 }
 
+// MARK: - ForegroundColor: Text
+
+extension Text {
+    /// Sets the color that the view uses for foreground elements.
+    public func foregroundColor(_ color: () -> Color) -> Text {
+        foregroundColor(color())
+    }
+
+    /// Sets the color that the view uses for foreground elements.
+    @_disfavoredOverload
+    public func foregroundColor(_ color: () -> UIColor) -> Text {
+        foregroundColor(Color(color()))
+    }
+
+    /// Sets the color that the view uses for foreground elements.
+    @_disfavoredOverload
+    public func foregroundColor(_ color: UIColor) -> Text {
+        foregroundColor(Color(color))
+    }
+}
+
 // MARK: - Tint & Accent Color
 
 extension View {

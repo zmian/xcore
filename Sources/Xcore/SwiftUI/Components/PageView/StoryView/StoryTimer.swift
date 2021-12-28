@@ -43,6 +43,7 @@ final class StoryTimer: ObservableObject {
         cancellable = Timer
             .publish(every: tick, on: .main, in: .common)
             .autoconnect()
+            .merge(with: Just(Date()))
             .sink { [weak self] _ in
                 self?.updateProgress()
             }

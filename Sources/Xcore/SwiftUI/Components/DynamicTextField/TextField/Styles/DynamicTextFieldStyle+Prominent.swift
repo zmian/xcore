@@ -107,7 +107,11 @@ extension ProminentDynamicTextFieldStyle {
             }
 
             var color: Color? {
-                configuration.isValid ? nil : attributes.errorColor
+                if configuration.text.isEmpty {
+                    return nil
+                }
+
+                return configuration.isValid ? nil : attributes.errorColor
             }
 
             switch validationColor {

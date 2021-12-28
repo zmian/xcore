@@ -64,6 +64,9 @@ public struct Money: Equatable, Hashable, MutableAppliable {
     /// The default value is `.shared`.
     public var formatter: CurrencyFormatter = .shared
 
+    /// The limits of digits after the decimal separator.
+    public var fractionLength: ClosedRange<Int> = 2...2
+
     /// The style used to format money components.
     ///
     /// The default value is `.default`.
@@ -102,7 +105,7 @@ public struct Money: Equatable, Hashable, MutableAppliable {
 
     /// A succinct label in a localized string that describes its contents
     public var accessibilityLabel: String {
-        formatter.string(from: amount, style: style)
+        formatter.string(from: amount, fractionLength: fractionLength, style: style)
     }
 }
 
@@ -134,7 +137,7 @@ extension Money: ExpressibleByIntegerLiteral {
 
 extension Money: CustomStringConvertible {
     public var description: String {
-        formatter.string(from: self)
+        formatter.string(from: self, fractionLength: fractionLength)
     }
 }
 
@@ -171,6 +174,16 @@ extension Money {
 // MARK: - Chaining Syntactic Syntax
 
 extension Money {
+    public func fractionLength(_ limit: Int) -> Self {
+        fractionLength(limit...limit)
+    }
+
+    public func fractionLength(_ limits: ClosedRange<Int>) -> Self {
+        applying {
+            $0.fractionLength = limits
+        }
+    }
+
     public func style(_ style: Components.Style) -> Self {
         applying {
             $0.style = style
@@ -239,6 +252,6 @@ extension Money {
     }
 
     public func string(format: String? = nil) -> String {
-        formatter.string(from: self, format: format)
+        formatter.string(from: self, fractionLength: fractionLength, format: format)
     }
 }

@@ -93,13 +93,20 @@ extension CurrencyFormatter: Hashable {
 // MARK: - Components
 
 extension CurrencyFormatter {
-    public func components(from amount: Decimal, sign: Money.Sign = .default) -> Money.Components {
+    public func components(
+        from amount: Decimal,
+        fractionLength limits: ClosedRange<Int> = 2...2,
+        sign: Money.Sign = .default
+    ) -> Money.Components {
         var majorUnitString = "0"
         var minorUnitString = "00"
 
         // Important to ensure decimal is enabled since the formatter is shared instance
         // potentially mutated by other code.
         formatter.isDecimalEnabled = true
+
+        formatter.minimumFractionDigits = limits.lowerBound
+        formatter.maximumFractionDigits = limits.upperBound
 
         let amountString = with(sign: sign) {
             formatter.string(from: NSDecimalNumber(decimal: amount))!
@@ -141,16 +148,18 @@ extension CurrencyFormatter {
     ///
     /// - Parameters:
     ///   - value: The value to format.
+    ///   - limits: The limits of digits after the decimal separator.
     ///   - style: The style to format the result.
     ///   - sign: The sign to use when formatting the result.
     /// - Returns: A string representation of a given value formatted using the
     ///   given style.
     public func string(
         from value: Decimal,
+        fractionLength limits: ClosedRange<Int>,
         style: Money.Components.Style = .default,
         sign: Money.Sign = .default
     ) -> String {
-        components(from: value, sign: sign).joined(style: style)
+        components(from: value, fractionLength: limits, sign: sign).joined(style: style)
     }
 
     /// Returns a string representation of a given value formatted using the given
@@ -158,16 +167,18 @@ extension CurrencyFormatter {
     ///
     /// - Parameters:
     ///   - value: The value to format.
+    ///   - limits: The limits of digits after the decimal separator.
     ///   - style: The style to format the result.
     ///   - sign: The sign to use when formatting the result.
     /// - Returns: A string representation of a given value formatted using the
     ///   given style.
     public func string(
         from value: Int,
+        fractionLength limits: ClosedRange<Int>,
         style: Money.Components.Style = .default,
         sign: Money.Sign = .default
     ) -> String {
-        string(from: Decimal(value), style: style, sign: sign)
+        string(from: Decimal(value), fractionLength: limits, style: style, sign: sign)
     }
 
     /// Returns a string representation of a given value formatted using the given
@@ -175,16 +186,18 @@ extension CurrencyFormatter {
     ///
     /// - Parameters:
     ///   - value: The value to format.
+    ///   - limits: The limits of digits after the decimal separator.
     ///   - style: The style to format the result.
     ///   - sign: The sign to use when formatting the result.
     /// - Returns: A string representation of a given value formatted using the
     ///   given style.
     public func string(
         from value: Double,
+        fractionLength limits: ClosedRange<Int>,
         style: Money.Components.Style = .default,
         sign: Money.Sign = .default
     ) -> String {
-        string(from: Decimal(value), style: style, sign: sign)
+        string(from: Decimal(value), fractionLength: limits, style: style, sign: sign)
     }
 
     /// Returns a numeric representation by parsing the given string.
