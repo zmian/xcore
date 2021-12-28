@@ -14,10 +14,11 @@ public protocol Mask {
 
 extension Mask {
     public func string(from value: String) -> String {
-        let sanitizedValue = value.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        let sanitizedValue = value.components(separatedBy: .decimalDigits.inverted).joined()
         let mask = maskFormat
         var result = ""
         var index = sanitizedValue.startIndex
+
         for ch in mask where index < sanitizedValue.endIndex {
             if ch == "#" {
                 result.append(sanitizedValue[index])
@@ -26,6 +27,7 @@ extension Mask {
                 result.append(ch)
             }
         }
+
         return result
     }
 
@@ -47,9 +49,9 @@ public struct SSNMask: Mask {
 // MARK: - Dot Syntax Support
 
 extension Mask where Self == PhoneNumberMask {
-    public static var phoneNumber: Self { Self() }
+    public static var phoneNumber: Self { .init() }
 }
 
 extension Mask where Self == SSNMask {
-    public static var ssn: Self { Self() }
+    public static var ssn: Self { .init() }
 }

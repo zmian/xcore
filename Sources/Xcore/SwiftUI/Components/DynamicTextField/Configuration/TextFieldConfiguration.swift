@@ -87,7 +87,43 @@ public struct TextFieldConfiguration<Formatter: TextFieldFormatter>: Equatable, 
     }
 }
 
-// MARK: - Convenience Init
+// MARK: - Equatable
+
+extension TextFieldConfiguration {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id &&
+            lhs.autocapitalization == rhs.autocapitalization &&
+            lhs.autocorrection == rhs.autocorrection &&
+            lhs.spellChecking == rhs.spellChecking &&
+            lhs.keyboard == rhs.keyboard &&
+            lhs.textContentType == rhs.textContentType &&
+            lhs.secureTextEntry == rhs.secureTextEntry &&
+            lhs.isEditable == rhs.isEditable
+    }
+}
+
+// MARK: - Inits
+
+extension TextFieldConfiguration where Formatter == AnyTextFieldFormatter {
+    /// Erase formatter
+    init<F: TextFieldFormatter>(_ configuration: TextFieldConfiguration<F>) {
+        self.init(
+            id: .init(rawValue: configuration.id.rawValue),
+            autocapitalization: configuration.autocapitalization,
+            autocorrection: configuration.autocorrection,
+            spellChecking: configuration.spellChecking,
+            keyboard: configuration.keyboard,
+            textContentType: configuration.textContentType,
+            secureTextEntry: .init(rawValue: configuration.secureTextEntry.rawValue)!,
+            isEditable: configuration.isEditable,
+            validation: configuration.validation,
+            formatter: .init(configuration.formatter),
+            userInfo: configuration.userInfo.mapPairs {
+                (UserInfo.Key(rawValue: $0.key.rawValue), $0.value)
+            }
+        )
+    }
+}
 
 extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatter {
     public init(
@@ -112,44 +148,6 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
             isEditable: isEditable,
             validation: validation,
             formatter: Formatter()
-        )
-    }
-}
-
-// MARK: - Equatable
-
-extension TextFieldConfiguration {
-    public static func ==(lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id &&
-            lhs.autocapitalization == rhs.autocapitalization &&
-            lhs.autocorrection == rhs.autocorrection &&
-            lhs.spellChecking == rhs.spellChecking &&
-            lhs.keyboard == rhs.keyboard &&
-            lhs.textContentType == rhs.textContentType &&
-            lhs.secureTextEntry == rhs.secureTextEntry &&
-            lhs.isEditable == rhs.isEditable
-    }
-}
-
-// MARK: - Convenience
-
-extension TextFieldConfiguration where Formatter == AnyTextFieldFormatter {
-    /// Erase formatter
-    init<F: TextFieldFormatter>(_ configuration: TextFieldConfiguration<F>) {
-        self.init(
-            id: .init(rawValue: configuration.id.rawValue),
-            autocapitalization: configuration.autocapitalization,
-            autocorrection: configuration.autocorrection,
-            spellChecking: configuration.spellChecking,
-            keyboard: configuration.keyboard,
-            textContentType: configuration.textContentType,
-            secureTextEntry: .init(rawValue: configuration.secureTextEntry.rawValue)!,
-            isEditable: configuration.isEditable,
-            validation: configuration.validation,
-            formatter: .init(configuration.formatter),
-            userInfo: configuration.userInfo.mapPairs {
-                (UserInfo.Key(rawValue: $0.key.rawValue), $0.value)
-            }
         )
     }
 }
