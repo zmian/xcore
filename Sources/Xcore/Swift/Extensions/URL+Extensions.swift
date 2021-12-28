@@ -33,6 +33,50 @@ extension URL {
     }
 }
 
+// MARK: - Appening Query Items
+
+extension URL {
+    /// Appends the given query item to the URL.
+    ///
+    /// ```
+    /// let url = URL(string: "https://example.com/?q=HelloWorld")!
+    /// print(url.appendQueryItem(named: "lang", value: "Swift")) // "https://example.com/?q=HelloWorld&lang=Swift"
+    /// ```
+    public func appendQueryItem(named name: String, value: String?) -> URL {
+        appendQueryItem(.init(name: name, value: value))
+    }
+
+    /// Appends the given query item to the URL.
+    ///
+    /// ```
+    /// let url = URL(string: "https://example.com/?q=HelloWorld")!
+    /// print(url.appendQueryItem(URLQueryItem(name: "lang", value: "Swift")) // "https://example.com/?q=HelloWorld&lang=Swift"
+    /// ```
+    public func appendQueryItem(_ item: URLQueryItem) -> URL {
+        appendQueryItems([item])
+    }
+
+    /// Appends the given list of query items to the URL.
+    ///
+    /// ```
+    /// let url = URL(string: "https://example.com/?q=HelloWorld")!
+    /// print(url.appendQueryItems([URLQueryItem(name: "lang", value: "Swift")]) // "https://example.com/?q=HelloWorld&lang=Swift"
+    /// ```
+    public func appendQueryItems(_ items: [URLQueryItem]) -> URL {
+        guard var components = URLComponents.init(url: self, resolvingAgainstBaseURL: true) else {
+            return self
+        }
+
+        var queryItems = components.queryItems ?? []
+        queryItems.append(contentsOf: items)
+        components.queryItems = Array(queryItems.reversed()).uniqued(\.name).reversed()
+
+        return components.url ?? self
+    }
+}
+
+// MARK: - Removing Query Items
+
 extension URL {
     /// Removes all the query items.
     ///
@@ -146,7 +190,11 @@ extension URL {
 
         return components.url ?? self
     }
+}
 
+// MARK: - Removing Components
+
+extension URL {
     /// Returns a URL constructed by removing the fragment from self.
     ///
     /// If the URL has no fragment (e.g., `http://www.example.com`),
