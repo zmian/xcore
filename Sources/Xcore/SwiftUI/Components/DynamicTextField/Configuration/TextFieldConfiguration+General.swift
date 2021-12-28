@@ -25,19 +25,6 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
         )
     }
 
-    /// Similar to text but no spell checking, auto capitalization or auto
-    /// correction.
-    public static var plain: Self {
-        .init(
-            id: #function,
-            autocapitalization: .none,
-            autocorrection: .no,
-            spellChecking: .no
-        )
-    }
-}
-
-extension TextFieldConfiguration where Formatter == MaskTextFieldFormatter {
     /// Phone Number
     public static func phoneNumber(length: Int? = nil) -> Self {
         .init(
@@ -49,6 +36,17 @@ extension TextFieldConfiguration where Formatter == MaskTextFieldFormatter {
             textContentType: .telephoneNumber,
             validation: .phoneNumber(length: length),
             mask: .phoneNumber
+        )
+    }
+
+    /// Similar to text but no spell checking, auto capitalization or auto
+    /// correction.
+    public static var plain: Self {
+        .init(
+            id: #function,
+            autocapitalization: .none,
+            autocorrection: .no,
+            spellChecking: .no
         )
     }
 }
