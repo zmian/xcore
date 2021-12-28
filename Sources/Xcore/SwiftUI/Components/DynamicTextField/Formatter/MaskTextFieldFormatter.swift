@@ -6,8 +6,8 @@
 
 import Foundation
 
-/// A formatter that passthrough their textual representations.
-public struct CustomTextFieldFormatter: TextFieldFormatter {
+/// A formatter that mask their textual representations.
+public struct MaskTextFieldFormatter: TextFieldFormatter {
     private let mask: Mask
 
     public init(_ mask: Mask) {
