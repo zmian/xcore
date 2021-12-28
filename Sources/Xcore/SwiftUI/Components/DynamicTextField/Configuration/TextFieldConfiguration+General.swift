@@ -25,19 +25,6 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
         )
     }
 
-    /// Phone Number
-    public static var phoneNumber: Self {
-        .init(
-            id: #function,
-            autocapitalization: .none,
-            autocorrection: .no,
-            spellChecking: .no,
-            keyboard: .phonePad,
-            textContentType: .telephoneNumber,
-            validation: .isValid(.phoneNumber)
-        )
-    }
-
     /// Similar to text but no spell checking, auto capitalization or auto
     /// correction.
     public static var plain: Self {
