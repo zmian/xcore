@@ -66,13 +66,17 @@ final class NumbersTests: TestCase {
 
     func testDoubleInit() {
         XCTAssertEqual(Double("2.5" as Any), 2.5)
+        XCTAssertEqual(Double(Int(-7) as Any), -7)
+        XCTAssertEqual(Double(UInt(7) as Any), 7)
         XCTAssertEqual(Double(CGFloat(2.5) as Any), 2.5)
         XCTAssertEqual(Double(CGFloat(0.07) as Any), 0.07)
         XCTAssertEqual(Double(Double(2.5) as Any), 2.5)
         XCTAssertEqual(Double(Double(0.07) as Any), 0.07)
         XCTAssertEqual(Double(Decimal(0.07) as Any), 0.07)
-        XCTAssertEqual(Double(Int(-7) as Any), -7)
-        XCTAssertEqual(Double(UInt(7) as Any), 7)
+        XCTAssertEqual(Double(Decimal(315.36) as Any), 315.36)
+        XCTAssertEqual(Double(Decimal(9.28) as Any), 9.28)
+        XCTAssertEqual(Double(Decimal(0.1736) as Any), 0.1736)
+        XCTAssertEqual(Double(Decimal(0.000001466) as Any), 0.000001466)
     }
 
     func testDouble_formatted() {
@@ -83,12 +87,26 @@ final class NumbersTests: TestCase {
         XCTAssertEqual(Double(1.1355).formatted(fractionDigits: 2), "1.14")
         XCTAssertEqual(Double(1.1355).formatted(fractionDigits: 3), "1.136")
 
+        XCTAssertEqual(Double(9.28).formatted(fractionDigits: 3), "9.280")
+        XCTAssertEqual(Double(0.1736).formatted(fractionDigits: 4), "0.1736")
+        XCTAssertEqual(Double(0.1736).formatted(fractionDigits: 2), "0.17")
+        XCTAssertEqual(Double(0.000001466).formatted(fractionDigits: 9), "0.000001466")
+        XCTAssertEqual(Double(0.000001466).formatted(fractionDigits: 8), "0.00000147")
+        XCTAssertEqual(Double(0.000001466).formatted(fractionDigits: 3), "0.000")
+
         // trunc
         XCTAssertEqual(Double(1.1355).formatted(.towardZero, fractionDigits: 3), "1.135")
     }
 
     func testAbbreviate() {
         let values1: [(Double, String)] = [
+            (0.000001466, "0.000001466"),
+            (0.000001566, "0.000001566"),
+            (0.01466, "0.01466"),
+            (0.241341466, "0.241341466"),
+            (0.1736, "0.1736"),
+            (9.28, "9.28"),
+            (0.07, "0.07"),
             (315.36, "315.36"),
             (987, "987"),
             (1200.0, "1.2K"),

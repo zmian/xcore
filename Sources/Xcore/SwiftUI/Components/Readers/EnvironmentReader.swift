@@ -25,7 +25,7 @@ public struct EnvironmentReader<Value, Content>: View where Content: View {
         self.content = content
     }
 
-    public var body: some View {
+    public var body: Content {
         content(value)
     }
 }

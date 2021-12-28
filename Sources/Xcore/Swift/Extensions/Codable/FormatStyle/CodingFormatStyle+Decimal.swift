@@ -7,8 +7,11 @@
 import Foundation
 
 public struct DecimalCodingFormatStyle: CodingFormatStyle {
+    public static var defaultEncodeAsString = false
+
     private static let numberFormatter = NumberFormatter().apply {
         $0.locale = .us
+        $0.maximumFractionDigits = Int.maxFractionDigits
     }
 
     private let encodeAsString: Bool
@@ -51,13 +54,13 @@ public struct DecimalCodingFormatStyle: CodingFormatStyle {
 
 extension DecodingFormatStyle where Self == DecimalCodingFormatStyle {
     public static var decimal: Self {
-        .init(encodeAsString: false)
+        .init(encodeAsString: Self.defaultEncodeAsString)
     }
 }
 
 extension EncodingFormatStyle where Self == DecimalCodingFormatStyle {
     public static var decimal: Self {
-        .init(encodeAsString: false)
+        .init(encodeAsString: Self.defaultEncodeAsString)
     }
 
     public static func decimal(asString: Bool) -> Self {

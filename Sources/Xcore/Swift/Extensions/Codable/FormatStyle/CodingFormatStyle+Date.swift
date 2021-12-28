@@ -12,7 +12,7 @@ public struct DateCodingFormatStyle: CodingFormatStyle {
 
     init(
         calendar: Calendar = .defaultCoding,
-        formats: [Date.Format.Custom] = [.yearMonthDayDash, .iso8601, .iso8601Local]
+        formats: [Date.Format.Custom] = [.iso8601, .iso8601Local, .yearMonthDayDash]
     ) {
         self.formats = formats
         self.calendar = calendar
@@ -42,7 +42,7 @@ public struct DateCodingFormatStyle: CodingFormatStyle {
 extension DecodingFormatStyle where Self == DateCodingFormatStyle {
     public static func date(
         calendar: Calendar = .defaultCoding,
-        formats: [Date.Format.Custom] = [.yearMonthDayDash, .iso8601, .iso8601Local]
+        formats: [Date.Format.Custom] = [.iso8601, .iso8601Local, .yearMonthDayDash]
     ) -> Self {
         .init(calendar: calendar, formats: formats)
     }
@@ -58,7 +58,7 @@ extension DecodingFormatStyle where Self == DateCodingFormatStyle {
 extension EncodingFormatStyle where Self == DateCodingFormatStyle {
     public static func date(
         calendar: Calendar = .defaultCoding,
-        formats: [Date.Format.Custom] = [.yearMonthDayDash, .iso8601, .iso8601Local]
+        formats: [Date.Format.Custom] = [.iso8601, .iso8601Local, .yearMonthDayDash]
     ) -> Self {
         .init(calendar: calendar, formats: formats)
     }

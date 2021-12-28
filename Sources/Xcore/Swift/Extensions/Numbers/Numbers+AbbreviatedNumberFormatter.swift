@@ -11,7 +11,6 @@ private struct AbbreviatedNumberFormatter<Number: DoubleDecimal> {
 
     private let formatter = NumberFormatter().apply {
         $0.numberStyle = .decimal
-        $0.allowsFloats = true
         $0.minimumIntegerDigits = 1
         $0.minimumFractionDigits = 0
         $0.maximumFractionDigits = 1
@@ -82,7 +81,7 @@ private struct AbbreviatedNumberFormatter<Number: DoubleDecimal> {
         let abbreviatedValue = value / abbreviation.divisor
         formatter.positiveSuffix = abbreviation.suffix
         formatter.negativeSuffix = abbreviation.suffix
-        formatter.maximumFractionDigits = value == abbreviatedValue ? 2 : 1
+        formatter.maximumFractionDigits = value == abbreviatedValue ? .maxFractionDigits : 1
         formatter.locale = locale ?? .current
         return formatter.string(from: abbreviatedValue.nsNumber) ?? "\(abbreviatedValue)"
     }

@@ -201,7 +201,7 @@ extension Double {
         }
 
         if let decimal = value as? Decimal {
-            self.init((decimal as NSDecimalNumber).stringValue)
+            self.init(decimal.formattedString())
             return
         }
 
@@ -229,13 +229,39 @@ extension Comparable {
 extension Double {
     private static let formatter = NumberFormatter().apply {
         $0.numberStyle = .decimal
+        $0.maximumFractionDigits = .maxFractionDigits
     }
 
-    func formattedString() -> String {
-        if #available(iOS 15.0, *) {
-            return formatted()
-        } else {
-            return Self.formatter.string(from: NSNumber(value: self)) ?? ""
-        }
+    @available(iOS, introduced: 14, deprecated: 15, message: "Use .formattedString() directly.")
+    public func formattedString() -> String {
+        Self.formatter.string(from: NSNumber(value: self)) ?? ""
     }
+
+//    @available(iOS 15.0, *)
+//    public func formattedString() -> String {
+//        formatted(.number.precision(.fractionLength(0...Int.maxFractionDigits)))
+//    }
+}
+
+// MARK: - Formatted
+
+extension Decimal {
+    private static let formatter = NumberFormatter().apply {
+        $0.numberStyle = .decimal
+        $0.maximumFractionDigits = .maxFractionDigits
+    }
+
+    @available(iOS, introduced: 14, deprecated: 15, message: "Use .formattedString() directly.")
+    public func formattedString() -> String {
+        Self.formatter.string(from: NSDecimalNumber(decimal: self)) ?? ""
+    }
+
+//    @available(iOS 15.0, *)
+//    public func formattedString() -> String {
+//        formatted(.number.precision(.fractionLength(0...Int.maxFractionDigits)))
+//    }
+}
+
+extension Int {
+    static var maxFractionDigits: Int { 100 }
 }

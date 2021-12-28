@@ -11,19 +11,19 @@ import SwiftUI
 /// Don't use it.
 ///
 /// :nodoc:
-public struct _XIVTSSV<S: StringProtocol>: View {
+public struct _XIVTSSV: View {
     @Environment(\.theme) private var theme
     let title: Text
-    let subtitle: S?
+    let subtitle: Text?
     let spacing: CGFloat?
 
-    init<S1: StringProtocol>(title: S1, subtitle: S?, spacing: CGFloat?) {
+    init<S1: StringProtocol, S2: StringProtocol>(title: S1, subtitle: S2?, spacing: CGFloat?) {
         self.title = Text(title)
-        self.subtitle = subtitle
+        self.subtitle = Text(subtitle)
         self.spacing = spacing
     }
 
-    init(title: Text, subtitle: S?, spacing: CGFloat?) {
+    init(title: Text, subtitle: Text?, spacing: CGFloat?) {
         self.title = title
         self.subtitle = subtitle
         self.spacing = spacing
@@ -34,10 +34,10 @@ public struct _XIVTSSV<S: StringProtocol>: View {
             title
 
             if let subtitle = subtitle {
-                Text(subtitle)
+                subtitle
                     .font(.app(.footnote))
-                    .truncationMode(.middle)
                     .foregroundColor(theme.textSecondaryColor)
+                    .truncationMode(.middle)
             }
         }
         .multilineTextAlignment(.leading)

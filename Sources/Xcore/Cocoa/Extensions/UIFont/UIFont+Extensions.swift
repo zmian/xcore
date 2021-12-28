@@ -30,26 +30,44 @@ extension UIFont {
 }
 
 extension UIFont {
-    /// Returns a font matching the given font descriptor.
+    /// Returns a font matching the given symbolic traits.
     ///
     /// - Parameter traits: The new symbolic traits.
-    /// - Returns: The new font matching the given font descriptor.
-    func traits(_ traits: UIFontDescriptor.SymbolicTraits...) -> UIFont? {
+    /// - Returns: The new font matching the given symbolic traits.
+    public func withTraits(_ traits: UIFontDescriptor.SymbolicTraits...) -> UIFont? {
         fontDescriptor.withSymbolicTraits(.init(traits)).map {
             UIFont(descriptor: $0, size: 0)
         }
     }
 
+    /// Returns a font object that is the same as the font, but has the specified
+    /// weight.
+    ///
+    /// - Parameter weight: The desired weight of the new font object.
+    /// - Returns: A font object of the specified weight.
+    public func withWeight(_ weight: Weight) -> UIFont {
+        var attributes = fontDescriptor.fontAttributes
+        var traits = (attributes[.traits] as? [UIFontDescriptor.TraitKey: Any]) ?? [:]
+        traits[.weight] = weight
+
+        attributes[.name] = nil // Needed for custom fonts as the name can be tied to specific weight.
+        attributes[.family] = familyName
+        attributes[.traits] = traits
+
+        let descriptor = UIFontDescriptor(fontAttributes: attributes)
+        return UIFont(descriptor: descriptor, size: 0)
+    }
+
     func bold() -> UIFont? {
-        traits(.traitBold)
+        withTraits(.traitBold)
     }
 
     func italic() -> UIFont? {
-        traits(.traitItalic)
+        withTraits(.traitItalic)
     }
 
     func monospaced() -> UIFont? {
-        traits(.traitMonoSpace)
+        withTraits(.traitMonoSpace)
     }
 }
 

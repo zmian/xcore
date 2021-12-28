@@ -140,8 +140,8 @@ extension Date.Format.Custom {
     /// `MM/dd/yyyy` (e.g., 06/04/2020)
     public static let monthDayYearSlash: Self = "MM/dd/yyyy"
 
-    /// `MM/dd/yyyy - h:mma` (e.g., 06/04/2020 - 12:00AM)
-    public static let monthDayYearSlashTime: Self = "MM/dd/yyyy - h:mma"
+    /// `MM/dd/yyyy - h:mm a` (e.g., 06/04/2020 - 12:00 AM)
+    public static let monthDayYearSlashTime: Self = "MM/dd/yyyy - h:mm a"
 
     /// `yyyy` (e.g., 2020)
     public static let year: Self = "yyyy"

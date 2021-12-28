@@ -151,6 +151,27 @@ final class URLTests: TestCase {
         XCTAssertEqual(url7.replacingQueryItems(["q"], with: "xxxx"), URL(string: "mailto://mail.app")!)
     }
 
+    func testAppendingQueryItemsList() {
+        let url1 = URL(string: "https://www.example.com/?q=HelloWorld")!
+        let url2 = URL(string: "http://welcome.hello.example.com/?q=HelloWorld&lang=swift")!
+        let url3 = URL(string: "www.hello.example.com/?q=HelloWorld")!
+        let url4 = URL(string: "hello.example.com")!
+        let url5 = URL(string: "mail.app")!
+        let url6 = URL(string: "file://mail.app")!
+        let url7 = URL(string: "mailto://mail.app")!
+
+        XCTAssertEqual(url1.appendQueryItems([.init(name: "lang", value: "Swift")]), URL(string: "https://www.example.com/?q=HelloWorld&lang=Swift")!)
+        XCTAssertEqual(url1.appendQueryItems([.init(name: "lang", value: "Swift")]), URL(string: "https://www.example.com/?q=HelloWorld&lang=Swift")!)
+        XCTAssertEqual(url2.appendQueryItems([.init(name: "lang", value: "Swift")]), URL(string: "http://welcome.hello.example.com/?q=HelloWorld&lang=Swift")!)
+        XCTAssertEqual(url2.appendQueryItems([.init(name: "q", value: nil)]), URL(string: "http://welcome.hello.example.com/?lang=swift&q")!)
+        XCTAssertEqual(url2.appendQueryItems([.init(name: "lang", value: "en")]), URL(string: "http://welcome.hello.example.com/?q=HelloWorld&lang=en")!)
+        XCTAssertEqual(url3.appendQueryItems([.init(name: "q", value: nil)]), URL(string: "www.hello.example.com/?q")!)
+        XCTAssertEqual(url4.appendQueryItems([.init(name: "lang", value: "Swift")]), URL(string: "hello.example.com?lang=Swift")!)
+        XCTAssertEqual(url5.appendQueryItems([.init(name: "lang", value: "Swift")]), URL(string: "mail.app?lang=Swift")!)
+        XCTAssertEqual(url6.appendQueryItems([.init(name: "lang", value: "Swift")]), URL(string: "file://mail.app?lang=Swift")!)
+        XCTAssertEqual(url7.appendQueryItems([.init(name: "lang", value: "Swift")]), URL(string: "mailto://mail.app?lang=Swift")!)
+    }
+
     func testMatchFound() {
         let domain = "example.com"
         let url1 = URL(string: "https://www.example.com/?q=HelloWorld")!

@@ -139,36 +139,36 @@ extension View {
         ))
     }
 
-    public func popup<A>(
+    public func popup<F>(
         _ title: Text,
         message: Text?,
         isPresented: Binding<Bool>,
         dismissMethods: Popup.DismissMethods = [.tapOutside],
-        @ViewBuilder actions: @escaping () -> A
-    ) -> some View where A: View {
+        @ViewBuilder footer: @escaping () -> F
+    ) -> some View where F: View {
         popup(
             isPresented: isPresented,
             style: .alert,
             dismissMethods: dismissMethods,
             content: {
-                StandardPopupAlert(title, message: message, actions: actions)
+                StandardPopupAlert(title, message: message, footer: footer)
             }
         )
     }
 
-    public func popup<A, S1, S2>(
+    public func popup<F, S1, S2>(
         _ title: S1,
         message: S2?,
         isPresented: Binding<Bool>,
         dismissMethods: Popup.DismissMethods = [.tapOutside],
-        @ViewBuilder actions: @escaping () -> A
-    ) -> some View where A: View, S1: StringProtocol, S2: StringProtocol {
+        @ViewBuilder footer: @escaping () -> F
+    ) -> some View where F: View, S1: StringProtocol, S2: StringProtocol {
         popup(
             Text(title),
             message: message.map { Text($0) },
             isPresented: isPresented,
             dismissMethods: dismissMethods,
-            actions: actions
+            footer: footer
         )
     }
 }
