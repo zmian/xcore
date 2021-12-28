@@ -152,7 +152,7 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
     }
 }
 
-extension TextFieldConfiguration where Formatter == CustomTextFieldFormatter {
+extension TextFieldConfiguration where Formatter == MaskTextFieldFormatter {
     public init(
         id: ID,
         autocapitalization: UITextAutocapitalizationType = .sentences,
