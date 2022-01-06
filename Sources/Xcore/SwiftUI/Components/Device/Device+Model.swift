@@ -97,7 +97,7 @@ extension Device {
         // HomePod
         case homePod
 
-        fileprivate init(identifier: String) {
+        public init(identifier: String) {
             var value: Self {
                 switch identifier {
                     // MARK: - iPhone
