@@ -6,6 +6,7 @@
 
 import Foundation
 
+#if canImport(_Concurrency) && compiler(>=5.5.2)
 /// A structure representing transformation of an input to output.
 @frozen
 public struct AsyncTransformer<Input, Output> {
@@ -39,3 +40,4 @@ extension AsyncTransformer {
         .init { await other(self($0)) }
     }
 }
+#endif
