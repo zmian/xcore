@@ -151,6 +151,29 @@ final class URLTests: TestCase {
         XCTAssertEqual(url7.replacingQueryItems(["q"], with: "xxxx"), URL(string: "mailto://mail.app")!)
     }
 
+    func testMaskingAllQueryItems() {
+        let url1 = URL(string: "https://www.example.com/?q=HelloWorld")!
+        let url2 = URL(string: "http://welcome.hello.example.com/?q=HelloWorld&lang=swift")!
+        let url3 = URL(string: "www.hello.example.com/?q=HelloWorld")!
+        let url4 = URL(string: "hello.example.com")!
+        let url5 = URL(string: "mail.app")!
+        let url6 = URL(string: "file://mail.app")!
+        let url7 = URL(string: "mailto://mail.app")!
+
+        XCTAssertEqual(url1.maskingAllQueryItems(), URL(string: "https://www.example.com/?q=xxxx")!)
+        XCTAssertEqual(url1.maskingAllQueryItems(), URL(string: "https://www.example.com/?q=xxxx")!)
+        XCTAssertEqual(url2.maskingAllQueryItems(), URL(string: "http://welcome.hello.example.com/?q=xxxx&lang=xxxx")!)
+        XCTAssertEqual(url2.maskingAllQueryItems(), URL(string: "http://welcome.hello.example.com/?q=xxxx&lang=xxxx")!)
+        XCTAssertEqual(url2.maskingAllQueryItems(), URL(string: "http://welcome.hello.example.com/?q=xxxx&lang=xxxx")!)
+        XCTAssertEqual(url2.maskingAllQueryItems(mask: "***"), URL(string: "http://welcome.hello.example.com/?q=***&lang=***")!)
+        XCTAssertEqual(url2.maskingAllQueryItems(mask: ""), URL(string: "http://welcome.hello.example.com/?q=&lang=")!)
+        XCTAssertEqual(url3.maskingAllQueryItems(), URL(string: "www.hello.example.com/?q=xxxx")!)
+        XCTAssertEqual(url4.maskingAllQueryItems(), URL(string: "hello.example.com")!)
+        XCTAssertEqual(url5.maskingAllQueryItems(), URL(string: "mail.app")!)
+        XCTAssertEqual(url6.maskingAllQueryItems(), URL(string: "file://mail.app")!)
+        XCTAssertEqual(url7.maskingAllQueryItems(), URL(string: "mailto://mail.app")!)
+    }
+
     func testAppendingQueryItemsList() {
         let url1 = URL(string: "https://www.example.com/?q=HelloWorld")!
         let url2 = URL(string: "http://welcome.hello.example.com/?q=HelloWorld&lang=swift")!
