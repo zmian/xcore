@@ -63,7 +63,7 @@ extension URL {
     /// print(url.appendQueryItems([URLQueryItem(name: "lang", value: "Swift")]) // "https://example.com/?q=HelloWorld&lang=Swift"
     /// ```
     public func appendQueryItems(_ items: [URLQueryItem]) -> URL {
-        guard var components = URLComponents.init(url: self, resolvingAgainstBaseURL: true) else {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
             return self
         }
 
@@ -183,6 +183,28 @@ extension URL {
                 for name in names where item.name == name {
                     queryItems[index].value = value
                 }
+            }
+
+            components.queryItems = queryItems
+        }
+
+        return components.url ?? self
+    }
+
+    /// Masks all query parameters from the `URL`.
+    ///
+    /// ```
+    /// let url = URL(string: "https://example.com/?q=HelloWorld&lang=swift")!
+    /// print(url.maskingAllQueryItems()) // "https://example.com/?q=xxxx&lang=xxxx"
+    /// ```
+    public func maskingAllQueryItems(mask: String = "xxxx") -> URL {
+        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
+            return self
+        }
+
+        if var queryItems = components.queryItems, !queryItems.isEmpty {
+            for (index, item) in queryItems.enumerated() {
+                queryItems[index].value = mask
             }
 
             components.queryItems = queryItems
