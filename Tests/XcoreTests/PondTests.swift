@@ -23,7 +23,7 @@ final class PondTests: TestCase {
         let stub = InMemoryPond()
         let userDefaults = UserDefaultsPond(suite)
 
-        try assertBasicCases(with: .composite { key in
+        try assertBasicCases(with: .composite { method, key in
             if key == .testValue2 {
                 return stub
             }

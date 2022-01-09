@@ -203,7 +203,7 @@ extension URL {
         }
 
         if var queryItems = components.queryItems, !queryItems.isEmpty {
-            for (index, item) in queryItems.enumerated() {
+            for index in queryItems.indices {
                 queryItems[index].value = mask
             }
 
