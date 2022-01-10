@@ -64,15 +64,15 @@ open class UIHostingWindow<Content: View>: UIWindow {
     }
 
     private func show() {
-        if preferredKey {
-            makeKey()
-        }
-
         if windowScene == nil, let scene = UIApplication.sharedOrNil?.firstWindowScene {
             windowScene = scene
         }
 
         isHidden = false
+
+        if preferredKey {
+            makeKey()
+        }
     }
 
     private func hide() {
