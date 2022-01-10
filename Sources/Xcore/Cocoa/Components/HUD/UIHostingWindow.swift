@@ -59,12 +59,11 @@ open class UIHostingWindow<Content: View>: UIWindow {
     public var preferredKey = false
 
     public var isPresented: Bool {
-        get { isHidden }
+        get { !isHidden }
         set { newValue ? show() : hide() }
     }
 
     private func show() {
-        windowLevel = .topMost
         if preferredKey {
             makeKey()
         }

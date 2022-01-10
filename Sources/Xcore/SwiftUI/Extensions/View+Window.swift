@@ -78,7 +78,7 @@ public struct WindowStyle: Hashable {
     /// windows assigned to a different window level. The ordering of windows within
     /// a given window level is not guaranteed.
     ///
-    /// The default value is `.top`.
+    /// The default value is `.normal`.
     public let level: UIWindow.Level
 
     /// A boolean value that indicates whether to make the receiver the key window.
@@ -99,7 +99,7 @@ public struct WindowStyle: Hashable {
     ///     key window.
     public init(
         label: String? = nil,
-        level: UIWindow.Level = .topMost,
+        level: UIWindow.Level = .normal,
         isKey: Bool = true
     ) {
         self.label = label
