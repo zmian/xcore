@@ -215,6 +215,7 @@ extension Window {
                 .environment(\.xstackStyle, env.xstackStyle)
                 .environment(\.theme, env.theme)
                 ._xtint(Color(env.theme.tintColor))
+                .preferredColorScheme(env.colorScheme)
         }
 
         private var env: EnvironmentValues {
