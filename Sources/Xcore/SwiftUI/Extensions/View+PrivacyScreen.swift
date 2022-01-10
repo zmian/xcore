@@ -73,7 +73,7 @@ private struct PrivacyScreenViewModifier<Screen: View>: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .window(isPresented: $isPrivacyScreenActive) {
+            .window(isPresented: $isPrivacyScreenActive, style: .privacy) {
                 ZStack {
                     if isPrivacyScreenActive {
                         screen()

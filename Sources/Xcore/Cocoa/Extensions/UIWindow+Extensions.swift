@@ -27,4 +27,22 @@ extension UIWindow.Level {
         let maxWinLevel = max(windowLevel, .normal)
         return maxWinLevel + 1
     }
+
+    /// The level for a privacy screen.
+    ///
+    /// Windows at this level appear on top of the status bar and alerts.
+    public static var privacy: Self {
+        alert + 1000
+    }
+}
+
+// MARK: - Style
+
+extension WindowStyle {
+    /// The style for a privacy screen.
+    ///
+    /// It appear on top of your app's main window, status bar and alerts.
+    public static var privacy: Self {
+        .init(label: "Privacy Screen", level: .privacy)
+    }
 }
