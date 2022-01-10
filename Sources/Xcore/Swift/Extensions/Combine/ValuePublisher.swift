@@ -28,4 +28,12 @@ public struct ValuePublisher<Output, Failure: Error>: Publisher {
         upstream.subscribe(subscriber)
     }
 }
+
+extension ValuePublisher {
+    /// An publisher that immediately publishes the given value. Useful for
+    /// situations where you must return an publisher, but you don't need to do anything.
+    public static func constant(_ output: Output) -> ValuePublisher {
+        .init(.init(output))
+    }
+}
 #endif
