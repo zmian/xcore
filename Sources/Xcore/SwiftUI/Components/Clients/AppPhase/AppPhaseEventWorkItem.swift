@@ -24,7 +24,7 @@ import Combine
 ///     // ... work
 /// }
 /// ```
-final class AppPhaseEventWorkItem {
+public final class AppPhaseEventWorkItem {
     @Dependency(\.appPhase) private var appPhase
     private var cancellable: AnyCancellable?
     private var workItem: DispatchWorkItem?
@@ -43,7 +43,7 @@ final class AppPhaseEventWorkItem {
     ///   - cancelPhase: The phase that cancels the pending work if it's not
     ///     executed before the app enters this state.
     ///   - work: The block that performs the work.
-    init(
+    public init(
         after interval: DispatchTimeInterval,
         schedulePhase: AppPhase,
         cancelPhase: AppPhase,
