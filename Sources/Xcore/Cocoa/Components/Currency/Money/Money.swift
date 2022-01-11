@@ -184,6 +184,10 @@ extension Money {
         }
     }
 
+    public func fractionLengthForAmount() -> Self {
+        fractionLength(amount.calculatePrecision())
+    }
+
     public func style(_ style: Components.Style) -> Self {
         applying {
             $0.style = style
