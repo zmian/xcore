@@ -127,6 +127,7 @@ extension Money.Components.Style {
     public static func abbreviation(
         threshold: Decimal,
         thresholdAbs: Bool = true,
+        fractionDigits: Int = .defaultFractionDigits,
         fallback: Self = .default
     ) -> Self {
         func canAbbreviation(amount: Decimal) -> (amount: Double, threshold: Double)? {
@@ -154,6 +155,7 @@ extension Money.Components.Style {
                 return $0.currencySymbol + value.amount.abbreviate(
                     threshold: value.threshold,
                     thresholdAbs: thresholdAbs,
+                    fractionDigits: fractionDigits,
                     locale: CurrencyFormatter.shared.locale
                 )
             },
