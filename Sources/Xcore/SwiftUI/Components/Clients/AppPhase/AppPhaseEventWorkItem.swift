@@ -49,7 +49,7 @@ public final class AppPhaseEventWorkItem {
         cancelPhase: AppPhase,
         work: @escaping () -> Void
     ) {
-        precondition(schedulePhase == cancelPhase, "Schedule and cancel work phases must be different.")
+        precondition(schedulePhase != cancelPhase, "Schedule and cancel work phases must be different.")
         self.work = work
         self.interval = interval
         self.schedulePhase = schedulePhase
