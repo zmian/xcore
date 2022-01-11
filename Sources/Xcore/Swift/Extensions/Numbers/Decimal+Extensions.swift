@@ -179,6 +179,6 @@ extension Decimal {
 extension Decimal {
     /// Calculate the number of digits after the decimal point
     fileprivate var significantFractionalDecimalDigits: Int {
-        return max(-exponent, 0)
+        max(-exponent, 0)
     }
 }
