@@ -93,8 +93,8 @@ extension AppInfo {
     /// See the [User-Agent header documentation](https://tools.ietf.org/html/rfc7231#section-5.5.3).
     ///
     /// ```
-    /// Format:  "executable/appVersionNumber (appBundleId; build:appBuildNumber; deviceName; deviceModel; osNameVersion) language_region"
-    /// Example: App/1.0.0 (com.app.dev; build:1; Z's iPhone; iPhone14,2; iOS 15.2.0) en_US
+    /// Format:  "executable/appVersionNumber (appBundleId; build:appBuildNumber; deviceModel; osNameVersion) language_region"
+    /// Example: App/1.0.0 (com.app.dev; build:1; iPhone14,2; iOS 15.2.0) en_US
     /// ```
     public static let userAgent: String = {
         let executable = Bundle.main.executable
@@ -102,10 +102,9 @@ extension AppInfo {
         let appBuildNumber = Bundle.main.buildNumber
         let appBundleId = Bundle.main.identifier
         let localeId = Locale.current.identifier
-        let deviceName = Device.current.model.name
         let deviceModel = Device.current.model.identifier
         let osNameVersion = Bundle.main.osNameVersion
-        return "\(executable)/\(appVersionNumber) (\(appBundleId); build:\(appBuildNumber); \(deviceName); \(deviceModel); \(osNameVersion)) \(localeId)"
+        return "\(executable)/\(appVersionNumber) (\(appBundleId); build:\(appBuildNumber); \(deviceModel); \(osNameVersion)) \(localeId)"
     }()
 }
 

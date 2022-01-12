@@ -29,12 +29,11 @@ final class AppInfoTests: TestCase {
         let appVersionNumber = Bundle.main.versionNumber
         let appBuildNumber = Bundle.main.buildNumber
         let osNameVersion = Bundle.main.osNameVersion
-        let deviceName = Device.current.model.name
         let deviceModel = Device.current.model.identifier
 
         XCTAssertEqual(
             AppInfo.userAgent,
-            "xctest/\(appVersionNumber) (com.apple.dt.xctest.tool; build:\(appBuildNumber); \(deviceName); \(deviceModel); \(osNameVersion)) en_US"
+            "xctest/\(appVersionNumber) (com.apple.dt.xctest.tool; build:\(appBuildNumber); \(deviceModel); \(osNameVersion)) en_US"
         )
     }
 }
