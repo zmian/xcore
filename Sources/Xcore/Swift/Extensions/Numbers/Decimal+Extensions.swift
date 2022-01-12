@@ -145,24 +145,32 @@ extension Decimal.RoundingMode {
 // MARK: - Precision
 
 extension Decimal {
-    /// Returns precision to be used consering the for the current value
+    /// Returns precision range to be used to ensure at least 2 significant fraction
+    /// digits are shown.
     ///
-    /// Minimum precision is always set to 2
-    /// For longer precisions, for amounts lower than $0.01, we want to show
-    /// the first two significant digits after the decimal point.
+    /// Minimum precision is always set to 2. For higher precisions, for amounts
+    /// lower than $0.01, we want to show the first two significant digits after the
+    /// decimal point.
     ///
-    /// $1.234 -> $1.23
-    /// $1.000031 -> $1.00
-    /// $0.00001 -> $0.0001
-    /// $0.000000138 -> $0.00000014
-    ///
-    internal func calculatePrecision() -> ClosedRange<Int> {
+    /// ```swift
+    /// $1           → $1.00
+    /// $1.234       → $1.23
+    /// $1.000031    → $1.00
+    /// $0.00001     → $0.00001
+    /// $0.000010000 → $0.00001
+    /// $0.000012    → $0.000012
+    /// $0.00001243  → $0.000012
+    /// $0.00001253  → $0.000013
+    /// $0.00001283  → $0.000013
+    /// $0.000000138 → $0.00000014
+    /// ```
+    func calculatePrecision() -> ClosedRange<Int> {
         let absAmount = abs(self)
 
         if absAmount > 0 && absAmount < 0.01 {
             // 1. Count the number of digits after the decimal point
             let significantFractionalDecimalDigits = Int(absAmount.significantFractionalDecimalDigits)
-            // 2. Count the number of significant difigts after the decimal point
+            // 2. Count the number of significant digits after the decimal point
             let significandCount = Int((absAmount.significand as NSDecimalNumber).uint64Value.digitsCount)
             // 3. Precision will be the # of zeros plus the default precision of 2
             let numberOfZeros = significantFractionalDecimalDigits - significandCount
@@ -172,13 +180,9 @@ extension Decimal {
 
         return 2...2
     }
-}
 
-// MARK: - Fractional
-
-extension Decimal {
-    /// Calculate the number of digits after the decimal point
-    fileprivate var significantFractionalDecimalDigits: Int {
+    /// Returns the number of digits after the decimal point.
+    private var significantFractionalDecimalDigits: Int {
         max(-exponent, 0)
     }
 }

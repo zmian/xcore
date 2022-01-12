@@ -184,6 +184,25 @@ extension Money {
         }
     }
 
+    /// Returns precision range to be used to ensure at least 2 significant fraction
+    /// digits are shown.
+    ///
+    /// Minimum precision is always set to 2. For higher precisions, for amounts
+    /// lower than $0.01, we want to show the first two significant digits after the
+    /// decimal point.
+    ///
+    /// ```swift
+    /// $1           → $1.00
+    /// $1.234       → $1.23
+    /// $1.000031    → $1.00
+    /// $0.00001     → $0.00001
+    /// $0.000010000 → $0.00001
+    /// $0.000012    → $0.000012
+    /// $0.00001243  → $0.000012
+    /// $0.00001253  → $0.000013
+    /// $0.00001283  → $0.000013
+    /// $0.000000138 → $0.00000014
+    /// ```
     public func fractionLengthForAmount() -> Self {
         fractionLength(amount.calculatePrecision())
     }
