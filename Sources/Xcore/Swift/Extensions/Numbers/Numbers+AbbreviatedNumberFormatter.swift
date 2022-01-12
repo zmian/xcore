@@ -57,6 +57,7 @@ private struct AbbreviatedNumberFormatter<Number: DoubleDecimal> {
         from value: Number,
         threshold: Number?,
         thresholdAbs: Bool,
+        fractionDigits: Int = .defaultFractionDigits,
         locale: Locale?
     ) -> String {
         // Adopted from: http://stackoverflow.com/a/35504720
@@ -81,7 +82,7 @@ private struct AbbreviatedNumberFormatter<Number: DoubleDecimal> {
         let abbreviatedValue = value / abbreviation.divisor
         formatter.positiveSuffix = abbreviation.suffix
         formatter.negativeSuffix = abbreviation.suffix
-        formatter.maximumFractionDigits = value == abbreviatedValue ? .maxFractionDigits : 1
+        formatter.maximumFractionDigits = value == abbreviatedValue ? .maxFractionDigits : fractionDigits
         formatter.locale = locale ?? .current
         return formatter.string(from: abbreviatedValue.nsNumber) ?? "\(abbreviatedValue)"
     }
@@ -116,12 +117,14 @@ extension Decimal {
     public func abbreviate(
         threshold: Decimal? = nil,
         thresholdAbs: Bool = true,
+        fractionDigits: Int = .defaultFractionDigits,
         locale: Locale? = nil
     ) -> String {
         Self.abbreviatedNumberFormatter.string(
             from: self,
             threshold: threshold,
             thresholdAbs: thresholdAbs,
+            fractionDigits: fractionDigits,
             locale: locale
         )
     }
@@ -154,12 +157,14 @@ extension Double {
     public func abbreviate(
         threshold: Double? = nil,
         thresholdAbs: Bool = true,
+        fractionDigits: Int = .defaultFractionDigits,
         locale: Locale? = nil
     ) -> String {
         Self.abbreviatedNumberFormatter.string(
             from: self,
             threshold: threshold,
             thresholdAbs: thresholdAbs,
+            fractionDigits: fractionDigits,
             locale: locale
         )
     }
@@ -182,4 +187,8 @@ extension Decimal: DoubleDecimal {
     fileprivate var nsNumber: NSNumber {
         NSDecimalNumber(decimal: self)
     }
+}
+
+extension Int {
+    public static let defaultFractionDigits: Int = 1
 }
