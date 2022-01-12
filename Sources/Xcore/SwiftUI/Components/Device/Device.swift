@@ -53,6 +53,8 @@ extension Device {
         #elseif os(macOS)
         #warning("TODO: Implement")
         return "macOS"
+        #else
+        return "Unknown"
         #endif
     }
 
