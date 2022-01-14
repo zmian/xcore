@@ -8,6 +8,7 @@ import Foundation
 
 public struct UserDefaultsPond: Pond {
     private let userDefaults: UserDefaults
+    public let id = "userDefaults"
 
     public init(_ userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults

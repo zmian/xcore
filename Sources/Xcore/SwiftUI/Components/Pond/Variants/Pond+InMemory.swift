@@ -9,6 +9,7 @@ import Foundation
 
 public struct InMemoryPond: Pond {
     private var storage: MutableBox<[String: Any]> = .init([:])
+    public let id = "inMemory"
 
     public init() {}
 
