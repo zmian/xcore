@@ -9,6 +9,7 @@ import KeychainAccess
 
 public struct KeychainPond: Pond {
     private let keychain: Keychain
+    public let id = "keychain"
 
     public init(_ keychain: Keychain) {
         self.keychain = keychain

@@ -20,6 +20,9 @@ import Foundation
 public protocol Pond {
     typealias Key = PondKey
 
+    /// A unique id for the pond.
+    var id: String { get }
+
     func get<T>(_ type: T.Type, _ key: Key) -> T?
 
     func set<T>(_ key: Key, value: T?)
