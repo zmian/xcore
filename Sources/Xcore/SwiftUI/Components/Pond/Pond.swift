@@ -68,7 +68,7 @@ extension Pond {
         try get(T.self, key)
     }
 
-    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) throws -> T {
+    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T {
         do {
             return try value(key)?.get() ?? defaultValue()
         } catch {
@@ -76,7 +76,7 @@ extension Pond {
         }
     }
 
-    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) throws -> T where T: RawRepresentable, T.RawValue == String {
+    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
         do {
             return try value(key)?.get() ?? defaultValue()
         } catch {
