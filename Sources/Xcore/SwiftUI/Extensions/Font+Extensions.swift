@@ -45,10 +45,15 @@ extension Font {
         }
 
         let pointSize = UIFontDescriptor.preferredFontDescriptor(
-            withTextStyle: .init(style)
+            withTextStyle: .init(style),
+            compatibleWith: compatibleWithTraitCollection()
         ).pointSize
 
-        return .custom(typeface, size: pointSize, relativeTo: style)
+        if isFixedSize {
+            return .custom(typeface, fixedSize: pointSize)
+        } else {
+            return .custom(typeface, size: pointSize, relativeTo: style)
+        }
     }
 
     /// Returns default app font with given `size`.
@@ -84,7 +89,9 @@ extension Font {
             return font
         }
 
-        if let textStyle = textStyle {
+        if isFixedSize {
+            return .custom(typeface, fixedSize: size)
+        } else if let textStyle = textStyle {
             return custom(typeface, size: size, relativeTo: textStyle)
         } else {
             return custom(typeface, size: size)
@@ -208,5 +215,28 @@ extension Font.TextStyle {
     /// [Guidelines]: https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/typography/#dynamic-type-sizes
     fileprivate func defaultPreferredWeight() -> Font.Weight {
         self == .headline ? .semibold : .regular
+    }
+}
+
+// MARK: - Dynamic Type Overrides
+
+extension Font {
+    /// An optional property to set the preferred content size category.
+    ///
+    /// - Note: Setting this property disables dynamic type.
+    public static var preferredContentSizeCategory: UIContentSizeCategory?
+
+    fileprivate static func compatibleWithTraitCollection() -> UITraitCollection? {
+        preferredContentSizeCategory.map(UITraitCollection.init(preferredContentSizeCategory:))
+    }
+
+    private static var isFixedSize: Bool {
+        preferredContentSizeCategory != nil
+    }
+}
+
+extension UIFont {
+    static func compatibleWithTraitCollection() -> UITraitCollection? {
+        Font.compatibleWithTraitCollection()
     }
 }
