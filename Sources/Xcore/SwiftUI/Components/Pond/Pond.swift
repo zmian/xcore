@@ -69,11 +69,19 @@ extension Pond {
     }
 
     public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) throws -> T {
-        try value(key)?.get() ?? defaultValue()
+        do {
+            return try value(key)?.get() ?? defaultValue()
+        } catch {
+            return defaultValue()
+        }
     }
 
     public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) throws -> T where T: RawRepresentable, T.RawValue == String {
-        try value(key)?.get() ?? defaultValue()
+        do {
+            return try value(key)?.get() ?? defaultValue()
+        } catch {
+            return defaultValue()
+        }
     }
 
     /// Returns the value of the key, decoded from a JSON object.
