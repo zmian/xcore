@@ -27,7 +27,7 @@ public struct UserDefaultsPond: Pond {
         }
     }
 
-    public func set<T>(_ key: Key, value: T?) {
+    public func set<T>(_ key: Key, value: T?) throws {
         if value == nil {
             remove(key)
         } else if let value = value as? Data {
@@ -37,9 +37,7 @@ public struct UserDefaultsPond: Pond {
         } else if let value = value, Mirror.isCollection(value) {
             userDefaults.set(value, forKey: key.id)
         } else {
-            #if DEBUG
-            fatalError("Unable to save value for \(key.id): \(String(describing: value))")
-            #endif
+            throw PondError.saveFailure(id: key.id, value: value)
         }
     }
 

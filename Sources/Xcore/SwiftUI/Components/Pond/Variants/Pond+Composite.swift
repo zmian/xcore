@@ -27,12 +27,12 @@ public struct CompositePond: Pond {
         self.pond = pond
     }
 
-    public func get<T>(_ type: T.Type, _ key: Key) -> T? {
-        pond(.get, key).get(type, key)
+    public func get<T>(_ type: T.Type, _ key: Key) throws -> T? {
+        try pond(.get, key).get(type, key)
     }
 
-    public func set<T>(_ key: Key, value: T?) {
-        pond(.set, key).set(key, value: value)
+    public func set<T>(_ key: Key, value: T?) throws {
+        try pond(.set, key).set(key, value: value)
     }
 
     public func contains(_ key: Key) -> Bool {

@@ -4,11 +4,10 @@
 // MIT license, see LICENSE file for details
 //
 
-#if DEBUG
 import Foundation
 
 public struct InMemoryPond: Pond {
-    private var storage: MutableBox<[String: Any]> = .init([:])
+    private var storage = MutableBox<[String: Any]>([:])
     public let id = "inMemory"
 
     public init() {}
@@ -61,4 +60,3 @@ extension Pond where Self == InMemoryPond {
     /// Returns inMemory variant of `Pond`.
     public static var inMemory: Self { .init() }
 }
-#endif
