@@ -44,7 +44,7 @@ extension UIFont {
 
         let preferredPointSize = UIFontDescriptor.preferredFontDescriptor(
             withTextStyle: style,
-            compatibleWith: traitCollection
+            compatibleWith: compatibleWithTraitCollection() ?? traitCollection
         ).pointSize
 
         return UIFont(name: typeface, size: preferredPointSize)!
