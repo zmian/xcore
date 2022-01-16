@@ -23,9 +23,9 @@ public protocol Pond {
     /// A unique id for the pond.
     var id: String { get }
 
-    func get<T>(_ type: T.Type, _ key: Key) -> T?
+    func get<T>(_ type: T.Type, _ key: Key) throws -> T?
 
-    func set<T>(_ key: Key, value: T?)
+    func set<T>(_ key: Key, value: T?) throws
 
     /// Returns a boolean value indicating whether the store contains value for the
     /// given key.
@@ -37,20 +37,22 @@ public protocol Pond {
 // MARK: - Helpers
 
 extension Pond {
-    public func set<T>(_ key: Key, value: T?) where T: RawRepresentable, T.RawValue == String {
-        set(key, value: value?.rawValue)
+    public func set<T>(_ key: Key, value: T?) throws where T: RawRepresentable, T.RawValue == String {
+        try set(key, value: value?.rawValue)
     }
 
-    public func setCodable<T: Codable>(_ key: Key, value: T?, encoder: JSONEncoder? = nil) {
+    public func setCodable<T: Codable>(_ key: Key, value: T?, encoder: JSONEncoder? = nil) throws {
         do {
             let data = try (encoder ?? JSONEncoder()).encode(value)
-            set(key, value: data)
+            try set(key, value: data)
         } catch {
             #if DEBUG
-            fatalError(String(describing: error))
-            #else
-            // Return nothing to avoid leaking error details in production.
+            if AppInfo.isDebuggerAttached {
+                fatalError(String(describing: error))
+            }
             #endif
+
+            throw error
         }
     }
 }
@@ -58,20 +60,20 @@ extension Pond {
 // MARK: - Helpers: Get
 
 extension Pond {
-    private func value(_ key: Key) -> StringConverter? {
-        StringConverter(get(key))
+    private func value(_ key: Key) throws -> StringConverter? {
+        StringConverter(try get(key))
     }
 
-    public func get<T>(_ key: Key) -> T? {
-        get(T.self, key)
+    public func get<T>(_ key: Key) throws -> T? {
+        try get(T.self, key)
     }
 
-    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T {
-        value(key)?.get() ?? defaultValue()
+    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) throws -> T {
+        try value(key)?.get() ?? defaultValue()
     }
 
-    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T where T: RawRepresentable, T.RawValue == String {
-        value(key)?.get() ?? defaultValue()
+    public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) throws -> T where T: RawRepresentable, T.RawValue == String {
+        try value(key)?.get() ?? defaultValue()
     }
 
     /// Returns the value of the key, decoded from a JSON object.
@@ -81,12 +83,12 @@ extension Pond {
     ///   - decoder: The decoder used to decode the data. If set to `nil`, it uses
     ///     ``JSONDecoder`` with `convertFromSnakeCase` key decoding strategy.
     /// - Returns: A value of the specified type, if the decoder can parse the data.
-    public func getCodable<T>(_ key: Key, type: T.Type = T.self, decoder: JSONDecoder? = nil) -> T? where T: Decodable {
-        if let data = get(Data.self, key) {
+    public func getCodable<T>(_ key: Key, type: T.Type = T.self, decoder: JSONDecoder? = nil) throws -> T? where T: Decodable {
+        if let data = try get(Data.self, key) {
             return StringConverter.get(type, from: data, decoder: decoder)
         }
 
-        if let value = StringConverter(get(String.self, key))?.get(type, decoder: decoder) {
+        if let value = StringConverter(try get(String.self, key))?.get(type, decoder: decoder) {
             return value
         }
 

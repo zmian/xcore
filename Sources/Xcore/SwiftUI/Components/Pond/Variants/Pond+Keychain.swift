@@ -15,21 +15,21 @@ public struct KeychainPond: Pond {
         self.keychain = keychain
     }
 
-    public func get<T>(_ type: T.Type, _ key: Key) -> T? {
+    public func get<T>(_ type: T.Type, _ key: Key) throws -> T? {
         switch T.self {
             case is Data.Type, is Optional<Data>.Type:
-                return try? keychain.getData(key.id) as? T
+                return try keychain.getData(key.id) as? T
             default:
                 if Mirror.isCollection(T.self) {
-                    if let data = try? keychain.getData(key.id) {
-                        return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? T
+                    if let data = try keychain.getData(key.id) {
+                        return try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? T
                     }
                 }
                 return StringConverter(keychain[key.id])?.get(type)
         }
     }
 
-    public func set<T>(_ key: Key, value: T?) {
+    public func set<T>(_ key: Key, value: T?) throws {
         do {
             if value == nil {
                 remove(key)
@@ -41,18 +41,16 @@ public struct KeychainPond: Pond {
                 let data = try NSKeyedArchiver.archivedData(withRootObject: value, requiringSecureCoding: false)
                 try keychain.set(data, key: key.id)
             } else {
-                #if DEBUG
-                fatalError("Unable to save value for \(key.id): \(String(describing: value))")
-                #endif
+                throw PondError.saveFailure(id: key.id, value: value)
             }
         } catch {
             #if DEBUG
             if AppInfo.isDebuggerAttached {
-                print(String(describing: error))
+                fatalError(String(describing: error))
             }
-            #else
-            // Return nothing to avoid leaking error details in production.
             #endif
+
+            throw error
         }
     }
 
