@@ -41,7 +41,7 @@ extension Pond {
         try set(key, value: value?.rawValue)
     }
 
-    public func setCodable<T: Codable>(_ key: Key, value: T?, encoder: JSONEncoder? = nil) throws {
+    public func setCodable<T: Codable>(_ key: Key, value: T?, encoder: JSONEncoder? = nil) {
         do {
             let data = try (encoder ?? JSONEncoder()).encode(value)
             try set(key, value: data)
@@ -51,8 +51,6 @@ extension Pond {
                 fatalError(String(describing: error))
             }
             #endif
-
-            throw error
         }
     }
 }
@@ -91,16 +89,20 @@ extension Pond {
     ///   - decoder: The decoder used to decode the data. If set to `nil`, it uses
     ///     ``JSONDecoder`` with `convertFromSnakeCase` key decoding strategy.
     /// - Returns: A value of the specified type, if the decoder can parse the data.
-    public func getCodable<T>(_ key: Key, type: T.Type = T.self, decoder: JSONDecoder? = nil) throws -> T? where T: Decodable {
-        if let data = try get(Data.self, key) {
-            return StringConverter.get(type, from: data, decoder: decoder)
-        }
+    public func getCodable<T>(_ key: Key, type: T.Type = T.self, decoder: JSONDecoder? = nil) -> T? where T: Decodable {
+        do {
+            if let data = try get(Data.self, key) {
+                return StringConverter.get(type, from: data, decoder: decoder)
+            }
 
-        if let value = StringConverter(try get(String.self, key))?.get(type, decoder: decoder) {
-            return value
-        }
+            if let value = StringConverter(try get(String.self, key))?.get(type, decoder: decoder) {
+                return value
+            }
 
-        return nil
+            return nil
+        } catch {
+            return nil
+        }
     }
 }
 
