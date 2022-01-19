@@ -8,13 +8,16 @@ import Foundation
 
 public protocol Mask {
     var maskFormat: String { get set }
+    func transformString(_ value: String) -> String
     func string(from value: String) -> String
     func value(from string: String) -> String
 }
 
 extension Mask {
+    public func transformString(_ value: String) -> String { value }
+
     public func string(from value: String) -> String {
-        let sanitizedValue = value.components(separatedBy: .decimalDigits.inverted).joined()
+        let sanitizedValue = transformString(value.components(separatedBy: .decimalDigits.inverted).joined())
         let mask = maskFormat
         var result = ""
         var index = sanitizedValue.startIndex
@@ -38,6 +41,13 @@ extension Mask {
 
 public struct PhoneNumberMask: Mask {
     public var maskFormat: String = "###-###-####"
+
+    /// Remove country indicative
+    /// TODO: We can make this function smarter by making it parse any contry code and remove it.
+    public func transformString(_ value: String) -> String {
+        value.count > 10 && value.hasPrefix("1") ? value.droppingPrefix("1") : value
+    }
+
     public init () {}
 }
 
