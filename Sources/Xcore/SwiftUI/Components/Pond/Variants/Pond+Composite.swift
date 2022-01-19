@@ -18,18 +18,21 @@ extension CompositePond {
 }
 
 public struct CompositePond: Pond {
+    public let id: String
+
     private let pond: (Method, Key) -> Pond
 
-    public init(_ pond: @escaping (Method, Key) -> Pond) {
+    public init(id: String, _ pond: @escaping (Method, Key) -> Pond) {
+        self.id = "composite:\(id)"
         self.pond = pond
     }
 
-    public func get<T>(_ type: T.Type, _ key: Key) -> T? {
-        pond(.get, key).get(type, key)
+    public func get<T>(_ type: T.Type, _ key: Key) throws -> T? {
+        try pond(.get, key).get(type, key)
     }
 
-    public func set<T>(_ key: Key, value: T?) {
-        pond(.set, key).set(key, value: value)
+    public func set<T>(_ key: Key, value: T?) throws {
+        try pond(.set, key).set(key, value: value)
     }
 
     public func contains(_ key: Key) -> Bool {
@@ -45,8 +48,8 @@ public struct CompositePond: Pond {
 
 extension Pond where Self == CompositePond {
     /// Returns composite variant of `Pond`.
-    public static func composite(_ pond: @escaping (Self.Method, Key) -> Pond) -> Self {
-        .init(pond)
+    public static func composite(id: String, _ pond: @escaping (Self.Method, Key) -> Pond) -> Self {
+        .init(id: id, pond)
     }
 
     /// Returns composite variant of `Pond` with Keychain `accessGroup` and optional
@@ -76,7 +79,7 @@ extension Pond where Self == CompositePond {
         let defaults = suiteName.map { UserDefaults(suiteName: $0)! } ?? .standard
         let userDefaults = UserDefaultsPond(defaults)
 
-        return composite { _, key in
+        return composite(id: "keychain:userDefaults") { _, key in
             switch key.storage {
                 case .userDefaults:
                     return userDefaults

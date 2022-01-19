@@ -152,4 +152,17 @@ final class MoneyTests: TestCase {
 
         XCTAssertEqual(String(describing: amount8), "$132.5K")
     }
+
+    func testCalculatePrecision() {
+        XCTAssertEqual(Money(1).fractionLengthForAmount().string(), "$1.00")
+        XCTAssertEqual(Money(1.234).fractionLengthForAmount().string(), "$1.23")
+        XCTAssertEqual(Money(1.000031).fractionLengthForAmount().string(), "$1.00")
+        XCTAssertEqual(Money(0.00001).fractionLengthForAmount().string(), "$0.00001")
+        XCTAssertEqual(Money(0.000010000).fractionLengthForAmount().string(), "$0.00001")
+        XCTAssertEqual(Money(0.000012).fractionLengthForAmount().string(), "$0.000012")
+        XCTAssertEqual(Money(0.00001243).fractionLengthForAmount().string(), "$0.000012")
+        XCTAssertEqual(Money(0.00001253).fractionLengthForAmount().string(), "$0.000013")
+        XCTAssertEqual(Money(0.00001283).fractionLengthForAmount().string(), "$0.000013")
+        XCTAssertEqual(Money(0.000000138).fractionLengthForAmount().string(), "$0.00000014")
+    }
 }

@@ -65,4 +65,17 @@ final class DecimalTests: TestCase {
         w3.round(fractionDigits: 2)
         XCTAssertEqual(w3, 6.57)
     }
+
+    func testCalculatePrecision() {
+        XCTAssertEqual(Decimal(1).calculatePrecision(), 2...2)
+        XCTAssertEqual(Decimal(1.234).calculatePrecision(), 2...2)
+        XCTAssertEqual(Decimal(1.000031).calculatePrecision(), 2...2)
+        XCTAssertEqual(Decimal(0.00001).calculatePrecision(), 2...6)
+        XCTAssertEqual(Decimal(0.000010000).calculatePrecision(), 2...6)
+        XCTAssertEqual(Decimal(0.000012).calculatePrecision(), 2...6)
+        XCTAssertEqual(Decimal(0.00001243).calculatePrecision(), 2...6)
+        XCTAssertEqual(Decimal(0.00001253).calculatePrecision(), 2...6)
+        XCTAssertEqual(Decimal(0.00001283).calculatePrecision(), 2...6)
+        XCTAssertEqual(Decimal(0.000000138).calculatePrecision(), 2...8)
+    }
 }
