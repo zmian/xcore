@@ -61,6 +61,20 @@ extension SignedInteger {
     }
 }
 
+extension UnsignedInteger {
+    public var digitsCount: Self {
+        numberOfDigits(in: self)
+    }
+
+    private func numberOfDigits(in number: Self) -> Self {
+        if number < 10 {
+            return 1
+        } else {
+            return 1 + numberOfDigits(in: number / 10)
+        }
+    }
+}
+
 extension FloatingPoint {
     public static var pi2: Self {
         .pi / 2

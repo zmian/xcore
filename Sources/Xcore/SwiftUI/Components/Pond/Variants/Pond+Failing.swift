@@ -8,6 +8,8 @@
 import Foundation
 
 public struct FailingPond: Pond {
+    public let id = "failing"
+
     public init() {}
 
     public func get<T>(_ type: T.Type, _ key: Key) -> T? {

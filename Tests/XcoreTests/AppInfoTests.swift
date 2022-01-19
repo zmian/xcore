@@ -18,7 +18,7 @@ final class AppInfoTests: TestCase {
             "device_name": Device.current.model.description,
             "device_model": Device.current.model.identifier,
             "device_family": Device.current.model.family,
-            "os": Bundle.main.osVersion,
+            "os": Bundle.main.osNameVersion,
             "locale": Locale.current.identifier
         ]
 
@@ -28,7 +28,7 @@ final class AppInfoTests: TestCase {
     func testUserAgent() {
         let appVersionNumber = Bundle.main.versionNumber
         let appBuildNumber = Bundle.main.buildNumber
-        let osNameVersion = Bundle.main.osVersion
+        let osNameVersion = Bundle.main.osNameVersion
         let deviceModel = Device.current.model.identifier
 
         XCTAssertEqual(

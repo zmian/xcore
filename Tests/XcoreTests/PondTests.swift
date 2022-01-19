@@ -23,7 +23,7 @@ final class PondTests: TestCase {
         let stub = InMemoryPond()
         let userDefaults = UserDefaultsPond(suite)
 
-        try assertBasicCases(with: .composite { method, key in
+        try assertBasicCases(with: .composite(id: "test") { method, key in
             if key == .testValue2 {
                 return stub
             }
@@ -38,30 +38,30 @@ final class PondTests: TestCase {
         DependencyValues.pond(.empty)
 
         // Set value
-        model.pond.set(.testValue, value: "Hello")
+        try model.pond.set(.testValue, value: "Hello")
         XCTAssertFalse(model.pond.contains(.testValue))
         model.pond.remove(.testValue)
         XCTAssertFalse(model.pond.contains(.testValue))
 
         // Set/Get value
-        model.pond.set(.testValue, value: 123)
-        XCTAssertNil(model.pond.get(.testValue))
+        try model.pond.set(.testValue, value: 123)
+        XCTAssertNil(try model.pond.get(.testValue))
     }
 
-    private func assertCases<T>(for value: T, pond: @autoclosure () -> Pond) where T: Equatable {
+    private func assertCases<T>(for value: T, pond: @autoclosure () -> Pond) throws where T: Equatable {
         let model = ViewModel()
 
         DependencyValues.pond(pond())
 
         // Set value
-        model.pond.set(.testValue, value: value)
+        try model.pond.set(.testValue, value: value)
         XCTAssertTrue(model.pond.contains(.testValue))
         model.pond.remove(.testValue)
         XCTAssertFalse(model.pond.contains(.testValue))
 
         // Set/Get value
-        model.pond.set(.testValue2, value: value)
-        XCTAssertEqual(model.pond.get(.testValue2), value)
+        try model.pond.set(.testValue2, value: value)
+        XCTAssertEqual(try model.pond.get(.testValue2), value)
     }
 }
 
@@ -69,30 +69,30 @@ final class PondTests: TestCase {
 
 extension PondTests {
     private func assertBasicCases(with pond: @autoclosure () -> Pond) throws {
-        assertCases(for: "Hello", pond: pond())
-        assertCases(for: ["Hello", "World"], pond: pond())
-        assertCases(for: ["Hello": "World"], pond: pond())
-        assertCases(for: ["Number": 315.36], pond: pond())
-        assertCases(for: [123, 315.36], pond: pond())
-        assertCases(for: 123, pond: pond())
-        assertCases(for: 315.36, pond: pond())
-        assertCases(for: Float(315.36), pond: pond())
-        assertCases(for: false, pond: pond())
-        assertCases(for: true, pond: pond())
+        try assertCases(for: "Hello", pond: pond())
+        try assertCases(for: ["Hello", "World"], pond: pond())
+        try assertCases(for: ["Hello": "World"], pond: pond())
+        try assertCases(for: ["Number": 315.36], pond: pond())
+        try assertCases(for: [123, 315.36], pond: pond())
+        try assertCases(for: 123, pond: pond())
+        try assertCases(for: 315.36, pond: pond())
+        try assertCases(for: Float(315.36), pond: pond())
+        try assertCases(for: false, pond: pond())
+        try assertCases(for: true, pond: pond())
 
-        assertCases(for: NSNumber(315.36), pond: pond())
+        try assertCases(for: NSNumber(315.36), pond: pond())
 
-        assertCases(for: Date().timeIntervalSinceNow, pond: pond())
-        assertCases(for: Date(), pond: pond())
-        assertCases(for: Date().adjusting(.day, by: 10), pond: pond())
+        try assertCases(for: Date().timeIntervalSinceNow, pond: pond())
+        try assertCases(for: Date(), pond: pond())
+        try assertCases(for: Date().adjusting(.day, by: 10), pond: pond())
 
-        assertCases(for: URL(string: "http://example.com"), pond: pond())
-        assertCases(for: NSURL(string: "http://example.com")! as URL, pond: pond())
-        assertCases(for: NSURL(string: "http://example.com"), pond: pond())
+        try assertCases(for: URL(string: "http://example.com"), pond: pond())
+        try assertCases(for: NSURL(string: "http://example.com")! as URL, pond: pond())
+        try assertCases(for: NSURL(string: "http://example.com"), pond: pond())
 
         // Test Data
-        assertCases(for: Crypt.generateSecureRandom(), pond: pond())
-        assertCases(for: Data("Hello World".utf8), pond: pond())
+        try assertCases(for: Crypt.generateSecureRandom(), pond: pond())
+        try assertCases(for: Data("Hello World".utf8), pond: pond())
 
         try assertGetDefaultValue(with: pond())
 
@@ -122,11 +122,11 @@ extension PondTests {
         }
 
         let data = try XCTUnwrap(#"{"value": "hello world"}"#.data(using: .utf8))
-        assertCases(for: data, pond: pond())
+        try assertCases(for: data, pond: pond())
 
         let model = ViewModel()
         DependencyValues.pond(pond())
-        model.pond.set(.testValue, value: data)
+        try model.pond.set(.testValue, value: data)
 
         let example = try XCTUnwrap(model.pond.getCodable(.testValue, type: Example.self))
         XCTAssertEqual(example.value, "hello world")

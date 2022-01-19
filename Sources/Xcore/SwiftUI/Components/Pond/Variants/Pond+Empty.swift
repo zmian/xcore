@@ -7,6 +7,8 @@
 import Foundation
 
 public struct EmptyPond: Pond {
+    public let id = "empty"
+
     public init() {}
 
     public func get<T>(_ type: T.Type, _ key: Key) -> T? {
