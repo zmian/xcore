@@ -19,7 +19,10 @@ extension View {
     public func readGeometry(perform action: @escaping (GeometryProxy) -> Void) -> some View {
         background(
             GeometryReader { geometry -> Color in
-                action(geometry)
+                // Fixes a crash in AG Graph where "value is changing during update."
+                DispatchQueue.main.async {
+                    action(geometry)
+                }
                 return Color.clear
             }
         )
