@@ -33,7 +33,6 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
             .padding(.defaultSpacing)
             .frame(alignment: .center)
 
-
             // Tap to advance or rewind
             HStack(spacing: 0) {
                 advanceView(isLeft: true)
