@@ -26,5 +26,6 @@ public struct XStack<Title, Value>: View where Title: View, Value: View {
             title: .init(content: title()),
             value: .init(content: value())
         ))
+        .accessibilityElement(children: .combine)
     }
 }
