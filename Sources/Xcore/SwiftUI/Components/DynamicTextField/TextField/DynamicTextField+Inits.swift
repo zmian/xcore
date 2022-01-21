@@ -61,7 +61,7 @@ extension DynamicTextField {
     ) {
         self.init(
             value: value,
-            label: Text(titleKey),
+            label: Text(titleKey).accessibilityHidden(true),
             configuration: configuration,
             onEditingChanged: onEditingChanged,
             onCommit: onCommit
@@ -92,7 +92,7 @@ extension DynamicTextField {
     ) where S: StringProtocol {
         self.init(
             value: value,
-            label: Text(title),
+            label: Text(title).accessibilityHidden(true),
             configuration: configuration,
             onEditingChanged: onEditingChanged,
             onCommit: onCommit
