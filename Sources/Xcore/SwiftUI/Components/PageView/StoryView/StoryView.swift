@@ -8,6 +8,7 @@ import SwiftUI
 
 public struct StoryView<Page, Content, Background>: View where Page: Identifiable, Content: View, Background: View {
     @Environment(\.storyProgressIndicatorInsets) private var insets
+    @Environment(\.theme) private var theme
     @ObservedObject private var storyTimer: StoryTimer
     private let pages: [Page]
     private let content: (Page) -> Content
@@ -22,6 +23,16 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
                     .ignoresSafeArea()
                     .animation(.none)
             }
+
+            // Tap to advance or rewind for accessibility. Following the Instagram approach.
+            HStack {
+                accessibilityButton(isLeft: true)
+                Spacer()
+                accessibilityButton(isLeft: false)
+            }
+            .padding(.defaultSpacing)
+            .frame(alignment: .center)
+
 
             // Tap to advance or rewind
             HStack(spacing: 0) {
@@ -46,8 +57,29 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
             ForEach(pages.indices) { index in
                 StoryProgressIndicator(progress: storyTimer.progress(for: index))
             }
+            .accessibilityHidden(true)
         }
         .padding(insets)
+    }
+
+    @ViewBuilder
+    private func accessibilityButton(isLeft: Bool) -> some View {
+        if UIAccessibility.isVoiceOverRunning {
+            VStack {
+                Spacer()
+                Image(system: isLeft ? .arrowLeftCircleFill : .arrowRightCircleFill)
+                    .resizable()
+                    .frame(36)
+                    .foregroundColor(theme.backgroundColor)
+                    .onTap {
+                        storyTimer.advance(by: isLeft ? -1 : 1)
+                        UIAccessibility.post(notification: .screenChanged, argument: nil)
+                        storyTimer.resume()
+                    }
+                    .accessibilityLabel(isLeft ? "Previous story" : "Next story")
+                Spacer()
+            }
+        }
     }
 
     private func advanceView(isLeft: Bool) -> some View {
