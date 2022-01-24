@@ -8,8 +8,10 @@ import Foundation
 
 public struct AdaptiveURL: UserInfoContainer, MutableAppliable {
     /// The title of the URL.
-    public let title: String
-    public let url: URL
+    public var title: String
+
+    public var url: URL
+
     /// Additional info which may be used to describe the url further.
     public var userInfo: UserInfo
 
