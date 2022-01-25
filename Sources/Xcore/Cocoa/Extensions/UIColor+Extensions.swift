@@ -120,7 +120,8 @@ extension UIColor {
     public func alpha(_ alpha: CGFloat) -> UIColor {
         // The colors are lazily evaluated. Please don't assign to variable as it won't
         // be dark mode compliant.
-        UIColor(light: withAlphaComponent(alpha), dark: withAlphaComponent(alpha))
+        let copy = copy() as! UIColor
+        return UIColor(light: copy.withAlphaComponent(alpha), dark: copy.withAlphaComponent(alpha))
     }
 }
 
