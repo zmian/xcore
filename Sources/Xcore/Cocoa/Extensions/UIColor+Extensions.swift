@@ -117,8 +117,10 @@ extension UIColor {
         set { withAlphaComponent(newValue) }
     }
 
-    public func alpha(_ value: CGFloat) -> UIColor {
-        withAlphaComponent(value)
+    public func alpha(_ alpha: CGFloat) -> UIColor {
+        // The colors are lazily evaluated. Please don't assign to variable as it won't
+        // be dark mode compliant.
+        UIColor(light: withAlphaComponent(alpha), dark: withAlphaComponent(alpha))
     }
 }
 
