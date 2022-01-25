@@ -5,28 +5,41 @@
 //
 
 import UIKit
+import SwiftUI
 
 // MARK: - Hex Support
 
 extension UIColor {
-    public convenience init(hex: Int64) {
+    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64) {
         let (r, g, b, a) = Self.components(hex: hex)
-        self.init(red: r, green: g, blue: b, alpha: a)
+
+        switch colorSpace {
+            case .displayP3:
+                self.init(displayP3Red: r, green: g, blue: b, alpha: a)
+            default:
+                self.init(red: r, green: g, blue: b, alpha: a)
+        }
     }
 
-    public convenience init(hex: Int64, alpha: CGFloat) {
+    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64, alpha: CGFloat) {
         let (r, g, b, a) = Self.components(hex: hex, alpha: alpha)
-        self.init(red: r, green: g, blue: b, alpha: a)
+
+        switch colorSpace {
+            case .displayP3:
+                self.init(displayP3Red: r, green: g, blue: b, alpha: a)
+            default:
+                self.init(red: r, green: g, blue: b, alpha: a)
+        }
     }
 
     @nonobjc
-    public convenience init(hex: String) {
-        self.init(hex: Self.components(hex: hex))
+    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: String) {
+        self.init(colorSpace, hex: Self.components(hex: hex))
     }
 
     @nonobjc
-    public convenience init(hex: String, alpha: CGFloat) {
-        self.init(hex: Self.components(hex: hex), alpha: alpha)
+    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: String, alpha: CGFloat) {
+        self.init(colorSpace, hex: Self.components(hex: hex), alpha: alpha)
     }
 
     public var hex: String {
