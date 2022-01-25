@@ -7,29 +7,28 @@
 import UIKit
 import SwiftUI
 
+extension UIColor {
+    public convenience init(_ colorSpace: Color.RGBColorSpace, red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
+        switch colorSpace {
+            case .displayP3:
+                self.init(displayP3Red: red, green: green, blue: blue, alpha: alpha)
+            default:
+                self.init(red: red, green: green, blue: blue, alpha: alpha)
+        }
+    }
+}
+
 // MARK: - Hex Support
 
 extension UIColor {
     public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64) {
         let (r, g, b, a) = Self.components(hex: hex)
-
-        switch colorSpace {
-            case .displayP3:
-                self.init(displayP3Red: r, green: g, blue: b, alpha: a)
-            default:
-                self.init(red: r, green: g, blue: b, alpha: a)
-        }
+        self.init(colorSpace, red: r, green: g, blue: b, alpha: a)
     }
 
     public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64, alpha: CGFloat) {
         let (r, g, b, a) = Self.components(hex: hex, alpha: alpha)
-
-        switch colorSpace {
-            case .displayP3:
-                self.init(displayP3Red: r, green: g, blue: b, alpha: a)
-            default:
-                self.init(red: r, green: g, blue: b, alpha: a)
-        }
+        self.init(colorSpace, red: r, green: g, blue: b, alpha: a)
     }
 
     @nonobjc
@@ -170,6 +169,7 @@ extension UIColor {
         let a = alpha * fg.a + (1 - alpha) * bg.a
 
         return UIColor(
+            .default,
             red: r.clamped(to: 0...255),
             green: g.clamped(to: 0...255),
             blue: b.clamped(to: 0...255),
@@ -223,7 +223,7 @@ extension UIColor {
         let blue = (toBlue - fromBlue) * percentage + fromBlue
         let alpha = (toAlpha - fromAlpha) * percentage + fromAlpha
 
-        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+        return UIColor(.default, red: red, green: green, blue: blue, alpha: alpha)
     }
 }
 
