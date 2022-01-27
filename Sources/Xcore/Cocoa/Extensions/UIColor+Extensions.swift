@@ -5,28 +5,40 @@
 //
 
 import UIKit
+import SwiftUI
+
+extension UIColor {
+    public convenience init(_ colorSpace: Color.RGBColorSpace, red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
+        switch colorSpace {
+            case .displayP3:
+                self.init(displayP3Red: red, green: green, blue: blue, alpha: alpha)
+            default:
+                self.init(red: red, green: green, blue: blue, alpha: alpha)
+        }
+    }
+}
 
 // MARK: - Hex Support
 
 extension UIColor {
-    public convenience init(hex: Int64) {
+    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64) {
         let (r, g, b, a) = Self.components(hex: hex)
-        self.init(red: r, green: g, blue: b, alpha: a)
+        self.init(colorSpace, red: r, green: g, blue: b, alpha: a)
     }
 
-    public convenience init(hex: Int64, alpha: CGFloat) {
+    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64, alpha: CGFloat) {
         let (r, g, b, a) = Self.components(hex: hex, alpha: alpha)
-        self.init(red: r, green: g, blue: b, alpha: a)
+        self.init(colorSpace, red: r, green: g, blue: b, alpha: a)
     }
 
     @nonobjc
-    public convenience init(hex: String) {
-        self.init(hex: Self.components(hex: hex))
+    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: String) {
+        self.init(colorSpace, hex: Self.components(hex: hex))
     }
 
     @nonobjc
-    public convenience init(hex: String, alpha: CGFloat) {
-        self.init(hex: Self.components(hex: hex), alpha: alpha)
+    public convenience init(_ colorSpace: Color.RGBColorSpace = .default, hex: String, alpha: CGFloat) {
+        self.init(colorSpace, hex: Self.components(hex: hex), alpha: alpha)
     }
 
     public var hex: String {
@@ -105,8 +117,11 @@ extension UIColor {
         set { withAlphaComponent(newValue) }
     }
 
-    public func alpha(_ value: CGFloat) -> UIColor {
-        withAlphaComponent(value)
+    public func alpha(_ alpha: CGFloat) -> UIColor {
+        // The colors are lazily evaluated. Please don't assign to variable as it won't
+        // be dark mode compliant.
+        let copy = copy() as! UIColor
+        return UIColor(light: copy.withAlphaComponent(alpha), dark: copy.withAlphaComponent(alpha))
     }
 }
 
@@ -157,6 +172,7 @@ extension UIColor {
         let a = alpha * fg.a + (1 - alpha) * bg.a
 
         return UIColor(
+            .default,
             red: r.clamped(to: 0...255),
             green: g.clamped(to: 0...255),
             blue: b.clamped(to: 0...255),
@@ -210,7 +226,7 @@ extension UIColor {
         let blue = (toBlue - fromBlue) * percentage + fromBlue
         let alpha = (toAlpha - fromAlpha) * percentage + fromAlpha
 
-        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+        return UIColor(.default, red: red, green: green, blue: blue, alpha: alpha)
     }
 }
 

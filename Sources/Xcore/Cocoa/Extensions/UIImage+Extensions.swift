@@ -140,6 +140,7 @@ extension UIImage {
         )
 
         return UIColor(
+            .default,
             red: CGFloat(bitmap[0]) / 255,
             green: CGFloat(bitmap[1]) / 255,
             blue: CGFloat(bitmap[2]) / 255,

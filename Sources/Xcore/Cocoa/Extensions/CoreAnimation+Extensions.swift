@@ -86,6 +86,7 @@ extension CALayer {
         context.translateBy(x: -point.x, y: -point.y)
         render(in: context)
         return UIColor(
+            .default,
             red: CGFloat(pixel[0]) / 255,
             green: CGFloat(pixel[1]) / 255,
             blue: CGFloat(pixel[2]) / 255,
