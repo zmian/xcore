@@ -63,7 +63,10 @@ extension URL {
     /// print(url.appendQueryItems([URLQueryItem(name: "lang", value: "Swift")]) // "https://example.com/?q=HelloWorld&lang=Swift"
     /// ```
     public func appendQueryItems(_ items: [URLQueryItem]) -> URL {
-        guard var components = URLComponents(url: self, resolvingAgainstBaseURL: true) else {
+        guard
+            !items.isEmpty,
+            var components = URLComponents(url: self, resolvingAgainstBaseURL: true)
+        else {
             return self
         }
 

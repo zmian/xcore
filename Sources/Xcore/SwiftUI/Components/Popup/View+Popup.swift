@@ -211,6 +211,8 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
             .onChange(of: isPresented) { isPresented in
                 if isPresented {
                     setupAutomaticDismissalIfNeeded()
+                    UIAccessibility.post(notification: .screenChanged, argument: nil)
+                    UIAccessibility.post(notification: .announcement, argument: "Alert")
                 }
             }
     }

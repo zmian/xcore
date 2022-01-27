@@ -6,21 +6,25 @@
 
 import SwiftUI
 
+extension Color.RGBColorSpace {
+    public static var `default`: Self = .sRGB
+}
+
 extension Color {
-    public init(hex: Int64) {
-        self.init(UIColor(hex: hex))
+    public init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64) {
+        self.init(UIColor(colorSpace, hex: hex))
     }
 
-    public init(hex: Int64, opacity: CGFloat) {
-        self.init(UIColor(hex: hex, alpha: opacity))
+    public init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64, opacity: CGFloat) {
+        self.init(UIColor(colorSpace, hex: hex, alpha: opacity))
     }
 
-    public init(hex: String) {
-        self.init(UIColor(hex: hex))
+    public init(_ colorSpace: Color.RGBColorSpace = .default, hex: String) {
+        self.init(UIColor(colorSpace, hex: hex))
     }
 
-    public init(hex: String, opacity: CGFloat) {
-        self.init(UIColor(hex: hex, alpha: opacity))
+    public init(_ colorSpace: Color.RGBColorSpace = .default, hex: String, opacity: CGFloat) {
+        self.init(UIColor(colorSpace, hex: hex, alpha: opacity))
     }
 }
 
