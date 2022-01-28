@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 /// A structure representing money type and set of attributes to formats the
 /// output.
@@ -40,6 +41,7 @@ public struct Money: Equatable, Hashable, MutableAppliable {
     public init(_ amount: Decimal) {
         self.amount = amount
         shouldSuperscriptMinorUnit = Self.appearance().shouldSuperscriptMinorUnit
+        superscriptCurrencySymbol = Self.appearance().superscriptCurrencySymbol
     }
 
     public init?(_ amount: Decimal?) {
@@ -103,9 +105,22 @@ public struct Money: Equatable, Hashable, MutableAppliable {
     /// The default value is `false`.
     public var shouldSuperscriptMinorUnit: Bool
 
+    /// A property to indicate whether the currency symbol is rendered as superscript.
+    ///
+    /// The default value is `plain`.
+    public var superscriptCurrencySymbol: CurrencySymbolSuperscript
+
+
     /// A succinct label in a localized string that describes its contents
     public var accessibilityLabel: String {
         formatter.string(from: amount, fractionLength: fractionLength, style: style)
+    }
+}
+
+extension Money {
+    public enum CurrencySymbolSuperscript: Hashable {
+        case plain
+        case superscript(font: Font, baselineOffset: CGFloat)
     }
 }
 
@@ -160,9 +175,11 @@ extension Money {
     ///
     /// ```swift
     /// Money.appearance().shouldSuperscriptMinorUnit = true
+    /// Money.appearance().superscriptCurrencySymbol = .superscript(font: .title3, baselineOffset: 24)
     /// ```
     public final class Appearance: Appliable {
         public var shouldSuperscriptMinorUnit = false
+        public var superscriptCurrencySymbol: CurrencySymbolSuperscript  = .plain
     }
 
     private static var appearanceProxy = Appearance()
