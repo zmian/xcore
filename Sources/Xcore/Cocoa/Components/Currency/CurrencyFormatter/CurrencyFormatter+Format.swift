@@ -131,19 +131,36 @@ extension Money: View {
         if amount == 0, !shouldDisplayZero {
             Text(zeroString)
         } else {
-            let components = formatter.components(from: amount, fractionLength: fractionLength, sign: sign)
-            let joinedAmount = components.joined(style: style)
-
-            Text(joinedAmount)
+            money
                 .unwrap(font.majorUnit) { view, value in
                     view.font(SwiftUI.Font(value))
                 }
                 .unwrap(foregroundColor) { view, color in
                     view.foregroundColor(color)
                 }
-//                .applyIf(shouldSuperscriptMinorUnit) {
-//                    EmptyView()
-//                }
+    //                .applyIf(shouldSuperscriptMinorUnit) {
+    //                    EmptyView()
+    //                }
+        }
+    }
+
+    @ViewBuilder
+    private var money: some View {
+        let components = formatter.components(from: amount, fractionLength: fractionLength, sign: sign)
+        let joinedAmount = components.joined(style: style)
+
+        if #available(iOS 15, *) {
+            Text(joinedAmount) { str in
+                if
+                    case let .superscript(font, baselineOffset) = superscriptCurrencySymbol,
+                    let symbolRange = str.range(of: components.currencySymbol)
+                {
+                    str[symbolRange].font = font
+                    str[symbolRange].baselineOffset = baselineOffset
+                }
+            }
+        } else {
+            Text(joinedAmount)
         }
     }
 }
