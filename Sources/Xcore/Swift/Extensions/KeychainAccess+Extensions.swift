@@ -32,16 +32,17 @@ extension KeychainAccess.AuthenticationPolicy: Hashable {}
 
 extension KeychainAccess.Keychain {
     /// A keychain with `service` set to bundle identifier with ".intents" removed
-    /// and `accessibility` set to `whenUnlockedThisDeviceOnly`.
+    /// and `accessibility` set to `.whenUnlockedThisDeviceOnly`.
     public static func `default`(
         accessGroup: String,
+        accessibility: Accessibility = .whenUnlockedThisDeviceOnly,
         policy: AuthenticationPolicy = .none
     ) -> Keychain {
         Keychain(
             service: (Bundle.main.bundleIdentifier ?? "").replacing(".intents", with: ""),
             accessGroup: accessGroup
         )
-        .accessibility(.whenUnlockedThisDeviceOnly)
+        .accessibility(accessibility)
         .policy(policy)
     }
 }
