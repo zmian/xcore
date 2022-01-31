@@ -51,6 +51,21 @@ final class ValidationRuleTests: TestCase {
         XCTAssertFalse("657-55-5462".validate(rule: rule))
     }
 
+    func testPostalCode() {
+        let rule: ValidationRule<String> = .postalCode
+
+        // Valid
+        XCTAssertTrue("12345".validate(rule: rule))
+        XCTAssertTrue("123456789".validate(rule: rule))
+        XCTAssertTrue("12345-6789".validate(rule: rule))
+
+        // Invalid
+        XCTAssertFalse("1234".validate(rule: rule))
+        XCTAssertFalse("123 4".validate(rule: rule))
+        XCTAssertFalse("123 45".validate(rule: rule))
+        XCTAssertFalse("1234567890".validate(rule: rule))
+    }
+
     func testName() {
         let rule: ValidationRule<String> = .name
 

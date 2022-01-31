@@ -224,6 +224,14 @@ extension ValidationRule where Input == String {
         )
     }
 
+    /// A validation rule that checks whether the input is a valid postal code.
+    public static var postalCode: Self {
+        .init(
+            pattern: "(^\\d{5}$)|(^\\d{9}$)|(^\\d{5}-\\d{4}$)",
+            transform: { $0.replacing("-", with: "") }
+        )
+    }
+
     public static var name: Self {
         name(range: 1...50)
     }
