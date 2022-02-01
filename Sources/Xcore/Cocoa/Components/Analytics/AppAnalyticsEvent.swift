@@ -72,7 +72,7 @@ extension AppAnalyticsEvent {
     }
 
     public func mergingProperties(_ otherProperties: [String: Any?]) -> Self {
-        mergingProperties(otherProperties.flatten())
+        mergingProperties(otherProperties.compacted())
     }
 }
 
