@@ -4,7 +4,6 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
 import SwiftUI
 
 /// A structure representing money type and set of attributes to formats the
@@ -105,11 +104,11 @@ public struct Money: Equatable, Hashable, MutableAppliable {
     /// The default value is `false`.
     public var shouldSuperscriptMinorUnit: Bool
 
-    /// A property to indicate whether the currency symbol is rendered as superscript.
+    /// A property to indicate whether the currency symbol is rendered as
+    /// superscript.
     ///
     /// The default value is `plain`.
     public var superscriptCurrencySymbol: CurrencySymbolSuperscript
-
 
     /// A succinct label in a localized string that describes its contents
     public var accessibilityLabel: String {
