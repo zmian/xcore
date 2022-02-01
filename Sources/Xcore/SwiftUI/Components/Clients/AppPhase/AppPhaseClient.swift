@@ -230,6 +230,39 @@ extension AppPhase {
     }
 }
 
+extension AppPhase: CustomAnalyticsValueConvertible {
+    public var analyticsValue: String {
+        switch self {
+            case .launched:
+                return "launched"
+            case .active:
+                return "active"
+            case .inactive:
+                return "inactive"
+            case .background:
+                return "background"
+            case .willEnterForeground:
+                return "will_enter_foreground"
+            case .willTerminate:
+                return "will_terminate"
+            case .memoryWarning:
+                return "memory_warning"
+            case .significantTimeChange:
+                return "significant_time_change"
+            case .remoteNotificationsRegistered(.success):
+                return "remote_notifications_registered_success"
+            case let .remoteNotificationsRegistered(.failure(error)):
+                return "remote_notifications_registered_error_\(error.code)"
+            case .remoteNotificationReceived:
+                return "remote_notification_received"
+            case .openUrl:
+                return "open_url"
+            case .continueUserActivity:
+                return "continue_user_activity"
+        }
+    }
+}
+
 // MARK: - Equatable
 
 extension AppPhase {
