@@ -40,19 +40,19 @@ open class Observers {
     }
 
     /// Removes all observers where the `owner` is deallocated.
-    open func flatten() {
+    open func compacted() {
         for (index, observer) in observers.enumerated().reversed() where observer.owner == nil {
             observers.remove(at: index)
         }
     }
 
     open var count: Int {
-        flatten()
+        compacted()
         return observers.count
     }
 
     open var isEmpty: Bool {
-        flatten()
+        compacted()
         return observers.isEmpty
     }
 
@@ -83,7 +83,7 @@ open class Observers {
 
     /// Invokes each registered observer.
     open func notify() {
-        flatten()
+        compacted()
         guard isNotificationEnabled else { return }
         observers.forEach { $0.handler?() }
     }

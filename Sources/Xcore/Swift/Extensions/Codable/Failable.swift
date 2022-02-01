@@ -65,7 +65,7 @@ extension Failable: CustomStringConvertible where Value: CustomStringConvertible
 // MARK: - Array
 
 extension Array {
-    public func flatten<Value>() -> [Value] where Element == Failable<Value> {
+    public func compacted<Value>() -> [Value] where Element == Failable<Value> {
         compactMap(\.value)
     }
 }
@@ -101,7 +101,7 @@ extension JSONDecoder {
             case .throw:
                 return try decode(type, from: data)
             case .lenient:
-                return T(try decode([Failable<T.Element>].self, from: data).flatten())
+                return T(try decode([Failable<T.Element>].self, from: data).compacted())
         }
     }
 }

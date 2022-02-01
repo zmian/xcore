@@ -305,7 +305,7 @@ public func != <Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
 
 extension Dictionary where Value: OptionalType {
     /// Removes `nil` values from `self`.
-    public func flatten() -> [Key: Value.Wrapped] {
+    public func compacted() -> [Key: Value.Wrapped] {
         var result: [Key: Value.Wrapped] = [:]
         for (key, value) in self {
             guard let value = value.wrapped else {

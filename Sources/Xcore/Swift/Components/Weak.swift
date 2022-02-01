@@ -61,7 +61,7 @@ extension Weak: Comparable where Value: Comparable {
 
 extension RangeReplaceableCollection where Index == Int {
     /// Removes all elements where the `value` is deallocated.
-    public mutating func flatten<T>() where Element == Weak<T>, T: AnyObject {
+    public mutating func compacted<T>() where Element == Weak<T>, T: AnyObject {
         for (index, element) in enumerated() where element.value == nil {
             remove(at: index)
         }
