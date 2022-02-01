@@ -123,7 +123,8 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
             autocorrection: .no,
             spellChecking: .no,
             keyboard: .numberPad,
-            textContentType: .postalCode
+            textContentType: .postalCode,
+            validation: .postalCode
         )
     }
 
