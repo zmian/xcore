@@ -138,9 +138,9 @@ extension Money: View {
                 .unwrap(foregroundColor) { view, color in
                     view.foregroundColor(color)
                 }
-    //                .applyIf(shouldSuperscriptMinorUnit) {
-    //                    EmptyView()
-    //                }
+//                .applyIf(shouldSuperscriptMinorUnit) {
+//                    EmptyView()
+//                }
         }
     }
 
