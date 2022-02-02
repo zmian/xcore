@@ -230,6 +230,8 @@ extension AppPhase {
     }
 }
 
+// MARK: - CustomAnalyticsValueConvertible
+
 extension AppPhase: CustomAnalyticsValueConvertible {
     public var analyticsValue: String {
         switch self {
