@@ -8,7 +8,7 @@ import SwiftUI
 
 extension Text {
     @available(iOS 15, *)
-    public init(_ string: String, configure: (inout AttributedString) -> Void) {
+    public init<S>(_ string: S, configure: (inout AttributedString) -> Void) where S: StringProtocol {
         var attributedString = AttributedString(string)
         configure(&attributedString)
         self.init(attributedString)
