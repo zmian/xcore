@@ -178,7 +178,7 @@ extension Money {
     /// ```
     public final class Appearance: Appliable {
         public var shouldSuperscriptMinorUnit = false
-        public var superscriptCurrencySymbol: CurrencySymbolSuperscript  = .plain
+        public var superscriptCurrencySymbol: CurrencySymbolSuperscript = .plain
     }
 
     private static var appearanceProxy = Appearance()

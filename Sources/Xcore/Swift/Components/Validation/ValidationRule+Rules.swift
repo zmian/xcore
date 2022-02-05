@@ -232,6 +232,11 @@ extension ValidationRule where Input == String {
         )
     }
 
+    /// A validation rule that checks whether the input contains "P.O. Box".
+    public static var containsPoBox: Self {
+        "(?i)^((.*)(((p|post)[-.\\s]*(o|off|office)[-.\\s]*(box|bin))|((p |post)[-.\\s]*(box|bin)))(.*))"
+    }
+
     public static var name: Self {
         name(range: 1...50)
     }
