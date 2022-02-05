@@ -97,9 +97,11 @@ final class ValidationRuleTests: TestCase {
         XCTAssertTrue("P.O.Box 1033 ".validate(rule: rule))
         XCTAssertTrue(" P.O.Box 1033".validate(rule: rule))
 
-        // Invalid
+        // Does not contain P.O. Box
         XCTAssertFalse("1 Apple Park Way".validate(rule: rule))
         XCTAssertFalse("1 Office Way".validate(rule: rule))
+        XCTAssertFalse("1 Infinite Loop; Cupertino, CA 95014".validate(rule: rule))
+        XCTAssertFalse("1 Infinite Loop".validate(rule: rule))
 
         let not_a_p_o_box = [
             "The Postal Road",
