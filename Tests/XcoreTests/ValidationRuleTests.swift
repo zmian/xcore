@@ -66,6 +66,112 @@ final class ValidationRuleTests: TestCase {
         XCTAssertFalse("1234567890".validate(rule: rule))
     }
 
+    func testContainsPoBox() {
+        let rule: ValidationRule<String> = .containsPoBox
+
+        // Valid
+        XCTAssertTrue("957-75-5462 P.O. Box".validate(rule: rule))
+        XCTAssertTrue("1 P.O. Box".validate(rule: rule))
+        XCTAssertTrue("2 P.O.Box".validate(rule: rule))
+        XCTAssertTrue("3 PO.Box".validate(rule: rule))
+        XCTAssertTrue("4 POBox".validate(rule: rule))
+        XCTAssertTrue("4 PO Box".validate(rule: rule))
+        XCTAssertTrue("4 P.O Box".validate(rule: rule))
+        XCTAssertTrue("4 P.O. Box".validate(rule: rule))
+        XCTAssertTrue("4 POST OFFICE Box".validate(rule: rule))
+
+        // Strict words
+        XCTAssertTrue("POST OFFICE Box".validate(rule: rule))
+        XCTAssertTrue("post office box".validate(rule: rule))
+        XCTAssertTrue("PO Box".validate(rule: rule))
+        XCTAssertTrue("po box".validate(rule: rule))
+        XCTAssertTrue("P.O. Box".validate(rule: rule))
+        XCTAssertTrue("p.o. box".validate(rule: rule))
+        XCTAssertTrue("P.O. box".validate(rule: rule))
+        XCTAssertTrue("P.O.Box".validate(rule: rule))
+        XCTAssertTrue("p.o.box".validate(rule: rule))
+        XCTAssertTrue("p.o. box 1033".validate(rule: rule))
+        XCTAssertTrue("P.O. Box 1033".validate(rule: rule))
+        XCTAssertTrue("p.o.box 1033".validate(rule: rule))
+        XCTAssertTrue("P.O.Box 1033".validate(rule: rule))
+        XCTAssertTrue("P.O.Box 1033 ".validate(rule: rule))
+        XCTAssertTrue(" P.O.Box 1033".validate(rule: rule))
+
+        // Invalid
+        XCTAssertFalse("1 Apple Park Way".validate(rule: rule))
+        XCTAssertFalse("1 Office Way".validate(rule: rule))
+
+        let not_a_p_o_box = [
+            "The Postal Road",
+            "The Postal Office Road",
+            "Box Hill",
+            "123 Some Street",
+            "Controller's Office",
+            "pollo St.",
+            "123 box canyon rd",
+            "777 Post Oak Blvd",
+            "PSC 477 Box 396",
+            "RR 1 Box 1020",
+            "Coop services",
+            "65 Brook Ave Ste 1P",
+            "pacific city",
+            "orange county",
+            "obox",
+            "pbox",
+            "party house",
+            "p shorty",
+            "something pacif pobo",
+            "po helpkline box",
+            "po ferrirs",
+            "panther boxing",
+            "box center",
+            "post office",
+            "Post",
+            "porceline"
+        ]
+
+        for address in not_a_p_o_box {
+            XCTAssertFalse(address.validate(rule: rule), "\(address)")
+        }
+
+        let p_o_box = [
+            "post office box",
+            "POBOX",
+            "po box",
+            "POBox12234",
+            "p o box",
+            "P.O.Box",
+            "HC73 P.O. Box 217",
+            "P O Box125",
+            "P. O. Box",
+            "P.O. Box 123",
+            "P.O. Box",
+            "PO Box N",
+            "PO Box",
+            "PO-Box",
+            "POBOX123",
+            "Po Box",
+            "Post Box 123",
+            "Post Office Box 123",
+            "Post Office Box",
+            "p box",
+            "p-o box",
+            "p-o-box",
+            "p.o box",
+            "p.o. box",
+            "p.o.-box",
+            "po box 123",
+            "po box",
+            "po-box",
+            "pobox",
+            "pobox123"
+        ]
+
+        for address in p_o_box {
+            XCTAssertTrue(address.validate(rule: rule), "\(address)")
+        }
+    }
+
     func testName() {
         let rule: ValidationRule<String> = .name
 
