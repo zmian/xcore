@@ -166,7 +166,6 @@ extension Window {
                 $0.windowLevel = style.level
                 $0.windowLabel = style.label
                 $0.preferredKey = style.isKey
-                $0.rootViewController?.view.backgroundColor = .clear
             }
 
             super.init(nibName: nil, bundle: nil)
