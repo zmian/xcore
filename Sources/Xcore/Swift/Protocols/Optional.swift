@@ -45,3 +45,35 @@ extension Optional: OptionalType {
         self
     }
 }
+
+// MARK: - isEqual
+
+extension Optional {
+    func isEqual(_ other: Self) -> Bool where Wrapped == [String: Encodable] {
+        switch (self, other) {
+            case (.none, .none):
+                return true
+            case let (.none, .some(value)):
+                if value.isEmpty {
+                    // nil or empty are the same
+                    return true
+                }
+
+                return false
+            case let (.some(value), .none):
+                if value.isEmpty {
+                    // nil or empty are the same
+                    return true
+                }
+
+                return false
+            case let (.some(lhs), .some(rhs)):
+                if lhs.isEmpty, rhs.isEmpty {
+                    // Fast pass
+                    return true
+                }
+
+                return JSONHelpers.stringify(lhs).sha256() == JSONHelpers.stringify(rhs).sha256()
+        }
+    }
+}

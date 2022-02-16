@@ -7,8 +7,11 @@
 import Foundation
 
 open class Analytics<Event: AnalyticsEventProtocol> {
+    private var userId: String?
+    private var traits: [String: Encodable]?
+
     /// The registered list of providers.
-    open private(set) var providers: [AnalyticsProvider] = []
+    open private(set) var providers: [AnalyticsProvider]
 
     public init(providers: [AnalyticsProvider]) {
         self.providers = providers
@@ -69,17 +72,6 @@ open class Analytics<Event: AnalyticsEventProtocol> {
         return (providers + additionalProviders).uniqued(\.id)
     }
 
-    /// A method to identify all registered providers with given user id and traits.
-    ///
-    /// - Parameters:
-    ///   - userId: The user id that should be used to identify all of the
-    ///     subsequent events.
-    ///   - traits: The dictionary of traits that should be used to identify all of
-    ///     the subsequent events.
-    open func identify(userId: String?, traits: [String: Encodable]?) {
-        providers.forEach { $0.identify(userId: userId, traits: traits) }
-    }
-
     /// A method to disable data collection for all registered providers.
     ///
     /// Depending on the audience for your app, you might need to offer the ability
@@ -92,7 +84,94 @@ open class Analytics<Event: AnalyticsEventProtocol> {
     ///
     /// This is useful for apps where users can sign in and out with different
     /// identities over time.
+    ///
+    /// - Note: If no user is identified than calling this method has no effect.
+    ///   This avoids providers generating anonymous user id while current user is
+    ///   already anonymous.
+    ///
+    /// For most analytics provider, reset method generates a new anonymous id
+    /// everytime. Resetting multiple times while the user is already in signed out
+    /// state will cause the some providers to generate multiple anonymous ids.
+    /// Meaning, there would be pockets of user's which would never track back to
+    /// the user if they ever signed back on to the app.
     open func reset() {
+        guard userId != nil else {
+            return
+        }
+
+        userId = nil
+        traits = nil
         providers.forEach { $0.reset() }
+    }
+}
+
+// MARK: - Identify
+
+extension Analytics {
+    /// A method to identify all registered providers with given user id and traits.
+    ///
+    /// - Parameter userId: The user id that should be used to identify all of the
+    ///   subsequent events.
+    ///
+    ///  - Note: Calling this method multiple times with same user id and/or traits
+    ///    have no effect. Internally, it ensures the user id and traits are
+    ///    different before invoking the identify call on the registered analytics
+    ///    providers.
+    public func identify(userId: String) {
+        _identify(userId: userId, traits: traits)
+    }
+
+    /// A method to identify all registered providers with given user id and traits.
+    ///
+    /// - Parameter traits: The dictionary of traits that should be used to identify
+    ///   all of the subsequent events.
+    ///
+    ///  - Note: Calling this method multiple times with same user id and/or traits
+    ///    have no effect. Internally, it ensures the user id and traits are
+    ///    different before invoking the identify call on the registered analytics
+    ///    providers.
+    public func identify(traits: [String: Encodable]) {
+        _identify(userId: userId, traits: traits)
+    }
+
+    /// A method to identify all registered providers with given user id and traits.
+    ///
+    /// - Parameters:
+    ///   - userId: The user id that should be used to identify all of the
+    ///     subsequent events.
+    ///   - traits: The dictionary of traits that should be used to identify all of
+    ///     the subsequent events.
+    ///
+    ///  - Note: Calling this method multiple times with same user id and/or traits
+    ///    have no effect. Internally, it ensures the user id and traits are
+    ///    different before invoking the identify call on the registered analytics
+    ///    providers.
+    public func identify(userId: String, traits: [String: Encodable]) {
+        _identify(userId: userId, traits: traits)
+    }
+
+    /// A method to identify all registered providers with given user id and traits.
+    ///
+    /// - Parameters:
+    ///   - userId: The user id that should be used to identify all of the
+    ///     subsequent events.
+    ///   - traits: The dictionary of traits that should be used to identify all of
+    ///     the subsequent events.
+    ///
+    ///  - Note: Calling this method multiple times with same user id and/or traits
+    ///    have no effect. Internally, it ensures the user id and traits are
+    ///    different before invoking the identify call on the registered analytics
+    ///    providers.
+    private func _identify(userId: String?, traits: [String: Encodable]?) {
+        let currentUserId = self.userId
+        let currentTraits = self.traits
+
+        guard userId?.nilIfBlank != currentUserId?.nilIfBlank || !traits.isEqual(currentTraits) else {
+            return
+        }
+
+        self.userId = userId ?? currentUserId
+        self.traits = traits ?? currentTraits
+        providers.forEach { $0.identify(userId: self.userId, traits: self.traits) }
     }
 }
