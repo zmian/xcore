@@ -11,7 +11,7 @@ public protocol AnalyticsEventProtocol {
     var name: String { get }
 
     /// The properties of the event that is sent to analytics providers.
-    var properties: [String: Any] { get }
+    var properties: [String: Encodable] { get }
 
     /// An option to send this event to additional analytics providers.
     ///
