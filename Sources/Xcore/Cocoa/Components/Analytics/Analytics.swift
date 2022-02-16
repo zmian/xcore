@@ -72,11 +72,11 @@ open class Analytics<Event: AnalyticsEventProtocol> {
     /// A method to identify all registered providers with given user id and traits.
     ///
     /// - Parameters:
-    ///   - event: The user id that should be used to identify all of the subsequent
-    ///     events.
+    ///   - userId: The user id that should be used to identify all of the
+    ///     subsequent events.
     ///   - traits: The dictionary of traits that should be used to identify all of
     ///     the subsequent events.
-    open func identify(userId: String, traits: [String: Any]) {
+    open func identify(userId: String?, traits: [String: Encodable]?) {
         providers.forEach { $0.identify(userId: userId, traits: traits) }
     }
 

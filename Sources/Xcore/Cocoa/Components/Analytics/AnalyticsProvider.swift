@@ -58,11 +58,11 @@ public protocol AnalyticsProvider {
     /// A method to identify the provider with given user id and traits.
     ///
     /// - Parameters:
-    ///   - event: The user id that should be used to identify all of the subsequent
-    ///     events.
+    ///   - userId: The user id that should be used to identify all of the
+    ///     subsequent events.
     ///   - traits: The dictionary of traits that should be used to identify all of
     ///     the subsequent events.
-    func identify(userId: String, traits: [String: Any])
+    func identify(userId: String?, traits: [String: Encodable]?)
 
     /// A method to disable all data collection for the provider.
     ///
@@ -84,7 +84,7 @@ extension AnalyticsProvider {
         name(of: self)
     }
 
-    public func identify(userId: String, traits: [String: Any]) {}
+    public func identify(userId: String?, traits: [String: Encodable]?) {}
     public func setEnabled(_ enable: Bool) {}
     public func reset() {}
 }
