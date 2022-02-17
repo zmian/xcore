@@ -8,7 +8,7 @@ import Foundation
 
 open class Analytics<Event: AnalyticsEventProtocol> {
     private var userId: String?
-    private var traits: [String: Encodable]?
+    private var traits: [String: Encodable] = [:]
 
     /// The registered list of providers.
     open private(set) var providers: [AnalyticsProvider]
@@ -100,7 +100,7 @@ open class Analytics<Event: AnalyticsEventProtocol> {
         }
 
         userId = nil
-        traits = nil
+        traits = [:]
         providers.forEach { $0.reset() }
     }
 }
@@ -162,7 +162,7 @@ extension Analytics {
     ///    have no effect. Internally, it ensures the user id and traits are
     ///    different before invoking the identify call on the registered analytics
     ///    providers.
-    private func _identify(userId: String?, traits: [String: Encodable]?) {
+    private func _identify(userId: String?, traits: [String: Encodable]) {
         let currentUserId = self.userId
         let currentTraits = self.traits
 
@@ -171,7 +171,7 @@ extension Analytics {
         }
 
         self.userId = userId ?? currentUserId
-        self.traits = traits ?? currentTraits
+        self.traits = traits.isEmpty ? currentTraits : traits
         providers.forEach { $0.identify(userId: self.userId, traits: self.traits) }
     }
 }

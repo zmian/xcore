@@ -15,7 +15,7 @@ final class AnalyticsTests: TestCase {
         // Identify
         analytics.identify(userId: "123")
         XCTAssertEqual(analytics.userId, "123")
-        XCTAssertEqual(analytics.traits, nil)
+        XCTAssertEqual(analytics.traits, [:])
         XCTAssertEqual(analytics.didCallIdentify, true)
         analytics.didCallIdentify = false
 
@@ -33,6 +33,12 @@ final class AnalyticsTests: TestCase {
 
         analytics.identify(userId: "1234", traits: ["hello": "world"])
         XCTAssertEqual(analytics.userId, "1234")
+        XCTAssertEqual(analytics.traits, ["hello": "world"])
+        XCTAssertEqual(analytics.didCallIdentify, true)
+        analytics.didCallIdentify = false
+
+        analytics.identify(userId: "12345")
+        XCTAssertEqual(analytics.userId, "12345")
         XCTAssertEqual(analytics.traits, ["hello": "world"])
         XCTAssertEqual(analytics.didCallIdentify, true)
         analytics.didCallIdentify = false
@@ -88,16 +94,16 @@ final class AnalyticsTests: TestCase {
 
         analytics.reset()
         XCTAssertEqual(analytics.userId, nil)
-        XCTAssertEqual(analytics.traits, nil)
+        XCTAssertEqual(analytics.traits, [:])
         XCTAssertEqual(analytics.didCallIdentify, false)
         analytics.identify(userId: "123")
         XCTAssertEqual(analytics.userId, "123")
-        XCTAssertEqual(analytics.traits, nil)
+        XCTAssertEqual(analytics.traits, [:])
         XCTAssertEqual(analytics.didCallIdentify, true)
         analytics.didCallIdentify = false
         analytics.identify(traits: [:])
         XCTAssertEqual(analytics.userId, "123")
-        XCTAssertEqual(analytics.traits, nil)
+        XCTAssertEqual(analytics.traits, [:])
         XCTAssertEqual(analytics.didCallIdentify, false)
     }
 
@@ -107,7 +113,7 @@ final class AnalyticsTests: TestCase {
 
         analytics.reset()
         XCTAssertEqual(analytics.userId, nil)
-        XCTAssertEqual(analytics.traits, nil)
+        XCTAssertEqual(analytics.traits, [:])
         XCTAssertEqual(analytics.didCallIdentify, false)
         analytics.identify(traits: ["hello": "greetings"])
         XCTAssertEqual(analytics.userId, nil)
@@ -131,7 +137,7 @@ final class AnalyticsTests: TestCase {
 private final class AnalyticsClient: Analytics<AppAnalyticsEvent> {
     var event: AppAnalyticsEvent?
     var userId: String?
-    var traits: [String: String]?
+    var traits: [String: String] = [:]
     var didCallReset = false
     var didCallSetEnabled = false
     var didCallIdentify = false
@@ -144,12 +150,12 @@ private final class AnalyticsClient: Analytics<AppAnalyticsEvent> {
         } identify: {
             self.didCallIdentify = true
             self.userId = $0
-            self.traits = $1?.compactMapValues { $0 as? String }
+            self.traits = $1.compactMapValues { $0 as? String }
         } setEnabled: {
             self.didCallSetEnabled = $0
         } reset: {
             self.userId = nil
-            self.traits = nil
+            self.traits = [:]
             self.didCallIdentify = false
             self.didCallReset = true
         }
@@ -162,13 +168,13 @@ private final class AnalyticsClient: Analytics<AppAnalyticsEvent> {
 
 private struct BlockAnalyticsProvider: AnalyticsProvider {
     private let _track: (_ event: AnalyticsEventProtocol) -> Void
-    private let _identify: (_ userId: String?, _ traits: [String: Encodable]?) -> Void
+    private let _identify: (_ userId: String?, _ traits: [String: Encodable]) -> Void
     private let _setEnabled: (_ enable: Bool) -> Void
     private let _reset: () -> Void
 
     init(
         track: @escaping (_ event: AnalyticsEventProtocol) -> Void,
-        identify: @escaping (_ userId: String?, _ traits: [String: Encodable]?) -> Void,
+        identify: @escaping (_ userId: String?, _ traits: [String: Encodable]) -> Void,
         setEnabled: @escaping (_ enable: Bool) -> Void,
         reset: @escaping () -> Void
     ) {
@@ -182,7 +188,7 @@ private struct BlockAnalyticsProvider: AnalyticsProvider {
         _track(event)
     }
 
-    func identify(userId: String?, traits: [String: Encodable]?) {
+    func identify(userId: String?, traits: [String: Encodable]) {
         _identify(userId, traits)
     }
 

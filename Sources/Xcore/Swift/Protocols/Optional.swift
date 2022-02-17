@@ -54,26 +54,23 @@ extension Optional {
             case (.none, .none):
                 return true
             case let (.none, .some(value)):
-                if value.isEmpty {
-                    // nil or empty are the same
-                    return true
-                }
-
-                return false
+                // nil or empty are the same
+                return value.isEmpty
             case let (.some(value), .none):
-                if value.isEmpty {
-                    // nil or empty are the same
-                    return true
-                }
-
-                return false
+                return value.isEmpty
             case let (.some(lhs), .some(rhs)):
-                if lhs.isEmpty, rhs.isEmpty {
-                    // Fast pass
-                    return true
-                }
-
-                return JSONHelpers.stringify(lhs).sha256() == JSONHelpers.stringify(rhs).sha256()
+                return lhs.isEqual(rhs)
         }
+    }
+}
+
+extension Dictionary where Key == String, Value == Encodable {
+    func isEqual(_ other: Self) -> Bool {
+        if isEmpty, other.isEmpty {
+            // Fast pass
+            return true
+        }
+
+        return JSONHelpers.stringify(self).sha256() == JSONHelpers.stringify(other).sha256()
     }
 }
