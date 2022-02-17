@@ -62,17 +62,17 @@ extension AppAnalyticsEvent: Hashable {
 // MARK: - Helpers
 
 extension AppAnalyticsEvent {
-    public func mergingProperties(_ otherProperties: [String: Encodable]) -> Self {
+    public func mergingProperties(_ other: [String: Encodable]) -> Self {
         .init(
             name: name,
-            properties: properties.merging(otherProperties),
+            properties: properties.merging(other),
             additionalProviders: additionalProviders,
             userInfo: userInfo
         )
     }
 
-    public func mergingProperties(_ otherProperties: [String: Encodable?]) -> Self {
-        mergingProperties(otherProperties.compacted())
+    public func mergingProperties(_ other: [String: Encodable?]) -> Self {
+        mergingProperties(other.compacted())
     }
 }
 
