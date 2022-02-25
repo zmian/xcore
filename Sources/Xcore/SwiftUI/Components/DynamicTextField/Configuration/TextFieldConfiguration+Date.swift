@@ -105,7 +105,7 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
             keyboard: .default,
             textContentType: textContentType,
             validation: .none,
-            formatter: Formatter()
+            formatter: .init()
         )
     }
 }

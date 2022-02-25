@@ -17,7 +17,7 @@ extension Int {
 
     public func pad(by amount: Int) -> String {
         Self.numberFormatter.minimumIntegerDigits = amount
-        return Self.numberFormatter.string(from: NSNumber(value: self))!
+        return Self.numberFormatter.string(from: self)!
     }
 }
 
@@ -248,7 +248,7 @@ extension Double {
 
     @available(iOS, introduced: 14, deprecated: 15, message: "Use .formattedString() directly.")
     public func formattedString() -> String {
-        Self.formatter.string(from: NSNumber(value: self)) ?? ""
+        Self.formatter.string(from: self) ?? ""
     }
 
 //    @available(iOS 15.0, *)
@@ -267,7 +267,7 @@ extension Decimal {
 
     @available(iOS, introduced: 14, deprecated: 15, message: "Use .formattedString() directly.")
     public func formattedString() -> String {
-        Self.formatter.string(from: NSDecimalNumber(decimal: self)) ?? ""
+        Self.formatter.string(from: self) ?? ""
     }
 
 //    @available(iOS 15.0, *)

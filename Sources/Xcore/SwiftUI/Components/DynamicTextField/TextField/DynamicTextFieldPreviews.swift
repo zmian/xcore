@@ -8,87 +8,149 @@ import SwiftUI
 
 #if DEBUG
 
-// MARK: - Default Style
+// MARK: - Preview Box
 
-private struct DefaultFieldPreview: View {
+private struct TextFieldPreviewBox<Content: View>: View {
     @State private var height: CGFloat = 0
-    @State private var text: String = ""
+    private let title: String
+    private let content: Content
+
+    init(_ title: String, @ViewBuilder content: () -> Content) {
+        self.title = title
+        self.content = content()
+    }
 
     var body: some View {
-        VStack(spacing: .s6) {
-            DynamicTextField(value: $text, configuration: .emailAddress) {
-                Label("Email Address", systemImage: .mail)
-            }
-            .readSize {
-                height = $0.height
-            }
-            .accentColor(.secondary)
-
+        Section {
+            content
+                .accentColor(.secondary)
+                .readSize {
+                    height = $0.height
+                }
+        } header: {
+            Text(title)
+        } footer: {
             Text("Text Field Height \(height)")
-                .font(.footnote)
-                .foregroundColor(.secondary)
         }
-        .padding()
     }
 }
 
-// MARK: - Line Style
+// MARK: - Showcase
 
-private struct LineFieldPreview: View {
-    @State private var height: CGFloat = 0
-    @State private var text: String = "hello@example.com"
+private struct ShowcaseFieldPreview: View {
+    @State private var style = Style.default
+    @State private var disableFloatingPlaceholder = false
+    @State private var text = ""
 
     var body: some View {
-        VStack(spacing: .s6) {
+        TextFieldPreviewBox("Showcase") {
             DynamicTextField(value: $text, configuration: .emailAddress) {
                 Label("Email Address", systemImage: .mail)
             }
-            .dynamicTextFieldStyle(.line)
-            .readSize {
-                height = $0.height
+            .dynamicTextFieldStyle(style.textFieldStyle)
+            .textFieldAttributes {
+                $0.disableFloatingPlaceholder = disableFloatingPlaceholder
             }
-            .accentColor(.secondary)
 
-            Text("Text Field Height \(height)")
-                .font(.footnote)
-                .foregroundColor(.secondary)
+            // Placeholder Style Picker
+            Button("\(disableFloatingPlaceholder ? "Enable" : "Disable") Floating Placeholder") {
+                disableFloatingPlaceholder.toggle()
+            }
+            .accentColor(Color(UIColor.link))
+
+            // Style Picker
+            Picker("", selection: $style) {
+                ForEach(Style.allCases) {
+                    Text($0.rawValue)
+                        .tag($0)
+                }
+            }
+            .pickerStyle(.segmented)
         }
-        .padding()
+    }
+
+    private enum Style: String, Hashable, CaseIterable, Identifiable {
+        case `default` = "Default"
+        case line = "Line"
+        case prominent1 = "P1"
+        case prominent2 = "P2"
+
+        var textFieldStyle: AnyDynamicTextFieldStyle {
+            switch self {
+                case .default:
+                    return AnyDynamicTextFieldStyle(.default)
+                case .line:
+                    return AnyDynamicTextFieldStyle(.line)
+                case .prominent1:
+                    return AnyDynamicTextFieldStyle(.prominent(.fill))
+                case .prominent2:
+                    return AnyDynamicTextFieldStyle(.prominent(.outline, shape: Capsule()))
+            }
+        }
     }
 }
 
-// MARK: - Prominent Style
+// MARK: - Number Style
 
-private struct ProminentFieldPreview: View {
-    @State private var height: CGFloat = 0
-    @State private var text: String = ""
+private struct NumberFieldPreview: View {
+    @State private var money = 0.0
+    @State private var decimal = 0.0
+    @State private var integer = 0
 
     var body: some View {
-        VStack {
-            VStack(spacing: .s6) {
-                DynamicTextField("SSN", value: $text, configuration: .ssn)
-                    .dynamicTextFieldStyle(.prominent(.fill))
-                    .readSize {
-                        height = $0.height
-                    }
+        TextFieldPreviewBox("Numbers") {
+            DynamicTextField("Money", value: $money, configuration: .currency)
+                .onChange(of: money) {
+                    print("Money: \($0)")
+                }
 
-                Text("Text Field Height \(height)")
-                    .font(.footnote)
-                    .foregroundColor(.secondary)
-            }
-            VStack(spacing: .s6) {
-                DynamicTextField("SSN", value: $text, configuration: .ssn)
-                    .dynamicTextFieldStyle(.prominent(.outline, shape: Capsule()))
-                    .readSize {
-                        height = $0.height
-                    }
+            DynamicTextField("Decimal", value: $decimal, configuration: .number)
+                .onChange(of: decimal) {
+                    print("Decimal: \($0)")
+                }
 
-                Text("Text Field Height \(height)")
-                    .font(.footnote)
-                    .foregroundColor(.secondary)
+            DynamicTextField("Integer", value: $integer, configuration: .number)
+                .onChange(of: integer) {
+                    print("Integer: \($0)")
+                }
+
+            Button("Change to 500") {
+                money = 500.0
+                decimal = 500
+                integer = 500
             }
+            .accentColor(Color(UIColor.link))
         }
-        .padding()
+    }
+}
+
+// MARK: - Data Format Types
+
+private struct DataFormatTypesFieldPreview: View {
+    @State private var ssn = ""
+    @State private var ssnLastFour = ""
+    @State private var phoneNumber: Int?
+
+    var body: some View {
+        TextFieldPreviewBox("Data Types") {
+            DynamicTextField("Social Security Number", value: $ssn, configuration: .ssn)
+                .onChange(of: ssn) {
+                    print("SSN: \($0)")
+                }
+
+            DynamicTextField("Social Security Number Last 4", value: $ssnLastFour, configuration: .ssnLastFour)
+                .onChange(of: ssnLastFour) {
+                    print("SSN (Last Four): \($0)")
+                }
+
+            DynamicTextField("Phone Number", value: $phoneNumber, configuration: .phoneNumber(length: 10))
+                .onChange(of: phoneNumber) {
+                    print("Phone Number: \(String(describing: $0))")
+                }
+        }
+        .textFieldAttributes {
+            $0.disableFloatingPlaceholder = false
+        }
     }
 }
 
@@ -104,23 +166,10 @@ struct DynamicTextField_Previews: PreviewProvider {
 extension Samples {
     @available(iOS 15.0, *)
     public static var dynamicTextFieldPreviews: some View {
-        LazyView {
-            VStack {
-                Section("Default Style") {
-                    DefaultFieldPreview()
-                }
-
-                Section("Line Style") {
-                    LineFieldPreview()
-                }
-
-                Section("Prominent Style") {
-                    ProminentFieldPreview()
-                        .textFieldAttributes {
-                            $0.disableFloatingPlaceholder = true
-                        }
-                }
-            }
+        List {
+            NumberFieldPreview()
+            ShowcaseFieldPreview()
+            DataFormatTypesFieldPreview()
         }
     }
 }

@@ -10,15 +10,82 @@ import Foundation
 public protocol TextFieldFormatter {
     associatedtype Value: Hashable
 
-    /// Returns a string containing the formatted value of the given value.
+    /// Transform the value to a string.
+    ///
+    /// **Sample Outout**
+    ///
+    /// ```swift
+    /// // String
+    /// "hello" → "hello"
+    ///
+    /// // Number
+    /// "0"      → String("0")
+    /// "55"     → String("55")
+    /// "552333" → String("552333")
+    ///
+    /// // Phone Number
+    /// "8006927753" → String("8006927753")
+    /// ```
     ///
     /// - Parameter value: A value that is parsed to create the returned string.
-    func string(from value: Value) -> String
+    func transformToString(_ value: Value) -> String
 
-    /// Returns a value created by parsing the given string.
+    /// Transform the string to the value.
+    ///
+    /// **Sample Outout**
+    ///
+    /// ```swift
+    /// // String
+    /// "hello" → "hello"
+    ///
+    /// // Number
+    /// String("0") → Int("0")
+    /// String("55") → Double("55")
+    /// String("552333") → Double("552333")
+    ///
+    /// // Phone Number
+    /// String("8006927753") → Int("8006927753")
+    /// ```
     ///
     /// - Parameter string: A string that is parsed to generate the returned value.
-    func value(from string: String) -> Value
+    func transformToValue(_ string: String) -> Value
+
+    /// Returns a formatted string that is suitable to display to the user.
+    ///
+    /// **Sample Outout**
+    ///
+    /// ```swift
+    /// // Number
+    /// "0"      → "$0.00"
+    /// "55"     → "$55"
+    /// "552333" → "$5,523.33"
+    ///
+    /// // Phone Number
+    /// "8006927753" → "(800) 692-7753"
+    /// ```
+    ///
+    /// - Parameter string: An input that should be formatted in a way that is
+    ///   suitable to display to the user.
+    func displayValue(from string: String) -> String
+
+    /// Returns an unformatted string removing any display only formatting that
+    /// maybe have been applied in the `displayValue(from:)` method.
+    ///
+    /// **Sample Outout**
+    ///
+    /// ```swift
+    /// // Number
+    /// "$0.00"     → "0"
+    /// "$55"       → "55"
+    /// "$5,523.33" → "552333"
+    ///
+    /// // Phone Number
+    /// "(800) 692-7753" → "8006927753"
+    /// ```
+    ///
+    /// - Parameter string: An input that should be undo any of the formatting that
+    ///   is applied in the `displayValue(from:)` method.
+    func sanitizeDisplayValue(from string: String) -> String
 
     /// Specify whether the input can be changed to the given string.
     ///
@@ -31,17 +98,27 @@ public protocol TextFieldFormatter {
 // MARK: - Type Erasure
 
 public struct AnyTextFieldFormatter: TextFieldFormatter {
-    private let _string: (AnyHashable) -> String
-    private let _value: (String) -> AnyHashable
+    private let _transformToString: (AnyHashable) -> String
+    private let _transformToValue: (String) -> AnyHashable
+    private let _displayValue: (String) -> String
+    private let _sanitizeDisplayValue: (String) -> String
     private let _shouldChange: (String) -> Bool
 
     init<F: TextFieldFormatter>(_ formatter: F) {
-        _string = {
-            formatter.string(from: $0.base as! F.Value)
+        _transformToString = {
+            formatter.transformToString($0.base as! F.Value)
         }
 
-        _value = {
-            AnyHashable(formatter.value(from: $0))
+        _transformToValue = {
+            AnyHashable(formatter.transformToValue($0))
+        }
+
+        _displayValue = {
+            formatter.displayValue(from: $0)
+        }
+
+        _sanitizeDisplayValue = {
+            formatter.sanitizeDisplayValue(from: $0)
         }
 
         _shouldChange = {
@@ -49,12 +126,20 @@ public struct AnyTextFieldFormatter: TextFieldFormatter {
         }
     }
 
-    public func string(from value: AnyHashable) -> String {
-        _string(value)
+    public func transformToString(_ value: AnyHashable) -> String {
+        _transformToString(value)
     }
 
-    public func value(from string: String) -> AnyHashable {
-        _value(string)
+    public func transformToValue(_ string: String) -> AnyHashable {
+        _transformToValue(string)
+    }
+
+    public func displayValue(from string: String) -> String {
+        _displayValue(string)
+    }
+
+    public func sanitizeDisplayValue(from string: String) -> String {
+        _sanitizeDisplayValue(string)
     }
 
     public func shouldChange(to string: String) -> Bool {
