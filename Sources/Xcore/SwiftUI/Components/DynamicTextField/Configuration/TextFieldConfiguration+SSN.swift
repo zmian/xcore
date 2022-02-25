@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatter {
+extension TextFieldConfiguration where Formatter == MaskingTextFieldFormatter {
     /// Social Security Number (SSN)
     public static var ssn: Self {
         .init(
@@ -18,7 +18,7 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
             textContentType: nil,
             secureTextEntry: .yesWithToggleButton,
             validation: .ssn,
-            mask: .ssn
+            formatter: .init("###-##-####")
         )
     }
 
@@ -32,7 +32,8 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
             keyboard: .numberPad,
             textContentType: nil,
             secureTextEntry: .yesWithToggleButton,
-            validation: .number(count: 4)
+            validation: .number(count: 4),
+            formatter: .init("####")
         )
     }
 }

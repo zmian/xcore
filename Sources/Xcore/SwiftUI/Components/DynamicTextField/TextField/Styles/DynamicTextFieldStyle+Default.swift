@@ -12,6 +12,12 @@ struct DefaultDynamicTextFieldStyle: DynamicTextFieldStyle {
     }
 }
 
+// MARK: - Dot Syntax Support
+
+extension DynamicTextFieldStyle where Self == DefaultDynamicTextFieldStyle {
+    static var `default`: Self { .init() }
+}
+
 // MARK: - Internal
 
 struct DefaultDynamicTextFieldView: View {
@@ -31,7 +37,6 @@ struct DefaultDynamicTextFieldView: View {
                 withoutFloating
             } else {
                 withFloating
-                    .frame(height: textFieldHeight + labelHeight)
             }
         }
         .apply {
@@ -68,6 +73,7 @@ struct DefaultDynamicTextFieldView: View {
                 }
                 .offset(y: textFieldOffsetY)
         }
+        .frame(height: floor(textFieldHeight + labelHeight))
     }
 
     private var placeholderView: some View {
