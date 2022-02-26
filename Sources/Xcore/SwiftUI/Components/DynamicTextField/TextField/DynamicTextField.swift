@@ -5,10 +5,13 @@
 //
 
 import SwiftUI
+import Combine
 
 public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
     @Environment(\.dynamicTextFieldStyle) private var style
     @Binding private var value: Formatter.Value
+    @State private var text: String
+    @State private var previousText: String
     @State private var isValid = true
     @State private var isFocused = false
     @State private var isFloatingPlaceholderEnabled = true
@@ -18,6 +21,9 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
     private let onEditingChanged: (Bool) -> Void
     private let onCommit: () -> Void
     private var onValidationChanged: (Bool) -> Void = { _ in }
+    private var formatter: Formatter {
+        configuration.formatter
+    }
 
     init<Label: View>(
         value: Binding<Formatter.Value>,
@@ -32,18 +38,12 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
         self.configuration = configuration
         self.onEditingChanged = onEditingChanged
         self.onCommit = onCommit
-    }
 
-    private var valueProxy: Binding<String> {
-        .init(
-            get: { configuration.formatter.string(from: value) },
-            set: { newString in
-                if configuration.formatter.shouldChange(to: newString) {
-                    value = configuration.formatter.value(from: newString)
-                    validate(newString)
-                }
-            }
-        )
+        // Initial value
+        let formatter = configuration.formatter
+        let initialValue = formatter.displayValue(from: formatter.transformToString(value.wrappedValue)) ?? ""
+        self._text = .init(wrappedValue: initialValue)
+        self._previousText = .init(wrappedValue: initialValue)
     }
 
     public var body: some View {
@@ -51,7 +51,7 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
             textField: .init(textFieldView),
             label: .init(label),
             configuration: .init(configuration),
-            text: valueProxy,
+            text: $text,
             isValid: isValid,
             isFocused: isFocused
         ))
@@ -70,7 +70,7 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
                 case false:
                     TextField(
                         "",
-                        text: valueProxy,
+                        text: $text,
                         onEditingChanged: { isFocused in
                             self.isFocused = isFocused
                             onEditingChanged(isFocused)
@@ -78,7 +78,7 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
                         onCommit: onCommit
                     )
                 case true:
-                    SecureField("", text: valueProxy, onCommit: onCommit)
+                    SecureField("", text: $text, onCommit: onCommit)
             }
         }
         .autocapitalization(configuration.autocapitalization)
@@ -86,6 +86,40 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
         .keyboardType(configuration.keyboard)
         .textContentType(configuration.textContentType)
         .disabled(!configuration.isEditable)
+        // If text field changes the then format the text and also update the value.
+        .onChange(of: text) { newText in
+            // Sanitize the text
+            let sanitizedText = formatter.sanitizeDisplayValue(from: newText)
+            // Check if the input is valid
+            if let displayText = formatter.displayValue(from: sanitizedText) {
+                // If the input is valid, format it and display it
+                text = displayText
+                previousText = text
+                validate(sanitizedText)
+                // In case the input produces a new value send it over
+                let newValue = formatter.transformToValue(sanitizedText)
+                if newValue != value {
+                    value = newValue
+                }
+            } else {
+                text = previousText
+            }
+        }
+        // If value changes then update the text field.
+        .onChange(of: value) { newValue in
+            let sanitizedText = formatter.sanitizeDisplayValue(from: text)
+            let currentValue = formatter.transformToValue(sanitizedText)
+            guard currentValue != newValue else {
+                return
+            }
+            let defaultText = formatter.transformToString(newValue)
+            if let displayText = formatter.displayValue(from: defaultText), displayText != text {
+                DispatchQueue.main.async {
+                    text = displayText
+                    previousText = text
+                }
+            }
+        }
     }
 
     @ViewBuilder
@@ -95,6 +129,7 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
                 isSecure.toggle()
             } label: {
                 Image(system: isSecure ? .eye : .eyeSlash)
+                    .imageScale(.small)
             }
             .accessibilityLabel(Text(isSecure ? "Show" : "Hide"))
         }

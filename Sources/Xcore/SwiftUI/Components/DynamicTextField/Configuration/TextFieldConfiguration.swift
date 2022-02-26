@@ -135,8 +135,7 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
         textContentType: UITextContentType? = nil,
         secureTextEntry: SecureTextEntry = .no,
         isEditable: Bool = true,
-        validation: ValidationRule<String> = .none,
-        mask: Mask? = nil
+        validation: ValidationRule<String> = .none
     ) {
         self.init(
             id: id,
@@ -148,7 +147,7 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
             secureTextEntry: secureTextEntry,
             isEditable: isEditable,
             validation: validation,
-            formatter: Formatter(mask)
+            formatter: .init()
         )
     }
 }
