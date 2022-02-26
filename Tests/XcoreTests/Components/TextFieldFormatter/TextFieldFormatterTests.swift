@@ -10,9 +10,13 @@ import XCTest
 final class TextFieldFormatterTests: TestCase {
     func testPhoneNumberFormatter() {
         let formatter = PhoneNumberTextFieldFormatter(countryCode: "1", length: 10)
+        let validation = ValidationRule<String>.phoneNumber(length: 10)
+
         // Country code is always omited
-        XCTAssertEqual(formatter.transformToValue("18006927753"), 8006927753)
-        XCTAssertEqual(formatter.transformToString(18006927753), "8006927753")
+        XCTAssertEqual(formatter.transformToValue("18006927753"), "8006927753")
+        XCTAssertEqual(formatter.transformToString("18006927753"), "8006927753")
+        XCTAssertTrue(formatter.transformToString("18006927753").validate(rule: validation))
+        XCTAssertEqual(formatter.transformToString("18006927753").validate(rule: validation), "8006927753".validate(rule: validation))
 
         // Display
         XCTAssertEqual(formatter.displayValue(from: "18006927753"), "🇺🇸 +1 (800) 692-7753")

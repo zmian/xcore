@@ -129,7 +129,7 @@ private struct NumberFieldPreview: View {
 private struct DataFormatTypesFieldPreview: View {
     @State private var ssn = ""
     @State private var ssnLastFour = ""
-    @State private var phoneNumber: Int?
+    @State private var phoneNumber = ""
 
     var body: some View {
         TextFieldPreviewBox("Data Types") {
@@ -145,7 +145,7 @@ private struct DataFormatTypesFieldPreview: View {
 
             DynamicTextField("Phone Number", value: $phoneNumber, configuration: .phoneNumber(length: 10))
                 .onChange(of: phoneNumber) {
-                    print("Phone Number: \(String(describing: $0))")
+                    print("Phone Number: \($0)")
                 }
         }
         .textFieldAttributes {
