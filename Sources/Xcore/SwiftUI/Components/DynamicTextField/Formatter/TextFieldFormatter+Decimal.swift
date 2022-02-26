@@ -10,28 +10,22 @@ import Foundation
 /// representations.
 public struct DecimalTextFieldFormatter: TextFieldFormatter {
     private let isCurrency: Bool
-    private let isEmptyZero: Bool
     private let numberFormatter = NumberFormatter().apply {
         $0.allowsFloats = true
         $0.numberStyle = .decimal
         $0.maximumFractionDigits = .maxFractionDigits
     }
 
-    public init(isCurrency: Bool, isEmptyZero: Bool) {
+    public init(isCurrency: Bool) {
         self.isCurrency = isCurrency
-        self.isEmptyZero = isEmptyZero
     }
 
-    public func string(from value: Double) -> String {
-        if isEmptyZero, value == 0 {
-            return ""
-        }
-
-        return numberFormatter.string(from: value) ?? ""
+    public func string(from value: Double?) -> String {
+        numberFormatter.string(from: value) ?? ""
     }
 
-    public func value(from string: String) -> Double {
-        numberFormatter.number(from: string)?.doubleValue ?? 0.0
+    public func value(from string: String) -> Double? {
+        numberFormatter.number(from: string)?.doubleValue
     }
 
     public func format(_ string: String) -> String? {

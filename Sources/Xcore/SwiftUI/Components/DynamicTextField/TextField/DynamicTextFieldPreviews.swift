@@ -93,25 +93,25 @@ private struct ShowcaseFieldPreview: View {
 // MARK: - Number Style
 
 private struct NumberFieldPreview: View {
-    @State private var money = 0.0
-    @State private var decimal = 0.0
-    @State private var integer = 0
+    @State private var money: Double? = 0.0
+    @State private var decimal: Double?
+    @State private var integer: Int? = 10
 
     var body: some View {
         TextFieldPreviewBox("Numbers") {
             DynamicTextField("Money", value: $money, configuration: .currency)
                 .onChange(of: money) {
-                    print("Money: \($0)")
+                    print("Money: \(String(describing: $0))")
                 }
 
             DynamicTextField("Decimal", value: $decimal, configuration: .number)
                 .onChange(of: decimal) {
-                    print("Decimal: \($0)")
+                    print("Decimal: \(String(describing: $0))")
                 }
 
             DynamicTextField("Integer", value: $integer, configuration: .number)
                 .onChange(of: integer) {
-                    print("Integer: \($0)")
+                    print("Integer: \(String(describing: $0))")
                 }
 
             Button("Change to 500") {

@@ -11,16 +11,16 @@ import SwiftUI
 extension TextFieldConfiguration where Formatter == DecimalTextFieldFormatter {
     /// Decimal type text configuration.
     public static var number: Self {
-        number(isCurrency: false, isEmptyZero: true)
+        number(isCurrency: false)
     }
 
     /// Currency type text configuration.
     public static var currency: Self {
-        number(isCurrency: true, isEmptyZero: false)
+        number(isCurrency: true)
     }
 
     /// Decimal type text configuration.
-    private static func number(isCurrency: Bool, isEmptyZero: Bool) -> Self {
+    private static func number(isCurrency: Bool) -> Self {
         .init(
             id: #function,
             autocapitalization: .none,
@@ -29,7 +29,7 @@ extension TextFieldConfiguration where Formatter == DecimalTextFieldFormatter {
             keyboard: .decimalPad,
             textContentType: nil,
             validation: .subset(of: .numbersWithDecimal),
-            formatter: .init(isCurrency: isCurrency, isEmptyZero: isEmptyZero)
+            formatter: .init(isCurrency: isCurrency)
         )
     }
 }

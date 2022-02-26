@@ -12,8 +12,12 @@ extension NumberFormatter {
     /// - Parameter number: An integer that is parsed to create the returned string.
     /// - Returns: A string containing the formatted value of integer using the
     ///   receiver’s current settings.
-    public func string(from number: Int) -> String? {
-        string(from: NSNumber(value: number))
+    public func string(from number: Int?) -> String? {
+        guard let number = number else {
+            return nil
+        }
+
+        return string(from: NSNumber(value: number))
     }
 
     /// Returns a string containing the formatted value of the provided
@@ -23,8 +27,12 @@ extension NumberFormatter {
     ///   returned string.
     /// - Returns: A string containing the formatted value of floating-point value
     ///   using the receiver’s current settings.
-    public func string(from number: Float) -> String? {
-        string(from: NSNumber(value: number))
+    public func string(from number: Float?) -> String? {
+        guard let number = number else {
+            return nil
+        }
+
+        return string(from: NSNumber(value: number))
     }
 
     /// Returns a string containing the formatted value of the provided
@@ -34,8 +42,12 @@ extension NumberFormatter {
     ///   returned string.
     /// - Returns: A string containing the formatted value of floating-point value
     ///   using the receiver’s current settings.
-    public func string(from number: Double) -> String? {
-        string(from: NSNumber(value: number))
+    public func string(from number: Double?) -> String? {
+        guard let number = number else {
+            return nil
+        }
+
+        return string(from: NSNumber(value: number))
     }
 
     /// Returns a string containing the formatted value of the provided decimal
@@ -45,7 +57,11 @@ extension NumberFormatter {
     ///   string.
     /// - Returns: A string containing the formatted value of decimal number using
     ///   the receiver’s current settings.
-    public func string(from number: Decimal) -> String? {
-        string(from: NSDecimalNumber(decimal: number))
+    public func string(from number: Decimal?) -> String? {
+        guard let number = number else {
+            return nil
+        }
+
+        return string(from: NSDecimalNumber(decimal: number))
     }
 }
