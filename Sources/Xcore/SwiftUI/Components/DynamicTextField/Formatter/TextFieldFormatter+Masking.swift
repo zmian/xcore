@@ -25,7 +25,7 @@ public struct MaskingTextFieldFormatter: TextFieldFormatter {
         string
     }
 
-    public func displayValue(from string: String) -> String {
+    public func displayValue(from string: String) -> String? {
         let sanitizedValue = string.components(separatedBy: .decimalDigits.inverted).joined()
         let mask = maskFormat
         var index = sanitizedValue.startIndex
@@ -45,10 +45,5 @@ public struct MaskingTextFieldFormatter: TextFieldFormatter {
 
     public func sanitizeDisplayValue(from string: String) -> String {
         string.replacing(formattingCharacters, with: "")
-    }
-
-    public func shouldChange(to string: String) -> Bool {
-        // `displayValue` method enforces the correct length.
-        true
     }
 }

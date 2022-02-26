@@ -41,7 +41,7 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
 
         // Initial value
         let formatter = configuration.formatter
-        let initialValue = formatter.displayValue(from: formatter.transformToString(value.wrappedValue))
+        let initialValue = formatter.displayValue(from: formatter.transformToString(value.wrappedValue)) ?? ""
         self._text = .init(wrappedValue: initialValue)
         self._previousText = .init(wrappedValue: initialValue)
     }
@@ -91,9 +91,9 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
             // Sanitize the text
             let sanitizedText = formatter.sanitizeDisplayValue(from: newText)
             // Check if the input is valid
-            if formatter.shouldChange(to: sanitizedText) {
+            if let displayText = formatter.displayValue(from: sanitizedText) {
                 // If the input is valid, format it and display it
-                text = formatter.displayValue(from: sanitizedText)
+                text = displayText
                 previousText = text
                 validate(sanitizedText)
                 // In case the input produces a new value send it over
@@ -105,7 +105,7 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
                 text = previousText
             }
         }
-        // If value changes the then update the text field.
+        // If value changes then update the text field.
         .onChange(of: value) { newValue in
             let sanitizedText = formatter.sanitizeDisplayValue(from: text)
             let currentValue = formatter.transformToValue(sanitizedText)
@@ -113,8 +113,12 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
                 return
             }
             let defaultText = formatter.transformToString(newValue)
-            text = formatter.displayValue(from: defaultText)
-            previousText = text
+            if let displayText = formatter.displayValue(from: defaultText), displayText != text {
+                DispatchQueue.main.async {
+                    text = displayText
+                    previousText = text
+                }
+            }
         }
     }
 

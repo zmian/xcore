@@ -34,14 +34,14 @@ public struct DecimalTextFieldFormatter: TextFieldFormatter {
         numberFormatter.number(from: string)?.doubleValue ?? 0.0
     }
 
-    public func displayValue(from string: String) -> String {
+    public func displayValue(from string: String) -> String? {
         let components = string.components(separatedBy: ".")
 
         guard
             let wholeNumberPartString = components.at(0),
             let wholeNumberPart = Int(wholeNumberPartString)
         else {
-            return ""
+            return string.isEmpty ? "" : nil
         }
 
         let symbol = isCurrency ? currency.currencySymbol : nil
@@ -68,20 +68,6 @@ public struct DecimalTextFieldFormatter: TextFieldFormatter {
         string
             .replacingOccurrences(of: ",", with: "")
             .replacingOccurrences(of: currency.currencySymbol, with: "")
-    }
-
-    public func shouldChange(to string: String) -> Bool {
-        let components = string.components(separatedBy: ".")
-
-        if components.count <= 2 {
-            var value = components.allSatisfy { $0.isEmpty || Int($0) != nil }
-            if isCurrency, let decimal = components.at(1) {
-                value = value && decimal.count <= 2
-            }
-            return value
-        } else {
-            return false
-        }
     }
 
     private var currency: CurrencySymbolsProvider {

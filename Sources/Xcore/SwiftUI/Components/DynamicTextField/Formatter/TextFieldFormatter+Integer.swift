@@ -22,9 +22,9 @@ public struct IntegerTextFieldFormatter: TextFieldFormatter {
         numberFormatter.number(from: string)?.intValue ?? 0
     }
 
-    public func displayValue(from string: String) -> String {
+    public func displayValue(from string: String) -> String? {
         guard let value = Int(string) else {
-            return ""
+            return string.isEmpty ? "" : nil
         }
 
         return numberFormatter.string(from: value) ?? ""
@@ -32,9 +32,5 @@ public struct IntegerTextFieldFormatter: TextFieldFormatter {
 
     public func sanitizeDisplayValue(from string: String) -> String {
         string.replacingOccurrences(of: ",", with: "")
-    }
-
-    public func shouldChange(to string: String) -> Bool {
-        Int(string) != nil
     }
 }

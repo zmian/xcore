@@ -18,15 +18,11 @@ public struct PassthroughTextFieldFormatter: TextFieldFormatter {
         string
     }
 
-    public func displayValue(from string: String) -> String {
+    public func displayValue(from string: String) -> String? {
         string
     }
 
     public func sanitizeDisplayValue(from string: String) -> String {
         string
-    }
-
-    public func shouldChange(to string: String) -> Bool {
-        true
     }
 }
