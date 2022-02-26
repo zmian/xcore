@@ -40,7 +40,7 @@ public struct PhoneNumberTextFieldFormatter: TextFieldFormatter {
         return numberFormatter.number(from: string)?.intValue
     }
 
-    public func displayValue(from string: String) -> String {
+    public func displayValue(from string: String) -> String? {
         var string = string
 
         if let length = length {
@@ -58,9 +58,5 @@ public struct PhoneNumberTextFieldFormatter: TextFieldFormatter {
 
     public func sanitizeDisplayValue(from string: String) -> String {
         mask.sanitizeDisplayValue(from: string)
-    }
-
-    public func shouldChange(to string: String) -> Bool {
-        string.isEmpty ? true : Int(string) != nil
     }
 }

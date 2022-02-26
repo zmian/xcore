@@ -66,7 +66,7 @@ public protocol TextFieldFormatter {
     ///
     /// - Parameter string: An input that should be formatted in a way that is
     ///   suitable to display to the user.
-    func displayValue(from string: String) -> String
+    func displayValue(from string: String) -> String?
 
     /// Returns an unformatted string removing any display only formatting that
     /// maybe have been applied in the `displayValue(from:)` method.
@@ -86,13 +86,6 @@ public protocol TextFieldFormatter {
     /// - Parameter string: An input that should be undo any of the formatting that
     ///   is applied in the `displayValue(from:)` method.
     func sanitizeDisplayValue(from string: String) -> String
-
-    /// Specify whether the input can be changed to the given string.
-    ///
-    /// - Parameter string: A changed string that will be applied.
-    /// - Returns: `true` if the given string should be changed; otherwise, `false`
-    ///   to keep the old string.
-    func shouldChange(to string: String) -> Bool
 }
 
 // MARK: - Type Erasure
@@ -100,9 +93,8 @@ public protocol TextFieldFormatter {
 public struct AnyTextFieldFormatter: TextFieldFormatter {
     private let _transformToString: (AnyHashable) -> String
     private let _transformToValue: (String) -> AnyHashable
-    private let _displayValue: (String) -> String
+    private let _displayValue: (String) -> String?
     private let _sanitizeDisplayValue: (String) -> String
-    private let _shouldChange: (String) -> Bool
 
     init<F: TextFieldFormatter>(_ formatter: F) {
         _transformToString = {
@@ -120,10 +112,6 @@ public struct AnyTextFieldFormatter: TextFieldFormatter {
         _sanitizeDisplayValue = {
             formatter.sanitizeDisplayValue(from: $0)
         }
-
-        _shouldChange = {
-            formatter.shouldChange(to: $0)
-        }
     }
 
     public func transformToString(_ value: AnyHashable) -> String {
@@ -134,15 +122,11 @@ public struct AnyTextFieldFormatter: TextFieldFormatter {
         _transformToValue(string)
     }
 
-    public func displayValue(from string: String) -> String {
+    public func displayValue(from string: String) -> String? {
         _displayValue(string)
     }
 
     public func sanitizeDisplayValue(from string: String) -> String {
         _sanitizeDisplayValue(string)
-    }
-
-    public func shouldChange(to string: String) -> Bool {
-        _shouldChange(string)
     }
 }
