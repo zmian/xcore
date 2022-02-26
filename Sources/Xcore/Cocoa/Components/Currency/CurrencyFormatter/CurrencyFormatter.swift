@@ -109,7 +109,7 @@ extension CurrencyFormatter {
         formatter.maximumFractionDigits = limits.upperBound
 
         let amountString = with(sign: sign) {
-            formatter.string(from: NSDecimalNumber(decimal: amount))!
+            formatter.string(from: amount)!
         }
 
         let pieces = amountString.components(separatedBy: decimalSeparator)
@@ -250,9 +250,7 @@ extension CurrencyFormatter {
 
             guard
                 let number = Decimal(string: string),
-                let formattedString = formatter.string(from: NSDecimalNumber(
-                    decimal: needsDecimalConversion ? number / 100 : number
-                ))
+                let formattedString = formatter.string(from: needsDecimalConversion ? number / 100 : number)
             else {
                 return nil
             }

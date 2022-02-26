@@ -17,6 +17,7 @@ extension Currency {
 }
 
 public protocol CurrencySymbolsProvider {
+    /// `$`
     var currencySymbol: String { get }
 
     /// The character the receiver uses as a grouping separator.
