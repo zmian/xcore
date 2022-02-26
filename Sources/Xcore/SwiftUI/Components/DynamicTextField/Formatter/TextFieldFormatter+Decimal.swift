@@ -54,14 +54,12 @@ public struct DecimalTextFieldFormatter: TextFieldFormatter {
             fractionPart = String(fraction.prefix(2))
         }
 
-        let value = [
+        return [
             symbol,
             wholeNumber,
             decimalPoint,
             fractionPart
         ].joined()
-
-        return value
     }
 
     public func unformat(_ string: String) -> String {

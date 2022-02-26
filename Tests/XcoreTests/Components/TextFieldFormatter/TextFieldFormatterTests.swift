@@ -151,7 +151,7 @@ final class TextFieldFormatterTests: TestCase {
         XCTAssertEqual(formatter.format("1000000.0123"), "$1,000,000.01")
 
         // Full loop
-        //              string(from:)  → unformat(_:)  → format(_:)     → unformat(_:) → value(from:)
+        //              string(from:)  → unformat(_:) → format(_:)      → unformat(_:) → value(from:)
         // 1000000.01 → "1,000,000.01" → "1000000.01" → "$1,000,000.01" → "1000000.01" → 1000000.01
         let initialValue = 1000000.01
         let stringValue = formatter.string(from: initialValue)
