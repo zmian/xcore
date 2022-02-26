@@ -14,12 +14,12 @@ public struct IntegerTextFieldFormatter: TextFieldFormatter {
         $0.numberStyle = .decimal
     }
 
-    public func string(from value: Int) -> String {
+    public func string(from value: Int?) -> String {
         numberFormatter.string(from: value) ?? ""
     }
 
-    public func value(from string: String) -> Int {
-        numberFormatter.number(from: string)?.intValue ?? 0
+    public func value(from string: String) -> Int? {
+        numberFormatter.number(from: string)?.intValue
     }
 
     public func format(_ string: String) -> String? {

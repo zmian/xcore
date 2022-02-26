@@ -114,7 +114,7 @@ final class TextFieldFormatterTests: TestCase {
     }
 
     func testDoubleNumberFormatter() {
-        let formatter = DecimalTextFieldFormatter(isCurrency: false, isEmptyZero: true)
+        let formatter = DecimalTextFieldFormatter(isCurrency: false)
         XCTAssertEqual(formatter.value(from: "100"), 100)
         XCTAssertEqual(formatter.value(from: "100.99"), 100.99)
         XCTAssertEqual(formatter.value(from: "100.991"), 100.991)
@@ -133,7 +133,7 @@ final class TextFieldFormatterTests: TestCase {
     }
 
     func testCurrencyNumberFormatter() {
-        let formatter = DecimalTextFieldFormatter(isCurrency: true, isEmptyZero: true)
+        let formatter = DecimalTextFieldFormatter(isCurrency: true)
         XCTAssertEqual(formatter.value(from: "100"), 100)
         XCTAssertEqual(formatter.value(from: "100.99"), 100.99)
         XCTAssertEqual(formatter.value(from: "100.991"), 100.991)
