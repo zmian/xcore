@@ -20,24 +20,14 @@ public struct PhoneNumberTextFieldFormatter: TextFieldFormatter {
         self.mask = .init(("🇺🇸 +\(digitsCount) (###) ###-####"))
     }
 
-    private let numberFormatter = NumberFormatter().apply {
-        $0.allowsFloats = false
-        $0.numberStyle = .none
+    public func transformToString(_ value: String) -> String {
+        // Remove the country code from the output.
+        value.droppingPrefix(countryCode)
     }
 
-    public func transformToString(_ value: Int?) -> String {
-        guard let value = value else {
-            return ""
-        }
-
+    public func transformToValue(_ string: String) -> String {
         // Remove the country code from the output.
-        return numberFormatter.string(from: value)?.droppingPrefix(countryCode) ?? ""
-    }
-
-    public func transformToValue(_ string: String) -> Int? {
-        // Remove the country code from the output.
-        let string = string.droppingPrefix(countryCode)
-        return numberFormatter.number(from: string)?.intValue
+        string.droppingPrefix(countryCode)
     }
 
     public func displayValue(from string: String) -> String? {
