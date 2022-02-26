@@ -120,6 +120,13 @@ private struct NumberFieldPreview: View {
                 integer = 500
             }
             .accentColor(Color(UIColor.link))
+
+            Button("Change to 1,000,000") {
+                money = 1000000.01
+                decimal = 1000000.01
+                integer = 1000000
+            }
+            .accentColor(Color(UIColor.link))
         }
     }
 }
@@ -143,7 +150,7 @@ private struct DataFormatTypesFieldPreview: View {
                     print("SSN (Last Four): \($0)")
                 }
 
-            DynamicTextField("Phone Number", value: $phoneNumber, configuration: .phoneNumber(length: 10))
+            DynamicTextField("Phone Number", value: $phoneNumber, configuration: .phoneNumber(for: .us))
                 .onChange(of: phoneNumber) {
                     print("Phone Number: \($0)")
                 }

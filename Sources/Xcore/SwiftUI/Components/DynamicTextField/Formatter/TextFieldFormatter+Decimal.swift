@@ -22,7 +22,7 @@ public struct DecimalTextFieldFormatter: TextFieldFormatter {
         self.isEmptyZero = isEmptyZero
     }
 
-    public func transformToString(_ value: Double) -> String {
+    public func string(from value: Double) -> String {
         if isEmptyZero, value == 0 {
             return ""
         }
@@ -30,11 +30,11 @@ public struct DecimalTextFieldFormatter: TextFieldFormatter {
         return numberFormatter.string(from: value) ?? ""
     }
 
-    public func transformToValue(_ string: String) -> Double {
+    public func value(from string: String) -> Double {
         numberFormatter.number(from: string)?.doubleValue ?? 0.0
     }
 
-    public func displayValue(from string: String) -> String? {
+    public func format(_ string: String) -> String? {
         let components = string.components(separatedBy: ".")
 
         guard
@@ -54,17 +54,15 @@ public struct DecimalTextFieldFormatter: TextFieldFormatter {
             fractionPart = String(fraction.prefix(2))
         }
 
-        let value = [
+        return [
             symbol,
             wholeNumber,
             decimalPoint,
             fractionPart
         ].joined()
-
-        return value
     }
 
-    public func sanitizeDisplayValue(from string: String) -> String {
+    public func unformat(_ string: String) -> String {
         string
             .replacingOccurrences(of: ",", with: "")
             .replacingOccurrences(of: currency.currencySymbol, with: "")
