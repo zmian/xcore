@@ -10,19 +10,19 @@ import Foundation
 public struct PassthroughTextFieldFormatter: TextFieldFormatter {
     public init() {}
 
-    public func transformToString(_ value: String) -> String {
+    public func string(from value: String) -> String {
         value
     }
 
-    public func transformToValue(_ string: String) -> String {
+    public func value(from string: String) -> String {
         string
     }
 
-    public func displayValue(from string: String) -> String? {
+    public func format(_ string: String) -> String? {
         string
     }
 
-    public func sanitizeDisplayValue(from string: String) -> String {
+    public func unformat(_ string: String) -> String {
         string
     }
 }

@@ -6,47 +6,72 @@
 
 import Foundation
 
+public struct PhoneNumberStyle: Hashable, Codable {
+    public let mask: String
+    public let countryCode: Int
+    public let length: Int
+
+    public init(mask: String, countryCode: Int) {
+        self.mask = mask
+        self.countryCode = countryCode
+        self.length = mask.count { $0 == "#" }
+    }
+}
+
+extension PhoneNumberStyle {
+    /// United States Phone Numbers
+    ///
+    /// 🇺🇸 +1 (800) 692-7753
+    public static var us: Self {
+        .init(mask: ("🇺🇸 +# (###) ###-####"), countryCode: 1)
+    }
+
+    /// Australia Phone Numbers
+    ///
+    /// 🇦🇺 +61 423 456 789
+    public static var au: Self {
+        .init(mask: ("🇦🇺 +## ### ### ###"), countryCode: 61)
+    }
+}
+
 /// A formatter that converts between phone number and the textual
 /// representation of it.
 public struct PhoneNumberTextFieldFormatter: TextFieldFormatter {
     private let mask: MaskingTextFieldFormatter
-    private let countryCode: String
-    private let length: Int?
+    private let style: PhoneNumberStyle
 
-    public init(countryCode: String, length: Int? = nil) {
-        self.length = length
-        self.countryCode = countryCode
-        let digitsCount = String(repeating: "#", count: countryCode.count)
-        self.mask = .init(("🇺🇸 +\(digitsCount) (###) ###-####"))
+    public init(style: PhoneNumberStyle) {
+        self.mask = .init(style.mask)
+        self.style = style
     }
 
-    public func transformToString(_ value: String) -> String {
-        // Remove the country code from the output.
-        value.droppingPrefix(countryCode)
+    public func string(from value: String) -> String {
+        value
     }
 
-    public func transformToValue(_ string: String) -> String {
-        // Remove the country code from the output.
-        string.droppingPrefix(countryCode)
+    public func value(from string: String) -> String {
+        string
     }
 
-    public func displayValue(from string: String) -> String? {
+    public func format(_ string: String) -> String? {
         var string = string
 
-        if let length = length {
-            // Remove country code
-            string = string.count > length && string.hasPrefix(countryCode) ? string.droppingPrefix(countryCode) : string
-        }
+        // Remove country code that maybe have been added via iOS autocomplete
+        string = string.count > style.length && string.hasPrefix(countryCode) ? string.droppingPrefix(countryCode) : string
 
         // Add country code
         if !string.isEmpty, !string.starts(with: countryCode) {
             string = countryCode + string
         }
 
-        return mask.displayValue(from: string)
+        return mask.format(string)
     }
 
-    public func sanitizeDisplayValue(from string: String) -> String {
-        mask.sanitizeDisplayValue(from: string)
+    public func unformat(_ string: String) -> String {
+        mask.unformat(string)
+    }
+
+    private var countryCode: String {
+        String(describing: style.countryCode)
     }
 }

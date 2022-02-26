@@ -39,18 +39,16 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
 
 extension TextFieldConfiguration where Formatter == PhoneNumberTextFieldFormatter {
     /// Phone Number
-    public static func phoneNumber(countryCode: String = "1", length: Int? = nil) -> Self {
-        let length = length.map { $0 + countryCode.count }
-
-        return .init(
+    public static func phoneNumber(for style: PhoneNumberStyle) -> Self {
+        .init(
             id: "phoneNumber",
             autocapitalization: .none,
             autocorrection: .no,
             spellChecking: .no,
             keyboard: .phonePad,
             textContentType: .telephoneNumber,
-            validation: .phoneNumber(length: length),
-            formatter: .init(countryCode: countryCode, length: length)
+            validation: .phoneNumber(length: style.length),
+            formatter: .init(style: style)
         )
     }
 }
