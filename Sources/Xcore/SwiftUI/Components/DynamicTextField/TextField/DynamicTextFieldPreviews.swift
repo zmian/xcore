@@ -143,7 +143,7 @@ private struct DataFormatTypesFieldPreview: View {
                     print("SSN (Last Four): \($0)")
                 }
 
-            DynamicTextField("Phone Number", value: $phoneNumber, configuration: .phoneNumber(length: 10))
+            DynamicTextField("Phone Number", value: $phoneNumber, configuration: .phoneNumber(for: .us))
                 .onChange(of: phoneNumber) {
                     print("Phone Number: \($0)")
                 }

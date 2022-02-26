@@ -61,7 +61,7 @@ public protocol TextFieldFormatter {
     /// "552333" → "$5,523.33"
     ///
     /// // Phone Number
-    /// "8006927753" → "(800) 692-7753"
+    /// "8006927753" → "🇺🇸 +1 (800) 692-7753"
     /// ```
     ///
     /// - Parameter string: An input that should be formatted in a way that is
