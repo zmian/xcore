@@ -11,19 +11,26 @@ public struct PhoneNumberStyle: Hashable, Codable {
     public let countryCode: Int
     public let length: Int
 
-    public init(mask: String, countryCode: Int, length: Int) {
+    public init(mask: String, countryCode: Int) {
         self.mask = mask
         self.countryCode = countryCode
-        self.length = length
+        self.length = mask.count { $0 == "#" }
     }
 }
 
 extension PhoneNumberStyle {
-    /// `".us"`
+    /// United States Phone Numbers
     ///
     /// 🇺🇸 +1 (800) 692-7753
     public static var us: Self {
-        .init(mask: ("🇺🇸 +# (###) ###-####"), countryCode: 1, length: 11)
+        .init(mask: ("🇺🇸 +# (###) ###-####"), countryCode: 1)
+    }
+
+    /// Australia Phone Numbers
+    ///
+    /// 🇦🇺 +61 423 456 789
+    public static var au: Self {
+        .init(mask: ("🇦🇺 +## ### ### ###"), countryCode: 61)
     }
 }
 
@@ -38,17 +45,15 @@ public struct PhoneNumberTextFieldFormatter: TextFieldFormatter {
         self.style = style
     }
 
-    public func transformToString(_ value: String) -> String {
-        // Remove the country code from the output.
-        value.droppingPrefix(countryCode)
+    public func string(from value: String) -> String {
+        value
     }
 
-    public func transformToValue(_ string: String) -> String {
-        // Remove the country code from the output.
-        string.droppingPrefix(countryCode)
+    public func value(from string: String) -> String {
+        string
     }
 
-    public func displayValue(from string: String) -> String? {
+    public func format(_ string: String) -> String? {
         var string = string
 
         // Remove country code that maybe have been added via iOS autocomplete
@@ -59,11 +64,11 @@ public struct PhoneNumberTextFieldFormatter: TextFieldFormatter {
             string = countryCode + string
         }
 
-        return mask.displayValue(from: string)
+        return mask.format(string)
     }
 
-    public func sanitizeDisplayValue(from string: String) -> String {
-        mask.sanitizeDisplayValue(from: string)
+    public func unformat(_ string: String) -> String {
+        mask.unformat(string)
     }
 
     private var countryCode: String {

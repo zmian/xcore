@@ -40,7 +40,7 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
 extension TextFieldConfiguration where Formatter == PhoneNumberTextFieldFormatter {
     /// Phone Number
     public static func phoneNumber(for style: PhoneNumberStyle) -> Self {
-        return .init(
+        .init(
             id: "phoneNumber",
             autocapitalization: .none,
             autocorrection: .no,

@@ -14,15 +14,15 @@ public struct IntegerTextFieldFormatter: TextFieldFormatter {
         $0.numberStyle = .decimal
     }
 
-    public func transformToString(_ value: Int) -> String {
+    public func string(from value: Int) -> String {
         numberFormatter.string(from: value) ?? ""
     }
 
-    public func transformToValue(_ string: String) -> Int {
+    public func value(from string: String) -> Int {
         numberFormatter.number(from: string)?.intValue ?? 0
     }
 
-    public func displayValue(from string: String) -> String? {
+    public func format(_ string: String) -> String? {
         guard let value = Int(string) else {
             return string.isEmpty ? "" : nil
         }
@@ -30,7 +30,7 @@ public struct IntegerTextFieldFormatter: TextFieldFormatter {
         return numberFormatter.string(from: value) ?? ""
     }
 
-    public func sanitizeDisplayValue(from string: String) -> String {
+    public func unformat(_ string: String) -> String {
         string.replacingOccurrences(of: ",", with: "")
     }
 }

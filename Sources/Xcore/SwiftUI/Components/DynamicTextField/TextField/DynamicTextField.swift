@@ -41,7 +41,8 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
 
         // Initial value
         let formatter = configuration.formatter
-        let initialValue = formatter.displayValue(from: formatter.transformToString(value.wrappedValue)) ?? ""
+        let sanitizedText = formatter.unformat(formatter.string(from: value.wrappedValue))
+        let initialValue = formatter.format(sanitizedText) ?? ""
         self._text = .init(wrappedValue: initialValue)
         self._previousText = .init(wrappedValue: initialValue)
     }
@@ -89,15 +90,15 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
         // If text field changes the then format the text and also update the value.
         .onChange(of: text) { newText in
             // Sanitize the text
-            let sanitizedText = formatter.sanitizeDisplayValue(from: newText)
+            let sanitizedText = formatter.unformat(newText)
             // Check if the input is valid
-            if let displayText = formatter.displayValue(from: sanitizedText) {
+            if let displayText = formatter.format(sanitizedText) {
                 // If the input is valid, format it and display it
                 text = displayText
                 previousText = text
                 validate(sanitizedText)
                 // In case the input produces a new value send it over
-                let newValue = formatter.transformToValue(sanitizedText)
+                let newValue = formatter.value(from: sanitizedText)
                 if newValue != value {
                     value = newValue
                 }
@@ -107,13 +108,12 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
         }
         // If value changes then update the text field.
         .onChange(of: value) { newValue in
-            let sanitizedText = formatter.sanitizeDisplayValue(from: text)
-            let currentValue = formatter.transformToValue(sanitizedText)
+            let currentValue = formatter.value(from: formatter.unformat(text))
             guard currentValue != newValue else {
                 return
             }
-            let defaultText = formatter.transformToString(newValue)
-            if let displayText = formatter.displayValue(from: defaultText), displayText != text {
+            let sanitizedText = formatter.unformat(formatter.string(from: newValue))
+            if let displayText = formatter.format(sanitizedText), displayText != text {
                 DispatchQueue.main.async {
                     text = displayText
                     previousText = text
