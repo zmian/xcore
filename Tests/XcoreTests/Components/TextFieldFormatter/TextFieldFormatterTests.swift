@@ -9,7 +9,7 @@ import XCTest
 
 final class TextFieldFormatterTests: TestCase {
     func testPhoneNumberFormatter() {
-        let formatter = PhoneNumberTextFieldFormatter(countryCode: "1", length: 10)
+        let formatter = PhoneNumberTextFieldFormatter(style: .us)
         let validation = ValidationRule<String>.phoneNumber(length: 10)
 
         // Country code is always omited
