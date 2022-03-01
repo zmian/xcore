@@ -14,9 +14,14 @@ public struct ScaleEffectButtonStyle: ButtonStyle {
     }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .contentShape(Rectangle())
-            .scaleOpacityEffect(configuration.isPressed, effects: [.opacity, .scale(anchor: anchor)])
+        EnvironmentReader(\.defaultButtonFont) { font in
+            configuration.label
+                .contentShape(Rectangle())
+                .scaleOpacityEffect(configuration.isPressed, effects: [.opacity, .scale(anchor: anchor)])
+                .unwrap(font) { view, font in
+                    view.font(font)
+                }
+        }
     }
 }
 

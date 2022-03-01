@@ -19,6 +19,19 @@ extension EnvironmentValues {
     }
 }
 
+// MARK: - DefaultButtonFont
+
+extension EnvironmentValues {
+    private struct DefaultButtonFontKey: EnvironmentKey {
+        static var defaultValue: Font?
+    }
+
+    public var defaultButtonFont: Font? {
+        get { self[DefaultButtonFontKey.self] }
+        set { self[DefaultButtonFontKey.self] = newValue }
+    }
+}
+
 // MARK: - DefaultMinButtonHeight
 
 extension EnvironmentValues {
@@ -68,5 +81,9 @@ extension View {
 
     public func defaultMinButtonHeight(_ value: CGFloat) -> some View {
         environment(\.defaultMinButtonHeight, value)
+    }
+
+    public func defaultButtonFont(_ value: Font?) -> some View {
+        environment(\.defaultButtonFont, value)
     }
 }
