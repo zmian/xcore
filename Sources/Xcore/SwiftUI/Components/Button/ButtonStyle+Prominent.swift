@@ -37,6 +37,7 @@ extension ProminentButtonStyle {
     private struct InternalBody: View {
         @Environment(\.defaultMinButtonHeight) private var minHeight
         @Environment(\.defaultOutlineButtonBorderColor) private var _borderColor
+        @Environment(\.defaultButtonFont) private var font
         @Environment(\.theme) private var theme
         @Environment(\.isEnabled) private var isEnabled
         @Environment(\.isLoading) private var isLoading
@@ -56,6 +57,9 @@ extension ProminentButtonStyle {
                 .scaleOpacityEffect(configuration.isPressed)
                 .overlayLoader(isLoading, tint: foregroundContentColor)
                 .allowsHitTesting(!isLoading)
+                .unwrap(font) { view, font in
+                    view.font(font)
+                }
         }
 
         @ViewBuilder
