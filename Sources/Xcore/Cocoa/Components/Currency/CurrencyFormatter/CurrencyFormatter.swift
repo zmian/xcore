@@ -127,6 +127,10 @@ extension CurrencyFormatter {
                 options: .regularExpression,
                 range: range
             )
+        } else if formatter.maximumFractionDigits == 0 {
+            // If fraction length is set to 0 the string representation should be empty
+            minorUnitString = ""
+            formatter.decimalSeparator = ""
         }
 
         return .init(
