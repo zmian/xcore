@@ -204,6 +204,7 @@ extension Window {
                 .environment(\.defaultMinListRowHeight, env.defaultMinListRowHeight)
                 .environment(\.defaultMinListHeaderHeight, env.defaultMinListHeaderHeight)
                 .environment(\.defaultMinButtonHeight, env.defaultMinButtonHeight)
+                .environment(\.defaultButtonFont, env.defaultButtonFont)
                 .environment(\.defaultOutlineButtonBorderColor, env.defaultOutlineButtonBorderColor)
                 .environment(\.textFieldAttributes, env.textFieldAttributes)
                 .environment(\.dynamicTextFieldStyle, env.dynamicTextFieldStyle)
