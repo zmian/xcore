@@ -89,13 +89,14 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
         .disabled(!configuration.isEditable)
         // If text field changes the then format the text and also update the value.
         .onChange(of: text) { newText in
-            // Sanitize the text
-            let sanitizedText = formatter.unformat(newText)
             // Check if the input is valid
-            if let displayText = formatter.format(sanitizedText) {
+            if let displayText = formatter.format(formatter.unformat(newText)) {
                 // If the input is valid, format it and display it
                 text = displayText
                 previousText = text
+
+                // Sanitize the text
+                let sanitizedText = formatter.unformat(displayText)
                 validate(sanitizedText)
                 // In case the input produces a new value send it over
                 let newValue = formatter.value(from: sanitizedText)
