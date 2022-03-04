@@ -95,7 +95,7 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
                 text = displayText
                 previousText = text
 
-                // Sanitize the text
+                // Sanitize the display text
                 let sanitizedText = formatter.unformat(displayText)
                 validate(sanitizedText)
                 // In case the input produces a new value send it over
