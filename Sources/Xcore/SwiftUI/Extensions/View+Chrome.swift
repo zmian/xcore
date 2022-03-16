@@ -5,8 +5,6 @@
 //
 
 import SwiftUI
-
-
 #if canImport(Introspect)
 import Introspect
 #endif
@@ -123,7 +121,7 @@ extension ViewChrome {
                     return "colored(\(UIColor(color).hex))"
                 case .view:
                     return "view"
-                case let  .themed(theme):
+                case let .themed(theme):
                     return "themed\(theme.id)"
             }
         }
