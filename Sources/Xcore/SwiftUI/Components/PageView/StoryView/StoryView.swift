@@ -53,7 +53,7 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
 
     private var progressIndicator: some View {
         HStack(spacing: 4) {
-            ForEach(pages.indices) { index in
+            ForEach(0..<pages.count, id: \.self) { index in
                 StoryProgressIndicator(progress: storyTimer.progress(for: index))
             }
             .accessibilityHidden(true)
