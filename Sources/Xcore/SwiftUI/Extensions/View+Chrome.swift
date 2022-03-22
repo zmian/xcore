@@ -8,6 +8,7 @@ import SwiftUI
 #if canImport(Introspect)
 import Introspect
 #endif
+
 // MARK: - View Helpers
 
 extension View {
@@ -122,7 +123,7 @@ extension ViewChrome {
                 case .view:
                     return "view"
                 case let .themed(theme):
-                    return "themed\(theme.id)"
+                    return "themed(\(theme.id))"
             }
         }
 
@@ -164,6 +165,7 @@ private struct ViewChromeModifier: ViewModifier {
         .introspectNavigationController { nvc in
             nvc.navigationBar.isTransparent = true
             nvc.navigationBar.tintColor = Theme.tintColor
+
             switch chrome.background {
                 case .transparent, .blurred, .view:
                     break
@@ -173,7 +175,6 @@ private struct ViewChromeModifier: ViewModifier {
                     nvc.navigationBar.tintColor = theme.tintColor
                     nvc.navigationBar.barTintColor = theme.backgroundColor
             }
-
         }
         #endif
     }
