@@ -5,9 +5,6 @@
 //
 
 import SwiftUI
-#if canImport(Introspect)
-import Introspect
-#endif
 
 // MARK: - View Helpers
 
@@ -101,7 +98,6 @@ extension ViewChrome {
         case transparent
         case blurred(UIBlurEffect.Style)
         case colored(Color)
-        case themed(Theme)
         case view(AnyView)
 
         public static var blurred: Self {
@@ -122,8 +118,6 @@ extension ViewChrome {
                     return "colored(\(UIColor(color).hex))"
                 case .view:
                     return "view"
-                case let .themed(theme):
-                    return "themed(\(theme.id))"
             }
         }
 
@@ -156,27 +150,9 @@ private struct ViewChromeModifier: ViewModifier {
                         bar(color, in: geometry)
                     case let .view(view):
                         bar(view, in: geometry)
-                    case let .themed(theme):
-                        bar(Color(theme.backgroundColor), in: geometry)
                 }
             }
         }
-        #if canImport(Introspect)
-        .introspectNavigationController { nvc in
-            nvc.navigationBar.isTransparent = true
-            nvc.navigationBar.tintColor = Theme.tintColor
-
-            switch chrome.background {
-                case .transparent, .blurred, .view:
-                    break
-                case let .colored(color):
-                    nvc.navigationBar.barTintColor = color.cgColor?.uiColor
-                case let .themed(theme):
-                    nvc.navigationBar.tintColor = theme.tintColor
-                    nvc.navigationBar.barTintColor = theme.backgroundColor
-            }
-        }
-        #endif
     }
 
     private func bar<V: View>(_ view: V, in geometry: GeometryProxy) -> some View {
