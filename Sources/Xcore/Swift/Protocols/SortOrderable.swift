@@ -15,3 +15,9 @@ extension Sequence where Element: SortOrderable {
         sorted { $0.sortOrder < $1.sortOrder }
     }
 }
+
+// MARK: - Mutable
+
+public protocol MutableSortOrderable: SortOrderable {
+    var sortOrder: Int { get set }
+}
