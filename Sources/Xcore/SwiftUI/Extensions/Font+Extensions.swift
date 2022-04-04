@@ -28,6 +28,16 @@ extension Font {
         weight: Weight? = nil,
         trait: UIFont.Trait = .normal
     ) -> Font {
+        let pointSize = UIFontDescriptor.preferredFontDescriptor(
+            withTextStyle: .init(style),
+            compatibleWith: compatibleWithTraitCollection()
+        ).pointSize
+
+        if AppInfo.isAppExtension {
+            // Temporary solution while custom fonts aren't supported on Widgets.
+            return .system(size: pointSize)
+        }
+
         let weight = weight.normalize(style: style)
         let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
 
@@ -43,11 +53,6 @@ extension Font {
 
             return font
         }
-
-        let pointSize = UIFontDescriptor.preferredFontDescriptor(
-            withTextStyle: .init(style),
-            compatibleWith: compatibleWithTraitCollection()
-        ).pointSize
 
         if isFixedSize {
             return .custom(typeface, fixedSize: pointSize)
@@ -72,6 +77,11 @@ extension Font {
         weight: Weight? = nil,
         trait: UIFont.Trait = .normal
     ) -> Font {
+        if AppInfo.isAppExtension {
+            // Temporary solution while custom fonts aren't supported on Widgets.
+            return .system(size: size)
+        }
+
         let weight = weight.normalize(style: textStyle)
         let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
 

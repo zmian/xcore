@@ -48,6 +48,20 @@ extension AppInfo {
     }
 }
 
+// MARK: - isWidgetExtension
+
+extension AppInfo {
+    /// A boolean value to determine whether it is running inside a WidgetKit
+    /// extension or not.
+    ///
+    /// Taken from [here](https://stackoverflow.com/a/64073922).
+    public static var isWidgetExtension: Bool {
+        guard let extesion = Bundle.main.infoDictionary?["NSExtension"] as? [String: String] else { return false }
+        guard let widget = extesion["NSExtensionPointIdentifier"] else { return false }
+        return widget == "com.apple.widgetkit-extension"
+    }
+}
+
 // MARK: - Distribution
 
 extension AppInfo {
