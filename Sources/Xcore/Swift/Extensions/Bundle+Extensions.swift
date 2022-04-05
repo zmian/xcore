@@ -139,3 +139,18 @@ extension Bundle {
         return path(forResource: name, ofType: ext)
     }
 }
+
+extension Bundle {
+    public static var app: Bundle {
+        guard AppInfo.isAppExtension else {
+            return .main
+        }
+
+        return
+            .init(url:
+                    Bundle.main.bundleURL
+                .deletingLastPathComponent()
+                .deletingLastPathComponent()
+            ) ?? .main
+    }
+}
