@@ -139,6 +139,7 @@ final class ValidationRuleTests: TestCase {
         let p_o_box = [
             "post office box",
             "POBOX",
+            "P.o-bOX",
             "po box",
             "POBox12234",
             "p o box",
