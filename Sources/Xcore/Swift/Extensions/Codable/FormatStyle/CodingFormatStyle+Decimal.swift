@@ -27,16 +27,8 @@ public struct DecimalCodingFormatStyle: CodingFormatStyle {
             return value
         }
 
-        if let value = value as? Int {
-            return Decimal(value)
-        }
-
-        if let value = value as? Double {
-            return Decimal(value)
-        }
-
         if
-            let value = value as? String,
+            let value = value as? String ?? (value as? LosslessStringConvertible)?.description,
             let decimal = Self.numberFormatter.number(from: value)?.decimalValue
         {
             return decimal
