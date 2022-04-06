@@ -172,6 +172,20 @@ final class CodingFormatStyleTests: TestCase {
         let data4 = try XCTUnwrap(#"{"value": 123}"#.data(using: .utf8))
         let example4 = try JSONDecoder().decode(Example.self, from: data4)
         XCTAssertEqual(example4.value, 123.0)
+
+        // Decode from special doubles
+        let data5 = try XCTUnwrap(#"{"value": 40.76}"#.data(using: .utf8))
+        let example5 = try JSONDecoder().decode(Example.self, from: data5)
+        XCTAssertEqual(example5.value, Decimal(string: "40.76", locale: .us))
+        XCTAssertEqual(example5.value.description, "40.76")
+
+        let decimal = try XCTUnwrap(Decimal(string: "40.76", locale: .us))
+        XCTAssertEqual(decimal.description, "40.76")
+
+        let data6 = try XCTUnwrap(#"{"value": 2109.12}"#.data(using: .utf8))
+        let example6 = try JSONDecoder().decode(Example.self, from: data6)
+        XCTAssertEqual(example6.value, Decimal(string: "2109.12", locale: .us))
+        XCTAssertEqual(example6.value.description, "2109.12")
     }
 
     func testAbsoluteValue() throws {
