@@ -312,6 +312,11 @@ extension String {
 }
 
 extension String {
+    /// Returns the height of string when drawn with the given font.
+    public static func height(font: UIFont) -> CGFloat {
+        "Sphinx".size(withFont: font).height
+    }
+
     /// Returns the bounding box size the receiver occupies when drawn with the
     /// given font.
     ///

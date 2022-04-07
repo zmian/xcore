@@ -73,4 +73,22 @@ extension Dictionary where Key == String, Value == Encodable {
 
         return JSONHelpers.stringify(self).sha256() == JSONHelpers.stringify(other).sha256()
     }
+
+    /// Returns nil if the dictionary is empty; otherwise, unmodified `self`.
+    public func nilIfEmpty() -> [Key: Value]? {
+        isEmpty ? nil : self
+    }
+}
+
+extension Optional where Wrapped == String {
+    /// Returns `true` iff `self` `nil` or contains no characters and blank spaces
+    /// (e.g., \n, “ “).
+    public var isNilOrBlank: Bool {
+        switch self {
+            case .none:
+                return true
+            case let .some(wrapped):
+                return wrapped.isBlank
+        }
+    }
 }
