@@ -39,7 +39,7 @@ extension KeychainAccess.Keychain {
         policy: AuthenticationPolicy = .none
     ) -> Keychain {
         Keychain(
-            service: (Bundle.main.bundleIdentifier ?? "").replacing(".intents", with: ""),
+            service: (Bundle.app.bundleIdentifier ?? "").replacing(".intents", with: ""),
             accessGroup: accessGroup
         )
         .accessibility(accessibility)
