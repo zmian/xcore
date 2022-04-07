@@ -36,6 +36,13 @@ extension Publisher {
     public func eraseToVoid() -> Publishers.Map<Self, Void> {
         map { _ in () }
     }
+
+    /// Erases the publisher output to void and then turns it into an
+    /// ``AnyPublisher``.
+    public func eraseToVoidAnyPublisher() -> AnyPublisher<Void, Failure> {
+        eraseToVoid()
+            .eraseToAnyPublisher()
+    }
 }
 
 extension Publisher where Failure == Never {
