@@ -6,6 +6,7 @@
 
 import Foundation
 import Dispatch
+import Combine
 
 extension DispatchQueue {
     private class var currentLabel: String? {
@@ -55,5 +56,54 @@ extension DispatchTime {
         let oneSecondInNanoseconds = TimeInterval(1_000_000_000)
         let secondsElapsed = TimeInterval(Int64(currentTime) - Int64(lastTime)) / oneSecondInNanoseconds
         return secondsElapsed
+    }
+}
+
+extension DispatchTimeInterval {
+    fileprivate var isImmediate: Bool {
+        switch self {
+            case let .seconds(int),
+                 let .milliseconds(int),
+                 let .microseconds(int),
+                 let .nanoseconds(int):
+                return int <= 0
+            case .never:
+                return true
+            @unknown default:
+                return false
+        }
+    }
+}
+
+/// Schedules a block for execution using the specified attributes, and returns
+/// immediately.
+public func withDelay(_ interval: TimeInterval, perform work: @escaping () -> Void) {
+    interval > 0 ? withDelay(.now() + interval, perform: work) : work()
+}
+
+/// Schedules a block for execution using the specified attributes, and returns
+/// immediately.
+public func withDelay(_ interval: DispatchTimeInterval, perform work: @escaping () -> Void) {
+    !interval.isImmediate ? withDelay(.now() + interval, perform: work) : work()
+}
+
+/// Schedules a block for execution using the specified attributes, and returns
+/// immediately.
+public func withDelay(_ deadline: DispatchTime, perform work: @escaping () -> Void) {
+    DispatchQueue.main.asyncAfter(deadline: deadline, execute: work)
+}
+
+/// Schedules a block for execution for every given seconds.
+public func withTimer(every interval: TimeInterval, perform work: @escaping () -> Void) -> AnyCancellable {
+    Timer.publish(
+        every: interval,
+        on: .main,
+        in: .common
+    )
+    .autoconnect()
+    .merge(with: Just(Date()))
+    .eraseToAnyPublisher()
+    .sink { _ in
+        work()
     }
 }
