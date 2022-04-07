@@ -22,6 +22,11 @@ struct ActivitySheetView: View {
         } onDismiss: {
             print("onDismiss")
         }
+        .onAppear {
+            withDelay(2) {
+                isShowingActivitySheet = false
+            }
+        }
     }
 }
 
