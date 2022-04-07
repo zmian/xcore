@@ -120,6 +120,9 @@ private struct ActivitySheetView: UIViewControllerRepresentable {
             onComplete: onComplete,
             onDismiss: onDismiss
         )
+        .apply {
+            $0.presentIfNeeded()
+        }
     }
 
     func updateUIViewController(
