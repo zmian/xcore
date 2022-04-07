@@ -171,10 +171,12 @@ private final class ActivitySheetViewPresenter: UIViewController {
     fileprivate func presentIfNeeded() {
         let isShown = presentedViewController != nil
 
-        guard !isShown, isShown != isPresented.wrappedValue else {
-            return
+        if isShown != isPresented.wrappedValue {
+            isPresented.wrappedValue ? showSheet() : hideSheet()
         }
+    }
 
+    private func showSheet() {
         let vc = UIActivityViewController(
             activityItems: items,
             applicationActivities: activities
@@ -197,5 +199,10 @@ private final class ActivitySheetViewPresenter: UIViewController {
         }
 
         present(vc, animated: true)
+    }
+
+    private func hideSheet() {
+        dismiss(animated: true)
+        removeFromParent()
     }
 }
