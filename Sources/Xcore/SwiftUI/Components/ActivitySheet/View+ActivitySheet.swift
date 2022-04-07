@@ -127,7 +127,11 @@ private struct ActivitySheetView: UIViewControllerRepresentable {
         context: Context
     ) {
         uiViewController.isPresented = isPresented
-        uiViewController.presentIfNeeded()
+
+        // Fixes an issue where sometimes sheet wouldn't be displayed.
+        DispatchQueue.main.async {
+            uiViewController.presentIfNeeded()
+        }
     }
 }
 
