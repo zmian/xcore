@@ -74,6 +74,15 @@ extension AppAnalyticsEvent {
     public func mergingProperties(_ other: [String: Encodable?]) -> Self {
         mergingProperties(other.compacted())
     }
+
+    public func mergingUserInfo(_ other: UserInfo, strategy: UserInfo.MergingStrategy = .replaceExisting) -> Self {
+        .init(
+            name: name,
+            properties: properties,
+            additionalProviders: additionalProviders,
+            userInfo: userInfo.merging(other, strategy: strategy)
+        )
+    }
 }
 
 // MARK: - UserInfo
