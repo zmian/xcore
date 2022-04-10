@@ -182,12 +182,10 @@ extension ValidationRule where Input == String {
         "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
     }
 
-    /// A validation rule that checks whether the input is a valid SSN.
-    public static var ssn: Self {
-        .init(
-            pattern: "^(?!000)(?!666)^([0-8]\\d{2})((?!00)(\\d{2}))((?!0000)(\\d{4}))",
-            transform: { $0.replacing("-", with: "") }
-        )
+    /// A validation rule that checks whether the input is a valid phone number with
+    /// 11 character length.
+    public static var phoneNumber: Self {
+        .phoneNumber(length: PhoneNumberStyle.us.length)
     }
 
     /// A validation rule that checks whether the input is a valid phone number.
@@ -202,26 +200,6 @@ extension ValidationRule where Input == String {
 
             return isValidNumber
         }
-    }
-
-    /// A validation rule that checks whether the input is a valid ITIN.
-    ///
-    /// **Individual Taxpayer Identification Number**
-    ///
-    /// Format: `9XX-7X-XXXX`
-    ///
-    /// **What is an ITIN?**
-    ///
-    /// An Individual Taxpayer Identification Number (ITIN) is a tax processing
-    /// number issued by the Internal Revenue Service. The IRS issues ITINs to
-    /// individuals who are required to have a U.S. taxpayer identification number
-    /// but who do not have, and are not eligible to obtain, a Social Security
-    /// number (SSN) from the Social Security Administration (SSA).
-    public static var itin: Self {
-        .init(
-            pattern: "^(9\\d{2})([ \\-]?)(7\\d|8[0-8]|9[0-2]|9[4-9])([ \\-]?)(\\d{4})$",
-            transform: { $0.replacing("-", with: "") }
-        )
     }
 
     /// A validation rule that checks whether the input is a valid postal code.
@@ -259,6 +237,43 @@ extension ValidationRule where Input == String {
     /// - Returns: The validation rule.
     public static func number(count: Int) -> Self {
         self.count(count) && subset(of: .numbers)
+    }
+}
+
+// MARK: - SSN & ITIN
+
+extension ValidationRule where Input == String {
+    /// A validation rule that checks whether the input is a valid SSN.
+    public static var ssn: Self {
+        .init(
+            pattern: "^(?!000)(?!666)^([0-8]\\d{2})((?!00)(\\d{2}))((?!0000)(\\d{4}))",
+            transform: { $0.replacing("-", with: "") }
+        )
+    }
+
+    /// A validation rule that checks whether the input is a valid ITIN.
+    ///
+    /// **Individual Taxpayer Identification Number**
+    ///
+    /// Format: `9XX-7X-XXXX`
+    ///
+    /// **What is an ITIN?**
+    ///
+    /// An Individual Taxpayer Identification Number (ITIN) is a tax processing
+    /// number issued by the Internal Revenue Service. The IRS issues ITINs to
+    /// individuals who are required to have a U.S. taxpayer identification number
+    /// but who do not have, and are not eligible to obtain, a Social Security
+    /// number (SSN) from the Social Security Administration (SSA).
+    public static var itin: Self {
+        .init(
+            pattern: "^(9\\d{2})([ \\-]?)(7\\d|8[0-8]|9[0-2]|9[4-9])([ \\-]?)(\\d{4})$",
+            transform: { $0.replacing("-", with: "") }
+        )
+    }
+
+    /// A validation rule that checks whether the input is a valid SSN or ITIN.
+    public static var ssnOrItin: Self {
+        .ssn || .itin
     }
 }
 
