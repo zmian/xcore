@@ -73,15 +73,11 @@ private struct PrivacyScreenViewModifier<Screen: View>: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .window(isPresented: $isPrivacyScreenActive, style: .privacy) {
-                ZStack {
-                    if isPrivacyScreenActive {
-                        screen()
-                            .transition(.opacity)
-                    }
-                }
-                .animation(.easeInOut, value: isPrivacyScreenActive)
-            }
+            .overlayScreen(
+                isPresented: $isPrivacyScreenActive,
+                style: .privacy,
+                content: screen
+            )
             .onChange(of: scenePhase) { phase in
                 isPrivacyScreenActive = phase != .active
             }
