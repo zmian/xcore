@@ -60,3 +60,12 @@ extension AdaptiveURL: Hashable {
         hasher.combine(String(reflecting: self))
     }
 }
+
+// MARK: - Markdown
+
+extension AdaptiveURL {
+    /// Returns mardown representation of the adaptive URL.
+    public var markdown: String {
+        title.isBlank ? "[\(url)](\(url))" : "[\(title)](\(url))"
+    }
+}
