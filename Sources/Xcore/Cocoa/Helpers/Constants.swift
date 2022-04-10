@@ -117,6 +117,13 @@ extension UIEdgeInsets {
     public static var defaultSpacing: Self { .init(.defaultSpacing) }
 }
 
+// MARK: - EdgeInsets
+
+extension EdgeInsets {
+    /// The default insets for list content.
+    public static var listRow = Self(.defaultSpacing)
+}
+
 // MARK: - UIColor
 
 extension UIColor {
