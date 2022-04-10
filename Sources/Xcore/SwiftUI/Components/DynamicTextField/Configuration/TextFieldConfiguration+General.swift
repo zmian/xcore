@@ -38,6 +38,11 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
 }
 
 extension TextFieldConfiguration where Formatter == PhoneNumberTextFieldFormatter {
+    /// Phone Number with 11 character length.
+    public static var phoneNumber: Self {
+        .phoneNumber(for: .us)
+    }
+
     /// Phone Number
     public static func phoneNumber(for style: PhoneNumberStyle) -> Self {
         .init(
