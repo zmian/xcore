@@ -26,3 +26,19 @@ extension Text {
         self.init(content)
     }
 }
+
+extension Text {
+    /// Creates text view that scales the provided portion of the text based on the
+    /// font than the rest.
+    public init(_ content: String, scale scaledContent: String, font: Font) {
+        if #available(iOS 15, *) {
+            self.init(content) { str in
+                if let range = str.range(of: scaledContent) {
+                    str[range].font = font
+                }
+            }
+        } else {
+            self.init(content)
+        }
+    }
+}
