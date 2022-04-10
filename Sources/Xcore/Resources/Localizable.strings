@@ -1,0 +1,31 @@
+// MARK: - Error
+
+// General
+"error.general_error_title" = "Something Went Wrong";
+"error.general_error_message" = "We can’t process this at the moment. Please try again later.";
+
+// Missing Fields
+"error.general_missing_fields_title" = "Missing Information";
+"error.general_missing_fields_message" = "Please complete all information before continuing.";
+
+// Route Unavailable
+"error.route_unavailable_message" = "We can’t process this at the moment. Please try again later.";
+
+// No Internet
+"error.no_internet_title" = "No Internet Connection";
+"error.no_internet_message" = "Please check your internet connection and try again.";
+
+// Database Error
+"error.database_error_message" = "We’ll get this fixed as soon as we can. Please contact support for more information.";
+
+// Session Expired
+"error.session_expired_title" = "Session Expired";
+"error.session_expired_message" = "Your session has expired. Please log in again.";
+
+// Camera Unavailable
+"error.camera_unavailable_title" = "Camera Unavailable";
+"error.camera_unavailable_message" = "Seems there is an issue with your device camera.";
+
+// Camera Permission Denied
+"error.camera_permission_denied_title" = "Camera Permission Denied";
+"error.camera_permission_denied_message" = "From your device settings, enable camera access.";
