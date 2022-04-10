@@ -6,6 +6,17 @@
 
 import Foundation
 
+/// Log levels ordered by their severity, with `.debug` being the least severe
+/// and `.critical` being the most severe.
+public enum LogLevel: String, Hashable, Codable {
+    case debug
+    case info
+    case notice
+    case warn
+    case error
+    case critical
+}
+
 public enum Console {
     /// The default value is `.all`.
     public static var levelOptions: LevelOptions = .all
