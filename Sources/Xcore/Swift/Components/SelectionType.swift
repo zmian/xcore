@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-public enum SelectionValue<Value> {
+public enum SelectionType<Value> {
     case value(Value)
     case binding(Binding<Value>)
 
@@ -22,7 +22,7 @@ public enum SelectionValue<Value> {
 
 // MARK: - Equatable
 
-extension SelectionValue: Equatable where Value: Equatable {
+extension SelectionType: Equatable where Value: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.value == rhs.value
     }
@@ -30,7 +30,7 @@ extension SelectionValue: Equatable where Value: Equatable {
 
 // MARK: - Hashable
 
-extension SelectionValue: Hashable where Value: Hashable {
+extension SelectionType: Hashable where Value: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(value)
     }
@@ -38,7 +38,7 @@ extension SelectionValue: Hashable where Value: Hashable {
 
 // MARK: - Boolean
 
-extension SelectionValue: ExpressibleByBooleanLiteral where Value == Bool {
+extension SelectionType: ExpressibleByBooleanLiteral where Value == Bool {
     public init(booleanLiteral value: Bool) {
         self = .value(value)
     }
@@ -46,7 +46,7 @@ extension SelectionValue: ExpressibleByBooleanLiteral where Value == Bool {
 
 // MARK: - CustomStringConvertible
 
-extension SelectionValue: CustomStringConvertible where Value: CustomStringConvertible {
+extension SelectionType: CustomStringConvertible where Value: CustomStringConvertible {
     public var description: String {
         value.description
     }
