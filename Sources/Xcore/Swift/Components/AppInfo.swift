@@ -67,6 +67,23 @@ extension AppInfo {
     }
 }
 
+// MARK: - ExecutionTarget
+
+extension AppInfo {
+    public enum ExecutionTarget {
+        /// App extension
+        case app
+
+        /// WidgetKit extension
+        case widget
+    }
+
+    /// A property to determine the execution target.
+    public static var target: ExecutionTarget {
+        isWidgetExtension ? .widget : .app
+    }
+}
+
 // MARK: - Distribution
 
 extension AppInfo {
