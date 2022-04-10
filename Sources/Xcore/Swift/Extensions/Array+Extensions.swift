@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 extension Array {
     /// Returns a random subarray of given length.
@@ -64,6 +65,8 @@ extension Array {
         return nil
     }
 }
+
+// MARK: - NSObjectProtocol
 
 extension Array where Element: NSObjectProtocol {
     /// Returns the first index where the specified value appears in the collection.
@@ -131,6 +134,8 @@ extension Array where Element: NSObjectProtocol {
     }
 }
 
+// MARK: - Equatable
+
 extension Array where Element: Equatable {
     /// Sorts the collection in place, using the given preferred order as the
     /// comparison between elements.
@@ -186,6 +191,16 @@ extension Array where Element: Equatable {
             return first < second
         }
     }
+
+    /// Adds the given elements to the array if it isn't already present, or remove
+    /// it otherwise.
+    public mutating func addOrRemove(_ element: Element) {
+        if contains(element) {
+            remove(element)
+        } else {
+            append(element)
+        }
+    }
 }
 
 extension Array where Element: RawRepresentable {
@@ -194,6 +209,8 @@ extension Array where Element: RawRepresentable {
         map(\.rawValue)
     }
 }
+
+// MARK: - String
 
 extension Array where Element == String? {
     /// Returns a new string by concatenating the elements of the sequence, adding
@@ -217,5 +234,29 @@ extension Array where Element == String? {
             .compactMap { $0 }
             .filter { !$0.isBlank }
             .joined(separator: separator)
+    }
+}
+
+// MARK: - CGPoint
+
+extension Array where Element == CGPoint {
+    /// Returns the minimum `Y` in the sequence of `CGPoint`s.
+    public func minY() -> Element? {
+        self.max { $0.y < $1.y }
+    }
+
+    /// Returns the maximum `Y` in the sequence of `CGPoint`s.
+    public func maxY() -> Element? {
+        self.max { $0.y > $1.y }
+    }
+
+    /// Returns the minimum `X` in the sequence of `CGPoint`s.
+    public func minX() -> Element? {
+        self.max { $0.x < $1.x }
+    }
+
+    /// Returns the maximum `X` in the sequence of `CGPoint`s.
+    public func maxX() -> Element? {
+        self.max { $0.x > $1.x }
     }
 }
