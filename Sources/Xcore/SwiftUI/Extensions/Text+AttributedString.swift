@@ -42,3 +42,9 @@ extension Text {
         }
     }
 }
+
+extension Text {
+    public init(_ error: Error) {
+        self.init([error.title, error.message].joined(separator: "\n\n"))
+    }
+}
