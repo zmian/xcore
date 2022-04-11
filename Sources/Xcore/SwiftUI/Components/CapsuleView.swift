@@ -77,7 +77,7 @@ extension CapsuleView where Label == Text? {
         systemImage: SystemAssetIdentifier? = nil
     ) {
         self.init(title, systemImage: systemImage) {
-            subtitle.map { $0 }
+            subtitle
         }
     }
 
@@ -87,7 +87,7 @@ extension CapsuleView where Label == Text? {
         systemImage: SystemAssetIdentifier? = nil
     ) where S1: StringProtocol, S2: StringProtocol {
         self.init(title, systemImage: systemImage) {
-            subtitle.map { Text($0) }
+            Text(subtitle)
         }
     }
 }
