@@ -12,7 +12,7 @@ extension Text {
     ///
     /// It ensures that text always occupies provided number of lines regardless of
     /// the actual number of lines of the text content.
-    public func fixedMultiline(lines: Int) -> some View {
+    public func fixedLines(_ lines: Int) -> some View {
         ZStack {
             self
                 .lineLimit(lines)
