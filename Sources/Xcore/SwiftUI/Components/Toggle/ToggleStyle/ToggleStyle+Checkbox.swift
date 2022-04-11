@@ -48,3 +48,13 @@ public struct CheckboxToggleStyle: ToggleStyle {
             }
     }
 }
+
+// MARK: - Dot Syntax Support
+
+extension ToggleStyle where Self == CheckboxToggleStyle {
+    public static var checkbox: Self { .init() }
+
+    public static func checkbox(placement: Self.Placement) -> Self {
+        .init(placement: placement)
+    }
+}
