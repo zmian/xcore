@@ -11,6 +11,7 @@ struct CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArrayLite
     private var providers: [FeatureFlagProvider] = []
 
     init(_ providers: [FeatureFlagProvider]) {
+        self.providers = providers.uniqued(\.id)
     }
 
     init(arrayLiteral elements: FeatureFlagProvider...) {
