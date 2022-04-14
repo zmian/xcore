@@ -59,7 +59,7 @@ struct CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArrayLite
     mutating func remove(id: String) {
         let ids = providers.map(\.id)
 
-        guard let index = ids.firstIndex(of: provider.id) else {
+        guard let index = ids.firstIndex(of: id) else {
             return
         }
 
