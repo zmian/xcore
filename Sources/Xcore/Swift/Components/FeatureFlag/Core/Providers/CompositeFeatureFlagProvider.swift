@@ -11,11 +11,21 @@ struct CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArrayLite
     private var providers: [FeatureFlagProvider] = []
 
     init(_ providers: [FeatureFlagProvider]) {
-        self.providers = providers
     }
 
     init(arrayLiteral elements: FeatureFlagProvider...) {
-        self.providers = elements
+        self.providers = elements.uniqued(\.id)
+    }
+
+    /// Inserts a new provider at the specified position if it's not already included in the collection.
+    ///
+    /// - Note: This method ensures there are no duplicate providers.
+    mutating func insert(_ provider: FeatureFlagProvider, at index: Int) {
+        guard !providers.contains(where: { $0.id == provider.id }) else {
+            return
+        }
+
+        providers.insert(provider, at: index)
     }
 
     /// Add given provider if it's not already included in the collection.
@@ -41,6 +51,11 @@ struct CompositeFeatureFlagProvider: FeatureFlagProvider, ExpressibleByArrayLite
 
     /// Removes the given provider.
     mutating func remove(_ provider: FeatureFlagProvider) {
+        remove(id: provider.id)
+    }
+
+    /// Removes the provider with given id.
+    mutating func remove(id: String) {
         let ids = providers.map(\.id)
 
         guard let index = ids.firstIndex(of: provider.id) else {

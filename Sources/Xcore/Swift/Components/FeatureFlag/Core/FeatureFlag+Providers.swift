@@ -20,6 +20,19 @@ extension FeatureFlag {
     public static func register(_ provider: FeatureFlagProvider) {
         self.provider.add(provider)
     }
+
+    /// Register the given provider at the specified index if it's not already
+    /// registered.
+    ///
+    /// - Note: This method ensures there are no duplicate providers.
+    public static func register(_ provider: FeatureFlagProvider, at index: Int) {
+        self.provider.insert(provider, at: index)
+    }
+
+    /// Unregister the provider with the given id.
+    public static func unregister(id: String) {
+        self.provider.remove(id: id)
+    }
 }
 
 // MARK: - FeatureFlag.Key Convenience
