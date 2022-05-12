@@ -9,8 +9,10 @@ import SwiftUI
 public struct StoryView<Page, Content, Background>: View where Page: Identifiable, Content: View, Background: View {
     @Environment(\.storyProgressIndicatorInsets) private var insets
     @Environment(\.theme) private var theme
+    @Dependency(\.appPhase) private var appPhase
     @ObservedObject private var storyTimer: StoryTimer
     private let pages: [Page]
+    private let pauseWhenInactive: Bool
     private let content: (Page) -> Content
     private let background: (Page) -> Background
 
@@ -49,6 +51,18 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
         }
         .onAppear(perform: storyTimer.start)
         .onDisappear(perform: storyTimer.stop)
+        .applyIf(pauseWhenInactive) {
+            $0.onReceive(appPhase.receive) { phase in
+                switch phase {
+                    case .active:
+                        storyTimer.resume()
+                    case .inactive:
+                        storyTimer.pause()
+                    default:
+                        break
+                }
+            }
+        }
     }
 
     private var progressIndicator: some View {
@@ -118,6 +132,7 @@ extension StoryView {
         interval: TimeInterval = 4,
         cycle: Count = .infinite,
         pages: [Page],
+        pauseWhenInactive: Bool = false,
         @ViewBuilder content: @escaping (Page) -> Content,
         @ViewBuilder background: @escaping (Page) -> Background
     ) {
@@ -127,6 +142,7 @@ extension StoryView {
             cycle: cycle
         )
         self.pages = pages
+        self.pauseWhenInactive = pauseWhenInactive
         self.content = content
         self.background = background
     }
