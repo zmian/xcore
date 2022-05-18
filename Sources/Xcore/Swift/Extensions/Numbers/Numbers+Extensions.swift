@@ -198,6 +198,10 @@ extension Double {
 }
 
 extension Double {
+    public init(truncating number: Decimal) {
+        self.init(truncating: NSDecimalNumber(decimal: number))
+    }
+
     @_disfavoredOverload
     public init?(_ value: Any?) {
         guard let value = value else {
