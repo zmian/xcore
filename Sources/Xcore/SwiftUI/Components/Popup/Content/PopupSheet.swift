@@ -25,7 +25,7 @@ public struct PopupSheet<Content>: View where Content: View {
             Spacer(height: safeAreaInsetsBottom)
         }
         .backgroundColor(theme.backgroundColor)
-        .clipShape(RoundedRectangleCorner(radius: cornerRadius, corners: .top))
+        .cornerRadius(cornerRadius, corners: .top)
         .fixedSize(horizontal: false, vertical: true)
         // Offset to ensure content is clipped and it's pinned properly.
         // Using `ignoresSafeArea` makes the `safeAreaInsetsBottom` to always return 0
