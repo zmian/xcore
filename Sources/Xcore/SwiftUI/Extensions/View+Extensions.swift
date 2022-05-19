@@ -120,6 +120,24 @@ extension View {
     }
 }
 
+// MARK: - ColorScheme
+
+extension View {
+    /// Conditionally sets this view’s color scheme.
+    ///
+    /// Use `colorScheme(_:)` to set the color scheme for the view to which you
+    /// apply it and any subviews.
+    ///
+    /// - Parameter colorScheme: The color scheme for this view.
+    /// - Returns: A view that sets this view’s color scheme.
+    public func colorScheme(_ colorScheme: ColorScheme?) -> some View {
+        unwrap(colorScheme) { content, colorScheme in
+            content
+                .colorScheme(colorScheme)
+        }
+    }
+}
+
 // MARK: - Shadow
 
 extension View {
