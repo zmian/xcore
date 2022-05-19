@@ -215,6 +215,11 @@ extension ValidationRule where Input == String {
         "(?i)^((.*)(((p|post)[-.\\s]*(o|off|office)[-.\\s]*(box|bin))|((p |post)[-.\\s]*(box|bin)))(.*))"
     }
 
+    /// A validation rule that checks whether the input is a valid one-time code.
+    public static var oneTimeCode: Self {
+        number(count: FeatureFlag.oneTimeCodeCharacterLimit)
+    }
+
     public static var name: Self {
         name(range: 1...50)
     }
