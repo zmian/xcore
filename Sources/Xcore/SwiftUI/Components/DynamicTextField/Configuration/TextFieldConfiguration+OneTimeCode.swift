@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatter {
+extension TextFieldConfiguration where Formatter == MaskingTextFieldFormatter {
     /// One-Time Code
     public static var oneTimeCode: Self {
         .init(
@@ -17,7 +17,7 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
             keyboard: .numberPad,
             textContentType: .oneTimeCode,
             validation: .oneTimeCode,
-            formatter: .init()
+            formatter: .init(String(repeating: "#", count: FeatureFlag.oneTimeCodeCharacterLimit))
         )
     }
 }
