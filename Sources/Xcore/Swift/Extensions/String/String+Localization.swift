@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct StringsFile: RawRepresentable, Equatable {
+public struct StringsFile: RawRepresentable, Hashable {
     public let rawValue: String
     public let bundle: Bundle
 

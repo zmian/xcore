@@ -70,7 +70,7 @@ public struct StringConverter {
             return nil
         }
 
-        return JSONHelpers.decode(string)
+        return try? JSONHelpers.decode(string)
     }
 
     private var nsNumber: NSNumber? {
