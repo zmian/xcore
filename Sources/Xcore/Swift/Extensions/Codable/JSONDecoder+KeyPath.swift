@@ -56,6 +56,7 @@ extension JSONDecoder {
 // MARK: - ValueWrapper
 
 extension JSONDecoder {
+    /// - SeeAlso: https://github.com/0111b/JSONDecoder-Keypath
     private final class ValueWrapper<T: Decodable>: Decodable {
         private typealias Container = KeyedDecodingContainer<Key>
 
