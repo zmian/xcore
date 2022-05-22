@@ -115,7 +115,6 @@ extension JSONHelpers {
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Any {
         guard let keyPath = keyPath, !keyPath.isEmpty else {
-            // Return `Data` without any transformation.
             return try JSONSerialization.jsonObject(with: data, options: options)
         }
 
@@ -135,7 +134,7 @@ extension JSONHelpers {
         return nestedJson
     }
 
-    /// Returns a Data object from given JSON data.
+    /// Returns a Data object at the specified key path from given JSON data.
     ///
     /// - Parameters:
     ///   - data: A data object containing JSON data.
@@ -145,10 +144,10 @@ extension JSONHelpers {
     ///   error occurs.
     public static func decodeData(
         _ data: Data,
-        keyPath: String,
+        keyPath: String?,
         options: JSONSerialization.ReadingOptions = [.mutableContainers]
     ) throws -> Data {
-        guard !keyPath.isEmpty else {
+        guard let keyPath = keyPath, !keyPath.isEmpty else {
             // Return `Data` without any transformation.
             return data
         }
