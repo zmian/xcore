@@ -46,7 +46,7 @@ extension KeyedDecodingContainer {
         _ key: Key,
         format: F
     ) throws -> F.Output where F.Input: Decodable {
-        try format.decode(try self.decode(key))
+        try format.decode(try decode(key))
     }
 
     /// Decodes a value of the given type for the given key using format style, if
@@ -84,7 +84,7 @@ extension KeyedEncodingContainer {
         forKey key: Key,
         format: F
     ) throws where F.Input: Encodable {
-        try self.encode(try format.encode(value), forKey: key)
+        try encode(try format.encode(value), forKey: key)
     }
 
     /// Encodes the given value for the given key using format style, if it is not
@@ -103,6 +103,6 @@ extension KeyedEncodingContainer {
             return
         }
 
-        try self.encodeIfPresent(try format.encode(value), forKey: key)
+        try encodeIfPresent(try format.encode(value), forKey: key)
     }
 }
