@@ -288,6 +288,39 @@ extension Date {
 
         return Date(timeInterval: -0.001, since: date)
     }
+
+    /// Adjusts the receiver's given component and along with all smaller units to
+    /// their middle using the calendar.
+    ///
+    /// - Parameters:
+    ///   - component: Component and along with all smaller units to adjust to their
+    ///                middle.
+    ///   - calendar: The calendar to use for adjustment.
+    public func middleOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
+        #if DEBUG
+        let date = calendar.dateInterval(of: component, for: self)!.middle()
+        #else
+        let date = calendar.dateInterval(of: component, for: self)?.middle() ?? self
+        #endif
+
+        return Date(timeInterval: -0.001, since: date)
+    }
+}
+
+// MARK: - Date Interval
+
+extension DateInterval {
+    /// Returns the middle Date of a DateInterval
+    ///
+    /// Due to timezone and daylight savings constraings, relying on either
+    /// `.start` or `.end` of a DateInterval - when the goal is to group days -
+    /// might produce unexpected results as they can return the previous or next
+    /// day respectively.
+    ///
+    /// With `middle()` we can be sure we'll always land on the correct day.
+    fileprivate func middle() -> Date {
+        start + (duration / 2)
+    }
 }
 
 // MARK: - Counts
