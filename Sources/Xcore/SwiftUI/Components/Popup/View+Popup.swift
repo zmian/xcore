@@ -56,7 +56,7 @@ extension View {
     ) -> some View where Content: View {
         // Widgets & Extension does not support UIWindow & DispatchWorkItem.
         applyIf(AppInfo.target == .app) {
-            modifier(PopupViewModifier(
+            $0.modifier(PopupViewModifier(
                 isPresented: isPresented,
                 style: style,
                 dismissMethods: dismissMethods,
@@ -139,7 +139,7 @@ extension View {
                     content(item)
                 }
             }
-        ))
+        )
     }
 
     public func popup<F>(

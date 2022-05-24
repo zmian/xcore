@@ -21,7 +21,7 @@ extension View {
     ) -> some View {
         // Widgets & Extension does not support UIWindow.
         applyIf(AppInfo.target == .app) {
-            overlay(
+            $0.overlay(
                 Color.clear
                     .frame(0)
                     .background(Window(
