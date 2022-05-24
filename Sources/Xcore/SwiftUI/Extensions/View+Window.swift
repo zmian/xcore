@@ -19,15 +19,18 @@ extension View {
         style: WindowStyle = .init(),
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
-        overlay(
-            Color.clear
-                .frame(0)
-                .background(Window(
-                    isPresented: isPresented,
-                    style: style,
-                    content: LazyView(content())
-                ))
-        )
+        // Widgets & Extension does not support UIWindow.
+        applyIf(AppInfo.target == .app) {
+            overlay(
+                Color.clear
+                    .frame(0)
+                    .background(Window(
+                        isPresented: isPresented,
+                        style: style,
+                        content: LazyView(content())
+                    ))
+            )
+        }
     }
 
     /// Presents a window using the given item as a data source for the window's

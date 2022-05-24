@@ -54,12 +54,15 @@ extension View {
         dismissMethods: Popup.DismissMethods = [.tapOutside],
         @ViewBuilder content: @escaping () -> Content
     ) -> some View where Content: View {
-        modifier(PopupViewModifier(
-            isPresented: isPresented,
-            style: style,
-            dismissMethods: dismissMethods,
-            content: content
-        ))
+        // Widgets & Extension does not support UIWindow & DispatchWorkItem.
+        applyIf(AppInfo.target == .app) {
+            modifier(PopupViewModifier(
+                isPresented: isPresented,
+                style: style,
+                dismissMethods: dismissMethods,
+                content: content
+            ))
+        }
     }
 
     /// Presents a popup using the given item as a data source for the popup's
@@ -121,7 +124,7 @@ extension View {
         dismissMethods: Popup.DismissMethods = [.tapOutside],
         @ViewBuilder content: @escaping (Item) -> Content
     ) -> some View where Content: View {
-        modifier(PopupViewModifier(
+        popup(
             isPresented: .init {
                 item.wrappedValue != nil
             } set: { isPresented in
