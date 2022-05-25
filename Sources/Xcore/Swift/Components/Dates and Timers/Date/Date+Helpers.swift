@@ -298,9 +298,9 @@ extension Date {
     ///   - calendar: The calendar to use for adjustment.
     public func middleOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
         #if DEBUG
-        let date = calendar.dateInterval(of: component, for: self)!.middle()
+        let date = calendar.dateInterval(of: component, for: self)!.middle
         #else
-        let date = calendar.dateInterval(of: component, for: self)?.middle() ?? self
+        let date = calendar.dateInterval(of: component, for: self)?.middle ?? self
         #endif
 
         return Date(timeInterval: -0.001, since: date)
@@ -318,7 +318,7 @@ extension DateInterval {
     /// day respectively.
     ///
     /// With `middle()` we can be sure we'll always land on the correct day.
-    fileprivate func middle() -> Date {
+    fileprivate var middle: Date {
         start + (duration / 2)
     }
 }
