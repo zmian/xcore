@@ -317,7 +317,7 @@ extension DateInterval {
     /// might produce unexpected results as they can return the previous or next
     /// day respectively.
     ///
-    /// With `middle()` we can be sure we'll always land on the correct day.
+    /// With `.middle` we can be sure we'll always land on the correct day.
     fileprivate var middle: Date {
         start + (duration / 2)
     }
