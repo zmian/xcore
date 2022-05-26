@@ -22,6 +22,7 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
         $0.currencySymbol = currencySymbol
         $0.isDecimalEnabled = true
         // When truncating fraction digits, if needed, we should round up.
+        // For example, `0.165` → `0.17` instead of `0.16`. 
         $0.roundingMode = .halfUp
     }
 
