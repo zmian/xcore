@@ -10,7 +10,7 @@ import XCTest
 final class CharacterSetTests: TestCase {
     func testCharacters() {
         let characters = CharacterSet.uppercaseLetters.characters()
-        XCTAssertEqual(characters.count, 1822)
+        XCTAssertEqual(characters.count, 1862)
         XCTAssertEqual(characters.prefix(3), ["A", "B", "C"])
     }
 

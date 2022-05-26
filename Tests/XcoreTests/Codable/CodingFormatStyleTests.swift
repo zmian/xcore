@@ -186,6 +186,19 @@ final class CodingFormatStyleTests: TestCase {
         let example6 = try JSONDecoder().decode(Example.self, from: data6)
         XCTAssertEqual(example6.value, Decimal(string: "2109.12", locale: .us))
         XCTAssertEqual(example6.value.description, "2109.12")
+
+        // decode
+        let data7 = try XCTUnwrap(#"{"value": 2.12}"#.data(using: .utf8))
+        let example7 = try JSONDecoder().decode(Example.self, from: data7)
+        XCTAssertEqual(example7.value, Decimal(string: "2.12", locale: .us))
+        XCTAssertEqual(example7.value.description, "2.12")
+
+        // Encode
+        let data8 = Example(value: example7.value)
+        let example8Data = try JSONEncoder().encode(data8)
+        let example8 = try JSONDecoder().decode(Example.self, from: example8Data)
+        XCTAssertEqual(example8.value, Decimal(string: "2.12", locale: .us))
+        XCTAssertEqual(example8.value.description, "2.12")
     }
 
     func testAbsoluteValue() throws {
