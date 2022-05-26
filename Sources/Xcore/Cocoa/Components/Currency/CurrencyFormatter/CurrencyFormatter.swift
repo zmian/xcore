@@ -21,6 +21,8 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
         // design consistent (e.g., German (de) locale: "1.000,11 $" → "$1.000,11").
         $0.currencySymbol = currencySymbol
         $0.isDecimalEnabled = true
+        // When truncating fraction digits, if needed, we should round up.
+        $0.roundingMode = .halfUp
     }
 
     /// The locale of the receiver.
