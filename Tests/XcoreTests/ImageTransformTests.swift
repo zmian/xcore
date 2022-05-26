@@ -47,7 +47,7 @@ final class ImageTransformTests: TestCase {
                 ResizeImageTransform(to: CGSize(width: 10, height: 100))
             ),
             (
-                "Xcore.BackgroundImageTransform-color:(#000000)-preferredSize:(120.0x300.0)-alignment:(UIControlContentHorizontalAlignment)",
+                "Xcore.BackgroundImageTransform-color:(#000000)-preferredSize:(120.0x300.0)-alignment:(0)",
                 BackgroundImageTransform(color: .black, preferredSize: CGSize(width: 120, height: 300))
             )
         ]

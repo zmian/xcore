@@ -12,7 +12,7 @@ public struct BackgroundImageTransform: ImageTransform {
     private let alignment: UIControl.ContentHorizontalAlignment
 
     public var id: String {
-        "\(transformName)-color:(\(color.hex))-preferredSize:(\(preferredSize.width)x\(preferredSize.height))-alignment:(\(alignment))"
+        "\(transformName)-color:(\(color.hex))-preferredSize:(\(preferredSize.width)x\(preferredSize.height))-alignment:(\(alignment.rawValue))"
     }
 
     public init(color: UIColor, preferredSize: CGSize, alignment: UIControl.ContentHorizontalAlignment = .center) {

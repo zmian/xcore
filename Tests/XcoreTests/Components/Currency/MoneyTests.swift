@@ -157,6 +157,7 @@ final class MoneyTests: TestCase {
         XCTAssertEqual(Money(1).fractionLengthForAmount().string(), "$1.00")
         XCTAssertEqual(Money(1.234).fractionLengthForAmount().string(), "$1.23")
         XCTAssertEqual(Money(1.000031).fractionLengthForAmount().string(), "$1.00")
+        XCTAssertEqual(Money(0.000031).fractionLengthForAmount().string(), "$0.000031")
         XCTAssertEqual(Money(0.00001).fractionLengthForAmount().string(), "$0.00001")
         XCTAssertEqual(Money(0.000010000).fractionLengthForAmount().string(), "$0.00001")
         XCTAssertEqual(Money(0.000012).fractionLengthForAmount().string(), "$0.000012")
