@@ -8,7 +8,7 @@ import XCTest
 @testable import Xcore
 
 final class DecimalTests: TestCase {
-    func testDecimalRounded() {
+    func testRounded() {
         let x = Decimal(6.5)
 
         XCTAssertEqual(Decimal(6).rounded(fractionDigits: 2), 6)
@@ -31,7 +31,7 @@ final class DecimalTests: TestCase {
         XCTAssertEqual(x.rounded(), 7.0)
     }
 
-    func testDecimalRound() {
+    func testRound() {
         // Equivalent to the C 'round' function:
         var w = Decimal(6.5)
         w.round(.toNearestOrAwayFromZero)

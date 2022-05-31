@@ -65,3 +65,8 @@ extension NumberFormatter {
         return string(from: NSDecimalNumber(decimal: number))
     }
 }
+
+extension Int {
+    static var maxFractionDigits: Int { 100 }
+    public static let defaultFractionDigits: Int = 1
+}
