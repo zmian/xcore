@@ -201,6 +201,20 @@ extension Decimal {
 // MARK: - Formatted
 
 extension Decimal {
+    /// The `locale` is always set to `usPosix` to avoid localizing string
+    /// representations of numbers which are used for strictly conversion purpose
+    /// only.
+    ///
+    /// For example:
+    /// ```
+    /// // With "us" locale:
+    /// // 0.377 → String → "0.377" ✅
+    ///
+    /// // Without "pt_PT" locale:
+    /// // 0.377 → String → "0,377" ❌
+    /// // Now this will fail conversion back to decimal withut knowing the original
+    /// // locale.
+    /// ```
     private static let usPosixFormatter = NumberFormatter().apply {
         $0.numberStyle = .decimal
         $0.maximumFractionDigits = .maxFractionDigits
