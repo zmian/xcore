@@ -30,7 +30,7 @@ extension CharacterSet {
     /// Returns random string of given length using `CharacterSet` as the seed.
     public func randomString(length: Int) -> String {
         let seed = characters()
-        return String((0..<length).map { _ in seed.randomElement()! })
+        return String((0..<length).compactMap { _ in seed.randomElement() })
     }
 
     /// Returns `CharacterSet` as an array of characters.

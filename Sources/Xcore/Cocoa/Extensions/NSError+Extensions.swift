@@ -20,3 +20,10 @@ extension NSError {
         )
     }
 }
+
+extension NSError {
+    /// Returns an error with random domain and code.
+    public static func random() -> Self {
+        .init(domain: .random(), code: .random(), userInfo: nil)
+    }
+}

@@ -6,6 +6,17 @@
 
 import Foundation
 
+// MARK: - Random
+
+extension Decimal {
+    /// Returns a random value within the specified range.
+    public static func random(_ lower: Double = 0, _ upper: Double = Double.defaultRandomUpperBound) -> Decimal {
+        Decimal(Double.random(in: lower...upper))
+    }
+}
+
+// MARK: - Round
+
 extension Decimal {
     /// Rounds the value to an integral value using the specified rounding rule.
     ///

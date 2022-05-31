@@ -178,7 +178,13 @@ extension String {
     ///
     /// - Parameter length: Number of random elements to return.
     public func random(length: Int) -> String {
-        String((0..<length).map { _ in randomElement()! })
+        String((0..<length).compactMap { _ in randomElement() })
+    }
+
+    /// Returns a random alphanumerics string of length based on
+    /// `Int.defaultRandomUpperBound`.
+    public static func random() -> Self {
+        .randomAlphanumerics(length: .defaultRandomUpperBound)
     }
 
     /// Returns a random alphanumerics string of the given length.
