@@ -25,12 +25,6 @@ private struct AbbreviatedNumberFormatter<Number: DoubleDecimal> {
         ("T", 1_000_000_000_000, 1_000_000_000_000)
     ]
 
-    init(locale: Locale? = nil) {
-        if let locale = locale {
-            self.formatter.locale = locale
-        }
-    }
-
     /// Returns a string representation of the abbreviation of the given value.
     ///
     /// Abbreviates `value` to compact format:
