@@ -92,6 +92,14 @@ final class CurrencyFormatterTests: TestCase {
         assertEqual(dollarsAndCents(from: 1.0), ("$1,", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1.000,", "00"))
 
+        // Portugal
+        CurrencyFormatter.shared.localeTest = .portugal
+        assertEqual(dollarsAndCents(from: -1000.0), ("-$1000,", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("-$1,", "00"))
+        assertEqual(dollarsAndCents(from: 0.0), ("$0,", "00"))
+        assertEqual(dollarsAndCents(from: 1.0), ("$1,", "00"))
+        assertEqual(dollarsAndCents(from: 1000.0), ("$1000,", "00"))
+
         // Germany
         CurrencyFormatter.shared.localeTest = .germany
         assertEqual(dollarsAndCents(from: -1000.0), ("-$1.000,", "00"))
@@ -208,6 +216,7 @@ extension CurrencyFormatterTests {
         case uk = "en_GB"
         case mexico = "es_MX"
         case brazil = "pt_BR"
+        case portugal = "pt_PT"
         case germany = "de_DE"
         case japan = "ja_JP" // no fractional numbers: 55.00 -> 55
 
