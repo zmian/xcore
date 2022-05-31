@@ -210,9 +210,9 @@ extension Decimal {
     /// // With "us" locale:
     /// // 0.377 → String → "0.377" ✅
     ///
-    /// // Without "pt_PT" locale:
+    /// // Without "pt_PT" (Portugal) locale:
     /// // 0.377 → String → "0,377" ❌
-    /// // Now this will fail conversion back to decimal withut knowing the original
+    /// // Now this will fail conversion back to decimal without knowing the original
     /// // locale.
     /// ```
     private static let usPosixFormatter = NumberFormatter().apply {
