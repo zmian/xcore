@@ -188,7 +188,3 @@ extension Decimal: DoubleDecimal {
         NSDecimalNumber(decimal: self)
     }
 }
-
-extension Int {
-    public static let defaultFractionDigits: Int = 1
-}

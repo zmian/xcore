@@ -186,3 +186,45 @@ extension Decimal {
         max(-exponent, 0)
     }
 }
+
+// MARK: - Formatted
+
+extension Decimal {
+    private static let usPosixFormatter = NumberFormatter().apply {
+        $0.numberStyle = .decimal
+        $0.maximumFractionDigits = .maxFractionDigits
+        $0.locale = .usPosix
+    }
+
+    private static let formatter = NumberFormatter().apply {
+        $0.numberStyle = .decimal
+        $0.maximumFractionDigits = .maxFractionDigits
+    }
+
+    @available(iOS, introduced: 14, deprecated: 15, message: "Use .formattedString() directly.")
+    public func formattedString() -> String {
+        Self.formatter.string(from: self) ?? ""
+    }
+
+    /// This is an implementation detail of `double` and `Double(any:)`.
+    ///
+    /// Don't use it.
+    ///
+    /// :nodoc:
+    var doubleValue: Double? {
+        guard let stringValue = Self.usPosixFormatter.string(from: self) else {
+            return nil
+        }
+
+        return Double(stringValue)
+    }
+
+    public var double: Double {
+        doubleValue ?? 0
+    }
+
+//    @available(iOS 15.0, *)
+//    public func formattedString() -> String {
+//        formatted(.number.precision(.fractionLength(0...Int.maxFractionDigits)))
+//    }
+}
