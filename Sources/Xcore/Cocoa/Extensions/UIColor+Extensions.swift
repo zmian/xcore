@@ -184,7 +184,9 @@ extension UIColor {
 // MARK: - Random
 
 extension UIColor {
-    public static func randomColor() -> UIColor {
+    /// Returns a random color.
+    @_disfavoredOverload
+    public static func random() -> UIColor {
         let hue = CGFloat(arc4random() % 256) / 256
         let saturation = CGFloat(arc4random() % 128) / 256 + 0.5
         let brightness = CGFloat(arc4random() % 128) / 256 + 0.5

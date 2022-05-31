@@ -18,6 +18,11 @@ extension Int {
         Self.numberFormatter.minimumIntegerDigits = amount
         return Self.numberFormatter.string(from: self)!
     }
+
+    /// Returns a random value.
+    public static func random() -> Self {
+        .random(in: 0...Int.defaultRandomUpperBound)
+    }
 }
 
 extension FixedWidthInteger {

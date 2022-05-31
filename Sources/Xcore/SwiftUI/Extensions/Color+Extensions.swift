@@ -31,6 +31,7 @@ extension Color {
 // MARK: - Random
 
 extension Color {
+    /// Returns a random color.
     public static func random() -> Self {
         let hue = CGFloat(arc4random() % 256) / 256
         let saturation = CGFloat(arc4random() % 128) / 256 + 0.5

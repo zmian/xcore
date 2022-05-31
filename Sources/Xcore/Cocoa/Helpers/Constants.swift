@@ -242,3 +242,13 @@ extension AppConstants {
         return max(0.0, remaining)
     }
 }
+
+extension Int {
+    static var maxFractionDigits: Int { 100 }
+    public static let defaultFractionDigits: Int = 1
+    public static var defaultRandomUpperBound = 100
+}
+
+extension Double {
+    public static var defaultRandomUpperBound = 100.0
+}

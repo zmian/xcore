@@ -7,6 +7,17 @@
 import Foundation
 import CoreGraphics
 
+// MARK: - Random
+
+extension Double {
+    /// Returns a random value within the specified range.
+    public static func random(_ lower: Double = 0, _ upper: Double = Double.defaultRandomUpperBound) -> Double {
+        .random(in: lower...upper)
+    }
+}
+
+// MARK: - Round
+
 extension Double {
     /// Returns this value rounded to an integral value using the specified rounding
     /// fraction digits.
