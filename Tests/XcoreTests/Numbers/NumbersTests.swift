@@ -64,19 +64,50 @@ final class NumbersTests: TestCase {
         XCTAssertEqual(values, expected)
     }
 
-    func testDoubleInit() {
-        XCTAssertEqual(Double("2.5" as Any), 2.5)
-        XCTAssertEqual(Double(Int(-7) as Any), -7)
-        XCTAssertEqual(Double(UInt(7) as Any), 7)
-        XCTAssertEqual(Double(CGFloat(2.5) as Any), 2.5)
-        XCTAssertEqual(Double(CGFloat(0.07) as Any), 0.07)
-        XCTAssertEqual(Double(Double(2.5) as Any), 2.5)
-        XCTAssertEqual(Double(Double(0.07) as Any), 0.07)
-        XCTAssertEqual(Double(Decimal(0.07) as Any), 0.07)
-        XCTAssertEqual(Double(Decimal(315.36) as Any), 315.36)
-        XCTAssertEqual(Double(Decimal(9.28) as Any), 9.28)
-        XCTAssertEqual(Double(Decimal(0.1736) as Any), 0.1736)
-        XCTAssertEqual(Double(Decimal(0.000001466) as Any), 0.000001466)
+    func testDoubleInitAny() {
+        XCTAssertEqual(Double(any: "2.5"), 2.5)
+        XCTAssertEqual(Double(any: Int(-7)), -7)
+        XCTAssertEqual(Double(any: UInt(7)), 7)
+        XCTAssertEqual(Double(any: CGFloat(2.5)), 2.5)
+        XCTAssertEqual(Double(any: CGFloat(0.07)), 0.07)
+        XCTAssertEqual(Double(any: Double(2.5)), 2.5)
+        XCTAssertEqual(Double(any: Double(0.07)), 0.07)
+        XCTAssertEqual(Double(any: Decimal(0.07)), 0.07)
+        XCTAssertEqual(Double(any: Decimal(315.36)), 315.36)
+        XCTAssertEqual(Double(any: Decimal(9.28)), 9.28)
+        XCTAssertEqual(Double(any: Decimal(0.1736)), 0.1736)
+        XCTAssertEqual(Double(any: Decimal(0.000001466)), 0.000001466)
+    }
+
+    func testDoubleInitTruncating() {
+        XCTAssertEqual(Double(truncating: Decimal(string: "2.5", locale: .us)!), 2.5)
+        XCTAssertEqual(Double(truncating: Decimal(2.5)), 2.5)
+
+        XCTAssertEqual(Double(truncating: Decimal(string: "-7", locale: .us)!), -7)
+        XCTAssertEqual(Double(truncating: Decimal(-7)), -7)
+
+        XCTAssertNotEqual(Double(truncating: Decimal(string: "0.07", locale: .us)!), 0.07)
+        XCTAssertNotEqual(Double(truncating: Decimal(0.07)), 0.07)
+
+        XCTAssertEqual(Double(truncating: Decimal(string: "315.36", locale: .us)!), 315.36)
+        XCTAssertEqual(Double(truncating: Decimal(315.36)), 315.3600000000001)
+        XCTAssertEqual(Double(any: Decimal(315.36)), 315.36)
+
+        XCTAssertEqual(Double(truncating: Decimal(string: "9.28", locale: .us)!), 9.28)
+        XCTAssertEqual(Double(truncating: Decimal(9.28)), 9.28)
+
+        XCTAssertEqual(Double(truncating: Decimal(string: "0.1736", locale: .us)!), 0.1736)
+        XCTAssertEqual(Double(truncating: Decimal(0.1736)), 0.1736)
+
+        XCTAssertEqual(NSDecimalNumber(decimal: Decimal(0.07)).doubleValue, 0.07000000000000003)
+        XCTAssertEqual(Double(any: Decimal(string: "0.07", locale: .us)!), 0.07)
+        XCTAssertEqual(Decimal(0.07), 0.07)
+        XCTAssertEqual(NSDecimalNumber(decimal: Decimal(string: "0.07", locale: .us)!).doubleValue, 0.06999999999999999)
+        XCTAssertEqual(NSNumber(value: Double(0.07)).doubleValue, 0.07)
+        XCTAssertEqual(0.07, 0.07)
+
+        XCTAssertNotEqual(Double(truncating: Decimal(string: "0.000001466", locale: .us)!), 0.000001466)
+        XCTAssertNotEqual(Double(truncating: Decimal(0.000001466)), 0.000001466)
     }
 
     func testDouble_formatted() {

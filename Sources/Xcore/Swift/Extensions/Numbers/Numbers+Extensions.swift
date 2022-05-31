@@ -203,7 +203,7 @@ extension Double {
     }
 
     @_disfavoredOverload
-    public init?(_ value: Any?) {
+    public init?(any value: Any?) {
         guard let value = value else {
             return nil
         }
@@ -218,8 +218,8 @@ extension Double {
             return
         }
 
-        if let decimal = value as? Decimal {
-            self.init(decimal.formattedString())
+        if let double = (value as? Decimal)?.doubleValue {
+            self.init(double)
             return
         }
 
@@ -264,6 +264,12 @@ extension Double {
 // MARK: - Formatted
 
 extension Decimal {
+    private static let usPosixFormatter = NumberFormatter().apply {
+        $0.numberStyle = .decimal
+        $0.maximumFractionDigits = .maxFractionDigits
+        $0.locale = .usPosix
+    }
+
     private static let formatter = NumberFormatter().apply {
         $0.numberStyle = .decimal
         $0.maximumFractionDigits = .maxFractionDigits
@@ -272,6 +278,18 @@ extension Decimal {
     @available(iOS, introduced: 14, deprecated: 15, message: "Use .formattedString() directly.")
     public func formattedString() -> String {
         Self.formatter.string(from: self) ?? ""
+    }
+
+    fileprivate var doubleValue: Double? {
+        guard let stringValue = Self.usPosixFormatter.string(from: self) else {
+            return nil
+        }
+
+        return Double(stringValue)
+    }
+
+    public var double: Double {
+        doubleValue ?? 0
     }
 
 //    @available(iOS 15.0, *)
