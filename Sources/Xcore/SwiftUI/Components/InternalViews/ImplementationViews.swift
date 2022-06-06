@@ -13,17 +13,17 @@ import SwiftUI
 /// :nodoc:
 public struct _XIVTSSV: View {
     @Environment(\.theme) private var theme
-    let title: Text
-    let subtitle: Text?
-    let spacing: CGFloat?
+    private let title: Text
+    private let subtitle: Text?
+    private let spacing: CGFloat?
 
-    init<S1: StringProtocol, S2: StringProtocol>(title: S1, subtitle: S2?, spacing: CGFloat?) {
+    public init<S1: StringProtocol, S2: StringProtocol>(title: S1, subtitle: S2?, spacing: CGFloat?) {
         self.title = Text(title)
         self.subtitle = Text(subtitle)
         self.spacing = spacing
     }
 
-    init(title: Text, subtitle: Text?, spacing: CGFloat?) {
+    public init(title: Text, subtitle: Text?, spacing: CGFloat?) {
         self.title = title
         self.subtitle = subtitle
         self.spacing = spacing
