@@ -18,10 +18,11 @@ public struct LoadingSwitchToggleStyle: ToggleStyle {
 
                 if isLoading {
                     ProgressView()
-                    // 50 points is the width of Switch control.
-                    // Width is set to 50 to avoid content shifting when changing state between
-                    // loading.
-                    .frame(width: 50, alignment: .trailing)
+                    // 51 x 31 points is the size of Switch control.
+                    // Ideal size is set to match switch to avoid content shifting when changing
+                    // state between loading.
+                    .frame(idealWidth: 51, idealHeight: 31, alignment: .trailing)
+                    .fixedSize()
                 } else {
                     Toggle(isOn: configuration.$isOn) {
                         EmptyView()
