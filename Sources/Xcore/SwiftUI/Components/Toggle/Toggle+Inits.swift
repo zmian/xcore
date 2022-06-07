@@ -7,6 +7,21 @@
 import SwiftUI
 
 extension Toggle {
+    /// Creates a toggle that generates its label from a title string.
+    ///
+    /// - Parameters:
+    ///   - title: A string that describes the purpose of the toggle.
+    ///   - isOn: A binding to a property that determines whether the toggle is on or off.
+    public init<S1>(
+        _ title: S1,
+        isOn: Binding<Bool>,
+        spacing: CGFloat? = nil
+    ) where Label == _XIVTSSV, S1: StringProtocol {
+        self.init(isOn: isOn) {
+            _XIVTSSV(title: title, spacing: spacing)
+        }
+    }
+
     /// Creates a toggle that generates its label from a title and subtitle strings.
     ///
     /// - Parameters:
