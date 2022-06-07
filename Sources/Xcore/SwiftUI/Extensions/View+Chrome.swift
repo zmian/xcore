@@ -23,6 +23,14 @@ extension View {
         statusBarBackground(.colored(color))
     }
 
+    /// Configures the status bar background color.
+    ///
+    /// - Parameter color: The background color for the status bar.
+    @_disfavoredOverload
+    public func statusBarBackground(_ color: UIColor) -> some View {
+        statusBarBackground(Color(color))
+    }
+
     /// Configures the status bar background view.
     ///
     /// - Parameter view: The background view for the status bar.
@@ -43,6 +51,14 @@ extension View {
     /// - Parameter color: The background color for the navigation bar.
     public func navigationBarBackground(_ color: Color) -> some View {
         navigationBarBackground(.colored(color))
+    }
+
+    /// Configures the navigation bar background color.
+    ///
+    /// - Parameter color: The background color for the navigation bar.
+    @_disfavoredOverload
+    public func navigationBarBackground(_ color: UIColor) -> some View {
+        navigationBarBackground(Color(color))
     }
 
     /// Configures the navigation bar background view.
