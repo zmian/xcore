@@ -137,6 +137,17 @@ extension ViewChrome {
             }
         }
 
+        public var isTransparent: Bool {
+            switch self {
+                case .transparent:
+                    return true
+                case .blurred, .view:
+                    return false
+                case let .colored(color):
+                    return UIColor(color).alpha == 0
+            }
+        }
+
         public static func ==(lhs: Self, rhs: Self) -> Bool {
             String(reflecting: lhs) == String(reflecting: rhs)
         }
@@ -169,6 +180,7 @@ private struct ViewChromeModifier: ViewModifier {
                 }
             }
         }
+        .preference(key: ViewChrome.PreferenceKey.self, value: chrome)
     }
 
     private func bar<V: View>(_ view: V, in geometry: GeometryProxy) -> some View {
@@ -189,5 +201,24 @@ private struct ViewChromeModifier: ViewModifier {
             case .navigationBar:
                 return geometry.safeAreaInsets.top
         }
+    }
+}
+
+// MARK: - PreferenceKey
+
+extension ViewChrome {
+    fileprivate struct PreferenceKey: SwiftUI.PreferenceKey {
+        static var defaultValue: ViewChrome?
+
+        static func reduce(value: inout Value, nextValue: () -> Value) {
+            value = nextValue()
+        }
+    }
+}
+
+extension View {
+    /// Adds an action to perform when the view's chrome changes.
+    public func onViewChromeChange(perform action: @escaping (ViewChrome?) -> Void) -> some View {
+        onPreferenceChange(ViewChrome.PreferenceKey.self, perform: action)
     }
 }
