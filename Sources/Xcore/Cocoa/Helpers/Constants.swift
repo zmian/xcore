@@ -83,6 +83,10 @@ extension CGFloat {
     /// The default spacing value at a normal dynamic type setting.
     public static var defaultSpacing: Self = .s5
 
+    /// The default spacing value at a normal dynamic type setting for inter items
+    /// in horizontal axis.
+    public static var interItemHSpacing: Self = .s3
+
     /// A convenience method to return `1` pixel relative to the screen scale.
     public static var onePixel: Self {
         enum Static {
@@ -115,6 +119,10 @@ extension UIEdgeInsets {
 
     /// The default spacing value at a normal dynamic type setting.
     public static var defaultSpacing: Self { .init(.defaultSpacing) }
+
+    /// The default spacing value at a normal dynamic type setting for inter items
+    /// in horizontal axis.
+    public static var interItemHSpacing: Self { .init(.interItemHSpacing) }
 }
 
 // MARK: - EdgeInsets
