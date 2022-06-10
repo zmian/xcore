@@ -12,8 +12,15 @@ extension Text {
     ///
     /// It ensures that text always occupies provided number of lines regardless of
     /// the actual number of lines of the text content.
-    public func fixedLines(_ lines: Int) -> some View {
-        ZStack {
+    ///
+    /// - Parameters:
+    ///   - lines: The number of lines to enfore for the text.
+    ///   - alignment: The alignment of this view inside the resulting frame. Note
+    ///     that most alignment values have no apparent effect when the size of the
+    ///     frame happens to match that of this view.
+    /// - Returns: A view with fixed lines of text.
+    public func fixedLines(_ lines: Int, alignment: Alignment = .center) -> some View {
+        ZStack(alignment: .top) {
             self
                 .lineLimit(lines)
                 .minimumScaleFactor(0.2)
@@ -24,6 +31,6 @@ extension Text {
                 .fixedSize(horizontal: false, vertical: true)
                 .hidden()
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: alignment)
     }
 }
