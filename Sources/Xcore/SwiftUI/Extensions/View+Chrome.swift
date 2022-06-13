@@ -211,7 +211,7 @@ extension ViewChrome {
         static var defaultValue: ViewChrome?
 
         static func reduce(value: inout Value, nextValue: () -> Value) {
-            value = nextValue()
+            value = nextValue() ?? value
         }
     }
 }
