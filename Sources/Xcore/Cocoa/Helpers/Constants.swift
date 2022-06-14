@@ -252,8 +252,8 @@ extension AppConstants {
 }
 
 extension Int {
-    static var maxFractionDigits: Int { 100 }
-    public static let defaultFractionDigits: Int = 1
+    public static var maxFractionDigits: Int = 100
+    public static var defaultFractionDigits: Int = 2
     public static var defaultRandomUpperBound = 100
 }
 
