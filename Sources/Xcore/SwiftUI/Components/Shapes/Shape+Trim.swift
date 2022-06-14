@@ -56,7 +56,8 @@ extension Shape {
     }
 }
 
-/// A shape with a trim effect applied to it.
+/// A shape with a trim effect applied to it and conditionally preserving
+/// `InsettableShape` conformance of the underlying shape.
 public struct TrimmedShape<Content>: Shape where Content: Shape {
     private let startFraction: CGFloat
     private let endFraction: CGFloat
