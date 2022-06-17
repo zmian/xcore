@@ -103,12 +103,12 @@ final class MoneyTests: TestCase {
         let amount7 = Money(1340)
             .style(.abbreviation(threshold: 0))
 
-        XCTAssertEqual(String(describing: amount7), "$1.3K")
+        XCTAssertEqual(String(describing: amount7), "$1.34K")
 
         let amount8 = Money(132_456)
             .style(.abbreviation(threshold: 0))
 
-        XCTAssertEqual(String(describing: amount8), "$132.5K")
+        XCTAssertEqual(String(describing: amount8), "$132.46K")
     }
 
     func testMoneyStyles_abbreviation_fallback_removeMinorUnit() {
@@ -145,12 +145,12 @@ final class MoneyTests: TestCase {
         let amount7 = Money(1340)
             .style(.abbreviation(threshold: 0, fallback: .removeMinorUnit))
 
-        XCTAssertEqual(String(describing: amount7), "$1.3K")
+        XCTAssertEqual(String(describing: amount7), "$1.34K")
 
         let amount8 = Money(132_456)
             .style(.abbreviation(threshold: 0, fallback: .removeMinorUnit))
 
-        XCTAssertEqual(String(describing: amount8), "$132.5K")
+        XCTAssertEqual(String(describing: amount8), "$132.46K")
     }
 
     func testCalculatePrecision() {

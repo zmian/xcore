@@ -714,6 +714,14 @@ final class DateTest: XCTestCase {
         XCTAssertTrue(currentDate_Year.is(.current(.year)), "Expected \(currentDate_Year.component(.year)) to be year current \(now.component(.year)).")
     }
 
+    func testComparisonOperatorWeekend() {
+        let nonWeekend = Date(year: 2000, month: 1, day: 3)
+        XCTAssertFalse(nonWeekend.is(.weekend))
+
+        let weekend = Date(year: 2000, month: 1, day: 1)
+        XCTAssertTrue(weekend.is(.weekend))
+    }
+
     func testDateIntervalsStaticDates() {
         // Week
         let thisWeekStartDate = Date(year: 2020, month: 1, day: 5, hour: 0, minute: 0, second: 0)

@@ -16,18 +16,15 @@ public struct LoadingSwitchToggleStyle: ToggleStyle {
 
                 Spacer()
 
-                if isLoading {
+                ZStack(alignment: .trailing) {
                     ProgressView()
-                        // 51 x 31 points is the size of Switch control.
-                        // Ideal size is set to match switch to avoid content shifting when changing
-                        // state between loading.
-                        .frame(idealWidth: 51, idealHeight: 31, alignment: .trailing)
-                        .fixedSize()
-                } else {
+                        .hidden(!isLoading)
+
                     Toggle(isOn: configuration.$isOn) {
                         EmptyView()
                     }
                     .labelsHidden()
+                    .hidden(isLoading)
                 }
             }
             .animation(.default, value: isLoading)

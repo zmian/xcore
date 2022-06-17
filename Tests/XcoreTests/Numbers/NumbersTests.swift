@@ -79,10 +79,10 @@ final class NumbersTests: TestCase {
             (12000.0, "12K"),
             (120000.0, "120K"),
             (1200000.0, "1.2M"),
-            (1340.0, "1.3K"),
-            (132456.0, "132.5K"),
-            (132456.80, "132.5K"),
-            (1_116_400_000.00, "1.1B")
+            (1340.0, "1.34K"),
+            (132456.0, "132.46K"),
+            (132456.80, "132.46K"),
+            (1_116_400_000.00, "1.12B")
         ]
 
         for (input, output) in values1 {
@@ -154,7 +154,7 @@ final class NumbersTests: TestCase {
         ]
 
         for (input, output) in values2 {
-            XCTAssertEqual(output, input.abbreviate())
+            XCTAssertEqual(output, input.abbreviate(fractionDigits: 1))
         }
     }
 
@@ -171,7 +171,7 @@ final class NumbersTests: TestCase {
         ]
 
         for (input, output) in values {
-            XCTAssertEqual(output, input.abbreviate(threshold: 2_000_000))
+            XCTAssertEqual(output, input.abbreviate(threshold: 2_000_000, fractionDigits: 1))
         }
     }
 
@@ -182,7 +182,7 @@ final class NumbersTests: TestCase {
             (140_800_200_000, "140,8B"),
             (170_400_800_000_000, "170,4T"),
             (-170_400_800_000_000, "-170,4T"),
-            (-9_223_372_036_854_775_808, "-9.223.372T")
+            (-9_223_372_036_854_775_808, "-9.223.372,04T")
         ]
 
         for (input, output) in valuesTr {
@@ -199,7 +199,7 @@ final class NumbersTests: TestCase {
         ]
 
         for (input, output) in valuesFr {
-            XCTAssertEqual(output, input.abbreviate(locale: .fr))
+            XCTAssertEqual(output, input.abbreviate(fractionDigits: 1, locale: .fr))
         }
     }
 }
