@@ -19,6 +19,8 @@ extension Date {
         /// Receiver must be yesterday with granularity matching at least down to the
         /// `day`. For example, the receiver year, month, day must match yesterday.
         case yesterday
+        /// Receiver must be weekend.
+        case weekend
         /// Receiver component must be equal to given `component + 1`.
         case next(Calendar.Component)
         /// Receiver component must be equal to given `component - 1`.
@@ -70,6 +72,8 @@ extension Date {
                 return `is`(.next(.day), in: calendar)
             case .yesterday:
                 return `is`(.previous(.day), in: calendar)
+            case .weekend:
+                return calendar.isDateInWeekend(self)
             case let .next(granularity):
                 let next = Date().adjusting(granularity, by: 1, in: calendar)
                 return isSame(next, granularity: granularity, in: calendar)
