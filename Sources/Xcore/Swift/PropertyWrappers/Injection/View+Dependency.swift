@@ -46,17 +46,13 @@ extension View {
 /// }
 /// ```
 private struct DependencyWriter<Content>: View where Content: View {
-    private let content: () -> Content
+    let body: Content
 
     init(
         content: @autoclosure @escaping () -> Content,
         write: (DependencyValues.Type) -> Void
     ) {
-        self.content = content
+        self.body = content()
         write(DependencyValues.self)
-    }
-
-    var body: some View {
-        content()
     }
 }
