@@ -8,7 +8,7 @@ import Foundation
 
 extension FeatureFlag {
     public static var oneTimeCodeCharacterLimit: Int {
-        Key("one_time_code_character_limit").value(default: 6)
+        key(#function).value(default: 6)
     }
 }
 
