@@ -31,7 +31,7 @@ extension FeatureFlag {
     /// hash.
     public static var systemForceRefreshHash: String? {
         guard
-            let value: String = Key("system_force_refresh_hash").value(),
+            let value: String = key(#function).value(),
             !value.isEmpty
         else {
             return nil
