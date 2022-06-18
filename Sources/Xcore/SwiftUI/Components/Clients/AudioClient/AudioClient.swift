@@ -48,7 +48,7 @@ extension DependencyValues {
     /// Provides functionality for playing audio on the device.
     @discardableResult
     public static func audio(_ value: AudioClient) -> Self.Type {
-        set(\.audio, value)
+        self[\.audio] = value
         return Self.self
     }
 }

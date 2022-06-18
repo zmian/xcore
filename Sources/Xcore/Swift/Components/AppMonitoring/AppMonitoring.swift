@@ -214,7 +214,7 @@ extension DependencyValues {
 
     @discardableResult
     public static func appMonitoring(_ value: AppMonitoring) -> Self.Type {
-        set(\.appMonitoring, value)
+        self[\.appMonitoring] = value
         return Self.self
     }
 }

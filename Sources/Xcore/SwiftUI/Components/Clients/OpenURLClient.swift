@@ -141,7 +141,7 @@ extension DependencyValues {
     /// Provides functionality for opening a URL.
     @discardableResult
     public static func openUrl(_ value: OpenURLClient) -> Self.Type {
-        set(\.openUrl, value)
+        self[\.openUrl] = value
         return Self.self
     }
 }

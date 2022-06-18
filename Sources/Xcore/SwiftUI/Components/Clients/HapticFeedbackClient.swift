@@ -79,7 +79,7 @@ extension DependencyValues {
 
     @discardableResult
     public static func hapticFeedback(_ value: HapticFeedbackClient) -> Self.Type {
-        set(\.hapticFeedback, value)
+        self[\.hapticFeedback] = value
         return Self.self
     }
 }

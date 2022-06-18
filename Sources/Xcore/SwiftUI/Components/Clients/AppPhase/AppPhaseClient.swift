@@ -407,7 +407,7 @@ extension DependencyValues {
     /// operational state.
     @discardableResult
     public static func appPhase(_ value: AppPhaseClient) -> Self.Type {
-        set(\.appPhase, value)
+        self[\.appPhase] = value
         return Self.self
     }
 }

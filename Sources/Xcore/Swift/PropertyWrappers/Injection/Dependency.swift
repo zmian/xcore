@@ -47,7 +47,7 @@ import Foundation
 ///         let viewModel = ViewModel()
 ///         XCTAssertEqual(viewModel.myCustomValue, "Failing value")
 ///
-///         DependencyValues.set(\.myCustomValue, "hello")
+///         DependencyValues[\.myCustomValue] = "hello"
 ///         XCTAssertEqual(viewModel.myCustomValue, "hello")
 ///     }
 /// }
@@ -110,7 +110,7 @@ public struct Dependency<Value> {
     /// }
     /// ```
     public var wrappedValue: Value {
-        DependencyValues.get(keyPath)
+        DependencyValues[keyPath]
     }
 }
 
@@ -165,7 +165,7 @@ public struct DependencyValues {
 
             #if DEBUG
             // When we are calling set key path using
-            // `DependencyValues.set(\.myCustomValue, "hello")` it invokes the getter first
+            // `DependencyValues[\.myCustomValue] = "hello"` it invokes the getter first
             // and in testing mode it incorrectly fails the tests when trying to set the
             // dependency explicitly.
             // See: https://bugs.swift.org/browse/SR-10203
@@ -173,7 +173,7 @@ public struct DependencyValues {
                 // If app is running in testing mode fail the test.
                 if ProcessInfo.Arguments.isTesting {
                     let dependencyName = "\"\(K.Value.self)\""
-                    let example = "\"DependencyValues.set(\\.pasteboard, .stub)\""
+                    let example = #"DependencyValues[\.pasteboard] = .stub"#
                     internal_XCTFail("You are trying to access \(dependencyName) dependency in this test case without assigning it. You can set this dependency as: \(example)")
                     return K.defaultValue
                 }
@@ -188,17 +188,19 @@ public struct DependencyValues {
         }
     }
 
-    @discardableResult
-    public static func set<V>(_ keyPath: WritableKeyPath<Self, V>, _ value: V) -> Self {
-        shared.isSetterOnKeyPathCalled = true
-        shared[keyPath: keyPath] = value
-        shared.isSetterOnKeyPathCalled = false
-        return shared
+    /// Accesses the dependency value associated with a key path.
+    public static subscript<T>(_ keyPath: KeyPath<Self, T>) -> T {
+        shared[keyPath: keyPath]
     }
 
-    @discardableResult
-    public static func get<V>(_ keyPath: KeyPath<Self, V>) -> V {
-        shared[keyPath: keyPath]
+    /// Accesses or updates the dependency value associated with a key path.
+    public static subscript<T>(_ keyPath: WritableKeyPath<Self, T>) -> T {
+        get { shared[keyPath: keyPath] }
+        set {
+            shared.isSetterOnKeyPathCalled = true
+            shared[keyPath: keyPath] = newValue
+            shared.isSetterOnKeyPathCalled = false
+        }
     }
 
     /// Reset all of the ``DependencyValues`` storage.
