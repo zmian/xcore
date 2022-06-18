@@ -52,5 +52,19 @@ extension Publisher where Failure == Never {
     }
 }
 
+extension Publisher {
+    /// Publishes any value that satisfy the given predicate.
+    public func match(_ predicate: @escaping (Output) -> Bool) -> AnyPublisher<Void, Failure> {
+        compactMap { predicate($0) ? $0 : nil }
+            .eraseToVoid()
+            .eraseToAnyPublisher()
+    }
+
+    /// Publishes any value that equals the given value.
+    public func when(_ value: Output) -> AnyPublisher<Void, Failure> where Output: Equatable {
+        match { $0 == value }
+    }
+}
+
 private var cancellables = Set<AnyCancellable>()
 #endif
