@@ -10,6 +10,68 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 internal enum Localized {
+  /// Cancel
+  internal static let cancel = Localized.tr("Localizable", "cancel")
+  /// Contact Support
+  internal static let contactSupport = Localized.tr("Localizable", "contact_support")
+  /// Continue
+  internal static let `continue` = Localized.tr("Localizable", "continue")
+  /// Done
+  internal static let done = Localized.tr("Localizable", "done")
+  /// Enable
+  internal static let enable = Localized.tr("Localizable", "enable")
+  /// Get Started
+  internal static let getStarted = Localized.tr("Localizable", "get_started")
+  /// Help
+  internal static let help = Localized.tr("Localizable", "help")
+  /// Hide
+  internal static let hide = Localized.tr("Localizable", "hide")
+  /// Learn More
+  internal static let learnMore = Localized.tr("Localizable", "learn_more")
+  /// Next
+  internal static let next = Localized.tr("Localizable", "next")
+  /// No
+  internal static let no = Localized.tr("Localizable", "no")
+  /// OK
+  internal static let ok = Localized.tr("Localizable", "ok")
+  /// Open App Settings
+  internal static let openAppSettings = Localized.tr("Localizable", "open_app_settings")
+  /// Read More
+  internal static let readMore = Localized.tr("Localizable", "read_more")
+  /// Remove
+  internal static let remove = Localized.tr("Localizable", "remove")
+  /// Resend
+  internal static let resend = Localized.tr("Localizable", "resend")
+  /// Retry
+  internal static let retry = Localized.tr("Localizable", "retry")
+  /// See All
+  internal static let seeAll = Localized.tr("Localizable", "see_all")
+  /// See More
+  internal static let seeMore = Localized.tr("Localizable", "see_more")
+  /// Share
+  internal static let share = Localized.tr("Localizable", "share")
+  /// Log In
+  internal static let signin = Localized.tr("Localizable", "signin")
+  /// Sign Up
+  internal static let signup = Localized.tr("Localizable", "signup")
+  /// Start
+  internal static let start = Localized.tr("Localizable", "start")
+  /// Submit
+  internal static let submit = Localized.tr("Localizable", "submit")
+  /// See All
+  internal static let toggleSeeAll = Localized.tr("Localizable", "toggle_see_all")
+  /// See Less
+  internal static let toggleSeeLess = Localized.tr("Localizable", "toggle_see_less")
+  /// See More
+  internal static let toggleSeeMore = Localized.tr("Localizable", "toggle_see_more")
+  /// Track
+  internal static let track = Localized.tr("Localizable", "track")
+  /// Unlink
+  internal static let unlink = Localized.tr("Localizable", "unlink")
+  /// Unlock
+  internal static let unlock = Localized.tr("Localizable", "unlock")
+  /// Yes
+  internal static let yes = Localized.tr("Localizable", "yes")
 
   internal enum Error {
     /// From your device settings, enable camera access.
@@ -40,6 +102,11 @@ internal enum Localized {
     internal static let sessionExpiredMessage = Localized.tr("Localizable", "error.session_expired_message")
     /// Session Expired
     internal static let sessionExpiredTitle = Localized.tr("Localizable", "error.session_expired_title")
+  }
+
+  internal enum MailApp {
+    /// Choose Your Mail App
+    internal static let `open` = Localized.tr("Localizable", "mail_app.open")
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
