@@ -98,7 +98,7 @@ extension DependencyValues {
     /// Provides functionality for evaluating and receiving events for app’s state.
     @discardableResult
     public static func appStatus(_ value: AppStatusClient) -> Self.Type {
-        set(\.appStatus, value)
+        self[\.appStatus] = value
         return Self.self
     }
 }

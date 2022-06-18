@@ -33,7 +33,7 @@ extension View {
     /// - Returns: A view that has the given value set in its dependency.
     public func dependency<V>(_ keyPath: WritableKeyPath<DependencyValues, V>, _ value: V) -> some View {
         DependencyWriter(content: self) { values in
-            values.set(keyPath, value)
+            values[keyPath] = value
         }
     }
 }
@@ -42,7 +42,7 @@ extension View {
 ///
 /// ```swift
 /// DependencyWriter { values in
-///     values.set(\.pasteboard, .live)
+///     values[\.pasteboard] = .live
 /// }
 /// ```
 private struct DependencyWriter<Content>: View where Content: View {

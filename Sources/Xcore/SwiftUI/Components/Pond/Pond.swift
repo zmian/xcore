@@ -129,7 +129,7 @@ extension DependencyValues {
     /// Provide functionality for key value storage.
     @discardableResult
     public static func pond(_ value: Pond) -> Self.Type {
-        set(\.pond, value)
+        self[\.pond] = value
         return Self.self
     }
 }

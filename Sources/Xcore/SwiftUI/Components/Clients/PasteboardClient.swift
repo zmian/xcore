@@ -80,7 +80,7 @@ extension DependencyValues {
     /// Provides functionality for copying a string to pasteboard.
     @discardableResult
     public static func pasteboard(_ value: PasteboardClient) -> Self.Type {
-        set(\.pasteboard, value)
+        self[\.pasteboard] = value
         return Self.self
     }
 }
