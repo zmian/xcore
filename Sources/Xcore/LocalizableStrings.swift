@@ -108,6 +108,17 @@ internal enum Localized {
     /// Choose Your Mail App
     internal static let `open` = Localized.tr("Localizable", "mail_app.open")
   }
+
+  internal enum Signout {
+    /// Log Out
+    internal static let title = Localized.tr("Localizable", "signout.title")
+    internal enum ConfirmPopup {
+      /// Are you sure you would like to log out?
+      internal static let message = Localized.tr("Localizable", "signout.confirm_popup.message")
+      /// Log Out
+      internal static let title = Localized.tr("Localizable", "signout.confirm_popup.title")
+    }
+  }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces
