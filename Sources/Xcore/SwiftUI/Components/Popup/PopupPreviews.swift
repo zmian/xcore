@@ -11,11 +11,12 @@ import SwiftUI
 private struct PopupPreviews: View {
     private let L = Samples.Strings.locationAlert
     @Environment(\.theme) private var theme
-    @State private var presentSystemAlert = false
-    @State private var presentAlert = false
-    @State private var presentAlertWithHeader = false
-    @State private var presentToast = false
-    @State private var presentWindow = false
+    @State private var showSystemAlert = false
+    @State private var showAlert = false
+    @State private var showAlertWithHeader = false
+    @State private var showToast = false
+    @State private var showWindow = false
+    @State private var openMailApp = false
 
     var body: some View {
         List {
@@ -23,21 +24,21 @@ private struct PopupPreviews: View {
                 "Show System Alert",
                 color: .blue,
                 image: .appleLogo,
-                toggle: $presentSystemAlert
+                toggle: $showSystemAlert
             )
 
             row(
                 "Show Alert",
                 color: .indigo,
                 image: .number1Circle,
-                toggle: $presentAlert
+                toggle: $showAlert
             )
 
             row(
                 "Show Alert with Header",
                 color: .indigo,
                 image: .number1Circle,
-                toggle: $presentAlertWithHeader
+                toggle: $showAlertWithHeader
             )
 
             ShowPartDetail()
@@ -46,47 +47,55 @@ private struct PopupPreviews: View {
                 "Show Toast",
                 color: .green,
                 image: .number3Circle,
-                toggle: $presentToast
+                toggle: $showToast
             )
 
             row(
                 "Show Window",
                 color: .green,
                 image: .macWindow,
-                toggle: $presentWindow
+                toggle: $showWindow
+            )
+
+            row(
+                "Open Mail",
+                color: .green,
+                image: .mail,
+                toggle: $openMailApp
             )
         }
         .navigationTitle("Popups")
-        .alert(L.title, isPresented: $presentSystemAlert) {
+        .openMailApp($openMailApp)
+        .alert(L.title, isPresented: $showSystemAlert) {
             Button("OK") {
-                presentSystemAlert = false
+                showSystemAlert = false
             }
         }
-        .popup(L.title, message: L.message, isPresented: $presentAlert, dismissMethods: [.xmark, .tapOutside]) {
+        .popup(L.title, message: L.message, isPresented: $showAlert, dismissMethods: [.xmark, .tapOutside]) {
             Button("OK") {
-                presentAlert = false
+                showAlert = false
             }
             .buttonStyle(.fill)
         }
-        .popup(isPresented: $presentAlertWithHeader) {
+        .popup(isPresented: $showAlertWithHeader) {
             StandardPopupAlert(Text(L.title), message: Text(L.message)) {
                 Image(system: .locationSlashFill)
                     .resizable()
                     .frame(50)
             } footer: {
                 Button("OK") {
-                    presentAlertWithHeader = false
+                    showAlertWithHeader = false
                 }
                 .buttonStyle(.fill)
             }
             .popupPreferredWidth(400)
         }
-        .popup(isPresented: $presentToast, style: .toast) {
+        .popup(isPresented: $showToast, style: .toast) {
             CapsuleView("Z’s AirPods", subtitle: "Connected", systemImage: .airpods)
         }
-        .window(isPresented: $presentWindow) {
+        .window(isPresented: $showWindow) {
             Button {
-                presentWindow = false
+                showWindow = false
             } label: {
                 CapsuleView("Tap to Hide Window", systemImage: .macWindow)
                     .foregroundColor(.indigo)
