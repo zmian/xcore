@@ -16,7 +16,7 @@ extension Image {
     ///   - resizingMode: The mode by which SwiftUI resizes the image.
     /// - Returns: An image, with the new resizing behavior set.
     public func resizable(
-        isActive: Bool,
+        _ isActive: Bool,
         capInsets: EdgeInsets = EdgeInsets(),
         resizingMode: Image.ResizingMode = .stretch
     ) -> Image {
