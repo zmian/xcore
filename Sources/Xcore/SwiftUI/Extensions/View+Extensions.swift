@@ -23,6 +23,18 @@ extension View {
     public func eraseToAnyView() -> AnyView {
         AnyView(self)
     }
+
+    /// Embed this view in `Link` if `url` isn't nil.
+    @ViewBuilder
+    public func embedInLink(_ url: URL?) -> some View {
+        if let url = url {
+            Link(destination: url) {
+                self
+            }
+        } else {
+            self
+        }
+    }
 }
 
 // MARK: - BackgroundColor
@@ -196,14 +208,17 @@ extension View {
     }
 }
 
-// MARK: - Spacer
+// MARK: - Clip
 
-public func Spacer(height: CGFloat) -> some View {
-    Spacer()
-        .frame(height: height)
-}
+extension View {
+    /// Clips the content by setting offset to `.onePixel` to hide the last
+    /// separator automatically.
+    public func clipLastSeparator() -> some View {
+        clipped(offsetY: -.onePixel)
+    }
 
-public func Spacer(width: CGFloat) -> some View {
-    Spacer()
-        .frame(width: width)
+    /// Clips the content by setting offset Y by given value.
+    public func clipped(offsetY: CGFloat) -> some View {
+        clipShape(Rectangle().offset(y: offsetY))
+    }
 }
