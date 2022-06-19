@@ -42,6 +42,10 @@ internal enum Localized {
   internal static let remove = Localized.tr("Localizable", "remove")
   /// Resend
   internal static let resend = Localized.tr("Localizable", "resend")
+  /// Plural format key: "You can resend in %1$#@seconds@"
+  internal static func resendAfter(_ p1: Int) -> String {
+    return Localized.tr("Localizable", "resend_after", p1)
+  }
   /// Retry
   internal static let retry = Localized.tr("Localizable", "retry")
   /// See All
