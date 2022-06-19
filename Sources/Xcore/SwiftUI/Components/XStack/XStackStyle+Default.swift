@@ -53,8 +53,9 @@ struct DefaultXStackStyle: XStackStyle {
                     $0.foregroundColor($1)
                 }
 
+            Spacer(minLength: 0)
+
             configuration.value
-                .frame(maxWidth: .infinity, alignment: .trailing)
                 .multilineTextAlignment(.trailing)
                 .unwrap(valueForegroundColor) {
                     $0.foregroundColor($1)
