@@ -40,6 +40,9 @@ struct XStackView: View {
                     .multilineTextAlignment(.trailing)
                 }
 
+                XStack("Language", value: "The Swift Programing Language by Apple")
+                    .xstackStyle(alignment: .firstTextBaseline)
+
                 XStack("Version")
 
                 XStack("Version", value: Bundle.main.versionBuildNumber)
