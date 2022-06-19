@@ -253,8 +253,9 @@ extension AppConstants {
 
 extension Int {
     public static var maxFractionDigits: Int = 100
-    public static var defaultFractionDigits: Int = 2
     public static var defaultRandomUpperBound = 100
+    public static var defaultFractionDigits: Int = 2
+    public static var defaultMoneyPrecision: Int = 2
 }
 
 extension Double {
