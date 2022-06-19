@@ -34,20 +34,31 @@ final class MoneyTests: TestCase {
 
         XCTAssertEqual(String(describing: amount4), "-$120.00")
 
-        let amount5 = Money(120)
+        let amount5 = Money(-120)
+        XCTAssertEqual(amount5.string(), "-$120.00")
+    }
+
+    func testMoneyStyles_signed() {
+        // Sign for positive value
+        let amount1 = Money(120)
             .style(.default)
-            .sign(.init(positive: "+", negative: "-"))
+            .sign(.both)
 
-        XCTAssertEqual(String(describing: amount5), "+$120.00")
+        XCTAssertEqual(String(describing: amount1), "+$120.00")
 
-        let amount6 = Money(-120)
+        // Sign for negative value
+        let amount2 = Money(-120)
             .style(.default)
-            .sign(.init(positive: "+", negative: "-"))
+            .sign(.both)
 
-        XCTAssertEqual(String(describing: amount6), "-$120.00")
+        XCTAssertEqual(String(describing: amount2), "-$120.00")
 
-        let amount7 = Money(-120)
-        XCTAssertEqual(amount7.string(), "-$120.00")
+        // Sign for zero value
+        let amount3 = Money(0)
+            .style(.default)
+            .sign(.both)
+
+        XCTAssertEqual(String(describing: amount3), "$0.00")
     }
 
     func testMoneyStyles_removeMinorUnit() {

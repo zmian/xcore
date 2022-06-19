@@ -111,7 +111,7 @@ extension CurrencyFormatter {
         formatter.minimumFractionDigits = limits.lowerBound
         formatter.maximumFractionDigits = limits.upperBound
 
-        let amountString = with(sign: sign) {
+        let amountString = with(sign: sign, amount: amount) {
             formatter.string(from: amount)!
         }
 
@@ -277,7 +277,14 @@ extension NumberFormatter {
 // MARK: - Sign
 
 extension CurrencyFormatter {
-    private func with<T>(sign: Money.Sign, _ block: () -> T) -> T {
+    private func with<T>(sign: Money.Sign, amount: Decimal, _ block: () -> T) -> T {
+        var sign = sign
+
+        // Omit sign for `0` amount.
+        if amount == 0 {
+            sign = .none
+        }
+
         let existingPositivePrefix = formatter.positivePrefix
         let existingNegativePrefix = formatter.negativePrefix
         formatter.positivePrefix = sign.positive + formatter.currencySymbol
