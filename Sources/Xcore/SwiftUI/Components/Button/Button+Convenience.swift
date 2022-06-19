@@ -12,6 +12,18 @@ public typealias EitherAnyViewText = _ConditionalContent<AnyView, Text>
 // MARK: - Text
 
 extension Button where Label == Text {
+    /// An accessible button that has the given `text` as label and performs the
+    /// provided `action`.
+    public static func accessible(
+        text: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            Text(text)
+        }
+        .accessibilityIdentifier("\(text.camelcased())Button")
+    }
+
     /// A button with `OK` label and given action.
     public static func okay(action: @escaping () -> Void) -> some View {
         Button(action: action) {
@@ -218,18 +230,6 @@ extension Button where Label == Text {
             Text(L.signin)
         }
         .accessibilityIdentifier("signinButton")
-    }
-
-    /// An accessible button that has the given `text` as label and performs the
-    /// provided `action`.
-    public static func accessible(
-        text: String,
-        action: @escaping () -> Void
-    ) -> some View {
-        Button(action: action) {
-            Text(text)
-        }
-        .accessibilityIdentifier("\(text.camelcased())Button")
     }
 }
 
