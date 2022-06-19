@@ -130,4 +130,6 @@ extension ImageAssetIdentifier {
     private static func propertyName(_ name: String = #function) -> Self {
         .init(rawValue: name, bundle: .xcore)
     }
+
+    public static var filterIcon: Self { propertyName() }
 }

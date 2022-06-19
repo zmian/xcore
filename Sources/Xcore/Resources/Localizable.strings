@@ -33,6 +33,12 @@
 "toggle_see_more" = "See More";
 "toggle_see_all" = "See All";
 
+// MARK: Sign Out Button
+
+"signout.title" = "Log Out";
+"signout.confirm_popup.title" = "Log Out";
+"signout.confirm_popup.message" = "Are you sure you would like to log out?";
+
 // MARK: - Mail App
 
 "mail_app.open" = "Choose Your Mail App";
