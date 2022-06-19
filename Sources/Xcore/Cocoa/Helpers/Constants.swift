@@ -171,14 +171,14 @@ public enum AppConstants {
     /// The golden ratio.
     public static var φ: CGFloat { 0.618 }
 
-    public static var statusBarHeight: CGFloat {
+    private(set) public static var statusBarHeight: CGFloat = {
         UIApplication
             .sharedOrNil?
             .firstSceneKeyWindow?
             .windowScene?
             .statusBarManager?
             .statusBarFrame.height ?? 44
-    }
+    }()
 
     public static var statusBarPlusNavBarHeight: CGFloat {
         statusBarHeight + navBarHeight
