@@ -60,10 +60,8 @@ extension UICollectionView {
             rawValue
         }
 
-        // swiftlint:disable inc_header_view inc_footer_view
         public static let header = Self(rawValue: UICollectionView.elementKindSectionHeader)
         public static let footer = Self(rawValue: UICollectionView.elementKindSectionFooter)
-        // swiftlint:enable inc_header_view inc_footer_view
     }
 }
 

@@ -110,14 +110,20 @@ extension View {
     /// Sets the style for `XStack` within this view to a style with a custom
     /// appearance and standard interaction behavior.
     public func xstackStyle(
+        _ traits: XStackContentTraits = .none,
         dim: XStackDimContent = .none,
         alignment: VerticalAlignment = .center,
-        spacing: CGFloat? = .defaultSpacing
+        spacing: CGFloat? = .interItemHSpacing,
+        separator separatorStyle: ListRowSeparatorStyle? = nil
     ) -> some View {
         xstackStyle(DefaultXStackStyle(
+            traits: traits,
             dim: dim,
             alignment: alignment,
             spacing: spacing
         ))
+        .unwrap(separatorStyle) {
+            $0.listRowSeparatorStyle($1)
+        }
     }
 }

@@ -106,16 +106,6 @@ custom_rules:
     regex: "weakSelf"
     message: "Rename `weakSelf` to be `strongSelf` to follow codebase naming convention."
 
-  inc_header_view:
-    name: "Inconsistent Naming Convention"
-    regex: "(let|var) header = (.*)View"
-    message: "Rename `header` to be `headerView` to follow codebase naming convention."
-
-  inc_footer_view:
-    name: "Inconsistent Naming Convention"
-    regex: "(let|var) footer = (.*)View"
-    message: "Rename `footer` to be `footerView` to follow codebase naming convention."
-
   inc_if_necessary:
     name: "Inconsistent Naming Convention"
     regex: "IfNecessary"

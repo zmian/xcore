@@ -19,13 +19,32 @@ public enum XStackDimContent {
     case value
 }
 
+/// An option set that defines content traits of the stack.
+public struct XStackContentTraits: OptionSet {
+    public let rawValue: Int
+
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+
+    /// Style the stack with header traits (e.g., accessibility and font weight).
+    public static let header = Self(rawValue: 1 << 0)
+
+    /// Style the stack with list row traits.
+    public static let row = Self(rawValue: 1 << 1)
+
+    /// Style the stack with list row and header traits.
+    public static let rowHeader: Self = [.row, .header]
+}
+
 // MARK: - Default Style
 
 struct DefaultXStackStyle: XStackStyle {
     @Environment(\.theme) private var theme
+    var traits: XStackContentTraits = .none
     var dim: XStackDimContent = .none
     var alignment: VerticalAlignment = .center
-    var spacing: CGFloat? = .defaultSpacing
+    var spacing: CGFloat? = .interItemHSpacing
 
     func makeBody(configuration: Self.Configuration) -> some View {
         HStack(alignment: alignment, spacing: configuration.isSingleChild ? 0 : spacing) {
@@ -34,13 +53,22 @@ struct DefaultXStackStyle: XStackStyle {
                     $0.foregroundColor($1)
                 }
 
-            Spacer(minLength: 0)
-
             configuration.value
+                .frame(maxWidth: .infinity, alignment: .trailing)
                 .multilineTextAlignment(.trailing)
                 .unwrap(valueForegroundColor) {
                     $0.foregroundColor($1)
                 }
+                .applyIf(traits.contains(.header)) {
+                    $0.font(.app(.body))
+                }
+        }
+        .applyIf(traits.contains(.row)) {
+            $0.listRowStyle()
+        }
+        .applyIf(traits.contains(.header)) {
+            $0.accessibilityAddTraits(.isHeader)
+                .font(.app(.headline))
         }
     }
 
