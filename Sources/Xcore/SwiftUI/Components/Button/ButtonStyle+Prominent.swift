@@ -151,5 +151,6 @@ extension ButtonStyle where Self == ProminentButtonStyle<Capsule> {
         .outline(shape: Capsule())
     }
 
+    static var primary: Self { capsule }
     static var secondary: Self { capsuleOutline }
 }
