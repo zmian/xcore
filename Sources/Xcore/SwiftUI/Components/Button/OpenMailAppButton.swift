@@ -19,7 +19,7 @@ public struct OpenMailAppButton: View {
     public var body: some View {
         Button(Localized.openMailApp) {
             openMailApp = true
-            onTap()
+            onTap?()
         }
         .openMailApp($openMailApp)
     }

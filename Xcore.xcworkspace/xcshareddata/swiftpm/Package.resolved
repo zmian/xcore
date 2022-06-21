@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/Flight-School/AnyCodable",
         "state": {
           "branch": null,
-          "revision": "b1a7a8a6186f2fcb28f7bda67cfc545de48b3c80",
-          "version": "0.6.2"
+          "revision": "f9fda69a7b704d46fb5123005f2f7e43dbb8a0fa",
+          "version": "0.6.5"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/SDWebImage/SDWebImage.git",
         "state": {
           "branch": null,
-          "revision": "2c53f531f1bedd253f55d85105409c28ed4a922c",
-          "version": "5.12.3"
+          "revision": "b729cc14f65e1412efc781a4cc46bd7f4720a3ae",
+          "version": "5.12.6"
         }
       }
     ]
