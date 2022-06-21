@@ -87,11 +87,9 @@ private struct MailAppViewModifier: ViewModifier {
             .popup(isPresented: sheetPresented, style: .sheet) {
                 StandardPopupSheet(L.open) {
                     ForEach(apps) { app in
-                        Button {
+                        Button(app.name) {
                             openUrl(app.url)
                             isPresented = false
-                        } label: {
-                            Text(app.name)
                         }
                         .foregroundColor(theme.tintColor)
                         .multilineTextAlignment(.center)

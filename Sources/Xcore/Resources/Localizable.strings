@@ -42,6 +42,7 @@
 // MARK: - Mail App
 
 "mail_app.open" = "Choose Your Mail App";
+"open_mail_app" = "Open Mail App";
 
 // MARK: - Error
 
