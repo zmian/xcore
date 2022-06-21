@@ -36,6 +36,8 @@ internal enum Localized {
   internal static let ok = Localized.tr("Localizable", "ok")
   /// Open App Settings
   internal static let openAppSettings = Localized.tr("Localizable", "open_app_settings")
+  /// Open Mail App
+  internal static let openMailApp = Localized.tr("Localizable", "open_mail_app")
   /// Read More
   internal static let readMore = Localized.tr("Localizable", "read_more")
   /// Remove
