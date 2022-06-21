@@ -6,7 +6,6 @@
 
 import Foundation
 
-#if canImport(_Concurrency) && compiler(>=5.5.2)
 /// A structure representing transformation of an input to output.
 @frozen
 public struct AsyncTransformer<Input, Output> {
@@ -36,8 +35,9 @@ extension AsyncTransformer where Input == Output {
 // MARK: - Map
 
 extension AsyncTransformer {
-    public func map<NewOutput>(_ other: AsyncTransformer<Output, NewOutput>) -> AsyncTransformer<Input, NewOutput> {
+    public func map<NewOutput>(
+        _ other: AsyncTransformer<Output, NewOutput>
+    ) -> AsyncTransformer<Input, NewOutput> {
         .init { await other(self($0)) }
     }
 }
-#endif
