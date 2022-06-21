@@ -6,11 +6,11 @@
 
 import SwiftUI
 
-public struct MailApp: Hashable, Identifiable {
-    public let name: String
-    public let url: URL
+struct MailApp: Hashable, Identifiable {
+    let name: String
+    let url: URL
 
-    public var id: String {
+    var id: String {
         name + "-" + url.absoluteString
     }
 
@@ -18,7 +18,7 @@ public struct MailApp: Hashable, Identifiable {
         UIApplication.sharedOrNil?.canOpenURL(url) ?? false
     }
 
-    public static var available: [Self] {
+    static var available: [Self] {
         all.filter(\.isAvailable)
     }
 }
@@ -52,7 +52,7 @@ extension MailApp {
 extension View {
     /// A view modifier that shows either sheet of available mail apps user has
     /// installed; otherwise, it opens Apple Mail app directly.
-    public func openMailApp(_ isPresented: Binding<Bool>) -> some View {
+    func openMailApp(_ isPresented: Binding<Bool>) -> some View {
         modifier(MailAppViewModifier(isPresented: isPresented))
     }
 }
