@@ -17,7 +17,7 @@ public struct IntCodingFormatStyle: CodingFormatStyle {
         self.encodeAsString = encodeAsString
     }
 
-    public func decode(_ value: AnyCodable, file: StaticString = #fileID, line: UInt = #line) throws -> Int {
+    public func decode(_ value: AnyCodable) throws -> Int {
         let value = value.value
 
         if let value = value as? Int {
@@ -31,10 +31,10 @@ public struct IntCodingFormatStyle: CodingFormatStyle {
             return int
         }
 
-        throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
+        throw CodingFormatStyleError.invalidValue
     }
 
-    public func encode(_ value: Int, file: StaticString = #fileID, line: UInt = #line) throws -> AnyCodable {
+    public func encode(_ value: Int) throws -> AnyCodable {
         AnyCodable.from(encodeAsString ? String(format: "%i", value) : value)
     }
 }

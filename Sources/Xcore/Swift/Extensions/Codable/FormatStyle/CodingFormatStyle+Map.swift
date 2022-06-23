@@ -14,9 +14,9 @@ public struct MapDecodingFormatStyle<Output>: DecodingFormatStyle {
         self.decode = decode
     }
 
-    public func decode(_ value: AnyCodable, file: StaticString = #fileID, line: UInt = #line) throws -> Output {
+    public func decode(_ value: AnyCodable) throws -> Output {
         guard let result = try decode(value.value) else {
-            throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
+            throw CodingFormatStyleError.invalidValue
         }
 
         return result

@@ -48,7 +48,14 @@ extension KeyedDecodingContainer {
         file: StaticString = #fileID,
         line: UInt = #line
     ) throws -> F.Output where F.Input: Decodable {
-        try format.decode(try decode(key), file: file, line: line)
+        let value: F.Input = try decode(key)
+
+        do {
+            return try format.decode(value)
+        } catch {
+            debugLog(value, error, info: "Attempting to decode invalid value", file: file, line: line)
+            throw error
+        }
     }
 
     /// Decodes a value of the given type for the given key using format style, if
@@ -70,7 +77,12 @@ extension KeyedDecodingContainer {
             return nil
         }
 
-        return try format.decode(value, file: file, line: line)
+        do {
+            return try format.decode(value)
+        } catch {
+            debugLog(value, error, info: "Attempting to decode invalid value", file: file, line: line)
+            throw error
+        }
     }
 }
 
@@ -90,7 +102,16 @@ extension KeyedEncodingContainer {
         file: StaticString = #fileID,
         line: UInt = #line
     ) throws where F.Input: Encodable {
-        try encode(try format.encode(value, file: file, line: line), forKey: key)
+        let formattedValue: F.Input
+
+        do {
+            formattedValue = try format.encode(value)
+        } catch {
+            debugLog(value, error, info: "Attempting to encode invalid value", file: file, line: line)
+            throw error
+        }
+
+        try encode(formattedValue, forKey: key)
     }
 
     /// Encodes the given value for the given key using format style, if it is not
@@ -111,6 +132,15 @@ extension KeyedEncodingContainer {
             return
         }
 
-        try encodeIfPresent(try format.encode(value, file: file, line: line), forKey: key)
+        let formattedValue: F.Input
+
+        do {
+            formattedValue = try format.encode(value)
+        } catch {
+            debugLog(value, error, info: "Attempting to encode invalid value", file: file, line: line)
+            throw error
+        }
+
+        try encodeIfPresent(formattedValue, forKey: key)
     }
 }
