@@ -40,26 +40,26 @@ public struct StringCodingFormatStyle: CodingFormatStyle {
         self.options = options
     }
 
-    public func decode(_ value: AnyCodable) throws -> String {
+    public func decode(_ value: AnyCodable, file: StaticString = #fileID, line: UInt = #line) throws -> String {
         let value = value.value
         let result: String
 
         if let value = value as? String {
             result = value
         } else if type(of: value) == Any?.self {
-            throw CodingFormatStyleError.invalidValue
+            throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
         } else {
             result = String(describing: value)
         }
 
-        return try applyOptions(to: result)
+        return try applyOptions(to: result, file: file, line: line)
     }
 
-    public func encode(_ value: String) throws -> AnyCodable {
-        AnyCodable(try applyOptions(to: value))
+    public func encode(_ value: String, file: StaticString = #fileID, line: UInt = #line) throws -> AnyCodable {
+        AnyCodable(try applyOptions(to: value, file: file, line: line))
     }
 
-    private func applyOptions(to value: String) throws -> String {
+    private func applyOptions(to value: String, file: StaticString, line: UInt) throws -> String {
         var result = value
 
         guard !options.isEmpty else {
@@ -95,7 +95,7 @@ public struct StringCodingFormatStyle: CodingFormatStyle {
         }
 
         if options.contains(.blankThrows), result.isBlank {
-            throw CodingFormatStyleError.invalidValue
+            throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
         }
 
         return result

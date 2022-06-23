@@ -20,7 +20,7 @@ public struct DoubleCodingFormatStyle: CodingFormatStyle {
         self.encodeAsString = encodeAsString
     }
 
-    public func decode(_ value: AnyCodable) throws -> Double {
+    public func decode(_ value: AnyCodable, file: StaticString = #fileID, line: UInt = #line) throws -> Double {
         let value = value.value
 
         if let value = value as? Double {
@@ -38,10 +38,10 @@ public struct DoubleCodingFormatStyle: CodingFormatStyle {
             return double
         }
 
-        throw CodingFormatStyleError.invalidValue
+        throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
     }
 
-    public func encode(_ value: Double) throws -> AnyCodable {
+    public func encode(_ value: Double, file: StaticString = #fileID, line: UInt = #line) throws -> AnyCodable {
         AnyCodable.from(encodeAsString ? String(format: "%d", value) : value)
     }
 }

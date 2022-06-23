@@ -21,7 +21,7 @@ public struct RawRepresentableDecodingFormatStyle<Output>: DecodingFormatStyle
         self.options = options
     }
 
-    public func decode(_ value: AnyCodable) throws -> Output {
+    public func decode(_ value: AnyCodable, file: StaticString = #fileID, line: UInt = #line) throws -> Output {
         // Attempt to construct the value from the given value without any
         // transformation.
         if
@@ -33,7 +33,7 @@ public struct RawRepresentableDecodingFormatStyle<Output>: DecodingFormatStyle
 
         let format = StringCodingFormatStyle(options: options)
         guard let output = Output(rawValue: try format.decode(value)) else {
-            throw CodingFormatStyleError.invalidValue
+            throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
         }
 
         return output
