@@ -10,7 +10,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "SDWebImage", url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.8.2"),
-        .package(url: "https://github.com/Flight-School/AnyCodable", from: "0.6.1"),
+        .package(url: "https://github.com/zmian/AnyCodable", .branch("master")),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", from: "4.2.2")
     ],
     targets: [
