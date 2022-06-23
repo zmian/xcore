@@ -13,7 +13,7 @@ public struct BoolCodingFormatStyle: CodingFormatStyle {
         self.encodeAsString = encodeAsString
     }
 
-    public func decode(_ value: AnyCodable, file: StaticString = #fileID, line: UInt = #line) throws -> Bool {
+    public func decode(_ value: AnyCodable) throws -> Bool {
         let value = value.value
 
         if let value = value as? Bool {
@@ -25,7 +25,7 @@ public struct BoolCodingFormatStyle: CodingFormatStyle {
         }
     }
 
-    public func encode(_ value: Bool, file: StaticString = #fileID, line: UInt = #line) throws -> AnyCodable {
+    public func encode(_ value: Bool) throws -> AnyCodable {
         if encodeAsString {
             return AnyCodable(value ? "true" : "false")
         }

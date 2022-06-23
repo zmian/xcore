@@ -20,7 +20,7 @@ public protocol DecodingFormatStyle {
     associatedtype Output
 
     /// Creates an `Output` instance from `value`.
-    func decode(_ value: Input, file: StaticString, line: UInt) throws -> Output
+    func decode(_ value: Input) throws -> Output
 }
 
 // MARK: - Encoding Format Style
@@ -33,18 +33,11 @@ public protocol EncodingFormatStyle {
     associatedtype Output
 
     /// Creates an `Input` instance from `value`.
-    func encode(_ value: Output, file: StaticString, line: UInt) throws -> Input
+    func encode(_ value: Output) throws -> Input
 }
 
 // MARK: - Error
 
 enum CodingFormatStyleError: Error {
     case invalidValue
-
-    public static func invalidValue(_ value: Any, file: StaticString = #fileID, line: UInt = #line) -> Self {
-        #if DEBUG
-        debugLog(value, info: "Invalid value", file: file, line: line)
-        #endif
-        return .invalidValue
-    }
 }

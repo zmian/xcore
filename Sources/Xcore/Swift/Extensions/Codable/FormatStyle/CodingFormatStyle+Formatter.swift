@@ -14,20 +14,20 @@ public struct FormatterCodingFormatStyle<Output>: CodingFormatStyle {
         self.formatter = formatter
     }
 
-    public func decode(_ value: String, file: StaticString = #fileID, line: UInt = #line) throws -> Output {
+    public func decode(_ value: String) throws -> Output {
         var obj: AnyObject?
         formatter.getObjectValue(&obj, for: value, errorDescription: nil)
 
         guard let value = obj as? Output else {
-            throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
+            throw CodingFormatStyleError.invalidValue
         }
 
         return value
     }
 
-    public func encode(_ value: Output, file: StaticString = #fileID, line: UInt = #line) throws -> String {
+    public func encode(_ value: Output) throws -> String {
         guard let value = formatter.string(for: value) else {
-            throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
+            throw CodingFormatStyleError.invalidValue
         }
 
         return value

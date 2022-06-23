@@ -13,7 +13,7 @@ public struct URLCodingFormatStyle: CodingFormatStyle {
         self.allowedCharacters = allowedCharacters
     }
 
-    public func decode(_ value: AnyCodable, file: StaticString = #fileID, line: UInt = #line) throws -> URL {
+    public func decode(_ value: AnyCodable) throws -> URL {
         if let value = value.value as? URL {
             return value
         }
@@ -23,7 +23,7 @@ public struct URLCodingFormatStyle: CodingFormatStyle {
             let value = value.removingPercentEncoding,
             !value.isBlank
         else {
-            throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
+            throw CodingFormatStyleError.invalidValue
         }
 
         if allowedCharacters == nil, let url = URL(string: value) {
@@ -38,10 +38,10 @@ public struct URLCodingFormatStyle: CodingFormatStyle {
             return url
         }
 
-        throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
+        throw CodingFormatStyleError.invalidValue
     }
 
-    public func encode(_ value: URL, file: StaticString = #fileID, line: UInt = #line) throws -> AnyCodable {
+    public func encode(_ value: URL) throws -> AnyCodable {
         AnyCodable(value.absoluteString)
     }
 }
