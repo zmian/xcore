@@ -16,12 +16,12 @@ public struct StringMapDecodingFormatStyle<Output>: DecodingFormatStyle {
         self.decode = decode
     }
 
-    public func decode(_ value: AnyCodable) throws -> Output {
+    public func decode(_ value: AnyCodable, file: StaticString = #fileID, line: UInt = #line) throws -> Output {
         guard
             let value = value.value as? String,
             let result = try decode(value)
         else {
-            throw CodingFormatStyleError.invalidValue
+            throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
         }
 
         return result
@@ -46,9 +46,9 @@ public struct StringMapEncodingFormatStyle<Input>: EncodingFormatStyle {
         self.encode = encode
     }
 
-    public func encode(_ value: Input) throws -> String {
+    public func encode(_ value: Input, file: StaticString = #fileID, line: UInt = #line) throws -> String {
         guard let result = try encode(value) else {
-            throw CodingFormatStyleError.invalidValue
+            throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
         }
 
         return result

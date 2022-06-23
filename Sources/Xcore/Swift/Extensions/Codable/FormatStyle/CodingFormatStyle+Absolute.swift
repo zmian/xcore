@@ -8,11 +8,11 @@ import Foundation
 
 /// Returns the absolute value of the input.
 public struct AbsoluteValueCodingFormatStyle<Value>: CodingFormatStyle where Value: Comparable, Value: SignedNumeric {
-    public func decode(_ value: Value) throws -> Value {
+    public func decode(_ value: Value, file: StaticString = #fileID, line: UInt = #line) throws -> Value {
         abs(value)
     }
 
-    public func encode(_ value: Value) throws -> Value {
+    public func encode(_ value: Value, file: StaticString = #fileID, line: UInt = #line) throws -> Value {
         abs(value)
     }
 }

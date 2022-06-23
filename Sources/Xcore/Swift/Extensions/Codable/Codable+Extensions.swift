@@ -44,9 +44,11 @@ extension KeyedDecodingContainer {
     ///   convertible to the requested type.
     public func decode<F: DecodingFormatStyle>(
         _ key: Key,
-        format: F
+        format: F,
+        file: StaticString = #fileID,
+        line: UInt = #line
     ) throws -> F.Output where F.Input: Decodable {
-        try format.decode(try decode(key))
+        try format.decode(try decode(key), file: file, line: line)
     }
 
     /// Decodes a value of the given type for the given key using format style, if
@@ -60,13 +62,15 @@ extension KeyedDecodingContainer {
     ///   null value.
     public func decodeIfPresent<F: DecodingFormatStyle>(
         _ key: Key,
-        format: F
+        format: F,
+        file: StaticString = #fileID,
+        line: UInt = #line
     ) throws -> F.Output? where F.Input: Decodable {
         guard let value: F.Input = try decodeIfPresent(key) else {
             return nil
         }
 
-        return try format.decode(value)
+        return try format.decode(value, file: file, line: line)
     }
 }
 
@@ -82,9 +86,11 @@ extension KeyedEncodingContainer {
     public mutating func encode<F: EncodingFormatStyle>(
         _ value: F.Output,
         forKey key: Key,
-        format: F
+        format: F,
+        file: StaticString = #fileID,
+        line: UInt = #line
     ) throws where F.Input: Encodable {
-        try encode(try format.encode(value), forKey: key)
+        try encode(try format.encode(value, file: file, line: line), forKey: key)
     }
 
     /// Encodes the given value for the given key using format style, if it is not
@@ -97,12 +103,14 @@ extension KeyedEncodingContainer {
     public mutating func encodeIfPresent<F: EncodingFormatStyle>(
         _ value: F.Output?,
         forKey key: Key,
-        format: F
+        format: F,
+        file: StaticString = #fileID,
+        line: UInt = #line
     ) throws where F.Input: Encodable {
         guard let value = value else {
             return
         }
 
-        try encodeIfPresent(try format.encode(value), forKey: key)
+        try encodeIfPresent(try format.encode(value, file: file, line: line), forKey: key)
     }
 }

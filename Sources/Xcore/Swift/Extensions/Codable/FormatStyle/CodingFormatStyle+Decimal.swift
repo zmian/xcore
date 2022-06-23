@@ -20,7 +20,7 @@ public struct DecimalCodingFormatStyle: CodingFormatStyle {
         self.encodeAsString = encodeAsString
     }
 
-    public func decode(_ value: AnyCodable) throws -> Decimal {
+    public func decode(_ value: AnyCodable, file: StaticString = #fileID, line: UInt = #line) throws -> Decimal {
         let value = value.value
 
         if let value = value as? Decimal {
@@ -34,10 +34,10 @@ public struct DecimalCodingFormatStyle: CodingFormatStyle {
             return decimal
         }
 
-        throw CodingFormatStyleError.invalidValue
+        throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
     }
 
-    public func encode(_ value: Decimal) throws -> AnyCodable {
+    public func encode(_ value: Decimal, file: StaticString = #fileID, line: UInt = #line) throws -> AnyCodable {
         AnyCodable.from(encodeAsString ? "\(value)" : value)
     }
 }

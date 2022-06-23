@@ -18,22 +18,22 @@ public struct DateCodingFormatStyle: CodingFormatStyle {
         self.calendar = calendar
     }
 
-    public func decode(_ value: String) throws -> Date {
+    public func decode(_ value: String, file: StaticString = #fileID, line: UInt = #line) throws -> Date {
         for format in formats {
             if let date = Date(from: value, format: format, calendar: calendar) {
                 return date
             }
         }
 
-        throw CodingFormatStyleError.invalidValue
+        throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
     }
 
-    public func encode(_ value: Date) throws -> String {
+    public func encode(_ value: Date, file: StaticString = #fileID, line: UInt = #line) throws -> String {
         if let format = formats.first {
             return value.string(format: format, in: calendar)
         }
 
-        throw CodingFormatStyleError.invalidValue
+        throw CodingFormatStyleError.invalidValue(value, file: file, line: line)
     }
 }
 
