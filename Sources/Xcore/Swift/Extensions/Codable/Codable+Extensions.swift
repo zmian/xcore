@@ -53,7 +53,7 @@ extension KeyedDecodingContainer {
         do {
             return try format.decode(value)
         } catch {
-            debugLog(value, error, info: "Attempting to decode invalid value", file: file, line: line)
+            debugLog(value, error, info: "Attempting to decode invalid value for \"\(key.stringValue)\".", file: file, line: line)
             throw error
         }
     }
@@ -80,7 +80,7 @@ extension KeyedDecodingContainer {
         do {
             return try format.decode(value)
         } catch {
-            debugLog(value, error, info: "Attempting to decode invalid value", file: file, line: line)
+            debugLog(value, error, info: "Attempting to decode invalid value for \"\(key.stringValue)\".", file: file, line: line)
             throw error
         }
     }
@@ -107,7 +107,7 @@ extension KeyedEncodingContainer {
         do {
             formattedValue = try format.encode(value)
         } catch {
-            debugLog(value, error, info: "Attempting to encode invalid value", file: file, line: line)
+            debugLog(value, error, info: "Attempting to encode invalid value for \"\(key.stringValue)\".", file: file, line: line)
             throw error
         }
 
@@ -137,7 +137,7 @@ extension KeyedEncodingContainer {
         do {
             formattedValue = try format.encode(value)
         } catch {
-            debugLog(value, error, info: "Attempting to encode invalid value", file: file, line: line)
+            debugLog(value, error, info: "Attempting to encode invalid value for \"\(key.stringValue)\".", file: file, line: line)
             throw error
         }
 
