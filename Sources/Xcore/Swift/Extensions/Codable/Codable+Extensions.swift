@@ -48,7 +48,7 @@ extension KeyedDecodingContainer {
         file: StaticString = #fileID,
         line: UInt = #line
     ) throws -> F.Output where F.Input: Decodable {
-        let value: F.Input = try decode(key)
+        let value = try decode(F.Input.self, forKey: key)
 
         do {
             return try format.decode(value)
@@ -73,7 +73,7 @@ extension KeyedDecodingContainer {
         file: StaticString = #fileID,
         line: UInt = #line
     ) throws -> F.Output? where F.Input: Decodable {
-        guard let value: F.Input = try decodeIfPresent(key) else {
+        guard let value = try decodeIfPresent(F.Input.self, forKey: key) else {
             return nil
         }
 
