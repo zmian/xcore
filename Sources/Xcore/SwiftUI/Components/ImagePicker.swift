@@ -36,7 +36,10 @@ extension ImagePicker {
             self.parent = parent
         }
 
-        public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        public func imagePickerController(
+            _ picker: UIImagePickerController,
+            didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
+        ) {
             if let uiImage = info[.editedImage] as? UIImage {
                 parent.callback(uiImage)
             }
