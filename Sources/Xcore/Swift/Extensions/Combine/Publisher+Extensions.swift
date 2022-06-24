@@ -6,6 +6,7 @@
 
 #if canImport(Combine)
 import Combine
+import Foundation
 
 extension Publisher where Failure == Never {
     /// Attaches a subscriber with closure-based behavior to a publisher that never
