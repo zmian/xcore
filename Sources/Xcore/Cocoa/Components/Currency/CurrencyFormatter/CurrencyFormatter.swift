@@ -280,7 +280,7 @@ extension CurrencyFormatter {
     private func with<T>(sign: Money.Sign, amount: Decimal, _ block: () -> T) -> T {
         var sign = sign
 
-        // Omit sign for `0` amount.
+        // Omit sign when amount is `0`.
         if amount == 0 {
             sign = .none
         }
