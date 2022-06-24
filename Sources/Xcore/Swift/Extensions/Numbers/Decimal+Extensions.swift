@@ -198,7 +198,7 @@ extension Decimal {
     }
 }
 
-// MARK: - Formatted
+// MARK: - Conversion
 
 extension Decimal {
     /// The `locale` is always set to `usPosix` to avoid localizing string
@@ -221,6 +221,32 @@ extension Decimal {
         $0.locale = .usPosix
     }
 
+    /// The `locale` is always set to `usPosix` to avoid localizing string
+    /// representations of numbers which are used for strictly conversion purpose
+    /// only.
+    var stringValue: String {
+        Self.usPosixFormatter.string(from: self) ??
+        NSDecimalNumber(decimal: self)
+            .description(withLocale: Locale.usPosix)
+    }
+
+    /// This is an implementation detail of `double` and `Double(any:)`.
+    ///
+    /// Don't use it.
+    ///
+    /// :nodoc:
+    var doubleValue: Double? {
+        Double(stringValue)
+    }
+
+    public var double: Double {
+        doubleValue ?? 0
+    }
+}
+
+// MARK: - Formatted
+
+extension Decimal {
     private static let formatter = NumberFormatter().apply {
         $0.numberStyle = .decimal
         $0.maximumFractionDigits = .maxFractionDigits
@@ -231,22 +257,6 @@ extension Decimal {
         Self.formatter.string(from: self) ?? ""
     }
 
-    /// This is an implementation detail of `double` and `Double(any:)`.
-    ///
-    /// Don't use it.
-    ///
-    /// :nodoc:
-    var doubleValue: Double? {
-        guard let stringValue = Self.usPosixFormatter.string(from: self) else {
-            return nil
-        }
-
-        return Double(stringValue)
-    }
-
-    public var double: Double {
-        doubleValue ?? 0
-    }
 
 //    @available(iOS 15.0, *)
 //    public func formattedString() -> String {

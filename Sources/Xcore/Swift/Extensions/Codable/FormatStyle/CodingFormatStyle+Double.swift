@@ -42,7 +42,7 @@ public struct DoubleCodingFormatStyle: CodingFormatStyle {
     }
 
     public func encode(_ value: Double) throws -> AnyCodable {
-        AnyCodable.from(encodeAsString ? String(format: "%d", value) : value)
+        AnyCodable.from(encodeAsString ? value.stringValue : value)
     }
 }
 

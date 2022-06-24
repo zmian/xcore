@@ -60,6 +60,8 @@ extension Double {
     }
 }
 
+// MARK: - Conversion
+
 extension Double {
     public init(truncating number: Decimal) {
         self.init(truncating: NSDecimalNumber(decimal: number))
@@ -87,6 +89,14 @@ extension Double {
         }
 
         return nil
+    }
+
+    /// The `locale` is always set to `usPosix` to avoid localizing string
+    /// representations of numbers which are used for strictly conversion purpose
+    /// only.
+    var stringValue: String {
+        NSNumber(value: self)
+            .description(withLocale: Locale.usPosix)
     }
 }
 

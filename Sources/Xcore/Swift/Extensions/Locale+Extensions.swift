@@ -56,6 +56,9 @@ extension Locale {
 
     /// Returns `tr` (Turkish) locale.
     public static let tr = Locale(identifier: "tr")
+
+    /// Returns `pt_PT` (Portuguese, Portugal) locale.
+    public static let ptPT = Locale(identifier: "pt_PT")
 }
 
 extension Locale {
