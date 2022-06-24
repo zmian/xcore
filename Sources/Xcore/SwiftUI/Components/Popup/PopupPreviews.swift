@@ -16,7 +16,6 @@ private struct PopupPreviews: View {
     @State private var showAlertWithHeader = false
     @State private var showToast = false
     @State private var showWindow = false
-    @State private var openMailApp = false
 
     var body: some View {
         List {
@@ -57,15 +56,9 @@ private struct PopupPreviews: View {
                 toggle: $showWindow
             )
 
-            row(
-                "Open Mail",
-                color: .green,
-                image: .mail,
-                toggle: $openMailApp
-            )
+            OpenMailAppButton()
         }
         .navigationTitle("Popups")
-        .openMailApp($openMailApp)
         .alert(L.title, isPresented: $showSystemAlert) {
             Button("OK") {
                 showSystemAlert = false
