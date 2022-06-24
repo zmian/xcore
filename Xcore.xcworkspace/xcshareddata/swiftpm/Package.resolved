@@ -3,11 +3,11 @@
     "pins": [
       {
         "package": "AnyCodable",
-        "repositoryURL": "https://github.com/Flight-School/AnyCodable",
+        "repositoryURL": "https://github.com/zmian/AnyCodable",
         "state": {
-          "branch": null,
-          "revision": "f9fda69a7b704d46fb5123005f2f7e43dbb8a0fa",
-          "version": "0.6.5"
+          "branch": "master",
+          "revision": "ca1a7d64fd7584fb0e3d4de521c76e2969b8ded6",
+          "version": null
         }
       },
       {
