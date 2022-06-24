@@ -38,7 +38,7 @@ public struct DecimalCodingFormatStyle: CodingFormatStyle {
     }
 
     public func encode(_ value: Decimal) throws -> AnyCodable {
-        AnyCodable.from(encodeAsString ? "\(value)" : value)
+        AnyCodable.from(encodeAsString ? value.stringValue : value)
     }
 }
 

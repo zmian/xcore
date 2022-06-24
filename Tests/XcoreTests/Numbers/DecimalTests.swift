@@ -78,4 +78,12 @@ final class DecimalTests: TestCase {
         XCTAssertEqual(Decimal(0.00001283).calculatePrecision(), 2...6)
         XCTAssertEqual(Decimal(0.000000138).calculatePrecision(), 2...8)
     }
+
+    func testConversionToString() throws {
+        let decimal_us = try XCTUnwrap(Decimal(string: "0.377", locale: .usPosix))
+        XCTAssertEqual(decimal_us.stringValue, "0.377")
+
+        let decimal_ptPT = try XCTUnwrap(Decimal(string: "0,377", locale: .ptPT))
+        XCTAssertEqual(decimal_ptPT.stringValue, "0.377")
+    }
 }
