@@ -165,8 +165,7 @@ extension Money: View {
     }
 }
 
-// TODO: Add support for "shouldSuperscriptMinorUnit"
-
+#warning("TODO: Add support for shouldSuperscriptMinorUnit")
 /*
   extension String {
       func rangeFromNSRange(nsRange : NSRange) -> Range<String.Index>? {
