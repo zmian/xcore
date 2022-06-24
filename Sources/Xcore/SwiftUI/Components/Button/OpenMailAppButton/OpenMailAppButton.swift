@@ -40,7 +40,7 @@ extension View {
 private struct MailAppViewModifier: ViewModifier {
     private typealias L = Localized.MailApp
     @Environment(\.theme) private var theme
-    @Dependency(\.openUrl) var openUrl
+    @Dependency(\.openUrl) private var openUrl
     private let apps = MailApp.available
     @Binding var isPresented: Bool
     private var sheetPresented: Binding<Bool> {
