@@ -13,9 +13,19 @@ extension NSObject {
 }
 
 extension NSObject {
-    func synchronized<T>(_ work: () throws -> T) rethrows -> T {
+    func synchronized<Result>(_ work: () throws -> Result) rethrows -> Result {
         objc_sync_enter(self)
         defer { objc_sync_exit(self) }
+        return try work()
+    }
+}
+
+extension NSRecursiveLock {
+    @inlinable
+    @discardableResult
+    func sync<Result>(_ work: () throws -> Result) rethrows -> Result {
+        lock()
+        defer { unlock() }
         return try work()
     }
 }
