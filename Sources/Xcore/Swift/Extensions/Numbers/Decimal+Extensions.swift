@@ -257,7 +257,6 @@ extension Decimal {
         Self.formatter.string(from: self) ?? ""
     }
 
-
 //    @available(iOS 15.0, *)
 //    public func formattedString() -> String {
 //        formatted(.number.precision(.fractionLength(0...Int.maxFractionDigits)))
