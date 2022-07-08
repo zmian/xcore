@@ -7,15 +7,15 @@
 import SwiftUI
 
 /// Continuous progress indicator
-struct StoryProgressIndicator: View {
+public struct StoryProgressIndicator: View {
     @Environment(\.storyProgressIndicatorColor) private var color
     private let progress: CGFloat
 
-    init(progress: CGFloat) {
+    public init(progress: CGFloat) {
         self.progress = progress
     }
 
-    var body: some View {
+    public var body: some View {
         ProgressView(value: progress)
             .progressViewStyle(.horizontalBar(height: 2))
             .accentColor(color)
