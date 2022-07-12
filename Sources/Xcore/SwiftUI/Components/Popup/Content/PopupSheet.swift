@@ -11,7 +11,6 @@ public struct PopupSheet<Content>: View where Content: View {
     @Environment(\.theme) private var theme
     @Environment(\.popupCornerRadius) private var cornerRadius
     @Environment(\.defaultMinListRowHeight) private var rowHeight
-    @State private var safeAreaInsetsBottom: CGFloat = 0
     private let content: () -> Content
 
     public init(@ViewBuilder content: @escaping () -> Content) {
@@ -22,19 +21,21 @@ public struct PopupSheet<Content>: View where Content: View {
         VStack(spacing: 0) {
             content()
                 .frame(maxWidth: .infinity, minHeight: rowHeight)
-            Spacer(height: safeAreaInsetsBottom)
         }
-        .backgroundColor(theme.backgroundColor)
-        .cornerRadius(cornerRadius, corners: .top)
         .fixedSize(horizontal: false, vertical: true)
-        // Offset to ensure content is clipped and it's pinned properly.
-        // Using `ignoresSafeArea` makes the `safeAreaInsetsBottom` to always return 0
-        // which means then we would need to manually offset with hardcoded values for
-        // devices.
-        .offset(y: safeAreaInsetsBottom)
-        .readGeometryChange {
-            safeAreaInsetsBottom = $0.safeAreaInsets.bottom
-        }
+        .background(background)
+    }
+
+    /// Creates background that ensures it's always pinned to the bottom when spring
+    /// animation is used to display the sheet.
+    private var background: some View {
+        RoundedRectangleCorner(radius: cornerRadius, corners: .top)
+            .fill(Color(theme.backgroundColor))
+            .background(
+                RoundedRectangleCorner(radius: cornerRadius, corners: .top)
+                    .fill(Color(theme.backgroundColor))
+                    .offset(y: AppConstants.homeIndicatorHeightIfPresent * 2)
+            )
     }
 }
 
