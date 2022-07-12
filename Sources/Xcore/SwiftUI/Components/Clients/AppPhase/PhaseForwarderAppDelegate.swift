@@ -138,6 +138,10 @@ open class PhaseForwarderAppDelegate: UIResponder, UIApplicationDelegate {
         send(.continueUserActivity(userActivity, handler: restorationHandler))
         return true
     }
+
+    open func applicationProtectedDataDidBecomeAvailable(_ application: UIApplication) {
+        send(.protectedDataDidBecomeAvailable)
+    }
 }
 
 // MARK: - Phase Using Notifications
