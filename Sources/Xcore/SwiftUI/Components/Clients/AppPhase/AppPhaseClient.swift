@@ -287,7 +287,8 @@ extension AppPhase {
             (.inactive, .inactive),
             (.background, .background),
             (.willEnterForeground, .willEnterForeground),
-            (.willTerminate, .willTerminate):
+            (.willTerminate, .willTerminate),
+            (.protectedDataDidBecomeAvailable, .protectedDataDidBecomeAvailable):
                 return true
             case let (.remoteNotificationsRegistered(lhs), .remoteNotificationsRegistered(rhs)):
                 return lhs == rhs
