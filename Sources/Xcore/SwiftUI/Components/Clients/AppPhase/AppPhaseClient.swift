@@ -101,6 +101,7 @@ public enum AppPhase: Hashable, CustomStringConvertible {
     case significantTimeChange
 
     /// Event invoked when the protected files are available.
+    ///
     /// See documentation for [more info].
     ///
     /// [more info]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623044-applicationprotecteddatadidbecom
