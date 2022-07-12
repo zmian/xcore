@@ -288,6 +288,8 @@ extension AppPhase {
             (.background, .background),
             (.willEnterForeground, .willEnterForeground),
             (.willTerminate, .willTerminate),
+            (.memoryWarning, .memoryWarning),
+            (.significantTimeChange, .significantTimeChange),
             (.protectedDataDidBecomeAvailable, .protectedDataDidBecomeAvailable):
                 return true
             case let (.remoteNotificationsRegistered(lhs), .remoteNotificationsRegistered(rhs)):
