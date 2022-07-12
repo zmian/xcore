@@ -100,6 +100,13 @@ public enum AppPhase: Hashable, CustomStringConvertible {
     /// [more info]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622992-applicationsignificanttimechange
     case significantTimeChange
 
+    /// Event invoked when the protected files are available.
+    ///
+    /// See documentation for [more info].
+    ///
+    /// [more info]: https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623044-applicationprotecteddatadidbecom
+    case protectedDataDidBecomeAvailable
+
     // MARK: - Handling Remote Notification Registration
 
     /// Event invoked when the app successfully registered with Apple Push
@@ -216,6 +223,8 @@ extension AppPhase {
                 return "memoryWarning"
             case .significantTimeChange:
                 return "significantTimeChange"
+            case .protectedDataDidBecomeAvailable:
+                return "protectedDataDidBecomeAvailable"
             case let .remoteNotificationsRegistered(.success(token)):
                 return "remoteNotificationsRegistered(.success(\(token.hexEncodedString())))"
             case let .remoteNotificationsRegistered(.failure(error)):
@@ -251,6 +260,8 @@ extension AppPhase: CustomAnalyticsValueConvertible {
                 return "memory_warning"
             case .significantTimeChange:
                 return "significant_time_change"
+            case .protectedDataDidBecomeAvailable:
+                return "protected_data_did_become_available"
             case .remoteNotificationsRegistered(.success):
                 return "remote_notifications_registered_success"
             case let .remoteNotificationsRegistered(.failure(error)):
@@ -276,7 +287,8 @@ extension AppPhase {
             (.inactive, .inactive),
             (.background, .background),
             (.willEnterForeground, .willEnterForeground),
-            (.willTerminate, .willTerminate):
+            (.willTerminate, .willTerminate),
+            (.protectedDataDidBecomeAvailable, .protectedDataDidBecomeAvailable):
                 return true
             case let (.remoteNotificationsRegistered(lhs), .remoteNotificationsRegistered(rhs)):
                 return lhs == rhs
@@ -304,7 +316,8 @@ extension AppPhase {
                  .willEnterForeground,
                  .willTerminate,
                  .memoryWarning,
-                 .significantTimeChange:
+                 .significantTimeChange,
+                 .protectedDataDidBecomeAvailable:
                 hasher.combine(description)
             case let .remoteNotificationsRegistered(value):
                 hasher.combine(value)
