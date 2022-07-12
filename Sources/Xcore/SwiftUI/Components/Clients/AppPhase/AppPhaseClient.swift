@@ -260,7 +260,7 @@ extension AppPhase: CustomAnalyticsValueConvertible {
             case .significantTimeChange:
                 return "significant_time_change"
             case .protectedDataDidBecomeAvailable:
-                return "protectedDataDidBecomeAvailable"
+                return "protected_data_did_become_available"
             case .remoteNotificationsRegistered(.success):
                 return "remote_notifications_registered_success"
             case let .remoteNotificationsRegistered(.failure(error)):
