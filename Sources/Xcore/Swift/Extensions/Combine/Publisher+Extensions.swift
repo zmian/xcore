@@ -25,7 +25,7 @@ extension Publisher where Failure == Never {
         cancellable = sink { output in
             receiveValue(output)
             if let token = cancellable {
-                cancellablesLock.sync {
+                cancellablesLock.synchronized {
                     cancellables.remove(token)
                 }
                 cancellable = nil
