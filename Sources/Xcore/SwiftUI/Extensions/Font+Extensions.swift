@@ -171,7 +171,7 @@ extension UIFont.Weight {
 }
 
 extension UIFont.TextStyle {
-    fileprivate init(_ textStyle: Font.TextStyle) {
+    init(_ textStyle: Font.TextStyle) {
         switch textStyle {
             case .largeTitle:
                 self = .largeTitle

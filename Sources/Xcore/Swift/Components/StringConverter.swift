@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct StringConverter {
+public struct StringConverter: Sendable, Hashable {
     private let string: String
 
     public init?(_ value: String?) {

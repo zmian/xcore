@@ -54,6 +54,7 @@ extension NSMutableAttributedString {
         return self
     }
 
+    @discardableResult
     open func foregroundColor(_ color: UIColor, for text: String? = nil) -> Self {
         addAttribute(.foregroundColor, value: color, range: range(of: text))
         return self
@@ -98,16 +99,24 @@ extension NSMutableAttributedString {
         addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
     }
 
-    private func range(of text: String?) -> NSRange {
+    /// Returns the range of a substring in the attributed string, if it exists;
+    /// otherwise, returns the range of the entire attributed string.
+    private func range(of stringToFind: String?) -> NSRange {
         let range: NSRange
 
-        if let text = text {
-            range = (string as NSString).range(of: text)
+        if let stringToFind = stringToFind {
+            range = (string as NSString).range(of: stringToFind)
         } else {
             range = NSRange(location: 0, length: string.count)
         }
 
         return range
+    }
+
+    /// Returns the range of a substring in the attributed string, if it exists.
+    func range(of stringToFind: String) -> NSRange? {
+        let range = (string as NSString).range(of: stringToFind)
+        return range.location == NSNotFound ? nil : range
     }
 }
 

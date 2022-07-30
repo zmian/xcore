@@ -33,41 +33,28 @@ extension Money {
         /// ```
         public let minorUnit: String
 
-        /// The currency symbol associated with the amount.
-        ///
-        /// For example, `$` for US dollars.
-        public let currencySymbol: String
+        /// The sign (+/-) associated with the amount.
+        public let sign: Sign
 
-        /// The grouping separator associated with the amount.
-        ///
-        /// For example, United States uses comma (`"10,000.00"`) whereas in France
-        /// space (`"10 000,00"`) is used instead for grouping separator.
-        public let groupingSeparator: String
-
-        /// The decimal separator associated with the amount.
-        ///
-        /// For example, United States uses period (`"10,000.00"`) whereas in France
-        /// comma (`"10 000,00"`) is used instead for decimal separator.
-        public let decimalSeparator: String
+        /// The currency formatter used to format the amount.
+        public let formatter: CurrencyFormatter
 
         public init(
             amount: Decimal,
             majorUnit: String,
             minorUnit: String,
-            currencySymbol: String,
-            groupingSeparator: String,
-            decimalSeparator: String
+            sign: Sign,
+            formatter: CurrencyFormatter
         ) {
             self.amount = amount
             self.majorUnit = majorUnit
             self.minorUnit = minorUnit
-            self.currencySymbol = currencySymbol
-            self.groupingSeparator = groupingSeparator
-            self.decimalSeparator = decimalSeparator
+            self.sign = sign
+            self.formatter = formatter
         }
 
         public var description: String {
-            joined(style: .default)
+            formatted()
         }
 
         /// Returns a new string by concatenating the components, using the given
@@ -75,17 +62,17 @@ extension Money {
         ///
         /// The default value is `.default`.
         ///
-        /// - Parameter style: The formatting style to use when joining the components.
-        /// - Returns: The joined string based on the given style.
-        public func joined(style: Style = .default) -> String {
-            style.join(self)
+        /// - Parameter style: The formatting style for the components.
+        /// - Returns: A formatted string based on the given style.
+        public func formatted(style: Style = .default) -> String {
+            style.format(self)
         }
 
         /// The range tuple of the components with respects to the given formatting
         /// style.
         ///
         /// - Parameter style: The formatting style to us when determining the ranges.
-        /// - Returns: The tuple with range for each components.
+        /// - Returns: A tuple with range for each components.
         public func range(style: Style = .default) -> Range {
             style.range(self)
         }
@@ -96,11 +83,11 @@ extension Money {
 
 extension Money.Components {
     var isMinorUnitValueZero: Bool {
-        minorUnit == "00"
+        amount.exponent == 1
     }
 
     var ranges: Range {
-        let majorUnitAndDecimalSeparator = "\(majorUnit)\(decimalSeparator)"
+        let majorUnitAndDecimalSeparator = "\(string(majorUnit: majorUnit))\(formatter.decimalSeparator)"
         let majorUnitRange = NSRange(location: 0, length: majorUnitAndDecimalSeparator.count)
         let minorUnitRange = NSRange(location: majorUnitRange.length, length: minorUnit.count)
 
@@ -108,5 +95,20 @@ extension Money.Components {
         let finalMinorUnitRange = minorUnitRange.location == NSNotFound ? nil : minorUnitRange
 
         return (finalMajorUnitRange, finalMinorUnitRange)
+    }
+
+    func string(majorUnit: String, minorUnit: String? = nil) -> String {
+        string(from: [majorUnit, minorUnit].joined(separator: formatter.decimalSeparator))
+    }
+
+    func string(from amount: String) -> String {
+        let sign = sign.of(self.amount)
+
+        switch formatter.currencySymbolPosition {
+            case .prefix:
+                return "\(sign)\(formatter.currencySymbol)\(amount)"
+            case .suffix:
+                return "\(sign)\(amount) \(formatter.currencySymbol)"
+        }
     }
 }

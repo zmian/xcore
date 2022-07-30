@@ -25,9 +25,9 @@ private struct AbbreviatedNumberFormatter<Number: DoubleDecimal> {
         ("T", 1_000_000_000_000, 1_000_000_000_000)
     ]
 
-    /// Returns a string representation of the abbreviation of the given value.
+    /// Returns an abbreviated string representation of the given value.
     ///
-    /// Abbreviates `value` to compact format:
+    /// Abbreviates `value` to the compact representation:
     ///
     /// ```swift
     /// 987     // → 987
@@ -87,9 +87,9 @@ private struct AbbreviatedNumberFormatter<Number: DoubleDecimal> {
 extension Decimal {
     private static let abbreviatedNumberFormatter = AbbreviatedNumberFormatter<Self>()
 
-    /// Returns a string representation of the abbreviation of the given value.
+    /// Returns an abbreviated string representation of the given value.
     ///
-    /// Abbreviates `value` to compact format:
+    /// Abbreviates `value` to the compact representation:
     ///
     /// ```swift
     /// 987     // → 987
@@ -127,9 +127,9 @@ extension Decimal {
 extension Double {
     private static let abbreviatedNumberFormatter = AbbreviatedNumberFormatter<Self>()
 
-    /// Returns a string representation of the abbreviation of the given value.
+    /// Returns an abbreviated string representation of the given value.
     ///
-    /// Abbreviates `value` to compact format:
+    /// Abbreviates `value` to the compact representation:
     ///
     /// ```swift
     /// 987     // → 987

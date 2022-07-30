@@ -145,6 +145,10 @@ extension Either: ExpressibleByIntegerLiteral where Right == IntegerLiteralType 
     }
 }
 
+// MARK: - Sendable
+
+extension Either: Sendable where Left: Sendable, Right: Sendable {}
+
 // MARK: - Equatable
 
 extension Either: Equatable where Left: Equatable, Right: Equatable {}

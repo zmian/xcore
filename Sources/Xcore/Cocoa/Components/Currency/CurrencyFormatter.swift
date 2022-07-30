@@ -6,16 +6,22 @@
 
 import Foundation
 
-public class CurrencyFormatter: Currency.SymbolsProvider {
+public final class CurrencyFormatter: Currency.SymbolsProvider, Appliable {
     public static let shared = CurrencyFormatter()
+
+    /// An enumeration representing the position of currency symbol.
+    public enum CurrencySymbolPosition: Sendable, Hashable {
+        case prefix
+        case suffix
+    }
+
+    public init() {}
 
     /// This formatter must be used only to transform Double values into US dollars.
     /// Reference: http://unicode.org/reports/tr35/tr35-10.html#Number_Format_Patterns
     private lazy var formatter = NumberFormatter().apply {
         $0.numberStyle = .currency
         $0.locale = locale
-        $0.positiveFormat = "¤#,##0.00"
-        $0.negativeFormat = "-¤#,##0.00"
         // We need to manually override the currency symbol in order to support
         // different locals but keep currency symbol at the correct position to keep the
         // design consistent (e.g., German (de) locale: "1.000,11 $" → "$1.000,11").
@@ -39,6 +45,9 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
         }
     }
 
+    /// The currency symbol position.
+    public var currencySymbolPosition: CurrencySymbolPosition = .prefix
+
     /// The character the receiver uses as a currency symbol.
     ///
     /// Currency symbol can be independently set of locale to ensure correct
@@ -50,7 +59,11 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
     /// While currency isn't directly translated (e.g.,`$100 != €100`), however, it
     /// is safe to use locale aware grouping and decimal separator to make it user
     /// locale friendly (e.g., France locale  `$1,000.00` == `$1 000,00`).
-    public var currencySymbol = Locale.us.currencySymbol ?? "$"
+    public var currencySymbol = Locale.us.currencySymbol ?? "$" {
+        didSet {
+            formatter.currencySymbol = currencySymbol
+        }
+    }
 
     /// The character the receiver uses as a grouping separator.
     ///
@@ -74,6 +87,7 @@ public class CurrencyFormatter: Currency.SymbolsProvider {
 extension CurrencyFormatter: Equatable {
     public static func ==(lhs: CurrencyFormatter, rhs: CurrencyFormatter) -> Bool {
         lhs.locale == rhs.locale &&
+            lhs.currencySymbolPosition == rhs.currencySymbolPosition &&
             lhs.currencySymbol == rhs.currencySymbol &&
             lhs.groupingSeparator == rhs.groupingSeparator &&
             lhs.decimalSeparator == rhs.decimalSeparator &&
@@ -86,6 +100,7 @@ extension CurrencyFormatter: Equatable {
 extension CurrencyFormatter: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(locale)
+        hasher.combine(currencySymbolPosition)
         hasher.combine(currencySymbol)
         hasher.combine(groupingSeparator)
         hasher.combine(decimalSeparator)
@@ -93,116 +108,9 @@ extension CurrencyFormatter: Hashable {
     }
 }
 
-// MARK: - Components
-
-extension CurrencyFormatter {
-    public func components(
-        from amount: Decimal,
-        fractionLength limits: ClosedRange<Int> = 2...2,
-        sign: Money.Sign = .default
-    ) -> Money.Components {
-        var majorUnitString = "0"
-        var minorUnitString = "00"
-
-        // Important to ensure decimal is enabled since the formatter is shared instance
-        // potentially mutated by other code.
-        formatter.isDecimalEnabled = true
-
-        formatter.minimumFractionDigits = limits.lowerBound
-        formatter.maximumFractionDigits = limits.upperBound
-
-        let amountString = with(sign: sign, amount: amount) {
-            formatter.string(from: amount)!
-        }
-
-        let pieces = amountString.components(separatedBy: decimalSeparator)
-
-        if let majorUnit = pieces.first {
-            majorUnitString = majorUnit
-        }
-
-        if pieces.count > 1 {
-            let rawMinorUnitString = pieces[1] as NSString
-            let range = NSRange(location: 0, length: rawMinorUnitString.length)
-            minorUnitString = rawMinorUnitString.replacingOccurrences(
-                of: "\\D",
-                with: "",
-                options: .regularExpression,
-                range: range
-            )
-        }
-
-        return .init(
-            amount: amount,
-            majorUnit: majorUnitString,
-            minorUnit: minorUnitString,
-            currencySymbol: currencySymbol,
-            groupingSeparator: groupingSeparator,
-            decimalSeparator: decimalSeparator
-        )
-    }
-}
-
 // MARK: - Format
 
 extension CurrencyFormatter {
-    /// Returns a string representation of a given value formatted using the given
-    /// style.
-    ///
-    /// - Parameters:
-    ///   - value: The value to format.
-    ///   - limits: The limits of digits after the decimal separator.
-    ///   - style: The style to format the result.
-    ///   - sign: The sign to use when formatting the result.
-    /// - Returns: A string representation of a given value formatted using the
-    ///   given style.
-    public func string(
-        from value: Decimal,
-        fractionLength limits: ClosedRange<Int>,
-        style: Money.Components.Style = .default,
-        sign: Money.Sign = .default
-    ) -> String {
-        components(from: value, fractionLength: limits, sign: sign).joined(style: style)
-    }
-
-    /// Returns a string representation of a given value formatted using the given
-    /// style.
-    ///
-    /// - Parameters:
-    ///   - value: The value to format.
-    ///   - limits: The limits of digits after the decimal separator.
-    ///   - style: The style to format the result.
-    ///   - sign: The sign to use when formatting the result.
-    /// - Returns: A string representation of a given value formatted using the
-    ///   given style.
-    public func string(
-        from value: Int,
-        fractionLength limits: ClosedRange<Int>,
-        style: Money.Components.Style = .default,
-        sign: Money.Sign = .default
-    ) -> String {
-        string(from: Decimal(value), fractionLength: limits, style: style, sign: sign)
-    }
-
-    /// Returns a string representation of a given value formatted using the given
-    /// style.
-    ///
-    /// - Parameters:
-    ///   - value: The value to format.
-    ///   - limits: The limits of digits after the decimal separator.
-    ///   - style: The style to format the result.
-    ///   - sign: The sign to use when formatting the result.
-    /// - Returns: A string representation of a given value formatted using the
-    ///   given style.
-    public func string(
-        from value: Double,
-        fractionLength limits: ClosedRange<Int>,
-        style: Money.Components.Style = .default,
-        sign: Money.Sign = .default
-    ) -> String {
-        string(from: Decimal(value), fractionLength: limits, style: style, sign: sign)
-    }
-
     /// Returns a numeric representation by parsing the given string.
     ///
     /// - Parameter string: A string that is parsed to generate the returned numeric
@@ -210,11 +118,7 @@ extension CurrencyFormatter {
     /// - Returns: A numeric representation by parsing the given string, or `nil` if
     ///   no single number could be parsed.
     public func decimal(from string: String) -> Decimal? {
-        if let decimalValue = Decimal(string: string) {
-            return decimalValue
-        }
-
-        return formatter.number(from: string)?.decimalValue
+        formatter.number(from: string)?.decimalValue
     }
 
     /// Returns a numeric representation by parsing the given string.
@@ -224,11 +128,7 @@ extension CurrencyFormatter {
     /// - Returns: A numeric representation by parsing the given string, or `nil` if
     ///   no single number could be parsed.
     public func double(from string: String) -> Double? {
-        if let doubleValue = Double(string) {
-            return doubleValue
-        }
-
-        return formatter.number(from: string)?.doubleValue
+        formatter.number(from: string)?.doubleValue
     }
 
     public func format(amount value: Any, allowDecimal: Bool) -> String? {
@@ -263,6 +163,69 @@ extension CurrencyFormatter {
     }
 }
 
+// MARK: - Components
+
+extension CurrencyFormatter {
+    func components(
+        from amount: Decimal,
+        fractionLength limits: ClosedRange<Int>? = nil,
+        sign: Money.Sign = .default
+    ) -> Money.Components {
+        let limits = limits ?? amount.calculatePrecision()
+        var majorUnitString = "0"
+        var minorUnitString = "00"
+
+        let amountString = with(fractionLength: limits) {
+            formatter.string(from: amount)!
+        }
+
+        let pieces = amountString.components(separatedBy: decimalSeparator)
+
+        if let majorUnit = pieces.first {
+            majorUnitString = majorUnit
+        }
+
+        if pieces.count > 1 {
+            let rawMinorUnitString = pieces[1] as NSString
+            let range = NSRange(location: 0, length: rawMinorUnitString.length)
+            minorUnitString = rawMinorUnitString.replacingOccurrences(
+                of: "\\D",
+                with: "",
+                options: .regularExpression,
+                range: range
+            )
+        }
+
+        return .init(
+            amount: amount,
+            majorUnit: majorUnitString,
+            minorUnit: minorUnitString,
+            sign: sign,
+            formatter: self
+        )
+    }
+
+    private func with<T>(fractionLength: ClosedRange<Int>, _ block: () -> T) -> T {
+        // Save
+        let existingPositivePrefix = formatter.positivePrefix
+        let existingNegativePrefix = formatter.negativePrefix
+        let existingFractionLength = formatter.fractionLength
+
+        formatter.fractionLength = fractionLength
+        formatter.positivePrefix = ""
+        formatter.negativePrefix = ""
+
+        // Compute
+        let result = block()
+
+        // Restore
+        formatter.positivePrefix = existingPositivePrefix
+        formatter.negativePrefix = existingNegativePrefix
+        formatter.fractionLength = existingFractionLength
+        return result
+    }
+}
+
 extension NumberFormatter {
     fileprivate var isDecimalEnabled: Bool {
         get { minimumFractionDigits == 0 }
@@ -271,27 +234,5 @@ extension NumberFormatter {
             // separator are at least getting a '.00'
             minimumFractionDigits = newValue ? 2 : 0
         }
-    }
-}
-
-// MARK: - Sign
-
-extension CurrencyFormatter {
-    private func with<T>(sign: Money.Sign, amount: Decimal, _ block: () -> T) -> T {
-        var sign = sign
-
-        // Omit sign when amount is `0`.
-        if amount == 0 {
-            sign = .none
-        }
-
-        let existingPositivePrefix = formatter.positivePrefix
-        let existingNegativePrefix = formatter.negativePrefix
-        formatter.positivePrefix = sign.positive + formatter.currencySymbol
-        formatter.negativePrefix = sign.negative + formatter.currencySymbol
-        let result = block()
-        formatter.positivePrefix = existingPositivePrefix
-        formatter.negativePrefix = existingNegativePrefix
-        return result
     }
 }

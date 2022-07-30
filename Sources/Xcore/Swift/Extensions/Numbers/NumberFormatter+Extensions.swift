@@ -65,3 +65,16 @@ extension NumberFormatter {
         return string(from: NSDecimalNumber(decimal: number))
     }
 }
+
+// MARK: - Fraction Length
+
+extension NumberFormatter {
+    /// The minimum and maximum number of digits after the decimal separator.
+    public var fractionLength: ClosedRange<Int> {
+        get { minimumFractionDigits...maximumFractionDigits }
+        set {
+            minimumFractionDigits = newValue.lowerBound
+            maximumFractionDigits = newValue.upperBound
+        }
+    }
+}

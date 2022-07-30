@@ -7,17 +7,23 @@
 import SwiftUI
 
 extension Money {
-    /// A structure representing colors used to display money.
+    /// A structure representing colors used to format money.
     public struct Color: Hashable {
-        /// The color to use when the amount is positive.
+        /// The color for positive values.
         public let positive: SwiftUI.Color
 
-        /// The color to use when the amount is negative.
+        /// The color for negative values.
         public let negative: SwiftUI.Color
 
-        /// The custom color to use when the amount is `0`.
+        /// The color for zero (`0`) values.
         public let zero: SwiftUI.Color
 
+        /// Creates an instance of color.
+        ///
+        /// - Parameters:
+        ///   - positive: The color for positive values.
+        ///   - negative: The color for negative values.
+        ///   - zero: The color for zero (`0`) values.
         public init(
             positive: SwiftUI.Color,
             negative: SwiftUI.Color,
@@ -28,6 +34,9 @@ extension Money {
             self.zero = zero
         }
 
+        /// Creates an instance of color.
+        ///
+        /// - Parameter color: The color for positive, negative and zero values.
         public init(_ color: SwiftUI.Color) {
             self.positive = color
             self.negative = color
@@ -39,6 +48,12 @@ extension Money {
 // MARK: - UIColor
 
 extension Money.Color {
+    /// Creates an instance of color.
+    ///
+    /// - Parameters:
+    ///   - positive: The color used to represent positive values.
+    ///   - negative: The color used to represent negative values.
+    ///   - zero: The color used to represent zero values.
     @_disfavoredOverload
     public init(
         positive: UIColor,
@@ -52,19 +67,12 @@ extension Money.Color {
         )
     }
 
+    /// Creates an instance of color.
+    ///
+    /// - Parameter color: The color used to represent positive, negative and zero
+    ///   values.
     @_disfavoredOverload
     public init(_ color: UIColor) {
         self.init(.init(color))
-    }
-}
-
-// MARK: - Built-in
-
-extension Money.Color {
-    /// A color representing absent of value.
-    ///
-    /// This instance can be used to indicate to the formatter to ignore color.
-    public static var none: Self {
-        .init(.clear)
     }
 }
