@@ -52,6 +52,7 @@ extension Menu: CaseIterable {
         separators,
         buttons,
         capsules,
+        money,
         xstack,
         popups,
         textFields,
@@ -79,6 +80,17 @@ extension Menu {
         content: {
             if #available(iOS 15.0, *) {
                 Samples.capsuleViewPreviews
+            } else {
+                EmptyView()
+            }
+        }
+    )
+
+    private static let money = Self(
+        title: "Money",
+        content: {
+            if #available(iOS 15.0, *) {
+                MoneyView()
             } else {
                 EmptyView()
             }

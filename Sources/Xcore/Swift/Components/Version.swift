@@ -35,7 +35,7 @@ import Foundation
 ///     }
 /// }
 /// ```
-public struct Version: RawRepresentable {
+public struct Version: RawRepresentable, Sendable {
     public let rawValue: String
 
     public init(rawValue: String) {

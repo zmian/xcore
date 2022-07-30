@@ -41,8 +41,6 @@ extension FatalReason {
 // MARK: - Internal Fatal Reasons
 
 extension FatalReason {
-    static let unsupportedFallbackFormattingStyle: Self = "Fallback style shouldn't be of type `abbreviationWith`."
-
     static func unknownCaseDetected<T: RawRepresentable>(_ case: T) -> Self {
         .init("Unknown case detected: \(`case`) - (\(`case`.rawValue))")
     }

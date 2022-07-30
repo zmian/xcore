@@ -157,7 +157,7 @@ final class CurrencyFormatterTests: TestCase {
         assertEqual(dollarsAndCents(from: 1000.0), ("$1.000,", "00"))
     }
 
-    func testCurrencyWithoutDecimals() {
+    func testCurrencyWithoutAllowingDecimals() {
         let amounts = [-1000.0, -1.0, 0.0, 1.0, 1000.0, 2000.88, 150_555.0, 4_627_042]
 
         for locale in Locale.allCases {
@@ -179,7 +179,29 @@ final class CurrencyFormatterTests: TestCase {
         }
     }
 
-    func testCurrencyWithDecimals() {
+    func testCurrencyWithAllowingDecimals() {
+        let amounts: [Decimal] = [-1000, -1, 0, 1, 1000, 200_088, 150_555, 4_627_042]
+
+        for locale in Locale.allCases {
+            CurrencyFormatter.shared.localeTest = locale
+
+            for amount in amounts {
+                guard let currencyString = CurrencyFormatter.shared.format(amount: amount, allowDecimal: false) else {
+                    XCTFail("Invalid currency amount.")
+                    break
+                }
+
+                guard let decimalValue = CurrencyFormatter.shared.decimal(from: currencyString) else {
+                    XCTFail("Failed to convert \(currencyString) to valid number.")
+                    break
+                }
+
+                XCTAssertTrue(decimalValue == amount, "result is: \(decimalValue) but amount is: \(amount), for \(locale.rawValue)")
+            }
+        }
+    }
+
+    func testCurrencyWithAllowingDecimals_double() {
         let amounts: [Double] = [-1000, -1, 0, 1, 1000, 200_088, 150_555, 4_627_042]
 
         for locale in Locale.allCases {
@@ -231,7 +253,8 @@ extension CurrencyFormatterTests {
 
     private func dollarsAndCents(from amount: Decimal) -> (dollars: String, cents: String) {
         let components = CurrencyFormatter.shared.components(from: amount)
-        return ("\(components.majorUnit)\(components.decimalSeparator)", components.minorUnit)
+        let majorUnit = components.formatted(style: .removeMinorUnit)
+        return ("\(majorUnit)\(components.formatter.decimalSeparator)", components.minorUnit)
     }
 }
 

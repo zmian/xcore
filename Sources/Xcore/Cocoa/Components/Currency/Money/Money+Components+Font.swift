@@ -4,92 +4,146 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import SwiftUI
 
 extension Money.Components {
-    /// A structure representing fonts used to display money components.
+    /// A structure representing fonts used to format money components.
     public struct Font: Hashable {
-        /// The font to be used in displaying major unit of the amount.
+        /// The font for major unit of the amount.
         ///
         /// ```swift
         /// let amount = Decimal(120.30)
         /// // 120 - major unit
         /// // 30 - minor unit
         /// ```
-        public let majorUnit: UIFont?
+        public var majorUnit: UIFont
 
-        /// The font to be used in displaying minor unit of the amount.
+        /// The font for minor unit of the amount.
         ///
         /// ```swift
         /// let amount = Decimal(120.30)
         /// // 120 - major unit
         /// // 30 - minor unit
         /// ```
-        public let minorUnit: UIFont?
+        public var minorUnit: Superscript?
 
-        /// The offset applied to the minor unit of the amount.
+        /// The font for currency symbol of the amount.
         ///
         /// ```swift
         /// let amount = Decimal(120.30)
+        /// // $ - currency symbol
         /// // 120 - major unit
         /// // 30 - minor unit
         /// ```
-        public let minorUnitOffset: Int?
+        public var currencySymbol: Superscript?
 
-        public init(majorUnit: UIFont?, minorUnit: UIFont?, minorUnitOffset: Int?) {
+        /// Creates an instance of font.
+        ///
+        /// - Parameters:
+        ///   - majorUnit: The font for major unit of the amount.
+        ///   - minorUnit: The font for minor unit of the amount.
+        ///   - currencySymbol: The font for currency symbol of the amount.
+        public init(
+            majorUnit: UIFont,
+            minorUnit: Superscript?,
+            currencySymbol: Superscript? = nil
+        ) {
             self.majorUnit = majorUnit
             self.minorUnit = minorUnit
-            self.minorUnitOffset = minorUnitOffset
+            self.currencySymbol = nil
         }
 
-        public init(_ style: UIFont.TextStyle) {
-            self.init(.app(style))
-        }
-
-        public init(_ font: UIFont?) {
+        /// Creates an instance of font.
+        ///
+        /// - Parameter font: The font for the amount.
+        public init(_ font: UIFont) {
             self.majorUnit = font
-            self.minorUnit = font
-            self.minorUnitOffset = nil
+            self.minorUnit = nil
+            self.currencySymbol = nil
+        }
+
+        /// Creates an instance of font.
+        ///
+        /// - Parameter style: The font text style for the amount.
+        public init(_ style: SwiftUI.Font.TextStyle) {
+            self.init(.app(.init(style)))
         }
     }
 }
 
-// MARK: - Convenience
+// MARK: - Superscript
 
 extension Money.Components.Font {
-    /// Superscript based layout derived from the given major unit size.
-    ///
-    /// - Note: Consider using the pre-existing styles instead of using this method
-    ///   directly. If an existing style doesn't fit your need create an alias here
-    ///   like `.body` to ensure consistency.
-    public static func superscript(_ style: UIFont.TextStyle) -> Self {
-        superscript(.app(style))
-    }
+    /// A structure representing font and baseline offset.
+    public struct Superscript: Hashable {
+        public let font: UIFont
+        public let baselineOffset: CGFloat
 
-    /// Superscript based layout derived from the given major unit size.
-    ///
-    /// - Note: Consider using the pre-existing styles instead of using this method
-    ///   directly. If an existing style doesn't fit your need create an alias here
-    ///   like `.body` to ensure consistency.
-    public static func superscript(_ font: UIFont) -> Self {
-        let majorUnitSize = font.pointSize
-
-        let φ = AppConstants.φ
-        var minorUnitSize = (majorUnitSize * φ).rounded()
-
-        // Add buffer if the given size is small. This helps with readability.
-        if majorUnitSize <= 20 {
-            minorUnitSize += (minorUnitSize * φ * φ * φ).rounded()
+        public init(font: UIFont, baselineOffset: CGFloat) {
+            self.font = font
+            self.baselineOffset = baselineOffset
         }
 
-        let minorUnitWeight: UIFont.Weight = minorUnitSize <= 10 ? .medium : .regular
-        let minorUnitOffset = Int((majorUnitSize - minorUnitSize).rounded())
+        /// Returns superscript based layout derived from the given font text style.
+        public static func relative(to style: Font.TextStyle) -> Self {
+            relative(to: .app(.init(style)))
+        }
 
-        return .init(
-            majorUnit: font,
-            minorUnit: .app(size: minorUnitSize, weight: minorUnitWeight),
-            minorUnitOffset: minorUnitOffset
-        )
+        /// Returns superscript based layout derived from the given font point size.
+        public static func relative(to font: UIFont) -> Self {
+            let majorUnitSize = font.pointSize
+
+            let φ = AppConstants.φ
+            var minorUnitSize = (majorUnitSize * φ).rounded()
+
+            // Add buffer if the given size is small. This helps with readability.
+            if majorUnitSize <= 20 {
+                minorUnitSize += (minorUnitSize * φ * φ * φ).rounded()
+            }
+
+            let minorUnitWeight: UIFont.Weight = minorUnitSize <= 10 ? .medium : .regular
+            let minorUnitOffset = (majorUnitSize - minorUnitSize).rounded()
+
+            return .init(
+                font: .app(size: minorUnitSize, weight: minorUnitWeight),
+                baselineOffset: minorUnitOffset
+            )
+        }
+    }
+}
+
+// MARK: - Chaining Syntactic Syntax
+
+extension Money.Components.Font {
+    /// Superscripts currency symbol relative to the major unit.
+    public func currencySymbolSuperscript() -> Self {
+        currencySymbol(.relative(to: majorUnit))
+    }
+
+    /// The font for currency symbol of the amount.
+    public func currencySymbol(font: UIFont, baselineOffset: CGFloat) -> Self {
+        currencySymbol(.init(font: font, baselineOffset: baselineOffset))
+    }
+
+    /// The font for currency symbol of the amount.
+    public func currencySymbol(_ superscript: Superscript?) -> Self {
+        var copy = self
+        copy.currencySymbol = superscript
+        return copy
+    }
+}
+
+// MARK: - Built-in Superscript: Minor Unit
+
+extension Money.Components.Font {
+    /// Superscripts minor unit relative to the given font text style.
+    public static func superscript(_ style: Font.TextStyle) -> Self {
+        superscript(.app(.init(style)))
+    }
+
+    /// Superscripts minor unit relative to the given font.
+    public static func superscript(_ font: UIFont) -> Self {
+        .init(majorUnit: font, minorUnit: .relative(to: font))
     }
 }
 
@@ -98,117 +152,56 @@ extension Money.Components.Font {
 extension Money.Components.Font {
     /// A font with the large title text style.
     public static var largeTitle: Self {
-        largeTitle(superscript: false)
+        .init(.largeTitle)
     }
 
     /// A font with the title text style.
     public static var title: Self {
-        title(superscript: false)
+        .init(.title)
     }
 
-    /// Create a font for second level hierarchical headings.
+    /// A font with the second level hierarchical headings.
     public static var title2: Self {
-        title2(superscript: false)
+        .init(.title2)
     }
 
-    /// Create a font for third level hierarchical headings.
+    /// A font with the third level hierarchical headings.
     public static var title3: Self {
-        title3(superscript: false)
+        .init(.title3)
     }
 
     /// A font with the headline text style.
     public static var headline: Self {
-        headline(superscript: false)
+        .init(.headline)
     }
 
     /// A font with the subheadline text style.
     public static var subheadline: Self {
-        subheadline(superscript: false)
+        .init(.subheadline)
     }
 
     /// A font with the body text style.
     public static var body: Self {
-        body(superscript: false)
+        .init(.body)
     }
 
     /// A font with the callout text style.
     public static var callout: Self {
-        callout(superscript: false)
+        .init(.callout)
     }
 
     /// A font with the footnote text style.
     public static var footnote: Self {
-        footnote(superscript: false)
+        .init(.footnote)
     }
 
     /// A font with the caption text style.
     public static var caption: Self {
-        caption(superscript: false)
+        .init(.caption)
     }
 
-    /// Create a font with the alternate caption text style.
+    /// A font with the alternate caption text style.
     public static var caption2: Self {
-        caption2(superscript: false)
-    }
-}
-
-extension Money.Components.Font {
-    /// A font with the large title text style.
-    public static func largeTitle(superscript: Bool) -> Self {
-        superscript ? .superscript(.largeTitle) : .init(.largeTitle)
-    }
-
-    /// A font with the title text style.
-    public static func title(superscript: Bool) -> Self {
-        superscript ? .superscript(.title1) : .init(.title1)
-    }
-
-    /// Create a font for second level hierarchical headings.
-    public static func title2(superscript: Bool) -> Self {
-        superscript ? .superscript(.title2) : .init(.title2)
-    }
-
-    /// Create a font for third level hierarchical headings.
-    public static func title3(superscript: Bool) -> Self {
-        superscript ? .superscript(.title3) : .init(.title3)
-    }
-
-    /// A font with the headline text style.
-    public static func headline(superscript: Bool) -> Self {
-        superscript ? .superscript(.headline) : .init(.headline)
-    }
-
-    /// A font with the subheadline text style.
-    public static func subheadline(superscript: Bool) -> Self {
-        superscript ? .superscript(.subheadline) : .init(.subheadline)
-    }
-
-    /// A font with the body text style.
-    public static func body(superscript: Bool) -> Self {
-        superscript ? .superscript(.body) : .init(.body)
-    }
-
-    /// A font with the callout text style.
-    public static func callout(superscript: Bool) -> Self {
-        superscript ? .superscript(.callout) : .init(.callout)
-    }
-
-    /// A font with the footnote text style.
-    public static func footnote(superscript: Bool) -> Self {
-        superscript ? .superscript(.footnote) : .init(.footnote)
-    }
-
-    /// A font with the caption text style.
-    public static func caption(superscript: Bool) -> Self {
-        superscript ? .superscript(.caption1) : .init(.caption1)
-    }
-
-    /// Create a font with the alternate caption text style.
-    public static func caption2(superscript: Bool) -> Self {
-        superscript ? .superscript(.caption2) : .init(.caption2)
-    }
-
-    public static var none: Self {
-        .init(nil)
+        .init(.caption2)
     }
 }

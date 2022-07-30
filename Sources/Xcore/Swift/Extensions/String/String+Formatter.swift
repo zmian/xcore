@@ -11,7 +11,7 @@ import Foundation
 extension String {
     /// A structure representing formatting of a string using a closure.
     public struct BlockFormatStyle {
-        public let format: (String) -> String
+        fileprivate let format: (String) -> String
 
         /// An initializer to format given input string.
         ///

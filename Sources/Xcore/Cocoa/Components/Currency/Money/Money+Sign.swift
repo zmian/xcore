@@ -7,17 +7,27 @@
 import Foundation
 
 extension Money {
-    /// A structure representing signs (+/-) used to display money.
-    public struct Sign: Hashable {
-        /// The string used to represent a positive sign for positive values.
+    /// A structure representing signs (+/-) used to format money.
+    public struct Sign: Sendable, Hashable {
+        /// The string used to represent sign for positive values.
         public let positive: String
 
-        /// The string used to represent a negative sign for negative values.
+        /// The string used to represent sign for negative values.
         public let negative: String
 
-        public init(positive: String, negative: String) {
+        /// The string used to represent sign for zero values.
+        public let zero: String
+
+        /// Creates an instance of sign.
+        ///
+        /// - Parameters:
+        ///   - positive: The string used to represent sign for positive values.
+        ///   - negative: The string used to represent sign for negative values.
+        ///   - zero: The string used to represent sign for zero values.
+        public init(positive: String, negative: String, zero: String) {
             self.positive = positive
             self.negative = negative
+            self.zero = zero
         }
     }
 }
@@ -25,54 +35,94 @@ extension Money {
 // MARK: - Built-in
 
 extension Money.Sign {
+    /// Displays minus sign (`"-"`) for the negative values and empty string (`""`)
+    /// for positive and zero values.
+    ///
     /// ```swift
-    /// // When the amount is positive then the output is "".
+    /// // When the amount is positive then the sign is empty string ("").
     /// let amount = Money(120.30)
-    ///     .sign(.default) // ← Specifying sign output
+    ///     .sign(.default) // ← Specifying the sign
     ///
     /// print(amount) // "$120.30"
     ///
-    /// // When the amount is negative then the output is "-".
+    /// // When the amount is negative then the sign is "-".
     /// let amount = Money(-120.30)
-    ///     .sign(.default) // ← Specifying sign output
+    ///     .sign(.default) // ← Specifying the sign
     ///
     /// print(amount) // "-$120.30"
     /// ```
     public static var `default`: Self {
-        .init(positive: "", negative: "-")
+        .init(positive: "", negative: "-", zero: "")
     }
 
+    /// Displays plus sign (`"+"`) for the positive values and empty string (`""`)
+    /// for negative and zero values.
+    ///
     /// ```swift
-    /// // When the amount is positive then the output is "+".
+    /// // When the amount is positive then the sign is "+".
     /// let amount = Money(120.30)
-    ///     .sign(.both) // ← Specifying sign output
+    ///     .sign(.whenPositive) // ← Specifying the sign
     ///
     /// print(amount) // "+$120.30"
     ///
-    /// // When the amount is negative then the output is "-".
+    /// // When the amount is negative then the sign is empty string ("").
     /// let amount = Money(-120.30)
-    ///     .sign(.both) // ← Specifying sign output
+    ///     .sign(.whenPositive) // ← Specifying the sign
+    ///
+    /// print(amount) // "$120.30"
+    /// ```
+    public static var whenPositive: Self {
+        .init(positive: "+", negative: "", zero: "")
+    }
+
+    /// Displays plus sign (`"+"`) for the positive values, minus sign (`"-"`) for
+    /// the negative values and empty string (`""`) for zero values.
+    ///
+    /// ```swift
+    /// // When the amount is positive then the sign is "+".
+    /// let amount = Money(120.30)
+    ///     .sign(.both) // ← Specifying the sign
+    ///
+    /// print(amount) // "+$120.30"
+    ///
+    /// // When the amount is negative then the sign is "-".
+    /// let amount = Money(-120.30)
+    ///     .sign(.both) // ← Specifying the sign
     ///
     /// print(amount) // "-$120.30"
     /// ```
     public static var both: Self {
-        .init(positive: "+", negative: "-")
+        .init(positive: "+", negative: "-", zero: "")
     }
 
+    /// Displays empty string (`""`) for positive, negative and zero values.
+    ///
     /// ```swift
-    /// // When the amount is positive then the output is "".
+    /// // When the amount is positive then the sign is empty string ("").
     /// let amount = Money(120.30)
-    ///     .sign(.none) // ← Specifying sign output
+    ///     .sign(.none) // ← Specifying the sign
     ///
     /// print(amount) // "$120.30"
     ///
-    /// // When the amount is negative then the output is "".
+    /// // When the amount is negative then the sign is empty string ("").
     /// let amount = Money(-120.30)
-    ///     .sign(.none) // ← Specifying sign output
+    ///     .sign(.none) // ← Specifying the sign
     ///
     /// print(amount) // "$120.30"
     /// ```
     public static var none: Self {
-        .init(positive: "", negative: "")
+        .init(positive: "", negative: "", zero: "")
+    }
+}
+
+// MARK: - Helpers
+
+extension Money.Sign {
+    func of(_ amount: Decimal) -> String {
+        if amount == 0 {
+            return zero
+        }
+
+        return amount > 0 ? positive : negative
     }
 }

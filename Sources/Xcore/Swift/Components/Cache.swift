@@ -159,7 +159,7 @@ private final class ValueWrapper {
     }
 }
 
-private final class KeyWrapper<Key: Hashable>: NSObject {
+private final class KeyWrapper<Key: Hashable & Sendable >: NSObject, Sendable {
     let key: Key
 
     init(_ key: Key) {

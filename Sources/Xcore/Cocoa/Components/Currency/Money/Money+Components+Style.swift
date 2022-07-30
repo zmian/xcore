@@ -7,19 +7,19 @@
 import Foundation
 
 extension Money.Components {
-    /// A structure representing formatting used to display money components.
+    /// A structure representing formatting used to format money components.
     public struct Style {
         public let id: Identifier<Self>
-        public let join: (Money.Components) -> String
+        public let format: (Money.Components) -> String
         public let range: (Money.Components) -> Range
 
         public init(
             id: Identifier<Self>,
-            join: @escaping (Money.Components) -> String,
+            format: @escaping (Money.Components) -> String,
             range: @escaping (Money.Components) -> Range
         ) {
             self.id = id
-            self.join = join
+            self.format = format
             self.range = range
         }
     }
@@ -44,6 +44,8 @@ extension Money.Components.Style: Hashable {
 // MARK: - Built-in
 
 extension Money.Components.Style {
+    /// Joins all of the money components.
+    ///
     /// ```swift
     /// let amount = Money(120.30)
     ///     .style(.default) // ← Specifying style format
@@ -53,11 +55,15 @@ extension Money.Components.Style {
     public static var `default`: Self {
         .init(
             id: #function,
-            join: { "\($0.majorUnit)\($0.decimalSeparator)\($0.minorUnit)" },
+            format: {
+                $0.string(majorUnit: $0.majorUnit, minorUnit: $0.minorUnit)
+            },
             range: { $0.ranges }
         )
     }
 
+    /// Removes minor units and then joins all of the money components.
+    ///
     /// ```swift
     /// let amount = Money(120.30)
     ///     .style(.removeMinorUnit) // ← Specifying style format
@@ -67,11 +73,14 @@ extension Money.Components.Style {
     public static var removeMinorUnit: Self {
         .init(
             id: #function,
-            join: { $0.majorUnit },
+            format: { $0.string(majorUnit: $0.majorUnit) },
             range: { ($0.ranges.majorUnit, nil) }
         )
     }
 
+    /// Conditionally removes minor units if the value is zero and then joins
+    /// remaining money components.
+    ///
     /// ```swift
     /// let amount = Money(120.30)
     ///     .style(.removeMinorUnitIfZero) // ← Specifying style format
@@ -86,26 +95,18 @@ extension Money.Components.Style {
     public static var removeMinorUnitIfZero: Self {
         .init(
             id: #function,
-            join: {
-                guard $0.isMinorUnitValueZero else {
-                    return "\($0.majorUnit)\($0.decimalSeparator)\($0.minorUnit)"
-                }
-
-                return $0.majorUnit
+            format: {
+                ($0.isMinorUnitValueZero ? Self.removeMinorUnit : .default)
+                    .format($0)
             },
             range: {
-                let ranges = $0.ranges
-
-                guard $0.isMinorUnitValueZero else {
-                    return ranges
-                }
-
-                return (ranges.majorUnit, nil)
+                ($0.isMinorUnitValueZero ? Self.removeMinorUnit : .default)
+                    .range($0)
             }
         )
     }
 
-    /// Abbreviate amount to compact format.
+    /// Abbreviates the money components to the compact representation.
     ///
     /// ```swift
     /// 987     // → 987
@@ -124,43 +125,35 @@ extension Money.Components.Style {
     ///     absolute value (e.g., `"abs(value)"`).
     ///   - fallback: The formatting style to use when threshold isn't reached.
     /// - Returns: Abbreviated version of `self`.
-    public static func abbreviation(
+    public static func abbreviate(
         threshold: Decimal,
         thresholdAbs: Bool = true,
         fractionDigits: Int = .defaultFractionDigits,
         fallback: Self = .default
     ) -> Self {
-        func canAbbreviation(amount: Decimal) -> (amount: Double, threshold: Double)? {
+        func canAbbreviate(amount: Decimal) -> Bool {
             let compareAmount = thresholdAbs ? abs(amount) : amount
-
-            guard
-                compareAmount >= 1000,
-                compareAmount >= threshold,
-                let amountValue = Double(exactly: NSDecimalNumber(decimal: amount.rounded(fractionDigits: 2))),
-                let thresholdValue = Double(exactly: NSDecimalNumber(decimal: threshold))
-            else {
-                return nil
-            }
-
-            return (amountValue, thresholdValue)
+            return compareAmount >= 1000 && compareAmount >= threshold
         }
 
         return .init(
             id: .init(rawValue: "abbreviation\(threshold)\(fallback.id)"),
-            join: {
-                guard let value = canAbbreviation(amount: $0.amount) else {
-                    return fallback.join($0)
+            format: {
+                guard canAbbreviate(amount: $0.amount) else {
+                    return fallback.format($0)
                 }
 
-                return $0.currencySymbol + value.amount.abbreviate(
-                    threshold: value.threshold,
+                let amount = $0.amount.abbreviate(
+                    threshold: threshold,
                     thresholdAbs: thresholdAbs,
                     fractionDigits: fractionDigits,
-                    locale: CurrencyFormatter.shared.locale
+                    locale: $0.formatter.locale
                 )
+
+                return $0.string(from: amount)
             },
             range: {
-                guard canAbbreviation(amount: $0.amount) != nil else {
+                guard canAbbreviate(amount: $0.amount) else {
                     return fallback.range($0)
                 }
 
