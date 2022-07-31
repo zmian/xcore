@@ -19,9 +19,9 @@ extension Int {
         return Self.numberFormatter.string(from: self)!
     }
 
-    /// Returns a random value.
-    public static func random() -> Self {
-        .random(in: 0...Int.defaultRandomUpperBound)
+    /// Returns a random value from `0` to the specified range upper bound.
+    public static func random(limit upperBound: Int = .max) -> Self {
+        .random(in: 0...upperBound)
     }
 }
 

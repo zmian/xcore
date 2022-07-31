@@ -9,9 +9,40 @@ import Foundation
 // MARK: - Random
 
 extension Decimal {
+    /// Returns a random value from `0` to the specified range upper bound.
+    public static func random(limit upperBound: Decimal = .greatestFiniteMagnitude) -> Decimal {
+        .random(in: 0...upperBound)
+    }
+
     /// Returns a random value within the specified range.
-    public static func random(_ lower: Double = 0, _ upper: Double = Double.defaultRandomUpperBound) -> Decimal {
-        Decimal(Double.random(in: lower...upper))
+    ///
+    /// Use this method to generate a floating-point value within a specific range.
+    /// This example creates three new values in the range `10.0 ... 20.0`.
+    ///
+    /// ```swift
+    /// for _ in 1...3 {
+    ///     print(Decimal.random(in: 10.0 ... 20.0))
+    /// }
+    /// // Prints "18.1900709259179"
+    /// // Prints "14.2286325689993"
+    /// // Prints "13.1485686260762"
+    /// ```
+    ///
+    /// The `random()` static method chooses a random value from a continuous
+    /// uniform distribution in `range`, and then converts that value to the nearest
+    /// representable value in this type. Depending on the size and span of `range`,
+    /// some concrete values may be represented more frequently than others.
+    ///
+    /// This method is equivalent to calling `random(in:using:)`, passing in the
+    /// system's default random generator.
+    ///
+    /// - Parameter range: The range in which to create a random value. Must be
+    ///   finite.
+    /// - Returns: A random value within the bounds of `range`.
+    @inlinable public static func random(in range: ClosedRange<Decimal>) -> Decimal {
+        Decimal(Double.random(
+            in: Double(truncating: range.lowerBound)...Double(truncating: range.upperBound)
+        ))
     }
 }
 
