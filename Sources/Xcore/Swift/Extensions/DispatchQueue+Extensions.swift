@@ -53,8 +53,11 @@ extension DispatchTime {
 extension DispatchTime {
     public static func seconds(elapsedSince lastTime: UInt64) -> TimeInterval {
         let currentTime = DispatchTime.now().uptimeNanoseconds
-        let oneSecondInNanoseconds = TimeInterval(1_000_000_000)
-        let secondsElapsed = TimeInterval(Int64(currentTime) - Int64(lastTime)) / oneSecondInNanoseconds
+        let nanosecondsInOneSecond = TimeInterval(NSEC_PER_SEC)
+        // Using Int64 instead of UInt64 to avoid Swift runtime failure: arithmetic
+        // overflow due to arithmetic returning signed (-) value for UInt64 type.
+        let diffInNanoseconds = Int64(currentTime) - Int64(lastTime)
+        let secondsElapsed = TimeInterval(diffInNanoseconds) / nanosecondsInOneSecond
         return secondsElapsed
     }
 }
