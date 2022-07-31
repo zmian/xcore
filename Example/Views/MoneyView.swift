@@ -17,12 +17,12 @@ struct MoneyView: View {
 
             XStack("Default Large Font") {
                 Money(-amount)
-                    .font(.largeTitle)
+                    .font(.app(.largeTitle))
             }
 
             XStack("Superscript", subtitle: "Currency Symbol") {
                 Money(amount)
-                    .font(.largeTitle.currencySymbolSuperscript())
+                    .font(.app(.largeTitle).currencySymbolSuperscript())
             }
 
             XStack("Superscript", subtitle: "Minor Unit") {

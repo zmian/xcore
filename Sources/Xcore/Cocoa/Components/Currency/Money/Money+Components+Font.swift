@@ -61,13 +61,69 @@ extension Money.Components {
             self.minorUnit = nil
             self.currencySymbol = nil
         }
+    }
+}
 
-        /// Creates an instance of font.
-        ///
-        /// - Parameter style: The font text style for the amount.
-        public init(_ style: SwiftUI.Font.TextStyle) {
-            self.init(.app(.init(style)))
-        }
+// MARK: - Built-in
+
+extension Money.Components.Font {
+    /// Creates an instance of font.
+    ///
+    /// - Parameter style: The font text style for the amount.
+    public static func app(_ style: Font.TextStyle) -> Self {
+        self.init(.app(.init(style)))
+    }
+
+    /// Creates an instance of font.
+    ///
+    /// - Parameter style: The font text style for the amount.
+    public static func app(_ style: Font.CustomTextStyle) -> Self {
+        self.init(.app(size: style.size))
+    }
+
+    /// Creates an instance of font with minor unit superscripted relative to the
+    /// given font.
+    ///
+    /// - Parameter font: The font for the amount.
+    public static func superscript(_ font: UIFont) -> Self {
+        .init(majorUnit: font, minorUnit: .relative(to: font))
+    }
+
+    /// Creates an instance of font with minor unit superscripted relative to the
+    /// given font text style.
+    ///
+    /// - Parameter style: The font text style for the amount.
+    public static func superscript(_ style: Font.TextStyle) -> Self {
+        superscript(.app(.init(style)))
+    }
+
+    /// Creates an instance of font with minor unit superscripted relative to the
+    /// given font text style.
+    ///
+    /// - Parameter style: The font text style for the amount.
+    public static func superscript(_ style: Font.CustomTextStyle) -> Self {
+        superscript(.app(size: style.size))
+    }
+}
+
+// MARK: - Chaining Syntactic Syntax
+
+extension Money.Components.Font {
+    /// Superscripts currency symbol relative to the major unit.
+    public func currencySymbolSuperscript() -> Self {
+        currencySymbol(.relative(to: majorUnit))
+    }
+
+    /// The font for currency symbol of the amount.
+    public func currencySymbol(font: UIFont, baselineOffset: CGFloat) -> Self {
+        currencySymbol(.init(font: font, baselineOffset: baselineOffset))
+    }
+
+    /// The font for currency symbol of the amount.
+    public func currencySymbol(_ superscript: Superscript?) -> Self {
+        var copy = self
+        copy.currencySymbol = superscript
+        return copy
     }
 }
 
@@ -109,99 +165,5 @@ extension Money.Components.Font {
                 baselineOffset: minorUnitOffset
             )
         }
-    }
-}
-
-// MARK: - Chaining Syntactic Syntax
-
-extension Money.Components.Font {
-    /// Superscripts currency symbol relative to the major unit.
-    public func currencySymbolSuperscript() -> Self {
-        currencySymbol(.relative(to: majorUnit))
-    }
-
-    /// The font for currency symbol of the amount.
-    public func currencySymbol(font: UIFont, baselineOffset: CGFloat) -> Self {
-        currencySymbol(.init(font: font, baselineOffset: baselineOffset))
-    }
-
-    /// The font for currency symbol of the amount.
-    public func currencySymbol(_ superscript: Superscript?) -> Self {
-        var copy = self
-        copy.currencySymbol = superscript
-        return copy
-    }
-}
-
-// MARK: - Built-in Superscript: Minor Unit
-
-extension Money.Components.Font {
-    /// Superscripts minor unit relative to the given font text style.
-    public static func superscript(_ style: Font.TextStyle) -> Self {
-        superscript(.app(.init(style)))
-    }
-
-    /// Superscripts minor unit relative to the given font.
-    public static func superscript(_ font: UIFont) -> Self {
-        .init(majorUnit: font, minorUnit: .relative(to: font))
-    }
-}
-
-// MARK: - Built-in
-
-extension Money.Components.Font {
-    /// A font with the large title text style.
-    public static var largeTitle: Self {
-        .init(.largeTitle)
-    }
-
-    /// A font with the title text style.
-    public static var title: Self {
-        .init(.title)
-    }
-
-    /// A font with the second level hierarchical headings.
-    public static var title2: Self {
-        .init(.title2)
-    }
-
-    /// A font with the third level hierarchical headings.
-    public static var title3: Self {
-        .init(.title3)
-    }
-
-    /// A font with the headline text style.
-    public static var headline: Self {
-        .init(.headline)
-    }
-
-    /// A font with the subheadline text style.
-    public static var subheadline: Self {
-        .init(.subheadline)
-    }
-
-    /// A font with the body text style.
-    public static var body: Self {
-        .init(.body)
-    }
-
-    /// A font with the callout text style.
-    public static var callout: Self {
-        .init(.callout)
-    }
-
-    /// A font with the footnote text style.
-    public static var footnote: Self {
-        .init(.footnote)
-    }
-
-    /// A font with the caption text style.
-    public static var caption: Self {
-        .init(.caption)
-    }
-
-    /// A font with the alternate caption text style.
-    public static var caption2: Self {
-        .init(.caption2)
     }
 }
