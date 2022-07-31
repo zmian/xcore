@@ -189,6 +189,14 @@ extension Money {
         }
     }
 
+    /// The font used to format money components.
+    @_disfavoredOverload
+    public func font(_ font: UIFont) -> Self {
+        applying {
+            $0.font = .init(font)
+        }
+    }
+
     /// The color used to format money components.
     public func color(_ color: Color?) -> Self {
         applying {
