@@ -15,14 +15,14 @@ final class MoneyTests: TestCase {
     func testDefault() {
         XCTAssertEqual(String(describing: Money(120.30)), "$120.30")
         XCTAssertEqual(String(describing: Money(120)), "$120.00")
-        XCTAssertEqual(String(describing: Money(-120)), "-$120.00")
+        XCTAssertEqual(String(describing: Money(-120)), "−$120.00")
 
         let amount4 = Money(-120)
             .style(.default)
             .sign(.default)
 
-        XCTAssertEqual(String(describing: amount4), "-$120.00")
-        XCTAssertEqual(Money(-120).formatted(), "-$120.00")
+        XCTAssertEqual(String(describing: amount4), "−$120.00")
+        XCTAssertEqual(Money(-120).formatted(), "−$120.00")
         XCTAssertEqual(String(describing: Money(0)), "$0.00")
     }
 
@@ -37,7 +37,7 @@ final class MoneyTests: TestCase {
         let amount2 = Money(-120)
             .sign(.both)
 
-        XCTAssertEqual(String(describing: amount2), "-$120.00")
+        XCTAssertEqual(String(describing: amount2), "−$120.00")
 
         // Sign for zero value
         let amount3 = Money(0)
@@ -203,7 +203,7 @@ final class MoneyTests: TestCase {
         XCTAssertEqual(Money(0.00001253).formatted(), "$0.000013")
         XCTAssertEqual(Money(0.00001283).formatted(), "$0.000013")
         XCTAssertEqual(Money(0.000000138).formatted(), "$0.00000014")
-        XCTAssertEqual(Money(-0.000000138).formatted(), "-$0.00000014")
+        XCTAssertEqual(Money(-0.000000138).formatted(), "−$0.00000014")
     }
 
     func testCustomCurrencySymbol_after() {
@@ -225,18 +225,18 @@ final class MoneyTests: TestCase {
         let amount3 = Money(-120)
             .formatter(formatter)
 
-        XCTAssertEqual(String(describing: amount3), "-120.00 BTC")
+        XCTAssertEqual(String(describing: amount3), "−120.00 BTC")
 
         let amount4 = Money(-120)
             .formatter(formatter)
             .style(.default)
             .sign(.default)
 
-        XCTAssertEqual(String(describing: amount4), "-120.00 BTC")
+        XCTAssertEqual(String(describing: amount4), "−120.00 BTC")
 
         let amount5 = Money(-120)
             .formatter(formatter)
-        XCTAssertEqual(amount5.formatted(), "-120.00 BTC")
+        XCTAssertEqual(amount5.formatted(), "−120.00 BTC")
     }
 
     func testCustomCurrencySymbol_before() {
@@ -247,7 +247,7 @@ final class MoneyTests: TestCase {
         let amount = Money(-120.30)
             .formatter(formatter)
 
-        XCTAssertEqual(String(describing: amount), "-BTC120.30")
+        XCTAssertEqual(String(describing: amount), "−BTC120.30")
     }
 
     func testCustomCurrencySymbol_before_custom() {
@@ -281,7 +281,7 @@ final class MoneyTests: TestCase {
             .formatter(formatter.apply { $0.currencySymbol = "BTC" })
             .style(customStyle)
 
-        XCTAssertEqual(String(describing: amount2), "BTC -120.30")
+        XCTAssertEqual(String(describing: amount2), "BTC −120.30")
     }
 
     func testZeroString() {
@@ -308,7 +308,7 @@ final class MoneyTests: TestCase {
             .zeroString("oops")
             .formatted(format: "%@ per month")
 
-        XCTAssertEqual(amount4, "-$9.99 per month")
+        XCTAssertEqual(amount4, "−$9.99 per month")
 
         let amount5 = Money(0)
             .zeroString(nil)

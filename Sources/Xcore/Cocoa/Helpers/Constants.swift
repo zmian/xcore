@@ -165,6 +165,18 @@ extension Character {
     public static var mask: Self = "•"
 }
 
+// MARK: - String
+
+extension String {
+    /// Returns the minus sign [U+2212 − MINUS SIGN][Wikipedia].
+    ///
+    /// See [The Minus Sign, Don’t use a hyphen when you need a minus sign.][Oleb]
+    ///
+    /// [Oleb]: https://oleb.net/blog/2015/02/minus-sign
+    /// [Wikipedia]: https://en.wikipedia.org/wiki/Plus_and_minus_signs
+    public static let minusSign: String = "\u{2212}"
+}
+
 // MARK: - App Constants
 
 public enum AppConstants {

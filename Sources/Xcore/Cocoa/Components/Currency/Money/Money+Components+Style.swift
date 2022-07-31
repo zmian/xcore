@@ -118,6 +118,23 @@ extension Money.Components.Style {
     /// 132456  // → 132.5K
     /// ```
     ///
+    /// - Returns: Abbreviated version of `self`.
+    public static var abbreviate: Self {
+        abbreviate(threshold: 0)
+    }
+
+    /// Abbreviates the money components to the compact representation.
+    ///
+    /// ```swift
+    /// 987     // → 987
+    /// 1200    // → 1.2K
+    /// 12000   // → 12K
+    /// 120000  // → 120K
+    /// 1200000 // → 1.2M
+    /// 1340    // → 1.3K
+    /// 132456  // → 132.5K
+    /// ```
+    ///
     /// - Parameters:
     ///   - threshold: A property to only abbreviate if `amount` is greater then
     ///     this value.
