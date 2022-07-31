@@ -26,8 +26,7 @@ extension Array {
 
     /// Returns a random element from `self`.
     public func randomElement() -> Element {
-        let randomIndex = Int(arc4random()) % count
-        return self[randomIndex]
+        self[Int.random() % count]
     }
 
     /// Split array by chunks of given size.
