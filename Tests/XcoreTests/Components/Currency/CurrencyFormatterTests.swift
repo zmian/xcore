@@ -12,146 +12,146 @@ final class CurrencyFormatterTests: TestCase {
     func testDollarsAndCents() {
         // US - Default
         CurrencyFormatter.shared.localeTest = .usa
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1.", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // India - Hindi
         CurrencyFormatter.shared.localeTest = .indiaHindi
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1.", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // India - Sanskrit
         CurrencyFormatter.shared.localeTest = .indiaSanskrit
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$१,०००.", "००"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$१.", "००"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$१,०००.", "००"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$१.", "००"))
         assertEqual(dollarsAndCents(from: 0.0), ("$०.", "००"))
         assertEqual(dollarsAndCents(from: 1.0), ("$१.", "००"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$१,०००.", "००"))
 
         // Puerto Rico
         CurrencyFormatter.shared.localeTest = .puertoRico
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
-        assertEqual(dollarsAndCents(from: -10000.0), ("-$10,000.", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -10000.0), ("−$10,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1.", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // China
         CurrencyFormatter.shared.localeTest = .china
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1.", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // Canada - Fr
         CurrencyFormatter.shared.localeTest = .canadaFr
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1 000,", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1,", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1 000,", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1,", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0,", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1,", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1 000,", "00"))
 
         // Canada - En
         CurrencyFormatter.shared.localeTest = .canadaEn
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1.", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // UK
         CurrencyFormatter.shared.localeTest = .uk
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1.", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // Mexico
         CurrencyFormatter.shared.localeTest = .mexico
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
-        assertEqual(dollarsAndCents(from: -10000.0), ("-$10,000.", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -10000.0), ("−$10,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1.", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // Brazil
         CurrencyFormatter.shared.localeTest = .brazil
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1.000,", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1,", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1.000,", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1,", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0,", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1,", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1.000,", "00"))
 
         // Portugal
         CurrencyFormatter.shared.localeTest = .portugal
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1000,", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1,", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1000,", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1,", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0,", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1,", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1000,", "00"))
 
         // Germany
         CurrencyFormatter.shared.localeTest = .germany
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1.000,", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1,", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1.000,", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1,", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0,", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1,", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1.000,", "00"))
 
         // Japan
         CurrencyFormatter.shared.localeTest = .japan
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1.", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // Pakistan - Urdu
         CurrencyFormatter.shared.localeTest = .pakistanUrdu
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1.", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // Pakistan - Punjabi
         CurrencyFormatter.shared.localeTest = .pakistanPunjabi
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$۱٬۰۰۰٫", "۰۰"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$۱٫", "۰۰"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$۱٬۰۰۰٫", "۰۰"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$۱٫", "۰۰"))
         assertEqual(dollarsAndCents(from: 0.0), ("$۰٫", "۰۰"))
         assertEqual(dollarsAndCents(from: 1.0), ("$۱٫", "۰۰"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$۱٬۰۰۰٫", "۰۰"))
 
         // Switzerland
         CurrencyFormatter.shared.localeTest = .switzerland
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1’000.", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1’000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1.", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1’000.", "00"))
 
         // Ireland
         CurrencyFormatter.shared.localeTest = .ireland
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1,000.", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1.", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1,000.", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1.", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0.", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1.", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1,000.", "00"))
 
         // Indonesia
         CurrencyFormatter.shared.localeTest = .indonesia
-        assertEqual(dollarsAndCents(from: -1000.0), ("-$1.000,", "00"))
-        assertEqual(dollarsAndCents(from: -1.0), ("-$1,", "00"))
+        assertEqual(dollarsAndCents(from: -1000.0), ("−$1.000,", "00"))
+        assertEqual(dollarsAndCents(from: -1.0), ("−$1,", "00"))
         assertEqual(dollarsAndCents(from: 0.0), ("$0,", "00"))
         assertEqual(dollarsAndCents(from: 1.0), ("$1,", "00"))
         assertEqual(dollarsAndCents(from: 1000.0), ("$1.000,", "00"))

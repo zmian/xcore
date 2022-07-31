@@ -7,7 +7,7 @@
 import Foundation
 
 extension Money {
-    /// A structure representing signs (+/-) used to format money.
+    /// A structure representing signs (+/−) used to format money.
     public struct Sign: Sendable, Hashable {
         /// The string used to represent sign for positive values.
         public let positive: String
@@ -35,7 +35,7 @@ extension Money {
 // MARK: - Built-in
 
 extension Money.Sign {
-    /// Displays minus sign (`"-"`) for the negative values and empty string (`""`)
+    /// Displays minus sign (`"−"`) for the negative values and empty string (`""`)
     /// for positive and zero values.
     ///
     /// ```swift
@@ -45,14 +45,14 @@ extension Money.Sign {
     ///
     /// print(amount) // "$120.30"
     ///
-    /// // When the amount is negative then the sign is "-".
+    /// // When the amount is negative then the sign is "−".
     /// let amount = Money(-120.30)
     ///     .sign(.default) // ← Specifying the sign
     ///
-    /// print(amount) // "-$120.30"
+    /// print(amount) // "−$120.30"
     /// ```
     public static var `default`: Self {
-        .init(positive: "", negative: "-", zero: "")
+        .init(positive: "", negative: .minusSign, zero: "")
     }
 
     /// Displays plus sign (`"+"`) for the positive values and empty string (`""`)
@@ -75,7 +75,7 @@ extension Money.Sign {
         .init(positive: "+", negative: "", zero: "")
     }
 
-    /// Displays plus sign (`"+"`) for the positive values, minus sign (`"-"`) for
+    /// Displays plus sign (`"+"`) for the positive values, minus sign (`"−"`) for
     /// the negative values and empty string (`""`) for zero values.
     ///
     /// ```swift
@@ -85,14 +85,14 @@ extension Money.Sign {
     ///
     /// print(amount) // "+$120.30"
     ///
-    /// // When the amount is negative then the sign is "-".
+    /// // When the amount is negative then the sign is "−".
     /// let amount = Money(-120.30)
     ///     .sign(.both) // ← Specifying the sign
     ///
     /// print(amount) // "-$120.30"
     /// ```
     public static var both: Self {
-        .init(positive: "+", negative: "-", zero: "")
+        .init(positive: "+", negative: .minusSign, zero: "")
     }
 
     /// Displays empty string (`""`) for positive, negative and zero values.
