@@ -100,11 +100,6 @@ final class StringTests: TestCase {
         XCTAssertEqual("HELLOWORLD".camelcased(), "helloworld")
         XCTAssertEqual("HELLO_WORLD".camelcased(), "helloWorld")
 
-        #warning("FIXME")
-//        XCTAssertEqual("HELLOwORLD".camelcased(), "helloWorld")
-//        XCTAssertEqual("HELLOworld".camelcased(), "helloWorld")
-//        XCTAssertEqual("HELLOworlD".camelcased(), "helloWorlD")
-
         XCTAssertEqual("Helloworld".camelcased(), "helloworld")
         XCTAssertEqual("HelloWorld".camelcased(), "helloWorld")
         XCTAssertEqual("Hello World".camelcased(), "helloWorld")
@@ -123,11 +118,6 @@ final class StringTests: TestCase {
         XCTAssertEqual("HELLOWORLD".snakecased(), "helloworld")
         XCTAssertEqual("HELLO_WORLD".snakecased(), "hello_world")
 
-        #warning("FIXME")
-//        XCTAssertEqual("HELLOwORLD".snakecased(), "hello_world")
-//        XCTAssertEqual("HELLOworld".snakecased(), "hello_world")
-//        XCTAssertEqual("HELLOworlD".snakecased(), "hello_worl_d")
-
         XCTAssertEqual("Helloworld".snakecased(), "helloworld")
         XCTAssertEqual("HelloWorld".snakecased(), "hello_world")
         XCTAssertEqual("hello_world".snakecased(), "hello_world")
@@ -142,15 +132,10 @@ final class StringTests: TestCase {
     func testTitlecased() {
         XCTAssertEqual("".titlecased(), "")
         XCTAssertEqual("a".titlecased(), "A")
-//        XCTAssertEqual("aBC".titlecased(), "A B C")
+        XCTAssertEqual("aBC".titlecased(), "A BC")
         XCTAssertEqual("a b".titlecased(), "A B")
 
         XCTAssertEqual("HELLOWORLD".titlecased(), "Helloworld")
-        #warning("FIXME")
-//        XCTAssertEqual("HELLO_WORLD".titlecased(), "Hello World")
-//        XCTAssertEqual("HELLOwORLD".titlecased(), "Hello World")
-//        XCTAssertEqual("HELLOworld".titlecased(), "Hello World")
-//        XCTAssertEqual("HELLOworlD".titlecased(), "hello Worl D")
 
         XCTAssertEqual("we're having dinner in the garden".titlecased(), "We're Having Dinner In The Garden")
         XCTAssertEqual("TheSwiftProgrammingLanguage".snakecased().replacing("_", with: " ").titlecased(), "The Swift Programming Language")
