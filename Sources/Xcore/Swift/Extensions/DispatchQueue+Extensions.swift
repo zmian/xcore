@@ -46,19 +46,21 @@ extension DispatchTime {
     /// - Parameter interval: The time interval, in seconds.
     /// - Returns: A new `DispatchTime` from specified seconds.
     public static func seconds(_ interval: TimeInterval) -> DispatchTime {
-        .now() + TimeInterval(Int64(interval * TimeInterval(NSEC_PER_SEC))) / TimeInterval(NSEC_PER_SEC)
+        .now() + (interval * nanosecondsPerSecond) / nanosecondsPerSecond
     }
-}
 
-extension DispatchTime {
     public static func seconds(elapsedSince lastTime: UInt64) -> TimeInterval {
         let currentTime = DispatchTime.now().uptimeNanoseconds
-        let nanosecondsInOneSecond = TimeInterval(NSEC_PER_SEC)
         // Using Int64 instead of UInt64 to avoid Swift runtime failure: arithmetic
         // overflow due to arithmetic returning signed (-) value for UInt64 type.
         let diffInNanoseconds = Int64(currentTime) - Int64(lastTime)
-        let secondsElapsed = TimeInterval(diffInNanoseconds) / nanosecondsInOneSecond
+        let secondsElapsed = TimeInterval(diffInNanoseconds) / nanosecondsPerSecond
         return secondsElapsed
+    }
+
+    /// The number of nanoseconds in one second.
+    private static var nanosecondsPerSecond: TimeInterval {
+        TimeInterval(NSEC_PER_SEC)
     }
 }
 
