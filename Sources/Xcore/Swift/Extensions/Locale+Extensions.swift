@@ -39,9 +39,7 @@ extension Locale {
 
     /// Returns `en_GB` (English, United Kingdom) locale.
     public static let uk = Locale(identifier: "en_GB")
-}
 
-extension Locale {
     /// Returns `fr` (French) locale.
     public static let fr = Locale(identifier: "fr")
 
