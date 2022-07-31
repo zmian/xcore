@@ -37,7 +37,6 @@ extension MonotonicTimer {
             begin = DispatchTime.now().uptimeNanoseconds
         }
 
-        // TODO: Bring `DispatchTime.seconds(elapsedSince:)` in the fold here as well.
         public func elapsed(_ duration: TimeInterval) -> Bool {
             let diff = diffInSeconds
 
@@ -61,10 +60,7 @@ extension MonotonicTimer {
         }
 
         private var diffInSeconds: TimeInterval {
-            // Using Int64 instead of UInt64 to avoid Swift runtime failure: arithmetic
-            // overflow due to arithmetic returning signed (-) value for UInt64 type.
-            let diffInNanoseconds = Int64(DispatchTime.now().uptimeNanoseconds) - Int64(begin)
-            return TimeInterval(diffInNanoseconds) / 1_000_000_000
+            DispatchTime.seconds(elapsedSince: begin)
         }
 
         public static func == (lhs: Uptime, rhs: Uptime) -> Bool {
