@@ -42,7 +42,8 @@ public struct Money: Hashable, MutableAppliable {
 
     public init(_ amount: Decimal) {
         self.amount = amount
-        self.fractionLength = amount.calculatePrecision()
+        fractionLength = amount.calculatePrecision()
+        currencySymbol = Self.appearance().currencySymbol
         superscriptMinorUnitEnabled = Self.appearance().superscriptMinorUnitEnabled
     }
 
@@ -63,10 +64,11 @@ public struct Money: Hashable, MutableAppliable {
         self.init(amount)
     }
 
-    /// The formatter used to format the amount.
-    ///
-    /// The default value is `.shared`.
-    public var formatter: CurrencyFormatter = .shared
+    /// The currency symbol of the amount.
+    public var currencySymbol: String
+
+    /// The currency symbol position.
+    public var currencySymbolPosition: CurrencySymbolPosition = .prefix
 
     /// The minimum and maximum number of digits after the decimal separator.
     public var fractionLength: ClosedRange<Int>
@@ -101,12 +103,12 @@ public struct Money: Hashable, MutableAppliable {
     ///
     /// print(amount) // "$120.30"
     /// ```
-    public var style: Components.Style = .default
+    public var style: Style = .default
 
     /// The font used to format money components.
     ///
     /// The default value is `nil`.
-    public var font: Components.Font?
+    public var font: Font?
 
     /// A property to indicate whether the color changes based on the amount.
     public var color: Color?
@@ -126,10 +128,11 @@ public struct Money: Hashable, MutableAppliable {
 // MARK: - Chaining Syntactic Syntax
 
 extension Money {
-    /// The formatter used to format the amount.
-    public func formatter(_ formatter: CurrencyFormatter) -> Self {
+    /// The currency symbol of the amount and its position.
+    public func currencySymbol(_ currencySymbol: String, position: CurrencySymbolPosition) -> Self {
         applying {
-            $0.formatter = formatter
+            $0.currencySymbol = currencySymbol
+            $0.currencySymbolPosition = position
         }
     }
 
@@ -176,14 +179,14 @@ extension Money {
     }
 
     /// The style used to format money components.
-    public func style(_ style: Components.Style) -> Self {
+    public func style(_ style: Style) -> Self {
         applying {
             $0.style = style
         }
     }
 
     /// The font used to format money components.
-    public func font(_ font: Components.Font?) -> Self {
+    public func font(_ font: Font?) -> Self {
         applying {
             $0.font = font
         }
@@ -273,6 +276,36 @@ extension Money: ExpressibleByIntegerLiteral {
     }
 }
 
+// MARK: - CurrencySymbolPosition
+
+extension Money {
+    /// An enumeration representing the position of currency symbol.
+    public enum CurrencySymbolPosition: Sendable, Hashable {
+        /// Adds currency symbol before the amount (e.g., `$10.00`).
+        case prefix
+
+        /// Adds currency symbol after the amount (e.g., `1 BTC`).
+        case suffix
+    }
+
+    /// The character the formatter uses as a decimal separator.
+    ///
+    /// For example, the decimal separator used in the United States is the period
+    /// (`"10,000.00"`) whereas in France it is the comma (`"10 000,00"`).
+    public var decimalSeparator: String {
+        CurrencyFormatter.shared.decimalSeparator
+    }
+
+    /// The locale of the formatter.
+    ///
+    /// The locale determines the default values for many formatter attributes, such
+    /// as ISO country and language codes, currency code, calendar, system of
+    /// measurement, and decimal separator.
+    public var locale: Locale {
+        CurrencyFormatter.shared.locale
+    }
+}
+
 // MARK: - Appearance
 
 extension Money {
@@ -285,10 +318,42 @@ extension Money {
     /// ```swift
     /// Money.appearance().apply {
     ///     $0.superscriptMinorUnitEnabled = false
+    ///     $0.currencySymbol = "£"
+    ///     $0.locale = .uk
     /// }
     /// ```
     public final class Appearance: Appliable {
         public var superscriptMinorUnitEnabled = true
+
+        /// The character the formatter uses as a currency symbol.
+        ///
+        /// Currency symbol can be independently set of locale to ensure correct
+        /// currency symbol is used while localizing decimal and grouping separators.
+        /// For example, `$ (USA)` currency symbol should be used when user changes
+        /// their locale to France, while grouping and decimal separator is changed to
+        /// space and comma respectively.
+        ///
+        /// While currency isn't directly translated (e.g.,`$100 != €100`), however, it
+        /// is safe to use locale aware grouping and decimal separator to make it user
+        /// locale friendly (e.g., France locale  `$1,000.00` == `$1 000,00`).
+        public var currencySymbol = Locale.us.currencySymbol ?? "$" {
+            didSet {
+                CurrencyFormatter.shared.currencySymbol = currencySymbol
+            }
+        }
+
+        /// The locale of the formatter.
+        ///
+        /// The locale determines the default values for many formatter attributes, such
+        /// as ISO country and language codes, currency code, calendar, system of
+        /// measurement, and decimal separator.
+        ///
+        /// The default value is `.us`.
+        public var locale: Locale = .us {
+            didSet {
+                CurrencyFormatter.shared.locale = locale
+            }
+        }
     }
 
     private static var appearanceProxy = Appearance()

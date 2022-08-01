@@ -50,7 +50,7 @@ struct MoneyView: View {
 
             XStack("BTC") {
                 Money(crypto)
-                    .formatter(btcFormatter)
+                    .currencySymbol("BTC", position: .suffix)
             }
 
             XStack("Format") {
@@ -67,10 +67,5 @@ struct MoneyView: View {
 
     private var color: Money.Color {
         .init(positive: .systemGreen, negative: .systemRed, zero: .label)
-    }
-
-    private let btcFormatter = CurrencyFormatter().apply {
-        $0.currencySymbol = "BTC"
-        $0.currencySymbolPosition = .suffix
     }
 }
