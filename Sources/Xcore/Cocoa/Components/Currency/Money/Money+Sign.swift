@@ -117,12 +117,12 @@ extension Money.Sign {
 
 // MARK: - Helpers
 
-extension Money.Sign {
-    func of(_ amount: Decimal) -> String {
+extension Money {
+    var currentSign: String {
         if amount == 0 {
-            return zero
+            return sign.zero
         }
 
-        return amount > 0 ? positive : negative
+        return amount > 0 ? sign.positive : sign.negative
     }
 }

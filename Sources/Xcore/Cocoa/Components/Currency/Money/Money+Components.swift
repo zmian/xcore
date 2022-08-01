@@ -12,8 +12,8 @@ extension Money {
     public struct Components: Equatable, CustomStringConvertible {
         public typealias Range = (majorUnit: NSRange?, minorUnit: NSRange?)
 
-        /// The amount of money.
-        public let amount: Decimal
+        /// The money used to extract the components.
+        public let money: Money
 
         /// The major unit of the amount.
         ///
@@ -33,24 +33,14 @@ extension Money {
         /// ```
         public let minorUnit: String
 
-        /// The sign (+/-) associated with the amount.
-        public let sign: Sign
-
-        /// The currency formatter used to format the amount.
-        public let formatter: CurrencyFormatter
-
         public init(
-            amount: Decimal,
+            money: Money,
             majorUnit: String,
-            minorUnit: String,
-            sign: Sign,
-            formatter: CurrencyFormatter
+            minorUnit: String
         ) {
-            self.amount = amount
+            self.money = money
             self.majorUnit = majorUnit
             self.minorUnit = minorUnit
-            self.sign = sign
-            self.formatter = formatter
         }
 
         public var description: String {
@@ -83,11 +73,11 @@ extension Money {
 
 extension Money.Components {
     var isMinorUnitValueZero: Bool {
-        amount.exponent == 1
+        money.amount.exponent == 1
     }
 
     var ranges: Range {
-        let majorUnitAndDecimalSeparator = "\(string(majorUnit: majorUnit))\(formatter.decimalSeparator)"
+        let majorUnitAndDecimalSeparator = "\(string(majorUnit: majorUnit))\(money.decimalSeparator)"
         let majorUnitRange = NSRange(location: 0, length: majorUnitAndDecimalSeparator.count)
         let minorUnitRange = NSRange(location: majorUnitRange.length, length: minorUnit.count)
 
@@ -98,17 +88,17 @@ extension Money.Components {
     }
 
     func string(majorUnit: String, minorUnit: String? = nil) -> String {
-        string(from: [majorUnit, minorUnit].joined(separator: formatter.decimalSeparator))
+        string(from: [majorUnit, minorUnit].joined(separator: money.decimalSeparator))
     }
 
     func string(from amount: String) -> String {
-        let sign = sign.of(self.amount)
+        let sign = money.currentSign
 
-        switch formatter.currencySymbolPosition {
+        switch money.currencySymbolPosition {
             case .prefix:
-                return "\(sign)\(formatter.currencySymbol)\(amount)"
+                return "\(sign)\(money.currencySymbol)\(amount)"
             case .suffix:
-                return "\(sign)\(amount) \(formatter.currencySymbol)"
+                return "\(sign)\(amount) \(money.currencySymbol)"
         }
     }
 }

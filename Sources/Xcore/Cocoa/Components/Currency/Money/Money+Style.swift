@@ -6,17 +6,17 @@
 
 import Foundation
 
-extension Money.Components {
+extension Money {
     /// A structure representing formatting used to format money components.
     public struct Style {
         public let id: Identifier<Self>
-        public let format: (Money.Components) -> String
-        public let range: (Money.Components) -> Range
+        public let format: (Components) -> String
+        public let range: (Components) -> Components.Range
 
         public init(
             id: Identifier<Self>,
-            format: @escaping (Money.Components) -> String,
-            range: @escaping (Money.Components) -> Range
+            format: @escaping (Components) -> String,
+            range: @escaping (Components) -> Components.Range
         ) {
             self.id = id
             self.format = format
@@ -27,7 +27,7 @@ extension Money.Components {
 
 // MARK: - Equatable
 
-extension Money.Components.Style: Equatable {
+extension Money.Style: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
     }
@@ -35,7 +35,7 @@ extension Money.Components.Style: Equatable {
 
 // MARK: - Hashable
 
-extension Money.Components.Style: Hashable {
+extension Money.Style: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -43,7 +43,7 @@ extension Money.Components.Style: Hashable {
 
 // MARK: - Built-in
 
-extension Money.Components.Style {
+extension Money.Style {
     /// Joins all of the money components.
     ///
     /// ```swift
@@ -156,21 +156,21 @@ extension Money.Components.Style {
         return .init(
             id: .init(rawValue: "abbreviation\(threshold)\(fallback.id)"),
             format: {
-                guard canAbbreviate(amount: $0.amount) else {
+                guard canAbbreviate(amount: $0.money.amount) else {
                     return fallback.format($0)
                 }
 
-                let amount = $0.amount.abbreviate(
+                let amount = $0.money.amount.abbreviate(
                     threshold: threshold,
                     thresholdAbs: thresholdAbs,
                     fractionDigits: fractionDigits,
-                    locale: $0.formatter.locale
+                    locale: $0.money.locale
                 )
 
                 return $0.string(from: amount)
             },
             range: {
-                guard canAbbreviate(amount: $0.amount) else {
+                guard canAbbreviate(amount: $0.money.amount) else {
                     return fallback.range($0)
                 }
 

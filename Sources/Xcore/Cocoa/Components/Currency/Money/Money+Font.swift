@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-extension Money.Components {
+extension Money {
     /// A structure representing fonts used to format money components.
     public struct Font: Hashable {
         /// The font for major unit of the amount.
@@ -66,7 +66,7 @@ extension Money.Components {
 
 // MARK: - Built-in
 
-extension Money.Components.Font {
+extension Money.Font {
     /// Creates an instance of font.
     ///
     /// - Parameter style: The font text style for the amount.
@@ -108,7 +108,7 @@ extension Money.Components.Font {
 
 // MARK: - Chaining Syntactic Syntax
 
-extension Money.Components.Font {
+extension Money.Font {
     /// Superscripts currency symbol relative to the major unit.
     public func currencySymbolSuperscript() -> Self {
         currencySymbol(.relative(to: majorUnit))
@@ -129,7 +129,7 @@ extension Money.Components.Font {
 
 // MARK: - Superscript
 
-extension Money.Components.Font {
+extension Money.Font {
     /// A structure representing font and baseline offset.
     public struct Superscript: Hashable {
         public let font: UIFont

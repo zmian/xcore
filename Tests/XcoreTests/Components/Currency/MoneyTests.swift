@@ -9,7 +9,7 @@ import XCTest
 
 final class MoneyTests: TestCase {
     override class func setUp() {
-        CurrencyFormatter.shared.locale = .us
+        Money.appearance().locale = .us
     }
 
     func testDefault() {
@@ -207,78 +207,67 @@ final class MoneyTests: TestCase {
     }
 
     func testCustomCurrencySymbol_after() {
-        let formatter = CurrencyFormatter().apply {
-            $0.currencySymbol = "BTC"
-            $0.currencySymbolPosition = .suffix
-        }
-
         let amount1 = Money(120.30)
-            .formatter(formatter)
+            .currencySymbol("BTC", position: .suffix)
 
         XCTAssertEqual(String(describing: amount1), "120.30 BTC")
 
         let amount2 = Money(120)
-            .formatter(formatter)
+            .currencySymbol("BTC", position: .suffix)
 
         XCTAssertEqual(String(describing: amount2), "120.00 BTC")
 
         let amount3 = Money(-120)
-            .formatter(formatter)
+            .currencySymbol("BTC", position: .suffix)
 
         XCTAssertEqual(String(describing: amount3), "−120.00 BTC")
 
         let amount4 = Money(-120)
-            .formatter(formatter)
+            .currencySymbol("ETH", position: .suffix)
             .style(.default)
             .sign(.default)
 
-        XCTAssertEqual(String(describing: amount4), "−120.00 BTC")
+        XCTAssertEqual(String(describing: amount4), "−120.00 ETH")
 
         let amount5 = Money(-120)
-            .formatter(formatter)
+            .currencySymbol("BTC", position: .suffix)
         XCTAssertEqual(amount5.formatted(), "−120.00 BTC")
     }
 
     func testCustomCurrencySymbol_before() {
-        let formatter = CurrencyFormatter().apply {
-            $0.currencySymbol = "BTC"
-        }
-
         let amount = Money(-120.30)
-            .formatter(formatter)
+            .currencySymbol("BTC", position: .prefix)
 
         XCTAssertEqual(String(describing: amount), "−BTC120.30")
     }
 
     func testCustomCurrencySymbol_before_custom() {
-        let formatter = CurrencyFormatter()
-
-        let customStyle = Money.Components.Style(
+        let customStyle = Money.Style(
             id: "custom",
             format: {
                 let amount = [$0.majorUnit, $0.minorUnit]
-                    .joined(separator: $0.formatter.decimalSeparator)
+                    .joined(separator: $0.money.decimalSeparator)
 
-                let sign = $0.amount > 0 ? $0.sign.positive : $0.sign.negative
+                let sign = $0.money.currentSign
 
-                switch $0.formatter.currencySymbolPosition {
+                switch $0.money.currencySymbolPosition {
                     case .prefix:
-                        return "\($0.formatter.currencySymbol) \(sign)\(amount)"
+                        return "\($0.money.currencySymbol) \(sign)\(amount)"
                     case .suffix:
-                        return "\(sign)\(amount) \($0.formatter.currencySymbol)"
+                        return "\(sign)\(amount) \($0.money.currencySymbol)"
                 }
             },
             range: \.ranges
         )
 
         let amount1 = Money(120.30)
-            .formatter(formatter.apply { $0.currencySymbol = "₿" })
+            .currencySymbol("₿", position: .prefix)
             .style(customStyle)
 
         XCTAssertEqual(String(describing: amount1), "₿ 120.30")
 
         let amount2 = Money(-120.30)
-            .formatter(formatter.apply { $0.currencySymbol = "BTC" })
+            .currencySymbol("BTC", position: .prefix)
             .style(customStyle)
 
         XCTAssertEqual(String(describing: amount2), "BTC −120.30")

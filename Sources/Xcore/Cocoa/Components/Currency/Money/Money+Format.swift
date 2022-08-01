@@ -66,7 +66,7 @@ extension Money {
             // Superscript: CurrencySymbol
             if
                 let currencySymbolInfo = font.currencySymbol,
-                let range = attributedString.range(of: components.formatter.currencySymbol)
+                let range = attributedString.range(of: components.money.currencySymbol)
             {
                 attributedString.setAttributes(currencySymbolInfo, range: range)
             }
@@ -101,17 +101,13 @@ extension Money {
     }
 
     private func components() -> Components {
-        formatter.components(
-            from: amount,
-            fractionLength: fractionLength,
-            sign: sign
-        )
+        CurrencyFormatter.shared.components(of: self)
     }
 }
 
 @available(iOS 15, *)
 extension AttributedString {
-    fileprivate mutating func setAttributes(_ attributes: Money.Components.Font.Superscript, range: Range<Index>) {
+    fileprivate mutating func setAttributes(_ attributes: Money.Font.Superscript, range: Range<Index>) {
         var attributeContainer = AttributeContainer()
         attributeContainer.font = attributes.font
         attributeContainer.baselineOffset = attributes.baselineOffset
