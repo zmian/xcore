@@ -4,7 +4,6 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
 import SwiftUI
 
 // MARK: - ImageAssetIdentifier

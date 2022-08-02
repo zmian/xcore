@@ -92,31 +92,7 @@ extension Date.Format {
 // MARK: - Format.Custom
 
 extension Date.Format {
-    public struct Custom: RawRepresentable, Equatable {
-        public let rawValue: String
-
-        public init(rawValue: String) {
-            self.rawValue = rawValue
-        }
-    }
-}
-
-extension Date.Format.Custom: ExpressibleByStringLiteral {
-    public init(stringLiteral value: StringLiteralType) {
-        self.init(rawValue: value)
-    }
-}
-
-extension Date.Format.Custom: CustomStringConvertible {
-    public var description: String {
-        rawValue
-    }
-}
-
-extension Date.Format.Custom: CustomPlaygroundDisplayConvertible {
-    public var playgroundDescription: Any {
-        rawValue
-    }
+    public typealias Custom = Identifier<Self>
 }
 
 // MARK: - Built-in Format.Custom

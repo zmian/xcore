@@ -290,6 +290,10 @@ extension Decimal {
 
 //    @available(iOS 15.0, *)
 //    public func formattedString() -> String {
-//        formatted(.number.precision(.fractionLength(0...Int.maxFractionDigits)))
+//        let style = FormatStyle
+//            .number
+//            .precision(.fractionLength(0...Int.maxFractionDigits))
+//
+//        return formatted(style)
 //    }
 }

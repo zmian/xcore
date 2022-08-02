@@ -101,18 +101,19 @@ extension Money {
     }
 
     private func components() -> Components {
-        let pieces = CurrencyFormatter.shared
+        // 1200.30 → "$1,200.30" → ["1,200", "30"]
+        let parts = CurrencyFormatter.shared
             .string(from: amount, fractionLength: fractionLength)
             .components(separatedBy: decimalSeparator)
 
         var majorUnit = "0"
         var minorUnit = "00"
 
-        if let majorUnitString = pieces.first {
+        if let majorUnitString = parts.first {
             majorUnit = majorUnitString
         }
 
-        if let minorUnitString = pieces.at(1) {
+        if let minorUnitString = parts.at(1) {
             minorUnit = minorUnitString.replacing("\\D", with: "")
         }
 
