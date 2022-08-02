@@ -71,7 +71,7 @@ public struct Money: Hashable, MutableAppliable {
     /// as ISO country and language codes, currency code, calendar, system of
     /// measurement, and decimal separator.
     ///
-    /// The default value is `.usPosix`.
+    /// The default value is `.us`.
     public var locale: Locale
 
     /// The character the formatter uses as a currency symbol for the amount.
@@ -354,7 +354,7 @@ extension Money {
         /// While currency isn't directly translated (e.g.,`$100 != €100`), however, it
         /// is safe to use locale aware grouping and decimal separator to make it user
         /// locale friendly (e.g., France locale  `$1,000.00` == `$1 000,00`).
-        public var currencySymbol = Locale.usPosix.currencySymbol ?? "$" {
+        public var currencySymbol = Locale.us.currencySymbol ?? "$" {
             didSet {
                 MoneyFormatter.shared.currencySymbol = currencySymbol
             }
@@ -366,8 +366,8 @@ extension Money {
         /// as ISO country and language codes, currency code, calendar, system of
         /// measurement, and decimal separator.
         ///
-        /// The default value is `.usPosix`.
-        public var locale: Locale = .usPosix {
+        /// The default value is `.us`.
+        public var locale: Locale = .us {
             didSet {
                 MoneyFormatter.shared.locale = locale
             }
