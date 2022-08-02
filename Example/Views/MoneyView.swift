@@ -22,6 +22,11 @@ struct MoneyView: View {
 
             XStack("Superscript", subtitle: "Currency Symbol") {
                 Money(amount)
+                    .font(.app(.jumbo3).currencySymbolSuperscript())
+            }
+
+            XStack("Superscript", subtitle: "Currency Symbol") {
+                Money(amount)
                     .font(.app(.largeTitle).currencySymbolSuperscript())
             }
 
@@ -68,4 +73,11 @@ struct MoneyView: View {
     private var color: Money.Color {
         .init(positive: .systemGreen, negative: .systemRed, zero: .label)
     }
+}
+
+// MARK: - CustomTextStyle
+
+extension Font.CustomTextStyle {
+    /// `48`
+    fileprivate static let jumbo3 = Self(size: 48, relativeTo: .largeTitle)
 }

@@ -82,27 +82,33 @@ extension Money.Font {
     }
 
     /// Creates an instance of font with minor unit superscripted relative to the
+    /// given font text style.
+    ///
+    /// - Parameters:
+    ///   - style: The font text style for the amount.
+    ///   - alignment: The minor unit alignment relative to the major unit.
+    public static func superscript(_ style: Font.TextStyle, alignment: VerticalAlignment = .top) -> Self {
+        superscript(.app(.init(style)), alignment: alignment)
+    }
+
+    /// Creates an instance of font with minor unit superscripted relative to the
+    /// given font text style.
+    ///
+    /// - Parameters:
+    ///   - style: The font text style for the amount.
+    ///   - alignment: The minor unit alignment relative to the major unit.
+    public static func superscript(_ style: Font.CustomTextStyle, alignment: VerticalAlignment = .top) -> Self {
+        superscript(.app(size: style.size), alignment: alignment)
+    }
+
+    /// Creates an instance of font with minor unit superscripted relative to the
     /// given font.
     ///
-    /// - Parameter font: The font for the amount.
-    public static func superscript(_ font: UIFont) -> Self {
-        .init(majorUnit: font, minorUnit: .relative(to: font))
-    }
-
-    /// Creates an instance of font with minor unit superscripted relative to the
-    /// given font text style.
-    ///
-    /// - Parameter style: The font text style for the amount.
-    public static func superscript(_ style: Font.TextStyle) -> Self {
-        superscript(.app(.init(style)))
-    }
-
-    /// Creates an instance of font with minor unit superscripted relative to the
-    /// given font text style.
-    ///
-    /// - Parameter style: The font text style for the amount.
-    public static func superscript(_ style: Font.CustomTextStyle) -> Self {
-        superscript(.app(size: style.size))
+    /// - Parameters:
+    ///   - font: The font for the amount.
+    ///   - alignment: The minor unit alignment relative to the major unit.
+    public static func superscript(_ font: UIFont, alignment: VerticalAlignment = .top) -> Self {
+        .init(majorUnit: font, minorUnit: .relative(to: font, alignment: alignment))
     }
 }
 
@@ -110,8 +116,8 @@ extension Money.Font {
 
 extension Money.Font {
     /// Superscripts currency symbol relative to the major unit.
-    public func currencySymbolSuperscript() -> Self {
-        currencySymbol(.relative(to: majorUnit))
+    public func currencySymbolSuperscript(alignment: VerticalAlignment = .top) -> Self {
+        currencySymbol(.relative(to: majorUnit, alignment: alignment))
     }
 
     /// The font for currency symbol of the amount.
@@ -141,29 +147,38 @@ extension Money.Font {
         }
 
         /// Returns superscript based layout derived from the given font text style.
-        public static func relative(to style: Font.TextStyle) -> Self {
-            relative(to: .app(.init(style)))
+        public static func relative(to style: Font.TextStyle, alignment: VerticalAlignment) -> Self {
+            relative(to: .app(.init(style)), alignment: alignment)
         }
 
         /// Returns superscript based layout derived from the given font point size.
-        public static func relative(to font: UIFont) -> Self {
-            let majorUnitSize = font.pointSize
-
-            let φ = AppConstants.φ
-            var minorUnitSize = (majorUnitSize * φ).rounded()
+        public static func relative(to referenceFont: UIFont, alignment: VerticalAlignment) -> Self {
+            var size = referenceFont.pointSize / 2
 
             // Add buffer if the given size is small. This helps with readability.
-            if majorUnitSize <= 20 {
-                minorUnitSize += (minorUnitSize * φ * φ * φ).rounded()
+            if size <= 14 {
+                size = referenceFont.pointSize / 1.3
             }
 
-            let minorUnitWeight: UIFont.Weight = minorUnitSize <= 10 ? .medium : .regular
-            let minorUnitOffset = (majorUnitSize - minorUnitSize).rounded()
-
-            return .init(
-                font: .app(size: minorUnitSize, weight: minorUnitWeight),
-                baselineOffset: minorUnitOffset
+            let font = UIFont.app(
+                size: size,
+                weight: size <= 20 ? .semibold : .regular
             )
+
+            let baselineOffset: CGFloat
+
+            switch alignment {
+                case .top:
+                    baselineOffset = referenceFont.capHeight - font.capHeight
+                case .center:
+                    baselineOffset = (referenceFont.capHeight - font.capHeight) / 2
+                default:
+                    let fontHalfSize = font.capHeight / 2
+                    let capHeight = (referenceFont.capHeight / 2 - fontHalfSize)
+                    baselineOffset = -(capHeight - fontHalfSize)
+            }
+
+            return .init(font: font, baselineOffset: baselineOffset)
         }
     }
 }
