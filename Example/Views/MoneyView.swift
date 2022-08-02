@@ -22,11 +22,6 @@ struct MoneyView: View {
 
             XStack("Superscript", subtitle: "Currency Symbol") {
                 Money(amount)
-                    .font(.app(.jumbo3).currencySymbolSuperscript())
-            }
-
-            XStack("Superscript", subtitle: "Currency Symbol") {
-                Money(amount)
                     .font(.app(.largeTitle).currencySymbolSuperscript())
             }
 
@@ -38,6 +33,11 @@ struct MoneyView: View {
             XStack("Superscript", subtitle: "Minor Unit & Currency Symbol") {
                 Money(amount)
                     .font(.superscript(.largeTitle).currencySymbolSuperscript())
+            }
+
+            XStack("Superscript", subtitle: "Currency Symbol") {
+                Money(amount)
+                    .font(.app(.jumbo3).currencySymbolSuperscript())
             }
 
             XStack("Colored") {
