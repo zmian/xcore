@@ -71,7 +71,7 @@ struct MoneyView: View {
     }
 
     private var color: Money.Color {
-        .init(positive: .systemGreen, negative: .systemRed, zero: .label)
+        .init(positive: .green, negative: .red, zero: .primary)
     }
 }
 
