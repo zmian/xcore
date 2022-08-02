@@ -18,7 +18,7 @@ extension Money {
             return zeroString
         }
 
-        let amountString = components().formatted(style: style)
+        let amountString = style.format(self)
 
         guard let format = format else {
             return amountString
@@ -41,9 +41,7 @@ extension Money {
             return AttributedString(zeroString)
         }
 
-        let components = components()
-
-        var attributedString = AttributedString(components.formatted(style: style))
+        var attributedString = AttributedString(style.format(self))
 
         // ForegroundColor
         if let foregroundColor = foregroundColor {
@@ -56,7 +54,7 @@ extension Money {
 
             // Superscript: MinorUnit
             if superscriptMinorUnitEnabled, let minorUnitInfo = font.minorUnit {
-                if let minorUnitRange = components.range(style: style).minorUnit {
+                if let minorUnitRange = style.range(self).minorUnit {
                     if let range = Range(minorUnitRange, in: attributedString) {
                         attributedString.setAttributes(minorUnitInfo, range: range)
                     }
@@ -66,7 +64,7 @@ extension Money {
             // Superscript: CurrencySymbol
             if
                 let currencySymbolInfo = font.currencySymbol,
-                let range = attributedString.range(of: components.money.currencySymbol)
+                let range = attributedString.range(of: currencySymbol)
             {
                 attributedString.setAttributes(currencySymbolInfo, range: range)
             }
@@ -98,26 +96,6 @@ extension Money {
         }
 
         return amount > 0 ? color.positive : color.negative
-    }
-
-    private func components() -> Components {
-        // 1200.30 → "$1,200.30" → ["1,200", "30"]
-        let parts = CurrencyFormatter.shared
-            .string(from: amount, fractionLength: fractionLength)
-            .components(separatedBy: decimalSeparator)
-
-        var majorUnit = "0"
-        var minorUnit = "00"
-
-        if let majorUnitString = parts.first {
-            majorUnit = majorUnitString
-        }
-
-        if let minorUnitString = parts.at(1) {
-            minorUnit = minorUnitString.replacing("\\D", with: "")
-        }
-
-        return .init(money: self, majorUnit: majorUnit, minorUnit: minorUnit)
     }
 }
 
