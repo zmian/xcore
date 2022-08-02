@@ -8,7 +8,13 @@ import UIKit
 import SwiftUI
 
 extension UIColor {
-    public convenience init(_ colorSpace: Color.RGBColorSpace, red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
+    public convenience init(
+        _ colorSpace: Color.RGBColorSpace,
+        red: CGFloat,
+        green: CGFloat,
+        blue: CGFloat,
+        alpha: CGFloat
+    ) {
         switch colorSpace {
             case .displayP3:
                 self.init(displayP3Red: red, green: green, blue: blue, alpha: alpha)

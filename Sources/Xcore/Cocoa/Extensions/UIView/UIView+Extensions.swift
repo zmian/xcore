@@ -86,15 +86,6 @@ extension UIView {
             layer.insertSublayer($0, at: 0)
         }
     }
-
-    @discardableResult
-    open func addOverlay(color: UIColor) -> UIView {
-        UIView().apply {
-            $0.backgroundColor = color
-            addSubview($0)
-            $0.anchor.edges.equalToSuperview()
-        }
-    }
 }
 
 // MARK: - Borders
