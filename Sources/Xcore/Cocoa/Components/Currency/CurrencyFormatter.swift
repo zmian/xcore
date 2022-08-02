@@ -101,37 +101,11 @@ extension CurrencyFormatter: Hashable {
     }
 }
 
-// MARK: - Components
+// MARK: - API
 
 extension CurrencyFormatter {
-    func components(of money: Money) -> Money.Components {
-        formatter.fractionLength = money.fractionLength
-        let amountString = formatter.string(from: money.amount)!
-
-        var majorUnitString = "0"
-        var minorUnitString = "00"
-
-        let pieces = amountString.components(separatedBy: decimalSeparator)
-
-        if let majorUnit = pieces.first {
-            majorUnitString = majorUnit
-        }
-
-        if pieces.count > 1 {
-            let rawMinorUnitString = pieces[1] as NSString
-            let range = NSRange(location: 0, length: rawMinorUnitString.length)
-            minorUnitString = rawMinorUnitString.replacingOccurrences(
-                of: "\\D",
-                with: "",
-                options: .regularExpression,
-                range: range
-            )
-        }
-
-        return .init(
-            money: money,
-            majorUnit: majorUnitString,
-            minorUnit: minorUnitString
-        )
+    func string(from amount: Decimal, fractionLength: ClosedRange<Int>) -> String {
+        formatter.fractionLength = fractionLength
+        return formatter.string(from: amount)!
     }
 }
