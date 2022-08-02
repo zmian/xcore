@@ -43,6 +43,7 @@ public struct Money: Hashable, MutableAppliable {
     public init(_ amount: Decimal) {
         self.amount = amount
         fractionLength = amount.calculatePrecision()
+        locale = Self.appearance().locale
         currencySymbol = Self.appearance().currencySymbol
         superscriptMinorUnitEnabled = Self.appearance().superscriptMinorUnitEnabled
     }
@@ -63,6 +64,15 @@ public struct Money: Hashable, MutableAppliable {
 
         self.init(amount)
     }
+
+    /// The locale the formatter uses when formatting the amount.
+    ///
+    /// The locale determines the default values for many formatter attributes, such
+    /// as ISO country and language codes, currency code, calendar, system of
+    /// measurement, and decimal separator.
+    ///
+    /// The default value is `.usPosix`.
+    public var locale: Locale
 
     /// The character the formatter uses as a currency symbol for the amount.
     ///
@@ -138,6 +148,13 @@ public struct Money: Hashable, MutableAppliable {
 // MARK: - Chaining Syntactic Syntax
 
 extension Money {
+    /// The locale the formatter uses when formatting the amount.
+    public func locale(_ locale: Locale) -> Self {
+        applying {
+            $0.locale = locale
+        }
+    }
+
     /// The currency symbol of the amount and its position.
     public func currencySymbol(_ currencySymbol: String, position: CurrencySymbolPosition) -> Self {
         applying {
@@ -298,17 +315,6 @@ extension Money {
         case suffix
     }
 
-    /// The locale of the formatter.
-    ///
-    /// The locale determines the default values for many formatter attributes, such
-    /// as ISO country and language codes, currency code, calendar, system of
-    /// measurement, and decimal separator.
-    ///
-    /// The default value is `.us`.
-    public var locale: Locale {
-        MoneyFormatter.shared.locale
-    }
-
     /// The character the formatter uses as a decimal separator.
     ///
     /// For example, the decimal separator used in the United States is the period
@@ -337,7 +343,7 @@ extension Money {
     public final class Appearance: Appliable {
         public var superscriptMinorUnitEnabled = true
 
-        /// The character the formatter uses as a currency symbol.
+        /// The character the formatter uses as a currency symbol for the amount.
         ///
         /// Currency symbol can be independently set of locale to ensure correct
         /// currency symbol is used while localizing decimal and grouping separators.
@@ -348,7 +354,7 @@ extension Money {
         /// While currency isn't directly translated (e.g.,`$100 != €100`), however, it
         /// is safe to use locale aware grouping and decimal separator to make it user
         /// locale friendly (e.g., France locale  `$1,000.00` == `$1 000,00`).
-        public var currencySymbol = Locale.us.currencySymbol ?? "$" {
+        public var currencySymbol = Locale.usPosix.currencySymbol ?? "$" {
             didSet {
                 MoneyFormatter.shared.currencySymbol = currencySymbol
             }
@@ -360,8 +366,8 @@ extension Money {
         /// as ISO country and language codes, currency code, calendar, system of
         /// measurement, and decimal separator.
         ///
-        /// The default value is `.us`.
-        public var locale: Locale = .us {
+        /// The default value is `.usPosix`.
+        public var locale: Locale = .usPosix {
             didSet {
                 MoneyFormatter.shared.locale = locale
             }

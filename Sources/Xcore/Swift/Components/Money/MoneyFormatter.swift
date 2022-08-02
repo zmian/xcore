@@ -11,6 +11,7 @@ import Foundation
 ///
 /// - Warning: This is an implementation detail of the `Money` type. Please use
 ///   the higher-level `Money` and `Money.appearance()` types.
+@available(iOS, introduced: 14, deprecated: 15, message: "Use Decimal.FormatStyle directly.")
 final class MoneyFormatter: Appliable {
     static let shared = MoneyFormatter()
 

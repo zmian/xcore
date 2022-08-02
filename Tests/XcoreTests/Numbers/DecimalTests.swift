@@ -86,4 +86,36 @@ final class DecimalTests: TestCase {
         let decimal_ptPT = try XCTUnwrap(Decimal(string: "0,377", locale: .ptPT))
         XCTAssertEqual(decimal_ptPT.stringValue, "0.377")
     }
+
+    func testWholeAndFraction() throws {
+        let amount1 = Decimal(1200.30)
+        XCTAssertEqual(amount1.whole, 1200)
+        XCTAssertEqual(amount1.fraction, 0.3)
+
+        let amount2 = Decimal(1200.00)
+        XCTAssertEqual(amount2.whole, 1200)
+        XCTAssertEqual(amount2.fraction, 0)
+
+        let amount3 = try XCTUnwrap(Decimal(string: "1200.3000000012"))
+        XCTAssertEqual(String(describing: amount3), "1200.3000000012")
+        XCTAssertEqual(amount3.whole, 1200)
+        XCTAssertEqual(amount3.fraction, Decimal(string: "0.3000000012"))
+        XCTAssertEqual(amount3.fraction.stringValue, "0.3000000012")
+
+        let amount4 = Decimal(1200.000000000000000000)
+        XCTAssertEqual(amount4.whole, 1200)
+        XCTAssertEqual(amount4.fraction, 0)
+    }
+
+    func testIsFractionZero() throws {
+        // True
+        XCTAssertEqual(Decimal(1200).isFractionZero, true)
+        XCTAssertEqual(Decimal(1200.00).isFractionZero, true)
+        XCTAssertEqual(Decimal(1200.000000000000000000).isFractionZero, true)
+
+        // False
+        XCTAssertEqual(Decimal(1200.30).isFractionZero, false)
+        XCTAssertEqual(try XCTUnwrap(Decimal(string: "1200.3000000012")).isFractionZero, false)
+        XCTAssertEqual(try XCTUnwrap(Decimal(string: "1200.0000000012")).isFractionZero, false)
+    }
 }
