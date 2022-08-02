@@ -101,7 +101,22 @@ extension Money {
     }
 
     private func components() -> Components {
-        CurrencyFormatter.shared.components(of: self)
+        let pieces = CurrencyFormatter.shared
+            .string(from: amount, fractionLength: fractionLength)
+            .components(separatedBy: decimalSeparator)
+
+        var majorUnit = "0"
+        var minorUnit = "00"
+
+        if let majorUnitString = pieces.first {
+            majorUnit = majorUnitString
+        }
+
+        if let minorUnitString = pieces.at(1) {
+            minorUnit = minorUnitString.replacing("\\D", with: "")
+        }
+
+        return .init(money: self, majorUnit: majorUnit, minorUnit: minorUnit)
     }
 }
 
