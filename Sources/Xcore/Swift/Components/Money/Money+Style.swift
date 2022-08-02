@@ -99,11 +99,11 @@ extension Money.Style {
         .init(
             id: #function,
             format: {
-                ($0.isMinorUnitValueZero ? Self.removeMinorUnit : .default)
+                ($0.amount.isFractionZero ? Self.removeMinorUnit : .default)
                     .format($0)
             },
             range: {
-                ($0.isMinorUnitValueZero ? Self.removeMinorUnit : .default)
+                ($0.amount.isFractionZero ? Self.removeMinorUnit : .default)
                     .range($0)
             }
         )
@@ -186,15 +186,27 @@ extension Money.Style {
 // MARK: - Internal API
 
 extension Money {
-    fileprivate var isMinorUnitValueZero: Bool {
-        amount.exponent == 1
-    }
-
     func components() -> Style.Components {
         // 1200.30 → "$1,200.30" → ["1,200", "30"]
-        let parts = MoneyFormatter.shared
-            .string(from: amount, fractionLength: fractionLength)
-            .components(separatedBy: decimalSeparator)
+        let parts: [String]
+
+        if #available(iOS 15.0, *) {
+            parts = amount
+                .formatted(
+                    .number
+                    .precision(.fractionLength(fractionLength))
+                    .sign(strategy: .never)
+                    .locale(locale)
+                    // When truncating fraction digits, if needed, we should round up.
+                    // For example, `0.165` → `0.17` instead of `0.16`.
+                    .rounded(rule: .toNearestOrAwayFromZero)
+                )
+                .components(separatedBy: decimalSeparator)
+        } else {
+            parts = MoneyFormatter.shared
+                .string(from: amount, fractionLength: fractionLength)
+                .components(separatedBy: decimalSeparator)
+        }
 
         var majorUnit = "0"
         var minorUnit = "00"

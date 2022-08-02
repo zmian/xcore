@@ -157,6 +157,37 @@ extension Decimal {
         copy.round(rule, fractionDigits: fractionDigits)
         return copy
     }
+
+    /// The whole part of the decimal.
+    ///
+    /// ```swift
+    /// let amount = Decimal(120.30)
+    /// // 120 - whole
+    /// // 30 - fraction
+    /// ```
+    var whole: Decimal { rounded(sign == .minus ? .up : .down) }
+
+    /// The fraction part of the decimal.
+    ///
+    /// ```swift
+    /// let amount = Decimal(120.30)
+    /// // 120 - whole
+    /// // 30 - fraction
+    /// ```
+    var fraction: Decimal { self - whole }
+
+    /// A boolean value indicating whether the fraction part of the decimal is `0`.
+    ///
+    /// ```swift
+    /// print(Decimal(120.30).isFractionZero)
+    /// // Prints "false"
+    ///
+    /// print(Decimal(120.00).isFractionZero)
+    /// // Prints "true"
+    /// ```
+    var isFractionZero: Bool {
+        max(-exponent, 0) == 0
+    }
 }
 
 // MARK: - Helpers
