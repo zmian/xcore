@@ -303,7 +303,7 @@ public func != <Key, Value>(lhs: [Key: Value?], rhs: [Key: Value?]) -> Bool {
 
 // MARK: - Flatten
 
-extension Dictionary where Value: OptionalType {
+extension Dictionary where Value: OptionalProtocol {
     /// Removes `nil` values from `self`.
     public func compacted() -> [Key: Value.Wrapped] {
         var result: [Key: Value.Wrapped] = [:]

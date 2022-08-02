@@ -174,7 +174,7 @@ private enum BoolRawRepresentableMarker<T>: ConformanceMarker {}
 // MARK: - RawRepresentableMarker
 
 extension RawRepresentableMarker: Conforming where T: RawRepresentable {}
-extension RawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable {}
+extension RawRepresentableMarker: ConformingOptional2 where T: OptionalProtocol, T.Wrapped: RawRepresentable {}
 // StringRawRepresentableMarker
 // - enum Color: String { case red, green, blue }
 // - StringRawRepresentableMarker<Color>.self
@@ -184,40 +184,40 @@ extension StringRawRepresentableMarker: Conforming where T: RawRepresentable, T.
 extension StringRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == String? {}
 // - enum Color: String { case red, green, blue }
 // - StringRawRepresentableMarker<Optional<Color>>.self
-extension StringRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == String {}
+extension StringRawRepresentableMarker: ConformingOptional2 where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == String {}
 // - struct Color: RawRepresentable { let rawValue: String? }
 // - StringRawRepresentableMarker<Optional<Color>>.self
-extension StringRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == String? {}
+extension StringRawRepresentableMarker: ConformingOptional2Optional where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == String? {}
 // IntRawRepresentableMarker
 extension IntRawRepresentableMarker: Conforming where T: RawRepresentable, T.RawValue == Int {}
 extension IntRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == Int? {}
-extension IntRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Int {}
-extension IntRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Int? {}
+extension IntRawRepresentableMarker: ConformingOptional2 where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Int {}
+extension IntRawRepresentableMarker: ConformingOptional2Optional where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Int? {}
 // UIntRawRepresentableMarker
 extension UIntRawRepresentableMarker: Conforming where T: RawRepresentable, T.RawValue == UInt {}
 extension UIntRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == UInt? {}
-extension UIntRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == UInt {}
-extension UIntRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == UInt? {}
+extension UIntRawRepresentableMarker: ConformingOptional2 where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == UInt {}
+extension UIntRawRepresentableMarker: ConformingOptional2Optional where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == UInt? {}
 // FloatRawRepresentableMarker
 extension FloatRawRepresentableMarker: Conforming where T: RawRepresentable, T.RawValue == Float {}
 extension FloatRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == Float? {}
-extension FloatRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Float {}
-extension FloatRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Float? {}
+extension FloatRawRepresentableMarker: ConformingOptional2 where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Float {}
+extension FloatRawRepresentableMarker: ConformingOptional2Optional where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Float? {}
 // DoubleRawRepresentableMarker
 extension DoubleRawRepresentableMarker: Conforming where T: RawRepresentable, T.RawValue == Double {}
 extension DoubleRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == Double? {}
-extension DoubleRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Double {}
-extension DoubleRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Double? {}
+extension DoubleRawRepresentableMarker: ConformingOptional2 where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Double {}
+extension DoubleRawRepresentableMarker: ConformingOptional2Optional where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Double? {}
 // CGFloatRawRepresentableMarker
 extension CGFloatRawRepresentableMarker: Conforming where T: RawRepresentable, T.RawValue == CGFloat {}
 extension CGFloatRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == CGFloat? {}
-extension CGFloatRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == CGFloat {}
-extension CGFloatRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == CGFloat? {}
+extension CGFloatRawRepresentableMarker: ConformingOptional2 where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == CGFloat {}
+extension CGFloatRawRepresentableMarker: ConformingOptional2Optional where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == CGFloat? {}
 // BoolRawRepresentableMarker
 extension BoolRawRepresentableMarker: Conforming where T: RawRepresentable, T.RawValue == Bool {}
 extension BoolRawRepresentableMarker: ConformingOptional where T: RawRepresentable, T.RawValue == Bool? {}
-extension BoolRawRepresentableMarker: ConformingOptional2 where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Bool {}
-extension BoolRawRepresentableMarker: ConformingOptional2Optional where T: OptionalType, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Bool? {}
+extension BoolRawRepresentableMarker: ConformingOptional2 where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Bool {}
+extension BoolRawRepresentableMarker: ConformingOptional2Optional where T: OptionalProtocol, T.Wrapped: RawRepresentable, T.Wrapped.RawValue == Bool? {}
 
 private func rawRepresentableRawValueType<T>(_ t: T.Type) -> Mirror.TypeInfo.Kind.RawValue? {
     if StringRawRepresentableMarker<T>.conforms {
