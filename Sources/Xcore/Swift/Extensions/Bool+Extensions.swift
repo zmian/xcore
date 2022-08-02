@@ -9,8 +9,8 @@ import Foundation
 extension Bool {
     public init?(_ optionalString: String?) {
         guard
-            let valueStr = optionalString,
-            let value = Bool(valueStr)
+            let valueString = optionalString,
+            let value = Bool(valueString)
         else {
             return nil
         }

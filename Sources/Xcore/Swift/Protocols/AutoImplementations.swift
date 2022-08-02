@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import Foundation
+import Swift
 
 // MARK: - Identifiable Auto Implementation for RawRepresentable
 

@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import Foundation
 
 /// A type that can be initialized in multiple contexts.
 ///

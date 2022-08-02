@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import Foundation
 
 public protocol SortOrderable {
     var sortOrder: Int { get }

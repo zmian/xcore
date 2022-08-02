@@ -37,11 +37,15 @@ public struct StringsFile: RawRepresentable, Hashable {
     }
 }
 
+// MARK: - ExpressibleByStringLiteral
+
 extension StringsFile: ExpressibleByStringLiteral {
     public init(stringLiteral value: StringLiteralType) {
         self.init(rawValue: value)
     }
 }
+
+// MARK: - String
 
 extension String {
     /// Returns a localized string, from a specific file without arguments.

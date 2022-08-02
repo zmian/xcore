@@ -35,7 +35,9 @@ extension Transformer where Input == Output {
 // MARK: - Map
 
 extension Transformer {
-    public func map<NewOutput>(_ other: Transformer<Output, NewOutput>) -> Transformer<Input, NewOutput> {
+    public func map<NewOutput>(
+        _ other: Transformer<Output, NewOutput>
+    ) -> Transformer<Input, NewOutput> {
         .init { other(self($0)) }
     }
 }
