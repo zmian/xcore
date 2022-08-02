@@ -61,7 +61,7 @@ public struct DecimalTextFieldFormatter: TextFieldFormatter {
             .replacingOccurrences(of: currency.currencySymbol, with: "")
     }
 
-    private var currency: CurrencySymbolsProvider {
-        CurrencyFormatter.shared
+    private var currency: MoneyFormatter {
+        MoneyFormatter.shared
     }
 }

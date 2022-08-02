@@ -64,7 +64,17 @@ public struct Money: Hashable, MutableAppliable {
         self.init(amount)
     }
 
-    /// The currency symbol of the amount.
+    /// The character the formatter uses as a currency symbol for the amount.
+    ///
+    /// Currency symbol can be independently set of locale to ensure correct
+    /// currency symbol is used while localizing decimal and grouping separators.
+    /// For example, `$ (USA)` currency symbol should be used when user changes
+    /// their locale to France, while grouping and decimal separator is changed to
+    /// space and comma respectively.
+    ///
+    /// While currency isn't directly translated (e.g.,`$100 != €100`), however, it
+    /// is safe to use locale aware grouping and decimal separator to make it user
+    /// locale friendly (e.g., France locale  `$1,000.00` == `$1 000,00`).
     public var currencySymbol: String
 
     /// The currency symbol position.
@@ -288,21 +298,23 @@ extension Money {
         case suffix
     }
 
-    /// The character the formatter uses as a decimal separator.
-    ///
-    /// For example, the decimal separator used in the United States is the period
-    /// (`"10,000.00"`) whereas in France it is the comma (`"10 000,00"`).
-    public var decimalSeparator: String {
-        CurrencyFormatter.shared.decimalSeparator
-    }
-
     /// The locale of the formatter.
     ///
     /// The locale determines the default values for many formatter attributes, such
     /// as ISO country and language codes, currency code, calendar, system of
     /// measurement, and decimal separator.
+    ///
+    /// The default value is `.us`.
     public var locale: Locale {
-        CurrencyFormatter.shared.locale
+        MoneyFormatter.shared.locale
+    }
+
+    /// The character the formatter uses as a decimal separator.
+    ///
+    /// For example, the decimal separator used in the United States is the period
+    /// (`"10,000.00"`) whereas in France it is the comma (`"10 000,00"`).
+    public var decimalSeparator: String {
+        locale.decimalSeparator ?? "."
     }
 }
 
@@ -338,7 +350,7 @@ extension Money {
         /// locale friendly (e.g., France locale  `$1,000.00` == `$1 000,00`).
         public var currencySymbol = Locale.us.currencySymbol ?? "$" {
             didSet {
-                CurrencyFormatter.shared.currencySymbol = currencySymbol
+                MoneyFormatter.shared.currencySymbol = currencySymbol
             }
         }
 
@@ -351,7 +363,7 @@ extension Money {
         /// The default value is `.us`.
         public var locale: Locale = .us {
             didSet {
-                CurrencyFormatter.shared.locale = locale
+                MoneyFormatter.shared.locale = locale
             }
         }
     }

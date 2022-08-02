@@ -9,14 +9,16 @@ import Foundation
 extension Money {
     /// A structure representing formatting used to format money components.
     public struct Style {
+        public typealias Components = (majorUnit: String, minorUnit: String)
+        public typealias Range = (majorUnit: NSRange?, minorUnit: NSRange?)
         public let id: Identifier<Self>
-        public let format: (Components) -> String
-        public let range: (Components) -> Components.Range
+        public let format: (Money) -> String
+        public let range: (Money) -> Range
 
         public init(
             id: Identifier<Self>,
-            format: @escaping (Components) -> String,
-            range: @escaping (Components) -> Components.Range
+            format: @escaping (Money) -> String,
+            range: @escaping (Money) -> Range
         ) {
             self.id = id
             self.format = format
@@ -56,7 +58,8 @@ extension Money.Style {
         .init(
             id: #function,
             format: {
-                $0.string(majorUnit: $0.majorUnit, minorUnit: $0.minorUnit)
+                let components = $0.components()
+                return $0.string(majorUnit: components.majorUnit, minorUnit: components.minorUnit)
             },
             range: { $0.ranges }
         )
@@ -73,7 +76,7 @@ extension Money.Style {
     public static var removeMinorUnit: Self {
         .init(
             id: #function,
-            format: { $0.string(majorUnit: $0.majorUnit) },
+            format: { $0.string(majorUnit: $0.components().majorUnit) },
             range: { ($0.ranges.majorUnit, nil) }
         )
     }
@@ -156,26 +159,81 @@ extension Money.Style {
         return .init(
             id: .init(rawValue: "abbreviation\(threshold)\(fallback.id)"),
             format: {
-                guard canAbbreviate(amount: $0.money.amount) else {
+                guard canAbbreviate(amount: $0.amount) else {
                     return fallback.format($0)
                 }
 
-                let amount = $0.money.amount.abbreviate(
+                let amount = $0.amount.abbreviate(
                     threshold: threshold,
                     thresholdAbs: thresholdAbs,
                     fractionDigits: fractionDigits,
-                    locale: $0.money.locale
+                    locale: $0.locale
                 )
 
                 return $0.string(from: amount)
             },
             range: {
-                guard canAbbreviate(amount: $0.money.amount) else {
+                guard canAbbreviate(amount: $0.amount) else {
                     return fallback.range($0)
                 }
 
                 return (nil, nil)
             }
         )
+    }
+}
+
+// MARK: - Internal API
+
+extension Money {
+    fileprivate var isMinorUnitValueZero: Bool {
+        amount.exponent == 1
+    }
+
+    func components() -> Style.Components {
+        // 1200.30 → "$1,200.30" → ["1,200", "30"]
+        let parts = MoneyFormatter.shared
+            .string(from: amount, fractionLength: fractionLength)
+            .components(separatedBy: decimalSeparator)
+
+        var majorUnit = "0"
+        var minorUnit = "00"
+
+        if let majorUnitString = parts.first {
+            majorUnit = majorUnitString
+        }
+
+        if let minorUnitString = parts.at(1) {
+            minorUnit = minorUnitString.replacing("\\D", with: "")
+        }
+
+        return (majorUnit: majorUnit, minorUnit: minorUnit)
+    }
+
+    var ranges: Style.Range {
+        let components = components()
+        let majorUnitAndDecimalSeparator = "\(string(majorUnit: components.majorUnit))\(decimalSeparator)"
+        let majorUnitRange = NSRange(location: 0, length: majorUnitAndDecimalSeparator.count)
+        let minorUnitRange = NSRange(location: majorUnitRange.length, length: components.minorUnit.count)
+
+        let finalMajorUnitRange = majorUnitRange.location == NSNotFound ? nil : majorUnitRange
+        let finalMinorUnitRange = minorUnitRange.location == NSNotFound ? nil : minorUnitRange
+
+        return (finalMajorUnitRange, finalMinorUnitRange)
+    }
+
+    fileprivate func string(majorUnit: String, minorUnit: String? = nil) -> String {
+        string(from: [majorUnit, minorUnit].joined(separator: decimalSeparator))
+    }
+
+    fileprivate func string(from amount: String) -> String {
+        let sign = currentSign
+
+        switch currencySymbolPosition {
+            case .prefix:
+                return "\(sign)\(currencySymbol)\(amount)"
+            case .suffix:
+                return "\(sign)\(amount) \(currencySymbol)"
+        }
     }
 }

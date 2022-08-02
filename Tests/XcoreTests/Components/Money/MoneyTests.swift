@@ -12,6 +12,34 @@ final class MoneyTests: TestCase {
         Money.appearance().locale = .us
     }
 
+    func testCurrentSign() {
+        // Sign: .default
+        XCTAssertEqual(Money(-120).currentSign, "−")
+        XCTAssertEqual(Money(120).currentSign, "")
+        XCTAssertEqual(Money(0).currentSign, "")
+
+        // Sign: .whenPositive
+        XCTAssertEqual(Money(-120).sign(.whenPositive).currentSign, "")
+        XCTAssertEqual(Money(120).sign(.whenPositive).currentSign, "+")
+        XCTAssertEqual(Money(0).sign(.whenPositive).currentSign, "")
+
+        // Sign: .both
+        XCTAssertEqual(Money(-120).sign(.both).currentSign, "−")
+        XCTAssertEqual(Money(120).sign(.both).currentSign, "+")
+        XCTAssertEqual(Money(0).sign(.both).currentSign, "")
+
+        // Sign: .none
+        XCTAssertEqual(Money(-120).sign(.none).currentSign, "")
+        XCTAssertEqual(Money(120).sign(.none).currentSign, "")
+        XCTAssertEqual(Money(0).sign(.none).currentSign, "")
+
+        // Sign: .emoji
+        let emojiSigned = Money.Sign(positive: "✅", negative: "❌", zero: "0️⃣")
+        XCTAssertEqual(Money(-120).sign(emojiSigned).currentSign, "❌")
+        XCTAssertEqual(Money(120).sign(emojiSigned).currentSign, "✅")
+        XCTAssertEqual(Money(0).sign(emojiSigned).currentSign, "0️⃣")
+    }
+
     func testDefault() {
         XCTAssertEqual(String(describing: Money(120.30)), "$120.30")
         XCTAssertEqual(String(describing: Money(120)), "$120.00")
@@ -245,16 +273,18 @@ final class MoneyTests: TestCase {
         let customStyle = Money.Style(
             id: "custom",
             format: {
-                let amount = [$0.majorUnit, $0.minorUnit]
-                    .joined(separator: $0.money.decimalSeparator)
+                let components = $0.components()
 
-                let sign = $0.money.currentSign
+                let amount = [components.majorUnit, components.minorUnit]
+                    .joined(separator: $0.decimalSeparator)
 
-                switch $0.money.currencySymbolPosition {
+                let sign = $0.currentSign
+
+                switch $0.currencySymbolPosition {
                     case .prefix:
-                        return "\($0.money.currencySymbol) \(sign)\(amount)"
+                        return "\($0.currencySymbol) \(sign)\(amount)"
                     case .suffix:
-                        return "\(sign)\(amount) \($0.money.currencySymbol)"
+                        return "\(sign)\(amount) \($0.currencySymbol)"
                 }
             },
             range: \.ranges

@@ -118,6 +118,7 @@ extension Money.Sign {
 // MARK: - Helpers
 
 extension Money {
+    /// Returns the sign of the current amount.
     var currentSign: String {
         if amount == 0 {
             return sign.zero
