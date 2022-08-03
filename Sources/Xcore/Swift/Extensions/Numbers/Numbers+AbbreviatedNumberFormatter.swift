@@ -109,7 +109,7 @@ extension Decimal {
     public func abbreviate(
         threshold: Decimal? = nil,
         thresholdAbs: Bool = true,
-        fractionLength: ClosedRange<Int> = 0...Int.defaultFractionDigits,
+        fractionLength: ClosedRange<Int> = .defaultFractionDigits,
         locale: Locale = .current
     ) -> String {
         Self.abbreviatedNumberFormatter.string(
@@ -149,7 +149,7 @@ extension Double {
     public func abbreviate(
         threshold: Double? = nil,
         thresholdAbs: Bool = true,
-        fractionLength: ClosedRange<Int> = 0...Int.defaultFractionDigits,
+        fractionLength: ClosedRange<Int> = .defaultFractionDigits,
         locale: Locale = .current
     ) -> String {
         Self.abbreviatedNumberFormatter.string(
