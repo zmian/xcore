@@ -152,42 +152,42 @@ final class MoneyTests: TestCase {
 
     func testStyle_abbreviate_fallback_default() {
         let amount1 = Money(120.30)
-            .style(.abbreviate(threshold: 0))
+            .style(.abbreviate)
 
         XCTAssertEqual(String(describing: amount1), "$120.30")
 
         let amount2 = Money(987)
-            .style(.abbreviate(threshold: 0))
+            .style(.abbreviate)
 
         XCTAssertEqual(String(describing: amount2), "$987.00")
 
         let amount3 = Money(1200)
-            .style(.abbreviate(threshold: 0))
+            .style(.abbreviate)
 
         XCTAssertEqual(String(describing: amount3), "$1.2K")
 
         let amount4 = Money(12000)
-            .style(.abbreviate(threshold: 0))
+            .style(.abbreviate)
 
         XCTAssertEqual(String(describing: amount4), "$12K")
 
         let amount5 = Money(120_000)
-            .style(.abbreviate(threshold: 0))
+            .style(.abbreviate)
 
         XCTAssertEqual(String(describing: amount5), "$120K")
 
         let amount6 = Money(1_200_000)
-            .style(.abbreviate(threshold: 0))
+            .style(.abbreviate)
 
         XCTAssertEqual(String(describing: amount6), "$1.2M")
 
         let amount7 = Money(1340)
-            .style(.abbreviate(threshold: 0))
+            .style(.abbreviate)
 
         XCTAssertEqual(String(describing: amount7), "$1.34K")
 
         let amount8 = Money(132_456)
-            .style(.abbreviate(threshold: 0))
+            .style(.abbreviate)
 
         XCTAssertEqual(String(describing: amount8), "$132.46K")
 
