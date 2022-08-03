@@ -148,7 +148,7 @@ extension Money.Style {
     public static func abbreviate(
         threshold: Decimal,
         thresholdAbs: Bool = true,
-        fractionLength: ClosedRange<Int> = 0...Int.defaultFractionDigits,
+        fractionLength: ClosedRange<Int> = .defaultFractionDigits,
         fallback: Self = .default
     ) -> Self {
         func canAbbreviate(amount: Decimal) -> Bool {

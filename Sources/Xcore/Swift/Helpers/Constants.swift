@@ -272,3 +272,7 @@ extension Int {
 extension Double {
     public static var defaultRandomUpperBound = 100.0
 }
+
+extension ClosedRange where Bound == Int {
+    public static var defaultFractionDigits: Self = 0...Int.defaultFractionDigits
+}
