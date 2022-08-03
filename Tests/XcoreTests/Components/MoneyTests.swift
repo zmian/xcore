@@ -190,6 +190,16 @@ final class MoneyTests: TestCase {
             .style(.abbreviate(threshold: 0))
 
         XCTAssertEqual(String(describing: amount8), "$132.46K")
+
+        let amount9 = Money(1200)
+            .style(.abbreviate(threshold: 1_201))
+
+        XCTAssertEqual(String(describing: amount9), "$1,200.00")
+
+        let amount10 = Money(1200)
+            .style(.abbreviate(threshold: 1_200))
+
+        XCTAssertEqual(String(describing: amount10), "$1.2K")
     }
 
     func testStyle_abbreviate_fallback_removeMinorUnit() {
