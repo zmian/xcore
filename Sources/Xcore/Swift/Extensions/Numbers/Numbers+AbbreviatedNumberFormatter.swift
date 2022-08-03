@@ -12,8 +12,6 @@ private struct AbbreviatedNumberFormatter<Number: DoubleDecimal> {
     private let formatter = NumberFormatter().apply {
         $0.numberStyle = .decimal
         $0.minimumIntegerDigits = 1
-        $0.minimumFractionDigits = 0
-        $0.maximumFractionDigits = 1
     }
 
     private let abbreviations: [Abbreviation] = [
@@ -51,14 +49,14 @@ private struct AbbreviatedNumberFormatter<Number: DoubleDecimal> {
         from value: Number,
         threshold: Number?,
         thresholdAbs: Bool,
-        fractionDigits: Int = .defaultFractionDigits,
-        locale: Locale?
+        fractionLength: ClosedRange<Int>,
+        locale: Locale
     ) -> String {
         // Adopted from: http://stackoverflow.com/a/35504720
         let abbreviation: Abbreviation = {
             let startValue = thresholdAbs ? abs(value) : value
 
-            if let threshold = threshold, startValue <= threshold {
+            if let threshold = threshold, threshold > startValue {
                 return abbreviations[0]
             }
 
@@ -76,8 +74,8 @@ private struct AbbreviatedNumberFormatter<Number: DoubleDecimal> {
         let abbreviatedValue = value / abbreviation.divisor
         formatter.positiveSuffix = abbreviation.suffix
         formatter.negativeSuffix = abbreviation.suffix
-        formatter.maximumFractionDigits = value == abbreviatedValue ? .maxFractionDigits : fractionDigits
-        formatter.locale = locale ?? .current
+        formatter.fractionLength = value == abbreviatedValue ? 0...Int.maxFractionDigits : fractionLength
+        formatter.locale = locale
         return formatter.string(from: abbreviatedValue.nsNumber) ?? "\(abbreviatedValue)"
     }
 }
@@ -111,14 +109,14 @@ extension Decimal {
     public func abbreviate(
         threshold: Decimal? = nil,
         thresholdAbs: Bool = true,
-        fractionDigits: Int = .defaultFractionDigits,
-        locale: Locale? = nil
+        fractionLength: ClosedRange<Int> = 0...Int.defaultFractionDigits,
+        locale: Locale = .current
     ) -> String {
         Self.abbreviatedNumberFormatter.string(
             from: self,
             threshold: threshold,
             thresholdAbs: thresholdAbs,
-            fractionDigits: fractionDigits,
+            fractionLength: fractionLength,
             locale: locale
         )
     }
@@ -151,14 +149,14 @@ extension Double {
     public func abbreviate(
         threshold: Double? = nil,
         thresholdAbs: Bool = true,
-        fractionDigits: Int = .defaultFractionDigits,
-        locale: Locale? = nil
+        fractionLength: ClosedRange<Int> = 0...Int.defaultFractionDigits,
+        locale: Locale = .current
     ) -> String {
         Self.abbreviatedNumberFormatter.string(
             from: self,
             threshold: threshold,
             thresholdAbs: thresholdAbs,
-            fractionDigits: fractionDigits,
+            fractionLength: fractionLength,
             locale: locale
         )
     }

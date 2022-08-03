@@ -154,7 +154,7 @@ final class NumbersTests: TestCase {
         ]
 
         for (input, output) in values2 {
-            XCTAssertEqual(output, input.abbreviate(fractionDigits: 1))
+            XCTAssertEqual(output, input.abbreviate(fractionLength: 0...1))
         }
     }
 
@@ -171,7 +171,7 @@ final class NumbersTests: TestCase {
         ]
 
         for (input, output) in values {
-            XCTAssertEqual(output, input.abbreviate(threshold: 2_000_000, fractionDigits: 1))
+            XCTAssertEqual(output, input.abbreviate(threshold: 2_000_000, fractionLength: 0...1))
         }
     }
 
@@ -199,7 +199,7 @@ final class NumbersTests: TestCase {
         ]
 
         for (input, output) in valuesFr {
-            XCTAssertEqual(output, input.abbreviate(fractionDigits: 1, locale: .fr))
+            XCTAssertEqual(output, input.abbreviate(fractionLength: 0...1, locale: .fr))
         }
     }
 }
