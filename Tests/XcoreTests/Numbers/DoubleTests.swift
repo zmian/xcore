@@ -54,22 +54,23 @@ final class DoubleTests: TestCase {
         XCTAssertNotEqual(Double(truncating: Decimal(0.000001466)), 0.000001466)
     }
 
+    @available(iOS 15.0, *)
     func testFormatted() {
-        XCTAssertEqual(Double(1).formatted(fractionDigits: 2), "1.00")
-        XCTAssertEqual(Double(1.09).formatted(fractionDigits: 2), "1.09")
-        XCTAssertEqual(Double(1.9).formatted(fractionDigits: 2), "1.90")
-        XCTAssertEqual(Double(1.1345).formatted(fractionDigits: 2), "1.13")
-        XCTAssertEqual(Double(1.1355).formatted(fractionDigits: 2), "1.14")
-        XCTAssertEqual(Double(1.1355).formatted(fractionDigits: 3), "1.136")
+        XCTAssertEqual(Double(1).formatted(.number.precision(.fractionLength(2))), "1.00")
+        XCTAssertEqual(Double(1.09).formatted(.number.precision(.fractionLength(2))), "1.09")
+        XCTAssertEqual(Double(1.9).formatted(.number.precision(.fractionLength(2))), "1.90")
+        XCTAssertEqual(Double(1.1345).formatted(.number.precision(.fractionLength(2))), "1.13")
+        XCTAssertEqual(Double(1.1355).formatted(.number.precision(.fractionLength(2))), "1.14")
+        XCTAssertEqual(Double(1.1355).formatted(.number.precision(.fractionLength(3))), "1.136")
 
-        XCTAssertEqual(Double(9.28).formatted(fractionDigits: 3), "9.280")
-        XCTAssertEqual(Double(0.1736).formatted(fractionDigits: 4), "0.1736")
-        XCTAssertEqual(Double(0.1736).formatted(fractionDigits: 2), "0.17")
-        XCTAssertEqual(Double(0.000001466).formatted(fractionDigits: 9), "0.000001466")
-        XCTAssertEqual(Double(0.000001466).formatted(fractionDigits: 8), "0.00000147")
-        XCTAssertEqual(Double(0.000001466).formatted(fractionDigits: 3), "0.000")
+        XCTAssertEqual(Double(9.28).formatted(.number.precision(.fractionLength(3))), "9.280")
+        XCTAssertEqual(Double(0.1736).formatted(.number.precision(.fractionLength(4))), "0.1736")
+        XCTAssertEqual(Double(0.1736).formatted(.number.precision(.fractionLength(2))), "0.17")
+        XCTAssertEqual(Double(0.000001466).formatted(.number.precision(.fractionLength(9))), "0.000001466")
+        XCTAssertEqual(Double(0.000001466).formatted(.number.precision(.fractionLength(8))), "0.00000147")
+        XCTAssertEqual(Double(0.000001466).formatted(.number.precision(.fractionLength(3))), "0.000")
 
         // trunc
-        XCTAssertEqual(Double(1.1355).formatted(.towardZero, fractionDigits: 3), "1.135")
+        XCTAssertEqual(Double(1.1355).formatted(.number.precision(.fractionLength(3)).rounded(rule: .towardZero)), "1.135")
     }
 }

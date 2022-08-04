@@ -41,23 +41,6 @@ extension Double {
         let multiplier = pow(10.0, Double(fractionDigits))
         return (self * multiplier).rounded(rule) / multiplier
     }
-
-    /// Returns this value rounded to an integral value using the specified rounding
-    /// fraction digits.
-    ///
-    /// - Parameters:
-    ///   - rule: The rounding rule to use.
-    ///   - fractionDigits: The number of digits result can have after its decimal
-    ///     point.
-    public func formatted(
-        _ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero,
-        fractionDigits: Int
-    ) -> String {
-        String(
-            format: "%.\(fractionDigits)f%",
-            rounded(rule, fractionDigits: fractionDigits)
-        )
-    }
 }
 
 // MARK: - Conversion

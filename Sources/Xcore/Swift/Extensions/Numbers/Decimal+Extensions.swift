@@ -140,7 +140,7 @@ extension Decimal {
     /// Use the fraction digits parameter to customize the output:
     ///
     /// ```swift
-    /// print(x.rounded(2))
+    /// print(x.rounded(fractionDigits: 2))
     /// // Prints "6.50"
     /// ```
     ///
@@ -157,7 +157,36 @@ extension Decimal {
         copy.round(rule, fractionDigits: fractionDigits)
         return copy
     }
+}
 
+// MARK: - Helpers
+
+extension Decimal.RoundingMode {
+    /// - SeeAlso: https://gist.github.com/natecook1000/27d31d73315ffc2c80a7b4efc5788bd0
+    fileprivate init(_ rule: FloatingPointRoundingRule, for value: Decimal) {
+        switch rule {
+            case .down:
+                self = .down
+            case .up:
+                self = .up
+            case .awayFromZero:
+                self = value < 0 ? .down : .up
+            case .towardZero:
+                self = value < 0 ? .up : .down
+            case .toNearestOrAwayFromZero:
+                self = .plain
+            case .toNearestOrEven:
+                self = .bankers
+            @unknown default:
+                warnUnknown(rule)
+                self = .plain
+        }
+    }
+}
+
+// MARK: - Parts
+
+extension Decimal {
     /// The whole part of the decimal.
     ///
     /// ```swift
@@ -187,31 +216,6 @@ extension Decimal {
     /// ```
     public var isFractionZero: Bool {
         max(-exponent, 0) == 0
-    }
-}
-
-// MARK: - Helpers
-
-extension Decimal.RoundingMode {
-    /// - SeeAlso: https://gist.github.com/natecook1000/27d31d73315ffc2c80a7b4efc5788bd0
-    fileprivate init(_ rule: FloatingPointRoundingRule, for value: Decimal) {
-        switch rule {
-            case .down:
-                self = .down
-            case .up:
-                self = .up
-            case .awayFromZero:
-                self = value < 0 ? .down : .up
-            case .towardZero:
-                self = value < 0 ? .up : .down
-            case .toNearestOrAwayFromZero:
-                self = .plain
-            case .toNearestOrEven:
-                self = .bankers
-            @unknown default:
-                warnUnknown(rule)
-                self = .plain
-        }
     }
 }
 
