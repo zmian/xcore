@@ -12,13 +12,35 @@ public enum NumericsStringFormattingRule {
     /// Format the output to ensure 2 places.
     ///
     /// ```swift
+    /// // trimZero: false (default)
+    /// 1      → "1.00"
+    /// 1.09   → "1.09"
+    /// 1.9    → "1.90"
+    /// 2.1345 → "2.13"
+    /// 2.1355 → "2.14"
+    ///
+    /// // trimZero: true
+    /// 1      → "1"
+    /// 1.09   → "1.09"
+    /// 1.9    → "1.90"
+    /// 2.1345 → "2.13"
+    /// 2.1355 → "2.14"
+    /// ```
+    case rounded(trimZero: Bool = false)
+
+    /// Format the output to ensure 2 places.
+    ///
+    /// ```swift
+    /// // trimZero: false (default)
     /// 1      → "1.00"
     /// 1.09   → "1.09"
     /// 1.9    → "1.90"
     /// 2.1345 → "2.13"
     /// 2.1355 → "2.14"
     /// ```
-    case rounded
+    public static var rounded: Self {
+        rounded(trimZero: false)
+    }
 
     /// Formats as percentage from a `0.0 - 1.0` scale as default.
     ///
@@ -185,12 +207,14 @@ extension DoubleOrDecimalProtocol {
         minimumBound: Self? = nil /* Remove in Swift 5.7 */
     ) -> String {
         switch rule {
-            case .rounded:
+            case let .rounded(trimZero):
+                let fractionLength = trimZero && isFractionZero ? 0...0 : 2...2
+
                 if #available(iOS 15.0, *) {
                     if let number = self as? Decimal {
                         return number.formatted(
                             .number
-                                .precision(.fractionLength(2))
+                                .precision(.fractionLength(fractionLength))
                                 .sign(strategy: showPlusSign ? .both : .automatic)
                                 .rounded(rule: .toNearestOrAwayFromZero)
                         )
@@ -198,7 +222,7 @@ extension DoubleOrDecimalProtocol {
                 }
 
                 let sign = showPlusSign && self > 0 ? "+" : ""
-                numericsStringFormattingRuleFormatter.fractionLength = 2...2
+                numericsStringFormattingRuleFormatter.fractionLength = fractionLength
                 return sign + (numericsStringFormattingRuleFormatter.string(from: nsNumber) ?? "")
 
             case let .roundedPercent(scale):

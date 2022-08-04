@@ -215,7 +215,7 @@ extension Decimal {
     /// // Prints "true"
     /// ```
     public var isFractionZero: Bool {
-        max(-exponent, 0) == 0
+        significantFractionalDecimalDigits == 0
     }
 }
 
@@ -246,7 +246,7 @@ extension Decimal {
 
         if absAmount > 0 && absAmount < 0.01 {
             // 1. Count the number of digits after the decimal point
-            let significantFractionalDecimalDigits = Int(absAmount.significantFractionalDecimalDigits)
+            let significantFractionalDecimalDigits = absAmount.significantFractionalDecimalDigits
             // 2. Count the number of significant digits after the decimal point
             let significandCount = Int((absAmount.significand as NSDecimalNumber).uint64Value.digitsCount)
             // 3. Precision will be the # of zeros plus the default precision of 2

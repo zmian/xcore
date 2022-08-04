@@ -9,7 +9,7 @@ import XCTest
 
 final class DoubleOrDecimalTests: TestCase {
     func testDecimal_rounded() {
-        // .rounded
+        // .rounded(trimZero: false)
         XCTAssertEqual(Decimal(1).formatted(.rounded), "1.00")
         XCTAssertEqual(Decimal(1.09).formatted(.rounded), "1.09")
         XCTAssertEqual(Decimal(1.9).formatted(.rounded), "1.90")
@@ -17,7 +17,15 @@ final class DoubleOrDecimalTests: TestCase {
         XCTAssertEqual(Decimal(2.1345).formatted(.rounded), "2.13")
         XCTAssertEqual(Decimal(2.1355).formatted(.rounded), "2.14")
 
-        // .rounded, showPlusSign: true
+        // .rounded(trimZero: true)
+        XCTAssertEqual(Decimal(1).formatted(.rounded(trimZero: true)), "1")
+        XCTAssertEqual(Decimal(1.09).formatted(.rounded(trimZero: true)), "1.09")
+        XCTAssertEqual(Decimal(1.9).formatted(.rounded(trimZero: true)), "1.90")
+        XCTAssertEqual(Decimal(2).formatted(.rounded(trimZero: true)), "2")
+        XCTAssertEqual(Decimal(2.1345).formatted(.rounded(trimZero: true)), "2.13")
+        XCTAssertEqual(Decimal(2.1355).formatted(.rounded(trimZero: true)), "2.14")
+
+        // .rounded(trimZero: false), showPlusSign: true
         XCTAssertEqual(Decimal(0).formatted(.rounded, showPlusSign: true), "0.00")
         XCTAssertEqual(Decimal(1).formatted(.rounded, showPlusSign: true), "+1.00")
         XCTAssertEqual(Decimal(1.09).formatted(.rounded, showPlusSign: true), "+1.09")
