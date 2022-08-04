@@ -275,4 +275,5 @@ extension Double {
 
 extension ClosedRange where Bound == Int {
     public static var defaultFractionDigits: Self = 0...Int.defaultFractionDigits
+    public static var maxFractionDigits: Self = 0...Int.maxFractionDigits
 }

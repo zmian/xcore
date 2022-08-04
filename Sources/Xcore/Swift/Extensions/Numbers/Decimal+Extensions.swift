@@ -185,7 +185,7 @@ extension Decimal {
     /// print(Decimal(120.00).isFractionZero)
     /// // Prints "true"
     /// ```
-    var isFractionZero: Bool {
+    public var isFractionZero: Bool {
         max(-exponent, 0) == 0
     }
 }

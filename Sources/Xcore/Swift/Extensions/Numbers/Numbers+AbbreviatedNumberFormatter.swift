@@ -6,7 +6,7 @@
 
 import Foundation
 
-private struct AbbreviatedNumberFormatter<Number: DoubleDecimal> {
+private struct AbbreviatedNumberFormatter<Number: DoubleOrDecimalProtocol> {
     private typealias Abbreviation = (suffix: String, threshold: Number, divisor: Number)
 
     private let formatter = NumberFormatter().apply {
@@ -74,9 +74,9 @@ private struct AbbreviatedNumberFormatter<Number: DoubleDecimal> {
         let abbreviatedValue = value / abbreviation.divisor
         formatter.positiveSuffix = abbreviation.suffix
         formatter.negativeSuffix = abbreviation.suffix
-        formatter.fractionLength = value == abbreviatedValue ? 0...Int.maxFractionDigits : fractionLength
+        formatter.fractionLength = value == abbreviatedValue ? .maxFractionDigits : fractionLength
         formatter.locale = locale
-        return formatter.string(from: abbreviatedValue.nsNumber) ?? "\(abbreviatedValue)"
+        return formatter.string(from: abbreviatedValue) ?? "\(abbreviatedValue)"
     }
 }
 
@@ -159,24 +159,5 @@ extension Double {
             fractionLength: fractionLength,
             locale: locale
         )
-    }
-}
-
-// MARK: - Helpers
-
-private protocol DoubleDecimal: SignedNumeric, Comparable {
-    var nsNumber: NSNumber { get }
-    static func / (lhs: Self, rhs: Self) -> Self
-}
-
-extension Double: DoubleDecimal {
-    fileprivate var nsNumber: NSNumber {
-        NSNumber(value: self)
-    }
-}
-
-extension Decimal: DoubleDecimal {
-    fileprivate var nsNumber: NSNumber {
-        NSDecimalNumber(decimal: self)
     }
 }
