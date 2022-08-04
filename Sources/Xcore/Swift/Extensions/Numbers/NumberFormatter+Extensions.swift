@@ -35,34 +35,20 @@ extension NumberFormatter {
         return string(from: NSNumber(value: number))
     }
 
-    /// Returns a string containing the formatted value of the provided
-    /// double-precision, floating-point value.
-    ///
-    /// - Parameter number: An floating-point value that is parsed to create the
-    ///   returned string.
-    /// - Returns: A string containing the formatted value of floating-point value
-    ///   using the receiver’s current settings.
-    public func string(from number: Double?) -> String? {
-        guard let number = number else {
-            return nil
-        }
-
-        return string(from: NSNumber(value: number))
-    }
-
-    /// Returns a string containing the formatted value of the provided decimal
+    /// Returns a string containing the formatted value of the provided double or
+    /// decimal
     /// number.
     ///
     /// - Parameter number: A decimal number that is parsed to create the returned
     ///   string.
     /// - Returns: A string containing the formatted value of decimal number using
     ///   the receiver’s current settings.
-    public func string(from number: Decimal?) -> String? {
+    public func string<Number: DoubleOrDecimalProtocol>(from number: Number?) -> String? {
         guard let number = number else {
             return nil
         }
 
-        return string(from: NSDecimalNumber(decimal: number))
+        return string(from: number.nsNumber)
     }
 }
 
