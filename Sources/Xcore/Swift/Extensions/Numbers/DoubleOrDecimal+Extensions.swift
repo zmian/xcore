@@ -72,7 +72,7 @@ public enum NumericsStringFormattingRule {
     /// -0.0000109 → "<-0.01%"
     /// 0.0000109  → "<0.01"
     /// ```
-    case percentage(
+    case asPercentage(
         scale: PercentageScale = .zeroToOne,
         /* minimumBound: any DoubleOrDecimalProtocol? = nil, Swift 5.7 */
         fractionLength: ClosedRange<Int> = .defaultFractionDigits
@@ -86,8 +86,8 @@ public enum NumericsStringFormattingRule {
     /// -0.0109 → "-1.09%"
     /// 0.02    → "2%"
     /// ```
-    public static var percentage: Self {
-        percentage()
+    public static var asPercentage: Self {
+        asPercentage()
     }
 
     /// Formats as percentage from a `0.0 - 1.0` scale as default.
@@ -116,11 +116,11 @@ public enum NumericsStringFormattingRule {
     /// -0.0000109 → "<-0.01%"
     /// 0.0000109  → "<0.01"
     /// ```
-    public static func percentage(
+    public static func asPercentage(
         scale: PercentageScale = .zeroToOne,
         fractionLength: Int
     ) -> Self {
-        percentage(
+        asPercentage(
             scale: scale,
             fractionLength: fractionLength...fractionLength
         )
@@ -152,19 +152,19 @@ extension DoubleOrDecimalProtocol {
     /// **Percentage Rule:**
     ///
     /// ```swift
-    /// print(0.019.formatted(.percentage))   // "1.9%"
-    /// print(-0.0109.formatted(.percentage)) // "−1.09%"
-    /// print(0.02.formatted(.percentage))    // "2%"
-    /// print(1.formatted(.percentage))       // "100%"
+    /// print(0.019.formatted(.asPercentage))   // "1.9%"
+    /// print(-0.0109.formatted(.asPercentage)) // "−1.09%"
+    /// print(0.02.formatted(.asPercentage))    // "2%"
+    /// print(1.formatted(.asPercentage))       // "100%"
     /// ```
     ///
     /// **Percentage Rule with fraction length:**
     ///
     /// ```swift
-    /// print(0.019.formatted(.percentage(fractionLength: 2)))   // "1.90%"
-    /// print(-0.0109.formatted(.percentage(fractionLength: 2))) // "−1.09%"
-    /// print(0.02.formatted(.percentage(fractionLength: 2)))    // "2.00%"
-    /// print(1.formatted(.percentage(fractionLength: 2)))       // "100.00%"
+    /// print(0.019.formatted(.asPercentage(fractionLength: 2)))   // "1.90%"
+    /// print(-0.0109.formatted(.asPercentage(fractionLength: 2))) // "−1.09%"
+    /// print(0.02.formatted(.asPercentage(fractionLength: 2)))    // "2.00%"
+    /// print(1.formatted(.asPercentage(fractionLength: 2)))       // "100.00%"
     /// ```
     public func formatted(
         _ rule: NumericsStringFormattingRule,
@@ -190,7 +190,7 @@ extension DoubleOrDecimalProtocol {
                 numberFormatter.fractionLength = fractionLength
                 return sign + (numberFormatter.string(from: nsNumber) ?? "")
 
-            case let .percentage(scale, fractionLength):
+            case let .asPercentage(scale, fractionLength):
                 let value = normalize(scale: scale)
 
                 var valueToUse: Self {
