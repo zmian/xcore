@@ -183,6 +183,7 @@ extension DoubleOrDecimalProtocol {
                                 .sign(strategy: showPlusSign ? .both : .automatic)
                                 .rounded(rule: .toNearestOrAwayFromZero)
                         )
+                        .replacing("-", with: .minusSign)
                     }
                 }
 
@@ -215,6 +216,7 @@ extension DoubleOrDecimalProtocol {
                                 .sign(strategy: showPlusSign ? .both : .automatic)
                                 .rounded(rule: .toNearestOrAwayFromZero)
                         )
+                        .replacing("-", with: .minusSign)
 
                         return value == valueToUse ? formattedValue : "<\(formattedValue)"
                     }
@@ -245,9 +247,11 @@ extension DoubleOrDecimalProtocol {
 private let percentFormatter = NumberFormatter().apply {
     $0.numberStyle = .percent
     $0.roundingMode = .halfUp
+    $0.minusSign = .minusSign
 }
 
 private let numberFormatter = NumberFormatter().apply {
     $0.numberStyle = .decimal
     $0.roundingMode = .halfUp
+    $0.minusSign = .minusSign
 }
