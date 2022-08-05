@@ -44,41 +44,6 @@ public enum NumericsStringFormattingRule {
 
     /// Formats as percentage from a `0.0 - 1.0` scale as default.
     ///
-    /// Percent must always have the hundredth place.
-    ///
-    /// ```swift
-    /// // scale: .zeroToOne (default)
-    /// 0.019   → "1.90%"
-    /// -0.0109 → "−1.09%"
-    /// 0.02    → "2.00%"
-    /// 1       → "100.00%"
-    ///
-    /// // scale: .zeroToHundred
-    /// 1      → "1.00%"
-    /// 1.09   → "1.09%"
-    /// 1.9    → "1.90%"
-    /// 2.1345 → "2.13%"
-    /// 2.1355 → "2.14%"
-    /// ```
-    case roundedPercent(scale: PercentageScale = .zeroToOne)
-
-    /// Formats as percentage from a `0.0 - 1.0` scale as default.
-    ///
-    /// Percent must always have the hundredth place.
-    ///
-    /// ```swift
-    /// // scale: .zeroToOne (default)
-    /// 0.019   → "1.90%"
-    /// -0.0109 → "−1.09%"
-    /// 0.02    → "2.00%"
-    /// 1       → "100.00%"
-    /// ```
-    public static var roundedPercent: Self {
-        roundedPercent()
-    }
-
-    /// Formats as percentage from a `0.0 - 1.0` scale as default.
-    ///
     /// ```swift
     /// // scale: .zeroToHundred
     /// 1      → "1%"
@@ -107,7 +72,7 @@ public enum NumericsStringFormattingRule {
     /// -0.0000109 → "<-0.01%"
     /// 0.0000109  → "<0.01"
     /// ```
-    case withPercentSign(
+    case percentage(
         scale: PercentageScale = .zeroToOne,
         /* minimumBound: any DoubleOrDecimalProtocol? = nil, Swift 5.7 */
         fractionLength: ClosedRange<Int> = .defaultFractionDigits
@@ -121,8 +86,8 @@ public enum NumericsStringFormattingRule {
     /// -0.0109 → "-1.09%"
     /// 0.02    → "2%"
     /// ```
-    public static var withPercentSign: Self {
-        withPercentSign()
+    public static var percentage: Self {
+        percentage()
     }
 
     /// Formats as percentage from a `0.0 - 1.0` scale as default.
@@ -151,11 +116,11 @@ public enum NumericsStringFormattingRule {
     /// -0.0000109 → "<-0.01%"
     /// 0.0000109  → "<0.01"
     /// ```
-    public static func withPercentSign(
+    public static func percentage(
         scale: PercentageScale = .zeroToOne,
         fractionLength: Int
     ) -> Self {
-        withPercentSign(
+        percentage(
             scale: scale,
             fractionLength: fractionLength...fractionLength
         )
@@ -184,22 +149,22 @@ extension DoubleOrDecimalProtocol {
     /// print(2.1355.formatted(.rounded)) // "2.14"
     /// ```
     ///
-    /// **Rounded with Percent Sign Rule:**
+    /// **Percentage Rule:**
     ///
     /// ```swift
-    /// print(0.019.formatted(.roundedPercent))   // "1.90%"
-    /// print(-0.0109.formatted(.roundedPercent)) // "−1.09%"
-    /// print(0.02.formatted(.roundedPercent))    // "2.00%"
-    /// print(1.formatted(.roundedPercent))       // "100.00%"
+    /// print(0.019.formatted(.percentage))   // "1.9%"
+    /// print(-0.0109.formatted(.percentage)) // "−1.09%"
+    /// print(0.02.formatted(.percentage))    // "2%"
+    /// print(1.formatted(.percentage))       // "100%"
     /// ```
     ///
-    /// **With Percent Sign Rule:**
+    /// **Percentage Rule with fraction length:**
     ///
     /// ```swift
-    /// print(0.019.formatted(.withPercentSign))   // "1.9%"
-    /// print(-0.0109.formatted(.withPercentSign)) // "−1.09%"
-    /// print(0.02.formatted(.withPercentSign))    // "2%"
-    /// print(1.formatted(.withPercentSign))       // "100%"
+    /// print(0.019.formatted(.percentage(fractionLength: 2)))   // "1.90%"
+    /// print(-0.0109.formatted(.percentage(fractionLength: 2))) // "−1.09%"
+    /// print(0.02.formatted(.percentage(fractionLength: 2)))    // "2.00%"
+    /// print(1.formatted(.percentage(fractionLength: 2)))       // "100.00%"
     /// ```
     public func formatted(
         _ rule: NumericsStringFormattingRule,
@@ -222,30 +187,10 @@ extension DoubleOrDecimalProtocol {
                 }
 
                 let sign = showPlusSign && self > 0 ? "+" : ""
-                numericsStringFormattingRuleFormatter.fractionLength = fractionLength
-                return sign + (numericsStringFormattingRuleFormatter.string(from: nsNumber) ?? "")
+                numberFormatter.fractionLength = fractionLength
+                return sign + (numberFormatter.string(from: nsNumber) ?? "")
 
-            case let .roundedPercent(scale):
-                let number = normalize(scale: scale)
-
-                if #available(iOS 15.0, *) {
-                    if let number = number as? Decimal {
-                        return number.formatted(
-                            .percent
-                                .precision(.fractionLength(2))
-                                .sign(strategy: showPlusSign ? .both : .automatic)
-                                .rounded(rule: .toNearestOrAwayFromZero)
-                        )
-                    }
-                }
-
-                return percentFormatter.apply {
-                    $0.fractionLength = 2...2
-                    $0.positivePrefix = showPlusSign && self > 0 ? "+" : ""
-                }
-                .string(from: number) ?? ""
-
-            case let .withPercentSign(scale, fractionLength):
+            case let .percentage(scale, fractionLength):
                 let value = normalize(scale: scale)
 
                 var valueToUse: Self {
@@ -260,7 +205,7 @@ extension DoubleOrDecimalProtocol {
                     return value >= 0 ? minimumBound : -minimumBound
                 }
 
-                let showPlusSign = showPlusSign && value == valueToUse
+                let showPlusSign = showPlusSign && value > 0 && value == valueToUse
 
                 if #available(iOS 15.0, *) {
                     if let number = valueToUse as? Decimal {
@@ -302,7 +247,7 @@ private let percentFormatter = NumberFormatter().apply {
     $0.roundingMode = .halfUp
 }
 
-private let numericsStringFormattingRuleFormatter = NumberFormatter().apply {
+private let numberFormatter = NumberFormatter().apply {
     $0.numberStyle = .decimal
     $0.roundingMode = .halfUp
 }
