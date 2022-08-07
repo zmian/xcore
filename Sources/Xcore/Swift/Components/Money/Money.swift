@@ -93,9 +93,9 @@ public struct Money: Hashable, MutableAppliable {
     /// The minimum and maximum number of digits after the decimal separator.
     public var fractionLength: ClosedRange<Int>
 
-    /// The sign (+/-) used to format money.
+    /// The sign (+/−) used to format money.
     ///
-    /// The default value is `.default`, meaning, displays minus sign (`"-"`) for
+    /// The default value is `.default`, meaning, displays minus sign (`"−"`) for
     /// the negative values and empty string (`""`) for positive and zero values.
     ///
     /// ```swift
@@ -105,11 +105,11 @@ public struct Money: Hashable, MutableAppliable {
     ///
     /// print(amount) // "$120.30"
     ///
-    /// // When the amount is negative then the sign is "-".
+    /// // When the amount is negative then the sign is "−".
     /// let amount = Money(-120.30)
     ///     .sign(.default) // ← Specifying the sign
     ///
-    /// print(amount) // "-$120.30"
+    /// print(amount) // "−$120.30"
     /// ```
     public var sign: Sign = .default
 

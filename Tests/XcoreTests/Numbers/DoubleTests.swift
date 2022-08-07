@@ -73,4 +73,36 @@ final class DoubleTests: TestCase {
         // trunc
         XCTAssertEqual(Double(1.1355).formatted(.number.precision(.fractionLength(3)).rounded(rule: .towardZero)), "1.135")
     }
+
+    func testIntegerAndFractionalParts() throws {
+        let amount1 = 1200.30
+        XCTAssertEqual(amount1.integerPart, 1200)
+        XCTAssertEqual(amount1.fractionalPart, 0.2999999999999545)
+
+        let amount2 = 1200.00
+        XCTAssertEqual(amount2.integerPart, 1200)
+        XCTAssertEqual(amount2.fractionalPart, 0)
+
+        let amount3 = try XCTUnwrap(Double("1200.3000000012"))
+        XCTAssertEqual(String(describing: amount3), "1200.3000000012")
+        XCTAssertEqual(amount3.integerPart, 1200)
+        XCTAssertEqual(amount3.fractionalPart, Double("0.3000000012000328"))
+        XCTAssertEqual(amount3.fractionalPart.stringValue, "0.3000000012000328")
+
+        let amount4 = 1200.000000000000000000
+        XCTAssertEqual(amount4.integerPart, 1200)
+        XCTAssertEqual(amount4.fractionalPart, 0)
+    }
+
+    func testIsFractionalPartZero() throws {
+        // True
+        XCTAssertEqual(1200.isFractionalPartZero, true)
+        XCTAssertEqual(1200.00.isFractionalPartZero, true)
+        XCTAssertEqual(1200.000000000000000000.isFractionalPartZero, true)
+
+        // False
+        XCTAssertEqual(1200.30.isFractionalPartZero, false)
+        XCTAssertEqual(try XCTUnwrap(Double("1200.3000000012")).isFractionalPartZero, false)
+        XCTAssertEqual(try XCTUnwrap(Double("1200.0000000012")).isFractionalPartZero, false)
+    }
 }

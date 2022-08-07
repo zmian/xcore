@@ -191,21 +191,26 @@ extension Decimal {
     ///
     /// ```swift
     /// let amount = Decimal(120.30)
-    /// // 120 - whole
-    /// // 30 - fraction
+    /// // 120 - integer part
+    /// // 30 - fractional part
     /// ```
-    var whole: Decimal { rounded(sign == .minus ? .up : .down) }
+    var integerPart: Decimal {
+        rounded(sign == .minus ? .up : .down)
+    }
 
-    /// The fraction part of the decimal.
+    /// The fractional part of the decimal.
     ///
     /// ```swift
     /// let amount = Decimal(120.30)
-    /// // 120 - whole
-    /// // 30 - fraction
+    /// // 120 - integer part
+    /// // 30 - fractional part
     /// ```
-    var fraction: Decimal { self - whole }
+    var fractionalPart: Decimal {
+        self - integerPart
+    }
 
-    /// A boolean value indicating whether the fraction part of the decimal is `0`.
+    /// A boolean value indicating whether the fractional part of the decimal is
+    /// `0`.
     ///
     /// ```swift
     /// print(Decimal(120.30).isFractionZero)
@@ -214,7 +219,7 @@ extension Decimal {
     /// print(Decimal(120.00).isFractionZero)
     /// // Prints "true"
     /// ```
-    public var isFractionZero: Bool {
+    public var isFractionalPartZero: Bool {
         significantFractionalDecimalDigits == 0
     }
 }
@@ -241,14 +246,14 @@ extension Decimal {
     /// $0.00001283  → $0.000013
     /// $0.000000138 → $0.00000014
     /// ```
-    func calculatePrecision() -> ClosedRange<Int> {
+    public func calculatePrecision() -> ClosedRange<Int> {
         let absAmount = abs(self)
 
         if absAmount > 0 && absAmount < 0.01 {
             // 1. Count the number of digits after the decimal point
             let significantFractionalDecimalDigits = absAmount.significantFractionalDecimalDigits
             // 2. Count the number of significant digits after the decimal point
-            let significandCount = Int((absAmount.significand as NSDecimalNumber).uint64Value.digitsCount)
+            let significandCount = Int((absAmount.significand.nsNumber).uint64Value.digitsCount)
             // 3. Precision will be the # of zeros plus the default precision of 2
             let numberOfZeros = significantFractionalDecimalDigits - significandCount
 

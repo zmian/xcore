@@ -40,18 +40,18 @@ public struct DecimalTextFieldFormatter: TextFieldFormatter {
         let symbol = isCurrency ? currency.currencySymbol : nil
         let wholeNumber = numberFormatter.string(from: wholeNumberPart)
         let decimalPoint = string.contains(".") ? "." : ""
-        var fractionPart: String? = components.at(1)
+        var fractionalPart: String? = components.at(1)
 
-        // Fraction part can't be more then 2 decimal places for currency type.
-        if isCurrency, let fraction = fractionPart {
-            fractionPart = String(fraction.prefix(2))
+        // Fractional part can't be more then 2 decimal places for currency type.
+        if isCurrency, let fraction = fractionalPart {
+            fractionalPart = String(fraction.prefix(2))
         }
 
         return [
             symbol,
             wholeNumber,
             decimalPoint,
-            fractionPart
+            fractionalPart
         ].joined()
     }
 
