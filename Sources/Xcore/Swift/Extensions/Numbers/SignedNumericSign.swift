@@ -6,35 +6,33 @@
 
 import Foundation
 
-extension Money {
-    /// A structure representing signs (+/−) used to format money.
-    public struct Sign: Sendable, Hashable {
-        /// The string used to represent sign for positive values.
-        public let positive: String
+/// A structure representing signs (+/−) used to format signed numeric types.
+public struct SignedNumericSign: Sendable, Codable, Hashable {
+    /// The string used to represent sign for positive values.
+    public let positive: String
 
-        /// The string used to represent sign for negative values.
-        public let negative: String
+    /// The string used to represent sign for negative values.
+    public let negative: String
 
-        /// The string used to represent sign for zero values.
-        public let zero: String
+    /// The string used to represent sign for zero values.
+    public let zero: String
 
-        /// Creates an instance of sign.
-        ///
-        /// - Parameters:
-        ///   - positive: The string used to represent sign for positive values.
-        ///   - negative: The string used to represent sign for negative values.
-        ///   - zero: The string used to represent sign for zero values.
-        public init(positive: String, negative: String, zero: String) {
-            self.positive = positive
-            self.negative = negative
-            self.zero = zero
-        }
+    /// Creates an instance of sign.
+    ///
+    /// - Parameters:
+    ///   - positive: The string used to represent sign for positive values.
+    ///   - negative: The string used to represent sign for negative values.
+    ///   - zero: The string used to represent sign for zero values.
+    public init(positive: String, negative: String, zero: String) {
+        self.positive = positive
+        self.negative = negative
+        self.zero = zero
     }
 }
 
 // MARK: - Built-in
 
-extension Money.Sign {
+extension SignedNumericSign {
     /// Displays minus sign (`"−"`) for the negative values and empty string (`""`)
     /// for positive and zero values.
     ///
@@ -118,6 +116,8 @@ extension Money.Sign {
 // MARK: - Helpers
 
 extension Money {
+    public typealias Sign = SignedNumericSign
+
     /// Returns the sign of the current amount.
     var currentSign: String {
         if amount == 0 {

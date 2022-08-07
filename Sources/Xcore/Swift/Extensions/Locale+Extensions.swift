@@ -7,6 +7,11 @@
 import Foundation
 
 extension Locale {
+    /// The default locale used in ``CustomFloatingPointFormatStyle``.
+    public static var defaultNumbers: Self = .current
+}
+
+extension Locale {
     /// Returns `en_US` locale.
     ///
     /// **For DateFormatter:**

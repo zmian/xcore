@@ -99,11 +99,11 @@ extension Money.Style {
         .init(
             id: #function,
             format: {
-                ($0.amount.isFractionZero ? Self.removeMinorUnit : .default)
+                ($0.amount.isFractionalPartZero ? Self.removeMinorUnit : .default)
                     .format($0)
             },
             range: {
-                ($0.amount.isFractionZero ? Self.removeMinorUnit : .default)
+                ($0.amount.isFractionalPartZero ? Self.removeMinorUnit : .default)
                     .range($0)
             }
         )
