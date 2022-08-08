@@ -253,7 +253,7 @@ extension Decimal {
             // 1. Count the number of digits after the decimal point
             let significantFractionalDecimalDigits = absAmount.significantFractionalDecimalDigits
             // 2. Count the number of significant digits after the decimal point
-            let significandCount = Int((absAmount.significand.nsNumber).uint64Value.digitsCount)
+            let significandCount = absAmount.significand.nsNumber.stringValue.count
             // 3. Precision will be the # of zeros plus the default precision of 2
             let numberOfZeros = significantFractionalDecimalDigits - significandCount
 

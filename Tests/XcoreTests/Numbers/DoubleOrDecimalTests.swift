@@ -36,6 +36,9 @@ extension DoubleOrDecimalTests {
         XCTAssertEqual(components(Decimal(0.00001253)), Component(range: 2...6, string: "0.000013"))
         XCTAssertEqual(components(Decimal(0.00001283)), Component(range: 2...6, string: "0.000013"))
         XCTAssertEqual(components(Decimal(0.000000138)), Component(range: 2...8, string: "0.00000014"))
+        XCTAssertEqual(components(Decimal(string: "-0.0000758574812982132645558836229533068")!), Component(range: 2...6, string: "−0.000076"))
+        XCTAssertEqual(components(Decimal(string: "-0.0000758")!), Component(range: 2...6, string: "−0.000076"))
+        XCTAssertEqual(components(Decimal(string: "-0.000075")!), Component(range: 2...6, string: "−0.000075"))
     }
 
     private struct Component: Equatable {
@@ -61,6 +64,7 @@ extension DoubleOrDecimalTests {
         XCTAssertEqual(Double(0.008379).formatted(.asPercent.fractionLength(2)), "0.84%")
         XCTAssertEqual(Double(0.008379).formatted(.asPercent(scale: .zeroToHundred)), "0.0084%")
         XCTAssertEqual(Double(0.008379).formatted(.asPercent(scale: .zeroToHundred).fractionLength(2)), "0.01%")
+        XCTAssertEqual(Double(-0.0000758574812982132645558836229533068).formatted(.asPercent), "−0.0076%")
     }
 
     func testDouble_asNumber() {
@@ -187,6 +191,7 @@ extension DoubleOrDecimalTests {
         XCTAssertEqual(Decimal(0.008379).formatted(.asPercent.fractionLength(2)), "0.84%")
         XCTAssertEqual(Decimal(0.008379).formatted(.asPercent(scale: .zeroToHundred)), "0.0084%")
         XCTAssertEqual(Decimal(0.008379).formatted(.asPercent(scale: .zeroToHundred).fractionLength(2)), "0.01%")
+        XCTAssertEqual(Decimal(string: "-0.0000758574812982132645558836229533068")!.formatted(.asPercent), "−0.0076%")
     }
 
     func testDecimal_asNumber() {
