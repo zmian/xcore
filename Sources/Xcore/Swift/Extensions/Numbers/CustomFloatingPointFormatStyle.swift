@@ -255,11 +255,30 @@ extension CustomFloatingPointFormatStyle: Foundation.FormatStyle {}
 // TODO: Uncomment when dropping iOS 14 Support
 // extension FormatStyle where Self == CustomFloatingPointFormatStyle<Double> {
 extension CustomFloatingPointFormatStyle where Value == Double {
-    /// Format the output to ensure 2 places.
+    /// Format the output.
     ///
     /// ```swift
     /// // Usage
     /// print(1.formatted(.asNumber)) // "1"
+    ///
+    /// 1          → "1"
+    /// 1.09       → "1.09"
+    /// 1.9        → "1.9"
+    /// 2.1345     → "2.1345"
+    /// -2.1355    → "−2.1355"
+    /// -2.1355    → "−2.1355"
+    /// 20024.1355 → "20024.1355"
+    /// ```
+    public static var asNumber: Self {
+        .init(type: .number)
+            .fractionLength(.maxFractionDigits)
+    }
+
+    /// Format the output to ensure 2 places.
+    ///
+    /// ```swift
+    /// // Usage
+    /// print(1.formatted(.asRounded)) // "1"
     ///
     /// 1       → "1"
     /// 1.09    → "1.09"
@@ -267,7 +286,7 @@ extension CustomFloatingPointFormatStyle where Value == Double {
     /// 2.1345  → "2.13"
     /// -2.1355 → "−2.14"
     /// ```
-    public static var asNumber: Self {
+    public static var asRounded: Self {
         .init(type: .number)
     }
 
@@ -323,11 +342,30 @@ extension CustomFloatingPointFormatStyle where Value == Double {
 // TODO: Uncomment when dropping iOS 14 Support
 // extension FormatStyle where Self == CustomFloatingPointFormatStyle<Decimal> {
 extension CustomFloatingPointFormatStyle where Value == Decimal {
-    /// Format the output to ensure 2 places.
+    /// Format the output.
     ///
     /// ```swift
     /// // Usage
     /// print(1.formatted(.asNumber)) // "1"
+    ///
+    /// 1          → "1"
+    /// 1.09       → "1.09"
+    /// 1.9        → "1.9"
+    /// 2.1345     → "2.1345"
+    /// -2.1355    → "−2.1355"
+    /// -2.1355    → "−2.1355"
+    /// 20024.1355 → "20024.1355"
+    /// ```
+    public static var asNumber: Self {
+        .init(type: .number)
+            .fractionLength(.maxFractionDigits)
+    }
+
+    /// Format the output to ensure 2 places.
+    ///
+    /// ```swift
+    /// // Usage
+    /// print(1.formatted(.asRounded)) // "1"
     ///
     /// 1       → "1"
     /// 1.09    → "1.09"
@@ -335,7 +373,7 @@ extension CustomFloatingPointFormatStyle where Value == Decimal {
     /// 2.1345  → "2.13"
     /// -2.1355 → "−2.14"
     /// ```
-    public static var asNumber: Self {
+    public static var asRounded: Self {
         .init(type: .number)
     }
 

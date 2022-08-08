@@ -163,7 +163,7 @@ extension XStack where Title == Text, Value == Text? {
         self.init {
             Text(title)
         } value: {
-            (value?.formattedString()).map(Text.init)
+            value.map { Text($0.formatted(.asNumber)) }
         }
     }
 }

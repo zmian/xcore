@@ -59,7 +59,8 @@ extension DoubleOrDecimalTests {
 
 extension DoubleOrDecimalTests {
     func testDouble() {
-        XCTAssertEqual(Double(0.008379).formatted(.asNumber), "0.0084")
+        XCTAssertEqual(Double(0.008379).formatted(.asNumber), "0.008379")
+        XCTAssertEqual(Double(0.008379).formatted(.asRounded), "0.0084")
         XCTAssertEqual(Double(0.008379).formatted(.asPercent), "0.84%")
         XCTAssertEqual(Double(0.008379).formatted(.asPercent.fractionLength(2)), "0.84%")
         XCTAssertEqual(Double(0.008379).formatted(.asPercent(scale: .zeroToHundred)), "0.0084%")
@@ -71,28 +72,29 @@ extension DoubleOrDecimalTests {
         // .asNumber.trimFractionalPartIfZero(true)
         XCTAssertEqual(Double(1).formatted(.asNumber), "1")
         XCTAssertEqual(Double(1.09).formatted(.asNumber), "1.09")
-        XCTAssertEqual(Double(1.9).formatted(.asNumber), "1.90")
+        XCTAssertEqual(Double(1.9).formatted(.asNumber), "1.9")
         XCTAssertEqual(Double(2).formatted(.asNumber), "2")
-        XCTAssertEqual(Double(2.1345).formatted(.asNumber), "2.13")
-        XCTAssertEqual(Double(2.1355).formatted(.asNumber), "2.14")
+        XCTAssertEqual(Double(2.1345).formatted(.asNumber), "2.1345")
+        XCTAssertEqual(Double(2.1355).formatted(.asNumber), "2.1355")
+        XCTAssertEqual(Double(20024.1355).formatted(.asNumber), "20,024.1355")
 
         // .asNumber.trimFractionalPartIfZero(false)
-        XCTAssertEqual(Double(1).formatted(.asNumber.trimFractionalPartIfZero(false)), "1.00")
+        XCTAssertEqual(Double(1).formatted(.asNumber.trimFractionalPartIfZero(false).fractionLength(2)), "1.00")
         XCTAssertEqual(Double(1.09).formatted(.asNumber.trimFractionalPartIfZero(false)), "1.09")
-        XCTAssertEqual(Double(1.9).formatted(.asNumber.trimFractionalPartIfZero(false)), "1.90")
-        XCTAssertEqual(Double(2).formatted(.asNumber.trimFractionalPartIfZero(false)), "2.00")
-        XCTAssertEqual(Double(2.1345).formatted(.asNumber.trimFractionalPartIfZero(false)), "2.13")
-        XCTAssertEqual(Double(2.1355).formatted(.asNumber.trimFractionalPartIfZero(false)), "2.14")
+        XCTAssertEqual(Double(1.9).formatted(.asNumber.trimFractionalPartIfZero(false).fractionLength(2)), "1.90")
+        XCTAssertEqual(Double(2).formatted(.asNumber.trimFractionalPartIfZero(false).fractionLength(2)), "2.00")
+        XCTAssertEqual(Double(2.1345).formatted(.asNumber.trimFractionalPartIfZero(false)), "2.1345")
+        XCTAssertEqual(Double(2.1355).formatted(.asNumber.trimFractionalPartIfZero(false)), "2.1355")
 
         // .asNumber.trimFractionalPartIfZero(false).sign(.both)
-        XCTAssertEqual(Double(0).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "0.00")
-        XCTAssertEqual(Double(1).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "+1.00")
-        XCTAssertEqual(Double(1.09).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "+1.09")
-        XCTAssertEqual(Double(1.9).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "+1.90")
-        XCTAssertEqual(Double(2).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "+2.00")
-        XCTAssertEqual(Double(-2).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "−2.00")
-        XCTAssertEqual(Double(2.1345).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "+2.13")
-        XCTAssertEqual(Double(-2.1355).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "−2.14")
+        XCTAssertEqual(Double(0).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false).fractionLength(2)), "0.00")
+        XCTAssertEqual(Double(1).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false).fractionLength(2)), "+1.00")
+        XCTAssertEqual(Double(1.09).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false).fractionLength(2)), "+1.09")
+        XCTAssertEqual(Double(1.9).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false).fractionLength(2)), "+1.90")
+        XCTAssertEqual(Double(2).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false).fractionLength(2)), "+2.00")
+        XCTAssertEqual(Double(-2).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false).fractionLength(2)), "−2.00")
+        XCTAssertEqual(Double(2.1345).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "+2.1345")
+        XCTAssertEqual(Double(-2.1355).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "−2.1355")
 
         // .asNumber.trimFractionalPartIfZero(false).sign(.both).minimumBound
         XCTAssertEqual(Double(0).formatted(.asNumber.minimumBound(1)), "<1")
@@ -100,7 +102,44 @@ extension DoubleOrDecimalTests {
         XCTAssertEqual(Double(1.09).formatted(.asNumber.sign(.both).minimumBound(5)), "<+5")
         XCTAssertEqual(Double(0.0000109).formatted(.asNumber.fractionLength(.maxFractionDigits)), "0.0000109")
         XCTAssertEqual(Double(-0.0000109).formatted(.asNumber.fractionLength(.maxFractionDigits)), "−0.0000109")
-        XCTAssertEqual(Double(-0.0000109).formatted(.asNumber), "−0.000011")
+        XCTAssertEqual(Double(-0.0000109).formatted(.asNumber), "−0.0000109")
+    }
+
+    func testDouble_asRounded() {
+        // .asRounded.trimFractionalPartIfZero(true)
+        XCTAssertEqual(Double(1).formatted(.asRounded), "1")
+        XCTAssertEqual(Double(1.09).formatted(.asRounded), "1.09")
+        XCTAssertEqual(Double(1.9).formatted(.asRounded), "1.90")
+        XCTAssertEqual(Double(2).formatted(.asRounded), "2")
+        XCTAssertEqual(Double(2.1345).formatted(.asRounded), "2.13")
+        XCTAssertEqual(Double(2.1355).formatted(.asRounded), "2.14")
+        XCTAssertEqual(Double(20024.1355).formatted(.asRounded), "20,024.14")
+
+        // .asRounded.trimFractionalPartIfZero(false)
+        XCTAssertEqual(Double(1).formatted(.asRounded.trimFractionalPartIfZero(false)), "1.00")
+        XCTAssertEqual(Double(1.09).formatted(.asRounded.trimFractionalPartIfZero(false)), "1.09")
+        XCTAssertEqual(Double(1.9).formatted(.asRounded.trimFractionalPartIfZero(false)), "1.90")
+        XCTAssertEqual(Double(2).formatted(.asRounded.trimFractionalPartIfZero(false)), "2.00")
+        XCTAssertEqual(Double(2.1345).formatted(.asRounded.trimFractionalPartIfZero(false)), "2.13")
+        XCTAssertEqual(Double(2.1355).formatted(.asRounded.trimFractionalPartIfZero(false)), "2.14")
+
+        // .asRounded.trimFractionalPartIfZero(false).sign(.both)
+        XCTAssertEqual(Double(0).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "0.00")
+        XCTAssertEqual(Double(1).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "+1.00")
+        XCTAssertEqual(Double(1.09).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "+1.09")
+        XCTAssertEqual(Double(1.9).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "+1.90")
+        XCTAssertEqual(Double(2).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "+2.00")
+        XCTAssertEqual(Double(-2).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "−2.00")
+        XCTAssertEqual(Double(2.1345).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "+2.13")
+        XCTAssertEqual(Double(-2.1355).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "−2.14")
+
+        // .asRounded.trimFractionalPartIfZero(false).sign(.both).minimumBound
+        XCTAssertEqual(Double(0).formatted(.asRounded.minimumBound(1)), "<1")
+        XCTAssertEqual(Double(1).formatted(.asRounded.minimumBound(1)), "1")
+        XCTAssertEqual(Double(1.09).formatted(.asRounded.sign(.both).minimumBound(5)), "<+5")
+        XCTAssertEqual(Double(0.0000109).formatted(.asRounded.fractionLength(.maxFractionDigits)), "0.0000109")
+        XCTAssertEqual(Double(-0.0000109).formatted(.asRounded.fractionLength(.maxFractionDigits)), "−0.0000109")
+        XCTAssertEqual(Double(-0.0000109).formatted(.asRounded), "−0.000011")
     }
 
     func testDouble_asPercent_fractionLength() {
@@ -186,7 +225,8 @@ extension DoubleOrDecimalTests {
 
 extension DoubleOrDecimalTests {
     func testDecimal() {
-        XCTAssertEqual(Decimal(0.008379).formatted(.asNumber), "0.0084")
+        XCTAssertEqual(Decimal(string: "0.008379")!.formatted(.asNumber), "0.008379")
+        XCTAssertEqual(Decimal(0.008379).formatted(.asRounded), "0.0084")
         XCTAssertEqual(Decimal(0.008379).formatted(.asPercent), "0.84%")
         XCTAssertEqual(Decimal(0.008379).formatted(.asPercent.fractionLength(2)), "0.84%")
         XCTAssertEqual(Decimal(0.008379).formatted(.asPercent(scale: .zeroToHundred)), "0.0084%")
@@ -198,28 +238,29 @@ extension DoubleOrDecimalTests {
         // .asNumber.trimFractionalPartIfZero(true)
         XCTAssertEqual(Decimal(1).formatted(.asNumber), "1")
         XCTAssertEqual(Decimal(1.09).formatted(.asNumber), "1.09")
-        XCTAssertEqual(Decimal(1.9).formatted(.asNumber), "1.90")
+        XCTAssertEqual(Decimal(1.9).formatted(.asNumber), "1.9")
         XCTAssertEqual(Decimal(2).formatted(.asNumber), "2")
-        XCTAssertEqual(Decimal(2.1345).formatted(.asNumber), "2.13")
-        XCTAssertEqual(Decimal(2.1355).formatted(.asNumber), "2.14")
+        XCTAssertEqual(Decimal(2.1345).formatted(.asNumber), "2.1345")
+        XCTAssertEqual(Decimal(2.1355).formatted(.asNumber), "2.1355")
+        XCTAssertEqual(Decimal(string: "20024.1355")!.formatted(.asNumber), "20,024.1355")
 
         // .asNumber.trimFractionalPartIfZero(false)
-        XCTAssertEqual(Decimal(1).formatted(.asNumber.trimFractionalPartIfZero(false)), "1.00")
+        XCTAssertEqual(Decimal(1).formatted(.asNumber.trimFractionalPartIfZero(false).fractionLength(2)), "1.00")
         XCTAssertEqual(Decimal(1.09).formatted(.asNumber.trimFractionalPartIfZero(false)), "1.09")
-        XCTAssertEqual(Decimal(1.9).formatted(.asNumber.trimFractionalPartIfZero(false)), "1.90")
-        XCTAssertEqual(Decimal(2).formatted(.asNumber.trimFractionalPartIfZero(false)), "2.00")
-        XCTAssertEqual(Decimal(2.1345).formatted(.asNumber.trimFractionalPartIfZero(false)), "2.13")
-        XCTAssertEqual(Decimal(2.1355).formatted(.asNumber.trimFractionalPartIfZero(false)), "2.14")
+        XCTAssertEqual(Decimal(1.9).formatted(.asNumber.trimFractionalPartIfZero(false).fractionLength(2)), "1.90")
+        XCTAssertEqual(Decimal(2).formatted(.asNumber.trimFractionalPartIfZero(false).fractionLength(2)), "2.00")
+        XCTAssertEqual(Decimal(2.1345).formatted(.asNumber.trimFractionalPartIfZero(false)), "2.1345")
+        XCTAssertEqual(Decimal(2.1355).formatted(.asNumber.trimFractionalPartIfZero(false)), "2.1355")
 
         // .asNumber.trimFractionalPartIfZero(false).sign(.both)
-        XCTAssertEqual(Decimal(0).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "0.00")
-        XCTAssertEqual(Decimal(1).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "+1.00")
-        XCTAssertEqual(Decimal(1.09).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "+1.09")
-        XCTAssertEqual(Decimal(1.9).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "+1.90")
-        XCTAssertEqual(Decimal(2).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "+2.00")
-        XCTAssertEqual(Decimal(-2).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "−2.00")
-        XCTAssertEqual(Decimal(2.1345).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "+2.13")
-        XCTAssertEqual(Decimal(-2.1355).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "−2.14")
+        XCTAssertEqual(Decimal(0).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false).fractionLength(2)), "0.00")
+        XCTAssertEqual(Decimal(1).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false).fractionLength(2)), "+1.00")
+        XCTAssertEqual(Decimal(1.09).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false).fractionLength(2)), "+1.09")
+        XCTAssertEqual(Decimal(1.9).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false).fractionLength(2)), "+1.90")
+        XCTAssertEqual(Decimal(2).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false).fractionLength(2)), "+2.00")
+        XCTAssertEqual(Decimal(-2).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false).fractionLength(2)), "−2.00")
+        XCTAssertEqual(Decimal(2.1345).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "+2.1345")
+        XCTAssertEqual(Decimal(-2.1355).formatted(.asNumber.sign(.both).trimFractionalPartIfZero(false)), "−2.1355")
 
         // .asNumber.trimFractionalPartIfZero(false).sign(.both).minimumBound
         XCTAssertEqual(Decimal(0).formatted(.asNumber.minimumBound(1)), "<1")
@@ -227,7 +268,44 @@ extension DoubleOrDecimalTests {
         XCTAssertEqual(Decimal(1.09).formatted(.asNumber.sign(.both).minimumBound(5)), "<+5")
         XCTAssertEqual(Decimal(0.0000109).formatted(.asNumber.fractionLength(.maxFractionDigits)), "0.0000109")
         XCTAssertEqual(Decimal(-0.0000109).formatted(.asNumber.fractionLength(.maxFractionDigits)), "−0.0000109")
-        XCTAssertEqual(Decimal(-0.0000109).formatted(.asNumber), "−0.000011")
+        XCTAssertEqual(Decimal(-0.0000109).formatted(.asNumber), "−0.0000109")
+    }
+
+    func testDecimal_asRounded() {
+        // .asRounded.trimFractionalPartIfZero(true)
+        XCTAssertEqual(Decimal(1).formatted(.asRounded), "1")
+        XCTAssertEqual(Decimal(1.09).formatted(.asRounded), "1.09")
+        XCTAssertEqual(Decimal(1.9).formatted(.asRounded), "1.90")
+        XCTAssertEqual(Decimal(2).formatted(.asRounded), "2")
+        XCTAssertEqual(Decimal(2.1345).formatted(.asRounded), "2.13")
+        XCTAssertEqual(Decimal(2.1355).formatted(.asRounded), "2.14")
+        XCTAssertEqual(Decimal(20024.1355).formatted(.asRounded), "20,024.14")
+
+        // .asRounded.trimFractionalPartIfZero(false)
+        XCTAssertEqual(Decimal(1).formatted(.asRounded.trimFractionalPartIfZero(false)), "1.00")
+        XCTAssertEqual(Decimal(1.09).formatted(.asRounded.trimFractionalPartIfZero(false)), "1.09")
+        XCTAssertEqual(Decimal(1.9).formatted(.asRounded.trimFractionalPartIfZero(false)), "1.90")
+        XCTAssertEqual(Decimal(2).formatted(.asRounded.trimFractionalPartIfZero(false)), "2.00")
+        XCTAssertEqual(Decimal(2.1345).formatted(.asRounded.trimFractionalPartIfZero(false)), "2.13")
+        XCTAssertEqual(Decimal(2.1355).formatted(.asRounded.trimFractionalPartIfZero(false)), "2.14")
+
+        // .asRounded.trimFractionalPartIfZero(false).sign(.both)
+        XCTAssertEqual(Decimal(0).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "0.00")
+        XCTAssertEqual(Decimal(1).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "+1.00")
+        XCTAssertEqual(Decimal(1.09).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "+1.09")
+        XCTAssertEqual(Decimal(1.9).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "+1.90")
+        XCTAssertEqual(Decimal(2).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "+2.00")
+        XCTAssertEqual(Decimal(-2).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "−2.00")
+        XCTAssertEqual(Decimal(2.1345).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "+2.13")
+        XCTAssertEqual(Decimal(-2.1355).formatted(.asRounded.sign(.both).trimFractionalPartIfZero(false)), "−2.14")
+
+        // .asRounded.trimFractionalPartIfZero(false).sign(.both).minimumBound
+        XCTAssertEqual(Decimal(0).formatted(.asRounded.minimumBound(1)), "<1")
+        XCTAssertEqual(Decimal(1).formatted(.asRounded.minimumBound(1)), "1")
+        XCTAssertEqual(Decimal(1.09).formatted(.asRounded.sign(.both).minimumBound(5)), "<+5")
+        XCTAssertEqual(Decimal(0.0000109).formatted(.asRounded.fractionLength(.maxFractionDigits)), "0.0000109")
+        XCTAssertEqual(Decimal(-0.0000109).formatted(.asRounded.fractionLength(.maxFractionDigits)), "−0.0000109")
+        XCTAssertEqual(Decimal(-0.0000109).formatted(.asRounded), "−0.000011")
     }
 
     func testDecimal_asPercent_fractionLength() {
