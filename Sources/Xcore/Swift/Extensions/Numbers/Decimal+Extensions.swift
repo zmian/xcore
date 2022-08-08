@@ -314,26 +314,3 @@ extension Decimal {
         doubleValue ?? 0
     }
 }
-
-// MARK: - Formatted
-
-extension Decimal {
-    private static let formatter = NumberFormatter().apply {
-        $0.numberStyle = .decimal
-        $0.maximumFractionDigits = .maxFractionDigits
-    }
-
-    @available(iOS, introduced: 14, deprecated: 15, message: "Use .formattedString() directly.")
-    public func formattedString() -> String {
-        Self.formatter.string(from: self) ?? ""
-    }
-
-//    @available(iOS 15.0, *)
-//    public func formattedString() -> String {
-//        let style = FormatStyle
-//            .number
-//            .precision(.fractionLength(0...Int.maxFractionDigits))
-//
-//        return formatted(style)
-//    }
-}
