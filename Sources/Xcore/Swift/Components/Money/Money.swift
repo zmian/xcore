@@ -171,6 +171,7 @@ extension Money {
     }
 
     /// The minimum and maximum number of digits after the decimal separator.
+    @_disfavoredOverload
     public func fractionLength(_ limit: Int) -> Self {
         fractionLength(limit...limit)
     }
