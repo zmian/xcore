@@ -11,7 +11,7 @@ public struct DoubleCodingFormatStyle: CodingFormatStyle {
 
     private static let numberFormatter = NumberFormatter().apply {
         $0.locale = .us
-        $0.maximumFractionDigits = Int.maxFractionDigits
+        $0.fractionLength = .maxFractionDigits
     }
 
     private let encodeAsString: Bool

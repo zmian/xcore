@@ -59,6 +59,10 @@ extension DoubleOrDecimalTests {
 
 extension DoubleOrDecimalTests {
     func testDouble() {
+        XCTAssertEqual(Double("20.05588")!.formatted(.asNumber), "20.05588")
+        XCTAssertEqual(Double("5.04198")!.formatted(.asNumber), "5.04198")
+        XCTAssertEqual(Double(5.04198).formatted(.asNumber), "5.04198")
+
         XCTAssertEqual(Double(0.008379).formatted(.asNumber), "0.008379")
         XCTAssertEqual(Double(0.008379).formatted(.asRounded), "0.0084")
         XCTAssertEqual(Double(0.008379).formatted(.asPercent), "0.84%")
@@ -225,6 +229,10 @@ extension DoubleOrDecimalTests {
 
 extension DoubleOrDecimalTests {
     func testDecimal() {
+        XCTAssertEqual(Decimal(string: "20.05588")!.formatted(.asNumber), "20.05588")
+        XCTAssertEqual(Decimal(string: "5.04198")!.formatted(.asNumber), "5.04198")
+        XCTAssertEqual(Decimal(5.04198).formatted(.asNumber), "5.041979999999998976")
+
         XCTAssertEqual(Decimal(string: "0.008379")!.formatted(.asNumber), "0.008379")
         XCTAssertEqual(Decimal(0.008379).formatted(.asRounded), "0.0084")
         XCTAssertEqual(Decimal(0.008379).formatted(.asPercent), "0.84%")

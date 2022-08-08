@@ -12,7 +12,7 @@ public struct DecimalTextFieldFormatter: TextFieldFormatter {
     private let isCurrency: Bool
     private let numberFormatter = NumberFormatter().apply {
         $0.numberStyle = .decimal
-        $0.maximumFractionDigits = .maxFractionDigits
+        $0.fractionLength = .maxFractionDigits
     }
 
     public init(isCurrency: Bool) {
