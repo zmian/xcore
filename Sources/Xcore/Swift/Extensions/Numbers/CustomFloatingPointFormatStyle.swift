@@ -147,17 +147,24 @@ extension CustomFloatingPointFormatStyle {
         }
 
         var numberFormattedString: String {
-            if #available(iOS 15.0, *) {
-                if let number = valueToUse as? Decimal {
-                    return number.formatted(
-                        .number
-                            .precision(.fractionLength(fractionLength))
-                            .sign(strategy: .never)
-                            .locale(locale)
-                            .rounded(rule: .toNearestOrAwayFromZero)
-                    )
-                }
-            }
+            // TODO: Fix
+//            FormatStyle API and formatter differences:
+              // with FormatStyle
+//            XCTAssertEqual(Decimal(5.04198).formatted(.asNumber), "5.041979999999998976")
+              // with formatter
+//            XCTAssertEqual(Decimal(5.04198).formatted(.asNumber), "5.04198")
+//
+//            if #available(iOS 15.0, *) {
+//                if let number = valueToUse as? Decimal {
+//                    return number.formatted(
+//                        .number
+//                            .precision(.fractionLength(fractionLength))
+//                            .sign(strategy: .never)
+//                            .locale(locale)
+//                            .rounded(rule: .toNearestOrAwayFromZero)
+//                    )
+//                }
+//            }
 
             numberFormatter.locale = locale
             numberFormatter.fractionLength = fractionLength
@@ -165,17 +172,18 @@ extension CustomFloatingPointFormatStyle {
         }
 
         var percentFormattedString: String {
-            if #available(iOS 15.0, *) {
-                if let number = valueToUse as? Decimal {
-                    return number.formatted(
-                        .percent
-                            .precision(.fractionLength(fractionLength))
-                            .sign(strategy: .never)
-                            .locale(locale)
-                            .rounded(rule: .toNearestOrAwayFromZero)
-                    )
-                }
-            }
+            // TODO: See the differences before uncommenting.
+//            if #available(iOS 15.0, *) {
+//                if let number = valueToUse as? Decimal {
+//                    return number.formatted(
+//                        .percent
+//                            .precision(.fractionLength(fractionLength))
+//                            .sign(strategy: .never)
+//                            .locale(locale)
+//                            .rounded(rule: .toNearestOrAwayFromZero)
+//                    )
+//                }
+//            }
 
             percentFormatter.locale = locale
             percentFormatter.fractionLength = fractionLength
