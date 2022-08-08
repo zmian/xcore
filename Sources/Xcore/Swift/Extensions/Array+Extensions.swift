@@ -110,7 +110,7 @@ extension Array where Element: NSObjectProtocol {
         lastIndex { $0.isKind(of: elementType) }
     }
 
-    /// Returns a boolean value indicating whether the sequence contains an element
+    /// Returns a Boolean value indicating whether the sequence contains an element
     /// that exists in the given parameter.
     ///
     /// ```swift

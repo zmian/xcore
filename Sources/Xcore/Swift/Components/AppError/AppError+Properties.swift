@@ -7,24 +7,24 @@
 import SwiftUI
 
 extension UserInfoKey where Type == AppError {
-    /// A boolean property indicating whether the error should show "Contact
+    /// A Boolean property indicating whether the error should show "Contact
     /// Support" option.
     public static var contactSupport: Self { #function }
 
-    /// A boolean property indicating whether the error should show "Open App
+    /// A Boolean property indicating whether the error should show "Open App
     /// Settings" option.
     public static var openAppSettings: Self { #function }
 }
 
 extension AppError {
-    /// A boolean property indicating whether the error should show "Contact
+    /// A Boolean property indicating whether the error should show "Contact
     /// Support" option.
     public var contactSupport: Bool {
         get { self[userInfoKey: .contactSupport, default: false] }
         set { self[userInfoKey: .contactSupport] = newValue }
     }
 
-    /// A boolean property indicating whether the error should show "Open App
+    /// A Boolean property indicating whether the error should show "Open App
     /// Settings" option.
     public var openAppSettings: Bool {
         get { self[userInfoKey: .openAppSettings, default: false] }
@@ -33,13 +33,13 @@ extension AppError {
 }
 
 extension Binding where Value == AppError? {
-    /// A boolean property indicating whether the error should show "Contact
+    /// A Boolean property indicating whether the error should show "Contact
     /// Support" option.
     public var contactSupport: Bool {
         wrappedValue?.contactSupport == true
     }
 
-    /// A boolean property indicating whether the error should show "Open App
+    /// A Boolean property indicating whether the error should show "Open App
     /// Settings" option.
     public var openAppSettings: Bool {
         wrappedValue?.openAppSettings == true

@@ -250,7 +250,7 @@ extension Dictionary {
     /// ```
     ///
     /// - Parameter includeElement: A closure that takes an element of the sequence
-    ///   as its argument and returns a boolean value indicating whether the element
+    ///   as its argument and returns a Boolean value indicating whether the element
     ///   should be included in the returned dictionary.
     /// - Returns: An array of the elements that `isIncluded` allowed.
     /// - Complexity: O(_n_), where _n_ is the length of the sequence.

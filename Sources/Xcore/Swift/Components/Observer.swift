@@ -58,7 +58,8 @@ open class Observers {
 
     // MARK: - Notify API
 
-    /// A boolean value to determine whether the notifications should be sent.
+    /// A Boolean property indicating whether the notifications should be sent.
+    ///
     /// This flag is checked before firing any notification calls to the registered
     /// observers. The default value is `true`.
     open var isNotificationEnabled = true

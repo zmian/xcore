@@ -24,7 +24,7 @@ public struct XStackStyleConfiguration {
     public struct Title: View {
         public let body: Either<AnyView, EmptyView>
 
-        /// A boolean that indicates whether the title view is an empty view.
+        /// A Boolean property indicating whether the title view is an empty view.
         public let isEmpty: Bool
 
         init<Content: View>(content: @autoclosure () -> Content) {
@@ -42,7 +42,7 @@ public struct XStackStyleConfiguration {
     public struct Value: View {
         public let body: Either<AnyView, EmptyView>
 
-        /// A boolean that indicates whether the value view is an empty view.
+        /// A Boolean property indicating whether the value view is an empty view.
         public let isEmpty: Bool
 
         init<Content: View>(content: @autoclosure () -> Content) {
@@ -62,7 +62,7 @@ public struct XStackStyleConfiguration {
     /// A view that represents the value of the stack.
     public let value: Value
 
-    /// A boolean that indicates whether the stack either have title or value.
+    /// A Boolean property indicating whether the stack either have title or value.
     public var isSingleChild: Bool {
         title.isEmpty || value.isEmpty
     }

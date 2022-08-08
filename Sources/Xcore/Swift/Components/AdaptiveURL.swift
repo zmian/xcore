@@ -31,13 +31,13 @@ public struct AdaptiveURL: UserInfoContainer, MutableAppliable {
 // MARK: - UserInfo
 
 extension UserInfoKey where Type == AdaptiveURL {
-    /// A boolean property indicating whether the URL content should adapt app
+    /// A Boolean property indicating whether the URL content should adapt app
     /// appearance.
     public static var shouldAdaptAppearance: Self { #function }
 }
 
 extension AdaptiveURL {
-    /// A boolean property indicating whether the URL content should adapt app
+    /// A Boolean property indicating whether the URL content should adapt app
     /// appearance.
     public var shouldAdaptAppearance: Bool {
         get { self[userInfoKey: .shouldAdaptAppearance, default: false] }

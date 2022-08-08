@@ -15,7 +15,7 @@ extension FeatureFlag {
 // MARK: - App Store Rating Prompt
 
 extension FeatureFlag {
-    /// A boolean property indicating whether App Store rating prompt is enabled.
+    /// A Boolean property indicating whether App Store rating prompt is enabled.
     public static var ratingPromptEnabled: Bool {
         key(#function).value()
     }

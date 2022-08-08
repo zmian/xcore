@@ -45,7 +45,7 @@ extension UIViewController {
         view.removeFromSuperview()
     }
 
-    /// A boolean value to determine whether the view controller is the root view
+    /// A Boolean property indicating whether the view controller is the root view
     ///  controller of `UINavigationController` or `UITabBarController`.
     open var isRootViewController: Bool {
         if let rootViewController = navigationController?.rootViewController {
@@ -55,7 +55,7 @@ extension UIViewController {
         return tabBarController?.isRootViewController(self) ?? false
     }
 
-    /// A boolean value to determine whether the view controller is being popped or
+    /// A Boolean property indicating whether the view controller is being popped or
     /// is showing a subview controller.
     open var isBeingPopped: Bool {
         if isMovingFromParent || isBeingDismissed {
@@ -89,13 +89,14 @@ extension UIViewController {
         return false
     }
 
-    /// A boolean value indicating whether the view is currently loaded into memory
-    /// and presented on the screen.
+    /// A Boolean property indicating whether the view is currently loaded into
+    /// memory and presented on the screen.
     public var isCurrentlyPresented: Bool {
         isViewLoaded && view.window != nil
     }
 
-    /// A boolean value indicating whether the home indicator is currently present.
+    /// A Boolean property indicating whether the home indicator is currently
+    /// present.
     public var isHomeIndicatorPresent: Bool {
         view.safeAreaInsets.bottom > 0
     }
@@ -121,7 +122,7 @@ extension UIViewController {
         return UINavigationController(rootViewController: self)
     }
 
-    /// A boolean value indicating whether the `self` can be embedded in
+    /// A Boolean property indicating whether the `self` can be embedded in
     /// `UINavigationController`.
     private var canBeEmbeddedInNavigationController: Bool {
         switch self {

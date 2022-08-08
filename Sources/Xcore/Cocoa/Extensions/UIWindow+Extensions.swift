@@ -7,7 +7,7 @@
 import UIKit
 
 extension UIWindow {
-    /// A boolean value that determines whether the window is visible.
+    /// A Boolean property indicating whether the window is visible.
     ///
     /// Useful in KeyPaths (e.g., `UIApplication.shared.window(\.isVisible)`)
     ///

@@ -27,7 +27,7 @@ public protocol Pond {
 
     func set<T>(_ key: Key, value: T?) throws
 
-    /// Returns a boolean value indicating whether the store contains value for the
+    /// Returns a Boolean value indicating whether the store contains value for the
     /// given key.
     func contains(_ key: Key) -> Bool
 

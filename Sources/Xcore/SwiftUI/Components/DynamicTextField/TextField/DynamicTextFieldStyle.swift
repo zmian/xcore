@@ -49,10 +49,10 @@ public struct DynamicTextFieldStyleConfiguration {
     /// The text currently present in the text field.
     @Binding public var text: String
 
-    /// A boolean property indicating whether the text field entry is valid.
+    /// A Boolean property indicating whether the text field entry is valid.
     public let isValid: Bool
 
-    /// A boolean property indicating whether the text field entry is focused.
+    /// A Boolean property indicating whether the text field entry is focused.
     public let isFocused: Bool
 }
 

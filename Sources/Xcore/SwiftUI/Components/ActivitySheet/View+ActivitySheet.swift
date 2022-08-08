@@ -36,8 +36,8 @@ extension View {
     /// ```
     ///
     /// - Parameters:
-    ///   - isPresented: A binding to a Boolean value that determines whether to
-    ///     present the activity sheet.
+    ///   - isPresented: A binding to a Boolean value indicating whether to present
+    ///     the activity sheet.
     ///   - items: The array of data objects on which to perform the activity. The
     ///     type of objects in the array is variable and dependent on the data your
     ///     application manages. For example, the data might consist of one or more

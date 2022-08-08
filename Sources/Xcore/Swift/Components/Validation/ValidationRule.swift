@@ -13,7 +13,7 @@ public struct ValidationRule<Input> {
         self.block = block
     }
 
-    /// Returns a boolean value indicating whether the given `input` matches the
+    /// Returns a Boolean value indicating whether the given `input` matches the
     /// conditions specified by `self`.
     ///
     /// ```swift
@@ -61,7 +61,7 @@ extension ValidationRule: ExpressibleByUnicodeScalarLiteral where Input == Strin
 // MARK: - Convenience Extension
 
 extension String {
-    /// Returns a boolean value indicating whether the `self` matches the conditions
+    /// Returns a Boolean value indicating whether the `self` matches the conditions
     /// specified by the `rule`.
     ///
     /// ```swift

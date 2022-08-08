@@ -33,7 +33,7 @@ extension HTTPCookieStorage {
 }
 
 extension HTTPCookie {
-    /// A boolean value that indicates whether the cookie is expired.
+    /// A Boolean property indicating whether the cookie is expired.
     ///
     /// This value is `false` if there is no specific expiration date, as with
     /// session-only cookies. The expiration date is compared to the current date to

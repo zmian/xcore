@@ -47,7 +47,7 @@ extension View {
     /// - Parameters:
     ///    - count: The number of taps or clicks required to trigger the action
     ///      closure provided in `action`. Defaults to `1`.
-    ///    - simultaneous: A boolean value determine whether to process tap gesture
+    ///    - simultaneous: A Boolean value indicating whether to process tap gesture
     ///      simultaneously with gestures defined by the view.
     ///    - action: The action to perform.
     @ViewBuilder

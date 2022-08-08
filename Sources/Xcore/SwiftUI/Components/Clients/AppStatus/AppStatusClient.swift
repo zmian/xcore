@@ -106,7 +106,7 @@ extension DependencyValues {
 // MARK: - Helpers
 
 extension AppStatusClient {
-    /// A boolean property indicating whether the application state is active,
+    /// A Boolean property indicating whether the application state is active,
     /// session is unlocked and protected data is available.
     ///
     /// This property is useful if you want to make an authenticated call on

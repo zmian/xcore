@@ -17,7 +17,7 @@ extension CustomFloatingPointFormatStyle {
         /// Formats as percentage using the given scale.
         case percent(scale: PercentageScale)
 
-        /// An enumeration representing the scale of the percentage.
+        /// An enumeration representing the scale of percent formatting.
         public enum PercentageScale: Codable, Hashable, Sendable {
             /// Percentage scale is: `0.0 - 1.0`.
             case zeroToOne
@@ -79,23 +79,17 @@ extension CustomFloatingPointFormatStyle {
     /// number.
     ///
     /// ```swift
-    /// 1.formatted(.asNumber)
+    /// 1.formatted(.asRounded)
     /// // Outputs "1"
     ///
-    /// 1.formatted(.asNumber.trimFractionalPartIfZero(false))
+    /// 1.formatted(.asRounded.trimFractionalPartIfZero(false))
     /// // Outputs "1.00"
     ///
-    /// 1.09.formatted(.asNumber)
+    /// 1.09.formatted(.asRounded)
     /// // Outputs "1.09"
     ///
-    /// 1.9.formatted(.asNumber)
+    /// 1.9.formatted(.asRounded)
     /// // Outputs "1.90"
-    ///
-    /// 2.1345.formatted(.asNumber)
-    /// // Outputs "2.13"
-    ///
-    /// 2.1355.formatted(.asNumber)
-    /// // Outputs "2.14"
     /// ```
     public func trimFractionalPartIfZero(_ trim: Bool) -> Self {
         applying {
@@ -131,11 +125,11 @@ extension CustomFloatingPointFormatStyle {
     /// - Returns: A string representation of the value.
     public func format(_ value: Value) -> String {
         let value = normalize(value)
-        let currentSign = value == 0 ? sign.zero : (value > 0 ? sign.positive : sign.negative)
+        let sign = value == 0 ? sign.zero : (value > 0 ? sign.positive : sign.negative)
         let fractionLength = normalizeFractionLength(value)
 
         // MinimumBound
-        var valueToUse: Value {
+        let valueToUse: Value = {
             guard
                 let minimumBound = minimumBound,
                 abs(value) < minimumBound
@@ -144,7 +138,7 @@ extension CustomFloatingPointFormatStyle {
             }
 
             return value >= 0 ? minimumBound : -minimumBound
-        }
+        }()
 
         var formattedString: String = {
             numberFormatter.synchronized {
@@ -181,7 +175,7 @@ extension CustomFloatingPointFormatStyle {
             }
         }
 
-        let formattedValue = currentSign + formattedString
+        let formattedValue = sign + formattedString
         return value == valueToUse ? formattedValue : "<\(formattedValue)"
     }
 
@@ -212,7 +206,7 @@ extension CustomFloatingPointFormatStyle {
                 return value.calculatePrecision()
             case .percent:
                 // Ensure when using `calculatePrecision` we are actually using the final value.
-                // "0.008379" → "0.84%"
+                // "0.008379 * 100" → "0.8379.calculatePrecision()" → (2...2) → "0.84%"
                 return (value * 100).calculatePrecision()
         }
     }
@@ -225,7 +219,7 @@ extension CustomFloatingPointFormatStyle: Foundation.FormatStyle {}
 // TODO: Uncomment when dropping iOS 14 Support
 // extension FormatStyle where Self == CustomFloatingPointFormatStyle<Double> {
 extension CustomFloatingPointFormatStyle where Value == Double {
-    /// Format the output.
+    /// Returns a number format style suitable for number types.
     ///
     /// ```swift
     /// // Usage
@@ -237,34 +231,36 @@ extension CustomFloatingPointFormatStyle where Value == Double {
     /// 2.1345     → "2.1345"
     /// -2.1355    → "−2.1355"
     /// -2.1355    → "−2.1355"
-    /// 20024.1355 → "20024.1355"
+    /// 20024.1355 → "20,024.1355"
     /// ```
     public static var asNumber: Self {
         .init(type: .number)
             .fractionLength(.maxFractionDigits)
     }
 
-    /// Format the output to ensure 2 places.
+    /// Returns a number format style suitable for number types and ensures fraction
+    /// part is at least 2 places.
     ///
     /// ```swift
     /// // Usage
     /// print(1.formatted(.asRounded)) // "1"
     ///
-    /// 1       → "1"
-    /// 1.09    → "1.09"
-    /// 1.9     → "1.90"
-    /// 2.1345  → "2.13"
-    /// -2.1355 → "−2.14"
+    /// 1          → "1"
+    /// 1.09       → "1.09"
+    /// 1.9        → "1.90"
+    /// 2.1345     → "2.13"
+    /// -2.1355    → "−2.14"
+    /// 20024.1355 → "20,024.14"
     /// ```
     public static var asRounded: Self {
         .init(type: .number)
     }
 
-    /// Formats as percentage from a `0.0 - 1.0` scale as default.
+    /// Returns a percent format style with the scale from `0.0 - 1.0`.
     ///
     /// ```swift
-    /// // scale: .zeroToOne (default), fractionLength: 0...2
-    /// 0.019   → "1.9%"
+    /// // scale: .zeroToOne (default)
+    /// 0.019   → "1.90%"
     /// -0.0109 → "−1.09%"
     /// 0.02    → "2%"
     /// ```
@@ -272,35 +268,36 @@ extension CustomFloatingPointFormatStyle where Value == Double {
         .asPercent(scale: .zeroToOne)
     }
 
-    /// Formats as percentage from a `0.0 - 1.0` scale as default.
+    /// Returns a percent format style based on the provided scale.
     ///
     /// ```swift
     /// // scale: .zeroToHundred
     /// 1      → "1%"
     /// 1.09   → "1.09%"
-    /// 1.9    → "1.9%"
+    /// 1.9    → "1.90%"
     /// 2.1345 → "2.13%"
     /// 2.1355 → "2.14%"
     ///
-    /// // scale: .zeroToOne (default), fractionLength: 0...0
-    /// 0.019   → "2%"
-    /// -0.0109 → "−1%"
-    /// 0.02    → "2%"
-    ///
-    /// // scale: .zeroToOne (default), fractionLength: 0...2
-    /// 0.019   → "1.9%"
+    /// // scale: .zeroToOne (default)
+    /// 0.019   → "1.90%"
     /// -0.0109 → "−1.09%"
     /// 0.02    → "2%"
     ///
-    /// // scale: .zeroToOne (default), fractionLength: 2...2, sign: .both, trimFractionalPartIfZero: false
-    /// 0.019   → "+1.90%"
+    /// // scale: .zeroToOne (default), trimFractionalPartIfZero: false
+    /// 0.019   → "1.90%"
     /// -0.0109 → "−1.09%"
-    /// 0.02    → "+2.00%"
+    /// 0.02    → "2.00%"
     ///
     /// // scale: .zeroToOne (default), minimumBound: 0.01
-    /// 0.019   → "+1.90%"
+    /// 0.019      → "+1.90%"
     /// -0.0000109 → "<−0.01%"
     /// 0.0000109  → "<0.01"
+    ///
+    /// // scale: .zeroToOne (default), fractionLength: 0, sign: .both
+    /// 0.019   → "+2%"
+    /// -0.0109 → "−1%"
+    /// 0.02    → "+2%"
+    ///
     /// ```
     public static func asPercent(scale: Self.Kind.PercentageScale) -> Self {
         .init(type: .percent(scale: scale))
@@ -312,7 +309,7 @@ extension CustomFloatingPointFormatStyle where Value == Double {
 // TODO: Uncomment when dropping iOS 14 Support
 // extension FormatStyle where Self == CustomFloatingPointFormatStyle<Decimal> {
 extension CustomFloatingPointFormatStyle where Value == Decimal {
-    /// Format the output.
+    /// Returns a number format style suitable for number types.
     ///
     /// ```swift
     /// // Usage
@@ -324,34 +321,36 @@ extension CustomFloatingPointFormatStyle where Value == Decimal {
     /// 2.1345     → "2.1345"
     /// -2.1355    → "−2.1355"
     /// -2.1355    → "−2.1355"
-    /// 20024.1355 → "20024.1355"
+    /// 20024.1355 → "20,024.1355"
     /// ```
     public static var asNumber: Self {
         .init(type: .number)
             .fractionLength(.maxFractionDigits)
     }
 
-    /// Format the output to ensure 2 places.
+    /// Returns a number format style suitable for number types and ensures fraction
+    /// part is at least 2 places.
     ///
     /// ```swift
     /// // Usage
     /// print(1.formatted(.asRounded)) // "1"
     ///
-    /// 1       → "1"
-    /// 1.09    → "1.09"
-    /// 1.9     → "1.90"
-    /// 2.1345  → "2.13"
-    /// -2.1355 → "−2.14"
+    /// 1          → "1"
+    /// 1.09       → "1.09"
+    /// 1.9        → "1.90"
+    /// 2.1345     → "2.13"
+    /// -2.1355    → "−2.14"
+    /// 20024.1355 → "20,024.14"
     /// ```
     public static var asRounded: Self {
         .init(type: .number)
     }
 
-    /// Formats as percentage from a `0.0 - 1.0` scale as default.
+    /// Returns a percent format style with the scale from `0.0 - 1.0`.
     ///
     /// ```swift
-    /// // scale: .zeroToOne (default), fractionLength: 0...2
-    /// 0.019   → "1.9%"
+    /// // scale: .zeroToOne (default)
+    /// 0.019   → "1.90%"
     /// -0.0109 → "−1.09%"
     /// 0.02    → "2%"
     /// ```
@@ -359,35 +358,36 @@ extension CustomFloatingPointFormatStyle where Value == Decimal {
         .asPercent(scale: .zeroToOne)
     }
 
-    /// Formats as percentage from a `0.0 - 1.0` scale as default.
+    /// Returns a percent format style based on the provided scale.
     ///
     /// ```swift
     /// // scale: .zeroToHundred
     /// 1      → "1%"
     /// 1.09   → "1.09%"
-    /// 1.9    → "1.9%"
+    /// 1.9    → "1.90%"
     /// 2.1345 → "2.13%"
     /// 2.1355 → "2.14%"
     ///
-    /// // scale: .zeroToOne (default), fractionLength: 0...0
-    /// 0.019   → "2%"
-    /// -0.0109 → "−1%"
-    /// 0.02    → "2%"
-    ///
-    /// // scale: .zeroToOne (default), fractionLength: 0...2
-    /// 0.019   → "1.9%"
+    /// // scale: .zeroToOne (default)
+    /// 0.019   → "1.90%"
     /// -0.0109 → "−1.09%"
     /// 0.02    → "2%"
     ///
-    /// // scale: .zeroToOne (default), fractionLength: 2...2, sign: .both, trimFractionalPartIfZero: false
-    /// 0.019   → "+1.90%"
+    /// // scale: .zeroToOne (default), trimFractionalPartIfZero: false
+    /// 0.019   → "1.90%"
     /// -0.0109 → "−1.09%"
-    /// 0.02    → "+2.00%"
+    /// 0.02    → "2.00%"
     ///
     /// // scale: .zeroToOne (default), minimumBound: 0.01
-    /// 0.019   → "+1.90%"
+    /// 0.019      → "+1.90%"
     /// -0.0000109 → "<−0.01%"
     /// 0.0000109  → "<0.01"
+    ///
+    /// // scale: .zeroToOne (default), fractionLength: 0, sign: .both
+    /// 0.019   → "+2%"
+    /// -0.0109 → "−1%"
+    /// 0.02    → "+2%"
+    ///
     /// ```
     public static func asPercent(scale: Self.Kind.PercentageScale) -> Self {
         .init(type: .percent(scale: scale))

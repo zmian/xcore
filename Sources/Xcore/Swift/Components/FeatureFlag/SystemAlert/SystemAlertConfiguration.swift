@@ -42,7 +42,7 @@ public struct SystemAlertConfiguration: Codable, Hashable, Identifiable {
     /// The message describing the system alert.
     public let message: String
 
-    /// A boolean property indicating whether the system alert can be dismissed.
+    /// A Boolean property indicating whether the system alert can be dismissed.
     public let isDismissable: Bool
 
     /// An optional image associated with the system alert.
@@ -79,7 +79,7 @@ public struct SystemAlertConfiguration: Codable, Hashable, Identifiable {
 extension SystemAlertConfiguration {
     private static var dismissedIds: Set<String> = []
 
-    /// A boolean property indicating whether the system alert is dismissed.
+    /// A Boolean property indicating whether the system alert is dismissed.
     public var isDismissed: Bool {
         guard isDismissable else {
             return false
