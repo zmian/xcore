@@ -288,7 +288,7 @@ extension Decimal {
     /// ```
     private static let usPosixFormatter = NumberFormatter().apply {
         $0.numberStyle = .decimal
-        $0.maximumFractionDigits = .maxFractionDigits
+        $0.fractionLength = .maxFractionDigits
         $0.locale = .usPosix
     }
 
