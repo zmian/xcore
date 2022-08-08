@@ -7,7 +7,7 @@
 import Foundation
 import SwiftUI
 
-/// A structure representing empty value.
+/// A structure representing an empty value.
 @frozen
 public struct Empty {
     public init() {}

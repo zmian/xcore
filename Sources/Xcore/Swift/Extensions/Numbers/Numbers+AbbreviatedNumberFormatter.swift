@@ -41,7 +41,7 @@ private struct AbbreviatedNumberFormatter<Number: DoubleOrDecimalProtocol> {
     ///   - value: The value to abbreviate.
     ///   - threshold: An optional property to only abbreviate if `value` is
     ///     greater then this value.
-    ///   - thresholdAbs: A boolean property indicating whether threshold is of
+    ///   - thresholdAbs: A Boolean value indicating whether threshold is of
     ///     absolute value (e.g., `"abs(value)"`).
     ///   - locale: The locale used to format the grouping and decimal separators.
     /// - Returns: Abbreviated version of the `value`.
@@ -102,7 +102,7 @@ extension Decimal {
     /// - Parameters:
     ///   - threshold: An optional property to only abbreviate if `value` is
     ///     greater then this value.
-    ///   - thresholdAbs: A boolean property indicating whether threshold is of
+    ///   - thresholdAbs: A Boolean value indicating whether threshold is of
     ///     absolute value (e.g., `"abs(value)"`).
     ///   - locale: The locale used to format the grouping and decimal separators.
     /// - Returns: Abbreviated version of the `value`.
@@ -142,7 +142,7 @@ extension Double {
     /// - Parameters:
     ///   - threshold: An optional property to only abbreviate if `value` is
     ///     greater then this value.
-    ///   - thresholdAbs: A boolean property indicating whether threshold is of
+    ///   - thresholdAbs: A Boolean value indicating whether threshold is of
     ///     absolute value (e.g., `"abs(value)"`).
     ///   - locale: The locale used to format the grouping and decimal separators.
     /// - Returns: Abbreviated version of the `value`.

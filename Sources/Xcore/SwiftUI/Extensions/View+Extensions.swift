@@ -161,7 +161,7 @@ extension View {
 // MARK: - Hidden
 
 extension View {
-    /// Hide or show the view based on a boolean value.
+    /// Hide or show the view based on a Boolean value.
     ///
     /// Example for visibility:
     ///
@@ -179,7 +179,7 @@ extension View {
     ///
     /// - Parameters:
     ///   - hidden: Set to `false` to show the view. Set to `true` to hide the view.
-    ///   - remove: Boolean value indicating whether or not to remove the view.
+    ///   - remove: A Boolean value indicating whether to remove the view.
     @ViewBuilder
     public func hidden(_ hidden: Bool, remove: Bool = false) -> some View {
         if hidden {

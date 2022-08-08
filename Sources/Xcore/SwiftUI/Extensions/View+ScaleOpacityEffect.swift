@@ -32,7 +32,7 @@ public enum PressedAnimationEffect: Hashable {
         }
     }
 
-    /// A boolean property indicating whether `self` is equals to `scale`, ignoring
+    /// A Boolean property indicating whether `self` is equals to `scale`, ignoring
     /// the anchor position.
     fileprivate var isScale: Bool {
         if case .scale = self {
@@ -48,7 +48,7 @@ extension View {
     /// when `isPressed` is `true`
     ///
     /// - Parameters:
-    ///   - isPressed: A Boolean that indicates whether the user is currently
+    ///   - isPressed: A Boolean value indicating whether the user is currently
     ///     pressing the view.
     ///   - effects: A list of effects to apply when `isPressed` is `true`.
     public func scaleOpacityEffect(

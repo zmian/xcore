@@ -9,7 +9,7 @@ import Foundation
 // MARK: - OptionalTypeMarker
 
 public protocol OptionalTypeMarker {
-    /// A boolean value that determines whether the wrapped value is `nil`.
+    /// A Boolean property indicating whether the wrapped value is `nil`.
     var isNil: Bool { get }
 }
 
@@ -23,7 +23,7 @@ extension Optional: OptionalTypeMarker {
         }
     }
 
-    /// A boolean value that determines whether the wrapped value is not `nil`.
+    /// A Boolean property indicating whether the wrapped value is not `nil`.
     ///
     /// Useful in KeyPaths to allow for negation.
     public var isNotNil: Bool {

@@ -23,7 +23,7 @@ import Foundation
 /// allows us to:
 /// - Handle confirmations related to an item (previously achieved by having
 ///   `var itemForAlert: Item?` on the state).
-/// - Handle confirmations related to a boolean (previously achieved by having
+/// - Handle confirmations related to a Boolean (previously achieved by having
 ///   `var showAlert: Bool` on the state).
 /// - Handle loading operations inside the alert.
 /// - Handle loading operations outside the alert

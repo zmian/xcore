@@ -205,11 +205,11 @@ extension UIView {
 extension UIView {
     /// Takes a snapshot of the complete view hierarchy as visible onscreen.
     ///
-    /// - Parameter afterScreenUpdates: A boolean value that indicates whether the
+    /// - Parameter afterScreenUpdates: A Boolean value indicating whether the
     ///   snapshot should be rendered after recent changes have been incorporated.
     ///   Specify the value false if you want to render a snapshot in the view
     ///   hierarchy’s current state, which might not include recent changes. A
-    ///   Boolean value that indicates whether the snapshot should be rendered after
+    ///   Boolean value indicating whether the snapshot should be rendered after
     ///   recent changes have been incorporated. Specify the value `false` if you
     ///   want to render a snapshot in the view hierarchy’s current state, which
     ///   might not include recent changes. The default value is `false`.
@@ -224,11 +224,11 @@ extension UIView {
 
     /// Takes a snapshot of the complete view hierarchy as visible onscreen.
     ///
-    /// - Parameter afterScreenUpdates: A boolean value that indicates whether the
+    /// - Parameter afterScreenUpdates: A Boolean value indicating whether the
     ///   snapshot should be rendered after recent changes have been incorporated.
     ///   Specify the value false if you want to render a snapshot in the view
     ///   hierarchy’s current state, which might not include recent changes. A
-    ///   Boolean value that indicates whether the snapshot should be rendered after
+    ///   Boolean value indicating whether the snapshot should be rendered after
     ///   recent changes have been incorporated. Specify the value `false` if you
     ///   want to render a snapshot in the view hierarchy’s current state, which
     ///   might not include recent changes. The default value is `false`.
@@ -338,7 +338,7 @@ extension UIView {
     ///     }
     ///
     /// - Parameter predicate: A closure that takes a subview in `self` as its
-    ///   argument and returns a boolean value indicating whether the subview is a
+    ///   argument and returns a Boolean value indicating whether the subview is a
     ///   match.
     /// - Returns: The first subview of the `self` that satisfies `predicate`,
     ///   or `nil` if there is no subview that satisfies `predicate`.
@@ -368,7 +368,7 @@ extension UIView {
     ///     }
     ///
     /// - Parameter predicate: A closure that takes a subview in `self` as its
-    ///   argument and returns a boolean value indicating whether the subview is a
+    ///   argument and returns a Boolean value indicating whether the subview is a
     ///   match.
     /// - Returns: An array of subviews that satisfies `predicate`, or `[]` if there
     ///   is no subview that satisfies `predicate`.

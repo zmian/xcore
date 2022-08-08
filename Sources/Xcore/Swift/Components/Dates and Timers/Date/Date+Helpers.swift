@@ -48,8 +48,8 @@ extension Date {
     ///   - string: String that represents a date.
     ///   - format: Format of the date that's represented with string.
     ///   - calendar: The calendar to use when parsing the date.
-    ///   - isLenient: A Boolean flag to indicate to use heuristics when parsing the
-    ///                date.
+    ///   - isLenient: A Boolean value indicating whether to use heuristics when
+    ///     parsing the date.
     public init?(
         from string: String,
         format: Format.Custom,
@@ -77,9 +77,9 @@ extension Date {
     ///
     /// - Parameters:
     ///   - format: The format to use when parsing the date.
-    ///   - doesRelativeDateFormatting: A Boolean flag to indicate if parsing should
-    ///   happen in relative format. Note: The relative formatting only supports
-    ///   Date and Time styles and not custom formats.
+    ///   - doesRelativeDateFormatting: A Boolean value to indicate if parsing
+    ///     should happen in relative format. Note: The relative formatting only
+    ///     supports Date and Time styles and not custom formats.
     ///   - calendar: The calendar to use when parsing the date.
     public func string(
         format: Format,

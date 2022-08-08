@@ -84,7 +84,7 @@ public final class AnalyticsSessionTracker {
         values.remove(value) != nil
     }
 
-    /// Returns a boolean value that indicates whether the given value exists in the
+    /// Returns a Boolean value indicating whether the given value exists in the
     /// set.
     ///
     /// - Parameter value: An value to look for in the set.

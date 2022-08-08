@@ -10,8 +10,8 @@ extension View {
     /// Presents a window when a binding to a Boolean value that you provide is true.
     ///
     /// - Parameters:
-    ///   - isPresented: A binding to a Boolean value that determines whether to
-    ///     present the window.
+    ///   - isPresented: A binding to a Boolean value indicating whether to present
+    ///     the window.
     ///   - style: A structure representing the style of a window.
     ///   - content: A closure that returns the content of the window.
     public func window<Content: View>(
@@ -84,7 +84,7 @@ public struct WindowStyle: Hashable {
     /// The default value is `.normal`.
     public let level: UIWindow.Level
 
-    /// A boolean value that indicates whether to make the receiver the key window.
+    /// A Boolean value indicating whether to make the receiver the key window.
     ///
     /// The key window receives keyboard and other non-touch related events. Setting
     /// this property to `true` causes the previous key window to resign the key
@@ -98,8 +98,8 @@ public struct WindowStyle: Hashable {
     /// - Parameters:
     ///   - label: A succinct label that identifies the window.
     ///   - level: The position of the window in the z-axis.
-    ///   - isKey: A boolean value that indicates whether to make the receiver the
-    ///     key window.
+    ///   - isKey: A Boolean value indicating whether to make the receiver the key
+    ///     window.
     public init(
         label: String? = nil,
         level: UIWindow.Level = .normal,

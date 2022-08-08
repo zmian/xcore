@@ -32,7 +32,7 @@ extension Array {
     ///
     /// - Parameters:
     ///   - keyPath: A key path of the element to order by.
-    ///   - ascending: A boolean flag indicating whether the key path ordering
+    ///   - ascending: A Boolean value indicating whether the key path ordering
     ///     should be ascending.
     /// - Returns: A sorted array of the sequence's elements.
     ///
@@ -70,7 +70,7 @@ extension Array {
     ///
     /// - Parameters:
     ///   - keyPath: A key path of the element to order by.
-    ///   - ascending: A boolean flag indicating whether the key path ordering
+    ///   - ascending: A Boolean value indicating whether the key path ordering
     ///     should be ascending.
     /// - Returns: A sorted array of the sequence's elements.
     ///

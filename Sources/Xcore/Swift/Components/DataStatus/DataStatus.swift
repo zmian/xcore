@@ -137,7 +137,7 @@ extension DataStatus where Value == Xcore.Empty {
 // MARK: - isFailureOrEmpty
 
 extension DataStatus where Value: Collection {
-    /// A boolean property indicating whether the status is failure or value
+    /// A Boolean property indicating whether the status is failure or value
     /// collection is empty.
     public var isFailureOrEmpty: Bool {
         switch self {
@@ -152,7 +152,7 @@ extension DataStatus where Value: Collection {
 }
 
 extension DataStatus {
-    /// A boolean property indicating whether the status is failure.
+    /// A Boolean property indicating whether the status is failure.
     public var isFailureOrEmpty: Bool {
         isFailure
     }

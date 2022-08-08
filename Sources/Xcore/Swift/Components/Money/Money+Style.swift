@@ -141,7 +141,7 @@ extension Money.Style {
     /// - Parameters:
     ///   - threshold: A property to only abbreviate if `amount` is greater then
     ///     this value.
-    ///   - thresholdAbs: A boolean property indicating whether threshold is of
+    ///   - thresholdAbs: A Boolean value indicating whether threshold is of
     ///     absolute value (e.g., `"abs(value)"`).
     ///   - fallback: The formatting style to use when threshold isn't reached.
     /// - Returns: Abbreviated version of `self`.

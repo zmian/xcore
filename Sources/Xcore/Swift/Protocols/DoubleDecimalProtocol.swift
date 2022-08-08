@@ -11,7 +11,7 @@ import Foundation
 public protocol DoubleOrDecimalProtocol: SignedNumeric, Comparable, Hashable, Codable {
     var nsNumber: NSNumber { get }
 
-    /// A boolean value indicating whether the fractional part of the decimal is
+    /// A Boolean property indicating whether the fractional part of the decimal is
     /// `0`.
     ///
     /// ```swift

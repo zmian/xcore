@@ -54,7 +54,7 @@ extension ProcessInfo {
             rawValue
         }
 
-        /// A boolean property to indicate whether the variable exists in the
+        /// A Boolean property to indicate whether the variable exists in the
         /// environment from which the process was launched.
         public var exists: Bool {
             ProcessInfo.shared.contains(key: rawValue) ||
@@ -149,20 +149,22 @@ extension ProcessInfo {
 // MARK: - Built-in Arguments
 
 extension ProcessInfo.Arguments {
-    /// A boolean value to determine whether the app is running tests.
+    /// A Boolean property indicating whether the app is running tests.
     public static var isTesting: Bool {
         argument("XCTestConfigurationFilePath").exists
     }
 
-    /// A boolean value to determine whether the app is running in previews.
+    /// A Boolean property indicating whether the app is running in previews.
     public static var isRunningInPreviews: Bool {
         argument("XCODE_RUNNING_FOR_PREVIEWS").exists
     }
 
+    /// A Boolean property indicating whether the app is running in debug mode.
     public static var isDebug: Bool {
         argument("DEBUG").exists
     }
 
+    /// A Boolean property indicating whether the analytics debug mode is enabled.
     public static var isAnalyticsDebugEnabled: (enabled: Bool, contains: String?) {
         guard AppInfo.isDebuggerAttached else {
             return (false, nil)

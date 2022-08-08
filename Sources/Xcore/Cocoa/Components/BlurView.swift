@@ -15,7 +15,7 @@ public class BlurView: XCView {
         $0.alpha = 1 - blurOpacity
     }
 
-    /// Returns a boolean value indicating whether reduce transparency is enabled.
+    /// A Boolean property indicating whether reduce transparency is enabled.
     ///
     /// `true` if the user has enabled Reduce Transparency in **Settings**;
     /// otherwise, `false`.
@@ -23,7 +23,7 @@ public class BlurView: XCView {
         UIAccessibility.isReduceTransparencyEnabled
     }
 
-    /// A boolean property to determine whether this view automatically enables blur
+    /// A Boolean property to determine whether this view automatically enables blur
     /// effect. When this property is `false` this classs acts as normal `UIView`.
     ///
     /// The default value is `true`.

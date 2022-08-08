@@ -15,7 +15,7 @@ open class UIHostingWindow<Content: View>: UIWindow {
         set { hostingController.rootView = newValue }
     }
 
-    /// A boolean value indicating whether to passthrough touches that are not
+    /// A Boolean property indicating whether to passthrough touches that are not
     /// inside the root view.
     public var passthroughNonContentTouches = true
 

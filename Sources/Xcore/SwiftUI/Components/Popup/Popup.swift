@@ -57,7 +57,7 @@ extension Popup {
         /// The default value is `[]`.
         public let ignoresSafeAreaEdges: Edge.Set
 
-        /// A boolean value that indicates whether to enable full screen dimmed
+        /// A Boolean property indicating whether to enable full screen dimmed
         /// background behind the popup content.
         public let allowDimming: Bool
 
@@ -75,8 +75,8 @@ extension Popup {
         ///     content.
         ///   - transition: The transition to associates with the popup.
         ///   - windowStyle: The style of the presenting window.
-        ///   - allowDimming: A boolean value that indicates whether to enable full
-        ///     screen dimmed background behind the popup content.
+        ///   - allowDimming: A Boolean value indicating whether to enable full screen
+        ///     dimmed background behind the popup content.
         ///   - dismissAfter: A property indicating whether the popup is automatically
         ///     dismissed after the given duration.
         public init(

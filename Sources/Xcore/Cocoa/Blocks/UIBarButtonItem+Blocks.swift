@@ -52,7 +52,7 @@ extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
         setActionHandler(nil)
     }
 
-    /// A boolean value to determine whether an action handler is attached.
+    /// A Boolean property indicating whether an action handler is attached.
     public var hasActionHandler: Bool {
         actionHandler != nil
     }

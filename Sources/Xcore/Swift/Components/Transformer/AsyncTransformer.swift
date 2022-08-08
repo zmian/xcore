@@ -4,20 +4,22 @@
 // MIT license, see LICENSE file for details
 //
 
-import Foundation
-
-/// A structure representing transformation of an input to output.
+/// A structure representing transformation of an input to an output.
 @frozen
 public struct AsyncTransformer<Input, Output> {
     private let transform: (Input) async -> Output
 
     /// An initializer to transform given input.
     ///
-    /// - Parameter transform: A block to transform the input to output.
+    /// - Parameter transform: A block to transform the input to an output.
     public init(_ transform: @escaping (Input) async -> Output) {
         self.transform = transform
     }
 
+    /// Transforms the input to an output.
+    ///
+    /// - Parameter value: The input to transform.
+    /// - Returns: The transformed input.
     public func callAsFunction(_ value: Input) async -> Output {
         await transform(value)
     }
@@ -26,7 +28,7 @@ public struct AsyncTransformer<Input, Output> {
 // MARK: - Passthrough
 
 extension AsyncTransformer where Input == Output {
-    /// Returns input as output without any transformation.
+    /// Returns the input as output without any transformation.
     public static var passthrough: Self {
         .init { $0 }
     }
@@ -35,6 +37,11 @@ extension AsyncTransformer where Input == Output {
 // MARK: - Map
 
 extension AsyncTransformer {
+    /// Returns a new transformer, mapping output value using the given transformer.
+    ///
+    /// - Parameter other: A transformer that takes the output of `self` as an input
+    ///   and transforms it to a new value.
+    /// - Returns: A new transformer with the transformation of the output.
     public func map<NewOutput>(
         _ other: AsyncTransformer<Output, NewOutput>
     ) -> AsyncTransformer<Input, NewOutput> {

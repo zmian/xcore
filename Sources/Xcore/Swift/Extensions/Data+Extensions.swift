@@ -12,7 +12,8 @@ extension Data {
     /// - Parameters:
     ///   - string: The string to be added to the `Data`.
     ///   - encoding: The encoding to use for representing the specified string.
-    ///   - allowLossyConversion: A boolean value to determine lossy conversion.
+    ///   - allowLossyConversion: A Boolean value indicating whether to allow lossy
+    ///     conversion.
     public mutating func append(
         _ string: String,
         encoding: String.Encoding = .utf8,

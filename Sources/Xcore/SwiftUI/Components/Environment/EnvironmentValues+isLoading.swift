@@ -11,7 +11,7 @@ extension EnvironmentValues {
         static var defaultValue: Bool = false
     }
 
-    /// A Boolean value that indicates whether the view associated with this
+    /// A Boolean property indicating whether the view associated with this
     /// environment is in loading state.
     ///
     /// The default value is `false`.
@@ -25,7 +25,7 @@ extension EnvironmentValues {
 
 extension View {
     /// Adds a condition that controls whether this view is in loading state.
-    /// - Parameter value: A Boolean value that determines whether this view is in
+    /// - Parameter value: A Boolean value indicating whether this view is in
     ///   loading state.
     public func isLoading(_ loading: Bool) -> some View {
         environment(\.isLoading, loading)

@@ -8,13 +8,14 @@ import SwiftUI
 
 // MARK: - Namespace
 
+/// A namespace for common utilities related to the application information.
 public enum AppInfo: Sendable {}
 
 // MARK: - isDebuggerAttached
 
 extension AppInfo {
-    /// A boolean value to determine whether the LLDB debugger is attached to the
-    /// app.
+    /// A Boolean property indicating whether the LLDB debugger is attached to the
+    /// application.
     ///
     /// - Note: LLDB is automatically attached when the app is running from Xcode.
     ///
@@ -29,11 +30,40 @@ extension AppInfo {
     }
 }
 
-// MARK: - isAppExtension
+// MARK: - Execution Target
 
 extension AppInfo {
-    /// A boolean value to determine whether it is running inside an extension or an
-    /// app.
+    /// An enumeration representing the execution target of the application.
+    public enum ExecutionTarget {
+        /// The application is running as a normal application (e.g., iOS app).
+        case app
+
+        /// The application is running as a ``WidgetKit`` extension.
+        case widget
+    }
+
+    /// A property indicating the execution target of the binary.
+    public static var target: ExecutionTarget {
+        isWidgetExtension ? .widget : .app
+    }
+
+    /// A Boolean property indicating whether the execution target is a
+    /// ``WidgetKit`` extension or a normal application target.
+    ///
+    /// - SeeAlso: https://stackoverflow.com/a/64073922
+    public static var isWidgetExtension: Bool {
+        guard
+            let nsExtension = Bundle.main.infoDictionary?["NSExtension"] as? [String: String],
+            let widget = nsExtension["NSExtensionPointIdentifier"]
+        else {
+            return false
+        }
+
+        return widget == "com.apple.widgetkit-extension"
+    }
+
+    /// A Boolean property indicating whether the execution target is an app
+    /// extension or a normal application target.
     ///
     /// When you build an extension based on an Xcode template, you get an extension
     /// bundle that ends in `.appex`. See [Creating an App Extension].
@@ -48,57 +78,23 @@ extension AppInfo {
     }
 }
 
-// MARK: - isWidgetExtension
-
-extension AppInfo {
-    /// A boolean value to determine whether it is running inside a WidgetKit
-    /// extension or app.
-    ///
-    /// - SeeAlso: https://stackoverflow.com/a/64073922
-    public static var isWidgetExtension: Bool {
-        guard
-            let nsExtension = Bundle.main.infoDictionary?["NSExtension"] as? [String: String],
-            let widget = nsExtension["NSExtensionPointIdentifier"]
-        else {
-            return false
-        }
-
-        return widget == "com.apple.widgetkit-extension"
-    }
-}
-
-// MARK: - ExecutionTarget
-
-extension AppInfo {
-    public enum ExecutionTarget {
-        /// App extension
-        case app
-
-        /// WidgetKit extension
-        case widget
-    }
-
-    /// A property to determine the execution target.
-    public static var target: ExecutionTarget {
-        isWidgetExtension ? .widget : .app
-    }
-}
-
 // MARK: - Distribution
 
 extension AppInfo {
+    /// An enumeration representing the application distribution channel.
     public enum Distribution {
-        /// App has been installed from the App Store.
+        /// App was installed from the App Store.
         case appStore
 
-        /// App has been installed from TestFlight.
+        /// App was installed from TestFlight.
         case testFlight
 
-        /// App has been installed by some other mechanism (Ad-Hoc, Enterprise, etc.)
+        /// App was installed by some other mechanism (Ad-Hoc, Enterprise, etc.)
         case other
     }
 
-    /// A property to determine the app distribution channel.
+    /// A property indicating the application distribution channel
+    /// (e.g., the App Store, TestFlight or Ad-Hoc, Enterprise).
     public static var distribution: Distribution {
         #if targetEnvironment(simulator)
         return .other
@@ -113,7 +109,7 @@ extension AppInfo {
         #endif
     }
 
-    /// A boolean value to determine whether the app has embedded mobile provision
+    /// A Boolean property indicating whether the app has embedded mobile provision
     /// file.
     private static var hasEmbeddedMobileProvision: Bool {
         Bundle.main.path(forResource: "embedded", ofType: "mobileprovision") != nil
@@ -129,7 +125,7 @@ extension AppInfo {
     /// See the [User-Agent header documentation](https://tools.ietf.org/html/rfc7231#section-5.5.3).
     ///
     /// ```
-    /// Format:  "executable/appVersionNumber (appBundleId; build:appBuildNumber; deviceModel; osNameVersion) language_region"
+    /// Template: "executable/appVersionNumber (appBundleId; build:appBuildNumber; deviceModel; osNameVersion) language_region"
     /// Example: App/1.0.0 (com.app.dev; build:1; iPhone14,2; iOS 15.2.0) en_US
     /// ```
     public static let userAgent: String = {
@@ -147,7 +143,7 @@ extension AppInfo {
 // MARK: - Traits
 
 extension AppInfo {
-    /// A list of app traits such as app version, device and OS.
+    /// A list of application traits such as app version, device and OS version.
     public static var traits: [String: String] {
         [
             "app_version": Bundle.main.versionNumber,

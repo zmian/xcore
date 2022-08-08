@@ -8,10 +8,11 @@ import Foundation
 
 // MARK: - Appliable
 
+/// A protocol that enables types to be configured using closure based API.
 public protocol Appliable {}
 
 extension Appliable {
-    /// A convenience function to apply styles using block based api.
+    /// A convenience function to apply styles using closure based API.
     ///
     /// ```swift
     /// let label = UILabel()
@@ -52,7 +53,7 @@ extension Appliable {
 // MARK: - Appliable: Array
 
 extension Array where Element: Appliable {
-    /// A convenience function to apply styles using block based api.
+    /// A convenience function to apply styles using closure based API.
     ///
     /// ```swift
     /// let label = UILabel()
@@ -82,10 +83,11 @@ extension Array where Element: Appliable {
 
 // MARK: - MutableAppliable
 
+/// A protocol that enables types to be configured using closure based API.
 public protocol MutableAppliable {}
 
 extension MutableAppliable {
-    /// A convenience function to apply styles using block based api.
+    /// A convenience function to apply styles using closure based API.
     ///
     /// - Parameter configure: The configuration block to apply.
     @discardableResult
@@ -95,7 +97,7 @@ extension MutableAppliable {
         return object
     }
 
-    /// A convenience function to apply styles using block based api.
+    /// A convenience function to apply styles using closure based API.
     ///
     /// - Parameter configure: The configuration block to apply.
     public mutating func apply(_ configure: (inout Self) throws -> Void) rethrows {
@@ -108,7 +110,7 @@ extension MutableAppliable {
 // MARK: - MutableAppliable: Array
 
 extension Array where Element: MutableAppliable {
-    /// A convenience function to apply styles using block based api.
+    /// A convenience function to apply styles using closure based API.
     ///
     /// ```swift
     /// let label = UILabel()
@@ -135,7 +137,7 @@ extension Array where Element: MutableAppliable {
         return self
     }
 
-    /// A convenience function to apply styles using block based api.
+    /// A convenience function to apply styles using closure based API.
     ///
     /// ```swift
     /// let label = UILabel()

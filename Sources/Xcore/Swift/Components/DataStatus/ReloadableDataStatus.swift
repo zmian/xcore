@@ -153,7 +153,7 @@ extension ReloadableDataStatus where Value == Xcore.Empty {
 // MARK: - isFailureOrEmpty
 
 extension ReloadableDataStatus where Value: Collection {
-    /// A boolean property indicating whether the status is loading, failure or
+    /// A Boolean property indicating whether the status is loading, failure or
     /// value collection is empty.
     public var isLoadingFailureOrEmpty: Bool {
         switch self {
@@ -168,7 +168,7 @@ extension ReloadableDataStatus where Value: Collection {
 }
 
 extension ReloadableDataStatus {
-    /// A boolean property indicating whether the status is failure.
+    /// A Boolean property indicating whether the status is failure.
     public var isFailureOrEmpty: Bool {
         isFailure
     }

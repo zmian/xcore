@@ -42,8 +42,8 @@ extension View {
     /// ```
     ///
     /// - Parameters:
-    ///   - isPresented: A binding to a Boolean value that determines whether to
-    ///     present the popup that you create in the modifier's `content` closure.
+    ///   - isPresented: A binding to a Boolean value indicating whether to present
+    ///     the popup that you create in the modifier's `content` closure.
     ///   - style: The style of the popup.
     ///   - dismissMethods: An option set specifying the dismissal methods for the
     ///     popup.
@@ -193,7 +193,7 @@ private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent:
 
     @State private var workItem: DispatchWorkItem?
 
-    /// A Boolean value that indicates whether the popup associated with this
+    /// A Boolean value indicating whether the popup associated with this
     /// environment is currently being presented.
     @Binding private var isPresented: Bool
 

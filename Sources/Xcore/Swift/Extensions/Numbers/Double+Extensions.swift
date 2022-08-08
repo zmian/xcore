@@ -68,8 +68,8 @@ extension Double {
         self - integerPart
     }
 
-    /// A boolean value indicating whether the fractional part of the floating point
-    /// is `0`.
+    /// A Boolean property indicating whether the fractional part of the floating
+    /// point is `0`.
     ///
     /// ```swift
     /// print(120.30.isFractionalPartZero)

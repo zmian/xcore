@@ -250,7 +250,7 @@ extension URL {
 // MARK: - Matches
 
 extension URL {
-    /// A boolean property indicating whether the url's host matches given domain.
+    /// A Boolean property indicating whether the url's host matches given domain.
     ///
     /// **Usage**
     ///

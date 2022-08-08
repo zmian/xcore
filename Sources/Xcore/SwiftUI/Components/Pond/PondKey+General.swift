@@ -9,7 +9,7 @@ import Foundation
 // MARK: - Keys: User Defaults
 
 extension PondKey {
-    /// A boolean property indicating whether the app is first launched since clean
+    /// A Boolean property indicating whether the app is first launched since clean
     /// install.
     fileprivate static var isFirstLaunch: Self {
         .init(id: #function, storage: .userDefaults, duration: .permanent)
@@ -24,7 +24,7 @@ extension PondKey {
 // MARK: - Pond: User Defaults
 
 extension Pond {
-    /// A boolean property indicating whether the app is first launched since clean
+    /// A Boolean property indicating whether the app is first launched since clean
     /// install.
     public var isFirstLaunch: Bool {
         get {
