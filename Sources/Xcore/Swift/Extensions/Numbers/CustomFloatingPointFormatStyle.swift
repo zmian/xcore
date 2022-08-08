@@ -146,56 +146,18 @@ extension CustomFloatingPointFormatStyle {
             return value >= 0 ? minimumBound : -minimumBound
         }
 
-        var numberFormattedString: String {
-            // TODO: Fix
-//            FormatStyle API and formatter differences:
-              // with FormatStyle
-//            XCTAssertEqual(Decimal(5.04198).formatted(.asNumber), "5.041979999999998976")
-              // with formatter
-//            XCTAssertEqual(Decimal(5.04198).formatted(.asNumber), "5.04198")
-//
-//            if #available(iOS 15.0, *) {
-//                if let number = valueToUse as? Decimal {
-//                    return number.formatted(
-//                        .number
-//                            .precision(.fractionLength(fractionLength))
-//                            .sign(strategy: .never)
-//                            .locale(locale)
-//                            .rounded(rule: .toNearestOrAwayFromZero)
-//                    )
-//                }
-//            }
-
-            numberFormatter.locale = locale
-            numberFormatter.fractionLength = fractionLength
-            return numberFormatter.string(from: valueToUse) ?? ""
-        }
-
-        var percentFormattedString: String {
-            // TODO: See the differences before uncommenting.
-//            if #available(iOS 15.0, *) {
-//                if let number = valueToUse as? Decimal {
-//                    return number.formatted(
-//                        .percent
-//                            .precision(.fractionLength(fractionLength))
-//                            .sign(strategy: .never)
-//                            .locale(locale)
-//                            .rounded(rule: .toNearestOrAwayFromZero)
-//                    )
-//                }
-//            }
-
-            percentFormatter.locale = locale
-            percentFormatter.fractionLength = fractionLength
-            return percentFormatter.string(from: valueToUse) ?? ""
-        }
-
         var formattedString: String = {
-            switch type {
-                case .number:
-                    return numberFormattedString
-                case .percent:
-                    return percentFormattedString
+            numberFormatter.synchronized {
+                switch type {
+                    case .number:
+                        numberFormatter.numberStyle = .decimal
+                    case .percent:
+                        numberFormatter.numberStyle = .percent
+                }
+
+                numberFormatter.locale = locale
+                numberFormatter.fractionLength = fractionLength
+                return numberFormatter.string(from: valueToUse) ?? ""
             }
         }()
 
@@ -441,13 +403,6 @@ extension DoubleOrDecimalProtocol {
 }
 
 // MARK: - Helpers
-
-private let percentFormatter = NumberFormatter().apply {
-    $0.numberStyle = .percent
-    $0.roundingMode = .halfUp
-    $0.positivePrefix = ""
-    $0.negativePrefix = ""
-}
 
 private let numberFormatter = NumberFormatter().apply {
     $0.numberStyle = .decimal

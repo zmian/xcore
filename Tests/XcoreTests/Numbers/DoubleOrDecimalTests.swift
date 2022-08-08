@@ -72,6 +72,11 @@ extension DoubleOrDecimalTests {
         XCTAssertEqual(Double(-0.0000758574812982132645558836229533068).formatted(.asPercent), "−0.0076%")
     }
 
+    func testDouble_locale() {
+        XCTAssertEqual(Double(290900.05588).formatted(.asNumber), "290,900.05588")
+        XCTAssertEqual(Double(290900.05588).formatted(.asNumber.locale(.fr)), "290 900,05588")
+    }
+
     func testDouble_asNumber() {
         // .asNumber.trimFractionalPartIfZero(true)
         XCTAssertEqual(Double(1).formatted(.asNumber), "1")
@@ -240,6 +245,11 @@ extension DoubleOrDecimalTests {
         XCTAssertEqual(Decimal(0.008379).formatted(.asPercent(scale: .zeroToHundred)), "0.0084%")
         XCTAssertEqual(Decimal(0.008379).formatted(.asPercent(scale: .zeroToHundred).fractionLength(2)), "0.01%")
         XCTAssertEqual(Decimal(string: "-0.0000758574812982132645558836229533068")!.formatted(.asPercent), "−0.0076%")
+    }
+
+    func testDecimal_locale() {
+        XCTAssertEqual(Decimal(string: "290900.05588")!.formatted(.asNumber), "290,900.05588")
+        XCTAssertEqual(Decimal(string: "290900.05588")!.formatted(.asNumber.locale(.fr)), "290 900,05588")
     }
 
     func testDecimal_asNumber() {
