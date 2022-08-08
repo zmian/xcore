@@ -110,7 +110,7 @@ extension Decimal {
         threshold: Decimal? = nil,
         thresholdAbs: Bool = true,
         fractionLength: ClosedRange<Int> = .defaultFractionDigits,
-        locale: Locale = .current
+        locale: Locale = .defaultNumbers
     ) -> String {
         Self.abbreviatedNumberFormatter.string(
             from: self,
@@ -150,7 +150,7 @@ extension Double {
         threshold: Double? = nil,
         thresholdAbs: Bool = true,
         fractionLength: ClosedRange<Int> = .defaultFractionDigits,
-        locale: Locale = .current
+        locale: Locale = .defaultNumbers
     ) -> String {
         Self.abbreviatedNumberFormatter.string(
             from: self,
