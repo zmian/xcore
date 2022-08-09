@@ -15,7 +15,7 @@ extension CustomFloatingPointFormatStyle {
         case number
 
         /// Formats as a number to the compact representation.
-        case abbreviation(threshold: Value?)
+        case abbreviated(threshold: Value?)
 
         /// Formats as percentage using the given scale.
         case percent(scale: PercentageScale)
@@ -178,7 +178,7 @@ extension CustomFloatingPointFormatStyle {
     /// for `percent` numbers.
     private func normalize(_ value: Value) -> Value {
         switch type {
-            case .number, .abbreviation:
+            case .number, .abbreviated:
                 return value
             case .percent(scale: .zeroToOne):
                 return value
@@ -197,7 +197,7 @@ extension CustomFloatingPointFormatStyle {
         }
 
         switch type {
-            case .number, .abbreviation:
+            case .number, .abbreviated:
                 return value.calculatePrecision()
             case .percent:
                 // Ensure when using `calculatePrecision` we are actually using the final value.
@@ -311,8 +311,8 @@ extension CustomFloatingPointFormatStyle where Value == Double {
     /// 1340    // → 1.3K
     /// 132456  // → 132.5K
     /// ```
-    public static var asAbbreviation: Self {
-        .asAbbreviation(threshold: nil)
+    public static var asAbbreviated: Self {
+        .asAbbreviated(threshold: nil)
     }
 
     /// Returns a format style suitable for compact representation of numbers.
@@ -331,8 +331,8 @@ extension CustomFloatingPointFormatStyle where Value == Double {
     ///
     /// - Parameter threshold: An optional property to only abbreviate if `value` is
     ///   greater then this value.
-    public static func asAbbreviation(threshold: Value?) -> Self {
-        .init(type: .abbreviation(threshold: threshold))
+    public static func asAbbreviated(threshold: Value?) -> Self {
+        .init(type: .abbreviated(threshold: threshold))
             .fractionLength(.defaultFractionDigits)
             .trimFractionalPartIfZero(false)
     }
@@ -440,8 +440,8 @@ extension CustomFloatingPointFormatStyle where Value == Decimal {
     /// 1340    // → 1.3K
     /// 132456  // → 132.5K
     /// ```
-    public static var asAbbreviation: Self {
-        .asAbbreviation(threshold: nil)
+    public static var asAbbreviated: Self {
+        .asAbbreviated(threshold: nil)
     }
 
     /// Returns a format style suitable for compact representation of numbers.
@@ -460,8 +460,8 @@ extension CustomFloatingPointFormatStyle where Value == Decimal {
     ///
     /// - Parameter threshold: An optional property to only abbreviate if `value` is
     ///   greater then this value.
-    public static func asAbbreviation(threshold: Value?) -> Self {
-        .init(type: .abbreviation(threshold: threshold))
+    public static func asAbbreviated(threshold: Value?) -> Self {
+        .init(type: .abbreviated(threshold: threshold))
             .fractionLength(.defaultFractionDigits)
             .trimFractionalPartIfZero(false)
     }
@@ -504,7 +504,7 @@ private final class FormatStyleFormatter {
                 case .percent:
                     formatter.numberStyle = .percent
                     return formatter.string(from: value) ?? ""
-                case let .abbreviation(threshold):
+                case let .abbreviated(threshold):
                     let abbreviation = AbbreviatedNumber().string(
                         from: value,
                         threshold: threshold

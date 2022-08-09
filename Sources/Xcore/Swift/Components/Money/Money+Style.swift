@@ -122,8 +122,8 @@ extension Money.Style {
     /// ```
     ///
     /// - Returns: Abbreviated version of `self`.
-    public static var abbreviate: Self {
-        abbreviate(threshold: 0)
+    public static var abbreviated: Self {
+        abbreviated(threshold: 0)
     }
 
     /// Abbreviates the money components to the compact representation.
@@ -145,7 +145,7 @@ extension Money.Style {
     ///     decimal separator.
     ///   - fallback: The formatting style to use when threshold isn't reached.
     /// - Returns: Abbreviated version of `self`.
-    public static func abbreviate(
+    public static func abbreviated(
         threshold: Decimal,
         fractionLength: ClosedRange<Int> = .defaultFractionDigits,
         fallback: Self = .default
@@ -156,14 +156,14 @@ extension Money.Style {
         }
 
         return .init(
-            id: .init(rawValue: "abbreviation\(threshold)\(fallback.id)"),
+            id: .init(rawValue: "abbreviated\(threshold)\(fallback.id)"),
             format: {
                 guard canAbbreviate(amount: $0.amount) else {
                     return fallback.format($0)
                 }
 
                 let amount = $0.amount.formatted(
-                    .asAbbreviation(threshold: threshold)
+                    .asAbbreviated(threshold: threshold)
                     .fractionLength(fractionLength)
                     .locale($0.locale)
                 )

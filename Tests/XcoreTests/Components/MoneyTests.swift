@@ -150,96 +150,96 @@ final class MoneyTests: TestCase {
         XCTAssertEqual(String(describing: amount4), "$1,234.57")
     }
 
-    func testStyle_abbreviate_fallback_default() {
+    func testStyle_abbreviated_fallback_default() {
         let amount1 = Money(120.30)
-            .style(.abbreviate)
+            .style(.abbreviated)
 
         XCTAssertEqual(String(describing: amount1), "$120.30")
 
         let amount2 = Money(987)
-            .style(.abbreviate)
+            .style(.abbreviated)
 
         XCTAssertEqual(String(describing: amount2), "$987.00")
 
         let amount3 = Money(1200)
-            .style(.abbreviate)
+            .style(.abbreviated)
 
         XCTAssertEqual(String(describing: amount3), "$1.2K")
 
         let amount4 = Money(12000)
-            .style(.abbreviate)
+            .style(.abbreviated)
 
         XCTAssertEqual(String(describing: amount4), "$12K")
 
         let amount5 = Money(120_000)
-            .style(.abbreviate)
+            .style(.abbreviated)
 
         XCTAssertEqual(String(describing: amount5), "$120K")
 
         let amount6 = Money(1_200_000)
-            .style(.abbreviate)
+            .style(.abbreviated)
 
         XCTAssertEqual(String(describing: amount6), "$1.2M")
 
         let amount7 = Money(1340)
-            .style(.abbreviate)
+            .style(.abbreviated)
 
         XCTAssertEqual(String(describing: amount7), "$1.34K")
 
         let amount8 = Money(132_456)
-            .style(.abbreviate)
+            .style(.abbreviated)
 
         XCTAssertEqual(String(describing: amount8), "$132.46K")
 
         let amount9 = Money(1200)
-            .style(.abbreviate(threshold: 1_201))
+            .style(.abbreviated(threshold: 1_201))
 
         XCTAssertEqual(String(describing: amount9), "$1,200.00")
 
         let amount10 = Money(1200)
-            .style(.abbreviate(threshold: 1_200))
+            .style(.abbreviated(threshold: 1_200))
 
         XCTAssertEqual(String(describing: amount10), "$1.2K")
     }
 
-    func testStyle_abbreviate_fallback_removeMinorUnit() {
+    func testStyle_abbreviated_fallback_removeMinorUnit() {
         let amount1 = Money(120.30)
-            .style(.abbreviate(threshold: 0, fallback: .removeMinorUnit))
+            .style(.abbreviated(threshold: 0, fallback: .removeMinorUnit))
 
         XCTAssertEqual(String(describing: amount1), "$120")
 
         let amount2 = Money(987)
-            .style(.abbreviate(threshold: 0, fallback: .removeMinorUnit))
+            .style(.abbreviated(threshold: 0, fallback: .removeMinorUnit))
 
         XCTAssertEqual(String(describing: amount2), "$987")
 
         let amount3 = Money(1200)
-            .style(.abbreviate(threshold: 0, fallback: .removeMinorUnit))
+            .style(.abbreviated(threshold: 0, fallback: .removeMinorUnit))
 
         XCTAssertEqual(String(describing: amount3), "$1.2K")
 
         let amount4 = Money(12000)
-            .style(.abbreviate(threshold: 0, fallback: .removeMinorUnit))
+            .style(.abbreviated(threshold: 0, fallback: .removeMinorUnit))
 
         XCTAssertEqual(String(describing: amount4), "$12K")
 
         let amount5 = Money(120_000)
-            .style(.abbreviate(threshold: 0, fallback: .removeMinorUnit))
+            .style(.abbreviated(threshold: 0, fallback: .removeMinorUnit))
 
         XCTAssertEqual(String(describing: amount5), "$120K")
 
         let amount6 = Money(1_200_000)
-            .style(.abbreviate(threshold: 0, fallback: .removeMinorUnit))
+            .style(.abbreviated(threshold: 0, fallback: .removeMinorUnit))
 
         XCTAssertEqual(String(describing: amount6), "$1.2M")
 
         let amount7 = Money(1340)
-            .style(.abbreviate(threshold: 0, fallback: .removeMinorUnit))
+            .style(.abbreviated(threshold: 0, fallback: .removeMinorUnit))
 
         XCTAssertEqual(String(describing: amount7), "$1.34K")
 
         let amount8 = Money(132_456)
-            .style(.abbreviate(threshold: 0, fallback: .removeMinorUnit))
+            .style(.abbreviated(threshold: 0, fallback: .removeMinorUnit))
 
         XCTAssertEqual(String(describing: amount8), "$132.46K")
     }
