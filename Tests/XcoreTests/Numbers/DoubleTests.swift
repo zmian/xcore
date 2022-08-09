@@ -106,7 +106,7 @@ final class DoubleTests: TestCase {
         XCTAssertEqual(try XCTUnwrap(Double("1200.0000000012")).isFractionalPartZero, false)
     }
 
-    func testAbbreviate() {
+    func testAbbreviated() {
         let values1: [(Double, String)] = [
             (0.000001466, "0.000001466"),
             (0.000001566, "0.000001566"),
@@ -128,7 +128,7 @@ final class DoubleTests: TestCase {
         ]
 
         for (input, output) in values1 {
-            XCTAssertEqual(output, input.formatted(.asAbbreviation))
+            XCTAssertEqual(output, input.formatted(.asAbbreviated))
         }
 
         let values2: [(Double, String)] = [
@@ -196,11 +196,11 @@ final class DoubleTests: TestCase {
         ]
 
         for (input, output) in values2 {
-            XCTAssertEqual(output, input.formatted(.asAbbreviation.fractionLength(0...1)))
+            XCTAssertEqual(output, input.formatted(.asAbbreviated.fractionLength(0...1)))
         }
     }
 
-    func testAbbreviateThreshold() {
+    func testAbbreviatedThreshold() {
         let values: [(Double, String)] = [
             (315.36, "315.36"),
             (1_000_000, "1,000,000"),
@@ -213,11 +213,11 @@ final class DoubleTests: TestCase {
         ]
 
         for (input, output) in values {
-            XCTAssertEqual(output, input.formatted(.asAbbreviation(threshold: 2_000_000).fractionLength(0...1)))
+            XCTAssertEqual(output, input.formatted(.asAbbreviated(threshold: 2_000_000).fractionLength(0...1)))
         }
     }
 
-    func testAbbreviateLocale() {
+    func testAbbreviatedLocale() {
         // Tr
         let valuesTr: [(Double, String)] = [
             (105_000_000, "105M"),
@@ -228,7 +228,7 @@ final class DoubleTests: TestCase {
         ]
 
         for (input, output) in valuesTr {
-            XCTAssertEqual(output, input.formatted(.asAbbreviation.locale(.tr)))
+            XCTAssertEqual(output, input.formatted(.asAbbreviated.locale(.tr)))
         }
 
         // Fr
@@ -241,7 +241,7 @@ final class DoubleTests: TestCase {
         ]
 
         for (input, output) in valuesFr {
-            XCTAssertEqual(output, input.formatted(.asAbbreviation.locale(.fr).fractionLength(0...1)))
+            XCTAssertEqual(output, input.formatted(.asAbbreviated.locale(.fr).fractionLength(0...1)))
         }
     }
 }
