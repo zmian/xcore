@@ -505,48 +505,41 @@ private final class FormatStyleFormatter {
                     formatter.numberStyle = .percent
                     return formatter.string(from: value) ?? ""
                 case let .abbreviated(threshold):
-                    let abbreviation = AbbreviatedNumber().string(
-                        from: value,
-                        threshold: threshold
-                    )
+                    typealias Abbreviation = (suffix: String, threshold: Value, divisor: Value)
+
+                    let abbreviations: [Abbreviation] = [
+                        ("", 0, 1),
+                        ("K", 1000, 1000),
+                        ("M", 499_000, 1_000_000),
+                        ("M", 1_000_000, 1_000_000),
+                        ("B", 1_000_000_000, 1_000_000_000),
+                        ("T", 1_000_000_000_000, 1_000_000_000_000)
+                    ]
+
+                    let abbreviation: Abbreviation = {
+                        // Adopted from: http://stackoverflow.com/a/35504720
+                        let value = abs(value)
+
+                        if let threshold = threshold, threshold > value {
+                            return abbreviations[0]
+                        }
+
+                        var prevAbbreviation = abbreviations[0]
+
+                        for tmpAbbreviation in abbreviations {
+                            if value < tmpAbbreviation.threshold {
+                                break
+                            }
+                            prevAbbreviation = tmpAbbreviation
+                        }
+
+                        return prevAbbreviation
+                    }()
 
                     let abbreviatedValue = value / abbreviation.divisor
                     formatter.fractionLength = value == abbreviatedValue ? .maxFractionDigits : fractionLength
                     return formatter.string(from: abbreviatedValue).map { $0 + abbreviation.suffix } ?? ""
             }
-        }
-    }
-
-    private struct AbbreviatedNumber<Value: DoubleOrDecimalProtocol> {
-        typealias Abbreviation = (suffix: String, threshold: Value, divisor: Value)
-
-        private let abbreviations: [Abbreviation] = [
-            ("", 0, 1),
-            ("K", 1000, 1000),
-            ("M", 499_000, 1_000_000),
-            ("M", 1_000_000, 1_000_000),
-            ("B", 1_000_000_000, 1_000_000_000),
-            ("T", 1_000_000_000_000, 1_000_000_000_000)
-        ]
-
-        func string(from value: Value, threshold: Value?) -> Abbreviation {
-            // Adopted from: http://stackoverflow.com/a/35504720
-            let value = abs(value)
-
-            if let threshold = threshold, threshold > value {
-                return abbreviations[0]
-            }
-
-            var prevAbbreviation = abbreviations[0]
-
-            for tmpAbbreviation in abbreviations {
-                if value < tmpAbbreviation.threshold {
-                    break
-                }
-                prevAbbreviation = tmpAbbreviation
-            }
-
-            return prevAbbreviation
         }
     }
 }
