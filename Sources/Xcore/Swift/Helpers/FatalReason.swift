@@ -44,14 +44,6 @@ extension FatalReason {
     static func unknownCaseDetected<T: RawRepresentable>(_ case: T) -> Self {
         .init("Unknown case detected: \(`case`) - (\(`case`.rawValue))")
     }
-
-    static func dequeueFailed(for name: String, identifier: String) -> Self {
-        .init("Failed to dequeue \(name) with identifier: \(identifier)")
-    }
-
-    static func dequeueFailed(for name: String, kind: String, indexPath: IndexPath) -> Self {
-        .init("Failed to dequeue \(name) for kind: \(kind) at indexPath(\(indexPath.section), \(indexPath.item))")
-    }
 }
 
 /// Unconditionally prints a given message and stops execution.
