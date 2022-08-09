@@ -360,6 +360,16 @@ final class MoneyTests: TestCase {
 
         XCTAssertEqual(amount5, "$0.00 per month")
     }
+
+    func testEdgeCaseNumbers() {
+        XCTAssertEqual(Money(Decimal(string: "20.05588"))?.formatted(), "$20.06")
+        XCTAssertEqual(Money(Decimal(string: "5.04198"))?.formatted(), "$5.04")
+        XCTAssertEqual(Money(5.04198).formatted(), "$5.04")
+
+        XCTAssertEqual(Money(Decimal(string: "20.05588"))?.fractionLength(.maxFractionDigits).formatted(), "$20.05588")
+        XCTAssertEqual(Money(Decimal(string: "5.04198"))?.fractionLength(.maxFractionDigits).formatted(), "$5.04198")
+        XCTAssertEqual(Money(5.04198).fractionLength(.maxFractionDigits).formatted(), "$5.041979999999998976")
+    }
 }
 
 // MARK: - Locale
