@@ -141,19 +141,18 @@ extension Money.Style {
     /// - Parameters:
     ///   - threshold: A property to only abbreviate if `amount` is greater then
     ///     this value.
-    ///   - thresholdAbs: A Boolean value indicating whether threshold is of
-    ///     absolute value (e.g., `"abs(value)"`).
+    ///   - fractionLength: The minimum and maximum number of digits after the
+    ///     decimal separator.
     ///   - fallback: The formatting style to use when threshold isn't reached.
     /// - Returns: Abbreviated version of `self`.
     public static func abbreviate(
         threshold: Decimal,
-        thresholdAbs: Bool = true,
         fractionLength: ClosedRange<Int> = .defaultFractionDigits,
         fallback: Self = .default
     ) -> Self {
         func canAbbreviate(amount: Decimal) -> Bool {
-            let compareAmount = thresholdAbs ? abs(amount) : amount
-            return compareAmount >= 1000 && compareAmount >= threshold
+            let amount = abs(amount)
+            return amount >= 1000 && amount >= threshold
         }
 
         return .init(
@@ -163,11 +162,10 @@ extension Money.Style {
                     return fallback.format($0)
                 }
 
-                let amount = $0.amount.abbreviate(
-                    threshold: threshold,
-                    thresholdAbs: thresholdAbs,
-                    fractionLength: fractionLength,
-                    locale: $0.locale
+                let amount = $0.amount.formatted(
+                    .asAbbreviation(threshold: threshold)
+                    .fractionLength(fractionLength)
+                    .locale($0.locale)
                 )
 
                 return $0.string(from: amount)

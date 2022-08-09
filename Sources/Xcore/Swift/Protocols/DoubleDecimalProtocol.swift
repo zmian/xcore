@@ -8,7 +8,7 @@ import Foundation
 
 /// A type that represents either a `Double` or a `Decimal` floating-point value
 /// type.
-public protocol DoubleOrDecimalProtocol: SignedNumeric, Comparable, Hashable, Codable {
+public protocol DoubleOrDecimalProtocol: SignedNumeric, Comparable, Hashable, Codable, ExpressibleByFloatLiteral {
     var nsNumber: NSNumber { get }
 
     /// A Boolean property indicating whether the fractional part of the decimal is
