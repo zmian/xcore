@@ -7,7 +7,7 @@
 import Foundation
 
 /// Returns a modified closure that emits the latest non-nil value
-/// if the original closure would return nil
+/// if the original closure would return nil.
 ///
 /// - SeeAlso: https://github.com/Thomvis/Construct/blob/main/Construct/Foundation/Memoize.swift
 public func replayNonNil<A, B>(_ f: @escaping (A) -> B?) -> (A) -> B? {
