@@ -8,7 +8,7 @@ import Foundation
 
 extension Locale {
     /// The default locale used in ``CustomFloatingPointFormatStyle``.
-    public static var defaultNumbers: Self = .current
+    public static var numbers: Self = .current
 }
 
 extension Locale {
@@ -51,14 +51,17 @@ extension Locale {
     /// Returns `es` (Spanish) locale.
     public static let es = Locale(identifier: "es")
 
+    /// Returns `ar` (Arabic) locale.
+    public static let ar = Locale(identifier: "ar")
+
+    /// Returns `tr` (Turkish) locale.
+    public static let tr = Locale(identifier: "tr")
+
     /// Returns `de` (German) locale.
     public static let de = Locale(identifier: "de")
 
     /// Returns `de_DE` (German, Germany) locale.
     public static let deDE = Locale(identifier: "de_DE")
-
-    /// Returns `tr` (Turkish) locale.
-    public static let tr = Locale(identifier: "tr")
 
     /// Returns `pt_PT` (Portuguese, Portugal) locale.
     public static let ptPT = Locale(identifier: "pt_PT")

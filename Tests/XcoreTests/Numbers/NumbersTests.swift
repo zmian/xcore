@@ -86,16 +86,16 @@ final class NumbersTests: TestCase {
         ]
 
         for (input, output) in values1 {
-            XCTAssertEqual(output, input.abbreviate())
+            XCTAssertEqual(output, input.formatted(.asAbbreviation))
         }
 
         let values2: [(Double, String)] = [
             (598, "598"),
             (987, "987"),
-            (-999, "-999"),
+            (-999, "−999"),
             // K
             (1000, "1K"),
-            (-1284, "-1.3K"),
+            (-1284, "−1.3K"),
             (1200, "1.2K"),
             (1340, "1.3K"),
             (9940, "9.9K"),
@@ -130,31 +130,31 @@ final class NumbersTests: TestCase {
             (999_000_000_000_000, "999T"),
             // Other
             (0, "0"),
-            (-10, "-10"),
+            (-10, "−10"),
             (500, "500"),
             (999, "999"),
             (1000, "1K"),
             (1234, "1.2K"),
             (9000, "9K"),
             (10_000, "10K"),
-            (-10_000, "-10K"),
+            (-10_000, "−10K"),
             (15_235, "15.2K"),
-            (-15_235, "-15.2K"),
+            (-15_235, "−15.2K"),
             (99_500, "99.5K"),
-            (-99_500, "-99.5K"),
+            (-99_500, "−99.5K"),
             (100_500, "100.5K"),
-            (-100_500, "-100.5K"),
+            (-100_500, "−100.5K"),
             (105_000_000, "105M"),
-            (-105_000_000, "-105M"),
+            (-105_000_000, "−105M"),
             (140_800_200_000, "140.8B"),
             (170_400_800_000_000, "170.4T"),
-            (-170_400_800_000_000, "-170.4T"),
-            (-9_223_372_036_854_775_808, "-9,223,372T"),
+            (-170_400_800_000_000, "−170.4T"),
+            (-9_223_372_036_854_775_808, "−9,223,372T"),
             (Double(Int.max), "9,223,372T")
         ]
 
         for (input, output) in values2 {
-            XCTAssertEqual(output, input.abbreviate(fractionLength: 0...1))
+            XCTAssertEqual(output, input.formatted(.asAbbreviation.fractionLength(0...1)))
         }
     }
 
@@ -166,12 +166,12 @@ final class NumbersTests: TestCase {
             (105_000_000, "105M"),
             (140_800_200_000, "140.8B"),
             (170_400_800_000_000, "170.4T"),
-            (-170_400_800_000_000, "-170.4T"),
-            (-9_223_372_036_854_775_808, "-9,223,372T")
+            (-170_400_800_000_000, "−170.4T"),
+            (-9_223_372_036_854_775_808, "−9,223,372T")
         ]
 
         for (input, output) in values {
-            XCTAssertEqual(output, input.abbreviate(threshold: 2_000_000, fractionLength: 0...1))
+            XCTAssertEqual(output, input.formatted(.asAbbreviation(threshold: 2_000_000).fractionLength(0...1)))
         }
     }
 
@@ -181,12 +181,12 @@ final class NumbersTests: TestCase {
             (105_000_000, "105M"),
             (140_800_200_000, "140,8B"),
             (170_400_800_000_000, "170,4T"),
-            (-170_400_800_000_000, "-170,4T"),
-            (-9_223_372_036_854_775_808, "-9.223.372,04T")
+            (-170_400_800_000_000, "−170,4T"),
+            (-9_223_372_036_854_775_808, "−9.223.372,04T")
         ]
 
         for (input, output) in valuesTr {
-            XCTAssertEqual(output, input.abbreviate(locale: .tr))
+            XCTAssertEqual(output, input.formatted(.asAbbreviation.locale(.tr)))
         }
 
         // Fr
@@ -194,12 +194,12 @@ final class NumbersTests: TestCase {
             (105_000_000, "105M"),
             (140_800_200_000, "140,8B"),
             (170_400_800_000_000, "170,4T"),
-            (-170_400_800_000_000, "-170,4T"),
-            (-9_223_372_036_854_775_808, "-9 223 372T")
+            (-170_400_800_000_000, "−170,4T"),
+            (-9_223_372_036_854_775_808, "−9 223 372T")
         ]
 
         for (input, output) in valuesFr {
-            XCTAssertEqual(output, input.abbreviate(fractionLength: 0...1, locale: .fr))
+            XCTAssertEqual(output, input.formatted(.asAbbreviation.locale(.fr).fractionLength(0...1)))
         }
     }
 }

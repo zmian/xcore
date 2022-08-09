@@ -10,9 +10,12 @@ import Foundation
 
 extension CustomFloatingPointFormatStyle {
     /// An enumeration representing the type of formatting.
-    public enum Kind: Codable, Hashable, Sendable {
+    public enum Kind: Codable, Hashable {
         /// Formats as a number.
         case number
+
+        /// Formats as a number to the compact representation.
+        case abbreviation(threshold: Value?)
 
         /// Formats as percentage using the given scale.
         case percent(scale: PercentageScale)
@@ -34,7 +37,7 @@ extension CustomFloatingPointFormatStyle {
 /// double and decimal instance.
 public struct CustomFloatingPointFormatStyle<Value: DoubleOrDecimalProtocol>: Codable, Hashable, MutableAppliable {
     public let type: Kind
-    public var locale: Locale = .defaultNumbers
+    public var locale: Locale = .numbers
     public var sign: SignedNumericSign = .default
     public var fractionLength: ClosedRange<Int>?
     public var trimFractionalPartIfZero = true
@@ -140,20 +143,12 @@ extension CustomFloatingPointFormatStyle {
             return value >= 0 ? minimumBound : -minimumBound
         }()
 
-        var formattedString: String = {
-            numberFormatter.synchronized {
-                switch type {
-                    case .number:
-                        numberFormatter.numberStyle = .decimal
-                    case .percent:
-                        numberFormatter.numberStyle = .percent
-                }
-
-                numberFormatter.locale = locale
-                numberFormatter.fractionLength = fractionLength
-                return numberFormatter.string(from: valueToUse) ?? ""
-            }
-        }()
+        var formattedString = formatter.string(
+            from: valueToUse,
+            type: type,
+            fractionLength: fractionLength,
+            locale: locale
+        )
 
         // 0.02 → "2.00%" → "2%"
         if trimFractionalPartIfZero {
@@ -183,7 +178,7 @@ extension CustomFloatingPointFormatStyle {
     /// for `percent` numbers.
     private func normalize(_ value: Value) -> Value {
         switch type {
-            case .number:
+            case .number, .abbreviation:
                 return value
             case .percent(scale: .zeroToOne):
                 return value
@@ -202,7 +197,7 @@ extension CustomFloatingPointFormatStyle {
         }
 
         switch type {
-            case .number:
+            case .number, .abbreviation:
                 return value.calculatePrecision()
             case .percent:
                 // Ensure when using `calculatePrecision` we are actually using the final value.
@@ -302,6 +297,45 @@ extension CustomFloatingPointFormatStyle where Value == Double {
     public static func asPercent(scale: Self.Kind.PercentageScale) -> Self {
         .init(type: .percent(scale: scale))
     }
+
+    /// Returns a format style suitable for compact representation of numbers.
+    ///
+    /// Abbreviates `value` to the compact representation:
+    ///
+    /// ```swift
+    /// 987     // → 987
+    /// 1200    // → 1.2K
+    /// 12000   // → 12K
+    /// 120000  // → 120K
+    /// 1200000 // → 1.2M
+    /// 1340    // → 1.3K
+    /// 132456  // → 132.5K
+    /// ```
+    public static var asAbbreviation: Self {
+        .asAbbreviation(threshold: nil)
+    }
+
+    /// Returns a format style suitable for compact representation of numbers.
+    ///
+    /// Abbreviates `value` to the compact representation:
+    ///
+    /// ```swift
+    /// 987     // → 987
+    /// 1200    // → 1.2K
+    /// 12000   // → 12K
+    /// 120000  // → 120K
+    /// 1200000 // → 1.2M
+    /// 1340    // → 1.3K
+    /// 132456  // → 132.5K
+    /// ```
+    ///
+    /// - Parameter threshold: An optional property to only abbreviate if `value` is
+    ///   greater then this value.
+    public static func asAbbreviation(threshold: Value?) -> Self {
+        .init(type: .abbreviation(threshold: threshold))
+            .fractionLength(.defaultFractionDigits)
+            .trimFractionalPartIfZero(false)
+    }
 }
 
 // MARK: - Decimal
@@ -392,6 +426,45 @@ extension CustomFloatingPointFormatStyle where Value == Decimal {
     public static func asPercent(scale: Self.Kind.PercentageScale) -> Self {
         .init(type: .percent(scale: scale))
     }
+
+    /// Returns a format style suitable for compact representation of numbers.
+    ///
+    /// Abbreviates `value` to the compact representation:
+    ///
+    /// ```swift
+    /// 987     // → 987
+    /// 1200    // → 1.2K
+    /// 12000   // → 12K
+    /// 120000  // → 120K
+    /// 1200000 // → 1.2M
+    /// 1340    // → 1.3K
+    /// 132456  // → 132.5K
+    /// ```
+    public static var asAbbreviation: Self {
+        .asAbbreviation(threshold: nil)
+    }
+
+    /// Returns a format style suitable for compact representation of numbers.
+    ///
+    /// Abbreviates `value` to the compact representation:
+    ///
+    /// ```swift
+    /// 987     // → 987
+    /// 1200    // → 1.2K
+    /// 12000   // → 12K
+    /// 120000  // → 120K
+    /// 1200000 // → 1.2M
+    /// 1340    // → 1.3K
+    /// 132456  // → 132.5K
+    /// ```
+    ///
+    /// - Parameter threshold: An optional property to only abbreviate if `value` is
+    ///   greater then this value.
+    public static func asAbbreviation(threshold: Value?) -> Self {
+        .init(type: .abbreviation(threshold: threshold))
+            .fractionLength(.defaultFractionDigits)
+            .trimFractionalPartIfZero(false)
+    }
 }
 
 extension DoubleOrDecimalProtocol {
@@ -404,9 +477,76 @@ extension DoubleOrDecimalProtocol {
 
 // MARK: - Helpers
 
-private let numberFormatter = NumberFormatter().apply {
-    $0.numberStyle = .decimal
-    $0.roundingMode = .halfUp
-    $0.positivePrefix = ""
-    $0.negativePrefix = ""
+private let formatter = FormatStyleFormatter()
+
+private final class FormatStyleFormatter {
+    private let formatter = NumberFormatter().apply {
+        $0.numberStyle = .decimal
+        $0.roundingMode = .halfUp
+        $0.positivePrefix = ""
+        $0.negativePrefix = ""
+    }
+
+    func string<Value>(
+        from value: Value,
+        type: CustomFloatingPointFormatStyle<Value>.Kind,
+        fractionLength: ClosedRange<Int>,
+        locale: Locale
+    ) -> String where Value: DoubleOrDecimalProtocol {
+        formatter.synchronized {
+            formatter.locale = locale
+            formatter.fractionLength = fractionLength
+            formatter.numberStyle = .decimal
+
+            switch type {
+                case .number:
+                    return formatter.string(from: value) ?? ""
+                case .percent:
+                    formatter.numberStyle = .percent
+                    return formatter.string(from: value) ?? ""
+                case let .abbreviation(threshold):
+                    let abbreviation = AbbreviatedNumber().string(
+                        from: value,
+                        threshold: threshold
+                    )
+
+                    let abbreviatedValue = value / abbreviation.divisor
+                    formatter.fractionLength = value == abbreviatedValue ? .maxFractionDigits : fractionLength
+                    return formatter.string(from: abbreviatedValue).map { $0 + abbreviation.suffix } ?? ""
+            }
+        }
+    }
+
+    private struct AbbreviatedNumber<Value: DoubleOrDecimalProtocol> {
+        typealias Abbreviation = (suffix: String, threshold: Value, divisor: Value)
+
+        private let abbreviations: [Abbreviation] = [
+            ("", 0, 1),
+            ("K", 1000, 1000),
+            ("M", 499_000, 1_000_000),
+            ("M", 1_000_000, 1_000_000),
+            ("B", 1_000_000_000, 1_000_000_000),
+            ("T", 1_000_000_000_000, 1_000_000_000_000)
+        ]
+
+        func string(from value: Value, threshold: Value?) -> Abbreviation {
+            // Adopted from: http://stackoverflow.com/a/35504720
+            let value = abs(value)
+
+            if let threshold = threshold, threshold > value {
+                return abbreviations[0]
+            }
+
+            var prevAbbreviation = abbreviations[0]
+
+            for tmpAbbreviation in abbreviations {
+                if value < tmpAbbreviation.threshold {
+                    break
+                }
+                prevAbbreviation = tmpAbbreviation
+            }
+
+            return prevAbbreviation
+        }
+    }
 }
