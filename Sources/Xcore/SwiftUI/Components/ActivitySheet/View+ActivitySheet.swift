@@ -59,6 +59,7 @@ extension View {
     ///   - onComplete: The closure to execute when user completes sharing the given
     ///     items.
     ///   - onDismiss: The closure to execute when dismissing the activity sheet.
+    @available(iOS, introduced: 14, deprecated: 16, message: "Use ShareLink directly.")
     public func activitySheet(
         isPresented: Binding<Bool>,
         items: [Any],

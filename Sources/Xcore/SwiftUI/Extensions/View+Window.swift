@@ -84,7 +84,7 @@ public struct WindowStyle: Hashable {
     /// The default value is `.normal`.
     public let level: UIWindow.Level
 
-    /// A Boolean value indicating whether to make the receiver the key window.
+    /// A Boolean property indicating whether to make the receiver the key window.
     ///
     /// The key window receives keyboard and other non-touch related events. Setting
     /// this property to `true` causes the previous key window to resign the key
