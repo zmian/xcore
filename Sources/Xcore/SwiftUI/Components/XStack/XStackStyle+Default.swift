@@ -74,10 +74,10 @@ struct DefaultXStackStyle: XStackStyle {
     }
 
     private var titleForegroundColor: Color? {
-        dim == .title ? Color(theme.textSecondaryColor) : nil
+        dim == .title ? theme.textSecondaryColor : nil
     }
 
     private var valueForegroundColor: Color? {
-        dim == .value ? Color(theme.textSecondaryColor) : nil
+        dim == .value ? theme.textSecondaryColor : nil
     }
 }

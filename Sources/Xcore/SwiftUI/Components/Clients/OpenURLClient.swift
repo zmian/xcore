@@ -89,7 +89,7 @@ extension OpenURLClient {
             // Attempt to open standard urls using in-app Safari.
             if [.http, .https].contains(url.schemeType) {
                 let vc = InAppSafariViewController(url: url).apply {
-                    $0.preferredControlTintColor = Theme.default.tintColor
+                    $0.preferredControlTintColor = Theme.tintColor.uiColor
                 }
 
                 // Present shows the Safari VC correctly in SwiftUI.

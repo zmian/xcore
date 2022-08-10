@@ -37,15 +37,17 @@ public struct CheckboxToggleStyle: ToggleStyle {
     }
 
     private func toggle(_ configuration: Self.Configuration) -> some View {
-        Image(system: configuration.isOn ? .checkmarkCircleFill : .circle)
-            .resizable()
-            .frame(24)
-            .foregroundColor(
-                configuration.isOn ? .accentColor : Color(Theme.separatorColor)
-            )
-            .onTapGesture {
-                configuration.isOn.toggle()
-            }
+        EnvironmentReader(\.theme) { theme in
+            Image(system: configuration.isOn ? .checkmarkCircleFill : .circle)
+                .resizable()
+                .frame(24)
+                .foregroundColor(
+                    configuration.isOn ? .accentColor : theme.separatorColor
+                )
+                .onTapGesture {
+                    configuration.isOn.toggle()
+                }
+        }
     }
 }
 

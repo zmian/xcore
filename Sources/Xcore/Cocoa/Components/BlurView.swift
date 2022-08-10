@@ -58,7 +58,7 @@ public class BlurView: XCView {
     ///
     /// - Note: This property is only used when `isBlurEffectEnabled` is `true` and
     ///   `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
-    @objc public dynamic var blurColor: UIColor = Theme.backgroundColor {
+    @objc public dynamic var blurColor: UIColor = Theme.backgroundColor.uiColor {
         didSet {
             blurBackView.backgroundColor = blurColor
         }
@@ -71,7 +71,7 @@ public class BlurView: XCView {
     ///
     /// - Note: This property is only used when `isBlurEffectEnabled` is `true` and
     ///   `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.
-    @objc public dynamic var blurEffectDisabledBackgroundColor: UIColor = Theme.backgroundColor
+    @objc public dynamic var blurEffectDisabledBackgroundColor: UIColor = Theme.backgroundColor.uiColor
 
     /// The `UIVisualEffect` to use when
     /// `UIAccessibilityIsReduceTransparencyEnabled()` is `false`.

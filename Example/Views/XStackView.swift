@@ -52,6 +52,7 @@ struct XStackView: View {
                     .xstackStyle(dim: .title)
 
                 XStack("Price", money: 10)
+                    .foregroundColor(theme.positiveSentimentColor)
 
                 XStack("Quantity", value: 1000)
                     .foregroundColor(theme.textSecondaryColor)

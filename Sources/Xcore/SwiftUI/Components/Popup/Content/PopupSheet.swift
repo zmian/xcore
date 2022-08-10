@@ -30,10 +30,10 @@ public struct PopupSheet<Content>: View where Content: View {
     /// animation is used to display the sheet.
     private var background: some View {
         RoundedRectangleCorner(radius: cornerRadius, corners: .top)
-            .fill(Color(theme.backgroundColor))
+            .fill(theme.backgroundColor)
             .background(
                 RoundedRectangleCorner(radius: cornerRadius, corners: .top)
-                    .fill(Color(theme.backgroundColor))
+                    .fill(theme.backgroundColor)
                     .offset(y: AppConstants.homeIndicatorHeightIfPresent * 2)
             )
     }

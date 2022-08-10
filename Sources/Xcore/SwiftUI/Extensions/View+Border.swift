@@ -38,7 +38,7 @@ extension View {
         EnvironmentReader(\.theme) { theme in
             overlay(
                 content
-                    .strokeBorder(color ?? Color(theme.separatorColor), lineWidth: width)
+                    .strokeBorder(color ?? theme.separatorColor, lineWidth: width)
             )
         }
     }

@@ -218,7 +218,7 @@ extension Window {
                 .environment(\.popupTextAlignment, env.popupTextAlignment)
                 .environment(\.xstackStyle, env.xstackStyle)
                 .environment(\.theme, env.theme)
-                ._xtint(Color(env.theme.tintColor))
+                ._xtint(env.theme.tintColor)
                 .preferredColorScheme(env.colorScheme)
         }
 

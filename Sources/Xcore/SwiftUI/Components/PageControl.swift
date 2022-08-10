@@ -63,7 +63,7 @@ extension UIViewRepresentableContext {
     }
 
     fileprivate var currentPageIndicatorTintColor: UIColor {
-        theme.tintColor
+        theme.tintColor.uiColor
     }
 
     fileprivate var pageIndicatorTintColor: UIColor {

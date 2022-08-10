@@ -29,7 +29,7 @@ public struct PopupAlert<Content>: View where Content: View {
             .padding(.defaultSpacing)
             .padding(.top, .defaultSpacing)
             .frame(width: preferredWidth)
-            .background(Color(theme.backgroundColor))
+            .background(theme.backgroundColor)
             .cornerRadius(cornerRadius, style: .continuous)
             .floatingShadow()
 

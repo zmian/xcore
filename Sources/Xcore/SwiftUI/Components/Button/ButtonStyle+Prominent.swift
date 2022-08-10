@@ -79,19 +79,15 @@ extension ProminentButtonStyle {
         }
 
         private var foregroundContentColor: Color {
-            Color(
-                isEnabled ?
-                    theme.buttonTextColor(id, configuration.isPressed ? .pressed : .normal) :
-                    theme.buttonTextColor(id, .disabled)
-            )
+            isEnabled ?
+                theme.buttonTextColor(id, configuration.isPressed ? .pressed : .normal) :
+                theme.buttonTextColor(id, .disabled)
         }
 
         private var backgroundColor: Color {
-            Color(
-                isEnabled ?
-                    theme.buttonBackgroundColor(id, configuration.isPressed ? .pressed : .normal) :
-                    theme.buttonBackgroundColor(id, .disabled)
-            )
+            isEnabled ?
+                theme.buttonBackgroundColor(id, configuration.isPressed ? .pressed : .normal) :
+                theme.buttonBackgroundColor(id, .disabled)
         }
 
         private var borderColor: Color {
