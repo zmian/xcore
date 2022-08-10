@@ -10,7 +10,7 @@ final class SeparatorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Separators"
-        view.backgroundColor = Theme.backgroundColor
+        view.backgroundColor = Theme.backgroundColor.uiColor
         setupContentView()
     }
 

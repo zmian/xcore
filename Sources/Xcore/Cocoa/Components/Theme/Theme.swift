@@ -4,12 +4,12 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import SwiftUI
 
 /// A structure representing constants related to theming of the app.
 ///
-/// - Note: Any instance of the theme doesn't not represent `light` or `dark`
-///   modes. As per iOS, it's the responsibility of `UIColor` object to declare
+/// - Note: Any instance of the theme does not represent `light` or `dark`
+///   modes. As per iOS, it's the responsibility of `Color` object to declare
 ///   dynamic version.
 ///
 /// If parts of the app requires a certain screen to always be in darker mode
@@ -32,28 +32,28 @@ import UIKit
 @dynamicMemberLookup
 public struct Theme: MutableAppliable, UserInfoContainer {
     public typealias Identifier = Xcore.Identifier<Self>
-    public typealias ButtonColor = (ButtonIdentifier, ButtonState, ElementPosition) -> UIColor
+    public typealias ButtonColor = (ButtonIdentifier, ButtonState, ElementPosition) -> Color
 
     /// A unique id for the theme.
     public var id: Identifier
 
     /// A color that represents the system or application tint color.
-    public var tintColor: UIColor
+    public var tintColor: Color
 
     /// The color for divider lines that hides any underlying content.
-    public var separatorColor: UIColor
+    public var separatorColor: Color
 
     /// The color for border lines that hides any underlying content.
-    public var borderColor: UIColor
+    public var borderColor: Color
 
     /// The color for toggle controls (e.g., Switch or Checkbox).
-    public var toggleColor: UIColor
+    public var toggleColor: Color
 
     /// The color for links.
-    public var linkColor: UIColor
+    public var linkColor: Color
 
     /// The color for placeholder text in controls or text views.
-    public var placeholderTextColor: UIColor
+    public var placeholderTextColor: Color
 
     // MARK: - Sentiment Color
 
@@ -63,13 +63,13 @@ public struct Theme: MutableAppliable, UserInfoContainer {
     /// outcomes.
     ///
     /// Use this color to for outcomes, such as the validation succeeded.
-    public var positiveSentimentColor: UIColor
+    public var positiveSentimentColor: Color
 
     /// The color for representing neutral sentiment.
     ///
     /// Use sentiment colors for items that represent positive, neutral or negative
     /// outcomes.
-    public var neutralSentimentColor: UIColor
+    public var neutralSentimentColor: Color
 
     /// The color for representing negative sentiment.
     ///
@@ -78,45 +78,45 @@ public struct Theme: MutableAppliable, UserInfoContainer {
     ///
     /// Use this color to for outcomes, such as the validation failed or require
     /// user's attention.
-    public var negativeSentimentColor: UIColor
+    public var negativeSentimentColor: Color
 
     // MARK: - Text
 
     /// The color for text labels that contain primary content.
-    public var textColor: UIColor
+    public var textColor: Color
 
     /// The color for text labels that contain secondary content.
-    public var textSecondaryColor: UIColor
+    public var textSecondaryColor: Color
 
     /// The color for text labels that contain tertiary content.
-    public var textTertiaryColor: UIColor
+    public var textTertiaryColor: Color
 
     /// The color for text labels that contain quaternary content.
-    public var textQuaternaryColor: UIColor
+    public var textQuaternaryColor: Color
 
     // MARK: - Background
 
     /// The color for the main background of your interface.
-    public var backgroundColor: UIColor
+    public var backgroundColor: Color
 
     /// The color for content layered on top of the main background.
-    public var backgroundSecondaryColor: UIColor
+    public var backgroundSecondaryColor: Color
 
     /// The color for content layered on top of secondary backgrounds.
-    public var backgroundTertiaryColor: UIColor
+    public var backgroundTertiaryColor: Color
 
     // MARK: - Grouped Background
 
     /// The color for the main background of your grouped interface.
-    public var groupedBackgroundColor: UIColor
+    public var groupedBackgroundColor: Color
 
     /// The color for content layered on top of the main background of your grouped
     /// interface.
-    public var groupedBackgroundSecondaryColor: UIColor
+    public var groupedBackgroundSecondaryColor: Color
 
     /// The color for content layered on top of secondary backgrounds of your
     /// grouped interface.
-    public var groupedBackgroundTertiaryColor: UIColor
+    public var groupedBackgroundTertiaryColor: Color
 
     // MARK: - Button
 
@@ -132,33 +132,33 @@ public struct Theme: MutableAppliable, UserInfoContainer {
 
     public init(
         id: Identifier,
-        tintColor: UIColor,
-        separatorColor: UIColor,
-        borderColor: UIColor,
-        toggleColor: UIColor,
-        linkColor: UIColor,
-        placeholderTextColor: UIColor,
+        tintColor: Color,
+        separatorColor: Color,
+        borderColor: Color,
+        toggleColor: Color,
+        linkColor: Color,
+        placeholderTextColor: Color,
 
         // Sentiment
-        positiveSentimentColor: UIColor,
-        neutralSentimentColor: UIColor,
-        negativeSentimentColor: UIColor,
+        positiveSentimentColor: Color,
+        neutralSentimentColor: Color,
+        negativeSentimentColor: Color,
 
         // Text
-        textColor: UIColor,
-        textSecondaryColor: UIColor,
-        textTertiaryColor: UIColor,
-        textQuaternaryColor: UIColor,
+        textColor: Color,
+        textSecondaryColor: Color,
+        textTertiaryColor: Color,
+        textQuaternaryColor: Color,
 
         // Background
-        backgroundColor: UIColor,
-        backgroundSecondaryColor: UIColor,
-        backgroundTertiaryColor: UIColor,
+        backgroundColor: Color,
+        backgroundSecondaryColor: Color,
+        backgroundTertiaryColor: Color,
 
         // Grouped Background
-        groupedBackgroundColor: UIColor,
-        groupedBackgroundSecondaryColor: UIColor,
-        groupedBackgroundTertiaryColor: UIColor,
+        groupedBackgroundColor: Color,
+        groupedBackgroundSecondaryColor: Color,
+        groupedBackgroundTertiaryColor: Color,
 
         // Button
         buttonTextColor: @escaping ButtonColor,
@@ -214,11 +214,11 @@ public struct Theme: MutableAppliable, UserInfoContainer {
 // MARK: - Convenience
 
 extension Theme {
-    public func buttonBackgroundColor(_ id: ButtonIdentifier, _ state: ButtonState = .normal) -> UIColor {
+    public func buttonBackgroundColor(_ id: ButtonIdentifier, _ state: ButtonState = .normal) -> Color {
         buttonBackgroundColor(id, state, .primary)
     }
 
-    public func buttonTextColor(_ id: ButtonIdentifier, _ state: ButtonState = .normal) -> UIColor {
+    public func buttonTextColor(_ id: ButtonIdentifier, _ state: ButtonState = .normal) -> Color {
         buttonTextColor(id, state, .primary)
     }
 }
@@ -263,47 +263,46 @@ extension Theme {
     /// [UI Element Colors]: https://developer.apple.com/documentation/uikit/uicolor/ui_element_colors
     private static let system = Theme(
         id: "system",
-        tintColor: .systemTint,
-        separatorColor: .separator,
-        borderColor: .separator,
-        toggleColor: .systemGreen,
-        linkColor: .link,
-        placeholderTextColor: .placeholderText,
+        tintColor: Color(.systemTint),
+        separatorColor: Color(.separator),
+        borderColor: Color(.separator),
+        toggleColor: Color(.systemTint),
+        linkColor: Color(.link),
+        placeholderTextColor: Color(.placeholderText),
 
         // Sentiment
-        positiveSentimentColor: .systemGreen,
+        positiveSentimentColor: .green,
         neutralSentimentColor: .gray,
-        negativeSentimentColor: .systemRed,
+        negativeSentimentColor: .red,
 
         // Text
-        textColor: .label,
-        textSecondaryColor: .secondaryLabel,
-        textTertiaryColor: .tertiaryLabel,
-        textQuaternaryColor: .quaternaryLabel,
+        textColor: .primary,
+        textSecondaryColor: .secondary,
+        textTertiaryColor: Color(.tertiaryLabel),
+        textQuaternaryColor: Color(.quaternaryLabel),
 
         // Background
-        backgroundColor: .systemBackground,
-        backgroundSecondaryColor: .secondarySystemBackground,
-        backgroundTertiaryColor: .tertiarySystemBackground,
+        backgroundColor: Color(.systemBackground),
+        backgroundSecondaryColor: Color(.secondarySystemBackground),
+        backgroundTertiaryColor: Color(.tertiarySystemBackground),
 
         // Grouped Background
-        groupedBackgroundColor: .systemGroupedBackground,
-        groupedBackgroundSecondaryColor: .secondarySystemGroupedBackground,
-        groupedBackgroundTertiaryColor: .tertiarySystemGroupedBackground,
+        groupedBackgroundColor: Color(.systemGroupedBackground),
+        groupedBackgroundSecondaryColor: Color(.secondarySystemGroupedBackground),
+        groupedBackgroundTertiaryColor: Color(.tertiarySystemGroupedBackground),
 
         // Button Text
         buttonTextColor: { style, state, position in
             switch (style, state, position) {
                 case (.outline, .normal, _),
                      (.outline, .pressed, _):
-                    return .label
-
+                    return .primary
                 case (_, .normal, _):
                     return .white
                 case (_, .pressed, _):
                     return .white
                 case (_, .disabled, _):
-                    return .systemGray4
+                    return Color(.systemGray4)
             }
         },
 
@@ -311,11 +310,11 @@ extension Theme {
         buttonBackgroundColor: { style, state, position in
             switch (style, state, position) {
                 case (_, .normal, _):
-                    return .systemTint
+                    return Color(.systemTint)
                 case (_, .pressed, _):
-                    return .systemTint
+                    return Color(.systemTint)
                 case (_, .disabled, _):
-                    return .secondarySystemBackground
+                    return Color(.secondarySystemBackground)
             }
         },
 

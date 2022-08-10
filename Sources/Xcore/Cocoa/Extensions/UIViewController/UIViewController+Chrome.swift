@@ -23,9 +23,9 @@ extension UIViewController {
         /// The default value is `.app(.body)`
         public lazy var font: UIFont = .app(.body)
         /// The default value is `Theme.tintColor`.
-        public lazy var tintColor: UIColor = Theme.tintColor
+        public lazy var tintColor: UIColor = Theme.tintColor.uiColor
         /// The default value is `Theme.textColor`.
-        public lazy var navigationBarTitleColor: UIColor = Theme.textColor
+        public lazy var navigationBarTitleColor: UIColor = Theme.textColor.uiColor
         fileprivate override init() {}
     }
 }
@@ -218,6 +218,13 @@ extension UIViewController {
         [
             .font: defaultAppearance.font,
             .foregroundColor: defaultAppearance.navigationBarTitleColor
+        ]
+    }
+
+    public static var defaultBarButtonItemTextAttributes: [NSAttributedString.Key: Any] {
+        [
+            .font: defaultAppearance.font,
+            .foregroundColor: defaultAppearance.tintColor
         ]
     }
 }

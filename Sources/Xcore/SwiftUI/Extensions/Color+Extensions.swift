@@ -84,3 +84,10 @@ extension Color {
         })
     }
 }
+
+extension Color {
+    /// The `UIColor` that corresponds to the color object.
+    public var uiColor: UIColor {
+        UIColor(self)
+    }
+}

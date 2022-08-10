@@ -21,13 +21,13 @@ public struct LineDynamicTextFieldStyle: DynamicTextFieldStyle {
                 let color: Color = {
                     if withValidationColors, configuration.isFocused {
                         if configuration.text.isEmpty {
-                            return Color(theme.separatorColor)
+                            return theme.separatorColor
                         }
 
                         return configuration.isValid ? attributes.successColor : attributes.errorColor
                     }
 
-                    return Color(theme.separatorColor)
+                    return theme.separatorColor
                 }()
 
                 VStack(alignment: .leading, spacing: .s2) {

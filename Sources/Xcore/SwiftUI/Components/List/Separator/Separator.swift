@@ -19,7 +19,7 @@ public struct Separator: View {
     }
 
     public var body: some View {
-        Color(theme.separatorColor)
+        theme.separatorColor
             .frame(height: height)
             .padding(separatorStyle.insets)
             .hidden(separatorStyle == .hidden, remove: true)
