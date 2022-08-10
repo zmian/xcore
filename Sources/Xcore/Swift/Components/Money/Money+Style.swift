@@ -166,6 +166,8 @@ extension Money.Style {
                     .asAbbreviated(threshold: threshold)
                     .fractionLength(fractionLength)
                     .locale($0.locale)
+                    // sign is appended by `string(from:)` method below.
+                    .sign(.none)
                 )
 
                 return $0.string(from: amount)
