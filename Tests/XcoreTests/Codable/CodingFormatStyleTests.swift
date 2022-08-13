@@ -131,6 +131,7 @@ final class CodingFormatStyleTests: TestCase {
 
         try assertDouble(number: "0.064657")
         try assertDouble(number: "0.064338")
+        try assertDouble(number: "0.128289")
     }
 
     func testDecimal() throws {
@@ -205,6 +206,7 @@ final class CodingFormatStyleTests: TestCase {
 
         try assertDecimal(number: "0.064657")
         try assertDecimal(number: "0.064338")
+        try assertDecimal(number: "0.128289")
     }
 
     func testAbsoluteValue() throws {
