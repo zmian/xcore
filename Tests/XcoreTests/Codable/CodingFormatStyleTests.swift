@@ -616,9 +616,8 @@ extension CodingFormatStyleTests {
             }
         }
 
-        let json = "{\"value\": \"\(number)\"}"
-
-        let data1 = try XCTUnwrap(json.data(using: .utf8))
+        // Decode from string: "number"
+        let data1 = try XCTUnwrap("{\"value\": \"\(number)\"}".data(using: .utf8))
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         XCTAssertEqual(example1.value, Double(number))
         XCTAssertEqual(example1.value.description, number)
@@ -628,8 +627,8 @@ extension CodingFormatStyleTests {
             .formatted()
         XCTAssertEqual(eth1, "\(number) ETH")
 
-        // decode
-        let data2 = try XCTUnwrap(json.data(using: .utf8))
+        // Decode from floating point: number
+        let data2 = try XCTUnwrap("{\"value\": \(number)}".data(using: .utf8))
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
         XCTAssertEqual(example2.value, Double(number))
         XCTAssertEqual(example2.value.description, number)
@@ -663,10 +662,8 @@ extension CodingFormatStyleTests {
             }
         }
 
-        let json = "{\"value\": \"\(number)\"}"
-
-        // decode
-        let data1 = try XCTUnwrap(json.data(using: .utf8))
+        // Decode from string: "number"
+        let data1 = try XCTUnwrap("{\"value\": \"\(number)\"}".data(using: .utf8))
         let example1 = try JSONDecoder().decode(Example.self, from: data1)
         XCTAssertEqual(example1.value, Decimal(string: number, locale: .us))
         XCTAssertEqual(example1.value.description, number)
@@ -676,8 +673,8 @@ extension CodingFormatStyleTests {
             .formatted()
         XCTAssertEqual(eth1, "\(number) ETH")
 
-        // decode
-        let data2 = try XCTUnwrap(json.data(using: .utf8))
+        // Decode from floating point: number
+        let data2 = try XCTUnwrap("{\"value\": \(number)}".data(using: .utf8))
         let example2 = try JSONDecoder().decode(Example.self, from: data2)
         XCTAssertEqual(example2.value, Decimal(string: number, locale: .us))
         XCTAssertEqual(example2.value.description, number)
