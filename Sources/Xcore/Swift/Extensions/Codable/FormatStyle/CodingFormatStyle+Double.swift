@@ -10,6 +10,7 @@ public struct DoubleCodingFormatStyle: CodingFormatStyle {
     public static var defaultEncodeAsString = false
 
     private static let numberFormatter = NumberFormatter().apply {
+        $0.numberStyle = .decimal
         $0.locale = .us
         $0.fractionLength = .maxFractionDigits
     }
