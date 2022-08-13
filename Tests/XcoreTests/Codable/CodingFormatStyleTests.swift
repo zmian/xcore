@@ -128,6 +128,28 @@ final class CodingFormatStyleTests: TestCase {
         let data4 = try XCTUnwrap(#"{"value": 123}"#.data(using: .utf8))
         let example4 = try JSONDecoder().decode(Example.self, from: data4)
         XCTAssertEqual(example4.value, 123.0)
+
+        // decode
+        let data9 = try XCTUnwrap(#"{"value": "0.064338"}"#.data(using: .utf8))
+        let example9 = try JSONDecoder().decode(Example.self, from: data9)
+        XCTAssertEqual(example9.value, Double("0.064338"))
+        XCTAssertEqual(example9.value.description, "0.064338")
+        let eth9 = Money(example9.value)
+            .currencySymbol("ETH", position: .suffix)
+            .fractionLength(.maxFractionDigits)
+            .formatted()
+        XCTAssertEqual(eth9, "0.064338 ETH")
+
+        // decode
+        let data10 = try XCTUnwrap(#"{"value": 0.064338}"#.data(using: .utf8))
+        let example10 = try JSONDecoder().decode(Example.self, from: data10)
+        XCTAssertEqual(example10.value, Double("0.064338"))
+        XCTAssertEqual(example10.value.description, "0.064338")
+        let eth10 = Money(example10.value)
+            .currencySymbol("ETH", position: .suffix)
+            .fractionLength(.maxFractionDigits)
+            .formatted()
+        XCTAssertEqual(eth10, "0.064338 ETH")
     }
 
     func testDecimal() throws {
@@ -199,6 +221,28 @@ final class CodingFormatStyleTests: TestCase {
         let example8 = try JSONDecoder().decode(Example.self, from: example8Data)
         XCTAssertEqual(example8.value, Decimal(string: "2.12", locale: .us))
         XCTAssertEqual(example8.value.description, "2.12")
+
+        // decode
+        let data9 = try XCTUnwrap(#"{"value": "0.064338"}"#.data(using: .utf8))
+        let example9 = try JSONDecoder().decode(Example.self, from: data9)
+        XCTAssertEqual(example9.value, Decimal(string: "0.064338", locale: .us))
+        XCTAssertEqual(example9.value.description, "0.064338")
+        let eth9 = Money(example9.value)
+            .currencySymbol("ETH", position: .suffix)
+            .fractionLength(.maxFractionDigits)
+            .formatted()
+        XCTAssertEqual(eth9, "0.064338 ETH")
+
+        // decode
+        let data10 = try XCTUnwrap(#"{"value": 0.064338}"#.data(using: .utf8))
+        let example10 = try JSONDecoder().decode(Example.self, from: data10)
+        XCTAssertEqual(example10.value, Decimal(string: "0.064338", locale: .us))
+        XCTAssertEqual(example10.value.description, "0.064338")
+        let eth10 = Money(example10.value)
+            .currencySymbol("ETH", position: .suffix)
+            .fractionLength(.maxFractionDigits)
+            .formatted()
+        XCTAssertEqual(eth10, "0.064338 ETH")
     }
 
     func testAbsoluteValue() throws {

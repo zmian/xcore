@@ -288,7 +288,7 @@ extension Money: ExpressibleByFloatLiteral {
     }
 
     public init(_ value: Double) {
-        self.init(Decimal(value))
+        self.init(Decimal(string: value.stringValue, locale: .usPosix) ?? Decimal(value))
     }
 }
 

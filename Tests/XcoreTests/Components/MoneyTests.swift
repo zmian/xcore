@@ -386,6 +386,12 @@ final class MoneyTests: TestCase {
         XCTAssertEqual(Money(Decimal(string: "20.05588"))?.fractionLength(.maxFractionDigits).formatted(), "$20.05588")
         XCTAssertEqual(Money(Decimal(string: "5.04198"))?.fractionLength(.maxFractionDigits).formatted(), "$5.04198")
         XCTAssertEqual(Money(5.04198).fractionLength(.maxFractionDigits).formatted(), "$5.041979999999998976")
+
+        let amount = Money(Decimal(string: "0.064144"))?
+            .currencySymbol("ETH", position: .suffix)
+            .fractionLength(.maxFractionDigits)
+
+        XCTAssertEqual(amount?.formatted(), "0.064144 ETH")
     }
 }
 

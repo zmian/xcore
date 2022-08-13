@@ -8,12 +8,6 @@ import Foundation
 
 public struct DecimalCodingFormatStyle: CodingFormatStyle {
     public static var defaultEncodeAsString = false
-
-    private static let numberFormatter = NumberFormatter().apply {
-        $0.locale = .us
-        $0.fractionLength = .maxFractionDigits
-    }
-
     private let encodeAsString: Bool
 
     fileprivate init(encodeAsString: Bool) {
@@ -29,7 +23,7 @@ public struct DecimalCodingFormatStyle: CodingFormatStyle {
 
         if
             let value = value as? String ?? (value as? LosslessStringConvertible)?.description,
-            let decimal = Self.numberFormatter.number(from: value)?.decimalValue
+            let decimal = Decimal(string: value, locale: .us)
         {
             return decimal
         }
