@@ -4,7 +4,19 @@
 // MIT license, see LICENSE file for details
 //
 
-import Foundation
+import UIKit
+
+extension Date {
+    /// Changes the `default` calendar to the given calendar for the scope of work.
+    public static func calendar<R>(_ new: Calendar, work: () -> R) -> R {
+        let current = Calendar.default
+        Calendar.default = new
+        defer { Calendar.default = current }
+        return work()
+    }
+}
+
+// MARK: - Transform
 
 extension Date {
     /// Epoch in milliseconds.
@@ -15,34 +27,226 @@ extension Date {
     public var milliseconds: Int64 {
         Int64(timeIntervalSince1970 * 1000)
     }
-}
 
-extension Date {
-    public func fromNow(
-        style: DateComponentsFormatter.UnitsStyle = .abbreviated,
-        format: String = "%@",
-        in calendar: Calendar = .default
-    ) -> String? {
-        let formatter = DateComponentsFormatter().apply {
-            $0.unitsStyle = style
-            $0.maximumUnitCount = 1
-            $0.allowedUnits = [.year, .month, .day, .hour, .minute, .second]
-            $0.calendar = calendar
-        }
-
-        guard let timeString = formatter.string(from: self, to: Date()) else {
-            return nil
-        }
-
-        let formatString = NSLocalizedString(format, comment: "Used to say how much time has passed (e.g., '2 hours ago').")
-        return String(format: formatString, timeString)
+    /// Retrieves the receiver's given component value.
+    ///
+    /// - Parameters:
+    ///   - component: Component to get the value for.
+    ///   - calendar: The calendar to use for retrieval.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let date = Date(year: 2020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
+    ///
+    /// // Example in default calendar
+    /// let year = date.component(.year)
+    /// let month = date.component(.month)
+    /// let day = date.component(.day)
+    ///
+    /// print(year)  // 2020
+    /// print(month) // 2
+    /// print(day)   // 1
+    ///
+    /// // Example in different calendar
+    /// let year = date.component(.year, in: .usEastern)
+    /// let month = date.component(.month, in: .usEastern)
+    /// let day = date.component(.day, in: .usEastern)
+    /// let hour = date.component(.hour, in: .usEastern)
+    ///
+    /// print(year)  // 2020
+    /// print(month) // 1
+    /// print(day)   // 31
+    /// print(hour)  // 22
+    /// ```
+    public func component(_ component: Calendar.Component, in calendar: Calendar = .default) -> Int {
+        calendar.component(component, from: self)
     }
 
-    /// Reset time to beginning of the day (`12 AM`) of `self`.
+    /// Creates a date interval from given date by adjusting its components.
     ///
-    /// - Parameter calendar: The calendar to use for the date.
-    public func stripTime(calendar: Calendar = .default) -> Date {
-        let components = calendar.dateComponents([.year, .month, .day], from: self)
-        return calendar.date(from: components) ?? self
+    /// - Parameters:
+    ///   - component: Component to adjust for the interval.
+    ///   - adjustment: The offset to adjust the component.
+    ///   - calendar: The calendar to use for adjustment.
+    public func interval(
+        for component: Calendar.Component,
+        adjustedBy adjustment: Int = 0,
+        in calendar: Calendar = .default
+    ) -> DateInterval {
+        let date = startOf(component, in: calendar)
+            .adjusting(component, by: adjustment, in: calendar)
+
+        return .init(start: date, end: date.endOf(component, in: calendar))
+    }
+}
+
+// MARK: - Adjustments
+
+extension Date {
+    /// Adjusts the receiver by given date components.
+    ///
+    /// - Parameters:
+    ///   - components: DateComponents object that contains adjustment values.
+    ///   - calendar: The calendar to use for adjustment.
+    public func adjusting(_ components: DateComponents, in calendar: Calendar = .default) -> Date {
+        calendar.date(byAdding: components, to: self)!
+    }
+
+    /// Adjusts the receiver's given component by the given offset in set calendar.
+    ///
+    /// - Parameters:
+    ///   - component: Component to adjust.
+    ///   - offset: Offset to use for adjustment.
+    ///   - calendar: The calendar to use for adjustment.
+    public func adjusting(_ component: Calendar.Component, by offset: Int, in calendar: Calendar = .default) -> Date {
+        var dateComponent = DateComponents()
+
+        switch component {
+            case .nanosecond:
+                dateComponent.nanosecond = offset
+            case .second:
+                dateComponent.second = offset
+            case .minute:
+                dateComponent.minute = offset
+            case .hour:
+                dateComponent.hour = offset
+            case .day:
+                dateComponent.day = offset
+            case .weekday:
+                dateComponent.weekday = offset
+            case .weekdayOrdinal:
+                dateComponent.weekdayOrdinal = offset
+            case .weekOfYear:
+                dateComponent.weekOfYear = offset
+            case .month:
+                dateComponent.month = offset
+            case .year:
+                dateComponent.year = offset
+            case .era:
+                dateComponent.era = offset
+            case .quarter:
+                dateComponent.quarter = offset
+            case .weekOfMonth:
+                dateComponent.weekOfMonth = offset
+            case .yearForWeekOfYear:
+                dateComponent.yearForWeekOfYear = offset
+            case .calendar, .timeZone:
+                fatalError("Unsupported type \(component)")
+            @unknown default:
+                fatalError("Unsupported type \(component)")
+        }
+
+        return adjusting(dateComponent, in: calendar)
+    }
+
+    /// Adjusts the receiver's given component and along with all smaller units to
+    /// their start using the calendar.
+    ///
+    /// - Parameters:
+    ///   - component: Component and along with all smaller units to adjust to their
+    ///     start.
+    ///   - calendar: The calendar to use for adjustment.
+    public func startOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
+        #if DEBUG
+        return calendar.dateInterval(of: component, for: self)!.start
+        #else
+        return calendar.dateInterval(of: component, for: self)?.start ?? self
+        #endif
+    }
+
+    /// Adjusts the receiver's given component and along with all smaller units to
+    /// their end using the calendar.
+    ///
+    /// - Parameters:
+    ///   - component: Component and along with all smaller units to adjust to their
+    ///     end.
+    ///   - calendar: The calendar to use for adjustment.
+    public func endOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
+        #if DEBUG
+        let date = calendar.dateInterval(of: component, for: self)!.end
+        #else
+        let date = calendar.dateInterval(of: component, for: self)?.end ?? self
+        #endif
+
+        return Date(timeInterval: -0.001, since: date)
+    }
+
+    /// Adjusts the receiver's given component and along with all smaller units to
+    /// their middle using the calendar.
+    ///
+    /// - Parameters:
+    ///   - component: Component and along with all smaller units to adjust to their
+    ///     middle.
+    ///   - calendar: The calendar to use for adjustment.
+    public func middleOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
+        #if DEBUG
+        let date = calendar.dateInterval(of: component, for: self)!.middle
+        #else
+        let date = calendar.dateInterval(of: component, for: self)?.middle ?? self
+        #endif
+
+        return Date(timeInterval: -0.001, since: date)
+    }
+}
+
+// MARK: - Counts
+
+extension Date {
+    /// Returns the time zone offset of a calendar from GMT.
+    ///
+    /// - Parameter calendar: The calendar used to calculate time zone.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let result = Date.timeZoneOffset(calendar: .usEastern)
+    /// print(result) // -4; Eastern time zone is 4 hours behind GMT.
+    /// ```
+    public static func timeZoneOffset(calendar: Calendar = .default) -> Int {
+        calendar.timeZone.secondsFromGMT() / 3600
+    }
+
+    /// Returns total number of days of month using the given calendar.
+    ///
+    /// - Parameter calendar: The calendar used to calculate month days.
+    public func monthDays(in calendar: Calendar = .default) -> Int {
+        calendar.range(of: .day, in: .month, for: self)!.count
+    }
+
+    /// Returns the total number of units to the given date.
+    ///
+    /// - Parameters:
+    ///   - component: The component to calculate.
+    ///   - date: A component to calculate to date.
+    ///   - calendar: The calendar to calculate the number.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let date = Date(year: 2019, month: 3, day: 4, hour: 2, minute: 22, second: 44)
+    /// let anotherDate = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 55)
+    /// let result = date.numberOf(.year, to: anotherDate)
+    ///
+    /// print(result) // 1; There is only 1 year between 2019 and 2020.
+    /// ```
+    public func numberOf(_ component: Calendar.Component, to date: Date, in calendar: Calendar = .default) -> Int {
+        #if DEBUG
+        return calendar.dateComponents([component], from: self, to: date).value(for: component)!
+        #else
+        return calendar.dateComponents([component], from: self, to: date).value(for: component) ?? 0
+        #endif
+    }
+}
+
+// MARK: - Date Picker
+
+extension Configuration where Type: UIDatePicker {
+    public static func `default`(minimumDate: Date) -> Self {
+        .init(id: "default") { picker in
+            picker.minimumDate = minimumDate
+            picker.calendar = .default
+            picker.timeZone = Calendar.default.timeZone
+        }
     }
 }

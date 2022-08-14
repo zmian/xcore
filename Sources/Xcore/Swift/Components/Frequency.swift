@@ -96,7 +96,7 @@ extension Frequency {
 
             result.append(Self(
                 id: .init(rawValue: "\(year)_\(monthId)"),
-                title: interval.start.string(format: .monthName, in: calendar),
+                title: interval.start.formatted(style: .monthName, in: calendar),
                 analyticsValue: monthId,
                 dateInterval: interval
             ))
