@@ -555,7 +555,7 @@ final class CodingFormatStyleTests: TestCase {
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
 
-                if let format = decoder.userInfo[.dateFormat] as? Date.Format.Custom {
+                if let format = decoder.userInfo[.dateFormat] as? Date.Style {
                     value = try container.decode(.value, format: .date(formats: format))
                 } else {
                     value = try container.decode(.value, format: .date())
@@ -579,7 +579,7 @@ final class CodingFormatStyleTests: TestCase {
 
         // Dynamically passing date format via the decoder
         let jsonDecoder = JSONDecoder().apply {
-            $0.userInfo[.dateFormat] = Date.Format.Custom.yearMonthDash
+            $0.userInfo[.dateFormat] = Date.Style.format("yyyy-MM")
         }
         let data3 = try XCTUnwrap(#"{"value": "2014-06"}"#.data(using: .utf8))
         let example3 = try jsonDecoder.decode(Example.self, from: data3)

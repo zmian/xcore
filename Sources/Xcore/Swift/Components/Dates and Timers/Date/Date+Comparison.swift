@@ -155,6 +155,16 @@ extension Date {
         return (orEqual ? (result == .orderedSame || result == .orderedDescending) : result == .orderedDescending)
     }
 
+    /// Compares whether the receiver is after the given seconds.
+    ///
+    /// - Parameters:
+    ///   - seconds: The seconds to compare.
+    ///   - calendar: The calendar to use when comparing.
+    public func isAfter(duration seconds: Int, in calendar: Calendar = .default) -> Bool {
+        let referenceDate = Date().adjusting(.second, by: seconds, in: calendar)
+        return referenceDate.isAfter(self, granularity: .second, in: calendar)
+    }
+
     /// Returns `true` if receiver date is contained in the specified interval.
     ///
     /// - Parameters:

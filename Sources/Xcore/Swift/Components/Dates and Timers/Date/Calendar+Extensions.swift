@@ -10,7 +10,7 @@ extension Calendar: MutableAppliable {
     public static var `default`: Self = .current
 
     /// The default calendar used in ``DateCodingFormatStyle``.
-    public static var defaultCoding: Self = .iso
+    public static var defaultCodable: Self = .iso
 
     /// Returns `ISO` calendar with `en_US_POSIX` locale and `GMT` time zone.
     public static let iso = Self(
