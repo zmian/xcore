@@ -65,22 +65,10 @@ extension Date {
         let formatter: DateFormatter
 
         switch style {
-            case let .date(dateStyle):
+            case let .dateTime(dateStyle, timeStyle):
                 formatter = cache.dateFormatter(
                     dateStyle: dateStyle,
-                    doesRelativeDateFormatting: doesRelativeDateFormatting,
-                    calendar: calendar
-                )
-            case let .time(timeStyle):
-                formatter = cache.dateFormatter(
                     timeStyle: timeStyle,
-                    doesRelativeDateFormatting: doesRelativeDateFormatting,
-                    calendar: calendar
-                )
-            case let .dateTime(style):
-                formatter = cache.dateFormatter(
-                    dateStyle: style,
-                    timeStyle: style,
                     doesRelativeDateFormatting: doesRelativeDateFormatting,
                     calendar: calendar
                 )

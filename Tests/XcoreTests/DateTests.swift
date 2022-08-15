@@ -944,14 +944,15 @@ final class DateTest: XCTestCase {
         XCTAssertEqual(date.formatted(format: .monthDayYear(.abbreviated)), "Jan 1, 2000")
 
         // .dateTime(.medium) ~= .monthDayYear(.abbreviated, withTime: true)
-        XCTAssertEqual(date.formatted(style: .dateTime(.medium)), "Jan 1, 2000 at 9:41:00 AM")
+        XCTAssertEqual(date.formatted(style: .dateTime(.medium, time: .short)), "Jan 1, 2000 at 9:41 AM")
         XCTAssertEqual(date.formatted(format: .monthDayYear(.abbreviated, withTime: true)), "Jan 1, 2000 - 9:41 AM")
 
         XCTAssertEqual(date.formatted(style: .dateTime(.none)), "")
         XCTAssertEqual(date.formatted(style: .dateTime(.short)), "1/1/00, 9:41 AM")
+        XCTAssertEqual(date.formatted(style: .dateTime(.medium, time: .short)), "Jan 1, 2000 at 9:41 AM")
         XCTAssertEqual(date.formatted(style: .dateTime(.medium)), "Jan 1, 2000 at 9:41:00 AM")
-        XCTAssertEqual(date.formatted(style: .dateTime(.long)), "January 1, 2000 at 9:41:00 AM GMT")
-        XCTAssertEqual(date.formatted(style: .dateTime(.full)), "Saturday, January 1, 2000 at 9:41:00 AM Greenwich Mean Time")
+        XCTAssertEqual(date.formatted(style: .dateTime(.long, time: .short)), "January 1, 2000 at 9:41 AM")
+        XCTAssertEqual(date.formatted(style: .dateTime(.full, time: .short)), "Saturday, January 1, 2000 at 9:41 AM")
 
         XCTAssertEqual(date.formatted(style: .iso8601(.withFullDate)), "2000-01-01")
     }
