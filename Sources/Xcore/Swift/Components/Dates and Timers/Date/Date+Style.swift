@@ -9,10 +9,26 @@ import Foundation
 extension Date {
     /// An enumeration representing date and time style of a date object.
     public enum Style: Hashable, Sendable {
-        case date(DateFormatter.Style)
-        case time(DateFormatter.Style)
-        case dateTime(DateFormatter.Style)
+        /// A style that uses ISO 8601 representation.
         case iso8601(ISO8601DateFormatter.Options)
+
+        /// A style that uses the date and time styles.
+        case dateTime(DateFormatter.Style, time: DateFormatter.Style)
+
+        /// A style that uses the same style for date and time.
+        public static func dateTime(_ style: DateFormatter.Style) -> Self {
+            dateTime(style, time: style)
+        }
+
+        /// A style that uses the date style.
+        public static func date(_ style: DateFormatter.Style) -> Self {
+            dateTime(style, time: .none)
+        }
+
+        /// A style that uses the time style.
+        public static func time(_ style: DateFormatter.Style) -> Self {
+            dateTime(.none, time: style)
+        }
 
         /// A style that uses the weekday in calendar.
         ///
