@@ -138,15 +138,6 @@ extension Date.Style.Format {
     /// `yyyy` (e.g., 2020)
     public static let year: Self = "yyyy"
 
-    /// `yyyy-MM-dd` (e.g., 2020-06-04)
-    public static let yearMonthDayDash: Self = "yyyy-MM-dd"
-
-    /// `M/d/yyyy` (e.g., 6/4/2020)
-    public static let monthDayYearSlash: Self = "M/d/yyyy"
-
-    /// `M/d/yyyy - h:mm a` (e.g., 6/4/2020 - 9:41 AM)
-    public static let monthDayYearSlashTime: Self = "M/d/yyyy - h:mm a"
-
     /// `MMMM d, yyyy` (e.g., June 4, 2020) // wide
     public static var monthDayYear: Self { monthDayYear(.wide) }
 

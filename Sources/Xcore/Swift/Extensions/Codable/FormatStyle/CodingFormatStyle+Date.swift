@@ -10,7 +10,8 @@ public struct DateCodingFormatStyle: CodingFormatStyle {
     public static let formats: [Date.Style] = [
         .format(.iso8601),
         .format(.iso8601Local),
-        .format(.yearMonthDayDash)
+        // yyyy-MM-dd (e.g., 2020-06-04)
+        .iso8601(.withFullDate)
     ]
 
     private let calendar: Calendar
