@@ -16,7 +16,7 @@ final class DateTest: XCTestCase {
     private let customStyles: [Date.Style] = [
         .format(.iso8601),
         .format(.iso8601Local),
-        .format(.yearMonthDayDash),
+        .iso8601(.withFullDate),
         .format(.year),
         .format(.monthDayYear(.wide)),
         .format(.monthDayYear(.abbreviated)),
@@ -26,8 +26,7 @@ final class DateTest: XCTestCase {
         .format(.monthDay(.narrow)),
         .format(.monthYear(.wide)),
         .format(.monthYear(.abbreviated)),
-        .format(.monthYear(.narrow)),
-        .format(.monthDayYearSlashTime)
+        .format(.monthYear(.narrow))
     ]
 
     func testStringToDate() {
@@ -45,7 +44,7 @@ final class DateTest: XCTestCase {
                     line = #line
                     stringToTest = "2022-06-04T11:11:22"
                     expectedDate = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
-                case .format(.yearMonthDayDash):
+                case .iso8601(.withFullDate):
                     line = #line
                     stringToTest = "2022-06-04"
                     expectedDate = Date(year: 2022, month: 6, day: 4)
@@ -89,10 +88,6 @@ final class DateTest: XCTestCase {
                     line = #line
                     stringToTest = "6/2022"
                     expectedDate = Date(year: 2022, month: 6, day: 1)
-                case .format(.monthDayYearSlashTime):
-                    line = #line
-                    stringToTest = "06/04/2022 - 11:11AM"
-                    expectedDate = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11)
                 default:
                     line = #line
                     stringToTest = ""
@@ -118,7 +113,7 @@ final class DateTest: XCTestCase {
                 case .format(.iso8601Local):
                     line = #line
                     expectedResult = "2022-06-04T11:11:22"
-                case .format(.yearMonthDayDash):
+                case .iso8601(.withFullDate):
                     line = #line
                     expectedResult = "2022-06-04"
                 case .format(.year):
@@ -151,9 +146,6 @@ final class DateTest: XCTestCase {
                 case .format(.monthYear(.narrow)):
                     line = #line
                     expectedResult = "6/22"
-                case .format(.monthDayYearSlashTime):
-                    line = #line
-                    expectedResult = "6/4/2022 - 11:11 AM"
                 default:
                     line = #line
                     expectedResult = ""
@@ -960,6 +952,8 @@ final class DateTest: XCTestCase {
         XCTAssertEqual(date.formatted(style: .dateTime(.medium)), "Jan 1, 2000 at 9:41:00 AM")
         XCTAssertEqual(date.formatted(style: .dateTime(.long)), "January 1, 2000 at 9:41:00 AM GMT")
         XCTAssertEqual(date.formatted(style: .dateTime(.full)), "Saturday, January 1, 2000 at 9:41:00 AM Greenwich Mean Time")
+
+        XCTAssertEqual(date.formatted(style: .iso8601(.withFullDate)), "2000-01-01")
     }
 }
 
