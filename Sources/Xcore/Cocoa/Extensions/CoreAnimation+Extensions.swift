@@ -94,9 +94,3 @@ extension CALayer {
         )
     }
 }
-
-extension CGColor {
-    public var uiColor: UIColor {
-        UIColor(cgColor: self)
-    }
-}

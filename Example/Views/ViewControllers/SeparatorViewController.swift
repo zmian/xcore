@@ -47,7 +47,7 @@ final class SeparatorViewController: UIViewController {
             $0.spacing = .s6
             $0.distribution = .equalSpacing
             $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.heightAnchor.constraint(equalToConstant: 200).activate()
+            $0.heightAnchor.constraint(equalToConstant: 200).isActive = true
         }
     }
 
@@ -60,7 +60,7 @@ final class SeparatorViewController: UIViewController {
 
         let freeSeparator = SeparatorView(backgroundColor: .systemBlue, automaticallySetThickness: false).apply {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.heightAnchor.constraint(equalToConstant: 12).activate()
+            $0.heightAnchor.constraint(equalToConstant: 12).isActive = true
         }
 
         let bigDotsSeparator = SeparatorView(backgroundColor: .gray).apply {

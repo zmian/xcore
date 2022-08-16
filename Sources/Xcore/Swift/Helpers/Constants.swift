@@ -88,11 +88,7 @@ extension CGFloat {
 
     /// A convenience method to return `1` pixel relative to the screen scale.
     public static var onePixel: Self {
-        enum Static {
-            static let onePixel = UIView().onePixel
-        }
-
-        return Static.onePixel
+        1 / UIScreen.main.scale
     }
 }
 

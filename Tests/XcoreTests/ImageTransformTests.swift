@@ -35,14 +35,6 @@ final class ImageTransformTests: TestCase {
                 CornerRadiusImageTransform(cornerRadius: 60)
             ),
             (
-                "Xcore.GradientImageTransform-type:(axial)-colors:(#FF0000,#00FF00)-direction:(topToBottom)-locations:(nil)-blendMode:(20)",
-                GradientImageTransform(type: .axial, colors: [.red, .green], direction: .topToBottom, locations: nil, blendMode: .sourceAtop)
-            ),
-            (
-                "Xcore.GradientImageTransform-type:(axial)-colors:(#FF0000,#00FF00)-direction:(topToBottom)-locations:(0.5,0.8)-blendMode:(17)",
-                GradientImageTransform(type: .axial, colors: [.red, .green], direction: .topToBottom, locations: [0.5, 0.8], blendMode: .copy)
-            ),
-            (
                 "Xcore.ResizeImageTransform-size:(10.0x100.0)-scalingMode:(aspectFill)",
                 ResizeImageTransform(to: CGSize(width: 10, height: 100))
             ),

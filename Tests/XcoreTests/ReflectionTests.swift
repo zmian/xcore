@@ -19,8 +19,8 @@ final class ReflectionTests: TestCase {
         XCTAssertEqual(MyProtocolClass.staticTypeName_2, "XcoreTests.MyProtocolClass")
 
         // Class
-        XCTAssertEqual(typeName(of: BlurView.self), "Xcore.BlurView")
-        XCTAssertEqual(typeName(of: BlurView()), "Xcore.BlurView")
+        XCTAssertEqual(typeName(of: SpacerView.self), "Xcore.SpacerView")
+        XCTAssertEqual(typeName(of: SpacerView()), "Xcore.SpacerView")
         // Enum
         XCTAssertEqual(typeName(of: FeatureFlag.self), "Xcore.FeatureFlag")
         XCTAssertEqual(typeName(of: StringSourceType.self), "Xcore.StringSourceType")

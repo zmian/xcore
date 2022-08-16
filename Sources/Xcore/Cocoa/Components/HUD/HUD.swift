@@ -111,21 +111,6 @@ open class HUD: Appliable {
         }
     }
 
-    private func setNeedsStatusBarAppearanceUpdate() {
-        switch preferredStatusBarStyle {
-            case let .style(value):
-                viewController.statusBarStyle = value
-            case .inherit:
-                let value = UIApplication.sharedOrNil?.firstSceneKeyWindow?.topViewController?.preferredStatusBarStyle
-                viewController.statusBarStyle = value ?? .default
-        }
-    }
-
-    /// A property to set status bar style when HUD is displayed.
-    ///
-    /// The default value is `.default`.
-    open var preferredStatusBarStyle: StatusBarAppearance = .default
-
     /// Adds a view to the end of the receiver’s list of subviews.
     ///
     /// This method establishes a strong reference to view and sets its next
@@ -233,7 +218,6 @@ open class HUD: Appliable {
             }
         } else {
             adjustWindowAttributes?(window)
-            setNeedsStatusBarAppearanceUpdate()
             window.isHidden = false
 
             guard animated else {
@@ -292,29 +276,6 @@ open class HUD: Appliable {
     }
 }
 
-// MARK: - StatusBarAppearance
-
-extension HUD {
-    public enum StatusBarAppearance {
-        /// Specifies whether HUD inherits status bar style from the presenting view
-        /// controller.
-        case inherit
-
-        /// Specifies HUD status bar style.
-        case style(UIStatusBarStyle)
-
-        /// A dark status bar, intended for use on light backgrounds.
-        public static var `default`: Self {
-            .style(.default)
-        }
-
-        /// A light status bar, intended for use on dark backgrounds.
-        public static var lightContent: Self {
-            .style(.lightContent)
-        }
-    }
-}
-
 // MARK: - Duration
 
 extension HUD {
@@ -363,10 +324,6 @@ extension HUD {
         override func viewDidLoad() {
             super.viewDidLoad()
             view.backgroundColor = backgroundColor
-        }
-
-        override var preferredStatusBarStyle: UIStatusBarStyle {
-            statusBarStyle ?? .default
         }
     }
 }

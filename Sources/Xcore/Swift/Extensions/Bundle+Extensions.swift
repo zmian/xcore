@@ -107,16 +107,10 @@ extension Bundle {
     /// - Returns: The file URL for the resource file name or `nil` if the file
     ///   could not be located.
     public func url(filename: String) -> URL? {
-        let components = filename.split(separator: ".")
-
-        guard components.count == 2 else {
-            return nil
-        }
-
-        let name = String(components[0])
-        let ext = String(components[1])
-
-        return url(forResource: name, withExtension: ext)
+        url(
+            forResource: filename.lastPathComponent.deletingPathExtension,
+            withExtension: filename.pathExtension
+        )
     }
 
     /// Returns the full pathname for the resource identified by the specified name
@@ -127,16 +121,10 @@ extension Bundle {
     /// - Returns: The full pathname for the resource file, or `nil` if the file
     ///   could not be located.
     public func path(filename: String) -> String? {
-        let components = filename.split(separator: ".")
-
-        guard components.count == 2 else {
-            return nil
-        }
-
-        let name = String(components[0])
-        let ext = String(components[1])
-
-        return path(forResource: name, ofType: ext)
+        path(
+            forResource: filename.lastPathComponent.deletingPathExtension,
+            ofType: filename.pathExtension
+        )
     }
 }
 
