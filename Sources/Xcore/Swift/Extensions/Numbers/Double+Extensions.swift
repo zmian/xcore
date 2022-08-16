@@ -149,3 +149,62 @@ extension Double {
             .description(withLocale: Locale.usPosix)
     }
 }
+
+// MARK: - Largest Remainder Round
+
+extension Array where Element == Double {
+    /// Rounds a list of percentage values (0...1) while keeping it's sum equal to
+    /// one.
+    ///
+    /// ```swift
+    /// [0.42857, 0.28571, 0.28571].largestRemainderRound() // [0.43, 0.29, 0.28]
+    /// ```
+    public func largestRemainderRound() -> [Double] {
+        let percentages = self
+
+        func getRemainder(value: Double) -> Double {
+            value - floor(value)
+        }
+
+        /// 1. Transform each value into `Remainder` struct calculating
+        /// integer value and decimal part.
+        /// Add index for later sort
+        var result: [PercentageItem] =
+            percentages
+                .enumerated()
+                .map { idx, percentage in
+                    let percentageBase = percentage * 100
+                    return PercentageItem(
+                        floor: floor(percentageBase),
+                        remainder: getRemainder(value: percentageBase),
+                        index: idx
+                    )
+                }
+                .sorted {
+                    $0.remainder > $1.remainder
+                }
+
+        /// 2. Calculate sum of the integer part of each value and the delta
+        /// to 100.
+        let delta: Int = 100 - Int(result.sum(\.floor))
+
+        /// 3. Based on the remainder sort (starting by highest remainder)
+        /// keep adding 1 until we reach sum of 100
+        for idx in 0..<delta where idx < result.count - 1 {
+            result[idx].floor += 1
+        }
+
+        /// 4. Return integer values dividing by 100 to return to 0...1 percentage
+        /// notation
+        return
+            result
+                .sorted { $0.index < $1.index }
+                .map { $0.floor / 100 }
+    }
+}
+
+private struct PercentageItem {
+    var floor: Double
+    let remainder: Double
+    let index: Int
+}
