@@ -6,7 +6,7 @@
 
 import AVFoundation
 
-// MARK: - Current Playback Time monitoring
+// MARK: - Current Playback Time Monitoring
 
 extension AVPlayer {
     /// A Boolean property indicating whether playback is in progress.
