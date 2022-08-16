@@ -96,15 +96,6 @@ extension ConfigurationInitializable where Self: UIView {
 extension UIView: ConfigurationInitializable {}
 extension UIBarButtonItem: ConfigurationInitializable {}
 
-extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
-    public init(configuration: Configuration<Self>, _ handler: ((_ sender: Self) -> Void)? = nil) {
-        self.init()
-        configuration.configure(self)
-        guard let handler = handler else { return }
-        addAction(handler)
-    }
-}
-
 // MARK: - Built-in
 
 extension Configuration {

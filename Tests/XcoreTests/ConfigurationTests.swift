@@ -13,11 +13,6 @@ final class ConfigurationTests: TestCase {
         XCTAssertEqual(label.text, "Hello, world!")
     }
 
-    func testUIBarButtonItemConfiguration() {
-        let barButtonItem = UIBarButtonItem(configuration: .someConfiguration)
-        XCTAssertEqual(barButtonItem.textColor, .yellow)
-    }
-
     func testExtend() {
         let greetLabel = UILabel(configuration: .greet(name: "Xcore"))
         XCTAssertEqual(greetLabel.text, "Hello, Xcore!")

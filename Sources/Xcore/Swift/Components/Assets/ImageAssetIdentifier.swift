@@ -82,15 +82,6 @@ extension UIImage {
             compatibleWith: nil
         )!
     }
-
-    public static func tinted(
-        assetIdentifier: ImageAssetIdentifier,
-        color: UIColor,
-        renderingMode: UIImage.RenderingMode = .alwaysOriginal
-    ) -> UIImage {
-        UIImage(assetIdentifier: assetIdentifier)
-            .tintColor(color).withRenderingMode(renderingMode)
-    }
 }
 
 // MARK: - UIImageView
@@ -102,19 +93,6 @@ extension UIImageView {
             guard let strongSelf = self else { return }
             strongSelf.image = image
         }
-    }
-}
-
-// MARK: - UIBarButtonItem
-
-extension TargetActionBlockRepresentable where Self: UIBarButtonItem {
-    public init(
-        assetIdentifier: ImageAssetIdentifier,
-        accessibilityIdentifier: String? = nil,
-        action: ((_ sender: Self) -> Void)? = nil
-    ) {
-        self.init(image: UIImage(assetIdentifier: assetIdentifier), action)
-        self.accessibilityIdentifier = accessibilityIdentifier
     }
 }
 
