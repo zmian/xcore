@@ -30,6 +30,39 @@ extension Date {
             dateTime(.none, time: style)
         }
 
+        /// A style to use when describing a relative date, for example “1 day ago” or
+        /// “yesterday”.
+        ///
+        /// **Always Relative:**
+        ///
+        /// ```swift
+        /// let relative = Date.Style.relative(until: .era)
+        ///
+        /// let yesterday = Date().adjusting(.day, by: -1)
+        /// yesterday.formatted(style: relative) // "Yesterday"
+        ///
+        /// let twoMonthAgo = Date().adjusting(.month, by: -2)
+        /// twoMonthAgo.formatted(style: relative) // "2 months ago"
+        /// ```
+        ///
+        /// **Relative For 1 Month:**
+        ///
+        /// ```swift
+        /// // Relative until one month and then outputs using `.date(.medium)` style.
+        /// let relative = Date.Style.relative(until: .month)
+        ///
+        /// let yesterday = Date().adjusting(.day, by: -1)
+        /// yesterday.formatted(style: relative) // "Yesterday"
+        ///
+        /// let twoMonthAgo = Date().adjusting(.month, by: -2)
+        /// twoMonthAgo.formatted(style: relative) // "Jun 4, 2022"
+        /// ```
+        ///
+        /// - Parameter until: The calendar component threshold until the date is styled
+        ///   as a relative style. After the given threshold it outputs using
+        ///   `.date(.medium) style (e.g., Jun 4, 2022)`.
+        case relative(until: Calendar.Component)
+
         /// A style that uses the weekday in calendar.
         ///
         /// - Parameter width: The width of the weekday name.

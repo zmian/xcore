@@ -956,6 +956,52 @@ final class DateTest: XCTestCase {
 
         XCTAssertEqual(date.formatted(style: .iso8601(.withFullDate)), "2000-01-01")
     }
+
+    func test_relative_until_era() {
+        let relative = Date.Style.relative(until: .era)
+
+        let yesterday = Date().adjusting(.day, by: -1)
+        let now = Date()
+        let hourAgo = Date().adjusting(.hour, by: 1)
+        let twoAgo = Date().adjusting(.hour, by: 2)
+        let tomorrow = Date().adjusting(.day, by: 1)
+        let twoMonthFromNow = Date().adjusting(.month, by: 2)
+        let twoMonthAgo = Date().adjusting(.month, by: -2)
+        let year2000 = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
+
+        XCTAssertEqual(yesterday.formatted(style: relative), "Yesterday")
+        XCTAssertEqual(now.formatted(style: relative), "Today")
+        XCTAssertEqual(hourAgo.formatted(style: relative), "In 1 hour")
+        XCTAssertEqual(twoAgo.formatted(style: relative), "Today")
+        XCTAssertEqual(tomorrow.formatted(style: relative), "Tomorrow")
+        XCTAssertEqual(twoMonthFromNow.formatted(style: relative), "In 2 months")
+        XCTAssertEqual(twoMonthAgo.formatted(style: relative), "2 months ago")
+        XCTAssertEqual(year2000.formatted(style: relative), "22 years ago")
+    }
+
+    func test_relative_until_month() {
+        let relative = Date.Style.relative(until: .month)
+
+        let yesterday = Date().adjusting(.day, by: -1)
+        let now = Date()
+        let hourAgo = Date().adjusting(.hour, by: 1)
+        let twoAgo = Date().adjusting(.hour, by: 2)
+        let tomorrow = Date().adjusting(.day, by: 1)
+
+        let twoMonthFromNow = Date().adjusting(.month, by: 2)
+        let twoMonthAgo = Date().adjusting(.month, by: -2)
+        let year2000 = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
+
+        XCTAssertEqual(yesterday.formatted(style: relative), "Yesterday")
+        XCTAssertEqual(now.formatted(style: relative), "Today")
+        XCTAssertEqual(hourAgo.formatted(style: relative), "In 1 hour")
+        XCTAssertEqual(twoAgo.formatted(style: relative), "Today")
+        XCTAssertEqual(tomorrow.formatted(style: relative), "Tomorrow")
+
+        XCTAssertEqual(twoMonthFromNow.formatted(style: relative), twoMonthFromNow.formatted(style: .date(.medium)))
+        XCTAssertEqual(twoMonthAgo.formatted(style: relative), twoMonthAgo.formatted(style: .date(.medium)))
+        XCTAssertEqual(year2000.formatted(style: relative), "Jan 1, 2000")
+    }
 }
 
 extension Calendar {
