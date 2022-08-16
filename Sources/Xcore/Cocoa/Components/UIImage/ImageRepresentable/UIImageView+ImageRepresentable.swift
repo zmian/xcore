@@ -136,7 +136,7 @@ extension UIImageView {
     ) {
         DispatchQueue.main.asyncSafe { [weak self] in
             guard let strongSelf = self else { return }
-            strongSelf.setImage(image, animationDuration: animationDuration)
+            strongSelf.setUIImage(image, animationDuration: animationDuration)
             callback?(image)
         }
     }
