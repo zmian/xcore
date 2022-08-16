@@ -244,4 +244,13 @@ final class DoubleTests: TestCase {
             XCTAssertEqual(output, input.formatted(.asAbbreviated.locale(.fr).fractionLength(0...1)))
         }
     }
+
+    func testLargestRemainderRound() {
+        let input = [0.42857, 0.28571, 0.28571]
+        let expected = [0.43, 0.29, 0.28]
+        XCTAssertEqual(input.largestRemainderRound(), expected)
+
+        XCTAssertEqual(input.sum(), 0.99999)
+        XCTAssertTrue(expected.sum() == 1)
+    }
 }
