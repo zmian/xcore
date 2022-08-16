@@ -26,7 +26,7 @@ extension AVPlayer {
     }
 
     private func format(seconds: TimeInterval) -> String {
-        let sec = seconds % 60
+        let sec = seconds.truncatingRemainder(dividingBy: 60)
         let min = seconds / 60
         let hrs = seconds / 3600
 
