@@ -9,11 +9,11 @@ import UIKit
 // MARK: - Edges
 
 extension NSLayoutConstraint {
-    public struct Edges {
-        public let top: NSLayoutConstraint
-        public let bottom: NSLayoutConstraint
-        public let leading: NSLayoutConstraint
-        public let trailing: NSLayoutConstraint
+    struct Edges {
+        let top: NSLayoutConstraint
+        let bottom: NSLayoutConstraint
+        let leading: NSLayoutConstraint
+        let trailing: NSLayoutConstraint
 
         private var constraints: [NSLayoutConstraint] {
             [top, bottom, leading, trailing]
@@ -26,21 +26,21 @@ extension NSLayoutConstraint {
             top = constraints.firstAttribute(.top)!
         }
 
-        public init(top: NSLayoutConstraint, bottom: NSLayoutConstraint, leading: NSLayoutConstraint, trailing: NSLayoutConstraint) {
+        init(top: NSLayoutConstraint, bottom: NSLayoutConstraint, leading: NSLayoutConstraint, trailing: NSLayoutConstraint) {
             self.top = top
             self.bottom = bottom
             self.leading = leading
             self.trailing = trailing
         }
 
-        public mutating func update(from insets: UIEdgeInsets) {
+        mutating func update(from insets: UIEdgeInsets) {
             top.constant = insets.top
             bottom.constant = insets.bottom
             leading.constant = insets.left
             trailing.constant = insets.right
         }
 
-        public mutating func update(from value: CGFloat) {
+        mutating func update(from value: CGFloat) {
             top.constant = value
             bottom.constant = value
             leading.constant = value
@@ -48,13 +48,13 @@ extension NSLayoutConstraint {
         }
 
         @discardableResult
-        public func activate() -> Self {
+        func activate() -> Self {
             constraints.activate()
             return self
         }
 
         @discardableResult
-        public func deactivate() -> Self {
+        func deactivate() -> Self {
             constraints.deactivate()
             return self
         }
@@ -64,9 +64,9 @@ extension NSLayoutConstraint {
 // MARK: - Size
 
 extension NSLayoutConstraint {
-    public struct Size {
-        public let width: NSLayoutConstraint
-        public let height: NSLayoutConstraint
+    struct Size {
+        let width: NSLayoutConstraint
+        let height: NSLayoutConstraint
 
         private var constraints: [NSLayoutConstraint] {
             [width, height]
@@ -77,34 +77,34 @@ extension NSLayoutConstraint {
             height = constraints[1]
         }
 
-        public init(width: NSLayoutConstraint, height: NSLayoutConstraint) {
+        init(width: NSLayoutConstraint, height: NSLayoutConstraint) {
             self.width = width
             self.height = height
         }
 
-        public mutating func update(from size: CGSize) {
+        mutating func update(from size: CGSize) {
             width.constant = size.width
             height.constant = size.height
         }
 
-        public mutating func update(from value: CGFloat) {
+        mutating func update(from value: CGFloat) {
             width.constant = value
             height.constant = value
         }
 
-        public func toggleIfNeeded() {
+        func toggleIfNeeded() {
             width.isActive = width.constant != 0
             height.isActive = height.constant != 0
         }
 
         @discardableResult
-        public func activate() -> Self {
+        func activate() -> Self {
             constraints.activate()
             return self
         }
 
         @discardableResult
-        public func deactivate() -> Self {
+        func deactivate() -> Self {
             constraints.deactivate()
             return self
         }

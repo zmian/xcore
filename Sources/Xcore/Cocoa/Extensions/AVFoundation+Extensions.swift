@@ -6,122 +6,18 @@
 
 import AVFoundation
 
-// MARK: - Current Playback Time monitoring
-
-extension AVPlayer {
-    public var isPlaying: Bool {
-        timeControlStatus == .playing
-    }
-
-    public func currentTime(_ block: @escaping (_ seconds: Int, _ formattedTime: String) -> Void) -> Any {
-        let interval = CMTime(value: 1, timescale: 1)
-
-        return addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] _ in
-            guard let strongSelf = self else { return }
-            let currentTime = strongSelf.currentTime()
-            let normalizedTime = Double(currentTime.value) / Double(currentTime.timescale)
-            block(Int(normalizedTime), strongSelf.format(seconds: Int(normalizedTime)))
-        }
-    }
-
-    private func format(seconds: Int) -> String {
-        let sec = seconds % 60
-        let min = seconds / 60
-        let hrs = seconds / 3600
-
-        if hrs == 0 {
-            return String(format: "%02d:%02d", min, sec)
-        }
-
-        return String(format: "%02d:%02d:%02d", hrs, min, sec)
-    }
-}
-
-extension AVPlayer {
-    private enum AssociatedKey {
-        static var playerRepeat = "playerRepeat"
-    }
-
-    /// Indicates whether to repeat playback of the current item.
-    public var `repeat`: Bool {
-        get { associatedObject(&AssociatedKey.playerRepeat, default: false) }
-        set {
-            guard newValue != `repeat` else { return }
-            setAssociatedObject(&AssociatedKey.playerRepeat, value: newValue)
-
-            guard newValue else {
-                NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: currentItem)
-                return
-            }
-
-            NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: currentItem, queue: nil) { [weak self] notification in
-                guard let strongSelf = self, let currentItem = notification.object as? AVPlayerItem else {
-                    return
-                }
-
-                strongSelf.actionAtItemEnd = .none
-                currentItem.seek(to: .zero) { [weak self] _ in
-                    self?.play()
-                }
-            }
-        }
-    }
-}
+// MARK: - AVPlayerItem
 
 extension AVPlayerItem {
-    public var hasValidDuration: Bool {
-        status == .readyToPlay && duration.isValid
-    }
-}
-
-extension CMTime {
-    public var isValid: Bool {
-        flags.contains(.valid)
-    }
-
-    public func offset(by: TimeInterval) -> CMTime {
-        let seconds = CMTimeGetSeconds(self)
-        let secondsWithOffset = seconds + by
-        return CMTime(seconds: secondsWithOffset, preferredTimescale: timescale)
-    }
-}
-
-// MARK: - RemoteOrLocalInstantiable
-
-extension AVPlayer {
-    /// Initializes an AVPlayer that automatically detect and load the asset from
-    /// local or a remote url.
-    ///
-    /// Implicitly creates an `AVPlayerItem` and clients can obtain the
-    /// `AVPlayerItem` as it becomes the player's `currentItem`.
-    ///
-    /// - Parameter remoteOrLocalName: The local filename from `Bundle.main` or
-    ///   remote url.
-    /// - Returns: An instance of an `AVPlayer`.
-    public convenience init?(remoteOrLocalName: String) {
-        guard let playerItem = AVPlayerItem(remoteOrLocalName: remoteOrLocalName) else {
-            return nil
-        }
-
-        self.init(playerItem: playerItem)
-    }
-}
-
-extension AVPlayerItem {
-    /// Initializes an AVPlayerItem with local resource referenced filename.
+    /// Creates an ``AVPlayerItem`` with local resource referenced file name.
     ///
     /// - Parameters:
-    ///   - filename: The local filename.
-    ///   - bundle: The bundle containing the specified filename. If you specify
+    ///   - filename: The local file name.
+    ///   - bundle: The bundle containing the specified file name. If you specify
     ///     `nil`, this method looks in the main bundle of the current application.
-    ///     The default value is `nil`.
     /// - Returns: An instance of AVPlayerItem.
     public convenience init?(filename: String, bundle: Bundle? = nil) {
-        let name = filename.lastPathComponent.deletingPathExtension
-        let ext = filename.pathExtension
-        let bundle = bundle ?? Bundle.main
-
-        guard let url = bundle.url(forResource: name, withExtension: ext) else {
+        guard let url = (bundle ?? Bundle.main).url(filename: filename) else {
             return nil
         }
 
@@ -129,9 +25,9 @@ extension AVPlayerItem {
     }
 
     /// Automatically detect and load the asset from local or a remote url.
-    public convenience init?(remoteOrLocalName: String) {
-        guard let url = URL(string: remoteOrLocalName), url.host != nil else {
-            self.init(filename: remoteOrLocalName)
+    public convenience init?(string: String) {
+        guard let url = URL(string: string), url.host != nil else {
+            self.init(filename: string)
             return
         }
 
@@ -139,21 +35,18 @@ extension AVPlayerItem {
     }
 }
 
+// MARK: - AVAsset
+
 extension AVAsset {
-    /// Initializes an AVAsset with local resource referenced filename.
+    /// Creates an ``AVAsset`` with local resource referenced file name.
     ///
     /// - Parameters:
-    ///   - filename: The local filename.
-    ///   - bundle: The bundle containing the specified filename. If you specify
+    ///   - filename: The local file name.
+    ///   - bundle: The bundle containing the specified file name. If you specify
     ///     `nil`, this method looks in the main bundle of the current application.
-    ///     The default value is `nil`.
     /// - Returns: An instance of AVAsset.
     public convenience init?(filename: String, bundle: Bundle? = nil) {
-        let name = filename.lastPathComponent.deletingPathExtension
-        let ext = filename.pathExtension
-        let bundle = bundle ?? Bundle.main
-
-        guard let url = bundle.url(forResource: name, withExtension: ext) else {
+        guard let url = (bundle ?? Bundle.main).url(filename: filename) else {
             return nil
         }
 
@@ -161,9 +54,9 @@ extension AVAsset {
     }
 
     /// Automatically detect and load the asset from local or a remote url.
-    public convenience init?(remoteOrLocalName: String) {
-        guard let url = URL(string: remoteOrLocalName), url.host != nil else {
-            self.init(filename: remoteOrLocalName)
+    public convenience init?(string: String) {
+        guard let url = URL(string: string), url.host != nil else {
+            self.init(filename: string)
             return
         }
 

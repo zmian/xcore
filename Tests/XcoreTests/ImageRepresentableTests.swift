@@ -12,7 +12,7 @@ final class ImageRepresentableTests: TestCase {
         let values: [ImageSourceType] = [
             .url("arrow"),
             .url("http://example.com/avatar.png"),
-            .uiImage(UIImage(color: .red, shape: .rectangle(.init(1))))
+            .uiImage(UIImage.rect)
         ]
 
         let encoder = JSONEncoder()
@@ -39,5 +39,26 @@ final class ImageRepresentableTests: TestCase {
                     }
             }
         }
+    }
+}
+
+// MARK: - Helpers
+
+extension UIImage {
+    fileprivate static var rect: UIImage {
+        let color = UIColor.red.cgColor
+        let rect = CGRect(.init(1))
+
+        let image = UIGraphicsImageRenderer(bounds: rect).image { rendererContext in
+            let context = rendererContext.cgContext
+            context.setFillColor(color)
+            context.fill(rect)
+        }
+
+        return .init(
+            cgImage: image.cgImage!,
+            scale: image.scale,
+            orientation: image.imageOrientation
+        )
     }
 }

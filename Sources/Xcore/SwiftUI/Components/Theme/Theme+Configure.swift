@@ -58,14 +58,10 @@ extension Theme {
 
         UITabBar.appearance().apply {
             $0.tintColor = tintColor
-            $0.borderColor = theme.separatorColor.uiColor
-            $0.borderWidth = .onePixel
         }
     }
 
     private static func setComponentsTheme(_ theme: Theme) {
-        BlurView.appearance().blurOpacity = 0.8
-
         SeparatorView.appearance().tintColor = theme.separatorColor.uiColor
 
         UIViewController.defaultAppearance.apply {

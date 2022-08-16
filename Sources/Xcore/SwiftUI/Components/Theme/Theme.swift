@@ -30,12 +30,12 @@ import SwiftUI
 /// }
 /// ```
 @dynamicMemberLookup
-public struct Theme: MutableAppliable, UserInfoContainer {
-    public typealias Identifier = Xcore.Identifier<Self>
+public struct Theme: Identifiable, MutableAppliable, UserInfoContainer {
+    public typealias ID = Xcore.Identifier<Self>
     public typealias ButtonColor = (ButtonIdentifier, ButtonState, ElementPosition) -> Color
 
     /// A unique id for the theme.
-    public var id: Identifier
+    public var id: ID
 
     /// A color that represents the system or application tint color.
     public var tintColor: Color
@@ -131,7 +131,7 @@ public struct Theme: MutableAppliable, UserInfoContainer {
     public var userInfo: UserInfo
 
     public init(
-        id: Identifier,
+        id: ID,
         tintColor: Color,
         separatorColor: Color,
         borderColor: Color,

@@ -190,7 +190,7 @@ public final class SeparatorView: UIView {
     private var defaultThickness: CGFloat {
         switch style {
             case .plain:
-                return onePixel
+                return .onePixel
             case .dash, .dot:
                 return 2
         }

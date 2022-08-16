@@ -7,7 +7,7 @@
 import WebKit
 
 extension WKWebsiteDataStore {
-    public enum RemoveDataType {
+    public enum DataType {
         /// All the available data types.
         case all
 
@@ -24,7 +24,7 @@ extension WKWebsiteDataStore {
         }
     }
 
-    public func remove(_ type: RemoveDataType, _ completion: (() -> Void)? = nil) {
+    public func remove(_ type: DataType, _ completion: (() -> Void)? = nil) {
         fetchDataRecords(ofTypes: type.dataTypes) { [weak self] records in
             self?.removeData(ofTypes: type.dataTypes, for: records) {
                 completion?()
