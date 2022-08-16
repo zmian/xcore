@@ -92,34 +92,6 @@ extension CGFloat {
     }
 }
 
-// MARK: - UIEdgeInsets
-
-extension UIEdgeInsets {
-    /// Spacing with the default value of `4` at a normal dynamic type setting.
-    public static var s1: Self { .init(.s1) }
-    /// Spacing with the default value of `8` at a normal dynamic type setting.
-    public static var s2: Self { .init(.s2) }
-    /// Spacing with the default value of `12` at a normal dynamic type setting.
-    public static var s3: Self { .init(.s3) }
-    /// Spacing with the default value of `16` at a normal dynamic type setting.
-    public static var s4: Self { .init(.s4) }
-    /// Spacing with the default value of `20` at a normal dynamic type setting.
-    public static var s5: Self { .init(.s5) }
-    /// Spacing with the default value of `24` at a normal dynamic type setting.
-    public static var s6: Self { .init(.s6) }
-    /// Spacing with the default value of `28` at a normal dynamic type setting.
-    public static var s7: Self { .init(.s7) }
-    /// Spacing with the default value of `32` at a normal dynamic type setting.
-    public static var s8: Self { .init(.s8) }
-
-    /// The default spacing value at a normal dynamic type setting.
-    public static var defaultSpacing: Self { .init(.defaultSpacing) }
-
-    /// The default spacing value at a normal dynamic type setting for inter items
-    /// in horizontal axis.
-    public static var interItemHSpacing: Self { .init(.interItemHSpacing) }
-}
-
 // MARK: - EdgeInsets
 
 extension EdgeInsets {

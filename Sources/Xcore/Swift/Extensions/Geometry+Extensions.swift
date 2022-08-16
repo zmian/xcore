@@ -7,178 +7,33 @@
 import UIKit
 import SwiftUI
 
-// MARK: - CGFloat - Extensions
-
-/// The value of `π` as a `CGFloat`.
-public let π = CGFloat.pi
+// MARK: - CGFloat
 
 extension CGFloat {
     /// A convenience method to convert an angle from degrees to radians.
     ///
     /// - Returns: `self` value in radians.
     public func degreesToRadians() -> Self {
-        π * self / 180
+        .pi * self / 180
     }
 
     /// A convenience method to convert an angle from radians to degrees.
     ///
     /// - Returns: `self` value in degrees.
     public func radiansToDegrees() -> Self {
-        self * 180 / π
+        self * 180 / .pi
     }
 }
 
-// MARK: - UIEdgeInsets - ExpressibleByFloatLiteral
+// MARK: - CGRect
 
-extension UIEdgeInsets: ExpressibleByFloatLiteral {
-    public init(floatLiteral value: FloatLiteralType) {
-        self = UIEdgeInsets(CGFloat(value))
+extension CGRect {
+    public init(_ size: CGSize) {
+        self = CGRect(origin: .zero, size: size)
     }
 }
 
-// MARK: - UIEdgeInsets - ExpressibleByIntegerLiteral
-
-extension UIEdgeInsets: ExpressibleByIntegerLiteral {
-    public init(integerLiteral value: IntegerLiteralType) {
-        self = UIEdgeInsets(CGFloat(value))
-    }
-}
-
-// MARK: - UIEdgeInsets - Extensions
-
-extension UIEdgeInsets {
-    public init(_ value: CGFloat) {
-        self = .init(top: value, left: value, bottom: value, right: value)
-    }
-
-    public init(top: CGFloat) {
-        self = .init(top: top, left: 0, bottom: 0, right: 0)
-    }
-
-    public init(left: CGFloat) {
-        self = .init(top: 0, left: left, bottom: 0, right: 0)
-    }
-
-    public init(bottom: CGFloat) {
-        self = .init(top: 0, left: 0, bottom: bottom, right: 0)
-    }
-
-    public init(right: CGFloat) {
-        self = .init(top: 0, left: 0, bottom: 0, right: right)
-    }
-
-    public init(horizontal: CGFloat, vertical: CGFloat) {
-        self = .init(top: vertical, left: horizontal, bottom: vertical, right: horizontal)
-    }
-
-    public init(horizontal: CGFloat) {
-        self = .init(top: 0, left: horizontal, bottom: 0, right: horizontal)
-    }
-
-    public init(horizontal: CGFloat, top: CGFloat) {
-        self = .init(top: top, left: horizontal, bottom: 0, right: horizontal)
-    }
-
-    public init(horizontal: CGFloat, bottom: CGFloat) {
-        self = .init(top: 0, left: horizontal, bottom: bottom, right: horizontal)
-    }
-
-    public init(vertical: CGFloat) {
-        self = .init(top: vertical, left: 0, bottom: vertical, right: 0)
-    }
-
-    public init(vertical: CGFloat, left: CGFloat) {
-        self = .init(top: vertical, left: left, bottom: vertical, right: 0)
-    }
-
-    public init(vertical: CGFloat, right: CGFloat) {
-        self = .init(top: vertical, left: 0, bottom: vertical, right: right)
-    }
-
-    public var horizontal: CGFloat {
-        get { left + right }
-        set {
-            left = newValue
-            right = newValue
-        }
-    }
-
-    public var vertical: CGFloat {
-        get { top + bottom }
-        set {
-            top = newValue
-            bottom = newValue
-        }
-    }
-}
-
-extension UIEdgeInsets {
-    public static func +=(lhs: inout Self, rhs: Self) {
-        lhs.top += rhs.top
-        lhs.left += rhs.left
-        lhs.bottom += rhs.bottom
-        lhs.right += rhs.right
-    }
-
-    public static func +=(lhs: inout Self, rhs: CGFloat) {
-        lhs.horizontal = rhs
-        lhs.vertical = rhs
-    }
-
-    public static func +(lhs: Self, rhs: Self) -> Self {
-        .init(
-            top: lhs.top + rhs.top,
-            left: lhs.left + rhs.left,
-            bottom: lhs.bottom + rhs.bottom,
-            right: lhs.right + rhs.right
-        )
-    }
-
-    public static func +(lhs: Self, rhs: CGFloat) -> Self {
-        .init(
-            top: lhs.top + rhs,
-            left: lhs.left + rhs,
-            bottom: lhs.bottom + rhs,
-            right: lhs.right + rhs
-        )
-    }
-}
-
-extension UIEdgeInsets {
-    public static func -=(lhs: inout Self, rhs: Self) {
-        lhs.top -= rhs.top
-        lhs.left -= rhs.left
-        lhs.bottom -= rhs.bottom
-        lhs.right -= rhs.right
-    }
-
-    public static func -=(lhs: inout Self, rhs: CGFloat) {
-        lhs.top -= rhs
-        lhs.left -= rhs
-        lhs.bottom -= rhs
-        lhs.right -= rhs
-    }
-
-    public static func -(lhs: Self, rhs: Self) -> Self {
-        .init(
-            top: lhs.top - rhs.top,
-            left: lhs.left - rhs.left,
-            bottom: lhs.bottom - rhs.bottom,
-            right: lhs.right - rhs.right
-        )
-    }
-
-    public static func -(lhs: Self, rhs: CGFloat) -> Self {
-        .init(
-            top: lhs.top - rhs,
-            left: lhs.left - rhs,
-            bottom: lhs.bottom - rhs,
-            right: lhs.right - rhs
-        )
-    }
-}
-
-// MARK: - CGSize - Extensions
+// MARK: - CGSize
 
 extension CGSize {
     /// Returns the lesser of width and height.
@@ -190,9 +45,7 @@ extension CGSize {
     public var max: CGFloat {
         Swift.max(width, height)
     }
-}
 
-extension CGSize {
     public init(_ value: CGFloat) {
         self = CGSize(width: value, height: value)
     }
@@ -213,9 +66,7 @@ extension CGSize {
     public static func +(lhs: Self, rhs: CGFloat) -> Self {
         .init(width: lhs.width + rhs, height: lhs.height + rhs)
     }
-}
 
-extension CGSize {
     public static func -=(lhs: inout Self, rhs: Self) {
         lhs.width -= rhs.width
         lhs.height -= rhs.height
@@ -232,9 +83,7 @@ extension CGSize {
     public static func -(lhs: Self, rhs: CGFloat) -> Self {
         .init(width: lhs.width - rhs, height: lhs.height - rhs)
     }
-}
 
-extension CGSize {
     public static func *=(lhs: inout Self, rhs: Self) {
         lhs.width *= rhs.width
         lhs.height *= rhs.height
@@ -253,15 +102,7 @@ extension CGSize {
     }
 }
 
-// MARK: - CGRect - Extensions
-
-extension CGRect {
-    public init(_ size: CGSize) {
-        self = CGRect(origin: .zero, size: size)
-    }
-}
-
-// MARK: - UILayoutPriority - Extensions
+// MARK: - UILayoutPriority
 
 extension UILayoutPriority {
     public static func +(lhs: Self, rhs: Float) -> Self {
@@ -273,10 +114,13 @@ extension UILayoutPriority {
     }
 }
 
-// MARK: - UIRectCorner - Extensions
+// MARK: - UIRectCorner
 
 extension UIRectCorner {
+    /// The top corner of the rectangle.
     public static let top: Self = [.topLeft, .topRight]
+
+    /// The bottom corner of the rectangle.
     public static let bottom: Self = [.bottomLeft, .bottomRight]
 
     public init(_ corner: CACornerMask) {
@@ -300,11 +144,16 @@ extension UIRectCorner {
     }
 }
 
-// MARK: - CACornerMask - Extensions
+// MARK: - CACornerMask
 
 extension CACornerMask {
+    /// All corners of the rectangle.
     public static let all: Self = [top, bottom]
+
+    /// The top corner of the rectangle.
     public static let top: Self = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+
+    /// The bottom corner of the rectangle.
     public static let bottom: Self = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
 
     public init(_ corner: UIRectCorner) {
@@ -328,7 +177,23 @@ extension CACornerMask {
     }
 }
 
-// MARK: - EdgeInsets - Extensions
+// MARK: - Edge.Set
+
+extension Edge.Set {
+    /// `.leading`, `.trailing`, `.bottom`.
+    public static let allButTop: Self = [.horizontal, .bottom]
+
+    /// `.leading`, `.trailing`, `.top`.
+    public static let allButBottom: Self = [.horizontal, .top]
+
+    /// `.leading`, `.top`, `.bottom`.
+    public static let allButTrailing: Self = [.leading, .vertical]
+
+    /// `.trailing`, `.top`, `.bottom`.
+    public static let allButLeading: Self = [.trailing, .vertical]
+}
+
+// MARK: - EdgeInsets
 
 extension EdgeInsets {
     public static let zero = Self(0)
@@ -411,18 +276,23 @@ extension EdgeInsets {
     }
 }
 
-// MARK: - Edge.Set
+// MARK: - UIEdgeInsets
 
-extension Edge.Set {
-    /// `.leading`, `.trailing`, `.bottom`.
-    public static let allButTop: Self = [.horizontal, .bottom]
+extension UIEdgeInsets {
+    public init(_ edges: Edge.Set, _ length: CGFloat) {
+        func value(edge: Edge.Set) -> CGFloat {
+            edges.contains(edge) ? length : 0
+        }
 
-    /// `.leading`, `.trailing`, `.top`.
-    public static let allButBottom: Self = [.horizontal, .top]
+        self.init(
+            top: value(edge: .top),
+            left: value(edge: .leading),
+            bottom: value(edge: .bottom),
+            right: value(edge: .trailing)
+        )
+    }
 
-    /// `.leading`, `.top`, `.bottom`.
-    public static let allButTrailing: Self = [.leading, .vertical]
-
-    /// `.trailing`, `.top`, `.bottom`.
-    public static let allButLeading: Self = [.trailing, .vertical]
+    public init(_ value: CGFloat) {
+        self = .init(top: value, left: value, bottom: value, right: value)
+    }
 }

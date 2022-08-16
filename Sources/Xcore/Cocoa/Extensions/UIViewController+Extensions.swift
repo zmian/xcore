@@ -18,7 +18,7 @@ extension UIViewController {
         _ childViewController: UIViewController,
         containerView: UIView? = nil,
         enableConstraints: Bool = false,
-        inset: UIEdgeInsets = 0
+        inset: UIEdgeInsets = .zero
     ) {
         guard let containerView = containerView ?? view else {
             return

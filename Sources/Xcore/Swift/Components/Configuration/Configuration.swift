@@ -29,17 +29,17 @@ import UIKit
 /// ```swift
 /// let headerLabel = UILabel(configuration: .header)
 /// ```
-public struct Configuration<Type> {
-    public typealias Identifier = Xcore.Identifier<Type>
-    public let id: Identifier
+public struct Configuration<Type>: Identifiable {
+    public typealias ID = Xcore.Identifier<Type>
+    public let id: ID
     private let _configure: (Type) -> Void
 
-    public init(id: Identifier? = nil, _ configure: @escaping ((Type) -> Void)) {
+    public init(id: ID? = nil, _ configure: @escaping ((Type) -> Void)) {
         self.id = id ?? "___defaultId___"
         self._configure = configure
     }
 
-    public func extend(id: Identifier? = nil, _ configure: @escaping ((Type) -> Void)) -> Self {
+    public func extend(id: ID? = nil, _ configure: @escaping ((Type) -> Void)) -> Self {
         .init(id: id ?? self.id) { type in
             self.configure(type)
             configure(type)
