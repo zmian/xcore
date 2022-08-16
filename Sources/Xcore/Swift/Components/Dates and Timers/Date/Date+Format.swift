@@ -6,31 +6,6 @@
 
 import Foundation
 
-// MARK: - Relative Formatted
-
-extension Date {
-    #warning("TODO: Normalize")
-    public func fromNow(
-        style: DateComponentsFormatter.UnitsStyle = .abbreviated,
-        format: String = "%@",
-        in calendar: Calendar = .default
-    ) -> String? {
-        let formatter = DateComponentsFormatter().apply {
-            $0.unitsStyle = style
-            $0.maximumUnitCount = 1
-            $0.allowedUnits = [.year, .month, .day, .hour, .minute, .second]
-            $0.calendar = calendar
-        }
-
-        guard let timeString = formatter.string(from: self, to: Date()) else {
-            return nil
-        }
-
-        let formatString = NSLocalizedString(format, comment: "Used to say how much time has passed (e.g., '2 hours ago').")
-        return String(format: formatString, timeString)
-    }
-}
-
 // MARK: - Formatted
 
 extension Date {
@@ -75,6 +50,8 @@ extension Date {
             case let .iso8601(options):
                 return cache.dateFormatter(options: options, calendar: calendar)
                     .string(from: self)
+            case let .relative(untilThreshold):
+                return formattedRelative(until: untilThreshold, calendar: calendar)
             case let .weekdayName(width):
                 return weekdayName(width, in: calendar)
             case let .monthName(width):
@@ -140,5 +117,42 @@ extension Date {
     ///   - calendar: The calendar to use when formatting name.
     private func monthName(_ style: Style.Width, in calendar: Calendar) -> String {
         Self._cache.symbolFormatter.monthName(for: component(.month), style: style, calendar: calendar)
+    }
+}
+
+// MARK: - Relative Formatted
+
+extension Date {
+    private func formattedRelative(until threshold: Calendar.Component, calendar: Calendar) -> String {
+        if #available(iOS 15.0, *) {
+            if `is`(.next(.hour), in: calendar) {
+                return formatted(.relative.calendar(calendar).capitalizationContext(.beginningOfSentence))
+            }
+
+            if `is`(.today, in: calendar) {
+                return "Today"
+            }
+
+            if `is`(.current(threshold), in: calendar) {
+                return formatted(.relative.calendar(calendar).capitalizationContext(.beginningOfSentence))
+            }
+
+            return formatted(style: .date(.medium))
+        } else {
+            // TODO: Remove all when iOS 14 support is dropped.
+            if `is`(.today, in: calendar) {
+                return "Today"
+            }
+
+            if `is`(.tomorrow, in: calendar) {
+                return "Tomorrow"
+            }
+
+            if `is`(.yesterday, in: calendar) {
+                return "Yesterday"
+            }
+
+            return formatted(style: .date(.medium))
+        }
     }
 }
