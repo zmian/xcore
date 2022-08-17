@@ -11,7 +11,7 @@ import UIKit
 extension UILabel {
     public func applyBullets(
         interlineFactor: CGFloat = 1,
-        style: NSAttributedString.BulletStyle = .default
+        style: NSAttributedString.BulletStyle = .dot
     ) {
         let attributedString = attributedText ?? NSAttributedString(
             string: text ?? "",
