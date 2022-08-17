@@ -6,6 +6,25 @@
 
 import Foundation
 
+/// A protocol to enable type safe value association with any of the
+/// ``NSObject`` subclasses.
+///
+/// An example of extending ``Timer`` class with custom `pauseDate` associated
+/// value:
+///
+/// ```swift
+/// extension Timer {
+///     private enum AssociatedKey {
+///         static var pauseDate = "pauseDate"
+///     }
+///
+///     /// A property indicating the date when the timer was paused.
+///     var pauseDate: Date? {
+///         get { associatedObject(&AssociatedKey.pauseDate) }
+///         set { setAssociatedObject(&AssociatedKey.pauseDate, value: newValue) }
+///     }
+/// }
+/// ```
 public protocol ExtensibleByAssociatedObject {}
 
 extension ExtensibleByAssociatedObject {
@@ -64,6 +83,7 @@ extension ExtensibleByAssociatedObject {
 
 // MARK: - AssociationPolicy
 
+/// An enumeration representing the behavior of an association.
 public enum AssociationPolicy {
     /// Specifies a weak reference to the associated object.
     case weak
@@ -88,6 +108,7 @@ public enum AssociationPolicy {
     /// The association is made atomically.
     case copyAtomic
 
+    /// Returns the underlying value of the association policy.
     fileprivate var rawValue: objc_AssociationPolicy {
         switch self {
             case .weak:
