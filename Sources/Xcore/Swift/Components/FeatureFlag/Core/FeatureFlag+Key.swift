@@ -13,7 +13,7 @@ extension FeatureFlag {
         /// Additional info which may be used to describe the key further.
         public var userInfo: UserInfo
 
-        /// Initialize an instance of key.
+        /// Creates an instance of key.
         ///
         /// - Parameter rawValue: A unique string representing the key.
         public init(rawValue: String) {
@@ -21,7 +21,7 @@ extension FeatureFlag {
             self.userInfo = [:]
         }
 
-        /// Initialize an instance of key.
+        /// Creates an instance of key.
         ///
         /// - Parameters:
         ///   - rawValue: A unique string representing the key.

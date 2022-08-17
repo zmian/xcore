@@ -17,7 +17,7 @@ public struct AppError: AppErrorProtocol, UserInfoContainer, MutableAppliable {
     /// Additional info which may be used to describe the error further.
     public var userInfo: UserInfo
 
-    /// Initialize an instance of app error.
+    /// Creates an instance of app error.
     ///
     /// - Parameters:
     ///   - id: A unique id for the error.
