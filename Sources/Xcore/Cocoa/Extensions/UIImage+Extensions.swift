@@ -9,12 +9,15 @@ import UIKit
 // MARK: - EncodingFormat
 
 extension UIImage {
+    /// An enumeration representing encoding format.
     public enum EncodingFormat {
+        /// Encoding format in PNG format.
         case png
+        /// Encoding format in JPEG format.
         case jpeg(quality: Double)
     }
 
-    /// Returns a data object that contains the specified image in given format.
+    /// Returns a data object that contains the specified image in a given format.
     ///
     /// - Parameter format: The encoding format.
     public func data(using format: EncodingFormat) -> Data? {

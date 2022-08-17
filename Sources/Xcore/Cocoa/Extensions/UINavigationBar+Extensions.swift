@@ -28,9 +28,7 @@ extension UINavigationBar {
             backgroundColor = .clear
         }
     }
-}
 
-extension UINavigationBar {
     /// The title’s text foreground color.
     @objc open dynamic var titleForegroundColor: UIColor? {
         get { titleTextAttributes?[.foregroundColor] as? UIColor }
