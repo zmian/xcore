@@ -21,7 +21,7 @@ public final class AnalyticsSessionTracker {
     private var values = Set<String>()
     private let sessionExpirationDuration: TimeInterval
 
-    /// Initialize an instance of analytics session tracker.
+    /// Creates an instance of analytics session tracker.
     ///
     /// - Parameter sessionExpirationDuration: Allowed time in seconds for the user
     ///   to be considered in the same session when the app enters foreground. The

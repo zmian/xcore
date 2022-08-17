@@ -15,7 +15,7 @@ public struct AdaptiveURL: UserInfoContainer, MutableAppliable {
     /// Additional info which may be used to describe the url further.
     public var userInfo: UserInfo
 
-    /// Initialize an instance of adaptive URL.
+    /// Creates an instance of adaptive URL.
     ///
     /// - Parameters:
     ///   - title: The title of the URL.
