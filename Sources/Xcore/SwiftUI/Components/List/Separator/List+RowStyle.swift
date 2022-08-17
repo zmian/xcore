@@ -51,8 +51,14 @@ private struct ListRowModifier: ViewModifier {
                         $0
                     }
                 }
-                .separator()
+                .overlay(separator, alignment: .bottom)
                 .contentShape(Rectangle())
+        }
+
+        private var separator: some View {
+            Separator()
+                .padding(separatorStyle.insets)
+                .hidden(separatorStyle == .hidden, remove: true)
         }
     }
 }

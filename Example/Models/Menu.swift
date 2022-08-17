@@ -66,8 +66,7 @@ extension Menu: CaseIterable {
 extension Menu {
     private static let separators = Self(
         title: "Separators",
-        subtitle: "UIKit",
-        content: SeparatorViewController().embedInView()
+        content: SeparatorsView()
     )
 
     private static let buttons = Self(

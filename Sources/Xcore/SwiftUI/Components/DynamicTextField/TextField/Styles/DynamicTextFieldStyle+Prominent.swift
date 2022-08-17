@@ -72,7 +72,7 @@ extension ProminentDynamicTextFieldStyle {
                 .apply {
                     if case .outline = prominence {
                         let color = outlineBorderColor
-                        $0.border(shape, width: color == nil ? 0.5 : 1, color: color)
+                        $0.border(shape, lineWidth: color == nil ? 0.5 : 1, color: color)
                     } else {
                         $0
                     }
