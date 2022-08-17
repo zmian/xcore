@@ -104,28 +104,38 @@ extension Timer {
 
 extension Timer {
     private enum AssociatedKey {
-        static var timerPauseDate = "timerPauseDate"
-        static var timerPreviousFireDate = "timerPreviousFireDate"
+        static var pauseDate = "pauseDate"
+        static var previousFireDate = "previousFireDate"
     }
 
+    /// A property indicating the date when the timer was paused.
     private var pauseDate: Date? {
-        get { associatedObject(&AssociatedKey.timerPauseDate) }
-        set { setAssociatedObject(&AssociatedKey.timerPauseDate, value: newValue) }
+        get { associatedObject(&AssociatedKey.pauseDate) }
+        set { setAssociatedObject(&AssociatedKey.pauseDate, value: newValue) }
     }
 
+    /// A property indicating the last fire date for the timer.
     private var previousFireDate: Date? {
-        get { associatedObject(&AssociatedKey.timerPreviousFireDate) }
-        set { setAssociatedObject(&AssociatedKey.timerPreviousFireDate, value: newValue) }
+        get { associatedObject(&AssociatedKey.previousFireDate) }
+        set { setAssociatedObject(&AssociatedKey.previousFireDate, value: newValue) }
     }
 
+    /// A method to pause the timer.
     public func pause() {
         pauseDate = Date()
         previousFireDate = fireDate
         fireDate = Date.distantFuture
     }
 
+    /// A method to resume the timer if it has been paused.
     public func resume() {
-        guard let pauseDate = pauseDate, let previousFireDate = previousFireDate else { return }
+        guard
+            let pauseDate = pauseDate,
+            let previousFireDate = previousFireDate
+        else {
+            return
+        }
+
         fireDate = Date(timeInterval: -pauseDate.timeIntervalSinceNow, since: previousFireDate)
     }
 }
