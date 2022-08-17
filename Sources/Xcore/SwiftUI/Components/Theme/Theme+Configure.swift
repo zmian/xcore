@@ -22,12 +22,18 @@ extension Theme {
         UIApplication.sharedOrNil?.delegate?.window??.tintColor = tintColor
 
         UIBarButtonItem.appearance().setTitleTextAttributes(
-            UIViewController.defaultBarButtonItemTextAttributes,
+            [
+                .font: UIFont.app(.body),
+                .foregroundColor: tintColor
+            ],
             for: .normal
         )
 
         UINavigationBar.appearance().apply {
-            $0.titleTextAttributes = UIViewController.defaultNavigationBarTextAttributes
+            $0.titleTextAttributes = [
+                .font: UIFont.app(.headline),
+                .foregroundColor: theme.textColor.uiColor
+            ]
             $0.tintColor = tintColor
             $0.barTintColor = theme.backgroundColor.uiColor
             $0.barStyle = .default
@@ -63,9 +69,5 @@ extension Theme {
 
     private static func setComponentsTheme(_ theme: Theme) {
         SeparatorView.appearance().tintColor = theme.separatorColor.uiColor
-
-        UIViewController.defaultAppearance.apply {
-            $0.tintColor = theme.tintColor.uiColor
-        }
     }
 }
