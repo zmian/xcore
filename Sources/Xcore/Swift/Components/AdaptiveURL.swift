@@ -6,10 +6,12 @@
 
 import Foundation
 
+/// A structure representing adaptive URL.
 public struct AdaptiveURL: UserInfoContainer, MutableAppliable {
     /// The title of the URL.
     public var title: String
 
+    /// The underlying URL.
     public var url: URL
 
     /// Additional info which may be used to describe the url further.
@@ -19,7 +21,7 @@ public struct AdaptiveURL: UserInfoContainer, MutableAppliable {
     ///
     /// - Parameters:
     ///   - title: The title of the URL.
-    ///   - url: The url.
+    ///   - url: The underlying url.
     ///   - userInfo: Additional info associated with the url.
     public init(title: String, url: URL, userInfo: UserInfo = [:]) {
         self.title = title
