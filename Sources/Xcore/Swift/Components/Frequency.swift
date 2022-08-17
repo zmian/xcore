@@ -6,11 +6,11 @@
 
 import Foundation
 
-public struct Frequency: UserInfoContainer, MutableAppliable, CustomAnalyticsValueConvertible {
-    public typealias Identifier = Xcore.Identifier<Self>
+public struct Frequency: Identifiable, UserInfoContainer, MutableAppliable, CustomAnalyticsValueConvertible {
+    public typealias ID = Identifier<Self>
 
     /// A unique id for the frequency.
-    public let id: Identifier
+    public let id: ID
 
     /// The title for the frequency.
     public let title: String
@@ -25,7 +25,7 @@ public struct Frequency: UserInfoContainer, MutableAppliable, CustomAnalyticsVal
     public var userInfo: UserInfo
 
     public init(
-        id: Identifier = #function,
+        id: ID = #function,
         title: String,
         analyticsValue: String? = nil,
         dateInterval: DateInterval,

@@ -22,13 +22,13 @@ public protocol PresentationContext {
 
 // If Swift ever allows nested types this enum can move under the
 // protocol namespace as `PresentationContextKind.Kind`.
-public struct PresentationContextKind: Equatable {
-    public typealias Identifier = Xcore.Identifier<Self>
+public struct PresentationContextKind: Identifiable, Hashable {
+    public typealias ID = Identifier<Self>
 
     /// A unique id for the presentation context.
-    public let id: Identifier
+    public let id: ID
 
-    public init(id: Identifier) {
+    public init(id: ID) {
         self.id = id
     }
 }
