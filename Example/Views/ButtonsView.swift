@@ -131,10 +131,8 @@ extension ButtonsView {
             }
 
             button {
-                HStack {
-                    Text("Capsule")
-                    Image(system: .chevronRight)
-                }
+                Label("Capsule", systemImage: .chevronRight)
+                    .labelStyle(.iconAfter)
             }
         }
         .buttonStyle(.capsule)
