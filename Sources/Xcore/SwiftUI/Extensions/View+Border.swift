@@ -7,16 +7,23 @@
 import SwiftUI
 
 extension View {
-    /// Adds a border in front of this view with the specified shape, width and
-    /// color.
+    /// Adds a border in front of this view with the specified corner radius, width
+    /// and color.
+    ///
+    /// - Parameters:
+    ///   - cornerRadius: The corner radius of the border.
+    ///   - lineWidth: The thickness of the border. The default is 1 pixel.
+    ///   - color: The border color.
+    /// - Returns: A view that adds a border with the specified corner radius, width
+    ///   and color to this view.
     public func border(
         cornerRadius: CGFloat = AppConstants.cornerRadius,
-        width: CGFloat = .onePixel,
+        lineWidth: CGFloat = .onePixel,
         color: Color? = nil
     ) -> some View {
         border(
             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous),
-            width: width,
+            lineWidth: lineWidth,
             color: color
         )
     }
@@ -29,16 +36,19 @@ extension View {
     ///
     /// - Parameters:
     ///   - content: The border shape.
-    ///   - width: The thickness of the border; if not provided, the default is
-    ///     `1` pixel.
+    ///   - lineWidth: The thickness of the border. The default is 1 pixel.
     ///   - color: The border color.
     /// - Returns: A view that adds a border with the specified shape, width and
     ///   color to this view.
-    public func border<S>(_ content: S, width: CGFloat = .onePixel, color: Color? = nil) -> some View where S: InsettableShape {
+    public func border<S>(
+        _ content: S,
+        lineWidth: CGFloat = .onePixel,
+        color: Color? = nil
+    ) -> some View where S: InsettableShape {
         EnvironmentReader(\.theme) { theme in
             overlay(
                 content
-                    .strokeBorder(color ?? theme.separatorColor, lineWidth: width)
+                    .strokeBorder(color ?? theme.separatorColor, lineWidth: lineWidth)
             )
         }
     }

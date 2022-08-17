@@ -13,7 +13,6 @@ extension Theme {
     public static func set(_ theme: Theme) {
         self.default = theme
         setSystemComponentsTheme(theme)
-        setComponentsTheme(theme)
     }
 
     private static func setSystemComponentsTheme(_ theme: Theme) {
@@ -65,9 +64,5 @@ extension Theme {
         UITabBar.appearance().apply {
             $0.tintColor = tintColor
         }
-    }
-
-    private static func setComponentsTheme(_ theme: Theme) {
-        SeparatorView.appearance().tintColor = theme.separatorColor.uiColor
     }
 }
