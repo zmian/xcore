@@ -31,7 +31,7 @@ import SwiftUI
 /// ```
 @dynamicMemberLookup
 public struct Theme: Identifiable, MutableAppliable, UserInfoContainer {
-    public typealias ID = Xcore.Identifier<Self>
+    public typealias ID = Identifier<Self>
     public typealias ButtonColor = (ButtonIdentifier, ButtonState, ElementPosition) -> Color
 
     /// A unique id for the theme.

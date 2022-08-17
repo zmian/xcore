@@ -30,7 +30,7 @@ import UIKit
 /// let headerLabel = UILabel(configuration: .header)
 /// ```
 public struct Configuration<Type>: Identifiable {
-    public typealias ID = Xcore.Identifier<Type>
+    public typealias ID = Identifier<Type>
     public let id: ID
     private let _configure: (Type) -> Void
 
