@@ -33,7 +33,7 @@ public struct FilterButton: View {
                 .foregroundColor(theme.backgroundColor)
                 .offset(y: -1)
                 .padding(.s2)
-                .backgroundColor(theme.tintColor)
+                .background(theme.tintColor)
                 .clipShape(Circle())
         }
     }

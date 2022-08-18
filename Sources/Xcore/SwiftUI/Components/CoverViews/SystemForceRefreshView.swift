@@ -24,6 +24,6 @@ public struct SystemForceRefreshView: View {
     private var loadingView: some View {
         ProgressView()
             .frame(max: .infinity)
-            .backgroundColor(theme.backgroundColor)
+            .background(theme.backgroundColor)
     }
 }

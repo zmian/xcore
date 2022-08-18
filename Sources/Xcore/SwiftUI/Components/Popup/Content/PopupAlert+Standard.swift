@@ -112,7 +112,7 @@ struct StandardPopupAlert_Previews: PreviewProvider {
         }
         .padding(.defaultSpacing)
         .frame(max: .infinity)
-        .backgroundColor(.secondary.opacity(0.15))
+        .background(.secondary.opacity(0.15))
         .previewLayout(.sizeThatFits)
     }
 }

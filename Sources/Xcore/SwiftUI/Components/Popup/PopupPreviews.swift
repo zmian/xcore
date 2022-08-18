@@ -95,7 +95,7 @@ private struct PopupPreviews: View {
             }
             .frame(height: 300)
             .padding(.s8)
-            .backgroundColor(.systemBackground)
+            .background(Color(.systemBackground))
             .cornerRadius(AppConstants.tileCornerRadius)
         }
     }

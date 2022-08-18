@@ -54,7 +54,7 @@ struct PopupSheet_Previews: PreviewProvider {
             .frame(height: 250)
         }
         .frame(max: .infinity, alignment: .bottom)
-        .backgroundColor(.secondary)
+        .background(.secondary)
         .ignoresSafeArea()
     }
 }

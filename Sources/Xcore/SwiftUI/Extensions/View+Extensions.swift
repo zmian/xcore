@@ -6,17 +6,9 @@
 
 import SwiftUI
 
-extension View {
-    /// Embed this view in a navigation view.
-    ///
-    /// - Note: This method is internal on purpose to allow the app target to
-    ///   declare their own variant in case they want to use this method name to
-    ///   apply any additional modifications (e.g., setting the navigation view style
-    ///   `.navigationViewStyle(.stack)`).
-    func embedInNavigation() -> some View {
-        NavigationView { self }
-    }
+// MARK: - Embed
 
+extension View {
     /// Wraps this view with a type eraser.
     ///
     /// - Returns: An `AnyView` wrapping this view.
@@ -35,85 +27,65 @@ extension View {
             self
         }
     }
+
+    /// Embed this view in a navigation view.
+    ///
+    /// - Note: This method is internal on purpose to allow the app target to
+    ///   declare their own variant in case they want to use this method name to
+    ///   apply any additional modifications (e.g., setting the navigation view style
+    ///   `.navigationViewStyle(.stack)`).
+    func embedInNavigation() -> some View {
+        NavigationView { self }
+    }
 }
 
 // MARK: - BackgroundColor
 
 extension View {
     /// Sets the background color behind this view.
-    public func backgroundColor(_ color: Color, ignoresSafeAreaEdges edges: Edge.Set = .all) -> some View {
-        background(
-            color
-                .ignoresSafeArea(edges: edges)
-        )
-    }
-
-    /// Sets the background color behind this view.
-    public func backgroundColor(ignoresSafeAreaEdges edges: Edge.Set = .all, _ color: () -> Color) -> some View {
-        background(
-            color()
-                .ignoresSafeArea(edges: edges)
-        )
-    }
-
-    /// Sets the background color behind this view.
-    @_disfavoredOverload
-    public func backgroundColor(_ color: UIColor, ignoresSafeAreaEdges edges: Edge.Set = .all) -> some View {
-        background(
-            Color(color)
-                .ignoresSafeArea(edges: edges)
-        )
-    }
-
-    /// Sets the background color behind this view.
-    @_disfavoredOverload
-    public func backgroundColor(ignoresSafeAreaEdges edges: Edge.Set = .all, _ color: () -> UIColor) -> some View {
-        background(
-            Color(color())
-                .ignoresSafeArea(edges: edges)
-        )
+    @available(iOS, introduced: 14, deprecated: 15, message: "Use background(_:ignoresSafeAreaEdges) directly.")
+    public func background(_ color: Color, ignoresSafeAreaEdges edges: Edge.Set = .all) -> some View {
+        background(color.ignoresSafeArea(edges: edges))
     }
 }
 
 // MARK: - ForegroundColor
 
 extension View {
-    /// Sets the color that the view uses for foreground elements.
-    public func foregroundColor(_ color: () -> Color) -> some View {
+    /// Sets the color of the foreground elements displayed by this view.
+    ///
+    /// - Parameter color: A closure to return foreground color to use when
+    ///   displaying this view. Return `nil` to remove any custom foreground color
+    ///   and to allow the system or the container to provide its own foreground
+    ///   color. If a container-specific override doesn’t exist, the system uses the
+    ///   primary color.
+    /// - Returns: A view that uses the foreground color you supply.
+    public func foregroundColor(_ color: () -> Color?) -> some View {
         foregroundColor(color())
-    }
-
-    /// Sets the color that the view uses for foreground elements.
-    @_disfavoredOverload
-    public func foregroundColor(_ color: () -> UIColor) -> some View {
-        foregroundColor(Color(color()))
-    }
-
-    /// Sets the color that the view uses for foreground elements.
-    @_disfavoredOverload
-    public func foregroundColor(_ color: UIColor) -> some View {
-        foregroundColor(Color(color))
     }
 }
 
 // MARK: - ForegroundColor: Text
 
 extension Text {
-    /// Sets the color that the view uses for foreground elements.
-    public func foregroundColor(_ color: () -> Color) -> Text {
+    /// Sets the color of the text displayed by this view.
+    ///
+    /// Use this method to change the color of the text rendered by a text view.
+    ///
+    /// For example, you can display the names of the color red based on some
+    /// condition:
+    ///
+    /// ```swift
+    /// Text("Red")
+    ///     .foregroundColor {
+    ///         isActive ? .red : nil
+    ///     }
+    /// ```
+    ///
+    /// - Parameter color: The color to use when displaying this text.
+    /// - Returns: A text view that uses the color value you supply.
+    public func foregroundColor(_ color: () -> Color?) -> Text {
         foregroundColor(color())
-    }
-
-    /// Sets the color that the view uses for foreground elements.
-    @_disfavoredOverload
-    public func foregroundColor(_ color: () -> UIColor) -> Text {
-        foregroundColor(Color(color()))
-    }
-
-    /// Sets the color that the view uses for foreground elements.
-    @_disfavoredOverload
-    public func foregroundColor(_ color: UIColor) -> Text {
-        foregroundColor(Color(color))
     }
 }
 
