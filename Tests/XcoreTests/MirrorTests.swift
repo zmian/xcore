@@ -577,6 +577,39 @@ final class MirrorTests: TestCase {
             }
         }
     }
+
+    func testIsEmpty() {
+        var anyValue: Any = Array("Hello")
+        XCTAssertEqual(Mirror.isEmpty(anyValue), false)
+
+        anyValue = [String]()
+        XCTAssertEqual(Mirror.isEmpty(anyValue), true)
+
+        anyValue = 2
+        XCTAssertEqual(Mirror.isEmpty(anyValue), nil)
+
+        anyValue = Set(["World"])
+        XCTAssertEqual(Mirror.isEmpty(anyValue), false)
+
+        anyValue = Set<String>()
+        XCTAssertEqual(Mirror.isEmpty(anyValue), true)
+    }
+
+    func testIsEqual() {
+        var lhs: Any = Array("Hello")
+        var rhs: Any = Array("Hello")
+
+        XCTAssertEqual(Mirror.isEqual(lhs, rhs), true)
+
+        rhs = Array("World")
+        XCTAssertEqual(Mirror.isEqual(lhs, rhs), false)
+
+        rhs = "Hello"
+        XCTAssertEqual(Mirror.isEqual(lhs, rhs), false)
+
+        lhs = "Hello"
+        XCTAssertEqual(Mirror.isEqual(lhs, rhs), true)
+    }
 }
 
 // MARK: - Helpers
