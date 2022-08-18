@@ -99,6 +99,6 @@ struct StandardPopupSheet_Previews: PreviewProvider {
                 .font(.app(.title3))
         }
         .frame(max: .infinity, alignment: .bottom)
-        .backgroundColor(.secondary)
+        .background(.secondary)
     }
 }

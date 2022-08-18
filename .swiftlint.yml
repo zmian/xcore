@@ -165,12 +165,6 @@ custom_rules:
     regex: '\: ImageAssetIdentifier (\{ #function \}|\{ propertyName\(\) \})'
     message: "Replace ImageAssetIdentifier with Self."
 
-  sui_icc_foregroundColor:
-    included: ".*.swift"
-    name: "Inconsistent Coding Convention"
-    regex: "\\.foregroundColor\\(Color\\("
-    message: "Use foregroundColor() directly instead of wrapping in Color."
-
   sui_icc_env_namespace:
     included: ".*.swift"
     name: "Inconsistent Coding Convention"

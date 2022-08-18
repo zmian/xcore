@@ -32,7 +32,7 @@ struct StoryProgressIndicator_Previews: PreviewProvider {
                 .storyProgressIndicatorColor(.purple)
         }
         .padding(20)
-        .backgroundColor(.black)
+        .background(.black)
         .previewLayout(.sizeThatFits)
     }
 }

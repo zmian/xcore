@@ -10,7 +10,7 @@ import SwiftUI
 ///
 /// ```swift
 /// EnvironmentReader(\.theme) { theme in
-///     Color(theme.backgroundColor)
+///     theme.backgroundColor
 /// }
 /// ```
 public struct EnvironmentReader<Value, Content>: View where Content: View {

@@ -65,7 +65,7 @@ extension ProminentDynamicTextFieldStyle {
             DynamicTextField.default(configuration)
                 .padding(finalPadding)
                 .applyIf(prominence == .fill) {
-                    $0.backgroundColor(theme.backgroundSecondaryColor)
+                    $0.background(theme.backgroundSecondaryColor)
                 }
                 .clipShape(shape)
                 .contentShape(shape)

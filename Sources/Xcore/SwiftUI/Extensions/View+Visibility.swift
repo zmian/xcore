@@ -11,6 +11,10 @@ extension View {
     /// Adds an action to perform when main window visibility status changes.
     ///
     /// - Note: It fires `.obstructed` event when `self` disappears as well.
+    ///
+    /// - Parameter action: The action to perform when visibility status changes.
+    /// - Returns: A view that triggers action when this view's visibility status
+    ///   changes.
     public func onVisibilityStatusChange(perform action: @escaping (VisibilityStatus) -> Void) -> some View {
         modifier(VisibilityModifier(action: action))
     }
@@ -18,9 +22,15 @@ extension View {
 
 // MARK: - Status
 
+/// An enumeration representing the visibility status.
 public enum VisibilityStatus: String, CustomAnalyticsValueConvertible {
+    /// The element visibility is unknown.
     case unknown
+
+    /// The element may be visible.
     case visible
+
+    /// The element may be obstructed by another UI element (e.g., popup).
     case obstructed
 }
 

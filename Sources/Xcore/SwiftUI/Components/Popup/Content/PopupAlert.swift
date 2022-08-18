@@ -74,7 +74,7 @@ struct PopupAlert_Previews: PreviewProvider {
             }
         }
         .padding(.defaultSpacing)
-        .backgroundColor(.secondary.opacity(0.15))
+        .background(.secondary.opacity(0.15))
         .previewLayout(.sizeThatFits)
     }
 }

@@ -61,7 +61,7 @@ struct HorizontalBarProgressViewStyle_Previews: PreviewProvider {
                 .accentColor(.green)
         }
         .padding(20)
-        .backgroundColor(.black)
+        .background(.black)
         .previewLayout(.sizeThatFits)
     }
 }

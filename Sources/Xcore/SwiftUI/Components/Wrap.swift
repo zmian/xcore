@@ -9,6 +9,11 @@ import SwiftUI
 // MARK: - UIViewController Wrapper
 
 extension UIViewController {
+    /// Embed this view controller in `SwiftUI.View`.
+    public func embedInView() -> some View {
+        Wrapper { self }
+    }
+
     private struct Wrapper<Content: UIViewController>: UIViewControllerRepresentable {
         private let content: () -> Content
 
@@ -22,16 +27,16 @@ extension UIViewController {
 
         public func updateUIViewController(_ uiViewController: Content, context: Context) {}
     }
-
-    /// Embed this view controller in `SwiftUI.View`.
-    public func embedInView() -> some View {
-        Wrapper { self }
-    }
 }
 
 // MARK: - UIView Wrapper
 
 extension UIView {
+    /// Embed this view in `SwiftUI.View`.
+    public func embedInView() -> some View {
+        Wrapper { self }
+    }
+
     private struct Wrapper<Content: UIView>: UIViewRepresentable {
         private let content: () -> Content
 
@@ -44,10 +49,5 @@ extension UIView {
         }
 
         public func updateUIView(_ uiView: Content, context: Context) {}
-    }
-
-    /// Embed this view in `SwiftUI.View`.
-    public func embedInView() -> some View {
-        Wrapper { self }
     }
 }
