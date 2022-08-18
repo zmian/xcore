@@ -17,8 +17,8 @@ extension Image {
     /// - Returns: An image, with the new resizing behavior set.
     public func resizable(
         _ isActive: Bool,
-        capInsets: EdgeInsets = EdgeInsets(),
-        resizingMode: Image.ResizingMode = .stretch
+        capInsets: EdgeInsets = .zero,
+        resizingMode: ResizingMode = .stretch
     ) -> Image {
         isActive ? resizable(capInsets: capInsets, resizingMode: resizingMode) : self
     }
