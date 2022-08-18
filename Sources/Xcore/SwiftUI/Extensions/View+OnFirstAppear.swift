@@ -32,7 +32,7 @@ extension View {
         with id: ID,
         perform action: (() -> Void)? = nil
     ) -> some View where ID: Hashable {
-        modifier(FirstAppearActionModifier(action: action))
+        onFirstAppear(perform: action)
             .onChange(of: id) { _ in
                 action?()
             }
