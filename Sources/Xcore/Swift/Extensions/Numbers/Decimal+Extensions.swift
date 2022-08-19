@@ -39,7 +39,8 @@ extension Decimal {
     /// - Parameter range: The range in which to create a random value. Must be
     ///   finite.
     /// - Returns: A random value within the bounds of `range`.
-    @inlinable public static func random(in range: ClosedRange<Decimal>) -> Decimal {
+    @inlinable
+    public static func random(in range: ClosedRange<Decimal>) -> Decimal {
         Decimal(Double.random(
             in: Double(truncating: range.lowerBound)...Double(truncating: range.upperBound)
         ))
@@ -249,7 +250,7 @@ extension Decimal {
     public func calculatePrecision() -> ClosedRange<Int> {
         let absAmount = abs(self)
 
-        if absAmount > 0 && absAmount < 0.01 {
+        if absAmount > 0, absAmount < 0.01 {
             // 1. Count the number of digits after the decimal point
             let significantFractionalDecimalDigits = absAmount.significantFractionalDecimalDigits
             // 2. Count the number of significant digits after the decimal point
@@ -297,8 +298,8 @@ extension Decimal {
     /// only.
     var stringValue: String {
         Self.usPosixFormatter.string(from: self) ??
-        NSDecimalNumber(decimal: self)
-            .description(withLocale: Locale.usPosix)
+            NSDecimalNumber(decimal: self)
+                .description(withLocale: Locale.usPosix)
     }
 
     /// This is an implementation detail of `double` and `Double(any:)`.

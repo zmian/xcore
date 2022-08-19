@@ -102,7 +102,7 @@ extension Popup {
 // MARK: - Equatable
 
 extension Popup.Style {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.alignment == rhs.alignment &&
         lhs.animation == rhs.animation &&
         lhs.windowStyle == rhs.windowStyle &&

@@ -26,7 +26,7 @@ import Foundation
 /// ```
 @propertyWrapper
 public struct Trimmed {
-    private var value: String = ""
+    private var value = ""
 
     public init(wrappedValue: String) {
         self.wrappedValue = wrappedValue

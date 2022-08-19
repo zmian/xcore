@@ -85,8 +85,7 @@ extension JSONDecoder {
             guard
                 let keyPath = decoder.userInfo[.keyPath] as? ArraySlice<String>,
                 !keyPath.isEmpty
-            else
-            {
+            else {
                 throw Error.internal
             }
 

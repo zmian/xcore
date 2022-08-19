@@ -345,7 +345,7 @@ final class MirrorTests: TestCase {
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let value2: Bool = false
+        let value2 = false
         let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .bool, isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
@@ -361,7 +361,7 @@ final class MirrorTests: TestCase {
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let value2: String = "hello"
+        let value2 = "hello"
         let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .string, isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
@@ -425,7 +425,7 @@ final class MirrorTests: TestCase {
         XCTAssertEqual(actual1, expected1)
 
         // Non-Optional
-        let value2: Int = 2
+        let value2 = 2
         let actual2 = Mirror.type(of: value2)
         let expected2 = Mirror.TypeInfo(kind: .numeric(.int), isOptional: false, isCodable: true)
         XCTAssertEqual(actual2, expected2)
@@ -532,7 +532,7 @@ final class MirrorTests: TestCase {
         }
 
         struct Value: Equatable, Codable {
-            var id: String = ""
+            var id = ""
             var name: String?
             var age: Float?
             var style1: Style1 = .two

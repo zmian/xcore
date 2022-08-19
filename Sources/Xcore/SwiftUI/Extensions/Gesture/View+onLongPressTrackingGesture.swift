@@ -51,13 +51,13 @@ private struct LongPressTrackingGestureRecognizer: UIViewRepresentable {
 
         let longPressGesture = UILongPressGestureRecognizer {
             onChanged($0.location(in: $0.view))
-           if [.ended, .cancelled, .failed].contains($0.state) {
-               onEnded()
-           }
-       }.apply {
-           $0.minimumPressDuration = minimumPressDuration
-           $0.allowableMovement = allowableMovement
-       }
+            if [.ended, .cancelled, .failed].contains($0.state) {
+                onEnded()
+            }
+        }.apply {
+            $0.minimumPressDuration = minimumPressDuration
+            $0.allowableMovement = allowableMovement
+        }
 
         view.addGestureRecognizer(longPressGesture)
         return view

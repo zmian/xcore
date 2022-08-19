@@ -134,11 +134,10 @@ extension Bundle {
             return .main
         }
 
-        return
-            .init(url:
-                    Bundle.main.bundleURL
+        return .init(
+            url: Bundle.main.bundleURL
                 .deletingLastPathComponent()
                 .deletingLastPathComponent()
-            ) ?? .main
+        ) ?? .main
     }
 }

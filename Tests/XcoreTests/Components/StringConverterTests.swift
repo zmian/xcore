@@ -46,7 +46,7 @@ final class StringConverterTests: TestCase {
             "language": "Swift"
         ]
 
-        let defaultDictionary: [String: String] = ["hello": "world"]
+        let defaultDictionary = ["hello": "world"]
         XCTAssertEqual(ConvertItem.validDictionary.value(default: defaultDictionary), validDictionary)
         XCTAssertEqual(ConvertItem.invalidDictionary.value(default: defaultDictionary), defaultDictionary)
 

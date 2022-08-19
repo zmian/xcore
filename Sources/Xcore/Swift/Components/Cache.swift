@@ -10,7 +10,7 @@ import Foundation
 /// that are subject to eviction when resources are low.
 open class Cache<Key: Hashable, Value> {
     /// The keys of the cache.
-    public private (set) var keys = Set<Key>()
+    public private(set) var keys = Set<Key>()
     private let cache = NSCache<KeyWrapper<Key>, ValueWrapper>()
     private let delegate = DelegateWrapper<Value>()
 
@@ -159,7 +159,7 @@ private final class ValueWrapper {
     }
 }
 
-private final class KeyWrapper<Key: Hashable & Sendable >: NSObject, Sendable {
+private final class KeyWrapper<Key: Hashable & Sendable>: NSObject, Sendable {
     let key: Key
 
     init(_ key: Key) {

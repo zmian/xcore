@@ -192,28 +192,28 @@ final class MoneyTests: TestCase {
         XCTAssertEqual(String(describing: amount8), "$132.46K")
 
         let amount9 = Money(1200)
-            .style(.abbreviated(threshold: 1_201))
+            .style(.abbreviated(threshold: 1201))
 
         XCTAssertEqual(String(describing: amount9), "$1,200.00")
 
         let amount10 = Money(1200)
-            .style(.abbreviated(threshold: 1_200))
+            .style(.abbreviated(threshold: 1200))
 
         XCTAssertEqual(String(describing: amount10), "$1.2K")
 
         let amount11 = Money(-1200)
-            .style(.abbreviated(threshold: 1_200))
+            .style(.abbreviated(threshold: 1200))
 
         XCTAssertEqual(String(describing: amount11), "−$1.2K")
 
         let amount12 = Money(1200)
-            .style(.abbreviated(threshold: 1_200))
+            .style(.abbreviated(threshold: 1200))
             .sign(.both)
 
         XCTAssertEqual(String(describing: amount12), "+$1.2K")
 
         let amount13 = Money(-1200)
-            .style(.abbreviated(threshold: 1_200))
+            .style(.abbreviated(threshold: 1200))
             .sign(.whenPositive)
 
         XCTAssertEqual(String(describing: amount13), "$1.2K")

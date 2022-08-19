@@ -122,9 +122,9 @@ private struct NumberFieldPreview: View {
             .accentColor(Color(UIColor.link))
 
             Button("Change to 1,000,000") {
-                money = 1000000.01
-                decimal = 1000000.01
-                integer = 1000000
+                money = 1_000_000.00
+                decimal = 1_000_000.00
+                integer = 1_000_000
             }
             .accentColor(Color(UIColor.link))
         }

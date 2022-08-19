@@ -31,13 +31,13 @@ extension Pond {
             // If the key exists, this means it's not the first launch.
             !contains(.isFirstLaunch)
         }
-        nonmutating set { try? `set`(.isFirstLaunch, value: newValue) }
+        nonmutating set { try? set(.isFirstLaunch, value: newValue) }
     }
 
     /// Returns last saved system force refresh hash.
     public var lastSystemForceRefreshHash: String? {
-        get { try? `get`(.lastSystemForceRefreshHash) }
-        nonmutating set { try? `set`(.lastSystemForceRefreshHash, value: newValue) }
+        get { try? get(.lastSystemForceRefreshHash) }
+        nonmutating set { try? set(.lastSystemForceRefreshHash, value: newValue) }
     }
 }
 

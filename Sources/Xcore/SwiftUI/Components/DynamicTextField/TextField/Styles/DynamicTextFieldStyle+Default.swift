@@ -84,8 +84,8 @@ struct DefaultDynamicTextFieldView: View {
                 }
 
                 return configuration.isValid ?
-                attributes.placeholderSuccessColor :
-                attributes.placeholderErrorColor
+                    attributes.placeholderSuccessColor :
+                    attributes.placeholderErrorColor
             }
     }
 
