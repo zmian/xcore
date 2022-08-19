@@ -7,8 +7,8 @@
 #if DEBUG
 import Foundation
 
-public struct FailingPond: Pond {
-    public let id = "failing"
+public struct UnimplementedPond: Pond {
+    public let id = "unimplemented"
 
     public init() {}
 
@@ -33,8 +33,8 @@ public struct FailingPond: Pond {
 
 // MARK: - Dot Syntax Support
 
-extension Pond where Self == FailingPond {
-    /// Returns failing variant of `Pond`.
-    public static var failing: Self { .init() }
+extension Pond where Self == UnimplementedPond {
+    /// Returns unimplemented variant of `Pond`.
+    public static var unimplemented: Self { .init() }
 }
 #endif

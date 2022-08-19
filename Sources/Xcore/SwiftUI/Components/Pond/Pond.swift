@@ -113,7 +113,7 @@ extension DependencyValues {
         static let defaultValue: Pond = {
             #if DEBUG
             if ProcessInfo.Arguments.isTesting {
-                return .failing
+                return .unimplemented
             }
             #endif
             return .empty
