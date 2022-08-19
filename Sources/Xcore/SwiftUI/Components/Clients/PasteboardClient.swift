@@ -23,7 +23,7 @@ public struct PasteboardClient {
     /// Copy the given string to the pasteboard.
     public let copy: (String) -> Void
 
-    /// Creates a client that copys a string to the pasteboard.
+    /// Creates a client that copy a string to the pasteboard.
     ///
     /// - Parameter copy: The closure to copy the given string to the pasteboard.
     public init(copy: @escaping (String) -> Void) {
