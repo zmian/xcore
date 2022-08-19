@@ -63,7 +63,7 @@ private func _isEmpty(_ value: Any) -> Bool? {
     return _openExistential(type(of: value), do: `do`)
 }
 
-// MARK: - AnyEquatable.isEmpty
+// MARK: - AnyEquatable.isEqual
 
 private protocol _AnyEquatable {
     static func _isEqual(_ lhs: Any, _ rhs: Any) -> Bool
