@@ -10,7 +10,7 @@ import Foundation
 /// storage.
 ///
 /// The library comes with few types out of the box: `UserDefaults`, `Keychain`,
-/// `InMemory`, `Failing`, `Empty` and `Composite` types.
+/// `InMemory`, `Unimplemented`, `Empty` and `Composite` types.
 ///
 /// To allow testability, reliability and predictability for persisting various
 /// types of data ranging from tokens to perishable user preferences. The
