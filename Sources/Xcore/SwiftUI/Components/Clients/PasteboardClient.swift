@@ -25,7 +25,7 @@ public struct PasteboardClient {
 
     /// Creates a client that copys a string to the pasteboard.
     ///
-    /// - Parameter open: The closure to copy the given string to the pasteboard.
+    /// - Parameter copy: The closure to copy the given string to the pasteboard.
     public init(copy: @escaping (String) -> Void) {
         self.copy = copy
     }
