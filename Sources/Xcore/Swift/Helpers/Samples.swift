@@ -4,6 +4,8 @@
 // MIT license, see LICENSE file for details
 //
 
+import Foundation
+
 /// A namespace for previews purpose.
 public enum Samples {}
 
