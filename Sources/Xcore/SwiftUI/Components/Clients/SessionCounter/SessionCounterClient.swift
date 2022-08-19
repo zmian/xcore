@@ -19,11 +19,13 @@ extension DependencyValues {
         static let defaultValue: SessionCounterClient = .noop
     }
 
+    /// Provides functionality to keep track of user's session counts.
     public var sessionCounter: SessionCounterClient {
         get { self[SessionCounterClientKey.self] }
         set { self[SessionCounterClientKey.self] = newValue }
     }
 
+    /// Provides functionality to keep track of user's session counts.
     @discardableResult
     public static func sessionCounter(_ value: SessionCounterClient) -> Self.Type {
         self[\.sessionCounter] = value

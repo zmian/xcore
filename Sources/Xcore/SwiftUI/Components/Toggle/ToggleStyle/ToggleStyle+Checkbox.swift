@@ -7,31 +7,35 @@
 import SwiftUI
 
 extension CheckboxToggleStyle {
-    public enum Placement {
-        case left
-        case right
+    @available(iOS, introduced: 14, deprecated: 15, message: "Use HorizontalEdge directly.")
+    public enum HorizontalEdge {
+        case leading
+        case trailing
     }
 }
 
+/// A toggle style that displays a checkbox and its label based on the given
+/// horizontal edge.
 public struct CheckboxToggleStyle: ToggleStyle {
-    private var placement: Placement
+    private let edge: HorizontalEdge
 
-    public init(placement: Placement = .right) {
-        self.placement = placement
+    init(edge: HorizontalEdge) {
+        self.edge = edge
     }
 
     public func makeBody(configuration: Self.Configuration) -> some View {
         HStack {
-            if placement == .right {
-                configuration.label
-                Spacer()
-                toggle(configuration)
-            } else {
-                toggle(configuration)
-                Spacer()
-                    .frame(width: .s4)
-                configuration.label
-                Spacer()
+            switch edge {
+                case .leading:
+                    toggle(configuration)
+                    Spacer()
+                        .frame(width: .s4)
+                    configuration.label
+                    Spacer()
+                case .trailing:
+                    configuration.label
+                    Spacer()
+                    toggle(configuration)
             }
         }
     }
@@ -42,7 +46,7 @@ public struct CheckboxToggleStyle: ToggleStyle {
                 .resizable()
                 .frame(24)
                 .foregroundColor(
-                    configuration.isOn ? .accentColor : theme.separatorColor
+                    configuration.isOn ? theme.toggleColor : theme.separatorColor
                 )
                 .onTapGesture {
                     configuration.isOn.toggle()
@@ -54,9 +58,9 @@ public struct CheckboxToggleStyle: ToggleStyle {
 // MARK: - Dot Syntax Support
 
 extension ToggleStyle where Self == CheckboxToggleStyle {
-    public static var checkbox: Self { .init() }
-
-    public static func checkbox(placement: Self.Placement) -> Self {
-        .init(placement: placement)
+    /// A toggle style that displays a checkbox and its label based on the given
+    /// horizontal edge.
+    public static func checkbox(edge: Self.HorizontalEdge) -> Self {
+        .init(edge: edge)
     }
 }

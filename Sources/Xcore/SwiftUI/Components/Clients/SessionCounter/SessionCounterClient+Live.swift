@@ -8,10 +8,10 @@ import Foundation
 import Combine
 
 public final class LiveSessionCounterClient: SessionCounterClient {
-    public static let shared = LiveSessionCounterClient()
+    fileprivate static let shared = LiveSessionCounterClient()
     @Dependency(\.pond) private var pond
     @Dependency(\.appStatus) private var appStatus
-    @Dependency(\.ratingPrompt) private var ratingPrompt
+    @Dependency(\.requestReview) private var requestReview
     private var cancellable: AnyCancellable?
 
     public func start() {
@@ -29,11 +29,11 @@ public final class LiveSessionCounterClient: SessionCounterClient {
 
     public func increment() {
         pond.incrementSessionCount()
-        showRatingPromptIfNeeded()
+        requestReviewIfNeeded()
     }
 
-    private func showRatingPromptIfNeeded() {
-        let multipleOfValue = FeatureFlag.ratingPromptVisitMultipleOf
+    private func requestReviewIfNeeded() {
+        let multipleOfValue = FeatureFlag.reviewPromptVisitMultipleOf
 
         guard
             multipleOfValue > 0,
@@ -43,7 +43,7 @@ public final class LiveSessionCounterClient: SessionCounterClient {
             return
         }
 
-        ratingPrompt.showIfNeeded()
+        requestReview()
     }
 }
 
