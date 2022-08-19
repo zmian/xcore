@@ -22,7 +22,7 @@ extension ValidationRule where Input: Collection {
     /// This validation rule can be used guard minimum or maximum length:
     ///
     /// ```swift
-    /// let name = "John Doe"
+    /// let name = "Sam Swift"
     /// name.validate(rule: .range(1...)) // length >= 1
     ///
     /// let password = "***"

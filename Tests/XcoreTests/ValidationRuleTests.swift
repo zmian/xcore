@@ -180,15 +180,15 @@ final class ValidationRuleTests: TestCase {
 
         // Valid
         XCTAssertTrue("Xcore Swift".validate(rule: rule))
-        XCTAssertTrue("John Doe".validate(rule: rule))
+        XCTAssertTrue("Sam Swift".validate(rule: rule))
         XCTAssertTrue("XC".validate(rule: rule))
         XCTAssertTrue("Z".validate(rule: rule))
 
         // Invalid
         XCTAssertFalse("2".validate(rule: rule))
-        XCTAssertFalse("23 John Doe".validate(rule: rule))
+        XCTAssertFalse("23 Sam Swift".validate(rule: rule))
         // More than 50 character is invalid name
-        XCTAssertFalse("John Doe Fugetaboutit Boaty McBoatface Boaty McBoatface Doe".validate(rule: rule))
+        XCTAssertFalse("Sam Swift Fugetaboutit Boaty McBoatface Boaty McBoatface Doe".validate(rule: rule))
     }
 
     func testLogicalOperators() {
@@ -199,7 +199,7 @@ final class ValidationRuleTests: TestCase {
     }
 
     func testRange() {
-        XCTAssertTrue("John Doe".validate(rule: .range(1...)))
+        XCTAssertTrue("Sam Swift".validate(rule: .range(1...)))
         XCTAssertFalse("secret".validate(rule: .range(8...50)))
         XCTAssertTrue("secret123".validate(rule: .range(8...50)))
     }
