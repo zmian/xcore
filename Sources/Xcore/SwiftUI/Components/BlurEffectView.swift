@@ -113,8 +113,8 @@ private class BlurView: XCView {
     override func commonInit() {
         super.addSubview(blurBackView)
         super.addSubview(blurEffectView)
-        blurBackView.anchor.edges.equalToSuperview()
-        blurEffectView.anchor.edges.equalToSuperview()
+        blurBackView.pinEdgesToSuperview()
+        blurEffectView.pinEdgesToSuperview()
 
         observer = NotificationCenter.on.accessibilityReduceTransparencyStatusDidChange { [weak self] in
             self?.accessibilityReduceTransparencyStatusDidChange()
