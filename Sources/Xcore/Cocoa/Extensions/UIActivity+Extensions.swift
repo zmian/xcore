@@ -6,6 +6,7 @@
 
 import UIKit
 
+@available(iOS, introduced: 14, deprecated: 16, message: "Use ShareLink directly.")
 extension UIActivity.ActivityType: CustomAnalyticsValueConvertible {
     public var analyticsValue: String {
         switch self {
