@@ -6,6 +6,7 @@
 
 import Foundation
 
+/// Creates an app status client using closure.
 public struct BlockAppStatusClient: AppStatusClient {
     private let _evaluate: () -> Void
     private let _changeSessionTo: (AppStatus.SessionState) -> Void
@@ -53,7 +54,7 @@ public struct BlockAppStatusClient: AppStatusClient {
 // MARK: - Variants
 
 extension AppStatusClient where Self == BlockAppStatusClient {
-    /// Returns noop variant of `BlockAppStatusClient`.
+    /// Returns noop variant of `AppStatusClient`.
     public static var noop: Self {
         .init(
             receive: .constant(.preparingLaunch),
