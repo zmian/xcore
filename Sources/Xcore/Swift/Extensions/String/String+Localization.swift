@@ -10,7 +10,7 @@ public struct StringsFile: RawRepresentable, Hashable {
     public let rawValue: String
     public let bundle: Bundle
 
-    /// A convenience initializer for `.strings` file in the `.main` bundle.
+    /// Creates a reference to the `.strings` file in the `.main` bundle.
     ///
     /// - Parameter rawValue: The name of the `.strings` file.
     public init(rawValue: String) {
@@ -18,7 +18,7 @@ public struct StringsFile: RawRepresentable, Hashable {
         self.bundle = .main
     }
 
-    /// A convenience initializer for `.strings` file in the `.main` bundle, if the
+    /// Creates a reference to the `.strings` file in the `.main` bundle, if the
     /// given `.strings` file is not found in the `.main` bundle then the fall-back
     /// bundle is used instead.
     ///

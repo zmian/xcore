@@ -86,7 +86,7 @@ extension CGFloat {
     /// in horizontal axis.
     public static var interItemHSpacing: Self = .s3
 
-    /// A convenience method to return `1` pixel relative to the screen scale.
+    /// Return true `1` pixel relative to the screen scale.
     public static var onePixel: Self {
         1 / UIScreen.main.scale
     }
@@ -215,7 +215,7 @@ extension AppConstants {
         Screen.ReferenceSize.iPhone6.size
     }
 
-    /// A convenience function to get relative value for given device based on iPhone 6 width.
+    /// Returns relative value for the current device based on iPhone 6 width.
     public static func aspect(_ value: CGFloat, axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
         let screenSize = UIScreen.main.bounds.size
         let reference = iPhone6ScreenSize

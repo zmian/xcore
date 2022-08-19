@@ -9,7 +9,7 @@ import Dispatch
 import Combine
 
 extension DispatchTime {
-    /// A convenience method to convert `TimeInterval` to `DispatchTime`.
+    /// Returns given `TimeInterval` as `DispatchTime`.
     ///
     /// - Parameter interval: The time interval, in seconds.
     /// - Returns: A new `DispatchTime` from specified seconds.

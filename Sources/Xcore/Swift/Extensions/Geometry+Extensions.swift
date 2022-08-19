@@ -10,14 +10,14 @@ import SwiftUI
 // MARK: - CGFloat
 
 extension CGFloat {
-    /// A convenience method to convert an angle from degrees to radians.
+    /// Converts an angle from degrees to radians.
     ///
     /// - Returns: `self` value in radians.
     public func degreesToRadians() -> Self {
         .pi * self / 180
     }
 
-    /// A convenience method to convert an angle from radians to degrees.
+    /// Converts an angle from radians to degrees.
     ///
     /// - Returns: `self` value in degrees.
     public func radiansToDegrees() -> Self {
