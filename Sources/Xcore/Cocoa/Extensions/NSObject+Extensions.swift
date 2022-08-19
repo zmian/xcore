@@ -10,9 +10,7 @@ extension NSObject {
     var memoryAddress: String {
         String(describing: Unmanaged<NSObject>.passUnretained(self).toOpaque())
     }
-}
 
-extension NSObject {
     @inlinable
     @discardableResult
     func synchronized<Result>(_ work: () throws -> Result) rethrows -> Result {
@@ -25,32 +23,6 @@ extension NSObject {
             defer { objc_sync_exit(self) }
             return try work()
         }
-    }
-}
-
-extension NSObject {
-    /// Returns the value for the property identified by a given key.
-    ///
-    /// The search pattern that `valueForKey:` uses to find the correct value
-    /// to return is described in **Accessor Search Patterns** in **Key-Value Coding
-    /// Programming Guide**.
-    ///
-    /// - Parameter key: The name of one of the receiver's properties.
-    /// - Returns: The value for the property identified by key.
-    open func safeValue(forKey key: String) -> Any? {
-        let mirror = Mirror(reflecting: self)
-
-        for child in mirror.children.makeIterator() where child.label == key {
-            return child.value
-        }
-
-        return nil
-    }
-
-    /// Return `true` if the `self` has the property of given `name`; otherwise,
-    /// `false`.
-    open func hasProperty(withName name: String) -> Bool {
-        safeValue(forKey: name) != nil
     }
 }
 
@@ -80,37 +52,5 @@ extension NSObject {
             case .typeOf:
                 return aClass.self == type(of: self)
         }
-    }
-}
-
-// MARK: - Property List
-
-extension NSObject {
-    /// Returns a dictionary of the properties declared by the object.
-    func propertyList() -> [String: String] {
-        var count: UInt32 = 0
-
-        guard let properties = class_copyPropertyList(object_getClass(self), &count) else {
-            return [:]
-        }
-
-        var result = [String: String]()
-
-        for i in 0..<count {
-            let property = properties.advanced(by: Int(i)).pointee
-
-            guard
-                let cAttributes = property_getAttributes(property),
-                let attributes = String(cString: cAttributes).components(separatedBy: ",").first
-            else {
-                continue
-            }
-
-            let name = String(cString: property_getName(property))
-            result[name] = attributes.replacing("[\"T@]+", with: "")
-        }
-
-        free(properties)
-        return result
     }
 }
