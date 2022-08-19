@@ -62,8 +62,8 @@ extension OpenURLClient {
     }
 
     #if DEBUG
-    /// Returns failing variant of `OpenURLClient`.
-    public static var failing: Self {
+    /// Returns unimplemented variant of `OpenURLClient`.
+    public static var unimplemented: Self {
         .init { _ in
             internal_XCTFail("\(Self.self) is unimplemented")
         }

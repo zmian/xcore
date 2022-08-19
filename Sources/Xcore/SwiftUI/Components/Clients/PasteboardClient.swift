@@ -47,8 +47,8 @@ extension PasteboardClient {
     }
 
     #if DEBUG
-    /// Returns failing variant of `PasteboardClient`.
-    public static var failing: Self {
+    /// Returns unimplemented variant of `PasteboardClient`.
+    public static var unimplemented: Self {
         .init { _ in
             internal_XCTFail("\(Self.self).copy is unimplemented")
         }
