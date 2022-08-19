@@ -6,7 +6,10 @@
 
 import Foundation
 
+/// A type with a customized textual representation for analytics purpose.
 public protocol CustomAnalyticsValueConvertible {
+    /// A stable textual representation of this instance that is suitable for
+    /// analytics purpose.
     var analyticsValue: String { get }
 }
 
