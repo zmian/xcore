@@ -7,8 +7,6 @@
 import SwiftUI
 
 struct SeparatorsView: View {
-    @Environment(\.theme) private var theme
-
     var body: some View {
         VStack(spacing: .defaultSpacing) {
             HStack {
