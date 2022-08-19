@@ -14,7 +14,16 @@ public final class LiveSessionCounterClient: SessionCounterClient {
     @Dependency(\.requestReview) private var requestReview
     private var cancellable: AnyCancellable?
 
-    public func start() {
+    init() {
+        withDelay(0.3) { [weak self] in
+            // Delay to avoid:
+            // Thread 1: Simultaneous accesses to 0x1107dbc18, but modification requires
+            // exclusive access. This is a client that invokes other clients.
+            self?.addAppStatusObserver()
+        }
+    }
+
+    private func addAppStatusObserver() {
         cancellable = appStatus
             .receive
             .when(.session(.unlocked))
