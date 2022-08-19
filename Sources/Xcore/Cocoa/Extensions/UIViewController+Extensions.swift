@@ -30,7 +30,7 @@ extension UIViewController {
         childViewController.didMove(toParent: self)
 
         if enableConstraints {
-            childViewController.view.anchor.edges.equalToSuperview().inset(inset)
+            childViewController.view.pinEdgesToSuperview(inset: inset)
         }
     }
 

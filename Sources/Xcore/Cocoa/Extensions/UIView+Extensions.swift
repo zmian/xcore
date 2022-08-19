@@ -229,3 +229,22 @@ extension UIView {
         subviews { $0.isType(of: aClass, comparison: comparison) } as? [T] ?? []
     }
 }
+
+// MARK: - Internal
+
+extension UIView {
+    func pinEdgesToSuperview(inset: UIEdgeInsets = .zero) {
+        pinEdges(to: superview!, inset: inset)
+    }
+
+    private func pinEdges(to other: UIView, inset: UIEdgeInsets = .zero) {
+        translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            topAnchor.constraint(equalTo: other.topAnchor, constant: inset.top),
+            bottomAnchor.constraint(equalTo: other.bottomAnchor, constant: inset.bottom),
+            leadingAnchor.constraint(equalTo: other.leadingAnchor, constant: inset.left),
+            trailingAnchor.constraint(equalTo: other.trailingAnchor, constant: inset.right)
+        ])
+    }
+}
