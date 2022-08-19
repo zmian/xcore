@@ -23,7 +23,7 @@ public enum SelectionType<Value> {
 // MARK: - Equatable
 
 extension SelectionType: Equatable where Value: Equatable {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.value == rhs.value
     }
 }

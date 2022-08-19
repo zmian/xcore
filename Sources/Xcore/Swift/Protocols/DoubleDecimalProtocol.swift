@@ -44,7 +44,7 @@ public protocol DoubleOrDecimalProtocol: SignedNumeric, Comparable, Hashable, Co
     /// ```
     func calculatePrecision() -> ClosedRange<Int>
 
-    static func / (lhs: Self, rhs: Self) -> Self
+    static func /(lhs: Self, rhs: Self) -> Self
 }
 
 // MARK: - Conformance

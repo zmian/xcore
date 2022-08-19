@@ -107,8 +107,8 @@ final class StoryTimer: ObservableObject {
         }
 
         if UIAccessibility.isVoiceOverRunning {
-            let currentIndex = max((Int(newProgress)) % pagesCount, 0)
-            let previousIndex = max((Int(progress)) % pagesCount, 0)
+            let currentIndex = max(Int(newProgress) % pagesCount, 0)
+            let previousIndex = max(Int(progress) % pagesCount, 0)
             if currentIndex > previousIndex {
                 pause()
                 return

@@ -186,7 +186,7 @@ extension Array where Element == Double {
 
         /// 2. Calculate sum of the integer part of each value and the delta
         /// to 100.
-        let delta: Int = 100 - Int(result.sum(\.floor))
+        let delta = 100 - Int(result.sum(\.floor))
 
         /// 3. Based on the remainder sort (starting by highest remainder)
         /// keep adding 1 until we reach sum of 100

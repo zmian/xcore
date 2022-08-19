@@ -122,7 +122,7 @@ extension Console {
     }
 
     private static func prefixOptions(level: LevelOptions, context: SourceContext) -> String {
-        var result: String = ""
+        var result = ""
 
         if prefixOptions.isEmpty, level.consoleDescription == nil {
             return result

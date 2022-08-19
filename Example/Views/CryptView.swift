@@ -8,8 +8,8 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct CryptView: View {
-    @State private var inputFilename: String = ""
-    @State private var encryptionKey: String = ""
+    @State private var inputFilename = ""
+    @State private var encryptionKey = ""
 
     var body: some View {
         List {
@@ -103,7 +103,7 @@ struct CryptView: View {
 
 @available(iOS 15.0, *)
 private struct InternalSection: View {
-    @State private var value: String = ""
+    @State private var value = ""
     private let title: String
     private let generate: () -> String
 

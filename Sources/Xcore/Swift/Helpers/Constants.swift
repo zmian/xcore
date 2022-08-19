@@ -142,7 +142,7 @@ extension String {
     ///
     /// [Oleb]: https://oleb.net/blog/2015/02/minus-sign
     /// [Wikipedia]: https://en.wikipedia.org/wiki/Plus_and_minus_signs
-    public static let minusSign: String = "\u{2212}"
+    public static let minusSign = "\u{2212}"
 }
 
 // MARK: - App Constants
@@ -151,14 +151,12 @@ public enum AppConstants {
     /// The golden ratio.
     public static var φ: CGFloat { 0.618 }
 
-    private(set) public static var statusBarHeight: CGFloat = {
-        UIApplication
-            .sharedOrNil?
-            .firstSceneKeyWindow?
-            .windowScene?
-            .statusBarManager?
-            .statusBarFrame.height ?? 44
-    }()
+    public private(set) static var statusBarHeight: CGFloat = UIApplication
+        .sharedOrNil?
+        .firstSceneKeyWindow?
+        .windowScene?
+        .statusBarManager?
+        .statusBarFrame.height ?? 44
 
     public static var statusBarPlusNavBarHeight: CGFloat {
         statusBarHeight + navBarHeight
@@ -232,8 +230,8 @@ extension AppConstants {
 }
 
 extension Int {
-    public static var maxFractionDigits: Int = 100
-    public static var defaultFractionDigits: Int = 2
+    public static var maxFractionDigits = 100
+    public static var defaultFractionDigits = 2
     public static var defaultRandomUpperBound = 100
 }
 

@@ -41,7 +41,7 @@ public struct AppStatusClient {
         sessionState: ValuePublisher<AppStatus.SessionState, Never>,
         evaluate: @escaping () -> Void,
         changeSessionTo: @escaping (AppStatus.SessionState) -> Void,
-        systemForceRefresh:  @escaping () -> Void
+        systemForceRefresh: @escaping () -> Void
     ) {
         self.receive = receive
         self.sessionState = sessionState

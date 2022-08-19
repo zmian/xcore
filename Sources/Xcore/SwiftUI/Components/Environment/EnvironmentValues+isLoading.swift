@@ -8,7 +8,7 @@ import SwiftUI
 
 extension EnvironmentValues {
     private struct XcoreIsLoadingKey: EnvironmentKey {
-        static var defaultValue: Bool = false
+        static var defaultValue = false
     }
 
     /// A Boolean property indicating whether the view associated with this

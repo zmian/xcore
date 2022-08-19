@@ -39,7 +39,7 @@ final class FeatureFlagTests: TestCase {
             "language": "Swift"
         ]
 
-        let defaultDictionary: [String: String] = ["hello": "world"]
+        let defaultDictionary = ["hello": "world"]
         XCTAssertEqual(TestFeature.flag(.validDictionary).value(default: defaultDictionary), validDictionary)
         XCTAssertEqual(TestFeature.flag(.invalidDictionary).value(default: defaultDictionary), defaultDictionary)
 

@@ -234,11 +234,11 @@ extension Money {
         return (finalMajorUnitRange, finalMinorUnitRange)
     }
 
-    fileprivate func string(majorUnit: String, minorUnit: String? = nil) -> String {
+    private func string(majorUnit: String, minorUnit: String? = nil) -> String {
         string(from: [majorUnit, minorUnit].joined(separator: decimalSeparator))
     }
 
-    fileprivate func string(from amount: String) -> String {
+    private func string(from amount: String) -> String {
         let sign = currentSign
 
         switch currencySymbolPosition {

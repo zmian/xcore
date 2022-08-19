@@ -23,14 +23,14 @@ extension PhoneNumberStyle {
     ///
     /// 🇺🇸 +1 (800) 692-7753
     public static var us: Self {
-        .init(mask: ("🇺🇸 +# (###) ###-####"), countryCode: 1)
+        .init(mask: "🇺🇸 +# (###) ###-####", countryCode: 1)
     }
 
     /// Australia Phone Numbers
     ///
     /// 🇦🇺 +61 423 456 789
     public static var au: Self {
-        .init(mask: ("🇦🇺 +## ### ### ###"), countryCode: 61)
+        .init(mask: "🇦🇺 +## ### ### ###", countryCode: 61)
     }
 }
 

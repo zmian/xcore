@@ -63,7 +63,7 @@ extension MonotonicTimer {
             DispatchTime.seconds(elapsedSince: begin)
         }
 
-        public static func == (lhs: Uptime, rhs: Uptime) -> Bool {
+        public static func ==(lhs: Uptime, rhs: Uptime) -> Bool {
             lhs.id == rhs.id
         }
     }

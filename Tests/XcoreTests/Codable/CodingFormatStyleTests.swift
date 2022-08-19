@@ -467,9 +467,9 @@ final class CodingFormatStyleTests: TestCase {
 
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-                value = try container.decode(.value, format: .string({
+                value = try container.decode(.value, format: .string {
                     UIColor(hex: $0)
-                }))
+                })
                 isBlueColor = try container.decode(.value, format: .string { hex in
                     hex == "0000FF" || hex == "#0000FF"
                 })
