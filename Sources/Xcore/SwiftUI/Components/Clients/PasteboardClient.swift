@@ -19,23 +19,15 @@ import UIKit
 ///     }
 /// }
 /// ```
-public struct PasteboardClient: Hashable, Identifiable {
-    public let id: String
-
-    /// Copy the specified string to pasteboard.
+public struct PasteboardClient {
+    /// Copy the given string to the pasteboard.
     public let copy: (String) -> Void
 
-    public init(id: String = #function, copy: @escaping (String) -> Void) {
-        self.id = id
+    /// Creates a client that copys a string to the pasteboard.
+    ///
+    /// - Parameter open: The closure to copy the given string to the pasteboard.
+    public init(copy: @escaping (String) -> Void) {
         self.copy = copy
-    }
-
-    public static func ==(lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
     }
 }
 

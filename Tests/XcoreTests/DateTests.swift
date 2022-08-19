@@ -972,7 +972,7 @@ final class DateTest: XCTestCase {
         XCTAssertEqual(yesterday.formatted(style: relative), "Yesterday")
         XCTAssertEqual(now.formatted(style: relative), "Today")
         XCTAssertEqual(hourAgo.formatted(style: relative), "In 1 hour")
-        XCTAssertEqual(twoAgo.formatted(style: relative), "In 2 hours")
+        XCTAssertEqual(twoAgo.formatted(style: relative), "Today")
         XCTAssertEqual(tomorrow.formatted(style: relative), "Tomorrow")
         XCTAssertEqual(twoMonthFromNow.formatted(style: relative), "In 2 months")
         XCTAssertEqual(twoMonthAgo.formatted(style: relative), "2 months ago")
@@ -995,7 +995,7 @@ final class DateTest: XCTestCase {
         XCTAssertEqual(yesterday.formatted(style: relative), "Yesterday")
         XCTAssertEqual(now.formatted(style: relative), "Today")
         XCTAssertEqual(hourAgo.formatted(style: relative), "In 1 hour")
-        XCTAssertEqual(twoAgo.formatted(style: relative), "In 2 hours")
+        XCTAssertEqual(twoAgo.formatted(style: relative), "Today")
         XCTAssertEqual(tomorrow.formatted(style: relative), "Tomorrow")
 
         XCTAssertEqual(twoMonthFromNow.formatted(style: relative), twoMonthFromNow.formatted(style: .date(.medium)))

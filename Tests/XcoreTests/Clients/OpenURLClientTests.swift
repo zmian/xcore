@@ -13,10 +13,9 @@ final class OpenURLClientTests: TestCase {
 
         var openedUrl: URL?
 
-        DependencyValues.openUrl(.init(id: "inline") { adaptiveUrl in
+        DependencyValues.openUrl(.init { adaptiveUrl in
             openedUrl = adaptiveUrl.url
         })
-        XCTAssertEqual(viewModel.openUrl.id, "inline")
 
         XCTAssertNil(openedUrl)
 
@@ -28,12 +27,6 @@ final class OpenURLClientTests: TestCase {
 
         viewModel.openSomeUrl()
         XCTAssertEqual(openedUrl, URL(string: "https://example.com"))
-    }
-
-    func testNoopVariantId() {
-        let viewModel = ViewModel()
-        DependencyValues.openUrl(.noop)
-        XCTAssertEqual(viewModel.openUrl.id, "noop")
     }
 
     private struct ViewModel {
