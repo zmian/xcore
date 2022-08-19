@@ -40,6 +40,41 @@ extension Color {
     }
 }
 
+extension Color {
+    /// Returns Boolean value indicating whether the given color and `self` feels
+    /// similar to the human eyes.
+    ///
+    /// - Parameters:
+    ///   - color: The color to compare to.
+    ///   - threshold: The threshold to decide similarity. The smaller the threshold
+    ///     the stricter the algorithm.
+    /// - Returns: A Boolean indicating whether the colors are similar.
+    public func isSimilar(to color: Color, threshold: CGFloat = 0.1) -> Bool {
+        let color = color.uiColor
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+
+        var otherRed: CGFloat = 0
+        var otherGreen: CGFloat = 0
+        var otherBlue: CGFloat = 0
+        var otherAlpha: CGFloat = 0
+        color.getRed(&otherRed, green: &otherGreen, blue: &otherBlue, alpha: &otherAlpha)
+
+        func isSimilar(lhs: CGFloat, rhs: CGFloat) -> Bool {
+            abs(lhs - rhs) <= (lhs * threshold)
+        }
+
+        return
+            isSimilar(lhs: red, rhs: otherRed) &&
+            isSimilar(lhs: green, rhs: otherGreen) &&
+            isSimilar(lhs: blue, rhs: otherBlue) &&
+            isSimilar(lhs: alpha, rhs: otherAlpha)
+    }
+}
+
 // MARK: - Color Scheme Mode
 
 extension Color {
