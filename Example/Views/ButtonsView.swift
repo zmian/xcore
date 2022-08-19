@@ -11,6 +11,8 @@ struct ButtonsView: View {
 
     var body: some View {
         List {
+            Toggle("Loading", isOn: $isLoading)
+                .toggleStyle(.checkbox(edge: .trailing))
             fillStates
             outlineStates
             callout

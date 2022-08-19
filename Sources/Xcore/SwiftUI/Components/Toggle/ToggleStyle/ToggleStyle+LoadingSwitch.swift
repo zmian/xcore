@@ -6,9 +6,10 @@
 
 import SwiftUI
 
+/// A toggle style that displays a leading label and a trailing switch. It
+/// automatically replaces the switch with progress view when `isLoading` value
+/// is `true`.
 public struct LoadingSwitchToggleStyle: ToggleStyle {
-    public init() {}
-
     public func makeBody(configuration: Self.Configuration) -> some View {
         EnvironmentReader(\.isLoading) { isLoading in
             HStack {
@@ -35,5 +36,8 @@ public struct LoadingSwitchToggleStyle: ToggleStyle {
 // MARK: - Dot Syntax Support
 
 extension ToggleStyle where Self == LoadingSwitchToggleStyle {
+    /// A toggle style that displays a leading label and a trailing switch. It
+    /// automatically replaces the switch with progress view when `isLoading` value
+    /// is `true`.
     public static var loadingSwitch: Self { .init() }
 }
