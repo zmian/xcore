@@ -6,13 +6,18 @@
 
 import Foundation
 
-public enum ReloadableDataStatus<Value: Hashable>: Hashable {
+public enum ReloadableDataStatus<Value: Equatable>: Equatable {
     case idle
     case loading
     case success(Value)
     case reloading(Value)
     case failure(AppError)
 }
+
+// MARK: - Conditional Conformance
+
+extension ReloadableDataStatus: Sendable where Value: Sendable {}
+extension ReloadableDataStatus: Hashable where Value: Hashable {}
 
 // MARK: - Helpers
 

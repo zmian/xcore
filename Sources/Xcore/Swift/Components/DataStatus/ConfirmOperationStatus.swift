@@ -27,7 +27,7 @@ import Foundation
 ///   `var showAlert: Bool` on the state).
 /// - Handle loading operations inside the alert.
 /// - Handle loading operations outside the alert
-public enum ConfirmOperationStatus<Item: Hashable, Value: Hashable>: Hashable {
+public enum ConfirmOperationStatus<Item: Equatable, Value: Equatable>: Equatable {
     /// The operation is idle.
     case idle
 
@@ -49,6 +49,11 @@ public enum ConfirmOperationStatus<Item: Hashable, Value: Hashable>: Hashable {
     /// The operation has failed with the given `AppError`.
     case failure(AppError)
 }
+
+// MARK: - Conditional Conformance
+
+extension ConfirmOperationStatus: Sendable where Item: Sendable, Value: Sendable {}
+extension ConfirmOperationStatus: Hashable where Item: Hashable, Value: Hashable {}
 
 // MARK: - Helpers
 
