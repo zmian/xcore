@@ -6,12 +6,17 @@
 
 import Foundation
 
-public enum DataStatus<Value: Hashable>: Hashable {
+public enum DataStatus<Value: Equatable>: Equatable {
     case idle
     case loading
     case success(Value)
     case failure(AppError)
 }
+
+// MARK: - Conditional Conformance
+
+extension DataStatus: Sendable where Value: Sendable {}
+extension DataStatus: Hashable where Value: Hashable {}
 
 // MARK: - Helpers
 

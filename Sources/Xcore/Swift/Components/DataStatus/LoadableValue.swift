@@ -6,10 +6,15 @@
 
 import Foundation
 
-public enum LoadableValue<Value: Hashable>: Hashable {
+public enum LoadableValue<Value: Equatable>: Equatable {
     case loading
     case value(Value)
 }
+
+// MARK: - Conditional Conformance
+
+extension LoadableValue: Sendable where Value: Sendable {}
+extension LoadableValue: Hashable where Value: Hashable {}
 
 // MARK: - Helpers
 
