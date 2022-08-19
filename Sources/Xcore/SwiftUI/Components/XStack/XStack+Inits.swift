@@ -106,7 +106,7 @@ extension XStack where Title == Text, Value == Text? {
     /// Creates a stack with a title and a value generated from a string.
     ///
     /// ```swift
-    /// XStack("First Name", value: "John")
+    /// XStack("First Name", value: "Sam")
     /// ```
     public init<S1, S2>(_ title: S1, value: S2?) where S1: StringProtocol, S2: StringProtocol {
         self.init {

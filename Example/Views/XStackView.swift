@@ -48,7 +48,7 @@ struct XStackView: View {
                 XStack("Version", value: Bundle.main.versionBuildNumber)
                     .xstackStyle(dim: .value)
 
-                XStack("First Name", value: "John")
+                XStack("First Name", value: "Sam")
                     .xstackStyle(dim: .title)
 
                 XStack("Price", money: 10)
