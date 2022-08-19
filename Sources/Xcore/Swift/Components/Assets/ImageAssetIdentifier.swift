@@ -13,7 +13,7 @@ public struct ImageAssetIdentifier: RawRepresentable, CustomStringConvertible, H
     public let bundle: Bundle
     public var accessibilityLabel: String?
 
-    /// A convenience initializer for `.xcassets` resource in the `.main` bundle.
+    /// Creates a reference to the `.xcassets` resource in the `.main` bundle.
     ///
     /// - Parameter rawValue: The name of the resource in `.xcassets`.
     public init(rawValue: String) {
@@ -22,7 +22,7 @@ public struct ImageAssetIdentifier: RawRepresentable, CustomStringConvertible, H
         self.accessibilityLabel = nil
     }
 
-    /// An initializer for `.xcassets` resource in the given `bundle`.
+    /// Creates a reference to the `.xcassets` resource in the given `bundle`.
     ///
     /// - Parameters:
     ///   - rawValue: The name of the resource in `.xcassets`.

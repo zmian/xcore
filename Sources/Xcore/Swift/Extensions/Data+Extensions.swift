@@ -7,7 +7,7 @@
 import Foundation
 
 extension Data {
-    /// A convenience method to append string to `Data` using specified encoding.
+    /// Appends string to `self` using the specified encoding.
     ///
     /// - Parameters:
     ///   - string: The string to be added to the `Data`.

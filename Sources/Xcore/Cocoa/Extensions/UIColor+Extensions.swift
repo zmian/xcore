@@ -203,7 +203,7 @@ extension UIColor {
 // MARK: - Cross Fade
 
 extension UIColor {
-    /// A convenience function to cross fade to the given color by the specified
+    /// Returns a transition color from `self` to the given color based on the given
     /// delta.
     ///
     /// - Parameters:

@@ -7,7 +7,7 @@
 import UIKit
 
 extension UINavigationController {
-    /// A convenience property to set root view controller without animation.
+    /// A property to get and set root view controller without animation.
     open var rootViewController: UIViewController? {
         get { viewControllers.first }
         set {

@@ -8,7 +8,7 @@ import Foundation
 
 // Credit: http://stackoverflow.com/a/31412302
 
-/// A convenience function to measure code execution.
+/// Measures code execution time.
 ///
 /// **Asynchronous code:**
 ///

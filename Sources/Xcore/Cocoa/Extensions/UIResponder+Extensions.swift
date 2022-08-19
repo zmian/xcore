@@ -7,7 +7,7 @@
 import UIKit
 
 extension UIResponder {
-    /// A convenience function to find the response of type `T`.
+    /// Returns the responder of type `T`.
     ///
     /// ```swift
     /// extension UICollectionViewCell {

@@ -7,7 +7,7 @@
 import UIKit
 
 extension UIViewController {
-    /// A convenience method to easily add child view controller.
+    /// Adds the specified view controller as a child of the `self`.
     ///
     /// - Parameters:
     ///   - childViewController: The view controller to add as a child view

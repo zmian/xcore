@@ -66,7 +66,7 @@ extension CATransition {
 // MARK: - CALayer
 
 extension CALayer {
-    /// A convenience method to return the color at given point in `self`.
+    /// Returns the color of a given point in `self`.
     ///
     /// - Parameter point: The point to use to detect color.
     /// - Returns: `UIColor` at the specified point.
