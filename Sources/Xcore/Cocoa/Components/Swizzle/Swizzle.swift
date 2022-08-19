@@ -35,11 +35,11 @@ import UIKit
 ///     }
 /// }
 /// ```
-public func swizzle(_ forClass: AnyClass, originalSelector: Selector, swizzledSelector: Selector, kind: SwizzleMethodKind = .instance) {
+public func swizzle(_ forClass: AnyClass, originalSelector: Selector, swizzledSelector: Selector, type: SwizzleMethodType = .instance) {
     let original: Method?
     let swizzled: Method?
 
-    switch kind {
+    switch type {
         case .instance:
             original = class_getInstanceMethod(forClass, originalSelector)
             swizzled = class_getInstanceMethod(forClass, swizzledSelector)
@@ -71,7 +71,11 @@ public func swizzle(_ forClass: AnyClass, originalSelector: Selector, swizzledSe
     }
 }
 
-public enum SwizzleMethodKind {
+/// An enumeration representing the swizzle method type.
+public enum SwizzleMethodType {
+    /// Swizzle the class method of a class.
     case `class`
+
+    /// Swizzle an instance method of a class.
     case instance
 }

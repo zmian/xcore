@@ -29,6 +29,7 @@ extension NSObject {
 // MARK: - Lookup Comparison
 
 extension NSObject {
+    /// An enumeration representing the method for comparison.
     public enum LookupComparison {
         /// Indicates whether the receiver is an instance of given class or an instance
         /// of any class that inherits from that class.
@@ -38,6 +39,9 @@ extension NSObject {
         case typeOf
     }
 
+    /// Returns a Boolean value indicating whether the receiver is a type of given
+    /// class using the provided comparison lookup method.
+    ///
     /// - Parameters:
     ///   - aClass: A class object representing the Objective-C class to be tested.
     ///   - comparison: The comparison option to use when comparing `self` to
