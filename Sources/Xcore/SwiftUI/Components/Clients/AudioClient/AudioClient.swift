@@ -19,7 +19,7 @@ public struct AudioFile: Equatable {
     public let bundle: Bundle
     public let category: AVAudioSession.Category
 
-    /// Creates audio file.
+    /// Creates an audio file.
     ///
     /// - Parameters:
     ///   - name: The name of the audio file.

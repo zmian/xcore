@@ -5,7 +5,7 @@
 //
 
 import Foundation
-import AVKit
+@_implementationOnly import AVKit
 
 public final class LiveAudioClient: AudioClient {
     private var audioPlayer: AVAudioPlayer?
