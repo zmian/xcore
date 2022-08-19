@@ -10,6 +10,8 @@ extension Color.RGBColorSpace {
     public static var `default`: Self = .sRGB
 }
 
+// MARK: - Hex Support
+
 extension Color {
     public init(_ colorSpace: Color.RGBColorSpace = .default, hex: Int64) {
         self.init(UIColor(colorSpace, hex: hex))
@@ -39,6 +41,35 @@ extension Color {
         return Color(hue: hue, saturation: saturation, brightness: brightness, opacity: 1)
     }
 }
+
+// MARK: - Lighter & Darker
+
+extension Color {
+    // Credit: http://stackoverflow.com/a/31466450
+
+    public func lighter(_ amount: CGFloat = 0.25) -> Color {
+        hueColorWithBrightness(1 + amount)
+    }
+
+    public func darker(_ amount: CGFloat = 0.25) -> Color {
+        hueColorWithBrightness(1 - amount)
+    }
+
+    private func hueColorWithBrightness(_ amount: CGFloat) -> Color {
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat = 0
+
+        if uiColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) {
+            return Color(hue: hue, saturation: saturation, brightness: brightness * amount, opacity: alpha)
+        } else {
+            return self
+        }
+    }
+}
+
+// MARK: - Similarity
 
 extension Color {
     /// Returns Boolean value indicating whether the given color and `self` feels
@@ -72,6 +103,44 @@ extension Color {
             isSimilar(lhs: green, rhs: otherGreen) &&
             isSimilar(lhs: blue, rhs: otherBlue) &&
             isSimilar(lhs: alpha, rhs: otherAlpha)
+    }
+}
+
+// MARK: - Cross Fade
+
+extension Color {
+    /// Returns a transition color from `self` to the given color based on the given
+    /// delta.
+    ///
+    /// - Parameters:
+    ///   - color: The color to which self should cross fade.
+    ///   - percentage: The delta of the cross fade.
+    /// - Returns: An instance of cross faded `UIColor`.
+    public func crossFade(to color: Color, delta percentage: CGFloat) -> Color {
+        let fromColor = uiColor
+        let toColor = color.uiColor
+
+        var fromRed: CGFloat = 0
+        var fromGreen: CGFloat = 0
+        var fromBlue: CGFloat = 0
+        var fromAlpha: CGFloat = 0
+
+        fromColor.getRed(&fromRed, green: &fromGreen, blue: &fromBlue, alpha: &fromAlpha)
+
+        var toRed: CGFloat = 0
+        var toGreen: CGFloat = 0
+        var toBlue: CGFloat = 0
+        var toAlpha: CGFloat = 0
+
+        toColor.getRed(&toRed, green: &toGreen, blue: &toBlue, alpha: &toAlpha)
+
+        // Calculate the actual RGBA values of the fade colour
+        let red = (toRed - fromRed) * percentage + fromRed
+        let green = (toGreen - fromGreen) * percentage + fromGreen
+        let blue = (toBlue - fromBlue) * percentage + fromBlue
+        let alpha = (toAlpha - fromAlpha) * percentage + fromAlpha
+
+        return Color(.default, red: red, green: green, blue: blue, opacity: alpha)
     }
 }
 
