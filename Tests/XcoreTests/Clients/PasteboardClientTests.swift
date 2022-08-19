@@ -12,7 +12,6 @@ final class PasteboardClientTests: TestCase {
         let viewModel = ViewModel()
 
         DependencyValues.pasteboard(.inMemory)
-        XCTAssertEqual(viewModel.pasteboard.id, "inMemory")
 
         // nil out the pasteboard
         globalPasteboard = nil
@@ -26,7 +25,6 @@ final class PasteboardClientTests: TestCase {
         let viewModel = ViewModel()
 
         DependencyValues.pasteboard(.noop)
-        XCTAssertEqual(viewModel.pasteboard.id, "noop")
 
         // nil out the pasteboard
         globalPasteboard = nil

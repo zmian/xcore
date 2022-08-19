@@ -28,12 +28,13 @@ import SwiftUI
 ///     }
 /// }
 /// ```
-public struct OpenURLClient: Hashable, Identifiable {
-    public let id: String
+public struct OpenURLClient {
     private let open: (AdaptiveURL) -> Void
 
-    public init(id: String = #function, open: @escaping (AdaptiveURL) -> Void) {
-        self.id = id
+    /// Creates a client that opens a URL.
+    ///
+    /// - Parameter open: The closure to run for the given URL.
+    public init(open: @escaping (AdaptiveURL) -> Void) {
         self.open = open
     }
 
@@ -49,14 +50,6 @@ public struct OpenURLClient: Hashable, Identifiable {
         }
 
         open(.init(title: "", url: url))
-    }
-
-    public static func ==(lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
     }
 }
 
