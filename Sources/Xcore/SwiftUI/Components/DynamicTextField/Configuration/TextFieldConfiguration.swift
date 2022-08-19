@@ -7,6 +7,7 @@
 import SwiftUI
 
 extension TextFieldConfiguration {
+    /// An enumeration representing the type of secure text entry.
     public enum SecureTextEntry: String {
         /// The text will be visible.
         case no
