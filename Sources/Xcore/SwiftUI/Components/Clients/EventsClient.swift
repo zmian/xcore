@@ -8,22 +8,74 @@ import UIKit
 import Combine
 
 /// Provides functionality for sending and receiving events.
+///
+/// **Usage**
+///
+/// ```swift
+/// enum MyEvent {
+///     case red
+///     case green
+///     case yellow
+/// }
+///
+/// typealias MyEventClient = EventsClient<MyEvent>
+///
+/// // MARK: - Dependency
+///
+/// extension DependencyValues {
+///     private struct MyEventClientKey: DependencyKey {
+///         static let defaultValue: MyEventClient = .live
+///     }
+///
+///     var myEvent: MyEventClient {
+///         get { self[MyEventClientKey.self] }
+///         set { self[MyEventClientKey.self] = newValue }
+///     }
+///
+///     @discardableResult
+///     static func myEvent(_ value: MyEventClient) -> Self.Type {
+///         self[\.myEvent] = value
+///         return Self.self
+///     }
+/// }
+///
+/// struct ViewModel {
+///     @Dependency(\.myEvent) var myEvent
+///
+///     func usage() {
+///         myEvent.receive.sink { event in
+///             print(event)
+///         }
+///
+///         // Send event
+///         myEvent.send(.green)
+///
+///         // prints "green"
+///     }
+/// }
+/// ```
 public struct EventsClient<Event> {
-    /// Send events.
+    /// Sends the give event.
     public var send: (Event) -> Void
 
-    /// Receive the sent events.
+    /// Receive events.
     public var receive: AnyPublisher<Event, Never>
 
+    /// Creates a client that sends and receive events.
+    ///
+    /// - Parameters:
+    ///   - send: The closure to send the give event.
+    ///   - receive: Receive events.
     public init(send: @escaping (Event) -> Void, receive: AnyPublisher<Event, Never>) {
         self.send = send
         self.receive = receive
     }
 }
 
-// MARK: - Live
+// MARK: - Variants
 
 extension EventsClient {
+    /// Returns live variant of `EventsClient`.
     public static var live: Self {
         let subject = PassthroughSubject<Event, Never>()
 

@@ -8,13 +8,30 @@ import SwiftUI
 
 /// A structure representing constants related to theming of the app.
 ///
-/// - Note: Any instance of the theme does not represent `light` or `dark`
-///   modes. As per iOS, it's the responsibility of `Color` object to declare
-///   dynamic version.
+/// Any instance of the theme does not represent `light` or `dark` modes. As per
+/// iOS, it's the responsibility of `Color` object to declare dynamic version.
+///
+/// **Usage**
+///
+/// ```swift
+/// struct ContentView: View {
+///     @Environment(\.theme) private var theme
+///     @State var landmarks = ["Lakes", "Rivers", "Mountains"]
+///
+///     var body: some View {
+///         List(landmarks) { landmark in
+///             Text(landmark)
+///                 .background(theme.backgroundSecondaryColor)
+///         }
+///     }
+/// }
+/// ```
+///
+/// **Deciding Darker Color Palette**
 ///
 /// If parts of the app requires a certain screen to always be in darker mode
-/// you should use the iOS API to force `UITraitCollection` to always be `.dark`
-/// mode.
+/// you should use the `preferredColorScheme(_:)` to force the presentation
+/// color scheme to always be in `.dark` mode.
 ///
 /// If some screens are always in darker appearance, meaning dark blue when
 /// color scheme is `.light` and black when color scheme is `.dark` then you
@@ -250,75 +267,4 @@ extension Theme: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-}
-
-// MARK: - Default
-
-extension Theme {
-    /// The default theme for the interface.
-    public static var `default`: Theme = .system
-
-    /// The system theme using [UI Element Colors] for the interface.
-    ///
-    /// [UI Element Colors]: https://developer.apple.com/documentation/uikit/uicolor/ui_element_colors
-    private static let system = Theme(
-        id: "system",
-        tintColor: Color(.systemTint),
-        separatorColor: Color(.separator),
-        borderColor: Color(.separator),
-        toggleColor: Color(.systemTint),
-        linkColor: Color(.link),
-        placeholderTextColor: Color(.placeholderText),
-
-        // Sentiment
-        positiveSentimentColor: .green,
-        neutralSentimentColor: .gray,
-        negativeSentimentColor: .red,
-
-        // Text
-        textColor: .primary,
-        textSecondaryColor: .secondary,
-        textTertiaryColor: Color(.tertiaryLabel),
-        textQuaternaryColor: Color(.quaternaryLabel),
-
-        // Background
-        backgroundColor: Color(.systemBackground),
-        backgroundSecondaryColor: Color(.secondarySystemBackground),
-        backgroundTertiaryColor: Color(.tertiarySystemBackground),
-
-        // Grouped Background
-        groupedBackgroundColor: Color(.systemGroupedBackground),
-        groupedBackgroundSecondaryColor: Color(.secondarySystemGroupedBackground),
-        groupedBackgroundTertiaryColor: Color(.tertiarySystemGroupedBackground),
-
-        // Button Text
-        buttonTextColor: { style, state, position in
-            switch (style, state, position) {
-                case (.outline, .normal, _),
-                     (.outline, .pressed, _):
-                    return .primary
-                case (_, .normal, _):
-                    return .white
-                case (_, .pressed, _):
-                    return .white
-                case (_, .disabled, _):
-                    return Color(.systemGray4)
-            }
-        },
-
-        // Button Background
-        buttonBackgroundColor: { style, state, position in
-            switch (style, state, position) {
-                case (_, .normal, _):
-                    return Color(.systemTint)
-                case (_, .pressed, _):
-                    return Color(.systemTint)
-                case (_, .disabled, _):
-                    return Color(.secondarySystemBackground)
-            }
-        },
-
-        // Chrome
-        statusBarStyle: .default
-    )
 }

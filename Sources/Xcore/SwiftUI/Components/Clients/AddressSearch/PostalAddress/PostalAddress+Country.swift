@@ -15,7 +15,7 @@ extension PostalAddress {
     /// [
     ///     "PT": "Portugal",
     ///     "GB": "United Kingdom",
-    ///     "US": "United States of America"
+    ///     "US": "United States"
     /// ]
     /// ```
     private static var countries: [String: String] = {
@@ -41,7 +41,7 @@ extension PostalAddress {
     }
 
     /// Returns a locale-aware string representation of the country code of the
-    /// address (e.g., "United States of America").
+    /// address (e.g., "United States").
     public var country: String {
         Self.countryName(isoCode: countryCode) ?? ""
     }
