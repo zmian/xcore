@@ -84,4 +84,24 @@ extension EventsClient {
             receive: subject.share().eraseToAnyPublisher()
         )
     }
+
+    /// Returns noop variant of `EventsClient`.
+    public static var noop: Self {
+        .init(
+            send: { _ in },
+            receive: .none
+        )
+    }
+
+    #if DEBUG
+    /// Returns unimplemented variant of `EventsClient`.
+    public static var unimplemented: Self {
+        .init(
+            send: { _ in
+                internal_XCTFail("\(Self.self).send is unimplemented")
+            },
+            receive: .unimplemented("\(Self.self).receive")
+        )
+    }
+    #endif
 }

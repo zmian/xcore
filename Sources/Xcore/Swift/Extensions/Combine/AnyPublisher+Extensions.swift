@@ -24,8 +24,9 @@ extension AnyPublisher {
         self.init(Fail(error: error))
     }
 
-    /// An effect that does nothing and completes immediately. Useful for situations
-    /// where you must return a publisher, but you don't need to do anything.
+    /// Any publisher that does nothing and completes immediately. Useful for
+    /// situations where you must return a publisher, but you don't need to do
+    /// anything.
     public static var none: AnyPublisher {
         Combine.Empty(completeImmediately: true)
             .eraseToAnyPublisher()
@@ -37,8 +38,8 @@ extension AnyPublisher {
     /// This can be helpful for converting APIs that are callback-based into ones
     /// that deal with ``Publisher``s.
     ///
-    /// For example, to create an effect that delivers an integer after waiting a
-    /// second:
+    /// For example, to create any publisher that delivers an integer after waiting
+    /// a second:
     ///
     /// ```swift
     /// AnyPublisher<Int, Never>.future { callback in
@@ -52,16 +53,13 @@ extension AnyPublisher {
     /// more they will be discarded:
     ///
     /// ```swift
-    /// Effect<Int, Never>.future { callback in
+    /// AnyPublisher<Int, Never>.future { callback in
     ///     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
     ///         callback(.success(42))
-    ///         callback(.success(1729)) // Will not be emitted by the effect
+    ///         callback(.success(1729)) // Will not be emitted by the publisher
     ///     }
     /// }
     /// ```
-    ///
-    ///  If you need to deliver more than one value to the effect, you should use
-    ///  the ``Effect`` initializer that accepts a ``Subscriber`` value.
     ///
     /// - Parameter attemptToFulfill: A closure that takes a `callback` as an
     ///   argument which can be used to feed it `Result<Output, Failure>` values.
@@ -73,6 +71,17 @@ extension AnyPublisher {
         }
         .eraseToAnyPublisher()
     }
+
+    #if DEBUG
+    /// Any publisher that causes a test to fail if it runs.
+    static func unimplemented(_ prefix: String) -> Self {
+        Deferred { () -> AnyPublisher in
+            internal_XCTFail("\(prefix.isEmpty ? "" : "\(prefix) - ")A failing publisher ran.")
+            return .none
+        }
+        .eraseToAnyPublisher()
+    }
+    #endif
 }
 
 extension Publisher {
@@ -89,7 +98,7 @@ extension Publisher {
     /// - Parameters:
     ///   - transform: A mapping function that converts `Result<Output,Failure>` to
     ///     another type.
-    /// - Returns: An effect that wraps `self`.
+    /// - Returns: Any publisher that wraps `self`.
     public func catchToResult<T>(
         _ transform: @escaping (Result<Output, Failure>) -> T
     ) -> AnyPublisher<T, Never> {
@@ -112,7 +121,7 @@ extension Publisher {
     ///         }
     /// ```
     ///
-    /// - Returns: An effect that wraps `self`.
+    /// - Returns: Any publisher that wraps `self`.
     public func catchToResult() -> AnyPublisher<Result<Output, Failure>, Never> {
         catchToResult { $0 }
     }
