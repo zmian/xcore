@@ -8,7 +8,10 @@ import Foundation
 
 /// Provides functionality to keep track of user's session counts.
 public protocol SessionCounterClient {
+    /// Returns user's current session count.
     var count: Int { get }
+
+    /// Increments user's session count.
     func increment()
 }
 

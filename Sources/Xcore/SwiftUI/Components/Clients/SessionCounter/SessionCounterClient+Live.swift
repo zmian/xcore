@@ -14,7 +14,7 @@ public final class LiveSessionCounterClient: SessionCounterClient {
     @Dependency(\.requestReview) private var requestReview
     private var cancellable: AnyCancellable?
 
-    init() {
+    private init() {
         withDelay(0.3) { [weak self] in
             // Delay to avoid:
             // Thread 1: Simultaneous accesses to 0x1107dbc18, but modification requires

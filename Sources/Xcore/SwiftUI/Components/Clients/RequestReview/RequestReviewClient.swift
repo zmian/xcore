@@ -51,6 +51,16 @@ extension RequestReviewClient {
         .init {}
     }
 
+    #if DEBUG
+    /// Returns unimplemented variant of `RequestReviewClient`.
+    public static var unimplemented: Self {
+        .init { _ in
+            internal_XCTFail("\(Self.self) is unimplemented")
+            return nil
+        }
+    }
+    #endif
+
     /// Returns live variant of `RequestReviewClient`.
     public static var live: Self {
         .init {
