@@ -280,3 +280,29 @@ extension Date.Style {
     /// A style that uses the ordinal month day in calendar (e.g., June 4th).
     public static var monthDayOrdinal: Self { monthDayOrdinal(.wide) }
 }
+
+// MARK: - Helper Date Format Style
+
+extension Date.Style {
+    /// For example, “1 day ago” or “yesterday” for a month and then outputs using
+    /// `.abbreviated` style.
+    public static var relative: Self { relative(until: .month) }
+
+    /// For example, `June 4, 2020`
+    public static var wide: Self { date(.long) }
+
+    /// For example, `Jun 4, 2020`
+    public static var abbreviated: Self { date(.medium) }
+
+    /// For example, `Jun 4, 2020 at 9:41 AM`
+    public static var abbreviatedTime: Self { dateTime(.medium, time: .short) }
+
+    /// For example, `6/4/20`
+    public static var narrow: Self { date(.short) }
+
+    /// For example, `6/4/20, 9:41 AM`
+    public static var narrowTime: Self { dateTime(.short) }
+
+    /// For example, `9:41 AM`
+    public static var time: Self { time(.short) }
+}
