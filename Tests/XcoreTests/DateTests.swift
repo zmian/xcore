@@ -1024,37 +1024,30 @@ final class DateTest: XCTestCase {
         XCTAssertEqual(year2000.formatted(style: .narrow, in: .london), "01/01/2000")
         XCTAssertEqual(year2000.formatted(style: .narrowTime, in: .london), "01/01/2000, 09:41")
         XCTAssertEqual(year2000.formatted(style: .time, in: .london), "09:41")
+
+        // Spanish
+        XCTAssertEqual(year2000.formatted(style: .wide, in: .spanish), "1 de enero de 2000")
+        XCTAssertEqual(year2000.formatted(style: .abbreviated, in: .spanish), "1 ene 2000")
+        XCTAssertEqual(year2000.formatted(style: .abbreviatedTime, in: .spanish), "1 ene 2000, 9:41")
+        XCTAssertEqual(year2000.formatted(style: .narrow, in: .spanish), "1/1/00")
+        XCTAssertEqual(year2000.formatted(style: .narrowTime, in: .spanish), "1/1/00, 9:41")
+        XCTAssertEqual(year2000.formatted(style: .time, in: .spanish), "9:41")
+
+        // Turkey
+        XCTAssertEqual(year2000.formatted(style: .wide, in: .turkey), "1 Ocak 2000")
+        XCTAssertEqual(year2000.formatted(style: .abbreviated, in: .turkey), "1 Oca 2000")
+        XCTAssertEqual(year2000.formatted(style: .abbreviatedTime, in: .turkey), "1 Oca 2000 11:41")
+        XCTAssertEqual(year2000.formatted(style: .narrow, in: .turkey), "1.01.2000")
+        XCTAssertEqual(year2000.formatted(style: .narrowTime, in: .turkey), "1.01.2000 11:41")
+        XCTAssertEqual(year2000.formatted(style: .time, in: .turkey), "11:41")
     }
 }
 
 extension Calendar {
-    fileprivate static let spanish = Self(
-        identifier: .gregorian
-    ).applying {
-        $0.timeZone = .gmt
-        $0.locale = .es
-    }
-
-    fileprivate static let turkey = Self(
-        identifier: .gregorian
-    ).applying {
-        $0.timeZone = .istanbul
-        $0.locale = .tr
-    }
-
-    fileprivate static let usEastern = Self(
-        identifier: .gregorian
-    ).applying {
-        $0.timeZone = .eastern
-        $0.locale = .current
-    }
-
-    fileprivate static let london = Self(
-        identifier: .gregorian
-    ).applying {
-        $0.timeZone = .london
-        $0.locale = .uk
-    }
+    fileprivate static let spanish = Self.gregorian(timeZone: .gmt, locale: .es)
+    fileprivate static let turkey = Self.gregorian(timeZone: .istanbul, locale: .tr)
+    fileprivate static let london = Self.gregorian(timeZone: .london, locale: .uk)
+    fileprivate static let usEastern = Self.gregorian(timeZone: .eastern)
 }
 
 // MARK: - DateInterval
