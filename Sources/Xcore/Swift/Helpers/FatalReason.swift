@@ -6,21 +6,18 @@
 
 import Foundation
 
-/// Reasons why code should abort at runtime.
+/// A structure representing a reason why code should abort at runtime.
 ///
 /// - SeeAlso: https://github.com/apple/swift-evolution/pull/861/files
 public struct FatalReason: CustomStringConvertible {
-    /// An underlying string-based cause for a fatal error.
+    /// A textual representation for a fatal error.
     public let reason: String
 
-    /// Establishes a new instance of a `FatalReason` with a string-based
-    /// explanation.
+    /// Creates a new instance of a `FatalReason` with a string-based explanation.
     public init(_ reason: String) {
         self.reason = reason
     }
 
-    /// Conforms to CustomStringConvertible, allowing reason to print directly to
-    /// complaint.
     public var description: String {
         reason
     }
@@ -34,13 +31,11 @@ extension FatalReason: ExpressibleByStringLiteral {
     }
 }
 
+// MARK: - Built-in
+
 extension FatalReason {
     public static let subclassMustImplement: Self = "Must be implemented by subclass."
-}
 
-// MARK: - Internal Fatal Reasons
-
-extension FatalReason {
     static func unknownCaseDetected<T: RawRepresentable>(_ case: T) -> Self {
         .init("Unknown case detected: \(`case`) - (\(`case`.rawValue))")
     }

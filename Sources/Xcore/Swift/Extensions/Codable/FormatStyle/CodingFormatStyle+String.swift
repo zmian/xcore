@@ -71,7 +71,7 @@ public struct StringCodingFormatStyle: CodingFormatStyle {
         }
 
         if options.contains(.trimWhitespaces) {
-            result = result.replaceWhitespaces(with: "")
+            result = result.replacingWhitespaces(with: "")
         }
 
         if options.contains(.lowercase) {

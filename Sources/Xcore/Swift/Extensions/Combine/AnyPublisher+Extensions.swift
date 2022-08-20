@@ -27,7 +27,7 @@ extension AnyPublisher {
     /// Any publisher that does nothing and completes immediately. Useful for
     /// situations where you must return a publisher, but you don't need to do
     /// anything.
-    public static var none: AnyPublisher {
+    public static var none: Self {
         Combine.Empty(completeImmediately: true)
             .eraseToAnyPublisher()
     }
@@ -65,7 +65,7 @@ extension AnyPublisher {
     ///   argument which can be used to feed it `Result<Output, Failure>` values.
     public static func future(
         _ attemptToFulfill: @escaping (@escaping (Result<Output, Failure>) -> Void) -> Void
-    ) -> AnyPublisher {
+    ) -> Self {
         Deferred {
             Future(attemptToFulfill)
         }
@@ -75,7 +75,7 @@ extension AnyPublisher {
     #if DEBUG
     /// Any publisher that causes a test to fail if it runs.
     static func unimplemented(_ prefix: String) -> Self {
-        Deferred { () -> AnyPublisher in
+        Deferred { () -> Self in
             internal_XCTFail("\(prefix.isEmpty ? "" : "\(prefix) - ")A failing publisher ran.")
             return .none
         }

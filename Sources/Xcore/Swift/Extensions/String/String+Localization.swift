@@ -6,8 +6,12 @@
 
 import Foundation
 
+/// A structure representing a strings file.
 public struct StringsFile: RawRepresentable, Hashable {
+    /// The name of the strings file.
     public let rawValue: String
+
+    /// The bundle of the strings file.
     public let bundle: Bundle
 
     /// Creates a reference to the `.strings` file in the `.main` bundle.
@@ -78,12 +82,7 @@ extension String {
     ///   return its own value.
     public func localized(file: StringsFile? = nil, comment: String = "", _ arguments: CVarArg...) -> String {
         String(
-            format: NSLocalizedString(
-                self,
-                tableName: file?.rawValue,
-                bundle: file?.bundle ?? .main,
-                comment: comment
-            ),
+            format: localized(file: file, comment: comment),
             arguments: arguments
         )
     }
