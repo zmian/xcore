@@ -9,7 +9,47 @@ import SwiftUI
 /// A structure representing money type and a set of attributes used to format
 /// the output.
 ///
-/// **Usage**
+/// Money conforms to ``SwiftUI.View`` protocol and can be used directly in any
+/// view.
+///
+/// ```swift
+/// struct ContentView: View {
+///     var body: some View {
+///         Money(120.30) // Renders "$120.30"
+///     }
+/// }
+/// ```
+///
+/// Custom currency symbol:
+///
+/// ```swift
+/// let btc = Money(0.5)
+///     .currencySymbol("BTC", position: .suffix)
+///
+/// print(btc)
+/// // Prints "0.5 BTC"
+///
+/// let britishPounds = Money(120.30)
+///     .currencySymbol("£", position: .prefix)
+///
+/// print(britishPounds)
+/// // Prints "£120.30"
+/// ```
+///
+/// Custom region and currency symbol:
+///
+/// ```swift
+/// let poland = Locale(identifier: "pl_PL")
+///
+/// let złoty = Money(120.30)
+///     .currencySymbol("zł", position: .suffix)
+///     .locale(poland)
+///
+/// print(złoty)
+/// // Prints "120,30 zł"
+/// ```
+///
+/// UIKit support is also provided out of the box:
 ///
 /// ```swift
 /// let amount = Money(120.30)
@@ -17,7 +57,7 @@ import SwiftUI
 ///     .font(.body)
 ///     .style(.removeMinorUnitIfZero)
 ///
-/// // Display the amount in a label.
+/// // Display the amount in a label:
 /// let amountLabel = UILabel()
 /// amountLabel.setText(amount)
 /// ```

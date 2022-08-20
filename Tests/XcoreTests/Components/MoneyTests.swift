@@ -393,6 +393,14 @@ final class MoneyTests: TestCase {
 
         XCTAssertEqual(amount?.formatted(), "0.064144 ETH")
     }
+
+    func testPolandLocale() {
+        let złoty = Money(120.30)
+            .currencySymbol("zł", position: .suffix)
+            .locale(.poland)
+
+        XCTAssertEqual(złoty.formatted(), "120,30 zł")
+    }
 }
 
 // MARK: - Locale
@@ -543,6 +551,7 @@ extension Locale {
     fileprivate static let portugal = Locale(identifier: "pt_PT")
     fileprivate static let brazil = Locale(identifier: "pt_BR")
     fileprivate static let germany = Locale(identifier: "de_DE")
+    fileprivate static let poland = Locale(identifier: "pl_PL")
 
     /// No fractional numbers: 55.00 -> 55
     fileprivate static let japan = Locale(identifier: "ja_JP")
