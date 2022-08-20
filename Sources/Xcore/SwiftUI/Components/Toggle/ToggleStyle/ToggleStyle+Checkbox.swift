@@ -28,8 +28,7 @@ public struct CheckboxToggleStyle: ToggleStyle {
             switch edge {
                 case .leading:
                     toggle(configuration)
-                    Spacer()
-                        .frame(width: .s4)
+                    Spacer(width: .s4)
                     configuration.label
                     Spacer()
                 case .trailing:
