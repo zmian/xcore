@@ -57,7 +57,7 @@ import SwiftUI
 ///     .font(.body)
 ///     .style(.removeMinorUnitIfZero)
 ///
-/// // Display the amount in a label:
+/// // Display the amount in a label
 /// let amountLabel = UILabel()
 /// amountLabel.setText(amount)
 /// ```
@@ -72,9 +72,9 @@ import SwiftUI
 /// print(monthlyPayment)
 /// // Prints "$9.99 per month"
 ///
-/// // Display the amount in a label.
+/// // Display the amount in a label
 /// let amountLabel = UILabel()
-/// amountLabel.setText(amount)
+/// amountLabel.setText(monthlyPayment)
 /// ```
 public struct Money: Hashable, MutableAppliable {
     /// The amount of money.
