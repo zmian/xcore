@@ -1002,6 +1002,19 @@ final class DateTest: XCTestCase {
         XCTAssertEqual(twoMonthAgo.formatted(style: relative), twoMonthAgo.formatted(style: .date(.medium)))
         XCTAssertEqual(year2000.formatted(style: relative), "Jan 1, 2000")
     }
+
+    func test_custom_style() {
+        let now = Date()
+        XCTAssertEqual(now.formatted(style: .relative), "Today")
+
+        let year2000 = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
+        XCTAssertEqual(year2000.formatted(style: .wide), "January 1, 2000")
+        XCTAssertEqual(year2000.formatted(style: .abbreviated), "Jan 1, 2000")
+        XCTAssertEqual(year2000.formatted(style: .abbreviatedTime), "Jan 1, 2000 at 9:41 AM")
+        XCTAssertEqual(year2000.formatted(style: .narrow), "1/1/00")
+        XCTAssertEqual(year2000.formatted(style: .narrowTime), "1/1/00, 9:41 AM")
+        XCTAssertEqual(year2000.formatted(style: .time), "9:41 AM")
+    }
 }
 
 extension Calendar {
