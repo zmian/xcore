@@ -24,6 +24,11 @@ import StoreKit
 public struct RequestReviewClient {
     private let request: () -> Void
 
+    /// Creates a client to request an App Store rating or review from the user, if
+    /// appropriate.
+    ///
+    /// - Parameter request: The closure to request an App Store rating or review
+    ///   from the user, if appropriate.
     public init(request: @escaping () -> Void) {
         self.request = request
     }
@@ -54,9 +59,8 @@ extension RequestReviewClient {
     #if DEBUG
     /// Returns unimplemented variant of `RequestReviewClient`.
     public static var unimplemented: Self {
-        .init { _ in
+        .init {
             internal_XCTFail("\(Self.self) is unimplemented")
-            return nil
         }
     }
     #endif

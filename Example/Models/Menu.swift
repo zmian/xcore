@@ -57,6 +57,7 @@ extension Menu: CaseIterable {
         popups,
         textFields,
         activitySheet,
+        hapticFeedback,
         crypt
     ]
 }
@@ -126,6 +127,17 @@ extension Menu {
     private static let activitySheet = Self(
         title: "Activity Sheet",
         content: ActivitySheetView()
+    )
+
+    private static let hapticFeedback = Self(
+        title: "Haptic Feedback",
+        content: {
+            if #available(iOS 15.0, *) {
+                HapticFeedbackView()
+            } else {
+                EmptyView()
+            }
+        }
     )
 
     private static let crypt = Self(

@@ -9,6 +9,7 @@ import AVKit
 
 /// Provides functionality for playing audio on the device.
 public protocol AudioClient {
+    /// Play the given audio file.
     func play(_ file: AudioFile)
 }
 
