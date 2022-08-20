@@ -7,32 +7,34 @@
 import UIKit
 import WebKit
 
-public final class SwizzleManager {
+public enum SwizzleManager {
     private static var didSwizzle = false
     static var options: SwizzleOptions = .all
 
-    private init() {}
-
     /// An entry point to enabled extra functionality for some properties that Xcore
-    /// swizzles. It also provides a hook swizzle additional selectors.
-    ///
-    /// **Usage**
+    /// swizzles. It also provides a hook to add additional swizzle selectors.
     ///
     /// Start the `SwizzleManager` when your app launches:
     ///
     ///
     /// ```swift
-    /// func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    ///     SwizzleManager.start([
-    ///         UIViewController.runOnceSwapSelectors
-    ///     ])
-    ///     return true
+    /// @main
+    /// struct ExampleApp: App {
+    ///     init() {
+    ///         SwizzleManager.start([
+    ///             UIViewController.runOnceSwapSelectors
+    ///         ])
+    ///     }
+    ///
+    ///     var body: some Scene {
+    ///         // ...
+    ///     }
     /// }
     /// ```
     ///
     /// - Parameters:
     ///   - options: A list of options to customize which Xcore classes to swizzle.
-    ///   - additionalSelectors: additional selectors to swizzle.
+    ///   - additionalSelectors: A list of additional selectors to swizzle.
     public static func start(
         options: SwizzleOptions = .all,
         _ additionalSelectors: @autoclosure () -> [() -> Void] = []

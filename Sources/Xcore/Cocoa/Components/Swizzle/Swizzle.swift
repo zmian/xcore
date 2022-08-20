@@ -6,21 +6,20 @@
 
 import UIKit
 
+/// An enumeration representing the swizzle method type.
+public enum SwizzleMethodType {
+    /// Swizzle the class method of a class.
+    case `class`
+
+    /// Swizzle an instance method of a class.
+    case instance
+}
+
 /// Swizzle selector for the given class.
 ///
+/// **Swizzling desired method:**
+///
 /// ```swift
-/// extension UIApplication {
-///     private static let runOnce: Void = {
-///         UIViewController.runOnceSwapViewWillAppear()
-///     }()
-///
-///     open override var next: UIResponder? {
-///         // Called before applicationDidFinishLaunching
-///         UIApplication.runOnce
-///         return super.next
-///     }
-/// }
-///
 /// extension UIViewController {
 ///     private static func runOnceSwapViewWillAppear() {
 ///         swizzle(
@@ -32,6 +31,22 @@ import UIKit
 ///
 ///     @objc private func swizzled_viewWillAppear(_ animated: Bool) {
 ///         swizzled_viewWillAppear(animated)
+///         // ... custom code
+///     }
+/// }
+/// ```
+///
+/// Initializing the swizzle hook to ensure it's only run once:
+///
+/// ```swift
+/// @main
+/// struct ExampleApp: App {
+///     init() {
+///         UIViewController.runOnceSwapViewWillAppear()
+///     }
+///
+///     var body: some Scene {
+///         // ...
 ///     }
 /// }
 /// ```
@@ -69,13 +84,4 @@ public func swizzle(_ forClass: AnyClass, originalSelector: Selector, swizzledSe
     } else {
         method_exchangeImplementations(originalMethod, swizzledMethod)
     }
-}
-
-/// An enumeration representing the swizzle method type.
-public enum SwizzleMethodType {
-    /// Swizzle the class method of a class.
-    case `class`
-
-    /// Swizzle an instance method of a class.
-    case instance
 }
