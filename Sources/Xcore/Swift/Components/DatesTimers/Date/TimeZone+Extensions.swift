@@ -15,4 +15,7 @@ extension TimeZone {
 
     /// Returns `Europe/Istanbul` time zone.
     public static let istanbul = TimeZone(identifier: "Europe/Istanbul")!
+
+    /// Returns `Europe/London` time zone.
+    public static let london = TimeZone(identifier: "Europe/London")!
 }
