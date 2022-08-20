@@ -4,10 +4,10 @@
 // MIT license, see LICENSE file for details
 //
 
-import UIKit
+import Foundation
 
 extension Theme {
-    public static func start() {
+    static func start() {
         set(.default)
     }
 }
