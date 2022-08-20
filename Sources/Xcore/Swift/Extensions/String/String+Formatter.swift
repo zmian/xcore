@@ -13,7 +13,7 @@ extension String {
     public struct BlockFormatStyle {
         fileprivate let format: (String) -> String
 
-        /// An initializer to format given input string.
+        /// Creates an initializer to format given input string.
         ///
         /// - Parameter format: A closure to format the input string.
         public init(_ format: @escaping (String) -> String) {

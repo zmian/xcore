@@ -6,7 +6,7 @@
 
 import Foundation
 
-/// A container that holds failable value.
+/// A container that holds a failable value.
 @dynamicMemberLookup
 public struct Failable<Value>: Decodable where Value: Decodable {
     public let value: Value?

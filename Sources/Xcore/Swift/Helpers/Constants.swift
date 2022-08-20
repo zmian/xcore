@@ -116,13 +116,33 @@ extension UIColor {
 // MARK: - URL
 
 extension URL {
-    /// A URL to launch the default **Mail** app.
-    public static var mailApp: Self { URL(string: "message://")! }
+    /// The URL to deep link to **Apple Mail** app.
+    public static var mailApp: Self {
+        URL(string: "message://")!
+    }
 
-    /// A URL to launch the **Settings** app and displays the app’s custom settings,
-    /// if it has any.
+    /// The URL to deep link to your app’s custom settings in the Settings app.
     public static var settingsApp: Self {
         URL(string: UIApplication.openSettingsURLString)!
+    }
+
+    /// A URL to deep link to your app’s notification settings in the Settings app.
+    @available(iOS, introduced: 14, deprecated: 15, message: "Update implementation")
+    public static var notificationSettings: Self {
+        if #available(iOS 15.4, *) {
+            return URL(string: UIApplicationOpenNotificationSettingsURLString)!
+        } else {
+            return settingsApp
+        }
+        /*
+        if #available(iOS 15.4, *) {
+            return URL(string: UIApplicationOpenNotificationSettingsURLString)!
+        } else if #available(iOS 16.0, *) {
+            return URL(string: UIApplication.openNotificationSettingsURLString)!
+        } else {
+            return settingsApp
+        }
+        */
     }
 }
 
@@ -177,7 +197,6 @@ public enum AppConstants {
         uiControlsHeight
     }
 
-    public static var hairline: CGFloat = 0.5
     public static var tileCornerRadius: CGFloat = 11
     public static var cornerRadius: CGFloat = 6
 

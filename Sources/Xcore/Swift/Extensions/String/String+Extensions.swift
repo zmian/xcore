@@ -113,13 +113,17 @@ extension String {
 
     /// Searches for pattern matches in the string and replaces them with
     /// replacement.
-    public func replacing(_ pattern: String, with: String, options: String.CompareOptions = .regularExpression) -> String {
+    public func replacing(
+        _ pattern: String,
+        with: String,
+        options: String.CompareOptions = .regularExpression
+    ) -> String {
         replacingOccurrences(of: pattern, with: with, options: options, range: nil)
     }
 
     /// Trim whitespaces from start and end and normalize multiple whitespaces into
     /// one and then replace them with the given string.
-    public func replaceWhitespaces(with string: String) -> String {
+    public func replacingWhitespaces(with string: String) -> String {
         trimmingCharacters(in: .whitespaces).replacing("[ ]+", with: string)
     }
 
@@ -243,18 +247,24 @@ extension String {
         self as NSString
     }
 
+    /// The last path component of the string.
     public var lastPathComponent: String {
         nsString.lastPathComponent
     }
 
+    /// Returns a new string made by deleting the last path component from the
+    /// receiver, along with any final path separator.
     public var deletingLastPathComponent: String {
         nsString.deletingLastPathComponent
     }
 
+    /// Returns a new string made by deleting the extension (if any, and only the
+    /// last) from the receiver.
     public var deletingPathExtension: String {
         nsString.deletingPathExtension
     }
 
+    /// The path extension, if any, of the string as interpreted as a path.
     public var pathExtension: String {
         nsString.pathExtension
     }
@@ -294,9 +304,10 @@ extension String {
 // MARK: - Range Expressions
 
 extension String {
-    // Credit: https://stackoverflow.com/a/27880748
-
     /// Returns an array of strings matching the given regular expression.
+    ///
+    /// - Parameter pattern: The pattern to match `self` against.
+    /// - SeeAlso: https://stackoverflow.com/a/27880748
     public func regex(_ pattern: String) -> [String] {
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: [])
@@ -312,6 +323,9 @@ extension String {
         }
     }
 
+    /// Returns a Boolean value indicating whether `self` matches the given pattern.
+    ///
+    /// - Parameter pattern: The pattern to match `self` against.
     public func isMatch(_ pattern: String) -> Bool {
         !regex(pattern).isEmpty
     }
