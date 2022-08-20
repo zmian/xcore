@@ -23,6 +23,21 @@ public struct QRCodeClient {
 // MARK: - Variants
 
 extension QRCodeClient {
+    /// Returns noop variant of `QRCodeClient`.
+    public static var noop: Self {
+        .init { _ in UIImage() }
+    }
+
+    #if DEBUG
+    /// Returns unimplemented variant of `QRCodeClient`.
+    public static var unimplemented: Self {
+        .init { _ in
+            internal_XCTFail("\(Self.self).generate is unimplemented")
+            return UIImage()
+        }
+    }
+    #endif
+
     /// Returns live variant of `QRCodeClient`.
     public static var live: Self {
         .init { string in
@@ -45,21 +60,6 @@ extension QRCodeClient {
             return UIImage(cgImage: transparentImage)
         }
     }
-
-    /// Returns noop variant of `QRCodeClient`.
-    public static var noop: Self {
-        .init { _ in UIImage() }
-    }
-
-    #if DEBUG
-    /// Returns unimplemented variant of `QRCodeClient`.
-    public static var unimplemented: Self {
-        .init { _ in
-            internal_XCTFail("\(Self.self).generate is unimplemented")
-            return UIImage()
-        }
-    }
-    #endif
 }
 
 // MARK: - Dependency

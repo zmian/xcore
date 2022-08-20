@@ -34,13 +34,6 @@ public struct PasteboardClient {
 // MARK: - Variants
 
 extension PasteboardClient {
-    /// Returns live variant of `PasteboardClient`.
-    public static var live: Self {
-        .init { string in
-            UIPasteboard.general.string = string
-        }
-    }
-
     /// Returns noop variant of `PasteboardClient`.
     public static var noop: Self {
         .init { _ in }
@@ -54,6 +47,13 @@ extension PasteboardClient {
         }
     }
     #endif
+
+    /// Returns live variant of `PasteboardClient`.
+    public static var live: Self {
+        .init { string in
+            UIPasteboard.general.string = string
+        }
+    }
 }
 
 // MARK: - Dependency

@@ -75,16 +75,6 @@ public struct EventsClient<Event> {
 // MARK: - Variants
 
 extension EventsClient {
-    /// Returns live variant of `EventsClient`.
-    public static var live: Self {
-        let subject = PassthroughSubject<Event, Never>()
-
-        return .init(
-            send: { subject.send($0) },
-            receive: subject.share().eraseToAnyPublisher()
-        )
-    }
-
     /// Returns noop variant of `EventsClient`.
     public static var noop: Self {
         .init(
@@ -104,4 +94,14 @@ extension EventsClient {
         )
     }
     #endif
+
+    /// Returns live variant of `EventsClient`.
+    public static var live: Self {
+        let subject = PassthroughSubject<Event, Never>()
+
+        return .init(
+            send: { subject.send($0) },
+            receive: subject.share().eraseToAnyPublisher()
+        )
+    }
 }
