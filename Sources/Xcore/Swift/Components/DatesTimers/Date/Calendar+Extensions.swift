@@ -22,13 +22,15 @@ extension Calendar: MutableAppliable {
 }
 
 extension Calendar {
-    /// Returns `gregorian` calendar with user's `current` locale and given time zone.
+    /// Returns `gregorian` calendar with given locale and time zone.
     ///
-    /// - Parameter timeZone: The time zone of the calendar.
-    public static func gregorian(timeZone: TimeZone) -> Self {
+    /// - Parameters:
+    ///   - timeZone: The time zone of the calendar.
+    ///   - locale: The locale of the calendar.
+    public static func gregorian(timeZone: TimeZone, locale: Locale = .current) -> Self {
         Calendar(identifier: .gregorian).applying {
             $0.timeZone = timeZone
-            $0.locale = .current
+            $0.locale = locale
         }
     }
 }
