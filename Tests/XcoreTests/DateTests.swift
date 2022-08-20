@@ -1008,12 +1008,22 @@ final class DateTest: XCTestCase {
         XCTAssertEqual(now.formatted(style: .relative), "Today")
 
         let year2000 = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
+
+        // Current
         XCTAssertEqual(year2000.formatted(style: .wide), "January 1, 2000")
         XCTAssertEqual(year2000.formatted(style: .abbreviated), "Jan 1, 2000")
         XCTAssertEqual(year2000.formatted(style: .abbreviatedTime), "Jan 1, 2000 at 9:41 AM")
         XCTAssertEqual(year2000.formatted(style: .narrow), "1/1/00")
         XCTAssertEqual(year2000.formatted(style: .narrowTime), "1/1/00, 9:41 AM")
         XCTAssertEqual(year2000.formatted(style: .time), "9:41 AM")
+
+        // London
+        XCTAssertEqual(year2000.formatted(style: .wide, in: .london), "1 January 2000")
+        XCTAssertEqual(year2000.formatted(style: .abbreviated, in: .london), "1 Jan 2000")
+        XCTAssertEqual(year2000.formatted(style: .abbreviatedTime, in: .london), "1 Jan 2000 at 09:41")
+        XCTAssertEqual(year2000.formatted(style: .narrow, in: .london), "01/01/2000")
+        XCTAssertEqual(year2000.formatted(style: .narrowTime, in: .london), "01/01/2000, 09:41")
+        XCTAssertEqual(year2000.formatted(style: .time, in: .london), "09:41")
     }
 }
 
@@ -1037,6 +1047,13 @@ extension Calendar {
     ).applying {
         $0.timeZone = .eastern
         $0.locale = .current
+    }
+
+    fileprivate static let london = Self(
+        identifier: .gregorian
+    ).applying {
+        $0.timeZone = .london
+        $0.locale = .uk
     }
 }
 
