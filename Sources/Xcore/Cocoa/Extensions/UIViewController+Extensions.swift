@@ -6,6 +6,7 @@
 
 import UIKit
 
+@objc
 extension UIViewController {
     /// Adds the specified view controller as a child of the `self`.
     ///

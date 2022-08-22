@@ -7,7 +7,7 @@
 import UIKit
 
 extension UITabBar {
-    open var isBorderHidden: Bool {
+    @objc open var isBorderHidden: Bool {
         get { value(forKey: "_hidesShadow") as? Bool ?? false }
         set { setValue(newValue, forKey: "_hidesShadow") }
     }

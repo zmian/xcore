@@ -6,6 +6,7 @@
 
 import UIKit
 
+@objc
 extension UIView {
     open var viewController: UIViewController? {
         responder()
@@ -58,25 +59,25 @@ extension UIView {
 // MARK: - Resistance And Hugging
 
 extension UIView {
-    open func resistsSizeChange() {
+    public func resistsSizeChange() {
         sizeChangeResistance(.required, axis: .vertical)
         sizeChangeResistance(.defaultLow, axis: .horizontal)
     }
 
-    open func resistsSizeChange(axis: NSLayoutConstraint.Axis) {
+    public func resistsSizeChange(axis: NSLayoutConstraint.Axis) {
         sizeChangeResistance(.required, axis: axis)
     }
 
-    open func sizeChangeResistance(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis) {
+    public func sizeChangeResistance(_ priority: UILayoutPriority, axis: NSLayoutConstraint.Axis) {
         setContentHuggingPriority(priority, for: axis)
         setContentCompressionResistancePriority(priority, for: axis)
     }
 
-    open func resistsSizeChange(axis: [NSLayoutConstraint.Axis]) {
+    public func resistsSizeChange(axis: [NSLayoutConstraint.Axis]) {
         sizeChangeResistance(.required, axis: axis)
     }
 
-    open func sizeChangeResistance(_ priority: UILayoutPriority, axis: [NSLayoutConstraint.Axis]) {
+    public func sizeChangeResistance(_ priority: UILayoutPriority, axis: [NSLayoutConstraint.Axis]) {
         axis.forEach {
             setContentHuggingPriority(priority, for: $0)
             setContentCompressionResistancePriority(priority, for: $0)
@@ -121,7 +122,7 @@ extension UIView {
     ///   match.
     /// - Returns: The first subview of the `self` that satisfies `predicate`,
     ///   or `nil` if there is no subview that satisfies `predicate`.
-    open func firstSubview(where predicate: (UIView) throws -> Bool) rethrows -> UIView? {
+    public func firstSubview(where predicate: (UIView) throws -> Bool) rethrows -> UIView? {
         if try predicate(self) {
             return self
         }
@@ -151,7 +152,7 @@ extension UIView {
     ///   match.
     /// - Returns: An array of subviews that satisfies `predicate`, or `[]` if there
     ///   is no subview that satisfies `predicate`.
-    open func subviews(where predicate: (UIView) throws -> Bool) rethrows -> [UIView] {
+    public func subviews(where predicate: (UIView) throws -> Bool) rethrows -> [UIView] {
         var result = [UIView]()
 
         func innerSubview(_ view: UIView, where predicate: (UIView) throws -> Bool) rethrows {
@@ -175,7 +176,7 @@ extension UIView {
     ///   - className: The class name of the child view (e.g., `UIImageView`).
     ///   - comparison: The comparison option to use when looking for the subview.
     /// - Returns: The child view if exists; otherwise, `nil`.
-    open func firstSubview(
+    public func firstSubview(
         withClassName className: String,
         comparison: LookupComparison = .kindOf
     ) -> UIView? {
@@ -192,7 +193,7 @@ extension UIView {
     ///   - className: The class name of the child views (e.g., `UIImageView`).
     ///   - comparison: The comparison option to use when looking for the subview.
     /// - Returns: The child views if exists; otherwise, empty array.
-    open func subviews(
+    public func subviews(
         withClassName className: String,
         comparison: LookupComparison = .kindOf
     ) -> [UIView] {
@@ -209,7 +210,7 @@ extension UIView {
     ///   - aClass: The class name of the child view (e.g., `UIImageView`).
     ///   - comparison: The comparison option to use when looking for the subview.
     /// - Returns: The child view if exists; otherwise, `nil`.
-    open func firstSubview<T: UIView>(
+    public func firstSubview<T: UIView>(
         withClass aClass: T.Type,
         comparison: LookupComparison = .kindOf
     ) -> T? {
@@ -222,7 +223,7 @@ extension UIView {
     ///   - aClass: The class name of the child view (e.g., `UIImageView`).
     ///   - comparison: The comparison option to use when looking for the subview.
     /// - Returns: The child view if exists; otherwise, `nil`.
-    open func subviews<T: UIView>(
+    public func subviews<T: UIView>(
         withClass aClass: T.Type,
         comparison: LookupComparison = .kindOf
     ) -> [T] {

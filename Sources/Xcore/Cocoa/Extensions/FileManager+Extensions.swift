@@ -54,7 +54,7 @@ extension FileManager {
     ///     `FileManager.Options` for possible values. The default value is `.none`.
     /// - Returns: Returns a `URL` constructed by appending the given path component
     ///   relative to the specified directory.
-    open func appending(
+    public func appending(
         path: String,
         relativeTo directory: SearchPathDirectory,
         options: CreationOptions
@@ -82,14 +82,14 @@ extension FileManager {
 }
 
 extension FileManager {
-    open func url(path: String, relativeTo directory: SearchPathDirectory, isDirectory: Bool = true) -> URL? {
+    public func url(path: String, relativeTo directory: SearchPathDirectory, isDirectory: Bool = true) -> URL? {
         url(for: directory)?
             .appendingPathComponent(path, isDirectory: isDirectory)
     }
 
     /// Removes the file or directory relative to the given directory.
     @discardableResult
-    open func removeItem(_ path: String, relativeTo directory: SearchPathDirectory, isDirectory: Bool = true) -> Bool {
+    public func removeItem(_ path: String, relativeTo directory: SearchPathDirectory, isDirectory: Bool = true) -> Bool {
         guard var directoryUrl = url(for: directory) else {
             // No need to remove as it doesn't exists.
             return true
@@ -106,7 +106,7 @@ extension FileManager {
     }
 
     /// Returns the first URL for the specified common directory in the user domain.
-    open func url(for directory: SearchPathDirectory) -> URL? {
+    public func url(for directory: SearchPathDirectory) -> URL? {
         urls(for: directory, in: .userDomainMask).first
     }
 

@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.6
 
 import PackageDescription
 
@@ -9,8 +9,8 @@ let package = Package(
         .library(name: "Xcore", targets: ["Xcore"])
     ],
     dependencies: [
-        .package(name: "SDWebImage", url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.8.2"),
-        .package(url: "https://github.com/zmian/AnyCodable", .branch("master")),
+        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.8.2"),
+        .package(url: "https://github.com/zmian/AnyCodable", branch: "master"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", from: "4.2.2")
     ],
     targets: [
