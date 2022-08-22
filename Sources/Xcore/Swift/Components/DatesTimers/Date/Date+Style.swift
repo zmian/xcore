@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-@preconcurrency import Foundation
+import Foundation
 
 extension Date {
     /// An enumeration representing date and time style of a date object.

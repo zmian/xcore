@@ -8,13 +8,14 @@ import UIKit
 
 // MARK: - TextColor
 
+@objc
 extension UIBarButtonItem {
-    @objc open dynamic var textColor: UIColor? {
+    open dynamic var textColor: UIColor? {
         get { titleTextColor(for: .normal) }
         set { setTitleTextColor(newValue, for: .normal) }
     }
 
-    open func titleTextColor(for state: UIControl.State) -> UIColor? {
+    func titleTextColor(for state: UIControl.State) -> UIColor? {
         titleTextAttribute(.foregroundColor, for: state)
     }
 
@@ -25,8 +26,9 @@ extension UIBarButtonItem {
 
 // MARK: - Font
 
+@objc
 extension UIBarButtonItem {
-    @objc open dynamic var font: UIFont? {
+    open dynamic var font: UIFont? {
         get { titleTextFont(for: .normal) }
         set {
             UIControl.State.applicationStates.forEach {

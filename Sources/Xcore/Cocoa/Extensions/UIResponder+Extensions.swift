@@ -18,7 +18,7 @@ extension UIResponder {
     ///     }
     /// }
     /// ```
-    open func responder<T: UIResponder>() -> T? {
+    public func responder<T: UIResponder>() -> T? {
         var responder: UIResponder = self
         while let nextResponder = responder.next {
             responder = nextResponder

@@ -41,7 +41,7 @@ extension NSAttributedString {
 // MARK: - NSMutableAttributedString
 
 extension NSMutableAttributedString {
-    open func replaceAttribute(_ name: Key, value: Any, range: NSRange) {
+    public func replaceAttribute(_ name: Key, value: Any, range: NSRange) {
         removeAttribute(name, range: range)
         addAttribute(name, value: value, range: range)
     }
@@ -50,28 +50,28 @@ extension NSMutableAttributedString {
 // MARK: - NSMutableAttributedString: Chaining Attributes
 
 extension NSMutableAttributedString {
-    open func underline(_ text: String? = nil, style: NSUnderlineStyle = .single) -> Self {
+    public func underline(_ text: String? = nil, style: NSUnderlineStyle = .single) -> Self {
         addAttribute(.underlineStyle, value: style.rawValue, range: range(of: text))
         return self
     }
 
     @discardableResult
-    open func foregroundColor(_ color: UIColor, for text: String? = nil) -> Self {
+    public func foregroundColor(_ color: UIColor, for text: String? = nil) -> Self {
         addAttribute(.foregroundColor, value: color, range: range(of: text))
         return self
     }
 
-    open func backgroundColor(_ color: UIColor, for text: String? = nil) -> Self {
+    public func backgroundColor(_ color: UIColor, for text: String? = nil) -> Self {
         addAttribute(.backgroundColor, value: color, range: range(of: text))
         return self
     }
 
-    open func font(_ font: UIFont, for text: String? = nil) -> Self {
+    public func font(_ font: UIFont, for text: String? = nil) -> Self {
         addAttribute(.font, value: font, range: range(of: text))
         return self
     }
 
-    open func link(url: URL?, text: String) -> Self {
+    public func link(url: URL?, text: String) -> Self {
         guard let url = url else {
             return self
         }
@@ -80,12 +80,12 @@ extension NSMutableAttributedString {
         return self
     }
 
-    open func lineSpacing(_ spacing: CGFloat) -> Self {
+    public func lineSpacing(_ spacing: CGFloat) -> Self {
         paragraphStyle(\.lineSpacing, to: spacing, range: range(of: nil))
         return self
     }
 
-    open func textAlignment(_ textAlignment: NSTextAlignment, for text: String? = nil) -> Self {
+    public func textAlignment(_ textAlignment: NSTextAlignment, for text: String? = nil) -> Self {
         paragraphStyle(\.alignment, to: textAlignment, range: range(of: text))
         return self
     }

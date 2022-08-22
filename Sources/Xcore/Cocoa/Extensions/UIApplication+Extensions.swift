@@ -60,7 +60,7 @@ extension UIApplication {
 // MARK: - TopViewController
 
 extension UIApplication {
-    open class func topViewController(_ base: UIViewController? = UIApplication.sharedOrNil?.firstSceneKeyWindow?.rootViewController) -> UIViewController? {
+    public class func topViewController(_ base: UIViewController? = UIApplication.sharedOrNil?.firstSceneKeyWindow?.rootViewController) -> UIViewController? {
         if let nav = base as? UINavigationController {
             return topViewController(nav.visibleViewController)
         }
@@ -106,7 +106,7 @@ extension UIApplication {
 
 extension UIWindow {
     /// The view controller at the top of the window's `rootViewController` stack.
-    open var topViewController: UIViewController? {
+    @objc open var topViewController: UIViewController? {
         UIApplication.topViewController(rootViewController)
     }
 }

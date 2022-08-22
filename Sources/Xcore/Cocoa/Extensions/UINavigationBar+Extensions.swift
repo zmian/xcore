@@ -11,7 +11,7 @@ extension UINavigationBar {
         static var isTransparent = "isTransparent"
     }
 
-    open var isTransparent: Bool {
+    @objc open var isTransparent: Bool {
         get { associatedObject(&AssociatedKey.isTransparent, default: false) }
         set {
             guard newValue != isTransparent else { return }

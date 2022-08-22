@@ -92,7 +92,7 @@ extension JSONDecoder {
     /// - Throws: `DecodingError.dataCorrupted` if values requested from the payload
     ///   are corrupted, or if the given data is not valid JSON.
     /// - Throws: An error if any value throws an error during decoding.
-    open func decode<T>(
+    public func decode<T>(
         _ type: T.Type,
         from data: Data,
         strategy: FailableDecodingStrategy
