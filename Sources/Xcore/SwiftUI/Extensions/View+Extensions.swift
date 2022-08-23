@@ -19,7 +19,7 @@ extension View {
     /// Embed this view in `Link` if `url` isn't nil.
     @ViewBuilder
     public func embedInLink(_ url: URL?) -> some View {
-        if let url = url {
+        if let url {
             Link(destination: url) {
                 self
             }

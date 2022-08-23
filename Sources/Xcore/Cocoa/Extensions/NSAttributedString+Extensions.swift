@@ -105,7 +105,7 @@ extension NSMutableAttributedString {
     private func range(of stringToFind: String?) -> NSRange {
         let range: NSRange
 
-        if let stringToFind = stringToFind {
+        if let stringToFind {
             range = (string as NSString).range(of: stringToFind)
         } else {
             range = NSRange(location: 0, length: string.count)

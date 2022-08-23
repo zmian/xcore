@@ -71,7 +71,7 @@ extension ImageTransform where Self == CompositeImageTransform {
             ResizeImageTransform(to: newSize, scalingMode: scalingMode)
         ]
 
-        if let tintColor = tintColor {
+        if let tintColor {
             transformer.add(TintColorImageTransform(tintColor: tintColor))
         }
 

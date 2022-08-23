@@ -39,7 +39,7 @@ public struct _XIVTSSV: View {
         VStack(alignment: .leading, spacing: spacing ?? .s1) {
             title
 
-            if let subtitle = subtitle {
+            if let subtitle {
                 subtitle
                     .font(.app(.footnote))
                     .foregroundColor(theme.textSecondaryColor)

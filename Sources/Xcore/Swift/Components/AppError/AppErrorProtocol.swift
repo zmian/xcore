@@ -45,7 +45,7 @@ extension AppErrorProtocol {
         message: \(message)
         """
 
-        if let debugMessage = debugMessage {
+        if let debugMessage {
             result += "\ndebugMessage: \(debugMessage)"
         }
 

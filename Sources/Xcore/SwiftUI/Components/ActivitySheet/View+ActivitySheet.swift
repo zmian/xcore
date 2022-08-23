@@ -197,7 +197,7 @@ private final class ActivitySheetViewPresenter: UIViewController {
                 strongSelf.isPresented.wrappedValue = false
 
                 if completed {
-                    if let type = type {
+                    if let type {
                         strongSelf.onComplete?(type)
                     }
                 } else {

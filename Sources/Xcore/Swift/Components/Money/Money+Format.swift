@@ -44,12 +44,12 @@ extension Money {
         var attributedString = AttributedString(style.format(self))
 
         // ForegroundColor
-        if let foregroundColor = foregroundColor {
+        if let foregroundColor {
             attributedString.foregroundColor = foregroundColor
         }
 
         // Font
-        if let font = font {
+        if let font {
             attributedString.font = font.majorUnit
 
             // Superscript: MinorUnit
@@ -71,7 +71,7 @@ extension Money {
         }
 
         // Format String
-        if let format = format {
+        if let format {
             var formatAttributedString = AttributedString(format)
             if let range = formatAttributedString.range(of: "%@") {
                 formatAttributedString.replaceSubrange(range, with: attributedString)

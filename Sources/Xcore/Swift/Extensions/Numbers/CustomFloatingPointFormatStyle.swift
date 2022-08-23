@@ -192,7 +192,7 @@ extension CustomFloatingPointFormatStyle {
             return 0...0
         }
 
-        if let fractionLength = fractionLength {
+        if let fractionLength {
             return fractionLength
         }
 

@@ -80,7 +80,7 @@ extension ProminentDynamicTextFieldStyle {
         }
 
         private var finalPadding: EdgeInsets {
-            if let padding = padding {
+            if let padding {
                 return padding
             } else {
                 var padding: EdgeInsets = .zero

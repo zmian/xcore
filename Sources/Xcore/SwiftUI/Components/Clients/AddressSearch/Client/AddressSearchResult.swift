@@ -37,7 +37,7 @@ public struct AddressSearchResult: Hashable, @unchecked Sendable {
     /// Returns search request to search for map locations based on a natural
     /// language string.
     func request() -> MKLocalSearch.Request {
-        if let completion = completion {
+        if let completion {
             return MKLocalSearch.Request(completion: completion)
         }
 

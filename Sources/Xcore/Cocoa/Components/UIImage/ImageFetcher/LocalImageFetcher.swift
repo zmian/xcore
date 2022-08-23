@@ -48,7 +48,7 @@ final class LocalImageFetcher: ImageFetcher {
                         return
                     }
 
-                    if let cacheKey = cacheKey {
+                    if let cacheKey {
                         strongSelf.cache.setObject(image, forKey: cacheKey)
                     }
 

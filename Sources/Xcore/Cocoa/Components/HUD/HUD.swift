@@ -54,7 +54,7 @@ open class HUD: Appliable {
     }
 
     public init(frame: CGRect? = nil) {
-        if let frame = frame {
+        if let frame {
             window = .init(frame: frame)
         } else if let windowScene = UIApplication.sharedOrNil?.firstWindowScene {
             window = .init(windowScene: windowScene)

@@ -14,7 +14,7 @@ extension View {
         _ value: Value?,
         @ViewBuilder content: (Self, Value) -> Content
     ) -> some View where Content: View {
-        if let value = value {
+        if let value {
             content(self, value)
         } else {
             self
