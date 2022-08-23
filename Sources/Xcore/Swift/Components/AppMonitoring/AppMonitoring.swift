@@ -78,7 +78,7 @@ extension AppMonitoring {
         // any PII.
         var customError: NSError?
 
-        if let error = error {
+        if let error {
             #if DEBUG
             debugLog(error, info: message ?? errorUrl?.absoluteString, file: file, line: line)
             #endif
@@ -101,7 +101,7 @@ extension AppMonitoring {
                     NSUnderlyingErrorKey: nsError
                 ] as [String: Any?]).compacted()
             )
-        } else if let message = message {
+        } else if let message {
             #if DEBUG
             debugLog(message, file: file, line: line)
             #endif

@@ -41,7 +41,7 @@ public struct StandardPopupAlert<Header, Footer>: View where Header: View, Foote
                         .foregroundColor(theme.textColor)
                         .accessibilityAddTraits(.isHeader)
 
-                    if let message = message {
+                    if let message {
                         message
                             .foregroundColor(theme.textSecondaryColor)
                     }

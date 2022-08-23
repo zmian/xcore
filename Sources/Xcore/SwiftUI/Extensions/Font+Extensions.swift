@@ -97,7 +97,7 @@ extension Font {
 
         if isFixedSize {
             return .custom(typeface, fixedSize: size)
-        } else if let textStyle = textStyle {
+        } else if let textStyle {
             return custom(typeface, size: size, relativeTo: textStyle)
         } else {
             return custom(typeface, size: size)

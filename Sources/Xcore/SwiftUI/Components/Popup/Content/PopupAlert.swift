@@ -34,7 +34,7 @@ public struct PopupAlert<Content>: View where Content: View {
             .floatingShadow()
 
             // Add dismiss button if the environment dismiss action is set.
-            if let dismiss = dismiss {
+            if let dismiss {
                 Button {
                     dismiss()
                 } label: {

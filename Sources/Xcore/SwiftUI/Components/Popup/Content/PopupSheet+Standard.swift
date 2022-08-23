@@ -52,7 +52,7 @@ extension StandardPopupSheet where Header == Text? {
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.init(content: content) {
-            if let title = title {
+            if let title {
                 Text(title)
                     .fontWeight(.semibold)
             }

@@ -32,7 +32,7 @@ extension Publisher where Failure == Never {
             }
         }
 
-        if let cancellable = cancellable {
+        if let cancellable {
             cancellables.insert(cancellable)
         }
     }

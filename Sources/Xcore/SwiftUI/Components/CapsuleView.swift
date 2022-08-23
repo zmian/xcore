@@ -16,7 +16,7 @@ public struct CapsuleView<Label>: View where Label: View {
 
     public var body: some View {
         HStack(spacing: .s4) {
-            if let image = image {
+            if let image {
                 Image(system: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)

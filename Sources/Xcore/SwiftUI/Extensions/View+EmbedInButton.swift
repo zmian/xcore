@@ -28,7 +28,7 @@ private struct EmbedInButtonViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         Group {
-            if let action = action {
+            if let action {
                 Button(action: action) {
                     content
                 }

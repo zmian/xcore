@@ -194,7 +194,7 @@ extension ValidationRule where Input == String {
             let sanitizedNumber = $0.replacing("-", with: "")
             let isValidNumber = isValid(.phoneNumber).validate(sanitizedNumber)
 
-            if let length = length {
+            if let length {
                 return isValidNumber && sanitizedNumber.count == length
             }
 

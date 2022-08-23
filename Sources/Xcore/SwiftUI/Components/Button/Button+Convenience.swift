@@ -315,7 +315,7 @@ extension Button where Label == EitherAnyViewText {
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
-            if let image = image {
+            if let image {
                 Text(title)
                     .symbol(image, scale: .small)
                     .eraseToAnyView()
@@ -338,7 +338,7 @@ extension Button where Label == Never {
     ) -> some View {
         EnvironmentReader(\.theme) { theme in
             VStack(alignment: .leading, spacing: .s2) {
-                if let prompt = prompt {
+                if let prompt {
                     Text(prompt)
                         .foregroundColor(theme.textSecondaryColor)
                         .font(.app(.footnote))

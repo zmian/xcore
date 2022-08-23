@@ -12,7 +12,7 @@ extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
         var value: Result
 
         if let actionHandler = actionHandlerWrapper?.closure {
-            if let error = error {
+            if let error {
                 value = .failure(error)
             } else {
                 value = .success(result)
