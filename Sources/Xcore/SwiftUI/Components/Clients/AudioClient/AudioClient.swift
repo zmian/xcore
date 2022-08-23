@@ -15,12 +15,12 @@ public protocol AudioClient {
 
 // MARK: - File
 
-public struct AudioFile: Equatable {
+public struct AudioFile: Hashable, @unchecked Sendable {
     public let name: String
     public let bundle: Bundle
     public let category: AVAudioSession.Category
 
-    /// Creates an audio file.
+    /// Creates a reference to an audio file.
     ///
     /// - Parameters:
     ///   - name: The name of the audio file.
