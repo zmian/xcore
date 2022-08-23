@@ -38,7 +38,7 @@ final class RemoteImageFetcher: ImageFetcher {
                 return
             }
 
-            guard let image = image else {
+            guard let image else {
                 callback(.failure(error ?? ImageFetcherError.notFound))
                 return
             }

@@ -124,7 +124,7 @@ public final class LiveAddressSearchClient: AddressSearchClient {
 
         let supportedRegions = Self.supportedRegions
 
-        guard let countryCode = countryCode else {
+        guard let countryCode else {
             throw AppError.decodingFailed(message: L.invalid)
         }
 

@@ -89,7 +89,7 @@ public struct Money: Hashable, MutableAppliable {
     }
 
     public init?(_ amount: Decimal?) {
-        guard let amount = amount else {
+        guard let amount else {
             return nil
         }
 
@@ -98,7 +98,7 @@ public struct Money: Hashable, MutableAppliable {
 
     @_disfavoredOverload
     public init?(_ amount: Double?) {
-        guard let amount = amount else {
+        guard let amount else {
             return nil
         }
 

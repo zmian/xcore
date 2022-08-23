@@ -25,7 +25,7 @@ extension UITextView {
     /// that it is big enough to display three lines of text.
     public var numberOfLines: Int {
         get {
-            guard let font = font else {
+            guard let font else {
                 return 0
             }
 

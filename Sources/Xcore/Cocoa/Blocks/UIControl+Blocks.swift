@@ -84,7 +84,7 @@ extension ControlTargetActionBlockRepresentable where Self: UIButton {
     /// - Parameter handler: The block invoked whenever `.touchUpInside` event is
     ///   triggered.
     public func action(_ handler: ((_ sender: Self) -> Void)?) {
-        guard let handler = handler else {
+        guard let handler else {
             removeAction(.touchUpInside)
             return
         }

@@ -20,7 +20,7 @@ extension Money {
 
         let amountString = style.format(self)
 
-        guard let format = format else {
+        guard let format else {
             return amountString
         }
 
@@ -87,7 +87,7 @@ extension Money {
 
 extension Money {
     private var foregroundColor: SwiftUI.Color? {
-        guard let color = color else {
+        guard let color else {
             return nil
         }
 

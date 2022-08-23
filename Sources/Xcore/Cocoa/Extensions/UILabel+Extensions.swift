@@ -45,7 +45,7 @@ extension UILabel {
     /// label.updateFont(scaleFactor: scaleFactor)
     /// ```
     public func updateFont(scaleFactor: CGFloat) {
-        guard let attributedText = attributedText else {
+        guard let attributedText else {
             let normalizedSize = floor(font.pointSize * scaleFactor * 10) / 10
             font = font.withSize(normalizedSize)
             return

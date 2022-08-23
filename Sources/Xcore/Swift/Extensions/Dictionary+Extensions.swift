@@ -69,7 +69,7 @@ extension Dictionary {
     ///   - strategy: The strategy to use when duplicate keys are encountered. The
     ///     default value is `.replaceExisting`.
     public mutating func merge(_ other: Dictionary?, strategy: MergingStrategy = .replaceExisting) {
-        guard let other = other else {
+        guard let other else {
             return
         }
 
@@ -91,7 +91,7 @@ extension Dictionary {
     /// - Returns: A new dictionary with the combined keys and values of this
     ///   dictionary and other.
     public func merging(_ other: Dictionary?, strategy: MergingStrategy = .replaceExisting) -> Dictionary {
-        guard let other = other else {
+        guard let other else {
             return self
         }
 
@@ -272,7 +272,7 @@ public func + <Key, Value>(lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value]
 }
 
 public func + <Key, Value>(lhs: [Key: Value], rhs: [Key: Value]?) -> [Key: Value] {
-    guard let rhs = rhs else {
+    guard let rhs else {
         return lhs
     }
 

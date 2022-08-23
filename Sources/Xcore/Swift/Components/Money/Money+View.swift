@@ -33,7 +33,7 @@ extension Money: View {
 
     @available(iOS, introduced: 14, deprecated: 15, message: "Use attributedString directly.")
     private var foregroundColor: SwiftUI.Color? {
-        guard let color = color else {
+        guard let color else {
             return nil
         }
 

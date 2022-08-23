@@ -121,7 +121,7 @@ extension Optional where Wrapped == ImageRepresentable {
             case .none:
                 return other == nil
             case let .some(this):
-                guard let other = other else {
+                guard let other else {
                     return false
                 }
 

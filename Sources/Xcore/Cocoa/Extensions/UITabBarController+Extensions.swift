@@ -8,7 +8,7 @@ import UIKit
 
 extension UITabBarController {
     func isRootViewController(_ viewController: UIViewController) -> Bool {
-        guard let viewControllers = viewControllers else {
+        guard let viewControllers else {
             return false
         }
 

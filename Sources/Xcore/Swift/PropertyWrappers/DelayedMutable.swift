@@ -34,7 +34,7 @@ public struct DelayedMutable<Value> {
 
     public var wrappedValue: Value {
         get {
-            guard let value = value else {
+            guard let value else {
                 fatalError("Property accessed before being initialized.")
             }
             return value

@@ -50,7 +50,7 @@ extension Crypt {
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
     public static func decrypt(contentsOf url: URL?, secret: String) throws -> Data {
-        guard let url = url else {
+        guard let url else {
             throw Error.urlNotFound
         }
 
@@ -66,7 +66,7 @@ extension Crypt {
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
     public static func decrypt<D: ContiguousBytes>(contentsOf url: URL?, secret: D) throws -> Data {
-        guard let url = url else {
+        guard let url else {
             throw Error.urlNotFound
         }
 
@@ -132,7 +132,7 @@ extension Crypt {
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
     public static func encrypt(contentsOf url: URL?, secret: String) throws -> Data {
-        guard let url = url else {
+        guard let url else {
             throw Error.urlNotFound
         }
 
@@ -147,7 +147,7 @@ extension Crypt {
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
     public static func encrypt<D: ContiguousBytes>(contentsOf url: URL?, secret: D) throws -> Data {
-        guard let url = url else {
+        guard let url else {
             throw Error.urlNotFound
         }
 

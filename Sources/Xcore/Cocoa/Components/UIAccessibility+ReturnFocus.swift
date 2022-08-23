@@ -21,7 +21,7 @@ extension UIAccessibility {
         ///   If `element` value is `nil`, then element that is currently focused by the
         ///   specified assistive technology is used instead.
         public mutating func update(_ tappedElement: Any? = nil) {
-            guard let tappedElement = tappedElement else {
+            guard let tappedElement else {
                 self.element = UIAccessibility.focusedElement(using: .notificationVoiceOver)
                 return
             }
