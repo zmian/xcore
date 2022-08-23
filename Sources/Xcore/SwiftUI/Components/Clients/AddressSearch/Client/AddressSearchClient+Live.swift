@@ -123,26 +123,33 @@ public final class LiveAddressSearchClient: AddressSearchClient {
             throw AppError.decodingFailed(message: L.invalid)
         }
 
-        if !supportedRegions.contains(countryCode) {
-            typealias L = Localized.PostalAddress.InvalidRegion
-            let appName = Bundle.app.name
-
-            var invalidRegion = AppError(
-                id: "address_validation_failed_invalid_region",
-                title: L.titleOther,
-                message: L.messageMany(appName),
-                logLevel: .error
-            )
-
-            if supportedRegions == ["US"] {
-                invalidRegion.title = L.title
-                invalidRegion.message = L.messageUs(appName)
-            } else if supportedRegions.count <= 5 {
-                invalidRegion.message = L.messageFew(appName, supportedRegions.joined(separator: ", "))
-            }
-
-            throw invalidRegion
+        guard !supportedRegions.contains(countryCode) else {
+            return
         }
+
+        typealias LR = L.InvalidRegion
+        let appName = Bundle.app.name
+
+        var invalidRegion = AppError(
+            id: "address_validation_failed_invalid_region",
+            title: LR.titleOther,
+            message: LR.messageMany(appName),
+            logLevel: .error
+        )
+
+        if supportedRegions == ["US"] {
+            let regionName = "U.S."
+            invalidRegion.title = LR.titleOne(regionName)
+            invalidRegion.message = LR.messageOne(appName, regionName, regionName)
+        } else if supportedRegions.count == 1, let code = supportedRegions.first {
+            let regionName = PostalAddress.countryName(isoCode: code) ?? code
+            invalidRegion.title = LR.titleOne(regionName)
+            invalidRegion.message = LR.messageOne(appName, regionName, regionName)
+        } else if supportedRegions.count <= 5 {
+            invalidRegion.message = LR.messageFew(appName, supportedRegions.joined(separator: ", "))
+        }
+
+        throw invalidRegion
     }
 }
 

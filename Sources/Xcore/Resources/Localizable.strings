@@ -81,8 +81,8 @@
 "postal_address.invalid" = "Please make sure the address is valid and includes a street name and number.";
 "postal_address.invalid_po_box.title" = "Residential Address";
 "postal_address.invalid_po_box.message" = "Please enter an address that doesn’t correspond to a P.O. Box.";
-"postal_address.invalid_region.title" = "U.S. Addresses";
+"postal_address.invalid_region.title_one" = "%@ Addresses";
 "postal_address.invalid_region.title_other" = "Unsupported Region";
-"postal_address.invalid_region.message_us" = "%@ is currently available to U.S. residents. To continue, please enter your U.S. residential address.";
+"postal_address.invalid_region.message_one" = "%@ is currently available to %@ residents. To continue, please enter your %@ residential address.";
 "postal_address.invalid_region.message_few" = "%@ is currently available to only %@ residents. To continue, please enter your residential address in one of the supported regions.";
 "postal_address.invalid_region.message_many" = "%@ is currently not available in your region.";
