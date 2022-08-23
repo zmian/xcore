@@ -124,6 +124,9 @@ final class LiveAddressSearchClientTests: TestCase {
 
             let client = Dependency(\.addressSearch).wrappedValue
 
+            // 1. Default Supported Regions
+            // ============================
+
             do {
                 try await client.validate(address: postalAddress)
             } catch {
@@ -137,13 +140,32 @@ final class LiveAddressSearchClientTests: TestCase {
                 }
             }
 
-            // Add Spain to support region list
+            // 2. Spain as Supported Regions
+            // =============================
             LiveAddressSearchClient.supportedRegions = ["US", "ES"]
 
             do {
                 try await client.validate(address: postalAddress)
             } catch {
                 XCTFail("Spain is supported region")
+            }
+
+            // 3. US, PT, and GB as Supported Regions
+            // ======================================
+
+            LiveAddressSearchClient.supportedRegions = ["US", "PT", "GB"]
+
+            do {
+                try await client.validate(address: postalAddress)
+            } catch {
+                if let error = error as? AppError {
+                    XCTAssertEqual(error.id, "address_validation_failed_invalid_region")
+                    XCTAssertEqual(error.title, "Unsupported Region")
+                    XCTAssertEqual(error.message, "xctest is currently available to only US, PT, and GB residents. To continue, please enter your residential address in one of the supported regions.")
+                    XCTAssertEqual(error.logLevel, .error)
+                } else {
+                    XCTFail("Unexpected error type")
+                }
             }
         }
     }
