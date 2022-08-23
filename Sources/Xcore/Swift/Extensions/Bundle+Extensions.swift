@@ -46,6 +46,14 @@ extension Bundle {
         info(forKey: kCFBundleIdentifierKey)
     }
 
+    /// The human-readable name of the bundle.
+    ///
+    /// This key is often found in the `InfoPlist.strings` since it is usually
+    /// localized.
+    public var name: String {
+        info(forKey: kCFBundleNameKey)
+    }
+
     /// The version number of the bundle (e.g., `"1.0"`).
     public var versionNumber: String {
         info(forKey: "CFBundleShortVersionString")
