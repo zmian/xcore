@@ -293,7 +293,7 @@ extension String {
     /// - Returns: A new string made by appending `component` to the receiver,
     ///   preceded if necessary by a path separator.
     public func appendingPathComponent(_ component: Any?) -> String {
-        guard let component = component else {
+        guard let component else {
             return self
         }
 

@@ -10,7 +10,7 @@ public struct StringConverter: Sendable, Hashable {
     private let string: String
 
     public init?(_ value: String?) {
-        guard let value = value else {
+        guard let value else {
             return nil
         }
 

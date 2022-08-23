@@ -39,7 +39,7 @@ extension HTTPCookie {
     /// session-only cookies. The expiration date is compared to the current date to
     /// determine if the cookie is expired.
     public var isExpired: Bool {
-        guard let expiresDate = expiresDate else {
+        guard let expiresDate else {
             return false
         }
 

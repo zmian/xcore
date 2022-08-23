@@ -15,7 +15,7 @@ public enum Either<Left, Right> {
 
 extension Either {
     public static func left(value: Left?) -> Either? {
-        guard let value = value else {
+        guard let value else {
             return nil
         }
 
@@ -23,7 +23,7 @@ extension Either {
     }
 
     public static func right(value: Right?) -> Either? {
-        guard let value = value else {
+        guard let value else {
             return nil
         }
 

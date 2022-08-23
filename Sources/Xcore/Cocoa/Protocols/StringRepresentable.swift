@@ -63,7 +63,7 @@ extension Optional where Wrapped == StringRepresentable {
             case .none:
                 return other == nil
             case let .some(this):
-                guard let other = other else {
+                guard let other else {
                     return false
                 }
 
@@ -117,7 +117,7 @@ extension TextAttributedTextRepresentable {
     }
 
     public func setText(_ string: StringRepresentable?) {
-        guard let string = string else {
+        guard let string else {
             text = nil
             attributedText = nil
             accessibilityLabel = nil
@@ -171,7 +171,7 @@ extension UILabel: TextAttributedTextRepresentable {}
 extension UITextField: TextAttributedTextRepresentable {}
 extension UITextView {
     public func setText(_ string: StringRepresentable?) {
-        guard let string = string else {
+        guard let string else {
             text = nil
             attributedText = nil
             accessibilityLabel = nil

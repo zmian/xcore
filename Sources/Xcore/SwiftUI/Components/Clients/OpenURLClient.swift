@@ -45,7 +45,7 @@ public struct OpenURLClient {
 
     /// Attempts to asynchronously open the resource at the specified URL.
     public func callAsFunction(_ url: URL?) {
-        guard let url = url else {
+        guard let url else {
             return
         }
 

@@ -13,7 +13,7 @@ extension NumberFormatter {
     /// - Returns: A string containing the formatted value of integer using the
     ///   receiver’s current settings.
     public func string(from number: Int?) -> String? {
-        guard let number = number else {
+        guard let number else {
             return nil
         }
 
@@ -28,7 +28,7 @@ extension NumberFormatter {
     /// - Returns: A string containing the formatted value of floating-point value
     ///   using the receiver’s current settings.
     public func string(from number: Float?) -> String? {
-        guard let number = number else {
+        guard let number else {
             return nil
         }
 
@@ -44,7 +44,7 @@ extension NumberFormatter {
     /// - Returns: A string containing the formatted value of decimal number using
     ///   the receiver’s current settings.
     public func string<Number: DoubleOrDecimalProtocol>(from number: Number?) -> String? {
-        guard let number = number else {
+        guard let number else {
             return nil
         }
 

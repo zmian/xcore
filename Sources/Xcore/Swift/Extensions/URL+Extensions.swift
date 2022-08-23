@@ -225,7 +225,7 @@ extension URL {
     /// If the URL has no fragment (e.g., `http://www.example.com`),
     /// then this function will return the URL unchanged.
     public func removingFragment() -> URL {
-        guard let fragment = fragment else {
+        guard let fragment else {
             return self
         }
 
@@ -291,7 +291,7 @@ extension URL {
 extension URL {
     /// The scheme of the `URL`.
     public var schemeType: Scheme {
-        guard let scheme = scheme else {
+        guard let scheme else {
             return .none
         }
 

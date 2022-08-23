@@ -21,7 +21,7 @@ extension UIGestureRecognizer: TargetActionBlockRepresentable {
 
 extension TargetActionBlockRepresentable where Self: UIGestureRecognizer {
     private func setActionHandler(_ handler: ((_ sender: Self) -> Void)?) {
-        guard let handler = handler else {
+        guard let handler else {
             actionHandler = nil
             removeTarget(nil, action: nil)
             return

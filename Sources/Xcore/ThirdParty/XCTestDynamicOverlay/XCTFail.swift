@@ -55,8 +55,7 @@
     /// - Parameter message: An optional description of the assertion, for inclusion in test
     ///   results.
     func internal_XCTFail(_ message: String = "", file: StaticString, line: UInt) {
-      guard let _XCTFailureHandler = _XCTFailureHandler
-      else { return }
+      guard let _XCTFailureHandler e     else { return }
 
       _XCTFailureHandler(nil, true, "\(file)", line, "\(message.isEmpty ? "failed" : message)", nil)
     }

@@ -72,7 +72,7 @@ extension NSMutableAttributedString {
     }
 
     public func link(url: URL?, text: String) -> Self {
-        guard let url = url else {
+        guard let url else {
             return self
         }
 

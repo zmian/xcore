@@ -128,7 +128,7 @@ extension KeyedEncodingContainer {
         file: StaticString = #fileID,
         line: UInt = #line
     ) throws where F.Input: Encodable {
-        guard let value = value else {
+        guard let value else {
             return
         }
 

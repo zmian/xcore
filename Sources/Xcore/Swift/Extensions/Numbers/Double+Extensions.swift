@@ -119,7 +119,7 @@ extension Double {
 
     @_disfavoredOverload
     public init?(any value: Any?) {
-        guard let value = value else {
+        guard let value else {
             return nil
         }
 

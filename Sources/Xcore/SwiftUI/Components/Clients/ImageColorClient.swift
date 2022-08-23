@@ -44,7 +44,7 @@ extension ImageColorClient {
     /// Returns live variant of `ImageColorClient`.
     public static var live: Self {
         .init { image in
-            guard let image = image else {
+            guard let image else {
                 return nil
             }
 

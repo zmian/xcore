@@ -101,7 +101,7 @@ private final class Observer {
         self.owner = owner
         self.handler = handler
         self.equals = { [weak owner] otherOwner in
-            guard let owner = owner else {
+            guard let owner else {
                 return false
             }
 
@@ -130,7 +130,7 @@ extension Observer: Equatable {
     }
 
     static func == <T>(lhs: T?, rhs: Observer) -> Bool where T: AnyObject, T: Equatable {
-        guard let lhs = lhs else {
+        guard let lhs else {
             return false
         }
 
@@ -139,7 +139,7 @@ extension Observer: Equatable {
 }
 
 private func == <T>(lhs: Observer?, rhs: T) -> Bool where T: AnyObject, T: Equatable {
-    guard let lhs = lhs else {
+    guard let lhs else {
         return false
     }
 

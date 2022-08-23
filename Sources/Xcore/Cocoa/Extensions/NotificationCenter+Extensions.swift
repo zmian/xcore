@@ -24,7 +24,7 @@ extension NotificationCenter {
     /// Removes all entries specifying a given observer from the notification
     /// center's dispatch table.
     public func remove(_ observer: NSObjectProtocol?) {
-        guard let observer = observer else {
+        guard let observer else {
             return
         }
 

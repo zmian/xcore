@@ -95,7 +95,7 @@ extension Date {
                 return nil
         }
 
-        guard let date = date else {
+        guard let date else {
             return nil
         }
 

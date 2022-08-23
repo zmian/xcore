@@ -65,7 +65,7 @@ extension UIImageView {
         animationDuration: TimeInterval = .slow,
         _ callback: ((_ image: UIImage?) -> Void)? = nil
     ) {
-        guard let image = image else {
+        guard let image else {
             setImage(
                 defaultImage,
                 alwaysAnimate: alwaysAnimate,

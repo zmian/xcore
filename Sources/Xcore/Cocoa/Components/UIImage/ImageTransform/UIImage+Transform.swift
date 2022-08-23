@@ -18,7 +18,7 @@ extension UIImage {
     ///   - transform: The transform to use.
     /// - Returns: The transformed image.
     func applying(_ transform: ImageTransform?, source: ImageRepresentable) -> UIImage {
-        guard let transform = transform else {
+        guard let transform else {
             return self
         }
 
