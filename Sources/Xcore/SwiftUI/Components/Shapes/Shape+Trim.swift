@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-extension Shape {
+extension InsettableShape {
     /// Trims this shape by a fractional amount based on its representation as a
     /// path.
     ///
@@ -51,17 +51,17 @@ extension Shape {
     ///     where drawing ends.
     /// - Returns: A shape built by capturing a portion of this shape's path.
     @_disfavoredOverload
-    public func trim(from startFraction: CGFloat = 0, to endFraction: CGFloat = 1) -> TrimmedShape<Self> {
+    public func trim(from startFraction: CGFloat = 0, to endFraction: CGFloat = 1) -> some InsettableShape {
         TrimmedShape(shape: self, from: startFraction, to: endFraction)
     }
 }
 
 /// A shape with a trim effect applied to it and conditionally preserving
 /// `InsettableShape` conformance of the underlying shape.
-public struct TrimmedShape<Content>: Shape where Content: Shape {
+private struct TrimmedShape<Content>: Shape where Content: Shape {
     private let startFraction: CGFloat
     private let endFraction: CGFloat
-    public var shape: Content
+    private var shape: Content
 
     /// Creates a trimmed shape.
     ///
@@ -71,13 +71,13 @@ public struct TrimmedShape<Content>: Shape where Content: Shape {
     ///     where drawing starts.
     ///   - endFraction: The fraction of the way through drawing this shape
     ///     where drawing ends.
-    public init(shape: Content, from startFraction: CGFloat = 0, to endFraction: CGFloat = 1) {
+    init(shape: Content, from startFraction: CGFloat = 0, to endFraction: CGFloat = 1) {
         self.shape = shape
         self.startFraction = startFraction
         self.endFraction = endFraction
     }
 
-    public func path(in rect: CGRect) -> Path {
+    func path(in rect: CGRect) -> Path {
         shape
             .trim(from: startFraction, to: endFraction)
             .path(in: rect)
@@ -86,7 +86,7 @@ public struct TrimmedShape<Content>: Shape where Content: Shape {
 
 extension TrimmedShape: InsettableShape where Content: InsettableShape {
     /// Returns `self` inset by `amount`.
-    public func inset(by amount: CGFloat) -> TrimmedShape<Content.InsetShape> {
+    func inset(by amount: CGFloat) -> TrimmedShape<Content.InsetShape> {
         TrimmedShape<Content.InsetShape>(
             shape: shape.inset(by: amount),
             from: startFraction,
