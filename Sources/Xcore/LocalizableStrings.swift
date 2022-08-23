@@ -133,12 +133,14 @@ internal enum Localized {
       internal static func messageMany(_ p1: Any) -> String {
         return Localized.tr("Localizable", "postal_address.invalid_region.message_many", String(describing: p1))
       }
-      /// %@ is currently available to U.S. residents. To continue, please enter your U.S. residential address.
-      internal static func messageUs(_ p1: Any) -> String {
-        return Localized.tr("Localizable", "postal_address.invalid_region.message_us", String(describing: p1))
+      /// %@ is currently available to %@ residents. To continue, please enter your %@ residential address.
+      internal static func messageOne(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
+        return Localized.tr("Localizable", "postal_address.invalid_region.message_one", String(describing: p1), String(describing: p2), String(describing: p3))
       }
-      /// U.S. Addresses
-      internal static let title = Localized.tr("Localizable", "postal_address.invalid_region.title")
+      /// %@ Addresses
+      internal static func titleOne(_ p1: Any) -> String {
+        return Localized.tr("Localizable", "postal_address.invalid_region.title_one", String(describing: p1))
+      }
       /// Unsupported Region
       internal static let titleOther = Localized.tr("Localizable", "postal_address.invalid_region.title_other")
     }
