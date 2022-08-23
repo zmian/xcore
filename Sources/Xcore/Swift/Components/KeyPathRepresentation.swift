@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct KeyPathRepresentation: Hashable {
+public struct KeyPathRepresentation: Hashable, Sendable {
     public let rawValue: String
     public let separator: String
 

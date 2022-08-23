@@ -32,6 +32,6 @@ extension Identifier: CustomPlaygroundDisplayConvertible {
     }
 }
 
+extension Identifier: Sendable {}
 extension Identifier: Hashable {}
 extension Identifier: Codable {}
-extension Identifier: Sendable {}
