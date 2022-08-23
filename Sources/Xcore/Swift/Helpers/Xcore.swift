@@ -31,7 +31,7 @@ extension AnyCodable {
 // Fix for package depending on other packages fix
 // =============================================================================
 // TODO: Check previews under Xcode 14 to see if this is fixed?
-private let _name = "Xcore"
+private let moduleName = "Xcore"
 
 private class CurrentBundleFinder {}
 
@@ -43,8 +43,8 @@ private class CurrentBundleFinder {}
 extension Foundation.Bundle {
     /// Returns the resource bundle associated with the current Swift module.
     fileprivate static var myModule: Bundle = {
-        let bundleName = "Xcore_\(_name)"
-        let localBundleName = "LocalPackages_\(_name)"
+        let bundleName = "Xcore_\(moduleName)"
+        let localBundleName = "LocalPackages_\(moduleName)"
 
         let candidates = [
             // Bundle should be present here when the package is linked into an App.
@@ -73,7 +73,7 @@ extension Foundation.Bundle {
             }
         }
 
-        fatalError("Unable to find bundle named \(_name).")
+        fatalError("Unable to find bundle named \(moduleName).")
     }()
 }
 // =============================================================================
