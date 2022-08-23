@@ -115,6 +115,35 @@ internal enum Localized {
     internal static let `open` = Localized.tr("Localizable", "mail_app.open")
   }
 
+  internal enum PostalAddress {
+    /// Please make sure the address is valid and includes a street name and number.
+    internal static let invalid = Localized.tr("Localizable", "postal_address.invalid")
+    internal enum InvalidPoBox {
+      /// Please enter an address that doesn’t correspond to a P.O. Box.
+      internal static let message = Localized.tr("Localizable", "postal_address.invalid_po_box.message")
+      /// Residential Address
+      internal static let title = Localized.tr("Localizable", "postal_address.invalid_po_box.title")
+    }
+    internal enum InvalidRegion {
+      /// %@ is currently available to only %@ residents. To continue, please enter your residential address in one of the supported regions.
+      internal static func messageFew(_ p1: Any, _ p2: Any) -> String {
+        return Localized.tr("Localizable", "postal_address.invalid_region.message_few", String(describing: p1), String(describing: p2))
+      }
+      /// %@ is currently not available in your region.
+      internal static func messageMany(_ p1: Any) -> String {
+        return Localized.tr("Localizable", "postal_address.invalid_region.message_many", String(describing: p1))
+      }
+      /// %@ is currently available to U.S. residents. To continue, please enter your U.S. residential address.
+      internal static func messageUs(_ p1: Any) -> String {
+        return Localized.tr("Localizable", "postal_address.invalid_region.message_us", String(describing: p1))
+      }
+      /// U.S. Addresses
+      internal static let title = Localized.tr("Localizable", "postal_address.invalid_region.title")
+      /// Unsupported Region
+      internal static let titleOther = Localized.tr("Localizable", "postal_address.invalid_region.title_other")
+    }
+  }
+
   internal enum Signout {
     /// Log Out
     internal static let title = Localized.tr("Localizable", "signout.title")
