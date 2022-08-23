@@ -51,6 +51,11 @@ public final class LiveAddressSearchClient: AddressSearchClient {
             throw AppError.postalAddressInvalidPoBox
         }
 
+        guard !Self.supportedRegions.isEmpty else {
+            // Early exit as all regions are supported.
+            return
+        }
+
         // Check the input address corresponds to US. We check this here to avoid users
         // from entering the details of a US address but select a different country.
         try supportedRegionValidation(address.countryCode)
