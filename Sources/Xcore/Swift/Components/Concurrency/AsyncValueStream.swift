@@ -47,7 +47,7 @@ public struct AsyncValueStream<Element>: AsyncSequence {
         base = stream
     }
 
-    public func makeAsyncIterator() -> AsyncCurrentValueStream<Element>.Base.Iterator {
+    public func makeAsyncIterator() -> AsyncCurrentValueStream<Element>.Iterator {
         base.makeAsyncIterator()
     }
 }

@@ -32,21 +32,23 @@ final class AsyncValueStreamTests: TestCase {
         let internalStream = AsyncCurrentValueStream<Int>(5)
         let externalStream = AsyncValueStream(internalStream)
 
+        Task {
+            // Collection all produced elements
+            var values: [Int] = []
+
+            for await value in externalStream {
+                values.append(value)
+            }
+
+            // Verify collected elements
+            XCTAssertEqual(values, [5, 1, 2])
+        }
+
         // Produce new elements
         internalStream.yield(1)
         internalStream.yield(2)
 
         // Finish producing elements
         internalStream.finish()
-
-        // Collection all produced elements
-        var values: [Int] = []
-
-        for await value in externalStream {
-            values.append(value)
-        }
-
-        // Verify collected elements
-        XCTAssertEqual(values, [5, 1, 2])
     }
 }
