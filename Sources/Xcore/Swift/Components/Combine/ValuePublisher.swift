@@ -14,26 +14,35 @@ import Combine
 /// subject from the client to avoid publishing unintended values by outside
 /// world.
 public struct ValuePublisher<Output, Failure: Error>: Publisher {
-    private let upstream: CurrentValueSubject<Output, Failure>
+    private let base: CurrentValueSubject<Output, Failure>
 
+    /// The value wrapped by this subject, published as a new element whenever it
+    /// changes.
     public var value: Output {
-        upstream.value
+        base.value
     }
 
+    /// Creates a current value subject from the given subject.
+    ///
+    /// - Parameter subject: The base subject.
     public init(_ subject: CurrentValueSubject<Output, Failure>) {
-        upstream = subject
+        base = subject
     }
 
     public func receive<S>(subscriber: S) where S: Subscriber, Failure == S.Failure, Output == S.Input {
-        upstream.subscribe(subscriber)
+        base.subscribe(subscriber)
     }
 }
+
+// MARK: - Constant
 
 extension ValuePublisher {
     /// An publisher that immediately publishes the given value. Useful for
     /// situations where you must return an publisher, but you don't need to do
     /// anything.
-    public static func constant(_ output: Output) -> ValuePublisher {
+    ///
+    /// - Parameter output: The constant output to publish.
+    public static func constant(_ output: Output) -> Self {
         .init(.init(output))
     }
 }

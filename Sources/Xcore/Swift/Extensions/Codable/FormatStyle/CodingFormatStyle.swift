@@ -12,7 +12,7 @@ public typealias CodingFormatStyle = DecodingFormatStyle & EncodingFormatStyle
 
 // MARK: - Decoding Format Style
 
-public protocol DecodingFormatStyle {
+public protocol DecodingFormatStyle<Input, Output> {
     /// The type of data to format.
     associatedtype Input
 
@@ -25,7 +25,7 @@ public protocol DecodingFormatStyle {
 
 // MARK: - Encoding Format Style
 
-public protocol EncodingFormatStyle {
+public protocol EncodingFormatStyle<Input, Output> {
     /// The type of data to format.
     associatedtype Input
 
