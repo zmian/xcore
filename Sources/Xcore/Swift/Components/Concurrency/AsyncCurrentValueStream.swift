@@ -4,6 +4,8 @@
 // MIT license, see LICENSE file for details
 //
 
+import Foundation
+
 /// An asynchronous sequence that wraps a single value and uses continuation to
 /// produce new elements.
 ///
@@ -12,11 +14,6 @@
 ///
 /// ```swift
 /// let stream = AsyncCurrentValueStream<Int>(5)
-///
-/// // Set up on termination handler
-/// stream.onTermination { _ in
-///     print("good bye")
-/// }
 ///
 /// print(stream.value) // Prints 5
 ///
@@ -33,9 +30,9 @@
 /// print(stream.value) // Prints 2
 /// ```
 public final class AsyncCurrentValueStream<Element>: AsyncSequence {
-    public typealias Base = AsyncStream<Element>
-    public let base: Base
-    private var continuation: Base.Continuation?
+    private typealias Base = AsyncStream<Element>
+    private typealias Continuation = Base.Continuation
+    private var continuations = [AnyHashable: Continuation]()
 
     /// The value wrapped by this stream, produced as a new element whenever it
     /// changes.
@@ -46,19 +43,6 @@ public final class AsyncCurrentValueStream<Element>: AsyncSequence {
     /// - Parameter value: The initial value to produce.
     public init(_ value: Element) {
         self.value = value
-
-        var c: Base.Continuation?
-
-        base = AsyncStream { continuation in
-            continuation.yield(value)
-            c = continuation
-        }
-
-        continuation = c
-    }
-
-    public func makeAsyncIterator() -> Base.Iterator {
-        base.makeAsyncIterator()
     }
 
     /// Resume the task awaiting the next iteration point by having it return
@@ -73,7 +57,9 @@ public final class AsyncCurrentValueStream<Element>: AsyncSequence {
     /// - Parameter value: The value to yield from the continuation.
     public func yield(_ value: Element) {
         self.value = value
-        continuation?.yield(value)
+        continuations.values.forEach {
+            $0.yield(value)
+        }
     }
 
     /// Resume the task awaiting the next iteration point by having it return
@@ -83,20 +69,54 @@ public final class AsyncCurrentValueStream<Element>: AsyncSequence {
     /// the stream enters a terminal state and doesn't produces any additional
     /// elements.
     public func finish() {
-        continuation?.finish()
-        continuation = nil
+        continuations.values.forEach {
+            $0.finish()
+        }
+
+        continuations.removeAll()
+    }
+}
+
+// MARK: - Iterator
+
+extension AsyncCurrentValueStream {
+    public func makeAsyncIterator() -> Iterator {
+        let id = UUID()
+
+        let stream = AsyncStream<Element> { [weak self] continuation in
+            guard let strongSelf = self else {
+                return continuation.finish()
+            }
+
+            continuation.yield(strongSelf.value)
+            strongSelf.continuations[id] = continuation
+        }
+
+        return Iterator(stream.makeAsyncIterator()) { [weak self] in
+            self?.continuations[id] = nil
+        }
     }
 
-    /// A callback to invoke when canceling iteration of an asynchronous stream.
-    ///
-    /// If an `onTermination` callback is set, using task cancellation to terminate
-    /// iteration of an `AsyncStream` results in a call to this callback.
-    ///
-    /// Canceling an active iteration invokes the `onTermination` callback first,
-    /// then resumes by yielding `nil`. This means that you can perform needed
-    /// cleanup in the cancellation handler. After reaching a terminal state as a
-    /// result of cancellation, the `AsyncStream` sets the callback to `nil`.
-    public func onTermination(_ call: @escaping @Sendable (Base.Continuation.Termination) -> Void) {
-        continuation?.onTermination = call
+    public struct Iterator: AsyncIteratorProtocol {
+        private var iterator: Base.Iterator
+        private let onTermination: () -> Void
+
+        fileprivate init(_ iterator: AsyncStream<Element>.Iterator, onTermination: @escaping () -> Void) {
+            self.iterator = iterator
+            self.onTermination = onTermination
+        }
+
+        public mutating func next() async -> Element? {
+            guard !Task.isCancelled else {
+                onTermination()
+                return nil
+            }
+
+            let next = await iterator.next()
+            if next == nil {
+                onTermination()
+            }
+            return next
+        }
     }
 }

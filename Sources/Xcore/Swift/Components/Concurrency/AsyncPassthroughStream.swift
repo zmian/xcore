@@ -4,6 +4,8 @@
 // MIT license, see LICENSE file for details
 //
 
+import Foundation
+
 /// An asynchronous sequence that uses continuation to produce new elements.
 ///
 /// Unlike ``AsyncCurrentValueStream``, a ``AsyncPassthroughStream`` doesn’t
@@ -11,11 +13,6 @@
 ///
 /// ```swift
 /// let stream = AsyncPassthroughStream<Int>()
-///
-/// // Set up on termination handler
-/// stream.onTermination { _ in
-///     print("good bye")
-/// }
 ///
 /// // Produce new elements
 /// stream.yield(1)
@@ -25,24 +22,12 @@
 /// stream.finish()
 /// ```
 public final class AsyncPassthroughStream<Element>: AsyncSequence {
-    public typealias Base = AsyncStream<Element>
-    public let base: Base
-    private var continuation: Base.Continuation?
+    private typealias Base = AsyncStream<Element>
+    private typealias Continuation = Base.Continuation
+    private var continuations = [AnyHashable: Continuation]()
 
     /// Creates an asynchronous sequence.
-    public init() {
-        var c: Base.Continuation?
-
-        base = AsyncStream { continuation in
-            c = continuation
-        }
-
-        continuation = c
-    }
-
-    public func makeAsyncIterator() -> Base.Iterator {
-        base.makeAsyncIterator()
-    }
+    public init() {}
 
     /// Resume the task awaiting the next iteration point by having it return
     /// nomally from its suspension point with a given element.
@@ -55,7 +40,9 @@ public final class AsyncPassthroughStream<Element>: AsyncSequence {
     ///
     /// - Parameter value: The value to yield from the continuation.
     public func yield(_ value: Element) {
-        continuation?.yield(value)
+        continuations.values.forEach {
+            $0.yield(value)
+        }
     }
 
     /// Resume the task awaiting the next iteration point by having it return
@@ -65,20 +52,49 @@ public final class AsyncPassthroughStream<Element>: AsyncSequence {
     /// the stream enters a terminal state and doesn't produces any additional
     /// elements.
     public func finish() {
-        continuation?.finish()
-        continuation = nil
+        continuations.values.forEach {
+            $0.finish()
+        }
+
+        continuations.removeAll()
+    }
+}
+
+// MARK: - Iterator
+
+extension AsyncPassthroughStream {
+    public func makeAsyncIterator() -> Iterator {
+        let id = UUID()
+
+        let stream = AsyncStream<Element> { [weak self] continuation in
+            self?.continuations[id] = continuation
+        }
+
+        return Iterator(stream.makeAsyncIterator()) { [weak self] in
+            self?.continuations[id] = nil
+        }
     }
 
-    /// A callback to invoke when canceling iteration of an asynchronous stream.
-    ///
-    /// If an `onTermination` callback is set, using task cancellation to terminate
-    /// iteration of an `AsyncStream` results in a call to this callback.
-    ///
-    /// Canceling an active iteration invokes the `onTermination` callback first,
-    /// then resumes by yielding `nil`. This means that you can perform needed
-    /// cleanup in the cancellation handler. After reaching a terminal state as a
-    /// result of cancellation, the `AsyncStream` sets the callback to `nil`.
-    public func onTermination(_ call: @escaping @Sendable (Base.Continuation.Termination) -> Void) {
-        continuation?.onTermination = call
+    public struct Iterator: AsyncIteratorProtocol {
+        private var iterator: Base.Iterator
+        private let onTermination: () -> Void
+
+        fileprivate init(_ iterator: AsyncStream<Element>.Iterator, onTermination: @escaping () -> Void) {
+            self.iterator = iterator
+            self.onTermination = onTermination
+        }
+
+        public mutating func next() async -> Element? {
+            guard !Task.isCancelled else {
+                onTermination()
+                return nil
+            }
+
+            let next = await iterator.next()
+            if next == nil {
+                onTermination()
+            }
+            return next
+        }
     }
 }

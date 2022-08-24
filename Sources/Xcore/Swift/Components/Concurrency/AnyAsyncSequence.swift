@@ -4,6 +4,16 @@
 // MIT license, see LICENSE file for details
 //
 
+// MARK: - AsyncSequence
+
+extension AsyncSequence {
+    public func eraseToAnyAsyncSequence() -> AnyAsyncSequence<Element> {
+        AnyAsyncSequence(self)
+    }
+}
+
+// MARK: - AnyAsyncSequence
+
 /// An asynchronous sequence that performs type erasure by wrapping another
 /// asynchronous sequence.
 public struct AnyAsyncSequence<Element>: AsyncSequence {
@@ -48,13 +58,7 @@ extension AnyAsyncSequence {
 
 extension AnyAsyncSequence: @unchecked Sendable where Element: Sendable {}
 
-// MARK: - AsyncSequence
-
-extension AsyncSequence {
-    public func eraseToAnyAsyncSequence() -> AnyAsyncSequence<Element> {
-        AnyAsyncSequence(self)
-    }
-}
+// MARK: - Helpers
 
 extension AnyAsyncSequence {
     /// Any asynchronous sequence that does nothing and completes immediately.
