@@ -82,8 +82,8 @@ final class AsyncPassthroughStreamTests: TestCase {
 
     func testIterations_asyncStream_directly() async {
         let stream = AsyncStream<Int> {
-            $0.send(1)
-            $0.send(2)
+            $0.yield(1)
+            $0.yield(2)
             $0.finish()
         }
 
