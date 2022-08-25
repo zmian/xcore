@@ -15,10 +15,10 @@ final class AsyncCurrentValueStreamTests: TestCase {
         XCTAssertEqual(stream.value, 5)
 
         // Produce new elements
-        stream.yield(1)
+        stream.send(1)
         XCTAssertEqual(stream.value, 1)
 
-        stream.yield(2)
+        stream.send(2)
 
         // Finish producing elements
         stream.finish()
@@ -55,8 +55,8 @@ final class AsyncCurrentValueStreamTests: TestCase {
         }
 
         // Produce new elements
-        stream.yield(1)
-        stream.yield(2)
+        stream.send(1)
+        stream.send(2)
 
         // Finish producing elements
         stream.finish()

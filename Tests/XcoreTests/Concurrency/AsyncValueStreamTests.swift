@@ -17,9 +17,9 @@ final class AsyncValueStreamTests: TestCase {
         XCTAssertEqual(externalStream.value, 5)
 
         // Produce new elements
-        internalStream.yield(1)
+        internalStream.send(1)
         XCTAssertEqual(externalStream.value, 1)
-        internalStream.yield(2)
+        internalStream.send(2)
 
         // Finish producing elements
         internalStream.finish()
@@ -45,8 +45,8 @@ final class AsyncValueStreamTests: TestCase {
         }
 
         // Produce new elements
-        internalStream.yield(1)
-        internalStream.yield(2)
+        internalStream.send(1)
+        internalStream.send(2)
 
         // Finish producing elements
         internalStream.finish()

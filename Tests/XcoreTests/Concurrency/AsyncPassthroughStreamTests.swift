@@ -36,8 +36,8 @@ final class AsyncPassthroughStreamTests: TestCase {
         }
 
         // Produce new elements
-        stream.yield(1)
-        stream.yield(2)
+        stream.send(1)
+        stream.send(2)
 
         // Finish producing elements
         stream.finish()
@@ -73,8 +73,8 @@ final class AsyncPassthroughStreamTests: TestCase {
         }
 
         // Produce new elements
-        stream.yield(1)
-        stream.yield(2)
+        stream.send(1)
+        stream.send(2)
 
         // Finish producing elements
         stream.finish()
@@ -82,8 +82,8 @@ final class AsyncPassthroughStreamTests: TestCase {
 
     func testIterations_asyncStream_directly() async {
         let stream = AsyncStream<Int> {
-            $0.yield(1)
-            $0.yield(2)
+            $0.send(1)
+            $0.send(2)
             $0.finish()
         }
 

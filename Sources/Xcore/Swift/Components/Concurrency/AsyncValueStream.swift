@@ -18,10 +18,10 @@
 /// print(externalStream.value) // Prints 5
 ///
 /// // Produce new elements
-/// internalStream.yield(1)
+/// internalStream.send(1)
 /// print(externalStream.value) // Prints 1
 ///
-/// internalStream.yield(2)
+/// internalStream.send(2)
 ///
 /// // Finish producing elements
 /// internalStream.finish()
@@ -29,7 +29,7 @@
 /// // Current Value
 /// print(externalStream.value) // Prints 2
 ///
-/// externalStream.yield(2) // 🛑 Value of type 'AsyncValueStream<Int>' has no member 'yield'
+/// externalStream.send(2) // 🛑 Value of type 'AsyncValueStream<Int>' has no member 'send'
 /// ```
 public struct AsyncValueStream<Element>: AsyncSequence {
     private let base: AsyncCurrentValueStream<Element>
