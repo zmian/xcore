@@ -102,6 +102,7 @@ extension AsyncPassthroughStream {
 // MARK: - AsyncStream
 
 extension AsyncPassthroughStream {
+    /// Creates an asynchronous sequence that produce new elements over time.
     public func makeAsyncStream() -> AsyncStream<Element> {
         AsyncStream { continuation in
             Task {
