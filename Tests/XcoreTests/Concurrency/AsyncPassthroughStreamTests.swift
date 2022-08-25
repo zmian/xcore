@@ -42,4 +42,73 @@ final class AsyncPassthroughStreamTests: TestCase {
         // Finish producing elements
         stream.finish()
     }
+
+    func testIterations_makeAsyncStream() async {
+        let stream = AsyncPassthroughStream<Int>()
+
+        let asyncStream = stream.makeAsyncStream()
+
+        Task {
+            // Collection all produced elements
+            var values: [Int] = []
+
+            for await value in asyncStream {
+                values.append(value)
+            }
+
+            // Verify collected elements
+            XCTAssertEqual(values, [1, 2])
+        }
+
+        Task {
+            // Collection all produced elements
+            var values: [Int] = []
+
+            for await value in asyncStream {
+                values.append(value)
+            }
+
+            // Verify collected elements
+            XCTAssertEqual(values, [1, 2])
+        }
+
+        // Produce new elements
+        stream.yield(1)
+        stream.yield(2)
+
+        // Finish producing elements
+        stream.finish()
+    }
+
+    func testIterations_asyncStream_directly() async {
+        let stream = AsyncStream<Int> {
+            $0.yield(1)
+            $0.yield(2)
+            $0.finish()
+        }
+
+        Task {
+            // Collection all produced elements
+            var values: [Int] = []
+
+            for await value in stream {
+                values.append(value)
+            }
+
+            // Verify collected elements
+            XCTAssertEqual(values, [1, 2])
+        }
+
+        Task {
+            // Collection all produced elements
+            var values: [Int] = []
+
+            for await value in stream {
+                values.append(value)
+            }
+
+            // Verify collected elements
+            XCTAssertEqual(values, [])
+        }
+    }
 }

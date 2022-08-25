@@ -7,6 +7,7 @@
 import XCTest
 @testable import Xcore
 
+/*
 final class AsyncShareStreamTests: TestCase {
     func testIterations() async {
         let stream = AsyncStream<Int> {
@@ -54,3 +55,4 @@ final class AsyncShareStreamTests: TestCase {
 }
 
 private var values: [String] = []
+*/
