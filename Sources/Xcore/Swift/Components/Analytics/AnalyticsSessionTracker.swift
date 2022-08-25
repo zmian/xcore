@@ -30,7 +30,14 @@ public final class AnalyticsSessionTracker {
     ///   default value is `30` seconds.
     public init(sessionExpirationDuration: TimeInterval = 30) {
         self.sessionExpirationDuration = sessionExpirationDuration
-        addAppPhaseObserver()
+
+        withDelay(0.3) { [weak self] in
+            // Delay to avoid:
+            // Thread 1: Simultaneous accesses to 0x1107dbc18, but modification requires
+            // exclusive access. This class can be used inside analytics client that invokes
+            // other clients.
+            self?.addAppPhaseObserver()
+        }
     }
 
     /// Adds an observer for the app lifecycle.
