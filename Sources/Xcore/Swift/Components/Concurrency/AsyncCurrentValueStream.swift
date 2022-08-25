@@ -18,10 +18,10 @@ import Foundation
 /// print(stream.value) // Prints 5
 ///
 /// // Produce new elements
-/// stream.yield(1)
+/// stream.send(1)
 /// print(stream.value) // Prints 1
 ///
-/// stream.yield(2)
+/// stream.send(2)
 ///
 /// // Finish producing elements
 /// stream.finish()
@@ -54,8 +54,8 @@ public final class AsyncCurrentValueStream<Element>: AsyncSequence {
     /// This can be called more than once and returns to the caller immediately
     /// without blocking for any awaiting consumption from the iteration.
     ///
-    /// - Parameter value: The value to yield from the continuation.
-    public func yield(_ value: Element) {
+    /// - Parameter value: The value to send from the continuation.
+    public func send(_ value: Element) {
         self.value = value
         continuations.values.forEach {
             $0.yield(value)
@@ -99,22 +99,22 @@ extension AsyncCurrentValueStream {
 
     public struct Iterator: AsyncIteratorProtocol {
         private var iterator: Base.Iterator
-        private let onTermination: () -> Void
+        private let onCancel: () -> Void
 
-        fileprivate init(_ iterator: AsyncStream<Element>.Iterator, onTermination: @escaping () -> Void) {
+        fileprivate init(_ iterator: AsyncStream<Element>.Iterator, onCancel: @escaping () -> Void) {
             self.iterator = iterator
-            self.onTermination = onTermination
+            self.onCancel = onCancel
         }
 
         public mutating func next() async -> Element? {
             guard !Task.isCancelled else {
-                onTermination()
+                onCancel()
                 return nil
             }
 
             let next = await iterator.next()
             if next == nil {
-                onTermination()
+                onCancel()
             }
             return next
         }

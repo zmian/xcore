@@ -11,9 +11,9 @@ import XCTest
 final class AsyncShareStreamTests: TestCase {
     func testIterations() async {
         let stream = AsyncStream<Int> {
-            $0.yield(1)
-            $0.yield(2)
-            $0.yield(3)
+            $0.send(1)
+            $0.send(2)
+            $0.send(3)
             $0.finish()
         }
         .map { $0 * 10 }

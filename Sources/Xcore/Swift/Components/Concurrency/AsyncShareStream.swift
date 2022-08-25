@@ -48,7 +48,7 @@ extension AsyncShareStream {
             }
 
             if let next = try await upstreamIterator.next() {
-                downstream.yield(next)
+                downstream.send(next)
                 return next
             } else {
                 downstream.finish()
