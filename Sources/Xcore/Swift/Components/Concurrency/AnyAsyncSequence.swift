@@ -57,26 +57,3 @@ extension AnyAsyncSequence {
 // MARK: - Sendable
 
 extension AnyAsyncSequence: @unchecked Sendable where Element: Sendable {}
-
-// MARK: - Helpers
-
-extension AnyAsyncSequence {
-    /// Any asynchronous sequence that does nothing and completes immediately.
-    /// Useful for situations where you must return an asynchronous sequence, but
-    /// you don't need to do anything.
-    public static var none: Self {
-        AsyncStream { $0.finish() }
-            .eraseToAnyAsyncSequence()
-    }
-
-    #if DEBUG
-    /// Any asynchronous sequence that causes a test to fail if it runs.
-    public static func unimplemented(_ prefix: String) -> Self {
-        AsyncStream {
-            internal_XCTFail("\(prefix.isEmpty ? "" : "\(prefix) - ")A failing asynchronous sequence ran.")
-            $0.finish()
-        }
-        .eraseToAnyAsyncSequence()
-    }
-    #endif
-}
