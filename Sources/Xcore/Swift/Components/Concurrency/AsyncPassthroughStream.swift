@@ -98,3 +98,17 @@ extension AsyncPassthroughStream {
         }
     }
 }
+
+// MARK: - AsyncStream
+
+extension AsyncPassthroughStream {
+    public func makeAsyncStream() -> AsyncStream<Element> {
+        AsyncStream { continuation in
+            Task {
+                for await value in self {
+                    continuation.yield(value)
+                }
+            }
+        }
+    }
+}
