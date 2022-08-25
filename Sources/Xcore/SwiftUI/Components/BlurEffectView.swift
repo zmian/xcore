@@ -116,7 +116,7 @@ private class BlurView: XCView {
         blurBackView.pinEdgesToSuperview()
         blurEffectView.pinEdgesToSuperview()
 
-        observer = NotificationCenter.on.accessibilityReduceTransparencyStatusDidChange { [weak self] in
+        observer = NotificationCenter.observe(UIAccessibility.reduceTransparencyStatusDidChangeNotification) { [weak self] _ in
             self?.accessibilityReduceTransparencyStatusDidChange()
         }
 
