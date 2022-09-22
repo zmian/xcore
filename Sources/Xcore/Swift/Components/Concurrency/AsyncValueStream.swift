@@ -47,7 +47,7 @@ public struct AsyncValueStream<Element>: AsyncSequence {
         base = stream
     }
 
-    public func makeAsyncIterator() -> AsyncCurrentValueStream<Element>.Iterator {
+    public func makeAsyncIterator() -> AsyncCurrentValueStream<Element>.AsyncIterator {
         base.makeAsyncIterator()
     }
 }
@@ -55,12 +55,14 @@ public struct AsyncValueStream<Element>: AsyncSequence {
 // MARK: - Constant
 
 extension AsyncValueStream {
-    /// An asynchronous sequence that immediately produces the given value. Useful for
-    /// situations where you must return an asynchronous sequence, but you don't
+    /// An asynchronous sequence that immediately produces the given value. Useful
+    /// for situations where you must return an asynchronous sequence, but you don't
     /// need to do anything.
     ///
     /// - Parameter value: The constant value to produce.
     public static func constant(_ value: Element) -> Self {
-        .init(.init(value))
+        let stream = AsyncCurrentValueStream(value)
+        stream.finish()
+        return .init(stream)
     }
 }

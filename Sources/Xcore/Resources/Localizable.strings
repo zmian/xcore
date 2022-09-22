@@ -86,3 +86,9 @@
 "postal_address.invalid_region.message_one" = "%@ is currently available to %@ residents. To continue, please enter your %@ residential address.";
 "postal_address.invalid_region.message_few" = "%@ is currently available to only %@ residents. To continue, please enter your residential address in one of the supported regions.";
 "postal_address.invalid_region.message_many" = "%@ is currently not available in your region.";
+
+// MARK: - Push notifications
+
+"push_notifications.open_system_settings.title" = "Open Settings";
+"push_notifications.open_system_settings.message" = "In Settings, tap Notifications and switch on Allow Notifications.";
+"push_notifications.open_system_settings.button_open_settings" = "Open Settings";

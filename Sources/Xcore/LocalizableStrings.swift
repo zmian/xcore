@@ -146,6 +146,17 @@ internal enum Localized {
     }
   }
 
+  internal enum PushNotifications {
+    internal enum OpenSystemSettings {
+      /// Open Settings
+      internal static let buttonOpenSettings = Localized.tr("Localizable", "push_notifications.open_system_settings.button_open_settings")
+      /// In Settings, tap Notifications and switch on Allow Notifications.
+      internal static let message = Localized.tr("Localizable", "push_notifications.open_system_settings.message")
+      /// Open Settings
+      internal static let title = Localized.tr("Localizable", "push_notifications.open_system_settings.title")
+    }
+  }
+
   internal enum Signout {
     /// Log Out
     internal static let title = Localized.tr("Localizable", "signout.title")
