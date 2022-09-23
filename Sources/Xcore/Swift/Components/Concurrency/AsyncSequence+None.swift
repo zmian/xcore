@@ -28,19 +28,6 @@ extension AsyncThrowingStream where Failure == Error {
 
 // MARK: - AnyAsyncSequence
 
-extension AnyAsyncSequence {
-    /// Any asynchronous sequence that does nothing and completes immediately.
-    /// Useful for situations where you must return an asynchronous sequence, but
-    /// you don't need to do anything.
-    public static var none: Self {
-        AsyncStream
-            .none
-            .eraseToAnyAsyncSequence()
-    }
-}
-
-// MARK: - AnyAsyncSequence
-
 extension AsyncPassthroughStream {
     /// Any asynchronous sequence that does nothing and completes immediately.
     /// Useful for situations where you must return an asynchronous sequence, but
