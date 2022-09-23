@@ -16,7 +16,11 @@ let package = Package(
     targets: [
         .target(
             name: "Xcore",
-            dependencies: ["SDWebImage", "AnyCodable", "KeychainAccess"],
+            dependencies: [
+                "SDWebImage",
+                "AnyCodable",
+                "KeychainAccess"
+            ],
             resources: [.process("Resources")]
         ),
         .testTarget(name: "XcoreTests", dependencies: ["Xcore"])

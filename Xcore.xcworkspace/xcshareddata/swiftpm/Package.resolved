@@ -1,34 +1,32 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "AnyCodable",
-        "repositoryURL": "https://github.com/zmian/AnyCodable",
-        "state": {
-          "branch": "master",
-          "revision": "ca1a7d64fd7584fb0e3d4de521c76e2969b8ded6",
-          "version": null
-        }
-      },
-      {
-        "package": "KeychainAccess",
-        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
-        "state": {
-          "branch": null,
-          "revision": "84e546727d66f1adc5439debad16270d0fdd04e7",
-          "version": "4.2.2"
-        }
-      },
-      {
-        "package": "SDWebImage",
-        "repositoryURL": "https://github.com/SDWebImage/SDWebImage.git",
-        "state": {
-          "branch": null,
-          "revision": "b729cc14f65e1412efc781a4cc46bd7f4720a3ae",
-          "version": "5.12.6"
-        }
+  "pins" : [
+    {
+      "identity" : "anycodable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/zmian/AnyCodable",
+      "state" : {
+        "branch" : "master",
+        "revision" : "ca1a7d64fd7584fb0e3d4de521c76e2969b8ded6"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "keychainaccess",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kishikawakatsumi/KeychainAccess",
+      "state" : {
+        "revision" : "84e546727d66f1adc5439debad16270d0fdd04e7",
+        "version" : "4.2.2"
+      }
+    },
+    {
+      "identity" : "sdwebimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImage.git",
+      "state" : {
+        "revision" : "b729cc14f65e1412efc781a4cc46bd7f4720a3ae",
+        "version" : "5.12.6"
+      }
+    }
+  ],
+  "version" : 2
 }
