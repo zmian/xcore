@@ -37,12 +37,6 @@ open class UIHostingWindow<Content: View>: UIWindow {
         backgroundColor = .clear
         rootViewController = hostingController
         accessibilityViewIsModal = true
-        if #unavailable(iOS 14.5) {
-            // iOS 14.4 and lower have a bug where UIHostingController doesn't
-            // call the viewDidLoad() method where the view's background color
-            // is set. Hence this little snippet to set it explicitly from here.
-            rootViewController?.view.backgroundColor = .clear
-        }
     }
 
     @available(*, unavailable)

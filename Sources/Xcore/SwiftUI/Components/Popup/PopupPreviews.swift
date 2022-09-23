@@ -4,10 +4,9 @@
 // MIT license, see LICENSE file for details
 //
 
+#if DEBUG
 import SwiftUI
 
-#if DEBUG
-@available(iOS 15.0, *)
 private struct PopupPreviews: View {
     private let L = Samples.Strings.locationAlert
     @Environment(\.theme) private var theme
@@ -112,7 +111,6 @@ private struct PopupPreviews: View {
 
 // MARK: - Preview Provider
 
-@available(iOS 15.0, *)
 struct Popup_Previews: PreviewProvider {
     static var previews: some View {
         PopupPreviews()
@@ -121,7 +119,6 @@ struct Popup_Previews: PreviewProvider {
 }
 
 extension Samples {
-    @available(iOS 15.0, *)
     public static var popupPreviews: some View {
         PopupPreviews()
     }

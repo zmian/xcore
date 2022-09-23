@@ -211,9 +211,7 @@ extension CustomFloatingPointFormatStyle: Foundation.FormatStyle {}
 
 // MARK: - Double
 
-// TODO: Uncomment when dropping iOS 14 Support
-// extension FormatStyle where Self == CustomFloatingPointFormatStyle<Double> {
-extension CustomFloatingPointFormatStyle where Value == Double {
+extension FormatStyle where Self == CustomFloatingPointFormatStyle<Double> {
     /// Returns a number format style suitable for number types.
     ///
     /// ```swift
@@ -331,7 +329,7 @@ extension CustomFloatingPointFormatStyle where Value == Double {
     ///
     /// - Parameter threshold: An optional property to only abbreviate if `value` is
     ///   greater then this value.
-    public static func asAbbreviated(threshold: Value?) -> Self {
+    public static func asAbbreviated(threshold: Double?) -> Self {
         .init(type: .abbreviated(threshold: threshold))
             .fractionLength(.defaultFractionDigits)
             .trimFractionalPartIfZero(false)
@@ -340,9 +338,7 @@ extension CustomFloatingPointFormatStyle where Value == Double {
 
 // MARK: - Decimal
 
-// TODO: Uncomment when dropping iOS 14 Support
-// extension FormatStyle where Self == CustomFloatingPointFormatStyle<Decimal> {
-extension CustomFloatingPointFormatStyle where Value == Decimal {
+extension FormatStyle where Self == CustomFloatingPointFormatStyle<Decimal> {
     /// Returns a number format style suitable for number types.
     ///
     /// ```swift
@@ -460,7 +456,7 @@ extension CustomFloatingPointFormatStyle where Value == Decimal {
     ///
     /// - Parameter threshold: An optional property to only abbreviate if `value` is
     ///   greater then this value.
-    public static func asAbbreviated(threshold: Value?) -> Self {
+    public static func asAbbreviated(threshold: Decimal?) -> Self {
         .init(type: .abbreviated(threshold: threshold))
             .fractionLength(.defaultFractionDigits)
             .trimFractionalPartIfZero(false)

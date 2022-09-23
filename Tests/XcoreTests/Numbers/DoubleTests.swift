@@ -54,7 +54,6 @@ final class DoubleTests: TestCase {
         XCTAssertNotEqual(Double(truncating: Decimal(0.000001466)), 0.000001466)
     }
 
-    @available(iOS 15.0, *)
     func testFormatted() {
         XCTAssertEqual(Double(1).formatted(.number.precision(.fractionLength(2))), "1.00")
         XCTAssertEqual(Double(1.09).formatted(.number.precision(.fractionLength(2))), "1.09")

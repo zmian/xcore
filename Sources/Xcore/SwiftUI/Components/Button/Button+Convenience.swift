@@ -65,19 +65,11 @@ extension Button where Label == Text {
     }
 
     /// A button with `Cancel` label and given action.
-    @ViewBuilder
     public static func cancel(action: @escaping () -> Void) -> some View {
-        if #available(iOS 15.0, *) {
-            Button(role: .cancel, action: action) {
-                Text(L.cancel)
-            }
-            .accessibilityIdentifier("cancelButton")
-        } else {
-            Button(action: action) {
-                Text(L.cancel)
-            }
-            .accessibilityIdentifier("cancelButton")
+        Button(role: .cancel, action: action) {
+            Text(L.cancel)
         }
+        .accessibilityIdentifier("cancelButton")
     }
 
     /// A button with `Enable` label and given action.
@@ -97,19 +89,11 @@ extension Button where Label == Text {
     }
 
     /// A button with `Remove` label and given action.
-    @ViewBuilder
     public static func remove(action: @escaping () -> Void) -> some View {
-        if #available(iOS 15.0, *) {
-            Button(role: .destructive, action: action) {
-                Text(L.remove)
-            }
-            .accessibilityIdentifier("removeButton")
-        } else {
-            Button(action: action) {
-                Text(L.remove)
-            }
-            .accessibilityIdentifier("removeButton")
+        Button(role: .destructive, action: action) {
+            Text(L.remove)
         }
+        .accessibilityIdentifier("removeButton")
     }
 
     /// A button with `Retry` label and given action.
@@ -237,21 +221,12 @@ extension Button where Label == Text {
 
 extension Button where Label == Image {
     /// A button with `X` label and given action.
-    @ViewBuilder
     public static func dismiss(action: @escaping () -> Void) -> some View {
-        if #available(iOS 15.0, *) {
-            Button(role: .cancel, action: action) {
-                Image(system: .xMark)
-            }
-            .accessibilityLabel("Dismiss")
-            .accessibilityIdentifier("dismissButton")
-        } else {
-            Button(action: action) {
-                Image(system: .xMark)
-            }
-            .accessibilityLabel("Dismiss")
-            .accessibilityIdentifier("dismissButton")
+        Button(role: .cancel, action: action) {
+            Image(system: .xMark)
         }
+        .accessibilityLabel("Dismiss")
+        .accessibilityIdentifier("dismissButton")
     }
 }
 

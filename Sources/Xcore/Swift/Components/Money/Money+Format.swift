@@ -35,7 +35,6 @@ extension Money {
     ///
     /// - Parameter format: An optional string format.
     /// - Returns: A locale-aware attributed string representation.
-    @available(iOS 15, *)
     public func attributedString(format: String? = nil) -> AttributedString {
         if amount == 0, let zeroString = zeroString {
             return AttributedString(zeroString)
@@ -99,7 +98,6 @@ extension Money {
     }
 }
 
-@available(iOS 15, *)
 extension AttributedString {
     fileprivate mutating func setAttributes(_ attributes: Money.Font.Superscript, range: Range<Index>) {
         var attributeContainer = AttributeContainer()

@@ -25,11 +25,7 @@ extension View {
         overlay(
             ProgressView()
                 .unwrap(tint) { content, tint in
-                    if #available(iOS 15.0, *) {
-                        content.tint(tint)
-                    } else {
-                        content.progressViewStyle(CircularProgressViewStyle(tint: tint))
-                    }
+                    content.tint(tint)
                 }
                 .hidden(!show),
             alignment: alignment

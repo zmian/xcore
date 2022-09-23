@@ -6,7 +6,6 @@
 
 import SwiftUI
 
-@available(iOS 15.0, *)
 struct CryptView: View {
     @State private var inputFilename = ""
     @State private var encryptionKey = ""
@@ -101,7 +100,6 @@ struct CryptView: View {
     }
 }
 
-@available(iOS 15.0, *)
 private struct InternalSection: View {
     @State private var value = ""
     private let title: String

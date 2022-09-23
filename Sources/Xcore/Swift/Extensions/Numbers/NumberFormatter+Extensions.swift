@@ -65,7 +65,6 @@ extension NumberFormatter {
     }
 }
 
-@available(iOS 15.0, *)
 extension NumberFormatStyleConfiguration.SignDisplayStrategy {
     /// Displays plus sign (`"+"`) for the positive values, minus sign (`"−"`) for
     /// the negative values and empty string (`""`) for zero values.

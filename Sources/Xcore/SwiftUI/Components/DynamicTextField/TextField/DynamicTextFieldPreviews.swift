@@ -163,7 +163,6 @@ private struct DataFormatTypesFieldPreview: View {
 
 // MARK: - Preview Provider
 
-@available(iOS 15.0, *)
 struct DynamicTextField_Previews: PreviewProvider {
     static var previews: some View {
         Samples.dynamicTextFieldPreviews
@@ -171,7 +170,6 @@ struct DynamicTextField_Previews: PreviewProvider {
 }
 
 extension Samples {
-    @available(iOS 15.0, *)
     public static var dynamicTextFieldPreviews: some View {
         List {
             NumberFieldPreview()

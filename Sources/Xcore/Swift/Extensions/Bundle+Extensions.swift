@@ -69,7 +69,7 @@ extension Bundle {
         "\(versionNumber) (\(buildNumber))"
     }
 
-    /// The OS version (e.g., `"iOS 15.0.1"`).
+    /// The OS version (e.g., `"iOS 15.2.0"`).
     public var osNameVersion: String {
         let name = Device.current.osName
         let version = Device.current.osVersion
@@ -86,7 +86,7 @@ extension Bundle {
     /// **Sample output:**
     ///
     /// ```swift
-    /// iOS 15.0.1        // OS Version
+    /// iOS 15.2.0        // OS Version
     /// Z's iPhone        // Device name
     /// Version 1.0 (300) // App Version and Build number
     /// ```
