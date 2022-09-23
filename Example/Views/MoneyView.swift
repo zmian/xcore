@@ -6,7 +6,6 @@
 
 import SwiftUI
 
-@available(iOS 15.0, *)
 struct MoneyView: View {
     @State private var amount: Decimal = 9.99
     @State private var crypto: Decimal = 0.00000001

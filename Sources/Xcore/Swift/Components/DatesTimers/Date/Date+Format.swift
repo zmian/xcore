@@ -124,35 +124,18 @@ extension Date {
 
 extension Date {
     private func formattedRelative(until threshold: Calendar.Component, calendar: Calendar) -> String {
-        if #available(iOS 15.0, *) {
-            if `is`(.next(.hour), in: calendar) {
-                return formatted(.relative.calendar(calendar).capitalizationContext(.beginningOfSentence))
-            }
-
-            if `is`(.today, in: calendar) {
-                return "Today"
-            }
-
-            if `is`(.current(threshold), in: calendar) {
-                return formatted(.relative.calendar(calendar).capitalizationContext(.beginningOfSentence))
-            }
-
-            return formatted(style: .date(.medium))
-        } else {
-            // TODO: Remove all when iOS 14 support is dropped.
-            if `is`(.today, in: calendar) {
-                return "Today"
-            }
-
-            if `is`(.tomorrow, in: calendar) {
-                return "Tomorrow"
-            }
-
-            if `is`(.yesterday, in: calendar) {
-                return "Yesterday"
-            }
-
-            return formatted(style: .date(.medium))
+        if `is`(.next(.hour), in: calendar) {
+            return formatted(.relative.calendar(calendar).capitalizationContext(.beginningOfSentence))
         }
+
+        if `is`(.today, in: calendar) {
+            return "Today"
+        }
+
+        if `is`(.current(threshold), in: calendar) {
+            return formatted(.relative.calendar(calendar).capitalizationContext(.beginningOfSentence))
+        }
+
+        return formatted(style: .date(.medium))
     }
 }

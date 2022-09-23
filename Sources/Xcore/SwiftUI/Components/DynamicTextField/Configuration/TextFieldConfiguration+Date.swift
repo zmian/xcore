@@ -89,21 +89,13 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
     }
 
     public static func date(_ configuration: Date) -> Self {
-        var textContentType: UITextContentType? {
-            if #available(iOS 15.0, *) {
-                return .dateTime
-            }
-
-            return nil
-        }
-
-        return .init(
+        .init(
             id: "date",
             autocapitalization: .none,
             autocorrection: .no,
             spellChecking: .no,
             keyboard: .default,
-            textContentType: textContentType,
+            textContentType: .dateTime,
             validation: .none,
             formatter: .init()
         )

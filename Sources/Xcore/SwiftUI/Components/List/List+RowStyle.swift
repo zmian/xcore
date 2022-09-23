@@ -44,13 +44,7 @@ private struct ListRowModifier: ViewModifier {
                 .frame(maxWidth: .infinity, minHeight: minHeight, alignment: .leading)
                 .listRowInsets(.zero)
                 .listRowBackground(Color.clear)
-                .apply {
-                    if #available(iOS 15.0, *) {
-                        $0.listRowSeparator(.hidden)
-                    } else {
-                        $0
-                    }
-                }
+                .listRowSeparator(.hidden)
                 .overlay(separator, alignment: .bottom)
                 .contentShape(Rectangle())
         }

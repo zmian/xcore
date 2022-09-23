@@ -6,7 +6,6 @@
 
 import SwiftUI
 
-@available(iOS 15.0, *)
 struct HapticFeedbackView: View {
     @Dependency(\.hapticFeedback) private var hapticFeedback
 

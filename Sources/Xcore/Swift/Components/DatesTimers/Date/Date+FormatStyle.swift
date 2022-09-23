@@ -6,7 +6,6 @@
 
 import Foundation
 
-@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
 extension FormatStyle where Self == Date.RelativeFormatStyle {
     /// Returns a relative date format style based on the named presentation and
     /// wide unit style.
@@ -15,7 +14,6 @@ extension FormatStyle where Self == Date.RelativeFormatStyle {
     }
 }
 
-@available(iOS 15.0, *)
 extension Date.RelativeFormatStyle {
     /// The capitalization context to use when formatting the relative dates.
     ///

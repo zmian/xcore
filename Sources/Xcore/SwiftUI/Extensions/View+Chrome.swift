@@ -112,12 +112,12 @@ extension ViewChrome {
     /// An enumeration representing the background style of the element.
     public enum Background: Hashable, CustomStringConvertible {
         case transparent
-        case blurred(UIBlurEffect.Style)
+        case blurred(Material)
         case colored(Color)
         case view(AnyView)
 
         public static var blurred: Self {
-            .blurred(.prominent)
+            .blurred(.regularMaterial)
         }
 
         public static func view<V: View>(_ view: V) -> Self {
@@ -172,7 +172,7 @@ private struct ViewChromeModifier: ViewModifier {
                     case .transparent:
                         EmptyView()
                     case let .blurred(style):
-                        bar(BlurEffectView(style: style), in: geometry)
+                        bar(Color.clear.background(style), in: geometry)
                     case let .colored(color):
                         bar(color, in: geometry)
                     case let .view(view):

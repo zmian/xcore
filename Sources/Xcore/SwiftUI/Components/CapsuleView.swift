@@ -116,7 +116,6 @@ extension CapsuleView where Label == Never {
 
 // MARK: - Preview Provider
 
-@available(iOS 15.0, *)
 struct CapsuleView_Previews: PreviewProvider {
     static var previews: some View {
         Samples.capsuleViewPreviews
@@ -125,7 +124,6 @@ struct CapsuleView_Previews: PreviewProvider {
 }
 
 extension Samples {
-    @available(iOS 15.0, *)
     public static var capsuleViewPreviews: some View {
         LazyView {
             ZStack {

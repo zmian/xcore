@@ -8,7 +8,6 @@
 import SwiftUI
 import UserNotifications
 import AsyncAlgorithms
-import Combine
 
 // MARK: - Live
 
@@ -34,7 +33,7 @@ private final class LivePushNotificationsClient: NSObject {
     @Dependency(\.appPhase) private var appPhase
     private var center: UNUserNotificationCenter { .current() }
     fileprivate let stream = AsyncPassthroughStream<Event>()
-    private var cancellable: AnyCancellable?
+    private var notificationTask: Task<(), Never>?
     private var currentAuthorizationStatus: AuthorizationStatus = .notDetermined
 
     override init() {
@@ -43,33 +42,21 @@ private final class LivePushNotificationsClient: NSObject {
         addObserver()
     }
 
+    deinit {
+        notificationTask?.cancel()
+        notificationTask = nil
+    }
+
     private func addObserver() {
-        if #available(iOS 15, *) {
-            Task {
-                // On foreground, get authorization status in case user goes into the System
-                // Settings and toggled the notifications settings.
-                for await _ in await NotificationCenter.async(UIApplication.willEnterForegroundNotification) {
-                    // Get the latest authorization status so that `events` stream can receives
-                    // the latest authorization status after the app enters foreground (If user
-                    // toggles the notification settings in the system Settings.app).
-                    _ = await authorizationStatus()
-                }
-            }
-        } else {
+        notificationTask = Task {
             // On foreground, get authorization status in case user goes into the System
             // Settings and toggled the notifications settings.
-            cancellable = NotificationCenter.default
-                .publisher(for: UIApplication.willEnterForegroundNotification)
-                .sink { [weak self] _ in
-                    guard let strongSelf = self else { return }
-
-                    Task {
-                        // Get the latest authorization status so that `events` stream can receives
-                        // the latest authorization status after the app enters foreground (If user
-                        // toggles the notification settings in the system Settings.app).
-                        await strongSelf.authorizationStatus()
-                    }
-                }
+            for await _ in await NotificationCenter.async(UIApplication.willEnterForegroundNotification) {
+                // Get the latest authorization status so that `events` stream can receives
+                // the latest authorization status after the app enters foreground (If user
+                // toggles the notification settings in the system Settings.app).
+                _ = await authorizationStatus()
+            }
         }
     }
 

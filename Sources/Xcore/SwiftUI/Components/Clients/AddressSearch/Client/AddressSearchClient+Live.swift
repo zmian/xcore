@@ -151,14 +151,7 @@ public final class LiveAddressSearchClient: AddressSearchClient {
             invalidRegion.title = LR.titleOne(regionName)
             invalidRegion.message = LR.messageOne(appName, regionName, regionName)
         } else if supportedRegions.count <= 5 {
-            let regions: String
-
-            if #available(iOS 15.0, *) {
-                regions = supportedRegions.formatted(.list(type: .and).locale(.us))
-            } else {
-                regions = supportedRegions.joined(separator: ", ")
-            }
-
+            let regions = supportedRegions.formatted(.list(type: .and).locale(.us))
             invalidRegion.message = LR.messageFew(appName, regions)
         }
 

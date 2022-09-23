@@ -312,11 +312,7 @@ extension Money: CustomStringConvertible {
 
 extension Money: StringRepresentable {
     public var stringSource: StringSourceType {
-        if #available(iOS 15, *) {
-            return .attributedString(NSAttributedString(attributedString()))
-        } else {
-            return .string(formatted())
-        }
+        .attributedString(NSAttributedString(attributedString()))
     }
 }
 
@@ -395,11 +391,7 @@ extension Money {
         /// While currency isn't directly translated (e.g.,`$100 != €100`), however, it
         /// is safe to use locale aware grouping and decimal separator to make it user
         /// locale friendly (e.g., France locale  `$1,000.00` == `$1 000,00`).
-        public var currencySymbol = Locale.us.currencySymbol ?? "$" {
-            didSet {
-                MoneyFormatter.shared.currencySymbol = currencySymbol
-            }
-        }
+        public var currencySymbol = Locale.us.currencySymbol ?? "$"
 
         /// The locale of the formatter.
         ///
@@ -408,11 +400,7 @@ extension Money {
         /// measurement, and decimal separator.
         ///
         /// The default value is `.us`.
-        public var locale: Locale = .us {
-            didSet {
-                MoneyFormatter.shared.locale = locale
-            }
-        }
+        public var locale: Locale = .us
     }
 
     private static var appearanceProxy = Appearance()

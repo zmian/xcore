@@ -77,24 +77,12 @@ extension Menu {
 
     private static let capsules = Self(
         title: "Capsule",
-        content: {
-            if #available(iOS 15.0, *) {
-                Samples.capsuleViewPreviews
-            } else {
-                EmptyView()
-            }
-        }
+        content: Samples.capsuleViewPreviews
     )
 
     private static let money = Self(
         title: "Money",
-        content: {
-            if #available(iOS 15.0, *) {
-                MoneyView()
-            } else {
-                EmptyView()
-            }
-        }
+        content: MoneyView()
     )
 
     private static let xstack = Self(
@@ -104,24 +92,12 @@ extension Menu {
 
     private static let popups = Self(
         title: "Popups",
-        content: {
-            if #available(iOS 15.0, *) {
-                Samples.popupPreviews
-            } else {
-                EmptyView()
-            }
-        }
+        content: Samples.popupPreviews
     )
 
     private static let textFields = Self(
         title: "TextFields",
-        content: {
-            if #available(iOS 15.0, *) {
-                Samples.dynamicTextFieldPreviews
-            } else {
-                EmptyView()
-            }
-        }
+        content: Samples.dynamicTextFieldPreviews
     )
 
     private static let activitySheet = Self(
@@ -131,23 +107,11 @@ extension Menu {
 
     private static let hapticFeedback = Self(
         title: "Haptic Feedback",
-        content: {
-            if #available(iOS 15.0, *) {
-                HapticFeedbackView()
-            } else {
-                EmptyView()
-            }
-        }
+        content: HapticFeedbackView()
     )
 
     private static let crypt = Self(
         title: "Crypt",
-        content: {
-            if #available(iOS 15.0, *) {
-                CryptView()
-            } else {
-                EmptyView()
-            }
-        }
+        content: CryptView()
     )
 }
