@@ -9,7 +9,7 @@ import XCTest
 
 final class DependencyTests: TestCase {
     func testProtocolDependency() throws {
-        struct ViewModel {
+        final class ViewModel {
             @Dependency(\.pasteboard) var pasteboard
 
             func copy() {
@@ -38,7 +38,7 @@ final class DependencyTests: TestCase {
     }
 
     func testStructDependency() {
-        struct ViewModel {
+        final class ViewModel {
             @Dependency(\.myPasteboard) var pasteboard
 
             func copy() {

@@ -35,7 +35,7 @@ extension TextFieldConfiguration {
 
 // MARK: - Address Components
 
-extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatter {
+extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
     public static func address(component: AddressComponent) -> Self {
         switch component {
             case .street:

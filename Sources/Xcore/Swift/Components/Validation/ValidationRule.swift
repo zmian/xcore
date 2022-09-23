@@ -31,7 +31,7 @@ public struct ValidationRule<Input> {
 
 // MARK: - Conditional Conformance
 
-extension ValidationRule where Input == String {
+extension ValidationRule<String> {
     public init(pattern: String, transform: ((Input) -> Input)? = nil) {
         self.init { input in
             let input = transform?(input) ?? input

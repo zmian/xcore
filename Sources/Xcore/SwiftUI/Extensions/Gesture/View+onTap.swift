@@ -43,11 +43,11 @@ extension View {
     ///     a button and perform the given action.
     ///   - style: Sets the button style.
     ///   - action: The action to perform when the user triggers the button.
-    public func onTap<S>(
+    public func onTap(
         if condition: Bool = true,
-        style: S,
+        style: some ButtonStyle,
         action: @escaping () -> Void
-    ) -> some View where S: ButtonStyle {
+    ) -> some View {
         applyIf(condition) { label in
             Button(action: action) {
                 label

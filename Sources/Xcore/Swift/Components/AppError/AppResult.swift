@@ -30,7 +30,7 @@ extension Result where Failure == AppError {
     }
 }
 
-extension Result where Failure == AppError, Success == Xcore.Empty {
+extension Result<Xcore.Empty, AppError> {
     /// Creates a new result by evaluating an async throwing closure, capturing the
     /// returned value as a success, or any thrown error as an `AppError`.
     ///

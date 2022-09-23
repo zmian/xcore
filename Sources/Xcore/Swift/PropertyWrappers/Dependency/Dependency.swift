@@ -40,7 +40,7 @@ import Foundation
 ///     }
 ///
 ///     func testPasteboard() throws {
-///         struct ViewModel {
+///         class ViewModel {
 ///             @Dependency(\.myCustomValue) var myCustomValue
 ///         }
 ///

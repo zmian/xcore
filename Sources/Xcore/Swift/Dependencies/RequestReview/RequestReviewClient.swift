@@ -13,7 +13,7 @@ import StoreKit
 /// **Usage**
 ///
 /// ```swift
-/// struct ViewModel {
+/// class ViewModel {
 ///     @Dependency(\.requestReview) var requestReview
 ///
 ///     func askToRateApp() {

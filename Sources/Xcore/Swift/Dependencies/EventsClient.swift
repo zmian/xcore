@@ -39,7 +39,7 @@ import Combine
 ///     }
 /// }
 ///
-/// struct ViewModel {
+/// class ViewModel {
 ///     @Dependency(\.myEvent) var myEvent
 ///
 ///     func usage() {

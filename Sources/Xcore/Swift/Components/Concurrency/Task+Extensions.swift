@@ -7,7 +7,7 @@
 import SwiftUI
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
-extension Task where Success == Never, Failure == Never {
+extension Task<Never, Never> {
     /// Suspends the current task for at least the given duration in seconds.
     ///
     /// If the task is canceled before the time ends, this function throws

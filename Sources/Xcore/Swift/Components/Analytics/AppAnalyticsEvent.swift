@@ -87,7 +87,7 @@ extension AppAnalyticsEvent {
 
 // MARK: - UserInfo
 
-extension UserInfoKey where Type == AppAnalyticsEvent {
+extension UserInfoKey<AppAnalyticsEvent> {
     /// An optional property indicating whether the event should be throttled and
     /// only fired once in the given session.
     ///

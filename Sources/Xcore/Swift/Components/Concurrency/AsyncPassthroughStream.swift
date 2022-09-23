@@ -68,6 +68,10 @@ extension AsyncPassthroughStream {
 
         let stream = AsyncStream<Element> { [weak self] continuation in
             self?.continuations[id] = continuation
+
+            continuation.onTermination = { [weak self] _ in
+                self?.continuations[id] = nil
+            }
         }
 
         return Iterator(stream.makeAsyncIterator()) { [weak self] in
@@ -77,22 +81,22 @@ extension AsyncPassthroughStream {
 
     public struct Iterator: AsyncIteratorProtocol {
         private var iterator: Base.Iterator
-        private let onCancel: () -> Void
+        private let onTermination: () -> Void
 
-        fileprivate init(_ iterator: Base.Iterator, onCancel: @escaping () -> Void) {
+        fileprivate init(_ iterator: Base.Iterator, onTermination: @escaping () -> Void) {
             self.iterator = iterator
-            self.onCancel = onCancel
+            self.onTermination = onTermination
         }
 
         public mutating func next() async -> Element? {
             guard !Task.isCancelled else {
-                onCancel()
+                onTermination()
                 return nil
             }
 
             let next = await iterator.next()
             if next == nil {
-                onCancel()
+                onTermination()
             }
             return next
         }

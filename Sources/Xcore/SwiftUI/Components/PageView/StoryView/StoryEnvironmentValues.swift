@@ -39,11 +39,6 @@ extension View {
         environment(\.storyProgressIndicatorColor, color)
     }
 
-    @_disfavoredOverload
-    public func storyProgressIndicatorColor(_ color: UIColor) -> some View {
-        storyProgressIndicatorColor(Color(color))
-    }
-
     public func storyProgressIndicatorInsets(_ insets: EdgeInsets) -> some View {
         environment(\.storyProgressIndicatorInsets, insets)
     }

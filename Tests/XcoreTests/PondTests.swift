@@ -178,7 +178,7 @@ extension PondTests {
     }
 }
 
-private struct ViewModel {
+private final class ViewModel {
     @Dependency(\.pond) var pond
 }
 

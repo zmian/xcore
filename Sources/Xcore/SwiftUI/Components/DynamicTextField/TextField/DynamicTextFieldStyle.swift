@@ -23,7 +23,7 @@ public struct DynamicTextFieldStyleConfiguration {
     public struct TextField: View {
         public let body: AnyView
 
-        init<Content: View>(_ content: Content) {
+        init(_ content: some View) {
             body = content.eraseToAnyView()
         }
     }
@@ -32,7 +32,7 @@ public struct DynamicTextFieldStyleConfiguration {
     public struct Label: View {
         public let body: AnyView
 
-        init<Content: View>(_ content: Content) {
+        init(_ content: some View) {
             body = content.eraseToAnyView()
         }
     }

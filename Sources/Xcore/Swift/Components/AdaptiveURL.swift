@@ -32,7 +32,7 @@ public struct AdaptiveURL: UserInfoContainer, MutableAppliable {
 
 // MARK: - UserInfo
 
-extension UserInfoKey where Type == AdaptiveURL {
+extension UserInfoKey<AdaptiveURL> {
     /// A Boolean property indicating whether the URL content should adapt app
     /// appearance.
     public static var shouldAdaptAppearance: Self { #function }

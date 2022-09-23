@@ -12,7 +12,7 @@ final class AppPhaseClientTests: TestCase {
     func testDefault() {
         DependencyValues.appPhase(.live)
 
-        var viewModel = ViewModel()
+        let viewModel = ViewModel()
         var receivedPhase: AppPhase?
         viewModel.receive { receivedPhase = $0 }
 
@@ -25,7 +25,7 @@ final class AppPhaseClientTests: TestCase {
 }
 
 extension AppPhaseClientTests {
-    private struct ViewModel {
+    private final class ViewModel {
         @Dependency(\.appPhase) private var appPhase
         private var cancellable: AnyCancellable?
 
@@ -33,9 +33,9 @@ extension AppPhaseClientTests {
             appPhase.send(phase)
         }
 
-        mutating func receive(_ callback: @escaping (AppPhase) -> Void) {
-            cancellable = appPhase.receive.sink { phase in
-                callback(phase)
+        func receive(_ callback: @escaping (AppPhase) -> Void) {
+            cancellable = appPhase.receive.sink { appPhase in
+                callback(appPhase)
             }
         }
     }

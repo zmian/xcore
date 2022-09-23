@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-extension UserInfoKey where Type == AppError {
+extension UserInfoKey<AppError> {
     /// A Boolean property indicating whether the error should show "Contact
     /// Support" option.
     public static var contactSupport: Self { #function }
@@ -32,7 +32,7 @@ extension AppError {
     }
 }
 
-extension Binding where Value == AppError? {
+extension Binding<AppError?> {
     /// A Boolean property indicating whether the error should show "Contact
     /// Support" option.
     public var contactSupport: Bool {

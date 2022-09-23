@@ -34,7 +34,7 @@ final class PasteboardClientTests: TestCase {
         XCTAssertNil(globalPasteboard) // current variant is noop
     }
 
-    private struct ViewModel {
+    private final class ViewModel {
         @Dependency(\.pasteboard) var pasteboard
 
         func copy() {

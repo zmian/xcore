@@ -105,7 +105,7 @@ extension TextFieldConfiguration {
 
 // MARK: - Inits
 
-extension TextFieldConfiguration where Formatter == AnyTextFieldFormatter {
+extension TextFieldConfiguration<AnyTextFieldFormatter> {
     /// Erase formatter
     init<F: TextFieldFormatter>(_ configuration: TextFieldConfiguration<F>) {
         self.init(
@@ -126,7 +126,7 @@ extension TextFieldConfiguration where Formatter == AnyTextFieldFormatter {
     }
 }
 
-extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatter {
+extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
     public init(
         id: ID,
         autocapitalization: UITextAutocapitalizationType = .sentences,

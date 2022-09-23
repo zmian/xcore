@@ -15,7 +15,7 @@ public struct AnyShape: Shape {
     private var _path: (CGRect) -> Path
 
     /// Create an instance that type-erases shap.
-    public init<S>(_ shape: S) where S: Shape {
+    public init(_ shape: some Shape) {
         self._path = shape.path(in:)
     }
 
@@ -34,7 +34,7 @@ public struct AnyInsettableShape: InsettableShape {
     private var _inset: (CGFloat) -> AnyInsettableShape
 
     /// Create an instance that type-erases shap.
-    public init<S>(_ shape: S) where S: InsettableShape {
+    public init(_ shape: some InsettableShape) {
         self._path = shape.path(in:)
         self._inset = {
             AnyInsettableShape(shape.inset(by: $0))

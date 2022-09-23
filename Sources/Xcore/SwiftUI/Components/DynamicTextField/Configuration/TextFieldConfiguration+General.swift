@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatter {
+extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
     /// Freeform text
     public static var text: Self {
         .init(id: #function)
@@ -37,7 +37,7 @@ extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatte
     }
 }
 
-extension TextFieldConfiguration where Formatter == PhoneNumberTextFieldFormatter {
+extension TextFieldConfiguration<PhoneNumberTextFieldFormatter> {
     /// Phone Number with 11 character length.
     public static var phoneNumber: Self {
         .phoneNumber(for: .us)

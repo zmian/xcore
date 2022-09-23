@@ -11,7 +11,7 @@ public typealias EitherAnyViewText = _ConditionalContent<AnyView, Text>
 
 // MARK: - Text
 
-extension Button where Label == Text {
+extension Button<Text> {
     /// An accessible button that has the given `text` as label and performs the
     /// provided `action`.
     public static func accessible(
@@ -219,7 +219,7 @@ extension Button where Label == Text {
 
 // MARK: - Image
 
-extension Button where Label == Image {
+extension Button<Image> {
     /// A button with `X` label and given action.
     public static func dismiss(action: @escaping () -> Void) -> some View {
         Button(role: .cancel, action: action) {
@@ -232,7 +232,7 @@ extension Button where Label == Image {
 
 // MARK: - Learn More, Read More, See More, See More/Less, See All, See All/Less
 
-extension Button where Label == EitherAnyViewText {
+extension Button<EitherAnyViewText> {
     /// A button with `Learn More` label and an option to display a chevron and
     /// given action.
     public static func learnMore(withChevron: Bool = true, action: @escaping () -> Void) -> some View {
@@ -282,7 +282,7 @@ extension Button where Label == EitherAnyViewText {
 
 // MARK: - Menu
 
-extension Button where Label == EitherAnyViewText {
+extension Button<EitherAnyViewText> {
     /// A button with label generated from the string and `image` and given action.
     public static func menu(
         _ title: String,
@@ -303,7 +303,7 @@ extension Button where Label == EitherAnyViewText {
 
 // MARK: - Dropdown
 
-extension Button where Label == Never {
+extension Button<Never> {
     /// A button with label generated from the string and optional `prompt` string
     /// above the button and given action.
     public static func dropdown(

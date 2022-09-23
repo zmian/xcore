@@ -33,7 +33,7 @@ private final class LivePushNotificationsClient: NSObject {
     @Dependency(\.appPhase) private var appPhase
     private var center: UNUserNotificationCenter { .current() }
     fileprivate let stream = AsyncPassthroughStream<Event>()
-    private var notificationTask: Task<(), Never>?
+    private var notificationTask: Task<Void, Never>?
     private var currentAuthorizationStatus: AuthorizationStatus = .notDetermined
 
     override init() {

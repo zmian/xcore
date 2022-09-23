@@ -40,11 +40,11 @@ extension View {
     ///   - color: The border color.
     /// - Returns: A view that adds a border with the specified shape, width and
     ///   color to this view.
-    public func border<S>(
-        _ content: S,
+    public func border(
+        _ content: some InsettableShape,
         lineWidth: CGFloat = .onePixel,
         color: Color? = nil
-    ) -> some View where S: InsettableShape {
+    ) -> some View {
         EnvironmentReader(\.theme) { theme in
             overlay(
                 content

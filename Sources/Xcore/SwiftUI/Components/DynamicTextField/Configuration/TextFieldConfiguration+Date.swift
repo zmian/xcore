@@ -80,7 +80,7 @@ extension TextFieldConfiguration.Date {
 
 // MARK: - Date
 
-extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatter {
+extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
     /// Date of Birth
     public static var birthday: Self {
         date(.minimumAge18).applying {

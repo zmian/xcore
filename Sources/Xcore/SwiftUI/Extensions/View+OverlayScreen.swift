@@ -29,10 +29,10 @@ extension View {
     /// ```
     ///
     /// - Parameter content: The overlay screen content view.
-    public func overlayScreen<Content: View>(
+    public func overlayScreen(
         isPresented: Binding<Bool>,
         style: WindowStyle = .init(),
-        @ViewBuilder content: @escaping () -> Content
+        @ViewBuilder content: @escaping () -> some View
     ) -> some View {
         modifier(OverlayScreenViewModifier(isPresented: isPresented, style: style, screen: content))
     }
@@ -59,10 +59,10 @@ extension View {
     /// ```
     ///
     /// - Parameter content: The overlay screen content view.
-    public func overlayScreen<Item, Content: View>(
+    public func overlayScreen<Item>(
         item: Binding<Item?>,
         style: WindowStyle = .init(),
-        @ViewBuilder content: @escaping (Item) -> Content
+        @ViewBuilder content: @escaping (Item) -> some View
     ) -> some View {
         overlayScreen(
             isPresented: .init {
@@ -118,10 +118,10 @@ private struct OverlayScreenViewModifier<Screen: View>: ViewModifier {
 extension View {
     // TODO: Remove when .window modifier can work in previews and tests directly.
     @ViewBuilder
-    fileprivate func internalWindow<Content: View>(
+    fileprivate func internalWindow(
         isPresented: Binding<Bool>,
         style: WindowStyle,
-        @ViewBuilder content: @escaping () -> Content
+        @ViewBuilder content: @escaping () -> some View
     ) -> some View {
         #if DEBUG
         internalWindowInPreview(isPresented: isPresented, style: style, content: content)
@@ -132,10 +132,10 @@ extension View {
 
     #if DEBUG
     @ViewBuilder
-    private func internalWindowInPreview<Content: View>(
+    private func internalWindowInPreview(
         isPresented: Binding<Bool>,
         style: WindowStyle,
-        @ViewBuilder content: @escaping () -> Content
+        @ViewBuilder content: @escaping () -> some View
     ) -> some View {
         if ProcessInfo.Arguments.isRunningInPreviews ||
             ProcessInfo.Arguments.isTesting {

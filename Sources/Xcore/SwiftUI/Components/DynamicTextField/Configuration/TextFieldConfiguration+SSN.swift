@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-extension TextFieldConfiguration where Formatter == MaskingTextFieldFormatter {
+extension TextFieldConfiguration<MaskingTextFieldFormatter> {
     /// Social Security Number (SSN)
     public static var ssn: Self {
         .init(

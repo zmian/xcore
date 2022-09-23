@@ -35,14 +35,14 @@ extension LoadableValue {
     }
 }
 
-extension LoadableValue where Value == Xcore.Empty {
+extension LoadableValue<Xcore.Empty> {
     /// A value, storing an `Empty` value.
     public static var value: Self {
         .value(Empty())
     }
 }
 
-extension LoadableValue where Value == Bool {
+extension LoadableValue<Bool> {
     /// Returns the value associated with `.value` case or `false` when it's
     /// loading.
     public var value: Bool {

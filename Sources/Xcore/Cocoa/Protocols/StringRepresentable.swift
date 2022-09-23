@@ -57,7 +57,7 @@ extension StringRepresentable {
     }
 }
 
-extension Optional where Wrapped == StringRepresentable {
+extension StringRepresentable? {
     public func isEqual(_ other: StringRepresentable?) -> Bool {
         switch self {
             case .none:

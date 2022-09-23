@@ -61,16 +61,16 @@ extension CapsuleView {
         self.label = label
     }
 
-    public init<S>(
-        _ title: S,
+    public init(
+        _ title: some StringProtocol,
         systemImage: SystemAssetIdentifier? = nil,
         @ViewBuilder label: @escaping () -> Label
-    ) where S: StringProtocol {
+    ) {
         self.init(Text(title), systemImage: systemImage, label: label)
     }
 }
 
-extension CapsuleView where Label == Text? {
+extension CapsuleView<Text?> {
     public init(
         _ title: Text,
         subtitle: Text?,
@@ -81,18 +81,18 @@ extension CapsuleView where Label == Text? {
         }
     }
 
-    public init<S1, S2>(
-        _ title: S1,
-        subtitle: S2?,
+    public init(
+        _ title: some StringProtocol,
+        subtitle: (some StringProtocol)?,
         systemImage: SystemAssetIdentifier? = nil
-    ) where S1: StringProtocol, S2: StringProtocol {
+    ) {
         self.init(title, systemImage: systemImage) {
             Text(subtitle)
         }
     }
 }
 
-extension CapsuleView where Label == Never {
+extension CapsuleView<Never> {
     public init(
         _ title: Text,
         systemImage: SystemAssetIdentifier? = nil
@@ -102,10 +102,10 @@ extension CapsuleView where Label == Never {
         }
     }
 
-    public init<S>(
-        _ title: S,
+    public init(
+        _ title: some StringProtocol,
         systemImage: SystemAssetIdentifier? = nil
-    ) where S: StringProtocol {
+    ) {
         self.init(title, systemImage: systemImage) {
             fatalError()
         }

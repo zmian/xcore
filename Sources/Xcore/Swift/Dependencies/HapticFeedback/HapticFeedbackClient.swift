@@ -35,7 +35,7 @@ extension HapticFeedbackClient {
 /// **Usage**
 ///
 /// ```swift
-/// struct ViewModel {
+/// class ViewModel {
 ///     @Dependency(\.hapticFeedback) var hapticFeedback
 ///
 ///     func triggerSelectionFeedback() {
@@ -96,7 +96,7 @@ extension DependencyValues {
     /// **Usage**
     ///
     /// ```swift
-    /// struct ViewModel {
+    /// class ViewModel {
     ///     @Dependency(\.hapticFeedback) var hapticFeedback
     ///
     ///     func triggerSelectionFeedback() {
@@ -120,7 +120,7 @@ extension DependencyValues {
     /// **Usage**
     ///
     /// ```swift
-    /// struct ViewModel {
+    /// class ViewModel {
     ///     @Dependency(\.hapticFeedback) var hapticFeedback
     ///
     ///     func triggerSelectionFeedback() {

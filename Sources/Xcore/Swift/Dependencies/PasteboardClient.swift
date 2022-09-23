@@ -11,7 +11,7 @@ import UIKit
 /// **Usage**
 ///
 /// ```swift
-/// struct ViewModel {
+/// class ViewModel {
 ///     @Dependency(\.pasteboard) var pasteboard
 ///
 ///     func copy() {

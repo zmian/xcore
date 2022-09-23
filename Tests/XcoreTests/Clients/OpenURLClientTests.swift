@@ -29,7 +29,7 @@ final class OpenURLClientTests: TestCase {
         XCTAssertEqual(openedUrl, URL(string: "https://example.com"))
     }
 
-    private struct ViewModel {
+    private final class ViewModel {
         @Dependency(\.openUrl) var openUrl
 
         func openMailApp() {

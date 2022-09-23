@@ -85,7 +85,7 @@ extension UIView {
     }
 }
 
-extension Array where Element == UIView {
+extension Array<UIView> {
     public func resistsSizeChange() {
         forEach { $0.resistsSizeChange() }
     }

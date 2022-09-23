@@ -8,7 +8,7 @@ import UIKit
 
 extension StringProtocol {
     /// Returns `true` iff `value` is in `self`.
-    public func contains<T: StringProtocol>(_ value: T, options: String.CompareOptions = []) -> Bool {
+    public func contains(_ value: some StringProtocol, options: String.CompareOptions = []) -> Bool {
         range(of: value, options: options) != nil
     }
 
