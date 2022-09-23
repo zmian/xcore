@@ -29,17 +29,6 @@ extension AsyncThrowingStream where Failure == Error {
     }
 }
 
-// MARK: - AnyAsyncSequence
-
-extension AnyAsyncSequence {
-    /// Any asynchronous sequence that causes a test to fail if it runs.
-    public static func unimplemented(_ prefix: String) -> Self {
-        AsyncStream
-            .unimplemented(prefix)
-            .eraseToAnyAsyncSequence()
-    }
-}
-
 // MARK: - AsyncPassthroughStream
 
 extension AsyncPassthroughStream {
