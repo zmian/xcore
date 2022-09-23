@@ -30,7 +30,7 @@ import Foundation
 /// print(stream.value) // Prints 2
 /// ```
 public final class AsyncCurrentValueStream<Element>: AsyncSequence {
-    private typealias Base = AsyncStream<Element>
+    fileprivate typealias Base = AsyncStream<Element>
     private typealias Continuation = Base.Continuation
     private var continuations = [AnyHashable: Continuation]()
 
@@ -101,7 +101,7 @@ extension AsyncCurrentValueStream {
         private var iterator: Base.Iterator
         private let onCancel: () -> Void
 
-        fileprivate init(_ iterator: AsyncStream<Element>.Iterator, onCancel: @escaping () -> Void) {
+        fileprivate init(_ iterator: Base.Iterator, onCancel: @escaping () -> Void) {
             self.iterator = iterator
             self.onCancel = onCancel
         }
