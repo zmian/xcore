@@ -72,7 +72,7 @@ private final class LivePushNotificationsClient: NSObject {
                 status = .denied
             case .authorized, .provisional, .ephemeral:
                 status = .authorized
-            default:
+            @unknown default:
                 status = .notDetermined
         }
 

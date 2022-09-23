@@ -22,7 +22,7 @@ import Foundation
 /// stream.finish()
 /// ```
 public final class AsyncPassthroughStream<Element>: AsyncSequence {
-    private typealias Base = AsyncStream<Element>
+    fileprivate typealias Base = AsyncStream<Element>
     private typealias Continuation = Base.Continuation
     private var continuations = [AnyHashable: Continuation]()
 
@@ -79,7 +79,7 @@ extension AsyncPassthroughStream {
         private var iterator: Base.Iterator
         private let onCancel: () -> Void
 
-        fileprivate init(_ iterator: AsyncStream<Element>.Iterator, onCancel: @escaping () -> Void) {
+        fileprivate init(_ iterator: Base.Iterator, onCancel: @escaping () -> Void) {
             self.iterator = iterator
             self.onCancel = onCancel
         }

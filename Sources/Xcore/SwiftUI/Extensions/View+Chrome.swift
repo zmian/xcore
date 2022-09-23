@@ -172,7 +172,7 @@ private struct ViewChromeModifier: ViewModifier {
                     case .transparent:
                         EmptyView()
                     case let .blurred(style):
-                        bar(Color.clear.background(style), in: geometry)
+                        bar(Rectangle().fill(style), in: geometry)
                     case let .colored(color):
                         bar(color, in: geometry)
                     case let .view(view):
