@@ -211,7 +211,7 @@ extension Array where Element: RawRepresentable {
 
 // MARK: - String
 
-extension Array where Element == String? {
+extension Array<String?> {
     /// Returns a new string by concatenating the elements of the sequence, adding
     /// the given separator between each element.
     ///
@@ -238,7 +238,7 @@ extension Array where Element == String? {
 
 // MARK: - CGPoint
 
-extension Array where Element == CGPoint {
+extension Array<CGPoint> {
     /// Returns the minimum `Y` in the sequence of `CGPoint`s.
     public func minY() -> Element? {
         self.max { $0.y < $1.y }

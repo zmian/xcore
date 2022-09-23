@@ -154,7 +154,7 @@ extension Collection where Element: BinaryFloatingPoint {
     }
 }
 
-extension Collection where Element == Decimal {
+extension Collection<Decimal> {
     /// Returns the average of all elements in the collection.
     public func average() -> Decimal {
         isEmpty ? 0 : sum() / Decimal(count)

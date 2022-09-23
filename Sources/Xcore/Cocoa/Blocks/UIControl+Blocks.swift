@@ -39,7 +39,7 @@ extension UIControl: ControlTargetActionBlockRepresentable {
     }
 }
 
-public protocol ControlTargetActionBlockRepresentable: AnyObject {
+public protocol ControlTargetActionBlockRepresentable<Sender>: AnyObject {
     associatedtype Sender
     func addAction(_ event: UIControl.Event, _ handler: @escaping (_ sender: Sender) -> Void)
     func removeAction(_ event: UIControl.Event)

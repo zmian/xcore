@@ -44,35 +44,3 @@ extension Money {
         }
     }
 }
-
-// MARK: - UIColor
-
-extension Money.Color {
-    /// Creates an instance of color.
-    ///
-    /// - Parameters:
-    ///   - positive: The color used to represent positive values.
-    ///   - negative: The color used to represent negative values.
-    ///   - zero: The color used to represent zero values.
-    @_disfavoredOverload
-    public init(
-        positive: UIColor,
-        negative: UIColor,
-        zero: UIColor
-    ) {
-        self.init(
-            positive: .init(positive),
-            negative: .init(negative),
-            zero: .init(zero)
-        )
-    }
-
-    /// Creates an instance of color.
-    ///
-    /// - Parameter color: The color used to represent positive, negative and zero
-    ///   values.
-    @_disfavoredOverload
-    public init(_ color: UIColor) {
-        self.init(.init(color))
-    }
-}

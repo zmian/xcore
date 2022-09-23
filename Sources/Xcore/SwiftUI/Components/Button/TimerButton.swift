@@ -13,7 +13,7 @@ public enum TimerButtonStatus {
     case loading
     case countdown
 
-    fileprivate init<V: Hashable>(_ data: DataStatus<V>) {
+    fileprivate init(_ data: DataStatus<some Hashable>) {
         switch data {
             case .idle, .failure:
                 self = .active
@@ -158,9 +158,9 @@ public struct TimerButton<Label: View>: View {
 
 // MARK: - Inits
 
-extension TimerButton where Label == Text {
-    public init<S: StringProtocol>(
-        _ title: S,
+extension TimerButton<Text> {
+    public init(
+        _ title: some StringProtocol,
         countdown countdownSeconds: Int = 15,
         status: TimerButtonStatus = .active,
         action: @escaping () -> Void
@@ -175,10 +175,10 @@ extension TimerButton where Label == Text {
         )
     }
 
-    public init<S: StringProtocol, V: Hashable>(
-        _ title: S,
+    public init(
+        _ title: some StringProtocol,
         countdown countdownSeconds: Int = 15,
-        status: DataStatus<V>,
+        status: DataStatus<some Hashable>,
         action: @escaping () -> Void
     ) {
         self.init(
@@ -208,7 +208,7 @@ extension TimerButton {
 
 // MARK: - Convenience
 
-extension TimerButton where Label == Text {
+extension TimerButton<Text> {
     /// A button with `Resend` label and given action.
     public static func resend(
         countdown countdownSeconds: Int = 15,

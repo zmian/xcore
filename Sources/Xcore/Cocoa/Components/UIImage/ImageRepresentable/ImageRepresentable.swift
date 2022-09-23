@@ -115,7 +115,7 @@ extension ImageRepresentable {
     }
 }
 
-extension Optional where Wrapped == ImageRepresentable {
+extension ImageRepresentable? {
     public func isEqual(_ other: ImageRepresentable?) -> Bool {
         switch self {
             case .none:

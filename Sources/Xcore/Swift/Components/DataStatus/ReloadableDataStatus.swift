@@ -148,7 +148,7 @@ extension ReloadableDataStatus {
     }
 }
 
-extension ReloadableDataStatus where Value == Xcore.Empty {
+extension ReloadableDataStatus<Xcore.Empty> {
     /// A success, storing a `Success` value.
     public static var success: Self {
         .success(Empty())

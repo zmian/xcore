@@ -8,6 +8,7 @@ import SwiftUI
 
 /// A stylized view, with a title and value, that visually collects a logical
 /// grouping of content.
+@available(iOS, introduced: 14, deprecated: 16, message: "Use LabeledContent")
 public struct XStack<Title, Value>: View where Title: View, Value: View {
     @Environment(\.xstackStyle) private var style
     private let title: () -> Title

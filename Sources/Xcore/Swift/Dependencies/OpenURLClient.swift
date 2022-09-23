@@ -12,7 +12,7 @@ import SwiftUI
 /// **Usage**
 ///
 /// ```swift
-/// struct ViewModel {
+/// class ViewModel {
 ///     @Dependency(\.openUrl) var openUrl
 ///
 ///     func openMailApp() {

@@ -80,7 +80,7 @@ extension Dictionary where Key == String, Value == Encodable {
     }
 }
 
-extension Optional where Wrapped == String {
+extension String? {
     /// Returns `true` iff `self` `nil` or contains no characters and blank spaces
     /// (e.g., \n, “ “).
     public var isNilOrBlank: Bool {

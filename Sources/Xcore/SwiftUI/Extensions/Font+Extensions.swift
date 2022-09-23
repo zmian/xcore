@@ -195,13 +195,13 @@ extension UIFont.TextStyle {
                 self = .caption1
             case .caption2:
                 self = .caption2
-            default:
+            @unknown default:
                 self = .body
         }
     }
 }
 
-extension Optional where Wrapped == Font.Weight {
+extension Font.Weight? {
     /// Returns non-optional font weight.
     ///
     /// - If `self` is non-nil then it returns `self`

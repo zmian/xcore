@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-extension TextFieldConfiguration where Formatter == MaskingTextFieldFormatter {
+extension TextFieldConfiguration<MaskingTextFieldFormatter> {
     /// One-Time Code
     public static var oneTimeCode: Self {
         .init(

@@ -17,13 +17,13 @@ public struct _XIVTSSV: View {
     private let subtitle: Text?
     private let spacing: CGFloat?
 
-    public init<S1: StringProtocol>(title: S1, spacing: CGFloat?) {
+    public init(title: some StringProtocol, spacing: CGFloat?) {
         self.title = Text(title)
         self.subtitle = nil
         self.spacing = spacing
     }
 
-    public init<S1: StringProtocol, S2: StringProtocol>(title: S1, subtitle: S2?, spacing: CGFloat?) {
+    public init(title: some StringProtocol, subtitle: (some StringProtocol)?, spacing: CGFloat?) {
         self.title = Text(title)
         self.subtitle = Text(subtitle)
         self.spacing = spacing

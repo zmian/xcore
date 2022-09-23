@@ -10,10 +10,10 @@ import SwiftUI
 
 extension View {
     @ViewBuilder
-    public func unwrap<Value, Content>(
+    public func unwrap<Value>(
         _ value: Value?,
-        @ViewBuilder content: (Self, Value) -> Content
-    ) -> some View where Content: View {
+        @ViewBuilder content: (Self, Value) -> some View
+    ) -> some View {
         if let value {
             content(self, value)
         } else {
@@ -26,10 +26,7 @@ extension View {
 
 extension View {
     /// Returns `self` as a parameter to the given content block.
-    @ViewBuilder
-    public func apply<Content>(
-        @ViewBuilder content: (Self) -> Content
-    ) -> some View where Content: View {
+    public func apply(@ViewBuilder content: (Self) -> some View) -> some View {
         content(self)
     }
 }
@@ -44,10 +41,10 @@ extension View {
     ///     modifier.
     ///   - modifier: The modifier to apply.
     @ViewBuilder
-    func applyIf<Modifier>(
+    func applyIf(
         _ condition: Bool,
-        @ViewBuilder modifier: () -> Modifier
-    ) -> some View where Modifier: ViewModifier {
+        @ViewBuilder modifier: () -> some ViewModifier
+    ) -> some View {
         if condition {
             self.modifier(modifier())
         } else {
@@ -63,10 +60,10 @@ extension View {
     /// - Returns: Either the original view or the transformed view if the condition
     ///   is `true`.
     @ViewBuilder
-    public func applyIf<Content>(
+    public func applyIf(
         _ condition: Bool,
-        @ViewBuilder transform: (Self) -> Content
-    ) -> some View where Content: View {
+        @ViewBuilder transform: (Self) -> some View
+    ) -> some View {
         if condition {
             transform(self)
         } else {
@@ -82,10 +79,10 @@ extension View {
     /// - Returns: Either the original view or the transformed view if the condition
     ///   is `true`.
     @ViewBuilder
-    public func applyIf<Content>(
+    public func applyIf(
         _ condition: Binding<Bool>,
-        @ViewBuilder transform: (Self) -> Content
-    ) -> some View where Content: View {
+        @ViewBuilder transform: (Self) -> some View
+    ) -> some View {
         if condition.wrappedValue {
             transform(self)
         } else {

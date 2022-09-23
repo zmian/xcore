@@ -8,7 +8,7 @@ import SwiftUI
 
 // MARK: - Decimal
 
-extension TextFieldConfiguration where Formatter == DecimalTextFieldFormatter {
+extension TextFieldConfiguration<DecimalTextFieldFormatter> {
     /// Decimal type text configuration.
     public static var number: Self {
         number(isCurrency: false)
@@ -36,7 +36,7 @@ extension TextFieldConfiguration where Formatter == DecimalTextFieldFormatter {
 
 // MARK: - Int
 
-extension TextFieldConfiguration where Formatter == IntegerTextFieldFormatter {
+extension TextFieldConfiguration<IntegerTextFieldFormatter> {
     /// Integer type text configuration.
     public static var number: Self {
         .init(

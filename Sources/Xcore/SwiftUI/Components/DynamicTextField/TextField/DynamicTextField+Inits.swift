@@ -8,7 +8,7 @@ import SwiftUI
 
 // MARK: - Configuration
 
-extension DynamicTextField where Formatter == PassthroughTextFieldFormatter {
+extension DynamicTextField<PassthroughTextFieldFormatter> {
     /// Creates a text field based on a text field style configuration.
     ///
     /// You can use this initializer within the ``makeBody(configuration:)`` method
@@ -83,13 +83,13 @@ extension DynamicTextField {
     ///   - onCommit: An action to perform when the user performs an action
     ///     (for example, when the user presses the Return key) while the text
     ///     field has focus.
-    public init<S>(
-        _ title: S,
+    public init(
+        _ title: some StringProtocol,
         value: Binding<Formatter.Value>,
         configuration: TextFieldConfiguration<Formatter>,
         onEditingChanged: @escaping (Bool) -> Void = { _ in },
         onCommit: @escaping () -> Void = {}
-    ) where S: StringProtocol {
+    ) {
         self.init(
             value: value,
             label: Text(title).accessibilityHidden(true),
@@ -114,12 +114,12 @@ extension DynamicTextField {
     ///     (for example, when the user presses the Return key) while the text
     ///     field has focus.
     ///   - label: The label of the text field, describing its purpose.
-    public init<Label: View>(
+    public init(
         value: Binding<Formatter.Value>,
         configuration: TextFieldConfiguration<Formatter>,
         onEditingChanged: @escaping (Bool) -> Void = { _ in },
         onCommit: @escaping () -> Void = {},
-        @ViewBuilder label: () -> Label
+        @ViewBuilder label: () -> some View
     ) {
         self.init(
             value: value,
@@ -133,7 +133,7 @@ extension DynamicTextField {
 
 // MARK: - Convenience Inits
 
-extension DynamicTextField where Formatter == PassthroughTextFieldFormatter {
+extension DynamicTextField<PassthroughTextFieldFormatter> {
     /// Creates a text field with a text label generated from a localized title
     /// string.
     ///
@@ -177,12 +177,12 @@ extension DynamicTextField where Formatter == PassthroughTextFieldFormatter {
     ///   - onCommit: An action to perform when the user performs an action
     ///     (for example, when the user presses the Return key) while the text
     ///     field has focus.
-    public init<S>(
-        _ title: S,
+    public init(
+        _ title: some StringProtocol,
         value: Binding<String>,
         onEditingChanged: @escaping (Bool) -> Void = { _ in },
         onCommit: @escaping () -> Void = {}
-    ) where S: StringProtocol {
+    ) {
         self.init(
             value: value,
             label: Text(title),
@@ -205,11 +205,11 @@ extension DynamicTextField where Formatter == PassthroughTextFieldFormatter {
     ///     (for example, when the user presses the Return key) while the text
     ///     field has focus.
     ///   - label: The label of the text field, describing its purpose.
-    public init<Label: View>(
+    public init(
         value: Binding<String>,
         onEditingChanged: @escaping (Bool) -> Void = { _ in },
         onCommit: @escaping () -> Void = {},
-        @ViewBuilder label: () -> Label
+        @ViewBuilder label: () -> some View
     ) {
         self.init(
             value: value,

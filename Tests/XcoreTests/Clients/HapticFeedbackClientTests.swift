@@ -22,7 +22,7 @@ final class HapticFeedbackClientTests: TestCase {
 }
 
 extension HapticFeedbackClientTests {
-    private struct ViewModel {
+    private final class ViewModel {
         @Dependency(\.hapticFeedback) var hapticFeedback
 
         func triggerSelectionFeedback() {

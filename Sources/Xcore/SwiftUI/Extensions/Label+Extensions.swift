@@ -8,7 +8,7 @@ import SwiftUI
 
 // MARK: - SystemAssetIdentifier
 
-extension Label where Title == Text, Icon == Image {
+extension Label<Text, Image> {
     /// Creates a label with a system icon image and a title generated from a
     /// localized string.
     ///
@@ -25,14 +25,14 @@ extension Label where Title == Text, Icon == Image {
     /// - Parameters:
     ///    - title: A string to used as the label's title.
     ///    - systemImage: The name of the image resource to lookup.
-    public init<S>(_ title: S, systemImage: SystemAssetIdentifier) where S: StringProtocol {
+    public init(_ title: some StringProtocol, systemImage: SystemAssetIdentifier) {
         self.init(title, systemImage: systemImage.rawValue)
     }
 }
 
 // MARK: - ImageAssetIdentifier
 
-extension Label where Title == Text, Icon == Image {
+extension Label<Text, Image> {
     /// Creates a label with an icon image and a title generated from a localized
     /// string.
     ///
@@ -48,14 +48,14 @@ extension Label where Title == Text, Icon == Image {
     /// - Parameters:
     ///    - title: A string to used as the label's title.
     ///    - image: The name of the image resource to lookup.
-    public init<S>(_ title: S, image: ImageAssetIdentifier) where S: StringProtocol {
+    public init(_ title: some StringProtocol, image: ImageAssetIdentifier) {
         self.init(title, image: Image(assetIdentifier: image))
     }
 }
 
 // MARK: - Image
 
-extension Label where Title == Text, Icon == Image {
+extension Label<Text, Image> {
     /// Creates a label with an icon image and a title generated from a localized
     /// string.
     ///
@@ -71,7 +71,7 @@ extension Label where Title == Text, Icon == Image {
     /// - Parameters:
     ///    - title: A string to used as the label's title.
     ///    - image: The image.
-    public init<S>(_ title: S, image: Image) where S: StringProtocol {
+    public init(_ title: some StringProtocol, image: Image) {
         self.init { Text(title) } icon: { image }
     }
 }

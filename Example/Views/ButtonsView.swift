@@ -184,7 +184,7 @@ extension ButtonsView {
         }
     }
 
-    private func button<Label: View>(@ViewBuilder label: () -> Label) -> some View {
+    private func button(@ViewBuilder label: () -> some View) -> some View {
         Button {
             print("Button tapped")
         } label: {

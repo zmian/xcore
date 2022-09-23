@@ -73,7 +73,7 @@ extension UIFont {
     }
 }
 
-extension Optional where Wrapped == UIFont.Weight {
+extension UIFont.Weight? {
     /// Returns non-optional font weight.
     ///
     /// - If `self` is non-nil then it returns `self`

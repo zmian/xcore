@@ -33,7 +33,7 @@ extension String {
 
 // MARK: - [UInt8]
 
-extension Array where Element == UInt8 {
+extension Array<UInt8> {
     public func sha256() -> Self {
         Array(SHA256.hash(data: self))
     }

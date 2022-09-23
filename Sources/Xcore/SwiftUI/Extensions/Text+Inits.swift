@@ -9,7 +9,7 @@ import SwiftUI
 extension Text {
     /// Creates a text view that displays a stored string without localization.
     @_disfavoredOverload
-    public init?<S>(_ content: S?) where S: StringProtocol {
+    public init?(_ content: (some StringProtocol)?) {
         guard let content else {
             return nil
         }
@@ -17,7 +17,7 @@ extension Text {
         self.init(content)
     }
 
-    public init<S>(_ string: S, configure: (inout AttributedString) -> Void) where S: StringProtocol {
+    public init(_ string: some StringProtocol, configure: (inout AttributedString) -> Void) {
         var attributedString = AttributedString(string)
         configure(&attributedString)
         self.init(attributedString)

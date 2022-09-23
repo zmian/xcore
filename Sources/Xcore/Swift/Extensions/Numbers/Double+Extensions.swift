@@ -152,7 +152,7 @@ extension Double {
 
 // MARK: - Largest Remainder Round
 
-extension Array where Element == Double {
+extension Array<Double> {
     /// Rounds a list of percentage values (0...1) while keeping it's sum equal to
     /// one.
     ///

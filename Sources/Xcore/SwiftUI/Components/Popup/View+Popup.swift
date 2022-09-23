@@ -48,12 +48,12 @@ extension View {
     ///   - dismissMethods: An option set specifying the dismissal methods for the
     ///     popup.
     ///   - content: A closure returning the content of the popup.
-    public func popup<Content>(
+    public func popup(
         isPresented: Binding<Bool>,
         style: Popup.Style = .alert,
         dismissMethods: Popup.DismissMethods = [.tapOutside],
-        @ViewBuilder content: @escaping () -> Content
-    ) -> some View where Content: View {
+        @ViewBuilder content: @escaping () -> some View
+    ) -> some View {
         // Widgets & Extension does not support UIWindow & DispatchWorkItem.
         applyIf(AppInfo.target == .app) {
             $0.modifier(PopupViewModifier(
@@ -118,12 +118,12 @@ extension View {
     ///   - dismissMethods: An option set specifying the dismissal methods for the
     ///     popup.
     ///   - content: A closure returning the content of the popup.
-    public func popup<Item, Content>(
+    public func popup<Item>(
         item: Binding<Item?>,
         style: Popup.Style = .alert,
         dismissMethods: Popup.DismissMethods = [.tapOutside],
-        @ViewBuilder content: @escaping (Item) -> Content
-    ) -> some View where Content: View {
+        @ViewBuilder content: @escaping (Item) -> some View
+    ) -> some View {
         popup(
             isPresented: .init {
                 item.wrappedValue != nil
@@ -142,13 +142,13 @@ extension View {
         )
     }
 
-    public func popup<F>(
+    public func popup(
         _ title: Text,
         message: Text?,
         isPresented: Binding<Bool>,
         dismissMethods: Popup.DismissMethods = [.tapOutside],
-        @ViewBuilder footer: @escaping () -> F
-    ) -> some View where F: View {
+        @ViewBuilder footer: @escaping () -> some View
+    ) -> some View {
         popup(
             isPresented: isPresented,
             style: .alert,
@@ -159,13 +159,13 @@ extension View {
         )
     }
 
-    public func popup<F, S1, S2>(
-        _ title: S1,
-        message: S2?,
+    public func popup(
+        _ title: some StringProtocol,
+        message: (some StringProtocol)?,
         isPresented: Binding<Bool>,
         dismissMethods: Popup.DismissMethods = [.tapOutside],
-        @ViewBuilder footer: @escaping () -> F
-    ) -> some View where F: View, S1: StringProtocol, S2: StringProtocol {
+        @ViewBuilder footer: @escaping () -> some View
+    ) -> some View {
         popup(
             Text(title),
             message: message.map { Text($0) },

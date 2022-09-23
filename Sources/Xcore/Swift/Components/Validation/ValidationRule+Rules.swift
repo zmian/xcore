@@ -111,7 +111,7 @@ extension ValidationRule where Input: Comparable {
 
 // MARK: - Input: String
 
-extension ValidationRule where Input == String {
+extension ValidationRule<String> {
     /// A validation rule that checks whether the input satisfy the given regex.
     ///
     /// - Parameter pattern: Regex pattern used to find matches in the input.
@@ -126,7 +126,7 @@ extension ValidationRule where Input == String {
     ///   - other: The other string to search for in the input string.
     ///   - options: The String `ComparisonOptions`. The default value `[]`.
     /// - Returns: The validation rule.
-    public static func contains<T: StringProtocol>(_ other: T, options: String.CompareOptions = []) -> Self {
+    public static func contains(_ other: some StringProtocol, options: String.CompareOptions = []) -> Self {
         .init { $0.contains(other, options: options) }
     }
 
@@ -135,7 +135,7 @@ extension ValidationRule where Input == String {
     ///
     /// - Parameter prefix: A possible prefix to test against this string.
     /// - Returns: The validation rule.
-    static func hasPrefix<T: StringProtocol>(_ prefix: T) -> Self {
+    static func hasPrefix(_ prefix: some StringProtocol) -> Self {
         .init { $0.hasPrefix(prefix) }
     }
 
@@ -144,7 +144,7 @@ extension ValidationRule where Input == String {
     ///
     /// - Parameter suffix: A possible suffix to test against this string.
     /// - Returns: The validation rule.
-    static func hasSuffix<T: StringProtocol>(_ suffix: T) -> Self {
+    static func hasSuffix(_ suffix: some StringProtocol) -> Self {
         .init { $0.hasSuffix(suffix) }
     }
 
@@ -171,7 +171,7 @@ extension ValidationRule where Input == String {
 
 // MARK: - Regex Based Rules
 
-extension ValidationRule where Input == String {
+extension ValidationRule<String> {
     /// A validation rule that checks whether the input is not blank.
     public static var notBlank: Self {
         .init { !$0.isBlank }
@@ -247,7 +247,7 @@ extension ValidationRule where Input == String {
 
 // MARK: - SSN & ITIN
 
-extension ValidationRule where Input == String {
+extension ValidationRule<String> {
     /// A validation rule that checks whether the input is a valid SSN.
     public static var ssn: Self {
         .init(
@@ -284,7 +284,7 @@ extension ValidationRule where Input == String {
 
 // MARK: - Data Detector
 
-extension ValidationRule where Input == String {
+extension ValidationRule<String> {
     /// A validation rule that checks whether the input is equal to the given data
     /// detector type.
     ///

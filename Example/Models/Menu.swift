@@ -12,11 +12,11 @@ struct Menu: Identifiable {
     let subtitle: String?
     let content: () -> AnyView
 
-    init<Content: View>(
+    init(
         id: UUID = UUID(),
         title: String,
         subtitle: String? = nil,
-        content: @autoclosure @escaping () -> Content
+        content: @autoclosure @escaping () -> some View
     ) {
         self.id = id
         self.title = title
@@ -28,11 +28,11 @@ struct Menu: Identifiable {
         }
     }
 
-    init<Content: View>(
+    init(
         id: UUID = UUID(),
         title: String,
         subtitle: String? = nil,
-        @ViewBuilder content: @escaping () -> Content
+        @ViewBuilder content: @escaping () -> some View
     ) {
         self.id = id
         self.title = title

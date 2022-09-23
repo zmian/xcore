@@ -23,7 +23,7 @@ extension View {
     /// - Parameters:
     ///   - id: The identifier of a child view to scroll to.
     ///   - anchor: The alignment behavior of the scroll action.
-    public func scrollTo<ID: Hashable>(_ id: Binding<ID>, anchor: UnitPoint = .top) -> some View {
+    public func scrollTo(_ id: Binding<some Hashable>, anchor: UnitPoint = .top) -> some View {
         modifier(ScrollToViewModifier(id: id, anchor: anchor))
     }
 }

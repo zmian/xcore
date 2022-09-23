@@ -17,7 +17,7 @@ extension TextFieldConfiguration {
 
 // MARK: - Person Components
 
-extension TextFieldConfiguration where Formatter == PassthroughTextFieldFormatter {
+extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
     public static func person(component: PersonNameComponent) -> Self {
         switch component {
             case .fullName:

@@ -33,7 +33,7 @@
 "toggle_see_more" = "See More";
 "toggle_see_all" = "See All";
 
-// MARK: Sign Out Button
+// MARK: - Sign Out Button
 
 "signout.title" = "Log Out";
 "signout.confirm_popup.title" = "Log Out";

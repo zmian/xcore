@@ -14,10 +14,10 @@ extension View {
     ///     the window.
     ///   - style: A structure representing the style of a window.
     ///   - content: A closure that returns the content of the window.
-    public func window<Content: View>(
+    public func window(
         isPresented: Binding<Bool>,
         style: WindowStyle = .init(),
-        @ViewBuilder content: @escaping () -> Content
+        @ViewBuilder content: @escaping () -> some View
     ) -> some View {
         // Widgets & Extension does not support UIWindow.
         applyIf(AppInfo.target == .app) {
@@ -44,10 +44,10 @@ extension View {
     ///     replaces it with a new one.
     ///   - style: A structure representing the style of a window.
     ///   - content: A closure that returns the content of the window.
-    public func window<Item, Content: View>(
+    public func window<Item>(
         item: Binding<Item?>,
         style: WindowStyle = .init(),
-        @ViewBuilder content: @escaping (Item) -> Content
+        @ViewBuilder content: @escaping (Item) -> some View
     ) -> some View {
         window(
             isPresented: .init {

@@ -9,15 +9,41 @@ import UIKit
 import Combine
 
 extension Publishers {
+    private static func notifications(for name: Notification.Name) -> NotificationCenter.Publisher {
+        NotificationCenter.default.publisher(for: name)
+    }
+
     /// Emits an event whenever keyboard visibility changes.
     public static var keyboardShown: AnyPublisher<Bool, Never> {
-        let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
+        let willShow = notifications(for: UIApplication.keyboardWillShowNotification)
             .map { _ in true }
 
-        let willHide = NotificationCenter.default.publisher(for: UIApplication.keyboardWillHideNotification)
+        let willHide = notifications(for: UIApplication.keyboardWillHideNotification)
             .map { _ in false }
 
-        return Publishers.MergeMany(willShow, willHide)
+        return MergeMany(willShow, willHide)
+            .eraseToAnyPublisher()
+    }
+
+    /// Emits an event whenever keyboard visibility and frame changes.
+    public static func keyboardCurrentHeight(safeAreaInsetsBottom: CGFloat = 0) -> AnyPublisher<CGFloat, Never> {
+        let willShow = notifications(for: UIApplication.keyboardWillShowNotification)
+            .merge(with:
+                notifications(for: UIApplication.keyboardWillChangeFrameNotification)
+            )
+            .compactMap {
+                $0.userInfo?[UIApplication.keyboardFrameEndUserInfoKey] as? CGRect
+            }
+            .map {
+                $0.height - safeAreaInsetsBottom
+            }
+            .eraseToAnyPublisher()
+
+        let willHide = notifications(for: UIApplication.keyboardWillHideNotification)
+            .map { _ in CGFloat.zero }
+            .eraseToAnyPublisher()
+
+        return MergeMany(willShow, willHide)
             .eraseToAnyPublisher()
     }
 }
@@ -25,13 +51,13 @@ extension Publishers {
 extension Publishers {
     /// Emits an event whenever protected data availability changes.
     public static var protectedDataAvailability: AnyPublisher<Bool, Never> {
-        let available = NotificationCenter.default.publisher(for: UIApplication.protectedDataDidBecomeAvailableNotification)
+        let available = notifications(for: UIApplication.protectedDataDidBecomeAvailableNotification)
             .map { _ in true }
 
-        let unavailable = NotificationCenter.default.publisher(for: UIApplication.protectedDataWillBecomeUnavailableNotification)
+        let unavailable = notifications(for: UIApplication.protectedDataWillBecomeUnavailableNotification)
             .map { _ in false }
 
-        return Publishers.MergeMany(available, unavailable)
+        return MergeMany(available, unavailable)
             .eraseToAnyPublisher()
     }
 }
@@ -39,10 +65,10 @@ extension Publishers {
 extension Publishers {
     /// Emits an event whenever window visibility changes.
     public static var windowVisibility: AnyPublisher<Void, Never> {
-        Publishers.MergeMany(
-            NotificationCenter.default.publisher(for: UIWindow.didBecomeHiddenNotification),
-            NotificationCenter.default.publisher(for: UIWindow.didBecomeVisibleNotification),
-            NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
+        MergeMany(
+            notifications(for: UIWindow.didBecomeHiddenNotification),
+            notifications(for: UIWindow.didBecomeVisibleNotification),
+            notifications(for: UIApplication.didBecomeActiveNotification)
         )
         .eraseToVoidAnyPublisher()
     }

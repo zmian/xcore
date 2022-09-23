@@ -8,13 +8,12 @@ import Foundation
 import Combine
 
 public final class LiveSessionCounterClient: SessionCounterClient {
-    fileprivate static let shared = LiveSessionCounterClient()
     @Dependency(\.pond) private var pond
     @Dependency(\.appStatus) private var appStatus
     @Dependency(\.requestReview) private var requestReview
     private var cancellable: AnyCancellable?
 
-    private init() {
+    fileprivate init() {
         withDelay(0.3) { [weak self] in
             // Delay to avoid:
             // Thread 1: Simultaneous accesses to 0x1107dbc18, but modification requires
@@ -60,9 +59,7 @@ public final class LiveSessionCounterClient: SessionCounterClient {
 
 extension SessionCounterClient where Self == LiveSessionCounterClient {
     /// Returns noop variant of `SessionCounterClient`.
-    public static var live: Self {
-        .shared
-    }
+    public static var live: Self { .init() }
 }
 
 // MARK: - Pond
