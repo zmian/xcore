@@ -23,7 +23,6 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
                 background(pages[Int(storyTimer.progress)])
                     .frame(maxWidth: .infinity)
                     .ignoresSafeArea()
-                    .animation(.none)
             }
 
             // Tap to advance or rewind for accessibility. Following the Instagram approach.

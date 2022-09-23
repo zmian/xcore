@@ -66,7 +66,7 @@ private struct VisibilityModifier: ViewModifier {
 
     private func updateStatusIfNeeded() {
         DispatchQueue.main.async {
-            guard let visibleWindow = UIApplication.sharedOrNil?.window(\.isVisible, \.isKeyWindow) else {
+            guard let visibleWindow = UIApplication.sharedOrNil?.sceneWindow(\.isVisible, \.isKeyWindow) else {
                 status = .unknown
                 return
             }
