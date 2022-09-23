@@ -72,19 +72,6 @@ extension UIFont {
 }
 
 extension UIFont {
-    var monospacedDigitFont: UIFont {
-        let featureSettings = [[
-            UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType,
-            UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector
-        ]]
-        let attributes = [UIFontDescriptor.AttributeName.featureSettings: featureSettings]
-        let oldDescriptor = fontDescriptor
-        let newDescriptor = oldDescriptor.addingAttributes(attributes)
-        return UIFont(descriptor: newDescriptor, size: 0)
-    }
-}
-
-extension UIFont {
     public static func printAvailableFontNames() {
         for family in familyNames {
             let count = fontNames(forFamilyName: family).count

@@ -22,7 +22,7 @@ extension UIWindow {
 extension UIWindow.Level {
     /// Returns the top most level of the window.
     public static var topMost: Self {
-        let topWindow = UIApplication.sharedOrNil?.windows.max { $0.windowLevel < $1.windowLevel }
+        let topWindow = UIApplication.sharedOrNil?.sceneWindows.max { $0.windowLevel < $1.windowLevel }
         let windowLevel = topWindow?.windowLevel ?? .normal
         let maxWinLevel = max(windowLevel, .normal)
         return maxWinLevel + 1

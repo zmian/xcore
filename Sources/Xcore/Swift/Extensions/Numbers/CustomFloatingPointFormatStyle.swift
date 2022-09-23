@@ -121,7 +121,7 @@ extension CustomFloatingPointFormatStyle {
 
 // MARK: - Format
 
-extension CustomFloatingPointFormatStyle {
+extension CustomFloatingPointFormatStyle: FormatStyle {
     /// Creates a locale-aware string representation from a value.
     ///
     /// - Parameter value: The floating point value to format.
@@ -206,8 +206,6 @@ extension CustomFloatingPointFormatStyle {
         }
     }
 }
-
-extension CustomFloatingPointFormatStyle: Foundation.FormatStyle {}
 
 // MARK: - Double
 
@@ -465,7 +463,6 @@ extension FormatStyle where Self == CustomFloatingPointFormatStyle<Decimal> {
 
 extension DoubleOrDecimalProtocol {
     /// Returns a string by formatting `self` using the given rule..
-    @available(iOS, introduced: 14, deprecated: 15, message: "Use Decimal.formatted and Double.formatted directly.")
     public func formatted(_ rule: CustomFloatingPointFormatStyle<Self>) -> String {
         rule.format(self)
     }

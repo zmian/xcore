@@ -6,14 +6,6 @@
 
 import SwiftUI
 
-extension CheckboxToggleStyle {
-    @available(iOS, introduced: 14, deprecated: 15, message: "Use HorizontalEdge directly.")
-    public enum HorizontalEdge {
-        case leading
-        case trailing
-    }
-}
-
 /// A toggle style that displays a checkbox and its label based on the given
 /// horizontal edge.
 public struct CheckboxToggleStyle: ToggleStyle {
@@ -59,7 +51,7 @@ public struct CheckboxToggleStyle: ToggleStyle {
 extension ToggleStyle where Self == CheckboxToggleStyle {
     /// A toggle style that displays a checkbox and its label based on the given
     /// horizontal edge.
-    public static func checkbox(edge: Self.HorizontalEdge) -> Self {
+    public static func checkbox(edge: HorizontalEdge) -> Self {
         .init(edge: edge)
     }
 }

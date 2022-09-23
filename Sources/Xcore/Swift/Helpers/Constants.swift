@@ -99,20 +99,6 @@ extension EdgeInsets {
     public static var listRow = Self(.defaultSpacing)
 }
 
-// MARK: - UIColor
-
-extension UIColor {
-    /// Returns default system tint color.
-    @available(iOS, introduced: 14, deprecated: 15, message: "Use tintColor directly.")
-    public static var systemTint: UIColor {
-        enum Static {
-            static let tintColor = UIView().tintColor ?? .systemBlue
-        }
-
-        return Static.tintColor
-    }
-}
-
 // MARK: - URL
 
 extension URL {

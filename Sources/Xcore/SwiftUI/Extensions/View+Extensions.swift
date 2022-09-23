@@ -39,16 +39,6 @@ extension View {
     }
 }
 
-// MARK: - BackgroundColor
-
-extension View {
-    /// Sets the background color behind this view.
-    @available(iOS, introduced: 14, deprecated: 15, message: "Use background(_:ignoresSafeAreaEdges) directly.")
-    public func background(_ color: Color, ignoresSafeAreaEdges edges: Edge.Set = .all) -> some View {
-        background(color.ignoresSafeArea(edges: edges))
-    }
-}
-
 // MARK: - ForegroundColor
 
 extension View {

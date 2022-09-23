@@ -81,7 +81,7 @@ extension UIApplication {
     /// Returns the top navigation controller from top windows in this application
     /// instance.
     public var topNavigationController: UINavigationController? {
-        let visibleWindows = windows.filter { !$0.isHidden }.reversed()
+        let visibleWindows = sceneWindows.filter { !$0.isHidden }.reversed()
 
         for window in visibleWindows {
             let topViewController = window.topViewController
@@ -112,13 +112,9 @@ extension UIWindow {
 }
 
 extension UIApplication {
-    /// Iterates through `windows` from top to bottom and returns window matching
-    /// the given `keyPaths`.
-    ///
-    /// - Returns: Returns an optional window object based on attributes options.
-    /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
-    public func window(_ keyPaths: KeyPath<UIWindow, Bool>...) -> UIWindow? {
-        windows.reversed().first(keyPaths)
+    /// Returns the app's first currently active scene's first key window.
+    public var firstSceneKeyWindow: UIWindow? {
+        sceneWindow(\.isKeyWindow)
     }
 
     /// Iterates through app's first currently active scene's `windows` from top to
@@ -127,16 +123,15 @@ extension UIApplication {
     /// - Returns: Returns an optional window object based on attributes options.
     /// - Complexity: O(_n_), where _n_ is the length of the `windows` array.
     public func sceneWindow(_ keyPaths: KeyPath<UIWindow, Bool>...) -> UIWindow? {
+        sceneWindows.first(keyPaths)
+    }
+
+    /// Returns windows associated with the app's first currently active scene.
+    public var sceneWindows: [UIWindow] {
         firstWindowScene?
             .windows
             .lazy
-            .reversed()
-            .first(keyPaths)
-    }
-
-    /// Returns the app's first currently active scene's first key window.
-    public var firstSceneKeyWindow: UIWindow? {
-        sceneWindow(\.isKeyWindow)
+            .reversed() ?? []
     }
 
     /// Returns the app's first window scene.
