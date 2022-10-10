@@ -11,7 +11,7 @@ extension View {
     ///
     /// - Parameter action: The action to perform when the user shakes the device.
     ///
-    /// - Returns: A view that triggers `action` the user shakes the device.
+    /// - Returns: A view that triggers `action` when the user shakes the device.
     public func onDeviceShake(perform action: @escaping (() -> Void)) -> some View {
         modifier(DeviceShakeViewModifier(action: action))
     }
