@@ -8,7 +8,7 @@ import SwiftUI
 
 /// A rectangular shape with rounded corners, aligned inside the frame of the
 /// view containing it.
-public struct RoundedRectangleCorner: Shape {
+public struct RoundedRectangleCorner: Shape, Sendable {
     private let radius: CGFloat
     private let corners: UIRectCorner
 
@@ -30,6 +30,8 @@ public struct RoundedRectangleCorner: Shape {
         return Path(path.cgPath)
     }
 }
+
+// MARK: - Preview
 
 struct RoundedRectangleCorner_Previews: PreviewProvider {
     static var previews: some View {

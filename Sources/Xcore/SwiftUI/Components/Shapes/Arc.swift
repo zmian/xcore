@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-public struct Arc: InsettableShape {
+public struct Arc: InsettableShape, Sendable {
     public let startAngle: Angle
     public let endAngle: Angle
     public let clockwise: Bool

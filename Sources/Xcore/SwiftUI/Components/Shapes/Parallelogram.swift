@@ -9,7 +9,7 @@ import SwiftUI
 /// A parallelogram centered on the frame of the view containing it.
 ///
 /// - SeeAlso: https://trailingclosure.com/swiftui-parallelogram-shape
-public struct Parallelogram: Shape {
+public struct Parallelogram: Shape, Sendable {
     private let depth: CGFloat
     private let isFlipped: Bool
 
@@ -39,6 +39,8 @@ public struct Parallelogram: Shape {
         }
     }
 }
+
+// MARK: - Preview
 
 struct Parallelogram_Previews: PreviewProvider {
     static var previews: some View {
