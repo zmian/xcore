@@ -13,7 +13,7 @@ extension View {
     ///
     /// - Returns: A view that triggers `action` the user shakes the device.
     fileprivate func onDeviceShake(perform action: @escaping (() -> Void)) -> some View {
-        modifier(DeviceShakeViewModifier(perform: action))
+        modifier(DeviceShakeViewModifier(action: action))
     }
 }
 
@@ -22,11 +22,7 @@ extension View {
 /// A view modifier that detects user shaking the device and calls the given
 /// action closure.
 private struct DeviceShakeViewModifier: ViewModifier {
-    private let action: (() -> Void)
-
-    init(perform action: @escaping (() -> Void)) {
-        self.action = action
-    }
+    let action: (() -> Void)
 
     func body(content: Content) -> some View {
         content
