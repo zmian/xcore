@@ -16,7 +16,7 @@ extension View {
 // MARK: - GeometryEffect
 
 /// - SeeAlso: https://talk.objc.io/episodes/S01E173-building-a-shake-animation
-public struct ShakeEffect: GeometryEffect {
+public struct ShakeEffect: GeometryEffect, Sendable {
     public var animatableData: CGFloat
 
     public init(shakes: Int) {

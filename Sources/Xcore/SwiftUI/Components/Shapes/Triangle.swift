@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// A triangle centered on the frame of the view containing it.
-public struct Triangle: Shape {
+public struct Triangle: Shape, Sendable {
     public init() {}
 
     /// Describes this shape as a path within a rectangular frame of reference.
@@ -23,6 +23,8 @@ public struct Triangle: Shape {
         }
     }
 }
+
+// MARK: - Preview
 
 struct Triangle_Previews: PreviewProvider {
     static var previews: some View {

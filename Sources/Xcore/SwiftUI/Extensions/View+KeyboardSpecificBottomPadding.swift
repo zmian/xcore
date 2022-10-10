@@ -22,6 +22,7 @@ extension View {
 
 // MARK: - ViewModifier
 
+@MainActor
 private struct KeyboardSpecificBottomPaddingModifier: ViewModifier {
     @State private var isKeyboardShown = false
     let length: CGFloat?

@@ -56,6 +56,8 @@ extension InsettableShape {
     }
 }
 
+// MARK: - TrimmedShape
+
 /// A shape with a trim effect applied to it and conditionally preserving
 /// `InsettableShape` conformance of the underlying shape.
 private struct TrimmedShape<Content>: Shape where Content: Shape {
@@ -94,3 +96,5 @@ extension TrimmedShape: InsettableShape where Content: InsettableShape {
         )
     }
 }
+
+extension TrimmedShape: Sendable where Content: Sendable {}

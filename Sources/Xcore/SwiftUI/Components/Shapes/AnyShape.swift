@@ -12,7 +12,7 @@ import SwiftUI
 /// Whenever the type of shape used with an AnyShape changes, the old hierarchy
 /// is destroyed and a new hierarchy is created for the new type.
 public struct AnyShape: Shape {
-    private var _path: (CGRect) -> Path
+    private let _path: (CGRect) -> Path
 
     /// Create an instance that type-erases shap.
     public init(_ shape: some Shape) {
@@ -30,8 +30,8 @@ public struct AnyShape: Shape {
 /// Whenever the type of shape used with an AnyShape changes, the old hierarchy
 /// is destroyed and a new hierarchy is created for the new type.
 public struct AnyInsettableShape: InsettableShape {
-    private var _path: (CGRect) -> Path
-    private var _inset: (CGFloat) -> AnyInsettableShape
+    private let _path: (CGRect) -> Path
+    private let _inset: (CGFloat) -> AnyInsettableShape
 
     /// Create an instance that type-erases shap.
     public init(_ shape: some InsettableShape) {
