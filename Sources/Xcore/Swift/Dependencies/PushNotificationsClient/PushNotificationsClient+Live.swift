@@ -17,7 +17,7 @@ extension PushNotificationsClient {
 
         return .init(
             authorizationStatus: client.authorizationStatus,
-            events: client.stream.makeAsyncStream(),
+            events: client.stream.makeAsyncStream,
             register: client.register,
             unregister: client.unregister,
             openAppSettings: client.openAppSettings
