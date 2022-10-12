@@ -52,7 +52,7 @@ extension Publisher {
 }
 
 extension Publisher where Failure == Never {
-    public func eraseToVoidAndError<E: Error>(to failureType: E.Type) -> Publishers.SetFailureType<Publishers.Map<Self, Void>, E> {
+    public func eraseToVoidAndError<E: Error>(to failureType: E.Type) -> some Publisher<Void, E> {
         eraseToVoid()
             .setFailureType(to: failureType)
     }
@@ -60,14 +60,13 @@ extension Publisher where Failure == Never {
 
 extension Publisher {
     /// Publishes any value that satisfy the given predicate.
-    public func match(_ predicate: @escaping (Output) -> Bool) -> AnyPublisher<Void, Failure> {
+    public func match(_ predicate: @escaping (Output) -> Bool) -> some Publisher<Void, Failure> {
         compactMap { predicate($0) ? $0 : nil }
             .eraseToVoid()
-            .eraseToAnyPublisher()
     }
 
     /// Publishes any value that equals the given value.
-    public func when(_ value: Output) -> AnyPublisher<Void, Failure> where Output: Equatable {
+    public func when(_ value: Output) -> some Publisher<Void, Failure> where Output: Equatable {
         match { $0 == value }
     }
 }

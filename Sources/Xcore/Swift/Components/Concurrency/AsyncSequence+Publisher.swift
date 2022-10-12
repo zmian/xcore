@@ -10,7 +10,7 @@ import Combine
 extension AsyncStream {
     /// Returns a publisher that emits events when asynchronous sequence produces
     /// new elements.
-    public var publisher: AnyPublisher<Element, Never> {
+    public var publisher: some Publisher<Element, Never> {
         let subject = PassthroughSubject<Element, Never>()
 
         Task {
@@ -20,7 +20,6 @@ extension AsyncStream {
         }
 
         return subject
-            .eraseToAnyPublisher()
     }
 }
 #endif

@@ -14,7 +14,7 @@ extension Publishers {
     }
 
     /// Emits an event whenever keyboard visibility changes.
-    public static var keyboardShown: AnyPublisher<Bool, Never> {
+    public static var keyboardShown: some Publisher<Bool, Never> {
         let willShow = notifications(for: UIApplication.keyboardWillShowNotification)
             .map { _ in true }
 
@@ -22,11 +22,10 @@ extension Publishers {
             .map { _ in false }
 
         return MergeMany(willShow, willHide)
-            .eraseToAnyPublisher()
     }
 
     /// Emits an event whenever keyboard visibility and frame changes.
-    public static func keyboardCurrentHeight(safeAreaInsetsBottom: CGFloat = 0) -> AnyPublisher<CGFloat, Never> {
+    public static func keyboardCurrentHeight(safeAreaInsetsBottom: CGFloat = 0) -> some Publisher<CGFloat, Never> {
         let willShow = notifications(for: UIApplication.keyboardWillShowNotification)
             .merge(with:
                 notifications(for: UIApplication.keyboardWillChangeFrameNotification)
@@ -44,13 +43,12 @@ extension Publishers {
             .eraseToAnyPublisher()
 
         return MergeMany(willShow, willHide)
-            .eraseToAnyPublisher()
     }
 }
 
 extension Publishers {
     /// Emits an event whenever protected data availability changes.
-    public static var protectedDataAvailability: AnyPublisher<Bool, Never> {
+    public static var protectedDataAvailability: some Publisher<Bool, Never> {
         let available = notifications(for: UIApplication.protectedDataDidBecomeAvailableNotification)
             .map { _ in true }
 
@@ -58,19 +56,18 @@ extension Publishers {
             .map { _ in false }
 
         return MergeMany(available, unavailable)
-            .eraseToAnyPublisher()
     }
 }
 
 extension Publishers {
     /// Emits an event whenever window visibility changes.
-    public static var windowVisibility: AnyPublisher<Void, Never> {
+    public static var windowVisibility: some Publisher<Void, Never> {
         MergeMany(
             notifications(for: UIWindow.didBecomeHiddenNotification),
             notifications(for: UIWindow.didBecomeVisibleNotification),
             notifications(for: UIApplication.didBecomeActiveNotification)
         )
-        .eraseToVoidAnyPublisher()
+        .eraseToVoid()
     }
 }
 #endif

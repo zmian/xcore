@@ -75,7 +75,6 @@ public func withTimer(every interval: TimeInterval, perform work: @escaping () -
     )
     .autoconnect()
     .merge(with: Just(Date()))
-    .eraseToAnyPublisher()
     .sink { _ in
         work()
     }
