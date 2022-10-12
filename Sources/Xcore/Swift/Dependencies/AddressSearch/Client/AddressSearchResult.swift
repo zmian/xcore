@@ -9,7 +9,7 @@ import Foundation
 
 /// A structure representing a fully-formed string that completes a partial
 /// string.
-public struct AddressSearchResult: Hashable, @unchecked Sendable {
+public final class AddressSearchResult: Hashable, @unchecked Sendable {
     public let title: String
     public let subtitle: String
     private let completion: MKLocalSearchCompletion?
@@ -45,5 +45,23 @@ public struct AddressSearchResult: Hashable, @unchecked Sendable {
             $0.naturalLanguageQuery = [title, subtitle].joined(separator: ", ")
             $0.resultTypes = .address
         }
+    }
+}
+
+// MARK: - Equatable
+
+extension AddressSearchResult {
+    public static func == (lhs: AddressSearchResult, rhs: AddressSearchResult) -> Bool {
+        lhs.title == rhs.title &&
+        lhs.subtitle == rhs.subtitle
+    }
+}
+
+// MARK: - Hashable
+
+extension AddressSearchResult {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
+        hasher.combine(subtitle)
     }
 }
