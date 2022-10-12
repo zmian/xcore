@@ -15,11 +15,6 @@ extension AsyncStream {
             $0.finish()
         }
     }
-
-    /// Any asynchronous sequence that causes a test to fail if it runs.
-    public static func unimplemented() -> Self {
-       unimplemented("")
-    }
 }
 
 // MARK: - AsyncThrowingStream

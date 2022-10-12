@@ -15,7 +15,9 @@ extension PushNotificationsClient {
                 internal_XCTFail("\(Self.self).authorizationStatus is unimplemented")
                 return .notDetermined
             },
-            events: AsyncStream.unimplemented,
+            events: {
+                .unimplemented("\(Self.self).events")
+            },
             register: {
                 internal_XCTFail("\(Self.self).register is unimplemented")
             },
