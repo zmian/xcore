@@ -14,7 +14,7 @@ public struct PushNotificationsClient {
     public var authorizationStatus: () async -> AuthorizationStatus
 
     /// Events produced from notifications client.
-    public var events: AsyncStream<Event>
+    public var events: () -> AsyncStream<Event>
 
     /// Registers to receive remote notifications through Apple Push Notification
     /// service.
@@ -63,7 +63,7 @@ public struct PushNotificationsClient {
     ///     Settings app.
     public init(
         authorizationStatus: @escaping () async -> AuthorizationStatus,
-        events: AsyncStream<Event>,
+        events:  @escaping () -> AsyncStream<Event>,
         register: @escaping () async -> Void,
         unregister: @escaping () -> Void,
         openAppSettings: @escaping () -> Void
