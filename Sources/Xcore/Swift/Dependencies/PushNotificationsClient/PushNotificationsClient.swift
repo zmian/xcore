@@ -63,7 +63,7 @@ public struct PushNotificationsClient {
     ///     Settings app.
     public init(
         authorizationStatus: @escaping () async -> AuthorizationStatus,
-        events:  @escaping () -> AsyncStream<Event>,
+        events: @escaping () -> AsyncStream<Event>,
         register: @escaping () async -> Void,
         unregister: @escaping () -> Void,
         openAppSettings: @escaping () -> Void
