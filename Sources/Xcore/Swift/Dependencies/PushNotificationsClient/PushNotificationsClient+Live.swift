@@ -7,7 +7,6 @@
 #if canImport(UserNotifications)
 import SwiftUI
 import UserNotifications
-import AsyncAlgorithms
 
 // MARK: - Live
 
