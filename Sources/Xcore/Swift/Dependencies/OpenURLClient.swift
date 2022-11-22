@@ -122,19 +122,12 @@ extension OpenURLClient {
 
 extension DependencyValues {
     private struct OpenURLClientKey: DependencyKey {
-        static let defaultValue: OpenURLClient = .system
+        static let liveValue: OpenURLClient = .system
     }
 
     /// Provides functionality for opening a URL.
     public var openUrl: OpenURLClient {
         get { self[OpenURLClientKey.self] }
         set { self[OpenURLClientKey.self] = newValue }
-    }
-
-    /// Provides functionality for opening a URL.
-    @discardableResult
-    public static func openUrl(_ value: OpenURLClient) -> Self.Type {
-        self[\.openUrl] = value
-        return Self.self
     }
 }

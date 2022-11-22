@@ -62,19 +62,12 @@ extension ImageColorClient {
 
 extension DependencyValues {
     private struct ImageColorClientKey: DependencyKey {
-        static let defaultValue: ImageColorClient = .live
+        static let liveValue: ImageColorClient = .live
     }
 
     /// Provides functionality for extracting a color from an image.
     public var imageColor: ImageColorClient {
         get { self[ImageColorClientKey.self] }
         set { self[ImageColorClientKey.self] = newValue }
-    }
-
-    /// Provides functionality for extracting a color from an image.
-    @discardableResult
-    public static func imageColor(_ value: ImageColorClient) -> Self.Type {
-        self[\.imageColor] = value
-        return Self.self
     }
 }

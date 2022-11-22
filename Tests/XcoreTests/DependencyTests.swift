@@ -19,22 +19,31 @@ final class DependencyTests: TestCase {
 
         let viewModel = ViewModel()
 
-        DependencyValues[\.pasteboard] = LivePasteboardClient()
-        XCTAssertEqual(viewModel.pasteboard.id, "live")
+        DependencyValues.withValues {
+            $0.pasteboard = LivePasteboardClient()
+        } operation: {
+            XCTAssertEqual(viewModel.pasteboard.id, "live")
+        }
 
-        DependencyValues[\.pasteboard] = NoopPasteboardClient()
-        XCTAssertEqual(viewModel.pasteboard.id, "noop")
+        DependencyValues.withValues {
+            $0.pasteboard = NoopPasteboardClient()
+        } operation: {
+            XCTAssertEqual(viewModel.pasteboard.id, "noop")
 
-        // nil out the pasteboard
-        globalPasteboard = nil
-        XCTAssertNil(globalPasteboard)
+            // nil out the pasteboard
+            globalPasteboard = nil
+            XCTAssertNil(globalPasteboard)
 
-        viewModel.copy()
-        XCTAssertNil(globalPasteboard) // current client is noop
+            viewModel.copy()
+            XCTAssertNil(globalPasteboard) // current client is noop
+        }
 
-        DependencyValues[\.pasteboard] = LivePasteboardClient()
-        viewModel.copy()
-        XCTAssertEqual(globalPasteboard, "hello") // current client is live
+        DependencyValues.withValues {
+            $0.pasteboard = LivePasteboardClient()
+        } operation: {
+            viewModel.copy()
+            XCTAssertEqual(globalPasteboard, "hello") // current client is live
+        }
     }
 
     func testStructDependency() {
@@ -48,22 +57,28 @@ final class DependencyTests: TestCase {
 
         let viewModel = ViewModel()
 
-        DependencyValues[\.myPasteboard] = .live
-        XCTAssertEqual(viewModel.pasteboard.id, "live")
+        DependencyValues.withValues {
+            $0.myPasteboard = .live
+        } operation: {
+            XCTAssertEqual(viewModel.pasteboard.id, "live")
+        }
 
-        DependencyValues[\.myPasteboard] = .noop
-        XCTAssertEqual(viewModel.pasteboard.id, "noop")
+        DependencyValues.withValues {
+            $0.myPasteboard = .noop
+        } operation: {
+            XCTAssertEqual(viewModel.pasteboard.id, "noop")
+        }
 
         // nil out the pasteboard
         globalPasteboard = nil
         XCTAssertNil(globalPasteboard)
 
-        DependencyValues[\.myPasteboard] = .live
-        viewModel.copy()
-        XCTAssertEqual(globalPasteboard, "hello") // current client is live
-
-        // Reset dependencies values.
-        DependencyValues.resetAll()
+        DependencyValues.withValues {
+            $0.myPasteboard = .live
+        } operation: {
+            viewModel.copy()
+            XCTAssertEqual(globalPasteboard, "hello") // current client is live
+        }
 
         XCTExpectFailure()
         viewModel.copy()
@@ -99,7 +114,7 @@ private struct NoopPasteboardClient: PasteboardClient {
 
 extension DependencyValues {
     private struct PasteboardClientKey: DependencyKey {
-        static let defaultValue: PasteboardClient = LivePasteboardClient()
+        static let liveValue: PasteboardClient = LivePasteboardClient()
     }
 
     fileprivate var pasteboard: PasteboardClient {
@@ -129,7 +144,7 @@ extension MyPasteboard {
 
 extension DependencyValues {
     private struct MyPasteboardClientKey: DependencyKey {
-        static let defaultValue: MyPasteboard = .live
+        static let liveValue: MyPasteboard = .live
     }
 
     fileprivate var myPasteboard: MyPasteboard {

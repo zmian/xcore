@@ -204,17 +204,11 @@ extension AppMonitoring {
 
 extension DependencyValues {
     private struct AppMonitoringKey: DependencyKey {
-        static let defaultValue: AppMonitoring = .noop
+        static let liveValue: AppMonitoring = .noop
     }
 
     public var appMonitoring: AppMonitoring {
         get { self[AppMonitoringKey.self] }
         set { self[AppMonitoringKey.self] = newValue }
-    }
-
-    @discardableResult
-    public static func appMonitoring(_ value: AppMonitoring) -> Self.Type {
-        self[\.appMonitoring] = value
-        return Self.self
     }
 }

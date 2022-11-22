@@ -7,6 +7,7 @@
 import Foundation
 @_exported import AnyCodable
 @_exported import KeychainAccess
+@_exported import Dependencies
 
 // MARK: - Bundle
 

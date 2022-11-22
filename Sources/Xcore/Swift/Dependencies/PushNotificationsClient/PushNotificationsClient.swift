@@ -231,7 +231,7 @@ extension PushNotificationsClient {
 
 extension DependencyValues {
     private struct PushNotificationsClientKey: DependencyKey {
-        static let defaultValue: PushNotificationsClient = {
+        static let liveValue: PushNotificationsClient = {
             #if DEBUG
             if ProcessInfo.Arguments.isTesting {
                 // We need to explicitly set the dependency value to `.unimplemented` as `.live`
@@ -254,13 +254,6 @@ extension DependencyValues {
     public var pushNotifications: PushNotificationsClient {
         get { self[PushNotificationsClientKey.self] }
         set { self[PushNotificationsClientKey.self] = newValue }
-    }
-
-    /// Provides functionality for managing push notification-related activities.
-    @discardableResult
-    public static func pushNotifications(_ value: PushNotificationsClient) -> Self.Type {
-        self[\.pushNotifications] = value
-        return Self.self
     }
 }
 #endif

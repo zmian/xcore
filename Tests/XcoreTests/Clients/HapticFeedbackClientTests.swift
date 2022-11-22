@@ -12,12 +12,14 @@ final class HapticFeedbackClientTests: TestCase {
         let viewModel = ViewModel()
         var triggeredFeedback: HapticFeedbackClient.Style?
 
-        DependencyValues.hapticFeedback(.init(trigger: { style in
-            triggeredFeedback = style
-        }))
-
-        viewModel.triggerSelectionFeedback()
-        XCTAssertEqual(triggeredFeedback, .selection)
+        DependencyValues.withValues {
+            $0.hapticFeedback = .init(trigger: { style in
+                triggeredFeedback = style
+            })
+        } operation: {
+            viewModel.triggerSelectionFeedback()
+            XCTAssertEqual(triggeredFeedback, .selection)
+        }
     }
 }
 

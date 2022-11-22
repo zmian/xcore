@@ -60,19 +60,12 @@ extension PasteboardClient {
 
 extension DependencyValues {
     private struct PasteboardClientKey: DependencyKey {
-        static let defaultValue: PasteboardClient = .live
+        static let liveValue: PasteboardClient = .live
     }
 
     /// Provides functionality for copying a string to pasteboard.
     public var pasteboard: PasteboardClient {
         get { self[PasteboardClientKey.self] }
         set { self[PasteboardClientKey.self] = newValue }
-    }
-
-    /// Provides functionality for copying a string to pasteboard.
-    @discardableResult
-    public static func pasteboard(_ value: PasteboardClient) -> Self.Type {
-        self[\.pasteboard] = value
-        return Self.self
     }
 }

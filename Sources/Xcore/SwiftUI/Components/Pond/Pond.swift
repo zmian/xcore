@@ -109,8 +109,8 @@ extension Pond {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct XcorePondKey: DependencyKey {
-        static let defaultValue: Pond = {
+    private struct PondKey: DependencyKey {
+        static let liveValue: Pond = {
             #if DEBUG
             if ProcessInfo.Arguments.isTesting {
                 return .unimplemented
@@ -122,14 +122,7 @@ extension DependencyValues {
 
     /// Provide functionality for key value storage.
     public var pond: Pond {
-        get { self[XcorePondKey.self] }
-        set { self[XcorePondKey.self] = newValue }
-    }
-
-    /// Provide functionality for key value storage.
-    @discardableResult
-    public static func pond(_ value: Pond) -> Self.Type {
-        self[\.pond] = value
-        return Self.self
+        get { self[PondKey.self] }
+        set { self[PondKey.self] = newValue }
     }
 }

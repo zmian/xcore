@@ -10,17 +10,19 @@ import Combine
 
 final class AppPhaseClientTests: TestCase {
     func testDefault() {
-        DependencyValues.appPhase(.live)
+        DependencyValues.withValues {
+            $0.appPhase = .live
+        } operation: {
+            let viewModel = ViewModel()
+            var receivedPhase: AppPhase?
+            viewModel.receive { receivedPhase = $0 }
 
-        let viewModel = ViewModel()
-        var receivedPhase: AppPhase?
-        viewModel.receive { receivedPhase = $0 }
+            viewModel.send(.launched(launchOptions: nil))
+            XCTAssertEqual(receivedPhase, .launched(launchOptions: nil))
 
-        viewModel.send(.launched(launchOptions: nil))
-        XCTAssertEqual(receivedPhase, .launched(launchOptions: nil))
-
-        viewModel.send(.background)
-        XCTAssertEqual(receivedPhase, .background)
+            viewModel.send(.background)
+            XCTAssertEqual(receivedPhase, .background)
+        }
     }
 }
 

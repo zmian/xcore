@@ -37,19 +37,12 @@ public struct AudioFile: Hashable, @unchecked Sendable {
 
 extension DependencyValues {
     private struct AudioClientKey: DependencyKey {
-        static let defaultValue: AudioClient = .live
+        static let liveValue: AudioClient = .live
     }
 
     /// Provides functionality for playing audio on the device.
     public var audio: AudioClient {
         get { self[AudioClientKey.self] }
         set { self[AudioClientKey.self] = newValue }
-    }
-
-    /// Provides functionality for playing audio on the device.
-    @discardableResult
-    public static func audio(_ value: AudioClient) -> Self.Type {
-        self[\.audio] = value
-        return Self.self
     }
 }
