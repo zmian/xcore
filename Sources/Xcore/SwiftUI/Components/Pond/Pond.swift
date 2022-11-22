@@ -110,14 +110,7 @@ extension Pond {
 
 extension DependencyValues {
     private struct PondKey: DependencyKey {
-        static let liveValue: Pond = {
-            #if DEBUG
-            if ProcessInfo.Arguments.isTesting {
-                return .unimplemented
-            }
-            #endif
-            return .empty
-        }()
+        static let liveValue: Pond = .empty
     }
 
     /// Provide functionality for key value storage.
