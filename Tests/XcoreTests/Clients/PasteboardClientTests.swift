@@ -11,27 +11,31 @@ final class PasteboardClientTests: TestCase {
     func testInMemoryVariant() {
         let viewModel = ViewModel()
 
-        DependencyValues.pasteboard(.inMemory)
+        DependencyValues.withValues {
+            $0.pasteboard = .inMemory
+        } operation: {
+            // nil out the pasteboard
+            globalPasteboard = nil
+            XCTAssertNil(globalPasteboard)
 
-        // nil out the pasteboard
-        globalPasteboard = nil
-        XCTAssertNil(globalPasteboard)
-
-        viewModel.copy()
-        XCTAssertEqual(globalPasteboard, "hello")
+            viewModel.copy()
+            XCTAssertEqual(globalPasteboard, "hello")
+        }
     }
 
     func testNoopVariant() {
         let viewModel = ViewModel()
 
-        DependencyValues.pasteboard(.noop)
+        DependencyValues.withValues {
+            $0.pasteboard = .noop
+        } operation: {
+            // nil out the pasteboard
+            globalPasteboard = nil
+            XCTAssertNil(globalPasteboard)
 
-        // nil out the pasteboard
-        globalPasteboard = nil
-        XCTAssertNil(globalPasteboard)
-
-        viewModel.copy()
-        XCTAssertNil(globalPasteboard) // current variant is noop
+            viewModel.copy()
+            XCTAssertNil(globalPasteboard) // current variant is noop
+        }
     }
 
     private final class ViewModel {

@@ -13,20 +13,22 @@ final class OpenURLClientTests: TestCase {
 
         var openedUrl: URL?
 
-        DependencyValues.openUrl(.init { adaptiveUrl in
-            openedUrl = adaptiveUrl.url
-        })
+        DependencyValues.withValues {
+            $0.openUrl = .init { adaptiveUrl in
+                openedUrl = adaptiveUrl.url
+            }
+        } operation: {
+            XCTAssertNil(openedUrl)
 
-        XCTAssertNil(openedUrl)
+            viewModel.openMailApp()
+            XCTAssertEqual(openedUrl, .mailApp)
 
-        viewModel.openMailApp()
-        XCTAssertEqual(openedUrl, .mailApp)
+            viewModel.openSettingsApp()
+            XCTAssertEqual(openedUrl, .settingsApp)
 
-        viewModel.openSettingsApp()
-        XCTAssertEqual(openedUrl, .settingsApp)
-
-        viewModel.openSomeUrl()
-        XCTAssertEqual(openedUrl, URL(string: "https://example.com"))
+            viewModel.openSomeUrl()
+            XCTAssertEqual(openedUrl, URL(string: "https://example.com"))
+        }
     }
 
     private final class ViewModel {

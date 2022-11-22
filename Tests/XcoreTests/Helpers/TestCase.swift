@@ -10,7 +10,6 @@ import XCTest
 class TestCase: XCTestCase {
     public override func setUp() {
         super.setUp()
-        DependencyValues.resetAll()
     }
 }
 

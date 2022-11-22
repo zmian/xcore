@@ -51,19 +51,12 @@ extension AppStatusClient {
 
 extension DependencyValues {
     private struct AppStatusClientKey: DependencyKey {
-        static let defaultValue: AppStatusClient = .noop
+        static let liveValue: AppStatusClient = .noop
     }
 
     /// Provides functionality for evaluating and receiving events for app’s state.
     public var appStatus: AppStatusClient {
         get { self[AppStatusClientKey.self] }
         set { self[AppStatusClientKey.self] = newValue }
-    }
-
-    /// Provides functionality for evaluating and receiving events for app’s state.
-    @discardableResult
-    public static func appStatus(_ value: AppStatusClient) -> Self.Type {
-        self[\.appStatus] = value
-        return Self.self
     }
 }

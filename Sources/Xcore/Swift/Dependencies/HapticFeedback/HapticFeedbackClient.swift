@@ -82,7 +82,7 @@ extension HapticFeedbackClient {
 
 extension DependencyValues {
     private struct HapticFeedbackClientKey: DependencyKey {
-        static let defaultValue: HapticFeedbackClient = .live
+        static let liveValue: HapticFeedbackClient = .live
     }
 
     /// Provides functionality for haptic feedback.
@@ -107,30 +107,5 @@ extension DependencyValues {
     public var hapticFeedback: HapticFeedbackClient {
         get { self[HapticFeedbackClientKey.self] }
         set { self[HapticFeedbackClientKey.self] = newValue }
-    }
-
-    /// Provides functionality for haptic feedback.
-    ///
-    /// Haptic feedback provides a tactile response, such as a tap, that draws
-    /// attention and reinforces both actions and events. While many system-provided
-    /// interface elements (for example, pickers, switches, and sliders)
-    /// automatically provide haptic feedback, you can use feedback generators to
-    /// add your own feedback to custom views and controls.
-    ///
-    /// **Usage**
-    ///
-    /// ```swift
-    /// class ViewModel {
-    ///     @Dependency(\.hapticFeedback) var hapticFeedback
-    ///
-    ///     func triggerSelectionFeedback() {
-    ///         hapticFeedback(.selection)
-    ///     }
-    /// }
-    /// ```
-    @discardableResult
-    public static func hapticFeedback(_ value: HapticFeedbackClient) -> Self.Type {
-        self[\.hapticFeedback] = value
-        return Self.self
     }
 }
