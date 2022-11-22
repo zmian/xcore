@@ -19,7 +19,7 @@ public protocol SessionCounterClient {
 
 extension DependencyValues {
     private struct SessionCounterClientKey: DependencyKey {
-        static let liveValue: SessionCounterClient = .noop
+        static let liveValue: SessionCounterClient = .live
     }
 
     /// Provides functionality to keep track of user's session counts.
