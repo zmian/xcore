@@ -110,12 +110,19 @@ extension Pond {
 
 extension DependencyValues {
     private struct PondKey: DependencyKey {
-        static let liveValue: Pond = .empty
+        static var liveValue: Pond = .empty
     }
 
     /// Provide functionality for key value storage.
     public var pond: Pond {
         get { self[PondKey.self] }
         set { self[PondKey.self] = newValue }
+    }
+
+    /// Provide functionality for key value storage.
+    @discardableResult
+    public static func pond(_ value: Pond) -> Self.Type {
+        PondKey.liveValue = value
+        return Self.self
     }
 }

@@ -19,12 +19,19 @@ public protocol SessionCounterClient {
 
 extension DependencyValues {
     private struct SessionCounterClientKey: DependencyKey {
-        static let liveValue: SessionCounterClient = .live
+        static var liveValue: SessionCounterClient = .live
     }
 
     /// Provides functionality to keep track of user's session counts.
     public var sessionCounter: SessionCounterClient {
         get { self[SessionCounterClientKey.self] }
         set { self[SessionCounterClientKey.self] = newValue }
+    }
+
+    /// Provides functionality to keep track of user's session counts.
+    @discardableResult
+    public static func sessionCounter(_ value: SessionCounterClient) -> Self.Type {
+        SessionCounterClientKey.liveValue = value
+        return Self.self
     }
 }

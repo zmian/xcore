@@ -408,7 +408,7 @@ public typealias AppPhaseClient = EventsClient<AppPhase>
 
 extension DependencyValues {
     private struct AppPhaseClientKey: DependencyKey {
-        static let liveValue: AppPhaseClient = .live
+        static var liveValue: AppPhaseClient = .live
     }
 
     /// Provides functionality for sending and receiving events for app’s
@@ -416,5 +416,13 @@ extension DependencyValues {
     public var appPhase: AppPhaseClient {
         get { self[AppPhaseClientKey.self] }
         set { self[AppPhaseClientKey.self] = newValue }
+    }
+
+    /// Provides functionality for sending and receiving events for app’s
+    /// operational state.
+    @discardableResult
+    public static func appPhase(_ value: AppPhaseClient) -> Self.Type {
+        AppPhaseClientKey.liveValue = value
+        return Self.self
     }
 }

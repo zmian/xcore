@@ -66,12 +66,19 @@ extension QRCodeClient {
 
 extension DependencyValues {
     private struct QRCodeClientKey: DependencyKey {
-        static let liveValue: QRCodeClient = .live
+        static var liveValue: QRCodeClient = .live
     }
 
     /// Provides functionality for generating a QR code.
     public var qrCode: QRCodeClient {
         get { self[QRCodeClientKey.self] }
         set { self[QRCodeClientKey.self] = newValue }
+    }
+
+    /// Provides functionality for generating a QR code.
+    @discardableResult
+    public static func qrCode(_ value: QRCodeClient) -> Self.Type {
+        QRCodeClientKey.liveValue = value
+        return Self.self
     }
 }
