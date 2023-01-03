@@ -29,7 +29,7 @@ public protocol AddressSearchClient {
 
 extension DependencyValues {
     private struct AddressSearchClientKey: DependencyKey {
-        static let liveValue: AddressSearchClient = .live
+        static var liveValue: AddressSearchClient = .live
     }
 
     /// Provides functionality for address search completion based on partial search
@@ -37,5 +37,13 @@ extension DependencyValues {
     public var addressSearch: AddressSearchClient {
         get { self[AddressSearchClientKey.self] }
         set { self[AddressSearchClientKey.self] = newValue }
+    }
+
+    /// Provides functionality for address search completion based on partial search
+    /// string.
+    @discardableResult
+    public static func addressSearch(_ value: AddressSearchClient) -> Self.Type {
+        AddressSearchClientKey.liveValue = value
+        return Self.self
     }
 }

@@ -231,29 +231,31 @@ extension PushNotificationsClient {
 
 extension DependencyValues {
     private struct PushNotificationsClientKey: DependencyKey {
-        static let liveValue: PushNotificationsClient = {
-            #if DEBUG
-            if ProcessInfo.Arguments.isTesting {
-                // We need to explicitly set the dependency value to `.unimplemented` as `.live`
-                // variant crashes when used within tests (see crash message below). We are
-                // explicitly setting it to `.unimplemented` to force the clients to provide
-                // stub implementation before attempting to use the PushNotificationsClient in
-                // tests.
-                //
-                // Crash message:
-                // Thread 1: "bundleProxyForCurrentProcess is nil: mainBundle.bundleURL
-                // file:///Applications/Xcode..."
-                return .unimplemented
-            }
-            #endif
-            return .live
-        }()
+        static var liveValue: PushNotificationsClient = .live
+
+        // We need to explicitly set the test dependency value to `.unimplemented` as
+        // default `.live` variant crashes when used within tests (see crash message
+        // below). Explicitly setting it to `.unimplemented` to force the clients to
+        // provide stub implementation before attempting to use the
+        // PushNotificationsClient in tests.
+        //
+        // Crash message:
+        // Thread 1: "bundleProxyForCurrentProcess is nil: mainBundle.bundleURL
+        // file:///Applications/Xcode..."
+        static let testValue: PushNotificationsClient = .unimplemented
     }
 
     /// Provides functionality for managing push notification-related activities.
     public var pushNotifications: PushNotificationsClient {
         get { self[PushNotificationsClientKey.self] }
         set { self[PushNotificationsClientKey.self] = newValue }
+    }
+
+    /// Provides functionality for managing push notification-related activities.
+    @discardableResult
+    public static func pushNotifications(_ value: PushNotificationsClient) -> Self.Type {
+        PushNotificationsClientKey.liveValue = value
+        return Self.self
     }
 }
 #endif

@@ -84,7 +84,7 @@ extension RequestReviewClient {
 
 extension DependencyValues {
     private struct RequestReviewClientKey: DependencyKey {
-        static let liveValue: RequestReviewClient = .live
+        static var liveValue: RequestReviewClient = .live
     }
 
     /// Provides functionality for requesting App Store ratings and reviews from
@@ -92,5 +92,13 @@ extension DependencyValues {
     public var requestReview: RequestReviewClient {
         get { self[RequestReviewClientKey.self] }
         set { self[RequestReviewClientKey.self] = newValue }
+    }
+
+    /// Provides functionality for requesting App Store ratings and reviews from
+    /// users.
+    @discardableResult
+    public static func requestReview(_ value: RequestReviewClient) -> Self.Type {
+        RequestReviewClientKey.liveValue = value
+        return Self.self
     }
 }
