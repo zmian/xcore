@@ -61,14 +61,12 @@ extension OpenURLClient {
         .init { _ in }
     }
 
-    #if DEBUG
     /// Returns unimplemented variant of `OpenURLClient`.
     public static var unimplemented: Self {
         .init { _ in
-            internal_XCTFail("\(Self.self) is unimplemented")
+            XCTFail("\(Self.self) is unimplemented")
         }
     }
-    #endif
 
     /// Returns system variant of `OpenURLClient`.
     public static var system: Self {

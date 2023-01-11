@@ -39,14 +39,12 @@ extension PasteboardClient {
         .init { _ in }
     }
 
-    #if DEBUG
     /// Returns unimplemented variant of `PasteboardClient`.
     public static var unimplemented: Self {
         .init { _ in
-            internal_XCTFail("\(Self.self).copy is unimplemented")
+            XCTFail("\(Self.self).copy is unimplemented")
         }
     }
-    #endif
 
     /// Returns live variant of `PasteboardClient`.
     public static var live: Self {

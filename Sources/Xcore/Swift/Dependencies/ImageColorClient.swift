@@ -31,15 +31,13 @@ extension ImageColorClient {
         .init { _ in nil }
     }
 
-    #if DEBUG
     /// Returns unimplemented variant of `ImageColorClient`.
     public static var unimplemented: Self {
         .init { _ in
-            internal_XCTFail("\(Self.self) is unimplemented")
+            XCTFail("\(Self.self) is unimplemented")
             return nil
         }
     }
-    #endif
 
     /// Returns live variant of `ImageColorClient`.
     public static var live: Self {

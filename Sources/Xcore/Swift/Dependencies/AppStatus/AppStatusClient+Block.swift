@@ -65,22 +65,20 @@ extension AppStatusClient where Self == BlockAppStatusClient {
         )
     }
 
-    #if DEBUG
     /// Returns unimplemented variant of `AppStatusClient`.
     public static var unimplemented: Self {
         .init(
             receive: .constant(.preparingLaunch),
             sessionState: .constant(.signedOut),
             evaluate: {
-                internal_XCTFail("\(Self.self).evaluate is unimplemented")
+                XCTFail("\(Self.self).evaluate is unimplemented")
             },
             changeSessionTo: { _ in
-                internal_XCTFail("\(Self.self).changeSessionTo is unimplemented")
+                XCTFail("\(Self.self).changeSessionTo is unimplemented")
             },
             systemForceRefresh: {
-                internal_XCTFail("\(Self.self).systemForceRefresh is unimplemented")
+                XCTFail("\(Self.self).systemForceRefresh is unimplemented")
             }
         )
     }
-    #endif
 }

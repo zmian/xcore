@@ -12,7 +12,7 @@ let package = Package(
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.8.2"),
         .package(url: "https://github.com/zmian/AnyCodable", branch: "master"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", from: "4.2.2"),
-        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "0.47.1")
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "0.1.3")
     ],
     targets: [
         .target(
@@ -21,7 +21,7 @@ let package = Package(
                 "SDWebImage",
                 "AnyCodable",
                 "KeychainAccess",
-                .product(name: "Dependencies", package: "swift-composable-architecture")
+                .product(name: "Dependencies", package: "swift-dependencies")
             ],
             resources: [.process("Resources")]
         ),
