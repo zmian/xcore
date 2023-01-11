@@ -72,16 +72,14 @@ extension AnyPublisher {
         .eraseToAnyPublisher()
     }
 
-    #if DEBUG
     /// Any publisher that causes a test to fail if it runs.
-    static func unimplemented(_ prefix: String) -> Self {
+    public static func unimplemented(_ prefix: String) -> Self {
         Deferred { () -> Self in
-            internal_XCTFail("\(prefix.isEmpty ? "" : "\(prefix) - ")A failing publisher ran.")
+            XCTFail("\(prefix.isEmpty ? "" : "\(prefix) - ")A failing publisher ran.")
             return .none
         }
         .eraseToAnyPublisher()
     }
-    #endif
 }
 
 extension Publisher {

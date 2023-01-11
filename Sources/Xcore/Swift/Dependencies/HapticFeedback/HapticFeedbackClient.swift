@@ -68,14 +68,12 @@ extension HapticFeedbackClient {
         .init { _ in }
     }
 
-    #if DEBUG
     /// Returns unimplemented variant of `HapticFeedbackClient`.
     public static var unimplemented: Self {
         .init { _ in
-            internal_XCTFail("\(Self.self) is unimplemented")
+            XCTFail("\(Self.self) is unimplemented")
         }
     }
-    #endif
 }
 
 // MARK: - Dependency

@@ -83,17 +83,15 @@ extension EventsClient {
         )
     }
 
-    #if DEBUG
     /// Returns unimplemented variant of `EventsClient`.
     public static var unimplemented: Self {
         .init(
             send: { _ in
-                internal_XCTFail("\(Self.self).send is unimplemented")
+                XCTFail("\(Self.self).send is unimplemented")
             },
             receive: .unimplemented("\(Self.self).receive")
         )
     }
-    #endif
 
     /// Returns live variant of `EventsClient`.
     public static var live: Self {

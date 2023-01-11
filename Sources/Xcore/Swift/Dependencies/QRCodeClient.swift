@@ -28,15 +28,13 @@ extension QRCodeClient {
         .init { _ in UIImage() }
     }
 
-    #if DEBUG
     /// Returns unimplemented variant of `QRCodeClient`.
     public static var unimplemented: Self {
         .init { _ in
-            internal_XCTFail("\(Self.self).generate is unimplemented")
+            XCTFail("\(Self.self).generate is unimplemented")
             return UIImage()
         }
     }
-    #endif
 
     /// Returns live variant of `QRCodeClient`.
     public static var live: Self {
