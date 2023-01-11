@@ -233,6 +233,7 @@ extension DependencyValues {
     private struct PushNotificationsClientKey: DependencyKey {
         static var liveValue: PushNotificationsClient = .live
 
+        #if DEBUG
         // We need to explicitly set the test dependency value to `.unimplemented` as
         // default `.live` variant crashes when used within tests (see crash message
         // below). Explicitly setting it to `.unimplemented` to force the clients to
@@ -243,6 +244,7 @@ extension DependencyValues {
         // Thread 1: "bundleProxyForCurrentProcess is nil: mainBundle.bundleURL
         // file:///Applications/Xcode..."
         static let testValue: PushNotificationsClient = .unimplemented
+        #endif
     }
 
     /// Provides functionality for managing push notification-related activities.
