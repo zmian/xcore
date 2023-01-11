@@ -9,41 +9,40 @@ import XCTest
 
 final class PasteboardClientTests: TestCase {
     func testInMemoryVariant() {
-        let viewModel = ViewModel()
-
-        DependencyValues.withValues {
+        let viewModel = withDependencies {
             $0.pasteboard = .inMemory
         } operation: {
-            // nil out the pasteboard
-            globalPasteboard = nil
-            XCTAssertNil(globalPasteboard)
-
-            viewModel.copy()
-            XCTAssertEqual(globalPasteboard, "hello")
+            ViewModel()
         }
+
+        // nil out the pasteboard
+        globalPasteboard = nil
+        XCTAssertNil(globalPasteboard)
+
+        viewModel.copy()
+        XCTAssertEqual(globalPasteboard, "hello")
     }
 
     func testNoopVariant() {
-        let viewModel = ViewModel()
-
-        DependencyValues.withValues {
+        let viewModel = withDependencies {
             $0.pasteboard = .noop
         } operation: {
-            // nil out the pasteboard
-            globalPasteboard = nil
-            XCTAssertNil(globalPasteboard)
-
-            viewModel.copy()
-            XCTAssertNil(globalPasteboard) // current variant is noop
+            ViewModel()
         }
+        // nil out the pasteboard
+        globalPasteboard = nil
+        XCTAssertNil(globalPasteboard)
+
+        viewModel.copy()
+        XCTAssertNil(globalPasteboard) // current variant is noop
     }
+}
 
-    private final class ViewModel {
-        @Dependency(\.pasteboard) var pasteboard
+private final class ViewModel {
+    @Dependency(\.pasteboard) var pasteboard
 
-        func copy() {
-            pasteboard.copy("hello")
-        }
+    func copy() {
+        pasteboard.copy("hello")
     }
 }
 
