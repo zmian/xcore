@@ -213,7 +213,7 @@ final class LiveAddressSearchClientTests: TestCase {
 
 extension LiveAddressSearchClientTests {
     private func search(_ query: String, file: StaticString = #file, line: UInt = #line, callback: (PostalAddress) async throws -> Void) async throws {
-        try await DependencyValues.withValues {
+        try await withDependencies {
             $0.addressSearch = .live
         } operation: {
             let client = Dependency(\.addressSearch).wrappedValue

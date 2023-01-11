@@ -19,13 +19,13 @@ final class DependencyTests: TestCase {
 
         let viewModel = ViewModel()
 
-        DependencyValues.withValues {
+        withDependencies {
             $0.pasteboard = LivePasteboardClient()
         } operation: {
             XCTAssertEqual(viewModel.pasteboard.id, "live")
         }
 
-        DependencyValues.withValues {
+        withDependencies {
             $0.pasteboard = NoopPasteboardClient()
         } operation: {
             XCTAssertEqual(viewModel.pasteboard.id, "noop")
@@ -38,7 +38,7 @@ final class DependencyTests: TestCase {
             XCTAssertNil(globalPasteboard) // current client is noop
         }
 
-        DependencyValues.withValues {
+        withDependencies {
             $0.pasteboard = LivePasteboardClient()
         } operation: {
             viewModel.copy()
@@ -57,13 +57,13 @@ final class DependencyTests: TestCase {
 
         let viewModel = ViewModel()
 
-        DependencyValues.withValues {
+        withDependencies {
             $0.myPasteboard = .live
         } operation: {
             XCTAssertEqual(viewModel.pasteboard.id, "live")
         }
 
-        DependencyValues.withValues {
+        withDependencies {
             $0.myPasteboard = .noop
         } operation: {
             XCTAssertEqual(viewModel.pasteboard.id, "noop")
@@ -73,7 +73,7 @@ final class DependencyTests: TestCase {
         globalPasteboard = nil
         XCTAssertNil(globalPasteboard)
 
-        DependencyValues.withValues {
+        withDependencies {
             $0.myPasteboard = .live
         } operation: {
             viewModel.copy()

@@ -33,39 +33,39 @@ final class PondTests: TestCase {
     }
 
     func testEmptyPond() throws {
-        let model = ViewModel()
-
-        try DependencyValues.withValues {
+        let model = withDependencies {
             $0.pond = .empty
         } operation: {
-            // Set value
-            try model.pond.set(.testValue, value: "Hello")
-            XCTAssertFalse(model.pond.contains(.testValue))
-            model.pond.remove(.testValue)
-            XCTAssertFalse(model.pond.contains(.testValue))
-
-            // Set/Get value
-            try model.pond.set(.testValue, value: 123)
-            XCTAssertNil(try model.pond.get(.testValue))
+            ViewModel()
         }
+
+        // Set value
+        try model.pond.set(.testValue, value: "Hello")
+        XCTAssertFalse(model.pond.contains(.testValue))
+        model.pond.remove(.testValue)
+        XCTAssertFalse(model.pond.contains(.testValue))
+
+        // Set/Get value
+        try model.pond.set(.testValue, value: 123)
+        XCTAssertNil(try model.pond.get(.testValue))
     }
 
     private func assertCases<T>(for value: T, pond: @autoclosure () -> Pond) throws where T: Equatable {
-        let model = ViewModel()
-
-        try DependencyValues.withValues {
+        let model = withDependencies {
             $0.pond = pond()
         } operation: {
-            // Set value
-            try model.pond.set(.testValue, value: value)
-            XCTAssertTrue(model.pond.contains(.testValue))
-            model.pond.remove(.testValue)
-            XCTAssertFalse(model.pond.contains(.testValue))
-
-            // Set/Get value
-            try model.pond.set(.testValue2, value: value)
-            XCTAssertEqual(try model.pond.get(.testValue2), value)
+            ViewModel()
         }
+
+        // Set value
+        try model.pond.set(.testValue, value: value)
+        XCTAssertTrue(model.pond.contains(.testValue))
+        model.pond.remove(.testValue)
+        XCTAssertFalse(model.pond.contains(.testValue))
+
+        // Set/Get value
+        try model.pond.set(.testValue2, value: value)
+        XCTAssertEqual(try model.pond.get(.testValue2), value)
     }
 }
 
@@ -112,15 +112,16 @@ extension PondTests {
             let value: String
         }
 
-        DependencyValues.withValues {
+        let model = withDependencies {
             $0.pond = pond()
         } operation: {
-            let model = ViewModel()
-            model.pond.remove(.testValue)
-
-            XCTAssertNil(model.pond.getCodable(.testValue, type: Example.self))
-            XCTAssertEqual(model.pond.get(.testValue, default: "My Value"), "My Value")
+            ViewModel()
         }
+
+        model.pond.remove(.testValue)
+
+        XCTAssertNil(model.pond.getCodable(.testValue, type: Example.self))
+        XCTAssertEqual(model.pond.get(.testValue, default: "My Value"), "My Value")
     }
 
     private func assertGetCodable(with pond: @autoclosure () -> Pond) throws {
@@ -131,15 +132,15 @@ extension PondTests {
         let data = try XCTUnwrap(#"{"value": "hello world"}"#.data(using: .utf8))
         try assertCases(for: data, pond: pond())
 
-        try DependencyValues.withValues {
+        let model = withDependencies {
             $0.pond = pond()
         } operation: {
-            let model = ViewModel()
-            try model.pond.set(.testValue, value: data)
-
-            let example = try XCTUnwrap(model.pond.getCodable(.testValue, type: Example.self))
-            XCTAssertEqual(example.value, "hello world")
+            ViewModel()
         }
+
+        try model.pond.set(.testValue, value: data)
+        let example = try XCTUnwrap(model.pond.getCodable(.testValue, type: Example.self))
+        XCTAssertEqual(example.value, "hello world")
     }
 
     private func assertGetCodable2(with pond: @autoclosure () -> Pond) throws {
@@ -147,17 +148,17 @@ extension PondTests {
             let value: String
         }
 
-        try DependencyValues.withValues {
+        let model = withDependencies {
             $0.pond = pond()
         } operation: {
-            let model = ViewModel()
-
-            let value = Example(value: "Swift")
-            model.pond.setCodable(.testValue, value: value)
-
-            let example = try XCTUnwrap(model.pond.getCodable(.testValue, type: Example.self))
-            XCTAssertEqual(example.value, "Swift")
+            ViewModel()
         }
+
+        let value = Example(value: "Swift")
+        model.pond.setCodable(.testValue, value: value)
+
+        let example = try XCTUnwrap(model.pond.getCodable(.testValue, type: Example.self))
+        XCTAssertEqual(example.value, "Swift")
     }
 
     private func assertGetCodableArray(with pond: @autoclosure () -> Pond) throws {
@@ -165,17 +166,17 @@ extension PondTests {
             let value: String
         }
 
-        try DependencyValues.withValues {
+        let model = withDependencies {
             $0.pond = pond()
         } operation: {
-            let model = ViewModel()
-
-            let values = [Example(value: "Swift"), Example(value: "Language")]
-            model.pond.setCodable(.testValue, value: values)
-
-            let examples = try XCTUnwrap(model.pond.getCodable(.testValue, type: [Example].self))
-            XCTAssertEqual(examples[0].value, "Swift")
+            ViewModel()
         }
+
+        let values = [Example(value: "Swift"), Example(value: "Language")]
+        model.pond.setCodable(.testValue, value: values)
+
+        let examples = try XCTUnwrap(model.pond.getCodable(.testValue, type: [Example].self))
+        XCTAssertEqual(examples[0].value, "Swift")
     }
 
     private func assertGetCodableDictionary(with pond: @autoclosure () -> Pond) throws {
@@ -183,17 +184,17 @@ extension PondTests {
             let value: String
         }
 
-        try DependencyValues.withValues {
+        let model = withDependencies {
             $0.pond = pond()
         } operation: {
-            let model = ViewModel()
-
-            let values = ["language": Example(value: "Swift")]
-            model.pond.setCodable(.testValue, value: values)
-
-            let examples = try XCTUnwrap(model.pond.getCodable(.testValue, type: [String: Example].self))
-            XCTAssertEqual(examples["language"], Example(value: "Swift"))
+            ViewModel()
         }
+
+        let values = ["language": Example(value: "Swift")]
+        model.pond.setCodable(.testValue, value: values)
+
+        let examples = try XCTUnwrap(model.pond.getCodable(.testValue, type: [String: Example].self))
+        XCTAssertEqual(examples["language"], Example(value: "Swift"))
     }
 }
 

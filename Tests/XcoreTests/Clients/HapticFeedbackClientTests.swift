@@ -9,17 +9,18 @@ import XCTest
 
 final class HapticFeedbackClientTests: TestCase {
     func testDefault() {
-        let viewModel = ViewModel()
         var triggeredFeedback: HapticFeedbackClient.Style?
 
-        DependencyValues.withValues {
+        let viewModel = withDependencies {
             $0.hapticFeedback = .init(trigger: { style in
                 triggeredFeedback = style
             })
         } operation: {
-            viewModel.triggerSelectionFeedback()
-            XCTAssertEqual(triggeredFeedback, .selection)
+            ViewModel()
         }
+
+        viewModel.triggerSelectionFeedback()
+        XCTAssertEqual(triggeredFeedback, .selection)
     }
 }
 
