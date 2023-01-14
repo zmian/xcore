@@ -320,8 +320,8 @@ extension Button<Never> {
                         .padding(.leading, .s4)
                 }
 
-                Button<XStack>(action: action) {
-                    XStack(title, systemImage: .chevronDown)
+                Button<XLabeledContent>(action: action) {
+                    XLabeledContent(title, systemImage: .chevronDown)
                 }
                 .buttonStyle(.secondary)
             }

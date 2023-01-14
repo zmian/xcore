@@ -6,21 +6,21 @@
 
 import SwiftUI
 
-/// An enumeration that defines dimming behavior of title and value of the
-/// stack.
-public enum XStackDimContent {
-    /// No changes to the title nor value text foreground color.
+/// An enumeration that defines dimming behavior for the label and content of
+/// the labeled content.
+public enum XLabeledContentDimContent {
+    /// No changes to the label nor content text foreground style.
     case none
 
-    /// Changes title's foreground color to secondary.
-    case title
+    /// Changes label's foreground style to secondary.
+    case label
 
-    /// Changes value's foreground color to secondary.
+    /// Changes content's value foreground style to secondary.
     case value
 }
 
 /// An option set that defines content traits of the stack.
-public struct XStackContentTraits: OptionSet {
+public struct XLabeledContentContentTraits: OptionSet {
     public let rawValue: Int
 
     public init(rawValue: Int) {
@@ -39,23 +39,23 @@ public struct XStackContentTraits: OptionSet {
 
 // MARK: - Default Style
 
-struct DefaultXStackStyle: XStackStyle {
+struct DefaultXLabeledContentStyle: XLabeledContentStyle {
     @Environment(\.theme) private var theme
-    var traits: XStackContentTraits = .none
-    var dim: XStackDimContent = .none
+    var traits: XLabeledContentContentTraits = .none
+    var dim: XLabeledContentDimContent = .none
     var alignment: VerticalAlignment = .center
     var spacing: CGFloat? = .interItemHSpacing
 
     func makeBody(configuration: Self.Configuration) -> some View {
         HStack(alignment: alignment, spacing: configuration.isSingleChild ? 0 : spacing) {
-            configuration.title
+            configuration.label
                 .unwrap(titleForegroundColor) {
                     $0.foregroundColor($1)
                 }
 
             Spacer(minLength: 0)
 
-            configuration.value
+            configuration.content
                 .multilineTextAlignment(.trailing)
                 .unwrap(valueForegroundColor) {
                     $0.foregroundColor($1)
@@ -74,7 +74,7 @@ struct DefaultXStackStyle: XStackStyle {
     }
 
     private var titleForegroundColor: Color? {
-        dim == .title ? theme.textSecondaryColor : nil
+        dim == .label ? theme.textSecondaryColor : nil
     }
 
     private var valueForegroundColor: Color? {
