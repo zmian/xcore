@@ -6,13 +6,13 @@
 
 import SwiftUI
 
-struct XStackView: View {
+struct XLabeledContentView: View {
     @Environment(\.theme) private var theme
     @State private var isPresented = false
 
     var body: some View {
         VStack {
-            XStack("Apple", subtitle: "AAPL") {
+            XLabeledContent("Apple", subtitle: "AAPL") {
                 Button {
                     isPresented = true
                 } label: {
@@ -28,7 +28,7 @@ struct XStackView: View {
             }
 
             List {
-                XStack {
+                XLabeledContent {
                     Text(
                         """
                         Apple Inc. is an American multinational technology company that specializes in \
@@ -40,21 +40,21 @@ struct XStackView: View {
                     .multilineTextAlignment(.trailing)
                 }
 
-                XStack("Language", value: "The Swift Programing Language by Apple")
-                    .xstackStyle(alignment: .firstTextBaseline)
+                XLabeledContent("Language", value: "The Swift Programing Language by Apple")
+                    .xlabeledContentStyle(alignment: .firstTextBaseline)
 
-                XStack("Version")
+                XLabeledContent("Version")
 
-                XStack("Version", value: Bundle.main.versionBuildNumber)
-                    .xstackStyle(dim: .value)
+                XLabeledContent("Version", value: Bundle.main.versionBuildNumber)
+                    .xlabeledContentStyle(dim: .value)
 
-                XStack("First Name", value: "Sam")
-                    .xstackStyle(dim: .title)
+                XLabeledContent("First Name", value: "Sam")
+                    .xlabeledContentStyle(dim: .label)
 
-                XStack("Price", money: 10)
+                XLabeledContent("Price", money: 10)
                     .foregroundColor(theme.positiveSentimentColor)
 
-                XStack("Quantity", value: 1000)
+                XLabeledContent("Quantity", value: 1000)
                     .foregroundColor(theme.textSecondaryColor)
 
                 favorites
@@ -66,20 +66,20 @@ struct XStackView: View {
 
     @ViewBuilder
     private var favorites: some View {
-        XStack("Favorite") {
+        XLabeledContent("Favorite") {
             Image(system: .star)
         }
 
-        XStack("Favorite", value: Image(system: .star))
+        XLabeledContent("Favorite", value: Image(system: .star))
 
-        XStack("Favorite", systemImage: .star)
+        XLabeledContent("Favorite", systemImage: .star)
 
-        XStack("Favorite", image: .blueJay)
+        XLabeledContent("Favorite", image: .blueJay)
     }
 
     @ViewBuilder
     private var complexView: some View {
-        XStack(image: Image(system: .docOnDoc)) {
+        XLabeledContent(image: Image(system: .docOnDoc)) {
             VStack(alignment: .leading) {
                 Text("Apple")
                 Text("AAPL")
@@ -88,7 +88,7 @@ struct XStackView: View {
             }
         }
 
-        XStack(systemImage: .docOnDoc) {
+        XLabeledContent(systemImage: .docOnDoc) {
             VStack(alignment: .leading) {
                 Text("Apple")
                 Text("AAPL")
@@ -97,19 +97,19 @@ struct XStackView: View {
             }
         }
 
-        XStack("Apple", subtitle: "AAPL") {
+        XLabeledContent("Apple", subtitle: "AAPL") {
             Image(system: .docOnDoc)
         }
 
-        XStack("Apple", subtitle: "AAPL", value: Image(system: .docOnDoc))
+        XLabeledContent("Apple", subtitle: "AAPL", value: Image(system: .docOnDoc))
     }
 }
 
 // MARK: - Previews
 
-struct XStackView_Previews: PreviewProvider {
+struct XLabeledContentView_Previews: PreviewProvider {
     static var previews: some View {
-        XStackView()
+        XLabeledContentView()
             .embedInNavigation()
     }
 }

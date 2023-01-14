@@ -53,7 +53,7 @@ extension Menu: CaseIterable {
         buttons,
         capsules,
         money,
-        xstack,
+        labeledContent,
         popups,
         textFields,
         activitySheet,
@@ -85,9 +85,9 @@ extension Menu {
         content: MoneyView()
     )
 
-    private static let xstack = Self(
-        title: "XStack",
-        content: XStackView()
+    private static let labeledContent = Self(
+        title: "XLabeledContent",
+        content: XLabeledContentView()
     )
 
     private static let popups = Self(

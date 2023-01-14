@@ -12,34 +12,34 @@ struct MoneyView: View {
 
     var body: some View {
         List {
-            XStack("Default", value: Money(amount))
+            XLabeledContent("Default", value: Money(amount))
 
-            XStack("Default Large Font") {
+            XLabeledContent("Default Large Font") {
                 Money(-amount)
                     .font(.app(.largeTitle))
             }
 
-            XStack("Superscript", subtitle: "Currency Symbol") {
+            XLabeledContent("Superscript", subtitle: "Currency Symbol") {
                 Money(amount)
                     .font(.app(.largeTitle).currencySymbolSuperscript())
             }
 
-            XStack("Superscript", subtitle: "Minor Unit") {
+            XLabeledContent("Superscript", subtitle: "Minor Unit") {
                 Money(amount)
                     .font(.superscript(.largeTitle))
             }
 
-            XStack("Superscript", subtitle: "Minor Unit & Currency Symbol") {
+            XLabeledContent("Superscript", subtitle: "Minor Unit & Currency Symbol") {
                 Money(amount)
                     .font(.superscript(.largeTitle).currencySymbolSuperscript())
             }
 
-            XStack("Superscript", subtitle: "Currency Symbol") {
+            XLabeledContent("Superscript", subtitle: "Currency Symbol") {
                 Money(amount)
                     .font(.app(.jumbo3).currencySymbolSuperscript())
             }
 
-            XStack("Colored") {
+            XLabeledContent("Colored") {
                 HStack {
                     Money(amount)
                         .color(color)
@@ -52,12 +52,12 @@ struct MoneyView: View {
                 }
             }
 
-            XStack("BTC") {
+            XLabeledContent("BTC") {
                 Money(crypto)
                     .currencySymbol("BTC", position: .suffix)
             }
 
-            XStack("Format") {
+            XLabeledContent("Format") {
                 Text(
                     Money(amount)
                         .color(color)
