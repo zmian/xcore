@@ -16,7 +16,6 @@ public struct WebView: View {
 
     public var body: some View {
         Representable(configuration: configuration)
-            .background()
     }
 }
 
