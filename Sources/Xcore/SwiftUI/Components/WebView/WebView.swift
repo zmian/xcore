@@ -45,19 +45,10 @@ extension WebView {
                 }
 
                 // 2. Set up cookies
-                configuration.cookies.forEach {
-                    wkConfig.websiteDataStore.httpCookieStore.setCookie($0)
-                }
+                injectCookies(to: wkConfig.websiteDataStore)
 
                 // 3. Set up user scripts
-                configuration.localStorageItems.forEach { key, value in
-                    let script = WKUserScript(
-                        source: "window.localStorage.setItem(\"\(key)\", \"\(value)\");",
-                        injectionTime: .atDocumentStart,
-                        forMainFrameOnly: true
-                    )
-                    wkConfig.userContentController.addUserScript(script)
-                }
+                injectLocalStorageItems(to: wkConfig.userContentController)
             }
 
             return WKWebView(frame: .zero, configuration: webkitConfiguration).apply {
@@ -70,12 +61,34 @@ extension WebView {
         }
 
         func updateUIView(_ webView: WKWebView, context: Context) {
+            injectCookies(to: webView.configuration.websiteDataStore)
+            injectLocalStorageItems(to: webView.configuration.userContentController)
+
             let request = URLRequest(
                 url: configuration.url,
                 cachePolicy: configuration.cachePolicy,
                 timeoutInterval: configuration.timeoutInterval
             )
             webView.load(request)
+        }
+
+        // MARK: - Private
+
+        private func injectCookies(to dataStore: WKWebsiteDataStore) {
+            configuration.cookies.forEach {
+                dataStore.httpCookieStore.setCookie($0)
+            }
+        }
+
+        private func injectLocalStorageItems(to userContentController: WKUserContentController) {
+            configuration.localStorageItems.forEach { key, value in
+                let script = WKUserScript(
+                    source: "window.localStorage.setItem(\"\(key)\", \"\(value)\");",
+                    injectionTime: .atDocumentStart,
+                    forMainFrameOnly: true
+                )
+                userContentController.addUserScript(script)
+            }
         }
     }
 }
