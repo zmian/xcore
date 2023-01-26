@@ -8,10 +8,10 @@ import SwiftUI
 import WebKit
 
 public struct WebView: View {
-    private let configuration: Configuration
+    @State private var configuration: Configuration
 
     public init(configuration: Configuration) {
-        self.configuration = configuration
+        self._configuration = .init(initialValue: configuration)
     }
 
     public var body: some View {
@@ -35,20 +35,7 @@ extension WebView {
 
         func makeUIView(context: Context) -> WKWebView {
             let webkitConfiguration = WKWebViewConfiguration().apply { wkConfig in
-                // 1. Set up message handlers
-                configuration.messageHandlers.forEach { messageHandler in
-                    wkConfig.userContentController.addScriptMessageHandler(
-                        context.coordinator,
-                        contentWorld: .page,
-                        name: messageHandler.name
-                    )
-                }
-
-                // 2. Set up cookies
-                injectCookies(to: wkConfig.websiteDataStore)
-
-                // 3. Set up user scripts
-                injectLocalStorageItems(to: wkConfig.userContentController)
+                updateConfiguration(wkConfig, context: context)
             }
 
             return WKWebView(frame: .zero, configuration: webkitConfiguration).apply {
@@ -61,8 +48,7 @@ extension WebView {
         }
 
         func updateUIView(_ webView: WKWebView, context: Context) {
-            injectCookies(to: webView.configuration.websiteDataStore)
-            injectLocalStorageItems(to: webView.configuration.userContentController)
+            updateConfiguration(webView.configuration, context: context)
 
             let request = URLRequest(
                 url: configuration.url,
@@ -72,22 +58,33 @@ extension WebView {
             webView.load(request)
         }
 
-        // MARK: - Private
+        private func updateConfiguration(_ wkConfig: WKWebViewConfiguration, context: Context) {
+            // Before re-injecting any script message handler, we need to ensure to remove
+            // any existing ones to prevent crashes.
+            wkConfig.userContentController.removeAllScriptMessageHandlers()
 
-        private func injectCookies(to dataStore: WKWebsiteDataStore) {
-            configuration.cookies.forEach {
-                dataStore.httpCookieStore.setCookie($0)
+            // 1. Set up message handlers
+            configuration.messageHandlers.forEach { messageHandler in
+                wkConfig.userContentController.addScriptMessageHandler(
+                    context.coordinator,
+                    contentWorld: .page,
+                    name: messageHandler.name
+                )
             }
-        }
 
-        private func injectLocalStorageItems(to userContentController: WKUserContentController) {
+            // 2. Set up cookies
+            configuration.cookies.forEach {
+                wkConfig.websiteDataStore.httpCookieStore.setCookie($0)
+            }
+
+            // 3. Set up user scripts
             configuration.localStorageItems.forEach { key, value in
                 let script = WKUserScript(
                     source: "window.localStorage.setItem(\"\(key)\", \"\(value)\");",
                     injectionTime: .atDocumentStart,
                     forMainFrameOnly: true
                 )
-                userContentController.addUserScript(script)
+                wkConfig.userContentController.addUserScript(script)
             }
         }
     }
