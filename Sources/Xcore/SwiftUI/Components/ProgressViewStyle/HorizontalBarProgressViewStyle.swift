@@ -22,11 +22,12 @@ public struct HorizontalBarProgressViewStyle: ProgressViewStyle {
 
                     ZStack(alignment: .leading) {
                         Capsule()
-                            .foregroundColor(.accentColor.opacity(0.3))
+                            .foregroundStyle(.tint)
+                            .opacity(0.3)
 
                         Capsule()
                             .frame(width: width * CGFloat(progress), alignment: .leading)
-                            .foregroundColor(.accentColor.opacity(0.9))
+                            .foregroundStyle(.tint)
                     }
                     .frame(height: height ?? 4)
                 }
@@ -37,6 +38,8 @@ public struct HorizontalBarProgressViewStyle: ProgressViewStyle {
     }
 }
 
+// MARK: - Previews
+
 struct HorizontalBarProgressViewStyle_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -44,7 +47,7 @@ struct HorizontalBarProgressViewStyle_Previews: PreviewProvider {
                 .colorScheme(.dark)
 
             ProgressView(value: 0.5)
-                .accentColor(.green)
+                .tint(.green)
 
             ProgressView(value: 0.8)
                 .progressViewStyle(.horizontalBar)
@@ -54,11 +57,11 @@ struct HorizontalBarProgressViewStyle_Previews: PreviewProvider {
 
             ProgressView(value: 1.0)
                 .progressViewStyle(.horizontalBar)
-                .accentColor(.yellow)
+                .tint(.yellow)
 
             ProgressView(value: 0.8)
                 .progressViewStyle(.horizontalBar)
-                .accentColor(.green)
+                .tint(.green)
         }
         .padding(20)
         .background(.black)

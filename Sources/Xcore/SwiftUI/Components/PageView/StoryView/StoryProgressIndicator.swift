@@ -18,10 +18,12 @@ public struct StoryProgressIndicator: View {
     public var body: some View {
         ProgressView(value: progress)
             .progressViewStyle(.horizontalBar(height: 2))
-            .accentColor(color)
+            .tint(color)
             .animation(.linear, value: progress)
     }
 }
+
+// MARK: - Previews
 
 struct StoryProgressIndicator_Previews: PreviewProvider {
     static var previews: some View {

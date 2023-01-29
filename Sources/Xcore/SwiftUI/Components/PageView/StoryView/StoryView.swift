@@ -10,7 +10,7 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
     @Environment(\.storyProgressIndicatorInsets) private var insets
     @Environment(\.theme) private var theme
     @Dependency(\.appPhase) private var appPhase
-    @ObservedObject private var storyTimer: StoryTimer
+    @StateObject private var storyTimer: StoryTimer
     private let pages: [Page]
     private let pauseWhenInactive: Bool
     private let content: (Page) -> Content
@@ -18,31 +18,20 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
 
     public var body: some View {
         ZStack(alignment: .top) {
+            let page = pages[Int(storyTimer.progress)]
+
             // Background
             if Background.self != Never.self {
-                background(pages[Int(storyTimer.progress)])
+                background(page)
                     .frame(maxWidth: .infinity)
                     .ignoresSafeArea()
             }
 
-            // Tap to advance or rewind for accessibility. Following the Instagram approach.
-            HStack {
-                accessibilityButton(isLeft: true)
-                Spacer()
-                accessibilityButton(isLeft: false)
-            }
-            .padding(.defaultSpacing)
-            .frame(alignment: .center)
-
             // Tap to advance or rewind
-            HStack(spacing: 0) {
-                advanceView(isLeft: true)
-                advanceView(isLeft: false)
-            }
-            .ignoresSafeArea()
+            advanceButtons()
 
             // Content
-            content(pages[Int(storyTimer.progress)])
+            content(page)
                 .frame(maxWidth: .infinity)
 
             // Progress Indicator
@@ -69,32 +58,39 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
             ForEach(0..<pages.count, id: \.self) { index in
                 StoryProgressIndicator(progress: storyTimer.progress(for: index))
             }
-            .accessibilityHidden(true)
         }
         .padding(insets)
+        .accessibilityHidden(true)
     }
 
+    /// A closure invoked on every cycle completion.
+    ///
+    /// - Parameter callback: The block to execute with a parameter indicating
+    ///   remaining number of cycles.
+    public func onCycleComplete(
+        _ callback: @escaping (_ remainingCycles: Count) -> Void
+    ) -> Self {
+        storyTimer.onCycleComplete = callback
+        return self
+    }
+}
+
+// MARK: - Advancing Page
+
+extension StoryView {
+    /// Tap left and right edges to rewind or advance a page.
     @ViewBuilder
-    private func accessibilityButton(isLeft: Bool) -> some View {
-        if UIAccessibility.isVoiceOverRunning {
-            VStack {
-                Spacer()
-                Image(system: isLeft ? .arrowLeftCircleFill : .arrowRightCircleFill)
-                    .resizable()
-                    .frame(36)
-                    .foregroundColor(theme.backgroundColor)
-                    .onTap {
-                        storyTimer.advance(by: isLeft ? -1 : 1)
-                        UIAccessibility.post(notification: .screenChanged, argument: nil)
-                        storyTimer.resume()
-                    }
-                    .accessibilityLabel(isLeft ? "Previous story" : "Next story")
-                Spacer()
-            }
+    private func advanceButtons() -> some View {
+        accessibilityAdvanceButtons()
+
+        HStack(spacing: 0) {
+            advanceButton(isLeft: true)
+            advanceButton(isLeft: false)
         }
+        .ignoresSafeArea()
     }
 
-    private func advanceView(isLeft: Bool) -> some View {
+    private func advanceButton(isLeft: Bool) -> some View {
         Rectangle()
             .foregroundColor(.clear)
             .contentShape(Rectangle())
@@ -111,16 +107,42 @@ public struct StoryView<Page, Content, Background>: View where Page: Identifiabl
                 }
             }
     }
+}
 
-    /// A closure invoked on every cycle completion.
-    ///
-    /// - Parameter callback: The block to execute with a parameter indicating
-    ///   remaining number of cycles.
-    public func onCycleComplete(
-        _ callback: @escaping (_ remainingCycles: Count) -> Void
-    ) -> Self {
-        storyTimer.onCycleComplete = callback
-        return self
+// MARK: - Accessibility Buttons
+
+extension StoryView {
+    /// Adds left and right buttons to rewind or advance a page when VoiceOver is
+    /// enabled. Following the Instagram approach of navigating stories during
+    /// VoiceOver.
+    @ViewBuilder
+    private func accessibilityAdvanceButtons() -> some View {
+        if UIAccessibility.isVoiceOverRunning {
+            HStack {
+                accessibilityAdvanceButton(isLeft: true)
+                Spacer()
+                accessibilityAdvanceButton(isLeft: false)
+            }
+            .padding(.defaultSpacing)
+            .frame(alignment: .center)
+        }
+    }
+
+    private func accessibilityAdvanceButton(isLeft: Bool) -> some View {
+        VStack {
+            Spacer()
+            Image(system: isLeft ? .arrowLeftCircleFill : .arrowRightCircleFill)
+                .resizable()
+                .frame(36)
+                .foregroundColor(theme.backgroundColor)
+                .onTap {
+                    storyTimer.advance(by: isLeft ? -1 : 1)
+                    UIAccessibility.post(notification: .screenChanged, argument: nil)
+                    storyTimer.resume()
+                }
+                .accessibilityLabel(isLeft ? "Previous page" : "Next page")
+            Spacer()
+        }
     }
 }
 
@@ -135,32 +157,15 @@ extension StoryView {
         @ViewBuilder content: @escaping (Page) -> Content,
         @ViewBuilder background: @escaping (Page) -> Background
     ) {
-        self.storyTimer = .init(
+        self._storyTimer = .init(wrappedValue: .init(
             pagesCount: pages.count,
             interval: interval,
             cycle: cycle
-        )
+        ))
         self.pages = pages
         self.pauseWhenInactive = pauseWhenInactive
         self.content = content
         self.background = background
-    }
-}
-
-extension StoryView where Background == Never {
-    public init(
-        interval: TimeInterval = 4,
-        cycle: Count = .infinite,
-        pages: [Page],
-        @ViewBuilder content: @escaping (Page) -> Content
-    ) {
-        self.init(
-            interval: interval,
-            cycle: cycle,
-            pages: pages,
-            content: content,
-            background: { _ in fatalError() }
-        )
     }
 }
 
