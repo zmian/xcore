@@ -32,22 +32,22 @@ import UIKit
 public struct Configuration<Type>: Identifiable {
     public typealias ID = Identifier<Type>
     public let id: ID
-    private let _configure: (Type) -> Void
+    public let configure: (Type) -> Void
 
     public init(id: ID? = nil, _ configure: @escaping ((Type) -> Void)) {
-        self.id = id ?? "___defaultId___"
-        self._configure = configure
+        self.id = Self.makeId(id: id)
+        self.configure = configure
     }
 
     public func extend(id: ID? = nil, _ configure: @escaping ((Type) -> Void)) -> Self {
-        .init(id: id ?? self.id) { type in
+        .init(id: Self.makeId(id: id)) { type in
             self.configure(type)
             configure(type)
         }
     }
 
-    public func configure(_ type: Type) {
-        self._configure(type)
+    private static func makeId(id: ID? = nil) -> ID {
+        id ?? .init(rawValue: UUID().uuidString)
     }
 }
 
