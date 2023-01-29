@@ -6,6 +6,23 @@
 
 import SwiftUI
 
+extension StoryView where Background == Never {
+    public init(
+        interval: TimeInterval = 4,
+        cycle: Count = .infinite,
+        pages: [Page],
+        @ViewBuilder content: @escaping (Page) -> Content
+    ) {
+        self.init(
+            interval: interval,
+            cycle: cycle,
+            pages: pages,
+            content: content,
+            background: { _ in fatalError() }
+        )
+    }
+}
+
 // MARK: - Support for String based page data
 
 public struct IdentifiableString: Identifiable {

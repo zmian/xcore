@@ -56,6 +56,7 @@ extension Menu: CaseIterable {
         labeledContent,
         popups,
         textFields,
+        story,
         activitySheet,
         hapticFeedback,
         crypt
@@ -98,6 +99,11 @@ extension Menu {
     private static let textFields = Self(
         title: "TextFields",
         content: Samples.dynamicTextFieldPreviews
+    )
+
+    private static let story = Self(
+        title: "Story",
+        content: StoryPreviewView()
     )
 
     private static let activitySheet = Self(
