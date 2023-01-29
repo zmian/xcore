@@ -20,7 +20,7 @@ extension Popup {
             self.rawValue = rawValue
         }
 
-        /// TODO: Swipe to dismiss popup.
+        // TODO: Swipe to dismiss popup.
         // public static let swipe = Self(rawValue: 1 << 0)
 
         /// Tap on popup to dismiss.

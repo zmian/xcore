@@ -123,13 +123,9 @@ extension Array where Element: NSObjectProtocol {
     /// - Parameter any: An array of element types to search for in the collection.
     /// - Returns: `true` if the sequence contains an element; otherwise, `false`.
     public func contains(any elementTypes: [Element.Type]) -> Bool {
-        for element in self {
-            if elementTypes.contains(where: { element.isKind(of: $0) }) {
-                return true
-            }
+        contains { element in
+            elementTypes.contains(where: { element.isKind(of: $0) })
         }
-
-        return false
     }
 }
 
@@ -203,7 +199,7 @@ extension Array where Element: Equatable {
 }
 
 extension Array where Element: RawRepresentable {
-    /// Return an array containing all corresponding `rawValue`s of `self`.
+    /// Returns an array containing all corresponding `rawValue`s of `self`.
     public var rawValues: [Element.RawValue] {
         map(\.rawValue)
     }
