@@ -7,6 +7,9 @@
 import Foundation
 
 extension OptionSet {
+    /// Returns an empty set `[]`.
+    public static var none: Self { [] }
+
     /// Returns a Boolean value indicating whether the set has any members in common
     /// with the given set.
     ///
@@ -17,7 +20,4 @@ extension OptionSet {
     public func contains(any member: Self) -> Bool {
         !isDisjoint(with: member)
     }
-
-    /// Returns an empty set `[]`.
-    public static var none: Self { [] }
 }
