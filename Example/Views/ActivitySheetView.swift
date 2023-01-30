@@ -10,6 +10,21 @@ struct ActivitySheetView: View {
     @State private var isShowingActivitySheet = false
 
     var body: some View {
+        if #available(iOS 16.0, *) {
+            List {
+                ShareLink("Share License Agreement", item: "License Agreement...")
+                    .buttonStyle(.capsule)
+
+                ShareLink(item: "License Agreement...") {
+                    Label("Share License Agreement", systemImage: .doc)
+                }
+            }
+        } else {
+            body15
+        }
+    }
+
+    private var body15: some View {
         List {
             Button {
                 isShowingActivitySheet = true
