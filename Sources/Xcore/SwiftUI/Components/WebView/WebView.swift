@@ -7,6 +7,7 @@
 import SwiftUI
 import WebKit
 
+/// A view that displays interactive web content, such as for an in-app browser.
 public struct WebView: View {
     private let urlRequest: URLRequest
     private var messageHandler: [String: ((Any) async throws -> Any?)?] = [:]
