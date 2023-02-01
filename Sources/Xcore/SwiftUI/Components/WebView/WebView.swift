@@ -7,15 +7,56 @@
 import SwiftUI
 import WebKit
 
+/// A view that displays interactive web content, such as for an in-app browser.
 public struct WebView: View {
-    @State private var configuration: Configuration
+    private let urlRequest: URLRequest
+    private var messageHandler: [String: ((Any) async throws -> Any?)?] = [:]
+    private var localStorageItems: [String: String] = [:]
+    private var cookies: [HTTPCookie] = []
 
-    public init(configuration: Configuration) {
-        self._configuration = .init(initialValue: configuration)
+    public init(url: URL) {
+        urlRequest = .init(url: url)
+    }
+
+    public init(urlRequest: URLRequest) {
+        self.urlRequest = urlRequest
     }
 
     public var body: some View {
-        Representable(configuration: configuration)
+        Representable(
+            urlRequest: urlRequest,
+            messageHandler: messageHandler,
+            localStorageItems: localStorageItems,
+            cookies: cookies
+        )
+    }
+}
+
+// MARK: - Public API
+
+extension WebView {
+    public func onMessageHandler(name: String, handler: ((_ body: Any) async throws -> Any?)?) -> Self {
+        apply {
+            $0.messageHandler[name] = handler
+        }
+    }
+
+    public func cookies(_ cookies: [HTTPCookie]) -> Self {
+        apply {
+            $0.cookies = cookies
+        }
+    }
+
+    public func localStorageItem(_ item: String, forKey key: String) -> Self {
+        apply {
+            $0.localStorageItems[key] = item
+        }
+    }
+
+    private func apply(_ configure: (inout Self) throws -> Void) rethrows -> Self {
+        var object = self
+        try configure(&object)
+        return object
     }
 }
 
@@ -23,11 +64,10 @@ public struct WebView: View {
 
 extension WebView {
     private struct Representable: UIViewRepresentable {
-        fileprivate let configuration: Configuration
-
-        init(configuration: Configuration) {
-            self.configuration = configuration
-        }
+        fileprivate let urlRequest: URLRequest
+        fileprivate var messageHandler: [String: ((Any) async throws -> Any?)?]
+        fileprivate var localStorageItems: [String: String]
+        fileprivate var cookies: [HTTPCookie]
 
         func makeCoordinator() -> Coordinator {
             Coordinator(parent: self)
@@ -43,19 +83,12 @@ extension WebView {
                 $0.uiDelegate = context.coordinator
                 $0.allowsBackForwardNavigationGestures = true
                 $0.allowsLinkPreview = false
-                $0.customUserAgent = configuration.userAgent
             }
         }
 
         func updateUIView(_ webView: WKWebView, context: Context) {
             updateConfiguration(webView.configuration, context: context)
-
-            let request = URLRequest(
-                url: configuration.url,
-                cachePolicy: configuration.cachePolicy,
-                timeoutInterval: configuration.timeoutInterval
-            )
-            webView.load(request)
+            webView.load(urlRequest)
         }
 
         private func updateConfiguration(_ wkConfig: WKWebViewConfiguration, context: Context) {
@@ -64,21 +97,21 @@ extension WebView {
             wkConfig.userContentController.removeAllScriptMessageHandlers()
 
             // 1. Set up message handlers
-            configuration.messageHandlers.forEach { messageHandler in
+            messageHandler.forEach { name, _ in
                 wkConfig.userContentController.addScriptMessageHandler(
                     context.coordinator,
                     contentWorld: .page,
-                    name: messageHandler.name
+                    name: name
                 )
             }
 
             // 2. Set up cookies
-            configuration.cookies.forEach {
+            cookies.forEach {
                 wkConfig.websiteDataStore.httpCookieStore.setCookie($0)
             }
 
             // 3. Set up user scripts
-            configuration.localStorageItems.forEach { key, value in
+            localStorageItems.forEach { key, value in
                 let script = WKUserScript(
                     source: "window.localStorage.setItem(\"\(key)\", \"\(value)\");",
                     injectionTime: .atDocumentStart,
@@ -96,7 +129,7 @@ extension WebView {
     private final class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandlerWithReply {
         private var didAddLoader = false
         private let loader = UIActivityIndicatorView(style: .medium)
-        let parent: Representable
+        private let parent: Representable
 
         init(parent: Representable) {
             self.parent = parent
@@ -114,7 +147,7 @@ extension WebView {
             #if DEBUG
             // Dump local storage keys and values when the current value is different than
             // the expected value.
-            parent.configuration.localStorageItems.forEach { key, expectedValue in
+            parent.localStorageItems.forEach { key, expectedValue in
                 webView.evaluateJavaScript("localStorage.getItem(\"\(key)\")") { (value, error) in
                     if let value = value as? String {
                         if expectedValue != value {
@@ -145,7 +178,7 @@ extension WebView {
             decisionHandler(.allow)
         }
 
-        func showLoader(_ show: Bool, _ view: WKWebView) {
+        private func showLoader(_ show: Bool, _ view: WKWebView) {
             if !didAddLoader {
                 view.addSubview(loader)
                 loader.translatesAutoresizingMaskIntoConstraints = false
@@ -159,19 +192,19 @@ extension WebView {
             loader.isHidden = !show
         }
 
+        @MainActor
         func userContentController(
             _ userContentController: WKUserContentController,
             didReceive message: WKScriptMessage,
             replyHandler: @escaping (Any?, String?) -> Void
         ) {
-            guard let messageHandler = parent.configuration.messageHandlers.first(where: { $0.name == message.name }) else {
+            guard let messageHandler = parent.messageHandler[message.name] else {
                 return replyHandler(nil, nil)
             }
 
-            messageHandler.send(.init(
-                body: message.body,
-                reply: .init(handler: replyHandler)
-            ))
+            Task {
+                replyHandler(try? await messageHandler?(message.body), nil)
+            }
         }
 
         // MARK: - Dev environment support
