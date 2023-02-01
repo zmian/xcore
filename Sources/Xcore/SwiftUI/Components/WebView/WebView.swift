@@ -7,7 +7,7 @@
 import SwiftUI
 import WebKit
 
-// MARK: Public Interface
+// MARK: - Public Interface
 
 public struct WebView: UIViewRepresentable {
     private var urlRequest: URLRequest
@@ -24,7 +24,7 @@ public struct WebView: UIViewRepresentable {
     }
 }
 
-// MARK: Extensions
+// MARK: - Extensions
 
 extension WebView {
     public func onMessageHandler(name: String, handler: ((_ body: Any) async throws -> Any?)?) -> WebView {
