@@ -7,85 +7,97 @@
 import SwiftUI
 import WebKit
 
-public struct WebView: View {
-    @State private var configuration: Configuration
+// MARK: Public Interface
 
-    public init(configuration: Configuration) {
-        self._configuration = .init(initialValue: configuration)
+public struct WebView: UIViewRepresentable {
+    private var urlRequest: URLRequest
+    private var messageHandler: [String: ((Any) async throws -> Any?)?] = [:]
+    private var localStorageItems: [String: String] = [:]
+    private var cookies: [HTTPCookie] = []
+
+    public init(url: URL) {
+        urlRequest = .init(url: url)
     }
 
-    public var body: some View {
-        Representable(configuration: configuration)
+    public init(urlRequest: URLRequest) {
+        self.urlRequest = urlRequest
     }
 }
 
-// MARK: - Representable
+// MARK: Extensions
 
 extension WebView {
-    private struct Representable: UIViewRepresentable {
-        fileprivate let configuration: Configuration
+    public func onMessageHandler(name: String, handler: ((_ body: Any) async throws -> Any?)?) -> WebView {
+        var copy = self
+        copy.messageHandler[name] = handler
+        return copy
+    }
 
-        init(configuration: Configuration) {
-            self.configuration = configuration
+    public func cookies(_ cookies: [HTTPCookie]) -> WebView {
+        var copy = self
+        copy.cookies = cookies
+        return copy
+    }
+
+    public func localStorageItem(_ item: String, forKey key: String) -> WebView {
+        var copy = self
+        copy.localStorageItems[key] = item
+        return copy
+    }
+}
+
+// MARK: - Implementation
+
+extension WebView {
+    public func makeCoordinator() -> Coordinator {
+        Coordinator(parent: self)
+    }
+
+    public func makeUIView(context: Context) -> WKWebView {
+        let webkitConfiguration = WKWebViewConfiguration().apply { wkConfig in
+            updateConfiguration(wkConfig, context: context)
         }
 
-        func makeCoordinator() -> Coordinator {
-            Coordinator(parent: self)
+        return WKWebView(frame: .zero, configuration: webkitConfiguration).apply {
+            $0.navigationDelegate = context.coordinator
+            $0.uiDelegate = context.coordinator
+            $0.allowsBackForwardNavigationGestures = true
+            $0.allowsLinkPreview = false
         }
+    }
 
-        func makeUIView(context: Context) -> WKWebView {
-            let webkitConfiguration = WKWebViewConfiguration().apply { wkConfig in
-                updateConfiguration(wkConfig, context: context)
-            }
+    public func updateUIView(_ webView: WKWebView, context: Context) {
+        updateConfiguration(webView.configuration, context: context)
+        webView.load(urlRequest)
+    }
 
-            return WKWebView(frame: .zero, configuration: webkitConfiguration).apply {
-                $0.navigationDelegate = context.coordinator
-                $0.uiDelegate = context.coordinator
-                $0.allowsBackForwardNavigationGestures = true
-                $0.allowsLinkPreview = false
-                $0.customUserAgent = configuration.userAgent
-            }
-        }
+    private func updateConfiguration(_ wkConfig: WKWebViewConfiguration, context: Context) {
+        // Before re-injecting any script message handler, we need to ensure to remove
+        // any existing ones to prevent crashes.
+        wkConfig.userContentController.removeAllScriptMessageHandlers()
 
-        func updateUIView(_ webView: WKWebView, context: Context) {
-            updateConfiguration(webView.configuration, context: context)
-
-            let request = URLRequest(
-                url: configuration.url,
-                cachePolicy: configuration.cachePolicy,
-                timeoutInterval: configuration.timeoutInterval
+        // 1. Set up message handlers
+        messageHandler.forEach { key, value in
+            wkConfig.userContentController.addScriptMessageHandler(
+                context.coordinator,
+                contentWorld: .page,
+                name: key
             )
-            webView.load(request)
         }
 
-        private func updateConfiguration(_ wkConfig: WKWebViewConfiguration, context: Context) {
-            // Before re-injecting any script message handler, we need to ensure to remove
-            // any existing ones to prevent crashes.
-            wkConfig.userContentController.removeAllScriptMessageHandlers()
+        // 2. Set up cookies
+        cookies.forEach {
+            wkConfig.websiteDataStore.httpCookieStore.setCookie($0)
+        }
 
-            // 1. Set up message handlers
-            configuration.messageHandlers.forEach { messageHandler in
-                wkConfig.userContentController.addScriptMessageHandler(
-                    context.coordinator,
-                    contentWorld: .page,
-                    name: messageHandler.name
-                )
-            }
-
-            // 2. Set up cookies
-            configuration.cookies.forEach {
-                wkConfig.websiteDataStore.httpCookieStore.setCookie($0)
-            }
-
-            // 3. Set up user scripts
-            configuration.localStorageItems.forEach { key, value in
-                let script = WKUserScript(
-                    source: "window.localStorage.setItem(\"\(key)\", \"\(value)\");",
-                    injectionTime: .atDocumentStart,
-                    forMainFrameOnly: true
-                )
-                wkConfig.userContentController.addUserScript(script)
-            }
+        // 3. Set up user scripts
+        localStorageItems.forEach { key, value in
+            let script = WKUserScript(
+                source: "window.localStorage.setItem(\"\(key)\", \"\(value)\");",
+                injectionTime: .atDocumentStart,
+                forMainFrameOnly: true
+            )
+            wkConfig.userContentController.addUserScript(script)
         }
     }
 }
@@ -93,28 +105,28 @@ extension WebView {
 // MARK: - Coordinator
 
 extension WebView {
-    private final class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandlerWithReply {
+    public final class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandlerWithReply {
         private var didAddLoader = false
         private let loader = UIActivityIndicatorView(style: .medium)
-        let parent: Representable
+        let parent: WebView
 
-        init(parent: Representable) {
+        init(parent: WebView) {
             self.parent = parent
         }
 
-        func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        public func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
             showLoader(false, webView)
         }
 
-        func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        public func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
             showLoader(true, webView)
         }
 
-        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
             #if DEBUG
             // Dump local storage keys and values when the current value is different than
             // the expected value.
-            parent.configuration.localStorageItems.forEach { key, expectedValue in
+            parent.localStorageItems.forEach { key, expectedValue in
                 webView.evaluateJavaScript("localStorage.getItem(\"\(key)\")") { (value, error) in
                     if let value = value as? String {
                         if expectedValue != value {
@@ -132,15 +144,15 @@ extension WebView {
             showLoader(false, webView)
         }
 
-        func webView(_ webView: WKWebView, didFail navigation: WKNavigation, withError error: Error) {
+        public func webView(_ webView: WKWebView, didFail navigation: WKNavigation, withError error: Error) {
             showLoader(false, webView)
         }
 
-        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation) {
+        public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation) {
             showLoader(true, webView)
         }
 
-        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
             // TODO: Can add restrtiction based on urls from configuration
             decisionHandler(.allow)
         }
@@ -159,25 +171,24 @@ extension WebView {
             loader.isHidden = !show
         }
 
-        func userContentController(
+        @MainActor public func userContentController(
             _ userContentController: WKUserContentController,
             didReceive message: WKScriptMessage,
             replyHandler: @escaping (Any?, String?) -> Void
         ) {
-            guard let messageHandler = parent.configuration.messageHandlers.first(where: { $0.name == message.name }) else {
+            guard let messageHandler = parent.messageHandler[message.name] else {
                 return replyHandler(nil, nil)
             }
 
-            messageHandler.send(.init(
-                body: message.body,
-                reply: .init(handler: replyHandler)
-            ))
+            Task {
+                replyHandler(try? await messageHandler?(message.body), nil)
+            }
         }
 
         // MARK: - Dev environment support
 
         #if DEBUG
-        func webView(_ webView: WKWebView, respondTo challenge: URLAuthenticationChallenge) async -> (URLSession.AuthChallengeDisposition, URLCredential?) {
+        public func webView(_ webView: WKWebView, respondTo challenge: URLAuthenticationChallenge) async -> (URLSession.AuthChallengeDisposition, URLCredential?) {
             // Enable accepting untrusted urls in debug mode only.
             guard let trust = challenge.protectionSpace.serverTrust else {
                 return (.performDefaultHandling, nil)
