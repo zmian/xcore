@@ -19,13 +19,19 @@ extension Result where Failure == AppError {
     /// Any thrown error is attempted to cast to app error; otherwise
     /// `AppError.general` failure value is used.
     ///
-    /// - Parameter body: An async throwing closure to evaluate.
+    /// - Parameters:
+    ///     - body: An async throwing closure to evaluate.
+    ///     - fallbackError: The error to throw if `body` throws a non-AppError
+    ///       instance.
     @_transparent
-    public init(catching body: @Sendable () async throws -> Success) async {
+    public init(
+        fallback fallbackError: @autoclosure () -> AppError = .general,
+        catching body: @Sendable () async throws -> Success
+    ) async {
         do {
             self = .success(try await body())
         } catch {
-            self = .failure((error as? AppError) ?? .general)
+            self = .failure((error as? AppError) ?? fallbackError())
         }
     }
 }
@@ -37,14 +43,20 @@ extension Result<Xcore.Empty, AppError> {
     /// Any thrown error is attempted to cast to app error; otherwise
     /// `AppError.general` failure value is used.
     ///
-    /// - Parameter body: An async throwing closure to evaluate.
+    /// - Parameters:
+    ///     - body: An async throwing closure to evaluate.
+    ///     - fallbackError: The error to throw if `body` throws a non-AppError
+    ///       instance.
     @_transparent
-    public init(catching body: @Sendable () async throws -> Void) async {
+    public init(
+        fallback fallbackError: @autoclosure () -> AppError = .general,
+        catching body: @Sendable () async throws -> Void
+    ) async {
         do {
             _ = try await body()
             self = .success
         } catch {
-            self = .failure((error as? AppError) ?? .general)
+            self = .failure((error as? AppError) ?? fallbackError())
         }
     }
 }
