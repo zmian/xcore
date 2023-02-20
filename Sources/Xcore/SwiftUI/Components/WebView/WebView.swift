@@ -13,6 +13,7 @@ public struct WebView: View {
     private var messageHandler: [String: ((Any) async throws -> Any?)?] = [:]
     private var localStorageItems: [String: String] = [:]
     private var cookies: [HTTPCookie] = []
+    private var policyDecision: ((WKWebView, WKNavigationAction) -> WKNavigationActionPolicy) = { _, _ in .allow }
 
     public init(url: URL) {
         urlRequest = .init(url: url)
@@ -27,7 +28,8 @@ public struct WebView: View {
             urlRequest: urlRequest,
             messageHandler: messageHandler,
             localStorageItems: localStorageItems,
-            cookies: cookies
+            cookies: cookies,
+            policyDecision: policyDecision
         )
     }
 }
@@ -53,6 +55,12 @@ extension WebView {
         }
     }
 
+    public func policyDecision(_ decision:  @escaping ((WKWebView, WKNavigationAction) -> WKNavigationActionPolicy)) -> Self {
+        apply {
+            $0.policyDecision = decision
+        }
+    }
+
     private func apply(_ configure: (inout Self) throws -> Void) rethrows -> Self {
         var object = self
         try configure(&object)
@@ -68,6 +76,7 @@ extension WebView {
         fileprivate var messageHandler: [String: ((Any) async throws -> Any?)?]
         fileprivate var localStorageItems: [String: String]
         fileprivate var cookies: [HTTPCookie]
+        fileprivate var policyDecision: ((WKWebView, WKNavigationAction) -> WKNavigationActionPolicy)
 
         func makeCoordinator() -> Coordinator {
             Coordinator(parent: self)
@@ -174,8 +183,12 @@ extension WebView {
         }
 
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-            // TODO: Can add restrtiction based on urls from configuration
-            decisionHandler(.allow)
+            decisionHandler(parent.policyDecision(webView, navigationAction))
+        }
+
+        func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+            webView.load(navigationAction.request)
+            return nil
         }
 
         private func showLoader(_ show: Bool, _ view: WKWebView) {
