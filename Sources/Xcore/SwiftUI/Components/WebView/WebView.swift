@@ -62,7 +62,7 @@ extension WebView {
         }
     }
 
-    public func policyDecision(_ decision:  @escaping PolicyDecision) -> Self {
+    public func policyDecision(_ decision: @escaping PolicyDecision) -> Self {
         apply {
             $0.policyDecision = decision
         }
