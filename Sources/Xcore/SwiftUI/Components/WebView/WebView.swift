@@ -13,9 +13,10 @@ public struct WebView: View {
     private var messageHandler: [String: ((Any) async throws -> Any?)?] = [:]
     private var localStorageItems: [String: String] = [:]
     private var cookies: [HTTPCookie] = []
+    private var reloadFlag = false
 
     public init(url: URL) {
-        urlRequest = .init(url: url)
+        self.init(urlRequest: .init(url: url))
     }
 
     public init(urlRequest: URLRequest) {
@@ -27,7 +28,8 @@ public struct WebView: View {
             urlRequest: urlRequest,
             messageHandler: messageHandler,
             localStorageItems: localStorageItems,
-            cookies: cookies
+            cookies: cookies,
+            reloadFlag: reloadFlag
         )
     }
 }
@@ -53,6 +55,12 @@ extension WebView {
         }
     }
 
+    public func reloadOnToggle(_ value: Bool) -> Self {
+        apply {
+            $0.reloadFlag = value
+        }
+    }
+
     private func apply(_ configure: (inout Self) throws -> Void) rethrows -> Self {
         var object = self
         try configure(&object)
@@ -68,6 +76,7 @@ extension WebView {
         fileprivate var messageHandler: [String: ((Any) async throws -> Any?)?]
         fileprivate var localStorageItems: [String: String]
         fileprivate var cookies: [HTTPCookie]
+        fileprivate var reloadFlag: Bool
 
         func makeCoordinator() -> Coordinator {
             Coordinator(parent: self)
