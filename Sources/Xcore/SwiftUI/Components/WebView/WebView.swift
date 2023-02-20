@@ -9,11 +9,16 @@ import WebKit
 
 /// A view that displays interactive web content, such as for an in-app browser.
 public struct WebView: View {
+    public typealias PolicyDecision = (
+        _ webView: WKWebView,
+        _ decidePolicyForNavigationAction: WKNavigationAction
+    ) -> WKNavigationActionPolicy
+
     private let urlRequest: URLRequest
     private var messageHandler: [String: ((Any) async throws -> Any?)?] = [:]
     private var localStorageItems: [String: String] = [:]
     private var cookies: [HTTPCookie] = []
-    private var policyDecision: ((WKWebView, WKNavigationAction) -> WKNavigationActionPolicy) = { _, _ in .allow }
+    private var policyDecision: PolicyDecision = { _, _ in .allow }
 
     public init(url: URL) {
         urlRequest = .init(url: url)
@@ -55,7 +60,7 @@ extension WebView {
         }
     }
 
-    public func policyDecision(_ decision:  @escaping ((WKWebView, WKNavigationAction) -> WKNavigationActionPolicy)) -> Self {
+    public func policyDecision(_ decision:  @escaping PolicyDecision) -> Self {
         apply {
             $0.policyDecision = decision
         }
@@ -76,7 +81,7 @@ extension WebView {
         fileprivate var messageHandler: [String: ((Any) async throws -> Any?)?]
         fileprivate var localStorageItems: [String: String]
         fileprivate var cookies: [HTTPCookie]
-        fileprivate var policyDecision: ((WKWebView, WKNavigationAction) -> WKNavigationActionPolicy)
+        fileprivate var policyDecision: PolicyDecision
 
         func makeCoordinator() -> Coordinator {
             Coordinator(parent: self)
