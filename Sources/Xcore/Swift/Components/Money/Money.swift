@@ -308,14 +308,6 @@ extension Money: CustomStringConvertible {
     }
 }
 
-// MARK: - StringRepresentable
-
-extension Money: StringRepresentable {
-    public var stringSource: StringSourceType {
-        .attributedString(NSAttributedString(attributedString()))
-    }
-}
-
 // MARK: - ExpressibleByFloatLiteral
 
 extension Money: ExpressibleByFloatLiteral {

@@ -23,8 +23,8 @@ final class ReflectionTests: TestCase {
         XCTAssertEqual(typeName(of: SpacerView()), "Xcore.SpacerView")
         // Enum
         XCTAssertEqual(typeName(of: FeatureFlag.self), "Xcore.FeatureFlag")
-        XCTAssertEqual(typeName(of: StringSourceType.self), "Xcore.StringSourceType")
-        XCTAssertEqual(typeName(of: StringSourceType.string("Hello")), "Xcore.StringSourceType")
+        XCTAssertEqual(typeName(of: ImageSourceType.self), "Xcore.ImageSourceType")
+        XCTAssertEqual(typeName(of: ImageSourceType.url("Hello")), "Xcore.ImageSourceType")
         // Struct
         XCTAssertEqual(typeName(of: Version.self), "Xcore.Version")
         XCTAssertEqual(typeName(of: Version(rawValue: "1.0.0")), "Xcore.Version")
