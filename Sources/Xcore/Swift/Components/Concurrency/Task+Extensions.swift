@@ -7,6 +7,7 @@
 import SwiftUI
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+@available(iOS, introduced: 13.0, deprecated: 16, message: "Use sleep(for: .seconds()) directly.")
 extension Task<Never, Never> {
     /// Suspends the current task for at least the given duration in seconds.
     ///
