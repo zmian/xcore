@@ -24,7 +24,7 @@ final class ConfigurationTests: TestCase {
         XCTAssertEqual(config1.id, "greeting")
 
         let config2: Configuration<UILabel> = .someConfiguration
-        XCTAssertEqual(config2.id, "___defaultId___")
+        XCTAssertEqual(config2.id.rawValue, UUID(uuidString: config2.id.rawValue)?.uuidString)
     }
 
     func testEquality() {

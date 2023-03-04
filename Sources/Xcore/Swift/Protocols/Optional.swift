@@ -6,31 +6,6 @@
 
 import Foundation
 
-// MARK: - OptionalTypeMarker
-
-public protocol OptionalTypeMarker {
-    /// A Boolean property indicating whether the wrapped value is `nil`.
-    var isNil: Bool { get }
-}
-
-extension Optional: OptionalTypeMarker {
-    public var isNil: Bool {
-        switch self {
-            case .none:
-                return true
-            case .some:
-                return false
-        }
-    }
-
-    /// A Boolean property indicating whether the wrapped value is not `nil`.
-    ///
-    /// Useful in KeyPaths to allow for negation.
-    public var isNotNil: Bool {
-        !isNil
-    }
-}
-
 // MARK: - OptionalProtocol
 
 // Credit: https://stackoverflow.com/a/45462046
@@ -43,6 +18,18 @@ public protocol OptionalProtocol {
 extension Optional: OptionalProtocol {
     public var wrapped: Wrapped? {
         self
+    }
+
+    /// A Boolean property indicating whether the wrapped value is `nil`.
+    public var isNil: Bool {
+        self == nil
+    }
+
+    /// A Boolean property indicating whether the wrapped value is not `nil`.
+    ///
+    /// Useful in KeyPaths to allow for negation.
+    public var isNotNil: Bool {
+        !isNil
     }
 }
 
