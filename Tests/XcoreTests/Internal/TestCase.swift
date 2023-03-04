@@ -7,9 +7,11 @@
 import XCTest
 @testable import Xcore
 
+// swiftlint:disable:next icc_test_case_superclass
 class TestCase: XCTestCase {
     public override func setUp() {
         super.setUp()
+        FeatureFlag.resetProviders()
     }
 }
 
