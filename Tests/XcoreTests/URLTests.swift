@@ -242,4 +242,31 @@ final class URLTests: TestCase {
         XCTAssertFalse(url4.matches(domain))
         XCTAssertFalse(url5.matches(domain))
     }
+
+    func testMaskingSensitiveQueryItems() {
+        FeatureFlag.setValue(["token", "vfp"], forKey: "sensitive_url_query_parameters")
+        let url1 = URL(string: "https://example.com/magiclink?token=Jn3yk23cf23")!
+        let url2 = URL(string: "https://example.com/magiclink?token=Jn3yk23cf23")!
+        let url3 = URL(string: "https://app.example.com/magiclink?token=Jn3yk23cf23")!
+        let url4 = URL(string: "https://example.com/callback/prove?vfp=Jn3yk23cf23")!
+        let url5 = URL(string: "https://app.example.com/magiclink?vfp=Jn3yk23cf23&token=Jn3yk23cf23")!
+        let url6 = URL(string: "https://app.example.com/magiclink?token=Jn3yk23cf23&vfp=Jn3yk23cf23")!
+        let url7 = URL(string: "https://example.com/dl/trade/buy?id=20")!
+        let url8 = URL(string: "https://example.com/dl/trade/buy?id=20&token=Jn3yk2x3cf23")!
+        let url9 = URL(string: "https://example.com/buy?token=Jn3yk2x3cf23")!
+        let url10 = URL(string: "https://example.com?token=Jn3yk2x3cf23")!
+        let url11 = URL(string: "https://example.com?code=Jn3yk2x3cf23")!
+
+        XCTAssertEqual(url1.maskingSensitiveQueryItems(), URL(string: "https://example.com/magiclink?token=xxxx")!)
+        XCTAssertEqual(url2.maskingSensitiveQueryItems(), URL(string: "https://example.com/magiclink?token=xxxx")!)
+        XCTAssertEqual(url3.maskingSensitiveQueryItems(), URL(string: "https://app.example.com/magiclink?token=xxxx")!)
+        XCTAssertEqual(url4.maskingSensitiveQueryItems(), URL(string: "https://example.com/callback/prove?vfp=xxxx")!)
+        XCTAssertEqual(url5.maskingSensitiveQueryItems(), URL(string: "https://app.example.com/magiclink?vfp=xxxx&token=xxxx")!)
+        XCTAssertEqual(url6.maskingSensitiveQueryItems(), URL(string: "https://app.example.com/magiclink?token=xxxx&vfp=xxxx")!)
+        XCTAssertEqual(url7.maskingSensitiveQueryItems(), URL(string: "https://example.com/dl/trade/buy?id=20")!)
+        XCTAssertEqual(url8.maskingSensitiveQueryItems(), URL(string: "https://example.com/dl/trade/buy?id=20&token=xxxx")!)
+        XCTAssertEqual(url9.maskingSensitiveQueryItems(), URL(string: "https://example.com/buy?token=xxxx")!)
+        XCTAssertEqual(url10.maskingSensitiveQueryItems(), URL(string: "https://example.com?token=xxxx")!)
+        XCTAssertEqual(url11.maskingSensitiveQueryItems(), URL(string: "https://example.com?code=Jn3yk2x3cf23")!)
+    }
 }
