@@ -59,7 +59,6 @@ extension Mirror {
     public static func type<T>(of value: T) -> TypeInfo {
         let type = Swift.type(of: value)
         let anyType = Swift.type(of: value as Any)
-        let isCodable = anyType is Codable.Type
 
         var kind: TypeInfo.Kind {
             switch anyType {
@@ -109,38 +108,7 @@ extension Mirror {
             }
         }
 
-        return .init(kind: kind, isOptional: isOptional(value), isCodable: isCodable)
-    }
-
-    /// Returns `true` when given value is optional; otherwise, `false`.
-    ///
-    /// - Parameter value: The value for which to check if is of type ``Optional``.
-    public static func isOptional<T>(_ value: T) -> Bool {
-        value is OptionalTypeMarker || value is OptionalTypeMarker.Type
-    }
-
-    // Credit: https://stackoverflow.com/a/46362808
-    public static func isCollection<T>(_ object: T) -> Bool {
-        collectionType(object) != nil
-    }
-
-    static func collectionType<T>(_ object: T) -> KnownCollectionType? {
-        let knownCollectionsTypes = ["Set", "Array", "Dictionary"]
-        let typeString = String(describing: Swift.type(of: object))
-
-        for type in knownCollectionsTypes where typeString.contains(type) {
-            if let knownType = KnownCollectionType(rawValue: type.camelcased()) {
-                return knownType
-            }
-        }
-
-        return nil
-    }
-
-    enum KnownCollectionType: String {
-        case set
-        case array
-        case dictionary
+        return .init(kind: kind, isOptional: isOptional(value), isCodable: isCodable(value))
     }
 }
 
