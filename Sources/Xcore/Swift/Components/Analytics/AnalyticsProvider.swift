@@ -16,20 +16,38 @@ import Foundation
 /// import Segment
 ///
 /// struct SegmentAnalyticsProvider: AnalyticsProvider {
+///     private var segment: Segment.Analytics {
+///         Segment.Analytics.shared()
+///     }
+///
 ///     init(writeKey: String) {
 ///         let configuration = AnalyticsConfiguration(writeKey: writeKey).apply {
 ///             $0.trackApplicationLifecycleEvents = true
 ///             $0.trackDeepLinks = true
 ///             $0.trackPushNotifications = true
+///
+///             #if DEBUG
+///             if AppInfo.isDebuggerAttached {
+///                 $0.flushInterval = 1
+///                 Segment.Analytics.debug(true)
+///             }
+///             #endif
 ///         }
 ///         Segment.Analytics.setup(with: configuration)
+///
+///         withDelay(0.3) { [weak self] in
+///             // Delay to avoid:
+///             // Thread 1: Simultaneous accesses to 0x1107dbc18, but modification requires
+///             // exclusive access. This is a client that invokes other clients.
+///             self?.addListener()
+///         }
 ///     }
 ///
 ///     func track(_ event: AnalyticsEventProtocol) {
 ///         segment.track(event.name, properties: event.properties)
 ///     }
 ///
-///     func identify(userId: String, traits: [String: Any]) {
+///     func identify(userId: String?, traits: [String: Encodable]) {
 ///         segment.identify(userId, traits: traits)
 ///     }
 ///
@@ -38,11 +56,31 @@ import Foundation
 ///     }
 ///
 ///     func reset() {
+///         segment.flush()
 ///         segment.reset()
 ///     }
+///     
+///     private func addListener() {
+///         cancellable = appPhase.receive.sink { phase in
+///             let segment = Segment.Analytics.shared()
 ///
-///     private var segment: Segment.Analytics {
-///         Segment.Analytics.shared()
+///             switch phase {
+///                 case let .launched(launchOptions):
+///                     SEGAppboyIntegrationFactory.instance().saveLaunchOptions(launchOptions)
+///                 case let .remoteNotificationsRegistered(.success(token)):
+///                     segment.registeredForRemoteNotifications(withDeviceToken: token)
+///                 case let .remoteNotificationsRegistered(.failure(error)):
+///                     segment.failedToRegisterForRemoteNotificationsWithError(error)
+///                 case let .remoteNotificationReceived(userInfo):
+///                     segment.receivedRemoteNotification(userInfo)
+///                 case let .continueUserActivity(activity, _):
+///                     segment.continue(activity)
+///                 case let .openUrl(url, options):
+///                     segment.open(url.maskingSensitiveQueryItems(), options: options)
+///                 default:
+///                     break
+///             }
+///         }
 ///     }
 /// }
 /// ```
