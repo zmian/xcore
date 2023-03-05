@@ -7,7 +7,22 @@
 import Foundation
 import Combine
 
-public final class LiveSessionCounterClient: SessionCounterClient {
+extension SessionCounterClient {
+    /// Returns live variant of `SessionCounterClient`.
+    public static var live: Self {
+        let client = LiveSessionCounterClient()
+
+        return .init {
+            client.count
+        } increment: {
+            client.increment()
+        }
+    }
+}
+
+// MARK: - Implementation
+
+private final class LiveSessionCounterClient {
     @Dependency(\.pond) private var pond
     @Dependency(\.appStatus) private var appStatus
     @Dependency(\.requestReview) private var requestReview
@@ -53,13 +68,6 @@ public final class LiveSessionCounterClient: SessionCounterClient {
 
         requestReview()
     }
-}
-
-// MARK: - Dot Syntax Support
-
-extension SessionCounterClient where Self == LiveSessionCounterClient {
-    /// Returns noop variant of `SessionCounterClient`.
-    public static var live: Self { .init() }
 }
 
 // MARK: - Pond
