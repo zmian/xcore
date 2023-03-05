@@ -13,9 +13,11 @@ import Foundation
 /// An example of Segment analytics provider:
 ///
 /// ```swift
-/// import Segment
+/// @_implementationOnly import Segment
 ///
 /// struct SegmentAnalyticsProvider: AnalyticsProvider {
+///     @Dependency(\.appPhase) private var appPhase
+///     private var cancellable: AnyCancellable?
 ///     private var segment: Segment.Analytics {
 ///         Segment.Analytics.shared()
 ///     }
