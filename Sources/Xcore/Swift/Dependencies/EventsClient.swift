@@ -56,7 +56,7 @@ import Combine
 /// ```
 public struct EventsClient<Event> {
     /// Sends the give event.
-    public var send: (Event) -> Void
+    public var send: @Sendable (Event) -> Void
 
     /// Receive events.
     public var receive: AnyPublisher<Event, Never>
@@ -66,7 +66,10 @@ public struct EventsClient<Event> {
     /// - Parameters:
     ///   - send: The closure to send the give event.
     ///   - receive: Receive events.
-    public init(send: @escaping (Event) -> Void, receive: AnyPublisher<Event, Never>) {
+    public init(
+        send: @escaping @Sendable (Event) -> Void,
+        receive: AnyPublisher<Event, Never>
+    ) {
         self.send = send
         self.receive = receive
     }
