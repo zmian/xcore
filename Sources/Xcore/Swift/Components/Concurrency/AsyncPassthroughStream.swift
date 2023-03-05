@@ -108,12 +108,6 @@ extension AsyncPassthroughStream {
 extension AsyncPassthroughStream {
     /// Creates an asynchronous sequence that produce new elements over time.
     public func makeAsyncStream() -> AsyncStream<Element> {
-        AsyncStream { continuation in
-            Task {
-                for await value in self {
-                    continuation.yield(value)
-                }
-            }
-        }
+        AsyncStream(self)
     }
 }
