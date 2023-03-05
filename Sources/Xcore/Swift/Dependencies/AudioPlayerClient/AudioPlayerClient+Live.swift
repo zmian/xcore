@@ -7,12 +7,25 @@
 import Foundation
 import AVKit
 
-public final class LiveAudioClient: AudioClient {
+extension AudioPlayerClient {
+    /// Returns live variant of `AudioPlayerClient`.
+    public static var live: Self {
+        let client = LiveAudioClient()
+
+        return .init { file in
+            client.play(file)
+        }
+    }
+}
+
+// MARK: - Implementation
+
+private final class LiveAudioClient {
     private var audioPlayer: AVAudioPlayer?
 
     public func play(_ file: AudioFile) {
         guard
-            let url = file.bundle.url(filename: file.name),
+            let url = file.url,
             let audioPlayer = try? AVAudioPlayer(contentsOf: url)
         else {
             return
@@ -22,11 +35,4 @@ public final class LiveAudioClient: AudioClient {
         self.audioPlayer = audioPlayer
         audioPlayer.play()
     }
-}
-
-// MARK: - Dot Syntax Support
-
-extension AudioClient where Self == LiveAudioClient {
-    /// Returns live variant of `AudioClient`.
-    static var live: Self { .init() }
 }
