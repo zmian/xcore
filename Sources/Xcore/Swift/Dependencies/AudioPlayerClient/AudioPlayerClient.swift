@@ -15,7 +15,13 @@ import Foundation
 ///     @Dependency(\.audioPlayer) var audioPlayer
 ///
 ///     func play() {
-///         audioPlayer.play("hello")
+///         audioPlayer.play(.success)
+///     }
+/// }
+///
+/// extension AudioFile {
+///     static var success: Self {
+///         .init(name: "success.mp3", bundle: .module, category: .ambient)
 ///     }
 /// }
 /// ```
