@@ -31,7 +31,7 @@ extension View {
     ///     ]
     ///
     ///     var body: some View {
-    ///         Image(systemName: "heart.fill")
+    ///         Image(systemName: .heartFill)
     ///             .resizable()
     ///             .frame(width: 200, height: 200)
     ///             .foregroundColor(fgColor)
