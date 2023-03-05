@@ -80,7 +80,7 @@ extension OpenURLClient {
     /// Returns unimplemented variant of `OpenURLClient`.
     public static var unimplemented: Self {
         .init { _ in
-            XCTFail("\(Self.self) is unimplemented")
+            XCTFail(#"Unimplemented: @Dependency(\.openUrl)"#)
             return false
         }
     }

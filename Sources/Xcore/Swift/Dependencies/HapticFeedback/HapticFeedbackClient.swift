@@ -71,7 +71,7 @@ extension HapticFeedbackClient {
     /// Returns unimplemented variant of `HapticFeedbackClient`.
     public static var unimplemented: Self {
         .init { _ in
-            XCTFail("\(Self.self) is unimplemented")
+            XCTFail(#"Unimplemented: @Dependency(\.hapticFeedback)"#)
         }
     }
 }
