@@ -184,6 +184,18 @@ custom_rules:
     regex: "\\@(Environment|SwiftUI.Environment)\\(\\\\.theme\\) private var theme: Theme"
     message: "Remove type from the right hand of the environment variable (e.g., `@Environment(\\.theme) private var theme`)."
 
+  icc_system_image:
+    included: ".*.swift"
+    name: "Inconsistent Coding Convention"
+    regex: "systemImage: \""
+    message: "Use compile time constants instead of the strings API (e.g., `Image(system: .circle))`."
+
+  icc_system_image:
+    included: ".*.swift"
+    name: "Inconsistent Coding Convention"
+    regex: "systemName: \""
+    message: "Use compile time constants instead of the strings API (e.g., `Image(system: .circle))`."
+
   icc_button_closure:
     included: ".*.swift"
     name: "Inconsistent Coding Convention"
@@ -195,3 +207,10 @@ custom_rules:
     name: "Inconsistent Coding Convention"
     regex: "// File.swift"
     message: "Please update the file name."
+
+  icc_test_case_superclass:
+    included: ".*.swift"
+    name: "Invalid XCTestCase use"
+    regex: "XCTestCase"
+    message: "Please \"import XCTestSupport\" and change the superclass to \": TestCase\" to ensure all of the dependencies are correctly set to failing before each test case."
+    severity: error
