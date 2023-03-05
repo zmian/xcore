@@ -42,7 +42,7 @@ extension UserInfoKey: Codable {}
 
 public protocol UserInfoContainer {
     typealias UserInfoKey = Xcore.UserInfoKey<Self>
-    typealias UserInfo = [UserInfoKey: Any]
+    typealias UserInfo = [UserInfoKey: any Sendable]
     var userInfo: UserInfo { get set }
 }
 

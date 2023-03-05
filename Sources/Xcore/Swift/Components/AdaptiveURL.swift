@@ -7,7 +7,7 @@
 import Foundation
 
 /// A structure representing adaptive URL.
-public struct AdaptiveURL: UserInfoContainer, MutableAppliable {
+public struct AdaptiveURL: UserInfoContainer, MutableAppliable, Sendable {
     /// The title of the URL.
     public var title: String
 

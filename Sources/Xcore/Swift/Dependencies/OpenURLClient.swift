@@ -29,27 +29,43 @@ import SwiftUI
 /// }
 /// ```
 public struct OpenURLClient {
-    private let open: (AdaptiveURL) -> Void
+    private let handler: @Sendable (AdaptiveURL) async -> Bool
 
     /// Creates a client that opens a URL.
     ///
     /// - Parameter open: The closure to run for the given URL.
-    public init(open: @escaping (AdaptiveURL) -> Void) {
-        self.open = open
+    public init(handler: @escaping @Sendable (AdaptiveURL) async -> Bool) {
+        self.handler = handler
+    }
+
+    /// Attempts to asynchronously open the resource at the specified URL.
+    @discardableResult
+    public func callAsFunction(_ url: AdaptiveURL) async -> Bool {
+        await handler(url)
+    }
+
+    /// Attempts to asynchronously open the resource at the specified URL.
+    @discardableResult
+    public func callAsFunction(_ url: URL?) async -> Bool {
+        guard let url else {
+            return false
+        }
+
+        return await handler(.init(title: "", url: url))
     }
 
     /// Attempts to asynchronously open the resource at the specified URL.
     public func callAsFunction(_ url: AdaptiveURL) {
-        open(url)
+        Task {
+            await callAsFunction(url)
+        }
     }
 
     /// Attempts to asynchronously open the resource at the specified URL.
     public func callAsFunction(_ url: URL?) {
-        guard let url else {
-            return
+        Task {
+            await callAsFunction(url)
         }
-
-        open(.init(title: "", url: url))
     }
 }
 
@@ -58,40 +74,38 @@ public struct OpenURLClient {
 extension OpenURLClient {
     /// Returns noop variant of `OpenURLClient`.
     public static var noop: Self {
-        .init { _ in }
+        .init { _ in false }
     }
 
     /// Returns unimplemented variant of `OpenURLClient`.
     public static var unimplemented: Self {
         .init { _ in
             XCTFail("\(Self.self) is unimplemented")
+            return false
         }
     }
 
     /// Returns system variant of `OpenURLClient`.
     public static var system: Self {
-        .init { adaptiveUrl in
-            guard let app = UIApplication.sharedOrNil else {
-                return
-            }
-
+        .init { @MainActor adaptiveUrl in
             let url = adaptiveUrl.url
+            let environment = EnvironmentValues()
 
             // Attempt to open standard urls using in-app Safari.
-            if [.http, .https].contains(url.schemeType) {
-                let vc = InAppSafariViewController(url: url).apply {
-                    $0.preferredControlTintColor = Theme.tintColor.uiColor
-                }
-
-                // Present shows the Safari VC correctly in SwiftUI.
-                return vc.show()
-            } else if app.canOpenURL(url) {
-                app.appExtensionSafeOpen(url)
-            } else {
-                #if DEBUG
-                Console.warn("Unable to open the url: \(url)")
-                #endif
+            guard
+                [.http, .https].contains(url.schemeType),
+                UIApplication.sharedOrNil != nil
+            else {
+                return await environment.openURL.run(url)
             }
+
+            let vc = InAppSafariViewController(url: url).apply {
+                $0.preferredControlTintColor = environment.theme.tintColor.uiColor
+            }
+
+            // Present shows the Safari VC correctly in SwiftUI.
+            vc.show()
+            return true
         }
     }
 
@@ -134,5 +148,23 @@ extension DependencyValues {
     public static func openUrl(_ value: OpenURLClient) -> Self.Type {
         OpenURLClientKey.liveValue = value
         return Self.self
+    }
+}
+
+// MARK: - Helpers
+
+extension OpenURLAction {
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
+    fileprivate func run(_ url: URL) async -> Bool {
+        #if os(watchOS)
+        callAsFunction(url)
+        return true
+        #else
+        return await withCheckedContinuation { continuation in
+            callAsFunction(url) { canOpen in
+                continuation.resume(returning: canOpen)
+            }
+        }
+        #endif
     }
 }

@@ -8,26 +8,31 @@ import XCTest
 @testable import Xcore
 
 final class OpenURLClientTests: TestCase {
-    func testInMemoryVariant() {
-        var openedUrl: URL?
+    func testInMemoryVariant() async {
+        let openedUrlIsolated = ActorIsolated<URL?>(nil)
 
         let viewModel = withDependencies {
             $0.openUrl = .init { adaptiveUrl in
-                openedUrl = adaptiveUrl.url
+                await openedUrlIsolated.setValue(adaptiveUrl.url)
+                return true
             }
         } operation: {
             ViewModel()
         }
 
+        var openedUrl = await openedUrlIsolated.value
         XCTAssertNil(openedUrl)
 
-        viewModel.openMailApp()
+        await viewModel.openMailApp()
+        openedUrl = await openedUrlIsolated.value
         XCTAssertEqual(openedUrl, .mailApp)
 
-        viewModel.openSettingsApp()
+        await viewModel.openSettingsApp()
+        openedUrl = await openedUrlIsolated.value
         XCTAssertEqual(openedUrl, .settingsApp)
 
-        viewModel.openSomeUrl()
+        await viewModel.openSomeUrl()
+        openedUrl = await openedUrlIsolated.value
         XCTAssertEqual(openedUrl, URL(string: "https://example.com"))
     }
 }
@@ -35,15 +40,15 @@ final class OpenURLClientTests: TestCase {
 private final class ViewModel {
     @Dependency(\.openUrl) var openUrl
 
-    func openMailApp() {
-        openUrl(.mailApp)
+    func openMailApp() async {
+        await openUrl(.mailApp)
     }
 
-    func openSettingsApp() {
-        openUrl(.settingsApp)
+    func openSettingsApp() async {
+        await openUrl(.settingsApp)
     }
 
-    func openSomeUrl() {
-        openUrl(URL(string: "https://example.com"))
+    func openSomeUrl() async {
+        await openUrl(URL(string: "https://example.com"))
     }
 }
