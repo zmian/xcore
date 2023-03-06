@@ -106,8 +106,14 @@ extension AppStatusClient {
     /// Returns unimplemented variant of `AppStatusClient`.
     public static var unimplemented: Self {
         .init(
-            receive: .constant(.preparingLaunch),
-            sessionState: .constant(.signedOut),
+            receive: {
+                XCTFail("\(Self.self).receive is unimplemented")
+                return .constant(.preparingLaunch)
+            }(),
+            sessionState: {
+                XCTFail("\(Self.self).sessionState is unimplemented")
+                return .constant(.signedOut)
+            }(),
             evaluate: {
                 XCTFail("\(Self.self).evaluate is unimplemented")
             },
