@@ -24,12 +24,10 @@ final class HapticFeedbackClientTests: TestCase {
     }
 }
 
-extension HapticFeedbackClientTests {
-    private final class ViewModel {
-        @Dependency(\.hapticFeedback) var hapticFeedback
+private final class ViewModel {
+    @Dependency(\.hapticFeedback) var hapticFeedback
 
-        func triggerSelectionFeedback() {
-            hapticFeedback(.selection)
-        }
+    func triggerSelectionFeedback() {
+        hapticFeedback(.selection)
     }
 }
