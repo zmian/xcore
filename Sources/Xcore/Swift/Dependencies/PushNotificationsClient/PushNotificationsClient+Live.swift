@@ -8,9 +8,8 @@
 import SwiftUI
 import UserNotifications
 
-// MARK: - Live
-
 extension PushNotificationsClient {
+    /// Returns live variant of `PushNotificationsClient`.
     public static var live: Self {
         let client = LivePushNotificationsClient()
 
@@ -24,7 +23,7 @@ extension PushNotificationsClient {
     }
 }
 
-// MARK: - Internal
+// MARK: - Implementation
 
 private final class LivePushNotificationsClient: NSObject {
     typealias Event = PushNotificationsClient.Event

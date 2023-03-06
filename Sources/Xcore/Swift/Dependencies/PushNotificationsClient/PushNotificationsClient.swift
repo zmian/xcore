@@ -76,6 +76,46 @@ public struct PushNotificationsClient {
     }
 }
 
+// MARK: - Authorization Status
+
+extension PushNotificationsClient {
+    /// An enumeration representing app’s authorization status for scheduling
+    /// notifications.
+    public enum AuthorizationStatus: Sendable, Hashable, CustomStringConvertible, CustomAnalyticsValueConvertible {
+        /// The user hasn’t yet made a choice about whether the app is allowed to
+        /// schedule notifications or receive notifications.
+        case notDetermined
+
+        /// The app isn’t authorized to schedule or receive notifications.
+        case denied
+
+        /// The app is authorized to schedule or receive notifications.
+        case authorized
+
+        public var description: String {
+            switch self {
+                case .notDetermined:
+                    return "Not Determined"
+                case .denied:
+                    return "Denied"
+                case .authorized:
+                    return "Authorized"
+            }
+        }
+
+        public var analyticsValue: String {
+            switch self {
+                case .notDetermined:
+                    return "not_determined"
+                case .denied:
+                    return "denied"
+                case .authorized:
+                    return "authorized"
+            }
+        }
+    }
+}
+
 // MARK: - Event
 
 extension PushNotificationsClient {
@@ -123,46 +163,6 @@ extension PushNotificationsClient {
                     return "Opened App From Notification: \(id)"
                 case .unregistered:
                     return "Unregistered"
-            }
-        }
-    }
-}
-
-// MARK: - Authorization Status
-
-extension PushNotificationsClient {
-    /// An enumeration representing app’s authorization status for scheduling
-    /// notifications.
-    public enum AuthorizationStatus: Sendable, Hashable, CustomStringConvertible, CustomAnalyticsValueConvertible {
-        /// The user hasn’t yet made a choice about whether the app is allowed to
-        /// schedule notifications or receive notifications.
-        case notDetermined
-
-        /// The app isn’t authorized to schedule or receive notifications.
-        case denied
-
-        /// The app is authorized to schedule or receive notifications.
-        case authorized
-
-        public var description: String {
-            switch self {
-                case .notDetermined:
-                    return "Not Determined"
-                case .denied:
-                    return "Denied"
-                case .authorized:
-                    return "Authorized"
-            }
-        }
-
-        public var analyticsValue: String {
-            switch self {
-                case .notDetermined:
-                    return "not_determined"
-                case .denied:
-                    return "denied"
-                case .authorized:
-                    return "authorized"
             }
         }
     }
