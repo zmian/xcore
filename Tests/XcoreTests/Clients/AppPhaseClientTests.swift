@@ -27,19 +27,17 @@ final class AppPhaseClientTests: TestCase {
     }
 }
 
-extension AppPhaseClientTests {
-    private final class ViewModel {
-        @Dependency(\.appPhase) private var appPhase
-        private var cancellable: AnyCancellable?
+private final class ViewModel {
+    @Dependency(\.appPhase) private var appPhase
+    private var cancellable: AnyCancellable?
 
-        func send(_ phase: AppPhase) {
-            appPhase.send(phase)
-        }
+    func send(_ phase: AppPhase) {
+        appPhase.send(phase)
+    }
 
-        func receive(_ callback: @escaping (AppPhase) -> Void) {
-            cancellable = appPhase.receive.sink { appPhase in
-                callback(appPhase)
-            }
+    func receive(_ callback: @escaping (AppPhase) -> Void) {
+        cancellable = appPhase.receive.sink { appPhase in
+            callback(appPhase)
         }
     }
 }
