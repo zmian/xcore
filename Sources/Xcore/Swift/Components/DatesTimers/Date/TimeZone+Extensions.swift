@@ -7,8 +7,8 @@
 import Foundation
 
 extension TimeZone {
-    /// Returns `GMT` time zone.
-    public static let gmt = TimeZone(identifier: "GMT")!
+    /// Returns `UTC` time zone.
+    public static let utc = TimeZone(identifier: "UTC")!
 
     /// Returns `America/New_York` time zone.
     public static let eastern = TimeZone(identifier: "America/New_York")!

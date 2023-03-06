@@ -1044,7 +1044,7 @@ final class DateTest: TestCase {
 }
 
 extension Calendar {
-    fileprivate static let spanish = Self.gregorian(timeZone: .gmt, locale: .es)
+    fileprivate static let spanish = Self.gregorian(timeZone: .utc, locale: .es)
     fileprivate static let turkey = Self.gregorian(timeZone: .istanbul, locale: .tr)
     fileprivate static let london = Self.gregorian(timeZone: .london, locale: .uk)
     fileprivate static let usEastern = Self.gregorian(timeZone: .eastern)
