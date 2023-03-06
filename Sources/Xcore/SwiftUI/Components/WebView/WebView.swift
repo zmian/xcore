@@ -19,7 +19,6 @@ public struct WebView: View {
     private var localStorageItems: [String: String] = [:]
     private var cookies: [HTTPCookie] = []
     private var policyDecision: PolicyDecision = { _, _ in .allow }
-    private var reloadFlag = false
 
     public init(url: URL) {
         self.init(urlRequest: .init(url: url))
@@ -35,8 +34,7 @@ public struct WebView: View {
             messageHandler: messageHandler,
             localStorageItems: localStorageItems,
             cookies: cookies,
-            policyDecision: policyDecision,
-            reloadFlag: reloadFlag
+            policyDecision: policyDecision
         )
     }
 }
@@ -68,12 +66,6 @@ extension WebView {
         }
     }
 
-    public func reloadOnToggle(_ value: Bool) -> Self {
-        apply {
-            $0.reloadFlag = value
-        }
-    }
-
     private func apply(_ configure: (inout Self) throws -> Void) rethrows -> Self {
         var object = self
         try configure(&object)
@@ -90,7 +82,6 @@ extension WebView {
         fileprivate var localStorageItems: [String: String]
         fileprivate var cookies: [HTTPCookie]
         fileprivate var policyDecision: PolicyDecision
-        fileprivate var reloadFlag: Bool
 
         func makeCoordinator() -> Coordinator {
             Coordinator(parent: self)
