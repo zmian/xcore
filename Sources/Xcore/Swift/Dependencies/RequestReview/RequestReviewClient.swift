@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import Foundation
+import SwiftUI
 import StoreKit
 
 /// Provides functionality to request an App Store rating or review from the
@@ -66,14 +66,17 @@ extension RequestReviewClient {
     /// Returns live variant of `RequestReviewClient`.
     public static var live: Self {
         .init {
-            guard
-                FeatureFlag.reviewPromptEnabled,
-                let scene = UIApplication.sharedOrNil?.firstSceneKeyWindow?.windowScene
-            else {
-                return
-            }
+            Task { @MainActor in
+                guard FeatureFlag.reviewPromptEnabled else {
+                    return
+                }
 
-            SKStoreReviewController.requestReview(in: scene)
+                if #available(iOS 16.0, macOS 13.0, *) {
+                    EnvironmentValues().requestReview()
+                } else if let scene = UIApplication.sharedOrNil?.firstSceneKeyWindow?.windowScene {
+                    SKStoreReviewController.requestReview(in: scene)
+                }
+            }
         }
     }
 }
