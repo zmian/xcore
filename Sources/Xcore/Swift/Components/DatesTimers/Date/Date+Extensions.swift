@@ -22,8 +22,8 @@ extension Date {
     /// Epoch in milliseconds.
     ///
     /// Epoch, also known as Unix timestamps, is the number of seconds (not
-    /// milliseconds) that have elapsed since `January 1, 1970` at `00:00:00 GMT`
-    /// (`1970-01-01 00:00:00 GMT`).
+    /// milliseconds) that have elapsed since `January 1, 1970` at `00:00:00 UTC`
+    /// (`1970-01-01 00:00:00 UTC`).
     public var milliseconds: Int64 {
         Int64(timeIntervalSince1970 * 1000)
     }
@@ -193,7 +193,7 @@ extension Date {
 // MARK: - Counts
 
 extension Date {
-    /// Returns the time zone offset of a calendar from GMT.
+    /// Returns the time zone offset of a calendar from UTC.
     ///
     /// - Parameter calendar: The calendar used to calculate time zone.
     ///
@@ -201,7 +201,7 @@ extension Date {
     ///
     /// ```swift
     /// let result = Date.timeZoneOffset(calendar: .usEastern)
-    /// print(result) // -4; Eastern time zone is 4 hours behind GMT.
+    /// print(result) // -4; Eastern time zone is 4 hours behind UTC.
     /// ```
     public static func timeZoneOffset(calendar: Calendar = .default) -> Int {
         calendar.timeZone.secondsFromGMT() / 3600
