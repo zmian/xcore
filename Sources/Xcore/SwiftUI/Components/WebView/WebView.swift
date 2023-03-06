@@ -19,6 +19,7 @@ public struct WebView: View {
     private var localStorageItems: [String: String] = [:]
     private var cookies: [HTTPCookie] = []
     private var policyDecision: PolicyDecision = { _, _ in .allow }
+    private var showLoader = false
 
     public init(url: URL) {
         self.init(urlRequest: .init(url: url))
@@ -34,7 +35,8 @@ public struct WebView: View {
             messageHandler: messageHandler,
             localStorageItems: localStorageItems,
             cookies: cookies,
-            policyDecision: policyDecision
+            policyDecision: policyDecision,
+            showLoader: showLoader
         )
     }
 }
@@ -66,6 +68,12 @@ extension WebView {
         }
     }
 
+    public func showLoader(_ value: Bool) -> Self {
+        apply {
+            $0.showLoader = value
+        }
+    }
+
     private func apply(_ configure: (inout Self) throws -> Void) rethrows -> Self {
         var object = self
         try configure(&object)
@@ -82,6 +90,7 @@ extension WebView {
         fileprivate var localStorageItems: [String: String]
         fileprivate var cookies: [HTTPCookie]
         fileprivate var policyDecision: PolicyDecision
+        fileprivate var showLoader: Bool
 
         func makeCoordinator() -> Coordinator {
             Coordinator(parent: self)
@@ -197,6 +206,10 @@ extension WebView {
         }
 
         private func showLoader(_ show: Bool, _ view: WKWebView) {
+            guard parent.showLoader else {
+                return
+            }
+
             if !didAddLoader {
                 view.addSubview(loader)
                 loader.translatesAutoresizingMaskIntoConstraints = false
