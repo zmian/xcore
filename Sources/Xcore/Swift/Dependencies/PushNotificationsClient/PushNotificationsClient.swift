@@ -222,8 +222,8 @@ extension PushNotificationsClient {
 // MARK: - Convenience
 
 extension PushNotificationsClient {
-    public func register(_ isOn: Bool) async {
-        await isOn ? register() : unregister()
+    public func register(_ shouldRegister: Bool) async {
+        await shouldRegister ? register() : unregister()
     }
 }
 
