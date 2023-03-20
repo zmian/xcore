@@ -20,6 +20,7 @@ public struct WebView: View {
     private var cookies: [HTTPCookie] = []
     private var policyDecision: PolicyDecision = { _, _ in .allow }
     private var showLoader = false
+    private var showRefreshControl = true
 
     public init(url: URL) {
         self.init(urlRequest: .init(url: url))
@@ -36,7 +37,8 @@ public struct WebView: View {
             localStorageItems: localStorageItems,
             cookies: cookies,
             policyDecision: policyDecision,
-            showLoader: showLoader
+            showLoader: showLoader,
+            showRefreshControl: showRefreshControl
         )
     }
 }
@@ -74,6 +76,12 @@ extension WebView {
         }
     }
 
+    public func hideRefreshControl(_ value: Bool) -> Self {
+        apply {
+            $0.showRefreshControl = !value
+        }
+    }
+
     private func apply(_ configure: (inout Self) throws -> Void) rethrows -> Self {
         var object = self
         try configure(&object)
@@ -91,6 +99,7 @@ extension WebView {
         fileprivate var cookies: [HTTPCookie]
         fileprivate var policyDecision: PolicyDecision
         fileprivate var showLoader: Bool
+        fileprivate var showRefreshControl: Bool
 
         func makeCoordinator() -> Coordinator {
             Coordinator(parent: self)
@@ -101,11 +110,23 @@ extension WebView {
                 updateConfiguration(wkConfig, context: context)
             }
 
-            return WKWebView(frame: .zero, configuration: webkitConfiguration).apply {
-                $0.navigationDelegate = context.coordinator
-                $0.uiDelegate = context.coordinator
-                $0.allowsBackForwardNavigationGestures = true
-                $0.allowsLinkPreview = false
+            return WKWebView(frame: .zero, configuration: webkitConfiguration).apply { webview in
+                webview.navigationDelegate = context.coordinator
+                webview.uiDelegate = context.coordinator
+                webview.allowsBackForwardNavigationGestures = true
+                webview.allowsLinkPreview = false
+                if showRefreshControl {
+                    webview.scrollView.refreshControl = UIRefreshControl().apply {
+                        $0.addAction(.valueChanged) { sender in
+                            Task {
+                                // Sleep under a second to properly show the control.
+                                try await Task.sleep(seconds: 0.75)
+                                sender.endRefreshing()
+                                webview.reload()
+                            }
+                        }
+                    }
+                }
             }
         }
 
