@@ -21,6 +21,7 @@ public struct WebView: View {
     private var policyDecision: PolicyDecision = { _, _ in .allow }
     private var showLoader = false
     private var showRefreshControl = true
+    private var additionalConfiguration: (WKWebView) -> Void = { _ in }
 
     public init(url: URL) {
         self.init(urlRequest: .init(url: url))
@@ -38,7 +39,8 @@ public struct WebView: View {
             cookies: cookies,
             policyDecision: policyDecision,
             showLoader: showLoader,
-            showRefreshControl: showRefreshControl
+            showRefreshControl: showRefreshControl,
+            additionalConfiguration: additionalConfiguration
         )
     }
 }
@@ -82,6 +84,12 @@ extension WebView {
         }
     }
 
+    public func additionalConfiguration(_ configuration: @escaping (WKWebView) -> Void) -> Self {
+        apply {
+            $0.additionalConfiguration = configuration
+        }
+    }
+
     private func apply(_ configure: (inout Self) throws -> Void) rethrows -> Self {
         var object = self
         try configure(&object)
@@ -100,6 +108,7 @@ extension WebView {
         fileprivate var policyDecision: PolicyDecision
         fileprivate var showLoader: Bool
         fileprivate var showRefreshControl: Bool
+        fileprivate let additionalConfiguration: (WKWebView) -> Void
 
         func makeCoordinator() -> Coordinator {
             Coordinator(parent: self)
@@ -127,6 +136,7 @@ extension WebView {
                         }
                     }
                 }
+                additionalConfiguration(webview)
             }
         }
 
