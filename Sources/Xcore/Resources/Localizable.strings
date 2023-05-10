@@ -66,7 +66,7 @@
 
 // Session Expired
 "error.session_expired_title" = "Session Expired";
-"error.session_expired_message" = "Your session has expired. Please log in again.";
+"error.session_expired_message" = "Your session has expired. Please log in again to continue.";
 
 // Camera Unavailable
 "error.camera_unavailable_title" = "Camera Unavailable";
