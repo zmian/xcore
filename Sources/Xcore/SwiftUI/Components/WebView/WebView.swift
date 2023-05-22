@@ -124,6 +124,9 @@ extension WebView {
                 webview.uiDelegate = context.coordinator
                 webview.allowsBackForwardNavigationGestures = true
                 webview.allowsLinkPreview = false
+                if #available(iOS 16.4, *) {
+                    webview.isInspectable = true
+                }
                 if showRefreshControl {
                     webview.scrollView.refreshControl = UIRefreshControl().apply {
                         $0.addAction(.valueChanged) { sender in
@@ -190,6 +193,7 @@ extension WebView {
         }
 
         func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+            webView.reload()
             showLoader(false, webView)
         }
 
