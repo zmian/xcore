@@ -22,7 +22,7 @@ public struct WebView: View {
     private var showLoader = false
     private var showRefreshControl = true
     private var additionalConfiguration: (WKWebView) -> Void = { _ in }
-    private var pullToRefreshHandler: () -> Void = { }
+    private var pullToRefreshHandler: () -> Void = {}
 
     public init(url: URL) {
         self.init(urlRequest: .init(url: url))
