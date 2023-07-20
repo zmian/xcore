@@ -22,6 +22,7 @@ public struct WebView: View {
     private var showLoader = false
     private var showRefreshControl = true
     private var additionalConfiguration: (WKWebView) -> Void = { _ in }
+    private var pullToRefreshHandler: () -> Void = {}
 
     public init(url: URL) {
         self.init(urlRequest: .init(url: url))
@@ -40,7 +41,8 @@ public struct WebView: View {
             policyDecision: policyDecision,
             showLoader: showLoader,
             showRefreshControl: showRefreshControl,
-            additionalConfiguration: additionalConfiguration
+            additionalConfiguration: additionalConfiguration,
+            pullToRefreshHandler: pullToRefreshHandler
         )
     }
 }
@@ -90,6 +92,12 @@ extension WebView {
         }
     }
 
+    public func onPullToRefresh(_ handler: @escaping () -> Void) -> Self {
+        apply {
+            $0.pullToRefreshHandler = handler
+        }
+    }
+
     private func apply(_ configure: (inout Self) throws -> Void) rethrows -> Self {
         var object = self
         try configure(&object)
@@ -109,6 +117,7 @@ extension WebView {
         fileprivate var showLoader: Bool
         fileprivate var showRefreshControl: Bool
         fileprivate let additionalConfiguration: (WKWebView) -> Void
+        fileprivate let pullToRefreshHandler: () -> Void
 
         func makeCoordinator() -> Coordinator {
             Coordinator(parent: self)
@@ -135,6 +144,7 @@ extension WebView {
                                 try await Task.sleep(seconds: 0.75)
                                 sender.endRefreshing()
                                 webview.reload()
+                                pullToRefreshHandler()
                             }
                         }
                     }
