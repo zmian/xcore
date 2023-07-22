@@ -102,8 +102,6 @@ extension StringConverter {
                 return string as? T
             case is Data.Type, is Optional<Data>.Type:
                 return string.data(using: .utf8) as? T
-            case is URL.Type, is Optional<URL>.Type:
-                return URL(string: string) as? T
             case is NSURL.Type, is Optional<NSURL>.Type:
                 return NSURL(string: string) as? T
             case is Date.Type, is Optional<Date>.Type:
