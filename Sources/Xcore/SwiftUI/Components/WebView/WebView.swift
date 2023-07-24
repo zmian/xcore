@@ -23,7 +23,7 @@ public struct WebView: View {
     private var showRefreshControl = true
     private var additionalConfiguration: (WKWebView) -> Void = { _ in }
     private var pullToRefreshHandler: () -> Void = {}
-    private var createWebViewHandler: (URL) -> WKWebView? = { _ in nil }
+    private var createWebViewHandler: (URLRequest) -> WKWebView? = { _ in nil }
 
     public init(url: URL) {
         self.init(urlRequest: .init(url: url))
@@ -100,7 +100,7 @@ extension WebView {
         }
     }
 
-    public func onNewWebViewWindow(_ handler: @escaping (URL) -> WKWebView?) -> Self {
+    public func onNewWebViewWindow(_ handler: @escaping (URLRequest) -> WKWebView?) -> Self {
         apply {
             $0.createWebViewHandler = handler
         }
@@ -126,7 +126,7 @@ extension WebView {
         fileprivate var showRefreshControl: Bool
         fileprivate let additionalConfiguration: (WKWebView) -> Void
         fileprivate let pullToRefreshHandler: () -> Void
-        fileprivate let createWebViewHandler: (URL) -> WKWebView?
+        fileprivate let createWebViewHandler: (URLRequest) -> WKWebView?
 
         func makeCoordinator() -> Coordinator {
             Coordinator(parent: self)
@@ -256,11 +256,8 @@ extension WebView {
         }
 
         func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-            guard let url = navigationAction.request.url else {
-                return nil
-            }
-            guard let webView = parent.createWebViewHandler(url) else {
-                openUrl(url)
+            guard let webView = parent.createWebViewHandler(navigationAction.request) else {
+                openUrl(navigationAction.request.url)
                 return nil
             }
             return webView
