@@ -23,6 +23,7 @@ public struct WebView: View {
     private var showRefreshControl = true
     private var additionalConfiguration: (WKWebView) -> Void = { _ in }
     private var pullToRefreshHandler: () -> Void = {}
+    private var createWebViewHandler: (URL) -> WKWebView? = { _ in nil }
 
     public init(url: URL) {
         self.init(urlRequest: .init(url: url))
@@ -42,7 +43,8 @@ public struct WebView: View {
             showLoader: showLoader,
             showRefreshControl: showRefreshControl,
             additionalConfiguration: additionalConfiguration,
-            pullToRefreshHandler: pullToRefreshHandler
+            pullToRefreshHandler: pullToRefreshHandler,
+            createWebViewHandler: createWebViewHandler
         )
     }
 }
@@ -98,6 +100,12 @@ extension WebView {
         }
     }
 
+    public func onNewWebViewWindow(_ handler: @escaping (URL) -> WKWebView?) -> Self {
+        apply {
+            $0.createWebViewHandler = handler
+        }
+    }
+
     private func apply(_ configure: (inout Self) throws -> Void) rethrows -> Self {
         var object = self
         try configure(&object)
@@ -118,6 +126,7 @@ extension WebView {
         fileprivate var showRefreshControl: Bool
         fileprivate let additionalConfiguration: (WKWebView) -> Void
         fileprivate let pullToRefreshHandler: () -> Void
+        fileprivate let createWebViewHandler: (URL) -> WKWebView?
 
         func makeCoordinator() -> Coordinator {
             Coordinator(parent: self)
@@ -194,6 +203,7 @@ extension WebView {
 
 extension WebView {
     private final class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandlerWithReply {
+        @Dependency(\.openUrl) var openUrl
         private var didAddLoader = false
         private let loader = UIActivityIndicatorView(style: .medium)
         private let parent: Representable
@@ -246,8 +256,14 @@ extension WebView {
         }
 
         func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-            webView.load(navigationAction.request)
-            return nil
+            guard let url = navigationAction.request.url else {
+                return nil
+            }
+            guard let webView = parent.createWebViewHandler(url) else {
+                openUrl(url)
+                return nil
+            }
+            return webView
         }
 
         private func showLoader(_ show: Bool, _ view: WKWebView) {
