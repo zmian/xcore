@@ -83,7 +83,8 @@ extension View {
 
 extension View {
     /// Adds an action to perform when this view recognizes a long press gesture
-    /// that works in `ScrollView` and `TabView` when set to `.page` style.
+    /// that works within `ScrollView` and `TabView` when set to the `.page` style,
+    /// meaning it doesn't disable the scroll view's swipe gesture.
     ///
     /// - Parameters:
     ///   - minimumDuration: The minimum duration of the long press that must
