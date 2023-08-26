@@ -80,7 +80,11 @@ extension NSMutableAttributedString {
         return self
     }
 
-    public func lineSpacing(_ spacing: CGFloat) -> Self {
+    public func lineSpacing(_ spacing: CGFloat?) -> Self {
+        guard let spacing else {
+            return self
+        }
+
         paragraphStyle(\.lineSpacing, to: spacing, range: range(of: nil))
         return self
     }
