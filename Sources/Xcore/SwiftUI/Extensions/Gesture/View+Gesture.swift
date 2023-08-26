@@ -82,14 +82,24 @@ extension View {
 // MARK: - On Long Press Gesture
 
 extension View {
-    /// Adds an action to perform when this view recognizes press and hold gesture.
+    /// Adds an action to perform when this view recognizes a long press gesture
+    /// that works in `ScrollView` and `TabView` when set to `.page` style.
     ///
-    /// In order to properly work inside a scroll view a `tapGesture` has to be also
-    /// added.
-    ///
-    /// A ``Timer`` is used to avoid flickering (``true`` and ``false`` values sent)
-    /// on scroll gesture.
-    public func onPressAndHold(maxDuration: Double = 10, action: @escaping (_ isPressing: Bool) -> Void) -> some View {
+    /// - Parameters:
+    ///   - minimumDuration: The minimum duration of the long press that must
+    ///     elapse before the gesture succeeds.
+    ///   - maximumDistance: The maximum distance that the fingers or cursor
+    ///     performing the long press can move before the gesture fails.
+    ///   - action: The action to perform when a long press is recognized and the
+    ///     pressing state of the gesture changes, passing the current state as a
+    ///     parameter.
+    public func onLongPressGestureSupportingScrollView(
+        minimumDuration: Double = 10,
+        maximumDistance: Double = .greatestFiniteMagnitude,
+        perform action: @escaping (_ isPressing: Bool) -> Void
+    ) -> some View {
+        /// A ``Timer`` is used to avoid flickering (``true`` and ``false`` values sent)
+        /// on scroll gesture.
         weak var clearTimer: Timer?
 
         func startClearTimer(isPressing: Bool) {
@@ -100,8 +110,11 @@ extension View {
         }
 
         return self
+            /// In order to properly work inside a scroll view a `onTapGesture` has to be
+            /// also added. Adding tap gesture prevents "LongPressGesture" from disabling
+            /// scroll view's swipe gesture.
             .onTapGesture {}
-            .onLongPressGesture(minimumDuration: maxDuration, maximumDistance: 4) {
+            .onLongPressGesture(minimumDuration: minimumDuration, maximumDistance: maximumDistance) {
                 clearTimer?.invalidate()
                 startClearTimer(isPressing: false)
             } onPressingChanged: { isPressing in
