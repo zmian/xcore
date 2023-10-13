@@ -178,7 +178,7 @@ public enum AppConstants {
         uiControlsHeight
     }
 
-    public static var tileCornerRadius: CGFloat = 11
+    public static var tileCornerRadius: CGFloat = 12
     public static var cornerRadius: CGFloat = 6
 
     public static var popupPreferredWidth: CGFloat {
