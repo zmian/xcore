@@ -137,28 +137,28 @@ extension WebView {
                 updateConfiguration(wkConfig, context: context)
             }
 
-            return WKWebView(frame: .zero, configuration: webkitConfiguration).apply { webview in
-                webview.navigationDelegate = context.coordinator
-                webview.uiDelegate = context.coordinator
-                webview.allowsBackForwardNavigationGestures = true
-                webview.allowsLinkPreview = false
+            return WKWebView(frame: .zero, configuration: webkitConfiguration).apply { webView in
+                webView.navigationDelegate = context.coordinator
+                webView.uiDelegate = context.coordinator
+                webView.allowsBackForwardNavigationGestures = true
+                webView.allowsLinkPreview = false
                 if #available(iOS 16.4, *) {
-                    webview.isInspectable = true
+                    webView.isInspectable = true
                 }
                 if showRefreshControl {
-                    webview.scrollView.refreshControl = UIRefreshControl().apply {
+                    webView.scrollView.refreshControl = UIRefreshControl().apply {
                         $0.addAction(.valueChanged) { sender in
                             Task {
                                 // Sleep under a second to properly show the control.
                                 try await Task.sleep(seconds: 0.75)
                                 sender.endRefreshing()
-                                webview.reload()
+                                webView.reload()
                                 pullToRefreshHandler()
                             }
                         }
                     }
                 }
-                additionalConfiguration(webview)
+                additionalConfiguration(webView)
             }
         }
 
