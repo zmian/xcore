@@ -20,19 +20,22 @@ extension Font {
     ///   - style: The text style for which to return a font descriptor. See Text
     ///     Styles for valid values.
     ///   - weight: The weight of the font. If set to `nil`, the value is derived
-    ///    from the given text style.
+    ///     from the given text style.
     ///   - trait: The trait of the font. The default value is `.normal`.
+    ///   - typeface: The typeface to use. If set to `nil` then `defaultAppTypeface`
+    ///     is used.
     /// - Returns: The new scaled font object.
     public static func app(
         _ style: TextStyle,
         weight: Weight? = nil,
-        trait: UIFont.Trait = .normal
+        trait: UIFont.Trait = .normal,
+        typeface: Typeface? = nil
     ) -> Font {
         // Temporary solution while custom fonts aren't supported on Widgets.
         let isWidgetExtension = AppInfo.isWidgetExtension
 
         let weight = weight.normalize(style: style)
-        let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
+        let typeface = (typeface ?? UIFont.defaultAppTypeface).name(weight: weight, trait: trait)
 
         if isWidgetExtension || typeface == UIFont.Typeface.systemFontId {
             var font = system(
@@ -66,20 +69,23 @@ extension Font {
     ///   - textStyle: Scales the size relative to the text style. The default value
     ///     is `.body`.
     ///   - weight: The weight of the font. If set to `nil`, the value is derived
-    ///    from the given text style.
+    ///     from the given text style.
     ///   - trait: The trait of the font. The default value is `.normal`.
+    ///   - typeface: The typeface to use. If set to `nil` then `defaultAppTypeface`
+    ///     is used.
     /// - Returns: The new font object.
     public static func app(
         size: CGFloat,
         relativeTo textStyle: TextStyle? = nil,
         weight: Weight? = nil,
-        trait: UIFont.Trait = .normal
+        trait: UIFont.Trait = .normal,
+        typeface: Typeface? = nil
     ) -> Font {
         // Temporary solution while custom fonts aren't supported on Widgets.
         let isWidgetExtension = AppInfo.isWidgetExtension
 
         let weight = weight.normalize(style: textStyle)
-        let typeface = UIFont.defaultAppTypeface.name(weight: weight, trait: trait)
+        let typeface = (typeface ?? UIFont.defaultAppTypeface).name(weight: weight, trait: trait)
 
         if isWidgetExtension || typeface == UIFont.Typeface.systemFontId {
             var font = system(
@@ -124,19 +130,23 @@ extension Font {
     ///   - style: The text style for which to return a font descriptor. See Custom
     ///     Text Styles for valid values.
     ///   - weight: The weight of the font. If set to `nil`, the value is derived
-    ///    from the given text style.
+    ///     from the given text style.
     ///   - trait: The trait of the font. The default value is `.normal`.
+    ///   - typeface: The typeface to use. If set to `nil` then `defaultAppTypeface`
+    ///     is used.
     /// - Returns: The new scaled font object.
     public static func app(
         _ style: CustomTextStyle,
         weight: Weight? = nil,
-        trait: UIFont.Trait = .normal
+        trait: UIFont.Trait = .normal,
+        typeface: Typeface? = nil
     ) -> Font {
         .app(
             size: style.size,
             relativeTo: style.textStyle,
             weight: weight,
-            trait: trait
+            trait: trait,
+            typeface: typeface
         )
     }
 }
