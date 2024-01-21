@@ -118,12 +118,6 @@ private struct Window<Content: View>: UIViewControllerRepresentable {
     let style: WindowStyle
     let content: Content
 
-    init(isPresented: Binding<Bool>, style: WindowStyle, content: Content) {
-        self.isPresented = isPresented
-        self.style = style
-        self.content = content
-    }
-
     func makeUIViewController(context: Context) -> ViewController {
         .init(
             isPresented: isPresented,
@@ -157,11 +151,11 @@ private struct Window<Content: View>: UIViewControllerRepresentable {
 
 extension Window {
     final class ViewController: UIViewController {
-        var hostingWindow: UIHostingWindow<RootView<Content>>
+        var hostingWindow: UIHostingWindow<RootView>
         var isPresented: Binding<Bool>
         var style: WindowStyle
 
-        init(isPresented: Binding<Bool>, style: WindowStyle, rootView: RootView<Content>) {
+        init(isPresented: Binding<Bool>, style: WindowStyle, rootView: RootView) {
             self.isPresented = isPresented
             self.style = style
 
@@ -193,7 +187,7 @@ extension Window {
 // MARK: - RootView
 
 extension Window {
-    fileprivate struct RootView<Content: View>: View {
+    fileprivate struct RootView: View {
         var content: Content
         var context: Window.Context
 
