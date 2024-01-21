@@ -14,6 +14,7 @@ extension Biometrics {
         case none
         case touchID
         case faceID
+        case opticID
 
         fileprivate init() {
             let context = LAContext()
@@ -27,6 +28,8 @@ extension Biometrics {
                     self = .touchID
                 case .faceID:
                     self = .faceID
+                case .opticID:
+                    self = .opticID
                 case .none:
                     self = .none
                 @unknown default:
@@ -45,6 +48,8 @@ extension Biometrics {
                     return "Touch ID"
                 case .faceID:
                     return "Face ID"
+                case .opticID:
+                    return "Optic ID"
             }
         }
 
@@ -57,6 +62,12 @@ extension Biometrics {
                     return .touchid
                 case .faceID:
                     return .faceid
+                case .opticID:
+                    if #available(iOS 17.0, *) {
+                        return .opticid
+                    } else {
+                        return .faceid
+                    }
             }
         }
     }

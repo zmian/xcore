@@ -18,8 +18,4 @@ class ViewControllerTestCase: TestCase {
         super.setUp()
         viewController.loadViewIfNeeded()
     }
-
-    override func tearDown() {
-        super.tearDown()
-    }
 }

@@ -32,6 +32,8 @@ extension Biometrics.Kind: CustomAnalyticsValueConvertible {
                 return "touch_id"
             case .faceID:
                 return "face_id"
+            case .opticID:
+                return "optic_id"
         }
     }
 }
