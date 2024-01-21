@@ -11,6 +11,7 @@ import SwiftUI
 /// An AnyShape allows changing the type of shap used in a given view hierarchy.
 /// Whenever the type of shape used with an AnyShape changes, the old hierarchy
 /// is destroyed and a new hierarchy is created for the new type.
+@available(iOS, introduced: 14, deprecated: 16, message: "Use AnyShape directly.")
 public struct AnyShape: Shape {
     private let _path: (CGRect) -> Path
 

@@ -41,6 +41,9 @@ extension Calendar.Component: RawRepresentable {
                 self = .calendar
             case Self.timeZone.rawValue:
                 self = .timeZone
+            // #available(iOS 17, *)
+            // case Self.isLeapMonth.rawValue:
+                // self = .isLeapMonth
             default:
                 return nil
         }
@@ -80,6 +83,8 @@ extension Calendar.Component: RawRepresentable {
                 return "calendar"
             case .timeZone:
                 return "timeZone"
+            case .isLeapMonth:
+                return "isLeapMonth"
             @unknown default:
                 return "unknown"
         }

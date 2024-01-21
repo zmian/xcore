@@ -19,9 +19,10 @@ extension Device {
         public static let touchID = Capability(rawValue: 1 << 0)
         /// - SeeAlso: `Device.current.biometrics.isAvailable` and `Device.current.biometrics.kind`.
         public static let faceID = Capability(rawValue: 1 << 1)
-        public static let notch = Capability(rawValue: 1 << 2)
-        public static let homeIndicator = Capability(rawValue: 1 << 3)
-        public static let iPhoneXSeries: Capability = [.notch, .faceID, .homeIndicator]
+        public static let opticID = Capability(rawValue: 1 << 2)
+        public static let notch = Capability(rawValue: 1 << 3)
+        public static let homeIndicator = Capability(rawValue: 1 << 4)
+        public static let iPhoneXSeries: Capability = [.notch, .faceID, .opticID, .homeIndicator]
     }
 }
 
@@ -42,6 +43,8 @@ extension Device {
                 capability.update(with: .touchID)
             case .faceID:
                 capability.update(with: .faceID)
+            case .opticID:
+                capability.update(with: .opticID)
             case .none:
                 break
         }

@@ -26,6 +26,9 @@ public enum UserInterfaceIdiom: Hashable, CustomStringConvertible {
     /// An interface designed for Apple Watch.
     case watch
 
+    /// An interface designed for Apple Vision.
+    case vision
+
     /// An unspecified idiom.
     case unspecified
 
@@ -43,6 +46,8 @@ public enum UserInterfaceIdiom: Hashable, CustomStringConvertible {
                 return "Apple TV"
             case .watch:
                 return "Apple Watch"
+            case .vision:
+                return "Apple Vision"
             case .unspecified:
                 return "Unspecified"
         }
@@ -69,6 +74,8 @@ extension UserInterfaceIdiom {
                 return .phone
             case .tv:
                 return .tv
+            case .vision:
+                return .vision
             case .unspecified:
                 return .unspecified
             @unknown default:
