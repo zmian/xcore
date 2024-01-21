@@ -78,7 +78,7 @@ struct DefaultDynamicTextFieldView: View {
 
     private var placeholderView: some View {
         configuration.label
-            .foregroundColor {
+            .foregroundStyle {
                 if text.isEmpty {
                     return attributes.placeholderColor
                 }

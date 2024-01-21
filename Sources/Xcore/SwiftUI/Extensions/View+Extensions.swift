@@ -42,16 +42,19 @@ extension View {
 // MARK: - ForegroundColor
 
 extension View {
-    /// Sets the color of the foreground elements displayed by this view.
+    /// Sets a view’s foreground elements to use a given style.
     ///
-    /// - Parameter color: A closure to return foreground color to use when
-    ///   displaying this view. Return `nil` to remove any custom foreground color
-    ///   and to allow the system or the container to provide its own foreground
-    ///   color. If a container-specific override doesn’t exist, the system uses the
-    ///   primary color.
-    /// - Returns: A view that uses the foreground color you supply.
-    public func foregroundColor(_ color: () -> Color?) -> some View {
-        foregroundColor(color())
+    /// - Parameter color: A closure to return color or pattern to use when filling
+    ///  in the foreground elements. To indicate a specific value, use ``Color`` or
+    ///  ``image(_:sourceRect:scale:)``, or one of the gradient types, like
+    ///  ``linearGradient(colors:startPoint:endPoint:)``. To set a style that’s
+    ///  relative to the containing view’s style, use one of the semantic styles,
+    ///  like ``primary``.
+    /// - Returns: A view that uses the given foreground style.
+    public func foregroundStyle<S: ShapeStyle>(_ style: () -> S?) -> some View {
+        unwrap(style()) { view, style in
+            view.foregroundStyle(style)
+        }
     }
 }
 
@@ -67,15 +70,19 @@ extension Text {
     ///
     /// ```swift
     /// Text("Red")
-    ///     .foregroundColor {
+    ///     .foregroundStyle {
     ///         isActive ? .red : nil
     ///     }
     /// ```
     ///
     /// - Parameter color: The color to use when displaying this text.
     /// - Returns: A text view that uses the color value you supply.
-    public func foregroundColor(_ color: () -> Color?) -> Text {
-        foregroundColor(color())
+    public func foregroundStyle(_ style: () -> Color?) -> Text {
+        if let s = style() {
+            foregroundColor(s)
+        } else {
+            self
+        }
     }
 }
 

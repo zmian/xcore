@@ -7,10 +7,12 @@
 import SwiftUI
 
 extension Font {
+    /// A structure representing a typeface for given weight and trait.
     public typealias Typeface = UIFont.Typeface
 }
 
 extension UIFont {
+    /// A structure representing a typeface for given weight and trait.
     public struct Typeface {
         private let block: (Weight, Trait) -> String
 
