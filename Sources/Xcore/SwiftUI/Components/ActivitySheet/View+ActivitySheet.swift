@@ -192,16 +192,16 @@ private final class ActivitySheetViewPresenter: UIViewController {
             $0.excludedActivityTypes = excludedActivityTypes
             $0.popoverPresentationController?.sourceView = view
             $0.completionWithItemsHandler = { [weak self] type, completed, _, _ in
-                guard let strongSelf = self else { return }
+                guard let self else { return }
 
-                strongSelf.isPresented.wrappedValue = false
+                isPresented.wrappedValue = false
 
                 if completed {
                     if let type {
-                        strongSelf.onComplete?(type)
+                        onComplete?(type)
                     }
                 } else {
-                    strongSelf.onDismiss?()
+                    onDismiss?()
                 }
             }
         }

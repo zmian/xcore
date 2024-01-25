@@ -36,7 +36,7 @@ final class LocalImageFetcher: ImageFetcher {
 
                 DispatchQueue.global(qos: .userInteractive).asyncSafe { [weak self] in
                     guard
-                        let strongSelf = self,
+                        let self,
                         let url = URL(string: value),
                         url.schemeType == .file,
                         let data = try? Data(contentsOf: url),
@@ -49,7 +49,7 @@ final class LocalImageFetcher: ImageFetcher {
                     }
 
                     if let cacheKey {
-                        strongSelf.cache.setObject(image, forKey: cacheKey)
+                        cache.setObject(image, forKey: cacheKey)
                     }
 
                     DispatchQueue.main.asyncSafe {

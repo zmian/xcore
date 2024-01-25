@@ -18,10 +18,10 @@ extension AVPlayer {
         let interval = CMTime(value: 1, timescale: 1)
 
         return addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] _ in
-            guard let strongSelf = self else { return }
-            let currentTime = strongSelf.currentTime()
+            guard let self else { return }
+            let currentTime = currentTime()
             let normalizedTime = Int(Double(currentTime.value) / Double(currentTime.timescale))
-            block(normalizedTime, strongSelf.format(seconds: normalizedTime))
+            block(normalizedTime, format(seconds: normalizedTime))
         }
     }
 

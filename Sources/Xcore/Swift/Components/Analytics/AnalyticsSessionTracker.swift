@@ -49,11 +49,11 @@ public final class AnalyticsSessionTracker {
     /// be considered in the same session then `values` cache is invalidated.
     private func addAppPhaseObserver() {
         cancellable = appPhase.receive.sink { [weak self] appPhase in
-            guard let strongSelf = self else { return }
+            guard let self else { return }
 
             switch appPhase {
                 case .background:
-                    strongSelf.lastActiveTime = DispatchTime.now().uptimeNanoseconds
+                    lastActiveTime = DispatchTime.now().uptimeNanoseconds
                 case .willEnterForeground:
                     // TODO: Switch to Clock API
 
@@ -61,9 +61,9 @@ public final class AnalyticsSessionTracker {
                     // of an edge case that can happen with `Date` if the user changes their
                     // timezone. `DispatchTime` is agnostic of any timezone changes, and it works
                     // consistently.
-                    if DispatchTime.seconds(elapsedSince: strongSelf.lastActiveTime) > strongSelf.sessionExpirationDuration {
+                    if DispatchTime.seconds(elapsedSince: lastActiveTime) > sessionExpirationDuration {
                         // Invalidate cache
-                        strongSelf.values.removeAll()
+                        values.removeAll()
                     }
                 default:
                     break

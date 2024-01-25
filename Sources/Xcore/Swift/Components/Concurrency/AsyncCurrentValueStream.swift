@@ -84,12 +84,12 @@ extension AsyncCurrentValueStream {
         let id = UUID()
 
         let stream = AsyncStream<Element> { [weak self] continuation in
-            guard let strongSelf = self else {
+            guard let self else {
                 return continuation.finish()
             }
 
-            continuation.yield(strongSelf.value)
-            strongSelf.continuations[id] = continuation
+            continuation.yield(value)
+            continuations[id] = continuation
 
             continuation.onTermination = { [weak self] _ in
                 self?.continuations[id] = nil
