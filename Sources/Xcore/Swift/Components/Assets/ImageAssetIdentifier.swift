@@ -90,8 +90,8 @@ extension UIImageView {
     public convenience init(assetIdentifier: ImageAssetIdentifier?) {
         self.init()
         setImage(assetIdentifier) { [weak self] image in
-            guard let strongSelf = self else { return }
-            strongSelf.image = image
+            guard let self else { return }
+            self.image = image
         }
     }
 }

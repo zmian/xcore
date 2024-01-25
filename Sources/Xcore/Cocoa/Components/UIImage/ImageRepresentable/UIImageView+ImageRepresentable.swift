@@ -35,10 +35,10 @@ extension UIImageView {
         }
 
         UIImage.Fetcher.fetch(imageRepresentable, in: self) { [weak self] result in
-            guard let strongSelf = self else { return }
+            guard let self else { return }
             let result = try? result.get()
             let animated = alwaysAnimate || (result?.cacheType ?? .none).possiblyDelayed
-            strongSelf.postProcess(
+            postProcess(
                 image: result?.image,
                 source: imageRepresentable,
                 animationDuration: animated ? animationDuration : 0,
@@ -80,14 +80,14 @@ extension UIImageView {
             alwaysAnimate: alwaysAnimate,
             animationDuration: animationDuration
         ) { [weak self] image in
-            guard let strongSelf = self else { return }
+            guard let self else { return }
 
             guard image == nil else {
                 callback?(image)
                 return
             }
 
-            strongSelf.setImage(
+            setImage(
                 defaultImage,
                 alwaysAnimate: alwaysAnimate,
                 animationDuration: animationDuration,
@@ -123,9 +123,9 @@ extension UIImageView {
         }
 
         DispatchQueue.global(qos: .userInteractive).syncSafe { [weak self] in
-            guard let strongSelf = self else { return }
+            guard let self else { return }
             image = image.applying(transform, source: source)
-            strongSelf.applyImage(image, animationDuration: animationDuration, callback)
+            applyImage(image, animationDuration: animationDuration, callback)
         }
     }
 
@@ -135,8 +135,8 @@ extension UIImageView {
         _ callback: ((_ image: UIImage?) -> Void)?
     ) {
         DispatchQueue.main.asyncSafe { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.setUIImage(image, animationDuration: animationDuration)
+            guard let self else { return }
+            setUIImage(image, animationDuration: animationDuration)
             callback?(image)
         }
     }
