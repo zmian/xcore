@@ -100,13 +100,3 @@ extension UIImageView {
 public func r(_ assetIdentifier: ImageAssetIdentifier) -> ImageAssetIdentifier {
     assetIdentifier
 }
-
-// MARK: - Buit-in Assets
-
-extension ImageAssetIdentifier {
-    private static func propertyName(_ name: String = #function) -> Self {
-        .init(rawValue: name, bundle: .xcore)
-    }
-
-    public static var filterIcon: Self { propertyName() }
-}
