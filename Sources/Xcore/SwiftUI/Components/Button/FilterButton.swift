@@ -20,7 +20,7 @@ public struct FilterButton: View {
         Button(action: action) {
             HStack(spacing: .s1) {
                 badge
-                Image(assetIdentifier: .filterIcon)
+                Image(system: .line3HorizontalDecrease)
             }
         }
     }
