@@ -76,7 +76,7 @@ extension Theme {
             }
         },
 
-        // Chrome
-        statusBarStyle: .default
+        // Toolbar
+        toolbarColorScheme: nil
     )
 }
