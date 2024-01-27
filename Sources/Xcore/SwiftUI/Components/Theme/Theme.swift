@@ -140,9 +140,9 @@ public struct Theme: Identifiable, MutableAppliable, UserInfoContainer {
     public var buttonTextColor: ButtonColor
     public var buttonBackgroundColor: ButtonColor
 
-    // MARK: - Chrome
+    // MARK: - Toolbar
 
-    public var statusBarStyle: UIStatusBarStyle
+    public var toolbarColorScheme: ColorScheme?
 
     /// Additional info which may be used to describe the theme further.
     public var userInfo: UserInfo
@@ -181,8 +181,8 @@ public struct Theme: Identifiable, MutableAppliable, UserInfoContainer {
         buttonTextColor: @escaping ButtonColor,
         buttonBackgroundColor: @escaping ButtonColor,
 
-        // Chrome
-        statusBarStyle: UIStatusBarStyle,
+        // Toolbar
+        toolbarColorScheme: ColorScheme? = nil,
 
         // UserInfo
         userInfo: UserInfo = [:]
@@ -220,8 +220,8 @@ public struct Theme: Identifiable, MutableAppliable, UserInfoContainer {
         self.buttonTextColor = buttonTextColor
         self.buttonBackgroundColor = buttonBackgroundColor
 
-        // Chrome
-        self.statusBarStyle = statusBarStyle
+        // Toolbar
+        self.toolbarColorScheme = toolbarColorScheme
 
         // UserInfo
         self.userInfo = userInfo
