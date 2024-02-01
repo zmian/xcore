@@ -46,7 +46,7 @@ private struct ListRowModifier: ViewModifier {
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
                 .overlay(separator, alignment: .bottom)
-                .contentShape(Rectangle())
+                .contentShape(.rect)
         }
 
         private var separator: some View {

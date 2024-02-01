@@ -93,7 +93,7 @@ extension StoryView {
     private func advanceButton(isLeft: Bool) -> some View {
         Rectangle()
             .foregroundColor(.clear)
-            .contentShape(Rectangle())
+            .contentShape(.rect)
             .onTapGesture {
                 storyTimer.advance(by: isLeft ? -1 : 1)
             }

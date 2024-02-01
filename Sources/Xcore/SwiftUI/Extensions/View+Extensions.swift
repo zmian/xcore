@@ -173,6 +173,6 @@ extension View {
 
     /// Clips the content by setting offset Y by given value.
     public func clipped(offsetY: CGFloat) -> some View {
-        clipShape(Rectangle().offset(y: offsetY))
+        clipShape(.rect.offset(y: offsetY))
     }
 }
