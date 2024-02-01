@@ -26,11 +26,9 @@ public struct Triangle: Shape, Sendable {
 
 // MARK: - Preview
 
-struct Triangle_Previews: PreviewProvider {
-    static var previews: some View {
-        Triangle()
-            .stroke(lineWidth: 13)
-            .frame(300)
-            .padding()
-    }
+#Preview {
+    Triangle()
+        .stroke(lineWidth: 13)
+        .frame(300)
+        .padding()
 }

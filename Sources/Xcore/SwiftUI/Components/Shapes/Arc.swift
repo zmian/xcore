@@ -59,20 +59,18 @@ public struct Arc: InsettableShape, Sendable {
 
 // MARK: - Preview
 
-struct Arc_Previews: PreviewProvider {
-    static var previews: some View {
-        Arc(startAngle: .degrees(0), endAngle: .degrees(180), clockwise: true)
-            .strokeBorder(
-                AngularGradient(
-                    gradient: Gradient(colors: [.white, .orange]),
-                    center: .center,
-                    startAngle: .degrees(180),
-                    endAngle: .degrees(360)
-                ),
-                lineWidth: 50
-            )
-            .background(Color.black.opacity(0.5))
-            .aspectRatio(CGSize(width: 1, height: 0.5), contentMode: .fit)
-            .previewLayout(.sizeThatFits)
-    }
+#Preview {
+    Arc(startAngle: .degrees(0), endAngle: .degrees(180), clockwise: true)
+        .strokeBorder(
+            AngularGradient(
+                gradient: Gradient(colors: [.white, .orange]),
+                center: .center,
+                startAngle: .degrees(180),
+                endAngle: .degrees(360)
+            ),
+            lineWidth: 50
+        )
+        .background(Color.black.opacity(0.5))
+        .aspectRatio(CGSize(width: 1, height: 0.5), contentMode: .fit)
+        .previewLayout(.sizeThatFits)
 }

@@ -193,11 +193,9 @@ extension ButtonsView {
     }
 }
 
-// MARK: - Previews
+// MARK: - Preview
 
-struct ButtonsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ButtonsView()
-            .embedInNavigation()
-    }
+#Preview {
+    ButtonsView()
+        .embedInNavigation()
 }

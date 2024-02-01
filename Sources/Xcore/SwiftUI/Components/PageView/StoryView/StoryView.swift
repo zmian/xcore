@@ -169,36 +169,34 @@ extension StoryView {
     }
 }
 
-// MARK: - Previews
+// MARK: - Preview
 
-struct StoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        struct Colorful: Identifiable {
-            let id: Int
-            let color: Color
-        }
+#Preview {
+    struct Colorful: Identifiable {
+        let id: Int
+        let color: Color
+    }
 
-        let pages = [
-            Colorful(id: 1, color: .green),
-            Colorful(id: 2, color: .blue),
-            Colorful(id: 3, color: .purple)
-        ]
+    let pages = [
+        Colorful(id: 1, color: .green),
+        Colorful(id: 2, color: .blue),
+        Colorful(id: 3, color: .purple)
+    ]
 
-        return StoryView(cycle: .once, pages: pages) { page in
-            VStack {
-                Text("Page")
-                Text("#")
-                    .baselineOffset(70)
-                    .font(.system(size: 100)) +
-                    Text("\(page.id)")
-                    .font(.system(size: 200))
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        } background: { page in
-            page.color
+    return StoryView(cycle: .once, pages: pages) { page in
+        VStack {
+            Text("Page")
+            Text("#")
+                .baselineOffset(70)
+                .font(.system(size: 100)) +
+            Text("\(page.id)")
+                .font(.system(size: 200))
         }
-        .onCycleComplete { count in
-            print(count)
-        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    } background: { page in
+        page.color
+    }
+    .onCycleComplete { count in
+        print(count)
     }
 }

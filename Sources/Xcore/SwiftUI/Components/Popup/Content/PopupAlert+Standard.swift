@@ -85,34 +85,32 @@ extension StandardPopupAlert where Header == Never {
     }
 }
 
-// MARK: - Previews
+// MARK: - Preview
 
-struct StandardPopupAlert_Previews: PreviewProvider {
-    private static let L = Samples.Strings.deleteMessageAlert
+#Preview {
+    Group {
+        let L = Samples.Strings.deleteMessageAlert
 
-    static var previews: some View {
-        Group {
-            StandardPopupAlert(L.title, message: L.message) {
-                HStack {
-                    Button("Cancel") {
-                        print("Cancel Tapped")
-                    }
-                    .buttonStyle(.outline)
-
-                    Button("Delete") {
-                        print("Delete Tapped")
-                    }
-                    .buttonStyle(.fill)
+        StandardPopupAlert(L.title, message: L.message) {
+            HStack {
+                Button("Cancel") {
+                    print("Cancel Tapped")
                 }
-            }
+                .buttonStyle(.outline)
 
-            StandardPopupAlert(L.title, message: L.message) {
-                EmptyView()
+                Button("Delete") {
+                    print("Delete Tapped")
+                }
+                .buttonStyle(.fill)
             }
         }
-        .padding(.defaultSpacing)
-        .frame(max: .infinity)
-        .background(.secondary.opacity(0.15))
-        .previewLayout(.sizeThatFits)
+
+        StandardPopupAlert(L.title, message: L.message) {
+            EmptyView()
+        }
     }
+    .padding(.defaultSpacing)
+    .frame(max: .infinity)
+    .background(.secondary.opacity(0.15))
+    .previewLayout(.sizeThatFits)
 }

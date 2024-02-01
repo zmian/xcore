@@ -84,7 +84,7 @@ private struct CustomBottomSheetButtonStyle: ButtonStyle {
     }
 }
 
-// MARK: - Previews
+// MARK: - Preview
 
 #Preview {
     CustomBottomSheet {

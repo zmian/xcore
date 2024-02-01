@@ -105,11 +105,9 @@ struct XLabeledContentView: View {
     }
 }
 
-// MARK: - Previews
+// MARK: - Preview
 
-struct XLabeledContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        XLabeledContentView()
-            .embedInNavigation()
-    }
+#Preview {
+    XLabeledContentView()
+        .embedInNavigation()
 }

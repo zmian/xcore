@@ -23,18 +23,16 @@ public struct StoryProgressIndicator: View {
     }
 }
 
-// MARK: - Previews
+// MARK: - Preview
 
-struct StoryProgressIndicator_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            StoryProgressIndicator(progress: 0)
-            StoryProgressIndicator(progress: 1.0)
-            StoryProgressIndicator(progress: 0.8)
-                .storyProgressIndicatorColor(.purple)
-        }
-        .padding(20)
-        .background(.black)
-        .previewLayout(.sizeThatFits)
+#Preview {
+    Group {
+        StoryProgressIndicator(progress: 0)
+        StoryProgressIndicator(progress: 1.0)
+        StoryProgressIndicator(progress: 0.8)
+            .storyProgressIndicatorColor(.purple)
     }
+    .padding(20)
+    .background(.black)
+    .previewLayout(.sizeThatFits)
 }
