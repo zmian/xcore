@@ -20,7 +20,7 @@ public struct ToolbarButtonStyle: ButtonStyle {
                 .opacity(isEnabled ? 1 : 0.2)
                 .scaleOpacityEffect(configuration.isPressed)
                 .frame(min: 44, alignment: .trailing)
-                .contentShape(Rectangle())
+                .contentShape(.rect)
         }
     }
 }

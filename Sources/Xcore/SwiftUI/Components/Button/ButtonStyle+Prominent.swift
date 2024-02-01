@@ -140,11 +140,11 @@ extension ButtonStyle where Self == ProminentButtonStyle<RoundedRectangle> {
 
 extension ButtonStyle where Self == ProminentButtonStyle<Capsule> {
     public static var capsule: Self {
-        .fill(shape: Capsule())
+        .fill(shape: .capsule)
     }
 
     public static var capsuleOutline: Self {
-        .outline(shape: Capsule())
+        .outline(shape: .capsule)
     }
 
     static var primary: Self { capsule }

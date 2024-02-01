@@ -142,7 +142,7 @@ private struct ShowPartDetail: View {
                 Text("Name: \(detail.name)")
                 Text("Quantity On-Hand: \(detail.quantity)")
             }
-            .contentShape(Rectangle())
+            .contentShape(.rect)
             .onTapGesture {
                 popupDetail = nil
             }

@@ -84,7 +84,7 @@ private struct ShowcaseFieldPreview: View {
                 case .prominent1:
                     return AnyDynamicTextFieldStyle(.prominent(.fill))
                 case .prominent2:
-                    return AnyDynamicTextFieldStyle(.prominent(.outline, shape: Capsule()))
+                    return AnyDynamicTextFieldStyle(.prominent(.outline, shape: .capsule))
             }
         }
     }

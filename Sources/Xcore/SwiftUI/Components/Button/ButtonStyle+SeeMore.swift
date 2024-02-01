@@ -26,7 +26,7 @@ public struct SeeMoreButtonStyle: ButtonStyle {
                 configuration.isPressed,
                 effects: [.opacity, .scale(anchor: alignment.unitPoint ?? .center)]
             )
-            .contentShape(Rectangle())
+            .contentShape(.rect)
     }
 }
 

@@ -38,7 +38,7 @@ public struct CapsuleView<Label>: View where Label: View {
         .padding(.horizontal)
         .frame(minHeight: 56)
         .background(Color(light: .systemBackground, dark: .secondarySystemBackground))
-        .clipShape(Capsule())
+        .clipShape(.capsule)
         .floatingShadow()
         .accessibilityElement(children: .combine)
     }
