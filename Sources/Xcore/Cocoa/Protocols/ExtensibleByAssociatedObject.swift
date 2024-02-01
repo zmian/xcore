@@ -20,8 +20,8 @@ import Foundation
 ///
 ///     /// A property indicating the date when the timer was paused.
 ///     var pauseDate: Date? {
-///         get { associatedObject(AssociatedKey.pauseDate) }
-///         set { setAssociatedObject(AssociatedKey.pauseDate, value: newValue) }
+///         get { associatedObject(&AssociatedKey.pauseDate) }
+///         set { setAssociatedObject(&AssociatedKey.pauseDate, value: newValue) }
 ///     }
 /// }
 /// ```
