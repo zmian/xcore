@@ -43,7 +43,7 @@ private struct MailAppViewModifier: ViewModifier {
     @Dependency(\.openUrl) private var openUrl
     private let apps = MailApp.available
     @Binding var isPresented: Bool
-    private var sheetPresented: Binding<Bool> {
+    private var isSheetPresented: Binding<Bool> {
         .init(
             get: { isPresented && apps.count > 1 },
             set: { isPresented = $0 }
@@ -62,8 +62,8 @@ private struct MailAppViewModifier: ViewModifier {
                     self.isPresented = false
                 }
             }
-            .popup(isPresented: sheetPresented, style: .sheet) {
-                StandardPopupSheet(L.open) {
+            .sheet(isPresented: isSheetPresented) {
+                CustomBottomSheet(L.open) {
                     ForEach(apps) { app in
                         Button(app.name) {
                             openUrl(app.url)

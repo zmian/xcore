@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-public struct StandardPopupSheet<Content: View, Header: View>: View {
+public struct CustomBottomSheet<Content: View, Header: View>: View {
     @Environment(\.theme) private var theme
     @Environment(\.multilineTextAlignment) private var textAlignment
     private let content: () -> Content
@@ -21,32 +21,30 @@ public struct StandardPopupSheet<Content: View, Header: View>: View {
     }
 
     public var body: some View {
-        PopupSheet {
-            VStack(spacing: 0) {
-                if Header.self != Never.self {
-                    header()
-                        .padding(.horizontal, .defaultSpacing)
-                        .padding(.vertical, .defaultSpacing * 1.2)
-                        .frame(maxWidth: .infinity)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .separator()
-                        .accessibilityAddTraits(.isHeader)
-                }
-
-                content()
-                    .buttonStyle(StandardPopupSheetButtonStyle())
+        VStack(spacing: 0) {
+            if Header.self != Never.self {
+                header()
+                    .padding(.horizontal, .defaultSpacing)
+                    .padding(.vertical, .defaultSpacing * 1.2)
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
                     .separator()
+                    .accessibilityAddTraits(.isHeader)
             }
-            .clipLastSeparator()
+
+            content()
+                .buttonStyle(CustomBottomSheetButtonStyle())
+                .separator()
         }
-        .environment(\.defaultMinListRowHeight, 0)
+        .clipLastSeparator()
+        .presentationDetents(.contentHeight(padding: 0))
     }
 }
 
 // MARK: - Inits
 
-extension StandardPopupSheet where Header == Text? {
+extension CustomBottomSheet where Header == Text? {
     public init(
         _ title: String? = nil,
         @ViewBuilder content: @escaping () -> Content
@@ -62,7 +60,7 @@ extension StandardPopupSheet where Header == Text? {
 
 // MARK: - ButtonStyle
 
-private struct StandardPopupSheetButtonStyle: ButtonStyle {
+private struct CustomBottomSheetButtonStyle: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         InternalBody(configuration: configuration)
     }
@@ -76,7 +74,7 @@ private struct StandardPopupSheetButtonStyle: ButtonStyle {
             configuration.label
                 .frame(maxWidth: .infinity, alignment: textAlignment.alignment)
                 .padding(.defaultSpacing)
-                .contentShape(Rectangle())
+                .contentShape(.rect)
                 .opacity(opacity)
         }
 
@@ -88,17 +86,15 @@ private struct StandardPopupSheetButtonStyle: ButtonStyle {
 
 // MARK: - Previews
 
-struct StandardPopupSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        StandardPopupSheet {
-            Button("Option 1") {}
-            Button("Option 2") {}
-            Button("Option 3") {}
-        } header: {
-            Label("Sheet Title", systemImage: .tv)
-                .font(.app(.title3))
-        }
-        .frame(max: .infinity, alignment: .bottom)
-        .background(.secondary)
+#Preview {
+    CustomBottomSheet {
+        Button("Option 1") {}
+        Button("Option 2") {}
+        Button("Option 3") {}
+    } header: {
+        Label("Sheet Title", systemImage: .tv)
+            .font(.app(.title3))
     }
+    .frame(max: .infinity, alignment: .bottom)
+    .background(.secondary)
 }
