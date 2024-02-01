@@ -38,35 +38,33 @@ public struct HorizontalBarProgressViewStyle: ProgressViewStyle {
     }
 }
 
-// MARK: - Previews
+// MARK: - Preview
 
-struct HorizontalBarProgressViewStyle_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            ProgressView()
-                .colorScheme(.dark)
+#Preview {
+    Group {
+        ProgressView()
+            .colorScheme(.dark)
 
-            ProgressView(value: 0.5)
-                .tint(.green)
+        ProgressView(value: 0.5)
+            .tint(.green)
 
-            ProgressView(value: 0.8)
-                .progressViewStyle(.horizontalBar)
+        ProgressView(value: 0.8)
+            .progressViewStyle(.horizontalBar)
 
-            ProgressView(value: 0.0)
-                .progressViewStyle(.horizontalBar)
+        ProgressView(value: 0.0)
+            .progressViewStyle(.horizontalBar)
 
-            ProgressView(value: 1.0)
-                .progressViewStyle(.horizontalBar)
-                .tint(.yellow)
+        ProgressView(value: 1.0)
+            .progressViewStyle(.horizontalBar)
+            .tint(.yellow)
 
-            ProgressView(value: 0.8)
-                .progressViewStyle(.horizontalBar)
-                .tint(.green)
-        }
-        .padding(20)
-        .background(.black)
-        .previewLayout(.sizeThatFits)
+        ProgressView(value: 0.8)
+            .progressViewStyle(.horizontalBar)
+            .tint(.green)
     }
+    .padding(20)
+    .background(.black)
+    .previewLayout(.sizeThatFits)
 }
 
 // MARK: - Dot Syntax Support

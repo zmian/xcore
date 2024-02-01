@@ -47,34 +47,32 @@ public struct PopupAlert<Content>: View where Content: View {
     }
 }
 
-// MARK: - Previews
+// MARK: - Preview
 
-struct PopupAlert_Previews: PreviewProvider {
-    private static let L = Samples.Strings.deleteMessageAlert
+#Preview {
+    Group {
+        let L = Samples.Strings.deleteMessageAlert
 
-    static var previews: some View {
-        Group {
-            PopupAlert {
-                HStack {
-                    Button("Cancel") {
-                        print("Cancel Tapped")
-                    }
-                    .buttonStyle(.outline)
-
-                    Button("Delete") {
-                        print("Delete Tapped")
-                    }
-                    .buttonStyle(.fill)
+        PopupAlert {
+            HStack {
+                Button("Cancel") {
+                    print("Cancel Tapped")
                 }
-            }
+                .buttonStyle(.outline)
 
-            PopupAlert {
-                Text(L.title)
-                Text(L.message)
+                Button("Delete") {
+                    print("Delete Tapped")
+                }
+                .buttonStyle(.fill)
             }
         }
-        .padding(.defaultSpacing)
-        .background(.secondary.opacity(0.15))
-        .previewLayout(.sizeThatFits)
+
+        PopupAlert {
+            Text(L.title)
+            Text(L.message)
+        }
     }
+    .padding(.defaultSpacing)
+    .background(.secondary.opacity(0.15))
+    .previewLayout(.sizeThatFits)
 }

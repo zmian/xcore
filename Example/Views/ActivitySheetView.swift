@@ -45,11 +45,9 @@ struct ActivitySheetView: View {
     }
 }
 
-// MARK: - Previews
+// MARK: - Preview
 
-struct ActivitySheetView_Previews: PreviewProvider {
-    static var previews: some View {
-        ActivitySheetView()
-            .embedInNavigation()
-    }
+#Preview {
+    ActivitySheetView()
+        .embedInNavigation()
 }

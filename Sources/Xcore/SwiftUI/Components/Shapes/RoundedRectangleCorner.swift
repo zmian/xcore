@@ -33,16 +33,14 @@ public struct RoundedRectangleCorner: Shape, Sendable {
 
 // MARK: - Preview
 
-struct RoundedRectangleCorner_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            RoundedRectangleCorner(radius: 75, corners: [.topLeft, .bottomRight])
-                .fill(.blue)
-            RoundedRectangleCorner(radius: 75, corners: .top)
-                .fill(.orange)
-            RoundedRectangleCorner(radius: 75, corners: .bottom)
-                .fill(.green)
-        }
-        .frame(150)
+#Preview {
+    VStack {
+        RoundedRectangleCorner(radius: 75, corners: [.topLeft, .bottomRight])
+            .fill(.blue)
+        RoundedRectangleCorner(radius: 75, corners: .top)
+            .fill(.orange)
+        RoundedRectangleCorner(radius: 75, corners: .bottom)
+            .fill(.green)
     }
+    .frame(150)
 }

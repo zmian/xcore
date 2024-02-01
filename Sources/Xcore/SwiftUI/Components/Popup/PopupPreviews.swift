@@ -109,13 +109,11 @@ private struct PopupPreviews: View {
     }
 }
 
-// MARK: - Preview Provider
+// MARK: - Preview
 
-struct Popup_Previews: PreviewProvider {
-    static var previews: some View {
-        PopupPreviews()
-            .embedInNavigation()
-    }
+#Preview {
+    PopupPreviews()
+        .embedInNavigation()
 }
 
 extension Samples {

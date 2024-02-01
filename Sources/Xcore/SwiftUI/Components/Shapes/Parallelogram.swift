@@ -40,18 +40,14 @@ public struct Parallelogram: Shape, Sendable {
     }
 }
 
-// MARK: - Preview
+#Preview {
+    ZStack {
+        Parallelogram(depth: 150)
+            .stroke(Color.black, lineWidth: 13)
 
-struct Parallelogram_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            Parallelogram(depth: 150)
-                .stroke(Color.black, lineWidth: 13)
-
-            Parallelogram(depth: 150, isFlipped: true)
-                .stroke(Color.red, lineWidth: 13)
-        }
-        .frame(300)
-        .padding()
+        Parallelogram(depth: 150, isFlipped: true)
+            .stroke(Color.red, lineWidth: 13)
     }
+    .frame(300)
+    .padding()
 }

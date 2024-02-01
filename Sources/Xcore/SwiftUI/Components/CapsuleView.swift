@@ -114,13 +114,11 @@ extension CapsuleView<Never> {
 
 #if DEBUG
 
-// MARK: - Preview Provider
+// MARK: - Preview
 
-struct CapsuleView_Previews: PreviewProvider {
-    static var previews: some View {
-        Samples.capsuleViewPreviews
-            .colorScheme(.light)
-    }
+#Preview {
+    Samples.capsuleViewPreviews
+        .colorScheme(.light)
 }
 
 extension Samples {

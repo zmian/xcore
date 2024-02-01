@@ -161,12 +161,10 @@ private struct DataFormatTypesFieldPreview: View {
     }
 }
 
-// MARK: - Preview Provider
+// MARK: - Preview
 
-struct DynamicTextField_Previews: PreviewProvider {
-    static var previews: some View {
-        Samples.dynamicTextFieldPreviews
-    }
+#Preview {
+    Samples.dynamicTextFieldPreviews
 }
 
 extension Samples {
