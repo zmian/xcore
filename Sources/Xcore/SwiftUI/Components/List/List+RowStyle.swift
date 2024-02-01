@@ -7,14 +7,8 @@
 import SwiftUI
 
 extension View {
-    public func listRowStyle() -> some View {
+    public func listRowStyle(insets: EdgeInsets? = nil) -> some View {
         modifier(ListRowModifier())
-    }
-
-    public func listRowStyle(insets: EdgeInsets? = nil, separator separatorStyle: ListRowSeparatorStyle) -> some View {
-        self
-            .listRowStyle()
-            .listRowSeparatorStyle(separatorStyle)
             .unwrap(insets) { content, insets in
                 content
                     .customListRowInsets(insets)
@@ -34,7 +28,6 @@ private struct ListRowModifier: ViewModifier {
     private struct InternalBody: View {
         @Environment(\.theme) private var theme
         @Environment(\.defaultMinListRowHeight) private var minHeight
-        @Environment(\.listRowSeparatorStyle) private var separatorStyle
         @Environment(\.customListRowInsets) private var rowInsets
         let content: Content
 
@@ -44,15 +37,6 @@ private struct ListRowModifier: ViewModifier {
                 .frame(maxWidth: .infinity, minHeight: minHeight, alignment: .leading)
                 .listRowInsets(.zero)
                 .listRowBackground(Color.clear)
-                .listRowSeparator(.hidden)
-                .overlay(separator, alignment: .bottom)
-                .contentShape(.rect)
-        }
-
-        private var separator: some View {
-            Separator()
-                .padding(separatorStyle.insets)
-                .hidden(separatorStyle == .hidden, remove: true)
         }
     }
 }

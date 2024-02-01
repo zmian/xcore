@@ -114,8 +114,7 @@ extension View {
         _ traits: XLabeledContentContentTraits = .none,
         dim: XLabeledContentDimContent = .none,
         alignment: VerticalAlignment = .center,
-        spacing: CGFloat? = .interItemHSpacing,
-        separator separatorStyle: ListRowSeparatorStyle? = nil
+        spacing: CGFloat? = .interItemHSpacing
     ) -> some View {
         xlabeledContentStyle(DefaultXLabeledContentStyle(
             traits: traits,
@@ -123,8 +122,5 @@ extension View {
             alignment: alignment,
             spacing: spacing
         ))
-        .unwrap(separatorStyle) {
-            $0.listRowSeparatorStyle($1)
-        }
     }
 }
