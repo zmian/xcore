@@ -77,7 +77,8 @@ private struct MailAppViewModifier: ViewModifier {
                         isPresented = false
                     }
                     .buttonStyle(.secondary)
-                    .padding(.defaultSpacing)
+                    .padding(.allButBottom, .defaultSpacing)
+                    .padding(.bottom, .onePixel)
                 }
             }
     }
