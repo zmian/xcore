@@ -19,7 +19,12 @@ struct MailApp: Hashable, Identifiable {
     }
 
     static var available: [Self] {
+        #if targetEnvironment(simulator)
+        // This allows us to see all the preview in simulator.
+        all
+        #else
         all.filter(\.isAvailable)
+        #endif
     }
 }
 
