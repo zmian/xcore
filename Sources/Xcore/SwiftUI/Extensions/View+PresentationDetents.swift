@@ -32,10 +32,10 @@ extension View {
 }
 
 public enum AppCustomPresentationDetent {
-    case contentHeight(padding: CGFloat?)
+    case contentHeight(insets: EdgeInsets?)
 
     public static var contentHeight: Self {
-        .contentHeight(padding: nil)
+        .contentHeight(insets: nil)
     }
 }
 
@@ -45,12 +45,11 @@ private struct PresentationDetentsViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         switch detent {
-            case let .contentHeight(padding):
+            case .contentHeight:
                 VStack(spacing: 0) {
                     content
                 }
-                .padding(.horizontal, padding ?? .defaultSpacing)
-                .padding(.top, padding ?? .s8)
+                .padding(insets)
                 .deviceSpecificBottomPadding()
                 .fixedSize(horizontal: false, vertical: true)
                 .readSize {
@@ -67,5 +66,13 @@ private struct PresentationDetentsViewModifier: ViewModifier {
                     }
                 }
         }
+    }
+
+    private var insets: EdgeInsets {
+        if case let .contentHeight(insets) = detent, let insets {
+            return insets
+        }
+
+        return EdgeInsets(horizontal: .defaultSpacing, top: .s8)
     }
 }

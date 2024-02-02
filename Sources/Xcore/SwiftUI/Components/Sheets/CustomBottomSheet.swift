@@ -38,7 +38,7 @@ public struct CustomBottomSheet<Content: View, Header: View>: View {
                 .separator()
         }
         .clipLastSeparator()
-        .presentationDetents(.contentHeight(padding: 0))
+        .presentationDetents(.contentHeight(insets: .zero))
     }
 }
 
