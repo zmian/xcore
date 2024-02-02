@@ -45,11 +45,11 @@ private struct PresentationDetentsViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         switch detent {
-            case .contentHeight:
+            case let .contentHeight(insets):
                 VStack(spacing: 0) {
                     content
                 }
-                .padding(insets)
+                .padding(insets ?? .init(horizontal: .defaultSpacing, top: .s8))
                 .deviceSpecificBottomPadding()
                 .fixedSize(horizontal: false, vertical: true)
                 .readSize {
@@ -66,13 +66,5 @@ private struct PresentationDetentsViewModifier: ViewModifier {
                     }
                 }
         }
-    }
-
-    private var insets: EdgeInsets {
-        if case let .contentHeight(insets) = detent, let insets {
-            return insets
-        }
-
-        return EdgeInsets(horizontal: .defaultSpacing, top: .s8)
     }
 }
