@@ -155,12 +155,4 @@ extension Popup.Style {
             dismissAfter: duration
         )
     }
-
-    /// A style that moves the popup in from the bottom edge of the screen.
-    public static let sheet = Self(
-        alignment: .bottom,
-        animation: .spring(),
-        transition: .move(edge: .bottom),
-        windowStyle: .init(label: "Sheet Window")
-    )
 }
