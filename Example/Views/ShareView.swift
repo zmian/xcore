@@ -9,11 +9,20 @@ import SwiftUI
 struct ShareView: View {
     var body: some View {
         List {
-            ShareLink("Share License Agreement", item: "License Agreement...")
-                .buttonStyle(.capsule)
+            Section {
+                ShareLink(item: "License Agreement...") {
+                    Label("Share License Agreement", systemImage: .doc)
+                }
+            }
 
-            ShareLink(item: "License Agreement...") {
-                Label("Share License Agreement", systemImage: .doc)
+            Section {
+                ShareLink("Share License Agreement", item: "License Agreement...")
+                    .buttonStyle(.capsule)
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                ShareLink("Share License Agreement", item: "License Agreement...")
             }
         }
     }
