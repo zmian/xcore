@@ -57,7 +57,7 @@ extension Menu: CaseIterable {
         popups,
         textFields,
         story,
-        activitySheet,
+        share,
         hapticFeedback,
         crypt
     ]
@@ -106,9 +106,9 @@ extension Menu {
         content: StoryPreviewView()
     )
 
-    private static let activitySheet = Self(
-        title: "Activity Sheet",
-        content: ActivitySheetView()
+    private static let share = Self(
+        title: "Share",
+        content: ShareView()
     )
 
     private static let hapticFeedback = Self(
