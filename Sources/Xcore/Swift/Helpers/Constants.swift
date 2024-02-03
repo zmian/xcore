@@ -114,16 +114,9 @@ extension URL {
 
     /// The URL to deep link to your app’s notification settings in the Settings
     /// app.
-    @available(iOS, introduced: 14, deprecated: 16, message: "Update implementation")
     @MainActor
     public static var notificationSettings: Self {
-        if #available(iOS 16.0, *) {
-            return URL(string: UIApplication.openNotificationSettingsURLString)!
-        } else if #available(iOS 15.4, *) {
-            return URL(string: UIApplicationOpenNotificationSettingsURLString)!
-        } else {
-            return settingsApp
-        }
+        URL(string: UIApplication.openNotificationSettingsURLString)!
     }
 }
 
