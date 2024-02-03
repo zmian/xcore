@@ -150,7 +150,7 @@ extension WebView {
                         $0.addAction(.valueChanged) { sender in
                             Task {
                                 // Sleep under a second to properly show the control.
-                                try await Task.sleep(seconds: 0.75)
+                                try await Task.sleep(for: .seconds(0.75))
                                 sender.endRefreshing()
                                 webView.reload()
                                 pullToRefreshHandler()
