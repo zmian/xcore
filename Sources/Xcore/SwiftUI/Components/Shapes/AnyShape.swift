@@ -6,25 +6,6 @@
 
 import SwiftUI
 
-/// A type-erased shape.
-///
-/// An AnyShape allows changing the type of shap used in a given view hierarchy.
-/// Whenever the type of shape used with an AnyShape changes, the old hierarchy
-/// is destroyed and a new hierarchy is created for the new type.
-@available(iOS, introduced: 14, deprecated: 16, message: "Use AnyShape directly.")
-public struct AnyShape: Shape {
-    private let _path: (CGRect) -> Path
-
-    /// Create an instance that type-erases shap.
-    public init(_ shape: some Shape) {
-        self._path = shape.path(in:)
-    }
-
-    public func path(in rect: CGRect) -> Path {
-        _path(rect)
-    }
-}
-
 /// A type-erased insettable shape.
 ///
 /// An AnyShape allows changing the type of shap used in a given view hierarchy.
