@@ -71,11 +71,7 @@ extension RequestReviewClient {
                     return
                 }
 
-                if #available(iOS 16.0, macOS 13.0, *) {
-                    EnvironmentValues().requestReview()
-                } else if let scene = UIApplication.sharedOrNil?.firstSceneKeyWindow?.windowScene {
-                    SKStoreReviewController.requestReview(in: scene)
-                }
+                EnvironmentValues().requestReview()
             }
         }
     }
