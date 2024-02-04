@@ -21,7 +21,7 @@ extension View {
     ) -> some View {
         // Widgets & Extension does not support UIWindow.
         applyIf(AppInfo.target == .app) {
-            $0.overlay(
+            $0.overlay {
                 Color.clear
                     .frame(0)
                     .background(Window(
@@ -29,7 +29,7 @@ extension View {
                         style: style,
                         content: LazyView(content())
                     ))
-            )
+            }
         }
     }
 
