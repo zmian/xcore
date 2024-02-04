@@ -1,6 +1,6 @@
 //
 // Xcore
-// Copyright © 2021 Xcore
+// Copyright © 2024 Xcore
 // MIT license, see LICENSE file for details
 //
 
