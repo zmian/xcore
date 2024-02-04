@@ -174,6 +174,10 @@ public enum AppConstants {
     public static var tileCornerRadius: CGFloat = 12
     public static var cornerRadius: CGFloat = 6
 
+    public static var preferredMaxWidth: CGFloat {
+        Screen.ReferenceSize.iPhoneXSMax.size.width
+    }
+
     public static var popupPreferredWidth: CGFloat {
         min(300, Device.screen.bounds.size.min * 0.8)
     }

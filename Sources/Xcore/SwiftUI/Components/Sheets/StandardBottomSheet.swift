@@ -60,6 +60,7 @@ public struct StandardBottomSheet<Header, Footer>: View where Header: View, Foot
         isPopup ? .center : multilineTextAlignment
     }
 
+    /// On iPad, the bottom sheet is displayed as a popup.
     private var isPopup: Bool {
         sizeClass == .regular
     }
