@@ -94,9 +94,10 @@ private struct PresentationDetentsViewModifier: ViewModifier {
     }
 
     private var preferredWidth: CGFloat? {
-        isPopup ? Screen.ReferenceSize.iPhoneXSMax.size.width : nil
+        isPopup ? AppConstants.preferredMaxWidth : nil
     }
 
+    /// On iPad, the bottom sheet is displayed as a popup.
     private var isPopup: Bool {
         sizeClass == .regular
     }
