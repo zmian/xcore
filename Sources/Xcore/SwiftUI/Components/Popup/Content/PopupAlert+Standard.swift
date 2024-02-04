@@ -38,12 +38,12 @@ public struct StandardPopupAlert<Header, Footer>: View where Header: View, Foote
                 VStack(alignment: textAlignment.horizontal, spacing: .s2) {
                     title
                         .fontWeight(.semibold)
-                        .foregroundColor(theme.textColor)
+                        .foregroundStyle(theme.textColor)
                         .accessibilityAddTraits(.isHeader)
 
                     if let message {
                         message
-                            .foregroundColor(theme.textSecondaryColor)
+                            .foregroundStyle(theme.textSecondaryColor)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: textAlignment.alignment)

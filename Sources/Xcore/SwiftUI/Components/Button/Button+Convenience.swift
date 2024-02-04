@@ -315,8 +315,8 @@ extension Button<Never> {
             VStack(alignment: .leading, spacing: .s2) {
                 if let prompt {
                     Text(prompt)
-                        .foregroundColor(theme.textSecondaryColor)
                         .font(.app(.footnote))
+                        .foregroundStyle(theme.textSecondaryColor)
                         .padding(.leading, .s4)
                 }
 

@@ -73,7 +73,7 @@ public struct TimerButton<Label: View>: View {
             .hidden(isButtonHidden)
 
             Text(L.resendAfter(state.remainingSeconds))
-                .foregroundColor(theme.textSecondaryColor)
+                .foregroundStyle(theme.textSecondaryColor)
                 .hidden(!showRemainingSeconds)
 
             ProgressView()

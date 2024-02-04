@@ -116,7 +116,7 @@ private struct InternalSection: View {
                 Text(value)
                     .padding(.vertical)
                     .font(.system(size: 14, design: .monospaced))
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .listRowBackground(Color.black)
                     .fixedSize(horizontal: false, vertical: true)
                     .transition(.move(edge: .top))

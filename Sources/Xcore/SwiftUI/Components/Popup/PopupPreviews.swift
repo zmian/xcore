@@ -90,7 +90,7 @@ private struct PopupPreviews: View {
                 showWindow = false
             } label: {
                 CapsuleView("Tap to Hide Window", systemImage: .macWindow)
-                    .foregroundColor(.indigo)
+                    .foregroundStyle(.indigo)
             }
             .frame(height: 300)
             .padding(.s8)

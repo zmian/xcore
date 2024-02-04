@@ -42,7 +42,7 @@ public struct _XIVTSSV: View {
             if let subtitle {
                 subtitle
                     .font(.app(.footnote))
-                    .foregroundColor(theme.textSecondaryColor)
+                    .foregroundStyle(theme.textSecondaryColor)
                     .truncationMode(.middle)
             }
         }

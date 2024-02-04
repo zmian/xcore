@@ -51,7 +51,7 @@ extension ProminentButtonStyle {
             configuration.label
                 .frame(maxWidth: .infinity, minHeight: minHeight)
                 .padding(.horizontal)
-                .foregroundColor(foregroundColor)
+                .foregroundStyle(foregroundColor)
                 .background(background)
                 .contentShape(shape)
                 .scaleOpacityEffect(configuration.isPressed)

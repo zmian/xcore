@@ -64,7 +64,7 @@ struct MoneyView: View {
                         .font(.superscript(.body).currencySymbolSuperscript())
                         .attributedString(format: "The price is %@ per month")
                 )
-                .foregroundColor(.gray)
+                .foregroundStyle(.gray)
             }
         }
     }

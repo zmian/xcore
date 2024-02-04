@@ -30,7 +30,7 @@ public struct FilterButton: View {
         if let count = count, count > 0 {
             Text("\(count)")
                 .font(.app(.footnote))
-                .foregroundColor(theme.backgroundColor)
+                .foregroundStyle(theme.backgroundColor)
                 .offset(y: -1)
                 .padding(.s2)
                 .background(theme.tintColor)

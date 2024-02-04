@@ -36,7 +36,7 @@ public struct CheckboxToggleStyle: ToggleStyle {
             Image(system: configuration.isOn ? .checkmarkCircleFill : .circle)
                 .resizable()
                 .frame(24)
-                .foregroundColor(
+                .foregroundStyle(
                     configuration.isOn ? theme.toggleColor : theme.separatorColor
                 )
                 .onTapGesture {

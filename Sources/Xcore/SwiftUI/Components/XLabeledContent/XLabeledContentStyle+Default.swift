@@ -50,7 +50,7 @@ struct DefaultXLabeledContentStyle: XLabeledContentStyle {
         HStack(alignment: alignment, spacing: configuration.isSingleChild ? 0 : spacing) {
             configuration.label
                 .unwrap(titleForegroundColor) {
-                    $0.foregroundColor($1)
+                    $0.foregroundStyle($1)
                 }
 
             Spacer(minLength: 0)
@@ -58,7 +58,7 @@ struct DefaultXLabeledContentStyle: XLabeledContentStyle {
             configuration.content
                 .multilineTextAlignment(.trailing)
                 .unwrap(valueForegroundColor) {
-                    $0.foregroundColor($1)
+                    $0.foregroundStyle($1)
                 }
                 .applyIf(traits.contains(.header)) {
                     $0.font(.app(.body))
