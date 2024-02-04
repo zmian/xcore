@@ -209,7 +209,7 @@ extension XLabeledContent where Content == Image {
     ///         Text("Apple")
     ///         Text("AAPL")
     ///             .font(.app(.footnote))
-    ///             .foregroundColor(theme.textSecondaryColor)
+    ///             .foregroundStyle(theme.textSecondaryColor)
     ///     }
     /// }
     /// ```
@@ -232,7 +232,7 @@ extension XLabeledContent where Content == Image {
     ///         Text("Apple")
     ///         Text("AAPL")
     ///             .font(.app(.footnote))
-    ///             .foregroundColor(theme.textSecondaryColor)
+    ///             .foregroundStyle(theme.textSecondaryColor)
     ///     }
     /// }
     /// ```
@@ -328,7 +328,7 @@ extension XLabeledContent where Label == _XIVTSSV {
     /// var subtitle: Text {
     ///     Text("AAPL")
     ///         .font(.caption)
-    ///         .foregroundColor(.green)
+    ///         .foregroundStyle(.green)
     /// }
     ///
     /// XLabeledContent(Text("Apple"), subtitle: subtitle) {
@@ -359,7 +359,7 @@ extension XLabeledContent where Label == _XIVTSSV {
     /// var subtitle: Text {
     ///     Text("AAPL")
     ///         .font(.caption)
-    ///         .foregroundColor(.green)
+    ///         .foregroundStyle(.green)
     /// }
     ///
     /// XLabeledContent(Text("Apple"), subtitle: subtitle, value: Image(system: .docOnDoc))
@@ -380,7 +380,7 @@ extension XLabeledContent where Label == _XIVTSSV {
     /// var subtitle: Text {
     ///     Text("AAPL")
     ///         .font(.caption)
-    ///         .foregroundColor(.green)
+    ///         .foregroundStyle(.green)
     /// }
     ///
     /// XLabeledContent(Text("Apple"), subtitle: subtitle, systemImage: .docOnDoc)
@@ -401,7 +401,7 @@ extension XLabeledContent where Label == _XIVTSSV {
     /// var subtitle: Text {
     ///     Text("AAPL")
     ///         .font(.caption)
-    ///         .foregroundColor(.green)
+    ///         .foregroundStyle(.green)
     /// }
     ///
     /// XLabeledContent(Text("Apple"), subtitle: subtitle, image: .disclosureIndicator)
@@ -436,7 +436,7 @@ extension XLabeledContent<_XIVTSSV, Never> {
     /// var subtitle: Text {
     ///     Text("AAPL")
     ///         .font(.caption)
-    ///         .foregroundColor(.green)
+    ///         .foregroundStyle(.green)
     /// }
     ///
     /// XLabeledContent(Text("Apple"), subtitle: subtitle)

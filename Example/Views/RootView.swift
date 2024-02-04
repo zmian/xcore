@@ -20,7 +20,7 @@ struct RootView: View {
                                 Spacer()
                                     .frame(height: 2)
                                 Text(subtitle)
-                                    .foregroundColor(.secondary)
+                                    .foregroundStyle(.secondary)
                                     .font(.footnote)
                             }
                         }

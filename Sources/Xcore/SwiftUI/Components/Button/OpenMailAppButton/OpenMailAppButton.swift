@@ -69,7 +69,7 @@ private struct MailAppViewModifier: ViewModifier {
                             openUrl(app.url)
                             isPresented = false
                         }
-                        .foregroundColor(theme.tintColor)
+                        .foregroundStyle(theme.tintColor)
                         .multilineTextAlignment(.center)
                     }
 

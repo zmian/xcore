@@ -41,7 +41,7 @@ struct DefaultDynamicTextFieldView: View {
         }
         .apply {
             if !isEnabled, let disabledColor = attributes.disabledColor {
-                $0.foregroundColor(disabledColor)
+                $0.foregroundStyle(disabledColor)
             } else {
                 $0
             }

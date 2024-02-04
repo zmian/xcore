@@ -39,7 +39,7 @@ extension View {
     }
 }
 
-// MARK: - ForegroundColor
+// MARK: - ForegroundStyle
 
 extension View {
     /// Sets a view’s foreground elements to use a given style.
@@ -58,7 +58,7 @@ extension View {
     }
 }
 
-// MARK: - ForegroundColor: Text
+// MARK: - ForegroundStyle: Text
 
 extension Text {
     /// Sets the color of the text displayed by this view.

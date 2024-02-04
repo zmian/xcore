@@ -85,6 +85,6 @@ private struct SymbolViewModifier: ViewModifier {
         Image(system: assetIdentifier)
             .imageScale(scale)
             .accessibilityHidden(true)
-            .foregroundColor(theme.separatorColor)
+            .foregroundStyle(theme.separatorColor)
     }
 }

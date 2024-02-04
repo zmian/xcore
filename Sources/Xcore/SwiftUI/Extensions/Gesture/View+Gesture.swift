@@ -34,7 +34,7 @@ extension View {
     ///         Image(systemName: .heartFill)
     ///             .resizable()
     ///             .frame(width: 200, height: 200)
-    ///             .foregroundColor(fgColor)
+    ///             .foregroundStyle(fgColor)
     ///             .onTapGesture(count: 2, simultaneous: true) {
     ///                 fgColor = colors.randomElement()!
     ///             }

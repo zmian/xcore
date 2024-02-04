@@ -26,7 +26,7 @@ extension View {
     ///     .ignoresSafeArea()
     /// ```
     public func maskInvert(size: CGSize, cornerRadius: CGFloat) -> some View {
-        foregroundColor(Color.black.opacity(0.75))
+        foregroundStyle(Color.black.opacity(0.75))
             .maskInvert(
                 RoundedRectangleCorner(radius: cornerRadius, corners: .allCorners),
                 size: size

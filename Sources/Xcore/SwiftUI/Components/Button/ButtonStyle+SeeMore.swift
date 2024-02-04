@@ -21,7 +21,7 @@ public struct SeeMoreButtonStyle: ButtonStyle {
             .font(.app(.subheadline))
             .frame(maxWidth: alignment == .center ? .infinity : nil)
             .padding(padding ?? .s4)
-            .foregroundColor(theme.textSecondaryColor)
+            .foregroundStyle(theme.textSecondaryColor)
             .scaleOpacityEffect(
                 configuration.isPressed,
                 effects: [.opacity, .scale(anchor: alignment.unitPoint ?? .center)]

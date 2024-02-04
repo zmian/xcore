@@ -43,7 +43,7 @@ extension View {
     /// ```swift
     /// Text("Rounded Corners")
     ///     .frame(width: 175, height: 75)
-    ///     .foregroundColor(Color.white)
+    ///     .foregroundStyle(Color.white)
     ///     .background(Color.black)
     ///     .cornerRadius(25, style: .continuous)
     /// ```

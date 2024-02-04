@@ -52,10 +52,10 @@ struct XLabeledContentView: View {
                     .xlabeledContentStyle(dim: .label)
 
                 XLabeledContent("Price", money: 10)
-                    .foregroundColor(theme.positiveSentimentColor)
+                    .foregroundStyle(theme.positiveSentimentColor)
 
                 XLabeledContent("Quantity", value: 1000)
-                    .foregroundColor(theme.textSecondaryColor)
+                    .foregroundStyle(theme.textSecondaryColor)
 
                 favorites
 
@@ -84,7 +84,7 @@ struct XLabeledContentView: View {
                 Text("Apple")
                 Text("AAPL")
                     .font(.app(.footnote))
-                    .foregroundColor(theme.textSecondaryColor)
+                    .foregroundStyle(theme.textSecondaryColor)
             }
         }
 
@@ -93,7 +93,7 @@ struct XLabeledContentView: View {
                 Text("Apple")
                 Text("AAPL")
                     .font(.app(.footnote))
-                    .foregroundColor(theme.textSecondaryColor)
+                    .foregroundStyle(theme.textSecondaryColor)
             }
         }
 

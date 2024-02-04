@@ -15,7 +15,7 @@ public struct SettingsIconLabelStyle: LabelStyle {
         } icon: {
             configuration.icon
                 .imageScale(.small)
-                .foregroundColor(.white)
+                .foregroundStyle(.white)
                 .background(
                     RoundedRectangle(cornerRadius: 6, style: .continuous)
                         .fill(tint)

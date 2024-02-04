@@ -92,7 +92,7 @@ extension StoryView {
 
     private func advanceButton(isLeft: Bool) -> some View {
         Rectangle()
-            .foregroundColor(.clear)
+            .foregroundStyle(.clear)
             .contentShape(.rect)
             .onTapGesture {
                 storyTimer.advance(by: isLeft ? -1 : 1)
@@ -134,7 +134,7 @@ extension StoryView {
             Image(system: isLeft ? .arrowLeftCircleFill : .arrowRightCircleFill)
                 .resizable()
                 .frame(36)
-                .foregroundColor(theme.backgroundColor)
+                .foregroundStyle(theme.backgroundColor)
                 .onTap {
                     storyTimer.advance(by: isLeft ? -1 : 1)
                     UIAccessibility.post(notification: .screenChanged, argument: nil)

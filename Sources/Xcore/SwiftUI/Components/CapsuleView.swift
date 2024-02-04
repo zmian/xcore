@@ -30,7 +30,7 @@ public struct CapsuleView<Label>: View where Label: View {
                 if Label.self != Never.self {
                     label()
                         .font(.app(.subheadline))
-                        .foregroundColor(theme.textSecondaryColor)
+                        .foregroundStyle(theme.textSecondaryColor)
                 }
             }
             .padding(hasImage ? .trailing : .horizontal)
@@ -138,11 +138,11 @@ extension Samples {
                     }
 
                     CapsuleView("Do Not Disturb", subtitle: "On", systemImage: .moonFill)
-                        .foregroundColor(.indigo)
+                        .foregroundStyle(.indigo)
                         .colorScheme(.dark)
 
                     CapsuleView("No Internet Connection", systemImage: .boltSlashFill)
-                        .foregroundColor(.orange)
+                        .foregroundStyle(.orange)
 
                     CapsuleView("Mail pasted from Photos")
 
