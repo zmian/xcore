@@ -40,18 +40,22 @@ public enum AppCustomPresentationDetent {
 }
 
 private struct PresentationDetentsViewModifier: ViewModifier {
+    @Environment(\.theme) private var theme
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var detentHeight: CGFloat = 0
+    private let cornerRadius = 16.0
     let detent: AppCustomPresentationDetent
 
     func body(content: Content) -> some View {
         switch detent {
-            case let .contentHeight(insets):
+            case .contentHeight:
                 VStack(spacing: 0) {
                     content
                 }
-                .padding(insets ?? .init(horizontal: .defaultSpacing, top: .s8))
+                .padding(insets)
                 .deviceSpecificBottomPadding()
                 .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: preferredWidth)
                 .readSize {
                     if detentHeight != $0.height {
                         detentHeight = $0.height
@@ -60,11 +64,40 @@ private struct PresentationDetentsViewModifier: ViewModifier {
                 .presentationDetents([.height(detentHeight)])
                 .apply {
                     if #available(iOS 16.4, *) {
-                        $0.presentationCornerRadius(16)
+                        $0.presentationCornerRadius(cornerRadius)
+                            // On iPad adapt the bottom sheet to be a popup.
+                            .unwrap(preferredWidth) { view, preferredWidth in
+                                view.presentationBackground {
+                                    theme.backgroundColor
+                                        .frame(maxWidth: preferredWidth, maxHeight: detentHeight)
+                                        .clipShape(.rect(cornerRadius: cornerRadius))
+                                }
+                            }
                     } else {
                         $0
                     }
                 }
         }
+    }
+
+    private var insets: EdgeInsets {
+        if case let .contentHeight(insets) = detent, let insets {
+            return insets
+        }
+
+        return .init(
+            top: .s8,
+            leading: .defaultSpacing,
+            bottom: isPopup ? .defaultSpacing : 0,
+            trailing: .defaultSpacing
+        )
+    }
+
+    private var preferredWidth: CGFloat? {
+        isPopup ? Screen.ReferenceSize.iPhoneXSMax.size.width : nil
+    }
+
+    private var isPopup: Bool {
+        sizeClass == .regular
     }
 }
