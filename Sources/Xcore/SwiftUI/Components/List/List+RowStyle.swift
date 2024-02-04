@@ -46,14 +46,13 @@ private struct ListRowModifier: ViewModifier {
                 .listRowInsets(.zero)
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
-                .overlay(separator, alignment: .bottom)
+                .overlay(alignment: .bottom) {
+                    if separatorStyle != .hidden {
+                        Separator()
+                            .padding(separatorStyle.insets)
+                    }
+                }
                 .contentShape(.rect)
-        }
-
-        private var separator: some View {
-            Separator()
-                .padding(separatorStyle.insets)
-                .hidden(separatorStyle == .hidden, remove: true)
         }
     }
 }

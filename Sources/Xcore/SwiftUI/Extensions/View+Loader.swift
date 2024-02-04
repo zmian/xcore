@@ -35,11 +35,11 @@ extension View {
     /// Sets the transparency of this view to `0` when the given flag is `true` and
     /// layers a loader in front of this view.
     public func maskWithLoader(
-        when value: Bool,
+        _ mask: Bool,
         tint: Color? = nil,
         alignment: Alignment = .center
     ) -> some View {
-        opacity(value ? 0 : 1)
-            .overlayLoader(value, tint: tint, alignment: alignment)
+        opacity(mask ? 0 : 1)
+            .overlayLoader(mask, tint: tint, alignment: alignment)
     }
 }

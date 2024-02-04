@@ -33,6 +33,8 @@ public struct FillView<Content: View>: View {
     public var body: some View {
         Color.clear
             .frame(max: .infinity)
-            .overlay(content, alignment: alignment)
+            .overlay(alignment: alignment) {
+                content
+            }
     }
 }
