@@ -20,8 +20,11 @@ extension PostalAddress {
     /// ```
     private static var countries: [String: String] = {
         var result = [String: String]()
-        Locale.isoRegionCodes.forEach { isoCode in
-            result[isoCode] = Locale.usPosix.localizedString(forRegionCode: isoCode)
+        Locale.Region.isoRegions.forEach { region in
+            let isCountry = region.isISORegion && region.continent != nil && region.subRegions.isEmpty
+            if isCountry {
+                result[region.identifier] = Locale.usPosix.localizedString(forRegionCode: region.identifier)
+            }
         }
         return result
     }()
