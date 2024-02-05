@@ -85,7 +85,7 @@ extension UIImage {
     ///     specified weight.
     ///
     /// [init(named:in:with:)]: https://developer.apple.com/documentation/uikit/uiimage/3294226-init
-    public convenience init?(system: SystemAssetIdentifier, with configuration: Configuration) {
+    public convenience init?(system: SystemAssetIdentifier, with configuration: Configuration?) {
         self.init(systemName: system.rawValue, withConfiguration: configuration)
     }
 }

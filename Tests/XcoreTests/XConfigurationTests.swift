@@ -7,7 +7,7 @@
 import XCTest
 @testable import Xcore
 
-final class ConfigurationTests: TestCase {
+final class XConfigurationTests: TestCase {
     func testUIViewConfiguration() {
         let label = UILabel(configuration: .hello)
         XCTAssertEqual(label.text, "Hello, world!")
@@ -20,16 +20,16 @@ final class ConfigurationTests: TestCase {
     }
 
     func testIdentifier() {
-        let config1: Configuration<UILabel> = .hello
+        let config1: XConfiguration<UILabel> = .hello
         XCTAssertEqual(config1.id, "greeting")
 
-        let config2: Configuration<UILabel> = .someConfiguration
+        let config2: XConfiguration<UILabel> = .someConfiguration
         XCTAssertEqual(config2.id.rawValue, UUID(uuidString: config2.id.rawValue)?.uuidString)
     }
 
     func testEquality() {
-        let config1: Configuration<UILabel> = .hello
-        let config2: Configuration<UILabel> = .someConfiguration
+        let config1: XConfiguration<UILabel> = .hello
+        let config2: XConfiguration<UILabel> = .someConfiguration
         XCTAssertNotEqual(config1, config2)
     }
 
@@ -94,7 +94,7 @@ final class ConfigurationTests: TestCase {
 
 // MARK: - Test Configurations
 
-extension Configuration where Type: UILabel {
+extension XConfiguration where Type: UILabel {
     fileprivate static var hello: Self {
         .init(id: "greeting") {
             $0.text = "Hello, world!"
@@ -115,7 +115,7 @@ extension Configuration where Type: UILabel {
     }
 }
 
-extension Configuration where Type: UIBarButtonItem {
+extension XConfiguration where Type: UIBarButtonItem {
     fileprivate static var someConfiguration: Self {
         .init {
             $0.textColor = .yellow
