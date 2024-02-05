@@ -976,7 +976,7 @@ final class DateTest: TestCase {
         XCTAssertEqual(tomorrow.formatted(style: relative), "Tomorrow")
         XCTAssertEqual(twoMonthFromNow.formatted(style: relative), "In 2 months")
         XCTAssertEqual(twoMonthAgo.formatted(style: relative), "2 months ago")
-        XCTAssertEqual(year2000.formatted(style: relative), "23 years ago")
+        XCTAssertEqual(year2000.formatted(style: relative), "24 years ago")
     }
 
     func test_relative_until_month() {
