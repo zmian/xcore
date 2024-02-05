@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-/// This view is an implementation detail of XLabeledContent and Toggle inits.
+/// This view is an implementation detail of LabeledContent and Toggle inits.
 ///
 /// Don't use it.
 ///

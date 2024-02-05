@@ -13,7 +13,7 @@ public protocol DynamicTextFieldStyle {
     typealias Configuration = DynamicTextFieldStyleConfiguration
 
     @ViewBuilder
-    func makeBody(configuration: Self.Configuration) -> Self.Body
+    func makeBody(configuration: Configuration) -> Self.Body
 }
 
 // MARK: - Configuration
@@ -68,7 +68,7 @@ struct AnyDynamicTextFieldStyle: DynamicTextFieldStyle {
         }
     }
 
-    func makeBody(configuration: Self.Configuration) -> some View {
+    func makeBody(configuration: Configuration) -> some View {
         _makeBody(configuration)
     }
 }

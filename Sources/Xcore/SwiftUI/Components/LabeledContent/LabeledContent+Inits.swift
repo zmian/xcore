@@ -6,131 +6,18 @@
 
 import SwiftUI
 
-// MARK: - Configuration
-
-extension XLabeledContent<XLabeledContentStyleConfiguration.Label, XLabeledContentStyleConfiguration.Content> {
-    /// Creates labeled content based on a labeled content style configuration.
-    ///
-    /// You can use this initializer within the ``makeBody(configuration:)`` method
-    /// of a ``XLabeledContentStyle`` to create a labeled content instance. This is
-    /// useful for custom styles that only modify the current style, as opposed to
-    /// implementing a brand new style.
-    ///
-    /// For example, the following style adds a red border around the labeled
-    /// content, but otherwise preserves the current style:
-    ///
-    /// ```swift
-    /// struct RedBorderLabeledContentStyle: XLabeledContentStyle {
-    ///     func makeBody(configuration: Configuration) -> some View {
-    ///         XLabeledContent(configuration)
-    ///             .border(Color.red)
-    ///     }
-    /// }
-    /// ```
-    ///
-    /// - Parameter configuration: The configuration of the labeled content.
-    public init(_ configuration: XLabeledContentStyleConfiguration) {
-        self.init(content: { configuration.content }, label: { configuration.label })
-    }
-}
-
-// MARK: - Label Only
-
-extension XLabeledContent where Content == Never {
-    /// Creates a label of the labeled content.
-    ///
-    /// ```swift
-    /// XLabeledContent {
-    ///     Text("Hello")
-    ///         .multilineTextAlignment(.trailing)
-    /// }
-    /// ```
-    public init(@ViewBuilder label: @escaping () -> Label) {
-        self.init {
-            fatalError()
-        } label: {
-            label()
-        }
-    }
-}
-
-extension XLabeledContent<Text, Never> {
-    /// Creates a label of the labeled content generated from a string.
-    ///
-    /// ```swift
-    /// XLabeledContent("Version")
-    /// ```
-    public init(_ label: some StringProtocol) {
-        self.init {
-            Text(label)
-        }
-    }
-}
-
-extension XLabeledContent where Label == Text {
-    /// Creates a labeled content with a label generated from a string and a value.
-    ///
-    /// ```swift
-    /// XLabeledContent("Favorite") {
-    ///     Image(system: .star)
-    /// }
-    /// ```
-    public init(
-        _ title: some StringProtocol,
-        @ViewBuilder content: @escaping () -> Content
-    ) {
-        self.init {
-            content()
-        } label: {
-            Text(title)
-        }
-    }
-}
-
-extension XLabeledContent where Label == Text {
-    /// Creates a labeled content with a title generated from a string and a value.
-    ///
-    /// ```swift
-    /// XLabeledContent("Favorite", value: Image(system: .star))
-    /// ```
-    public init(_ title: some StringProtocol, value: Content) {
-        self.init {
-            value
-        } label: {
-            Text(title)
-        }
-    }
-}
-
-extension XLabeledContent<Text, Text?> {
-    /// Creates a labeled content with a title and a value generated from a string.
-    ///
-    /// ```swift
-    /// XLabeledContent("First Name", value: "Sam")
-    /// ```
-    public init(_ title: some StringProtocol, value: (some StringProtocol)?) {
-        self.init {
-            value.map(Text.init)
-        } label: {
-            Text(title)
-        }
-    }
-}
-
 // MARK: - Money
 
-extension XLabeledContent<Text, Money?> {
+extension LabeledContent<Text, Money?> {
     /// Creates a labeled content with a title generated from a string and a value
     /// formatted as money.
     ///
     /// ```swift
-    /// XLabeledContent("Price", money: 10) // formats the value as "$10.00"
+    /// LabeledContent("Price", money: 10) // formats the value as "$10.00"
     /// ```
     public init(_ title: some StringProtocol, money: Decimal?) {
-        self.init {
+        self.init(title) {
             Money(money)
-        } label: {
-            Text(title)
         }
     }
 
@@ -138,50 +25,28 @@ extension XLabeledContent<Text, Money?> {
     /// formatted as money.
     ///
     /// ```swift
-    /// XLabeledContent("Price", money: 10) // formats the value as "$10.00"
+    /// LabeledContent("Price", money: 10) // formats the value as "$10.00"
     /// ```
     @_disfavoredOverload
     public init(_ title: some StringProtocol, money: Double?) {
-        self.init {
+        self.init(title) {
             Money(money)
-        } label: {
-            Text(title)
-        }
-    }
-}
-
-// MARK: - Double
-
-extension XLabeledContent<Text, Text?> {
-    /// Creates a labeled content with a title generated from a string and a value
-    /// formatted using number formatter.
-    ///
-    /// ```swift
-    /// XLabeledContent("Quantity", value: 1000) // formats the value as "1,000"
-    /// ```
-    public init(_ title: some StringProtocol, value: Double?) {
-        self.init {
-            value.map { Text($0.formatted(.asNumber)) }
-        } label: {
-            Text(title)
         }
     }
 }
 
 // MARK: - Image
 
-extension XLabeledContent<Text, Image?> {
+extension LabeledContent<Text, Image?> {
     /// Creates a labeled content with a title generated from a string and a value
     /// with a system image.
     ///
     /// ```swift
-    /// XLabeledContent("Favorite", systemImage: .star)
+    /// LabeledContent("Favorite", systemImage: .star)
     /// ```
     public init(_ title: some StringProtocol, systemImage: SystemAssetIdentifier?) {
-        self.init {
+        self.init(title) {
             systemImage.map(Image.init(system:))
-        } label: {
-            Text(title)
         }
     }
 
@@ -189,22 +54,20 @@ extension XLabeledContent<Text, Image?> {
     /// with an image.
     ///
     /// ```swift
-    /// XLabeledContent("Favorite", image: .disclosureIndicator)
+    /// LabeledContent("Favorite", image: .disclosureIndicator)
     /// ```
     public init(_ title: some StringProtocol, image: ImageAssetIdentifier?) {
-        self.init {
+        self.init(title) {
             image.map(Image.init(assetIdentifier:))
-        } label: {
-            Text(title)
         }
     }
 }
 
-extension XLabeledContent where Content == Image {
+extension LabeledContent where Label: View, Content == Image {
     /// Creates a labeled content with a title and a value with an image.
     ///
     /// ```swift
-    /// XLabeledContent(image: Image(system: .docOnDoc)) {
+    /// LabeledContent(image: Image(system: .docOnDoc)) {
     ///     VStack(alignment: .leading) {
     ///         Text("Apple")
     ///         Text("AAPL")
@@ -227,7 +90,7 @@ extension XLabeledContent where Content == Image {
     /// Creates a labeled content with a title and a value with a system image.
     ///
     /// ```swift
-    /// XLabeledContent(systemImage: .docOnDoc) {
+    /// LabeledContent(systemImage: .docOnDoc) {
     ///     VStack(alignment: .leading) {
     ///         Text("Apple")
     ///         Text("AAPL")
@@ -246,12 +109,12 @@ extension XLabeledContent where Content == Image {
 
 // MARK: - Title & Subtitle with Strings
 
-extension XLabeledContent where Label == _XIVTSSV {
+extension LabeledContent where Label == _XIVTSSV, Content: View {
     /// Creates a labeled content with a title and subtitle generated from string
     /// and a value.
     ///
     /// ```swift
-    /// XLabeledContent("Apple", subtitle: "AAPL") {
+    /// LabeledContent("Apple", subtitle: "AAPL") {
     ///     Image(system: .docOnDoc)
     /// }
     /// ```
@@ -276,7 +139,7 @@ extension XLabeledContent where Label == _XIVTSSV {
     /// and a value.
     ///
     /// ```swift
-    /// XLabeledContent("Apple", subtitle: "AAPL", value: Image(system: .docOnDoc))
+    /// LabeledContent("Apple", subtitle: "AAPL", value: Image(system: .docOnDoc))
     /// ```
     public init(
         _ title: some StringProtocol,
@@ -291,7 +154,7 @@ extension XLabeledContent where Label == _XIVTSSV {
     /// and a value with a system image.
     ///
     /// ```swift
-    /// XLabeledContent("Apple", subtitle: "AAPL", systemImage: .docOnDoc)
+    /// LabeledContent("Apple", subtitle: "AAPL", systemImage: .docOnDoc)
     /// ```
     public init(
         _ title: some StringProtocol,
@@ -306,7 +169,7 @@ extension XLabeledContent where Label == _XIVTSSV {
     /// and a value with an image.
     ///
     /// ```swift
-    /// XLabeledContent("Apple", subtitle: "AAPL", image: .disclosureIndicator)
+    /// LabeledContent("Apple", subtitle: "AAPL", image: .disclosureIndicator)
     /// ```
     public init(
         _ title: some StringProtocol,
@@ -320,7 +183,7 @@ extension XLabeledContent where Label == _XIVTSSV {
 
 // MARK: - Title & Subtitle with Text
 
-extension XLabeledContent where Label == _XIVTSSV {
+extension LabeledContent where Label == _XIVTSSV, Content: View {
     /// Creates a labeled content with a title and subtitle generated from string
     /// and a value.
     ///
@@ -331,7 +194,7 @@ extension XLabeledContent where Label == _XIVTSSV {
     ///         .foregroundStyle(.green)
     /// }
     ///
-    /// XLabeledContent(Text("Apple"), subtitle: subtitle) {
+    /// LabeledContent(Text("Apple"), subtitle: subtitle) {
     ///     Image(system: .docOnDoc)
     /// }
     /// ```
@@ -362,7 +225,7 @@ extension XLabeledContent where Label == _XIVTSSV {
     ///         .foregroundStyle(.green)
     /// }
     ///
-    /// XLabeledContent(Text("Apple"), subtitle: subtitle, value: Image(system: .docOnDoc))
+    /// LabeledContent(Text("Apple"), subtitle: subtitle, value: Image(system: .docOnDoc))
     /// ```
     public init(
         _ title: Text,
@@ -383,7 +246,7 @@ extension XLabeledContent where Label == _XIVTSSV {
     ///         .foregroundStyle(.green)
     /// }
     ///
-    /// XLabeledContent(Text("Apple"), subtitle: subtitle, systemImage: .docOnDoc)
+    /// LabeledContent(Text("Apple"), subtitle: subtitle, systemImage: .docOnDoc)
     /// ```
     public init(
         _ title: Text,
@@ -404,7 +267,7 @@ extension XLabeledContent where Label == _XIVTSSV {
     ///         .foregroundStyle(.green)
     /// }
     ///
-    /// XLabeledContent(Text("Apple"), subtitle: subtitle, image: .disclosureIndicator)
+    /// LabeledContent(Text("Apple"), subtitle: subtitle, image: .disclosureIndicator)
     /// ```
     public init(
         _ title: Text,
@@ -416,11 +279,11 @@ extension XLabeledContent where Label == _XIVTSSV {
     }
 }
 
-extension XLabeledContent<_XIVTSSV, Never> {
+extension LabeledContent<_XIVTSSV, Never> {
     /// Creates a labeled content with a title and subtitle generated from strings.
     ///
     /// ```swift
-    /// XLabeledContent("Apple", subtitle: "AAPL")
+    /// LabeledContent("Apple", subtitle: "AAPL")
     /// ```
     public init(
         _ title: some StringProtocol,
@@ -439,7 +302,7 @@ extension XLabeledContent<_XIVTSSV, Never> {
     ///         .foregroundStyle(.green)
     /// }
     ///
-    /// XLabeledContent(Text("Apple"), subtitle: subtitle)
+    /// LabeledContent(Text("Apple"), subtitle: subtitle)
     /// ```
     public init(
         _ title: Text,

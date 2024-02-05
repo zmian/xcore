@@ -15,7 +15,7 @@ public struct LineDynamicTextFieldStyle: DynamicTextFieldStyle {
         self.height = height
     }
 
-    public func makeBody(configuration: Self.Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         EnvironmentReader(\.textFieldAttributes) { attributes in
             EnvironmentReader(\.theme) { theme in
                 let color: Color = {

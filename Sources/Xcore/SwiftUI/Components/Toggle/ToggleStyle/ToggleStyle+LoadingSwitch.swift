@@ -10,7 +10,7 @@ import SwiftUI
 /// automatically replaces the switch with progress view when `isLoading` value
 /// is `true`.
 public struct LoadingSwitchToggleStyle: ToggleStyle {
-    public func makeBody(configuration: Self.Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         EnvironmentReader(\.isLoading) { isLoading in
             HStack {
                 configuration.label

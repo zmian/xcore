@@ -15,7 +15,7 @@ public struct CheckboxToggleStyle: ToggleStyle {
         self.edge = edge
     }
 
-    public func makeBody(configuration: Self.Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         HStack {
             switch edge {
                 case .leading:
@@ -31,7 +31,7 @@ public struct CheckboxToggleStyle: ToggleStyle {
         }
     }
 
-    private func toggle(_ configuration: Self.Configuration) -> some View {
+    private func toggle(_ configuration: Configuration) -> some View {
         EnvironmentReader(\.theme) { theme in
             Image(system: configuration.isOn ? .checkmarkCircleFill : .circle)
                 .resizable()

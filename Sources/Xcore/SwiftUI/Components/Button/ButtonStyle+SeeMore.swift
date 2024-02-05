@@ -16,7 +16,7 @@ public struct SeeMoreButtonStyle: ButtonStyle {
         self.alignment = alignment
     }
 
-    public func makeBody(configuration: Self.Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.app(.subheadline))
             .frame(maxWidth: alignment == .center ? .infinity : nil)

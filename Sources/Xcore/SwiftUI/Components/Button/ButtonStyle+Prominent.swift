@@ -21,7 +21,7 @@ public struct ProminentButtonStyle<S: InsettableShape>: ButtonStyle {
         self.shape = shape
     }
 
-    public func makeBody(configuration: Self.Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         InternalBody(
             id: id,
             prominence: prominence,

@@ -36,13 +36,13 @@ extension Appliable {
     }
 
     @discardableResult
-    public func apply(_ configuration: Configuration<Self>) -> Self {
+    public func apply(_ configuration: XConfiguration<Self>) -> Self {
         configuration.configure(self)
         return self
     }
 
     @discardableResult
-    public func apply(_ configurations: [Configuration<Self>]) -> Self {
+    public func apply(_ configurations: [XConfiguration<Self>]) -> Self {
         configurations.forEach {
             $0.configure(self)
         }

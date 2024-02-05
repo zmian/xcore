@@ -40,7 +40,7 @@ public struct ProminentDynamicTextFieldStyle<S: InsettableShape>: DynamicTextFie
         self.padding = padding
     }
 
-    public func makeBody(configuration: Self.Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         InternalBody(
             configuration: configuration,
             shape: shape,
