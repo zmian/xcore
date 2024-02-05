@@ -14,7 +14,7 @@ public struct HorizontalBarProgressViewStyle: ProgressViewStyle {
         self.height = height
     }
 
-    public func makeBody(configuration: Self.Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         if let progress = configuration.fractionCompleted {
             AxisGeometryReader { width in
                 VStack(alignment: .leading) {

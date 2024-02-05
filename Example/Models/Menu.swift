@@ -87,8 +87,8 @@ extension Menu {
     )
 
     private static let labeledContent = Self(
-        title: "XLabeledContent",
-        content: XLabeledContentView()
+        title: "LabeledContent",
+        content: LabeledContentView()
     )
 
     private static let popups = Self(

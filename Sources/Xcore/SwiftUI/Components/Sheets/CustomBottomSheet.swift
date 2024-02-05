@@ -61,7 +61,7 @@ extension CustomBottomSheet where Header == Text? {
 // MARK: - ButtonStyle
 
 private struct CustomBottomSheetButtonStyle: ButtonStyle {
-    func makeBody(configuration: Self.Configuration) -> some View {
+    func makeBody(configuration: Configuration) -> some View {
         InternalBody(configuration: configuration)
     }
 

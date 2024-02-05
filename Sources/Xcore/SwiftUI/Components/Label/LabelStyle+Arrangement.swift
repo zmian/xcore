@@ -11,7 +11,7 @@ import SwiftUI
 public struct IconAfterLabelStyle: LabelStyle {
     var axis: Axis = .horizontal
 
-    public func makeBody(configuration: Self.Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         switch axis {
             case .horizontal:
                 HStack {
@@ -32,7 +32,7 @@ public struct IconAfterLabelStyle: LabelStyle {
 public struct IconBeforeLabelStyle: LabelStyle {
     var axis: Axis = .horizontal
 
-    public func makeBody(configuration: Self.Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         switch axis {
             case .horizontal:
                 HStack {

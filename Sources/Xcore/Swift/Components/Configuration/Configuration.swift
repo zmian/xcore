@@ -14,8 +14,8 @@ import UIKit
 /// **Configuration Declaration**
 ///
 /// ```swift
-/// extension Configuration where Type: UILabel {
-///     static var header: Configuration {
+/// extension XConfiguration where Type: UILabel {
+///     static var header: XConfiguration {
 ///         .init(id: #function) {
 ///             $0.font = .app(.title1)
 ///             $0.numberOfLines = 0
@@ -29,7 +29,7 @@ import UIKit
 /// ```swift
 /// let headerLabel = UILabel(configuration: .header)
 /// ```
-public struct Configuration<Type>: Identifiable {
+public struct XConfiguration<Type>: Identifiable {
     public typealias ID = Identifier<Type>
     public let id: ID
     public let configure: (Type) -> Void
@@ -53,7 +53,7 @@ public struct Configuration<Type>: Identifiable {
 
 // MARK: - Equatable
 
-extension Configuration: Equatable {
+extension XConfiguration: Equatable {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id
     }
@@ -61,7 +61,7 @@ extension Configuration: Equatable {
 
 // MARK: - Hashable
 
-extension Configuration: Hashable {
+extension XConfiguration: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -70,7 +70,7 @@ extension Configuration: Hashable {
 // MARK: - Convenience UIKit Initializers
 
 extension UILabel {
-    public convenience init(text: String?, configuration: Configuration<UILabel>) {
+    public convenience init(text: String?, configuration: XConfiguration<UILabel>) {
         self.init()
         self.text = text
         configuration.configure(self)
@@ -82,23 +82,23 @@ extension UILabel {
     }
 }
 
-// MARK: - ConfigurationInitializable
+// MARK: - XConfigurationInitializable
 
-public protocol ConfigurationInitializable {}
+public protocol XConfigurationInitializable {}
 
-extension ConfigurationInitializable where Self: UIView {
-    public init(configuration: Configuration<Self>) {
+extension XConfigurationInitializable where Self: UIView {
+    public init(configuration: XConfiguration<Self>) {
         self.init()
         configuration.configure(self)
     }
 }
 
-extension UIView: ConfigurationInitializable {}
-extension UIBarButtonItem: ConfigurationInitializable {}
+extension UIView: XConfigurationInitializable {}
+extension UIBarButtonItem: XConfigurationInitializable {}
 
 // MARK: - Built-in
 
-extension Configuration {
+extension XConfiguration {
     public static var none: Self {
         .init(id: #function) { _ in }
     }

@@ -210,7 +210,6 @@ extension Window {
                 .environment(\.popupCornerRadius, env.popupCornerRadius)
                 .environment(\.popupPreferredWidth, env.popupPreferredWidth)
                 .environment(\.popupTextAlignment, env.popupTextAlignment)
-                .environment(\.xlabeledContentStyle, env.xlabeledContentStyle)
                 .environment(\.theme, env.theme)
                 .tint(env.theme.tintColor)
                 .accentColor(env.theme.tintColor)

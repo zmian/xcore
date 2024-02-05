@@ -9,7 +9,7 @@ import SwiftUI
 public struct SettingsIconLabelStyle: LabelStyle {
     var tint: Color
 
-    public func makeBody(configuration: Self.Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         Label {
             configuration.title
         } icon: {

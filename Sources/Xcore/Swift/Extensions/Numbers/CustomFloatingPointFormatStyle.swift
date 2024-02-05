@@ -351,6 +351,7 @@ extension FormatStyle where Self == CustomFloatingPointFormatStyle<Decimal> {
     /// -2.1355    → "−2.1355"
     /// 20024.1355 → "20,024.1355"
     /// ```
+    @_disfavoredOverload
     public static var asNumber: Self {
         .init(type: .number)
             .fractionLength(.maxFractionDigits)
@@ -370,6 +371,7 @@ extension FormatStyle where Self == CustomFloatingPointFormatStyle<Decimal> {
     /// -2.1355    → "−2.14"
     /// 20024.1355 → "20,024.14"
     /// ```
+    @_disfavoredOverload
     public static var asRounded: Self {
         .init(type: .number)
     }
@@ -382,6 +384,7 @@ extension FormatStyle where Self == CustomFloatingPointFormatStyle<Decimal> {
     /// -0.0109 → "−1.09%"
     /// 0.02    → "2%"
     /// ```
+    @_disfavoredOverload
     public static var asPercent: Self {
         .asPercent(scale: .zeroToOne)
     }
@@ -417,6 +420,7 @@ extension FormatStyle where Self == CustomFloatingPointFormatStyle<Decimal> {
     /// 0.02    → "+2%"
     ///
     /// ```
+    @_disfavoredOverload
     public static func asPercent(scale: Self.Kind.PercentageScale) -> Self {
         .init(type: .percent(scale: scale))
     }
@@ -434,6 +438,7 @@ extension FormatStyle where Self == CustomFloatingPointFormatStyle<Decimal> {
     /// 1340    // → 1.3K
     /// 132456  // → 132.5K
     /// ```
+    @_disfavoredOverload
     public static var asAbbreviated: Self {
         .asAbbreviated(threshold: nil)
     }
@@ -454,6 +459,7 @@ extension FormatStyle where Self == CustomFloatingPointFormatStyle<Decimal> {
     ///
     /// - Parameter threshold: An optional property to only abbreviate if `value` is
     ///   greater then this value.
+    @_disfavoredOverload
     public static func asAbbreviated(threshold: Decimal?) -> Self {
         .init(type: .abbreviated(threshold: threshold))
             .fractionLength(.defaultFractionDigits)
