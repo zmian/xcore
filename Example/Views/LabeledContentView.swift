@@ -75,7 +75,9 @@ struct LabeledContentView: View {
 
         LabeledContent("Favorite", systemImage: .star)
 
-        LabeledContent("Favorite", image: .blueJay)
+        LabeledContent("Favorite") {
+            Image(.blueJay)
+        }
     }
 
     @ViewBuilder
