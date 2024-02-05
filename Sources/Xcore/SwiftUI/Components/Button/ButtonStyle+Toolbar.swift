@@ -7,7 +7,7 @@
 import SwiftUI
 
 public struct ToolbarButtonStyle: ButtonStyle {
-    public func makeBody(configuration: Self.Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         InternalBody(configuration: configuration)
     }
 

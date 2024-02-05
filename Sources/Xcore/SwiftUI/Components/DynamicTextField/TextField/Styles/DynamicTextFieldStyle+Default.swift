@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct DefaultDynamicTextFieldStyle: DynamicTextFieldStyle {
-    func makeBody(configuration: Self.Configuration) -> some View {
+    func makeBody(configuration: Configuration) -> some View {
         DynamicTextField.default(configuration)
     }
 }

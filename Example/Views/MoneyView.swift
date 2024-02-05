@@ -12,34 +12,34 @@ struct MoneyView: View {
 
     var body: some View {
         List {
-            XLabeledContent("Default", value: Money(amount))
+            LabeledContent("Default", money: amount)
 
-            XLabeledContent("Default Large Font") {
+            LabeledContent("Default Large Font") {
                 Money(-amount)
                     .font(.app(.largeTitle))
             }
 
-            XLabeledContent("Superscript", subtitle: "Currency Symbol") {
+            LabeledContent("Superscript", subtitle: "Currency Symbol") {
                 Money(amount)
                     .font(.app(.largeTitle).currencySymbolSuperscript())
             }
 
-            XLabeledContent("Superscript", subtitle: "Minor Unit") {
+            LabeledContent("Superscript", subtitle: "Minor Unit") {
                 Money(amount)
                     .font(.superscript(.largeTitle))
             }
 
-            XLabeledContent("Superscript", subtitle: "Minor Unit & Currency Symbol") {
+            LabeledContent("Superscript", subtitle: "Minor Unit & Currency Symbol") {
                 Money(amount)
                     .font(.superscript(.largeTitle).currencySymbolSuperscript())
             }
 
-            XLabeledContent("Superscript", subtitle: "Currency Symbol") {
+            LabeledContent("Superscript", subtitle: "Currency Symbol") {
                 Money(amount)
                     .font(.app(.jumbo3).currencySymbolSuperscript())
             }
 
-            XLabeledContent("Colored") {
+            LabeledContent("Colored") {
                 HStack {
                     Money(amount)
                         .color(color)
@@ -52,12 +52,12 @@ struct MoneyView: View {
                 }
             }
 
-            XLabeledContent("BTC") {
+            LabeledContent("BTC") {
                 Money(crypto)
                     .currencySymbol("BTC", position: .suffix)
             }
 
-            XLabeledContent("Format") {
+            LabeledContent("Format") {
                 Text(
                     Money(amount)
                         .color(color)
@@ -67,6 +67,7 @@ struct MoneyView: View {
                 .foregroundStyle(.gray)
             }
         }
+        .labeledContentStyle(dim: .none)
     }
 
     private var color: Money.Color {
