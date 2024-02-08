@@ -9,7 +9,13 @@ import SwiftUI
 extension View {
     public func readOffsetY(_ offset: Binding<CGFloat>) -> some View {
         readGeometry {
-            offset.wrappedValue = $0.frame(in: .global).minY
+            let currentValue = offset.wrappedValue
+            let newValue = $0.frame(in: .global).minY
+
+            // Avoid excessively writing the same value to the binding.
+            if currentValue != newValue {
+                offset.wrappedValue = newValue
+            }
         }
     }
 }
