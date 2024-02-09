@@ -21,7 +21,6 @@ extension View {
             if currentValue != newValue {
                 size.wrappedValue = newValue
             }
-
         }
     }
 
