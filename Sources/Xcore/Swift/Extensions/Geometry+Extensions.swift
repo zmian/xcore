@@ -114,69 +114,6 @@ extension UILayoutPriority {
     }
 }
 
-// MARK: - UIRectCorner
-
-extension UIRectCorner {
-    /// The top corner of the rectangle.
-    public static let top: Self = [.topLeft, .topRight]
-
-    /// The bottom corner of the rectangle.
-    public static let bottom: Self = [.bottomLeft, .bottomRight]
-
-    public init(_ corner: CACornerMask) {
-        self = .none
-
-        if corner.contains(.layerMinXMinYCorner) {
-            self.insert(.topLeft)
-        }
-
-        if corner.contains(.layerMaxXMinYCorner) {
-            self.insert(.topRight)
-        }
-
-        if corner.contains(.layerMinXMaxYCorner) {
-            self.insert(.bottomLeft)
-        }
-
-        if corner.contains(.layerMaxXMaxYCorner) {
-            self.insert(.bottomRight)
-        }
-    }
-}
-
-// MARK: - CACornerMask
-
-extension CACornerMask {
-    /// All corners of the rectangle.
-    public static let all: Self = [top, bottom]
-
-    /// The top corner of the rectangle.
-    public static let top: Self = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-
-    /// The bottom corner of the rectangle.
-    public static let bottom: Self = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-
-    public init(_ corner: UIRectCorner) {
-        self = .none
-
-        if corner.contains(.topLeft) {
-            self.insert(.layerMinXMinYCorner)
-        }
-
-        if corner.contains(.topRight) {
-            self.insert(.layerMaxXMinYCorner)
-        }
-
-        if corner.contains(.bottomLeft) {
-            self.insert(.layerMinXMaxYCorner)
-        }
-
-        if corner.contains(.bottomRight) {
-            self.insert(.layerMaxXMaxYCorner)
-        }
-    }
-}
-
 // MARK: - Edge.Set
 
 extension Edge.Set {

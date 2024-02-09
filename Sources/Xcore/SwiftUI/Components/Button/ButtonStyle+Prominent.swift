@@ -122,7 +122,7 @@ extension ButtonStyle {
 
 extension ButtonStyle where Self == ProminentButtonStyle<RoundedRectangle> {
     public static func fill(cornerRadius: CGFloat) -> Self {
-        .fill(shape: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .fill(shape: .rect(cornerRadius: cornerRadius))
     }
 
     public static var fill: Self {
@@ -130,7 +130,7 @@ extension ButtonStyle where Self == ProminentButtonStyle<RoundedRectangle> {
     }
 
     public static func outline(cornerRadius: CGFloat) -> Self {
-        .outline(shape: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .outline(shape: .rect(cornerRadius: cornerRadius))
     }
 
     public static var outline: Self {

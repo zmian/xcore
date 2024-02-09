@@ -27,10 +27,7 @@ extension View {
     /// ```
     public func maskInvert(size: CGSize, cornerRadius: CGFloat) -> some View {
         foregroundStyle(Color.black.opacity(0.75))
-            .maskInvert(
-                RoundedRectangleCorner(radius: cornerRadius, corners: .allCorners),
-                size: size
-            )
+            .maskInvert(.rect(cornerRadius: cornerRadius), size: size)
     }
 
     /// Invertly masks this view using the given size and corner radius.
@@ -51,7 +48,7 @@ extension View {
     ///
     /// ```
     /// Rectangle()
-    ///     .maskInvert(Circle(), lineWidth: 20)
+    ///     .maskInvert(.circle, lineWidth: 20)
     ///     .ignoresSafeArea()
     /// ```
     public func maskInvert<S: Shape>(_ shape: S, lineWidth: CGFloat) -> some View {
