@@ -112,9 +112,6 @@ extension UIFont {
             throw RegistrationError.failedToRegisterFont
         }
 
-        #if DEBUG
-        Console.info("Successfully registered font \"\(fontName)\".")
-        #endif
         return fontName
     }
 
