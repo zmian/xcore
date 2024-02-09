@@ -148,7 +148,7 @@ private struct ShowPartDetail: View {
     }
 }
 
-private struct InventoryItem: Identifiable {
+private struct InventoryItem: Hashable, Identifiable {
     var id: String
     let partNumber: String
     let quantity: Int
