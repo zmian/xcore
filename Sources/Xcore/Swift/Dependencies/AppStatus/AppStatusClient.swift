@@ -82,6 +82,7 @@ extension AppStatusClient {
     /// - Note: Do not use this property to check for non-repeating API calls. You
     ///   should always send them as the system will automatically handle normal
     ///   calls and queue them if necessary.
+    @MainActor
     public var isUserDataAvailable: Bool {
         let isApplicationActive = UIApplication.sharedOrNil?.applicationState != .background
         let isProtectedDataAvailable = UIApplication.shared.isProtectedDataAvailable
