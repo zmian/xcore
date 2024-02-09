@@ -14,8 +14,14 @@ private struct SizePreferenceKey: PreferenceKey {
 extension View {
     /// Adds a modifier for this view that binds view size to specified binding.
     public func readSize(_ size: Binding<CGSize>) -> some View {
-        readSize {
-            size.wrappedValue = $0
+        readSize { newValue in
+            let currentValue = size.wrappedValue
+
+            // Avoid excessively writing the same value to the binding.
+            if currentValue != newValue {
+                size.wrappedValue = newValue
+            }
+
         }
     }
 
