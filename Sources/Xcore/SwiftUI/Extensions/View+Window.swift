@@ -44,19 +44,13 @@ extension View {
     ///     replaces it with a new one.
     ///   - style: A structure representing the style of a window.
     ///   - content: A closure that returns the content of the window.
-    public func window<Item>(
+    public func window<Item: Hashable>(
         item: Binding<Item?>,
         style: WindowStyle = .init(),
         @ViewBuilder content: @escaping (Item) -> some View
     ) -> some View {
         window(
-            isPresented: .init {
-                item.wrappedValue != nil
-            } set: { isPresented in
-                if !isPresented {
-                    item.wrappedValue = nil
-                }
-            },
+            isPresented: item.isPresented,
             style: style,
             content: {
                 if let item = item.wrappedValue {

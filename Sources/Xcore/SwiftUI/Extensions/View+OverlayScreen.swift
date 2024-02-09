@@ -59,19 +59,13 @@ extension View {
     /// ```
     ///
     /// - Parameter content: The overlay screen content view.
-    public func overlayScreen<Item>(
+    public func overlayScreen<Item: Hashable>(
         item: Binding<Item?>,
         style: WindowStyle = .init(),
         @ViewBuilder content: @escaping (Item) -> some View
     ) -> some View {
         overlayScreen(
-            isPresented: .init {
-                item.wrappedValue != nil
-            } set: { isPresented in
-                if !isPresented {
-                    item.wrappedValue = nil
-                }
-            },
+            isPresented: item.isPresented,
             style: style,
             content: {
                 if let item = item.wrappedValue {

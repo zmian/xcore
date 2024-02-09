@@ -118,20 +118,14 @@ extension View {
     ///   - dismissMethods: An option set specifying the dismissal methods for the
     ///     popup.
     ///   - content: A closure returning the content of the popup.
-    public func popup<Item>(
+    public func popup<Item: Hashable>(
         item: Binding<Item?>,
         style: Popup.Style = .alert,
         dismissMethods: Popup.DismissMethods = [.tapOutside],
         @ViewBuilder content: @escaping (Item) -> some View
     ) -> some View {
         popup(
-            isPresented: .init {
-                item.wrappedValue != nil
-            } set: { isPresented in
-                if !isPresented {
-                    item.wrappedValue = nil
-                }
-            },
+            isPresented: item.isPresented,
             style: style,
             dismissMethods: dismissMethods,
             content: {

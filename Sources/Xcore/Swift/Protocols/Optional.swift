@@ -79,3 +79,41 @@ extension String? {
         }
     }
 }
+
+extension Optional {
+    /// Converts `self` to a boolean.
+    ///
+    /// Useful when converting `Binding<Item?>` into `Binding<Bool>` to pass to
+    /// `SwiftUI` modifier that requires Boolean binding.
+    ///
+    /// Instead of manually converting to Boolean binding:
+    ///
+    /// ```swift
+    /// .popup(
+    ///     isPresented: .init {
+    ///         item.wrappedValue != nil
+    ///     } set: { isPresented in
+    ///         if !isPresented {
+    ///             item.wrappedValue = nil
+    ///         }
+    ///     }) {
+    ///     if let item = item.wrappedValue {
+    ///         content(item)
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// You can use the simple boolean property:
+    ///
+    /// ```swift
+    /// .popup(isPresented: item.isPresented) {
+    ///     if let item = item.wrappedValue {
+    ///         content(item)
+    ///     }
+    /// }
+    /// ```
+    var isPresented: Bool {
+        get { self != nil }
+        set { if !newValue { self = nil } }
+    }
+}
