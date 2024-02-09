@@ -23,7 +23,8 @@ let package = Package(
                 "KeychainAccess",
                 .product(name: "Dependencies", package: "swift-dependencies")
             ],
-            resources: [.process("Resources")]
+            resources: [.process("Resources")],
+            swiftSettings: [.enableExperimentalFeature("StrictConcurrency=targeted")]
         ),
         .testTarget(name: "XcoreTests", dependencies: ["Xcore"])
     ]
