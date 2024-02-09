@@ -140,7 +140,7 @@ extension DynamicTextFieldStyle where Self == ProminentDynamicTextFieldStyle<Rou
     ) -> Self {
         prominent(
             prominence,
-            shape: RoundedRectangle(cornerRadius: cornerRadius, style: .continuous),
+            shape: .rect(cornerRadius: cornerRadius),
             padding: padding
         )
     }

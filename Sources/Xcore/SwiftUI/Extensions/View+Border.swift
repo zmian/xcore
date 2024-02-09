@@ -21,8 +21,7 @@ extension View {
         lineWidth: CGFloat = .onePixel,
         color: Color? = nil
     ) -> some View {
-        border(
-            RoundedRectangle(cornerRadius: cornerRadius, style: .continuous),
+        border(.rect(cornerRadius: cornerRadius),
             lineWidth: lineWidth,
             color: color
         )

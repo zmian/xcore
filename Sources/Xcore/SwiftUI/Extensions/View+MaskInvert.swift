@@ -34,7 +34,7 @@ extension View {
     ///
     /// ```
     /// Rectangle()
-    ///     .maskInvert(Circle(), size: CGSize(width: 200, height: 100))
+    ///     .maskInvert(.circle, size: CGSize(width: 200, height: 100))
     ///     .ignoresSafeArea()
     /// ```
     public func maskInvert<S: Shape>(_ shape: S, size: CGSize) -> some View {
@@ -76,8 +76,6 @@ private struct InvertedShape<S: Shape>: Shape {
     }
 
     func path(in rect: CGRect) -> Path {
-        var path = Rectangle().path(in: rect)
-
         let innerRect: CGRect
 
         switch dimension {
@@ -91,8 +89,8 @@ private struct InvertedShape<S: Shape>: Shape {
                 innerRect = rect.inset(by: .init(lineWidth))
         }
 
+        var path = Rectangle().path(in: rect)
         path.addPath(shape.path(in: innerRect))
-
         return path
     }
 }
