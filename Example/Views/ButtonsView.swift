@@ -15,8 +15,7 @@ struct ButtonsView: View {
                 .toggleStyle(.checkbox(edge: .trailing))
             fillStates
             outlineStates
-            callout
-            capsules
+            symbolLabels
             others
             builtin
         }
@@ -31,7 +30,7 @@ struct ButtonsView: View {
 
 extension ButtonsView {
     private var fillStates: some View {
-        Section(header: Text("Fill Prominence")) {
+        Section("Fill Prominence") {
             button {
                 Text("Fill")
             }
@@ -68,7 +67,7 @@ extension ButtonsView {
     }
 
     private var outlineStates: some View {
-        Section(header: Text("Outline Prominence")) {
+        Section("Outline Prominence") {
             button {
                 Text("Outline")
             }
@@ -98,13 +97,8 @@ extension ButtonsView {
         }
     }
 
-    private var callout: some View {
-        Section(header: Text("Callout")) {
-            button {
-                Text("Fill")
-            }
-            .buttonStyle(.fill)
-
+    private var symbolLabels: some View {
+        Section("Labels with Symbols") {
             button {
                 Label("Fill", systemImage: .chevronRight)
                     .labelStyle(.iconAfter)
@@ -120,28 +114,15 @@ extension ButtonsView {
             .buttonStyle(.fill)
 
             button {
-                Text("Outline")
-            }
-            .buttonStyle(.outline)
-        }
-    }
-
-    private var capsules: some View {
-        Section(header: Text("Capsule")) {
-            button {
-                Text("Capsule")
-            }
-
-            button {
                 Label("Capsule", systemImage: .chevronRight)
                     .labelStyle(.iconAfter)
             }
+            .buttonStyle(.capsule)
         }
-        .buttonStyle(.capsule)
     }
 
     private var others: some View {
-        Section(header: Text("Others")) {
+        Section("Others") {
             button {
                 HStack {
                     Text("Borderless")
@@ -153,6 +134,7 @@ extension ButtonsView {
             button {
                 HStack {
                     Text("Borderless")
+                    Spacer()
                     Image(system: .chevronRight)
                 }
             }
@@ -162,15 +144,15 @@ extension ButtonsView {
     }
 
     private var builtin: some View {
-        Section(header: Text("Built-in Styles")) {
+        Section("Built-in Styles") {
             button {
                 Text("No style")
             }
 
             button {
-                Text("DefaultButtonStyle")
+                Text("DefaultButtonStyle (.automatic)")
             }
-            .buttonStyle(DefaultButtonStyle())
+            .buttonStyle(.automatic)
 
             button {
                 Text("Borderless")
