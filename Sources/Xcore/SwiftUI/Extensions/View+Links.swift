@@ -27,7 +27,7 @@ private struct OpenURLInAppViewModifier: ViewModifier {
     @Dependency(\.openUrl) private var openUrl
 
     func body(content: Content) -> some View {
-        if AppInfo.isWidgetExtension || AppInfo.isAppExtension {
+        if AppInfo.isAppExtension || AppInfo.isWidgetExtension {
             content
         } else {
             content
