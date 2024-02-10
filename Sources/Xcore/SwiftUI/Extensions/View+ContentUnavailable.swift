@@ -19,7 +19,6 @@ extension View {
     ///     var body: some View {
     ///         List(landmarks) { landmark in
     ///             Text(landmark)
-    ///                 .background(theme.backgroundSecondaryColor)
     ///         }
     ///         .contentUnavailable(landmarks, message: "No Landmarks")
     ///     }
@@ -47,7 +46,6 @@ extension View {
     ///     var body: some View {
     ///         List(landmarks) { landmark in
     ///             Text(landmark)
-    ///                 .background(theme.backgroundSecondaryColor)
     ///         }
     ///         .contentUnavailable(landmarks.isEmpty, message: "No Landmarks")
     ///     }
@@ -76,7 +74,6 @@ extension View {
     ///     var body: some View {
     ///         List(landmarks) { landmark in
     ///             Text(landmark)
-    ///                 .background(theme.backgroundSecondaryColor)
     ///         }
     ///         .contentUnavailable(landmarks.isEmpty) {
     ///             Text("No Landmarks")
