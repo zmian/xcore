@@ -8,16 +8,25 @@ import SwiftUI
 
 struct ButtonsView: View {
     @State private var isLoading = true
+    @State private var isContentUnavailable = false
 
     var body: some View {
         List {
             Toggle("Loading", isOn: $isLoading)
                 .toggleStyle(.checkbox(edge: .trailing))
+
+            Button("Show Content Unavailable") {
+                isContentUnavailable = true
+            }
+
             fillStates
             outlineStates
             symbolLabels
             others
             builtin
+        }
+        .contentUnavailable(isContentUnavailable) {
+            Text("No content to display")
         }
         .listStyle(.insetGrouped)
         .onAppear {
