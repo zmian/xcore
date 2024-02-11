@@ -30,10 +30,10 @@ extension DefaultDynamicTextFieldStyle {
         var body: some View {
             HStack(spacing: .s2) {
                 switch attributes.placeholderPlacement {
+                    case .inline:
+                        inlineContent
                     case .floating:
-                        withFloating
-                    case .inline, .top:
-                        withoutFloating
+                        floatingContent
                 }
 
                 ProgressView()
@@ -44,7 +44,7 @@ extension DefaultDynamicTextFieldStyle {
             }
         }
 
-        private var withoutFloating: some View {
+        private var inlineContent: some View {
             ZStack(alignment: .leading) {
                 placeholderView
                     .hidden(!text.isEmpty)
@@ -53,7 +53,7 @@ extension DefaultDynamicTextFieldStyle {
             }
         }
 
-        private var withFloating: some View {
+        private var floatingContent: some View {
             ZStack(alignment: .leading) {
                 placeholderView
                     .readSize {

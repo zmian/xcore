@@ -10,7 +10,6 @@ public struct TextFieldAttributes: Hashable, MutableAppliable {
     public enum PlaceholderPlacement: Hashable, CaseIterable {
         case floating
         case inline
-        case top
     }
 
     public var placeholderPlacement: PlaceholderPlacement
