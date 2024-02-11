@@ -16,6 +16,7 @@ public protocol DynamicTextFieldStyle {
     @ViewBuilder
     func makeBody(configuration: Configuration) -> Body
 }
+
 // MARK: - Configuration
 
 /// The properties of a text field instance.
@@ -78,7 +79,7 @@ struct AnyDynamicTextFieldStyle: DynamicTextFieldStyle {
 
 extension EnvironmentValues {
     private struct DynamicTextFieldStyleKey: EnvironmentKey {
-        static var defaultValue = AnyDynamicTextFieldStyle(DefaultDynamicTextFieldStyle())
+        static var defaultValue = AnyDynamicTextFieldStyle(.default)
     }
 
     var dynamicTextFieldStyle: AnyDynamicTextFieldStyle {

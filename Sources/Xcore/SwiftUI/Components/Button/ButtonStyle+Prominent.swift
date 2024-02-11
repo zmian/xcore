@@ -44,7 +44,7 @@ extension ProminentButtonStyle {
 
         let id: ButtonIdentifier
         let prominence: ButtonProminence
-        let configuration: ButtonStyleConfiguration
+        let configuration: Configuration
         let shape: S
 
         var body: some View {

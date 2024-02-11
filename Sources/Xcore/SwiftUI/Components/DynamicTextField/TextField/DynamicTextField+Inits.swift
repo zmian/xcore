@@ -30,7 +30,8 @@ extension DynamicTextField<PassthroughTextFieldFormatter> {
     ///
     /// - Parameter configuration: A text field style configuration.
     public static func `default`(_ configuration: DynamicTextFieldStyleConfiguration) -> some View {
-        DefaultDynamicTextFieldView(configuration: configuration)
+        DefaultDynamicTextFieldStyle()
+            .makeBody(configuration: configuration)
     }
 }
 

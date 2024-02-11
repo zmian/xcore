@@ -56,7 +56,7 @@ extension ProminentDynamicTextFieldStyle {
     private struct InternalBody: View {
         @Environment(\.textFieldAttributes) private var attributes
         @Environment(\.theme) private var theme
-        let configuration: DynamicTextFieldStyleConfiguration
+        let configuration: Configuration
         let shape: S
         let prominence: Prominence
         let padding: EdgeInsets?
