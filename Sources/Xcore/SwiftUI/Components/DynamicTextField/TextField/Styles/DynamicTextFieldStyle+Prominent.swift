@@ -16,8 +16,9 @@ public struct ProminentDynamicTextFieldStyle<S: InsettableShape>: DynamicTextFie
         }
 
         public enum OutlineValidationColor {
-            /// If `placeholderPlacement` attributes is not set to `.floating` then
-            /// validation color is applied to the border; otherwise, ignored.
+            /// If you set the `placeholderPlacement` attribute to `.floating`, the color
+            /// won't be applied to the border; otherwise, the validation color is used on
+            /// the border.
             case automatic
             /// Enable validation color border.
             case enable

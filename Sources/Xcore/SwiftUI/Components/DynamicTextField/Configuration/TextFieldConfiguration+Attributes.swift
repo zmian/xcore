@@ -13,30 +13,30 @@ public struct TextFieldAttributes: Hashable, MutableAppliable {
         case top
     }
 
+    public var placeholderPlacement: PlaceholderPlacement
     public var placeholderColor: Color
     public var placeholderErrorColor: Color
     public var placeholderSuccessColor: Color
     public var errorColor: Color
     public var successColor: Color
     public var disabledColor: Color?
-    public var placeholderPlacement: PlaceholderPlacement
 
     public init(
+        placeholderPlacement: PlaceholderPlacement = .floating,
         placeholderColor: Color = Color(.placeholderText),
         placeholderErrorColor: Color = Color(.systemOrange),
         placeholderSuccessColor: Color = Color(.systemGreen),
         errorColor: Color = Color(.systemOrange),
         successColor: Color = Color(.systemGreen),
-        disabledColor: Color? = nil,
-        placeholderPlacement: PlaceholderPlacement = .floating
+        disabledColor: Color? = nil
     ) {
+        self.placeholderPlacement = placeholderPlacement
         self.placeholderColor = placeholderColor
         self.placeholderErrorColor = placeholderErrorColor
         self.placeholderSuccessColor = placeholderSuccessColor
         self.errorColor = errorColor
         self.successColor = successColor
         self.disabledColor = disabledColor
-        self.placeholderPlacement = placeholderPlacement
     }
 }
 
@@ -44,7 +44,7 @@ public struct TextFieldAttributes: Hashable, MutableAppliable {
 
 extension EnvironmentValues {
     private struct AttributesKey: EnvironmentKey {
-        static var defaultValue: TextFieldAttributes = .init()
+        static var defaultValue = TextFieldAttributes()
     }
 
     public var textFieldAttributes: TextFieldAttributes {
