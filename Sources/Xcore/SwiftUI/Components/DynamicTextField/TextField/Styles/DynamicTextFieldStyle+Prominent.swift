@@ -64,9 +64,7 @@ extension ProminentDynamicTextFieldStyle {
         var body: some View {
             DynamicTextField.default(configuration)
                 .padding(finalPadding)
-                .applyIf(prominence == .fill) {
-                    $0.background(theme.backgroundSecondaryColor)
-                }
+                .background(prominence == .fill ? theme.backgroundSecondaryColor : .clear)
                 .clipShape(shape)
                 .contentShape(shape)
                 .apply {
@@ -84,19 +82,8 @@ extension ProminentDynamicTextFieldStyle {
                 return padding
             } else {
                 var padding: EdgeInsets = .zero
-
-                if attributes.disableFloatingPlaceholder {
-                    padding.vertical = .s4
-                } else {
-                    padding.vertical = .s2
-                }
-
-                if S.self == Capsule.self {
-                    padding.horizontal = .s4
-                } else {
-                    padding.horizontal = .s3
-                }
-
+                padding.vertical = attributes.disableFloatingPlaceholder ? .s4 : .s2
+                padding.horizontal = S.self == Capsule.self ? .s4 : .s3
                 return padding
             }
         }
