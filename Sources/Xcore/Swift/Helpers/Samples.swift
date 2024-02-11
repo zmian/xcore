@@ -25,6 +25,9 @@ extension Samples {
     /// tests.
     public static let lastNameInitial = "S"
 
+    /// Returns a sample avatar url suitable to display in the previews and tests.
+    public static let avatarUrl = URL(string: "https://avatars.githubusercontent.com/u/621693")!
+
     /// Returns a sample url suitable to display in the previews and tests.
     public static let url = URL(string: "https://www.example.com")!
 
