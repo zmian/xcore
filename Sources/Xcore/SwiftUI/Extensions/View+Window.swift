@@ -206,7 +206,6 @@ extension Window {
                 .environment(\.popupTextAlignment, env.popupTextAlignment)
                 .environment(\.theme, env.theme)
                 .tint(env.theme.tintColor)
-                .accentColor(env.theme.tintColor)
                 .preferredColorScheme(env.colorScheme)
         }
 

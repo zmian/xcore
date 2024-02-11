@@ -23,7 +23,6 @@ private struct TextFieldPreviewBox<Content: View>: View {
     var body: some View {
         Section {
             content
-                .accentColor(.secondary)
                 .readSize {
                     height = $0.height
                 }
@@ -56,7 +55,6 @@ private struct ShowcaseFieldPreview: View {
             Button("\(disableFloatingPlaceholder ? "Enable" : "Disable") Floating Placeholder") {
                 disableFloatingPlaceholder.toggle()
             }
-            .accentColor(Color(UIColor.link))
 
             // Style Picker
             Picker("", selection: $style) {
@@ -119,14 +117,12 @@ private struct NumberFieldPreview: View {
                 decimal = 500
                 integer = 500
             }
-            .accentColor(Color(UIColor.link))
 
             Button("Change to 1,000,000") {
                 money = 1_000_000.00
                 decimal = 1_000_000.00
                 integer = 1_000_000
             }
-            .accentColor(Color(UIColor.link))
         }
     }
 }
@@ -155,6 +151,7 @@ private struct DataFormatTypesFieldPreview: View {
                     print("Phone Number: \($0)")
                 }
         }
+        .tint(.secondary)
         .textFieldAttributes {
             $0.disableFloatingPlaceholder = false
         }
@@ -170,8 +167,8 @@ private struct DataFormatTypesFieldPreview: View {
 extension Samples {
     public static var dynamicTextFieldPreviews: some View {
         List {
-            NumberFieldPreview()
             ShowcaseFieldPreview()
+            NumberFieldPreview()
             DataFormatTypesFieldPreview()
         }
     }
