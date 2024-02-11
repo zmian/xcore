@@ -38,7 +38,8 @@ private struct TextFieldPreviewBox<Content: View>: View {
 
 private struct ShowcaseFieldPreview: View {
     @State private var style = Style.default
-    @State private var disableFloatingPlaceholder = false
+    @State private var disableFloatingPlaceholder = true
+    @State private var showLoading = false
     @State private var text = ""
 
     var body: some View {
@@ -49,6 +50,11 @@ private struct ShowcaseFieldPreview: View {
             .dynamicTextFieldStyle(style.textFieldStyle)
             .textFieldAttributes {
                 $0.disableFloatingPlaceholder = disableFloatingPlaceholder
+            }
+            .isLoading(showLoading)
+
+            Button("\(showLoading ? "Hide" : "Show") Loading") {
+                showLoading.toggle()
             }
 
             // Placeholder Style Picker

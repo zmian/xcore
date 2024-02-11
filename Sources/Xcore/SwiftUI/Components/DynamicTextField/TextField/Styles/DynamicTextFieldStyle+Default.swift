@@ -17,6 +17,7 @@ struct DefaultDynamicTextFieldStyle: DynamicTextFieldStyle {
 extension DefaultDynamicTextFieldStyle {
     private struct InternalBody: View {
         @Environment(\.isEnabled) private var isEnabled
+        @Environment(\.isLoading) private var isLoading
         @Environment(\.textFieldAttributes) private var attributes
         @State private var textFieldHeight: CGFloat = 0
         @State private var labelHeight: CGFloat = 0
@@ -27,12 +28,15 @@ extension DefaultDynamicTextFieldStyle {
         }
 
         var body: some View {
-            Group {
+            HStack(spacing: .s2) {
                 if attributes.disableFloatingPlaceholder {
                     withoutFloating
                 } else {
                     withFloating
                 }
+
+                ProgressView()
+                    .hidden(!isLoading, remove: true)
             }
             .unwrap(foregroundColor) {
                 $0.foregroundColor($1)
