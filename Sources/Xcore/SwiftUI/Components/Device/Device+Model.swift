@@ -30,6 +30,8 @@ extension Device {
         case iPhoneSE2
         case iPhone12, iPhone12Mini, iPhone12Pro, iPhone12ProMax
         case iPhone13, iPhone13Mini, iPhone13Pro, iPhone13ProMax
+        case iPhone14, iPhone14Plus, iPhone14Pro, iPhone14ProMax
+        case iPhone15, iPhone15Plus, iPhone15Pro, iPhone15ProMax
 
         // iPad
         case iPad_1
@@ -40,6 +42,8 @@ extension Device {
         case iPad_6
         case iPad_7
         case iPad_8
+        case iPad_9
+        case iPad_10
         case iPadMini_1
         case iPadMini_2
         case iPadMini_3
@@ -49,8 +53,9 @@ extension Device {
         case iPadAir_2
         case iPadAir_3
         case iPadAir_4
+        case iPadAir_5
         case iPadPro_97Inch
-        case iPadPro_10Inch
+        case iPadPro_10Inch_2
         case iPadPro_11Inch_1
         case iPadPro_11Inch_2
         case iPadPro_11Inch_3
@@ -85,6 +90,7 @@ extension Device {
         case appleTVHD
         case appleTV4K
         case appleTV4K2
+        case appleTV4K3
 
         // iPod
         case iPodTouch1
@@ -136,6 +142,14 @@ extension Device {
                     case "iPhone14,4": return .iPhone13Mini
                     case "iPhone14,2": return .iPhone13Pro
                     case "iPhone14,3": return .iPhone13ProMax
+                    case "iPhone14,7": return .iPhone14
+                    case "iPhone14,8": return .iPhone14Plus
+                    case "iPhone15,2": return .iPhone14Pro
+                    case "iPhone15,3": return .iPhone14ProMax
+                    case "iPhone15,4": return .iPhone15
+                    case "iPhone15,5": return .iPhone15Plus
+                    case "iPhone16,1": return .iPhone15Pro
+                    case "iPhone16,2": return .iPhone15ProMax
 
                     // MARK: - iPad
 
@@ -147,17 +161,20 @@ extension Device {
                     case "iPad7,5", "iPad7,6": return .iPad_6
                     case "iPad7,11", "iPad7,12": return .iPad_7
                     case "iPad11,6", "iPad11,7": return .iPad_8
+                    case "iPad12,1", "iPad12,2": return .iPad_9
+                    case "iPad13,18", "iPad13,19": return .iPad_10
                     case "iPad4,1", "iPad4,2", "iPad4,3": return .iPadAir_1
                     case "iPad5,3", "iPad5,4": return .iPadAir_2
                     case "iPad11,3", "iPad11,4": return .iPadAir_3
                     case "iPad13,1", "iPad13,2": return .iPadAir_4
+                    case "iPad13,16", "iPad13,17": return .iPadAir_5
                     case "iPad2,5", "iPad2,6", "iPad2,7": return .iPadMini_1
                     case "iPad4,4", "iPad4,5", "iPad4,6": return .iPadMini_2
                     case "iPad4,7", "iPad4,8", "iPad4,9": return .iPadMini_3
                     case "iPad5,1", "iPad5,2": return .iPadMini_4
                     case "iPad11,1", "iPad11,2": return .iPadMini_5
                     case "iPad6,3", "iPad6,4": return .iPadPro_97Inch
-                    case "iPad7,3", "iPad7,4": return .iPadPro_10Inch
+                    case "iPad7,3", "iPad7,4": return .iPadPro_10Inch_2
                     case "iPad8,1", "iPad8,2", "iPad8,3", "iPad8,4": return .iPadPro_11Inch_1
                     case "iPad8,9", "iPad8,10": return .iPadPro_11Inch_2
                     case "iPad13,4", "iPad13,5", "iPad13,6", "iPad13,7": return .iPadPro_11Inch_3
@@ -194,6 +211,7 @@ extension Device {
                     case "AppleTV5,3": return .appleTVHD
                     case "AppleTV6,2": return .appleTV4K
                     case "AppleTV11,1": return .appleTV4K2
+                    case "AppleTV14,1": return .appleTV4K3
 
                     // MARK: - iPod
 
@@ -203,6 +221,7 @@ extension Device {
                     case "iPod4,1": return .iPodTouch4
                     case "iPod5,1": return .iPodTouch5
                     case "iPod7,1": return .iPodTouch6
+                    case "iPod9,1": return .iPodTouch7
 
                     // MARK: - HomePod
 
@@ -258,6 +277,16 @@ extension Device {
                 case .iPhone13Mini: return "iPhone 13 mini"
                 case .iPhone13Pro: return "iPhone 13 Pro"
                 case .iPhone13ProMax: return "iPhone 13 Pro Max"
+                // 14
+                case .iPhone14: return "iPhone 14"
+                case .iPhone14Plus: return "iPhone 14 Plus"
+                case .iPhone14Pro: return "iPhone 14 Pro"
+                case .iPhone14ProMax: return "iPhone 14 Pro Max"
+                // 15
+                case .iPhone15: return "iPhone 15"
+                case .iPhone15Plus: return "iPhone 15 Plus"
+                case .iPhone15Pro: return "iPhone 15 Pro"
+                case .iPhone15ProMax: return "iPhone 15 Pro Max"
 
                 case .iPad_1: return "iPad (1st generation)"
                 case .iPad_2: return "iPad (2nd generation)"
@@ -267,17 +296,20 @@ extension Device {
                 case .iPad_6: return "iPad (6th generation)"
                 case .iPad_7: return "iPad (7th generation)"
                 case .iPad_8: return "iPad (8th generation)"
+                case .iPad_9: return "iPad (9th generation)"
+                case .iPad_10: return "iPad (10th generation)"
                 case .iPadAir_1: return "iPad Air (1st generation)"
                 case .iPadAir_2: return "iPad Air (2nd generation)"
                 case .iPadAir_3: return "iPad Air (3rd generation)"
                 case .iPadAir_4: return "iPad Air (4th generation)"
+                case .iPadAir_5: return "iPad Air (5th generation)"
                 case .iPadMini_1: return "iPad Mini (1st generation)"
                 case .iPadMini_2: return "iPad Mini (2nd generation)"
                 case .iPadMini_3: return "iPad Mini (3rd generation)"
                 case .iPadMini_4: return "iPad Mini (4th generation)"
                 case .iPadMini_5: return "iPad Mini (5th generation)"
                 case .iPadPro_97Inch: return "iPad Pro (9.7-inch)"
-                case .iPadPro_10Inch: return "iPad Pro (10.5-inch)"
+                case .iPadPro_10Inch_2: return "iPad Pro (10.5-inch)"
                 case .iPadPro_11Inch_1: return "iPad Pro (11-inch)"
                 case .iPadPro_11Inch_2: return "iPad Pro (11-inch) (2nd generation)"
                 case .iPadPro_11Inch_3: return "iPad Pro (11-inch) (3rd generation)"
@@ -310,6 +342,7 @@ extension Device {
                 case .appleTVHD: return "Apple TV HD"
                 case .appleTV4K: return "Apple TV 4K"
                 case .appleTV4K2: return "Apple TV 4K (2nd generation)"
+                case .appleTV4K3: return "Apple TV 4K (3rd generation)"
 
                 case .iPodTouch1: return "iPod touch (1st generation)"
                 case .iPodTouch2: return "iPod touch (2nd generation)"
