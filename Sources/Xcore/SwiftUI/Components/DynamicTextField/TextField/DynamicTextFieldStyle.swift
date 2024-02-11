@@ -8,16 +8,17 @@ import SwiftUI
 
 // MARK: - Style
 
+/// A specification for the appearance and interaction of a text field.
 public protocol DynamicTextFieldStyle {
     associatedtype Body: View
     typealias Configuration = DynamicTextFieldStyleConfiguration
 
     @ViewBuilder
-    func makeBody(configuration: Configuration) -> Self.Body
+    func makeBody(configuration: Configuration) -> Body
 }
-
 // MARK: - Configuration
 
+/// The properties of a text field instance.
 public struct DynamicTextFieldStyleConfiguration {
     /// A type-erased input field of a text field.
     public struct TextField: View {
@@ -59,9 +60,9 @@ public struct DynamicTextFieldStyleConfiguration {
 // MARK: - Any Style
 
 struct AnyDynamicTextFieldStyle: DynamicTextFieldStyle {
-    private var _makeBody: (Self.Configuration) -> AnyView
+    private let _makeBody: (Configuration) -> AnyView
 
-    init<S: DynamicTextFieldStyle>(_ style: S) {
+    init(_ style: some DynamicTextFieldStyle) {
         _makeBody = {
             style.makeBody(configuration: $0)
                 .eraseToAnyView()
@@ -91,7 +92,7 @@ extension EnvironmentValues {
 extension View {
     /// Sets the style for text field within this view to a style with a custom
     /// appearance and standard interaction behavior.
-    public func dynamicTextFieldStyle<S: DynamicTextFieldStyle>(_ style: S) -> some View {
+    public func dynamicTextFieldStyle(_ style: some DynamicTextFieldStyle) -> some View {
         environment(\.dynamicTextFieldStyle, AnyDynamicTextFieldStyle(style))
     }
 }
