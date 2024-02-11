@@ -29,10 +29,11 @@ extension DefaultDynamicTextFieldStyle {
 
         var body: some View {
             HStack(spacing: .s2) {
-                if attributes.disableFloatingPlaceholder {
-                    withoutFloating
-                } else {
-                    withFloating
+                switch attributes.placeholderPlacement {
+                    case .floating:
+                        withFloating
+                    case .inline, .top:
+                        withoutFloating
                 }
 
                 ProgressView()
