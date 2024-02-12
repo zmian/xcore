@@ -8,7 +8,7 @@ import Foundation
 import CryptoKit
 
 public enum Crypt {
-    public enum Error: Swift.Error {
+    private enum Error: Swift.Error {
         case deobfuscationFailure
         case urlNotFound
     }
@@ -37,7 +37,7 @@ extension Crypt {
     /// - Returns: The original plaintext data that was sealed in the box, as long
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
-    public static func decrypt<D: ContiguousBytes>(contentsAt path: String?, secret: D) throws -> Data {
+    public static func decrypt(contentsAt path: String?, secret: some ContiguousBytes) throws -> Data {
         try decrypt(contentsOf: path.map(URL.init(fileURLWithPath:)), secret: secret)
     }
 
@@ -65,7 +65,7 @@ extension Crypt {
     /// - Returns: The original plaintext data that was sealed in the box, as long
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
-    public static func decrypt<D: ContiguousBytes>(contentsOf url: URL?, secret: D) throws -> Data {
+    public static func decrypt(contentsOf url: URL?, secret: some ContiguousBytes) throws -> Data {
         guard let url else {
             throw Error.urlNotFound
         }
@@ -93,7 +93,7 @@ extension Crypt {
     /// - Returns: The original plaintext data that was sealed in the box, as long
     ///   as the correct key is used and authentication succeeds. The call throws an
     ///   error if decryption or authentication fail.
-    public static func decrypt<D: ContiguousBytes>(_ data: Data, secret: D) throws -> Data {
+    public static func decrypt(_ data: Data, secret: some ContiguousBytes) throws -> Data {
         let key = SymmetricKey(data: secret)
         return try ChaChaPoly.open(.init(combined: data), using: key)
     }
@@ -120,7 +120,7 @@ extension Crypt {
     ///   - path: The path to the content to encrypt.
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
-    public static func encrypt<D: ContiguousBytes>(contentsAt path: String?, secret: D) throws -> Data {
+    public static func encrypt(contentsAt path: String?, secret: some ContiguousBytes) throws -> Data {
         try encrypt(contentsOf: path.map(URL.init(fileURLWithPath:)), secret: secret)
     }
 
@@ -146,7 +146,7 @@ extension Crypt {
     ///   - path: The url of the content to encrypt.
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
-    public static func encrypt<D: ContiguousBytes>(contentsOf url: URL?, secret: D) throws -> Data {
+    public static func encrypt(contentsOf url: URL?, secret: some ContiguousBytes) throws -> Data {
         guard let url else {
             throw Error.urlNotFound
         }
@@ -170,7 +170,7 @@ extension Crypt {
     ///   - data: The data to encrypt.
     ///   - secret: A cryptographic key used to encrypt the data.
     /// - Returns: The encrypted data.
-    public static func encrypt<D: ContiguousBytes>(_ data: Data, secret: D) throws -> Data {
+    public static func encrypt(_ data: Data, secret: some ContiguousBytes) throws -> Data {
         let key = SymmetricKey(data: secret)
         return try ChaChaPoly.seal(data, using: key).combined
     }
