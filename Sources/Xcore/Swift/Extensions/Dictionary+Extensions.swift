@@ -156,6 +156,41 @@ extension Dictionary where Value: Equatable {
     }
 }
 
+extension Dictionary where Key: RawRepresentable, Key.RawValue: Hashable {
+    /// Returns a dictionary containing the results of mapping over the sequence's
+    /// key value pairs.
+    ///
+    /// In this example, `mapPairs` is used to convert the parameter dictionary keys
+    /// to their corresponding raw values.
+    ///
+    /// ```swift
+    /// enum Keys: String {
+    ///     case name = "full_name"
+    ///     case age
+    ///     case language
+    /// }
+    ///
+    /// var parameter: [Keys: Any] = [
+    ///     .name: "Vivien",
+    ///     .age: 21,
+    ///     .language: "English"
+    /// ]
+    ///
+    /// let result = parameter.mapPairs()
+    ///
+    /// //  'result' [String: Any] = [
+    /// //     "full_name": "Vivien",
+    /// //     "age": 21,
+    /// //     "language": "English"
+    /// // ]
+    /// ```
+    ///
+    /// - Returns: A dictionary containing the transformed key value pairs.
+    public func mapPairs() -> [Key.RawValue: Value] {
+        mapPairs { ($0.key.rawValue, $0.value) }
+    }
+}
+
 extension Dictionary {
     /// Returns a dictionary containing the results of mapping the given closure
     /// over the sequence's key value pairs.
@@ -256,12 +291,6 @@ extension Dictionary {
     /// - Complexity: O(_n_), where _n_ is the length of the sequence.
     public func filterPairs(_ includeElement: (Element) throws -> Bool) rethrows -> [Key: Value] {
         Dictionary(uniqueKeysWithValues: try filter(includeElement))
-    }
-}
-
-extension Dictionary where Key: RawRepresentable, Key.RawValue: Hashable {
-    public func normalize() -> [Key.RawValue: Value] {
-        mapPairs { ($0.key.rawValue, $0.value) }
     }
 }
 
