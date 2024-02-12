@@ -88,11 +88,14 @@ extension View {
     ///   - content: A closure returning the view when content is unavailable.
     @ViewBuilder
     public func contentUnavailable(_ unavailable: Bool, @ViewBuilder content: () -> some View) -> some View {
-        if unavailable {
+        ZStack {
             content()
-        } else {
+                .hidden(!unavailable)
+
             self
+                .hidden(unavailable)
         }
+        .animation(.default, value: unavailable)
     }
 }
 
