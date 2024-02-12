@@ -20,7 +20,7 @@ extension LiveAddressSearchClient {
     /// A list of ISO country codes for supported regions (e.g., “US” or “GB”).
     ///
     /// If empty then all regions are supported.
-    public static var supportedRegions = ["US"]
+    public static var supportedRegions = [Locale.Region.unitedStates]
 }
 
 // MARK: - Implementation
@@ -90,29 +90,27 @@ public final class LiveAddressSearchClient: AddressSearchClient {
 
     /// Performs a request to the maps API to obtain a placemark.
     private func perform(request: MKLocalSearch.Request) async throws -> MKPlacemark {
-        try await withCheckedThrowingContinuation { continuation in
+        do {
             let search = MKLocalSearch(request: request)
+            let response = try await search.start()
 
-            search.start { response, error in
-                guard
-                    let response = response,
-                    let placemark = response.mapItems.first?.placemark
-                else {
-                    let decodingErrorCodes = [
-                        MKError.decodingFailed,
-                        MKError.directionsNotFound,
-                        MKError.placemarkNotFound
-                    ]
-
-                    if let error = error as? MKError, decodingErrorCodes.contains(error.code) {
-                        return continuation.resume(throwing: AppError.decodingFailed(message: L.invalid))
-                    }
-
-                    return continuation.resume(throwing: AppError.decodingFailedInvalidData())
-                }
-
-                continuation.resume(returning: placemark)
+            if let placemark = response.mapItems.first?.placemark {
+                return placemark
+            } else {
+                throw AppError.decodingFailedInvalidData()
             }
+        } catch {
+            let decodingErrorCodes = [
+                MKError.decodingFailed,
+                MKError.directionsNotFound,
+                MKError.placemarkNotFound
+            ]
+
+            if let error = error as? MKError, decodingErrorCodes.contains(error.code) {
+                throw AppError.decodingFailed(message: L.invalid)
+            }
+
+            throw error.asAppError(or: .decodingFailedInvalidData())
         }
     }
 
@@ -122,7 +120,7 @@ public final class LiveAddressSearchClient: AddressSearchClient {
             return
         }
 
-        let supportedRegions = Self.supportedRegions
+        let supportedRegions = Self.supportedRegions.map(\.identifier)
 
         guard let countryCode else {
             throw AppError.decodingFailed(message: L.invalid)
@@ -142,6 +140,7 @@ public final class LiveAddressSearchClient: AddressSearchClient {
             logLevel: .error
         )
 
+        #warning("Use stringDict to properly localize")
         if supportedRegions == ["US"] {
             let regionName = "U.S."
             invalidRegion.title = LR.titleOne(regionName)

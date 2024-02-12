@@ -27,3 +27,10 @@ extension NSError {
         )
     }
 }
+
+extension Error {
+    @_disfavoredOverload
+    public func asAppError(or fallbackError: @autoclosure () -> AppError) -> AppError {
+        (self as? AppError) ?? fallbackError()
+    }
+}
