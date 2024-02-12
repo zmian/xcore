@@ -65,6 +65,6 @@ extension View {
         return self
             .opacity(opacity)
             .scaleEffect(scale, anchor: anchor)
-            .animation(.spring(), value: isPressed)
+            .animation(.spring, value: isPressed)
     }
 }

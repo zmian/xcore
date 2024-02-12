@@ -133,7 +133,7 @@ extension Popup.Style {
     /// A style that scale and fades in the popup from the center of the screen.
     public static let alert = Self(
         alignment: .center,
-        animation: .spring(),
+        animation: .spring,
         transition: .scale(scale: 1.1)
             .combined(with: .opacity)
     )
@@ -147,7 +147,7 @@ extension Popup.Style {
     public static func toast(edge: Edge = .top, dismissAfter duration: Double = 2) -> Self {
         .init(
             alignment: edge == .top ? .top : .bottom,
-            animation: .spring(response: 0.6),
+            animation: .spring,
             transition: .move(edge: edge)
                 .combined(with: .opacity),
             windowStyle: .init(label: "Toast Window", isKey: false),
