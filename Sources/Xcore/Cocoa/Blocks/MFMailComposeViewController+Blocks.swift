@@ -13,7 +13,7 @@ extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
         didFinishWith result: MFMailComposeResult,
         error: Error?
     ) {
-        if let actionHandler = actionHandlerWrapper?.handler {
+        if let actionHandler = actionHandler?.handler {
             let value = error.map(Result.failure) ?? .success(result)
             actionHandler(controller, value)
         }
@@ -41,7 +41,7 @@ extension MFMailComposeViewController {
         static var shouldAutoDismiss = "shouldAutoDismiss"
     }
 
-    private var actionHandlerWrapper: ClosureWrapper? {
+    private var actionHandler: ClosureWrapper? {
         get { associatedObject(&AssociatedKey.actionHandler) }
         set { setAssociatedObject(&AssociatedKey.actionHandler, value: newValue) }
     }
@@ -56,6 +56,6 @@ extension MFMailComposeViewController {
 
     public func didFinishWithResult(_ handler: @escaping Handler) {
         mailComposeDelegate = self
-        actionHandlerWrapper = ClosureWrapper(handler)
+        actionHandler = ClosureWrapper(handler)
     }
 }
