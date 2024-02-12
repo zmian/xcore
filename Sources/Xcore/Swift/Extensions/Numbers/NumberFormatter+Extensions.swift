@@ -43,7 +43,7 @@ extension NumberFormatter {
     ///   string.
     /// - Returns: A string containing the formatted value of decimal number using
     ///   the receiver’s current settings.
-    public func string<Number: DoubleOrDecimalProtocol>(from number: Number?) -> String? {
+    public func string(from number: (some DoubleOrDecimalProtocol)?) -> String? {
         guard let number else {
             return nil
         }
