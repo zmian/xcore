@@ -50,6 +50,8 @@ extension Device {
         return UIDevice.current.systemName
         #elseif os(watchOS)
         return WKInterfaceDevice.current().systemName
+        #elseif os(visionOS)
+        return "visionOS"
         #elseif os(macOS)
         #warning("TODO: Implement")
         return "macOS"

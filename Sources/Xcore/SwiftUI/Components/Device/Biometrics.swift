@@ -97,6 +97,10 @@ public struct Biometrics {
             return kind
         }
 
+        if UserInterfaceIdiom.current == .vision {
+            return .opticID
+        }
+
         return Device.screen.referenceSize.iPhoneXSeries ? .faceID : .touchID
     }
 }

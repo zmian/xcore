@@ -19,10 +19,11 @@ extension Device {
         public static let touchID = Capability(rawValue: 1 << 0)
         /// - SeeAlso: `Device.current.biometrics.isAvailable` and `Device.current.biometrics.kind`.
         public static let faceID = Capability(rawValue: 1 << 1)
+        /// - SeeAlso: `Device.current.biometrics.isAvailable` and `Device.current.biometrics.kind`.
         public static let opticID = Capability(rawValue: 1 << 2)
         public static let notch = Capability(rawValue: 1 << 3)
         public static let homeIndicator = Capability(rawValue: 1 << 4)
-        public static let iPhoneXSeries: Capability = [.notch, .faceID, .opticID, .homeIndicator]
+        public static let iPhoneXSeries: Capability = [.notch, .faceID, .homeIndicator]
     }
 }
 

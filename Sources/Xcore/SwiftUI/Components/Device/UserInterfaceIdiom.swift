@@ -34,22 +34,14 @@ public enum UserInterfaceIdiom: Hashable, CustomStringConvertible {
 
     public var description: String {
         switch self {
-            case .carPlay:
-                return "CarPlay"
-            case .mac:
-                return "Mac"
-            case .pad:
-                return "iPad"
-            case .phone:
-                return "iPhone"
-            case .tv:
-                return "Apple TV"
-            case .watch:
-                return "Apple Watch"
-            case .vision:
-                return "Apple Vision"
-            case .unspecified:
-                return "Unspecified"
+            case .carPlay: "CarPlay"
+            case .mac: "Mac"
+            case .pad: "iPad"
+            case .phone: "iPhone"
+            case .tv: "Apple TV"
+            case .watch: "Apple Watch"
+            case .vision: "Apple Vision"
+            case .unspecified: "Unspecified"
         }
     }
 }
@@ -61,7 +53,7 @@ extension UserInterfaceIdiom {
     static var current: Self {
         #if targetEnvironment(macCatalyst)
         return .mac
-        #elseif os(iOS) || os(tvOS)
+        #elseif os(iOS) || os(tvOS) || os(visionOS)
         // swiftformat:disable indent
         switch UIDevice.current.userInterfaceIdiom {
             case .carPlay:

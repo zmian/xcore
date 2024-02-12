@@ -172,7 +172,7 @@ extension View {
 
 // MARK: - View Modifier
 
-private struct PopupViewModifier<PopupContent>: ViewModifier where PopupContent: View {
+private struct PopupViewModifier<PopupContent: View>: ViewModifier {
     init(
         isPresented: Binding<Bool>,
         style: Popup.Style,
