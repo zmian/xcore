@@ -20,6 +20,24 @@ extension UIGestureRecognizer: TargetActionBlockRepresentable {
 }
 
 extension TargetActionBlockRepresentable where Self: UIGestureRecognizer {
+    public init(_ handler: @escaping (_ sender: Self) -> Void) {
+        self.init()
+        setActionHandler(handler)
+    }
+
+    public func addAction(_ action: @escaping (_ sender: Self) -> Void) {
+        setActionHandler(action)
+    }
+
+    public func removeAction() {
+        setActionHandler(nil)
+    }
+
+    /// A Boolean property indicating whether an action handler is attached.
+    public var hasActionHandler: Bool {
+        actionHandler != nil
+    }
+
     private func setActionHandler(_ handler: ((_ sender: Self) -> Void)?) {
         guard let handler else {
             actionHandler = nil
@@ -36,27 +54,5 @@ extension TargetActionBlockRepresentable where Self: UIGestureRecognizer {
 
         actionHandler = wrapper
         addTarget(wrapper, action: #selector(wrapper.invoke(_:)))
-    }
-
-    /// Add action handler when the item is selected.
-    ///
-    /// - Parameter action: The block to invoke when the item is selected.
-    public func addAction(_ action: @escaping (_ sender: Self) -> Void) {
-        setActionHandler(action)
-    }
-
-    /// Removes action handler from `self`.
-    public func removeAction() {
-        setActionHandler(nil)
-    }
-
-    /// A Boolean property indicating whether an action handler is attached.
-    public var hasActionHandler: Bool {
-        actionHandler != nil
-    }
-
-    public init(_ handler: @escaping (_ sender: Self) -> Void) {
-        self.init()
-        setActionHandler(handler)
     }
 }
