@@ -74,7 +74,7 @@ extension Locale.Currency {
     public static let usd = Self("usd")
 
     /// United Kingdom, Pound Sterling.
-    public static let gbp = Self.init("gbp")
+    public static let gbp = Self("gbp")
 }
 
 extension Locale {
