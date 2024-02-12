@@ -25,10 +25,10 @@ extension WKWebsiteDataStore {
     }
 
     public func remove(_ type: DataType, _ completion: (() -> Void)? = nil) {
-        fetchDataRecords(ofTypes: type.dataTypes) { [weak self] records in
-            self?.removeData(ofTypes: type.dataTypes, for: records) {
-                completion?()
-            }
+        Task {
+            let records = await dataRecords(ofTypes: type.dataTypes)
+            await removeData(ofTypes: type.dataTypes, for: records)
+            completion?()
         }
     }
 }

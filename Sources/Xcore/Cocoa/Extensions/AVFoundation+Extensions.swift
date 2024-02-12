@@ -49,7 +49,7 @@ extension AVPlayerItem {
     ///     `nil`, this method looks in the main bundle of the current application.
     /// - Returns: An instance of AVPlayerItem.
     public convenience init?(filename: String, bundle: Bundle? = nil) {
-        guard let url = (bundle ?? Bundle.main).url(filename: filename) else {
+        guard let url = (bundle ?? .main).url(filename: filename) else {
             return nil
         }
 
@@ -78,7 +78,7 @@ extension AVAsset {
     ///     `nil`, this method looks in the main bundle of the current application.
     /// - Returns: An instance of AVAsset.
     public convenience init?(filename: String, bundle: Bundle? = nil) {
-        guard let url = (bundle ?? Bundle.main).url(filename: filename) else {
+        guard let url = (bundle ?? .main).url(filename: filename) else {
             return nil
         }
 

@@ -15,6 +15,8 @@ extension UIImage {
         case png
         /// Encoding format in JPEG format.
         case jpeg(quality: Double)
+        /// Encoding format in HEIC format.
+        case heic
     }
 
     /// Returns a data object that contains the specified image in a given format.
@@ -26,6 +28,11 @@ extension UIImage {
                 return pngData()
             case let .jpeg(quality):
                 return jpegData(compressionQuality: quality)
+            case .heic:
+                if #available(iOS 17.0, *) {
+                    return heicData()
+                }
+                return nil
         }
     }
 }

@@ -38,7 +38,7 @@ extension NotificationCenter {
     ///     delivery.
     /// - Returns: An asynchronous sequence of notifications from the center.
     @available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
-    public static func async(_ name: Notification.Name, object: AnyObject? = nil) -> NotificationCenter.Notifications {
+    public static func async(_ name: Notification.Name, object: AnyObject? = nil) -> Notifications {
         shared.notifications(named: name, object: object)
     }
 }
@@ -98,12 +98,10 @@ extension NotificationCenter {
         userInfo: [AnyHashable: Any]? = nil,
         delayInterval: TimeInterval = 0
     ) {
-        guard delayInterval > 0 else {
-            shared.post(name: name, object: object, userInfo: userInfo)
-            return
-        }
-
-        Timer.after(delayInterval) {
+        Task {
+            if delayInterval > 0 {
+                try await Task.sleep(for: .seconds(delayInterval))
+            }
             shared.post(name: name, object: object, userInfo: userInfo)
         }
     }
@@ -137,6 +135,6 @@ extension NotificationCenter {
     }
 
     private static var shared: NotificationCenter {
-        NotificationCenter.default
+        .default
     }
 }
