@@ -67,6 +67,16 @@ extension Locale {
     public static let ptPT = Locale(identifier: "pt_PT")
 }
 
+// MARK: - Currency
+
+extension Locale.Currency {
+    /// United States, US Dollar.
+    public static let usd = Self("usd")
+
+    /// United Kingdom, Pound Sterling.
+    public static let gbp = Self.init("gbp")
+}
+
 extension Locale {
     public static func printAvailableIdentifiers() {
         print("Identifier,Description")

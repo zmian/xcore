@@ -27,7 +27,7 @@ extension Optional: OptionalProtocol {
 
     /// A Boolean property indicating whether the wrapped value is not `nil`.
     ///
-    /// Useful in KeyPaths to allow for negation.
+    /// Useful in ``KeyPath``s to allow for negation.
     public var isNotNil: Bool {
         !isNil
     }
