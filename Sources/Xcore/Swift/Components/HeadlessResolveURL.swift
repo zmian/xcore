@@ -11,14 +11,13 @@ import WebKit
 ///
 /// It can resolve any wrapped link and once resolved it returns the resolved
 /// url.
+@MainActor
 public func headlessResolve(url: URL) async -> URL? {
-    await withCheckedContinuation { continuation in
-        Task { @MainActor in
-            HeadlessResolveURL(url: url) { url in
-                continuation.resume(returning: url)
-            }
-            .start()
+    await withCheckedContinuation { @MainActor continuation in
+        HeadlessResolveURL(url: url) { url in
+            continuation.resume(returning: url)
         }
+        .start()
     }
 }
 
@@ -26,6 +25,7 @@ public func headlessResolve(url: URL) async -> URL? {
 ///
 /// It can resolve any wrapped link and once resolved it invokes the completion
 /// block.
+@MainActor
 private final class HeadlessResolveURL: UIView, WKNavigationDelegate {
     private let url: URL
     private let webView = WKWebView()
