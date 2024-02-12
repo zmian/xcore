@@ -17,8 +17,8 @@ public protocol ControlTargetActionBlockRepresentable: AnyObject {
     ///
     /// - Parameters:
     ///   - event: An event to add to `self`.
-    ///   - handler: The block invoked whenever given event is triggered.
-    func addAction(_ event: UIControl.Event, _ handler: @escaping (_ sender: Sender) -> Void)
+    ///   - action: The block invoked whenever given event is triggered.
+    func addAction(_ event: UIControl.Event, _ action: @escaping (_ sender: Sender) -> Void)
 
     /// Stops the delivery of the given event from `self`.
     ///
@@ -31,12 +31,12 @@ extension UIControl: ControlTargetActionBlockRepresentable {
 }
 
 extension ControlTargetActionBlockRepresentable where Self: UIControl {
-    public func addAction(_ event: UIControl.Event, _ handler: @escaping (_ sender: Self) -> Void) {
+    public func addAction(_ event: UIControl.Event, _ action: @escaping (_ sender: Self) -> Void) {
         let uniqueId = UIAction.Identifier("\(event.rawValue)")
 
         let action = UIAction(identifier: uniqueId) {
             guard let sender = $0.sender as? Self else { return }
-            handler(sender)
+            action(sender)
         }
 
         addAction(action, for: event)
@@ -51,14 +51,14 @@ extension ControlTargetActionBlockRepresentable where Self: UIControl {
 extension ControlTargetActionBlockRepresentable where Self: UIButton {
     /// Associates `.primaryActionTriggered` action method with the control.
     ///
-    /// - Parameter handler: The block invoked whenever `.primaryActionTriggered`
+    /// - Parameter action: The block invoked whenever `.primaryActionTriggered`
     ///   event is triggered.
-    public func action(_ handler: ((_ sender: Self) -> Void)?) {
-        guard let handler else {
+    public func action(_ action: ((_ sender: Self) -> Void)?) {
+        guard let action else {
             removeAction(.primaryActionTriggered)
             return
         }
 
-        addAction(.primaryActionTriggered, handler)
+        addAction(.primaryActionTriggered, action)
     }
 }
