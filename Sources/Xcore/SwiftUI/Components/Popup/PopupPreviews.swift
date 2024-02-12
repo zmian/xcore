@@ -67,7 +67,7 @@ private struct PopupPreviews: View {
             Button("OK") {
                 showAlert = false
             }
-            .buttonStyle(.fill)
+            .buttonStyle(.rectFill)
         }
         .popup(isPresented: $showAlertWithHeader) {
             StandardPopupAlert(Text(L.title), message: Text(L.message)) {
@@ -78,7 +78,7 @@ private struct PopupPreviews: View {
                 Button("OK") {
                     showAlertWithHeader = false
                 }
-                .buttonStyle(.fill)
+                .buttonStyle(.rectFill)
             }
             .popupPreferredWidth(400)
         }

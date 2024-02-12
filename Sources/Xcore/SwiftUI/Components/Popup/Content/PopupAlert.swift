@@ -58,12 +58,12 @@ public struct PopupAlert<Content>: View where Content: View {
                 Button("Cancel") {
                     print("Cancel Tapped")
                 }
-                .buttonStyle(.outline)
+                .buttonStyle(.secondary)
 
                 Button("Delete") {
                     print("Delete Tapped")
                 }
-                .buttonStyle(.fill)
+                .buttonStyle(.primary)
             }
         }
 

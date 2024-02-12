@@ -17,7 +17,7 @@ struct ShareView: View {
 
             Section {
                 ShareLink("Share License Agreement", item: "License Agreement...")
-                    .buttonStyle(.capsule)
+                    .buttonStyle(.capsuleFill)
             }
         }
         .toolbar {

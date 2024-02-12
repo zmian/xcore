@@ -121,32 +121,26 @@ extension ButtonStyle {
 }
 
 extension ButtonStyle where Self == ProminentButtonStyle<RoundedRectangle> {
-    public static func fill(cornerRadius: CGFloat) -> Self {
-        .fill(shape: .rect(cornerRadius: cornerRadius))
+    public static var rectFill: Self {
+        .fill(shape: .rect(cornerRadius: AppConstants.cornerRadius))
     }
 
-    public static var fill: Self {
-        .fill(cornerRadius: AppConstants.cornerRadius)
-    }
-
-    public static func outline(cornerRadius: CGFloat) -> Self {
-        .outline(shape: .rect(cornerRadius: cornerRadius))
-    }
-
-    public static var outline: Self {
-        .outline(cornerRadius: AppConstants.cornerRadius)
+    public static var rectOutline: Self {
+        .outline(shape: .rect(cornerRadius: AppConstants.cornerRadius))
     }
 }
 
 extension ButtonStyle where Self == ProminentButtonStyle<Capsule> {
-    public static var capsule: Self {
+    public static var capsuleFill: Self {
         .fill(shape: .capsule)
     }
 
     public static var capsuleOutline: Self {
         .outline(shape: .capsule)
     }
+}
 
-    static var primary: Self { capsule }
+extension ButtonStyle where Self == ProminentButtonStyle<Capsule> {
+    static var primary: Self { capsuleFill }
     static var secondary: Self { capsuleOutline }
 }

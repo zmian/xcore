@@ -12,8 +12,7 @@ struct ButtonsView: View {
 
     var body: some View {
         List {
-            Toggle("Loading", isOn: $isLoading)
-                .toggleStyle(.checkbox(edge: .trailing))
+            Toggle("Show Loading", isOn: $isLoading)
 
             Button("Show Content Unavailable") {
                 isContentUnavailable = true
@@ -43,34 +42,34 @@ extension ButtonsView {
             button {
                 Text("Fill")
             }
-            .buttonStyle(.fill)
+            .buttonStyle(.rectFill)
 
             button {
                 Text("Fill Disabled")
             }
-            .buttonStyle(.fill)
+            .buttonStyle(.rectFill)
             .disabled(true)
 
             button {
                 Text("Fill")
             }
-            .buttonStyle(.fill)
+            .buttonStyle(.rectFill)
             .isLoading(isLoading)
 
             button {
                 Text("Fill Hard Edges")
             }
-            .buttonStyle(.fill(cornerRadius: 0))
+            .buttonStyle(.fill(shape: .rect))
 
             button {
                 Text("Capsule")
             }
-            .buttonStyle(.capsule)
+            .buttonStyle(.capsuleFill)
 
             button {
                 Text("Capsule Disabled")
             }
-            .buttonStyle(.capsule)
+            .buttonStyle(.capsuleFill)
             .disabled(true)
         }
     }
@@ -80,18 +79,18 @@ extension ButtonsView {
             button {
                 Text("Outline")
             }
-            .buttonStyle(.outline)
+            .buttonStyle(.rectOutline)
 
             button {
                 Text("Outline Disabled")
             }
-            .buttonStyle(.outline)
+            .buttonStyle(.rectOutline)
             .disabled(true)
 
             button {
                 Text("Outline Hard Edges")
             }
-            .buttonStyle(.outline(cornerRadius: 0))
+            .buttonStyle(.outline(shape: .rect))
 
             button {
                 Text("Capsule Outline")
@@ -112,7 +111,7 @@ extension ButtonsView {
                 Label("Fill", systemImage: .chevronRight)
                     .labelStyle(.iconAfter)
             }
-            .buttonStyle(.fill)
+            .buttonStyle(.rectFill)
 
             button {
                 Label("Fill", systemImage: .heartFill)
@@ -120,13 +119,13 @@ extension ButtonsView {
                     .padding(.vertical)
                     .labelStyle(.iconBefore(axis: .vertical))
             }
-            .buttonStyle(.fill)
+            .buttonStyle(.rectFill)
 
             button {
                 Label("Capsule", systemImage: .chevronRight)
                     .labelStyle(.iconAfter)
             }
-            .buttonStyle(.capsule)
+            .buttonStyle(.capsuleFill)
         }
     }
 
