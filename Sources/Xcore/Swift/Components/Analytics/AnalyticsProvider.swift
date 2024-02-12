@@ -27,6 +27,7 @@ import Foundation
 ///             $0.trackApplicationLifecycleEvents = true
 ///             $0.trackDeepLinks = true
 ///             $0.trackPushNotifications = true
+///             $0.recordScreenViews = false
 ///
 ///             #if DEBUG
 ///             if AppInfo.isDebuggerAttached {
@@ -61,7 +62,7 @@ import Foundation
 ///         segment.flush()
 ///         segment.reset()
 ///     }
-///     
+///
 ///     private func addListener() {
 ///         cancellable = appPhase.receive.sink { phase in
 ///             let segment = Segment.Analytics.shared()
