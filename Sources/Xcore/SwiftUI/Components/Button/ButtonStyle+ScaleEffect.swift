@@ -16,7 +16,10 @@ public struct ScaleEffectButtonStyle: ButtonStyle {
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .contentShape(.rect)
-            .scaleOpacityEffect(configuration.isPressed, effects: [.opacity, .scale(anchor: anchor)])
+            .scaleOpacityEffect(
+                configuration.isPressed,
+                effects: [.opacity, .scale(anchor: anchor)]
+            )
     }
 }
 

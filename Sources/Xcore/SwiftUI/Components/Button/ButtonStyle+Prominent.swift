@@ -41,7 +41,6 @@ extension ProminentButtonStyle {
         @Environment(\.theme) private var theme
         @Environment(\.isEnabled) private var isEnabled
         @Environment(\.isLoading) private var isLoading
-
         let id: ButtonIdentifier
         let prominence: ButtonProminence
         let configuration: Configuration
@@ -66,11 +65,9 @@ extension ProminentButtonStyle {
         private var background: some View {
             switch prominence {
                 case .fill:
-                    shape
-                        .fill(backgroundColor)
+                    shape.fill(backgroundColor)
                 case .outline:
-                    shape
-                        .strokeBorder(borderColor, lineWidth: .onePixel)
+                    shape.strokeBorder(borderColor, lineWidth: .onePixel)
             }
         }
 
