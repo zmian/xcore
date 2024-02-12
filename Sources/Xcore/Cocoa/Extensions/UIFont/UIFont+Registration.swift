@@ -7,7 +7,7 @@
 import UIKit
 
 extension UIFont {
-    public enum RegistrationError: Error {
+    private enum RegistrationError: Error {
         case fontNotFound
         case remoteFontUrlDetected
         case failedToCreateFont

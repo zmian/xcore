@@ -58,16 +58,8 @@ extension UIFont {
         return UIFont(descriptor: descriptor, size: 0)
     }
 
-    func bold() -> UIFont? {
-        withTraits(.traitBold)
-    }
-
-    func italic() -> UIFont? {
-        withTraits(.traitItalic)
-    }
-
-    func monospaced() -> UIFont? {
-        withTraits(.traitMonoSpace)
+    public var textStyle: UIFont.TextStyle? {
+        fontDescriptor.object(forKey: .textStyle) as? UIFont.TextStyle
     }
 }
 
@@ -81,52 +73,5 @@ extension UIFont {
                 print("  - \(name)")
             }
         }
-    }
-}
-
-extension UIFont {
-    private enum AssociatedKey {
-        static var textStyle = "textStyle"
-    }
-
-    var _textStyle: UIFont.TextStyle? {
-        get { associatedObject(&AssociatedKey.textStyle) }
-        set { setAssociatedObject(&AssociatedKey.textStyle, value: newValue) }
-    }
-
-    public var textStyle: UIFont.TextStyle? {
-        _textStyle ?? fontDescriptor.object(forKey: .textStyle) as? UIFont.TextStyle
-    }
-}
-
-extension UIFont.TextStyle: CaseIterable {
-    public static var allCases: [UIFont.TextStyle] = {
-        [
-            .largeTitle,
-            .title1,
-            .title2,
-            .title3,
-            .headline,
-            .subheadline,
-            .body,
-            .callout,
-            .footnote,
-            .caption1,
-            .caption2
-        ]
-    }()
-
-    private static var headerStyles: [UIFont.TextStyle] = {
-        [
-            .largeTitle,
-            .title1,
-            .title2,
-            .title3,
-            .headline
-        ]
-    }()
-
-    public var isTitle: Bool {
-        Self.headerStyles.contains(self)
     }
 }

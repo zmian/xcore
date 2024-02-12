@@ -48,7 +48,6 @@ extension UIFont {
         ).pointSize
 
         return UIFont(name: typeface, size: preferredPointSize)!
-            .apply { $0._textStyle = style }
     }
 
     /// The default app typeface with given size and weight.
