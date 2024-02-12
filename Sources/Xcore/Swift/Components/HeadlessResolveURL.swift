@@ -13,7 +13,7 @@ import WebKit
 /// url.
 public func headlessResolve(url: URL) async -> URL? {
     await withCheckedContinuation { continuation in
-        DispatchQueue.main.async {
+        Task { @MainActor in
             HeadlessResolveURL(url: url) { url in
                 continuation.resume(returning: url)
             }

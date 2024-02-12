@@ -99,15 +99,18 @@ extension View {
         maximumDistance: Double = .greatestFiniteMagnitude,
         perform action: @escaping (_ isPressing: Bool) -> Void
     ) -> some View {
-        /// A ``Timer`` is used to avoid flickering (``true`` and ``false`` values sent)
+        /// A ``Task`` is used to avoid flickering (``true`` and ``false`` values sent)
         /// on scroll gesture.
-        weak var clearTimer: Timer?
+        var task: Task<Void, Error>?
 
-        func startClearTimer(isPressing: Bool) {
-            clearTimer = Timer.after(isPressing ? 0.1 : 0) {
+        func debounce(isPressing: Bool) {
+            task?.cancel()
+            task = Task {
+                if isPressing {
+                    try await Task.sleep(for: .seconds(0.1))
+                }
                 action(isPressing)
             }
-            clearTimer?.resume()
         }
 
         return self
@@ -116,11 +119,9 @@ extension View {
             /// scroll view's swipe gesture.
             .onTapGesture {}
             .onLongPressGesture(minimumDuration: minimumDuration, maximumDistance: maximumDistance) {
-                clearTimer?.invalidate()
-                startClearTimer(isPressing: false)
+                debounce(isPressing: false)
             } onPressingChanged: { isPressing in
-                clearTimer?.invalidate()
-                startClearTimer(isPressing: isPressing)
+                debounce(isPressing: isPressing)
             }
     }
 }
