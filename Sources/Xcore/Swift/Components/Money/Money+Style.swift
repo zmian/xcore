@@ -8,17 +8,17 @@ import Foundation
 
 extension Money {
     /// A structure representing formatting used to format money components.
-    public struct Style {
+    public struct Style: Sendable {
         public typealias Components = (majorUnit: String, minorUnit: String)
         public typealias Range = (majorUnit: NSRange?, minorUnit: NSRange?)
         public let id: Identifier<Self>
-        public let format: (Money) -> String
-        public let range: (Money) -> Range
+        public let format: @Sendable (Money) -> String
+        public let range: @Sendable (Money) -> Range
 
         public init(
             id: Identifier<Self>,
-            format: @escaping (Money) -> String,
-            range: @escaping (Money) -> Range
+            format: @escaping @Sendable (Money) -> String,
+            range: @escaping @Sendable (Money) -> Range
         ) {
             self.id = id
             self.format = format
@@ -150,6 +150,7 @@ extension Money.Style {
         fractionLength: ClosedRange<Int> = .defaultFractionDigits,
         fallback: Self = .default
     ) -> Self {
+        @Sendable
         func canAbbreviate(amount: Decimal) -> Bool {
             let amount = abs(amount)
             return amount >= 1000 && amount >= threshold

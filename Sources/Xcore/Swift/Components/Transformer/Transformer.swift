@@ -6,13 +6,13 @@
 
 /// A structure representing transformation of an input to an output.
 @frozen
-public struct Transformer<Input, Output> {
-    private let transform: (Input) -> Output
+public struct Transformer<Input, Output>: Sendable {
+    private let transform: @Sendable (Input) -> Output
 
     /// An initializer to transform given input.
     ///
     /// - Parameter transform: A block to transform the input to an output.
-    public init(_ transform: @escaping (Input) -> Output) {
+    public init(_ transform: @escaping @Sendable (Input) -> Output) {
         self.transform = transform
     }
 

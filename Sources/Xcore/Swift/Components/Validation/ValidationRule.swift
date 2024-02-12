@@ -6,10 +6,10 @@
 
 import Foundation
 
-public struct ValidationRule<Input> {
-    private let block: (Input) -> Bool
+public struct ValidationRule<Input>: Sendable {
+    private let block: @Sendable (Input) -> Bool
 
-    public init(_ block: @escaping (Input) -> Bool) {
+    public init(_ block: @escaping @Sendable (Input) -> Bool) {
         self.block = block
     }
 

@@ -6,13 +6,13 @@
 
 /// A structure representing transformation of an input to an output.
 @frozen
-public struct AsyncTransformer<Input, Output> {
-    private let transform: (Input) async -> Output
+public struct AsyncTransformer<Input, Output>: Sendable {
+    private let transform: @Sendable (Input) async -> Output
 
     /// An initializer to transform given input.
     ///
     /// - Parameter transform: A block to transform the input to an output.
-    public init(_ transform: @escaping (Input) async -> Output) {
+    public init(_ transform: @escaping @Sendable (Input) async -> Output) {
         self.transform = transform
     }
 

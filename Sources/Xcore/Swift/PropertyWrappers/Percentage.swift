@@ -23,7 +23,7 @@ import Foundation
 /// sliderValue -= 1
 /// // print(sliderValue) // 99.0%
 /// ```
-public struct Percentage: RawRepresentable {
+public struct Percentage: RawRepresentable, Sendable {
     public static let min: Percentage = 0
     public static let max: Percentage = 100
 

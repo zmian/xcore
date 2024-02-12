@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct ElementPosition: OptionSet {
+public struct ElementPosition: OptionSet, Sendable {
     public let rawValue: Int
 
     public init(rawValue: Int) {
@@ -21,7 +21,7 @@ public struct ElementPosition: OptionSet {
 
 // MARK: - ButtonIdentifier
 
-public enum ButtonIdentifierTag {}
+public enum ButtonIdentifierTag: Sendable {}
 public typealias ButtonIdentifier = Identifier<ButtonIdentifierTag>
 
 extension ButtonIdentifier {
@@ -32,7 +32,7 @@ extension ButtonIdentifier {
 
 // MARK: - ButtonState
 
-public enum ButtonState {
+public enum ButtonState: Sendable {
     case normal
     case pressed
     case disabled
@@ -40,7 +40,7 @@ public enum ButtonState {
 
 // MARK: - ButtonProminence
 
-public enum ButtonProminence {
+public enum ButtonProminence: Sendable {
     case fill
     case outline
 }

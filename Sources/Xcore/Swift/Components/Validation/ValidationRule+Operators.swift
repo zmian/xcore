@@ -48,7 +48,7 @@ extension ValidationRule {
     ///   - lhs: A value to compare.
     ///   - rhs: Another value to compare.
     /// - Returns: The validation rule.
-    public static func &&(lhs: Self, rhs: @autoclosure @escaping () -> Self) -> Self {
+    public static func &&(lhs: Self, rhs: @autoclosure @escaping @Sendable () -> Self) -> Self {
         .init { lhs.validate($0) && rhs().validate($0) }
     }
 
@@ -65,7 +65,7 @@ extension ValidationRule {
     ///   - lhs: A value to compare.
     ///   - rhs: Another value to compare.
     /// - Returns: The validation rule.
-    public static func ||(lhs: Self, rhs: @autoclosure @escaping () -> Self) -> Self {
+    public static func ||(lhs: Self, rhs: @autoclosure @escaping @Sendable () -> Self) -> Self {
         .init { lhs.validate($0) || rhs().validate($0) }
     }
 

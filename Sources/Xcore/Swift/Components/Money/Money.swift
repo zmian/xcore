@@ -279,7 +279,7 @@ extension Money {
     @_disfavoredOverload
     public func color(_ color: UIColor) -> Self {
         applying {
-            $0.color = .init(.init(color))
+            $0.color = .init(.init(uiColor: color))
         }
     }
 
@@ -336,7 +336,7 @@ extension Money: ExpressibleByIntegerLiteral {
 
 extension Money {
     /// An enumeration representing the position of currency symbol.
-    public enum CurrencySymbolPosition: Sendable, Hashable {
+    public enum CurrencySymbolPosition: Hashable, Sendable {
         /// Adds currency symbol before the amount (e.g., `$10.00`).
         case prefix
 
