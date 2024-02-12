@@ -29,7 +29,6 @@ disabled_rules:
   - weak_delegate
   - void_function_in_ternary
 opt_in_rules:
-  - switch_case_on_newline
   - closure_spacing
   - contains_over_first_not_nil
   - discouraged_object_literal
