@@ -26,7 +26,7 @@ public struct HorizontalBarProgressViewStyle: ProgressViewStyle {
                             .opacity(0.3)
 
                         Capsule()
-                            .frame(width: width * CGFloat(progress), alignment: .leading)
+                            .frame(width: width * progress, alignment: .leading)
                             .foregroundStyle(.tint)
                     }
                     .frame(height: height ?? 4)
@@ -43,10 +43,17 @@ public struct HorizontalBarProgressViewStyle: ProgressViewStyle {
 #Preview {
     Group {
         ProgressView()
-            .colorScheme(.dark)
 
-        ProgressView(value: 0.5)
-            .tint(.green)
+        ProgressView(value: 0.5) {
+            Text("Progress Label")
+        }
+        .tint(.green)
+
+        ProgressView(value: 0.5) {
+            Text("Progress Label")
+        }
+        .progressViewStyle(.horizontalBar)
+        .tint(.green)
 
         ProgressView(value: 0.8)
             .progressViewStyle(.horizontalBar)
@@ -58,12 +65,11 @@ public struct HorizontalBarProgressViewStyle: ProgressViewStyle {
             .progressViewStyle(.horizontalBar)
             .tint(.yellow)
 
-        ProgressView(value: 0.8)
-            .progressViewStyle(.horizontalBar)
-            .tint(.green)
+        ProgressView(value: 0.7)
+            .progressViewStyle(.horizontalBar(height: 16))
+            .tint(.yellow)
     }
-    .padding(20)
-    .background(.black)
+    .padding(.defaultSpacing)
     .previewLayout(.sizeThatFits)
 }
 
