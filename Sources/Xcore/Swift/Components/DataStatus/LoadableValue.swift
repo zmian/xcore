@@ -28,9 +28,9 @@ extension LoadableValue {
     public var value: Value? {
         switch self {
             case let .value(value):
-                return value
+                value
             default:
-                return nil
+                nil
         }
     }
 }
@@ -49,9 +49,9 @@ extension LoadableValue<Bool> {
         get {
             switch self {
                 case let .value(value):
-                    return value
+                    value
                 default:
-                    return false
+                    false
             }
         }
         set {

@@ -41,9 +41,9 @@ extension ReloadableDataStatus {
     public var isReloading: Bool {
         switch self {
             case .reloading:
-                return true
+                true
             default:
-                return false
+                false
         }
     }
 
@@ -51,9 +51,9 @@ extension ReloadableDataStatus {
     public var isSuccess: Bool {
         switch self {
             case .success:
-                return true
+                true
             default:
-                return false
+                false
         }
     }
 
@@ -61,9 +61,9 @@ extension ReloadableDataStatus {
     public var isFailure: Bool {
         switch self {
             case .failure:
-                return true
+                true
             default:
-                return false
+                false
         }
     }
 
@@ -71,9 +71,9 @@ extension ReloadableDataStatus {
     public var value: Value? {
         switch self {
             case let .success(value), let .reloading(value):
-                return value
+                value
             default:
-                return nil
+                nil
         }
     }
 
@@ -81,9 +81,9 @@ extension ReloadableDataStatus {
     public var error: AppError? {
         switch self {
             case let .failure(error):
-                return error
+                error
             default:
-                return nil
+                nil
         }
     }
 
@@ -91,11 +91,11 @@ extension ReloadableDataStatus {
     public var result: AppResult<Value>? {
         switch self {
             case let .success(value), let .reloading(value):
-                return .success(value)
+                .success(value)
             case let .failure(error):
-                return .failure(error)
+                .failure(error)
             case .idle, .loading:
-                return nil
+                nil
         }
     }
 
@@ -122,15 +122,15 @@ extension ReloadableDataStatus {
     public func mapSuccess<NewValue>(_ transform: (Value) -> NewValue) -> ReloadableDataStatus<NewValue> {
         switch self {
             case .idle:
-                return .idle
+                .idle
             case .loading:
-                return .loading
+                .loading
             case let .success(value):
-                return .success(transform(value))
+                .success(transform(value))
             case let .reloading(value):
-                return .reloading(transform(value))
+                .reloading(transform(value))
             case let .failure(error):
-                return .failure(error)
+                .failure(error)
         }
     }
 }
@@ -163,11 +163,11 @@ extension ReloadableDataStatus where Value: Collection {
     public var isFailureOrEmpty: Bool {
         switch self {
             case .idle, .loading:
-                return false
+                false
             case let .success(value), let .reloading(value):
-                return value.isEmpty
+                value.isEmpty
             case .failure:
-                return true
+                true
         }
     }
 }

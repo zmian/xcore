@@ -26,12 +26,18 @@ public enum AppStatus: Hashable, CustomStringConvertible {
 extension AppStatus: CustomAnalyticsValueConvertible {
     public var analyticsValue: String {
         switch self {
-            case .preparingLaunch: "preparing_launch"
-            case .systemForceRefresh: "system_force_refresh"
-            case let .systemAlert(configuration): "system_alert_\(configuration.id)"
-            case .session(.signedOut): "session_signed_out"
-            case .session(.locked): "session_locked"
-            case .session(.unlocked): "session_unlocked"
+            case .preparingLaunch:
+                "preparing_launch"
+            case .systemForceRefresh:
+                "system_force_refresh"
+            case let .systemAlert(configuration):
+                "system_alert_\(configuration.id)"
+            case .session(.signedOut):
+                "session_signed_out"
+            case .session(.locked):
+                "session_locked"
+            case .session(.unlocked):
+                "session_unlocked"
         }
     }
 

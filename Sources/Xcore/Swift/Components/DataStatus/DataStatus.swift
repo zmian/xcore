@@ -35,9 +35,9 @@ extension DataStatus {
     public var isSuccess: Bool {
         switch self {
             case .success:
-                return true
+                true
             default:
-                return false
+                false
         }
     }
 
@@ -45,9 +45,9 @@ extension DataStatus {
     public var isFailure: Bool {
         switch self {
             case .failure:
-                return true
+                true
             default:
-                return false
+                false
         }
     }
 
@@ -55,9 +55,9 @@ extension DataStatus {
     public var value: Value? {
         switch self {
             case let .success(value):
-                return value
+                value
             default:
-                return nil
+                nil
         }
     }
 
@@ -65,9 +65,9 @@ extension DataStatus {
     public var error: AppError? {
         switch self {
             case let .failure(error):
-                return error
+                error
             default:
-                return nil
+                nil
         }
     }
 
@@ -75,11 +75,11 @@ extension DataStatus {
     public var result: AppResult<Value>? {
         switch self {
             case let .success(value):
-                return .success(value)
+                .success(value)
             case let .failure(error):
-                return .failure(error)
+                .failure(error)
             case .idle, .loading:
-                return nil
+                nil
         }
     }
 }
@@ -97,13 +97,13 @@ extension DataStatus {
     public func mapSuccess<NewValue>(_ transform: (Value) -> DataStatus<NewValue>) -> DataStatus<NewValue> {
         switch self {
             case .idle:
-                return .idle
+                .idle
             case .loading:
-                return .loading
+                .loading
             case let .success(value):
-                return transform(value)
+                transform(value)
             case let .failure(error):
-                return .failure(error)
+                .failure(error)
         }
     }
 
@@ -147,11 +147,11 @@ extension DataStatus where Value: Collection {
     public var isFailureOrEmpty: Bool {
         switch self {
             case .idle, .loading:
-                return false
+                false
             case let .success(value):
-                return value.isEmpty
+                value.isEmpty
             case .failure:
-                return true
+                true
         }
     }
 }

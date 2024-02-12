@@ -63,9 +63,9 @@ extension ConfirmOperationStatus {
     public var isWaitingConfirmation: Bool {
         switch self {
             case .waitingConfirmation:
-                return true
+                true
             default:
-                return false
+                false
         }
     }
 
@@ -73,9 +73,9 @@ extension ConfirmOperationStatus {
     public var isLoading: Bool {
         switch self {
             case .loading:
-                return true
+                true
             default:
-                return false
+                false
         }
     }
 
@@ -84,9 +84,9 @@ extension ConfirmOperationStatus {
     public var isLoadingOrWaitingConfirmation: Bool {
         switch self {
             case .loading, .waitingConfirmation:
-                return true
+                true
             default:
-                return false
+                false
         }
     }
 
@@ -94,9 +94,9 @@ extension ConfirmOperationStatus {
     public var isSuccess: Bool {
         switch self {
             case .success:
-                return true
+                true
             default:
-                return false
+                false
         }
     }
 
@@ -104,9 +104,9 @@ extension ConfirmOperationStatus {
     public var isFailure: Bool {
         switch self {
             case .failure:
-                return true
+                true
             default:
-                return false
+                false
         }
     }
 
@@ -115,11 +115,11 @@ extension ConfirmOperationStatus {
     public var item: Item? {
         switch self {
             case let .waitingConfirmation(item):
-                return item
+                item
             case let .loading(item):
-                return item
+                item
             default:
-                return nil
+                nil
         }
     }
 
@@ -127,9 +127,9 @@ extension ConfirmOperationStatus {
     public var value: Value? {
         switch self {
             case let .success(value):
-                return value
+                value
             default:
-                return nil
+                nil
         }
     }
 
@@ -137,9 +137,9 @@ extension ConfirmOperationStatus {
     public var error: AppError? {
         switch self {
             case let .failure(error):
-                return error
+                error
             default:
-                return nil
+                nil
         }
     }
 
@@ -147,11 +147,11 @@ extension ConfirmOperationStatus {
     public var result: AppResult<Value>? {
         switch self {
             case let .success(value):
-                return .success(value)
+                .success(value)
             case let .failure(error):
-                return .failure(error)
+                .failure(error)
             case .idle, .loading, .waitingConfirmation:
-                return nil
+                nil
         }
     }
 }
