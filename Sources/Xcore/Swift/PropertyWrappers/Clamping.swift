@@ -31,6 +31,6 @@ public struct Clamping<Value: Comparable> {
 
     public var wrappedValue: Value {
         get { value }
-        set { value = min(max(range.lowerBound, newValue), range.upperBound) }
+        set { value = newValue.clamped(to: range) }
     }
 }
