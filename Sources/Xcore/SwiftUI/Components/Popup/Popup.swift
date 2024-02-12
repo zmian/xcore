@@ -147,7 +147,7 @@ extension Popup.Style {
     public static func toast(edge: Edge = .top, dismissAfter duration: Double = 2) -> Self {
         .init(
             alignment: edge == .top ? .top : .bottom,
-            animation: .spring,
+            animation: .spring(response: 0.6),
             transition: .move(edge: edge)
                 .combined(with: .opacity),
             windowStyle: .init(label: "Toast Window", isKey: false),
