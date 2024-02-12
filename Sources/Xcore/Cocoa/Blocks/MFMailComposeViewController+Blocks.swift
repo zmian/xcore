@@ -8,16 +8,13 @@ import UIKit
 import MessageUI
 
 extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
-    public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        var value: Result
-
-        if let actionHandler = actionHandlerWrapper?.closure {
-            if let error {
-                value = .failure(error)
-            } else {
-                value = .success(result)
-            }
-
+    public func mailComposeController(
+        _ controller: MFMailComposeViewController,
+        didFinishWith result: MFMailComposeResult,
+        error: Error?
+    ) {
+        if let actionHandler = actionHandlerWrapper?.handler {
+            let value = error.map(Result.failure) ?? .success(result)
             actionHandler(controller, value)
         }
 
@@ -29,12 +26,13 @@ extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
 
 extension MFMailComposeViewController {
     public typealias Result = Swift.Result<MFMailComposeResult, Error>
+    public typealias Handler = (_ controller: MFMailComposeViewController, _ result: Result) -> Void
 
     private class ClosureWrapper: NSObject {
-        var closure: ((_ controller: MFMailComposeViewController, _ result: Result) -> Void)?
+        var handler: Handler?
 
-        init(_ closure: ((_ controller: MFMailComposeViewController, _ result: Result) -> Void)?) {
-            self.closure = closure
+        init(_ handler: Handler?) {
+            self.handler = handler
         }
     }
 
@@ -56,9 +54,7 @@ extension MFMailComposeViewController {
         }
     }
 
-    public func didFinishWithResult(
-        _ handler: @escaping (_ controller: MFMailComposeViewController, _ result: Result) -> Void
-    ) {
+    public func didFinishWithResult(_ handler: @escaping Handler) {
         mailComposeDelegate = self
         actionHandlerWrapper = ClosureWrapper(handler)
     }
