@@ -7,12 +7,12 @@
 import SwiftUI
 
 public struct TextFieldAttributes: Hashable, MutableAppliable {
-    public enum PlaceholderPlacement: Hashable, CaseIterable {
+    public enum PlaceholderBehavior: Hashable, CaseIterable {
         case floating
         case inline
     }
 
-    public var placeholderPlacement: PlaceholderPlacement
+    public var placeholderBehavior: PlaceholderBehavior
     public var placeholderColor: Color
     public var placeholderErrorColor: Color
     public var placeholderSuccessColor: Color
@@ -21,7 +21,7 @@ public struct TextFieldAttributes: Hashable, MutableAppliable {
     public var disabledColor: Color?
 
     public init(
-        placeholderPlacement: PlaceholderPlacement = .floating,
+        placeholderBehavior: PlaceholderBehavior = .floating,
         placeholderColor: Color = Color(.placeholderText),
         placeholderErrorColor: Color = Color(.systemOrange),
         placeholderSuccessColor: Color = Color(.systemGreen),
@@ -29,7 +29,7 @@ public struct TextFieldAttributes: Hashable, MutableAppliable {
         successColor: Color = Color(.systemGreen),
         disabledColor: Color? = nil
     ) {
-        self.placeholderPlacement = placeholderPlacement
+        self.placeholderBehavior = placeholderBehavior
         self.placeholderColor = placeholderColor
         self.placeholderErrorColor = placeholderErrorColor
         self.placeholderSuccessColor = placeholderSuccessColor

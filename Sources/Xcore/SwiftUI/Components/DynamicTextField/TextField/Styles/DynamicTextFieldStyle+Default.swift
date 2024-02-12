@@ -29,7 +29,7 @@ extension DefaultDynamicTextFieldStyle {
 
         var body: some View {
             HStack(spacing: .s2) {
-                switch attributes.placeholderPlacement {
+                switch attributes.placeholderBehavior {
                     case .inline:
                         inlineContent
                     case .floating:

@@ -16,7 +16,7 @@ public struct ProminentDynamicTextFieldStyle<S: InsettableShape>: DynamicTextFie
         }
 
         public enum OutlineValidationColor {
-            /// If you set the `placeholderPlacement` attribute to `.floating`, the color
+            /// If you set the `placeholderBehavior` attribute to `.floating`, the color
             /// won't be applied to the border; otherwise, the validation color is used on
             /// the border.
             case automatic
@@ -83,7 +83,7 @@ extension ProminentDynamicTextFieldStyle {
                 return padding
             } else {
                 var padding: EdgeInsets = .zero
-                padding.vertical = attributes.placeholderPlacement == .floating ? .s2 : .s4
+                padding.vertical = attributes.placeholderBehavior == .floating ? .s2 : .s4
                 padding.horizontal = S.self == Capsule.self ? .s4 : .s3
                 return padding
             }
@@ -104,7 +104,7 @@ extension ProminentDynamicTextFieldStyle {
 
             switch validationColor {
                 case .automatic:
-                    return attributes.placeholderPlacement == .floating ? nil : color
+                    return attributes.placeholderBehavior == .floating ? nil : color
                 case .enable:
                     return color
                 case .disable:

@@ -37,8 +37,8 @@ private struct TextFieldPreviewBox<Content: View>: View {
 // MARK: - Showcase
 
 private struct ShowcaseFieldPreview: View {
-    private typealias PlaceholderPlacement = TextFieldAttributes.PlaceholderPlacement
-    @State private var placeholderPlacement = PlaceholderPlacement.floating
+    private typealias PlaceholderBehavior = TextFieldAttributes.PlaceholderBehavior
+    @State private var placeholderBehavior = PlaceholderBehavior.floating
     @State private var style = Style.default
     @State private var showLoading = false
     @State private var text = ""
@@ -50,7 +50,7 @@ private struct ShowcaseFieldPreview: View {
             }
             .dynamicTextFieldStyle(style.textFieldStyle)
             .textFieldAttributes {
-                $0.placeholderPlacement = placeholderPlacement
+                $0.placeholderBehavior = placeholderBehavior
             }
             .isLoading(showLoading)
             .listRowSeparator(.hidden)
@@ -59,8 +59,8 @@ private struct ShowcaseFieldPreview: View {
             Toggle("Show Loading State", isOn: $showLoading)
 
             // Placeholder Style Picker
-            Picker("Placeholder Placement", selection: $placeholderPlacement) {
-                ForEach(PlaceholderPlacement.allCases, id: \.self) {
+            Picker("Placeholder Behavior", selection: $placeholderBehavior) {
+                ForEach(PlaceholderBehavior.allCases, id: \.self) {
                     Text(String(describing: $0).titlecased())
                         .tag($0)
                 }
