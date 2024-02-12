@@ -6,6 +6,8 @@
 
 import Foundation
 
+#warning("TODO: Use SwiftLog")
+
 /// Log levels ordered by their severity, with `.debug` being the least severe
 /// and `.critical` being the most severe.
 public enum LogLevel: String, Hashable, Codable {
