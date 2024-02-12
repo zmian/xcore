@@ -9,9 +9,7 @@ import Foundation
 extension HTTPCookieStorage {
     /// Removes all cookies from the storage.
     public func deleteCookies() {
-        cookies?.forEach {
-            deleteCookie($0)
-        }
+        cookies?.forEach(deleteCookie)
     }
 
     /// Stores given list of cookies in the cookie storage if the cookie accept
@@ -26,9 +24,7 @@ extension HTTPCookieStorage {
     ///
     /// - Parameter cookies: The cookies to store.
     public func setCookies(_ cookies: [HTTPCookie]) {
-        cookies.forEach {
-            setCookie($0)
-        }
+        cookies.forEach(setCookie)
     }
 }
 
