@@ -21,7 +21,7 @@ extension CustomFloatingPointFormatStyle {
         case percent(scale: PercentageScale)
 
         /// An enumeration representing the scale of percent formatting.
-        public enum PercentageScale: Sendable, Hashable, Codable {
+        public enum PercentageScale: Hashable, Sendable, Codable {
             /// Percentage scale is: `0.0 - 1.0`.
             case zeroToOne
 
