@@ -6,31 +6,31 @@
 
 import Foundation
 
-public struct PhoneNumberStyle: Hashable, Codable {
-    public let mask: String
-    public let countryCode: Int
-    public let length: Int
+extension PhoneNumberTextFieldFormatter {
+    public struct Style: Hashable, Codable {
+        public let mask: String
+        public let countryCode: Int
+        public let length: Int
 
-    public init(mask: String, countryCode: Int) {
-        self.mask = mask
-        self.countryCode = countryCode
-        self.length = mask.count { $0 == "#" }
-    }
-}
+        public init(mask: String, countryCode: Int) {
+            self.mask = mask
+            self.countryCode = countryCode
+            self.length = mask.count { $0 == "#" }
+        }
 
-extension PhoneNumberStyle {
-    /// United States Phone Numbers
-    ///
-    /// 🇺🇸 +1 (800) 692-7753
-    public static var us: Self {
-        .init(mask: "🇺🇸 +# (###) ###-####", countryCode: 1)
-    }
+        /// United States Phone Numbers
+        ///
+        /// 🇺🇸 +1 (800) 692-7753
+        public static var us: Self {
+            .init(mask: "🇺🇸 +# (###) ###-####", countryCode: 1)
+        }
 
-    /// Australia Phone Numbers
-    ///
-    /// 🇦🇺 +61 423 456 789
-    public static var au: Self {
-        .init(mask: "🇦🇺 +## ### ### ###", countryCode: 61)
+        /// Australia Phone Numbers
+        ///
+        /// 🇦🇺 +61 423 456 789
+        public static var au: Self {
+            .init(mask: "🇦🇺 +## ### ### ###", countryCode: 61)
+        }
     }
 }
 
@@ -38,9 +38,9 @@ extension PhoneNumberStyle {
 /// representation of it.
 public struct PhoneNumberTextFieldFormatter: TextFieldFormatter {
     private let mask: MaskingTextFieldFormatter
-    private let style: PhoneNumberStyle
+    private let style: Style
 
-    public init(style: PhoneNumberStyle) {
+    public init(style: Style) {
         self.mask = .init(style.mask)
         self.style = style
     }

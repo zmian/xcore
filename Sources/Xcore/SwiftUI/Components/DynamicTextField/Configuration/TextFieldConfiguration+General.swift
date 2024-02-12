@@ -44,7 +44,7 @@ extension TextFieldConfiguration<PhoneNumberTextFieldFormatter> {
     }
 
     /// Phone Number
-    public static func phoneNumber(for style: PhoneNumberStyle) -> Self {
+    public static func phoneNumber(for style: Formatter.Style) -> Self {
         .init(
             id: "phoneNumber",
             autocapitalization: .none,

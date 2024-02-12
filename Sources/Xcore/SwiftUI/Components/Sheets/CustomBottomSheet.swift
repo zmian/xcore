@@ -68,7 +68,7 @@ private struct CustomBottomSheetButtonStyle: ButtonStyle {
     private struct InternalBody: View {
         @Environment(\.multilineTextAlignment) private var textAlignment
         @Environment(\.isEnabled) private var isEnabled
-        let configuration: ButtonStyleConfiguration
+        let configuration: Configuration
 
         var body: some View {
             configuration.label

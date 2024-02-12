@@ -185,7 +185,7 @@ extension ValidationRule<String> {
     /// A validation rule that checks whether the input is a valid phone number with
     /// 11 character length.
     public static var phoneNumber: Self {
-        .phoneNumber(length: PhoneNumberStyle.us.length)
+        .phoneNumber(length: PhoneNumberTextFieldFormatter.Style.us.length)
     }
 
     /// A validation rule that checks whether the input is a valid phone number.
