@@ -20,10 +20,6 @@ public enum SelectionType<Value> {
     }
 }
 
-// MARK: - Sendable
-
-extension SelectionType: Sendable where Value: Sendable {}
-
 // MARK: - Equatable
 
 extension SelectionType: Equatable where Value: Equatable {
