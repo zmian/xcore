@@ -244,22 +244,34 @@ extension AppPhase {
 extension AppPhase: CustomAnalyticsValueConvertible {
     public var analyticsValue: String {
         switch self {
-            case .launched: "launched"
-            case .active: "active"
-            case .inactive: "inactive"
-            case .background: "background"
-            case .willEnterForeground: "will_enter_foreground"
-            case .willTerminate: "will_terminate"
-            case .memoryWarning: "memory_warning"
-            case .significantTimeChange: "significant_time_change"
-            case .protectedDataDidBecomeAvailable: "protected_data_did_become_available"
+            case .launched:
+                "launched"
+            case .active:
+                "active"
+            case .inactive:
+                "inactive"
+            case .background:
+                "background"
+            case .willEnterForeground:
+                "will_enter_foreground"
+            case .willTerminate:
+                "will_terminate"
+            case .memoryWarning:
+                "memory_warning"
+            case .significantTimeChange:
+                "significant_time_change"
+            case .protectedDataDidBecomeAvailable:
+                "protected_data_did_become_available"
             case .remoteNotificationsRegistered(.success):
                 "remote_notifications_registered_success"
             case let .remoteNotificationsRegistered(.failure(error)):
                 "remote_notifications_registered_error_\(error.code)"
-            case .remoteNotificationReceived: "remote_notification_received"
-            case .openUrl: "open_url"
-            case .continueUserActivity: "continue_user_activity"
+            case .remoteNotificationReceived:
+                "remote_notification_received"
+            case .openUrl:
+                "open_url"
+            case .continueUserActivity:
+                "continue_user_activity"
         }
     }
 }
