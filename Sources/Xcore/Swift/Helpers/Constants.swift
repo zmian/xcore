@@ -145,7 +145,7 @@ public enum AppConstants {
     /// The golden ratio.
     public static var φ: CGFloat { 0.618 }
 
-    public private(set) static var statusBarHeight: CGFloat = UIApplication
+    public static let statusBarHeight: CGFloat = UIApplication
         .sharedOrNil?
         .firstSceneKeyWindow?
         .windowScene?
@@ -165,20 +165,16 @@ public enum AppConstants {
     }
 
     public static var navBarItemHeight: CGFloat { 24 }
-    public static var tabBarHeight: CGFloat { 49 }
     public static var uiControlsHeight: CGFloat { 50 }
-    public static var searchBarHeight: CGFloat {
-        uiControlsHeight
-    }
 
     public static var tileCornerRadius: CGFloat = 12
     public static var cornerRadius: CGFloat = 6
 
     public static var preferredMaxWidth: CGFloat {
-        Screen.ReferenceSize.iPhoneXSMax.size.width
+        iPhoneXSScreenSize.width
     }
 
-    public static var popupPreferredWidth: CGFloat {
+    static var popupPreferredWidth: CGFloat {
         min(300, Device.screen.bounds.size.min * 0.8)
     }
 }
@@ -203,24 +199,24 @@ extension AppConstants {
     }
 
     public static var mediumScreenSize: Bool {
-        Device.screen.referenceSize.size.max <= iPhone6ScreenSize.max
+        Device.screen.referenceSize.size.max <= iPhoneXSScreenSize.max
     }
 
-    public static var iPhone6ScreenSize: CGSize {
-        Screen.ReferenceSize.iPhone6.size
+    public static var iPhoneXSScreenSize: CGSize {
+        Screen.ReferenceSize.iPhoneXSMax.size
     }
 
     /// Returns relative value for the current device based on iPhone 6 width.
     public static func aspect(_ value: CGFloat, axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
         let screenSize = UIScreen.main.bounds.size
-        let reference = iPhone6ScreenSize
+        let reference = iPhoneXSScreenSize
         let relation = axis == .vertical ? screenSize.height / reference.height : screenSize.width / reference.width
         return value * relation
     }
 
     public static func remaining(axis: NSLayoutConstraint.Axis = .vertical) -> CGFloat {
         let screenSize = UIScreen.main.bounds.size
-        let reference = iPhone6ScreenSize
+        let reference = iPhoneXSScreenSize
         let remaining = axis == .vertical ? screenSize.height - reference.height : screenSize.width - reference.width
         return max(0.0, remaining)
     }

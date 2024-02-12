@@ -30,18 +30,11 @@ public struct Percentage: RawRepresentable {
     public private(set) var rawValue: Double
 
     public init(rawValue: Double) {
-        self.rawValue = Self.normalize(rawValue)
+        self.rawValue = Self.clamped(rawValue)
     }
 
-    private static func normalize(_ value: Double) -> Double {
-        switch value {
-            case 0...100:
-                return value
-            case ..<0:
-                return 0
-            default:
-                return 100
-        }
+    private static func clamped(_ value: Double) -> Double {
+        value.clamped(to: 0...100)
     }
 }
 
@@ -97,13 +90,11 @@ extension Percentage {
     }
 
     public static func +=(lhs: inout Self, rhs: Self) {
-        let normalizedValue = normalize(lhs.rawValue + rhs.rawValue)
-        lhs.rawValue = normalizedValue
+        lhs.rawValue = clamped(lhs.rawValue + rhs.rawValue)
     }
 
     public static func -=(lhs: inout Self, rhs: Self) {
-        let normalizedValue = normalize(lhs.rawValue - rhs.rawValue)
-        lhs.rawValue = normalizedValue
+        lhs.rawValue = clamped(lhs.rawValue - rhs.rawValue)
     }
 }
 
