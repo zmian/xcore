@@ -28,12 +28,12 @@ extension AppStatus {
                      (.unlocked, .locked),
                      (.unlocked, .signedOut),
                      (.signedOut, .unlocked):
-                    return true
+                    true
                 case (.locked, .locked),
                      (.unlocked, .unlocked),
                      (.signedOut, .signedOut),
                      (.signedOut, .locked):
-                    return false
+                    false
             }
         }
     }

@@ -208,33 +208,33 @@ extension AppPhase {
     public var description: String {
         switch self {
             case .launched:
-                return "launched"
+                "launched"
             case .active:
-                return "active"
+                "active"
             case .inactive:
-                return "inactive"
+                "inactive"
             case .background:
-                return "background"
+                "background"
             case .willEnterForeground:
-                return "willEnterForeground"
+                "willEnterForeground"
             case .willTerminate:
-                return "willTerminate"
+                "willTerminate"
             case .memoryWarning:
-                return "memoryWarning"
+                "memoryWarning"
             case .significantTimeChange:
-                return "significantTimeChange"
+                "significantTimeChange"
             case .protectedDataDidBecomeAvailable:
-                return "protectedDataDidBecomeAvailable"
+                "protectedDataDidBecomeAvailable"
             case let .remoteNotificationsRegistered(.success(token)):
-                return "remoteNotificationsRegistered(.success(\(token.hexEncodedString())))"
+                "remoteNotificationsRegistered(.success(\(token.hexEncodedString())))"
             case let .remoteNotificationsRegistered(.failure(error)):
-                return "remoteNotificationsRegistered(.failure(\(error)))"
+                "remoteNotificationsRegistered(.failure(\(error)))"
             case .remoteNotificationReceived:
-                return "remoteNotificationReceived"
+                "remoteNotificationReceived"
             case let .openUrl(url, options):
-                return "openUrl(\(url), options: \(options))"
+                "openUrl(\(url), options: \(options))"
             case let .continueUserActivity(userActivity, _):
-                return "continueUserActivity(\(userActivity), handler: ())"
+                "continueUserActivity(\(userActivity), handler: ())"
         }
     }
 }
@@ -244,34 +244,22 @@ extension AppPhase {
 extension AppPhase: CustomAnalyticsValueConvertible {
     public var analyticsValue: String {
         switch self {
-            case .launched:
-                return "launched"
-            case .active:
-                return "active"
-            case .inactive:
-                return "inactive"
-            case .background:
-                return "background"
-            case .willEnterForeground:
-                return "will_enter_foreground"
-            case .willTerminate:
-                return "will_terminate"
-            case .memoryWarning:
-                return "memory_warning"
-            case .significantTimeChange:
-                return "significant_time_change"
-            case .protectedDataDidBecomeAvailable:
-                return "protected_data_did_become_available"
+            case .launched: "launched"
+            case .active: "active"
+            case .inactive: "inactive"
+            case .background: "background"
+            case .willEnterForeground: "will_enter_foreground"
+            case .willTerminate: "will_terminate"
+            case .memoryWarning: "memory_warning"
+            case .significantTimeChange: "significant_time_change"
+            case .protectedDataDidBecomeAvailable: "protected_data_did_become_available"
             case .remoteNotificationsRegistered(.success):
-                return "remote_notifications_registered_success"
+                "remote_notifications_registered_success"
             case let .remoteNotificationsRegistered(.failure(error)):
-                return "remote_notifications_registered_error_\(error.code)"
-            case .remoteNotificationReceived:
-                return "remote_notification_received"
-            case .openUrl:
-                return "open_url"
-            case .continueUserActivity:
-                return "continue_user_activity"
+                "remote_notifications_registered_error_\(error.code)"
+            case .remoteNotificationReceived: "remote_notification_received"
+            case .openUrl: "open_url"
+            case .continueUserActivity: "continue_user_activity"
         }
     }
 }

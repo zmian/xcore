@@ -10,7 +10,7 @@ extension HapticFeedbackClient {
     /// Returns live variant of `HapticFeedbackClient`.
     public static var live: Self {
         .init { style in
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 switch style {
                     case .selection:
                         LiveHapticFeedbackClient.selection.trigger()

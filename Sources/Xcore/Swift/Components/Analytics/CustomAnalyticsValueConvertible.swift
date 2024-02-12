@@ -26,14 +26,10 @@ extension CustomAnalyticsValueConvertible where Self: RawRepresentable, RawValue
 extension Biometrics.Kind: CustomAnalyticsValueConvertible {
     public var analyticsValue: String {
         switch self {
-            case .none:
-                return "none"
-            case .touchID:
-                return "touch_id"
-            case .faceID:
-                return "face_id"
-            case .opticID:
-                return "optic_id"
+            case .none: "none"
+            case .touchID: "touch_id"
+            case .faceID: "face_id"
+            case .opticID: "optic_id"
         }
     }
 }

@@ -94,23 +94,17 @@ extension PushNotificationsClient {
 
         public var description: String {
             switch self {
-                case .notDetermined:
-                    return "Not Determined"
-                case .denied:
-                    return "Denied"
-                case .authorized:
-                    return "Authorized"
+                case .notDetermined: "Not Determined"
+                case .denied: "Denied"
+                case .authorized: "Authorized"
             }
         }
 
         public var analyticsValue: String {
             switch self {
-                case .notDetermined:
-                    return "not_determined"
-                case .denied:
-                    return "denied"
-                case .authorized:
-                    return "authorized"
+                case .notDetermined: "not_determined"
+                case .denied: "denied"
+                case .authorized: "authorized"
             }
         }
     }
@@ -154,15 +148,15 @@ extension PushNotificationsClient {
         public var description: String {
             switch self {
                 case let .changedAuthorization(status):
-                    return "Changed Authorization: \(status)"
+                    "Changed Authorization: \(status)"
                 case let .requestedAuthorization(.success(granted)):
-                    return "Requested Authorization: .success(granted: \(granted))"
+                    "Requested Authorization: .success(granted: \(granted))"
                 case let .requestedAuthorization(.failure(error)):
-                    return "Requested Authorization: .failure(\(error))"
+                    "Requested Authorization: .failure(\(error))"
                 case let .openedAppFromNotification(id):
-                    return "Opened App From Notification: \(id)"
+                    "Opened App From Notification: \(id)"
                 case .unregistered:
-                    return "Unregistered"
+                    "Unregistered"
             }
         }
     }

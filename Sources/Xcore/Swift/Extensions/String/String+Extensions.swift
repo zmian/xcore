@@ -223,7 +223,11 @@ extension String {
     ///   - length: The maximum length of the string.
     ///   - position: The truncation position option.
     ///   - ellipsis: A `String` that will be appended in the truncation position.
-    public func truncate(_ length: Int, position: TruncationPosition = .tail, ellipsis: String = "...") -> String {
+    public func truncate(
+        _ length: Int,
+        position: TruncationPosition = .tail,
+        ellipsis: String = "..."
+    ) -> String {
         guard count > length else { return self }
 
         switch position {
