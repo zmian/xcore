@@ -25,7 +25,6 @@ public func headlessResolve(url: URL) async -> URL? {
 ///
 /// It can resolve any wrapped link and once resolved it invokes the completion
 /// block.
-@MainActor
 private final class HeadlessResolveURL: UIView, WKNavigationDelegate {
     private let url: URL
     private let webView = WKWebView()
