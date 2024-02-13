@@ -25,7 +25,7 @@ extension WKWebsiteDataStore {
     }
 
     public func remove(_ type: DataType, _ completion: (() -> Void)? = nil) {
-        Task {
+        Task { @MainActor in
             let records = await dataRecords(ofTypes: type.dataTypes)
             await removeData(ofTypes: type.dataTypes, for: records)
             completion?()

@@ -14,6 +14,8 @@ public protocol ImageFetcher {
 
     func canHandle(_ image: ImageRepresentable) -> Bool
 
+    #warning("Update imp to use concurrency")
+
     /// Fetch the image.
     ///
     /// - Parameters:
