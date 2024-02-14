@@ -45,7 +45,7 @@ Xcore is available through Swift Package Manager. To integrate it into a project
 let package = Package(
     ...
     dependencies: [
-        .package(name: "Xcore", url: "https://github.com/zmian/xcore", .branch("main"))
+        .package(url: "https://github.com/zmian/xcore", branch: "main")
     ],
     ...
 )
