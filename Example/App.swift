@@ -6,6 +6,8 @@
 
 import SwiftUI
 
+#warning("TODO: Switch docs to DocC")
+
 @main
 struct XcoreApp: App {
     init() {

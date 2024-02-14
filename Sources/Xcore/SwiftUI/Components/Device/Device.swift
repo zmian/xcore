@@ -53,7 +53,7 @@ extension Device {
         #elseif os(visionOS)
         return "visionOS"
         #elseif os(macOS)
-        #warning("TODO: Implement")
+        #warning("FIXME: Implement")
         return "macOS"
         #else
         return "Unknown"

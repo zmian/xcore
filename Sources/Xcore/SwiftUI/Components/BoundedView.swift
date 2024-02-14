@@ -43,7 +43,7 @@ public struct BoundedView<Content: View>: View {
     }
 
     public var body: some View {
-        // TODO: Use Layout protocol for implementation instead of GeometryReader.
+        #warning("TODO: Use Layout protocol for implementation instead of GeometryReader.")
         AxisGeometryReader { width in
             HStack {
                 if showLeftSpacer(viewWidth: width) {

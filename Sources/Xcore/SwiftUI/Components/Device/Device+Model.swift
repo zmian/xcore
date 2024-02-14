@@ -407,10 +407,10 @@ extension Device.Model {
         #elseif os(watchOS)
         return WKInterfaceDevice.current().model
         #elseif os(visionOS)
-        #warning("TODO: Implement")
+        #warning("FIXME: Implement")
         return "Apple Vision Pro"
         #elseif os(macOS)
-        #warning("TODO: Implement")
+        #warning("FIXME: Implement")
         return ""
         #endif
     }

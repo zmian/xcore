@@ -20,17 +20,14 @@ extension Popup {
             self.rawValue = rawValue
         }
 
-        // TODO: Swipe to dismiss popup.
-        // public static let swipe = Self(rawValue: 1 << 0)
-
         /// Tap on popup to dismiss.
-        public static let tapInside = Self(rawValue: 1 << 1)
+        public static let tapInside = Self(rawValue: 1 << 0)
 
         /// Tap outside of the popup content to dismiss.
-        public static let tapOutside = Self(rawValue: 1 << 2)
+        public static let tapOutside = Self(rawValue: 1 << 1)
 
         /// Adds an "x" button that user can tap to dismiss popup.
-        public static let xmark = Self(rawValue: 1 << 3)
+        public static let xmark = Self(rawValue: 1 << 2)
     }
 }
 
