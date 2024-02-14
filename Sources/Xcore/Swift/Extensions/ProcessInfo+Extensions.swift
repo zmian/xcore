@@ -164,7 +164,8 @@ extension ProcessInfo.Arguments {
         argument("DEBUG").exists
     }
 
-    /// A Boolean property indicating whether the analytics debug mode is enabled.
+    /// A Boolean property indicating whether the analytics debug mode is enabled
+    /// and analytics events are logged to the console.
     public static var isAnalyticsDebugEnabled: (enabled: Bool, contains: String?) {
         guard AppInfo.isDebuggerAttached else {
             return (false, nil)

@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import OSLog
 
 extension UIApplication {
     /// Swift doesn't allow marking parts of Swift framework unavailable for the App
@@ -47,7 +48,9 @@ extension UIApplication {
         let selector = NSSelectorFromString("openURL:options:completionHandler:")
 
         guard let method = application.method(for: selector) else {
-            Console.warn("Dynamic selector \(selector) isn't available.")
+            #if DEBUG
+            Logger.xc.warning("Dynamic selector \(selector, privacy: .public) isn't available.")
+            #endif
             return
         }
 

@@ -38,11 +38,8 @@ extension KeychainAccess.Keychain {
         accessibility: Accessibility = .whenUnlockedThisDeviceOnly,
         policy: AuthenticationPolicy = .none
     ) -> Keychain {
-        Keychain(
-            service: (Bundle.app.bundleIdentifier ?? "").replacing(".intents", with: ""),
-            accessGroup: accessGroup
-        )
-        .accessibility(accessibility)
-        .policy(policy)
+        Keychain(service: AppInfo.bundleId, accessGroup: accessGroup)
+            .accessibility(accessibility)
+            .policy(policy)
     }
 }

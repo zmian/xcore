@@ -65,7 +65,7 @@ open class Analytics<Event: AnalyticsEventProtocol> {
 
         #if DEBUG
         if AppInfo.isDebuggerAttached {
-            providers.append(PrintAnalyticsProvider())
+            providers.append(LogAnalyticsProvider())
         }
         #endif
 

@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import OSLog
 
 /// A structure representing a reason why code should abort at runtime.
 ///
@@ -55,25 +56,18 @@ extension FatalReason {
 @_transparent
 public func fatalError(
     because reason: FatalReason,
-    context: SourceContext = .init()
+    function: StaticString = #function,
+    file: StaticString = #file,
+    line: UInt = #line
 ) -> Never {
-    fatalError("\(context.function): \(reason)", file: context.file, line: context.line)
+    fatalError("\(function): \(reason)", file: file, line: line)
 }
 
 /// Prints a warning message in debug mode.
 ///
-/// - Parameters:
-///   - value: The unknown value.
-///   - file: The filename to print with `message`. The default is the file
-///     where `unknown(:function:file:line:)` is called.
-///   - function: The name of the calling function to print with `message`. The
-///     default is the calling scope where `unknown(:function:file:line:)` is
-///     called.
-///   - line: The line number to print along with `message`. The default is the
-///     line number where `unknown(:function:file:line:)` is called.
-@_transparent
-public func warnUnknown(_ value: Any, context: SourceContext = .init()) {
+/// - Parameter value: The unknown value.
+public func warnUnknown(_ value: Any) {
     #if DEBUG
-    Console.warn("Unknown value detected: \(value)", context: context)
+    Logger.xc.warning("Unknown value detected: \(String(describing: value), privacy: .public)")
     #endif
 }

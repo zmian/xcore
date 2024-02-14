@@ -5,6 +5,7 @@
 //
 
 import Foundation
+import OSLog
 
 public struct StringConverter: Sendable, Hashable {
     private let string: String
@@ -155,10 +156,7 @@ extension StringConverter {
         } catch {
             #if DEBUG
             if AppInfo.isDebuggerAttached {
-                print("Failed to decode \(type):")
-                print("---")
-                dump(error)
-                print("---")
+                Logger.xc.error("Failed to decode \(type, privacy: .public):\n \(dump(error), privacy: .public)")
             }
             #endif
             return nil

@@ -6,6 +6,7 @@
 
 import SwiftUI
 import WebKit
+import OSLog
 
 /// A view that displays interactive web content, such as for an in-app browser.
 public struct WebView: View {
@@ -229,12 +230,12 @@ extension WebView {
                 webView.evaluateJavaScript("localStorage.getItem(\"\(key)\")") { (value, error) in
                     if let value = value as? String {
                         if expectedValue != value {
-                            print("\"\(key)\" value in local storage:", value)
+                            Logger.xc.debug("\"\(key, privacy: .public)\" value in local storage: \(value, privacy: .public)")
                         }
                     }
 
                     if let error {
-                        print("Failed to get the value for the \"\(key)\":", error)
+                        Logger.xc.error("Failed to get the value for the \"\(key, privacy: .public)\": \(error, privacy: .public)")
                     }
                 }
             }

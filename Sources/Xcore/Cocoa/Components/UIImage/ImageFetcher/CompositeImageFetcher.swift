@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import OSLog
 
 final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
     /// The registered list of fetchers.
@@ -65,9 +66,9 @@ extension CompositeImageFetcher {
     ) {
         guard image.imageSource.isValid else {
             #if DEBUG
-            Console.error("Unable to fetch image because of invalid image source.")
+            Logger.xc.error("Unable to fetch image because of invalid image source: \(String(describing: image.imageSource), privacy: .public)")
             #endif
-            callback(.failure(ImageFetcherError.notFound))
+            callback(.failure(ImageFetcherError.invalidImageSource))
             return
         }
 

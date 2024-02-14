@@ -5,8 +5,9 @@
 //
 
 import Foundation
+import OSLog
 
-struct PrintAnalyticsProvider: AnalyticsProvider {
+struct LogAnalyticsProvider: AnalyticsProvider {
     func track(_ event: AnalyticsEventProtocol) {
         let (enabled, containsValue) = ProcessInfo.Arguments.isAnalyticsDebugEnabled
 
@@ -31,9 +32,9 @@ struct PrintAnalyticsProvider: AnalyticsProvider {
             propertiesString = "\nproperties: \(propertiesString)"
         }
 
-        print("""
+        Logger.analytics.debug("""
 
-        event: "\(event.name)"\(propertiesString)
+        event: "\(event.name, privacy: .public)"\(propertiesString, privacy: .public)
         """)
     }
 }

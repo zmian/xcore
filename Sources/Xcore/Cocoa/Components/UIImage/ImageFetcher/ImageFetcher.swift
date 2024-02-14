@@ -41,6 +41,7 @@ extension ImageFetcher {
 
 enum ImageFetcherError: Error {
     case notFound
+    case invalidImageSource
 }
 
 extension Result where Success == (image: UIImage, cacheType: ImageSourceType.CacheType) {

@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import OSLog
 
 extension UIFont {
     private enum RegistrationError: Error {
@@ -93,7 +94,7 @@ extension UIFont {
                 try unregister(fontName, cgFont: cgFont)
             } else {
                 #if DEBUG
-                Console.info("\"\(fontName)\" font already registered.")
+                Logger.xc.debug("\"\(fontName, privacy: .public)\" font already registered.")
                 #endif
                 return fontName
             }
@@ -105,7 +106,7 @@ extension UIFont {
             if let fontError = fontError?.takeRetainedValue() {
                 let errorDescription = CFErrorCopyDescription(fontError)
                 #if DEBUG
-                Console.error("Failed to register font \"\(fontName)\" with font manager: \(String(describing: errorDescription))")
+                Logger.xc.error("Failed to register font \"\(fontName, privacy: .public)\" with font manager: \(String(describing: errorDescription), privacy: .public)")
                 #endif
             }
 
@@ -131,7 +132,7 @@ extension UIFont {
         // unregister.
         guard !fontNames(forFamilyName: fontName).isEmpty else {
             #if DEBUG
-            Console.info("\"\(fontName)\" font isn't registered.")
+            Logger.xc.debug("\"\(fontName, privacy: .public)\" font isn't registered.")
             #endif
             return
         }
@@ -142,13 +143,13 @@ extension UIFont {
         if let fontError = fontError?.takeRetainedValue() {
             let errorDescription = CFErrorCopyDescription(fontError)
             #if DEBUG
-            Console.error("Failed to unregister font \"\(fontName)\" with font manager: \(String(describing: errorDescription))")
+            Logger.xc.error("Failed to unregister font \"\(fontName, privacy: .public)\" with font manager: \(String(describing: errorDescription), privacy: .public)")
             #endif
             throw RegistrationError.failedToUnregisterFont
         }
 
         #if DEBUG
-        Console.info("Successfully unregistered font \"\(fontName)\".")
+        Logger.xc.debug("Successfully unregistered font \"\(fontName, privacy: .public)\".")
         #endif
     }
 
