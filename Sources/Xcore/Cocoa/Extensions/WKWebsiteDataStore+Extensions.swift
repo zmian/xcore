@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-import WebKit
+@preconcurrency import WebKit
 
 extension WKWebsiteDataStore {
     public enum DataType {
