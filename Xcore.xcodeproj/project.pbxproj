@@ -239,7 +239,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "Scripts/lint.sh\n";
+			shellScript = "./BuildTools/Scripts/lint.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

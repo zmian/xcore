@@ -26,7 +26,7 @@ currentver="$(swiftlint version)"
 minrequiredver="0.43.1"
 
 if [ "$(printf '%s\n' "$minrequiredver" "$currentver" | sort -V | head -n1)" = "$minrequiredver" ]; then
-    cd ../ && swiftlint lint
+    swiftlint lint
 else
     echo "
     error: 🛑 Your SwiftLint version $currentver is outdated.
