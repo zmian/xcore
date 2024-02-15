@@ -127,8 +127,7 @@ extension ColorizeImageTransform {
 // MARK: - Dot Syntax Support
 
 extension ImageTransform where Self == ColorizeImageTransform {
-    /// Applies colorization to the image with the given color using the specified
-    /// colorize type method.
+    /// Colorizes the image with the given color using the specified colorize type.
     ///
     /// - Parameters:
     ///   - color: The color to use when coloring.

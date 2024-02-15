@@ -31,9 +31,12 @@ extension UIImage {
 }
 
 extension UIImage {
-    /// Creates arbitrarily-colored icons from a black-with-alpha master image.
+    /// Applies tint color to the image.
     ///
-    /// - Parameter color: The color to be applied.
+    /// Ideal for creating arbitrarily-colored icons from a black-with-alpha
+    /// template image.
+    ///
+    /// - Parameter color: The tint color to apply
     /// - Returns: The processed `UIImage` object.
     public func tintColor(_ color: UIColor) -> UIImage {
         applying(.tintColor(color))
@@ -41,7 +44,7 @@ extension UIImage {
 
     /// Adjusts the alpha level of the image.
     ///
-    /// - Parameter value: The alpha value to be applied.
+    /// - Parameter value: The alpha value to apply.
     /// - Returns: The processed `UIImage` object.
     public func alpha(_ value: CGFloat) -> UIImage {
         applying(.alpha(value))
@@ -55,7 +58,7 @@ extension UIImage {
         applying(.cornerRadius(value))
     }
 
-    /// Colorizes the image with the given color.
+    /// Colorizes the image with the given color using the specified colorize type.
     ///
     /// - Parameters:
     ///   - color: The color to use when coloring.
@@ -73,7 +76,7 @@ extension UIImage {
     /// - Parameters:
     ///   - color: The background color to apply.
     ///   - preferredSize: The preferred size of the resulting image.
-    ///   - alignment: The alignment within the preferred size. The default value is `.center`.
+    ///   - alignment: The alignment within the preferred size.
     /// - Returns: The processed `UIImage` object.
     public func background(
         _ color: UIColor,

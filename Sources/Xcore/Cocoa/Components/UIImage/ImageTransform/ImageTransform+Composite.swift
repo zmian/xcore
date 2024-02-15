@@ -49,7 +49,7 @@ extension CompositeImageTransform {
 // MARK: - Dot Syntax Support
 
 extension ImageTransform where Self == CompositeImageTransform {
-    /// Applies scaling to the image to fit within a bounds of the given size.
+    /// Scales an image to fit within a bounds of the given size.
     ///
     /// - Parameters:
     ///   - newSize: The size of the bounds the image must fit within.

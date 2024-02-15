@@ -28,7 +28,7 @@ public struct AlphaImageTransform: ImageTransform {
 // MARK: - Dot Syntax Support
 
 extension ImageTransform where Self == AlphaImageTransform {
-    /// Applies alpha to the image.
+    /// Adjusts the alpha level of the image.
     ///
     /// - Parameter value: The alpha value to apply.
     /// - Returns: An `AlphaImageTransform` instance.
