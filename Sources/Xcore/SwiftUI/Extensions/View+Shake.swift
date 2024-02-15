@@ -21,7 +21,6 @@ extension View {
 
 /// A view modifier that detects user shaking the device and calls the given
 /// action closure.
-@MainActor
 private struct DeviceShakeViewModifier: ViewModifier {
     let action: () -> Void
 
