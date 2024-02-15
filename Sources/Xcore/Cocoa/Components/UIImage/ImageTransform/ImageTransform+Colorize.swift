@@ -7,7 +7,7 @@
 import UIKit
 
 extension ColorizeImageTransform {
-    public enum Kind: Sendable {
+    public enum Kind: Hashable, Sendable {
         /// Colorize image with given tint color.
         ///
         /// This is similar to Photoshop's **Color** layer blend mode.
