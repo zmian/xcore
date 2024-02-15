@@ -29,6 +29,6 @@ public struct AlphaImageTransform: ImageTransform {
 
 extension ImageTransform where Self == AlphaImageTransform {
     public static func alpha(_ value: CGFloat) -> Self {
-        Self(alpha: value)
+        .init(alpha: value)
     }
 }

@@ -59,7 +59,7 @@ extension ImageTransform where Self == BackgroundImageTransform {
         preferredSize: CGSize,
         alignment: UIControl.ContentHorizontalAlignment = .center
     ) -> Self {
-        Self(
+        .init(
             color: color,
             preferredSize: preferredSize,
             alignment: alignment

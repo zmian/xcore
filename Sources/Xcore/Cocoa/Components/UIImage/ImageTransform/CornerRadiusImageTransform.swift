@@ -30,6 +30,6 @@ public struct CornerRadiusImageTransform: ImageTransform {
 
 extension ImageTransform where Self == CornerRadiusImageTransform {
     public static func cornerRadius(_ value: CGFloat) -> Self {
-        Self(cornerRadius: value)
+        .init(cornerRadius: value)
     }
 }

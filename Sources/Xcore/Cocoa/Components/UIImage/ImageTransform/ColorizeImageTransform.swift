@@ -134,6 +134,6 @@ extension ImageTransform where Self == ColorizeImageTransform {
     ///   - kind: The kind of colorize type method to use.
     /// - Returns: The processed `UIImage` object.
     public static func colorize(_ color: UIColor, kind: Self.Kind) -> Self {
-        Self(color: color, kind: kind)
+        .init(color: color, kind: kind)
     }
 }
