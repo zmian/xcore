@@ -167,16 +167,16 @@ private final class AnalyticsClient: Analytics<AppAnalyticsEvent> {
 // MARK: - BlockAnalyticsProvider
 
 private struct BlockAnalyticsProvider: AnalyticsProvider {
-    private let _track: (_ event: AnalyticsEventProtocol) -> Void
-    private let _identify: (_ userId: String?, _ traits: EncodableDictionary) -> Void
-    private let _setEnabled: (_ enable: Bool) -> Void
-    private let _reset: () -> Void
+    private let _track: @Sendable (_ event: AnalyticsEventProtocol) -> Void
+    private let _identify: @Sendable (_ userId: String?, _ traits: EncodableDictionary) -> Void
+    private let _setEnabled: @Sendable (_ enable: Bool) -> Void
+    private let _reset: @Sendable () -> Void
 
     init(
-        track: @escaping (_ event: AnalyticsEventProtocol) -> Void,
-        identify: @escaping (_ userId: String?, _ traits: EncodableDictionary) -> Void,
-        setEnabled: @escaping (_ enable: Bool) -> Void,
-        reset: @escaping () -> Void
+        track: @escaping @Sendable (_ event: AnalyticsEventProtocol) -> Void,
+        identify: @escaping @Sendable (_ userId: String?, _ traits: EncodableDictionary) -> Void,
+        setEnabled: @escaping @Sendable (_ enable: Bool) -> Void,
+        reset: @escaping @Sendable () -> Void
     ) {
         self._track = track
         self._identify = identify

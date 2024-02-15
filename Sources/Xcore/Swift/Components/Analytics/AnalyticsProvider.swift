@@ -87,7 +87,7 @@ import Foundation
 ///     }
 /// }
 /// ```
-public protocol AnalyticsProvider {
+public protocol AnalyticsProvider: Sendable {
     /// A unique id for the analytics provider.
     var id: String { get }
 
