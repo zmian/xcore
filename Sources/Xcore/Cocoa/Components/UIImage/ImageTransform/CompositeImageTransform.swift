@@ -45,3 +45,31 @@ extension CompositeImageTransform {
         }
     }
 }
+
+// MARK: - Dot Syntax Support
+
+extension ImageTransform where Self == CompositeImageTransform {
+    /// Scales an image to fit within a bounds of the given size.
+    ///
+    /// - Parameters:
+    ///   - newSize: The size of the bounds the image must fit within.
+    ///   - scalingMode: The desired scaling mode. The default value is
+    ///     `.aspectFill`.
+    ///   - tintColor: An optional tint color to apply. The default value is `nil`.
+    /// - Returns: A new scaled image.
+    public static func scaled(
+        to newSize: CGSize,
+        scalingMode: ResizeImageTransform.ScalingMode = .aspectFill,
+        tintColor: UIColor? = nil
+    ) -> Self {
+        var transformer: Self = [
+            ResizeImageTransform(to: newSize, scalingMode: scalingMode)
+        ]
+
+        if let tintColor {
+            transformer.add(.tintColor(tintColor))
+        }
+
+        return transformer
+    }
+}

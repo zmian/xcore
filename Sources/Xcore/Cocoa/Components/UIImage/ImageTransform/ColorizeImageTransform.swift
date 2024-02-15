@@ -7,7 +7,7 @@
 import UIKit
 
 extension ColorizeImageTransform {
-    public enum Kind {
+    public enum Kind: Sendable {
         /// Colorize image with given tint color.
         ///
         /// This is similar to Photoshop's **Color** layer blend mode.
@@ -121,5 +121,19 @@ extension ColorizeImageTransform {
             context.scaleBy(x: 1, y: -1)
             block(context)
         }
+    }
+}
+
+// MARK: - Dot Syntax Support
+
+extension ImageTransform where Self == ColorizeImageTransform {
+    /// Colorize image with given color.
+    ///
+    /// - Parameters:
+    ///   - color: The color to use when coloring.
+    ///   - kind: The kind of colorize type method to use.
+    /// - Returns: The processed `UIImage` object.
+    public static func colorize(_ color: UIColor, kind: Self.Kind) -> Self {
+        Self(color: color, kind: kind)
     }
 }

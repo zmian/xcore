@@ -15,7 +15,7 @@ extension ImageRepresentable {
     /// func setIcon(_ icon: ImageRepresentable) {
     ///     let newIcon = icon
     ///         .alignment(.leading)
-    ///         .transform(TintColorImageTransform(tintColor: .white))
+    ///         .transform(.tintColor(.white))
     ///         .alignment(.trailing) // last one wins when using plugin.
     ///
     ///     let iconView = UIImageView()

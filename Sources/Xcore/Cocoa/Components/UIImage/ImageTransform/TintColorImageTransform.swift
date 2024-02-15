@@ -29,3 +29,12 @@ public struct TintColorImageTransform: ImageTransform {
         }
     }
 }
+
+// MARK: - Dot Syntax Support
+
+extension ImageTransform where Self == TintColorImageTransform {
+    /// Creating arbitrarily-colored icons from a black-with-alpha master image.
+    public static func tintColor(_ color: UIColor) -> Self {
+        Self(tintColor: color)
+    }
+}

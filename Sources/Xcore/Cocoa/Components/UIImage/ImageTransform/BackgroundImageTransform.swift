@@ -50,3 +50,19 @@ public struct BackgroundImageTransform: ImageTransform {
         }
     }
 }
+
+// MARK: - Dot Syntax Support
+
+extension ImageTransform where Self == BackgroundImageTransform {
+    public static func background(
+        _ color: UIColor,
+        preferredSize: CGSize,
+        alignment: UIControl.ContentHorizontalAlignment = .center
+    ) -> Self {
+        Self(
+            color: color,
+            preferredSize: preferredSize,
+            alignment: alignment
+        )
+    }
+}

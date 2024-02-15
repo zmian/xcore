@@ -38,11 +38,10 @@ struct PluginImage: ImageRepresentable {
     private var plugins: [ImageRepresentablePlugin]
 
     init() {
-        self.base = ""
-        self.plugins = []
+        self.init("")
     }
 
-    init(_ base: ImageRepresentable, plugins: [ImageRepresentablePlugin]) {
+    init(_ base: ImageRepresentable, plugins: [ImageRepresentablePlugin] = []) {
         self.base = base
         self.plugins = plugins
     }

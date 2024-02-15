@@ -25,3 +25,11 @@ public struct CornerRadiusImageTransform: ImageTransform {
         }
     }
 }
+
+// MARK: - Dot Syntax Support
+
+extension ImageTransform where Self == CornerRadiusImageTransform {
+    public static func cornerRadius(_ value: CGFloat) -> Self {
+        Self(cornerRadius: value)
+    }
+}

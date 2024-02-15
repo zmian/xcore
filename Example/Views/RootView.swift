@@ -32,7 +32,6 @@ struct RootView: View {
                 Text("A demonstration of components included in Xcore.")
             }
         }
-        .listStyle(.insetGrouped)
         .environment(\.defaultMinListRowHeight, 55)
         .navigationTitle("Showcase")
         .embedInNavigation()

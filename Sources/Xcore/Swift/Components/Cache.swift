@@ -8,7 +8,7 @@ import Foundation
 
 /// A mutable collection you use to temporarily store transient key-value pairs
 /// that are subject to eviction when resources are low.
-open class Cache<Key: Hashable, Value> {
+actor Cache<Key: Hashable & Sendable, Value> {
     /// The keys of the cache.
     public private(set) var keys = Set<Key>()
     private let cache = NSCache<KeyWrapper<Key>, ValueWrapper>()
@@ -21,7 +21,7 @@ open class Cache<Key: Hashable, Value> {
     /// The name of the cache.
     ///
     /// The default value is an empty string ("").
-    open var name: String {
+    public var name: String {
         get { cache.name }
         set { cache.name = newValue }
     }
@@ -30,7 +30,7 @@ open class Cache<Key: Hashable, Value> {
     /// from the cache.
     ///
     /// - Parameter action: The action to perform.
-    open func willEvictValue(_ action: ((Value) -> Void)?) {
+    public func willEvictValue(_ action: ((Value) -> Void)?) {
         delegate.willEvictValue = action
     }
 
@@ -40,7 +40,7 @@ open class Cache<Key: Hashable, Value> {
     /// - Parameter key: The key to look up in the cache.
     /// - Returns: The value associated with key, or `nil` if no value is associated
     ///   with key.
-    open func contains(forKey key: Key) -> Bool {
+    public func contains(forKey key: Key) -> Bool {
         value(forKey: key) != nil
     }
 
@@ -49,7 +49,7 @@ open class Cache<Key: Hashable, Value> {
     /// - Parameter key: An object identifying the value.
     /// - Returns: The value associated with key, or `nil` if no value is associated
     ///   with key.
-    open func value(forKey key: Key) -> Value? {
+    public func value(forKey key: Key) -> Value? {
         cache.object(forKey: KeyWrapper(key))?.value as? Value
     }
 
@@ -61,7 +61,7 @@ open class Cache<Key: Hashable, Value> {
     /// - Parameters:
     ///   - value: The value to be stored in the cache.
     ///   - key: The key with which to associate the value.
-    open func setValue(_ value: Value, forKey key: Key) {
+    public func setValue(_ value: Value, forKey key: Key) {
         keys.insert(key)
         cache.setObject(ValueWrapper(value), forKey: KeyWrapper(key))
     }
@@ -90,7 +90,7 @@ open class Cache<Key: Hashable, Value> {
     ///   - value: The value to store in the cache.
     ///   - key: The key with which to associate the value.
     ///   - cost: The cost with which to associate the key-value pair.
-    open func setValue(_ value: Value, forKey key: Key, cost: Int) {
+    public func setValue(_ value: Value, forKey key: Key, cost: Int) {
         keys.insert(key)
         cache.setObject(ValueWrapper(value), forKey: KeyWrapper(key), cost: cost)
     }
@@ -98,13 +98,13 @@ open class Cache<Key: Hashable, Value> {
     /// Removes the value of the specified key in the cache.
     ///
     /// - Parameter key: The key identifying the value to be removed.
-    open func remove(_ key: Key) {
+    public func remove(_ key: Key) {
         keys.remove(key)
         cache.removeObject(forKey: KeyWrapper(key))
     }
 
     /// Empties the cache.
-    open func removeAll() {
+    public func removeAll() {
         keys.removeAll()
         cache.removeAllObjects()
     }
@@ -124,7 +124,7 @@ open class Cache<Key: Hashable, Value> {
     /// This is not a strict limit, and if the cache goes over the limit, a value
     /// in the cache could be evicted instantly, at a later point in time, or
     /// possibly never, all depending on the implementation details of the cache.
-    open var totalCostLimit: Int {
+    public var totalCostLimit: Int {
         get { cache.totalCostLimit }
         set { cache.totalCostLimit = newValue }
     }
@@ -136,14 +136,14 @@ open class Cache<Key: Hashable, Value> {
     /// This is not a strict limit—if the cache goes over the limit, an value in the
     /// cache could be evicted instantly, later, or possibly never, depending on the
     /// implementation details of the cache.
-    open var countLimit: Int {
+    public var countLimit: Int {
         get { cache.countLimit }
         set { cache.countLimit = newValue }
     }
 
     /// Whether the cache will automatically evict discardable-content values whose
     /// content has been discarded.
-    open var evictsValuesWithDiscardedContent: Bool {
+    public var evictsValuesWithDiscardedContent: Bool {
         get { cache.evictsObjectsWithDiscardedContent }
         set { cache.evictsObjectsWithDiscardedContent = newValue }
     }

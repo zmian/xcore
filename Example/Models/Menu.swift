@@ -57,6 +57,7 @@ extension Menu: CaseIterable {
         popups,
         textFields,
         story,
+        images,
         share,
         hapticFeedback,
         crypt
@@ -104,6 +105,11 @@ extension Menu {
     private static let story = Self(
         title: "Story",
         content: StoryPreviewView()
+    )
+
+    private static let images = Self(
+        title: "Images Loader",
+        content: ImagesView()
     )
 
     private static let share = Self(
