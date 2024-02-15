@@ -99,7 +99,7 @@ final class AsyncPassthroughStreamTests: TestCase {
             XCTAssertEqual(values, [1, 2])
         }
 
-        Task { @MainActor in
+        Task {
             // Collection all produced elements
             var values: [Int] = []
 
