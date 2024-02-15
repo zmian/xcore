@@ -9,7 +9,7 @@ import KeychainAccess
 
 extension CompositePond {
     /// An enumeration representing the method requesting the pond for the key.
-    public enum Method: Hashable {
+    public enum Method: Sendable, Hashable {
         case get
         case set
         case contains
@@ -27,11 +27,11 @@ public struct CompositePond: Pond {
         self.pond = pond
     }
 
-    public func get<T>(_ type: T.Type, _ key: Key) throws -> T? {
+    public func get<T: Codable>(_ type: T.Type, _ key: Key) throws -> T? {
         try pond(.get, key).get(type, key)
     }
 
-    public func set<T>(_ key: Key, value: T?) throws {
+    public func set<T: Codable>(_ key: Key, value: T?) throws {
         try pond(.set, key).set(key, value: value)
     }
 

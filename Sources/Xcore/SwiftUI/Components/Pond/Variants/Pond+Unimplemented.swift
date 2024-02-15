@@ -11,12 +11,12 @@ public struct UnimplementedPond: Pond {
 
     public init() {}
 
-    public func get<T>(_ type: T.Type, _ key: Key) -> T? {
+    public func get<T: Codable>(_ type: T.Type, _ key: Key) -> T? {
         XCTFail("\(Self.self).get is unimplemented")
         return nil
     }
 
-    public func set<T>(_ key: Key, value: T?) {
+    public func set<T: Codable>(_ key: Key, value: T?) {
         XCTFail("\(Self.self).set is unimplemented")
     }
 

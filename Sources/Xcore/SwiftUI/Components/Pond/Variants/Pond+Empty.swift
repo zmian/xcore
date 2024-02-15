@@ -11,11 +11,11 @@ public struct EmptyPond: Pond {
 
     public init() {}
 
-    public func get<T>(_ type: T.Type, _ key: Key) -> T? {
+    public func get<T: Codable>(_ type: T.Type, _ key: Key) -> T? {
         nil
     }
 
-    public func set<T>(_ key: Key, value: T?) {}
+    public func set<T: Codable>(_ key: Key, value: T?) {}
 
     public func remove(_ key: Key) {}
 

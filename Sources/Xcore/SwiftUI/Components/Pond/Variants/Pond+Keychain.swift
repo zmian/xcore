@@ -15,7 +15,7 @@ public struct KeychainPond: Pond {
         self.keychain = keychain
     }
 
-    public func get<T>(_ type: T.Type, _ key: Key) throws -> T? {
+    public func get<T: Codable>(_ type: T.Type, _ key: Key) throws -> T? {
         switch T.self {
             case is Data.Type, is Optional<Data>.Type:
                 return try keychain.getData(key.id) as? T
@@ -24,17 +24,15 @@ public struct KeychainPond: Pond {
                     return StringConverter(stringValue)?.get(type)
                 }
 
-                if let C = Mirror.asCodable(T.self) {
-                    if let data = try keychain.getData(key.id) {
-                        return try JSONDecoder().decode(C.self, from: data) as? T
-                    }
+                if let data = try keychain.getData(key.id) {
+                    return try JSONDecoder().decode(T.self, from: data)
                 }
 
                 return nil
         }
     }
 
-    public func set<T>(_ key: Key, value: T?) throws {
+    public func set<T: Codable>(_ key: Key, value: T?) throws {
         do {
             if value == nil {
                 remove(key)
@@ -42,7 +40,7 @@ public struct KeychainPond: Pond {
                 try keychain.set(value, key: key.id)
             } else if let value = StringConverter(value)?.get(String.self) {
                 try keychain.set(value, key: key.id)
-            } else if let value = value as? Codable {
+            } else if let value {
                 let data = try JSONEncoder().encode(value)
                 try keychain.set(data, key: key.id)
             } else {

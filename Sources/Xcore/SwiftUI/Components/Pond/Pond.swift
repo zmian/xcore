@@ -23,9 +23,9 @@ public protocol Pond {
     /// A unique id for the pond.
     var id: String { get }
 
-    func get<T>(_ type: T.Type, _ key: Key) throws -> T?
+    func get<T: Codable>(_ type: T.Type, _ key: Key) throws -> T?
 
-    func set<T>(_ key: Key, value: T?) throws
+    func set<T: Codable>(_ key: Key, value: T?) throws
 
     /// Returns a Boolean value indicating whether the store contains value for the
     /// given key.
@@ -41,17 +41,8 @@ extension Pond {
         try set(key, value: value?.rawValue)
     }
 
-    public func setCodable<T: Codable>(_ key: Key, value: T?, encoder: JSONEncoder? = nil) {
-        do {
-            let data = try (encoder ?? JSONEncoder()).encode(value)
-            try set(key, value: data)
-        } catch {
-            #if DEBUG
-            if AppInfo.isDebuggerAttached {
-                fatalError(String(describing: error))
-            }
-            #endif
-        }
+    public func set(_ key: Key, value: NSNumber?) throws {
+        try set(key, value: value?.stringValue)
     }
 }
 
@@ -59,11 +50,15 @@ extension Pond {
 
 extension Pond {
     private func value(_ key: Key) throws -> StringConverter? {
-        StringConverter(try get(key))
+        StringConverter(try get(String.self, key))
     }
 
-    public func get<T>(_ key: Key) throws -> T? {
+    public func get<T: Codable>(_ key: Key) throws -> T? {
         try get(T.self, key)
+    }
+
+    public func get(_ key: Key) throws -> NSNumber? {
+        try? value(key)?.get()
     }
 
     public func get<T>(_ key: Key, default defaultValue: @autoclosure () -> T) -> T {
@@ -79,29 +74,6 @@ extension Pond {
             return try value(key)?.get() ?? defaultValue()
         } catch {
             return defaultValue()
-        }
-    }
-
-    /// Returns the value of the key, decoded from a JSON object.
-    ///
-    /// - Parameters:
-    ///   - type: The type of the value to decode from the string.
-    ///   - decoder: The decoder used to decode the data. If set to `nil`, it uses
-    ///     ``JSONDecoder`` with `convertFromSnakeCase` key decoding strategy.
-    /// - Returns: A value of the specified type, if the decoder can parse the data.
-    public func getCodable<T>(_ key: Key, type: T.Type = T.self, decoder: JSONDecoder? = nil) -> T? where T: Decodable {
-        do {
-            if let data = try get(Data.self, key) {
-                return StringConverter.get(type, from: data, decoder: decoder)
-            }
-
-            if let value = StringConverter(try get(String.self, key))?.get(type, decoder: decoder) {
-                return value
-            }
-
-            return nil
-        } catch {
-            return nil
         }
     }
 }

@@ -47,10 +47,28 @@ final class PondTests: TestCase {
 
         // Set/Get value
         try model.pond.set(.testValue, value: 123)
-        XCTAssertNil(try model.pond.get(.testValue))
+        XCTAssertNil(try model.pond.get(Int.self, .testValue))
     }
 
-    private func assertCases<T>(for value: T, pond: @autoclosure () -> Pond) throws where T: Equatable {
+    private func assertCases<T: Codable>(for value: T, pond: @autoclosure () -> Pond) throws where T: Equatable {
+        let model = withDependencies {
+            $0.pond = pond()
+        } operation: {
+            ViewModel()
+        }
+
+        // Set value
+        try model.pond.set(.testValue, value: value)
+        XCTAssertTrue(model.pond.contains(.testValue))
+        model.pond.remove(.testValue)
+        XCTAssertFalse(model.pond.contains(.testValue))
+
+        // Set/Get value
+        try model.pond.set(.testValue2, value: value)
+        XCTAssertEqual(try model.pond.get(.testValue2), value)
+    }
+
+    private func assertCases(for value: NSNumber, pond: @autoclosure () -> Pond) throws {
         let model = withDependencies {
             $0.pond = pond()
         } operation: {
@@ -92,7 +110,6 @@ extension PondTests {
 
         try assertCases(for: URL(string: "http://example.com"), pond: pond())
         try assertCases(for: NSURL(string: "http://example.com")! as URL, pond: pond())
-        try assertCases(for: NSURL(string: "http://example.com"), pond: pond())
 
         // Test Data
         try assertCases(for: Crypt.generateSecureRandom(), pond: pond())
@@ -120,7 +137,7 @@ extension PondTests {
 
         model.pond.remove(.testValue)
 
-        XCTAssertNil(model.pond.getCodable(.testValue, type: Example.self))
+        XCTAssertNil(try model.pond.get(Example.self, .testValue))
         XCTAssertEqual(model.pond.get(.testValue, default: "My Value"), "My Value")
     }
 
@@ -139,7 +156,7 @@ extension PondTests {
         }
 
         try model.pond.set(.testValue, value: data)
-        let example = try XCTUnwrap(model.pond.getCodable(.testValue, type: Example.self))
+        let example = try XCTUnwrap(model.pond.get(Example.self, .testValue))
         XCTAssertEqual(example.value, "hello world")
     }
 
@@ -155,9 +172,9 @@ extension PondTests {
         }
 
         let value = Example(value: "Swift")
-        model.pond.setCodable(.testValue, value: value)
+        try model.pond.set(.testValue, value: value)
 
-        let example = try XCTUnwrap(model.pond.getCodable(.testValue, type: Example.self))
+        let example = try XCTUnwrap(model.pond.get(Example.self, .testValue))
         XCTAssertEqual(example.value, "Swift")
     }
 
@@ -173,9 +190,9 @@ extension PondTests {
         }
 
         let values = [Example(value: "Swift"), Example(value: "Language")]
-        model.pond.setCodable(.testValue, value: values)
+        try model.pond.set(.testValue, value: values)
 
-        let examples = try XCTUnwrap(model.pond.getCodable(.testValue, type: [Example].self))
+        let examples = try XCTUnwrap(model.pond.get([Example].self, .testValue))
         XCTAssertEqual(examples[0].value, "Swift")
     }
 
@@ -191,9 +208,9 @@ extension PondTests {
         }
 
         let values = ["language": Example(value: "Swift")]
-        model.pond.setCodable(.testValue, value: values)
+        try model.pond.set(.testValue, value: values)
 
-        let examples = try XCTUnwrap(model.pond.getCodable(.testValue, type: [String: Example].self))
+        let examples = try XCTUnwrap(model.pond.get([String: Example].self, .testValue))
         XCTAssertEqual(examples["language"], Example(value: "Swift"))
     }
 }

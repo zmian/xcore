@@ -12,7 +12,7 @@ public struct InMemoryPond: Pond {
 
     public init() {}
 
-    public func get<T>(_ type: T.Type, _ key: Key) -> T? {
+    public func get<T: Codable>(_ type: T.Type, _ key: Key) throws -> T? {
         switch T.self {
             case is Data.Type, is Optional<Data>.Type:
                 return storage[key.id] as? T
@@ -21,23 +21,24 @@ public struct InMemoryPond: Pond {
                     return StringConverter(stringValue)?.get(type)
                 }
 
-                if Mirror.isCodable(T.self) {
-                    return storage[key.id] as? T
+                if let data = storage[key.id] as? Data {
+                    return try JSONDecoder().decode(T.self, from: data)
                 }
 
                 return nil
         }
     }
 
-    public func set<T>(_ key: Key, value: T?) {
+    public func set<T: Codable>(_ key: Key, value: T?) throws {
         if value == nil {
             remove(key)
         } else if let value = value as? Data {
             storage[key.id] = value
         } else if let value = StringConverter(value)?.get(String.self) {
             storage[key.id] = value
-        } else if let value = value as? Codable {
-            storage[key.id] = value
+        } else if let value {
+            let data = try JSONEncoder().encode(value)
+            storage[key.id] = data
         } else {
             #if DEBUG
             fatalError("Unable to save value for \(key.id): \(String(describing: value))")
