@@ -27,8 +27,8 @@ public protocol ImageFetcher {
     ///   - image: The image requested to be fetched.
     ///   - imageView: An optional property indicating the `UIImageView` where the
     ///     fetched image will be set.
-    /// - Returns: A tuple containing the fetched `UIImage` object and its cache type if the image is
-    ///   successfully fetched; otherwise, throws an error.
+    /// - Returns: A tuple containing the fetched `UIImage` object and its cache
+    ///   type if the image is successfully fetched; otherwise, throws an error.
     /// - Throws: An error if the image fetching operation encounters any issues.
     @MainActor
     func fetch(_ image: ImageRepresentable, in imageView: UIImageView?) async throws -> Output
