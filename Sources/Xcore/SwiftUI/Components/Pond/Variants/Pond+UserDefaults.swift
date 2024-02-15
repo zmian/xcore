@@ -19,25 +19,39 @@ public struct UserDefaultsPond: Pond {
             case is Data.Type, is Optional<Data>.Type:
                 return userDefaults.object(forKey: key.id) as? T
             default:
-                if Mirror.isCollection(T.self) {
-                    return userDefaults.object(forKey: key.id) as? T
-                } else {
-                    return StringConverter(userDefaults.string(forKey: key.id))?.get(type)
+                if let stringValue = userDefaults.string(forKey: key.id) {
+                    return StringConverter(stringValue)?.get(type)
                 }
+
+                if Mirror.isCodable(T.self) {
+                    return userDefaults.object(forKey: key.id) as? T
+                }
+
+                return nil
         }
     }
 
     public func set<T>(_ key: Key, value: T?) throws {
-        if value == nil {
-            remove(key)
-        } else if let value = value as? Data {
-            userDefaults.set(value, forKey: key.id)
-        } else if let value = StringConverter(value)?.get(String.self) {
-            userDefaults.set(value, forKey: key.id)
-        } else if let value = value, Mirror.isCollection(value) {
-            userDefaults.set(value, forKey: key.id)
-        } else {
-            throw PondError.saveFailure(id: key.id, value: value)
+        do {
+            if value == nil {
+                remove(key)
+            } else if let value = value as? Data {
+                userDefaults.set(value, forKey: key.id)
+            } else if let value = StringConverter(value)?.get(String.self) {
+                userDefaults.set(value, forKey: key.id)
+            } else if let value = value as? Codable {
+                userDefaults.set(value, forKey: key.id)
+            } else {
+                throw PondError.saveFailure(id: key.id, value: value)
+            }
+        } catch {
+            #if DEBUG
+            if AppInfo.isDebuggerAttached {
+                fatalError(String(describing: error))
+            }
+            #endif
+
+            throw error
         }
     }
 

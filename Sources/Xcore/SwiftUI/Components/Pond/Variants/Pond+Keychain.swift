@@ -20,12 +20,17 @@ public struct KeychainPond: Pond {
             case is Data.Type, is Optional<Data>.Type:
                 return try keychain.getData(key.id) as? T
             default:
-                if Mirror.isCollection(T.self) {
+                if let stringValue = keychain[key.id] {
+                    return StringConverter(stringValue)?.get(type)
+                }
+
+                if let C = Mirror.asCodable(T.self) {
                     if let data = try keychain.getData(key.id) {
-                        return try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? T
+                        return try JSONDecoder().decode(C.self, from: data) as? T
                     }
                 }
-                return StringConverter(keychain[key.id])?.get(type)
+
+                return nil
         }
     }
 
@@ -37,8 +42,8 @@ public struct KeychainPond: Pond {
                 try keychain.set(value, key: key.id)
             } else if let value = StringConverter(value)?.get(String.self) {
                 try keychain.set(value, key: key.id)
-            } else if let value = value, Mirror.isCollection(value) {
-                let data = try NSKeyedArchiver.archivedData(withRootObject: value, requiringSecureCoding: false)
+            } else if let value = value as? Codable {
+                let data = try JSONEncoder().encode(value)
                 try keychain.set(data, key: key.id)
             } else {
                 throw PondError.saveFailure(id: key.id, value: value)

@@ -17,11 +17,15 @@ public struct InMemoryPond: Pond {
             case is Data.Type, is Optional<Data>.Type:
                 return storage[key.id] as? T
             default:
-                if Mirror.isCollection(T.self) {
-                    return storage[key.id] as? T
-                } else {
-                    return StringConverter(storage[key.id])?.get(type)
+                if let stringValue = storage[key.id] as? String {
+                    return StringConverter(stringValue)?.get(type)
                 }
+
+                if Mirror.isCodable(T.self) {
+                    return storage[key.id] as? T
+                }
+
+                return nil
         }
     }
 
@@ -32,7 +36,7 @@ public struct InMemoryPond: Pond {
             storage[key.id] = value
         } else if let value = StringConverter(value)?.get(String.self) {
             storage[key.id] = value
-        } else if let value = value, Mirror.isCollection(value) {
+        } else if let value = value as? Codable {
             storage[key.id] = value
         } else {
             #if DEBUG

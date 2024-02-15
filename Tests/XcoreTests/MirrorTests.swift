@@ -48,6 +48,22 @@ final class MirrorTests: TestCase {
         XCTAssertEqual(Mirror.isCodable(Custom.self), true)
     }
 
+    func testAsCodable() {
+        XCTAssertNotNil(Mirror.asCodable(Array<String>.self))
+        XCTAssertNotNil(Mirror.asCodable(Set<String>.self))
+        XCTAssertNotNil(Mirror.asCodable([String: String].self))
+
+        struct Custom: Codable {}
+        XCTAssertNotNil(Mirror.asCodable(Custom.self))
+        XCTAssertNotNil(Mirror.asCodable([Custom].self))
+        XCTAssertNotNil(Mirror.asCodable([Int: Custom].self))
+
+        struct Value {}
+        XCTAssertNil(Mirror.asCodable(Value.self))
+        XCTAssertNil(Mirror.asCodable([Value].self))
+        XCTAssertNil(Mirror.asCodable([Int: Value].self))
+    }
+
     func testIsCollection() {
         XCTAssertEqual(Mirror.isCollection(Array<String>.self), true)
 

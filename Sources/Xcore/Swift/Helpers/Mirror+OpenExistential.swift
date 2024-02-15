@@ -35,6 +35,15 @@ extension Mirror {
     public static func isCodable<T>(_ value: T.Type) -> Bool {
         value is any Codable.Type
     }
+
+    /// Returns the `Codable` type if the provided type is `Codable`.
+    ///
+    /// - Parameter value: The type to attempt to cast to `Codable` type.
+    /// - Returns: The `Codable` type associated with the provided type, or `nil` if
+    ///   not applicable.
+    public static func asCodable<T>(_ value: T.Type) -> Codable.Type? {
+        value as? Codable.Type
+    }
 }
 
 // MARK: - isCollection

@@ -8,7 +8,7 @@ import Foundation
 import KeychainAccess
 
 /// A structure representing a key for the ``Pond``.
-public struct PondKey: Hashable, Identifiable, UserInfoContainer {
+public struct PondKey: Hashable, Sendable, Identifiable, UserInfoContainer {
     /// A unique identifier for the key.
     public let id: String
 
@@ -60,7 +60,7 @@ public struct PondKey: Hashable, Identifiable, UserInfoContainer {
 
 extension PondKey {
     /// An enumeration representing the store for the value of the key.
-    public enum Storage: Hashable {
+    public enum Storage: Hashable, @unchecked Sendable {
         /// A storage backed by `UserDefaults`.
         case userDefaults
 
@@ -79,7 +79,7 @@ extension PondKey {
 extension PondKey {
     /// An enumeration representing the persistence duration for the value of the
     /// key.
-    public enum PersistenceDuration: Hashable, CustomStringConvertible {
+    public enum PersistenceDuration: Hashable, Sendable, CustomStringConvertible {
         /// Value is persisted until the current user signs out (e.g., filter settings).
         case session
 
