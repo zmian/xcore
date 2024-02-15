@@ -8,18 +8,26 @@ import XCTest
 @testable import Xcore
 
 final class CacheTests: TestCase {
-    func testCache() {
+    func testCache() async {
         let cache = Cache<String, Int>()
-        cache.setValue(10, forKey: "hello")
-        cache.setValue(20, forKey: "world")
-        XCTAssertEqual(cache.value(forKey: "hello"), 10)
-        XCTAssertEqual(cache.value(forKey: "world"), 20)
+        await cache.setValue(10, forKey: "hello")
+        await cache.setValue(20, forKey: "world")
 
-        cache.remove("world")
-        XCTAssertNil(cache.value(forKey: "world"))
+        let v1 = await cache.value(forKey: "hello")
+        let v2 = await cache.value(forKey: "world")
 
-        cache.removeAll()
-        XCTAssertNil(cache.value(forKey: "hello"))
-        XCTAssertNil(cache.value(forKey: "world"))
+        XCTAssertEqual(v1, 10)
+        XCTAssertEqual(v2, 20)
+
+        await cache.remove("world")
+        let v3 = await cache.value(forKey: "world")
+        XCTAssertNil(v3)
+
+        await cache.removeAll()
+
+        let v4 = await cache.value(forKey: "hello")
+        let v5 = await cache.value(forKey: "world")
+        XCTAssertNil(v4)
+        XCTAssertNil(v5)
     }
 }
