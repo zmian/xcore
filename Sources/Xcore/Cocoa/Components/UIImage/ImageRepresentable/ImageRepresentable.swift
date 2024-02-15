@@ -8,7 +8,7 @@ import UIKit
 
 // MARK: - ImageSourceType
 
-public enum ImageSourceType: Hashable, Sendable {
+public enum ImageSourceType: Sendable, Hashable {
     case url(String)
     case uiImage(UIImage)
 
@@ -68,7 +68,7 @@ extension ImageSourceType: Codable {
 // MARK: - ImageSourceType.CacheType
 
 extension ImageSourceType {
-    public enum CacheType: Hashable, Sendable {
+    public enum CacheType: Sendable, Hashable {
         /// The image wasn't available in the cache, but was downloaded from the web.
         case none
 

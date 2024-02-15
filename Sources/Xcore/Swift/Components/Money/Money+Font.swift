@@ -8,7 +8,7 @@ import SwiftUI
 
 extension Money {
     /// A structure representing fonts used to format money components.
-    public struct Font: Hashable, Sendable {
+    public struct Font: Sendable, Hashable {
         /// The font for major unit of the amount.
         ///
         /// ```swift
@@ -137,7 +137,7 @@ extension Money.Font {
 
 extension Money.Font {
     /// A structure representing font and baseline offset.
-    public struct Superscript: Hashable, Sendable {
+    public struct Superscript: Sendable, Hashable {
         public let font: UIFont
         public let baselineOffset: CGFloat
 

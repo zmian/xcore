@@ -336,7 +336,7 @@ extension Money: ExpressibleByIntegerLiteral {
 
 extension Money {
     /// An enumeration representing the position of currency symbol.
-    public enum CurrencySymbolPosition: Hashable, Sendable {
+    public enum CurrencySymbolPosition: Sendable, Hashable {
         /// Adds currency symbol before the amount (e.g., `$10.00`).
         case prefix
 

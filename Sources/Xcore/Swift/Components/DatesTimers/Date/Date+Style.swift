@@ -8,7 +8,7 @@ import Foundation
 
 extension Date {
     /// An enumeration representing date and time style of a date object.
-    public enum Style: Hashable, Sendable {
+    public enum Style: Sendable, Hashable {
         /// A style that uses ISO 8601 representation.
         case iso8601(ISO8601DateFormatter.Options)
 
@@ -96,7 +96,7 @@ extension Date {
 // MARK: - Style.Width
 
 extension Date.Style {
-    public enum Width: String, Hashable, Sendable {
+    public enum Width: String, Sendable, Hashable {
         /// A style that uses full representation of units.
         ///
         /// **Month Name**

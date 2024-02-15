@@ -7,7 +7,7 @@
 import Foundation
 
 /// An enumeration representing app's status.
-public enum AppStatus: Hashable, CustomStringConvertible {
+public enum AppStatus: Sendable, Hashable, CustomStringConvertible {
     /// The app is preparing from cold launch. This is the initial state.
     case preparingLaunch
 

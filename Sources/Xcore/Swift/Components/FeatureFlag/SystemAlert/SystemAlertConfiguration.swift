@@ -32,7 +32,7 @@ import Foundation
 ///     "cta_url": "https://www.example.com"
 /// }
 /// ```
-public struct SystemAlertConfiguration: Hashable, Sendable, Codable, Identifiable {
+public struct SystemAlertConfiguration: Sendable, Hashable, Codable, Identifiable {
     /// A unique id for the system alert.
     public let id: String
 

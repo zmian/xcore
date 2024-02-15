@@ -300,7 +300,7 @@ extension URL {
 }
 
 extension URL {
-    public struct Scheme: RawRepresentable, Hashable, Sendable, CustomStringConvertible {
+    public struct Scheme: RawRepresentable, Sendable, Hashable, CustomStringConvertible {
         public let rawValue: String
 
         public init(rawValue: String) {

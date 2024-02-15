@@ -7,7 +7,7 @@
 import Foundation
 import OSLog
 
-public struct StringConverter: Hashable, Sendable {
+public struct StringConverter: Sendable, Hashable {
     private let string: String
 
     public init?(_ value: String?) {

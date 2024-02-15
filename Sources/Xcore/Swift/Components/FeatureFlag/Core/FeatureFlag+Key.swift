@@ -7,7 +7,7 @@
 import Foundation
 
 extension FeatureFlag {
-    public struct Key: RawRepresentable, Hashable, Sendable, UserInfoContainer {
+    public struct Key: RawRepresentable, Sendable, Hashable, UserInfoContainer {
         public let rawValue: String
 
         /// Additional info which may be used to describe the key further.

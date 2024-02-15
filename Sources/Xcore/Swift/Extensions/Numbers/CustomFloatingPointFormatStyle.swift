@@ -10,7 +10,7 @@ import Foundation
 
 extension CustomFloatingPointFormatStyle {
     /// An enumeration representing the type of formatting.
-    public enum Kind: Hashable, Sendable, Codable {
+    public enum Kind: Sendable, Hashable, Codable {
         /// Formats as a number.
         case number
 
@@ -21,7 +21,7 @@ extension CustomFloatingPointFormatStyle {
         case percent(scale: PercentageScale)
 
         /// An enumeration representing the scale of percent formatting.
-        public enum PercentageScale: Hashable, Sendable, Codable {
+        public enum PercentageScale: Sendable, Hashable, Codable {
             /// Percentage scale is: `0.0 - 1.0`.
             case zeroToOne
 
@@ -35,7 +35,7 @@ extension CustomFloatingPointFormatStyle {
 
 /// A structure that creates a locale-appropriate string representation of a
 /// double and decimal instance.
-public struct CustomFloatingPointFormatStyle<Value: DoubleOrDecimalProtocol>: Hashable, Sendable, Codable, MutableAppliable {
+public struct CustomFloatingPointFormatStyle<Value: DoubleOrDecimalProtocol>: Sendable, Hashable, Codable, MutableAppliable {
     public let type: Kind
     public var locale: Locale = .numbers
     public var sign: SignedNumericSign = .default

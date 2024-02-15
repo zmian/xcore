@@ -8,7 +8,7 @@ import SwiftUI
 
 extension Money {
     /// A structure representing colors used to format money.
-    public struct Color: Hashable, Sendable {
+    public struct Color: Sendable, Hashable {
         /// The color for positive values.
         public let positive: SwiftUI.Color
 

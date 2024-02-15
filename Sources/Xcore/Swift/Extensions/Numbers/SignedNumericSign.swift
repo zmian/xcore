@@ -7,7 +7,7 @@
 import Foundation
 
 /// A structure representing signs (+/−) used to format signed numeric types.
-public struct SignedNumericSign: Hashable, Sendable, Codable {
+public struct SignedNumericSign: Sendable, Hashable, Codable {
     /// The string used to represent sign for positive values.
     public let positive: String
 
