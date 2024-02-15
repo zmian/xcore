@@ -19,7 +19,7 @@ extension UIImageView {
     ///     closure receives the `UIImage` object as its parameter.
     public func setImage(
         _ image: ImageRepresentable?,
-        duration animationDuration: TimeInterval = .slow,
+        duration animationDuration: TimeInterval = .default,
         _ callback: ((_ image: UIImage?) -> Void)? = nil
     ) {
         cancelSetImageRequest()
@@ -68,7 +68,7 @@ extension UIImageView {
     public func setImage(
         _ image: ImageRepresentable?,
         default defaultImage: ImageRepresentable,
-        duration animationDuration: TimeInterval = .slow,
+        duration animationDuration: TimeInterval = .default,
         _ callback: ((_ image: UIImage?) -> Void)? = nil
     ) {
         guard let image else {
