@@ -127,12 +127,13 @@ extension ColorizeImageTransform {
 // MARK: - Dot Syntax Support
 
 extension ImageTransform where Self == ColorizeImageTransform {
-    /// Colorize image with given color.
+    /// Applies colorization to the image with the given color using the specified
+    /// colorize type method.
     ///
     /// - Parameters:
     ///   - color: The color to use when coloring.
     ///   - kind: The kind of colorize type method to use.
-    /// - Returns: The processed `UIImage` object.
+    /// - Returns: A `ColorizeImageTransform` instance.
     public static func colorize(_ color: UIColor, kind: Self.Kind) -> Self {
         .init(color: color, kind: kind)
     }

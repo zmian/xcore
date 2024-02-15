@@ -28,6 +28,10 @@ public struct AlphaImageTransform: ImageTransform {
 // MARK: - Dot Syntax Support
 
 extension ImageTransform where Self == AlphaImageTransform {
+    /// Applies alpha to the image.
+    ///
+    /// - Parameter value: The alpha value to apply.
+    /// - Returns: An `AlphaImageTransform` instance.
     public static func alpha(_ value: CGFloat) -> Self {
         .init(alpha: value)
     }

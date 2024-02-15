@@ -29,6 +29,10 @@ public struct CornerRadiusImageTransform: ImageTransform {
 // MARK: - Dot Syntax Support
 
 extension ImageTransform where Self == CornerRadiusImageTransform {
+    /// Applies corner radius to the image.
+    ///
+    /// - Parameter value: The corner radius value to apply.
+    /// - Returns: A `CornerRadiusImageTransform` instance.
     public static func cornerRadius(_ value: CGFloat) -> Self {
         .init(cornerRadius: value)
     }

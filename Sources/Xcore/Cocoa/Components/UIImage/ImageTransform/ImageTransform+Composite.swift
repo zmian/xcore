@@ -49,13 +49,12 @@ extension CompositeImageTransform {
 // MARK: - Dot Syntax Support
 
 extension ImageTransform where Self == CompositeImageTransform {
-    /// Scales an image to fit within a bounds of the given size.
+    /// Applies scaling to the image to fit within a bounds of the given size.
     ///
     /// - Parameters:
     ///   - newSize: The size of the bounds the image must fit within.
-    ///   - scalingMode: The desired scaling mode. The default value is
-    ///     `.aspectFill`.
-    ///   - tintColor: An optional tint color to apply. The default value is `nil`.
+    ///   - scalingMode: The desired scaling mode.
+    ///   - tintColor: An optional tint color to apply.
     /// - Returns: A new scaled image.
     public static func scaled(
         to newSize: CGSize,
