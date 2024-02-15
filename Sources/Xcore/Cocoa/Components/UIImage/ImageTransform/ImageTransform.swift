@@ -6,14 +6,16 @@
 
 import UIKit
 
+/// A protocol for objects responsible for transforming images in the context of
+/// `ImageRepresentable`.
 public protocol ImageTransform: ImageRepresentablePlugin {
     /// A unique id for the transform.
     var id: String { get }
 
-    /// Invoked to transform the given image.
+    /// Applies a transformation to the given image.
     ///
     /// - Parameters:
-    ///   - image: The image to apply the transform.
+    ///   - image: The image to be transformed.
     ///   - source: The original source from which the `image` was constructed.
     /// - Returns: The transformed `UIImage` object.
     func transform(_ image: UIImage, source: ImageRepresentable) -> UIImage

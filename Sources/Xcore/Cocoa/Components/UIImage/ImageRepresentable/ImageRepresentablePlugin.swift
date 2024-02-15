@@ -6,6 +6,8 @@
 
 import Foundation
 
+/// A protocol for objects representing plugins that can be associated with
+/// `ImageRepresentable` types.
 public protocol ImageRepresentablePlugin: Sendable {
     /// A unique id for the image plugin.
     var id: String { get }

@@ -7,7 +7,7 @@
 import UIKit
 
 extension ImageRepresentable {
-    /// Returns `ImageRepresentable` instance with the given transform.
+    /// Returns an `ImageRepresentable` instance with the given transform.
     ///
     /// **Usage**
     ///
@@ -16,7 +16,7 @@ extension ImageRepresentable {
     ///     let newIcon = icon
     ///         .alignment(.leading)
     ///         .transform(.tintColor(.white))
-    ///         .alignment(.trailing) // last one wins when using plugin.
+    ///         .alignment(.trailing) // The last one wins when using plugins.
     ///
     ///     let iconView = UIImageView()
     ///     iconView.setImage(newIcon)
