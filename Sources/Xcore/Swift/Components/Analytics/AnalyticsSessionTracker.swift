@@ -55,8 +55,6 @@ public final class AnalyticsSessionTracker {
                 case .background:
                     lastActiveTime = DispatchTime.now().uptimeNanoseconds
                 case .willEnterForeground:
-                    #warning("TODO: Switch to Clock API")
-
                     // `DispatchTime` was used here instead of `Date.timeIntervalSince(_:)` because
                     // of an edge case that can happen with `Date` if the user changes their
                     // timezone. `DispatchTime` is agnostic of any timezone changes, and it works
