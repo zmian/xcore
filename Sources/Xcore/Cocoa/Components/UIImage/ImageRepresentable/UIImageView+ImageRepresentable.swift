@@ -39,7 +39,7 @@ extension UIImageView {
 
             // Ensure that we are not setting image to the incorrect image view instance in
             // case it's being reused (e.g., `UICollectionViewCell`).
-            if imageRepresentableSource != imageRepresentable.imageSource {
+            if let imageRepresentableSource, imageRepresentableSource != imageRepresentable.imageSource {
                 return
             }
 
