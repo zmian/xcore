@@ -54,13 +54,14 @@ public struct BackgroundImageTransform: ImageTransform {
 // MARK: - Dot Syntax Support
 
 extension ImageTransform where Self == BackgroundImageTransform {
-    /// Applies a background color to the image.
+    /// Creates an instance of background image transform with the specified color,
+    /// preferred size, and alignment.
     ///
     /// - Parameters:
     ///   - color: The background color to apply.
     ///   - preferredSize: The preferred size of the resulting image.
     ///   - alignment: The alignment within the preferred size. The default value is `.center`.
-    /// - Returns: The processed `UIImage` object.
+    /// - Returns: A `BackgroundImageTransform` instance.
     public static func background(
         _ color: UIColor,
         preferredSize: CGSize,
