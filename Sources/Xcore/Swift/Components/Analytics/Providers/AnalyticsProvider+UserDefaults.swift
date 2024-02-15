@@ -7,7 +7,7 @@
 import Foundation
 
 /// An analytics provider that can be used for unit tests.
-public final class UserDefaultsAnalyticsProvider: AnalyticsProvider, @unchecked Sendable {
+public final class UserDefaultsAnalyticsProvider: AnalyticsProvider {
     private let suiteName: String
     private lazy var userDefaults = UserDefaults(suiteName: suiteName)!
     private var isEnabled = true
