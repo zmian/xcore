@@ -7,7 +7,7 @@
 import Foundation
 import CryptoKit
 
-public enum Crypt {
+public enum Crypt: Sendable {
     private enum Error: Swift.Error {
         case deobfuscationFailure
         case urlNotFound

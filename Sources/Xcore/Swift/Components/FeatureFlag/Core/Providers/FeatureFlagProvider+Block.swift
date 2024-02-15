@@ -8,9 +8,12 @@ import Foundation
 
 public struct BlockFeatureFlagProvider: FeatureFlagProvider {
     public let id: String
-    private let block: (FeatureFlag.Key) -> FeatureFlag.Value?
+    private let block: @Sendable (FeatureFlag.Key) -> FeatureFlag.Value?
 
-    public init(id: String, value: @escaping (FeatureFlag.Key) -> FeatureFlag.Value?) {
+    public init(
+        id: String,
+        value: @escaping @Sendable (FeatureFlag.Key) -> FeatureFlag.Value?
+    ) {
         self.id = id
         self.block = value
     }

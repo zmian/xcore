@@ -34,12 +34,12 @@ public struct XConfiguration<Type>: Identifiable {
     public let id: ID
     public let configure: (Type) -> Void
 
-    public init(id: ID? = nil, _ configure: @escaping ((Type) -> Void)) {
+    public init(id: ID? = nil, _ configure: @escaping (Type) -> Void) {
         self.id = Self.makeId(id: id)
         self.configure = configure
     }
 
-    public func extend(id: ID? = nil, _ configure: @escaping ((Type) -> Void)) -> Self {
+    public func extend(id: ID? = nil, _ configure: @escaping (Type) -> Void) -> Self {
         .init(id: Self.makeId(id: id)) { type in
             self.configure(type)
             configure(type)

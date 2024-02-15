@@ -7,7 +7,7 @@
 import Foundation
 
 extension FeatureFlag {
-    public struct Key: RawRepresentable, Equatable, UserInfoContainer {
+    public struct Key: RawRepresentable, Hashable, Sendable, UserInfoContainer {
         public let rawValue: String
 
         /// Additional info which may be used to describe the key further.
@@ -59,7 +59,7 @@ extension FeatureFlag.Key: CustomPlaygroundDisplayConvertible {
 
 // MARK: - Hashable
 
-extension FeatureFlag.Key: Hashable {
+extension FeatureFlag.Key {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(rawValue)
     }

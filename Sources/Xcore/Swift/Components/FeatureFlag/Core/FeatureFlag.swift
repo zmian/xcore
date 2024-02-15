@@ -14,7 +14,7 @@ import Foundation
 /// their functionality as classes or structures that extend this enumeration.
 /// For example, the **System Alert** flag returns a `SystemAlertConfiguration`
 /// instance.
-public enum FeatureFlag {
+public enum FeatureFlag: Sendable {
     /// **Usage**
     ///
     /// ```swift

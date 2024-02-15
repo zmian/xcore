@@ -44,7 +44,7 @@ import Foundation
 ///     }
 /// }
 /// ```
-public protocol FeatureFlagProvider {
+public protocol FeatureFlagProvider: Sendable {
     /// A unique id for the feature flag provider.
     var id: String { get }
 
