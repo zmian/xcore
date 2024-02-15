@@ -10,13 +10,14 @@ import OSLog
 
 /// A view that displays interactive web content, such as for an in-app browser.
 public struct WebView: View {
+    public typealias MessageHandler = @MainActor (_ body: Any) async throws -> Any?
     public typealias PolicyDecision = (
         _ webView: WKWebView,
         _ decidePolicyForNavigationAction: WKNavigationAction
     ) -> WKNavigationActionPolicy
 
     private let urlRequest: URLRequest
-    private var messageHandler: [String: ((Any) async throws -> Any?)?] = [:]
+    private var messageHandlers: [String: MessageHandler] = [:]
     private var localStorageItems: [String: String] = [:]
     private var cookies: [HTTPCookie] = []
     private var policyDecision: PolicyDecision = { _, _ in .allow }
@@ -37,7 +38,7 @@ public struct WebView: View {
     public var body: some View {
         Representable(
             urlRequest: urlRequest,
-            messageHandler: messageHandler,
+            messageHandlers: messageHandlers,
             localStorageItems: localStorageItems,
             cookies: cookies,
             policyDecision: policyDecision,
@@ -53,9 +54,9 @@ public struct WebView: View {
 // MARK: - Public API
 
 extension WebView {
-    public func onMessageHandler(name: String, handler: ((_ body: Any) async throws -> Any?)?) -> Self {
+    public func onMessageHandler(name: String, handler: MessageHandler?) -> Self {
         apply {
-            $0.messageHandler[name] = handler
+            $0.messageHandlers[name] = handler
         }
     }
 
@@ -119,7 +120,7 @@ extension WebView {
 extension WebView {
     private struct Representable: UIViewRepresentable {
         fileprivate let urlRequest: URLRequest
-        fileprivate var messageHandler: [String: ((Any) async throws -> Any?)?]
+        fileprivate var messageHandlers: [String: MessageHandler]
         fileprivate var localStorageItems: [String: String]
         fileprivate var cookies: [HTTPCookie]
         fileprivate var policyDecision: PolicyDecision
@@ -174,7 +175,7 @@ extension WebView {
             wkConfig.userContentController.removeAllScriptMessageHandlers()
 
             // 1. Set up message handlers
-            messageHandler.forEach { name, _ in
+            messageHandlers.forEach { name, _ in
                 wkConfig.userContentController.addScriptMessageHandler(
                     context.coordinator,
                     contentWorld: .page,
@@ -283,13 +284,11 @@ extension WebView {
         }
 
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) async -> (Any?, String?) {
-            await Task { @MainActor in
-                guard let messageHandler = parent.messageHandler[message.name] else {
-                    return (nil, nil)
-                }
+            guard let messageHandler = parent.messageHandlers[message.name] else {
+                return (nil, nil)
+            }
 
-                return (try? await messageHandler?(message.body), nil)
-            }.value
+            return (try? await messageHandler(message.body), nil)
         }
 
         // MARK: - Dev environment support
