@@ -54,7 +54,7 @@ import Combine
 ///     }
 /// }
 /// ```
-public struct EventsClient<Event> {
+public struct EventsClient<Event: Sendable> {
     /// Sends the give event.
     public var send: @Sendable (Event) -> Void
 

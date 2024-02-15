@@ -6,6 +6,8 @@
 
 import Foundation
 
+public typealias EncodableDictionary = [String: Encodable & Sendable]
+
 extension Dictionary {
     public enum MergingStrategy {
         case replaceExisting

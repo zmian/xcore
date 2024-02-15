@@ -50,7 +50,7 @@ import Foundation
 ///         segment.track(event.name, properties: event.properties)
 ///     }
 ///
-///     func identify(userId: String?, traits: [String: Encodable]) {
+///     func identify(userId: String?, traits: EncodableDictionary) {
 ///         segment.identify(userId, traits: traits)
 ///     }
 ///
@@ -103,7 +103,7 @@ public protocol AnalyticsProvider {
     ///     subsequent events.
     ///   - traits: The dictionary of traits that should be used to identify all of
     ///     the subsequent events.
-    func identify(userId: String?, traits: [String: Encodable])
+    func identify(userId: String?, traits: EncodableDictionary)
 
     /// A method to disable all data collection for the provider.
     ///
@@ -125,7 +125,7 @@ extension AnalyticsProvider {
         name(of: self)
     }
 
-    public func identify(userId: String?, traits: [String: Encodable]) {}
+    public func identify(userId: String?, traits: EncodableDictionary) {}
     public func setEnabled(_ enable: Bool) {}
     public func reset() {}
 }

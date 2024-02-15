@@ -36,7 +36,7 @@ extension Optional: OptionalProtocol {
 // MARK: - isEqual
 
 extension Optional {
-    func isEqual(_ other: Self) -> Bool where Wrapped == [String: Encodable] {
+    func isEqual(_ other: Self) -> Bool where Wrapped == EncodableDictionary {
         switch (self, other) {
             case (.none, .none):
                 return true
@@ -51,7 +51,7 @@ extension Optional {
     }
 }
 
-extension Dictionary where Key == String, Value == Encodable {
+extension Dictionary where Key == String, Value == Encodable & Sendable {
     func isEqual(_ other: Self) -> Bool {
         if isEmpty, other.isEmpty {
             // Fast pass

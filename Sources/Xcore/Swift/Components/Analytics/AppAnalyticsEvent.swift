@@ -8,14 +8,14 @@ import Foundation
 
 public struct AppAnalyticsEvent: AnalyticsEventProtocol, UserInfoContainer {
     public let name: String
-    public let properties: [String: Encodable]
+    public let properties: EncodableDictionary
     public let additionalProviders: [AnalyticsProvider]
     /// Additional info which may be used to describe the analytics event further.
     public var userInfo: UserInfo
 
     public init(
         name: String,
-        properties: [String: Encodable] = [:],
+        properties: EncodableDictionary = [:],
         additionalProviders: [AnalyticsProvider] = [],
         userInfo: UserInfo = [:]
     ) {
@@ -62,7 +62,7 @@ extension AppAnalyticsEvent: Hashable {
 // MARK: - Helpers
 
 extension AppAnalyticsEvent {
-    public func mergingProperties(_ other: [String: Encodable]) -> Self {
+    public func mergingProperties(_ other: EncodableDictionary) -> Self {
         .init(
             name: name,
             properties: properties.merging(other),
@@ -71,7 +71,7 @@ extension AppAnalyticsEvent {
         )
     }
 
-    public func mergingProperties(_ other: [String: Encodable?]) -> Self {
+    public func mergingProperties(_ other: [String: (Encodable & Sendable)?]) -> Self {
         mergingProperties(other.compacted())
     }
 

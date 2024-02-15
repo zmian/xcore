@@ -168,13 +168,13 @@ private final class AnalyticsClient: Analytics<AppAnalyticsEvent> {
 
 private struct BlockAnalyticsProvider: AnalyticsProvider {
     private let _track: (_ event: AnalyticsEventProtocol) -> Void
-    private let _identify: (_ userId: String?, _ traits: [String: Encodable]) -> Void
+    private let _identify: (_ userId: String?, _ traits: EncodableDictionary) -> Void
     private let _setEnabled: (_ enable: Bool) -> Void
     private let _reset: () -> Void
 
     init(
         track: @escaping (_ event: AnalyticsEventProtocol) -> Void,
-        identify: @escaping (_ userId: String?, _ traits: [String: Encodable]) -> Void,
+        identify: @escaping (_ userId: String?, _ traits: EncodableDictionary) -> Void,
         setEnabled: @escaping (_ enable: Bool) -> Void,
         reset: @escaping () -> Void
     ) {
@@ -188,7 +188,7 @@ private struct BlockAnalyticsProvider: AnalyticsProvider {
         _track(event)
     }
 
-    func identify(userId: String?, traits: [String: Encodable]) {
+    func identify(userId: String?, traits: EncodableDictionary) {
         _identify(userId, traits)
     }
 

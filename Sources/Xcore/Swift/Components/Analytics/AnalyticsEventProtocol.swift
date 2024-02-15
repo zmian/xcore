@@ -6,12 +6,12 @@
 
 import Foundation
 
-public protocol AnalyticsEventProtocol {
+public protocol AnalyticsEventProtocol: Sendable {
     /// The name of the event that is sent to analytics providers.
     var name: String { get }
 
     /// The properties of the event that is sent to analytics providers.
-    var properties: [String: Encodable] { get }
+    var properties: EncodableDictionary { get }
 
     /// An option to send this event to additional analytics providers.
     ///

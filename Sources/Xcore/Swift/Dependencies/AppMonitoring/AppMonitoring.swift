@@ -36,7 +36,7 @@ public struct AppMonitoring {
         _ level: LogLevel,
         _ message: String?,
         _ error: Error?,
-        _ properties: [String: Encodable]?
+        _ properties: EncodableDictionary?
     ) -> Void
 
     private var _trace: (_ operationName: String) -> AppTraceReporting
@@ -46,7 +46,7 @@ public struct AppMonitoring {
         setCollectionEnabled: @escaping (Bool) -> Void,
         signin: @escaping (_ userId: String?) -> Void,
         signout: @escaping () -> Void,
-        log: @escaping (_ level: LogLevel, _ message: String?, _ error: Error?, _ properties: [String: Encodable]?) -> Void,
+        log: @escaping (_ level: LogLevel, _ message: String?, _ error: Error?, _ properties: EncodableDictionary?) -> Void,
         trace: @escaping (_ operationName: String) -> AppTraceReporting
     ) {
         self.configure = configure
@@ -70,7 +70,7 @@ extension AppMonitoring {
         errorUrl: URL? = nil,
         id customErrorId: String? = nil,
         message: String? = nil,
-        properties: [String: Encodable]? = nil,
+        properties: EncodableDictionary? = nil,
         file: StaticString = #fileID,
         line: UInt = #line
     ) {
@@ -128,7 +128,7 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         errorUrl: URL? = nil,
         message: String? = nil,
-        properties: [String: Encodable]? = nil,
+        properties: EncodableDictionary? = nil,
         file: StaticString = #fileID,
         line: UInt = #line
     ) {
@@ -140,7 +140,7 @@ extension AppMonitoring {
         _ error: Error? = nil,
         id customErrorId: String? = nil,
         message: String? = nil,
-        properties: [String: Encodable]? = nil,
+        properties: EncodableDictionary? = nil,
         file: StaticString = #fileID,
         line: UInt = #line
     ) {
@@ -152,7 +152,7 @@ extension AppMonitoring {
         _ error: Error? = nil,
         id customErrorId: String? = nil,
         message: String? = nil,
-        properties: [String: Encodable]? = nil,
+        properties: EncodableDictionary? = nil,
         file: StaticString = #fileID,
         line: UInt = #line
     ) {
@@ -164,7 +164,7 @@ extension AppMonitoring {
         _ error: Error? = nil,
         id customErrorId: String? = nil,
         message: String? = nil,
-        properties: [String: Encodable]? = nil,
+        properties: EncodableDictionary? = nil,
         file: StaticString = #fileID,
         line: UInt = #line
     ) {
@@ -176,7 +176,7 @@ extension AppMonitoring {
         _ error: Error? = nil,
         id customErrorId: String? = nil,
         message: String? = nil,
-        properties: [String: Encodable]? = nil,
+        properties: EncodableDictionary? = nil,
         file: StaticString = #fileID,
         line: UInt = #line
     ) {

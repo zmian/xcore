@@ -10,7 +10,7 @@ import OSLog
 
 /// A view that displays interactive web content, such as for an in-app browser.
 public struct WebView: View {
-    public typealias MessageHandler = @MainActor (_ body: Any) async throws -> Any?
+    public typealias MessageHandler = @MainActor (_ body: Any) async throws -> (any Sendable)?
     public typealias PolicyDecision = (
         _ webView: WKWebView,
         _ decidePolicyForNavigationAction: WKNavigationAction
