@@ -7,15 +7,19 @@
 import UIKit
 
 extension UIImage {
+    /// Applies the given transform to the image.
+    ///
+    /// - Parameter transform: The transform to be applied.
+    /// - Returns: The transformed image.
     public func applying(_ transform: ImageTransform) -> UIImage {
         transform.transform(self)
     }
 
-    /// Process the image using the given transform.
+    /// Processes the image using the given transform.
     ///
     /// - Parameters:
-    ///   - source: The original source from which the image was constructed.
     ///   - transform: The transform to use.
+    ///   - source: The original source from which the image was constructed.
     /// - Returns: The transformed image.
     func applying(_ transform: ImageTransform?, source: ImageRepresentable) -> UIImage {
         guard let transform else {
@@ -27,20 +31,31 @@ extension UIImage {
 }
 
 extension UIImage {
-    /// Creating arbitrarily-colored icons from a black-with-alpha master image.
+    /// Creates arbitrarily-colored icons from a black-with-alpha master image.
+    ///
+    /// - Parameter color: The color to be applied.
+    /// - Returns: The processed `UIImage` object.
     public func tintColor(_ color: UIColor) -> UIImage {
         applying(.tintColor(color))
     }
 
+    /// Adjusts the alpha level of the image.
+    ///
+    /// - Parameter value: The alpha value to be applied.
+    /// - Returns: The processed `UIImage` object.
     public func alpha(_ value: CGFloat) -> UIImage {
         applying(.alpha(value))
     }
 
+    /// Rounds the corners of the image.
+    ///
+    /// - Parameter value: The corner radius value.
+    /// - Returns: The processed `UIImage` object.
     public func cornerRadius(_ value: CGFloat) -> UIImage {
         applying(.cornerRadius(value))
     }
 
-    /// Colorize image with given color.
+    /// Colorizes the image with the given color.
     ///
     /// - Parameters:
     ///   - color: The color to use when coloring.
@@ -53,6 +68,13 @@ extension UIImage {
         applying(.colorize(color, kind: kind))
     }
 
+    /// Applies a background color to the image.
+    ///
+    /// - Parameters:
+    ///   - color: The background color to apply.
+    ///   - preferredSize: The preferred size of the resulting image.
+    ///   - alignment: The alignment within the preferred size. The default value is `.center`.
+    /// - Returns: The processed `UIImage` object.
     public func background(
         _ color: UIColor,
         preferredSize: CGSize,
@@ -65,9 +87,8 @@ extension UIImage {
     ///
     /// - Parameters:
     ///   - newSize: The size of the bounds the image must fit within.
-    ///   - scalingMode: The desired scaling mode. The default value is
-    ///     `.aspectFill`.
-    ///   - tintColor: An optional tint color to apply. The default value is `nil`.
+    ///   - scalingMode: The desired scaling mode.
+    ///   - tintColor: An optional tint color to apply.
     /// - Returns: A new scaled image.
     public func scaled(
         to newSize: CGSize,
