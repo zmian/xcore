@@ -46,12 +46,8 @@ extension ImageColorClient {
                 return nil
             }
 
-            return await withCheckedContinuation { continuation in
-                UIImage.fetch(image) { result in
-                    let uiColor = result.value?.averageColor
-                    continuation.resume(returning: uiColor.map(Color.init))
-                }
-            }
+            let uiImage = try? await UIImage.fetch(image)
+            return uiImage?.averageColor.map(Color.init)
         }
     }
 }

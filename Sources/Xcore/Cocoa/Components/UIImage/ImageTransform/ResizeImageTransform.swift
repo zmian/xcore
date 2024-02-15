@@ -29,7 +29,7 @@ public struct ResizeImageTransform: ImageTransform {
 
 extension ResizeImageTransform {
     /// Represents a scaling mode
-    public enum ScalingMode {
+    public enum ScalingMode: Sendable {
         case fill
         case aspectFill
         case aspectFit

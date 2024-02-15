@@ -11,43 +11,19 @@ final class RemoteImageFetcher: ImageFetcher {
         image.imageSource.isRemoteUrl
     }
 
-    /// Loads remote image either via from cache or web.
-    ///
-    /// - Parameters:
-    ///   - image: The image requested to be fetched.
-    ///   - imageView: An optional property if this image will be set on the image
-    ///     view.
-    ///   - callback: A closure with the `UIImage` object and cache type if image
-    ///     successfully fetched; otherwise, `nil`.
-    func fetch(
-        _ image: ImageRepresentable,
-        in imageView: UIImageView?,
-        _ callback: @escaping ResultBlock
-    ) {
+    func fetch(_ image: ImageRepresentable, in imageView: UIImageView?) async throws -> Output {
         guard
             case let .url(value) = image.imageSource,
             let url = URL(string: value),
             url.host != nil
         else {
-            callback(.failure(ImageFetcherError.notFound))
-            return
+            throw ImageFetcherError.notFound
         }
 
-        let cancelToken = ImageDownloader.load(url: url) { image, _, error, finished, cacheType in
-            guard finished else {
-                return
-            }
-
-            guard let image else {
-                callback(.failure(error ?? ImageFetcherError.notFound))
-                return
-            }
-
-            callback(.success((image, cacheType)))
-        }
-
+        let (image, cacheType, cancelToken) = try await ImageDownloader.load(url: url)
         // Store the token cancel block so the request can be cancelled if needed.
         imageView?._imageFetcherCancelBlock = cancelToken
+        return (image, cacheType)
     }
 
     func removeCache() {

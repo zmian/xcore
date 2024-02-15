@@ -8,11 +8,11 @@ import UIKit
 
 public struct BlockImageTransform: ImageTransform {
     public let id: String
-    private let block: (_ image: UIImage, _ source: ImageRepresentable) -> UIImage
+    private let block: @Sendable (_ image: UIImage, _ source: ImageRepresentable) -> UIImage
 
     public init(
         id: String,
-        _ transform: @escaping (_ image: UIImage, _ source: ImageRepresentable) -> UIImage
+        _ transform: @escaping @Sendable (_ image: UIImage, _ source: ImageRepresentable) -> UIImage
     ) {
         self.id = id
         self.block = transform

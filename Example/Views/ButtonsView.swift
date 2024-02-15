@@ -27,11 +27,9 @@ struct ButtonsView: View {
         .contentUnavailable(isContentUnavailable) {
             Text("No content to display")
         }
-        .listStyle(.insetGrouped)
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                isLoading = false
-            }
+        .task {
+            try? await Task.sleep(for: .seconds(3))
+            isLoading = false
         }
     }
 }

@@ -7,20 +7,19 @@
 import UIKit
 
 extension UIImageView {
-    /// Automatically detect and load the image from local or a remote url.
+    /// Automatically detects and loads the image from a local or remote URL.
     ///
     /// - Parameters:
-    ///   - image: The image to display.
-    ///   - alwaysAnimate: An option to always animate setting the image. The image
-    ///     will only fade in when fetched from a remote url and not in memory
-    ///     cache.
+    ///   - image: The image to be displayed.
     ///   - animationDuration: The total duration of the animation. If the specified
-    ///     value is negative or `0`, the image is set without animation.
-    ///   - callback: A closure to invoke when finished setting the image.
+    ///     value is negative or `0`, the image is set without animation; otherwise,
+    ///     the image will only fade in when fetched from a remote URL and not in
+    ///     memory cache.
+    ///   - callback: A closure to be invoked when finished setting the image. The
+    ///     closure receives the `UIImage` object as its parameter.
     public func setImage(
         _ image: ImageRepresentable?,
-        alwaysAnimate: Bool = false,
-        animationDuration: TimeInterval = .slow,
+        duration animationDuration: TimeInterval = .default,
         _ callback: ((_ image: UIImage?) -> Void)? = nil
     ) {
         cancelSetImageRequest()
@@ -34,52 +33,50 @@ extension UIImageView {
             return
         }
 
-        UIImage.Fetcher.fetch(imageRepresentable, in: self) { [weak self] result in
-            guard let self else { return }
-            let result = try? result.get()
-            let animated = alwaysAnimate || (result?.cacheType ?? .none).possiblyDelayed
-            postProcess(
-                image: result?.image,
-                source: imageRepresentable,
-                animationDuration: animated ? animationDuration : 0,
-                callback
-            )
+        Task { @MainActor in
+            var (image, cacheType) = try await UIImage.Fetcher.fetch(imageRepresentable, in: self)
+            let animated = cacheType.possiblyDelayed
+
+            // Ensure that we are not setting image to the incorrect image view instance in
+            // case it's being reused (e.g., `UICollectionViewCell`).
+            if let imageRepresentableSource, imageRepresentableSource != imageRepresentable.imageSource {
+                return
+            }
+
+            if let transform: ImageTransform = imageRepresentable.plugin() {
+                image = await Task { [image] in
+                    image.applying(transform, source: imageRepresentable)
+                }.value
+            }
+
+            setUIImage(image, animationDuration: animated ? animationDuration : 0)
+            callback?(image)
         }
     }
 
-    /// Automatically detect and load the image from local or a remote url.
+    /// Automatically detects and loads the image from a local or remote URL.
     ///
     /// - Parameters:
-    ///   - image: The image to display.
+    ///   - image: The image to be displayed.
     ///   - defaultImage: The fallback image to display if `image` can't be loaded.
-    ///   - alwaysAnimate: An option to always animate setting the image. The image
-    ///     will only fade in when fetched from a remote url and not in memory
-    ///     cache.
     ///   - animationDuration: The total duration of the animation. If the specified
-    ///     value is negative or `0`, the image is set without animation.
-    ///   - callback: A closure to invoke when finished setting the image.
+    ///     value is negative or `0`, the image is set without animation; otherwise,
+    ///     the image will only fade in when fetched from a remote URL and not in
+    ///     memory cache.
+    ///   - callback: A closure to be invoked when finished setting the image. The
+    ///     closure receives the `UIImage` object as its parameter.
     public func setImage(
         _ image: ImageRepresentable?,
         default defaultImage: ImageRepresentable,
-        alwaysAnimate: Bool = false,
-        animationDuration: TimeInterval = .slow,
+        duration animationDuration: TimeInterval = .default,
         _ callback: ((_ image: UIImage?) -> Void)? = nil
     ) {
         guard let image else {
-            setImage(
-                defaultImage,
-                alwaysAnimate: alwaysAnimate,
-                animationDuration: animationDuration,
-                callback
-            )
+            setImage(defaultImage, duration: animationDuration, callback)
             return
         }
 
-        setImage(
-            image,
-            alwaysAnimate: alwaysAnimate,
-            animationDuration: animationDuration
-        ) { [weak self] image in
+        setImage(image, duration: animationDuration) { [weak self] image in
             guard let self else { return }
 
             guard image == nil else {
@@ -87,57 +84,7 @@ extension UIImageView {
                 return
             }
 
-            setImage(
-                defaultImage,
-                alwaysAnimate: alwaysAnimate,
-                animationDuration: animationDuration,
-                callback
-            )
-        }
-    }
-}
-
-extension UIImageView {
-    private func postProcess(
-        image: UIImage?,
-        source: ImageRepresentable,
-        animationDuration: TimeInterval,
-        _ callback: ((_ image: UIImage?) -> Void)?
-    ) {
-        guard var image = image else {
-            DispatchQueue.main.asyncSafe {
-                callback?(nil)
-            }
-            return
-        }
-
-        // Ensure that we are not setting image to the incorrect image view instance in
-        // case it's being reused (e.g., `UICollectionViewCell`).
-        if let imageSource = imageRepresentableSource, imageSource != source.imageSource {
-            return
-        }
-
-        guard let transform: ImageTransform = source.plugin() else {
-            applyImage(image, animationDuration: animationDuration, callback)
-            return
-        }
-
-        DispatchQueue.global(qos: .userInteractive).syncSafe { [weak self] in
-            guard let self else { return }
-            image = image.applying(transform, source: source)
-            applyImage(image, animationDuration: animationDuration, callback)
-        }
-    }
-
-    private func applyImage(
-        _ image: UIImage,
-        animationDuration: TimeInterval,
-        _ callback: ((_ image: UIImage?) -> Void)?
-    ) {
-        DispatchQueue.main.asyncSafe { [weak self] in
-            guard let self else { return }
-            setUIImage(image, animationDuration: animationDuration)
-            callback?(image)
+            setImage(defaultImage, duration: animationDuration, callback)
         }
     }
 }

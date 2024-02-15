@@ -6,60 +6,52 @@
 
 import UIKit
 
-final class LocalImageFetcher: ImageFetcher {
-    private let cache = NSCache<NSString, UIImage>()
+final class LocalImageFetcher: ImageFetcher, Sendable {
+    private let cache = Cache<String, UIImage>()
 
     func canHandle(_ image: ImageRepresentable) -> Bool {
         !image.imageSource.isRemoteUrl
     }
 
-    func fetch(
-        _ image: ImageRepresentable,
-        in imageView: UIImageView?,
-        _ callback: @escaping ResultBlock
-    ) {
+    func fetch(_ image: ImageRepresentable, in _: UIImageView?) async throws -> Output {
         switch image.imageSource {
             case let .uiImage(image):
-                callback(.success((image, .memory)))
+                return (image, .memory)
             case let .url(value):
-                if let image = UIImage(named: value, in: image.bundle, compatibleWith: nil) {
-                    callback(.success((image, .memory)))
-                    return
-                }
+                let task = Task<Output, Error> {
+                    if let image = UIImage(named: value, in: image.bundle, compatibleWith: nil) {
+                        return (image, .memory)
+                    }
 
-                let cacheKey = image.cacheKey as NSString?
+                    let cacheKey = image.cacheKey
 
-                if let cacheKey = cacheKey, let image = cache.object(forKey: cacheKey) {
-                    callback(.success((image, .memory)))
-                    return
-                }
+                    if let cacheKey, let image = await cache.value(forKey: cacheKey) {
+                        return (image, .memory)
+                    }
 
-                DispatchQueue.global(qos: .userInteractive).asyncSafe { [weak self] in
                     guard
-                        let self,
                         let url = URL(string: value),
                         url.schemeType == .file,
                         let data = try? Data(contentsOf: url),
                         let image = UIImage(data: data)
                     else {
-                        DispatchQueue.main.asyncSafe {
-                            callback(.failure(ImageFetcherError.notFound))
-                        }
-                        return
+                        throw ImageFetcherError.notFound
                     }
 
                     if let cacheKey {
-                        cache.setObject(image, forKey: cacheKey)
+                        await cache.setValue(image, forKey: cacheKey)
                     }
 
-                    DispatchQueue.main.asyncSafe {
-                        callback(.success((image, .disk)))
-                    }
+                    return (image, ImageSourceType.CacheType.disk)
                 }
+
+                return try await task.value
         }
     }
 
     func removeCache() {
-        cache.removeAllObjects()
+        Task {
+            await cache.removeAll()
+        }
     }
 }

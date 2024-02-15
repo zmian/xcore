@@ -16,7 +16,7 @@ extension UIImage {
 
 extension UIImage.Fetcher {
     /// The registered list of fetchers.
-    private static let registered = CompositeImageFetcher([
+    private static let shared = CompositeImageFetcher([
         RemoteImageFetcher(),
         LocalImageFetcher()
     ])
@@ -25,21 +25,18 @@ extension UIImage.Fetcher {
     ///
     /// - Note: This method ensures there are no duplicate fetchers.
     public static func register(_ fetcher: ImageFetcher) {
-        registered.add(fetcher)
+        shared.add(fetcher)
     }
 
     // MARK: - Cache Management
 
     public static func removeCache() {
-        registered.removeCache()
+        shared.removeCache()
     }
 
-    static func fetch(
-        _ image: ImageRepresentable,
-        in imageView: UIImageView?,
-        _ callback: @escaping ImageFetcher.ResultBlock
-    ) {
-        registered.fetch(image, in: imageView, callback)
+    @MainActor
+    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView? = nil) async throws -> ImageFetcher.Output {
+        try await shared.fetch(image, in: imageView)
     }
 }
 
@@ -56,15 +53,15 @@ extension UIImageView {
     }
 
     /// The image fetch cancel block for the current fetch request.
-    var _imageFetcherCancelBlock: (() -> Void)? {
+    var _imageFetcherCancelBlock: ImageDownloaderCancelToken? {
         get { associatedObject(&AssociatedKey.imageFetcherCancelBlock) }
         set { setAssociatedObject(&AssociatedKey.imageFetcherCancelBlock, value: newValue) }
     }
 
     /// Cancel any pending or in-flight image fetch/set request dispatched via
-    /// `setImage(_:alwaysAnimate:animationDuration:_:)` method.
+    /// `setImage(_:animationDuration:_:)` method.
     ///
-    /// - SeeAlso: `setImage(_:alwaysAnimate:animationDuration:_:)`
+    /// - SeeAlso: `setImage(_:animationDuration:_:)`
     public func cancelSetImageRequest() {
         sd_cancelCurrentImageLoad()
         _imageFetcherCancelBlock?()

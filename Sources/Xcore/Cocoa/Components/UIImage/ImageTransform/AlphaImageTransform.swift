@@ -24,3 +24,11 @@ public struct AlphaImageTransform: ImageTransform {
         }
     }
 }
+
+// MARK: - Dot Syntax Support
+
+extension ImageTransform where Self == AlphaImageTransform {
+    public static func alpha(_ value: CGFloat) -> Self {
+        .init(alpha: value)
+    }
+}

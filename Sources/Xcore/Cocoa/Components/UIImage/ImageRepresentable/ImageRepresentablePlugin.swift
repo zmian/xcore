@@ -6,7 +6,7 @@
 
 import Foundation
 
-public protocol ImageRepresentablePlugin {
+public protocol ImageRepresentablePlugin: Sendable {
     /// A unique id for the image plugin.
     var id: String { get }
 }
@@ -25,7 +25,7 @@ extension ImageRepresentable {
     /// - Parameter plugin: The plugin to append to the collection.
     /// - Returns: An `ImageRepresentable` instance with given plugin.
     public func append(_ plugin: ImageRepresentablePlugin) -> ImageRepresentable {
-        var pluginImage = self as? PluginImage ?? PluginImage(self, plugins: [])
+        var pluginImage = self as? PluginImage ?? PluginImage(self)
         pluginImage.add(plugin)
         return pluginImage
     }

@@ -6,30 +6,34 @@
 
 import UIKit
 
+/// A protocol for objects responsible for fetching images asynchronously.
 public protocol ImageFetcher {
-    typealias ResultBlock = (Result<(image: UIImage, cacheType: ImageSourceType.CacheType), Error>) -> Void
+    /// The output type containing the fetched image and its cache type.
+    typealias Output = (image: UIImage, cacheType: ImageSourceType.CacheType)
 
     /// A unique id for the image fetcher.
     var id: String { get }
 
+    /// Determines whether the image fetcher can handle the specified image.
+    ///
+    /// - Parameter image: The image to be evaluated.
+    /// - Returns: A boolean value indicating whether the image fetcher can handle
+    ///   the specified image.
     func canHandle(_ image: ImageRepresentable) -> Bool
 
-    #warning("Update imp to use concurrency")
-
-    /// Fetch the image.
+    /// Asynchronously fetches the specified image.
     ///
     /// - Parameters:
     ///   - image: The image requested to be fetched.
-    ///   - imageView: An optional property if this image will be set on the image
-    ///                view.
-    ///   - callback: The callback to let the handler know when the image is
-    ///               fetched.
-    func fetch(
-        _ image: ImageRepresentable,
-        in imageView: UIImageView?,
-        _ callback: @escaping ResultBlock
-    )
+    ///   - imageView: An optional property indicating the `UIImageView` where the
+    ///     fetched image will be set.
+    /// - Returns: A tuple containing the fetched `UIImage` object and its cache
+    ///   type if the image is successfully fetched; otherwise, throws an error.
+    /// - Throws: An error if the image fetching operation encounters any issues.
+    @MainActor
+    func fetch(_ image: ImageRepresentable, in imageView: UIImageView?) async throws -> Output
 
+    /// Removes the cached image data associated with the image fetcher.
     func removeCache()
 }
 
@@ -42,15 +46,4 @@ extension ImageFetcher {
 enum ImageFetcherError: Error {
     case notFound
     case invalidImageSource
-}
-
-extension Result where Success == (image: UIImage, cacheType: ImageSourceType.CacheType) {
-    func trimCache() -> Result<UIImage, Error> {
-        switch self {
-            case let .success(value):
-                return .success(value.image)
-            case let .failure(error):
-                return .failure(error)
-        }
-    }
 }

@@ -59,17 +59,13 @@ extension CompositeImageFetcher {
         image.imageSource.isValid
     }
 
-    func fetch(
-        _ image: ImageRepresentable,
-        in imageView: UIImageView?,
-        _ callback: @escaping ResultBlock
-    ) {
+    @MainActor
+    func fetch(_ image: ImageRepresentable, in imageView: UIImageView?) async throws -> Output {
         guard image.imageSource.isValid else {
             #if DEBUG
             Logger.xc.error("Unable to fetch image because of invalid image source: \(String(describing: image.imageSource), privacy: .public)")
             #endif
-            callback(.failure(ImageFetcherError.invalidImageSource))
-            return
+            throw ImageFetcherError.invalidImageSource
         }
 
         // 1. Reverse fetchers so the third-party fetchers are always prioritized over
@@ -77,12 +73,11 @@ extension CompositeImageFetcher {
         // 2. Find the first one that can handle the request.
         // 3. Fetch the requested image.
         guard let fetcher = fetchers.reversed().first(where: { $0.canHandle(image) }) else {
-            callback(.failure(ImageFetcherError.notFound))
-            return
+            throw ImageFetcherError.notFound
         }
 
         imageView?.imageRepresentableSource = image.imageSource
-        fetcher.fetch(image, in: imageView, callback)
+        return try await fetcher.fetch(image, in: imageView)
     }
 
     func removeCache() {
