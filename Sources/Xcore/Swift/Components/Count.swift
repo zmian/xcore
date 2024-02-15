@@ -24,7 +24,7 @@ import Foundation
 ///     print("Remaining count is 0.")
 /// }
 /// ```
-public enum Count: Equatable, ExpressibleByIntegerLiteral, CustomStringConvertible, Sendable {
+public enum Count: Hashable, ExpressibleByIntegerLiteral, CustomStringConvertible, Sendable {
     case infinite
     case times(Int)
 
