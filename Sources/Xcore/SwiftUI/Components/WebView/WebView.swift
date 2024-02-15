@@ -252,8 +252,8 @@ extension WebView {
             showLoader(true, webView)
         }
 
-        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-            decisionHandler(parent.policyDecision(webView, navigationAction))
+        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction) async -> WKNavigationActionPolicy {
+            parent.policyDecision(webView, navigationAction)
         }
 
         func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
@@ -282,19 +282,12 @@ extension WebView {
             loader.isHidden = !show
         }
 
-        @MainActor
-        func userContentController(
-            _ userContentController: WKUserContentController,
-            didReceive message: WKScriptMessage,
-            replyHandler: @escaping (Any?, String?) -> Void
-        ) {
+        func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) async -> (Any?, String?) {
             guard let messageHandler = parent.messageHandler[message.name] else {
-                return replyHandler(nil, nil)
+                return (nil, nil)
             }
 
-            Task {
-                replyHandler(try? await messageHandler?(message.body), nil)
-            }
+            return (try? await messageHandler?(message.body), nil)
         }
 
         // MARK: - Dev environment support
