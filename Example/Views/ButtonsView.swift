@@ -23,6 +23,7 @@ struct ButtonsView: View {
             symbolLabels
             others
             builtin
+            specialBtns
         }
         .contentUnavailable(isContentUnavailable) {
             Text("No content to display")
@@ -169,6 +170,14 @@ extension ButtonsView {
                 Text("Plain")
             }
             .buttonStyle(.plain)
+        }
+    }
+
+    private var specialBtns: some View {
+        Section("Special Buttons") {
+            TimerButton.resend {
+                print("Button tapped")
+            }
         }
     }
 
