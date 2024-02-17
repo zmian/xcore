@@ -94,14 +94,15 @@ extension Date {
 }
 
 extension Date {
-    /// Compares whether the receiver is before, after or equal to `date` based on
+    /// Compares whether the receiver is before, after, or equal to `date` based on
     /// their components down to a given unit granularity.
     ///
     /// - Parameters:
     ///   - date: Reference date.
-    ///   - granularity: Smallest unit that must, along with all larger units, be
-    ///     less for the given date.
+    ///   - granularity: The smallest unit that must, along with all larger units,
+    ///     be less for the given date.
     ///   - calendar: The calendar to use when comparing.
+    /// - Returns: The result of the comparison.
     public func compare(to date: Date, granularity: Calendar.Component, in calendar: Calendar = .default) -> ComparisonResult {
         calendar.compare(self, to: date, toGranularity: granularity)
     }
@@ -120,15 +121,17 @@ extension Date {
         compare(to: date, granularity: granularity, in: calendar) == .orderedSame
     }
 
-    /// Compares whether the receiver is before/before equal `date` based on their
-    /// components down to a given unit granularity.
+    /// Compares whether the receiver is before or before equal `date` based on
+    /// their components down to a given unit granularity.
     ///
     /// - Parameters:
     ///   - date: The date to compare.
     ///   - orEqual: `true` to also check for equality.
-    ///   - granularity: Smallest unit that must, along with all larger units, be
-    ///     less for the given dates.
+    ///   - granularity: The smallest unit that must, along with all larger units,
+    ///     be less for the given dates.
     ///   - calendar: The calendar to use when comparing.
+    /// - Returns: `true` if the receiver is before or before equal the given date,
+    ///   otherwise `false`.
     public func isBefore(
         _ date: Date,
         orEqual: Bool = false,
@@ -145,9 +148,11 @@ extension Date {
     /// - Parameters:
     ///   - date: The date to compare.
     ///   - orEqual: `true` to also check for equality.
-    ///   - granularity: Smallest unit that must, along with all larger units, be
-    ///     greater for the given dates.
+    ///   - granularity: The smallest unit that must, along with all larger units,
+    ///     be greater for the given dates.
     ///   - calendar: The calendar to use when comparing.
+    /// - Returns: `true` if the receiver is after or after equal the given date,
+    ///   otherwise `false`.
     public func isAfter(
         _ date: Date,
         orEqual: Bool = false,
@@ -163,19 +168,23 @@ extension Date {
     /// - Parameters:
     ///   - seconds: The seconds to compare.
     ///   - calendar: The calendar to use when comparing.
+    /// - Returns: `true` if the receiver is after the specified duration, otherwise
+    ///   `false`.
     public func isAfter(duration seconds: Int, in calendar: Calendar = .default) -> Bool {
         let referenceDate = Date().adjusting(.second, by: seconds, in: calendar)
         return referenceDate.isAfter(self, granularity: .second, in: calendar)
     }
 
-    /// Returns `true` if receiver date is contained in the specified interval.
+    /// Returns `true` if the receiver date is contained in the specified interval.
     ///
     /// - Parameters:
     ///   - interval: The date interval.
     ///   - orEqual: `true` to also check for equality on the given interval.
-    ///   - granularity: Smallest unit that must, along with all larger units, be
-    ///     greater for the given dates.
+    ///   - granularity: The smallest unit that must, along with all larger units,
+    ///     be greater for the given dates.
     ///   - calendar: The calendar to use when comparing.
+    /// - Returns: `true` if the receiver date is within the specified interval,
+    ///   otherwise `false`.
     public func isBetween(
         _ interval: DateInterval,
         orEqual: Bool = false,
