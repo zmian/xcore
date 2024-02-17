@@ -46,12 +46,10 @@ public final class Device: ObservableObject {
 extension Device {
     /// The name of the operating system running on the device (e.g., iOS).
     public var osName: String {
-        #if os(iOS) || os(tvOS)
+        #if os(iOS) || os(tvOS) || os(visionOS) || targetEnvironment(macCatalyst)
         return UIDevice.current.systemName
         #elseif os(watchOS)
         return WKInterfaceDevice.current().systemName
-        #elseif os(visionOS)
-        return "visionOS"
         #elseif os(macOS)
         #warning("FIXME: Implement")
         return "macOS"

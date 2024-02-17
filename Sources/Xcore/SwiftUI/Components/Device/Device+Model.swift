@@ -402,13 +402,10 @@ extension Device.Model {
 
     /// The family name of the device model (e.g., "iPhone" or "iPod touch").
     public var family: String {
-        #if os(iOS) || os(tvOS)
+        #if os(iOS) || os(tvOS) || os(visionOS) || targetEnvironment(macCatalyst)
         return UIDevice.current.model
         #elseif os(watchOS)
         return WKInterfaceDevice.current().model
-        #elseif os(visionOS)
-        #warning("FIXME: Implement")
-        return "Apple Vision Pro"
         #elseif os(macOS)
         #warning("FIXME: Implement")
         return ""
