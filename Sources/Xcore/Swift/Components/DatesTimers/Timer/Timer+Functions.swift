@@ -9,14 +9,22 @@ import Dispatch
 import Combine
 
 extension DispatchTime {
-    /// Returns given `TimeInterval` as `DispatchTime`.
+    /// Returns a `DispatchTime` calculated from the given time interval in seconds.
     ///
     /// - Parameter interval: The time interval, in seconds.
-    /// - Returns: A new `DispatchTime` from specified seconds.
+    /// - Returns: A new `DispatchTime` instance calculated from the given time
+    ///  interval in seconds.
     public static func seconds(_ interval: TimeInterval) -> DispatchTime {
         .now() + (interval * nanosecondsPerSecond) / nanosecondsPerSecond
     }
 
+    /// Calculates the time interval in seconds elapsed since the specified
+    /// `DispatchTime`.
+    ///
+    /// - Parameter lastTime: The `DispatchTime` value representing a reference
+    ///   point in time.
+    /// - Returns: The time interval, in seconds, between the current time and the
+    ///   specified `lastTime`.
     public static func seconds(elapsedSince lastTime: UInt64) -> TimeInterval {
         let currentTime = DispatchTime.now().uptimeNanoseconds
         // Using Int64 instead of UInt64 to avoid Swift runtime failure: arithmetic
