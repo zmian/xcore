@@ -95,7 +95,7 @@ private struct OverlayScreenViewModifier<Screen: View>: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .internalWindow(isPresented: $isPresented, style: style) {
+            .window(isPresented: $isPresented, style: style) {
                 ZStack {
                     if isPresented {
                         screen()
@@ -107,43 +107,33 @@ private struct OverlayScreenViewModifier<Screen: View>: ViewModifier {
     }
 }
 
-// MARK: - Helpers
+// MARK: - Preview
 
-extension View {
-    // TODO: Remove when .window modifier can work in previews and tests directly.
-    @ViewBuilder
-    fileprivate func internalWindow(
-        isPresented: Binding<Bool>,
-        style: WindowStyle,
-        @ViewBuilder content: @escaping () -> some View
-    ) -> some View {
-        #if DEBUG
-        internalWindowInPreview(isPresented: isPresented, style: style, content: content)
-        #else
-        window(isPresented: isPresented, style: style, content: content)
-        #endif
-    }
+#Preview {
+    ContentView()
+}
 
-    #if DEBUG
-    @ViewBuilder
-    private func internalWindowInPreview(
-        isPresented: Binding<Bool>,
-        style: WindowStyle,
-        @ViewBuilder content: @escaping () -> some View
-    ) -> some View {
-        if ProcessInfo.Arguments.isRunningInPreviews ||
-            ProcessInfo.Arguments.isTesting {
-            ZStack {
-                self
+struct ContentView: View {
+    @State private var isPresented = true
 
-                if isPresented.wrappedValue {
-                    content()
-                }
-            }
+    var body: some View {
+        Color.red
             .ignoresSafeArea()
-        } else {
-            window(isPresented: isPresented, style: style, content: content)
-        }
+            .overlay {
+                Button("Show Overlay Screen") {
+                    isPresented = true
+                }
+                .buttonStyle(.borderedProminent)
+            }
+            .overlayScreen(isPresented: $isPresented) {
+                Color.yellow
+                    .ignoresSafeArea()
+                    .overlay {
+                        Button("Hide Overlay Screen") {
+                            isPresented = false
+                        }
+                        .buttonStyle(.bordered)
+                    }
+            }
     }
-    #endif
 }

@@ -83,3 +83,14 @@ private struct PrivacyScreenViewModifier<Screen: View>: ViewModifier {
             }
     }
 }
+
+// MARK: - Preview
+
+#Preview {
+    Color.red
+        .ignoresSafeArea()
+        .privacyScreen {
+            Color.yellow
+                .ignoresSafeArea()
+        }
+}
