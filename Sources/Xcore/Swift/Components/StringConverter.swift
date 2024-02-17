@@ -62,8 +62,13 @@ public struct StringConverter: Sendable, Hashable {
         return nil
     }
 
+    /// The URL constructed from the string, or `nil` if the string is not a valid
+    /// URL.
     private var url: URL? {
-        URL(string: string)
+        let url = URL(string: string)
+        // Checks to ensure arbitrary strings are not considered valid URLs
+        // (e.g., URL(string: "hello world")).
+        return url?.scheme == nil ? nil : url
     }
 
     private var json: Any? {
