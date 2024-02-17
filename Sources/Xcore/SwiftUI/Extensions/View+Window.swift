@@ -187,30 +187,11 @@ extension Window {
 
         var body: some View {
             content
-                // TODO: Is there better way to propagate all of the environment values to the window content view?
-                .environment(\.font, env.font)
-                .foregroundStyle(env.theme.textColor)
-                .environment(\.isLoading, env.isLoading)
-                .environment(\.isEnabled, env.isEnabled)
-                .environment(\.defaultMinListRowHeight, env.defaultMinListRowHeight)
-                .environment(\.defaultMinListHeaderHeight, env.defaultMinListHeaderHeight)
-                .environment(\.defaultMinButtonHeight, env.defaultMinButtonHeight)
-                .environment(\.defaultButtonFont, env.defaultButtonFont)
-                .environment(\.defaultOutlineButtonBorderColor, env.defaultOutlineButtonBorderColor)
-                .environment(\.textFieldAttributes, env.textFieldAttributes)
-                .environment(\.dynamicTextFieldStyle, env.dynamicTextFieldStyle)
-                .environment(\.storyProgressIndicatorColor, env.storyProgressIndicatorColor)
-                .environment(\.storyProgressIndicatorInsets, env.storyProgressIndicatorInsets)
-                .environment(\.popupCornerRadius, env.popupCornerRadius)
-                .environment(\.popupPreferredWidth, env.popupPreferredWidth)
-                .environment(\.popupTextAlignment, env.popupTextAlignment)
-                .environment(\.theme, env.theme)
-                .tint(env.theme.tintColor)
-                .preferredColorScheme(env.colorScheme)
-        }
-
-        private var env: EnvironmentValues {
-            context.environment
+                // Propagates all of the parent environment values to the child (window
+                // content).
+                .transformEnvironment(\.self) { values in
+                    values = context.environment
+                }
         }
     }
 }
