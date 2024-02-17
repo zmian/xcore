@@ -136,11 +136,21 @@ extension Date {
 // MARK: - Adjustments
 
 extension Date {
-    /// Adjusts the receiver by given date components.
+    /// Adjusts the receiver by the specified date components.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let currentDate = Date()
+    /// let futureDate = currentDate.adjusting(.day, by: 7)
+    ///
+    /// print(futureDate) // A date representing 7 days in the future.
+    /// ```
     ///
     /// - Parameters:
-    ///   - components: DateComponents object that contains adjustment values.
-    ///   - calendar: The calendar to use for adjustment.
+    ///   - components: A `DateComponents` object that contains adjustment values.
+    ///   - calendar: The calendar to use for the adjustment.
+    /// - Returns: A new `Date` object representing the adjusted date.
     public func adjusting(_ components: DateComponents, in calendar: Calendar = .default) -> Date {
         calendar.date(byAdding: components, to: self)!
     }
