@@ -136,13 +136,15 @@ extension Date {
 // MARK: - Adjustments
 
 extension Date {
-    /// Adjusts the receiver by the specified date components.
+    /// Adjusts the receiver by adding the specified date components.
     ///
     /// **Usage**
     ///
     /// ```swift
     /// let currentDate = Date()
-    /// let futureDate = currentDate.adjusting(.day, by: 7)
+    /// var dateComponent = DateComponents()
+    /// dateComponent.day = 7
+    /// let futureDate = currentDate.adjusting(dateComponent, by: 7)
     ///
     /// print(futureDate) // A date representing 7 days in the future.
     /// ```
@@ -155,12 +157,23 @@ extension Date {
         calendar.date(byAdding: components, to: self)!
     }
 
-    /// Adjusts the receiver's given component by the given offset in set calendar.
+    /// Adjusts the receiver by adding the specified offset to the given component
+    /// in the set calendar.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let currentDate = Date()
+    /// let futureDate = currentDate.adjusting(.day, by: 7)
+    ///
+    /// print(futureDate) // A date representing 7 days in the future.
+    /// ```
     ///
     /// - Parameters:
-    ///   - component: Component to adjust.
-    ///   - offset: Offset to use for adjustment.
-    ///   - calendar: The calendar to use for adjustment.
+    ///   - component: The calendar component to adjust.
+    ///   - offset: The offset value to add to the specified component.
+    ///   - calendar: The calendar to use for the adjustment.
+    /// - Returns: A new `Date` object representing the adjusted date.
     public func adjusting(_ component: Calendar.Component, by offset: Int, in calendar: Calendar = .default) -> Date {
         var dateComponent = DateComponents()
 
@@ -202,13 +215,23 @@ extension Date {
         return adjusting(dateComponent, in: calendar)
     }
 
-    /// Adjusts the receiver's given component and along with all smaller units to
-    /// their start using the calendar.
+    /// Adjusts the receiver, along with all smaller units, to the beginning of the
+    /// specified component using the set calendar.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let currentDate = Date()
+    /// let startOfDay = currentDate.startOf(.day)
+    ///
+    /// print(startOfDay) // A date representing the start of the current day.
+    /// ```
     ///
     /// - Parameters:
-    ///   - component: Component and along with all smaller units to adjust to their
-    ///     start.
-    ///   - calendar: The calendar to use for adjustment.
+    ///   - component: The calendar component to adjust along with its smaller units
+    ///     to their start.
+    ///   - calendar: The calendar to use for the adjustment.
+    /// - Returns: A new `Date` object representing the adjusted date.
     public func startOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
         #if DEBUG
         return calendar.dateInterval(of: component, for: self)!.start
@@ -217,13 +240,23 @@ extension Date {
         #endif
     }
 
-    /// Adjusts the receiver's given component and along with all smaller units to
-    /// their end using the calendar.
+    /// Adjusts the receiver, along with all smaller units, to the end of the
+    /// specified component using the set calendar.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let currentDate = Date()
+    /// let endOfDay = currentDate.endOf(.day)
+    ///
+    /// print(endOfDay) // A date representing the end of the current day.
+    /// ```
     ///
     /// - Parameters:
-    ///   - component: Component and along with all smaller units to adjust to their
-    ///     end.
-    ///   - calendar: The calendar to use for adjustment.
+    ///   - component: The calendar component to adjust along with its smaller units
+    ///     to their end.
+    ///   - calendar: The calendar to use for the adjustment.
+    /// - Returns: A new `Date` object representing the adjusted date.
     public func endOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
         #if DEBUG
         let date = calendar.dateInterval(of: component, for: self)!.end
@@ -234,13 +267,23 @@ extension Date {
         return Date(timeInterval: -0.001, since: date)
     }
 
-    /// Adjusts the receiver's given component and along with all smaller units to
-    /// their middle using the calendar.
+    /// Adjusts the receiver's date, along with all smaller units, to the middle of
+    /// the specified component using the set calendar.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let currentDate = Date()
+    /// let middleOfDay = currentDate.middleOf(.day)
+    ///
+    /// print(middleOfDay) // A date representing the middle of the current day.
+    /// ```
     ///
     /// - Parameters:
-    ///   - component: Component and along with all smaller units to adjust to their
-    ///     middle.
-    ///   - calendar: The calendar to use for adjustment.
+    ///   - component: The calendar component to adjust along with its smaller units
+    ///     to their middle.
+    ///   - calendar: The calendar to use for the adjustment.
+    /// - Returns: A new `Date` object representing the adjusted date.
     public func middleOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
         #if DEBUG
         let date = calendar.dateInterval(of: component, for: self)!.middle
