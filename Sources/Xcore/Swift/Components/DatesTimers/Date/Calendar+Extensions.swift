@@ -7,7 +7,7 @@
 import Foundation
 
 extension Calendar: MutableAppliable {
-    /// The default calendar, initially set to the current calendar.
+    /// The default calendar, initially set to the `current` calendar.
     public static var `default`: Self = .current
 
     /// The default calendar used in ``DateCodingFormatStyle``.
