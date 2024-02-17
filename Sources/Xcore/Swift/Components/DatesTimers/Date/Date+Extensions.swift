@@ -67,18 +67,14 @@ extension Date {
         Int64(timeIntervalSince1970 * 1000)
     }
 
-    /// Retrieves the receiver's given component value.
-    ///
-    /// - Parameters:
-    ///   - component: Component to get the value for.
-    ///   - calendar: The calendar to use for retrieval.
+    /// Retrieves the value of a specified date component from the receiver.
     ///
     /// **Usage**
     ///
     /// ```swift
     /// let date = Date(year: 2020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
     ///
-    /// // Example in default calendar
+    /// // Example in the default calendar
     /// let year = date.component(.year)
     /// let month = date.component(.month)
     /// let day = date.component(.day)
@@ -87,7 +83,7 @@ extension Date {
     /// print(month) // 2
     /// print(day)   // 1
     ///
-    /// // Example in different calendar
+    /// // Example in a different calendar (e.g., US Eastern)
     /// let year = date.component(.year, in: .usEastern)
     /// let month = date.component(.month, in: .usEastern)
     /// let day = date.component(.day, in: .usEastern)
@@ -98,16 +94,33 @@ extension Date {
     /// print(day)   // 31
     /// print(hour)  // 22
     /// ```
+    ///
+    /// - Parameters:
+    ///   - component: The date component for which to retrieve the value.
+    ///   - calendar: The calendar to use for retrieval.
     public func component(_ component: Calendar.Component, in calendar: Calendar = .default) -> Int {
         calendar.component(component, from: self)
     }
 
-    /// Creates a date interval from given date by adjusting its components.
+    /// Creates a date interval by adjusting the specified date component.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let date = Date()
+    ///
+    /// // Create an interval by adjusting the day component
+    /// let dayInterval = date.interval(for: .day, adjustedBy: 5)
+    ///
+    /// print(dayInterval.start) // Adjusted start date
+    /// print(dayInterval.end)   // Adjusted end date
+    /// ```
     ///
     /// - Parameters:
-    ///   - component: Component to adjust for the interval.
-    ///   - adjustment: The offset to adjust the component.
+    ///   - component: The date component to adjust for the interval.
+    ///   - adjustment: The offset to adjust the specified component.
     ///   - calendar: The calendar to use for adjustment.
+    /// - Returns: A `DateInterval` instance representing the adjusted interval.
     public func interval(
         for component: Calendar.Component,
         adjustedBy adjustment: Int = 0,
