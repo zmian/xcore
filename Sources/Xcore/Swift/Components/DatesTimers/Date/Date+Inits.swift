@@ -7,16 +7,16 @@
 import UIKit
 
 extension Date {
-    /// Create a `Date` object using the given date components.
+    /// Creates a `Date` object using the given date components.
     ///
     /// - Parameters:
-    ///   - year: Year to set on the Date.
-    ///   - month: Month to set on the Date.
-    ///   - day: Date to set on the Date.
-    ///   - hour: Hour to set on the Date.
-    ///   - minute: Minute to set on the Date.
-    ///   - second: Second to set on the Date.
-    ///   - calendar: Calendar to set on the Date.
+    ///   - year: The year to set on the Date.
+    ///   - month: The month to set on the Date.
+    ///   - day: The day to set on the Date.
+    ///   - hour: The hour to set on the Date.
+    ///   - minute: The minute to set on the Date.
+    ///   - second: The second to set on the Date.
+    ///   - calendar: The calendar to set on the Date.
     public init(
         year: Int,
         month: Int,
@@ -40,11 +40,11 @@ extension Date {
         self = dateComponent.date!
     }
 
-    /// Create a `Date` object using the given date string and format.
+    /// Creates a `Date` object using the given date string and format.
     ///
     /// - Parameters:
-    ///   - string: String that represents a date.
-    ///   - format: Format of the date that's represented with string.
+    ///   - string: The string that represents a date.
+    ///   - format: The format of the date that's represented with the string.
     ///   - calendar: The calendar to use when parsing the date.
     ///   - isLenient: A Boolean value indicating whether to use heuristics when
     ///     parsing the date.
@@ -57,11 +57,11 @@ extension Date {
         self.init(string, style: .format(format), calendar: calendar, isLenient: isLenient)
     }
 
-    /// Create a `Date` object using the given date string and format.
+    /// Creates a `Date` object using the given date string and style.
     ///
     /// - Parameters:
-    ///   - string: String that represents a date.
-    ///   - style: Style of the date that's represented with string.
+    ///   - string: The string that represents a date.
+    ///   - style: The style of the date that's represented with the string.
     ///   - calendar: The calendar to use when parsing the date.
     ///   - isLenient: A Boolean value indicating whether to use heuristics when
     ///     parsing the date.
