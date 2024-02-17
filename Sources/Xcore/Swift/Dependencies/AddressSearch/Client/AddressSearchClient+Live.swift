@@ -252,6 +252,12 @@ extension PostalAddress {
 // MARK: - App Error
 
 extension AppError {
+    /// An error thrown when an address is a P.O. Box.
+    ///
+    /// ```
+    /// // Residential Address
+    /// // Please enter an address that doesn’t correspond to a P.O. Box.
+    /// ```
     fileprivate static var postalAddressInvalidPoBox: Self {
         typealias L = Localized.PostalAddress.InvalidPoBox
         return .init(

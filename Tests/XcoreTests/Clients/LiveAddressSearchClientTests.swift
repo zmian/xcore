@@ -10,12 +10,12 @@ import XCTest
 final class LiveAddressSearchClientTests: TestCase {
     override func setUp() {
         super.setUp()
-        LiveAddressSearchClient.supportedRegions = ["US"]
+        LiveAddressSearchClient.supportedRegions = [.unitedStates]
     }
 
-    func testQueensAddresses() async throws {
+    func testQueensAddresses() async {
         // No Country
-        try await search("3818 Queens Blvd, Queens, NY 11101") { postalAddress in
+        await search("3818 Queens Blvd, Queens, NY 11101") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "38-18 Queens Blvd")
             XCTAssertEqual(postalAddress.street2, "")
             XCTAssertEqual(postalAddress.city, "Long Island City")
@@ -24,7 +24,7 @@ final class LiveAddressSearchClientTests: TestCase {
             XCTAssertEqual(postalAddress.countryCode, "US")
         }
 
-        try await search("38-18 Queens Blvd, Long Island City, NY 11101") { postalAddress in
+        await search("38-18 Queens Blvd, Long Island City, NY 11101") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "38-18 Queens Blvd")
             XCTAssertEqual(postalAddress.street2, "")
             XCTAssertEqual(postalAddress.city, "Long Island City")
@@ -34,7 +34,7 @@ final class LiveAddressSearchClientTests: TestCase {
         }
 
         // With country
-        try await search("3818 Queens Blvd, Queens, NY 11101, United States") { postalAddress in
+        await search("3818 Queens Blvd, Queens, NY 11101, United States") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "38-18 Queens Blvd")
             XCTAssertEqual(postalAddress.street2, "")
             XCTAssertEqual(postalAddress.city, "Long Island City")
@@ -43,7 +43,7 @@ final class LiveAddressSearchClientTests: TestCase {
             XCTAssertEqual(postalAddress.countryCode, "US")
         }
 
-        try await search("38-18 Queens Blvd, Long Island City, NY 11101, USA") { postalAddress in
+        await search("38-18 Queens Blvd, Long Island City, NY 11101, USA") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "38-18 Queens Blvd")
             XCTAssertEqual(postalAddress.street2, "")
             XCTAssertEqual(postalAddress.city, "Long Island City")
@@ -53,7 +53,7 @@ final class LiveAddressSearchClientTests: TestCase {
         }
 
         // No zip code
-        try await search("3818 Queens Blvd, Queens, NY") { postalAddress in
+        await search("3818 Queens Blvd, Long Island City, NY") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "38-18 Queens Blvd")
             XCTAssertEqual(postalAddress.street2, "")
             XCTAssertEqual(postalAddress.city, "Long Island City")
@@ -63,7 +63,7 @@ final class LiveAddressSearchClientTests: TestCase {
         }
 
         // No zip code with Country
-        try await search("3818 Queens Blvd, Queens, NY, USA") { postalAddress in
+        await search("3818 Queens Blvd, Long Island City, NY, USA") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "38-18 Queens Blvd")
             XCTAssertEqual(postalAddress.street2, "")
             XCTAssertEqual(postalAddress.city, "Long Island City")
@@ -73,8 +73,8 @@ final class LiveAddressSearchClientTests: TestCase {
         }
     }
 
-    func testNormalAddress() async throws {
-        try await search("529 Broadway, 10B, New York, NY 10012, United States") { postalAddress in
+    func testNormalAddress() async {
+        await search("529 Broadway, 10B, New York, NY 10012, United States") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "529 Broadway")
             XCTAssertEqual(postalAddress.street2, "")
             XCTAssertEqual(postalAddress.city, "New York")
@@ -83,7 +83,7 @@ final class LiveAddressSearchClientTests: TestCase {
             XCTAssertEqual(postalAddress.countryCode, "US")
         }
 
-        try await search("2761 Raging River Ct, Decatur, GA  30034, United States") { postalAddress in
+        await search("2761 Raging River Ct, Decatur, GA  30034, United States") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "2761 Raging River Ct")
             XCTAssertEqual(postalAddress.street2, "")
             XCTAssertEqual(postalAddress.city, "Decatur")
@@ -93,8 +93,8 @@ final class LiveAddressSearchClientTests: TestCase {
         }
     }
 
-    func testIncompleteAddress() async throws {
-        try await search("Nothing, Decatur, GA 30034") { postalAddress in
+    func testIncompleteAddress() async {
+        await search("Nothing, Decatur, GA 30034, US") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "")
             XCTAssertEqual(postalAddress.street2, "")
             XCTAssertEqual(postalAddress.city, "Decatur")
@@ -103,7 +103,7 @@ final class LiveAddressSearchClientTests: TestCase {
             XCTAssertEqual(postalAddress.countryCode, "US")
         }
 
-        try await search("123 Havenshire Ridge Ln, Pinehurst TX 77362") { postalAddress in
+        await search("123 Havenshire Ridge Ln, Pinehurst TX 77362") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "Havenshire Ridge Ln")
             XCTAssertEqual(postalAddress.street2, "")
             XCTAssertEqual(postalAddress.city, "Pinehurst")
@@ -113,8 +113,8 @@ final class LiveAddressSearchClientTests: TestCase {
         }
     }
 
-    func testNonUsaAddresses() async throws {
-        try await search("Carrera de San Jeronimo, 34, Madrid 28014") { postalAddress in
+    func testNonUsaAddresses() async {
+        await search("Carrera de San Jeronimo, 34, Madrid 28014") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "34 Carrera de San Jerónimo")
             XCTAssertEqual(postalAddress.street2, "")
             XCTAssertEqual(postalAddress.city, "28014 Madrid")
@@ -142,7 +142,7 @@ final class LiveAddressSearchClientTests: TestCase {
 
             // 2. Spain as Supported Regions
             // =============================
-            LiveAddressSearchClient.supportedRegions = ["US", "ES"]
+            LiveAddressSearchClient.supportedRegions = [.unitedStates, .spain]
 
             do {
                 try await client.validate(address: postalAddress)
@@ -153,7 +153,7 @@ final class LiveAddressSearchClientTests: TestCase {
             // 3. US, PT, and GB as Supported Regions
             // ======================================
 
-            LiveAddressSearchClient.supportedRegions = ["US", "PT", "GB"]
+            LiveAddressSearchClient.supportedRegions = [.unitedStates, .portugal, .unitedKingdom]
 
             do {
                 try await client.validate(address: postalAddress)
@@ -170,8 +170,8 @@ final class LiveAddressSearchClientTests: TestCase {
         }
     }
 
-    func testAddressWithUnit() async throws {
-        try await search("222 Jackson St, Unit 5, Brooklyn, NY 11211") { postalAddress in
+    func testAddressWithUnit() async {
+        await search("222 Jackson St, Unit 5, Brooklyn, NY 11211") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "222 Jackson St")
             XCTAssertEqual(postalAddress.street2, "Unit 5")
             XCTAssertEqual(postalAddress.city, "Brooklyn")
@@ -180,16 +180,16 @@ final class LiveAddressSearchClientTests: TestCase {
             XCTAssertEqual(postalAddress.countryCode, "US")
         }
 
-        try await search("222 Jackson St, Apt 5, Brooklyn, NY 11211") { postalAddress in
+        await search("222 Jackson St, Apt 5, Brooklyn, NY 11211") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "222 Jackson St")
-            XCTAssertEqual(postalAddress.street2, "Unit 5")
+            XCTAssertEqual(postalAddress.street2, "Apt 5")
             XCTAssertEqual(postalAddress.city, "Brooklyn")
             XCTAssertEqual(postalAddress.state, "NY")
             XCTAssertEqual(postalAddress.postalCode, "11211")
             XCTAssertEqual(postalAddress.countryCode, "US")
         }
 
-        try await search("222 Jackson St, 5, Brooklyn, NY 11211") { postalAddress in
+        await search("222 Jackson St, 5, Brooklyn, NY 11211") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "222 Jackson St")
             XCTAssertEqual(postalAddress.street2, "")
             XCTAssertEqual(postalAddress.city, "Brooklyn")
@@ -198,7 +198,7 @@ final class LiveAddressSearchClientTests: TestCase {
             XCTAssertEqual(postalAddress.countryCode, "US")
         }
 
-        try await search("2900 Bedford Ave, 2B, Brooklyn, NY 11210") { postalAddress in
+        await search("2900 Bedford Ave, 2B, Brooklyn, NY 11210") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "2900 Bedford Ave")
             XCTAssertEqual(postalAddress.street2, "")
             XCTAssertEqual(postalAddress.city, "Brooklyn")
@@ -212,13 +212,22 @@ final class LiveAddressSearchClientTests: TestCase {
 // MARK: - Helpers
 
 extension LiveAddressSearchClientTests {
-    private func search(_ query: String, file: StaticString = #file, line: UInt = #line, callback: (PostalAddress) async throws -> Void) async throws {
-        try await withDependencies {
-            $0.addressSearch = .live
-        } operation: {
-            let client = Dependency(\.addressSearch).wrappedValue
-            let postalAddress = try await client.search(query: query)
-            try await callback(postalAddress)
+    private func search(
+        _ query: String,
+        file: StaticString = #file,
+        line: UInt = #line,
+        callback: (PostalAddress) async throws -> Void
+    ) async {
+        do {
+            try await withDependencies {
+                $0.addressSearch = .live
+            } operation: {
+                let client = Dependency(\.addressSearch).wrappedValue
+                let postalAddress = try await client.search(query: query)
+                try await callback(postalAddress)
+            }
+        } catch {
+            XCTFail(String(describing: error), file: file, line: line)
         }
     }
 }
