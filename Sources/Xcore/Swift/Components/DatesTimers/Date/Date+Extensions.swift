@@ -247,31 +247,37 @@ extension Date {
 extension Date {
     /// Returns the time zone offset of a calendar from UTC.
     ///
-    /// - Parameter calendar: The calendar used to calculate time zone.
-    ///
     /// **Usage**
     ///
     /// ```swift
     /// let result = Date.timeZoneOffset(calendar: .usEastern)
     /// print(result) // -4; Eastern time zone is 4 hours behind UTC.
     /// ```
+    ///
+    /// - Parameter calendar: The calendar used to calculate the time zone offset.
+    /// - Returns: The time zone offset in hours.
     public static func timeZoneOffset(calendar: Calendar = .default) -> Int {
         calendar.timeZone.secondsFromGMT() / 3600
     }
 
-    /// Returns total number of days of month using the given calendar.
+    /// Returns the total number of days in the month using the given calendar.
     ///
-    /// - Parameter calendar: The calendar used to calculate month days.
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let date = Date(year: 2022, month: 2, day: 15)
+    /// let daysInMonth = date.monthDays()
+    ///
+    /// print(daysInMonth) // 28; February in a non-leap year.
+    /// ```
+    ///
+    /// - Parameter calendar: The calendar used to calculate the month days.
+    /// - Returns: The total number of days in the month.
     public func monthDays(in calendar: Calendar = .default) -> Int {
         calendar.range(of: .day, in: .month, for: self)!.count
     }
 
-    /// Returns the total number of units to the given date.
-    ///
-    /// - Parameters:
-    ///   - component: The component to calculate.
-    ///   - date: A component to calculate to date.
-    ///   - calendar: The calendar to calculate the number.
+    /// Returns the total number of units from the receiver to the specified date.
     ///
     /// **Usage**
     ///
@@ -282,6 +288,12 @@ extension Date {
     ///
     /// print(result) // 1; There is only 1 year between 2019 and 2020.
     /// ```
+    ///
+    /// - Parameters:
+    ///   - component: The component to calculate (e.g., year, month, day).
+    ///   - date: The target date for the calculation.
+    ///   - calendar: The calendar to use for the calculation.
+    /// - Returns: The number of units between the receiver and the specified date.
     public func numberOf(_ component: Calendar.Component, to date: Date, in calendar: Calendar = .default) -> Int {
         #if DEBUG
         return calendar.dateComponents([component], from: self, to: date).value(for: component)!
