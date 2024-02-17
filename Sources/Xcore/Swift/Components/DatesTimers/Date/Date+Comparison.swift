@@ -10,26 +10,27 @@ import Foundation
 
 extension Date {
     public enum ComparisonOperator {
-        /// Receiver must be today with granularity matching at least down to the `day`.
-        /// For example, the receiver year, month, day must match today.
+        /// The receiver must be today with granularity matching at least down to the `day`.
+        /// For example, the receiver's year, month, and day must match today.
         case today
-        /// Receiver must be tomorrow with granularity matching at least down to the
-        /// `day`. For example, the receiver year, month, day must match tomorrow.
+        /// The receiver must be tomorrow with granularity matching at least down to the
+        /// `day`. For example, the receiver's year, month, and day must match tomorrow.
         case tomorrow
-        /// Receiver must be yesterday with granularity matching at least down to the
-        /// `day`. For example, the receiver year, month, day must match yesterday.
+        /// The receiver must be yesterday with granularity matching at least down to the
+        /// `day`. For example, the receiver's year, month, and day must match yesterday.
         case yesterday
-        /// Receiver must be weekend.
+        /// The receiver must be the weekend.
         case weekend
-        /// Receiver component must be equal to given `component + 1`.
+        /// The receiver component must be equal to the given `component + 1`.
         case next(Calendar.Component)
-        /// Receiver component must be equal to given `component - 1`.
+        /// The receiver component must be equal to the given `component - 1`.
         case previous(Calendar.Component)
-        /// Receiver component must be `component - n` where `n <= 1`.
+        /// The receiver component must be `component - n` where `n <= 1`.
         case past(Calendar.Component)
-        /// Receiver component must be same `component` as current.
+        /// The receiver component must be the same `component` as the current
+        /// component.
         case current(Calendar.Component)
-        /// Receiver component must be `component + n` where `n >= 1`.
+        /// The receiver component must be `component + n` where `n >= 1`.
         case future(Calendar.Component)
     }
 
@@ -62,8 +63,10 @@ extension Date {
     /// ```
     ///
     /// - Parameters:
-    ///   - comparison: The comparison operator to use to determine the comparison.
+    ///   - comparison: The comparison operator to use for the comparison.
     ///   - calendar: The calendar to use when comparing.
+    /// - Returns: `true` if the receiver satisfies the given comparison; otherwise,
+    ///   `false`.
     public func `is`(_ comparison: ComparisonOperator, in calendar: Calendar = .default) -> Bool {
         switch comparison {
             case .today:
