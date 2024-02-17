@@ -95,14 +95,51 @@ extension Timer {
         set { setAssociatedObject(&AssociatedKey.previousFireDate, value: newValue) }
     }
 
-    /// A method to pause the timer.
+    /// Pauses the timer.
+    ///
+    /// Call this method to temporarily stop the timer from firing.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let timer = Timer.after(5) {
+    ///     print("Hi once")
+    /// }
+    ///
+    /// // Pause the timer
+    /// timer.pause()
+    ///
+    /// // ... Perform other tasks ...
+    ///
+    /// // Resume the timer
+    /// timer.resume()
+    /// ```
     public func pause() {
         pauseDate = Date()
         previousFireDate = fireDate
         fireDate = Date.distantFuture
     }
 
-    /// A method to resume the timer if it has been paused.
+    /// Resumes the timer if it has been paused.
+    ///
+    /// Call this method to resume the timer if it has been previously paused using
+    /// the `pause()` method.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let timer = Timer.after(5) {
+    ///     print("Hi once")
+    /// }
+    ///
+    /// // Pause the timer
+    /// timer.pause()
+    ///
+    /// // ... Perform other tasks ...
+    ///
+    /// // Resume the timer
+    /// timer.resume()
+    /// ```
     public func resume() {
         guard
             let pauseDate = pauseDate,
