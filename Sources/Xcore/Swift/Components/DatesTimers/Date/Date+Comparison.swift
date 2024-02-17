@@ -63,7 +63,7 @@ extension Date {
     /// ```
     ///
     /// - Parameters:
-    ///   - comparison: The comparison operator to use for the comparison.
+    ///   - comparison: The operator to use for the comparison.
     ///   - calendar: The calendar to use when comparing.
     /// - Returns: `true` if the receiver satisfies the given comparison; otherwise,
     ///   `false`.
