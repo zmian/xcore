@@ -38,3 +38,4 @@ Carthage/Build
 
 /.build
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.swiftpm/xcode/xcshareddata/xcschemes/Xcore.xcscheme
