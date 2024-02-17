@@ -58,20 +58,6 @@ extension EnvironmentValues {
     }
 }
 
-// MARK: - DefaultAppTypeface
-
-extension EnvironmentValues {
-    private struct DefaultAppTypefaceKey: EnvironmentKey {
-        static var defaultValue = UIFont.defaultAppTypeface
-    }
-
-    // TODO: Implement the app function to pick the typeface from environment.
-    var defaultAppTypeface: UIFont.Typeface {
-        get { self[DefaultAppTypefaceKey.self] }
-        set { self[DefaultAppTypefaceKey.self] = newValue }
-    }
-}
-
 // MARK: - View Helpers
 
 extension View {
