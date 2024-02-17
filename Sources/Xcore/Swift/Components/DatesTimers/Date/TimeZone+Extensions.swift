@@ -7,15 +7,15 @@
 import Foundation
 
 extension TimeZone {
-    /// Returns `UTC` time zone.
+    /// Returns the `UTC` time zone.
     public static let utc = TimeZone(identifier: "UTC")!
 
-    /// Returns `America/New_York` time zone.
+    /// Returns the `America/New_York` time zone.
     public static let eastern = TimeZone(identifier: "America/New_York")!
 
-    /// Returns `Europe/Istanbul` time zone.
+    /// Returns the `Europe/Istanbul` time zone.
     public static let istanbul = TimeZone(identifier: "Europe/Istanbul")!
 
-    /// Returns `Europe/London` time zone.
+    /// Returns the `Europe/London` time zone.
     public static let london = TimeZone(identifier: "Europe/London")!
 }
