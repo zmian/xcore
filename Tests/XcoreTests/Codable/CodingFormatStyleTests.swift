@@ -284,8 +284,9 @@ final class CodingFormatStyleTests: TestCase {
         // Escaped url
         let data3 = try XCTUnwrap(#"{"value": "https://example.com/_hello.html?DAT=A.B.cd&app=XC≻=ABC456&id=F5"}"#.data(using: .utf8))
         let example3 = try JSONDecoder().decode(Example.self, from: data3)
+        // Non-escaped url without any encoding.
         let urlString = "https://example.com/_hello.html?DAT=A.B.cd&app=XC≻=ABC456&id=F5"
-        XCTAssertNil(URL(string: urlString)) // this should be nil as the above string should be encoded properly.
+        XCTAssertNotNil(URL(string: urlString))
         let validUrlString = try XCTUnwrap(urlString.urlEscaped())
         let validUrl = try XCTUnwrap(URL(string: validUrlString))
         XCTAssertEqual(example3.value, validUrl)
