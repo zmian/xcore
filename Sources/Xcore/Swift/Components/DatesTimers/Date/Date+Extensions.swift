@@ -7,23 +7,62 @@
 import UIKit
 
 extension Date {
-    /// Changes the `default` calendar to the given calendar for the scope of work.
-    public static func calendar<R>(_ new: Calendar, work: () -> R) -> R {
+    /// Temporarily changes the `default` calendar to the given calendar for the
+    /// scope of work.
+    ///
+    /// This method allows you to perform date-related operations within a specific
+    /// calendar without permanently changing the `default` calendar.
+    ///
+    /// - Parameters:
+    ///   - new: The calendar to set as the temporary `default`.
+    ///   - work: A closure representing the scope of work to be performed with the
+    ///     temporary `default` calendar.
+    /// - Returns: The result of the work closure.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let result = Date.calendar(.gregorian) {
+    ///     // Perform date-related operations using the .gregorian calendar
+    ///     let currentDate = Date()
+    ///     let formattedDate = currentDate.format(.monthYear(.abbreviated)):
+    ///     print("Formatted Date: \(formattedDate)")
+    ///
+    ///     // Additional date-related operations within the .gregorian calendar
+    ///     // ...
+    ///
+    ///     // The .gregorian calendar is automatically restored to the original
+    ///     // default after this scope.
+    /// }
+    /// ```
+    ///
+    /// - Note: The `default` calendar is restored to its original state after the
+    ///   work closure completes, even if an error occurs within the closure.
+    public static func calendar<R>(_ new: Calendar, work: () throws -> R) rethrows -> R {
         let current = Calendar.default
         Calendar.default = new
         defer { Calendar.default = current }
-        return work()
+        return try work()
     }
 }
 
 // MARK: - Transform
 
 extension Date {
-    /// Epoch in milliseconds.
+    /// Represents the epoch timestamp in milliseconds.
     ///
-    /// Epoch, also known as Unix timestamps, is the number of seconds (not
+    /// The epoch, also known as Unix timestamps, is the number of seconds (not
     /// milliseconds) that have elapsed since `January 1, 1970` at `00:00:00 UTC`
-    /// (`1970-01-01 00:00:00 UTC`).
+    /// (`1970-01-01 00:00:00 UTC`). This property returns the equivalent epoch
+    /// timestamp in milliseconds.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let currentDate = Date()
+    /// let epochMilliseconds = currentDate.milliseconds
+    /// print("Epoch Timestamp (in milliseconds): \(epochMilliseconds)")
+    /// ```
     public var milliseconds: Int64 {
         Int64(timeIntervalSince1970 * 1000)
     }
