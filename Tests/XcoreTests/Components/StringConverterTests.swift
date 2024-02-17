@@ -26,6 +26,7 @@ final class StringConverterTests: TestCase {
 
         let defaultUrl = URL(string: "https://github.com/zmian/xcore.swift")!
         XCTAssertEqual(ConvertItem.validUrl.value(default: defaultUrl), URL(string: "https://swift.org/")!)
+        XCTAssertEqual(ConvertItem.validUrl2.value(default: defaultUrl), URL(string: "message://")!)
         XCTAssertEqual(ConvertItem.invalidUrl.value(default: defaultUrl), defaultUrl)
 
         let defaultString = "hello world"
@@ -95,6 +96,7 @@ private struct ConvertValue {
         storage[.invalidNsNumber] = "hello world"
 
         storage[.validUrl] = "https://swift.org/"
+        storage[.validUrl2] = "message://"
         storage[.invalidUrl] = "hello world"
 
         storage[.validString] = "dark"
@@ -140,6 +142,7 @@ private enum ConvertItem: String {
     case invalidNsNumber
 
     case validUrl
+    case validUrl2
     case invalidUrl
 
     case validString
