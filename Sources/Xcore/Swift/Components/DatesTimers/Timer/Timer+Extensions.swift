@@ -37,7 +37,8 @@ extension Timer {
     /// Creates a repeating timer and schedules it on the current run loop in the
     /// default mode.
     ///
-    /// After interval seconds have elapsed, the timer fires, executing block.
+    /// After the specified interval in seconds has elapsed, the timer fires,
+    /// executing the provided block.
     ///
     /// **Usage**
     ///
@@ -55,12 +56,12 @@ extension Timer {
     /// ```
     ///
     /// - Parameters:
-    ///    - interval: The number of seconds between firings of the timer. If
-    ///      interval is less than or equal to `0.0`, this method chooses the
-    ///      nonnegative value of `0.0001` seconds instead.
-    ///    - work: A closure to be executed when the timer fires. The block takes a
-    ///      single `Timer` parameter and has no return value.
-    /// - Returns: A new Timer object, configured according to the specified
+    ///   - interval: The number of seconds between firings of the timer. If
+    ///     `interval` is less than or equal to `0.0`, this method chooses the
+    ///     nonnegative value of `0.0001` seconds instead.
+    ///   - work: A closure to be executed when the timer fires. The block takes a
+    ///     single `Timer` parameter and has no return value.
+    /// - Returns: A new `Timer` object, configured according to the specified
     ///   parameters.
     @discardableResult
     public class func every(
