@@ -148,7 +148,7 @@ extension Samples {
 
                     CapsuleView("Dismiss")
 
-                    CapsuleView("9:41 AM", systemImage: .bellFill)
+                    CapsuleView("9:41 AM", systemImage: .bellFill)
                 }
             }
         }

@@ -203,7 +203,7 @@ extension Date.Style.Format {
     /// ```
     public static func monthDayYear(_ width: Date.Style.Width, withTime: Bool = false) -> Self {
         let format: String
-        let suffix = withTime ? " - h:mm a" : ""
+        let suffix = withTime ? " - h:mm a" : ""
 
         switch width {
             case .wide:
@@ -224,7 +224,7 @@ extension Date.Style.Format {
     /// ```
     public static func monthDay(_ width: Date.Style.Width, withTime: Bool = false) -> Self {
         let format: String
-        let suffix = withTime ? " - h:mm a" : ""
+        let suffix = withTime ? " - h:mm a" : ""
 
         switch width {
             case .wide:
@@ -245,7 +245,7 @@ extension Date.Style.Format {
     /// ```
     public static func monthYear(_ width: Date.Style.Width, withTime: Bool = false) -> Self {
         let format: String
-        let suffix = withTime ? " - h:mm a" : ""
+        let suffix = withTime ? " - h:mm a" : ""
 
         switch width {
             case .wide:
@@ -294,15 +294,15 @@ extension Date.Style {
     /// For example, `Jun 4, 2020`
     public static var abbreviated: Self { date(.medium) }
 
-    /// For example, `Jun 4, 2020 at 9:41 AM`
+    /// For example, `Jun 4, 2020 at 9:41 AM`
     public static var abbreviatedTime: Self { dateTime(.medium, time: .short) }
 
     /// For example, `6/4/20`
     public static var narrow: Self { date(.short) }
 
-    /// For example, `6/4/20, 9:41 AM`
+    /// For example, `6/4/20, 9:41 AM`
     public static var narrowTime: Self { dateTime(.short) }
 
-    /// For example, `9:41 AM`
+    /// For example, `9:41 AM`
     public static var time: Self { time(.short) }
 }

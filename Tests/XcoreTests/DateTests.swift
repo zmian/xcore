@@ -161,15 +161,15 @@ final class DateTest: TestCase {
         let date = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
         // .wide
         XCTAssertEqual(date.formatted(format: .monthDayYear(.wide)), "June 4, 2022")
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.wide, withTime: true)), "June 4, 2022 - 11:11 AM")
+        XCTAssertEqual(date.formatted(format: .monthDayYear(.wide, withTime: true)), "June 4, 2022 - 11:11 AM")
 
         // .abbreviated
         XCTAssertEqual(date.formatted(format: .monthDayYear(.abbreviated)), "Jun 4, 2022")
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.abbreviated, withTime: true)), "Jun 4, 2022 - 11:11 AM")
+        XCTAssertEqual(date.formatted(format: .monthDayYear(.abbreviated, withTime: true)), "Jun 4, 2022 - 11:11 AM")
 
         // .narrow
         XCTAssertEqual(date.formatted(format: .monthDayYear(.narrow)), "6/4/22")
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.narrow, withTime: true)), "6/4/22 - 11:11 AM")
+        XCTAssertEqual(date.formatted(format: .monthDayYear(.narrow, withTime: true)), "6/4/22 - 11:11 AM")
     }
 
     func testDate_monthDayOrdinal() {
@@ -936,23 +936,23 @@ final class DateTest: TestCase {
         // .date(.short) == .monthDayYear(.narrow)
         XCTAssertEqual(date.formatted(style: .date(.short)), "1/1/00")
         XCTAssertEqual(date.formatted(format: .monthDayYear(.narrow)), "1/1/00")
-        XCTAssertEqual(date.formatted(style: .dateTime(.short)), "1/1/00, 9:41 AM")
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.narrow, withTime: true)), "1/1/00 - 9:41 AM")
+        XCTAssertEqual(date.formatted(style: .dateTime(.short)), "1/1/00, 9:41 AM")
+        XCTAssertEqual(date.formatted(format: .monthDayYear(.narrow, withTime: true)), "1/1/00 - 9:41 AM")
 
         // .date(.medium) == .monthDayYear(.abbreviated)
         XCTAssertEqual(date.formatted(style: .date(.medium)), "Jan 1, 2000")
         XCTAssertEqual(date.formatted(format: .monthDayYear(.abbreviated)), "Jan 1, 2000")
 
         // .dateTime(.medium) ~= .monthDayYear(.abbreviated, withTime: true)
-        XCTAssertEqual(date.formatted(style: .dateTime(.medium, time: .short)), "Jan 1, 2000 at 9:41 AM")
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.abbreviated, withTime: true)), "Jan 1, 2000 - 9:41 AM")
+        XCTAssertEqual(date.formatted(style: .dateTime(.medium, time: .short)), "Jan 1, 2000 at 9:41 AM")
+        XCTAssertEqual(date.formatted(format: .monthDayYear(.abbreviated, withTime: true)), "Jan 1, 2000 - 9:41 AM")
 
         XCTAssertEqual(date.formatted(style: .dateTime(.none)), "")
-        XCTAssertEqual(date.formatted(style: .dateTime(.short)), "1/1/00, 9:41 AM")
-        XCTAssertEqual(date.formatted(style: .dateTime(.medium, time: .short)), "Jan 1, 2000 at 9:41 AM")
-        XCTAssertEqual(date.formatted(style: .dateTime(.medium)), "Jan 1, 2000 at 9:41:00 AM")
-        XCTAssertEqual(date.formatted(style: .dateTime(.long, time: .short)), "January 1, 2000 at 9:41 AM")
-        XCTAssertEqual(date.formatted(style: .dateTime(.full, time: .short)), "Saturday, January 1, 2000 at 9:41 AM")
+        XCTAssertEqual(date.formatted(style: .dateTime(.short)), "1/1/00, 9:41 AM")
+        XCTAssertEqual(date.formatted(style: .dateTime(.medium, time: .short)), "Jan 1, 2000 at 9:41 AM")
+        XCTAssertEqual(date.formatted(style: .dateTime(.medium)), "Jan 1, 2000 at 9:41:00 AM")
+        XCTAssertEqual(date.formatted(style: .dateTime(.long, time: .short)), "January 1, 2000 at 9:41 AM")
+        XCTAssertEqual(date.formatted(style: .dateTime(.full, time: .short)), "Saturday, January 1, 2000 at 9:41 AM")
 
         XCTAssertEqual(date.formatted(style: .iso8601(.withFullDate)), "2000-01-01")
     }
@@ -1012,10 +1012,10 @@ final class DateTest: TestCase {
         // Current
         XCTAssertEqual(year2000.formatted(style: .wide), "January 1, 2000")
         XCTAssertEqual(year2000.formatted(style: .abbreviated), "Jan 1, 2000")
-        XCTAssertEqual(year2000.formatted(style: .abbreviatedTime), "Jan 1, 2000 at 9:41 AM")
+        XCTAssertEqual(year2000.formatted(style: .abbreviatedTime), "Jan 1, 2000 at 9:41 AM")
         XCTAssertEqual(year2000.formatted(style: .narrow), "1/1/00")
-        XCTAssertEqual(year2000.formatted(style: .narrowTime), "1/1/00, 9:41 AM")
-        XCTAssertEqual(year2000.formatted(style: .time), "9:41 AM")
+        XCTAssertEqual(year2000.formatted(style: .narrowTime), "1/1/00, 9:41 AM")
+        XCTAssertEqual(year2000.formatted(style: .time), "9:41 AM")
 
         // London
         XCTAssertEqual(year2000.formatted(style: .wide, in: .london), "1 January 2000")
