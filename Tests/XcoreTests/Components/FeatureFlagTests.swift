@@ -57,7 +57,7 @@ final class FeatureFlagTests: TestCase {
 // MARK: - CustomFeatureFlag
 
 private struct CustomFeatureFlag: FeatureFlagProvider {
-    private var storage: [String: Any] = [:]
+    private var storage: [String: any Sendable] = [:]
 
     init() {
         let dictionaryExample = """
