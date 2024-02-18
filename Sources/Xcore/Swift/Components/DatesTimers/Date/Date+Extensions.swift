@@ -144,7 +144,7 @@ extension Date {
     /// let currentDate = Date()
     /// var dateComponent = DateComponents()
     /// dateComponent.day = 7
-    /// let futureDate = currentDate.adjusting(dateComponent, by: 7)
+    /// let futureDate = currentDate.adjusting(dateComponent)
     ///
     /// print(futureDate) // A date representing 7 days in the future.
     /// ```

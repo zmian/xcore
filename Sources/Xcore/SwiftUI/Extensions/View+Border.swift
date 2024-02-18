@@ -34,21 +34,21 @@ extension View {
     /// border appears inside the bounds of this view.
     ///
     /// - Parameters:
-    ///   - content: The border shape.
+    ///   - shape: The border shape.
     ///   - lineWidth: The thickness of the border. The default is 1 pixel.
     ///   - color: The border color.
     /// - Returns: A view that adds a border with the specified shape, width and
     ///   color to this view.
     public func border(
-        _ content: some InsettableShape,
+        _ shape: some InsettableShape,
         lineWidth: CGFloat = .onePixel,
         color: Color? = nil
     ) -> some View {
         EnvironmentReader(\.theme) { theme in
-            overlay(
-                content
+            overlay {
+                shape
                     .strokeBorder(color ?? theme.separatorColor, lineWidth: lineWidth)
-            )
+            }
         }
     }
 }
