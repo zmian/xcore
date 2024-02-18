@@ -31,10 +31,14 @@ final class LocalImageFetcher: ImageFetcher, Sendable {
 
                     guard
                         let url = URL(string: value),
-                        url.schemeType == .file,
-                        let data = try? Data(contentsOf: url),
-                        let image = UIImage(data: data)
+                        url.schemeType == .file
                     else {
+                        throw ImageFetcherError.notFound
+                    }
+
+                    let data = try Data(contentsOf: url)
+
+                    guard let image = UIImage(data: data) else {
                         throw ImageFetcherError.notFound
                     }
 
@@ -42,7 +46,7 @@ final class LocalImageFetcher: ImageFetcher, Sendable {
                         await cache.setValue(image, forKey: cacheKey)
                     }
 
-                    return (image, ImageSourceType.CacheType.disk)
+                    return (image, .disk)
                 }
 
                 return try await task.value
