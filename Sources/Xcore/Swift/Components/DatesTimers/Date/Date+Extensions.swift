@@ -38,7 +38,10 @@ extension Date {
     ///
     /// - Note: The `default` calendar is restored to its original state after the
     ///   work closure completes, even if an error occurs within the closure.
-    public static func calendar<R>(_ new: Calendar, work: () throws -> R) rethrows -> R {
+    public static func calendar<R>(
+        _ new: Calendar,
+        work: () throws -> R
+    ) rethrows -> R {
         let current = Calendar.default
         Calendar.default = new
         defer { Calendar.default = current }
@@ -98,7 +101,10 @@ extension Date {
     /// - Parameters:
     ///   - component: The date component for which to retrieve the value.
     ///   - calendar: The calendar to use for retrieval.
-    public func component(_ component: Calendar.Component, in calendar: Calendar = .default) -> Int {
+    public func component(
+        _ component: Calendar.Component,
+        in calendar: Calendar = .default
+    ) -> Int {
         calendar.component(component, from: self)
     }
 
@@ -153,7 +159,10 @@ extension Date {
     ///   - components: A `DateComponents` object that contains adjustment values.
     ///   - calendar: The calendar to use for the adjustment.
     /// - Returns: A new `Date` object representing the adjusted date.
-    public func adjusting(_ components: DateComponents, in calendar: Calendar = .default) -> Date {
+    public func adjusting(
+        _ components: DateComponents,
+        in calendar: Calendar = .default
+    ) -> Date {
         calendar.date(byAdding: components, to: self)!
     }
 
@@ -174,7 +183,11 @@ extension Date {
     ///   - offset: The offset value to add to the specified component.
     ///   - calendar: The calendar to use for the adjustment.
     /// - Returns: A new `Date` object representing the adjusted date.
-    public func adjusting(_ component: Calendar.Component, by offset: Int, in calendar: Calendar = .default) -> Date {
+    public func adjusting(
+        _ component: Calendar.Component,
+        by offset: Int,
+        in calendar: Calendar = .default
+    ) -> Date {
         var dateComponent = DateComponents()
 
         switch component {
@@ -232,7 +245,10 @@ extension Date {
     ///     to their start.
     ///   - calendar: The calendar to use for the adjustment.
     /// - Returns: A new `Date` object representing the adjusted date.
-    public func startOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
+    public func startOf(
+        _ component: Calendar.Component,
+        in calendar: Calendar = .default
+    ) -> Date {
         #if DEBUG
         return calendar.dateInterval(of: component, for: self)!.start
         #else
@@ -257,7 +273,10 @@ extension Date {
     ///     to their end.
     ///   - calendar: The calendar to use for the adjustment.
     /// - Returns: A new `Date` object representing the adjusted date.
-    public func endOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
+    public func endOf(
+        _ component: Calendar.Component,
+        in calendar: Calendar = .default
+    ) -> Date {
         #if DEBUG
         let date = calendar.dateInterval(of: component, for: self)!.end
         #else
@@ -284,7 +303,10 @@ extension Date {
     ///     to their middle.
     ///   - calendar: The calendar to use for the adjustment.
     /// - Returns: A new `Date` object representing the adjusted date.
-    public func middleOf(_ component: Calendar.Component, in calendar: Calendar = .default) -> Date {
+    public func middleOf(
+        _ component: Calendar.Component,
+        in calendar: Calendar = .default
+    ) -> Date {
         #if DEBUG
         let date = calendar.dateInterval(of: component, for: self)!.middle
         #else
@@ -347,7 +369,11 @@ extension Date {
     ///   - date: The target date for the calculation.
     ///   - calendar: The calendar to use for the calculation.
     /// - Returns: The number of units between the receiver and the specified date.
-    public func numberOf(_ component: Calendar.Component, to date: Date, in calendar: Calendar = .default) -> Int {
+    public func numberOf(
+        _ component: Calendar.Component,
+        to date: Date,
+        in calendar: Calendar = .default
+    ) -> Int {
         #if DEBUG
         return calendar.dateComponents([component], from: self, to: date).value(for: component)!
         #else

@@ -54,7 +54,11 @@ extension Date {
         calendar: Calendar = .default,
         isLenient: Bool = true
     ) {
-        self.init(string, style: .format(format), calendar: calendar, isLenient: isLenient)
+        self.init(
+            string, style: .format(format),
+            calendar: calendar,
+            isLenient: isLenient
+        )
     }
 
     /// Creates a `Date` object using the given date string and style.

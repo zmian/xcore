@@ -10,14 +10,15 @@ import Foundation
 
 extension Date {
     public enum ComparisonOperator {
-        /// The receiver must be today with granularity matching at least down to the `day`.
-        /// For example, the receiver's year, month, and day must match today.
+        /// The receiver must be today with granularity matching at least down to the
+        /// `day`. For example, the receiver's year, month, and day must match today.
         case today
         /// The receiver must be tomorrow with granularity matching at least down to the
         /// `day`. For example, the receiver's year, month, and day must match tomorrow.
         case tomorrow
-        /// The receiver must be yesterday with granularity matching at least down to the
-        /// `day`. For example, the receiver's year, month, and day must match yesterday.
+        /// The receiver must be yesterday with granularity matching at least down to
+        /// the `day`. For example, the receiver's year, month, and day must match
+        /// yesterday.
         case yesterday
         /// The receiver must be the weekend.
         case weekend
@@ -67,7 +68,10 @@ extension Date {
     ///   - calendar: The calendar to use when comparing.
     /// - Returns: `true` if the receiver satisfies the given comparison; otherwise,
     ///   `false`.
-    public func `is`(_ comparison: ComparisonOperator, in calendar: Calendar = .default) -> Bool {
+    public func `is`(
+        _ comparison: ComparisonOperator,
+        in calendar: Calendar = .default
+    ) -> Bool {
         switch comparison {
             case .today:
                 return `is`(.current(.day), in: calendar)
@@ -103,7 +107,11 @@ extension Date {
     ///     be less for the given date.
     ///   - calendar: The calendar to use when comparing.
     /// - Returns: The result of the comparison.
-    public func compare(to date: Date, granularity: Calendar.Component, in calendar: Calendar = .default) -> ComparisonResult {
+    public func compare(
+        to date: Date,
+        granularity: Calendar.Component,
+        in calendar: Calendar = .default
+    ) -> ComparisonResult {
         calendar.compare(self, to: date, toGranularity: granularity)
     }
 
@@ -117,7 +125,11 @@ extension Date {
     ///   - calendar: The calendar to use when comparing.
     /// - Returns: `true` if the dates are the same down to the given granularity,
     ///   otherwise `false`.
-    public func isSame(_ date: Date, granularity: Calendar.Component, in calendar: Calendar = .default) -> Bool {
+    public func isSame(
+        _ date: Date,
+        granularity: Calendar.Component,
+        in calendar: Calendar = .default
+    ) -> Bool {
         compare(to: date, granularity: granularity, in: calendar) == .orderedSame
     }
 
@@ -170,7 +182,10 @@ extension Date {
     ///   - calendar: The calendar to use when comparing.
     /// - Returns: `true` if the receiver is after the specified duration, otherwise
     ///   `false`.
-    public func isAfter(duration seconds: Int, in calendar: Calendar = .default) -> Bool {
+    public func isAfter(
+        duration seconds: Int,
+        in calendar: Calendar = .default
+    ) -> Bool {
         let referenceDate = Date().adjusting(.second, by: seconds, in: calendar)
         return referenceDate.isAfter(self, granularity: .second, in: calendar)
     }
