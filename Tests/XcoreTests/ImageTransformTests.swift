@@ -44,10 +44,8 @@ final class ImageTransformTests: TestCase {
             )
         ]
 
-        for transform in transforms {
-            let input = transform.1.id
-            let output = transform.0
-            XCTAssertEqual(input, output)
+        for (expectedId, transform) in transforms {
+            XCTAssertEqual(transform.id, expectedId)
         }
     }
 }

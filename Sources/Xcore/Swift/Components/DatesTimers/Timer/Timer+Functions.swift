@@ -14,7 +14,7 @@ extension DispatchTime {
     /// - Parameter interval: The time interval, in seconds.
     /// - Returns: A new `DispatchTime` instance calculated from the given time
     ///  interval in seconds.
-    public static func seconds(_ interval: TimeInterval) -> DispatchTime {
+    public static func seconds(_ interval: TimeInterval) -> Self {
         .now() + (interval * nanosecondsPerSecond) / nanosecondsPerSecond
     }
 
