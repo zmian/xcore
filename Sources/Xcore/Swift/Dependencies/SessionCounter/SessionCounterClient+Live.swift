@@ -83,6 +83,6 @@ extension Pond {
     }
 
     private var sessionCountKey: PondKey {
-        userDefaultsKey(#function)
+        .userDefaults(#function)
     }
 }
