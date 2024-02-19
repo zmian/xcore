@@ -110,3 +110,17 @@ extension PondKey {
         hasher.combine(id)
     }
 }
+
+// MARK: - Convenience
+
+extension PondKey {
+    /// Returns ``PondKey`` instance with ``UserDefaults`` storage and duration set
+    /// to `.session`.
+    public static func userDefaults(
+        _ key: String,
+        duration: PersistenceDuration = .session
+    ) -> Self {
+        let key = key.droppingSuffix("Key")
+        return Self(id: key, storage: .userDefaults, duration: duration)
+    }
+}

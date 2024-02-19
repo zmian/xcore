@@ -40,16 +40,3 @@ extension Pond {
         nonmutating set { try? set(.lastSystemForceRefreshHash, value: newValue) }
     }
 }
-
-extension Pond {
-    /// Returns ``PondKey`` instance with ``UserDefaults`` storage and duration set
-    /// to `.session`.
-    public func userDefaultsKey(
-        _ key: String,
-        duration: PondKey.PersistenceDuration = .session,
-        dropKeySuffix: Bool = true
-    ) -> Key {
-        let key = dropKeySuffix ? key.droppingSuffix("Key") : key
-        return PondKey(id: key, storage: .userDefaults, duration: duration)
-    }
-}
