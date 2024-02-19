@@ -15,7 +15,7 @@ extension View {
     /// - Parameter action: The action to perform when visibility status changes.
     /// - Returns: A view that triggers action when this view's visibility status
     ///   changes.
-    @MainActor 
+    @MainActor
     public func onVisibilityStatusChange(perform action: @escaping (VisibilityStatus) -> Void) -> some View {
         modifier(VisibilityModifier(action: action))
     }

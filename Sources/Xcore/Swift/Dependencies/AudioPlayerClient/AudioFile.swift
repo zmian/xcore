@@ -29,7 +29,7 @@ public struct AudioFile: Sendable, Hashable {
     ///   - bundle: The bundle where audio file is located.
     ///   - category: The audio session category.
     public init(
-        name: String, 
+        name: String,
         bundle: Bundle = .main,
         category: AVAudioSession.Category
     ) {
