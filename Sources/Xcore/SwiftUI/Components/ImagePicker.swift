@@ -5,46 +5,64 @@
 //
 
 import SwiftUI
+import PhotosUI
 
-public struct ImagePicker: UIViewControllerRepresentable {
-    @Environment(\.presentationMode) fileprivate var presentationMode
-    fileprivate var callback: (UIImage) -> Void
+/// A view that displays a Photos picker for choosing a single image from the
+/// photo library.
+///
+/// Use the simple Photos picker view to browse and select an image from the
+/// photo library.
+///
+/// **Usage**
+///
+/// ```swift
+/// struct ContentView: View {
+///     @State private var selectedImage: UIImage?
+///
+///     var body: some View {
+///         SimplePhotoPicker { image in
+///             selectedImage = image
+///         } label: {
+///             Text("Select Image")
+///         }
+///     }
+/// }
+/// ```
+public struct SimplePhotoPicker<Label: View>: View {
+    private let label: Label
+    @State var selectedItems: [PhotosPickerItem] = []
+    private let callback: (UIImage) -> Void
 
-    public init(callback: @escaping (UIImage) -> Void) {
-        self.callback = callback
+    /// Creates a simple image picker view.
+    ///
+    /// - Parameters:
+    ///   - selection: A closure that will be called when an image is selected. The
+    ///     selected `UIImage` is passed as a parameter to this closure.
+    ///   - label: The view that describes the action of choosing an item.
+    public init(
+        selection: @escaping (UIImage) -> Void,
+        @ViewBuilder label: () -> Label
+    ) {
+        self.callback = selection
+        self.label = label()
     }
 
-    public func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    public func makeUIViewController(context: Context) -> UIImagePickerController {
-        UIImagePickerController().apply {
-            $0.allowsEditing = true
-            $0.delegate = context.coordinator
-        }
-    }
-
-    public func updateUIViewController(_ picker: UIImagePickerController, context: Context) {}
-}
-
-extension ImagePicker {
-    public final class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-        private let parent: ImagePicker
-
-        fileprivate init(_ parent: ImagePicker) {
-            self.parent = parent
-        }
-
-        public func imagePickerController(
-            _ picker: UIImagePickerController,
-            didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
+    public var body: some View {
+        PhotosPicker(
+            selection: $selectedItems,
+            maxSelectionCount: 1,
+            matching: .images
         ) {
-            if let uiImage = info[.editedImage] as? UIImage {
-                parent.callback(uiImage)
+            label
+        }
+        .onChange(of: selectedItems) { selectedItems in
+            Task {
+                if
+                    let data = try await selectedItems.first?.loadTransferable(type: Data.self),
+                    let image = UIImage(data: data) {
+                    callback(image)
+                }
             }
-
-            parent.presentationMode.wrappedValue.dismiss()
         }
     }
 }
