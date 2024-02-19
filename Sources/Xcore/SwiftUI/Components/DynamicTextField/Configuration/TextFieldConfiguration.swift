@@ -8,7 +8,7 @@ import SwiftUI
 
 extension TextFieldConfiguration {
     /// An enumeration representing the type of secure text entry.
-    public enum SecureTextEntry: String {
+    public enum SecureTextEntry: String, Sendable {
         /// The text will be visible.
         case no
 
@@ -22,17 +22,17 @@ extension TextFieldConfiguration {
 }
 
 /// A structure representing text field configuration.
-public struct TextFieldConfiguration<Formatter: TextFieldFormatter>: Equatable, Identifiable, UserInfoContainer, MutableAppliable {
+public struct TextFieldConfiguration<Formatter: TextFieldFormatter>: Sendable, Equatable, Identifiable, UserInfoContainer, MutableAppliable {
     public typealias ID = Identifier<Self>
 
     /// A unique id for the configuration.
     public var id: ID
 
     /// The default value is `.sentences`.
-    public var autocapitalization: UITextAutocapitalizationType
+    public var autocapitalization: TextInputAutocapitalization
 
-    /// The default value is `.default`.
-    public var autocorrection: UITextAutocorrectionType
+    /// The default value is `true`.
+    public var autocorrectionDisabled: Bool
 
     /// The default value is `.default`.
     public var spellChecking: UITextSpellCheckingType
@@ -63,8 +63,8 @@ public struct TextFieldConfiguration<Formatter: TextFieldFormatter>: Equatable, 
 
     public init(
         id: ID,
-        autocapitalization: UITextAutocapitalizationType = .sentences,
-        autocorrection: UITextAutocorrectionType = .default,
+        autocapitalization: TextInputAutocapitalization = .sentences,
+        autocorrectionDisabled: Bool = true,
         spellChecking: UITextSpellCheckingType = .default,
         keyboard: UIKeyboardType = .default,
         textContentType: UITextContentType? = nil,
@@ -76,7 +76,7 @@ public struct TextFieldConfiguration<Formatter: TextFieldFormatter>: Equatable, 
     ) {
         self.id = id
         self.autocapitalization = autocapitalization
-        self.autocorrection = autocorrection
+        self.autocorrectionDisabled = autocorrectionDisabled
         self.spellChecking = spellChecking
         self.keyboard = keyboard
         self.textContentType = textContentType
@@ -93,8 +93,9 @@ public struct TextFieldConfiguration<Formatter: TextFieldFormatter>: Equatable, 
 extension TextFieldConfiguration {
     public static func ==(lhs: Self, rhs: Self) -> Bool {
         lhs.id == rhs.id &&
-            lhs.autocapitalization == rhs.autocapitalization &&
-            lhs.autocorrection == rhs.autocorrection &&
+            // TODO: Restore when autocapitalization is Equatable
+            // lhs.autocapitalization == rhs.autocapitalization &&
+            lhs.autocorrectionDisabled == rhs.autocorrectionDisabled &&
             lhs.spellChecking == rhs.spellChecking &&
             lhs.keyboard == rhs.keyboard &&
             lhs.textContentType == rhs.textContentType &&
@@ -111,7 +112,7 @@ extension TextFieldConfiguration<AnyTextFieldFormatter> {
         self.init(
             id: .init(rawValue: configuration.id.rawValue),
             autocapitalization: configuration.autocapitalization,
-            autocorrection: configuration.autocorrection,
+            autocorrectionDisabled: configuration.autocorrectionDisabled,
             spellChecking: configuration.spellChecking,
             keyboard: configuration.keyboard,
             textContentType: configuration.textContentType,
@@ -129,8 +130,8 @@ extension TextFieldConfiguration<AnyTextFieldFormatter> {
 extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
     public init(
         id: ID,
-        autocapitalization: UITextAutocapitalizationType = .sentences,
-        autocorrection: UITextAutocorrectionType = .default,
+        autocapitalization: TextInputAutocapitalization = .sentences,
+        autocorrectionDisabled: Bool = true,
         spellChecking: UITextSpellCheckingType = .default,
         keyboard: UIKeyboardType = .default,
         textContentType: UITextContentType? = nil,
@@ -141,7 +142,7 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         self.init(
             id: id,
             autocapitalization: autocapitalization,
-            autocorrection: autocorrection,
+            autocorrectionDisabled: autocorrectionDisabled,
             spellChecking: spellChecking,
             keyboard: keyboard,
             textContentType: textContentType,

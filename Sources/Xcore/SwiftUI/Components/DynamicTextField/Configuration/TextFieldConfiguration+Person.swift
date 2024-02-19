@@ -7,7 +7,7 @@
 import SwiftUI
 
 extension TextFieldConfiguration {
-    public enum PersonNameComponent: String {
+    public enum PersonNameComponent: String, Sendable, Hashable {
         case fullName
         case firstName
         case middleName
@@ -36,9 +36,6 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         .init(
             id: #function,
             autocapitalization: .words,
-            autocorrection: .default,
-            spellChecking: .default,
-            keyboard: .default,
             textContentType: .name
         )
     }
@@ -48,9 +45,6 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         .init(
             id: #function,
             autocapitalization: .words,
-            autocorrection: .default,
-            spellChecking: .default,
-            keyboard: .default,
             textContentType: .givenName
         )
     }
@@ -60,9 +54,6 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         .init(
             id: #function,
             autocapitalization: .words,
-            autocorrection: .default,
-            spellChecking: .default,
-            keyboard: .default,
             textContentType: .familyName
         )
     }
@@ -72,9 +63,6 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         .init(
             id: #function,
             autocapitalization: .words,
-            autocorrection: .default,
-            spellChecking: .default,
-            keyboard: .default,
             textContentType: .middleName
         )
     }

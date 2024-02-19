@@ -23,8 +23,7 @@ extension TextFieldConfiguration<DecimalTextFieldFormatter> {
     private static func number(isCurrency: Bool) -> Self {
         .init(
             id: #function,
-            autocapitalization: .none,
-            autocorrection: .no,
+            autocapitalization: .never,
             spellChecking: .no,
             keyboard: .decimalPad,
             textContentType: nil,
@@ -41,8 +40,7 @@ extension TextFieldConfiguration<IntegerTextFieldFormatter> {
     public static var number: Self {
         .init(
             id: #function,
-            autocapitalization: .none,
-            autocorrection: .no,
+            autocapitalization: .never,
             spellChecking: .no,
             keyboard: .numberPad,
             textContentType: nil,

@@ -7,7 +7,7 @@
 import Foundation
 
 extension PhoneNumberTextFieldFormatter {
-    public struct Style: Hashable, Codable {
+    public struct Style: Sendable, Hashable, Codable {
         public let mask: String
         public let countryCode: Int
         public let length: Int
@@ -36,7 +36,7 @@ extension PhoneNumberTextFieldFormatter {
 
 /// A formatter that converts between phone number and the textual
 /// representation of it.
-public struct PhoneNumberTextFieldFormatter: TextFieldFormatter {
+public struct PhoneNumberTextFieldFormatter: TextFieldFormatter, Sendable {
     private let mask: MaskingTextFieldFormatter
     private let style: Style
 

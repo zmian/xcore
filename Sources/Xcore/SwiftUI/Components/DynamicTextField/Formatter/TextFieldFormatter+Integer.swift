@@ -8,7 +8,7 @@ import Foundation
 
 /// A formatter that converts between integer values and their textual
 /// representations.
-public struct IntegerTextFieldFormatter: TextFieldFormatter {
+public struct IntegerTextFieldFormatter: TextFieldFormatter, Sendable {
     private let numberFormatter = NumberFormatter().apply {
         $0.allowsFloats = false
         $0.numberStyle = .decimal

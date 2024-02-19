@@ -7,7 +7,7 @@
 import Foundation
 
 /// A formatter that passthrough their textual representations.
-public struct PassthroughTextFieldFormatter: TextFieldFormatter {
+public struct PassthroughTextFieldFormatter: TextFieldFormatter, Sendable {
     public init() {}
 
     public func string(from value: String) -> String {

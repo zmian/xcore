@@ -8,7 +8,7 @@ import Foundation
 
 /// A formatter that converts between decimal values and their textual
 /// representations.
-public struct DecimalTextFieldFormatter: TextFieldFormatter {
+public struct DecimalTextFieldFormatter: TextFieldFormatter, Sendable {
     private let isCurrency: Bool
     private let numberFormatter = NumberFormatter().apply {
         $0.numberStyle = .decimal

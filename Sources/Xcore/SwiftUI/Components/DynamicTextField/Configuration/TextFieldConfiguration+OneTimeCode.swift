@@ -11,8 +11,7 @@ extension TextFieldConfiguration<MaskingTextFieldFormatter> {
     public static var oneTimeCode: Self {
         .init(
             id: #function,
-            autocapitalization: .none,
-            autocorrection: .no,
+            autocapitalization: .never,
             spellChecking: .no,
             keyboard: .numberPad,
             textContentType: .oneTimeCode,

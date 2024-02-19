@@ -6,8 +6,8 @@
 
 import SwiftUI
 
-public struct TextFieldAttributes: Hashable, MutableAppliable {
-    public enum PlaceholderBehavior: Hashable, CaseIterable {
+public struct TextFieldAttributes: Sendable, Hashable, MutableAppliable {
+    public enum PlaceholderBehavior: Sendable, Hashable, CaseIterable {
         case floating
         case inline
     }

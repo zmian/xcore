@@ -11,8 +11,7 @@ extension TextFieldConfiguration<MaskingTextFieldFormatter> {
     public static var ssn: Self {
         .init(
             id: #function,
-            autocapitalization: .none,
-            autocorrection: .no,
+            autocapitalization: .never,
             spellChecking: .no,
             keyboard: .numberPad,
             textContentType: nil,
@@ -26,8 +25,7 @@ extension TextFieldConfiguration<MaskingTextFieldFormatter> {
     public static var ssnLastFour: Self {
         .init(
             id: #function,
-            autocapitalization: .none,
-            autocorrection: .no,
+            autocapitalization: .never,
             spellChecking: .no,
             keyboard: .numberPad,
             textContentType: nil,

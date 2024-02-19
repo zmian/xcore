@@ -7,7 +7,7 @@
 import Foundation
 
 /// A formatter that allows masking.
-public struct MaskingTextFieldFormatter: TextFieldFormatter {
+public struct MaskingTextFieldFormatter: TextFieldFormatter, Sendable {
     private let maskFormat: String
     private let formattingCharacters: String
 

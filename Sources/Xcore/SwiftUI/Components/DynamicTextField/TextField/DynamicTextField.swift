@@ -82,8 +82,8 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
                     SecureField("", text: $text, onCommit: onCommit)
             }
         }
-        .autocapitalization(configuration.autocapitalization)
-        .autocorrection(configuration.autocorrection)
+        .textInputAutocapitalization(configuration.autocapitalization)
+        .autocorrectionDisabled(configuration.autocorrectionDisabled)
         .keyboardType(configuration.keyboard)
         .textContentType(configuration.textContentType)
         .disabled(!configuration.isEditable)

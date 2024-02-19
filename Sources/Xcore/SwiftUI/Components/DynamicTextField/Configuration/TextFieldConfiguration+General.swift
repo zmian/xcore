@@ -16,8 +16,7 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
     public static var emailAddress: Self {
         .init(
             id: #function,
-            autocapitalization: .none,
-            autocorrection: .no,
+            autocapitalization: .never,
             spellChecking: .no,
             keyboard: .emailAddress,
             textContentType: .emailAddress,
@@ -30,8 +29,7 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
     public static var plain: Self {
         .init(
             id: #function,
-            autocapitalization: .none,
-            autocorrection: .no,
+            autocapitalization: .never,
             spellChecking: .no
         )
     }
@@ -47,8 +45,7 @@ extension TextFieldConfiguration<PhoneNumberTextFieldFormatter> {
     public static func phoneNumber(for style: Formatter.Style) -> Self {
         .init(
             id: "phoneNumber",
-            autocapitalization: .none,
-            autocorrection: .no,
+            autocapitalization: .never,
             spellChecking: .no,
             keyboard: .phonePad,
             textContentType: .telephoneNumber,

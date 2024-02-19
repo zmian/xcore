@@ -7,7 +7,7 @@
 import Foundation
 
 /// A type that converts between values and their textual representations.
-public protocol TextFieldFormatter {
+public protocol TextFieldFormatter: Sendable {
     associatedtype Value: Hashable
 
     /// Returns the string representation of the value.
@@ -97,10 +97,10 @@ public protocol TextFieldFormatter {
 // MARK: - Type Erasure
 
 public struct AnyTextFieldFormatter: TextFieldFormatter {
-    private let _string: (AnyHashable) -> String
-    private let _value: (String) -> AnyHashable
-    private let _format: (String) -> String?
-    private let _unformat: (String) -> String
+    private let _string: @Sendable (AnyHashable) -> String
+    private let _value: @Sendable (String) -> AnyHashable
+    private let _format: @Sendable (String) -> String?
+    private let _unformat: @Sendable (String) -> String
 
     init<F: TextFieldFormatter>(_ formatter: F) {
         _string = {

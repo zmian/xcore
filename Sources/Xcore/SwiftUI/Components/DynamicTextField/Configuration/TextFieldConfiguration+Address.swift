@@ -8,7 +8,7 @@ import SwiftUI
 
 extension TextFieldConfiguration {
     /// An enumeration representing postal address components.
-    public enum AddressComponent: String {
+    public enum AddressComponent: String, Sendable, Hashable {
         /// The street address in a postal address.
         case street
 
@@ -60,9 +60,6 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         .init(
             id: #function,
             autocapitalization: .words,
-            autocorrection: .default,
-            spellChecking: .default,
-            keyboard: .default,
             textContentType: .fullStreetAddress
         )
     }
@@ -72,9 +69,6 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         .init(
             id: #function,
             autocapitalization: .words,
-            autocorrection: .default,
-            spellChecking: .default,
-            keyboard: .default,
             textContentType: .streetAddressLine1
         )
     }
@@ -84,9 +78,6 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         .init(
             id: #function,
             autocapitalization: .words,
-            autocorrection: .default,
-            spellChecking: .default,
-            keyboard: .default,
             textContentType: .streetAddressLine2
         )
     }
@@ -96,9 +87,6 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         .init(
             id: #function,
             autocapitalization: .words,
-            autocorrection: .default,
-            spellChecking: .default,
-            keyboard: .default,
             textContentType: .addressCity
         )
     }
@@ -108,9 +96,6 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         .init(
             id: #function,
             autocapitalization: .words,
-            autocorrection: .default,
-            spellChecking: .default,
-            keyboard: .default,
             textContentType: .addressState
         )
     }
@@ -119,8 +104,7 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
     private static var postalCode: Self {
         .init(
             id: #function,
-            autocapitalization: .none,
-            autocorrection: .no,
+            autocapitalization: .never,
             spellChecking: .no,
             keyboard: .numberPad,
             textContentType: .postalCode,
@@ -133,9 +117,6 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         .init(
             id: #function,
             autocapitalization: .words,
-            autocorrection: .default,
-            spellChecking: .default,
-            keyboard: .default,
             textContentType: .countryName
         )
     }

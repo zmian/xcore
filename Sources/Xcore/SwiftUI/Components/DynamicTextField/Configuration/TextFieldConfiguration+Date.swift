@@ -7,7 +7,7 @@
 import SwiftUI
 
 extension TextFieldConfiguration {
-    public struct Date {
+    public struct Date: Sendable, Hashable {
         public let minimum: Foundation.Date?
         public let maximum: Foundation.Date?
         public let selection: Foundation.Date
@@ -91,10 +91,8 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
     public static func date(_ configuration: Date) -> Self {
         .init(
             id: "date",
-            autocapitalization: .none,
-            autocorrection: .no,
+            autocapitalization: .never,
             spellChecking: .no,
-            keyboard: .default,
             textContentType: .dateTime,
             validation: .none,
             formatter: .init()
