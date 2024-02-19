@@ -201,7 +201,10 @@ extension Date.Style.Format {
     /// `MMM d, yyyy` (e.g., Jun 4, 2020) // abbreviated
     /// `M/d/yy` (e.g., 6/4/20) // narrow
     /// ```
-    public static func monthDayYear(_ width: Date.Style.Width, withTime: Bool = false) -> Self {
+    public static func monthDayYear(
+        _ width: Date.Style.Width,
+        withTime: Bool = false
+    ) -> Self {
         let format: String
         let suffix = withTime ? " - h:mm a" : ""
 
@@ -222,7 +225,10 @@ extension Date.Style.Format {
     /// `MMM d` (e.g., Jun 4) // abbreviated
     /// `M/d` (e.g., 6/4) // narrow
     /// ```
-    public static func monthDay(_ width: Date.Style.Width, withTime: Bool = false) -> Self {
+    public static func monthDay(
+        _ width: Date.Style.Width,
+        withTime: Bool = false
+    ) -> Self {
         let format: String
         let suffix = withTime ? " - h:mm a" : ""
 
@@ -243,7 +249,10 @@ extension Date.Style.Format {
     /// `MMM yyyy` (e.g., Jun 2020) // abbreviated
     /// `M/yy` (e.g., 6/20) // narrow
     /// ```
-    public static func monthYear(_ width: Date.Style.Width, withTime: Bool = false) -> Self {
+    public static func monthYear(
+        _ width: Date.Style.Width,
+        withTime: Bool = false
+    ) -> Self {
         let format: String
         let suffix = withTime ? " - h:mm a" : ""
 

@@ -31,7 +31,7 @@ extension AnyCodable {
 #if SWIFT_PACKAGE
 // Fix for package depending on other packages fix
 // =============================================================================
-#warning("TODO: TODO: Check previews under Xcode 14 to see if this is fixed?")
+#warning("TODO: Check previews under Xcode 14 to see if this is fixed?")
 private let moduleName = "Xcore"
 
 private class CurrentBundleFinder {}

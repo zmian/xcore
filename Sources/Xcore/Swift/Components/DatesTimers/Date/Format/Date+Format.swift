@@ -99,8 +99,16 @@ extension Date {
     ///   - weekday: The weekday number.
     ///   - style: The style of the weekday name.
     ///   - calendar: The calendar to use when formatting name.
-    public static func weekdayName(for weekday: Int, style: Style.Width = .wide, in calendar: Calendar = .default) -> String {
-        _cache.symbolFormatter.weekdayName(for: weekday, style: style, calendar: calendar)
+    public static func weekdayName(
+        for weekday: Int,
+        style: Style.Width = .wide,
+        in calendar: Calendar = .default
+    ) -> String {
+        _cache.symbolFormatter.weekdayName(
+            for: weekday,
+            style: style,
+            calendar: calendar
+        )
     }
 
     /// Calculates the weekday name on the receiver date based on calendar.
@@ -108,8 +116,15 @@ extension Date {
     /// - Parameters:
     ///   - style: The style of the weekday name.
     ///   - calendar: The calendar to use when formatting name.
-    private func weekdayName(_ style: Style.Width, in calendar: Calendar) -> String {
-        Self._cache.symbolFormatter.weekdayName(for: component(.weekday), style: style, calendar: calendar)
+    private func weekdayName(
+        _ style: Style.Width,
+        in calendar: Calendar
+    ) -> String {
+        Self._cache.symbolFormatter.weekdayName(
+            for: component(.weekday),
+            style: style,
+            calendar: calendar
+        )
     }
 
     /// Calculates the month name on the receiver date based on calendar.
@@ -117,17 +132,31 @@ extension Date {
     /// - Parameters:
     ///   - style: The style of the month name.
     ///   - calendar: The calendar to use when formatting name.
-    private func monthName(_ style: Style.Width, in calendar: Calendar) -> String {
-        Self._cache.symbolFormatter.monthName(for: component(.month), style: style, calendar: calendar)
+    private func monthName(
+        _ style: Style.Width,
+        in calendar: Calendar
+    ) -> String {
+        Self._cache.symbolFormatter.monthName(
+            for: component(.month),
+            style: style,
+            calendar: calendar
+        )
     }
 }
 
 // MARK: - Relative Formatted
 
 extension Date {
-    private func formattedRelative(until threshold: Calendar.Component, calendar: Calendar) -> String {
+    private func formattedRelative(
+        until threshold: Calendar.Component,
+        calendar: Calendar
+    ) -> String {
         if `is`(.next(.hour), in: calendar) {
-            return formatted(.relative.calendar(calendar).capitalizationContext(.beginningOfSentence))
+            return formatted(
+                .relative
+                .calendar(calendar)
+                .capitalizationContext(.beginningOfSentence)
+            )
         }
 
         if `is`(.today, in: calendar) {
@@ -135,7 +164,11 @@ extension Date {
         }
 
         if `is`(.current(threshold), in: calendar) {
-            return formatted(.relative.calendar(calendar).capitalizationContext(.beginningOfSentence))
+            return formatted(
+                .relative
+                .calendar(calendar)
+                .capitalizationContext(.beginningOfSentence)
+            )
         }
 
         return formatted(style: .date(.medium))
