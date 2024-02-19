@@ -14,10 +14,12 @@ struct MailApp: Hashable, Identifiable {
         name + "-" + url.absoluteString
     }
 
+    @MainActor
     private var isAvailable: Bool {
         UIApplication.sharedOrNil?.canOpenURL(url) ?? false
     }
 
+    @MainActor
     static var available: [Self] {
         #if targetEnvironment(simulator)
         // This allows us to see all the preview in simulator.

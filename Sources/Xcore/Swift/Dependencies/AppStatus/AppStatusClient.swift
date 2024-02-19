@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// Provides functionality for evaluating and receiving events for app’s state.
-public struct AppStatusClient {
+public struct AppStatusClient: Sendable {
     /// Receive the app status events.
     public let receive: ValuePublisher<AppStatus, Never>
 
@@ -15,16 +15,16 @@ public struct AppStatusClient {
     public let sessionState: ValuePublisher<AppStatus.SessionState, Never>
 
     /// Asks the app status client to evaluate the status.
-    private let _evaluate: () -> Void
+    private let _evaluate: @Sendable () -> Void
 
     /// Transition the app to given session state.
-    private let _changeSessionTo: (AppStatus.SessionState) -> Void
+    private let _changeSessionTo: @Sendable (AppStatus.SessionState) -> Void
 
     /// A method to purge cache (e.g., remote images), save the hash and re-evaluate
     /// the app state.
     ///
     /// - Warning: Do not purge any data that would force the user to sign in again.
-    private let _systemForceRefresh: () -> Void
+    private let _systemForceRefresh: @Sendable () -> Void
 
     /// Creates an app status client.
     ///
@@ -39,9 +39,9 @@ public struct AppStatusClient {
     public init(
         receive: ValuePublisher<AppStatus, Never>,
         sessionState: ValuePublisher<AppStatus.SessionState, Never>,
-        evaluate: @escaping () -> Void,
-        changeSessionTo: @escaping (AppStatus.SessionState) -> Void,
-        systemForceRefresh: @escaping () -> Void
+        evaluate: @escaping @Sendable () -> Void,
+        changeSessionTo: @escaping @Sendable (AppStatus.SessionState) -> Void,
+        systemForceRefresh: @escaping @Sendable () -> Void
     ) {
         self.receive = receive
         self.sessionState = sessionState

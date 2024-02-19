@@ -18,36 +18,36 @@ public var am: AppMonitoring {
     return Dependency(\.appMonitoring).wrappedValue
 }
 
-public struct AppMonitoring {
+public struct AppMonitoring: Sendable {
     /// Configure app monitoring service.
-    public var configure: () -> Void
+    public var configure: @Sendable () -> Void
 
     /// Configure app reporting collection to based on user preferences.
-    public var setCollectionEnabled: (Bool) -> Void
+    public var setCollectionEnabled: @Sendable (Bool) -> Void
 
     /// Associates given user id with subsequent reports.
-    public var signin: (_ userId: String?) -> Void
+    public var signin: @Sendable (_ userId: String?) -> Void
 
     /// Disassociate any existing user id from subsequent reports.
-    public var signout: () -> Void
+    public var signout: @Sendable () -> Void
 
     /// Logs a message with option to include any additional information.
-    private var _log: (
+    private var _log: @Sendable (
         _ level: LogLevel,
         _ message: String?,
         _ error: Error?,
         _ properties: EncodableDictionary?
     ) -> Void
 
-    private var _trace: (_ operationName: String) -> AppTraceReporting
+    private var _trace: @Sendable (_ operationName: String) -> AppTraceReporting
 
     public init(
-        configure: @escaping () -> Void,
-        setCollectionEnabled: @escaping (Bool) -> Void,
-        signin: @escaping (_ userId: String?) -> Void,
-        signout: @escaping () -> Void,
-        log: @escaping (_ level: LogLevel, _ message: String?, _ error: Error?, _ properties: EncodableDictionary?) -> Void,
-        trace: @escaping (_ operationName: String) -> AppTraceReporting
+        configure: @escaping @Sendable () -> Void,
+        setCollectionEnabled: @escaping @Sendable (Bool) -> Void,
+        signin: @escaping @Sendable (_ userId: String?) -> Void,
+        signout: @escaping @Sendable () -> Void,
+        log: @escaping @Sendable (_ level: LogLevel, _ message: String?, _ error: Error?, _ properties: EncodableDictionary?) -> Void,
+        trace: @escaping @Sendable (_ operationName: String) -> AppTraceReporting
     ) {
         self.configure = configure
         self.setCollectionEnabled = setCollectionEnabled

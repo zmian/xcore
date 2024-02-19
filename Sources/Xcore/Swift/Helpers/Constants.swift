@@ -17,7 +17,7 @@ extension TimeInterval {
     ///     ...
     /// }
     /// ```
-    public static var fast: Self = 0.25
+    public static let fast: Self = 0.25
 
     /// The default duration to use for animations when the desired interval is
     /// between `0.3...0.5` seconds.
@@ -27,7 +27,7 @@ extension TimeInterval {
     ///     ...
     /// }
     /// ```
-    public static var `default`: Self = 0.35
+    public static let `default`: Self = 0.35
 
     /// The slow duration to use for animations when the desired interval is between
     /// `> 0.5` seconds.
@@ -37,7 +37,7 @@ extension TimeInterval {
     ///     ...
     /// }
     /// ```
-    public static var slow: Self = 0.5
+    public static let slow: Self = 0.5
 }
 
 extension CGAffineTransform {

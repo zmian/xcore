@@ -32,7 +32,7 @@ extension ButtonIdentifier {
 
 // MARK: - ButtonState
 
-public enum ButtonState: Sendable {
+public enum ButtonState: Sendable, Hashable {
     case normal
     case pressed
     case disabled
@@ -40,7 +40,7 @@ public enum ButtonState: Sendable {
 
 // MARK: - ButtonProminence
 
-public enum ButtonProminence: Sendable {
+public enum ButtonProminence: Sendable, Hashable {
     case fill
     case outline
 }

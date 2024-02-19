@@ -6,6 +6,7 @@
 
 import UIKit
 
+@MainActor
 public protocol TargetActionBlockRepresentable: AnyObject {
     associatedtype Sender
 

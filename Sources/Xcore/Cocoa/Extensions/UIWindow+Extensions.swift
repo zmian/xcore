@@ -21,6 +21,7 @@ extension UIWindow {
 
 extension UIWindow.Level {
     /// Returns the top most level of the window.
+    @MainActor
     public static var topMost: Self {
         let topWindow = UIApplication.sharedOrNil?.sceneWindows.max { $0.windowLevel < $1.windowLevel }
         let windowLevel = topWindow?.windowLevel ?? .normal

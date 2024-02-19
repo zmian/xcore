@@ -46,4 +46,6 @@ extension ValuePublisher {
         .init(.init(output))
     }
 }
+
+extension ValuePublisher: @unchecked Sendable where Output: Sendable {}
 #endif

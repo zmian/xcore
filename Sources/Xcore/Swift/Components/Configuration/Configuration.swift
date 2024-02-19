@@ -86,6 +86,7 @@ extension UILabel {
 
 public protocol XConfigurationInitializable {}
 
+@MainActor
 extension XConfigurationInitializable where Self: UIView {
     public init(configuration: XConfiguration<Self>) {
         self.init()

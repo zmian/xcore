@@ -7,13 +7,13 @@
 import SwiftUI
 
 /// Provides functionality for extracting a color from an image.
-public struct ImageColorClient {
-    private let extract: (ImageRepresentable?) async -> Color?
+public struct ImageColorClient: Sendable {
+    private let extract: @Sendable (ImageRepresentable?) async -> Color?
 
     /// Creates a client that extracts a color from the given image.
     ///
     /// - Parameter extract: The closure to extract a color from the given image.
-    public init(extract: @escaping (ImageRepresentable?) async -> Color?) {
+    public init(extract: @escaping @Sendable (ImageRepresentable?) async -> Color?) {
         self.extract = extract
     }
 

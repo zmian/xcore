@@ -25,7 +25,7 @@ import Foundation
 ///     }
 /// }
 /// ```
-public struct AudioPlayerClient {
+public struct AudioPlayerClient: Sendable {
     /// Play the given audio file.
     public let play: @Sendable (_ file: AudioFile) -> Void
 

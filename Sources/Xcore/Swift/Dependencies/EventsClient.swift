@@ -54,7 +54,7 @@ import Combine
 ///     }
 /// }
 /// ```
-public struct EventsClient<Event: Sendable> {
+public struct EventsClient<Event: Sendable>: @unchecked Sendable {
     /// Sends the give event.
     public var send: @Sendable (Event) -> Void
 

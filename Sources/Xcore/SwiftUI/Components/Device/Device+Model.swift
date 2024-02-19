@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension Device {
-    public indirect enum Model: Hashable, CustomStringConvertible {
+    public indirect enum Model: Sendable, Hashable, CustomStringConvertible {
         case unknown(String)
         case simulator(Model)
 

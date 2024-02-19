@@ -26,6 +26,7 @@ extension HapticFeedbackClient {
 
 // MARK: - Implementation
 
+@MainActor
 private final class LiveHapticFeedbackClient {
     private let makeGenerator: () -> UIFeedbackGenerator
     private var generator: UIFeedbackGenerator?

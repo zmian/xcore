@@ -16,53 +16,55 @@ extension Theme {
     }
 
     private static func setSystemComponentsTheme(_ theme: Theme) {
-        let tintColor = theme.tintColor.uiColor
+        Task { @MainActor in
+            let tintColor = theme.tintColor.uiColor
 
-        UIApplication.sharedOrNil?.delegate?.window??.tintColor = tintColor
+            UIApplication.sharedOrNil?.delegate?.window??.tintColor = tintColor
 
-        UIBarButtonItem.appearance().setTitleTextAttributes(
-            [
-                .font: UIFont.app(.body),
-                .foregroundColor: tintColor
-            ],
-            for: .normal
-        )
+            UIBarButtonItem.appearance().setTitleTextAttributes(
+                [
+                    .font: UIFont.app(.body),
+                    .foregroundColor: tintColor
+                ],
+                for: .normal
+            )
 
-        UINavigationBar.appearance().apply {
-            $0.titleTextAttributes = [
-                .font: UIFont.app(.headline),
-                .foregroundColor: theme.textColor.uiColor
-            ]
-            $0.tintColor = tintColor
-            $0.barTintColor = theme.backgroundColor.uiColor
-            $0.barStyle = .default
-            $0.isTranslucent = true
-        }
+            UINavigationBar.appearance().apply {
+                $0.titleTextAttributes = [
+                    .font: UIFont.app(.headline),
+                    .foregroundColor: theme.textColor.uiColor
+                ]
+                $0.tintColor = tintColor
+                $0.barTintColor = theme.backgroundColor.uiColor
+                $0.barStyle = .default
+                $0.isTranslucent = true
+            }
 
-        UIToolbar.appearance().apply {
-            $0.tintColor = tintColor
-            $0.barTintColor = theme.backgroundColor.uiColor
-            $0.barStyle = .default
-            $0.isTranslucent = true
-        }
+            UIToolbar.appearance().apply {
+                $0.tintColor = tintColor
+                $0.barTintColor = theme.backgroundColor.uiColor
+                $0.barStyle = .default
+                $0.isTranslucent = true
+            }
 
-        UIPageControl.appearance().apply {
-            $0.pageIndicatorTintColor = .systemGray6
-            $0.currentPageIndicatorTintColor = tintColor
-            $0.backgroundColor = .clear
-        }
+            UIPageControl.appearance().apply {
+                $0.pageIndicatorTintColor = .systemGray6
+                $0.currentPageIndicatorTintColor = tintColor
+                $0.backgroundColor = .clear
+            }
 
-        UISwitch.appearance().apply {
-            $0.tintColor = theme.textColor.opacity(0.08).uiColor
-            $0.onTintColor = theme.toggleColor.uiColor
-        }
+            UISwitch.appearance().apply {
+                $0.tintColor = theme.textColor.opacity(0.08).uiColor
+                $0.onTintColor = theme.toggleColor.uiColor
+            }
 
-        UISlider.appearance().apply {
-            $0.maximumTrackTintColor = theme.textColor.opacity(0.16).uiColor
-        }
+            UISlider.appearance().apply {
+                $0.maximumTrackTintColor = theme.textColor.opacity(0.16).uiColor
+            }
 
-        UITabBar.appearance().apply {
-            $0.tintColor = tintColor
+            UITabBar.appearance().apply {
+                $0.tintColor = tintColor
+            }
         }
     }
 }

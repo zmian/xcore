@@ -21,15 +21,15 @@ import StoreKit
 ///     }
 /// }
 /// ```
-public struct RequestReviewClient {
-    private let request: () -> Void
+public struct RequestReviewClient: Sendable {
+    private let request: @Sendable () -> Void
 
     /// Creates a client to request an App Store rating or review from the user, if
     /// appropriate.
     ///
     /// - Parameter request: The closure to request an App Store rating or review
     ///   from the user, if appropriate.
-    public init(request: @escaping () -> Void) {
+    public init(request: @escaping @Sendable () -> Void) {
         self.request = request
     }
 

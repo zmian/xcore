@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// An enumeration that indicate the interface type for the device.
-public enum UserInterfaceIdiom: Hashable, CustomStringConvertible {
+public enum UserInterfaceIdiom: Sendable, Hashable, CustomStringConvertible {
     /// An interface designed for an in-car experience.
     case carPlay
 

@@ -12,7 +12,7 @@ extension Screen {
     /// Sometime it is useful to know the screen size instead of a specific model
     /// as multiple devices share the same screen sizes (e.g., iPhone X and
     /// iPhone XS or iPhone 5, 5s, 5c & SE).
-    public enum ReferenceSize {
+    public enum ReferenceSize: Sendable, Hashable {
         case iPhone4
         case iPhone5
         case iPhone6

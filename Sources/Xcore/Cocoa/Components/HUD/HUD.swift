@@ -8,6 +8,7 @@ import UIKit
 
 /// A base class to create a HUD that sets up blank canvas that can be
 /// customized by subclasses to show anything in a fullscreen window.
+@MainActor
 open class HUD: Appliable {
     public private(set) var isHidden = true
     private var isTemporarilySuppressed = false

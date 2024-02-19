@@ -8,7 +8,7 @@ import UIKit
 
 extension HapticFeedbackClient {
     /// An enumeration representing the style of haptic feedback.
-    public enum Style: Hashable {
+    public enum Style: Sendable, Hashable {
         /// Creates haptics to indicate a change in selection.
         case selection
 
@@ -43,14 +43,14 @@ extension HapticFeedbackClient {
 ///     }
 /// }
 /// ```
-public struct HapticFeedbackClient {
-    private let trigger: (Style) -> Void
+public struct HapticFeedbackClient: Sendable {
+    private let trigger: @Sendable (Style) -> Void
 
     /// Creates a client that generates haptic feedback for the given style.
     ///
     /// - Parameter trigger: The closure to trigger haptic feedback for the given
     ///   style.
-    public init(trigger: @escaping (_ style: Style) -> Void) {
+    public init(trigger: @escaping @Sendable (_ style: Style) -> Void) {
         self.trigger = trigger
     }
 

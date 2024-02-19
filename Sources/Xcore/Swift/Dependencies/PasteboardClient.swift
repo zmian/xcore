@@ -19,14 +19,14 @@ import UIKit
 ///     }
 /// }
 /// ```
-public struct PasteboardClient {
+public struct PasteboardClient: Sendable {
     /// Copy the given string to the pasteboard.
-    public let copy: (String) -> Void
+    public let copy: @Sendable (String) -> Void
 
     /// Creates a client that copy a string to the pasteboard.
     ///
     /// - Parameter copy: The closure to copy the given string to the pasteboard.
-    public init(copy: @escaping (String) -> Void) {
+    public init(copy: @escaping @Sendable (String) -> Void) {
         self.copy = copy
     }
 }

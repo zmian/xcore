@@ -8,7 +8,7 @@ import Foundation
 
 /// Provides functionality for address search completion based on partial search
 /// string.
-public protocol AddressSearchClient {
+public protocol AddressSearchClient: Sendable {
     /// Observes search results for the given id.
     func observe(id: UUID) -> AsyncStream<[AddressSearchResult]>
 

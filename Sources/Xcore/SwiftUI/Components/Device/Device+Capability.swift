@@ -8,7 +8,7 @@ import SwiftUI
 
 extension Device {
     /// A structure representing the device’s capabilities.
-    public struct Capability: OptionSet {
+    public struct Capability: OptionSet, Sendable {
         public let rawValue: Int
 
         public init(rawValue: Int) {

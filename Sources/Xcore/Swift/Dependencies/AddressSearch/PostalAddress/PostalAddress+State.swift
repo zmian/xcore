@@ -37,7 +37,7 @@ extension PostalAddress {
 // MARK: - Dictionary
 
 extension PostalAddress {
-    private static var states: [String: String] = [
+    private static let states: [String: String] = [
         "AL": "Alabama",
         "AK": "Alaska",
         "AS": "American Samoa",

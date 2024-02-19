@@ -15,6 +15,7 @@ extension View {
     /// - Parameter action: The action to perform when visibility status changes.
     /// - Returns: A view that triggers action when this view's visibility status
     ///   changes.
+    @MainActor 
     public func onVisibilityStatusChange(perform action: @escaping (VisibilityStatus) -> Void) -> some View {
         modifier(VisibilityModifier(action: action))
     }
@@ -23,7 +24,7 @@ extension View {
 // MARK: - Status
 
 /// An enumeration representing the visibility status.
-public enum VisibilityStatus: String, CustomAnalyticsValueConvertible {
+public enum VisibilityStatus: String, Sendable, CustomAnalyticsValueConvertible {
     /// The element visibility is unknown.
     case unknown
 
@@ -36,6 +37,7 @@ public enum VisibilityStatus: String, CustomAnalyticsValueConvertible {
 
 // MARK: - ViewModifier
 
+@MainActor
 private struct VisibilityModifier: ViewModifier {
     @State private var status: VisibilityStatus = .unknown
     private let action: (VisibilityStatus) -> Void
@@ -65,13 +67,11 @@ private struct VisibilityModifier: ViewModifier {
     }
 
     private func updateStatusIfNeeded() {
-        DispatchQueue.main.async {
-            guard let visibleWindow = UIApplication.sharedOrNil?.sceneWindow(\.isVisible, \.isKeyWindow) else {
-                status = .unknown
-                return
-            }
-
-            status = visibleWindow != appWindow ? .obstructed : .visible
+        guard let visibleWindow = UIApplication.sharedOrNil?.sceneWindow(\.isVisible, \.isKeyWindow) else {
+            status = .unknown
+            return
         }
+
+        status = visibleWindow != appWindow ? .obstructed : .visible
     }
 }

@@ -57,7 +57,7 @@ import Foundation
 ///     }
 /// }
 /// ```
-public protocol AppTraceReporting {
+public protocol AppTraceReporting: Sendable {
     init(operationName: String)
     func setTag(_ key: String, value: Encodable)
     func setError(_ error: Error, file: StaticString, line: UInt)

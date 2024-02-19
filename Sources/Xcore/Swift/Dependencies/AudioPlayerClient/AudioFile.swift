@@ -8,7 +8,7 @@ import Foundation
 import AVKit
 
 /// A structure representing an audio file.
-public struct AudioFile: Hashable, @unchecked Sendable {
+public struct AudioFile: Sendable, Hashable {
     public let url: URL?
     public let category: AVAudioSession.Category
 
@@ -28,7 +28,11 @@ public struct AudioFile: Hashable, @unchecked Sendable {
     ///   - name: The name of the audio file.
     ///   - bundle: The bundle where audio file is located.
     ///   - category: The audio session category.
-    public init(name: String, bundle: Bundle = .main, category: AVAudioSession.Category) {
+    public init(
+        name: String, 
+        bundle: Bundle = .main,
+        category: AVAudioSession.Category
+    ) {
         self.init(
             url: bundle.url(filename: name),
             category: category

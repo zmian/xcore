@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// An indication of a app’s operational state.
-public enum AppPhase: Hashable, CustomStringConvertible {
+public enum AppPhase: @unchecked Sendable, Hashable, CustomStringConvertible {
     /// Event invoked when the launch process is almost done and the app is almost
     /// ready to run.
     ///

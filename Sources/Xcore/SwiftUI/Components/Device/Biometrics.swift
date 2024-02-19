@@ -10,7 +10,7 @@ import LocalAuthentication
 // MARK: - Kind
 
 extension Biometrics {
-    public enum Kind {
+    public enum Kind: Sendable, Hashable {
         case none
         case touchID
         case faceID
@@ -43,13 +43,13 @@ extension Biometrics {
         public var displayName: String {
             switch self {
                 case .none:
-                    return ""
+                    ""
                 case .touchID:
-                    return "Touch ID"
+                    "Touch ID"
                 case .faceID:
-                    return "Face ID"
+                    "Face ID"
                 case .opticID:
-                    return "Optic ID"
+                    "Optic ID"
             }
         }
 
@@ -76,7 +76,7 @@ extension Biometrics {
 // MARK: - Biometrics
 
 /// A structure representing the biometrics for the device.
-public struct Biometrics {
+public struct Biometrics: Sendable {
     /// Indicates that the device owner can authenticate using biometry (e.g.,
     /// Touch ID or Face ID).
     public var isAvailable: Bool {
@@ -105,47 +105,6 @@ public struct Biometrics {
     }
 }
 
-// MARK: - Authenticate
-
-extension Biometrics {
-    /// Evaluates the user authentication with biometry policy.
-    ///
-    /// - Parameter completion: A closure that is executed when policy evaluation
-    ///   finishes.
-    public func authenticate(_ completion: @escaping (_ success: Bool) -> Void) {
-        guard isAvailable else {
-            return
-        }
-
-        // Using blank string " " here for `localizedReason` because `localizedReason`
-        // is not used for Face ID authentication.
-        //
-        // - SeeAlso: `NSFaceIDUsageDescription` in `Info.plist` file.
-        let context = LAContext()
-        context.localizedFallbackTitle = ""
-        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: " ") { success, _ in
-            DispatchQueue.main.async {
-                completion(success)
-            }
-        }
-    }
-
-    public func requestPermission(_ completion: @escaping () -> Void) {
-        guard isAvailable else {
-            return
-        }
-
-        let context = LAContext()
-        context.localizedFallbackTitle = ""
-        context.interactionNotAllowed = true
-        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: " ") { _, _ in
-            DispatchQueue.main.async {
-                completion()
-            }
-        }
-    }
-}
-
 // MARK: - Device
 
 extension Device {
@@ -160,62 +119,62 @@ extension LAError: CustomStringConvertible {
     public var description: String {
         switch code {
             case .appCancel:
-                return "appCancel"
+                "appCancel"
             case .userCancel:
-                return "userCancel"
+                "userCancel"
             case .systemCancel:
-                return "systemCancel"
+                "systemCancel"
             case .biometryLockout:
-                return "biometryLockout"
+                "biometryLockout"
             case .biometryNotAvailable:
-                return "biometryNotAvailable"
+                "biometryNotAvailable"
             case .biometryNotEnrolled:
-                return "biometryNotEnrolled"
+                "biometryNotEnrolled"
             case .authenticationFailed:
-                return "authenticationFailed"
+                "authenticationFailed"
             case .invalidContext:
-                return "invalidContext"
+                "invalidContext"
             case .notInteractive:
-                return "notInteractive"
+                "notInteractive"
             case .passcodeNotSet:
-                return "passcodeNotSet"
+                "passcodeNotSet"
             case .userFallback:
-                return "userFallback"
+                "userFallback"
             case .watchNotAvailable:
-                return "watchNotAvailable"
+                "watchNotAvailable"
             default:
-                return "code_\(code.rawValue)"
+                "code_\(code.rawValue)"
         }
     }
 
     public var localizedDescription: String {
         switch code {
             case .appCancel:
-                return "Authentication was canceled by application (e.g. invalidate was called while authentication was in progress)."
+                "Authentication was canceled by application (e.g. invalidate was called while authentication was in progress)."
             case .userCancel:
-                return "Authentication was canceled by user (e.g. tapped Cancel button)."
+                "Authentication was canceled by user (e.g. tapped Cancel button)."
             case .systemCancel:
-                return "Authentication was canceled by system (e.g. another application went to foreground)."
+                "Authentication was canceled by system (e.g. another application went to foreground)."
             case .biometryLockout:
-                return "Authentication was not successful because there were too many failed biometry attempts and biometry is now locked. Passcode is now required to unlock biometry."
+                "Authentication was not successful because there were too many failed biometry attempts and biometry is now locked. Passcode is now required to unlock biometry."
             case .biometryNotAvailable:
-                return "Authentication could not start because biometry is not available on the device."
+                "Authentication could not start because biometry is not available on the device."
             case .biometryNotEnrolled:
-                return "Authentication could not start because biometry has no enrolled identities."
+                "Authentication could not start because biometry has no enrolled identities."
             case .authenticationFailed:
-                return "Authentication was not successful because user failed to provide valid credentials."
+                "Authentication was not successful because user failed to provide valid credentials."
             case .invalidContext:
-                return "LAContext passed to this call has been previously invalidated."
+                "LAContext passed to this call has been previously invalidated."
             case .notInteractive:
-                return "Authentication failed because it would require showing UI which has been forbidden by using \"interactionNotAllowed\" property."
+                "Authentication failed because it would require showing UI which has been forbidden by using \"interactionNotAllowed\" property."
             case .passcodeNotSet:
-                return "Authentication could not start because passcode is not set on the device."
+                "Authentication could not start because passcode is not set on the device."
             case .userFallback:
-                return "Authentication was canceled because the user tapped the fallback button (Enter Password)."
+                "Authentication was canceled because the user tapped the fallback button (Enter Password)."
             case .watchNotAvailable:
-                return "An attempt to authenticate with Apple Watch failed."
+                "An attempt to authenticate with Apple Watch failed."
             default:
-                return "Authentication failed with reason code \(code.rawValue)."
+                "Authentication failed with reason code \(code.rawValue)."
         }
     }
 }

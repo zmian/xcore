@@ -9,7 +9,7 @@ import Foundation
 
 /// A structure representing a fully-formed string that completes a partial
 /// string.
-public final class AddressSearchResult: Hashable, @unchecked Sendable {
+public final class AddressSearchResult: @unchecked Sendable, Hashable {
     public let title: String
     public let subtitle: String
     private let completion: MKLocalSearchCompletion?

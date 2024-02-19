@@ -7,8 +7,9 @@
 import Foundation
 
 /// Provides functionality to keep track of user's session counts.
-public struct SessionCounterClient {
-    private let _count: @Sendable () -> Int
+public struct SessionCounterClient: Sendable {
+    /// Returns user's current session count.
+    public let count: @Sendable () -> Int
 
     /// Increments user's session count.
     public let increment: @Sendable () -> Void
@@ -22,13 +23,8 @@ public struct SessionCounterClient {
         count: @escaping @Sendable() -> Int,
         increment: @escaping @Sendable () -> Void
     ) {
-        self._count = count
+        self.count = count
         self.increment = increment
-    }
-
-    /// Returns user's current session count.
-    public var count: Int {
-        _count()
     }
 }
 

@@ -28,7 +28,7 @@ import SwiftUI
 ///     }
 /// }
 /// ```
-public struct OpenURLClient {
+public struct OpenURLClient: Sendable {
     private let handler: @Sendable (AdaptiveURL) async -> Bool
 
     /// Creates a client that opens a URL.

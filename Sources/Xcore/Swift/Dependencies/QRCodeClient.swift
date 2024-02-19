@@ -8,14 +8,14 @@ import UIKit
 @_implementationOnly import CoreImage.CIFilterBuiltins
 
 /// Provides functionality for generating a QR code.
-public struct QRCodeClient {
+public struct QRCodeClient: Sendable {
     /// Attempts to generate a QR code of the given string.
-    public let generate: (String) throws -> UIImage
+    public let generate: @Sendable (String) throws -> UIImage
 
     /// Creates a client that generates a QR code of the given string.
     ///
     /// - Parameter generate: The closure to generate a QR code of the given string.
-    public init(generate: @escaping (String) throws -> UIImage) {
+    public init(generate: @escaping @Sendable (String) throws -> UIImage) {
         self.generate = generate
     }
 }

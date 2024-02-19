@@ -85,6 +85,7 @@ extension UIView {
     }
 }
 
+@MainActor
 extension Array<UIView> {
     public func resistsSizeChange() {
         forEach { $0.resistsSizeChange() }

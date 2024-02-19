@@ -78,6 +78,7 @@ extension NSAttributedString {
     /// let scaleFactor = label.attributedText!.fontScaleFactor(width: availableWidth)
     /// label.updateFont(scaleFactor: scaleFactor)
     /// ```
+    @MainActor
     public func fontScaleFactor(width: CGFloat, minimumScaleFactor: CGFloat = 0.5) -> CGFloat {
         let fauxLabel = UILabel().apply {
             $0.attributedText = self

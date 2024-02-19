@@ -18,7 +18,7 @@ extension PostalAddress {
     ///     "US": "United States"
     /// ]
     /// ```
-    private static var countries: [String: String] = {
+    private static let countries: [String: String] = {
         var result = [String: String]()
         Locale.Region.isoRegions.forEach { region in
             let isCountry = region.isISORegion && region.continent != nil && region.subRegions.isEmpty
