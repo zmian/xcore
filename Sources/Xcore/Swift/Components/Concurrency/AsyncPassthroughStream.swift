@@ -107,6 +107,7 @@ extension AsyncPassthroughStream {
 
 extension AsyncPassthroughStream {
     /// Creates an asynchronous sequence that produce new elements over time.
+    @Sendable
     public func makeAsyncStream() -> AsyncStream<Element> {
         AsyncStream(self)
     }

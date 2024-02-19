@@ -58,6 +58,7 @@ private final class LivePushNotificationsClient: NSObject {
         }
     }
 
+    @Sendable
     func authorizationStatus() async -> AuthorizationStatus {
         let settings = await center.notificationSettings()
 
@@ -84,6 +85,7 @@ private final class LivePushNotificationsClient: NSObject {
         return status
     }
 
+    @Sendable
     func register() async {
         switch await authorizationStatus() {
             case .notDetermined:
@@ -109,11 +111,13 @@ private final class LivePushNotificationsClient: NSObject {
         }
     }
 
+    @Sendable
     func unregister() {
         registerForRemoteNotifications(false)
         stream.send(.unregistered)
     }
 
+    @Sendable
     func openAppSettings() {
         #warning("FIXME: Fix the open settings up. Uncommenting causes segmentation fault 11")
 //        typealias L = Localized.PushNotifications.OpenSystemSettings
