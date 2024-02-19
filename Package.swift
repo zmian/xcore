@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "Xcore",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v16), .watchOS(.v10)],
     products: [
         .library(name: "Xcore", targets: ["Xcore"])
     ],
