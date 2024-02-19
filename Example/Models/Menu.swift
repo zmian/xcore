@@ -58,6 +58,7 @@ extension Menu: CaseIterable {
         textFields,
         story,
         images,
+        window,
         share,
         hapticFeedback,
         crypt
@@ -110,6 +111,11 @@ extension Menu {
     private static let images = Self(
         title: "Images Loader",
         content: ImagesView()
+    )
+
+    private static let window = Self(
+        title: "Window Overlay",
+        content: Samples.OverlayScreenPreview()
     )
 
     private static let share = Self(
