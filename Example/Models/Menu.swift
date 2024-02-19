@@ -56,6 +56,7 @@ extension Menu: CaseIterable {
         labeledContent,
         popups,
         textFields,
+        text,
         story,
         images,
         window,
@@ -101,6 +102,12 @@ extension Menu {
     private static let textFields = Self(
         title: "TextFields",
         content: Samples.dynamicTextFieldPreviews
+    )
+
+    private static let text = Self(
+        title: "Text",
+        subtitle: "Built-in Markdown Support",
+        content: TextView()
     )
 
     private static let story = Self(
