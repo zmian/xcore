@@ -50,7 +50,7 @@ extension SessionCounterClient {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct SessionCounterClientKey: DependencyKey {
+    private enum SessionCounterClientKey: DependencyKey {
         static var liveValue: SessionCounterClient = .live
         static var testValue: SessionCounterClient = .unimplemented
         static var previewValue: SessionCounterClient = .noop

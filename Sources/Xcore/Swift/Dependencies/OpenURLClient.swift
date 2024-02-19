@@ -133,7 +133,7 @@ extension OpenURLClient {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct OpenURLClientKey: DependencyKey {
+    private enum OpenURLClientKey: DependencyKey {
         static var liveValue: OpenURLClient = .system
     }
 

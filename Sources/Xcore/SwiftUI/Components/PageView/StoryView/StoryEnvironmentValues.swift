@@ -9,8 +9,8 @@ import SwiftUI
 // MARK: - Progress Indicator Color
 
 extension EnvironmentValues {
-    private struct StoryProgressIndicatorColorKey: EnvironmentKey {
-        static var defaultValue: Color = .accentColor
+    private enum StoryProgressIndicatorColorKey: EnvironmentKey {
+        static let defaultValue: Color = .accentColor
     }
 
     var storyProgressIndicatorColor: Color {
@@ -22,8 +22,8 @@ extension EnvironmentValues {
 // MARK: - Progress Indicator Insets
 
 extension EnvironmentValues {
-    private struct StoryProgressIndicatorInsetsKey: EnvironmentKey {
-        static var defaultValue = EdgeInsets(horizontal: .defaultSpacing)
+    private enum StoryProgressIndicatorInsetsKey: EnvironmentKey {
+        static let defaultValue = EdgeInsets(horizontal: .defaultSpacing)
     }
 
     var storyProgressIndicatorInsets: EdgeInsets {

@@ -55,7 +55,7 @@ extension ImageColorClient {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct ImageColorClientKey: DependencyKey {
+    private enum ImageColorClientKey: DependencyKey {
         static var liveValue: ImageColorClient = .live
     }
 

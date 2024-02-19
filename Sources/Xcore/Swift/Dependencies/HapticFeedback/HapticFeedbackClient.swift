@@ -79,7 +79,7 @@ extension HapticFeedbackClient {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct HapticFeedbackClientKey: DependencyKey {
+    private enum HapticFeedbackClientKey: DependencyKey {
         static var liveValue: HapticFeedbackClient = .live
     }
 

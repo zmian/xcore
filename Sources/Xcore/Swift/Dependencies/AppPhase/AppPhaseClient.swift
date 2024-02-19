@@ -407,7 +407,7 @@ extension AppPhase {
 public typealias AppPhaseClient = EventsClient<AppPhase>
 
 extension DependencyValues {
-    private struct AppPhaseClientKey: DependencyKey {
+    private enum AppPhaseClientKey: DependencyKey {
         static var liveValue: AppPhaseClient = .live
     }
 

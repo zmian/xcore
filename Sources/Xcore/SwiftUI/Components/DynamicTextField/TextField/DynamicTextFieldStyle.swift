@@ -78,8 +78,8 @@ struct AnyDynamicTextFieldStyle: DynamicTextFieldStyle {
 // MARK: - Environment Key
 
 extension EnvironmentValues {
-    private struct DynamicTextFieldStyleKey: EnvironmentKey {
-        static var defaultValue = AnyDynamicTextFieldStyle(.default)
+    private enum DynamicTextFieldStyleKey: EnvironmentKey {
+        static let defaultValue = AnyDynamicTextFieldStyle(.default)
     }
 
     var dynamicTextFieldStyle: AnyDynamicTextFieldStyle {

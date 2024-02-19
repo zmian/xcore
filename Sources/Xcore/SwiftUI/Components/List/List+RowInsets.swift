@@ -9,8 +9,8 @@ import SwiftUI
 // MARK: - List Row Insets Environment
 
 extension EnvironmentValues {
-    private struct CustomListRowInsetsKey: EnvironmentKey {
-        static var defaultValue: EdgeInsets = .listRow
+    private enum CustomListRowInsetsKey: EnvironmentKey {
+        static let defaultValue: EdgeInsets = .listRow
     }
 
     var customListRowInsets: EdgeInsets {

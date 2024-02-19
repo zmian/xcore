@@ -80,7 +80,7 @@ extension RequestReviewClient {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct RequestReviewClientKey: DependencyKey {
+    private enum RequestReviewClientKey: DependencyKey {
         static var liveValue: RequestReviewClient = .live
     }
 

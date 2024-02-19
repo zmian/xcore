@@ -56,7 +56,7 @@ extension AudioPlayerClient {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct AudioPlayerClientKey: DependencyKey {
+    private enum AudioPlayerClientKey: DependencyKey {
         static var liveValue: AudioPlayerClient = .live
     }
 

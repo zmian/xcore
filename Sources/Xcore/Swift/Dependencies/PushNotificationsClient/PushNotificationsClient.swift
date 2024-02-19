@@ -224,7 +224,7 @@ extension PushNotificationsClient {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct PushNotificationsClientKey: DependencyKey {
+    private enum PushNotificationsClientKey: DependencyKey {
         static var liveValue: PushNotificationsClient = .live
 
         // We need to explicitly set the test dependency value to `.unimplemented` as

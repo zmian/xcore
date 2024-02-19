@@ -113,7 +113,7 @@ private struct NoopPasteboardClient: PasteboardClient {
 }
 
 extension DependencyValues {
-    private struct PasteboardClientKey: DependencyKey {
+    private enum PasteboardClientKey: DependencyKey {
         static let liveValue: PasteboardClient = LivePasteboardClient()
     }
 

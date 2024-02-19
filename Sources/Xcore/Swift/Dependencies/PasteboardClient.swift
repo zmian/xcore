@@ -57,7 +57,7 @@ extension PasteboardClient {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct PasteboardClientKey: DependencyKey {
+    private enum PasteboardClientKey: DependencyKey {
         static var liveValue: PasteboardClient = .live
     }
 

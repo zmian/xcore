@@ -28,7 +28,7 @@ public protocol AddressSearchClient: Sendable {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct AddressSearchClientKey: DependencyKey {
+    private enum AddressSearchClientKey: DependencyKey {
         static var liveValue: AddressSearchClient = .live
     }
 

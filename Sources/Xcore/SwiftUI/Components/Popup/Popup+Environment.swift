@@ -9,20 +9,20 @@ import SwiftUI
 // MARK: - Keys
 
 extension EnvironmentValues {
-    private struct PopupCornerRadiusKey: EnvironmentKey {
-        static var defaultValue: CGFloat = 16
+    private enum PopupCornerRadiusKey: EnvironmentKey {
+        static let defaultValue: CGFloat = 16
     }
 
-    private struct PopupPreferredWidthKey: EnvironmentKey {
-        static var defaultValue: CGFloat = AppConstants.popupPreferredWidth
+    private enum PopupPreferredWidthKey: EnvironmentKey {
+        static let defaultValue: CGFloat = AppConstants.popupPreferredWidth
     }
 
-    private struct PopupTextAlignmentKey: EnvironmentKey {
-        static var defaultValue: TextAlignment = .center
+    private enum PopupTextAlignmentKey: EnvironmentKey {
+        static let defaultValue: TextAlignment = .center
     }
 
-    private struct PopupDismissActionKey: EnvironmentKey {
-        static var defaultValue: PopupDismissAction?
+    private enum PopupDismissActionKey: EnvironmentKey {
+        static let defaultValue: PopupDismissAction? = nil
     }
 }
 

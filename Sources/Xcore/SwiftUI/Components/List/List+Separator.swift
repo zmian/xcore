@@ -38,8 +38,8 @@ public enum ListRowSeparatorStyle: Equatable {
 // MARK: - List Row Separator Style Environment
 
 extension EnvironmentValues {
-    private struct ListRowSeparatorStyleKey: EnvironmentKey {
-        static var defaultValue: ListRowSeparatorStyle = .line
+    private enum ListRowSeparatorStyleKey: EnvironmentKey {
+        static let defaultValue: ListRowSeparatorStyle = .line
     }
 
     public var listRowSeparatorStyle: ListRowSeparatorStyle {

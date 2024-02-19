@@ -9,8 +9,8 @@ import SwiftUI
 // MARK: - Theme
 
 extension EnvironmentValues {
-    private struct ThemeKey: EnvironmentKey {
-        static var defaultValue: Theme = .default
+    private enum ThemeKey: EnvironmentKey {
+        static let defaultValue: Theme = .default
     }
 
     public var theme: Theme {
@@ -22,8 +22,8 @@ extension EnvironmentValues {
 // MARK: - DefaultButtonFont
 
 extension EnvironmentValues {
-    private struct DefaultButtonFontKey: EnvironmentKey {
-        static var defaultValue: Font?
+    private enum DefaultButtonFontKey: EnvironmentKey {
+        static let defaultValue: Font? = nil
     }
 
     public var defaultButtonFont: Font? {
@@ -35,8 +35,8 @@ extension EnvironmentValues {
 // MARK: - DefaultMinButtonHeight
 
 extension EnvironmentValues {
-    private struct DefaultMinButtonHeightKey: EnvironmentKey {
-        static var defaultValue: CGFloat = 50
+    private enum DefaultMinButtonHeightKey: EnvironmentKey {
+        static let defaultValue: CGFloat = 50
     }
 
     public var defaultMinButtonHeight: CGFloat {
@@ -48,8 +48,8 @@ extension EnvironmentValues {
 // MARK: - DefaultOulineButtonBorderColor
 
 extension EnvironmentValues {
-    private struct DefaultOutlineButtonBorderColorKey: EnvironmentKey {
-        static var defaultValue: Color?
+    private enum DefaultOutlineButtonBorderColorKey: EnvironmentKey {
+        static let defaultValue: Color? = nil
     }
 
     public var defaultOutlineButtonBorderColor: Color? {

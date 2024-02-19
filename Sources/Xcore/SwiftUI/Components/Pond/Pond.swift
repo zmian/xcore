@@ -81,7 +81,7 @@ extension Pond {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct PondKey: DependencyKey {
+    private enum PondKey: DependencyKey {
         static var liveValue: Pond = .empty
     }
 

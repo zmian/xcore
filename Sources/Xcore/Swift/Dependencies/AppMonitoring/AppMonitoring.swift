@@ -203,7 +203,7 @@ extension AppMonitoring {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct AppMonitoringKey: DependencyKey {
+    private enum AppMonitoringKey: DependencyKey {
         static var liveValue: AppMonitoring = .noop
     }
 

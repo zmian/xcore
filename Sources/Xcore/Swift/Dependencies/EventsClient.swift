@@ -23,19 +23,13 @@ import Combine
 /// // MARK: - Dependency
 ///
 /// extension DependencyValues {
-///     private struct MyEventClientKey: DependencyKey {
-///         static let defaultValue: MyEventClient = .live
+///     private enum MyEventClientKey: DependencyKey {
+///         static let liveValue: MyEventClient = .live
 ///     }
 ///
 ///     var myEvent: MyEventClient {
 ///         get { self[MyEventClientKey.self] }
 ///         set { self[MyEventClientKey.self] = newValue }
-///     }
-///
-///     @discardableResult
-///     static func myEvent(_ value: MyEventClient) -> Self.Type {
-///         self[\.myEvent] = value
-///         return Self.self
 ///     }
 /// }
 ///

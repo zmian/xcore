@@ -42,8 +42,8 @@ public struct TextFieldAttributes: Sendable, Hashable, MutableAppliable {
 // MARK: - Environment
 
 extension EnvironmentValues {
-    private struct AttributesKey: EnvironmentKey {
-        static var defaultValue = TextFieldAttributes()
+    private enum AttributesKey: EnvironmentKey {
+        static let defaultValue = TextFieldAttributes()
     }
 
     public var textFieldAttributes: TextFieldAttributes {

@@ -19,8 +19,8 @@ extension View {
 // MARK: - EnvironmentValue
 
 extension EnvironmentValues {
-    private struct XcoreIsLoadingKey: EnvironmentKey {
-        static var defaultValue = false
+    private enum XcoreIsLoadingKey: EnvironmentKey {
+        static let defaultValue = false
     }
 
     /// A Boolean property indicating whether the view associated with this

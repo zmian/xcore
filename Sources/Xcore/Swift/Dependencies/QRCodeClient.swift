@@ -63,7 +63,7 @@ extension QRCodeClient {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct QRCodeClientKey: DependencyKey {
+    private enum QRCodeClientKey: DependencyKey {
         static var liveValue: QRCodeClient = .live
     }
 

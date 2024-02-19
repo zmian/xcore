@@ -131,7 +131,7 @@ extension AppStatusClient {
 // MARK: - Dependency
 
 extension DependencyValues {
-    private struct AppStatusClientKey: DependencyKey {
+    private enum AppStatusClientKey: DependencyKey {
         static var liveValue: AppStatusClient = .noop
     }
 
