@@ -13,61 +13,62 @@ import UIKit
 enum ImageDownloader {
     /// Downloads the image at the given URL, if not present in cache or return the
     /// cached version otherwise.
-    static func load(url: URL) async throws -> (UIImage, ImageSourceType.CacheType, ImageDownloaderCancelToken?) {
-        try await withCheckedThrowingContinuation { continuation in
-            var token: SDWebImageCombinedOperation?
+    static func load(url: URL) async throws -> (UIImage, ImageSourceType.CacheType) {
+        var token: SDWebImageCombinedOperation?
+        let cancel: ImageDownloaderCancelToken = .init { token?.cancel() }
 
-            token = SDWebImageManager.shared.loadImage(
-                with: url,
-                options: [.avoidAutoSetImage],
-                progress: nil
-            ) { image, _, error, cacheType, _, _ in
-                if Task.isCancelled {
-                    token?.cancel()
-                    continuation.resume(throwing: CancellationError())
-                } else if let image {
-                    let cancel = token?.cancel
-                    continuation.resume(returning: (image, .init(cacheType), .init { cancel?() }))
-                } else {
-                    continuation.resume(throwing: error ?? ImageFetcherError.notFound)
+        return try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { continuation in
+                token = SDWebImageManager.shared.loadImage(
+                    with: url,
+                    options: [.avoidAutoSetImage],
+                    progress: nil
+                ) { image, _, error, cacheType, _, _ in
+                    if Task.isCancelled {
+                        token?.cancel()
+                        continuation.resume(throwing: CancellationError())
+                    } else if let image {
+                        continuation.resume(returning: (image, .init(cacheType)))
+                    } else {
+                        continuation.resume(throwing: error ?? ImageFetcherError.notFound)
+                    }
                 }
             }
-
-            if Task.isCancelled {
-                token?.cancel()
-            }
+        } onCancel: {
+            cancel()
         }
     }
 
     /// Downloads the image from the given url.
     static func download(url: URL) async throws -> UIImage {
-        try await withCheckedThrowingContinuation { continuation in
-            var token: SDWebImageDownloadToken?
+        var token: SDWebImageDownloadToken?
+        let cancel: ImageDownloaderCancelToken = .init { token?.cancel() }
 
-            token = SDWebImageDownloader.shared.downloadImage(
-                with: url,
-                options: [],
-                progress: nil
-            ) { image, _, error, finished in
-                if Task.isCancelled {
-                    token?.cancel()
-                    continuation.resume(throwing: CancellationError())
-                }
+        return try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { continuation in
+                token = SDWebImageDownloader.shared.downloadImage(
+                    with: url,
+                    options: [],
+                    progress: nil
+                ) { image, _, error, finished in
+                    if Task.isCancelled {
+                        token?.cancel()
+                        continuation.resume(throwing: CancellationError())
+                    }
 
-                if !finished {
-                    return
-                }
+                    if !finished {
+                        return
+                    }
 
-                if let image {
-                    continuation.resume(returning: image)
-                } else {
-                    continuation.resume(throwing: error ?? ImageFetcherError.notFound)
+                    if let image {
+                        continuation.resume(returning: image)
+                    } else {
+                        continuation.resume(throwing: error ?? ImageFetcherError.notFound)
+                    }
                 }
             }
-
-            if Task.isCancelled {
-                token?.cancel()
-            }
+        } onCancel: {
+            cancel()
         }
     }
 
@@ -92,13 +93,5 @@ extension ImageSourceType.CacheType {
             default:
                 fatalError(because: .unknownCaseDetected(type))
         }
-    }
-}
-
-struct ImageDownloaderCancelToken: @unchecked Sendable {
-    let cancel: () -> Void
-
-    func callAsFunction() {
-        cancel()
     }
 }

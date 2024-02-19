@@ -20,10 +20,7 @@ final class RemoteImageFetcher: ImageFetcher {
             throw ImageFetcherError.notFound
         }
 
-        let (image, cacheType, cancelToken) = try await ImageDownloader.load(url: url)
-        // Store the token cancel block so the request can be cancelled if needed.
-        imageView?._imageFetcherCancelBlock = cancelToken
-        return (image, cacheType)
+        return try await ImageDownloader.load(url: url)
     }
 
     func removeCache() {
