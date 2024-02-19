@@ -35,7 +35,10 @@ extension UIImage.Fetcher {
     }
 
     @MainActor
-    static func fetch(_ image: ImageRepresentable, in imageView: UIImageView? = nil) async throws -> ImageFetcher.Output {
+    static func fetch(
+        _ image: ImageRepresentable,
+        in imageView: UIImageView? = nil
+    ) async throws -> ImageFetcher.Output {
         try await shared.fetch(image, in: imageView)
     }
 }
@@ -65,5 +68,14 @@ extension UIImageView {
     public func cancelSetImageRequest() {
         sd_cancelCurrentImageLoad()
         _imageFetcherCancelBlock?()
+        _imageFetcherCancelBlock = nil
+    }
+}
+
+struct ImageDownloaderCancelToken: @unchecked Sendable {
+    let cancel: () -> Void
+
+    func callAsFunction() {
+        cancel()
     }
 }

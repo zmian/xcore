@@ -107,33 +107,40 @@ private struct OverlayScreenViewModifier<Screen: View>: ViewModifier {
     }
 }
 
+#if DEBUG
+
 // MARK: - Preview
 
 #Preview {
-    ContentView()
+    Samples.OverlayScreenPreview()
 }
 
-struct ContentView: View {
-    @State private var isPresented = true
+extension Samples {
+    public struct OverlayScreenPreview: View {
+        @State private var isPresented = true
 
-    var body: some View {
-        Color.red
-            .ignoresSafeArea()
-            .overlay {
-                Button("Show Overlay Screen") {
-                    isPresented = true
-                }
-                .buttonStyle(.borderedProminent)
-            }
-            .overlayScreen(isPresented: $isPresented) {
-                Color.yellow
-                    .ignoresSafeArea()
-                    .overlay {
-                        Button("Hide Overlay Screen") {
-                            isPresented = false
-                        }
-                        .buttonStyle(.bordered)
+        public init() {}
+
+        public var body: some View {
+            Color.red
+                .ignoresSafeArea()
+                .overlay {
+                    Button("Show Overlay Screen") {
+                        isPresented = true
                     }
-            }
+                    .buttonStyle(.borderedProminent)
+                }
+                .overlayScreen(isPresented: $isPresented) {
+                    Color.yellow
+                        .ignoresSafeArea()
+                        .overlay {
+                            Button("Hide Overlay Screen") {
+                                isPresented = false
+                            }
+                            .buttonStyle(.bordered)
+                        }
+                }
+        }
     }
 }
+#endif

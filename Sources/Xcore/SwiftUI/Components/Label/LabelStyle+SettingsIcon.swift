@@ -8,12 +8,14 @@ import SwiftUI
 
 public struct SettingsIconLabelStyle: LabelStyle {
     var tint: Color
+    var contentMode: ContentMode
 
     public func makeBody(configuration: Configuration) -> some View {
         Label {
             configuration.title
         } icon: {
             configuration.icon
+                .aspectRatio(contentMode: contentMode)
                 .imageScale(.small)
                 .foregroundStyle(.white)
                 .background(
@@ -28,7 +30,7 @@ public struct SettingsIconLabelStyle: LabelStyle {
 // MARK: - Dot Syntax Support
 
 extension LabelStyle where Self == SettingsIconLabelStyle {
-    public static func settingsIcon(tint: Color) -> Self {
-        .init(tint: tint)
+    public static func settingsIcon(tint: Color, contentMode: ContentMode = .fit) -> Self {
+        .init(tint: tint, contentMode: contentMode)
     }
 }

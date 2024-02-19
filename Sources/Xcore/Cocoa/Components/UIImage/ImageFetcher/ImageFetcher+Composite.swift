@@ -61,6 +61,9 @@ extension CompositeImageFetcher {
 
     @MainActor
     func fetch(_ image: ImageRepresentable, in imageView: UIImageView?) async throws -> Output {
+        // Cancel any existing in-flight image request.
+        imageView?.cancelSetImageRequest()
+
         guard image.imageSource.isValid else {
             #if DEBUG
             Logger.xc.error("Unable to fetch image because of invalid image source: \(String(describing: image.imageSource), privacy: .public)")
@@ -76,8 +79,17 @@ extension CompositeImageFetcher {
             throw ImageFetcherError.notFound
         }
 
+        let task = Task {
+            try await fetcher.fetch(image, in: imageView)
+        }
+
         imageView?.imageRepresentableSource = image.imageSource
-        return try await fetcher.fetch(image, in: imageView)
+        // Store the token cancel block so the request can be cancelled if needed.
+        imageView?._imageFetcherCancelBlock = .init {
+            task.cancel()
+        }
+
+        return try await task.value
     }
 
     func removeCache() {

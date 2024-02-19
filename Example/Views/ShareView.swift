@@ -13,6 +13,14 @@ struct ShareView: View {
                 ShareLink(item: "License Agreement...") {
                     Label("Share License Agreement", systemImage: .doc)
                 }
+
+                ShareLink(item: Image(.blueJay), preview: SharePreview(
+                    "Blue Jay",
+                    image: Image(.blueJay)
+                )) {
+                    Label("Share Blue Jay", image: Image(.blueJay).resizable())
+                        .labelStyle(.settingsIcon(tint: .accentColor))
+                }
             }
 
             Section {
