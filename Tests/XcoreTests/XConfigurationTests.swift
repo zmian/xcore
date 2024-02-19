@@ -7,6 +7,7 @@
 import XCTest
 @testable import Xcore
 
+@MainActor
 final class XConfigurationTests: TestCase {
     func testUIViewConfiguration() {
         let label = UILabel(configuration: .hello)
