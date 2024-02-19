@@ -8,13 +8,6 @@ import XCTest
 @testable import Xcore
 
 final class ArrayTests: TestCase {
-    func testSplitBy() {
-        let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-        let chunks = array.splitBy(5)
-        let expected = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12]]
-        XCTAssertEqual(chunks, expected)
-    }
-
     func testSortByPreferredOrder() {
         let preferredOrder = ["Z", "A", "B", "C", "D"]
         var alphabets = ["D", "C", "B", "A", "Z", "W"]

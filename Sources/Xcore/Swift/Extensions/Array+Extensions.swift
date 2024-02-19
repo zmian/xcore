@@ -29,21 +29,6 @@ extension Array {
         self[Int.random() % count]
     }
 
-    /// Split array by chunks of given size.
-    ///
-    /// ```swift
-    /// let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    /// let chunks = array.splitBy(5)
-    /// print(chunks) // [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], [11, 12]]
-    /// ```
-    /// - SeeAlso: https://gist.github.com/ericdke/fa262bdece59ff786fcb
-    public func splitBy(_ subSize: Int) -> [[Element]] {
-        stride(from: 0, to: count, by: subSize).map { startIndex in
-            let endIndex = index(startIndex, offsetBy: subSize, limitedBy: count) ?? startIndex + (count - startIndex)
-            return Array(self[startIndex..<endIndex])
-        }
-    }
-
     public func firstElement<T>(type: T.Type) -> T? {
         for element in self {
             if let element = element as? T {
