@@ -7,6 +7,8 @@
 import SwiftUI
 
 #warning("TODO: Switch docs to DocC")
+#warning("TODO: Add watchOS support")
+#warning("TODO: Add StrictConcurrency=complete support")
 
 @main
 struct XcoreApp: App {
