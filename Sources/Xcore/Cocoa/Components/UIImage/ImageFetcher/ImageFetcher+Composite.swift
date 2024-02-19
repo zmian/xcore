@@ -79,11 +79,12 @@ extension CompositeImageFetcher {
             throw ImageFetcherError.notFound
         }
 
+        imageView?.imageRepresentableSource = image.imageSource
+
         let task = Task {
             try await fetcher.fetch(image, in: imageView)
         }
 
-        imageView?.imageRepresentableSource = image.imageSource
         // Store the token cancel block so the request can be cancelled if needed.
         imageView?._imageFetcherCancelBlock = .init {
             task.cancel()
