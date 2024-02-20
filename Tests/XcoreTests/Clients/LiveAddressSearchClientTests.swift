@@ -117,7 +117,7 @@ final class LiveAddressSearchClientTests: TestCase {
         await search("Carrera de San Jeronimo, 34, Madrid 28014") { postalAddress in
             XCTAssertEqual(postalAddress.street1, "34 Carrera de San Jerónimo")
             XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "28014 Madrid")
+            XCTAssertEqual(postalAddress.city, "Centro")
             XCTAssertEqual(postalAddress.state, "Madrid")
             XCTAssertEqual(postalAddress.postalCode, "28014")
             XCTAssertEqual(postalAddress.countryCode, "ES")

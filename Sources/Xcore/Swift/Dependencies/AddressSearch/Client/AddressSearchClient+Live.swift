@@ -214,20 +214,24 @@ extension PostalAddress {
         // ```
         let addressLines = item.addressDictionary?["FormattedAddressLines"] as? [String] ?? []
 
-        func getCityField(_ addressLines: [String]) -> String? {
-            // Only one field means we only have the country
-            guard addressLines.count > 1 else {
-                return ""
+        func getCityField(_ addressLines: [String]) -> String {
+            if item.isoCountryCode == "US" {
+                // Only one field means we only have the country
+                guard addressLines.count > 1 else {
+                    return ""
+                }
+
+                // City field is located on the 2nd to last position
+                return addressLines
+                    .at(addressLines.count - 2)?
+                    .components(separatedBy: ",")
+                    .first ?? ""
             }
 
-            // City field is located on the 2nd to last position
-            return addressLines.at(addressLines.count - 2)
+            return item.subLocality ?? item.locality ?? ""
         }
 
-        let city = getCityField(addressLines)?
-            .components(separatedBy: ",")
-            .first ?? ""
-
+        let city = getCityField(addressLines)
         let street2 = addressLines.count > 3 ? addressLines.at(1) : ""
 
         self.init(
