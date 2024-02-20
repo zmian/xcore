@@ -133,7 +133,7 @@ public final class LiveAddressSearchClient: AddressSearchClient {
         typealias LR = L.InvalidRegion
         let appName = Bundle.app.name
 
-        var invalidRegion = AppError(
+        var invalidRegionError = AppError(
             id: "address_validation_failed_invalid_region",
             title: LR.titleOther,
             message: LR.messageMany(appName),
@@ -145,14 +145,14 @@ public final class LiveAddressSearchClient: AddressSearchClient {
         if supportedRegions.count == 1, let code = supportedRegions.first {
             let isUSA = code == "US"
             let regionName = isUSA ? "U.S." : PostalAddress.countryName(isoCode: code) ?? code
-            invalidRegion.title = LR.titleOne(regionName)
-            invalidRegion.message = LR.messageOne(appName, regionName, regionName)
+            invalidRegionError.title = LR.titleOne(regionName)
+            invalidRegionError.message = LR.messageOne(appName, regionName, regionName)
         } else if supportedRegions.count <= 5 {
             let regions = supportedRegions.formatted(.list(type: .and).locale(.us))
-            invalidRegion.message = LR.messageFew(appName, regions)
+            invalidRegionError.message = LR.messageFew(appName, regions)
         }
 
-        throw invalidRegion
+        throw invalidRegionError
     }
 }
 
