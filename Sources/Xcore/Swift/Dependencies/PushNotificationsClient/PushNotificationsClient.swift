@@ -180,7 +180,7 @@ extension PushNotificationsClient {
         /// You must execute this block at some point after processing the user’s
         /// response to let the system know that you are done. The block has no return
         /// value or parameters.
-        public let completion: @Sendable () -> Void
+        public let completion: () -> Void
 
         /// A convenience property, returning dictionary of custom information
         /// associated with the notification.
@@ -195,7 +195,7 @@ extension PushNotificationsClient {
         public init(
             center: UNUserNotificationCenter,
             response: UNNotificationResponse,
-            completion: @escaping @Sendable () -> Void
+            completion: @escaping () -> Void
         ) {
             self.center = center
             self.response = response
