@@ -141,12 +141,10 @@ public final class LiveAddressSearchClient: AddressSearchClient {
         )
 
         #warning("Use stringDict to properly localize")
-        if supportedRegions == ["US"] {
-            let regionName = "U.S."
-            invalidRegion.title = LR.titleOne(regionName)
-            invalidRegion.message = LR.messageOne(appName, regionName, regionName)
-        } else if supportedRegions.count == 1, let code = supportedRegions.first {
-            let regionName = PostalAddress.countryName(isoCode: code) ?? code
+
+        if supportedRegions.count == 1, let code = supportedRegions.first {
+            let isUSA = code == "US"
+            let regionName = isUSA ? "U.S." : PostalAddress.countryName(isoCode: code) ?? code
             invalidRegion.title = LR.titleOne(regionName)
             invalidRegion.message = LR.messageOne(appName, regionName, regionName)
         } else if supportedRegions.count <= 5 {
