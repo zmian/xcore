@@ -266,7 +266,6 @@ extension PostalAddress {
         ///     Thoroughfare = "Queens Blvd";
         ///     ZIP = 11101;
         /// }
-        ///
         /// ```
         /// - SeeAlso: http://www.openradar.appspot.com/35862589
         let addressLines = item.addressDictionary?["FormattedAddressLines"] as? [String] ?? []
