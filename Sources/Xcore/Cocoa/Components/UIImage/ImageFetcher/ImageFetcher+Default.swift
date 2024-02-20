@@ -24,10 +24,8 @@ final class DefaultImageFetcher: ImageFetcher, Sendable {
                         return (image, .memory)
                     }
 
-                    let cacheKey = image.cacheKey
-
                     // If cached then return it from the cache.
-                    if let cacheKey, let image = await cache.value(forKey: cacheKey) {
+                    if let cacheKey = image.cacheKey, let image = await cache.value(forKey: cacheKey) {
                         return (image, .memory)
                     }
 
@@ -43,7 +41,7 @@ final class DefaultImageFetcher: ImageFetcher, Sendable {
                             throw ImageFetcherError.notFound
                         }
 
-                        if let cacheKey {
+                        if let cacheKey = image.cacheKey {
                             await cache.setValue(image, forKey: cacheKey)
                         }
 
