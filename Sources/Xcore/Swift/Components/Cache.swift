@@ -8,10 +8,10 @@ import Foundation
 
 /// A mutable collection you use to temporarily store transient key-value pairs
 /// that are subject to eviction when resources are low.
-actor Cache<Key: Hashable & Sendable, Value> {
+actor Cache<Key: Sendable & Hashable, Value> {
     /// The keys of the cache.
     public private(set) var keys = Set<Key>()
-    private let cache = NSCache<KeyWrapper<Key>, ValueWrapper>()
+    private let cache = NSCache<KeyWrapper<Key>, Box<Value>>()
     private let delegate = DelegateWrapper<Value>()
 
     public init() {
@@ -63,7 +63,7 @@ actor Cache<Key: Hashable & Sendable, Value> {
     ///   - key: The key with which to associate the value.
     public func setValue(_ value: Value, forKey key: Key) {
         keys.insert(key)
-        cache.setObject(ValueWrapper(value), forKey: KeyWrapper(key))
+        cache.setObject(Box(value), forKey: KeyWrapper(key))
     }
 
     /// Sets the value of the specified key in the cache, and associates the
@@ -92,7 +92,7 @@ actor Cache<Key: Hashable & Sendable, Value> {
     ///   - cost: The cost with which to associate the key-value pair.
     public func setValue(_ value: Value, forKey key: Key, cost: Int) {
         keys.insert(key)
-        cache.setObject(ValueWrapper(value), forKey: KeyWrapper(key), cost: cost)
+        cache.setObject(Box(value), forKey: KeyWrapper(key), cost: cost)
     }
 
     /// Removes the value of the specified key in the cache.
@@ -151,15 +151,7 @@ actor Cache<Key: Hashable & Sendable, Value> {
 
 // MARK: - Wrappers
 
-private final class ValueWrapper {
-    let value: Any
-
-    init(_ value: Any) {
-        self.value = value
-    }
-}
-
-private final class KeyWrapper<Key: Hashable & Sendable>: NSObject, Sendable {
+private final class KeyWrapper<Key: Sendable & Hashable>: NSObject, Sendable {
     let key: Key
 
     init(_ key: Key) {
@@ -185,7 +177,7 @@ private final class DelegateWrapper<Value>: NSObject, NSCacheDelegate {
     func cache(_ cache: NSCache<AnyObject, AnyObject>, willEvictObject obj: Any) {
         guard
             let willEvictValue = willEvictValue,
-            let value = (obj as? ValueWrapper)?.value as? Value
+            let value = (obj as? Box<Value>)?.value
         else {
             return
         }
