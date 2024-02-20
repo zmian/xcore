@@ -188,30 +188,87 @@ extension LiveAddressSearchClient {
 
 extension PostalAddress {
     init(_ item: MKPlacemark) {
-        // Extracting the city from the formatted address lines because "sublocality"
-        // or "locality" are not uniquely identifying the proper city.
-        //
-        // For example, Brooklyn comes as a "sublocality" but Miami Beach comes as
-        // "locality", and Long Island City doesn't come in neither of these properties.
-        //
-        // However, formatted address lines returns the correct data (e.g., "Brooklyn,
-        // NY 11217"), we are parsing the string and taking the first component,
-        // returning "Brooklyn" correctly as the city.
-        //
-        // We have to check the number of lines on the address as to know where to fetch
-        // the city from: when 4 lines (address with apt number) are present the city is
-        // in position #2. If only 3 lines, then the city is in position #1.
-        //
-        // If the address has 4 lines then we use position #1 to fill `street2`.
-        //
-        // ```swift
-        // FormattedAddressLines = (
-        //     "222 Jackson St",
-        //     "Unit 5",
-        //     "Brooklyn, NY 11211",
-        //     "United States"
-        // )
-        // ```
+        /// Extracting the city from the formatted address lines because "sublocality"
+        /// or "locality" are not uniquely identifying the proper city.
+        ///
+        /// For example, Brooklyn comes as a "sublocality" but Miami Beach comes as
+        /// "locality", and Long Island City doesn't come in neither of these
+        /// properties.
+        ///
+        /// However, formatted address lines returns the correct data (e.g., "Brooklyn,
+        /// NY 11217"), we are parsing the string and taking the first component,
+        /// returning "Brooklyn" correctly as the city.
+        ///
+        /// We have to check the number of lines on the address as to know where to
+        /// fetch the city from: when 4 lines (address with apt number) are present the
+        /// city is in position #2. If only 3 lines, then the city is in position #1.
+        ///
+        /// If the address has 4 lines then we use position #1 to fill `street2`.
+        ///
+        /// ```swift
+        ///
+        /// // Brooklyn
+        ///
+        /// // Sample output from "FormattedAddressLines"
+        /// FormattedAddressLines = (
+        ///     "222 Jackson St",
+        ///     "Unit 5",
+        ///     "Brooklyn, NY 11211",
+        ///     "United States"
+        /// )
+        ///
+        /// // Complete output of "item.addressDictionary"
+        /// {
+        ///     City = "New York";
+        ///     Country = "United States";
+        ///     CountryCode = US;
+        ///     FormattedAddressLines = (
+        ///         "222 Jackson St",
+        ///         "Unit 5", // ← Completely omitted from properties.
+        ///         "Brooklyn, NY  11211",
+        ///         "United States"
+        ///     );
+        ///     Name = "222 Jackson St";
+        ///     State = NY;
+        ///     Street = "222 Jackson St";
+        ///     SubAdministrativeArea = "Kings County";
+        ///     SubLocality = Brooklyn; // ← Shown under "SubLocality".
+        ///     SubThoroughfare = 222;
+        ///     Thoroughfare = "Jackson St";
+        ///     ZIP = 11211;
+        /// }
+        ///
+        /// // Queens
+        ///
+        /// // Sample output from "FormattedAddressLines"
+        /// FormattedAddressLines = (
+        ///     "38-18 Queens Blvd",
+        ///     "Long Island City, NY 11101",
+        ///     "United States"
+        /// )
+        ///
+        /// // Complete output of "item.addressDictionary"
+        /// {
+        ///     City = "New York";
+        ///     Country = "United States";
+        ///     CountryCode = US;
+        ///     FormattedAddressLines = (
+        ///         "38-18 Queens Blvd",
+        ///         "Long Island City, NY  11101",
+        ///         "United States"
+        ///     );
+        ///     Name = "38-18 Queens Blvd";
+        ///     State = NY;
+        ///     Street = "38-18 Queens Blvd";
+        ///     SubAdministrativeArea = "Queens County";
+        ///     SubLocality = Queens; // ← Should of been "Long Island City" as shown under "FormattedAddressLines".
+        ///     SubThoroughfare = "38-18";
+        ///     Thoroughfare = "Queens Blvd";
+        ///     ZIP = 11101;
+        /// }
+        ///
+        /// ```
+        /// - SeeAlso: http://www.openradar.appspot.com/35862589
         let addressLines = item.addressDictionary?["FormattedAddressLines"] as? [String] ?? []
 
         func getCityField(_ addressLines: [String]) -> String {
