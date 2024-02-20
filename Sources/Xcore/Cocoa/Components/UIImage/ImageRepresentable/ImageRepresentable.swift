@@ -23,10 +23,9 @@ public enum ImageSourceType: Sendable, Hashable {
 
     public var isRemoteUrl: Bool {
         guard
-            case let .url(rawValue) = self,
-            let url = URL(string: rawValue),
-            url.host != nil,
-            url.schemeType != .file
+            case let .url(string) = self,
+            let url = URL(string: string),
+            [.http, .https].contains(url.schemeType)
         else {
             return false
         }

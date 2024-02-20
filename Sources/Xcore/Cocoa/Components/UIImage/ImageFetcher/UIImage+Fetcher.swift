@@ -17,8 +17,7 @@ extension UIImage {
 extension UIImage.Fetcher {
     /// The registered list of fetchers.
     private static let shared = CompositeImageFetcher([
-        RemoteImageFetcher(),
-        LocalImageFetcher()
+        DefaultImageFetcher()
     ])
 
     /// Register the given fetcher if it's not already registered.

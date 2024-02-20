@@ -6,11 +6,11 @@
 
 import UIKit
 
-final class LocalImageFetcher: ImageFetcher, Sendable {
+final class DefaultImageFetcher: ImageFetcher, Sendable {
     private let cache = Cache<String, UIImage>()
 
     func canHandle(_ image: ImageRepresentable) -> Bool {
-        !image.imageSource.isRemoteUrl
+        image.imageSource.isValid
     }
 
     func fetch(_ image: ImageRepresentable, in _: UIImageView?) async throws -> Output {
@@ -19,34 +19,41 @@ final class LocalImageFetcher: ImageFetcher, Sendable {
                 return (image, .memory)
             case let .url(value):
                 let task = Task<Output, Error> {
+                    // Bundle image
                     if let image = UIImage(named: value, in: image.bundle, compatibleWith: nil) {
                         return (image, .memory)
                     }
 
                     let cacheKey = image.cacheKey
 
+                    // If cached then return it from the cache.
                     if let cacheKey, let image = await cache.value(forKey: cacheKey) {
                         return (image, .memory)
                     }
 
-                    guard
-                        let url = URL(string: value),
-                        url.schemeType == .file
-                    else {
+                    guard let url = URL(string: value) else {
                         throw ImageFetcherError.notFound
                     }
 
-                    let data = try Data(contentsOf: url)
+                    // File url
+                    if url.isFileURL {
+                        let data = try Data(contentsOf: url)
 
-                    guard let image = UIImage(data: data) else {
-                        throw ImageFetcherError.notFound
+                        guard let image = UIImage(data: data) else {
+                            throw ImageFetcherError.notFound
+                        }
+
+                        if let cacheKey {
+                            await cache.setValue(image, forKey: cacheKey)
+                        }
+
+                        return (image, .disk)
+                    } else if image.imageSource.isRemoteUrl {
+                        // Remote url
+                        return try await ImageDownloader.load(url: url)
                     }
 
-                    if let cacheKey {
-                        await cache.setValue(image, forKey: cacheKey)
-                    }
-
-                    return (image, .disk)
+                    throw ImageFetcherError.notFound
                 }
 
                 return try await task.value
@@ -55,6 +62,7 @@ final class LocalImageFetcher: ImageFetcher, Sendable {
 
     func removeCache() {
         Task {
+            ImageDownloader.removeCache()
             await cache.removeAll()
         }
     }
