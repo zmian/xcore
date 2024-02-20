@@ -9,9 +9,9 @@ import SwiftUI
 extension TextFieldConfiguration {
     public enum PersonNameComponent: String, Sendable, Hashable {
         case fullName
-        case firstName
+        case givenName
         case middleName
-        case lastName
+        case familyName
     }
 }
 
@@ -22,16 +22,16 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         switch component {
             case .fullName:
                 return fullName
-            case .firstName:
-                return firstName
+            case .givenName:
+                return givenName
             case .middleName:
                 return middleName
-            case .lastName:
-                return lastName
+            case .familyName:
+                return familyName
         }
     }
 
-    /// Name
+    /// A property that defines the content in a text input area as a full name.
     private static var fullName: Self {
         .init(
             id: #function,
@@ -40,8 +40,9 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         )
     }
 
-    /// First Name
-    private static var firstName: Self {
+    /// A property that defines the content in a text input area as a given name,
+    /// or first name.
+    private static var givenName: Self {
         .init(
             id: #function,
             autocapitalization: .words,
@@ -49,21 +50,22 @@ extension TextFieldConfiguration<PassthroughTextFieldFormatter> {
         )
     }
 
-    /// Last Name
-    private static var lastName: Self {
-        .init(
-            id: #function,
-            autocapitalization: .words,
-            textContentType: .familyName
-        )
-    }
-
-    /// Middle Name
+    /// A property that defines the content in a text input area as a middle name.
     private static var middleName: Self {
         .init(
             id: #function,
             autocapitalization: .words,
             textContentType: .middleName
+        )
+    }
+
+    /// A property that defines the content in a text input area as a family name,
+    /// or last name.
+    private static var familyName: Self {
+        .init(
+            id: #function,
+            autocapitalization: .words,
+            textContentType: .familyName
         )
     }
 }
