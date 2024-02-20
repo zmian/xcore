@@ -224,7 +224,7 @@ extension PostalAddress {
         ///     CountryCode = US;
         ///     FormattedAddressLines = (
         ///         "222 Jackson St",
-        ///         "Unit 5", // ← Completely omitted from properties.
+        ///         "Unit 5", // ⚠️ ← Completely omitted from properties.
         ///         "Brooklyn, NY  11211",
         ///         "United States"
         ///     );
@@ -232,7 +232,7 @@ extension PostalAddress {
         ///     State = NY;
         ///     Street = "222 Jackson St";
         ///     SubAdministrativeArea = "Kings County";
-        ///     SubLocality = Brooklyn; // ← Shown under "SubLocality".
+        ///     SubLocality = Brooklyn; // ⚠️ ← Shown under "SubLocality".
         ///     SubThoroughfare = 222;
         ///     Thoroughfare = "Jackson St";
         ///     ZIP = 11211;
@@ -261,7 +261,7 @@ extension PostalAddress {
         ///     State = NY;
         ///     Street = "38-18 Queens Blvd";
         ///     SubAdministrativeArea = "Queens County";
-        ///     SubLocality = Queens; // ← Should of been "Long Island City" as shown under "FormattedAddressLines".
+        ///     SubLocality = Queens; // ⚠️ ← Should of been "Long Island City" as shown under "FormattedAddressLines".
         ///     SubThoroughfare = "38-18";
         ///     Thoroughfare = "Queens Blvd";
         ///     ZIP = 11101;
