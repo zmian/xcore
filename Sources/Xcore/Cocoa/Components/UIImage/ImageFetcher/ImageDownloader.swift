@@ -15,7 +15,7 @@ enum ImageDownloader {
     /// cached version otherwise.
     static func load(url: URL) async throws -> (UIImage, ImageSourceType.CacheType) {
         var token: SDWebImageCombinedOperation?
-        let cancel: ImageDownloaderCancelToken = .init { token?.cancel() }
+        let cancel = ImageDownloaderCancelToken { token?.cancel() }
 
         return try await withTaskCancellationHandler {
             try await withCheckedThrowingContinuation { continuation in
@@ -42,7 +42,7 @@ enum ImageDownloader {
     /// Downloads the image from the given url.
     static func download(url: URL) async throws -> UIImage {
         var token: SDWebImageDownloadToken?
-        let cancel: ImageDownloaderCancelToken = .init { token?.cancel() }
+        let cancel = ImageDownloaderCancelToken { token?.cancel() }
 
         return try await withTaskCancellationHandler {
             try await withCheckedThrowingContinuation { continuation in
