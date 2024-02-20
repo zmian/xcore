@@ -6,7 +6,7 @@
 
 import Foundation
 
-/// A namespace for previews purpose.
+/// A namespace for common data suitable to display in the previews and tests.
 public enum Samples {}
 
 // MARK: - Built-in
