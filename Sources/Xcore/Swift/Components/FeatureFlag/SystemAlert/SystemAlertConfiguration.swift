@@ -141,7 +141,7 @@ extension SystemAlertConfiguration {
 // MARK: - Sample
 
 extension SystemAlertConfiguration {
-    /// Returns a sample maintenance mode system alert suitable to display in the
+    /// Returns a sample maintenance mode system alert suitable for display in
     /// previews and tests.
     public static var maintenance: Self {
         .init(
@@ -152,7 +152,7 @@ extension SystemAlertConfiguration {
         )
     }
 
-    /// Returns a sample unsupported app version alert suitable to display in the
+    /// Returns a sample unsupported app version alert suitable for display in
     /// previews and tests.
     public static var unsupportedAppVersion: Self {
         .init(
@@ -164,8 +164,8 @@ extension SystemAlertConfiguration {
         )
     }
 
-    /// Returns a sample unsupported app version alert with inline links suitable to
-    /// display in the previews and tests.
+    /// Returns a sample unsupported app version alert with inline links suitable
+    /// for display in previews and tests.
     public static var unsupportedAppVersionWithLinks: Self {
         .init(
             id: "unsupported_app_version",

@@ -99,7 +99,7 @@ extension PostalAddress {
 // MARK: - Sample
 
 extension PostalAddress {
-    /// Returns an address suitable for display in previews and tests.
+    /// Returns a sample address suitable for display in previews and tests.
     public static var sample: Self {
         .init(
             street1: "One Apple Park Way",

@@ -50,7 +50,7 @@ public protocol TextFieldFormatter: Sendable {
     /// - Parameter string: A string that is parsed to generate the returned value.
     func value(from string: String) -> Value
 
-    /// Returns a formatted string that is suitable to display to the user.
+    /// Returns a formatted string suitable for display to the user.
     ///
     /// **Sample Outout**
     ///
