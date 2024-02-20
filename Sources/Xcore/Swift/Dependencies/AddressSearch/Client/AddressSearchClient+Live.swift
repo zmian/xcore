@@ -161,9 +161,9 @@ public final class LiveAddressSearchClient: AddressSearchClient {
 extension LiveAddressSearchClient {
     private final class Delegate: NSObject, MKLocalSearchCompleterDelegate, @unchecked Sendable {
         fileprivate let searchCompleter = MKLocalSearchCompleter()
-        private let onResults: ([AddressSearchResult]) -> Void
+        private let onResults: @Sendable ([AddressSearchResult]) -> Void
 
-        init(onResults: @escaping ([AddressSearchResult]) -> Void) {
+        init(onResults: @escaping @Sendable ([AddressSearchResult]) -> Void) {
             self.onResults = onResults
             super.init()
             searchCompleter.delegate = self
