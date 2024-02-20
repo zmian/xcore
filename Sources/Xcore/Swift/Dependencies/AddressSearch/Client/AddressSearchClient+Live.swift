@@ -202,7 +202,7 @@ extension PostalAddress {
         // the city from: when 4 lines (address with apt number) are present the city is
         // in position #2. If only 3 lines, then the city is in position #1.
         //
-        // If the address has 4 lines then we use position #1 to fill `address2`.
+        // If the address has 4 lines then we use position #1 to fill `street2`.
         //
         // ```swift
         // FormattedAddressLines = (
