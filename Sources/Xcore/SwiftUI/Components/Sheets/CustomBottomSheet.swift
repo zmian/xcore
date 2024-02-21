@@ -61,26 +61,19 @@ extension CustomBottomSheet where Header == Text? {
 // MARK: - ButtonStyle
 
 private struct CustomBottomSheetButtonStyle: ButtonStyle {
+    @Environment(\.multilineTextAlignment) private var textAlignment
+    @Environment(\.isEnabled) private var isEnabled
+
     func makeBody(configuration: Configuration) -> some View {
-        InternalBody(configuration: configuration)
+        configuration.label
+            .frame(maxWidth: .infinity, alignment: textAlignment.alignment)
+            .padding(.defaultSpacing)
+            .contentShape(.rect)
+            .opacity(opacity(configuration))
     }
 
-    private struct InternalBody: View {
-        @Environment(\.multilineTextAlignment) private var textAlignment
-        @Environment(\.isEnabled) private var isEnabled
-        let configuration: Configuration
-
-        var body: some View {
-            configuration.label
-                .frame(maxWidth: .infinity, alignment: textAlignment.alignment)
-                .padding(.defaultSpacing)
-                .contentShape(.rect)
-                .opacity(opacity)
-        }
-
-        private var opacity: CGFloat {
-            !isEnabled ? 0.2 : (configuration.isPressed ? 0.2 : 1)
-        }
+    private func opacity(_ configuration: Configuration) -> CGFloat {
+        !isEnabled ? 0.2 : (configuration.isPressed ? 0.2 : 1)
     }
 }
 

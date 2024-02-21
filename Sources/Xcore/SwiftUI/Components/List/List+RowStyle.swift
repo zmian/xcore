@@ -27,32 +27,24 @@ extension View {
 /// A structure to modify the row to add row insets and custom separator with
 /// full control over the separator insets as well.
 private struct ListRowModifier: ViewModifier {
+    @Environment(\.theme) private var theme
+    @Environment(\.defaultMinListRowHeight) private var minHeight
+    @Environment(\.customListRowInsets) private var rowInsets
+    @Environment(\.listRowSeparatorStyle) private var separatorStyle
+
     func body(content: Content) -> some View {
-        InternalBody(content: content)
-    }
-
-    private struct InternalBody: View {
-        @Environment(\.theme) private var theme
-        @Environment(\.defaultMinListRowHeight) private var minHeight
-        @Environment(\.customListRowInsets) private var rowInsets
-        @Environment(\.listRowSeparatorStyle) private var separatorStyle
-
-        let content: Content
-
-        var body: some View {
-            content
-                .padding(rowInsets)
-                .frame(maxWidth: .infinity, minHeight: minHeight, alignment: .leading)
-                .listRowInsets(.zero)
-                .listRowBackground(Color.clear)
-                .listRowSeparator(.hidden)
-                .overlay(alignment: .bottom) {
-                    if separatorStyle != .hidden {
-                        Separator()
-                            .padding(separatorStyle.insets)
-                    }
+        content
+            .padding(rowInsets)
+            .frame(maxWidth: .infinity, minHeight: minHeight, alignment: .leading)
+            .listRowInsets(.zero)
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
+            .overlay(alignment: .bottom) {
+                if separatorStyle != .hidden {
+                    Separator()
+                        .padding(separatorStyle.insets)
                 }
-                .contentShape(.rect)
-        }
+            }
+            .contentShape(.rect)
     }
 }
