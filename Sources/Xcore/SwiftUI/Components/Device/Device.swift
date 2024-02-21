@@ -33,7 +33,7 @@ public final class Device: ObservableObject {
         #if os(iOS)
         cancellable = screen
             .objectWillChange
-            .receive(on: DispatchQueue.main)
+            .receive(on: .main)
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
             }

@@ -58,19 +58,19 @@ extension DispatchTimeInterval {
 
 /// Schedules a block for execution using the specified attributes, and returns
 /// immediately.
-public func withDelay(_ interval: TimeInterval, perform work: @escaping () -> Void) {
+public func withDelay(_ interval: TimeInterval, perform work: @escaping @Sendable () -> Void) {
     interval > 0 ? withDelay(.now() + interval, perform: work) : work()
 }
 
 /// Schedules a block for execution using the specified attributes, and returns
 /// immediately.
-public func withDelay(_ interval: DispatchTimeInterval, perform work: @escaping () -> Void) {
+public func withDelay(_ interval: DispatchTimeInterval, perform work: @escaping @Sendable () -> Void) {
     !interval.isImmediate ? withDelay(.now() + interval, perform: work) : work()
 }
 
 /// Schedules a block for execution using the specified attributes, and returns
 /// immediately.
-public func withDelay(_ deadline: DispatchTime, perform work: @escaping () -> Void) {
+public func withDelay(_ deadline: DispatchTime, perform work: @escaping @Sendable () -> Void) {
     DispatchQueue.main.asyncAfter(deadline: deadline, execute: work)
 }
 

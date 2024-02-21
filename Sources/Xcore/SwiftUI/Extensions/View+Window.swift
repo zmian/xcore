@@ -134,7 +134,7 @@ private struct Window<Content: View>: UIViewControllerRepresentable {
             viewController.update()
         } else {
             // Fixes an issue where disappear animations are broken.
-            DispatchQueue.main.asyncAfter(deadline: .now() + .default) {
+            withDelay(.default) {
                 viewController.update()
             }
         }

@@ -80,7 +80,7 @@ public final class Screen: ObservableObject {
         cancellable = NotificationCenter
             .default
             .publisher(for: UIDevice.orientationDidChangeNotification, object: nil)
-            .receive(on: DispatchQueue.main)
+            .receive(on: .main)
             .sink { [weak self] _ in
                 self?.objectWillChange.send()
             }
