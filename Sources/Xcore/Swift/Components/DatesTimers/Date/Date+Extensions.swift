@@ -22,7 +22,7 @@ extension Date {
     /// **Usage**
     ///
     /// ```swift
-    /// let result = Date.calendar(.gregorian) {
+    /// let result = Date.withCalendar(.gregorian) {
     ///     // Perform date-related operations using the .gregorian calendar
     ///     let currentDate = Date()
     ///     let formattedDate = currentDate.format(.monthYear(.abbreviated)):
@@ -38,7 +38,7 @@ extension Date {
     ///
     /// - Note: The `default` calendar is restored to its original state after the
     ///   work closure completes, even if an error occurs within the closure.
-    public static func calendar<R>(
+    public static func withCalendar<R>(
         _ new: Calendar,
         work: () throws -> R
     ) rethrows -> R {
