@@ -108,7 +108,7 @@ extension TextFieldConfiguration {
 
 extension TextFieldConfiguration<AnyTextFieldFormatter> {
     /// Erase formatter
-    init<F: TextFieldFormatter>(_ configuration: TextFieldConfiguration<F>) {
+    init(_ configuration: TextFieldConfiguration<some TextFieldFormatter>) {
         self.init(
             id: .init(rawValue: configuration.id.rawValue),
             autocapitalization: configuration.autocapitalization,
