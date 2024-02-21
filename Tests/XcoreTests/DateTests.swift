@@ -909,7 +909,7 @@ final class DateTest: TestCase {
         let date = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22, calendar: .current)
         let expectedDate = Date(year: 2022, month: 5, day: 4, calendar: .current)
 
-        Date.calendar(.current) {
+        Date.withCalendar(.current) {
             XCTAssertEqual(date.startOf(.day), expectedDate)
             XCTAssertEqual(date.removingTime(), expectedDate)
             XCTAssertEqual(date.startOf(.day), date.removingTime())
