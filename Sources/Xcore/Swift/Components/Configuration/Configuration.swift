@@ -14,7 +14,7 @@ import UIKit
 /// **Configuration Declaration**
 ///
 /// ```swift
-/// extension XConfiguration where Type: UILabel {
+/// extension XConfiguration<UILabel> {
 ///     static var header: XConfiguration {
 ///         .init(id: #function) {
 ///             $0.font = .app(.title1)

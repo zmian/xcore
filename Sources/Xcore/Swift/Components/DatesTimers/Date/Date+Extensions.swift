@@ -385,7 +385,7 @@ extension Date {
 // MARK: - Date Picker
 
 @MainActor
-extension XConfiguration where Type: UIDatePicker {
+extension XConfiguration<UIDatePicker> {
     public static func `default`(minimumDate: Date) -> Self {
         .init(id: "default") { picker in
             picker.minimumDate = minimumDate

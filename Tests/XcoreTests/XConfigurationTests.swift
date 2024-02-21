@@ -95,7 +95,7 @@ final class XConfigurationTests: TestCase {
 
 // MARK: - Test Configurations
 
-extension XConfiguration where Type: UILabel {
+extension XConfiguration<UILabel> {
     fileprivate static var hello: Self {
         .init(id: "greeting") {
             $0.text = "Hello, world!"
@@ -116,7 +116,7 @@ extension XConfiguration where Type: UILabel {
     }
 }
 
-extension XConfiguration where Type: UIBarButtonItem {
+extension XConfiguration<UIBarButtonItem> {
     fileprivate static var someConfiguration: Self {
         .init {
             $0.textColor = .yellow
