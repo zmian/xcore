@@ -10,26 +10,26 @@ import SwiftUI
 /// automatically replaces the switch with progress view when `isLoading` value
 /// is `true`.
 public struct LoadingSwitchToggleStyle: ToggleStyle {
+    @Environment(\.isLoading) private var isLoading
+
     public func makeBody(configuration: Configuration) -> some View {
-        EnvironmentReader(\.isLoading) { isLoading in
-            HStack {
-                configuration.label
+        HStack {
+            configuration.label
 
-                Spacer()
+            Spacer()
 
-                ZStack(alignment: .trailing) {
-                    ProgressView()
-                        .hidden(!isLoading)
+            ZStack(alignment: .trailing) {
+                ProgressView()
+                    .hidden(!isLoading)
 
-                    Toggle(isOn: configuration.$isOn) {
-                        EmptyView()
-                    }
-                    .labelsHidden()
-                    .hidden(isLoading)
+                Toggle(isOn: configuration.$isOn) {
+                    EmptyView()
                 }
+                .labelsHidden()
+                .hidden(isLoading)
             }
-            .animation(.default, value: isLoading)
         }
+        .animation(.default, value: isLoading)
     }
 }
 
@@ -41,3 +41,31 @@ extension ToggleStyle where Self == LoadingSwitchToggleStyle {
     /// is `true`.
     public static var loadingSwitch: Self { .init() }
 }
+
+#if DEBUG
+
+// MARK: - Preview
+
+#Preview {
+    TogglePreview()
+}
+
+private struct TogglePreview: View {
+    @State private var isLoading = false
+
+    var body: some View {
+        List {
+            Toggle("Show Loading", isOn: $isLoading)
+                .toggleStyle(.loadingSwitch)
+                .isLoading(isLoading)
+        }
+        .onChange(of: isLoading) { _ in
+            if isLoading {
+                withDelay(1) {
+                    isLoading = false
+                }
+            }
+        }
+    }
+}
+#endif

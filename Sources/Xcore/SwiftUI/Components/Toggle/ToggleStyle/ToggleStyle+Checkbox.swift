@@ -9,6 +9,7 @@ import SwiftUI
 /// A toggle style that displays a checkbox and its label based on the given
 /// horizontal edge.
 public struct CheckboxToggleStyle: ToggleStyle {
+    @Environment(\.theme) private var theme
     private let edge: HorizontalEdge
 
     init(edge: HorizontalEdge) {
@@ -32,17 +33,15 @@ public struct CheckboxToggleStyle: ToggleStyle {
     }
 
     private func toggle(_ configuration: Configuration) -> some View {
-        EnvironmentReader(\.theme) { theme in
-            Image(system: configuration.isOn ? .checkmarkCircleFill : .circle)
-                .resizable()
-                .frame(24)
-                .foregroundStyle(
-                    configuration.isOn ? theme.toggleColor : theme.separatorColor
-                )
-                .onTapGesture {
-                    configuration.isOn.toggle()
-                }
-        }
+        Image(system: configuration.isOn ? .checkmarkCircleFill : .circle)
+            .resizable()
+            .frame(24)
+            .foregroundStyle(
+                configuration.isOn ? theme.toggleColor : theme.separatorColor
+            )
+            .onTapGesture {
+                configuration.isOn.toggle()
+            }
     }
 }
 
@@ -55,3 +54,23 @@ extension ToggleStyle where Self == CheckboxToggleStyle {
         .init(edge: edge)
     }
 }
+
+#if DEBUG
+
+// MARK: - Preview
+
+#Preview {
+    TogglePreview()
+}
+
+private struct TogglePreview: View {
+    @State private var isLoading = false
+
+    var body: some View {
+        List {
+            Toggle("Show Loading", isOn: $isLoading)
+                .toggleStyle(.checkbox(edge: .leading))
+        }
+    }
+}
+#endif
