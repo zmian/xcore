@@ -20,12 +20,26 @@ public struct WebView: View {
     private var messageHandlers: [String: MessageHandler] = [:]
     private var localStorageItems: [String: String] = [:]
     private var cookies: [HTTPCookie] = []
-    private var policyDecision: PolicyDecision = { _, _ in .allow }
     private var showLoader = false
     private var showRefreshControl = true
     private var additionalConfiguration: (WKWebView) -> Void = { _ in }
     private var pullToRefreshHandler: () -> Void = {}
     private var createWebViewHandler: (URLRequest) -> WKWebView? = { _ in nil }
+    private var policyDecision: PolicyDecision = { _, action in
+        guard let scheme = action.request.url?.schemeType else {
+            return .allow
+        }
+
+        // Handle email, sms and tel urls natively.
+        switch scheme {
+            case .email, .sms, .tel:
+                @Dependency(\.openUrl) var openUrl
+                openUrl(action.request.url)
+                return .cancel
+            default:
+                return .allow
+        }
+    }
 
     public init(url: URL) {
         self.init(urlRequest: .init(url: url))
