@@ -5,7 +5,7 @@
 //
 
 import SwiftUI
-@_implementationOnly import SafariServices
+private import SafariServices
 
 /// Provides functionality for opening a URL.
 ///

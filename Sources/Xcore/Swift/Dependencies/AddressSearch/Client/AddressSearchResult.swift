@@ -5,7 +5,7 @@
 //
 
 import Foundation
-@_implementationOnly import MapKit
+internal import MapKit
 
 /// A structure representing a fully-formed string that completes a partial
 /// string.

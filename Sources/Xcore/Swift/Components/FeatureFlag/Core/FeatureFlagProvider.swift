@@ -11,7 +11,7 @@ import Foundation
 /// Sample implementation for fetching value from Firebase Remote Config:
 ///
 /// ```swift
-/// @_implementationOnly import FirebaseRemoteConfig
+/// private import FirebaseRemoteConfig
 ///
 /// struct FirebaseFeatureFlagProvider: FeatureFlagProvider {
 ///     func value(forKey key: FeatureFlag.Key) -> FeatureFlag.Value? {

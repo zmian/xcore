@@ -5,7 +5,7 @@
 //
 
 import UIKit
-@_implementationOnly import CoreImage.CIFilterBuiltins
+private import CoreImage.CIFilterBuiltins
 
 /// Provides functionality for generating a QR code.
 public struct QRCodeClient: Sendable {

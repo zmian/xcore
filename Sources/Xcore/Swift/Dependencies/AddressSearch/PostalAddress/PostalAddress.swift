@@ -5,7 +5,7 @@
 //
 
 import Foundation
-@_implementationOnly import Contacts
+private import Contacts
 
 /// A structure representing a postal address.
 public struct PostalAddress: Sendable, Hashable, Identifiable, CustomStringConvertible {

@@ -5,7 +5,7 @@
 //
 
 import Foundation
-@_implementationOnly import MapKit
+internal import MapKit
 
 // MARK: - Dot Syntax Support
 

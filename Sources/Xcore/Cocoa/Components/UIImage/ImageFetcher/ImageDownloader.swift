@@ -5,7 +5,7 @@
 //
 
 import UIKit
-@_implementationOnly import SDWebImage
+private import SDWebImage
 
 /// An internal class to download remote images.
 ///
