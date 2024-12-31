@@ -6,7 +6,7 @@
 
 import Foundation
 
-extension Calendar.Component: RawRepresentable {
+extension Calendar.Component: @retroactive RawRepresentable {
     public init?(rawValue: String) {
         switch rawValue {
             case Self.era.rawValue:
@@ -17,6 +17,9 @@ extension Calendar.Component: RawRepresentable {
                 self = .month
             case Self.day.rawValue:
                 self = .day
+            // #available(iOS 18, *)
+            // case Self.dayOfYear.rawValue:
+                // self = .dayOfYear
             case Self.hour.rawValue:
                 self = .hour
             case Self.minute.rawValue:
@@ -41,9 +44,8 @@ extension Calendar.Component: RawRepresentable {
                 self = .calendar
             case Self.timeZone.rawValue:
                 self = .timeZone
-            // #available(iOS 17, *)
-            // case Self.isLeapMonth.rawValue:
-                // self = .isLeapMonth
+            case Self.isLeapMonth.rawValue:
+                self = .isLeapMonth
             default:
                 return nil
         }
@@ -59,6 +61,8 @@ extension Calendar.Component: RawRepresentable {
                 return "month"
             case .day:
                 return "day"
+            case .dayOfYear:
+                return "dayOfYear"
             case .hour:
                 return "hour"
             case .minute:

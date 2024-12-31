@@ -25,7 +25,7 @@ extension PushNotificationsClient {
 
 // MARK: - Implementation
 
-private final class LivePushNotificationsClient: NSObject {
+private final class LivePushNotificationsClient: NSObject, Sendable {
     typealias Event = PushNotificationsClient.Event
     typealias AuthorizationStatus = PushNotificationsClient.AuthorizationStatus
     @Dependency(\.appPhase) private var appPhase
@@ -49,7 +49,7 @@ private final class LivePushNotificationsClient: NSObject {
         notificationTask = Task {
             // On foreground, get authorization status in case user goes into the System
             // Settings and toggled the notifications settings.
-            for await _ in await NotificationCenter.async(UIApplication.willEnterForegroundNotification) {
+            for await _ in NotificationCenter.async(UIApplication.willEnterForegroundNotification) {
                 // Get the latest authorization status so that `events` stream can receives
                 // the latest authorization status after the app enters foreground (If user
                 // toggles the notification settings in the system Settings.app).
