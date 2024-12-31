@@ -9,53 +9,25 @@ import SwiftUI
 // MARK: - Theme
 
 extension EnvironmentValues {
-    private enum ThemeKey: EnvironmentKey {
-        static let defaultValue: Theme = .default
-    }
-
-    public var theme: Theme {
-        get { self[ThemeKey.self] }
-        set { self[ThemeKey.self] = newValue }
-    }
+    @Entry public var theme: Theme = .default
 }
 
 // MARK: - DefaultButtonFont
 
 extension EnvironmentValues {
-    private enum DefaultButtonFontKey: EnvironmentKey {
-        static let defaultValue: Font? = nil
-    }
-
-    public var defaultButtonFont: Font? {
-        get { self[DefaultButtonFontKey.self] }
-        set { self[DefaultButtonFontKey.self] = newValue }
-    }
+    @Entry public var defaultButtonFont: Font?
 }
 
 // MARK: - DefaultMinButtonHeight
 
 extension EnvironmentValues {
-    private enum DefaultMinButtonHeightKey: EnvironmentKey {
-        static let defaultValue: CGFloat = 50
-    }
-
-    public var defaultMinButtonHeight: CGFloat {
-        get { self[DefaultMinButtonHeightKey.self] }
-        set { self[DefaultMinButtonHeightKey.self] = newValue }
-    }
+    @Entry public var defaultMinButtonHeight: CGFloat = 50
 }
 
 // MARK: - DefaultOulineButtonBorderColor
 
 extension EnvironmentValues {
-    private enum DefaultOutlineButtonBorderColorKey: EnvironmentKey {
-        static let defaultValue: Color? = nil
-    }
-
-    public var defaultOutlineButtonBorderColor: Color? {
-        get { self[DefaultOutlineButtonBorderColorKey.self] }
-        set { self[DefaultOutlineButtonBorderColorKey.self] = newValue }
-    }
+    @Entry public var defaultOutlineButtonBorderColor: Color?
 }
 
 // MARK: - View Helpers

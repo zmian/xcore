@@ -67,13 +67,6 @@ extension Device {
 // MARK: - Environment Support
 
 extension EnvironmentValues {
-    private enum DeviceKey: EnvironmentKey {
-        static let defaultValue: Device = .current
-    }
-
     /// An object representing the device.
-    public var device: Device {
-        get { self[DeviceKey.self] }
-        set { self[DeviceKey.self] = newValue }
-    }
+    @Entry public var device: Device = .current
 }

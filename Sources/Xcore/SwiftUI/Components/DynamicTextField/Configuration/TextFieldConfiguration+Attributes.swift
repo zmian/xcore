@@ -42,14 +42,7 @@ public struct TextFieldAttributes: Sendable, Hashable, MutableAppliable {
 // MARK: - Environment
 
 extension EnvironmentValues {
-    private enum AttributesKey: EnvironmentKey {
-        static let defaultValue = TextFieldAttributes()
-    }
-
-    public var textFieldAttributes: TextFieldAttributes {
-        get { self[AttributesKey.self] }
-        set { self[AttributesKey.self] = newValue }
-    }
+    @Entry public var textFieldAttributes = TextFieldAttributes()
 }
 
 // MARK: - View Helpers

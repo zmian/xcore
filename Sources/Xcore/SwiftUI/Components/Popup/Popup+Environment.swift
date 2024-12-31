@@ -6,48 +6,13 @@
 
 import SwiftUI
 
-// MARK: - Keys
-
-extension EnvironmentValues {
-    private enum PopupCornerRadiusKey: EnvironmentKey {
-        static let defaultValue: CGFloat = 16
-    }
-
-    private enum PopupPreferredWidthKey: EnvironmentKey {
-        static let defaultValue: CGFloat = AppConstants.popupPreferredWidth
-    }
-
-    private enum PopupTextAlignmentKey: EnvironmentKey {
-        static let defaultValue: TextAlignment = .center
-    }
-
-    private enum PopupDismissActionKey: EnvironmentKey {
-        static let defaultValue: PopupDismissAction? = nil
-    }
-}
-
 // MARK: - Values
 
 extension EnvironmentValues {
-    var popupCornerRadius: CGFloat {
-        get { self[PopupCornerRadiusKey.self] }
-        set { self[PopupCornerRadiusKey.self] = newValue }
-    }
-
-    var popupPreferredWidth: CGFloat {
-        get { self[PopupPreferredWidthKey.self] }
-        set { self[PopupPreferredWidthKey.self] = newValue }
-    }
-
-    var popupTextAlignment: TextAlignment {
-        get { self[PopupTextAlignmentKey.self] }
-        set { self[PopupTextAlignmentKey.self] = newValue }
-    }
-
-    var popupDismissAction: PopupDismissAction? {
-        get { self[PopupDismissActionKey.self] }
-        set { self[PopupDismissActionKey.self] = newValue }
-    }
+    @Entry var popupCornerRadius: CGFloat = 16
+    @Entry var popupPreferredWidth: CGFloat = AppConstants.popupPreferredWidth
+    @Entry var popupTextAlignment: TextAlignment = .center
+    @Entry var popupDismissAction: PopupDismissAction?
 }
 
 // MARK: - View Helpers

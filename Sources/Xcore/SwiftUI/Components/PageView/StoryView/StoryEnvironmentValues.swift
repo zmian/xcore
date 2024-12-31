@@ -6,32 +6,6 @@
 
 import SwiftUI
 
-// MARK: - Progress Indicator Color
-
-extension EnvironmentValues {
-    private enum StoryProgressIndicatorColorKey: EnvironmentKey {
-        static let defaultValue: Color = .accentColor
-    }
-
-    var storyProgressIndicatorColor: Color {
-        get { self[StoryProgressIndicatorColorKey.self] }
-        set { self[StoryProgressIndicatorColorKey.self] = newValue }
-    }
-}
-
-// MARK: - Progress Indicator Insets
-
-extension EnvironmentValues {
-    private enum StoryProgressIndicatorInsetsKey: EnvironmentKey {
-        static let defaultValue = EdgeInsets(horizontal: .defaultSpacing)
-    }
-
-    var storyProgressIndicatorInsets: EdgeInsets {
-        get { self[StoryProgressIndicatorInsetsKey.self] }
-        set { self[StoryProgressIndicatorInsetsKey.self] = newValue }
-    }
-}
-
 // MARK: - View Helpers
 
 extension View {
@@ -42,4 +16,9 @@ extension View {
     public func storyProgressIndicatorInsets(_ insets: EdgeInsets) -> some View {
         environment(\.storyProgressIndicatorInsets, insets)
     }
+}
+
+extension EnvironmentValues {
+    @Entry var storyProgressIndicatorColor: Color = .accentColor
+    @Entry var storyProgressIndicatorInsets = EdgeInsets(horizontal: .defaultSpacing)
 }

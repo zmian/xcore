@@ -19,14 +19,7 @@ extension View {
 // MARK: - EnvironmentValue
 
 extension EnvironmentValues {
-    private enum XcoreIsLoadingKey: EnvironmentKey {
-        static let defaultValue = false
-    }
-
     /// A Boolean property indicating whether the view associated with this
     /// environment is in loading state.
-    public var isLoading: Bool {
-        get { self[XcoreIsLoadingKey.self] }
-        set { self[XcoreIsLoadingKey.self] = newValue }
-    }
+    @Entry public var isLoading: Bool = false
 }

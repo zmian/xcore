@@ -78,14 +78,7 @@ struct AnyDynamicTextFieldStyle: DynamicTextFieldStyle {
 // MARK: - Environment Key
 
 extension EnvironmentValues {
-    private enum DynamicTextFieldStyleKey: EnvironmentKey {
-        static let defaultValue = AnyDynamicTextFieldStyle(.default)
-    }
-
-    var dynamicTextFieldStyle: AnyDynamicTextFieldStyle {
-        get { self[DynamicTextFieldStyleKey.self] }
-        set { self[DynamicTextFieldStyleKey.self] = newValue }
-    }
+    @Entry var dynamicTextFieldStyle = AnyDynamicTextFieldStyle(.default)
 }
 
 // MARK: - View Helper
