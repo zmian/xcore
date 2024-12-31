@@ -37,7 +37,7 @@ private struct ScrollToViewModifier<ID: Hashable>: ViewModifier {
     func body(content: Content) -> some View {
         ScrollViewReader { proxy in
             content
-                .onChange(of: id) { id in
+                .onChange(of: id) { _, id in
                     withAnimation {
                         proxy.scrollTo(id, anchor: anchor)
                     }

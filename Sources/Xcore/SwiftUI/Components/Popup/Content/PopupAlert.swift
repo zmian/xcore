@@ -49,7 +49,7 @@ public struct PopupAlert<Content>: View where Content: View {
 
 // MARK: - Preview
 
-#Preview {
+#Preview(traits: .sizeThatFitsLayout) {
     Group {
         let L = Samples.Strings.deleteMessageAlert
 
@@ -74,5 +74,4 @@ public struct PopupAlert<Content>: View where Content: View {
     }
     .padding(.defaultSpacing)
     .background(.secondary.opacity(0.15))
-    .previewLayout(.sizeThatFits)
 }

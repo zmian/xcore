@@ -53,7 +53,7 @@ private struct MailAppViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .onChange(of: isPresented) { isPresented in
+            .onChange(of: isPresented) { _, isPresented in
                 if isPresented, apps.count == 1 {
                     // Attempt to open the first one, which will be Apple's Mail.
                     //

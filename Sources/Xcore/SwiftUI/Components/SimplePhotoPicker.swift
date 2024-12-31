@@ -55,7 +55,7 @@ public struct SimplePhotoPicker<Label: View>: View {
         ) {
             label
         }
-        .onChange(of: selectedItems) { selectedItems in
+        .onChange(of: selectedItems) { _, selectedItems in
             Task {
                 if
                     let data = try await selectedItems.first?.loadTransferable(type: Data.self),

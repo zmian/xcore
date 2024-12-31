@@ -366,7 +366,7 @@ extension AppPhase {
 ///     var body: some Scene {
 ///         WindowGroup {
 ///             ContentView()
-///                 .onChange(of: scenePhase) { phase in
+///                 .onChange(of: scenePhase) { _, phase in
 ///                     // Forward all of the events to `AppPhaseClient`.
 ///                     AppPhase(phase).map(appDelegate.appPhase.send)
 ///                 }

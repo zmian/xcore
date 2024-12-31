@@ -59,7 +59,7 @@ private struct TogglePreview: View {
                 .toggleStyle(.loadingSwitch)
                 .isLoading(isLoading)
         }
-        .onChange(of: isLoading) { _ in
+        .onChange(of: isLoading) { _, _ in
             if isLoading {
                 withDelay(1) {
                     isLoading = false

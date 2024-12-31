@@ -205,7 +205,7 @@ private struct PopupViewModifier<PopupContent: View>: ViewModifier {
             .window(isPresented: $isPresented, style: style.windowStyle) {
                 popupContent
             }
-            .onChange(of: isPresented) { isPresented in
+            .onChange(of: isPresented) { _, isPresented in
                 if isPresented {
                     setupAutomaticDismissalIfNeeded()
                     UIAccessibility.post(notification: .screenChanged, argument: nil)

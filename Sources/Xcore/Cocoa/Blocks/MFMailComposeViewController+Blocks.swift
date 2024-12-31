@@ -7,7 +7,7 @@
 import UIKit
 import MessageUI
 
-extension MFMailComposeViewController: MFMailComposeViewControllerDelegate {
+extension MFMailComposeViewController: @retroactive MFMailComposeViewControllerDelegate {
     public func mailComposeController(
         _ controller: MFMailComposeViewController,
         didFinishWith result: MFMailComposeResult,

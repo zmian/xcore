@@ -115,7 +115,7 @@ extension Device {
 
 // MARK: - Errors
 
-extension LAError: CustomStringConvertible {
+extension LAError: @retroactive CustomStringConvertible {
     public var description: String {
         switch code {
             case .appCancel:
@@ -124,11 +124,11 @@ extension LAError: CustomStringConvertible {
                 "userCancel"
             case .systemCancel:
                 "systemCancel"
-            case .biometryLockout:
+            case .biometryLockout, .touchIDLockout:
                 "biometryLockout"
-            case .biometryNotAvailable:
+            case .biometryNotAvailable, .touchIDNotAvailable:
                 "biometryNotAvailable"
-            case .biometryNotEnrolled:
+            case .biometryNotEnrolled, .touchIDNotEnrolled:
                 "biometryNotEnrolled"
             case .authenticationFailed:
                 "authenticationFailed"
@@ -140,9 +140,9 @@ extension LAError: CustomStringConvertible {
                 "passcodeNotSet"
             case .userFallback:
                 "userFallback"
-            case .watchNotAvailable:
-                "watchNotAvailable"
-            default:
+            case .companionNotAvailable:
+                "companionNotAvailable"
+            @unknown default:
                 "code_\(code.rawValue)"
         }
     }
@@ -155,11 +155,11 @@ extension LAError: CustomStringConvertible {
                 "Authentication was canceled by user (e.g. tapped Cancel button)."
             case .systemCancel:
                 "Authentication was canceled by system (e.g. another application went to foreground)."
-            case .biometryLockout:
+            case .biometryLockout, .touchIDLockout:
                 "Authentication was not successful because there were too many failed biometry attempts and biometry is now locked. Passcode is now required to unlock biometry."
-            case .biometryNotAvailable:
+            case .biometryNotAvailable, .touchIDNotAvailable:
                 "Authentication could not start because biometry is not available on the device."
-            case .biometryNotEnrolled:
+            case .biometryNotEnrolled, .touchIDNotEnrolled:
                 "Authentication could not start because biometry has no enrolled identities."
             case .authenticationFailed:
                 "Authentication was not successful because user failed to provide valid credentials."
@@ -171,9 +171,9 @@ extension LAError: CustomStringConvertible {
                 "Authentication could not start because passcode is not set on the device."
             case .userFallback:
                 "Authentication was canceled because the user tapped the fallback button (Enter Password)."
-            case .watchNotAvailable:
-                "An attempt to authenticate with Apple Watch failed."
-            default:
+            case .companionNotAvailable:
+                "Authentication could not start because there was no paired companion device nearby."
+            @unknown default:
                 "Authentication failed with reason code \(code.rawValue)."
         }
     }

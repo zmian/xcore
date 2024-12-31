@@ -108,18 +108,18 @@ private struct NumberFieldPreview: View {
     var body: some View {
         TextFieldPreviewBox("Numbers") {
             DynamicTextField("Money", value: $money, configuration: .currency)
-                .onChange(of: money) {
-                    print("Money: \(String(describing: $0))")
+                .onChange(of: money) { _, newValue in
+                    print("Money: \(String(describing: newValue))")
                 }
 
             DynamicTextField("Decimal", value: $decimal, configuration: .number)
-                .onChange(of: decimal) {
-                    print("Decimal: \(String(describing: $0))")
+                .onChange(of: decimal) { _, newValue in
+                    print("Decimal: \(String(describing: newValue))")
                 }
 
             DynamicTextField("Integer", value: $integer, configuration: .number)
-                .onChange(of: integer) {
-                    print("Integer: \(String(describing: $0))")
+                .onChange(of: integer) { _, newValue in
+                    print("Integer: \(String(describing: newValue))")
                 }
 
             Button("Change to 500") {
@@ -147,18 +147,18 @@ private struct DataFormatTypesFieldPreview: View {
     var body: some View {
         TextFieldPreviewBox("Data Types") {
             DynamicTextField("Social Security Number", value: $ssn, configuration: .ssn)
-                .onChange(of: ssn) {
-                    print("SSN: \($0)")
+                .onChange(of: ssn) { _, newValue in
+                    print("SSN: \(newValue)")
                 }
 
             DynamicTextField("Social Security Number Last 4", value: $ssnLastFour, configuration: .ssnLastFour)
-                .onChange(of: ssnLastFour) {
-                    print("SSN (Last Four): \($0)")
+                .onChange(of: ssnLastFour) { _, newValue in
+                    print("SSN (Last Four): \(newValue)")
                 }
 
             DynamicTextField("Phone Number", value: $phoneNumber, configuration: .phoneNumber(for: .us))
-                .onChange(of: phoneNumber) {
-                    print("Phone Number: \($0)")
+                .onChange(of: phoneNumber) { _, newValue in
+                    print("Phone Number: \(newValue)")
                 }
         }
         .tint(.secondary)

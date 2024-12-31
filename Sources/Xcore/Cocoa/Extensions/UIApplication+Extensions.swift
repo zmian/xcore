@@ -156,7 +156,7 @@ extension UIApplication {
 
 // MARK: - ActivationState
 
-extension UIScene.ActivationState: CustomStringConvertible {
+extension UIScene.ActivationState: @retroactive CustomStringConvertible {
     public var description: String {
         switch self {
             case .foregroundActive:

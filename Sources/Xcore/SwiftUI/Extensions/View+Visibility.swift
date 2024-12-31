@@ -54,7 +54,7 @@ private struct VisibilityModifier: ViewModifier {
             .onDisappear {
                 status = .obstructed
             }
-            .onChange(of: status) { newValue in
+            .onChange(of: status) { _, newValue in
                 action(newValue)
             }
             .onReceive(Publishers.windowVisibility) {

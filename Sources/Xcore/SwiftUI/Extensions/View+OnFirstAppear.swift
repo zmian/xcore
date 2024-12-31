@@ -33,7 +33,7 @@ extension View {
         perform action: (() -> Void)? = nil
     ) -> some View where ID: Hashable {
         onFirstAppear(perform: action)
-            .onChange(of: id) { _ in
+            .onChange(of: id) { _, _ in
                 action?()
             }
     }
@@ -53,7 +53,7 @@ extension View {
         perform action: (() -> Void)? = nil
     ) -> some View where ID: Hashable {
         onAppear(perform: action)
-            .onChange(of: id) { _ in
+            .onChange(of: id) { _, _ in
                 action?()
             }
     }

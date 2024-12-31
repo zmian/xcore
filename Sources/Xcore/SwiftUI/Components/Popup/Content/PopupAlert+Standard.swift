@@ -87,7 +87,7 @@ extension StandardPopupAlert where Header == Never {
 
 // MARK: - Preview
 
-#Preview {
+#Preview(traits: .sizeThatFitsLayout) {
     Group {
         let L = Samples.Strings.deleteMessageAlert
 
@@ -112,5 +112,4 @@ extension StandardPopupAlert where Header == Never {
     .padding(.defaultSpacing)
     .frame(max: .infinity)
     .background(.secondary.opacity(0.15))
-    .previewLayout(.sizeThatFits)
 }

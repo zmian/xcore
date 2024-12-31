@@ -27,7 +27,7 @@ extension Shape where Self == UnevenRoundedRectangle {
 
 // MARK: - Preview
 
-#Preview {
+#Preview(traits: .sizeThatFitsLayout) {
     VStack {
         Color.blue
             .clipShape(.rect(topLeadingRadius: 75, bottomTrailingRadius: 75))
@@ -48,5 +48,4 @@ extension Shape where Self == UnevenRoundedRectangle {
             .clipShape(.rect(topRadius: 75, bottomRadius: 10))
     }
     .padding(.defaultSpacing)
-    .previewLayout(.sizeThatFits)
 }

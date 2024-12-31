@@ -78,7 +78,7 @@ private struct PrivacyScreenViewModifier<Screen: View>: ViewModifier {
                 style: .privacy,
                 content: screen
             )
-            .onChange(of: scenePhase) { phase in
+            .onChange(of: scenePhase) { _, phase in
                 isPrivacyScreenActive = phase != .active
             }
     }

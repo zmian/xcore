@@ -88,7 +88,7 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
         .textContentType(configuration.textContentType)
         .disabled(!configuration.isEditable)
         // If text field changes the then format the text and also update the value.
-        .onChange(of: text) { newText in
+        .onChange(of: text) { _, newText in
             // Check if the input is valid
             if let displayText = formatter.format(formatter.unformat(newText)) {
                 // If the input is valid, format it and display it
@@ -108,7 +108,7 @@ public struct DynamicTextField<Formatter: TextFieldFormatter>: View {
             }
         }
         // If value changes then update the text field.
-        .onChange(of: value) { newValue in
+        .onChange(of: value) { _, newValue in
             let currentValue = formatter.value(from: formatter.unformat(text))
             guard currentValue != newValue else {
                 return

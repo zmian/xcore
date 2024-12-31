@@ -79,7 +79,7 @@ extension Version: Comparable {
 
 // MARK: - OperatingSystemVersion
 
-extension OperatingSystemVersion: CustomStringConvertible {
+extension OperatingSystemVersion: @retroactive CustomStringConvertible {
     /// Returns system version formatted in accordance with Semantic Versioning.
     ///
     /// `<major>.<minor>.<patch>`

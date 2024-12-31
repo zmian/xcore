@@ -87,7 +87,7 @@ public struct TimerButton<Label: View>: View {
                 state = .active
             }
         }
-        .onChange(of: state) { state in
+        .onChange(of: state) { _, state in
             switch state {
                 case .idle, .ticked:
                     break
@@ -97,7 +97,7 @@ public struct TimerButton<Label: View>: View {
                     restartTimer()
             }
         }
-        .onChange(of: status) { status in
+        .onChange(of: status) { _, status in
             onStatus(status)
         }
         .onAppear {

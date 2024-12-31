@@ -26,7 +26,7 @@ extension KeychainAccess.Keychain {
     }
 }
 
-extension KeychainAccess.AuthenticationPolicy: Hashable {}
+extension KeychainAccess.AuthenticationPolicy: @retroactive Hashable {}
 
 // MARK: - Inits
 
