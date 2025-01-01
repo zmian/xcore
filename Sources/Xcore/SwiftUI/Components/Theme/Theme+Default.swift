@@ -10,7 +10,7 @@ import SwiftUI
 
 extension Theme {
     /// The default theme for the interface.
-    public static var `default`: Theme = .system
+    nonisolated(unsafe) public static var `default`: Theme = .system
 }
 
 // MARK: - System

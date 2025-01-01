@@ -114,7 +114,7 @@ extension Font {
 // MARK: - CustomTextStyle
 
 extension Font {
-    public struct CustomTextStyle {
+    public struct CustomTextStyle: Sendable {
         public let size: CGFloat
         public let textStyle: TextStyle
 

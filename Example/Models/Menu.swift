@@ -6,6 +6,7 @@
 
 import SwiftUI
 
+@MainActor
 struct Menu: Identifiable {
     let id: UUID
     let title: String
@@ -47,7 +48,7 @@ struct Menu: Identifiable {
 
 // MARK: - CaseIterable
 
-extension Menu: CaseIterable {
+extension Menu: @preconcurrency CaseIterable {
     static var allCases: [Self] = [
         separators,
         buttons,
