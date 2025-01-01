@@ -60,3 +60,6 @@ extension Box: Identifiable where Value: Identifiable {
         value.id
     }
 }
+
+extension Box: @unchecked Sendable where Value: Sendable {}
+extension MutableBox: @unchecked Sendable where Value: Sendable {}

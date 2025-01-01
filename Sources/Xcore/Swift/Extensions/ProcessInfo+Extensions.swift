@@ -26,7 +26,7 @@ extension ProcessInfo {
 
 extension ProcessInfo {
     private enum AssociatedKey {
-        static var inMemoryEnvironmentStorage = "inMemoryEnvironmentStorage"
+        nonisolated(unsafe) static var inMemoryEnvironmentStorage = "inMemoryEnvironmentStorage"
     }
 
     private var inMemoryEnvironmentStorage: [String: String] {

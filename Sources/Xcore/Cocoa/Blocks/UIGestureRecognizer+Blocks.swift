@@ -10,7 +10,7 @@ extension UIGestureRecognizer: TargetActionBlockRepresentable {
     public typealias Sender = UIGestureRecognizer
 
     private enum AssociatedKey {
-        static var actionHandler = "actionHandler"
+        nonisolated(unsafe) static var actionHandler = "actionHandler"
     }
 
     fileprivate var actionHandler: SenderClosureWrapper? {

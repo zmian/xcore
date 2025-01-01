@@ -20,14 +20,14 @@ extension LiveAddressSearchClient {
     /// A list of ISO country codes for supported regions (e.g., “US” or “GB”).
     ///
     /// If empty then all regions are supported.
-    public static var supportedRegions = [Locale.Region.unitedStates]
+    nonisolated(unsafe) public static var supportedRegions = [Locale.Region.unitedStates]
 }
 
 // MARK: - Implementation
 
 public final class LiveAddressSearchClient: AddressSearchClient {
     private typealias L = Localized.PostalAddress
-    private var delegates = [UUID: Delegate]()
+    nonisolated(unsafe) private var delegates = [UUID: Delegate]()
 
     public func observe(id: UUID) -> AsyncStream<[AddressSearchResult]> {
         AsyncStream { [weak self] continuation in

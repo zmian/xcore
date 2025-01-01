@@ -7,7 +7,7 @@
 import SwiftUI
 
 extension Color.RGBColorSpace {
-    public static var `default`: Self = .sRGB
+    nonisolated(unsafe) public static var `default`: Self = .sRGB
 }
 
 // MARK: - Hex Support

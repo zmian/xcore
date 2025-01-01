@@ -6,8 +6,8 @@
 
 import Foundation
 
-public struct DecimalCodingFormatStyle: CodingFormatStyle {
-    public static var defaultEncodeAsString = false
+public struct DecimalCodingFormatStyle: CodingFormatStyle, Sendable {
+    nonisolated(unsafe) public static var defaultEncodeAsString = false
     private let encodeAsString: Bool
 
     fileprivate init(encodeAsString: Bool) {

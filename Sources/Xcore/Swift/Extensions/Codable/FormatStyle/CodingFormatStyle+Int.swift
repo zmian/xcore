@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct IntCodingFormatStyle: CodingFormatStyle {
+public struct IntCodingFormatStyle: CodingFormatStyle, Sendable {
     private static let numberFormatter = NumberFormatter().apply {
         $0.locale = .us
     }

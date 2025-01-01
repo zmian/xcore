@@ -9,7 +9,7 @@ import OSLog
 
 final class CompositeImageFetcher: ImageFetcher, ExpressibleByArrayLiteral {
     /// The registered list of fetchers.
-    private var fetchers: [ImageFetcher] = []
+    nonisolated(unsafe) private var fetchers: [ImageFetcher] = []
 
     init(_ fetchers: [ImageFetcher]) {
         self.fetchers = fetchers

@@ -7,7 +7,7 @@
 import Foundation
 
 extension StringCodingFormatStyle {
-    public struct Options: OptionSet {
+    public struct Options: OptionSet, Sendable {
         public let rawValue: Int
 
         public init(rawValue: Int) {
@@ -33,7 +33,7 @@ extension StringCodingFormatStyle {
     }
 }
 
-public struct StringCodingFormatStyle: CodingFormatStyle {
+public struct StringCodingFormatStyle: CodingFormatStyle, Sendable {
     private let options: Options
 
     init(options: Options) {

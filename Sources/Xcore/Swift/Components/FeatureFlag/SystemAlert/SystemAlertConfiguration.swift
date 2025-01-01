@@ -77,7 +77,7 @@ public struct SystemAlertConfiguration: Sendable, Hashable, Codable, Identifiabl
 // MARK: - Dismissal
 
 extension SystemAlertConfiguration {
-    private static var dismissedIds: Set<String> = []
+    nonisolated(unsafe) private static var dismissedIds: Set<String> = []
 
     /// A Boolean property indicating whether the system alert is dismissed.
     public var isDismissed: Bool {

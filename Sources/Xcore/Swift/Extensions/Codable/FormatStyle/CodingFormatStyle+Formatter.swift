@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FormatterCodingFormatStyle<Output>: CodingFormatStyle {
+public struct FormatterCodingFormatStyle<Output>: CodingFormatStyle, @unchecked Sendable {
     private let formatter: Formatter
 
     fileprivate init(_ formatter: Formatter) {

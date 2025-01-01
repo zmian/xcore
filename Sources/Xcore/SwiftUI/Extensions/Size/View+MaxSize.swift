@@ -11,7 +11,7 @@ extension View {
         overlay(DetermineMaximumSize())
     }
 
-    public func onMaximumSizeChange(_ action: @escaping (CGSize) -> Void) -> some View {
+    public func onMaximumSizeChange(_ action: @escaping @Sendable (CGSize) -> Void) -> some View {
         onPreferenceChange(DetermineMaximumSize.Key.self, perform: action)
     }
 }
@@ -23,7 +23,7 @@ private struct DetermineMaximumSize: View {
     fileprivate typealias Key = MaximumSizePreferenceKey
 
     fileprivate struct MaximumSizePreferenceKey: PreferenceKey {
-        static var defaultValue: CGSize = .zero
+        static let defaultValue: CGSize = .zero
 
         static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
             value = CGSize(

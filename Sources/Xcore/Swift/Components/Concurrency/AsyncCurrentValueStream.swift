@@ -29,14 +29,14 @@ import Foundation
 /// // Current Value
 /// print(stream.value) // Prints 2
 /// ```
-public final class AsyncCurrentValueStream<Element>: AsyncSequence {
+public final class AsyncCurrentValueStream<Element: Sendable>: AsyncSequence, Sendable {
     fileprivate typealias Base = AsyncStream<Element>
     private typealias Continuation = Base.Continuation
-    private var continuations = [AnyHashable: Continuation]()
+    nonisolated(unsafe) private var continuations = [AnyHashable: Continuation]()
 
     /// The value wrapped by this stream, produced as a new element whenever it
     /// changes.
-    public private(set) var value: Element
+    nonisolated(unsafe) public private(set) var value: Element
 
     /// Creates a current value asynchronous sequence with the given initial value.
     ///

@@ -7,7 +7,7 @@
 import UIKit
 
 extension UIFont {
-    public static var defaultAppTypeface: UIFont.Typeface = .system
+    nonisolated(unsafe) public static var defaultAppTypeface: UIFont.Typeface = .system
 
     /// Scaled version of default app typeface.
     ///

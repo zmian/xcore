@@ -29,7 +29,7 @@ public protocol AddressSearchClient: Sendable {
 
 extension DependencyValues {
     private enum AddressSearchClientKey: DependencyKey {
-        static var liveValue: AddressSearchClient = .live
+        nonisolated(unsafe) static var liveValue: AddressSearchClient = .live
     }
 
     /// Provides functionality for address search completion based on partial search

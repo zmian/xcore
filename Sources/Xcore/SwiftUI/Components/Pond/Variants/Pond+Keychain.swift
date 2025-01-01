@@ -5,7 +5,7 @@
 //
 
 import Foundation
-import KeychainAccess
+@preconcurrency import KeychainAccess
 
 public struct KeychainPond: Pond {
     private let keychain: Keychain

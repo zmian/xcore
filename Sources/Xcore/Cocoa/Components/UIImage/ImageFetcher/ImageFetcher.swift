@@ -7,7 +7,7 @@
 import UIKit
 
 /// A protocol for objects responsible for fetching images asynchronously.
-public protocol ImageFetcher {
+public protocol ImageFetcher: Sendable {
     /// The output type containing the fetched image and its cache type.
     typealias Output = (image: UIImage, cacheType: ImageSourceType.CacheType)
 

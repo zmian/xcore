@@ -8,7 +8,7 @@ import Foundation
 
 extension Locale {
     /// The default locale used in ``CustomFloatingPointFormatStyle``.
-    public static var numbers: Self = .current
+    nonisolated(unsafe) public static var numbers: Self = .current
 }
 
 extension Locale {

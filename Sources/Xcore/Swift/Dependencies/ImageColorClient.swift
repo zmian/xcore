@@ -56,7 +56,7 @@ extension ImageColorClient {
 
 extension DependencyValues {
     private enum ImageColorClientKey: DependencyKey {
-        static var liveValue: ImageColorClient = .live
+        nonisolated(unsafe) static var liveValue: ImageColorClient = .live
     }
 
     /// Provides functionality for extracting a color from an image.

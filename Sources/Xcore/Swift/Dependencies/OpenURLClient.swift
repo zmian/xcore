@@ -134,7 +134,7 @@ extension OpenURLClient {
 
 extension DependencyValues {
     private enum OpenURLClientKey: DependencyKey {
-        static var liveValue: OpenURLClient = .system
+        nonisolated(unsafe) static var liveValue: OpenURLClient = .system
     }
 
     /// Provides functionality for opening a URL.

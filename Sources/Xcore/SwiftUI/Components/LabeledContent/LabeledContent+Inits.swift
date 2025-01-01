@@ -109,6 +109,7 @@ extension LabeledContent where Label: View, Content == Image {
 
 // MARK: - Title & Subtitle with Strings
 
+@MainActor
 extension LabeledContent where Label == _XIVTSSV, Content: View {
     /// Creates a labeled content with a title and subtitle generated from string
     /// and a value.
@@ -183,6 +184,7 @@ extension LabeledContent where Label == _XIVTSSV, Content: View {
 
 // MARK: - Title & Subtitle with Text
 
+@MainActor
 extension LabeledContent where Label == _XIVTSSV, Content: View {
     /// Creates a labeled content with a title and subtitle generated from string
     /// and a value.
@@ -279,6 +281,7 @@ extension LabeledContent where Label == _XIVTSSV, Content: View {
     }
 }
 
+@MainActor
 extension LabeledContent<_XIVTSSV, Never> {
     /// Creates a labeled content with a title and subtitle generated from strings.
     ///

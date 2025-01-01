@@ -13,7 +13,7 @@ public enum Popup {}
 // MARK: - Dismiss Methods
 
 extension Popup {
-    public struct DismissMethods: OptionSet, Hashable {
+    public struct DismissMethods: OptionSet, Hashable, Sendable {
         public let rawValue: Int
 
         public init(rawValue: Int) {
@@ -35,7 +35,7 @@ extension Popup {
 
 extension Popup {
     /// A structure representing the style of a popup.
-    public struct Style: Hashable {
+    public struct Style: Hashable, Sendable {
         /// The alignment of the popup inside the resulting view. Alignment applies if
         /// the popup is smaller than the size given by the resulting frame.
         public let alignment: Alignment
@@ -44,7 +44,7 @@ extension Popup {
         public let animation: Animation
 
         /// The transition to associates with the popup.
-        public let transition: AnyTransition
+        nonisolated(unsafe) public let transition: AnyTransition
 
         /// The style of the presenting window.
         public let windowStyle: WindowStyle

@@ -9,10 +9,10 @@ import Foundation
 // MARK: - Decoding
 
 /// A structure to decode string to output using block based format style.
-public struct StringMapDecodingFormatStyle<Output>: DecodingFormatStyle {
-    private let decode: (String) throws -> Output?
+public struct StringMapDecodingFormatStyle<Output>: DecodingFormatStyle, Sendable {
+    private let decode: @Sendable (String) throws -> Output?
 
-    fileprivate init(_ decode: @escaping (String) throws -> Output?) {
+    fileprivate init(_ decode: @escaping @Sendable (String) throws -> Output?) {
         self.decode = decode
     }
 
@@ -31,7 +31,7 @@ public struct StringMapDecodingFormatStyle<Output>: DecodingFormatStyle {
 // MARK: - Convenience
 
 extension DecodingFormatStyle {
-    public static func string<Output>(_ decode: @escaping (String) throws -> Output?) -> Self where Self == StringMapDecodingFormatStyle<Output> {
+    public static func string<Output>(_ decode: @escaping @Sendable (String) throws -> Output?) -> Self where Self == StringMapDecodingFormatStyle<Output> {
         Self(decode)
     }
 }

@@ -7,7 +7,7 @@
 import UIKit
 
 extension UIFont {
-    public enum Trait {
+    public enum Trait: Sendable {
         case normal
         case italic
         case monospaced

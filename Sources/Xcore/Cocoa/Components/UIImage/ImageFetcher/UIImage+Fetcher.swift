@@ -44,8 +44,8 @@ extension UIImage.Fetcher {
 
 extension UIImageView {
     private enum AssociatedKey {
-        static var imageRepresentableSource = "imageRepresentableSource"
-        static var imageFetcherCancelBlock = "imageFetcherCancelBlock"
+        nonisolated(unsafe) static var imageRepresentableSource = "imageRepresentableSource"
+        nonisolated(unsafe) static var imageFetcherCancelBlock = "imageFetcherCancelBlock"
     }
 
     /// The `ImageSourceType` object associated with the receiver.

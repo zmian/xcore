@@ -132,7 +132,7 @@ extension AppStatusClient {
 
 extension DependencyValues {
     private enum AppStatusClientKey: DependencyKey {
-        static var liveValue: AppStatusClient = .noop
+        nonisolated(unsafe) static var liveValue: AppStatusClient = .noop
     }
 
     /// Provides functionality for evaluating and receiving events for app’s state.

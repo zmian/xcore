@@ -64,7 +64,7 @@ extension QRCodeClient {
 
 extension DependencyValues {
     private enum QRCodeClientKey: DependencyKey {
-        static var liveValue: QRCodeClient = .live
+        nonisolated(unsafe) static var liveValue: QRCodeClient = .live
     }
 
     /// Provides functionality for generating a QR code.

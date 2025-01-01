@@ -6,6 +6,7 @@
 
 import SwiftUI
 
+@MainActor
 extension Toggle {
     /// Creates a toggle that generates its label from a title and subtitle strings.
     ///

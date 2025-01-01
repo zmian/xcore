@@ -240,7 +240,7 @@ extension Font {
     /// An optional property to set the preferred content size category.
     ///
     /// - Note: Setting this property disables dynamic type.
-    public static var preferredContentSizeCategory: UIContentSizeCategory?
+    nonisolated(unsafe) public static var preferredContentSizeCategory: UIContentSizeCategory?
 
     fileprivate static func compatibleWithTraitCollection() -> UITraitCollection? {
         preferredContentSizeCategory.map(UITraitCollection.init(preferredContentSizeCategory:))

@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct URLCodingFormatStyle: CodingFormatStyle {
+public struct URLCodingFormatStyle: CodingFormatStyle, Sendable {
     private let allowedCharacters: CharacterSet?
 
     fileprivate init(allowed allowedCharacters: CharacterSet?) {

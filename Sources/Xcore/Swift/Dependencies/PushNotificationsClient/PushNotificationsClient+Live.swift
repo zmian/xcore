@@ -25,7 +25,7 @@ extension PushNotificationsClient {
 
 // MARK: - Implementation
 
-private final class LivePushNotificationsClient: NSObject, Sendable {
+private final class LivePushNotificationsClient: NSObject, @unchecked Sendable {
     typealias Event = PushNotificationsClient.Event
     typealias AuthorizationStatus = PushNotificationsClient.AuthorizationStatus
     @Dependency(\.appPhase) private var appPhase

@@ -31,7 +31,7 @@
 ///
 /// externalStream.send(2) // 🛑 Value of type 'AsyncValueStream<Int>' has no member 'send'
 /// ```
-public struct AsyncValueStream<Element>: AsyncSequence {
+public struct AsyncValueStream<Element: Sendable>: AsyncSequence, Sendable {
     private let base: AsyncCurrentValueStream<Element>
 
     /// The value wrapped by this stream, produced as a new element whenever it

@@ -80,7 +80,7 @@ extension HapticFeedbackClient {
 
 extension DependencyValues {
     private enum HapticFeedbackClientKey: DependencyKey {
-        static var liveValue: HapticFeedbackClient = .live
+        nonisolated(unsafe) static var liveValue: HapticFeedbackClient = .live
     }
 
     /// Provides functionality for haptic feedback.

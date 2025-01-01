@@ -32,7 +32,7 @@ public struct ValidationRule<Input>: Sendable {
 // MARK: - Conditional Conformance
 
 extension ValidationRule<String> {
-    public init(pattern: String, transform: ((Input) -> Input)? = nil) {
+    public init(pattern: String, transform: (@Sendable (Input) -> Input)? = nil) {
         self.init { input in
             let input = transform?(input) ?? input
             return NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: input)

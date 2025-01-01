@@ -9,7 +9,7 @@ import SwiftUI
 extension CustomLabeledContentStyle {
     /// An enumeration that defines dimming behavior for the label and content of
     /// the labeled content.
-    public enum Dim {
+    public enum Dim: Sendable {
         /// No changes to the label nor content text foreground style.
         case none
 
@@ -21,7 +21,7 @@ extension CustomLabeledContentStyle {
     }
 
     /// An option set that defines content traits of the labeled content.
-    public struct Traits: OptionSet {
+    public struct Traits: OptionSet, Sendable {
         public let rawValue: Int
 
         public init(rawValue: Int) {

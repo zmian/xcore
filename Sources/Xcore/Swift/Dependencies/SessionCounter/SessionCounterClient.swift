@@ -51,9 +51,9 @@ extension SessionCounterClient {
 
 extension DependencyValues {
     private enum SessionCounterClientKey: DependencyKey {
-        static var liveValue: SessionCounterClient = .live
-        static var testValue: SessionCounterClient = .unimplemented
-        static var previewValue: SessionCounterClient = .noop
+        nonisolated(unsafe) static var liveValue: SessionCounterClient = .live
+        nonisolated(unsafe) static var testValue: SessionCounterClient = .unimplemented
+        nonisolated(unsafe) static var previewValue: SessionCounterClient = .noop
     }
 
     /// Provides functionality to keep track of user's session counts.

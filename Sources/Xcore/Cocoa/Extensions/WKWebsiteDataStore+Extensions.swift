@@ -14,6 +14,7 @@ extension WKWebsiteDataStore {
         /// Only cache.
         case cache
 
+        @MainActor
         fileprivate var dataTypes: Set<String> {
             switch self {
                 case .all:

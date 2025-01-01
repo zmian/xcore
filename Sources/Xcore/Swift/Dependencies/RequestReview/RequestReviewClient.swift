@@ -81,7 +81,7 @@ extension RequestReviewClient {
 
 extension DependencyValues {
     private enum RequestReviewClientKey: DependencyKey {
-        static var liveValue: RequestReviewClient = .live
+        nonisolated(unsafe) static var liveValue: RequestReviewClient = .live
     }
 
     /// Provides functionality for requesting App Store ratings and reviews from

@@ -369,7 +369,7 @@ extension Money {
     ///     $0.locale = .uk
     /// }
     /// ```
-    public final class Appearance: Appliable {
+    public final class Appearance: Appliable, @unchecked Sendable {
         public var superscriptMinorUnitEnabled = true
 
         /// The character the formatter uses as a currency symbol for the amount.
@@ -395,7 +395,7 @@ extension Money {
         public var locale: Locale = .us
     }
 
-    private static var appearanceProxy = Appearance()
+    private static let appearanceProxy = Appearance()
     public static func appearance() -> Appearance {
         appearanceProxy
     }

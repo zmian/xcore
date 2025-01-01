@@ -8,10 +8,10 @@ import Foundation
 
 extension Calendar: MutableAppliable {
     /// The default calendar, initially set to the `current` calendar.
-    public static var `default`: Self = .current
+    nonisolated(unsafe) public static var `default`: Self = .current
 
     /// The default calendar used in ``DateCodingFormatStyle``.
-    public static var defaultCodable: Self = .iso
+    nonisolated(unsafe) public static var defaultCodable: Self = .iso
 
     /// Returns the `ISO` calendar with `en_US_POSIX` locale and `UTC` time zone.
     public static let iso = Self(identifier: .gregorian).applying {

@@ -7,10 +7,10 @@
 import Foundation
 
 /// A structure to decode given value to output using block based format style.
-public struct MapDecodingFormatStyle<Output>: DecodingFormatStyle {
-    private let decode: (Any) throws -> Output?
+public struct MapDecodingFormatStyle<Output>: DecodingFormatStyle, Sendable {
+    private let decode: @Sendable (Any) throws -> Output?
 
-    fileprivate init(_ decode: @escaping (Any) throws -> Output?) {
+    fileprivate init(_ decode: @escaping @Sendable (Any) throws -> Output?) {
         self.decode = decode
     }
 
@@ -26,7 +26,7 @@ public struct MapDecodingFormatStyle<Output>: DecodingFormatStyle {
 // MARK: - Convenience
 
 extension DecodingFormatStyle {
-    public static func map<Output>(_ decode: @escaping (Any) throws -> Output?) -> Self where Self == MapDecodingFormatStyle<Output> {
+    public static func map<Output>(_ decode: @escaping @Sendable (Any) throws -> Output?) -> Self where Self == MapDecodingFormatStyle<Output> {
         .init(decode)
     }
 }

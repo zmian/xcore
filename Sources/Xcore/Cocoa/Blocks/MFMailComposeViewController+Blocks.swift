@@ -7,7 +7,7 @@
 import UIKit
 import MessageUI
 
-extension MFMailComposeViewController: @retroactive MFMailComposeViewControllerDelegate {
+extension MFMailComposeViewController: @retroactive @preconcurrency MFMailComposeViewControllerDelegate {
     public func mailComposeController(
         _ controller: MFMailComposeViewController,
         didFinishWith result: MFMailComposeResult,
@@ -37,8 +37,8 @@ extension MFMailComposeViewController {
     }
 
     private enum AssociatedKey {
-        static var actionHandler = "actionHandler"
-        static var shouldAutoDismiss = "shouldAutoDismiss"
+        nonisolated(unsafe) static var actionHandler = "actionHandler"
+        nonisolated(unsafe) static var shouldAutoDismiss = "shouldAutoDismiss"
     }
 
     private var actionHandler: ClosureWrapper? {

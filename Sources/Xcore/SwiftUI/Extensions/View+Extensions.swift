@@ -12,7 +12,7 @@ extension View {
     /// Wraps this view with a type eraser.
     ///
     /// - Returns: An `AnyView` wrapping this view.
-    public func eraseToAnyView() -> AnyView {
+    nonisolated public func eraseToAnyView() -> AnyView {
         AnyView(self)
     }
 
@@ -157,7 +157,7 @@ extension View {
     /// label that repeats information that users already have. For example, don’t
     /// use the label “Play button” because a button already has a trait that
     /// identifies it as a button.
-    public func accessibilityLabel(_ label: String?...) -> some View {
+    nonisolated public func accessibilityLabel(_ label: String?...) -> some View {
         accessibilityLabel(Text(label.joined(separator: ", ")))
     }
 }

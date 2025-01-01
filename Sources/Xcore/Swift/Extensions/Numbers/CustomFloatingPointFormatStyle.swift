@@ -478,7 +478,7 @@ extension DoubleOrDecimalProtocol {
 
 private let formatter = FormatStyleFormatter()
 
-private final class FormatStyleFormatter {
+private final class FormatStyleFormatter: Sendable {
     private let formatter = NumberFormatter().apply {
         $0.numberStyle = .decimal
         $0.roundingMode = .halfUp

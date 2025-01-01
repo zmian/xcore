@@ -10,7 +10,7 @@ import Foundation
 
 extension FeatureFlag {
     /// The registered list of providers.
-    private static var provider = CompositeFeatureFlagProvider([
+    nonisolated(unsafe) private static var provider = CompositeFeatureFlagProvider([
         ProcessInfoEnvironmentVariablesFeatureFlagProvider()
     ])
 

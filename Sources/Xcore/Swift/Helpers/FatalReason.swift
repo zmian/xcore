@@ -10,7 +10,7 @@ import OSLog
 /// A structure representing a reason why code should abort at runtime.
 ///
 /// - SeeAlso: https://github.com/apple/swift-evolution/pull/861/files
-public struct FatalReason: CustomStringConvertible {
+public struct FatalReason: Sendable, CustomStringConvertible {
     /// A textual representation for a fatal error.
     public let reason: String
 
