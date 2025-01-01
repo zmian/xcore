@@ -29,7 +29,7 @@ private final class LiveSessionCounterClient: @unchecked Sendable {
     private var cancellable: AnyCancellable?
 
     fileprivate init() {
-        withDelay(0.3) { [weak self] in
+        withDelay(.seconds(0.3)) { [weak self] in
             // Delay to avoid:
             // Thread 1: Simultaneous accesses to 0x1107dbc18, but modification requires
             // exclusive access. This is a client that invokes other clients.

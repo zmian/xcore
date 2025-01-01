@@ -31,7 +31,7 @@ public final class AnalyticsSessionTracker: @unchecked Sendable {
     public init(sessionExpirationDuration: TimeInterval = 30) {
         self.sessionExpirationDuration = sessionExpirationDuration
 
-        withDelay(0.3) { [weak self] in
+        withDelay(.seconds(0.3)) { [weak self] in
             // Delay to avoid:
             // Thread 1: Simultaneous accesses to 0x1107dbc18, but modification requires
             // exclusive access. This class can be used inside analytics client that invokes

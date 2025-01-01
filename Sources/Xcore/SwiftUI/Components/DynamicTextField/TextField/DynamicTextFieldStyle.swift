@@ -86,7 +86,7 @@ extension EnvironmentValues {
 extension View {
     /// Sets the style for text field within this view to a style with a custom
     /// appearance and standard interaction behavior.
-    public func dynamicTextFieldStyle(_ style: some DynamicTextFieldStyle) -> some View {
+    nonisolated public func dynamicTextFieldStyle(_ style: some DynamicTextFieldStyle) -> some View {
         environment(\.dynamicTextFieldStyle, AnyDynamicTextFieldStyle(style))
     }
 }

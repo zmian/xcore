@@ -9,7 +9,7 @@ import SwiftUI
 public struct ScaleEffectButtonStyle: ButtonStyle {
     private let anchor: UnitPoint
 
-    public init(anchor: UnitPoint = .center) {
+    nonisolated public init(anchor: UnitPoint = .center) {
         self.anchor = anchor
     }
 
@@ -26,9 +26,9 @@ public struct ScaleEffectButtonStyle: ButtonStyle {
 // MARK: - Dot Syntax Support
 
 extension ButtonStyle where Self == ScaleEffectButtonStyle {
-    public static var scaleEffect: Self { .init() }
+    nonisolated public static var scaleEffect: Self { .init() }
 
-    public static func scaleEffect(anchor: UnitPoint) -> Self {
+    nonisolated public static func scaleEffect(anchor: UnitPoint) -> Self {
         .init(anchor: anchor)
     }
 }

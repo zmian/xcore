@@ -40,9 +40,9 @@ extension DecodingFormatStyle {
 
 /// A structure to encode input to string using block based format style.
 public struct StringMapEncodingFormatStyle<Input>: EncodingFormatStyle {
-    private let encode: (Input) throws -> String?
+    private let encode: @Sendable (Input) throws -> String?
 
-    fileprivate init(_ encode: @escaping (Input) throws -> String?) {
+    fileprivate init(_ encode: @escaping @Sendable (Input) throws -> String?) {
         self.encode = encode
     }
 
@@ -58,7 +58,7 @@ public struct StringMapEncodingFormatStyle<Input>: EncodingFormatStyle {
 // MARK: - Convenience
 
 extension EncodingFormatStyle {
-    public static func string<Input>(_ encode: @escaping (Input) throws -> String?) -> Self where Self == StringMapEncodingFormatStyle<Input> {
+    public static func string<Input>(_ encode: @escaping @Sendable (Input) throws -> String?) -> Self where Self == StringMapEncodingFormatStyle<Input> {
         .init(encode)
     }
 }

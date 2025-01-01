@@ -10,7 +10,7 @@ public struct LineDynamicTextFieldStyle: DynamicTextFieldStyle {
     private let withValidationColors: Bool
     private let height: CGFloat?
 
-    init(withValidationColors: Bool = true, height: CGFloat? = nil) {
+    nonisolated init(withValidationColors: Bool = true, height: CGFloat? = nil) {
         self.withValidationColors = withValidationColors
         self.height = height
     }
@@ -42,9 +42,9 @@ public struct LineDynamicTextFieldStyle: DynamicTextFieldStyle {
 // MARK: - Dot Syntax Support
 
 extension DynamicTextFieldStyle where Self == LineDynamicTextFieldStyle {
-    public static var line: Self { line() }
+    nonisolated public static var line: Self { line() }
 
-    public static func line(withValidationColors: Bool = true, height: CGFloat? = nil) -> Self {
+    nonisolated public static func line(withValidationColors: Bool = true, height: CGFloat? = nil) -> Self {
         Self(withValidationColors: withValidationColors, height: height)
     }
 }

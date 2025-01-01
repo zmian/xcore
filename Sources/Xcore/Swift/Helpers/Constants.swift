@@ -170,11 +170,9 @@ public enum AppConstants {
     public static var navBarItemHeight: CGFloat { 24 }
     public static var uiControlsHeight: CGFloat { 50 }
 
-    @MainActor
-    public static var tileCornerRadius: CGFloat = 12
+    nonisolated(unsafe) public static var tileCornerRadius: CGFloat = 12
 
-    @MainActor
-    public static var cornerRadius: CGFloat = 6
+    nonisolated(unsafe) public static var cornerRadius: CGFloat = 6
 
     @MainActor
     public static var preferredMaxWidth: CGFloat {

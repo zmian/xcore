@@ -30,7 +30,7 @@ public struct SettingsIconLabelStyle: LabelStyle {
 // MARK: - Dot Syntax Support
 
 extension LabelStyle where Self == SettingsIconLabelStyle {
-    public static func settingsIcon(tint: Color, contentMode: ContentMode = .fit) -> Self {
+    nonisolated public static func settingsIcon(tint: Color, contentMode: ContentMode = .fit) -> Self {
         .init(tint: tint, contentMode: contentMode)
     }
 }

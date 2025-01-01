@@ -7,7 +7,7 @@
 import SwiftUI
 
 public struct ProminentDynamicTextFieldStyle<S: InsettableShape>: DynamicTextFieldStyle {
-    public enum Prominence: Equatable {
+    public enum Prominence: Sendable, Hashable {
         case fill
         case outline(OutlineValidationColor)
 
@@ -15,7 +15,7 @@ public struct ProminentDynamicTextFieldStyle<S: InsettableShape>: DynamicTextFie
             outline(.automatic)
         }
 
-        public enum OutlineValidationColor {
+        public enum OutlineValidationColor: Sendable, Hashable {
             /// If you set the `placeholderBehavior` attribute to `.floating`, the color
             /// won't be applied to the border; otherwise, the validation color is used on
             /// the border.
@@ -31,7 +31,7 @@ public struct ProminentDynamicTextFieldStyle<S: InsettableShape>: DynamicTextFie
     private let prominence: Prominence
     private let padding: EdgeInsets?
 
-    public init(
+    nonisolated public init(
         _ prominence: Prominence,
         shape: S,
         padding: EdgeInsets? = nil
@@ -117,11 +117,11 @@ extension ProminentDynamicTextFieldStyle {
 // MARK: - Dot Syntax Support
 
 extension DynamicTextFieldStyle where Self == ProminentDynamicTextFieldStyle<RoundedRectangle> {
-    public static var prominent: Self {
+    nonisolated public static var prominent: Self {
         prominent()
     }
 
-    public static func prominent(
+    nonisolated public static func prominent(
         _ prominence: Self.Prominence = .fill,
         cornerRadius: CGFloat = AppConstants.tileCornerRadius,
         padding: EdgeInsets? = nil
@@ -135,7 +135,7 @@ extension DynamicTextFieldStyle where Self == ProminentDynamicTextFieldStyle<Rou
 }
 
 extension DynamicTextFieldStyle {
-    public static func prominent<S: InsettableShape>(
+    nonisolated public static func prominent<S: InsettableShape>(
         _ prominence: Self.Prominence = .fill,
         shape: S,
         padding: EdgeInsets? = nil
