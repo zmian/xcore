@@ -390,7 +390,7 @@ extension Device.Model {
     /// The value of this property is an arbitrary alphanumeric string that is
     /// associated with the device as an identifier. For example, you can find the
     /// name of an iOS device in the `General > About` settings.
-    public var name: String {
+    @MainActor public var name: String {
         #if os(iOS) || os(tvOS)
         return UIDevice.current.name
         #elseif os(watchOS)
@@ -401,7 +401,7 @@ extension Device.Model {
     }
 
     /// The family name of the device model (e.g., "iPhone" or "iPod touch").
-    public var family: String {
+    @MainActor public var family: String {
         #if os(iOS) || os(tvOS) || os(visionOS) || targetEnvironment(macCatalyst)
         return UIDevice.current.model
         #elseif os(watchOS)

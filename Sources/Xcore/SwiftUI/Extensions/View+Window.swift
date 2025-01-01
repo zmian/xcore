@@ -130,14 +130,7 @@ private struct Window<Content: View>: UIViewControllerRepresentable {
             viewController.hostingWindow.rootView.content = content
         }
 
-        if isPresented.wrappedValue {
-            viewController.update()
-        } else {
-            // Fixes an issue where disappear animations are broken.
-            withDelay(.default) {
-                viewController.update()
-            }
-        }
+        viewController.update()
     }
 }
 

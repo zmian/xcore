@@ -8,6 +8,7 @@ import SwiftUI
 import Combine
 
 /// - SeeAlso: https://trailingclosure.com/swiftui-instagram-story-tutorial
+@MainActor
 final class StoryTimer: ObservableObject {
     @Published var progress: Double
     private let tick = 0.1
@@ -29,10 +30,6 @@ final class StoryTimer: ObservableObject {
         self.cycle = cycle
         self.progress = 0
         start()
-    }
-
-    deinit {
-        stop()
     }
 
     func start() {
@@ -114,6 +111,7 @@ final class StoryTimer: ObservableObject {
                 return
             }
         }
+
         progress = newProgress
     }
 }

@@ -142,6 +142,7 @@ extension AppInfo {
     /// Template: "executable/appVersionNumber (appBundleId; build:appBuildNumber; deviceModel; osNameVersion) language_region"
     /// Example: App/1.0.0 (com.app.dev; build:1; iPhone14,2; iOS 16.2.0) en_US
     /// ```
+    @MainActor
     public static let userAgent: String = {
         let executable = Bundle.main.executable
         let appVersionNumber = Bundle.main.versionNumber
@@ -158,6 +159,7 @@ extension AppInfo {
 
 extension AppInfo {
     /// A list of application traits such as app version, device and OS version.
+    @MainActor
     public static var traits: [String: String] {
         [
             "app_version": Bundle.main.versionNumber,

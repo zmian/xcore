@@ -87,7 +87,7 @@ extension CGFloat {
     nonisolated(unsafe) public static var interItemHSpacing: Self = .s3
 
     /// Return true `1` pixel relative to the screen scale.
-    public static var onePixel: Self {
+    @MainActor public static var onePixel: Self {
         1 / UIScreen.main.scale
     }
 }
@@ -145,6 +145,7 @@ public enum AppConstants {
     /// The golden ratio.
     public static var φ: CGFloat { 0.618 }
 
+    @MainActor
     public static let statusBarHeight: CGFloat = UIApplication
         .sharedOrNil?
         .firstSceneKeyWindow?
@@ -152,10 +153,12 @@ public enum AppConstants {
         .statusBarManager?
         .statusBarFrame.height ?? 44
 
+    @MainActor
     public static var statusBarPlusNavBarHeight: CGFloat {
         statusBarHeight + navBarHeight
     }
 
+    @MainActor
     public static var navBarHeight: CGFloat {
         if Device.userInterfaceIdiom == .pad {
             return 50
@@ -167,20 +170,28 @@ public enum AppConstants {
     public static var navBarItemHeight: CGFloat { 24 }
     public static var uiControlsHeight: CGFloat { 50 }
 
+    @MainActor
     public static var tileCornerRadius: CGFloat = 12
+
+    @MainActor
     public static var cornerRadius: CGFloat = 6
 
+    @MainActor
     public static var preferredMaxWidth: CGFloat {
         iPhoneXSScreenSize.width
     }
 
+//    @MainActor
     static var popupPreferredWidth: CGFloat {
-        min(300, Device.screen.bounds.size.min * 0.8)
+//        min(300, Device.screen.bounds.size.min * 0.8)
+        #warning("fixme")
+        return 300
     }
 }
 
 // MARK: - Device
 
+@MainActor
 extension AppConstants {
     public static var supportsHomeIndicator: Bool {
         Device.capability.contains(.homeIndicator)
