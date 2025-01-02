@@ -42,7 +42,7 @@ extension PasteboardClient {
     /// Returns unimplemented variant of `PasteboardClient`.
     public static var unimplemented: Self {
         .init { _ in
-            XCTFail(#"Unimplemented: @Dependency(\.pasteboard)"#)
+            reportIssue(#"Unimplemented: @Dependency(\.pasteboard)"#)
         }
     }
 

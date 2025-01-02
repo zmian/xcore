@@ -5,7 +5,7 @@
 //
 
 import UIKit
-import Combine
+@preconcurrency import Combine
 
 /// Provides functionality for sending and receiving events.
 ///
@@ -48,7 +48,7 @@ import Combine
 ///     }
 /// }
 /// ```
-public struct EventsClient<Event: Sendable>: @unchecked Sendable {
+public struct EventsClient<Event: Sendable>: Sendable {
     /// Sends the give event.
     public var send: @Sendable (Event) -> Void
 
@@ -84,7 +84,7 @@ extension EventsClient {
     public static var unimplemented: Self {
         .init(
             send: { _ in
-                XCTFail("\(Self.self).send is unimplemented")
+                reportIssue("\(Self.self).send is unimplemented")
             },
             receive: .unimplemented("\(Self.self).receive")
         )

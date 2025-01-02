@@ -48,7 +48,7 @@ extension AudioPlayerClient {
     /// Returns unimplemented variant of `AudioPlayerClient`.
     public static var unimplemented: Self {
         .init { _ in
-            XCTFail(#"Unimplemented: @Dependency(\.audioPlayer)"#)
+            reportIssue(#"Unimplemented: @Dependency(\.audioPlayer)"#)
         }
     }
 }

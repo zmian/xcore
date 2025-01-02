@@ -34,7 +34,7 @@ extension ImageColorClient {
     /// Returns unimplemented variant of `ImageColorClient`.
     public static var unimplemented: Self {
         .init { _ in
-            XCTFail(#"Unimplemented: @Dependency(\.imageColor)"#)
+            reportIssue(#"Unimplemented: @Dependency(\.imageColor)"#)
             return nil
         }
     }

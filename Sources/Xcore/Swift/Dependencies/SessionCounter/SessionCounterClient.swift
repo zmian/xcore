@@ -39,10 +39,10 @@ extension SessionCounterClient {
     /// Returns unimplemented variant of `SessionCounterClient`.
     public static var unimplemented: Self {
         .init {
-            XCTFail("\(Self.self).count is unimplemented")
+            reportIssue("\(Self.self).count is unimplemented")
             return 0
         } increment: {
-            XCTFail("\(Self.self).increment is unimplemented")
+            reportIssue("\(Self.self).increment is unimplemented")
         }
     }
 }

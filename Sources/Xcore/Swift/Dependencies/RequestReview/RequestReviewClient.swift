@@ -59,7 +59,7 @@ extension RequestReviewClient {
     /// Returns unimplemented variant of `RequestReviewClient`.
     public static var unimplemented: Self {
         .init {
-            XCTFail(#"Unimplemented: @Dependency(\.requestReview)"#)
+            reportIssue(#"Unimplemented: @Dependency(\.requestReview)"#)
         }
     }
 

@@ -31,7 +31,7 @@ extension QRCodeClient {
     /// Returns unimplemented variant of `QRCodeClient`.
     public static var unimplemented: Self {
         .init { _ in
-            XCTFail(#"Unimplemented: @Dependency(\.qrCode)"#)
+            reportIssue(#"Unimplemented: @Dependency(\.qrCode)"#)
             throw CancellationError()
         }
     }
