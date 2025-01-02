@@ -23,7 +23,7 @@ private struct TextFieldPreviewBox<Content: View>: View {
     var body: some View {
         Section {
             content
-                .readSize {
+                .readSize { @MainActor in
                     height = $0.height
                 }
         } header: {
