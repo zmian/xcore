@@ -6,7 +6,6 @@
 
 import SwiftUI
 
-#warning("Use containers to handle this https://developer.apple.com/documentation/SwiftUI/Group/init(subviews:transform:)")
 public struct StoryView<Page, Content, Background>: View where Page: Identifiable, Content: View, Background: View {
     @Environment(\.storyProgressIndicatorInsets) private var insets
     @Environment(\.theme) private var theme
