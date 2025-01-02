@@ -34,7 +34,7 @@ extension View {
     ///   declare their own variant in case they want to use this method name to
     ///   apply any additional modifications (e.g., setting the navigation view style
     ///   `.navigationViewStyle(.stack)`).
-    func embedInNavigation() -> some View {
+    nonisolated func embedInNavigation() -> some View {
         NavigationView { self }
     }
 }
@@ -77,7 +77,7 @@ extension Text {
     ///
     /// - Parameter color: The color to use when displaying this text.
     /// - Returns: A text view that uses the color value you supply.
-    public func foregroundStyle(_ style: () -> Color?) -> Text {
+    nonisolated public func foregroundStyle(_ style: () -> Color?) -> Text {
         if let s = style() {
             foregroundColor(s)
         } else {
@@ -107,7 +107,7 @@ extension View {
 // MARK: - Shadow
 
 extension View {
-    func floatingShadow() -> some View {
+    nonisolated func floatingShadow() -> some View {
         shadow(color: Color(white: 0, opacity: 0.08), radius: 8, x: 0, y: 4)
     }
 }
@@ -135,7 +135,7 @@ extension View {
     ///   - hidden: Set to `false` to show the view. Set to `true` to hide the view.
     ///   - remove: A Boolean value indicating whether to remove the view.
     @ViewBuilder
-    public func hidden(_ hidden: Bool, remove: Bool = false) -> some View {
+    nonisolated public func hidden(_ hidden: Bool, remove: Bool = false) -> some View {
         if hidden {
             if !remove {
                 self.hidden()
@@ -172,7 +172,7 @@ extension View {
     }
 
     /// Clips the content by setting offset Y by given value.
-    public func clipped(offsetY: CGFloat) -> some View {
+    nonisolated public func clipped(offsetY: CGFloat) -> some View {
         clipShape(.rect.offset(y: offsetY))
     }
 }
