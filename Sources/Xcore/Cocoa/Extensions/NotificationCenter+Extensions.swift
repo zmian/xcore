@@ -18,13 +18,33 @@ extension NotificationCenter {
     /// ``` swift
     /// UIDevice.current.beginGeneratingDeviceOrientationNotifications()
     ///
-    /// let notifications = await NotificationCenter
+    /// let notifications = NotificationCenter
     ///     .async(UIDevice.orientationDidChangeNotification)
     ///     .filter { _ in
     ///         UIDevice.current.orientation == .portrait
     ///     }
     ///
     /// for await notification in notifications {
+    ///     print("Device is now in portrait orientation.")
+    /// }
+    /// ```
+    ///
+    /// - Tip: The ``Notification`` type doesn’t conform to ``Sendable``, so
+    ///   iterating over this asynchronous sequence produces a compiler warning. You
+    ///   can use a ``map(_:)`` or ``compactMap(_:)`` operator on the sequence to
+    ///   extract sendable properties of the notification and iterate over those
+    ///   instead. See ``notifications(named:object:)`` for an example of this
+    ///   approach.
+    ///
+    /// ``` swift
+    /// let notifications = NotificationCenter
+    ///     .async(UIDevice.orientationDidChangeNotification)
+    ///     .filter { _ in
+    ///         UIDevice.current.orientation == .portrait
+    ///     }
+    ///     .map { _ in () } // ✅ ← Silence the warning.
+    ///
+    /// for await _ in notifications {
     ///     print("Device is now in portrait orientation.")
     /// }
     /// ```
