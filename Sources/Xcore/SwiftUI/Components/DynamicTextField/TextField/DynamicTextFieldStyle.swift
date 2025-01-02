@@ -9,7 +9,7 @@ import SwiftUI
 // MARK: - Style
 
 /// A specification for the appearance and interaction of a text field.
-public protocol DynamicTextFieldStyle {
+@MainActor public protocol DynamicTextFieldStyle {
     associatedtype Body: View
     typealias Configuration = DynamicTextFieldStyleConfiguration
 
@@ -78,7 +78,14 @@ struct AnyDynamicTextFieldStyle: DynamicTextFieldStyle {
 // MARK: - Environment Key
 
 extension EnvironmentValues {
-    @Entry var dynamicTextFieldStyle = AnyDynamicTextFieldStyle(.default)
+    private enum DynamicTextFieldStyleKey: @preconcurrency EnvironmentKey {
+        @MainActor static let defaultValue = AnyDynamicTextFieldStyle(.default)
+    }
+
+    var dynamicTextFieldStyle: AnyDynamicTextFieldStyle {
+        get { self[DynamicTextFieldStyleKey.self] }
+        set { self[DynamicTextFieldStyleKey.self] = newValue }
+    }
 }
 
 // MARK: - View Helper
@@ -86,7 +93,7 @@ extension EnvironmentValues {
 extension View {
     /// Sets the style for text field within this view to a style with a custom
     /// appearance and standard interaction behavior.
-    nonisolated public func dynamicTextFieldStyle(_ style: some DynamicTextFieldStyle) -> some View {
+    public func dynamicTextFieldStyle(_ style: some DynamicTextFieldStyle) -> some View {
         environment(\.dynamicTextFieldStyle, AnyDynamicTextFieldStyle(style))
     }
 }
