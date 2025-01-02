@@ -48,7 +48,7 @@ private final class ViewModel {
 
 // MARK: - Helpers
 
-private var globalPasteboard: String?
+nonisolated(unsafe) private var globalPasteboard: String?
 
 extension PasteboardClient {
     /// Returns in-memory variant of `PasteboardClient`.

@@ -7,6 +7,7 @@
 import XCTest
 @testable import Xcore
 
+@MainActor
 final class ReflectionTests: TestCase {
     func testName() {
         let myViewControllerInstance = MyViewController()

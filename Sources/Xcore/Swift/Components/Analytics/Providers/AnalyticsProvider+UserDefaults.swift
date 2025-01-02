@@ -9,8 +9,8 @@ import Foundation
 /// An analytics provider that can be used for unit tests.
 public final class UserDefaultsAnalyticsProvider: AnalyticsProvider {
     private let suiteName: String
-    private lazy var userDefaults = UserDefaults(suiteName: suiteName)!
-    private var isEnabled = true
+    nonisolated(unsafe) private let userDefaults: UserDefaults
+    nonisolated(unsafe) private var isEnabled = true
 
     /// Creates an analytics provider object with the specified database name.
     ///
@@ -18,6 +18,7 @@ public final class UserDefaultsAnalyticsProvider: AnalyticsProvider {
     ///   named: `UserDefaultsAnalyticsProvider`.
     public init(named: String? = nil) {
         self.suiteName = named ?? name(of: UserDefaultsAnalyticsProvider.self)
+        self.userDefaults = UserDefaults(suiteName: suiteName)!
     }
 
     public func track(_ event: AnalyticsEventProtocol) {

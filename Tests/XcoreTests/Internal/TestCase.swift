@@ -21,7 +21,7 @@ func assert<T>(
     _ input: T,
     _ comparator: (T, T) -> Bool,
     _ output: T,
-    file: StaticString = #file,
+    file: StaticString = #filePath,
     line: UInt = #line
 ) {
     XCTAssert(
@@ -35,7 +35,7 @@ func assert<T>(
 func assertEqual<T1, T2>(
     _ input: (T1, T2),
     _ output: (T1, T2),
-    file: StaticString = #file,
+    file: StaticString = #filePath,
     line: UInt = #line
 ) where T1: Equatable, T2: Equatable {
     XCTAssertTrue(

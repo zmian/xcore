@@ -251,7 +251,7 @@ final class LiveAddressSearchClientTests: TestCase {
 extension LiveAddressSearchClientTests {
     private func search(
         _ query: String,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line,
         callback: (PostalAddress) async throws -> Void
     ) async {

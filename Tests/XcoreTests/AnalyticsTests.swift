@@ -134,7 +134,7 @@ final class AnalyticsTests: TestCase {
     }
 }
 
-private final class AnalyticsClient: Analytics<AppAnalyticsEvent> {
+private final class AnalyticsClient: Analytics<AppAnalyticsEvent>, @unchecked Sendable {
     var event: AppAnalyticsEvent?
     var userId: String?
     var traits: [String: String] = [:]

@@ -7,6 +7,7 @@
 import XCTest
 @testable import Xcore
 
+@MainActor
 final class AppInfoTests: TestCase {
     func testTraits() {
         let actual = AppInfo.traits

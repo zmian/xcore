@@ -8,7 +8,7 @@ import Foundation
 @testable import Xcore
 
 extension FeatureFlag {
-    public static func setValues(_ values: [String: Any]) {
+    public static func setValues(_ values: [String: Sendable]) {
         let testProviderId = "xctest"
         unregister(id: testProviderId)
         register(BlockFeatureFlagProvider(id: testProviderId) { key in

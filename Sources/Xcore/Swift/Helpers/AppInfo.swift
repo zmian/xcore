@@ -34,7 +34,7 @@ extension AppInfo {
 
 extension AppInfo {
     /// An enumeration representing the execution target of the application.
-    public enum ExecutionTarget {
+    public enum ExecutionTarget: Sendable {
         /// The application is running as a normal application (e.g., iOS app).
         case app
 
@@ -82,7 +82,7 @@ extension AppInfo {
 
 extension AppInfo {
     /// An enumeration representing the application distribution channel.
-    public enum Distribution {
+    public enum Distribution: Sendable {
         /// App was installed from the App Store.
         case appStore
 
