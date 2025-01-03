@@ -4,22 +4,27 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import Foundation
 import KeychainAccess
 @testable import Xcore
 
-final class PondTests: TestCase {
-    func testPond_Basic_Stub() throws {
+@Suite(.serialized)
+struct PondTests {
+    @Test
+    func pond_Basics_inMemory() throws {
         try assertBasicCases(with: .inMemory)
     }
 
-    func testPond_Basic_UserDefaults() throws {
-        let suite = try XCTUnwrap(UserDefaults(suiteName: "pond_test"))
+    @Test
+    func pond_Basics_UserDefaults() throws {
+        let suite = try #require(UserDefaults(suiteName: "pond_test"))
         try assertBasicCases(with: .userDefaults(suite))
     }
 
-    func testPond_Basic_Composit() throws {
-        let suite = try XCTUnwrap(UserDefaults(suiteName: "pond_test"))
+    @Test
+    func pond_Basics_Composite() throws {
+        let suite = try #require(UserDefaults(suiteName: "pond_test"))
         let stub = InMemoryPond()
         let userDefaults = UserDefaultsPond(suite)
 
@@ -32,7 +37,8 @@ final class PondTests: TestCase {
         })
     }
 
-    func testEmptyPond() throws {
+    @Test
+    func emptyPond() throws {
         let model = withDependencies {
             $0.pond = .empty
         } operation: {
@@ -41,13 +47,13 @@ final class PondTests: TestCase {
 
         // Set value
         try model.pond.set(.testValue, value: "Hello")
-        XCTAssertFalse(model.pond.contains(.testValue))
+        #expect(!model.pond.contains(.testValue))
         model.pond.remove(.testValue)
-        XCTAssertFalse(model.pond.contains(.testValue))
+        #expect(!model.pond.contains(.testValue))
 
         // Set/Get value
         try model.pond.set(.testValue, value: 123)
-        XCTAssertNil(try model.pond.get(Int.self, .testValue))
+        #expect(try model.pond.get(Int.self, .testValue) == nil)
     }
 
     private func assertCases<T: Codable>(for value: T, pond: @autoclosure () -> Pond) throws where T: Equatable {
@@ -59,13 +65,13 @@ final class PondTests: TestCase {
 
         // Set value
         try model.pond.set(.testValue, value: value)
-        XCTAssertTrue(model.pond.contains(.testValue))
+        #expect(model.pond.contains(.testValue))
         model.pond.remove(.testValue)
-        XCTAssertFalse(model.pond.contains(.testValue))
+        #expect(!model.pond.contains(.testValue))
 
         // Set/Get value
         try model.pond.set(.testValue2, value: value)
-        XCTAssertEqual(try model.pond.get(.testValue2), value)
+        #expect(try model.pond.get(.testValue2) == value)
     }
 
     private func assertCases(for value: NSNumber, pond: @autoclosure () -> Pond) throws {
@@ -77,13 +83,13 @@ final class PondTests: TestCase {
 
         // Set value
         try model.pond.set(.testValue, value: value)
-        XCTAssertTrue(model.pond.contains(.testValue))
+        #expect(model.pond.contains(.testValue))
         model.pond.remove(.testValue)
-        XCTAssertFalse(model.pond.contains(.testValue))
+        #expect(!model.pond.contains(.testValue))
 
         // Set/Get value
         try model.pond.set(.testValue2, value: value)
-        XCTAssertEqual(try model.pond.get(.testValue2), value)
+        #expect(try model.pond.get(.testValue2) == value)
     }
 }
 
@@ -137,8 +143,8 @@ extension PondTests {
 
         model.pond.remove(.testValue)
 
-        XCTAssertNil(try model.pond.get(Example.self, .testValue))
-        XCTAssertEqual(model.pond.get(.testValue, default: "My Value"), "My Value")
+        #expect(try model.pond.get(Example.self, .testValue) == nil)
+        #expect(model.pond.get(.testValue, default: "My Value") == "My Value")
     }
 
     private func assertGetCodable(with pond: @autoclosure () -> Pond) throws {
@@ -146,7 +152,7 @@ extension PondTests {
             let value: String
         }
 
-        let data = try XCTUnwrap(#"{"value": "hello world"}"#.data(using: .utf8))
+        let data = try #require(#"{"value": "hello world"}"#.data(using: .utf8))
         try assertCases(for: data, pond: pond())
 
         let model = withDependencies {
@@ -156,8 +162,8 @@ extension PondTests {
         }
 
         try model.pond.set(.testValue, value: data)
-        let example = try XCTUnwrap(model.pond.get(Example.self, .testValue))
-        XCTAssertEqual(example.value, "hello world")
+        let example = try #require(try model.pond.get(Example.self, .testValue))
+        #expect(example.value == "hello world")
     }
 
     private func assertGetCodable2(with pond: @autoclosure () -> Pond) throws {
@@ -174,8 +180,8 @@ extension PondTests {
         let value = Example(value: "Swift")
         try model.pond.set(.testValue, value: value)
 
-        let example = try XCTUnwrap(model.pond.get(Example.self, .testValue))
-        XCTAssertEqual(example.value, "Swift")
+        let example = try #require(try model.pond.get(Example.self, .testValue))
+        #expect(example.value == "Swift")
     }
 
     private func assertGetCodableArray(with pond: @autoclosure () -> Pond) throws {
@@ -192,8 +198,8 @@ extension PondTests {
         let values = [Example(value: "Swift"), Example(value: "Language")]
         try model.pond.set(.testValue, value: values)
 
-        let examples = try XCTUnwrap(model.pond.get([Example].self, .testValue))
-        XCTAssertEqual(examples[0].value, "Swift")
+        let examples = try #require(try model.pond.get([Example].self, .testValue))
+        #expect(examples[0].value == "Swift")
     }
 
     private func assertGetCodableDictionary(with pond: @autoclosure () -> Pond) throws {
@@ -210,8 +216,8 @@ extension PondTests {
         let values = ["language": Example(value: "Swift")]
         try model.pond.set(.testValue, value: values)
 
-        let examples = try XCTUnwrap(model.pond.get([String: Example].self, .testValue))
-        XCTAssertEqual(examples["language"], Example(value: "Swift"))
+        let examples = try #require(try model.pond.get([String: Example].self, .testValue))
+        #expect(examples["language"] == Example(value: "Swift"))
     }
 }
 

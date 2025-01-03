@@ -11,6 +11,7 @@ struct ValidationRuleTests {
     @Test
     func email() {
         let rule: ValidationRule<String> = .email
+
         #expect("help@example.com".validate(rule: rule))
         #expect("help@gmail.com".validate(rule: rule))
         #expect("help@io.com".validate(rule: rule))
