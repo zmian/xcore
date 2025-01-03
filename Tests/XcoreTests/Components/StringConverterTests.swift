@@ -4,42 +4,44 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import Foundation
 @testable import Xcore
 
-final class StringConverterTests: TestCase {
-    func testGetValue() {
-        XCTAssertEqual(ConvertItem.validBool.value(default: false), true)
-        XCTAssertEqual(ConvertItem.invalidBool.value(default: false), false)
+struct StringConverterTests {
+    @Test
+    func getValue() {
+        #expect(ConvertItem.validBool.value(default: false) == true)
+        #expect(ConvertItem.invalidBool.value(default: false) == false)
 
-        XCTAssertEqual(ConvertItem.validInt.value(default: 0), Int(1213))
-        XCTAssertEqual(ConvertItem.invalidInt.value(default: 0), Int(0))
+        #expect(ConvertItem.validInt.value(default: 0) == Int(1213))
+        #expect(ConvertItem.invalidInt.value(default: 0) == Int(0))
 
-        XCTAssertEqual(ConvertItem.validFloat.value(default: 0), Float(20.34))
-        XCTAssertEqual(ConvertItem.invalidFloat.value(default: 0), Float(0))
+        #expect(ConvertItem.validFloat.value(default: 0) == Float(20.34))
+        #expect(ConvertItem.invalidFloat.value(default: 0) == Float(0))
 
-        XCTAssertEqual(ConvertItem.validDouble.value(default: 0), Double(100.76))
-        XCTAssertEqual(ConvertItem.invalidDouble.value(default: 0), Double(0))
+        #expect(ConvertItem.validDouble.value(default: 0) == Double(100.76))
+        #expect(ConvertItem.invalidDouble.value(default: 0) == Double(0))
 
-        XCTAssertEqual(ConvertItem.validNsNumber.value(default: NSNumber(value: 0)), NSNumber(value: 10))
-        XCTAssertEqual(ConvertItem.invalidNsNumber.value(default: NSNumber(value: 0)), NSNumber(value: 0))
+        #expect(ConvertItem.validNsNumber.value(default: NSNumber(value: 0)) == NSNumber(value: 10))
+        #expect(ConvertItem.invalidNsNumber.value(default: NSNumber(value: 0)) == NSNumber(value: 0))
 
         let defaultUrl = URL(string: "https://github.com/zmian/xcore.swift")!
-        XCTAssertEqual(ConvertItem.validUrl.value(default: defaultUrl), URL(string: "https://swift.org/")!)
-        XCTAssertEqual(ConvertItem.validUrl2.value(default: defaultUrl), URL(string: "message://")!)
-        XCTAssertEqual(ConvertItem.invalidUrl.value(default: defaultUrl), defaultUrl)
+        #expect(ConvertItem.validUrl.value(default: defaultUrl) == URL(string: "https://swift.org/"))
+        #expect(ConvertItem.validUrl2.value(default: defaultUrl) == URL(string: "message://"))
+        #expect(ConvertItem.invalidUrl.value(default: defaultUrl) == defaultUrl)
 
         let defaultString = "hello world"
-        XCTAssertEqual(ConvertItem.validString.value(default: defaultString), "dark")
-        XCTAssertEqual(ConvertItem.invalidString.value(default: defaultString), defaultString)
+        #expect(ConvertItem.validString.value(default: defaultString) == "dark")
+        #expect(ConvertItem.invalidString.value(default: defaultString) == defaultString)
 
         let defaultNsString = NSString("greeting world")
-        XCTAssertEqual(ConvertItem.validNsString.value(default: defaultNsString), NSString("darker"))
-        XCTAssertEqual(ConvertItem.invalidNsString.value(default: defaultNsString), defaultNsString)
+        #expect(ConvertItem.validNsString.value(default: defaultNsString) == NSString("darker"))
+        #expect(ConvertItem.invalidNsString.value(default: defaultNsString) == defaultNsString)
 
         let defaultArray: [String] = ["swift", "objc"]
-        XCTAssertEqual(ConvertItem.validArray.value(default: defaultArray), ["red", "blue", "green"])
-        XCTAssertEqual(ConvertItem.invalidArray.value(default: defaultArray), defaultArray)
+        #expect(ConvertItem.validArray.value(default: defaultArray) == ["red", "blue", "green"])
+        #expect(ConvertItem.invalidArray.value(default: defaultArray) == defaultArray)
 
         let validDictionary = [
             "name": "zmian",
@@ -48,17 +50,17 @@ final class StringConverterTests: TestCase {
         ]
 
         let defaultDictionary = ["hello": "world"]
-        XCTAssertEqual(ConvertItem.validDictionary.value(default: defaultDictionary), validDictionary)
-        XCTAssertEqual(ConvertItem.invalidDictionary.value(default: defaultDictionary), defaultDictionary)
+        #expect(ConvertItem.validDictionary.value(default: defaultDictionary) == validDictionary)
+        #expect(ConvertItem.invalidDictionary.value(default: defaultDictionary) == defaultDictionary)
 
         let expectedValueDark = ConvertItem.validRawRepresentable.value(default: TestTheme.light)
-        XCTAssertEqual(expectedValueDark, .dark)
+        #expect(expectedValueDark == .dark)
 
         let expectedValueLight = ConvertItem.invalidRawRepresentable1.value(default: TestTheme.light)
-        XCTAssertEqual(expectedValueLight, .light)
+        #expect(expectedValueLight == .light)
 
         let expectedValueDark2 = ConvertItem.invalidRawRepresentable2.value(default: TestTheme.dark)
-        XCTAssertEqual(expectedValueDark2, .dark)
+        #expect(expectedValueDark2 == .dark)
     }
 }
 
