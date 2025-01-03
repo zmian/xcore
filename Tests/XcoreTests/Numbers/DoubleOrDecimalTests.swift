@@ -7,7 +7,7 @@
 import XCTest
 @testable import Xcore
 
-final class DoubleOrDecimalTests: TestCase {}
+final class DoubleOrDecimalTests: XCTestCase {}
 
 // MARK: - Precision
 

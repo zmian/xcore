@@ -7,7 +7,7 @@
 import XCTest
 @testable import Xcore
 
-final class DateTest: TestCase {
+final class DateTest: XCTestCase {
     override func setUp() {
         super.setUp()
         Calendar.default = .iso

@@ -7,7 +7,7 @@
 import XCTest
 @testable import Xcore
 
-final class AsyncPassthroughStreamTests: TestCase {
+final class AsyncPassthroughStreamTests: XCTestCase {
     func testIterations() async {
         let stream = AsyncPassthroughStream<Int>()
 

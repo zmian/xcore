@@ -3,7 +3,6 @@
 // Copyright © 2022 Xcore
 // MIT license, see LICENSE file for details
 //
-// swiftlint:disable icc_test_case_superclass
 
 #if canImport(Combine)
 import XCTest

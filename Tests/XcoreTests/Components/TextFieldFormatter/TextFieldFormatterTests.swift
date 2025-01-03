@@ -7,7 +7,7 @@
 import XCTest
 @testable import Xcore
 
-final class TextFieldFormatterTests: TestCase {
+final class TextFieldFormatterTests: XCTestCase {
     func testPhoneNumberFormatterUS() {
         let formatter = PhoneNumberTextFieldFormatter(style: .us)
         let validation = ValidationRule<String>.phoneNumber(length: 11)

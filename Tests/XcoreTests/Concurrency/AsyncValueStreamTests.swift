@@ -7,7 +7,7 @@
 import XCTest
 @testable import Xcore
 
-final class AsyncValueStreamTests: TestCase {
+final class AsyncValueStreamTests: XCTestCase {
     func testCurrentValue() async {
         let internalStream = AsyncCurrentValueStream<Int>(5)
 

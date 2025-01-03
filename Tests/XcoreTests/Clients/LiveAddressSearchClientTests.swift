@@ -7,7 +7,7 @@
 import XCTest
 @testable import Xcore
 
-final class LiveAddressSearchClientTests: TestCase {
+final class LiveAddressSearchClientTests: XCTestCase {
     override func setUp() {
         super.setUp()
         LiveAddressSearchClient.supportedRegions = [.unitedStates]
