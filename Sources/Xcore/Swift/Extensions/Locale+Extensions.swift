@@ -51,8 +51,8 @@ extension Locale {
     /// Returns `es` (Spanish) locale.
     public static let es = Locale(identifier: "es")
 
-    /// Returns `ar` (Arabic) locale.
-    public static let ar = Locale(identifier: "ar")
+    /// Returns `ar_SA` (Arabic, Saudi Arabia) locale.
+    public static let ar = Locale(identifier: "ar_SA")
 
     /// Returns `tr` (Turkish) locale.
     public static let tr = Locale(identifier: "tr")
