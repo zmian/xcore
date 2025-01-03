@@ -4,133 +4,139 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
 @testable import Xcore
 
-final class AnalyticsTests: TestCase {
-    func testIdentify() {
+struct AnalyticsTests {
+    @Test
+    func identify() {
         let analytics = AnalyticsClient()
-        XCTAssertEqual(analytics.userId, nil)
+        #expect(analytics.userId == nil)
 
         // Identify
         analytics.identify(userId: "123")
-        XCTAssertEqual(analytics.userId, "123")
-        XCTAssertEqual(analytics.traits, [:])
-        XCTAssertEqual(analytics.didCallIdentify, true)
+        #expect(analytics.userId == "123")
+        #expect(analytics.traits == [:])
+        #expect(analytics.didCallIdentify == true)
         analytics.didCallIdentify = false
 
         analytics.identify(userId: "123", traits: ["hello": "world"])
-        XCTAssertEqual(analytics.userId, "123")
-        XCTAssertEqual(analytics.traits, ["hello": "world"])
-        XCTAssertEqual(analytics.didCallIdentify, true)
+        #expect(analytics.userId == "123")
+        #expect(analytics.traits == ["hello": "world"])
+        #expect(analytics.didCallIdentify == true)
         analytics.didCallIdentify = false
 
         // Ensure identify isn't called if user id and traits are the same.
         analytics.identify(traits: ["hello": "world"])
-        XCTAssertEqual(analytics.userId, "123")
-        XCTAssertEqual(analytics.traits, ["hello": "world"])
-        XCTAssertEqual(analytics.didCallIdentify, false)
+        #expect(analytics.userId == "123")
+        #expect(analytics.traits == ["hello": "world"])
+        #expect(analytics.didCallIdentify == false)
 
         analytics.identify(userId: "1234", traits: ["hello": "world"])
-        XCTAssertEqual(analytics.userId, "1234")
-        XCTAssertEqual(analytics.traits, ["hello": "world"])
-        XCTAssertEqual(analytics.didCallIdentify, true)
+        #expect(analytics.userId == "1234")
+        #expect(analytics.traits == ["hello": "world"])
+        #expect(analytics.didCallIdentify == true)
         analytics.didCallIdentify = false
 
         analytics.identify(userId: "12345")
-        XCTAssertEqual(analytics.userId, "12345")
-        XCTAssertEqual(analytics.traits, ["hello": "world"])
-        XCTAssertEqual(analytics.didCallIdentify, true)
+        #expect(analytics.userId == "12345")
+        #expect(analytics.traits == ["hello": "world"])
+        #expect(analytics.didCallIdentify == true)
         analytics.didCallIdentify = false
     }
 
     /// Reset, ensure reset is only called if user was identified.
-    func testReset() {
+    @Test
+    func reset() {
         let analytics = AnalyticsClient()
 
         // when only traits are set, reset shouldn't be called.
         analytics.identify(traits: ["hello": "greetings"])
-        XCTAssertEqual(analytics.didCallIdentify, true)
+        #expect(analytics.didCallIdentify == true)
         analytics.didCallIdentify = false
-        XCTAssertEqual(analytics.didCallReset, false)
+        #expect(analytics.didCallReset == false)
         analytics.reset()
-        XCTAssertEqual(analytics.didCallReset, false)
+        #expect(analytics.didCallReset == false)
 
         // when only user id is set, reset should be called.
         analytics.identify(userId: "123")
         analytics.reset()
-        XCTAssertEqual(analytics.didCallReset, true)
+        #expect(analytics.didCallReset == true)
         analytics.didCallReset = false
 
         analytics.identify(traits: ["hello": "greetings"])
         analytics.reset()
-        XCTAssertEqual(analytics.didCallReset, false)
+        #expect(analytics.didCallReset == false)
         analytics.identify(userId: "1234")
-        XCTAssertEqual(analytics.userId, "1234")
+        #expect(analytics.userId == "1234")
         analytics.reset()
-        XCTAssertEqual(analytics.userId, nil)
-        XCTAssertEqual(analytics.didCallReset, true)
+        #expect(analytics.userId == nil)
+        #expect(analytics.didCallReset == true)
     }
 
-    func testTrack() {
+    @Test
+    func track() {
         let analytics = AnalyticsClient()
 
-        XCTAssertEqual(analytics.event, nil)
+        #expect(analytics.event == nil)
         analytics.track(AppAnalyticsEvent(name: "sign up"))
-        XCTAssertEqual(analytics.event, AppAnalyticsEvent(name: "sign up"))
+        #expect(analytics.event == AppAnalyticsEvent(name: "sign up"))
     }
 
-    func testSetEnabled() {
+    @Test
+    func setEnabled() {
         let analytics = AnalyticsClient()
 
-        XCTAssertEqual(analytics.didCallSetEnabled, false)
+        #expect(analytics.didCallSetEnabled == false)
         analytics.setEnabled(true)
-        XCTAssertEqual(analytics.didCallSetEnabled, true)
+        #expect(analytics.didCallSetEnabled == true)
     }
 
     /// nil or empty traits should be the treated the same
-    func testEmptyAndNilTraits() {
+    @Test
+    func emptyAndNilTraits() {
         let analytics = AnalyticsClient()
 
         analytics.reset()
-        XCTAssertEqual(analytics.userId, nil)
-        XCTAssertEqual(analytics.traits, [:])
-        XCTAssertEqual(analytics.didCallIdentify, false)
+        #expect(analytics.userId == nil)
+        #expect(analytics.traits == [:])
+        #expect(analytics.didCallIdentify == false)
         analytics.identify(userId: "123")
-        XCTAssertEqual(analytics.userId, "123")
-        XCTAssertEqual(analytics.traits, [:])
-        XCTAssertEqual(analytics.didCallIdentify, true)
+        #expect(analytics.userId == "123")
+        #expect(analytics.traits == [:])
+        #expect(analytics.didCallIdentify == true)
         analytics.didCallIdentify = false
         analytics.identify(traits: [:])
-        XCTAssertEqual(analytics.userId, "123")
-        XCTAssertEqual(analytics.traits, [:])
-        XCTAssertEqual(analytics.didCallIdentify, false)
+        #expect(analytics.userId == "123")
+        #expect(analytics.traits == [:])
+        #expect(analytics.didCallIdentify == false)
     }
 
     /// nil or empty user id should be the treated the same
-    func tesBlankAndNilUserId() {
+    @Test
+    func BlankAndNilUserId() {
         let analytics = AnalyticsClient()
 
         analytics.reset()
-        XCTAssertEqual(analytics.userId, nil)
-        XCTAssertEqual(analytics.traits, [:])
-        XCTAssertEqual(analytics.didCallIdentify, false)
+        #expect(analytics.userId == nil)
+        #expect(analytics.traits == [:])
+        #expect(analytics.didCallIdentify == false)
         analytics.identify(traits: ["hello": "greetings"])
-        XCTAssertEqual(analytics.userId, nil)
-        XCTAssertEqual(analytics.traits, ["hello": "greetings"])
-        XCTAssertEqual(analytics.didCallIdentify, true)
+        #expect(analytics.userId == nil)
+        #expect(analytics.traits == ["hello": "greetings"])
+        #expect(analytics.didCallIdentify == true)
         analytics.didCallIdentify = false
         // Empty == nil
         analytics.identify(userId: "")
-        XCTAssertEqual(analytics.userId, nil)
-        XCTAssertEqual(analytics.traits, ["hello": "greetings"])
-        XCTAssertEqual(analytics.didCallIdentify, false)
+        #expect(analytics.userId == nil)
+        #expect(analytics.traits == ["hello": "greetings"])
+        #expect(analytics.didCallIdentify == false)
 
         // blank == nil
         analytics.identify(userId: "   ")
-        XCTAssertEqual(analytics.userId, nil)
-        XCTAssertEqual(analytics.traits, ["hello": "greetings"])
-        XCTAssertEqual(analytics.didCallIdentify, false)
+        #expect(analytics.userId == nil)
+        #expect(analytics.traits == ["hello": "greetings"])
+        #expect(analytics.didCallIdentify == false)
     }
 }
 

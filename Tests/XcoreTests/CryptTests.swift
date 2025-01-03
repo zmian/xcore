@@ -4,66 +4,77 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import Foundation
 @testable import Xcore
 
-final class CryptTests: TestCase {
-    func testObfuscateString() throws {
+struct CryptTests {
+    @Test
+    func obfuscateString() throws {
         let secret = Crypt.generateRandomPassword()
         let message = "Hello World"
 
         let obfuscated = Crypt.obfuscate(message, secret: secret)
         let deobfuscate = try Crypt.deobfuscate(obfuscated, secret: secret)
 
-        XCTAssertNotEqual(Data(message.utf8).sha256().bytes, obfuscated)
-        XCTAssertEqual(message, deobfuscate)
+        #expect(Data(message.utf8).sha256().bytes != obfuscated)
+        #expect(message == deobfuscate)
 
         // Incorrect Secret
         let incorrectSecret = Crypt.generateRandomPassword()
-        XCTAssertThrowsError(try Crypt.deobfuscate(obfuscated, secret: incorrectSecret))
+        #expect(throws: Error.self) {
+            try Crypt.deobfuscate(obfuscated, secret: incorrectSecret)
+        }
     }
 
-    func testObfuscateData() throws {
+    @Test
+    func obfuscateData() throws {
         let secret = Crypt.generateSecureRandom().bytes
         let message = Crypt.generateSecureRandom().bytes
 
         let obfuscated = Crypt.obfuscate(message, secret: secret)
         let deobfuscate = try Crypt.deobfuscate(obfuscated, secret: secret)
 
-        XCTAssertEqual(deobfuscate, message)
+        #expect(deobfuscate == message)
     }
 
-    func testEncryptDecrypt_SecretData() throws {
+    @Test
+    func encryptDecrypt_SecretData() throws {
         let secret = Crypt.generateSecureRandom()
-        let message = try XCTUnwrap("Hello World".data(using: .utf8))
+        let message = try #require("Hello World".data(using: .utf8))
 
         let encryptedMessage = try Crypt.encrypt(message, secret: secret)
         let decryptedMessage = try Crypt.decrypt(encryptedMessage, secret: secret)
-        let decryptedMessageString = try XCTUnwrap(String(data: decryptedMessage, encoding: .utf8))
+        let decryptedMessageString = try #require(String(data: decryptedMessage, encoding: .utf8))
 
-        XCTAssertEqual("Hello World", decryptedMessageString)
-        XCTAssertEqual(message, decryptedMessage)
-        XCTAssertNotEqual(message, encryptedMessage)
+        #expect("Hello World" == decryptedMessageString)
+        #expect(message == decryptedMessage)
+        #expect(message != encryptedMessage)
 
         // Incorrect Secret
         let incorrectSecret = Crypt.generateSecureRandom()
-        XCTAssertThrowsError(try Crypt.decrypt(encryptedMessage, secret: incorrectSecret))
+        #expect(throws: Error.self) {
+            try Crypt.decrypt(encryptedMessage, secret: incorrectSecret)
+        }
     }
 
-    func testEncryptDecrypt_SecretString() throws {
+    @Test
+    func encryptDecrypt_SecretString() throws {
         let secret = Crypt.generateRandomPassword()
-        let message = try XCTUnwrap("Hello World".data(using: .utf8))
+        let message = try #require("Hello World".data(using: .utf8))
 
         let encryptedMessage = try Crypt.encrypt(message, secret: secret)
         let decryptedMessage = try Crypt.decrypt(encryptedMessage, secret: secret)
-        let decryptedMessageString = try XCTUnwrap(String(data: decryptedMessage, encoding: .utf8))
+        let decryptedMessageString = try #require(String(data: decryptedMessage, encoding: .utf8))
 
-        XCTAssertEqual("Hello World", decryptedMessageString)
-        XCTAssertEqual(message, decryptedMessage)
-        XCTAssertNotEqual(message, encryptedMessage)
+        #expect("Hello World" == decryptedMessageString)
+        #expect(message == decryptedMessage)
+        #expect(message != encryptedMessage)
 
         // Incorrect Secret
         let incorrectSecret = Crypt.generateRandomPassword()
-        XCTAssertThrowsError(try Crypt.decrypt(encryptedMessage, secret: incorrectSecret))
+        #expect(throws: Error.self) {
+            try Crypt.decrypt(encryptedMessage, secret: incorrectSecret)
+        }
     }
 }
