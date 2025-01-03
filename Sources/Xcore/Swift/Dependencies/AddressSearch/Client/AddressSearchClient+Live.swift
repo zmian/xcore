@@ -27,22 +27,28 @@ extension LiveAddressSearchClient {
 
 public final class LiveAddressSearchClient: AddressSearchClient {
     private typealias L = Localized.PostalAddress
-    nonisolated(unsafe) private var delegates = [UUID: Delegate]()
+    private let delegates = LockIsolated([UUID: Delegate]())
 
     public func observe(id: UUID) -> AsyncStream<[AddressSearchResult]> {
         AsyncStream { [weak self] continuation in
-            self?.delegates[id] = Delegate { results in
-                continuation.yield(results)
+            self?.delegates.withValue {
+                $0[id] = Delegate { results in
+                    continuation.yield(results)
+                }
             }
 
             continuation.onTermination = { [weak self] _ in
-                self?.delegates[id] = nil
+                self?.delegates.withValue {
+                    $0[id] = nil
+                }
             }
         }
     }
 
     public func update(id: UUID, searchString: String) {
-        delegates[id]?.searchCompleter.queryFragment = searchString
+        delegates.withValue {
+            $0[id]?.searchString = searchString
+        }
     }
 
     public func validate(address: PostalAddress) async throws {
@@ -159,8 +165,8 @@ public final class LiveAddressSearchClient: AddressSearchClient {
 // MARK: - Delegate
 
 extension LiveAddressSearchClient {
-    private final class Delegate: NSObject, MKLocalSearchCompleterDelegate, @unchecked Sendable {
-        fileprivate let searchCompleter = MKLocalSearchCompleter()
+    private final class Delegate: NSObject, MKLocalSearchCompleterDelegate, Sendable {
+        nonisolated(unsafe) private let searchCompleter = MKLocalSearchCompleter()
         private let onResults: @Sendable ([AddressSearchResult]) -> Void
 
         init(onResults: @escaping @Sendable ([AddressSearchResult]) -> Void) {
@@ -176,6 +182,11 @@ extension LiveAddressSearchClient {
 
         func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
             onResults([])
+        }
+
+        var searchString: String {
+            get { searchCompleter.queryFragment }
+            set { searchCompleter.queryFragment = newValue }
         }
 
         deinit {
