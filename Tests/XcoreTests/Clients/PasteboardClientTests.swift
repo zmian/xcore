@@ -4,11 +4,12 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
 @testable import Xcore
 
-final class PasteboardClientTests: TestCase {
-    func testInMemoryVariant() {
+struct PasteboardClientTests {
+    @Test
+    func inMemoryVariant() {
         let viewModel = withDependencies {
             $0.pasteboard = .inMemory
         } operation: {
@@ -16,25 +17,26 @@ final class PasteboardClientTests: TestCase {
         }
 
         // nil out the pasteboard
-        globalPasteboard = nil
-        XCTAssertNil(globalPasteboard)
+        globalPasteboard.setValue(nil)
+        #expect(globalPasteboard.value == nil)
 
         viewModel.copy()
-        XCTAssertEqual(globalPasteboard, "hello")
+        #expect(globalPasteboard.value == "hello")
     }
 
-    func testNoopVariant() {
+    @Test
+    func noopVariant() {
         let viewModel = withDependencies {
             $0.pasteboard = .noop
         } operation: {
             ViewModel()
         }
         // nil out the pasteboard
-        globalPasteboard = nil
-        XCTAssertNil(globalPasteboard)
+        globalPasteboard.setValue(nil)
+        #expect(globalPasteboard.value == nil)
 
         viewModel.copy()
-        XCTAssertNil(globalPasteboard) // current variant is noop
+        #expect(globalPasteboard.value == nil) // current variant is noop
     }
 }
 
@@ -48,13 +50,13 @@ private final class ViewModel {
 
 // MARK: - Helpers
 
-nonisolated(unsafe) private var globalPasteboard: String?
+private let globalPasteboard = LockIsolated<String?>(nil)
 
 extension PasteboardClient {
     /// Returns in-memory variant of `PasteboardClient`.
     fileprivate static var inMemory: Self {
         .init { string in
-            globalPasteboard = string
+            globalPasteboard.setValue(string)
         }
     }
 }

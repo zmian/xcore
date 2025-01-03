@@ -4,11 +4,13 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import Foundation
 @testable import Xcore
 
-final class IdentifierTests: TestCase {
-    func testCodable() throws {
+struct IdentifierTests {
+    @Test
+    func codable() throws {
         typealias ID = Identifier<IdentifierTests>
 
         let values: [ID] = [
@@ -20,12 +22,12 @@ final class IdentifierTests: TestCase {
         let data = try encoder.encode(values)
         let encodedValue = String(data: data, encoding: .utf8)!
         let expectedEncodedValue = "[\"1\",\"some_id\"]"
-        XCTAssertEqual(encodedValue, expectedEncodedValue)
+        #expect(encodedValue == expectedEncodedValue)
 
         let decoder = JSONDecoder()
         let decodedValues = try decoder.decode([ID].self, from: data)
         for (index, value) in values.enumerated() {
-            XCTAssertEqual(value, decodedValues[index])
+            #expect(value == decodedValues[index])
         }
     }
 }

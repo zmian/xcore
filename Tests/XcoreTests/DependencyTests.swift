@@ -4,11 +4,12 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
 @testable import Xcore
 
-final class DependencyTests: TestCase {
-    func testProtocolDependency() throws {
+struct DependencyTests {
+    @Test
+    func protocolDependency() {
         final class ViewModel {
             @Dependency(\.pasteboard) var pasteboard
 
@@ -20,33 +21,34 @@ final class DependencyTests: TestCase {
         let viewModel = ViewModel()
 
         withDependencies {
-            $0.pasteboard = LivePasteboardClient()
+            $0.pasteboard = SharedPasteboardClient()
         } operation: {
-            XCTAssertEqual(viewModel.pasteboard.id, "live")
+            #expect(viewModel.pasteboard.id == "shared")
         }
 
         withDependencies {
             $0.pasteboard = NoopPasteboardClient()
         } operation: {
-            XCTAssertEqual(viewModel.pasteboard.id, "noop")
+            #expect(viewModel.pasteboard.id == "noop")
 
             // nil out the pasteboard
             globalPasteboard = nil
-            XCTAssertNil(globalPasteboard)
+            #expect(globalPasteboard == nil)
 
             viewModel.copy()
-            XCTAssertNil(globalPasteboard) // current client is noop
+            #expect(globalPasteboard == nil) // current client is noop
         }
 
         withDependencies {
-            $0.pasteboard = LivePasteboardClient()
+            $0.pasteboard = SharedPasteboardClient()
         } operation: {
             viewModel.copy()
-            XCTAssertEqual(globalPasteboard, "hello") // current client is live
+            #expect(globalPasteboard == "hello") // current client is shared
         }
     }
 
-    func testStructDependency() {
+    @Test
+    func structDependency() {
         final class ViewModel {
             @Dependency(\.myPasteboard) var pasteboard
 
@@ -58,31 +60,31 @@ final class DependencyTests: TestCase {
         let viewModel = ViewModel()
 
         withDependencies {
-            $0.myPasteboard = .live
+            $0.myPasteboard = .shared
         } operation: {
-            XCTAssertEqual(viewModel.pasteboard.id, "live")
+            #expect(viewModel.pasteboard.id == "shared")
         }
 
         withDependencies {
             $0.myPasteboard = .noop
         } operation: {
-            XCTAssertEqual(viewModel.pasteboard.id, "noop")
+            #expect(viewModel.pasteboard.id == "noop")
         }
 
         // nil out the pasteboard
         globalPasteboard = nil
-        XCTAssertNil(globalPasteboard)
+        #expect(globalPasteboard == nil)
 
         withDependencies {
-            $0.myPasteboard = .live
+            $0.myPasteboard = .shared
         } operation: {
             viewModel.copy()
-            XCTAssertEqual(globalPasteboard, "hello") // current client is live
+            #expect(globalPasteboard == "hello") // current client is shared
         }
 
         XCTExpectFailure()
         viewModel.copy()
-        XCTAssertEqual(globalPasteboard, "hello") // current client is live
+        #expect(globalPasteboard == "hello") // current client is shared
     }
 }
 
@@ -96,8 +98,8 @@ private protocol PasteboardClient: Sendable {
     func copy(_ text: String)
 }
 
-private struct LivePasteboardClient: PasteboardClient {
-    let id = "live"
+private struct SharedPasteboardClient: PasteboardClient {
+    let id = "shared"
 
     func copy(_ text: String) {
         globalPasteboard = text
@@ -114,7 +116,7 @@ private struct NoopPasteboardClient: PasteboardClient {
 
 extension DependencyValues {
     private enum PasteboardClientKey: DependencyKey {
-        static let liveValue: PasteboardClient = LivePasteboardClient()
+        static let liveValue: PasteboardClient = SharedPasteboardClient()
     }
 
     fileprivate var pasteboard: PasteboardClient {
@@ -131,7 +133,7 @@ private struct MyPasteboard: Sendable {
 }
 
 extension MyPasteboard {
-    static var live: Self {
+    static var shared: Self {
         .init(id: #function) {
             globalPasteboard = $0
         }
@@ -144,7 +146,8 @@ extension MyPasteboard {
 
 extension DependencyValues {
     private struct MyPasteboardClientKey: DependencyKey {
-        static let liveValue: MyPasteboard = .live
+        static let liveValue: MyPasteboard = .shared
+        static let testValue: MyPasteboard = .shared
     }
 
     fileprivate var myPasteboard: MyPasteboard {

@@ -4,12 +4,14 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import Foundation
 @testable import Xcore
 
 @MainActor
-final class AppInfoTests: TestCase {
-    func testTraits() {
+struct AppInfoTests {
+    @Test
+    func traits() {
         let actual = AppInfo.traits
 
         let expected = [
@@ -23,17 +25,18 @@ final class AppInfoTests: TestCase {
             "locale": Locale.current.identifier
         ]
 
-        XCTAssertEqual(actual, expected)
+        #expect(actual == expected)
     }
 
-    func testUserAgent() {
+    @Test
+    func userAgent() {
         let appVersionNumber = Bundle.main.versionNumber
         let appBuildNumber = Bundle.main.buildNumber
         let osNameVersion = Bundle.main.osNameVersion
         let deviceModel = Device.current.model.identifier
 
-        XCTAssertEqual(
-            AppInfo.userAgent,
+        #expect(
+            AppInfo.userAgent ==
             "xctest/\(appVersionNumber) (com.apple.dt.xctest.tool; build:\(appBuildNumber); \(deviceModel); \(osNameVersion)) en_US"
         )
     }

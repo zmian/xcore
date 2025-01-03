@@ -4,24 +4,27 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
-@testable import Xcore
+import Testing
 import SwiftUI
+@testable import Xcore
 
-final class EmptyTests: TestCase {
-    func testEquality() {
-        XCTAssertEqual(Empty(), Empty())
+struct EmptyTests {
+    @Test
+    func equality() {
+        #expect(Empty() == Empty())
     }
 
-    func testIdentifiable() {
-        XCTAssertEqual(Empty().id, Empty().id)
+    @Test
+    func identifiable() {
+        #expect(Empty().id == Empty().id)
     }
 
-    func testComparable() {
-        XCTAssertFalse(Empty() < Empty())
-        XCTAssertFalse(Empty() > Empty())
+    @Test
+    func comparable() {
+        #expect(!(Empty() < Empty()))
+        #expect(!(Empty() > Empty()))
 
-        XCTAssertTrue(Empty() <= Empty())
-        XCTAssertTrue(Empty() >= Empty())
+        #expect(Empty() <= Empty())
+        #expect(Empty() >= Empty())
     }
 }
