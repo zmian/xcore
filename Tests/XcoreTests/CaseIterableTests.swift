@@ -4,22 +4,25 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
 @testable import Xcore
 
-final class CaseIterableTests: TestCase {
-    func testAllCases() {
-        XCTAssertEqual(SomeClass.Counting.allCases.count, 3)
-        XCTAssertEqual(SomeClass.NewCounting.allCases.count, 2)
-        XCTAssertEqual(SomeStruct.Counting.allCases.count, 3)
+struct CaseIterableTests {
+    @Test
+    func allCases() {
+        #expect(SomeClass.Counting.allCases.count == 3)
+        #expect(SomeClass.NewCounting.allCases.count == 2)
+        #expect(SomeStruct.Counting.allCases.count == 3)
     }
 
-    func testCount() {
-        XCTAssertEqual(SomeClass.Counting.count, 3)
-        XCTAssertEqual(SomeClass.NewCounting.count, 2)
+    @Test
+    func count() {
+        #expect(SomeClass.Counting.count == 3)
+        #expect(SomeClass.NewCounting.count == 2)
     }
 
-    func testRawValues() {
+    @Test
+    func rawValues() {
         let expectedRawValues1 = [
             "one",
             "two",
@@ -31,8 +34,8 @@ final class CaseIterableTests: TestCase {
             "two"
         ]
 
-        XCTAssertEqual(SomeClass.Counting.rawValues, expectedRawValues1)
-        XCTAssertEqual(SomeClass.NewCounting.rawValues, expectedRawValues2)
+        #expect(SomeClass.Counting.rawValues == expectedRawValues1)
+        #expect(SomeClass.NewCounting.rawValues == expectedRawValues2)
     }
 }
 

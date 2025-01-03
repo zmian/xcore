@@ -4,36 +4,42 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import Foundation
 @testable import Xcore
 
-final class CharacterSetTests: TestCase {
-    func testCharacters() {
+struct CharacterSetTests {
+    @Test
+    func characters() {
         let characters = CharacterSet.uppercaseLetters.characters()
-        XCTAssertEqual(characters.count, 1862)
-        XCTAssertEqual(characters.prefix(3), ["A", "B", "C"])
+        #expect(characters.count == 1862)
+        #expect(characters.prefix(3) == ["A", "B", "C"])
     }
 
-    func testNumbers() {
+    @Test
+    func numbers() {
         let characters = CharacterSet.numbers.characters()
-        XCTAssertEqual(characters.count, 10)
-        XCTAssertEqual(String(characters), "0123456789")
+        #expect(characters.count == 10)
+        #expect(String(characters) == "0123456789")
     }
 
-    func testNumbersWithDecimal() {
+    @Test
+    func numbersWithDecimal() {
         let characters = CharacterSet.numbersWithDecimal.characters()
-        XCTAssertEqual(characters.count, 11)
-        XCTAssertEqual(String(characters), ".0123456789")
+        #expect(characters.count == 11)
+        #expect(String(characters) == ".0123456789")
     }
 
-    func testLettersAndSpaces() {
+    @Test
+    func lettersAndSpaces() {
         let characters = CharacterSet.lettersAndSpaces.characters()
-        XCTAssertEqual(characters.count, 53)
-        XCTAssertEqual(String(characters), " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+        #expect(characters.count == 53)
+        #expect(String(characters) == " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
     }
 
-    func testRandomString() {
+    @Test
+    func randomString() {
         let result = CharacterSet.lettersAndSpaces.randomString(length: 50)
-        XCTAssertEqual(result.count, 50)
+        #expect(result.count == 50)
     }
 }

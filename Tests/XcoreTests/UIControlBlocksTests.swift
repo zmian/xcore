@@ -4,50 +4,53 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import UIKit
 @testable import Xcore
 
 @MainActor
-final class UIControlBlocksTests: TestCase {
-    func testAddAction() {
+struct UIControlBlocksTests {
+    @Test
+    func addAction() {
         let button = MockButton()
-        XCTAssertEqual(button.values.count, 0)
+        #expect(button.values.count == 0)
         button.tap()
-        XCTAssertEqual(button.values, ["hello"])
+        #expect(button.values == ["hello"])
 
         button.attachAddAction(withValue: "world")
-        XCTAssertEqual(button.values, ["hello"])
+        #expect(button.values == ["hello"])
         button.tap()
-        XCTAssertEqual(button.values, ["hello", "world"])
+        #expect(button.values == ["hello", "world"])
 
         button.removeAddAction()
-        XCTAssertEqual(button.values, ["hello", "world"])
+        #expect(button.values == ["hello", "world"])
         button.values.removeAll()
         button.tap()
-        XCTAssertEqual(button.values.count, 0)
+        #expect(button.values.count == 0)
     }
 
-    func testAction() {
+    @Test
+    func action() {
         let button = MockButton()
-        XCTAssertEqual(button.values.count, 0)
+        #expect(button.values.count == 0)
         button.tap()
-        XCTAssertEqual(button.values, ["hello"])
+        #expect(button.values == ["hello"])
 
         button.attachAddAction(withValue: "world")
-        XCTAssertEqual(button.values, ["hello"])
+        #expect(button.values == ["hello"])
         button.tap()
-        XCTAssertEqual(button.values, ["hello", "world"])
+        #expect(button.values == ["hello", "world"])
 
         button.attachAction(withValue: "greetings")
-        XCTAssertEqual(button.values, ["hello", "world"])
+        #expect(button.values == ["hello", "world"])
         button.tap()
-        XCTAssertEqual(button.values, ["hello", "world", "greetings"])
+        #expect(button.values == ["hello", "world", "greetings"])
 
         button.removeAction()
-        XCTAssertEqual(button.values, ["hello", "world", "greetings"])
+        #expect(button.values == ["hello", "world", "greetings"])
         button.values.removeAll()
         button.tap()
-        XCTAssertEqual(button.values.count, 0)
+        #expect(button.values.count == 0)
     }
 }
 

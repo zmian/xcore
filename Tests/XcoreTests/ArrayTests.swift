@@ -4,28 +4,32 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import UIKit
 @testable import Xcore
 
-final class ArrayTests: TestCase {
-    func testSortByPreferredOrder() {
+struct ArrayTests {
+    @Test
+    func sortByPreferredOrder() {
         let preferredOrder = ["Z", "A", "B", "C", "D"]
         var alphabets = ["D", "C", "B", "A", "Z", "W"]
         alphabets.sort(by: preferredOrder)
         let expected = ["Z", "A", "B", "C", "D", "W"]
-        XCTAssertEqual(alphabets, expected)
+        #expect(alphabets == expected)
     }
 
-    func testSortedByPreferredOrder() {
+    @Test
+    func sortedByPreferredOrder() {
         let preferredOrder = ["Z", "A", "B", "C", "D"]
         let alphabets = ["D", "C", "B", "A", "Z", "W"]
         let sorted = alphabets.sorted(by: preferredOrder)
         let expected = ["Z", "A", "B", "C", "D", "W"]
-        XCTAssertEqual(sorted, expected)
-        XCTAssertNotEqual(sorted, alphabets)
+        #expect(sorted == expected)
+        #expect(sorted != alphabets)
     }
 
-    func testRawValues() {
+    @Test
+    func rawValues() {
         let values = [
             SomeType(rawValue: "Hello"),
             SomeType(rawValue: "World"),
@@ -38,67 +42,74 @@ final class ArrayTests: TestCase {
             "!"
         ]
 
-        XCTAssertEqual(values.rawValues, expectedRawValues)
+        #expect(values.rawValues == expectedRawValues)
     }
 
     @MainActor
-    func testContains() {
+    @Test
+    func contains() {
         let instances = [UIView(), UIImageView()]
         let result = instances.contains(any: [UIImageView.self, UILabel.self])
-        XCTAssertEqual(result, true)
-        XCTAssertEqual(instances.contains(any: [UILabel.self]), false)
+        #expect(result == true)
+        #expect(instances.contains(any: [UILabel.self]) == false)
     }
 
-    func testRandomElement() {
+    @Test
+    func randomElement() {
         let values = [132, 2432, 35435, 455]
         let randomValue = values.randomElement()
-        XCTAssert(values.contains(randomValue))
+        #expect(values.contains(randomValue))
     }
 
-    func testRandomElements() {
+    @Test
+    func randomElements() {
         let values = [132, 2432, 35435, 455]
         let randomValue1 = values.randomElements(length: 17)
         let randomValue2 = values.randomElements(length: 2)
 
-        XCTAssertEqual(randomValue1.count, values.count)
-        XCTAssertEqual(randomValue2.count, 2)
+        #expect(randomValue1.count == values.count)
+        #expect(randomValue2.count == 2)
     }
 
-    func testEmptyRandomElements() {
+    @Test
+    func emptyRandomElements() {
         let values: [Int] = []
         let randomValue1 = values.randomElements(length: 17)
         let randomValue2 = values.randomElements(length: 2)
 
-        XCTAssertEqual(randomValue1.count, values.count)
-        XCTAssertEqual(randomValue2.count, 0)
+        #expect(randomValue1.count == values.count)
+        #expect(randomValue2.count == 0)
     }
 
-    func testFirstElement() {
+    @Test
+    func firstElement() {
         let value: [Any] = ["232", 12, 2, 11.0, "hello"]
         let resultString = value.firstElement(type: String.self)
         let resultInt = value.firstElement(type: Int.self)
         let resultDouble = value.firstElement(type: Double.self)
         let resultCGFloat = value.firstElement(type: CGFloat.self)
-        XCTAssertEqual(resultString!, "232")
-        XCTAssertEqual(resultInt!, 12)
-        XCTAssertEqual(resultDouble!, 11)
-        XCTAssertNil(resultCGFloat)
+        #expect(resultString == "232")
+        #expect(resultInt == 12)
+        #expect(resultDouble == 11)
+        #expect(resultCGFloat == nil)
     }
 
-    func testLastElement() {
+    @Test
+    func lastElement() {
         let value: [Any] = ["232", 12, 2, 11.0, "hello"]
         let resultString = value.lastElement(type: String.self)
         let resultInt = value.lastElement(type: Int.self)
         let resultDouble = value.lastElement(type: Double.self)
         let resultCGFloat = value.lastElement(type: CGFloat.self)
-        XCTAssertEqual(resultString!, "hello")
-        XCTAssertEqual(resultInt!, 2)
-        XCTAssertEqual(resultDouble!, 11)
-        XCTAssertNil(resultCGFloat)
+        #expect(resultString == "hello")
+        #expect(resultInt == 2)
+        #expect(resultDouble == 11)
+        #expect(resultCGFloat == nil)
     }
 
     @MainActor
-    func testFirstIndex() {
+    @Test
+    func firstIndex() {
         let tag1View = UIView().apply { $0.tag = 1 }
         let tag2View = UIView().apply { $0.tag = 2 }
 
@@ -110,14 +121,15 @@ final class ArrayTests: TestCase {
         let resultUIView = value.firstIndex(of: UIView.self)
         let resultUILabel = value.firstIndex(of: UILabel.self)
         let resultUIViewController = value.firstIndex(of: UIViewController.self)
-        XCTAssertEqual(resultNSString!, 0)
-        XCTAssertEqual(resultUIView!, 1)
-        XCTAssertEqual(resultUILabel!, 3)
-        XCTAssertNil(resultUIViewController)
+        #expect(resultNSString == 0)
+        #expect(resultUIView == 1)
+        #expect(resultUILabel == 3)
+        #expect(resultUIViewController == nil)
     }
 
     @MainActor
-    func testLastIndex() {
+    @Test
+    func lastIndex() {
         let tag1View = UIView().apply { $0.tag = 1 }
         let tag2View = UIView().apply { $0.tag = 2 }
 
@@ -129,14 +141,15 @@ final class ArrayTests: TestCase {
         let resultUIView = value.lastIndex(of: UIView.self)
         let resultUILabel = value.lastIndex(of: UILabel.self)
         let resultUIViewController = value.lastIndex(of: UIViewController.self)
-        XCTAssertEqual(resultNSString!, 5)
-        XCTAssertEqual(resultUIView!, 4) // UILabel is subclass of UIView
-        XCTAssertEqual(resultUILabel!, 4)
-        XCTAssertNil(resultUIViewController)
+        #expect(resultNSString == 5)
+        #expect(resultUIView == 4) // UILabel is subclass of UIView
+        #expect(resultUILabel == 4)
+        #expect(resultUIViewController == nil)
     }
 
     @MainActor
-    func testJoined() {
+    @Test
+    func joined() {
         let label1 = UILabel().apply {
             $0.text = "Hello"
         }
@@ -152,10 +165,10 @@ final class ArrayTests: TestCase {
         }
 
         let value1 = [label1.text, label2.text, label3.text, button.title(for: .normal)].joined(separator: ", ")
-        XCTAssertEqual(value1, "Hello, World!")
+        #expect(value1 == "Hello, World!")
 
         let value2 = [label1.text, label2.text, label3.text, button.title(for: .normal)].joined()
-        XCTAssertEqual(value2, "HelloWorld!")
+        #expect(value2 == "HelloWorld!")
     }
 }
 

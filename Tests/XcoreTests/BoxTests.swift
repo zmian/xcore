@@ -4,21 +4,23 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
 @testable import Xcore
 
-final class BoxTests: TestCase {
-    func testBox() {
+struct BoxTests {
+    @Test
+    func box() {
         let box = Box("Hello, world!")
-        XCTAssertEqual(box.value, "Hello, world!")
+        #expect(box.value == "Hello, world!")
     }
 
-    func testBoxEquality() {
+    @Test
+    func boxEquality() {
         let box1 = Box(1)
         let box2 = Box(1)
-        XCTAssertEqual(box1, box2)
+        #expect(box1 == box2)
 
         let box3 = Box(3)
-        XCTAssertNotEqual(box1, box3)
+        #expect(box1 != box3)
     }
 }

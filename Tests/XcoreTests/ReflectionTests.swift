@@ -4,31 +4,33 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import UIKit
 @testable import Xcore
 
 @MainActor
-final class ReflectionTests: TestCase {
-    func testName() {
+struct ReflectionTests {
+    @Test
+    func nameOfType() {
         let myViewControllerInstance = MyViewController()
-        XCTAssertEqual(typeName(of: myViewControllerInstance), "XcoreTests.MyViewController")
-        XCTAssertEqual(typeName(of: MyViewController.self), "XcoreTests.MyViewController")
-        XCTAssertEqual(typeName(of: MyView.self), "XcoreTests.MyView")
-        XCTAssertEqual(MyProtocolClass().typeName, "XcoreTests.MyProtocolClass")
-        XCTAssertEqual(MyProtocolClass().instanceName, "XcoreTests.MyProtocolClass")
-        XCTAssertEqual(MyProtocolClass.staticTypeName_1, "XcoreTests.MyProtocolClass")
-        XCTAssertEqual(MyProtocolClass.staticTypeName_2, "XcoreTests.MyProtocolClass")
+        #expect(typeName(of: myViewControllerInstance) == "XcoreTests.MyViewController")
+        #expect(typeName(of: MyViewController.self) == "XcoreTests.MyViewController")
+        #expect(typeName(of: MyView.self) == "XcoreTests.MyView")
+        #expect(MyProtocolClass().typeName == "XcoreTests.MyProtocolClass")
+        #expect(MyProtocolClass().instanceName == "XcoreTests.MyProtocolClass")
+        #expect(MyProtocolClass.staticTypeName_1 == "XcoreTests.MyProtocolClass")
+        #expect(MyProtocolClass.staticTypeName_2 == "XcoreTests.MyProtocolClass")
 
         // Class
-        XCTAssertEqual(typeName(of: SpacerView.self), "Xcore.SpacerView")
-        XCTAssertEqual(typeName(of: SpacerView()), "Xcore.SpacerView")
+        #expect(typeName(of: SpacerView.self) == "Xcore.SpacerView")
+        #expect(typeName(of: SpacerView()) == "Xcore.SpacerView")
         // Enum
-        XCTAssertEqual(typeName(of: FeatureFlag.self), "Xcore.FeatureFlag")
-        XCTAssertEqual(typeName(of: ImageSourceType.self), "Xcore.ImageSourceType")
-        XCTAssertEqual(typeName(of: ImageSourceType.url("Hello")), "Xcore.ImageSourceType")
+        #expect(typeName(of: FeatureFlag.self) == "Xcore.FeatureFlag")
+        #expect(typeName(of: ImageSourceType.self) == "Xcore.ImageSourceType")
+        #expect(typeName(of: ImageSourceType.url("Hello")) == "Xcore.ImageSourceType")
         // Struct
-        XCTAssertEqual(typeName(of: Version.self), "Xcore.Version")
-        XCTAssertEqual(typeName(of: Version(rawValue: "1.0.0")), "Xcore.Version")
+        #expect(typeName(of: Version.self) == "Xcore.Version")
+        #expect(typeName(of: Version(rawValue: "1.0.0")) == "Xcore.Version")
     }
 }
 

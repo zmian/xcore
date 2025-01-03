@@ -4,30 +4,33 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import UIKit
 @testable import Xcore
 
 final class SubviewLookupTests: ViewControllerTestCase {
-    func testSubview() {
+    @Test
+    func subview() {
         let searchBar = UISearchBar()
         view.addSubview(searchBar)
         searchBar.layoutIfNeeded()
 
-        XCTAssertNotNil(searchBar.firstSubview(withClass: UITextField.self))
-        XCTAssertNotNil(searchBar.firstSubview(withClassName: "UISearchBarTextField"))
+        #expect(searchBar.firstSubview(withClass: UITextField.self) != nil )
+        #expect(searchBar.firstSubview(withClassName: "UISearchBarTextField") != nil)
 
-        XCTAssertNil(searchBar.firstSubview(withClass: UITextField.self, comparison: .typeOf))
-        XCTAssertNotNil(searchBar.firstSubview(withClass: UITextField.self, comparison: .kindOf))
-        XCTAssertNotNil(searchBar.firstSubview(withClassName: "UISearchBarTextField", comparison: .typeOf))
-        XCTAssertNotNil(searchBar.firstSubview(withClassName: "UISearchBarTextField", comparison: .kindOf))
+        #expect(searchBar.firstSubview(withClass: UITextField.self, comparison: .typeOf) == nil)
+        #expect(searchBar.firstSubview(withClass: UITextField.self, comparison: .kindOf) != nil)
+        #expect(searchBar.firstSubview(withClassName: "UISearchBarTextField", comparison: .typeOf) != nil)
+        #expect(searchBar.firstSubview(withClassName: "UISearchBarTextField", comparison: .kindOf) != nil)
     }
 
-    func testSearchBar() {
+    @Test
+    func searchBar() {
         let searchBar = UISearchBar()
         view.addSubview(searchBar)
         searchBar.layoutIfNeeded()
 
         searchBar.placeholder = "Hello, World!"
-        XCTAssertEqual(searchBar.placeholder, "Hello, World!")
+        #expect(searchBar.placeholder == "Hello, World!")
     }
 }
