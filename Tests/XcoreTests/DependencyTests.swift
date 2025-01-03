@@ -82,7 +82,6 @@ struct DependencyTests {
             #expect(globalPasteboard == "hello") // current client is shared
         }
 
-        XCTExpectFailure()
         viewModel.copy()
         #expect(globalPasteboard == "hello") // current client is shared
     }
