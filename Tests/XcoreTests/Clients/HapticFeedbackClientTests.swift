@@ -7,7 +7,6 @@
 import Testing
 @testable import Xcore
 
-@Suite
 @MainActor
 struct HapticFeedbackClientTests {
     @Test

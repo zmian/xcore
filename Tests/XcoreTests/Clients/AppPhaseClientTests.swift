@@ -4,12 +4,13 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
 import Combine
 @testable import Xcore
 
-final class AppPhaseClientTests: TestCase {
-    func testDefault() {
+struct AppPhaseClientTests {
+    @Test
+    func basics() {
         let viewModel = withDependencies {
             $0.appPhase = .live
         } operation: {
@@ -20,10 +21,10 @@ final class AppPhaseClientTests: TestCase {
         viewModel.receive { receivedPhase = $0 }
 
         viewModel.send(.launched(launchOptions: nil))
-        XCTAssertEqual(receivedPhase, .launched(launchOptions: nil))
+        #expect(receivedPhase == .launched(launchOptions: nil))
 
         viewModel.send(.background)
-        XCTAssertEqual(receivedPhase, .background)
+        #expect(receivedPhase == .background)
     }
 }
 

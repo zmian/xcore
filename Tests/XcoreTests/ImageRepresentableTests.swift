@@ -4,11 +4,13 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import UIKit
 @testable import Xcore
 
-final class ImageRepresentableTests: TestCase {
-    func testCodable() throws {
+struct ImageRepresentableTests {
+    @Test
+    func codable() throws {
         let values: [ImageSourceType] = [
             .url("arrow"),
             .url("http://example.com/avatar.png"),
@@ -19,7 +21,7 @@ final class ImageRepresentableTests: TestCase {
         let data = try encoder.encode(values)
         let encodedValue = String(data: data, encoding: .utf8)!
         let expectedEncodedValue = "[\"arrow\",\"http:\\/\\/example.com\\/avatar.png\",\"iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAYAAABWKLW\\/AAAAAXNSR0IArs4c6QAAAIRlWElmTU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAADYAAAAAQAAANgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAAOgAwAEAAAAAQAAAAMAAAAAGuc7vgAAAAlwSFlzAAAhOAAAITgBRZYxYAAAABxpRE9UAAAAAgAAAAAAAAACAAAAKAAAAAIAAAABAAAARxQf8tcAAAATSURBVBgZYvjPwPAfhhlgDBANAAAA\\/\\/9N3En5AAAADElEQVRj+M\\/A8B+GAV3XEe9euoaRAAAAAElFTkSuQmCC\"]"
-        XCTAssertEqual(encodedValue, expectedEncodedValue)
+        #expect(encodedValue == expectedEncodedValue)
 
         let decoder = JSONDecoder()
         let decodedValues = try decoder.decode([ImageSourceType].self, from: data)
@@ -27,15 +29,15 @@ final class ImageRepresentableTests: TestCase {
         for (index, value) in values.enumerated() {
             switch value {
                 case .url:
-                    XCTAssertEqual(value, decodedValues[index])
+                    #expect(value == decodedValues[index])
                 case let .uiImage(expectedImage):
                     if case let .uiImage(decodedImage) = decodedValues[index] {
                         // Double converting it to PNG so the conversion passes matches.
                         let expectedImageData = UIImage(data: expectedImage.pngData()!)!.pngData()!
                         let decodedImageData = decodedImage.pngData()!
-                        XCTAssertEqual(decodedImageData, expectedImageData)
+                        #expect(decodedImageData == expectedImageData)
                     } else {
-                        XCTAssert(false, "Failed to convert UIImage to Data.")
+                        Issue.record("Failed to convert UIImage to Data.")
                     }
             }
         }

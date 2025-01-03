@@ -4,141 +4,148 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
 @testable import Xcore
 
-final class StringTests: TestCase {
-    func testMasked() {
+struct StringTests {
+    @Test
+    func masked() {
         let email = "support@example.com"
-        XCTAssertEqual(email.formatted(.masked), "s•••@example.com")
-        XCTAssertEqual(email.formatted(.masked(count: .same)), "s••••••@example.com")
-        XCTAssertEqual(email.formatted(.masked(count: .equal(2))), "s••@example.com")
+        #expect(email.formatted(.masked) == "s•••@example.com")
+        #expect(email.formatted(.masked(count: .same)) == "s••••••@example.com")
+        #expect(email.formatted(.masked(count: .equal(2))) == "s••@example.com")
+        #expect(email.formatted(.masked(count: nil)) == "s•••@example.com")
 
         let string1 = "Hello World"
-        XCTAssertEqual(string1.formatted(.masked), "•••••••••••")
+        #expect(string1.formatted(.masked) == "•••••••••••")
 
         let string2 = "0123456789"
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 3)), "•••••••789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 4)), "••••••6789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 4)), "0123••••••")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 14)), "0123456789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 14)), "0123456789")
-        XCTAssertEqual(string2.formatted(.maskedAccountNumber), "•••• 6789")
+        #expect(string2.formatted(.maskedAllExcept(last: 3)) == "•••••••789")
+        #expect(string2.formatted(.maskedAllExcept(last: 4)) == "••••••6789")
+        #expect(string2.formatted(.maskedAllExcept(first: 4)) == "0123••••••")
+        #expect(string2.formatted(.maskedAllExcept(first: 14)) == "0123456789")
+        #expect(string2.formatted(.maskedAllExcept(last: 14)) == "0123456789")
+        #expect(string2.formatted(.maskedAccountNumber) == "•••• 6789")
 
         // Options: Last 4
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 4, separator: " ")), "•••••• 6789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 4, count: .same, separator: " ")), "•••••• 6789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 9, count: .same, separator: " ")), "• 123456789")
+        #expect(string2.formatted(.maskedAllExcept(last: 4, separator: " ")) == "•••••• 6789")
+        #expect(string2.formatted(.maskedAllExcept(last: 4, count: .same, separator: " ")) == "•••••• 6789")
+        #expect(string2.formatted(.maskedAllExcept(last: 9, count: .same, separator: " ")) == "• 123456789")
 
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 10, count: .min(2), separator: " ")), "•• 0123456789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 9, count: .min(2), separator: " ")), "•• 123456789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 8, count: .min(2), separator: " ")), "•• 23456789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 7, count: .min(2), separator: " ")), "••• 3456789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 4, count: .min(2), separator: " ")), "•••••• 6789")
+        #expect(string2.formatted(.maskedAllExcept(last: 10, count: .min(2), separator: " ")) == "•• 0123456789")
+        #expect(string2.formatted(.maskedAllExcept(last: 9, count: .min(2), separator: " ")) == "•• 123456789")
+        #expect(string2.formatted(.maskedAllExcept(last: 8, count: .min(2), separator: " ")) == "•• 23456789")
+        #expect(string2.formatted(.maskedAllExcept(last: 7, count: .min(2), separator: " ")) == "••• 3456789")
+        #expect(string2.formatted(.maskedAllExcept(last: 4, count: .min(2), separator: " ")) == "•••••• 6789")
 
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 10, count: .max(2), separator: " ")), "0123456789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 9, count: .max(2), separator: " ")), "• 123456789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 8, count: .max(2), separator: " ")), "•• 23456789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 7, count: .max(2), separator: " ")), "•• 3456789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 4, count: .max(2), separator: " ")), "•• 6789")
+        #expect(string2.formatted(.maskedAllExcept(last: 10, count: .max(2), separator: " ")) == "0123456789")
+        #expect(string2.formatted(.maskedAllExcept(last: 9, count: .max(2), separator: " ")) == "• 123456789")
+        #expect(string2.formatted(.maskedAllExcept(last: 8, count: .max(2), separator: " ")) == "•• 23456789")
+        #expect(string2.formatted(.maskedAllExcept(last: 7, count: .max(2), separator: " ")) == "•• 3456789")
+        #expect(string2.formatted(.maskedAllExcept(last: 4, count: .max(2), separator: " ")) == "•• 6789")
 
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 10, count: .equal(1), separator: " ")), "• 0123456789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 4, count: .equal(4), separator: " ")), "•••• 6789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(last: 10, count: .equal(4), separator: " ")), "•••• 0123456789")
+        #expect(string2.formatted(.maskedAllExcept(last: 10, count: .equal(1), separator: " ")) == "• 0123456789")
+        #expect(string2.formatted(.maskedAllExcept(last: 4, count: .equal(4), separator: " ")) == "•••• 6789")
+        #expect(string2.formatted(.maskedAllExcept(last: 10, count: .equal(4), separator: " ")) == "•••• 0123456789")
 
         // Options: First 4
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 4, separator: " ")), "0123 ••••••")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 4, count: .same, separator: " ")), "0123 ••••••")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 9, count: .same, separator: " ")), "012345678 •")
+        #expect(string2.formatted(.maskedAllExcept(first: 4, separator: " ")) == "0123 ••••••")
+        #expect(string2.formatted(.maskedAllExcept(first: 4, count: .same, separator: " ")) == "0123 ••••••")
+        #expect(string2.formatted(.maskedAllExcept(first: 9, count: .same, separator: " ")) == "012345678 •")
 
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 10, count: .min(2), separator: " ")), "0123456789 ••")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 9, count: .min(2), separator: " ")), "012345678 ••")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 8, count: .min(2), separator: " ")), "01234567 ••")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 7, count: .min(2), separator: " ")), "0123456 •••")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 4, count: .min(2), separator: " ")), "0123 ••••••")
+        #expect(string2.formatted(.maskedAllExcept(first: 10, count: .min(2), separator: " ")) == "0123456789 ••")
+        #expect(string2.formatted(.maskedAllExcept(first: 9, count: .min(2), separator: " ")) == "012345678 ••")
+        #expect(string2.formatted(.maskedAllExcept(first: 8, count: .min(2), separator: " ")) == "01234567 ••")
+        #expect(string2.formatted(.maskedAllExcept(first: 7, count: .min(2), separator: " ")) == "0123456 •••")
+        #expect(string2.formatted(.maskedAllExcept(first: 4, count: .min(2), separator: " ")) == "0123 ••••••")
 
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 10, count: .max(2), separator: " ")), "0123456789")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 9, count: .max(2), separator: " ")), "012345678 •")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 8, count: .max(2), separator: " ")), "01234567 ••")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 7, count: .max(2), separator: " ")), "0123456 ••")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 4, count: .max(2), separator: " ")), "0123 ••")
+        #expect(string2.formatted(.maskedAllExcept(first: 10, count: .max(2), separator: " ")) == "0123456789")
+        #expect(string2.formatted(.maskedAllExcept(first: 9, count: .max(2), separator: " ")) == "012345678 •")
+        #expect(string2.formatted(.maskedAllExcept(first: 8, count: .max(2), separator: " ")) == "01234567 ••")
+        #expect(string2.formatted(.maskedAllExcept(first: 7, count: .max(2), separator: " ")) == "0123456 ••")
+        #expect(string2.formatted(.maskedAllExcept(first: 4, count: .max(2), separator: " ")) == "0123 ••")
 
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 10, count: .equal(1), separator: " ")), "0123456789 •")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 4, count: .equal(4), separator: " ")), "0123 ••••")
-        XCTAssertEqual(string2.formatted(.maskedAllExcept(first: 10, count: .equal(4), separator: " ")), "0123456789 ••••")
+        #expect(string2.formatted(.maskedAllExcept(first: 10, count: .equal(1), separator: " ")) == "0123456789 •")
+        #expect(string2.formatted(.maskedAllExcept(first: 4, count: .equal(4), separator: " ")) == "0123 ••••")
+        #expect(string2.formatted(.maskedAllExcept(first: 10, count: .equal(4), separator: " ")) == "0123456789 ••••")
     }
 
-    func testRandomAlphanumerics() {
+    @Test
+    func randomAlphanumerics() {
         let result = String.randomAlphanumerics(length: 50)
-        XCTAssertEqual(result.count, 50)
+        #expect(result.count == 50)
     }
 
-    func testUppercasedFirstAndLowercasedFirst() {
+    @Test
+    func uppercasedFirstAndLowercasedFirst() {
         let input1 = "Hello World"
-        XCTAssertEqual(input1.uppercasedFirst(), "Hello World")
-        XCTAssertEqual(input1.lowercasedFirst(), "hello World")
+        #expect(input1.uppercasedFirst() == "Hello World")
+        #expect(input1.lowercasedFirst() == "hello World")
 
         let input2 = "HelloWorld"
-        XCTAssertEqual(input2.uppercasedFirst(), "HelloWorld")
-        XCTAssertEqual(input2.lowercasedFirst(), "helloWorld")
+        #expect(input2.uppercasedFirst() == "HelloWorld")
+        #expect(input2.lowercasedFirst() == "helloWorld")
 
         let input3 = "helloworld"
-        XCTAssertEqual(input3.uppercasedFirst(), "Helloworld")
-        XCTAssertEqual(input3.lowercasedFirst(), "helloworld")
+        #expect(input3.uppercasedFirst() == "Helloworld")
+        #expect(input3.lowercasedFirst() == "helloworld")
 
         let input4 = "hello world"
-        XCTAssertEqual(input4.uppercasedFirst(), "Hello world")
-        XCTAssertEqual(input4.lowercasedFirst(), "hello world")
+        #expect(input4.uppercasedFirst() == "Hello world")
+        #expect(input4.lowercasedFirst() == "hello world")
     }
 
-    func testCamelcased() {
-        XCTAssertEqual("".camelcased(), "")
-        XCTAssertEqual("a".camelcased(), "a")
-        XCTAssertEqual("aBC".camelcased(), "aBC")
-        XCTAssertEqual("a b".camelcased(), "aB")
+    @Test
+    func camelcased() {
+        #expect("".camelcased().isEmpty)
+        #expect("a".camelcased() == "a")
+        #expect("aBC".camelcased() == "aBC")
+        #expect("a b".camelcased() == "aB")
 
-        XCTAssertEqual("HELLOWORLD".camelcased(), "helloworld")
-        XCTAssertEqual("HELLO_WORLD".camelcased(), "helloWorld")
+        #expect("HELLOWORLD".camelcased() == "helloworld")
+        #expect("HELLO_WORLD".camelcased() == "helloWorld")
 
-        XCTAssertEqual("Helloworld".camelcased(), "helloworld")
-        XCTAssertEqual("HelloWorld".camelcased(), "helloWorld")
-        XCTAssertEqual("Hello World".camelcased(), "helloWorld")
-        XCTAssertEqual("Hello World, Greeting".camelcased(), "helloWorldGreeting")
-        XCTAssertEqual("Hello World, Greeting 🐶🐮".camelcased(), "helloWorldGreeting")
-        XCTAssertEqual("Hello World, Greeting 🐶🐮".snakecased().titlecased().camelcased(), "helloWorldGreeting")
-        XCTAssertEqual("TheSwiftProgrammingLanguage".camelcased(), "theSwiftProgrammingLanguage")
+        #expect("Helloworld".camelcased() == "helloworld")
+        #expect("HelloWorld".camelcased() == "helloWorld")
+        #expect("Hello World".camelcased() == "helloWorld")
+        #expect("Hello World, Greeting".camelcased() == "helloWorldGreeting")
+        #expect("Hello World, Greeting 🐶🐮".camelcased() == "helloWorldGreeting")
+        #expect("Hello World, Greeting 🐶🐮".snakecased().titlecased().camelcased() == "helloWorldGreeting")
+        #expect("TheSwiftProgrammingLanguage".camelcased() == "theSwiftProgrammingLanguage")
     }
 
-    func testSnakecased() {
-        XCTAssertEqual("".snakecased(), "")
-        XCTAssertEqual("a".snakecased(), "a")
-        XCTAssertEqual("aBC".snakecased(), "a_b_c")
-        XCTAssertEqual("a b".snakecased(), "a_b")
+    @Test
+    func snakecased() {
+        #expect("".snakecased().isEmpty)
+        #expect("a".snakecased() == "a")
+        #expect("aBC".snakecased() == "a_b_c")
+        #expect("a b".snakecased() == "a_b")
 
-        XCTAssertEqual("HELLOWORLD".snakecased(), "helloworld")
-        XCTAssertEqual("HELLO_WORLD".snakecased(), "hello_world")
+        #expect("HELLOWORLD".snakecased() == "helloworld")
+        #expect("HELLO_WORLD".snakecased() == "hello_world")
 
-        XCTAssertEqual("Helloworld".snakecased(), "helloworld")
-        XCTAssertEqual("HelloWorld".snakecased(), "hello_world")
-        XCTAssertEqual("hello_world".snakecased(), "hello_world")
-        XCTAssertEqual("Hello_World".snakecased(), "hello_world")
-        XCTAssertEqual("Hello World".snakecased(), "hello_world")
-        XCTAssertEqual("Hello World, Greeting".snakecased(), "hello_world_greeting")
-        XCTAssertEqual("Hello World, Greeting 🐶🐮".snakecased(), "hello_world_greeting")
-        XCTAssertEqual("Hello World, Greeting 🐶🐮".camelcased().titlecased().snakecased(), "hello_world_greeting")
-        XCTAssertEqual("TheSwiftProgrammingLanguage".snakecased(), "the_swift_programming_language")
+        #expect("Helloworld".snakecased() == "helloworld")
+        #expect("HelloWorld".snakecased() == "hello_world")
+        #expect("hello_world".snakecased() == "hello_world")
+        #expect("Hello_World".snakecased() == "hello_world")
+        #expect("Hello World".snakecased() == "hello_world")
+        #expect("Hello World, Greeting".snakecased() == "hello_world_greeting")
+        #expect("Hello World, Greeting 🐶🐮".snakecased() == "hello_world_greeting")
+        #expect("Hello World, Greeting 🐶🐮".camelcased().titlecased().snakecased() == "hello_world_greeting")
+        #expect("TheSwiftProgrammingLanguage".snakecased() == "the_swift_programming_language")
     }
 
-    func testTitlecased() {
-        XCTAssertEqual("".titlecased(), "")
-        XCTAssertEqual("a".titlecased(), "A")
-        XCTAssertEqual("aBC".titlecased(), "A BC")
-        XCTAssertEqual("a b".titlecased(), "A B")
+    @Test
+    func titlecased() {
+        #expect("".titlecased().isEmpty)
+        #expect("a".titlecased() == "A")
+        #expect("aBC".titlecased() == "A BC")
+        #expect("a b".titlecased() == "A B")
 
-        XCTAssertEqual("HELLOWORLD".titlecased(), "Helloworld")
+        #expect("HELLOWORLD".titlecased() == "Helloworld")
 
-        XCTAssertEqual("we're having dinner in the garden".titlecased(), "We're Having Dinner In The Garden")
-        XCTAssertEqual("TheSwiftProgrammingLanguage".snakecased().replacing("_", with: " ").titlecased(), "The Swift Programming Language")
-        XCTAssertEqual("TheSwiftProgrammingLanguage".snakecased().camelcased().titlecased(), "TheSwiftProgrammingLanguage")
+        #expect("we're having dinner in the garden".titlecased() == "We're Having Dinner In The Garden")
+        #expect("TheSwiftProgrammingLanguage".snakecased().replacing("_", with: " ").titlecased() == "The Swift Programming Language")
+        #expect("TheSwiftProgrammingLanguage".snakecased().camelcased().titlecased() == "TheSwiftProgrammingLanguage")
     }
 }

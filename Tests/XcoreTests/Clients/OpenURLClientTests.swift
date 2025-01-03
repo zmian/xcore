@@ -8,7 +8,6 @@ import Testing
 import Foundation
 @testable import Xcore
 
-@Suite
 struct OpenURLClientTests {
     @Test
     func inMemoryVariant() async {

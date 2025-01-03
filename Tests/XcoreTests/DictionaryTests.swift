@@ -4,11 +4,12 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
 @testable import Xcore
 
-final class DictionaryTests: TestCase {
-    func testRawRepresentableSubscriptString() {
+struct DictionaryTests {
+    @Test
+    func rawRepresentableSubscriptString() {
         enum Key: String {
             case name
             case framework
@@ -21,10 +22,13 @@ final class DictionaryTests: TestCase {
             "language": "Swift"
         ]
 
-        XCTAssertEqual(dictionary[Key.framework]!, "Xcore")
+        #expect(dictionary[Key.framework] == "Xcore")
+        #expect(dictionary[Key.name] == "zmian")
+        #expect(dictionary[Key.language] == "Swift")
     }
 
-    func testRawRepresentableSubscriptInt() {
+    @Test
+    func rawRepresentableSubscriptInt() {
         enum Key: Int {
             case zero
             case one
@@ -35,6 +39,6 @@ final class DictionaryTests: TestCase {
             1: "Xcore"
         ]
 
-        XCTAssertEqual(dictionary[Key.one]!, "Xcore")
+        #expect(dictionary[Key.one] == "Xcore")
     }
 }

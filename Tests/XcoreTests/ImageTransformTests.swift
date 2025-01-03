@@ -4,11 +4,13 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import Foundation
 @testable import Xcore
 
-final class ImageTransformTests: TestCase {
-    func testTransformIdentifier() {
+struct ImageTransformTests {
+    @Test
+    func transformIdentifier() {
         let transforms: [(String, ImageTransform)] = [
             (
                 "Xcore.AlphaImageTransform-alpha:(0.2)",
@@ -45,7 +47,7 @@ final class ImageTransformTests: TestCase {
         ]
 
         for (expectedId, transform) in transforms {
-            XCTAssertEqual(transform.id, expectedId)
+            #expect(transform.id == expectedId)
         }
     }
 }

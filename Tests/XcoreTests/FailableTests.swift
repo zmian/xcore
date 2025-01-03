@@ -4,41 +4,51 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import Foundation
 @testable import Xcore
 
-final class FailableTests: TestCase {
-    func testWithoutFailableDecoder() throws {
-        XCTAssertThrowsError(try JSONDecoder().decode([Pet].self, from: json))
+struct FailableTests {
+    @Test
+    func withoutFailableDecoder() throws {
+        #expect(throws: Error.self) {
+            try JSONDecoder().decode([Pet].self, from: json)
+        }
     }
 
-    func testWithFailableDecoder() throws {
+    @Test
+    func withFailableDecoder() throws {
         let pets = try JSONDecoder().decode([Failable<Pet>].self, from: json)
 
-        XCTAssertEqual(pets.count, 2)
-        XCTAssertEqual(pets.first?.name, "Zeus")
-        XCTAssertEqual(pets.first?.age, 3)
-        XCTAssertNil(pets.last?.value)
+        #expect(pets.count == 2)
+        #expect(pets.first?.name == "Zeus")
+        #expect(pets.first?.age == 3)
+        #expect(pets.last?.value == nil)
     }
 
-    func testWithFailableEncoder() throws {
+    @Test
+    func withFailableEncoder() throws {
         let pets1 = try JSONDecoder().decode([Failable<Pet>].self, from: json)
         let data = try JSONEncoder().encode(pets1)
         let pets2 = try JSONDecoder().decode([Failable<Pet>].self, from: data)
-        XCTAssertEqual(pets1, pets2)
+        #expect(pets1 == pets2)
     }
 
-    func testWithFailableDecodingStrategyLenient() throws {
+    @Test
+    func withFailableDecodingStrategyLenient() throws {
         let pets = try JSONDecoder().decode([Pet].self, from: json, strategy: .lenient)
 
-        XCTAssertEqual(pets.count, 1)
-        XCTAssertEqual(pets.first?.name, "Zeus")
-        XCTAssertEqual(pets.first?.age, 3)
-        XCTAssertNotNil(pets.last) // Count is == 1 so last == first
+        #expect(pets.count == 1)
+        #expect(pets.first?.name == "Zeus")
+        #expect(pets.first?.age == 3)
+        #expect(pets.last != nil) // Count is == 1 so last == first
     }
 
-    func testWithFailableDecodingStrategyThrows() throws {
-        XCTAssertThrowsError(try JSONDecoder().decode([Pet].self, from: json, strategy: .throw))
+    @Test
+    func withFailableDecodingStrategyThrows() throws {
+        #expect(throws: Error.self) {
+            try JSONDecoder().decode([Pet].self, from: json, strategy: .throw)
+        }
     }
 
     // MARK: - Helpers
