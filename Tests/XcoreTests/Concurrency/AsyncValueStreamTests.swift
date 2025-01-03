@@ -4,31 +4,33 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
 @testable import Xcore
 
-final class AsyncValueStreamTests: TestCase {
-    func testCurrentValue() async {
+struct AsyncValueStreamTests {
+    @Test
+    func currentValue() async {
         let internalStream = AsyncCurrentValueStream<Int>(5)
 
         let externalStream = AsyncValueStream(internalStream)
 
         // Verify current value == initial value
-        XCTAssertEqual(externalStream.value, 5)
+        #expect(externalStream.value == 5)
 
         // Produce new elements
         internalStream.send(1)
-        XCTAssertEqual(externalStream.value, 1)
+        #expect(externalStream.value == 1)
         internalStream.send(2)
 
         // Finish producing elements
         internalStream.finish()
 
         // Current Value
-        XCTAssertEqual(externalStream.value, 2)
+        #expect(externalStream.value == 2)
     }
 
-    func testIterations() async {
+    @Test
+    func iterations() async {
         let internalStream = AsyncCurrentValueStream<Int>(5)
         let externalStream = AsyncValueStream(internalStream)
 
@@ -41,7 +43,7 @@ final class AsyncValueStreamTests: TestCase {
             }
 
             // Verify collected elements
-            XCTAssertEqual(values, [5, 1, 2])
+            #expect(values == [5, 1, 2])
         }
 
         // Produce new elements

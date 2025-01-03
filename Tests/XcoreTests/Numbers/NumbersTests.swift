@@ -4,29 +4,33 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import Foundation
 @testable import Xcore
 
-final class NumbersTests: TestCase {
-    func testRunningSum() {
+struct NumbersTests {
+    @Test
+    func runningSum() {
         let intRunningSum = [1, 1, 1, 1, 1, 1].runningSum()
         let expected1 = [1, 2, 3, 4, 5, 6]
-        XCTAssertEqual(intRunningSum, expected1)
+        #expect(intRunningSum == expected1)
 
         let doubleRunningSum = [1.0, 1, 1, 1, 1, 1].runningSum()
         let expected2 = [1.0, 2, 3, 4, 5, 6]
-        XCTAssertEqual(doubleRunningSum, expected2)
+        #expect(doubleRunningSum == expected2)
     }
 
-    func testSum() {
+    @Test
+    func sum() {
         let intSum = [1, 1, 1, 1, 1, 1].sum()
-        XCTAssertEqual(intSum, 6)
+        #expect(intSum == 6)
 
         let doubleSum = [1.0, 1, 1, 1, 1, 1].sum()
-        XCTAssertEqual(doubleSum, 6.0)
+        #expect(doubleSum == 6.0)
     }
 
-    func testSumClosure() {
+    @Test
+    func sumClosure() {
         struct Expense {
             let title: String
             let amount: Double
@@ -38,29 +42,31 @@ final class NumbersTests: TestCase {
         ]
 
         let totalCost = expenses.sum(\.amount)
-        XCTAssertEqual(totalCost, 2200.0)
+        #expect(totalCost == 2200.0)
     }
 
-    func testAverage() {
+    @Test
+    func average() {
         let int = [1, 1, 1, 1, 1, 1].average()
-        XCTAssertEqual(int, 1.0)
+        #expect(int == 1.0)
 
         let double = [1.0, 1, 1, 1, 1, 1].average()
-        XCTAssertEqual(double, 1.0)
+        #expect(double == 1.0)
 
         let float: [Float] = [1.0, 1, 1, 1, 1, 1]
-        XCTAssertEqual(float.average(), 1.0)
+        #expect(float.average() == 1.0)
 
         let float2: [Float] = [1.0, 12.3, 33, 37, 34, 45]
-        XCTAssertEqual(float2.average(), 27.050001)
+        #expect(float2.average() == 27.050001)
 
         let decimal: [Decimal] = [1.0, 12.3, 33, 37, 34, 45]
-        XCTAssertEqual(decimal.average(), 27.05)
+        #expect(decimal.average() == 27.05)
     }
 
-    func testMap() {
+    @Test
+    func map() {
         let values = 10.map { $0 * 2 }
         let expected = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
-        XCTAssertEqual(values, expected)
+        #expect(values == expected)
     }
 }

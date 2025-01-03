@@ -3,124 +3,129 @@
 // Copyright © 2021 Xcore
 // MIT license, see LICENSE file for details
 //
+// swiftlint:disable empty_string
 
-import XCTest
+import Testing
 @testable import Xcore
 
-final class LiveAddressSearchClientTests: TestCase {
-    override func setUp() {
-        super.setUp()
+@Suite(.serialized)
+struct LiveAddressSearchClientTests {
+    init() {
         LiveAddressSearchClient.supportedRegions = [.unitedStates]
     }
 
-    func testQueensAddresses() async {
+    @Test
+    func queensAddresses() async {
         // No Country
         await search("3818 Queens Blvd, Queens, NY 11101") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "38-18 Queens Blvd")
-            XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "Long Island City")
-            XCTAssertEqual(postalAddress.state, "NY")
-            XCTAssertEqual(postalAddress.postalCode, "11101")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "38-18 Queens Blvd")
+            #expect(postalAddress.street2 == "")
+            #expect(postalAddress.city == "Long Island City")
+            #expect(postalAddress.state == "NY")
+            #expect(postalAddress.postalCode == "11101")
+            #expect(postalAddress.countryCode == "US")
         }
 
         await search("38-18 Queens Blvd, Long Island City, NY 11101") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "38-18 Queens Blvd")
-            XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "Long Island City")
-            XCTAssertEqual(postalAddress.state, "NY")
-            XCTAssertEqual(postalAddress.postalCode, "11101")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "38-18 Queens Blvd")
+            #expect(postalAddress.street2 == "")
+            #expect(postalAddress.city == "Long Island City")
+            #expect(postalAddress.state == "NY")
+            #expect(postalAddress.postalCode == "11101")
+            #expect(postalAddress.countryCode == "US")
         }
 
         // With country
         await search("3818 Queens Blvd, Queens, NY 11101, United States") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "38-18 Queens Blvd")
-            XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "Long Island City")
-            XCTAssertEqual(postalAddress.state, "NY")
-            XCTAssertEqual(postalAddress.postalCode, "11101")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "38-18 Queens Blvd")
+            #expect(postalAddress.street2 == "")
+            #expect(postalAddress.city == "Long Island City")
+            #expect(postalAddress.state == "NY")
+            #expect(postalAddress.postalCode == "11101")
+            #expect(postalAddress.countryCode == "US")
         }
 
         await search("38-18 Queens Blvd, Long Island City, NY 11101, USA") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "38-18 Queens Blvd")
-            XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "Long Island City")
-            XCTAssertEqual(postalAddress.state, "NY")
-            XCTAssertEqual(postalAddress.postalCode, "11101")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "38-18 Queens Blvd")
+            #expect(postalAddress.street2 == "")
+            #expect(postalAddress.city == "Long Island City")
+            #expect(postalAddress.state == "NY")
+            #expect(postalAddress.postalCode == "11101")
+            #expect(postalAddress.countryCode == "US")
         }
 
         // No zip code
         await search("3818 Queens Blvd, Long Island City, NY") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "38-18 Queens Blvd")
-            XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "Long Island City")
-            XCTAssertEqual(postalAddress.state, "NY")
-            XCTAssertEqual(postalAddress.postalCode, "11101")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "38-18 Queens Blvd")
+            #expect(postalAddress.street2 == "")
+            #expect(postalAddress.city == "Long Island City")
+            #expect(postalAddress.state == "NY")
+            #expect(postalAddress.postalCode == "11101")
+            #expect(postalAddress.countryCode == "US")
         }
 
         // No zip code with Country
         await search("3818 Queens Blvd, Long Island City, NY, USA") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "38-18 Queens Blvd")
-            XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "Long Island City")
-            XCTAssertEqual(postalAddress.state, "NY")
-            XCTAssertEqual(postalAddress.postalCode, "11101")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "38-18 Queens Blvd")
+            #expect(postalAddress.street2 == "")
+            #expect(postalAddress.city == "Long Island City")
+            #expect(postalAddress.state == "NY")
+            #expect(postalAddress.postalCode == "11101")
+            #expect(postalAddress.countryCode == "US")
         }
     }
 
-    func testNormalAddress() async {
+    @Test
+    func normalAddress() async {
         await search("529 Broadway, 10B, New York, NY 10012, United States") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "529 Broadway")
-            XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "New York")
-            XCTAssertEqual(postalAddress.state, "NY")
-            XCTAssertEqual(postalAddress.postalCode, "10012")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "529 Broadway")
+            #expect(postalAddress.street2 == "")
+            #expect(postalAddress.city == "New York")
+            #expect(postalAddress.state == "NY")
+            #expect(postalAddress.postalCode == "10012")
+            #expect(postalAddress.countryCode == "US")
         }
 
         await search("2761 Raging River Ct, Decatur, GA  30034, United States") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "2761 Raging River Ct")
-            XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "Decatur")
-            XCTAssertEqual(postalAddress.state, "GA")
-            XCTAssertEqual(postalAddress.postalCode, "30034")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "2761 Raging River Ct")
+            #expect(postalAddress.street2 == "")
+            #expect(postalAddress.city == "Decatur")
+            #expect(postalAddress.state == "GA")
+            #expect(postalAddress.postalCode == "30034")
+            #expect(postalAddress.countryCode == "US")
         }
     }
 
-    func testIncompleteAddress() async {
+    @Test
+    func incompleteAddress() async {
         await search("Nothing, Decatur, GA 30034, US") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "")
-            XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "Decatur")
-            XCTAssertEqual(postalAddress.state, "GA")
-            XCTAssertEqual(postalAddress.postalCode, "30034")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "")
+            #expect(postalAddress.street2 == "")
+            #expect(postalAddress.city == "Decatur")
+            #expect(postalAddress.state == "GA")
+            #expect(postalAddress.postalCode == "30034")
+            #expect(postalAddress.countryCode == "US")
         }
 
         await search("123 Havenshire Ridge Ln, Pinehurst TX 77362") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "Havenshire Ridge Ln")
-            XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "Pinehurst")
-            XCTAssertEqual(postalAddress.state, "TX")
-            XCTAssertEqual(postalAddress.postalCode, "77362")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "Havenshire Ridge Ln")
+            #expect(postalAddress.street2 == "")
+            #expect(postalAddress.city == "Pinehurst")
+            #expect(postalAddress.state == "TX")
+            #expect(postalAddress.postalCode == "77362")
+            #expect(postalAddress.countryCode == "US")
         }
     }
 
-    func testNonUsaAddresses() async {
+    @Test
+    func nonUsaAddresses() async {
         await search("Carrera de San Jeronimo, 34, Madrid 28014") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "34 Carrera de San Jerónimo")
-            XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "Centro")
-            XCTAssertEqual(postalAddress.state, "Madrid")
-            XCTAssertEqual(postalAddress.postalCode, "28014")
-            XCTAssertEqual(postalAddress.countryCode, "ES")
+            #expect(postalAddress.street1 == "34 Carrera de San Jerónimo")
+            #expect(postalAddress.street2 == "")
+            #expect(postalAddress.city == "Centro")
+            #expect(postalAddress.state == "Madrid")
+            #expect(postalAddress.postalCode == "28014")
+            #expect(postalAddress.countryCode == "ES")
 
             let client = Dependency(\.addressSearch).wrappedValue
 
@@ -131,12 +136,12 @@ final class LiveAddressSearchClientTests: TestCase {
                 try await client.validate(address: postalAddress)
             } catch {
                 if let error = error as? AppError {
-                    XCTAssertEqual(error.id, "address_validation_failed_invalid_region")
-                    XCTAssertEqual(error.title, "U.S. Addresses")
-                    XCTAssertEqual(error.message, "xctest is currently available to U.S. residents. To continue, please enter your U.S. residential address.")
-                    XCTAssertEqual(error.logLevel, .error)
+                    #expect(error.id == "address_validation_failed_invalid_region")
+                    #expect(error.title == "U.S. Addresses")
+                    #expect(error.message == "xctest is currently available to U.S. residents. To continue, please enter your U.S. residential address.")
+                    #expect(error.logLevel == .error)
                 } else {
-                    XCTFail("Unexpected error type")
+                    Issue.record("Unexpected error type")
                 }
             }
 
@@ -148,7 +153,7 @@ final class LiveAddressSearchClientTests: TestCase {
             do {
                 try await client.validate(address: postalAddress)
             } catch {
-                XCTFail("Spain is supported region")
+                Issue.record("Spain is a supported region")
             }
 
             // 3. Portugal as Supported Regions
@@ -160,12 +165,12 @@ final class LiveAddressSearchClientTests: TestCase {
                 try await client.validate(address: postalAddress)
             } catch {
                 if let error = error as? AppError {
-                    XCTAssertEqual(error.id, "address_validation_failed_invalid_region")
-                    XCTAssertEqual(error.title, "Portugal Addresses")
-                    XCTAssertEqual(error.message, "xctest is currently available to Portugal residents. To continue, please enter your Portugal residential address.")
-                    XCTAssertEqual(error.logLevel, .error)
+                    #expect(error.id == "address_validation_failed_invalid_region")
+                    #expect(error.title == "Portugal Addresses")
+                    #expect(error.message == "xctest is currently available to Portugal residents. To continue, please enter your Portugal residential address.")
+                    #expect(error.logLevel == .error)
                 } else {
-                    XCTFail("Unexpected error type")
+                    Issue.record("Unexpected error type")
                 }
             }
 
@@ -178,12 +183,12 @@ final class LiveAddressSearchClientTests: TestCase {
                 try await client.validate(address: postalAddress)
             } catch {
                 if let error = error as? AppError {
-                    XCTAssertEqual(error.id, "address_validation_failed_invalid_region")
-                    XCTAssertEqual(error.title, "Unsupported Region")
-                    XCTAssertEqual(error.message, "xctest is currently available to only US, PT, and GB residents. To continue, please enter your residential address in one of the supported regions.")
-                    XCTAssertEqual(error.logLevel, .error)
+                    #expect(error.id == "address_validation_failed_invalid_region")
+                    #expect(error.title == "Unsupported Region")
+                    #expect(error.message == "xctest is currently available to only US, PT, and GB residents. To continue, please enter your residential address in one of the supported regions.")
+                    #expect(error.logLevel == .error)
                 } else {
-                    XCTFail("Unexpected error type")
+                    Issue.record("Unexpected error type")
                 }
             }
 
@@ -196,52 +201,53 @@ final class LiveAddressSearchClientTests: TestCase {
                 try await client.validate(address: postalAddress)
             } catch {
                 if let error = error as? AppError {
-                    XCTAssertEqual(error.id, "address_validation_failed_invalid_region")
-                    XCTAssertEqual(error.title, "Unsupported Region")
-                    XCTAssertEqual(error.message, "xctest is currently not available in your region.")
-                    XCTAssertEqual(error.logLevel, .error)
+                    #expect(error.id == "address_validation_failed_invalid_region")
+                    #expect(error.title == "Unsupported Region")
+                    #expect(error.message == "xctest is currently not available in your region.")
+                    #expect(error.logLevel == .error)
                 } else {
-                    XCTFail("Unexpected error type")
+                    Issue.record("Unexpected error type")
                 }
             }
         }
     }
 
-    func testAddressWithUnit() async {
+    @Test
+    func addressWithUnit() async {
         await search("222 Jackson St, Unit 5, Brooklyn, NY 11211") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "222 Jackson St")
-            XCTAssertEqual(postalAddress.street2, "Unit 5")
-            XCTAssertEqual(postalAddress.city, "Brooklyn")
-            XCTAssertEqual(postalAddress.state, "NY")
-            XCTAssertEqual(postalAddress.postalCode, "11211")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "222 Jackson St")
+            #expect(postalAddress.street2 == "Unit 5")
+            #expect(postalAddress.city == "Brooklyn")
+            #expect(postalAddress.state == "NY")
+            #expect(postalAddress.postalCode == "11211")
+            #expect(postalAddress.countryCode == "US")
         }
 
         await search("222 Jackson St, Apt 5, Brooklyn, NY 11211") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "222 Jackson St")
-            XCTAssertEqual(postalAddress.street2, "Apt 5")
-            XCTAssertEqual(postalAddress.city, "Brooklyn")
-            XCTAssertEqual(postalAddress.state, "NY")
-            XCTAssertEqual(postalAddress.postalCode, "11211")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "222 Jackson St")
+            #expect(postalAddress.street2 == "Apt 5")
+            #expect(postalAddress.city == "Brooklyn")
+            #expect(postalAddress.state == "NY")
+            #expect(postalAddress.postalCode == "11211")
+            #expect(postalAddress.countryCode == "US")
         }
 
         await search("222 Jackson St, 5, Brooklyn, NY 11211") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "222 Jackson St")
-            XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "Brooklyn")
-            XCTAssertEqual(postalAddress.state, "NY")
-            XCTAssertEqual(postalAddress.postalCode, "11211")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "222 Jackson St")
+            #expect(postalAddress.street2 == "")
+            #expect(postalAddress.city == "Brooklyn")
+            #expect(postalAddress.state == "NY")
+            #expect(postalAddress.postalCode == "11211")
+            #expect(postalAddress.countryCode == "US")
         }
 
         await search("2900 Bedford Ave, 2B, Brooklyn, NY 11210") { postalAddress in
-            XCTAssertEqual(postalAddress.street1, "2900 Bedford Ave")
-            XCTAssertEqual(postalAddress.street2, "")
-            XCTAssertEqual(postalAddress.city, "Brooklyn")
-            XCTAssertEqual(postalAddress.state, "NY")
-            XCTAssertEqual(postalAddress.postalCode, "11210")
-            XCTAssertEqual(postalAddress.countryCode, "US")
+            #expect(postalAddress.street1 == "2900 Bedford Ave")
+            #expect(postalAddress.street2 == "")
+            #expect(postalAddress.city == "Brooklyn")
+            #expect(postalAddress.state == "NY")
+            #expect(postalAddress.postalCode == "11210")
+            #expect(postalAddress.countryCode == "US")
         }
     }
 }
@@ -251,8 +257,7 @@ final class LiveAddressSearchClientTests: TestCase {
 extension LiveAddressSearchClientTests {
     private func search(
         _ query: String,
-        file: StaticString = #filePath,
-        line: UInt = #line,
+        sourceLocation: SourceLocation = #_sourceLocation,
         callback: (PostalAddress) async throws -> Void
     ) async {
         do {
@@ -264,7 +269,7 @@ extension LiveAddressSearchClientTests {
                 try await callback(postalAddress)
             }
         } catch {
-            XCTFail(String(describing: error), file: file, line: line)
+            Issue.record(error, sourceLocation: sourceLocation)
         }
     }
 }
