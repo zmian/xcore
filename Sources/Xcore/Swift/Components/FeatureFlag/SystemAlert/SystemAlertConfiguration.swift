@@ -77,7 +77,7 @@ public struct SystemAlertConfiguration: Sendable, Hashable, Codable, Identifiabl
 // MARK: - Dismissal
 
 extension SystemAlertConfiguration {
-    nonisolated(unsafe) private static var dismissedIds: Set<String> = []
+    private static let dismissedIds = LockIsolated(Set<String>())
 
     /// A Boolean property indicating whether the system alert is dismissed.
     public var isDismissed: Bool {
@@ -85,7 +85,9 @@ extension SystemAlertConfiguration {
             return false
         }
 
-        return Self.dismissedIds.contains(id)
+        return Self.dismissedIds.withValue {
+            $0.contains(id)
+        }
     }
 
     /// A method to dismiss the system alert for this session
@@ -94,7 +96,9 @@ extension SystemAlertConfiguration {
             return
         }
 
-        Self.dismissedIds.insert(id)
+        Self.dismissedIds.withValue {
+            _ = $0.insert(id)
+        }
     }
 }
 
