@@ -4,19 +4,19 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
 @testable import Xcore
 
+@Suite
 @MainActor
-final class HapticFeedbackClientTests: TestCase {
-    func testDefault() async {
-        let triggeredFeedbackIsolated = ActorIsolated<HapticFeedbackClient.Style?>(nil)
+struct HapticFeedbackClientTests {
+    @Test
+    func basics() {
+        let triggeredFeedback = LockIsolated<HapticFeedbackClient.Style?>(nil)
 
         let viewModel = withDependencies {
             $0.hapticFeedback = .init(trigger: { style in
-                Task {
-                    await triggeredFeedbackIsolated.setValue(style)
-                }
+                triggeredFeedback.setValue(style)
             })
         } operation: {
             ViewModel()
@@ -24,9 +24,7 @@ final class HapticFeedbackClientTests: TestCase {
 
         viewModel.triggerSelectionFeedback()
 
-        await Task.megaYield()
-        let triggeredFeedback = await triggeredFeedbackIsolated.value
-        XCTAssertEqual(triggeredFeedback, .selection)
+        #expect(triggeredFeedback.value == .selection)
     }
 }
 

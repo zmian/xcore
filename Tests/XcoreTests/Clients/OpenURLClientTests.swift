@@ -4,36 +4,35 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import Foundation
 @testable import Xcore
 
-final class OpenURLClientTests: TestCase {
-    func testInMemoryVariant() async {
-        let openedUrlIsolated = ActorIsolated<URL?>(nil)
+@Suite
+struct OpenURLClientTests {
+    @Test
+    func inMemoryVariant() async {
+        let openedUrl = LockIsolated<URL?>(nil)
 
         let viewModel = withDependencies {
             $0.openUrl = .init { adaptiveUrl in
-                await openedUrlIsolated.setValue(adaptiveUrl.url)
+                openedUrl.setValue(adaptiveUrl.url)
                 return true
             }
         } operation: {
             ViewModel()
         }
 
-        var openedUrl = await openedUrlIsolated.value
-        XCTAssertNil(openedUrl)
+        #expect(openedUrl.value == nil)
 
         await viewModel.openMailApp()
-        openedUrl = await openedUrlIsolated.value
-        XCTAssertEqual(openedUrl, .mailApp)
+        #expect(openedUrl.value == .mailApp)
 
         await viewModel.openSettingsApp()
-        openedUrl = await openedUrlIsolated.value
-        XCTAssertEqual(openedUrl, .settingsApp)
+        #expect(openedUrl.value == .settingsApp)
 
         await viewModel.openSomeUrl()
-        openedUrl = await openedUrlIsolated.value
-        XCTAssertEqual(openedUrl, URL(string: "https://example.com"))
+        #expect(openedUrl.value == URL(string: "https://example.com"))
     }
 }
 
