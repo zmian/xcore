@@ -4,11 +4,13 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
+import Foundation
 @testable import Xcore
 
-final class JSONDecoderKeyPathTests: TestCase {
-    func testValidKeyPath() throws {
+struct JSONDecoderKeyPathTests {
+    @Test
+    func validKeyPath() throws {
         let json = """
         {
             "person": {
@@ -19,10 +21,11 @@ final class JSONDecoderKeyPathTests: TestCase {
         """.data(using: .utf8)!
 
         let person = try JSONDecoder().decode(Person.self, from: json, keyPath: "person")
-        XCTAssertEqual(Person(name: "Sam", age: 8), person)
+        #expect(Person(name: "Sam", age: 8) == person)
     }
 
-    func testInValidKeyPath() throws {
+    @Test
+    func inValidKeyPath() throws {
         let json = """
         {
             "person": {
@@ -32,10 +35,13 @@ final class JSONDecoderKeyPathTests: TestCase {
         }
         """.data(using: .utf8)!
 
-        XCTAssertThrowsError(try JSONDecoder().decode(Person.self, from: json, keyPath: "person.custom"))
+        #expect(throws: Error.self) {
+            try JSONDecoder().decode(Person.self, from: json, keyPath: "person.custom")
+        }
     }
 
-    func testValidKeyPathNested() throws {
+    @Test
+    func validKeyPathNested() throws {
         let json = """
         {
             "level_1": {
@@ -48,10 +54,11 @@ final class JSONDecoderKeyPathTests: TestCase {
         """.data(using: .utf8)!
 
         let person = try JSONDecoder().decode(Person.self, from: json, keyPath: "level_1.person")
-        XCTAssertEqual(Person(name: "Sam", age: 8), person)
+        #expect(Person(name: "Sam", age: 8) == person)
     }
 
-    func testValidKeyPathNestedSeparator() throws {
+    @Test
+    func validKeyPathNestedSeparator() throws {
         let json = """
         {
             "level_1": {
@@ -72,7 +79,7 @@ final class JSONDecoderKeyPathTests: TestCase {
             )
         )
 
-        XCTAssertEqual(Person(name: "Sam", age: 8), person)
+        #expect(Person(name: "Sam", age: 8) == person)
     }
 }
 
