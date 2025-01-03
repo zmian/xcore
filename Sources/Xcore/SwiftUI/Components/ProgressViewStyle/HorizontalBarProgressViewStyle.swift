@@ -10,7 +10,7 @@ import SwiftUI
 public struct HorizontalBarProgressViewStyle: ProgressViewStyle {
     private let height: CGFloat?
 
-    init(height: CGFloat? = nil) {
+    nonisolated init(height: CGFloat? = nil) {
         self.height = height
     }
 
@@ -75,9 +75,9 @@ public struct HorizontalBarProgressViewStyle: ProgressViewStyle {
 // MARK: - Dot Syntax Support
 
 extension ProgressViewStyle where Self == HorizontalBarProgressViewStyle {
-    public static var horizontalBar: Self { .init() }
+    nonisolated public static var horizontalBar: Self { .init() }
 
-    public static func horizontalBar(height: CGFloat?) -> Self {
+    nonisolated public static func horizontalBar(height: CGFloat?) -> Self {
         .init(height: height)
     }
 }

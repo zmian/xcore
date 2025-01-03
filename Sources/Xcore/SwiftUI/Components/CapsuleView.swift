@@ -122,7 +122,7 @@ extension CapsuleView<Never> {
 }
 
 extension Samples {
-    public static var capsuleViewPreviews: some View {
+    @MainActor public static var capsuleViewPreviews: some View {
         LazyView {
             ZStack {
                 Color(.systemBackground)

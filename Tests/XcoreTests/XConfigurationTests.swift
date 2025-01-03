@@ -95,6 +95,7 @@ final class XConfigurationTests: TestCase {
 
 // MARK: - Test Configurations
 
+@MainActor
 extension XConfiguration<UILabel> {
     fileprivate static var hello: Self {
         .init(id: "greeting") {
@@ -116,6 +117,7 @@ extension XConfiguration<UILabel> {
     }
 }
 
+@MainActor
 extension XConfiguration<UIBarButtonItem> {
     fileprivate static var someConfiguration: Self {
         .init {

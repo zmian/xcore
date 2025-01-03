@@ -31,7 +31,7 @@ extension ValidationRule where Input: Collection {
     ///
     /// - Parameter range: The range expression to check against input count.
     /// - Returns: The validation rule.
-    public static func range<T: RangeExpression>(_ range: T) -> Self where T.Bound == Int {
+    public static func range<T: RangeExpression & Sendable>(_ range: T) -> Self where T.Bound == Int {
         .init { range.contains($0.count) }
     }
 
@@ -58,7 +58,7 @@ extension ValidationRule where Input: Collection {
 
 // MARK: - Input: Equatable
 
-extension ValidationRule where Input: Equatable {
+extension ValidationRule where Input: Equatable & Sendable {
     /// A validation rule that checks whether the input is equal to the given
     /// value.
     ///
@@ -71,7 +71,7 @@ extension ValidationRule where Input: Equatable {
 
 // MARK: - Input: Comparable
 
-extension ValidationRule where Input: Comparable {
+extension ValidationRule where Input: Comparable & Sendable {
     /// A validation rule that checks whether the input is less than the given
     /// value.
     ///
@@ -126,7 +126,7 @@ extension ValidationRule<String> {
     ///   - other: The other string to search for in the input string.
     ///   - options: The String `ComparisonOptions`. The default value `[]`.
     /// - Returns: The validation rule.
-    public static func contains(_ other: some StringProtocol, options: String.CompareOptions = []) -> Self {
+    public static func contains(_ other: some StringProtocol & Sendable, options: String.CompareOptions = []) -> Self {
         .init { $0.contains(other, options: options) }
     }
 
@@ -135,7 +135,7 @@ extension ValidationRule<String> {
     ///
     /// - Parameter prefix: A possible prefix to test against this string.
     /// - Returns: The validation rule.
-    static func hasPrefix(_ prefix: some StringProtocol) -> Self {
+    static func hasPrefix(_ prefix: some StringProtocol & Sendable) -> Self {
         .init { $0.hasPrefix(prefix) }
     }
 
@@ -144,7 +144,7 @@ extension ValidationRule<String> {
     ///
     /// - Parameter suffix: A possible suffix to test against this string.
     /// - Returns: The validation rule.
-    static func hasSuffix(_ suffix: some StringProtocol) -> Self {
+    static func hasSuffix(_ suffix: some StringProtocol & Sendable) -> Self {
         .init { $0.hasSuffix(suffix) }
     }
 
@@ -224,7 +224,7 @@ extension ValidationRule<String> {
         name(range: 1...50)
     }
 
-    public static func name<T: RangeExpression>(range: T) -> Self where T.Bound == Int {
+    public static func name<T: RangeExpression & Sendable>(range: T) -> Self where T.Bound == Int {
         self.range(range) && subset(of: .numbers.inverted)
     }
 
@@ -232,7 +232,7 @@ extension ValidationRule<String> {
     ///
     /// - Parameter range: The range of the input.
     /// - Returns: The validation rule.
-    public static func number<T: RangeExpression>(range: T) -> Self where T.Bound == Int {
+    public static func number<T: RangeExpression & Sendable>(range: T) -> Self where T.Bound == Int {
         self.range(range) && subset(of: .numbers)
     }
 

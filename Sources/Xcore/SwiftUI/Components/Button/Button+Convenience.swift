@@ -232,6 +232,7 @@ extension Button<Image> {
 
 // MARK: - Learn More, Read More, See More, See More/Less, See All, See All/Less
 
+@MainActor
 extension Button<EitherAnyViewText> {
     /// A button with `Learn More` label and an option to display a chevron and
     /// given action.
@@ -282,6 +283,7 @@ extension Button<EitherAnyViewText> {
 
 // MARK: - Menu
 
+@MainActor
 extension Button<EitherAnyViewText> {
     /// A button with label generated from the string and `image` and given action.
     public static func menu(
@@ -303,6 +305,7 @@ extension Button<EitherAnyViewText> {
 
 // MARK: - Dropdown
 
+@MainActor
 extension Button<Never> {
     /// A button with label generated from the string and optional `prompt` string
     /// above the button and given action.

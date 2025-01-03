@@ -31,7 +31,7 @@ extension QRCodeClient {
     /// Returns unimplemented variant of `QRCodeClient`.
     public static var unimplemented: Self {
         .init { _ in
-            XCTFail(#"Unimplemented: @Dependency(\.qrCode)"#)
+            reportIssue(#"Unimplemented: @Dependency(\.qrCode)"#)
             throw CancellationError()
         }
     }
@@ -64,7 +64,7 @@ extension QRCodeClient {
 
 extension DependencyValues {
     private enum QRCodeClientKey: DependencyKey {
-        static var liveValue: QRCodeClient = .live
+        nonisolated(unsafe) static var liveValue: QRCodeClient = .live
     }
 
     /// Provides functionality for generating a QR code.

@@ -7,6 +7,7 @@
 import UIKit
 
 extension UIAccessibility {
+    @MainActor
     public struct ReturnFocus {
         private var element: Any?
 
@@ -43,5 +44,5 @@ extension UIAccessibility {
 
 extension UIAccessibility {
     /// A variable indicating the last focused accessibility element.
-    public static var lastFocusedElement = ReturnFocus()
+    @MainActor public static var lastFocusedElement = ReturnFocus()
 }

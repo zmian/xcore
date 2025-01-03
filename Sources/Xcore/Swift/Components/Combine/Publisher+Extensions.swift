@@ -71,6 +71,6 @@ extension Publisher {
     }
 }
 
-private var cancellables = Set<AnyCancellable>()
+nonisolated(unsafe) private var cancellables = Set<AnyCancellable>()
 private let cancellablesLock = NSRecursiveLock()
 #endif

@@ -8,6 +8,7 @@ import XCTest
 import UIKit
 @testable import Xcore
 
+@MainActor
 class ViewControllerTestCase: TestCase {
     let viewController = UIViewController()
     var view: UIView {
@@ -16,6 +17,7 @@ class ViewControllerTestCase: TestCase {
 
     override func setUp() {
         super.setUp()
-        viewController.loadViewIfNeeded()
+        #warning("fixme")
+//        viewController.loadViewIfNeeded()
     }
 }

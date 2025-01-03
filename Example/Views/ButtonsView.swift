@@ -178,6 +178,7 @@ extension ButtonsView {
             TimerButton.resend {
                 print("Button tapped")
             }
+            .frame(maxWidth: .infinity)
         }
     }
 

@@ -23,7 +23,7 @@ private struct TextFieldPreviewBox<Content: View>: View {
     var body: some View {
         Section {
             content
-                .readSize {
+                .readSize { @MainActor in
                     height = $0.height
                 }
         } header: {
@@ -83,6 +83,7 @@ private struct ShowcaseFieldPreview: View {
         case prominent1 = "P1"
         case prominent2 = "P2"
 
+        @MainActor
         var textFieldStyle: AnyDynamicTextFieldStyle {
             switch self {
                 case .default:
@@ -172,6 +173,7 @@ private struct DataFormatTypesFieldPreview: View {
 }
 
 extension Samples {
+    @MainActor
     public static var dynamicTextFieldPreviews: some View {
         List {
             ShowcaseFieldPreview()

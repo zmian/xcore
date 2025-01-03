@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.0
 
 import PackageDescription
 
@@ -24,9 +24,9 @@ let package = Package(
                 "KeychainAccess",
                 .product(name: "Dependencies", package: "swift-dependencies")
             ],
-            resources: [.process("Resources")],
-            swiftSettings: [.enableExperimentalFeature("StrictConcurrency=targeted")]
+            resources: [.process("Resources")]
         ),
         .testTarget(name: "XcoreTests", dependencies: ["Xcore"])
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )

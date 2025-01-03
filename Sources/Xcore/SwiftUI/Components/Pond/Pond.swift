@@ -17,7 +17,7 @@ import Foundation
 /// library comes with few types out of the box to provide consolidated Key
 /// Value Storage API for Keychain (secure storage), In-Memory (ephemeral
 /// storage), and UserDefaults (non-sensitive storage).
-public protocol Pond {
+public protocol Pond: Sendable {
     typealias Key = PondKey
 
     /// A unique id for the pond.
@@ -82,7 +82,7 @@ extension Pond {
 
 extension DependencyValues {
     private enum PondKey: DependencyKey {
-        static var liveValue: Pond = .empty
+        nonisolated(unsafe) static var liveValue: Pond = .empty
     }
 
     /// Provide functionality for key value storage.

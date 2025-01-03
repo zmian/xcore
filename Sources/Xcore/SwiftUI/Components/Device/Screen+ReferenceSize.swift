@@ -21,6 +21,7 @@ extension Screen {
         case iPhoneXSMax
         case unknown
 
+        @MainActor
         init(screen: Screen) {
             switch screen.size.max {
                 case 480:

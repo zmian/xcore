@@ -14,18 +14,19 @@ extension AVPlayer {
         timeControlStatus == .playing
     }
 
-    public func currentTime(_ block: @escaping (_ seconds: Int, _ formattedTime: String) -> Void) -> Any {
+    public func currentTime(_ block: @escaping @Sendable (_ seconds: Int, _ formattedTime: String) -> Void) -> Any {
         let interval = CMTime(value: 1, timescale: 1)
 
         return addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] _ in
             guard let self else { return }
             let currentTime = currentTime()
             let normalizedTime = Int(Double(currentTime.value) / Double(currentTime.timescale))
-            block(normalizedTime, format(seconds: normalizedTime))
+            let formattedTime = format(seconds: normalizedTime)
+            block(normalizedTime, formattedTime)
         }
     }
 
-    private func format(seconds: Int) -> String {
+    nonisolated private func format(seconds: Int) -> String {
         let sec = seconds % 60
         let min = seconds / 60
         let hrs = seconds / 3600

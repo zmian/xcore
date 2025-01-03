@@ -204,7 +204,7 @@ extension AppMonitoring {
 
 extension DependencyValues {
     private enum AppMonitoringKey: DependencyKey {
-        static var liveValue: AppMonitoring = .noop
+        nonisolated(unsafe) static var liveValue: AppMonitoring = .noop
     }
 
     public var appMonitoring: AppMonitoring {

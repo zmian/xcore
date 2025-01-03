@@ -7,19 +7,23 @@
 #if canImport(Combine)
 import Combine
 
-extension AsyncStream {
+extension AsyncStream where Element: Sendable {
     /// Returns a publisher that emits events when asynchronous sequence produces
     /// new elements.
     public var publisher: some Publisher<Element, Never> {
-        let subject = PassthroughSubject<Element, Never>()
+        let box = Box()
 
         Task {
             for await value in self {
-                subject.send(value)
+                box.subject.send(value)
             }
         }
 
-        return subject
+        return box.subject
+    }
+
+    private final class Box: @unchecked Sendable {
+        let subject = PassthroughSubject<Element, Never>()
     }
 }
 #endif

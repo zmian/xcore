@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct BoolCodingFormatStyle: CodingFormatStyle {
+public struct BoolCodingFormatStyle: CodingFormatStyle, Sendable {
     private let encodeAsString: Bool
 
     fileprivate init(encodeAsString: Bool) {

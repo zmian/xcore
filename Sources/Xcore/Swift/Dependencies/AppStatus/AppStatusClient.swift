@@ -108,21 +108,21 @@ extension AppStatusClient {
     public static var unimplemented: Self {
         .init(
             receive: {
-                XCTFail("\(Self.self).receive is unimplemented")
+                reportIssue("\(Self.self).receive is unimplemented")
                 return .constant(.preparingLaunch)
             }(),
             sessionState: {
-                XCTFail("\(Self.self).sessionState is unimplemented")
+                reportIssue("\(Self.self).sessionState is unimplemented")
                 return .constant(.signedOut)
             }(),
             evaluate: {
-                XCTFail("\(Self.self).evaluate is unimplemented")
+                reportIssue("\(Self.self).evaluate is unimplemented")
             },
             changeSessionTo: { _ in
-                XCTFail("\(Self.self).changeSessionTo is unimplemented")
+                reportIssue("\(Self.self).changeSessionTo is unimplemented")
             },
             systemForceRefresh: {
-                XCTFail("\(Self.self).systemForceRefresh is unimplemented")
+                reportIssue("\(Self.self).systemForceRefresh is unimplemented")
             }
         )
     }
@@ -132,7 +132,7 @@ extension AppStatusClient {
 
 extension DependencyValues {
     private enum AppStatusClientKey: DependencyKey {
-        static var liveValue: AppStatusClient = .noop
+        nonisolated(unsafe) static var liveValue: AppStatusClient = .noop
     }
 
     /// Provides functionality for evaluating and receiving events for app’s state.

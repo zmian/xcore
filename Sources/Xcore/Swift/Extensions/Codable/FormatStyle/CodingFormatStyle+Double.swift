@@ -6,8 +6,8 @@
 
 import Foundation
 
-public struct DoubleCodingFormatStyle: CodingFormatStyle {
-    public static var defaultEncodeAsString = false
+public struct DoubleCodingFormatStyle: CodingFormatStyle, Sendable {
+    nonisolated(unsafe) public static var defaultEncodeAsString = false
 
     private static let numberFormatter = NumberFormatter().apply {
         $0.numberStyle = .decimal

@@ -88,9 +88,9 @@ final class DependencyTests: TestCase {
 
 // MARK: - Helpers
 
-private var globalPasteboard: String?
+nonisolated(unsafe) private var globalPasteboard: String?
 
-private protocol PasteboardClient {
+private protocol PasteboardClient: Sendable {
     var id: String { get }
 
     func copy(_ text: String)
@@ -125,9 +125,9 @@ extension DependencyValues {
 
 // MARK: - Dependency with Struct
 
-private struct MyPasteboard {
+private struct MyPasteboard: Sendable {
     let id: String
-    let copy: (String) -> Void
+    let copy: @Sendable (String) -> Void
 }
 
 extension MyPasteboard {

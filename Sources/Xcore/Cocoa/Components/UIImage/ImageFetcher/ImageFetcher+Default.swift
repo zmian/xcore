@@ -6,7 +6,7 @@
 
 import UIKit
 
-final class DefaultImageFetcher: ImageFetcher, Sendable {
+final class DefaultImageFetcher: ImageFetcher {
     private let cache = Cache<String, UIImage>()
 
     func canHandle(_ image: ImageRepresentable) -> Bool {

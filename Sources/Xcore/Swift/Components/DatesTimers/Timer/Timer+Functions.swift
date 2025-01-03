@@ -40,41 +40,25 @@ extension DispatchTime {
     }
 }
 
-extension DispatchTimeInterval {
-    fileprivate var isImmediate: Bool {
-        switch self {
-            case let .seconds(int),
-                 let .milliseconds(int),
-                 let .microseconds(int),
-                 let .nanoseconds(int):
-                return int <= 0
-            case .never:
-                return true
-            @unknown default:
-                return false
+/// Schedules given operation for execution using the specified attributes, and
+/// returns immediately.
+@discardableResult
+public func withDelay(
+    _ duration: ContinuousClock.Instant.Duration,
+    tolerance: ContinuousClock.Instant.Duration? = nil,
+    priority: TaskPriority? = nil,
+    perform operation: sending @escaping @isolated(any) () -> Void
+) -> Task<Void, Never> {
+    Task(priority: priority) {
+        do {
+            try await Task.sleep(for: duration, tolerance: tolerance, clock: ContinuousClock())
+            await operation()
+        } catch {
+            // If the task is cancelled before the time ends, this function throws
+            // `CancellationError`. Thus, we just report it.
+            reportIssue(error)
         }
     }
-}
-
-/// Schedules a block for execution using the specified attributes, and returns
-/// immediately.
-@preconcurrency
-public func withDelay(_ interval: TimeInterval, perform work: @escaping @Sendable @convention(block) () -> Void) {
-    interval > 0 ? withDelay(.now() + interval, perform: work) : work()
-}
-
-/// Schedules a block for execution using the specified attributes, and returns
-/// immediately.
-@preconcurrency
-public func withDelay(_ interval: DispatchTimeInterval, perform work: @escaping @Sendable @convention(block) () -> Void) {
-    !interval.isImmediate ? withDelay(.now() + interval, perform: work) : work()
-}
-
-/// Schedules a block for execution using the specified attributes, and returns
-/// immediately.
-@preconcurrency
-public func withDelay(_ deadline: DispatchTime, perform work: @escaping @Sendable @convention(block) () -> Void) {
-    DispatchQueue.main.asyncAfter(deadline: deadline, execute: work)
 }
 
 /// Schedules a block for execution for every given seconds.

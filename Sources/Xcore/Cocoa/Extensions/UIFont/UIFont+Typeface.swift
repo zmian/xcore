@@ -13,10 +13,10 @@ extension Font {
 
 extension UIFont {
     /// A structure representing a typeface for given weight and trait.
-    public struct Typeface {
-        private let block: (Weight, Trait) -> String
+    public struct Typeface: Sendable {
+        private let block: @Sendable (Weight, Trait) -> String
 
-        public init(_ block: @escaping (Weight, Trait) -> String) {
+        public init(_ block: @escaping @Sendable (Weight, Trait) -> String) {
             self.block = block
         }
 
@@ -33,7 +33,7 @@ extension UIFont {
 // MARK: - Custom
 
 extension UIFont.Typeface {
-    static var systemFontId = "XCAppleSystemUIFont"
+    static let systemFontId = "XCAppleSystemUIFont"
 
     public static var system: Self {
         .init { _, _ in

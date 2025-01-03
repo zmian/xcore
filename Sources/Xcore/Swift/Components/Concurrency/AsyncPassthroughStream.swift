@@ -21,10 +21,10 @@ import Foundation
 /// // Finish producing elements
 /// stream.finish()
 /// ```
-public final class AsyncPassthroughStream<Element>: AsyncSequence {
+public final class AsyncPassthroughStream<Element: Sendable>: AsyncSequence, Sendable {
     fileprivate typealias Base = AsyncStream<Element>
     private typealias Continuation = Base.Continuation
-    private var continuations = [AnyHashable: Continuation]()
+    nonisolated(unsafe) private var continuations = [AnyHashable: Continuation]()
 
     /// Creates an asynchronous sequence.
     public init() {}

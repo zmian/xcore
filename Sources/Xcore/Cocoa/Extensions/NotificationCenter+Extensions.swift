@@ -18,13 +18,33 @@ extension NotificationCenter {
     /// ``` swift
     /// UIDevice.current.beginGeneratingDeviceOrientationNotifications()
     ///
-    /// let notifications = await NotificationCenter
+    /// let notifications = NotificationCenter
     ///     .async(UIDevice.orientationDidChangeNotification)
     ///     .filter { _ in
     ///         UIDevice.current.orientation == .portrait
     ///     }
     ///
     /// for await notification in notifications {
+    ///     print("Device is now in portrait orientation.")
+    /// }
+    /// ```
+    ///
+    /// - Tip: The ``Notification`` type doesn’t conform to ``Sendable``, so
+    ///   iterating over this asynchronous sequence produces a compiler warning. You
+    ///   can use a ``map(_:)`` or ``compactMap(_:)`` operator on the sequence to
+    ///   extract sendable properties of the notification and iterate over those
+    ///   instead. See ``notifications(named:object:)`` for an example of this
+    ///   approach.
+    ///
+    /// ``` swift
+    /// let notifications = NotificationCenter
+    ///     .async(UIDevice.orientationDidChangeNotification)
+    ///     .filter { _ in
+    ///         UIDevice.current.orientation == .portrait
+    ///     }
+    ///     .map { _ in () } // ✅ ← Silence the warning.
+    ///
+    /// for await _ in notifications {
     ///     print("Device is now in portrait orientation.")
     /// }
     /// ```
@@ -38,7 +58,7 @@ extension NotificationCenter {
     ///     delivery.
     /// - Returns: An asynchronous sequence of notifications from the center.
     @available(macOS 12, iOS 15, tvOS 15, watchOS 8, *)
-    public static func async(_ name: Notification.Name, object: AnyObject? = nil) -> Notifications {
+    public static func async(_ name: Notification.Name, object: (any AnyObject & Sendable)? = nil) -> Notifications {
         shared.notifications(named: name, object: object)
     }
 }
@@ -75,7 +95,7 @@ extension NotificationCenter {
         _ name: Notification.Name,
         object: Any? = nil,
         queue: OperationQueue? = nil,
-        _ callback: @escaping (_ notification: Notification) -> Void
+        _ callback: @escaping @Sendable (_ notification: Notification) -> Void
     ) -> NSObjectProtocol {
         shared.addObserver(forName: name, object: object, queue: queue, using: callback)
     }
@@ -94,8 +114,8 @@ extension NotificationCenter {
     ///     default value is `0`.
     public static func post(
         _ name: Notification.Name,
-        object: Any? = nil,
-        userInfo: [AnyHashable: Any]? = nil,
+        object: Sendable? = nil,
+        userInfo: [AnyHashableSendable: any Sendable]? = nil,
         delayInterval: TimeInterval = 0
     ) {
         Task {

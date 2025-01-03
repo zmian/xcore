@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct DateCodingFormatStyle: CodingFormatStyle {
+public struct DateCodingFormatStyle: CodingFormatStyle, Sendable {
     public static let formats: [Date.Style] = [
         .format(.iso8601),
         .format(.iso8601Local),

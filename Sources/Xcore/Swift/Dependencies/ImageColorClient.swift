@@ -34,7 +34,7 @@ extension ImageColorClient {
     /// Returns unimplemented variant of `ImageColorClient`.
     public static var unimplemented: Self {
         .init { _ in
-            XCTFail(#"Unimplemented: @Dependency(\.imageColor)"#)
+            reportIssue(#"Unimplemented: @Dependency(\.imageColor)"#)
             return nil
         }
     }
@@ -56,7 +56,7 @@ extension ImageColorClient {
 
 extension DependencyValues {
     private enum ImageColorClientKey: DependencyKey {
-        static var liveValue: ImageColorClient = .live
+        nonisolated(unsafe) static var liveValue: ImageColorClient = .live
     }
 
     /// Provides functionality for extracting a color from an image.

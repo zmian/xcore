@@ -6,7 +6,7 @@
 
 import Foundation
 
-public protocol AnalyticsEventProtocol {
+public protocol AnalyticsEventProtocol: Sendable {
     /// The name of the event that is sent to analytics providers.
     var name: String { get }
 

@@ -8,13 +8,14 @@ import SwiftUI
 import Combine
 
 /// An object representing the device.
+@MainActor
 @dynamicMemberLookup
 public final class Device: ObservableObject {
     /// An object that represents the current device.
-    public static let current = Device()
+    nonisolated public static let current = Device()
 
     /// Returns the screen object representing the device’s screen.
-    public var screen: Screen {
+    nonisolated public var screen: Screen {
         .main
     }
 
@@ -27,9 +28,9 @@ public final class Device: ObservableObject {
         current[keyPath: keyPath]
     }
 
-    private var cancellable: AnyCancellable?
+    nonisolated(unsafe) private var cancellable: AnyCancellable?
 
-    private init() {
+    nonisolated private init() {
         #if os(iOS)
         cancellable = screen
             .objectWillChange

@@ -27,7 +27,7 @@ extension Data {
 }
 
 extension Data {
-    public struct HexEncodingOptions: OptionSet {
+    public struct HexEncodingOptions: OptionSet, Sendable {
         public let rawValue: Int
 
         public init(rawValue: Int) {

@@ -42,7 +42,7 @@ extension PasteboardClient {
     /// Returns unimplemented variant of `PasteboardClient`.
     public static var unimplemented: Self {
         .init { _ in
-            XCTFail(#"Unimplemented: @Dependency(\.pasteboard)"#)
+            reportIssue(#"Unimplemented: @Dependency(\.pasteboard)"#)
         }
     }
 
@@ -58,7 +58,7 @@ extension PasteboardClient {
 
 extension DependencyValues {
     private enum PasteboardClientKey: DependencyKey {
-        static var liveValue: PasteboardClient = .live
+        nonisolated(unsafe) static var liveValue: PasteboardClient = .live
     }
 
     /// Provides functionality for copying a string to pasteboard.

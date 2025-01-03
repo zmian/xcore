@@ -28,7 +28,7 @@ import PhotosUI
 ///     }
 /// }
 /// ```
-public struct SimplePhotoPicker<Label: View>: View {
+public struct SimplePhotoPicker<Label: View & Sendable>: View {
     private let label: Label
     @State var selectedItems: [PhotosPickerItem] = []
     private let callback: (UIImage) -> Void

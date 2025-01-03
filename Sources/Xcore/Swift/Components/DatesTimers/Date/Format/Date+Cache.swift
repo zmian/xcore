@@ -13,7 +13,7 @@ extension Date {
 }
 
 extension Date {
-    final class _FormatterCache {
+    final class _FormatterCache: @unchecked Sendable {
         private let queue = DispatchQueue(label: #function, attributes: .concurrent)
         private let cache = NSCache<NSString, Formatter>()
 

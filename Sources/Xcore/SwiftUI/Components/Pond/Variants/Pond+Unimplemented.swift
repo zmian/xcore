@@ -12,20 +12,20 @@ public struct UnimplementedPond: Pond {
     public init() {}
 
     public func get<T: Codable>(_ type: T.Type, _ key: Key) -> T? {
-        XCTFail("\(Self.self).get is unimplemented")
+        reportIssue("\(Self.self).get is unimplemented")
         return nil
     }
 
     public func set<T: Codable>(_ key: Key, value: T?) {
-        XCTFail("\(Self.self).set is unimplemented")
+        reportIssue("\(Self.self).set is unimplemented")
     }
 
     public func remove(_ key: Key) {
-        XCTFail("\(Self.self).remove is unimplemented")
+        reportIssue("\(Self.self).remove is unimplemented")
     }
 
     public func contains(_ key: Key) -> Bool {
-        XCTFail("\(Self.self).contains is unimplemented")
+        reportIssue("\(Self.self).contains is unimplemented")
         return false
     }
 }

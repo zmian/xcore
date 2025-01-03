@@ -16,7 +16,7 @@ public typealias CodingFormatStyle = DecodingFormatStyle & EncodingFormatStyle
 
 /// A type that decodes a given data type into a representation in another type,
 /// such as a string.
-public protocol DecodingFormatStyle {
+public protocol DecodingFormatStyle: Sendable {
     /// The type of data to format for decoding.
     associatedtype Input
 
@@ -35,7 +35,7 @@ public protocol DecodingFormatStyle {
 
 /// A type that encodes a given data type into a representation in another type,
 /// such as a string.
-public protocol EncodingFormatStyle {
+public protocol EncodingFormatStyle: Sendable {
     /// The type of data to format for encoding.
     associatedtype Input
 

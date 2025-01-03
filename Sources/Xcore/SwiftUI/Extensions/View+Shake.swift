@@ -27,7 +27,7 @@ private struct DeviceShakeViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .task {
-                for await _ in NotificationCenter.async(UIDevice.userDidShakeDeviceNotification) {
+                for await _ in NotificationCenter.async(UIDevice.userDidShakeDeviceNotification).map({ _ in () }) {
                     action()
                 }
             }

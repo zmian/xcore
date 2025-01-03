@@ -51,17 +51,17 @@ public struct IconBeforeLabelStyle: LabelStyle {
 // MARK: - Dot Syntax Support
 
 extension LabelStyle where Self == IconBeforeLabelStyle {
-    public static var iconBefore: Self { .init() }
+    nonisolated public static var iconBefore: Self { .init() }
 
-    public static func iconBefore(axis: Axis) -> Self {
+    nonisolated public static func iconBefore(axis: Axis) -> Self {
         .init(axis: axis)
     }
 }
 
 extension LabelStyle where Self == IconAfterLabelStyle {
-    public static var iconAfter: Self { .init() }
+    nonisolated public static var iconAfter: Self { .init() }
 
-    public static func iconAfter(axis: Axis) -> Self {
+    nonisolated public static func iconAfter(axis: Axis) -> Self {
         .init(axis: axis)
     }
 }

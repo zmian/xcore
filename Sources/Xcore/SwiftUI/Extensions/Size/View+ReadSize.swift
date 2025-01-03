@@ -7,7 +7,7 @@
 import SwiftUI
 
 private struct SizePreferenceKey: PreferenceKey {
-    static var defaultValue: CGSize = .zero
+    static let defaultValue: CGSize = .zero
     static func reduce(value: inout CGSize, nextValue: () -> CGSize) {}
 }
 
@@ -27,7 +27,7 @@ extension View {
     /// Adds a modifier for this view that fires an action when view's size changes.
     ///
     /// - SeeAlso: https://fivestars.blog/swiftui/swiftui-share-layout-information.html
-    public func readSize(perform action: @escaping (CGSize) -> Void) -> some View {
+    public func readSize(perform action: @escaping @isolated(any) @Sendable (CGSize) -> Void) -> some View {
         background(
             GeometryReader { geometry in
                 Color.clear

@@ -12,10 +12,11 @@ import Combine
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension XCTestCase {
     /// - SeeAlso: https://www.swiftbysundell.com/articles/unit-testing-combine-based-swift-code
+    @MainActor
     func awaitPublisher<T: Publisher>(
         _ publisher: T,
         timeout: TimeInterval = 10,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line,
         fulfillOnValue: Bool = false
     ) throws -> T.Output {

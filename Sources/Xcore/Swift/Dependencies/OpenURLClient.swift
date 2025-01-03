@@ -80,7 +80,7 @@ extension OpenURLClient {
     /// Returns unimplemented variant of `OpenURLClient`.
     public static var unimplemented: Self {
         .init { _ in
-            XCTFail(#"Unimplemented: @Dependency(\.openUrl)"#)
+            reportIssue(#"Unimplemented: @Dependency(\.openUrl)"#)
             return false
         }
     }
@@ -134,7 +134,7 @@ extension OpenURLClient {
 
 extension DependencyValues {
     private enum OpenURLClientKey: DependencyKey {
-        static var liveValue: OpenURLClient = .system
+        nonisolated(unsafe) static var liveValue: OpenURLClient = .system
     }
 
     /// Provides functionality for opening a URL.

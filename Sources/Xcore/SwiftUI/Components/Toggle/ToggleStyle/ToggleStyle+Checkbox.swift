@@ -12,7 +12,7 @@ public struct CheckboxToggleStyle: ToggleStyle {
     @Environment(\.theme) private var theme
     private let edge: HorizontalEdge
 
-    init(edge: HorizontalEdge) {
+    nonisolated init(edge: HorizontalEdge) {
         self.edge = edge
     }
 
@@ -50,7 +50,7 @@ public struct CheckboxToggleStyle: ToggleStyle {
 extension ToggleStyle where Self == CheckboxToggleStyle {
     /// A toggle style that displays a checkbox and its label based on the given
     /// horizontal edge.
-    public static func checkbox(edge: HorizontalEdge) -> Self {
+    nonisolated public static func checkbox(edge: HorizontalEdge) -> Self {
         .init(edge: edge)
     }
 }

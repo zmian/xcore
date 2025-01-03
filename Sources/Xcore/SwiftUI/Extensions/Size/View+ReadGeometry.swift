@@ -35,7 +35,7 @@ extension View {
     }
 
     /// Adds a modifier for this view that fires an action when view's geometry changes.
-    public func readGeometryChange(perform action: @escaping (GeometryProxy) -> Void) -> some View {
+    public func readGeometryChange(perform action: @escaping @Sendable (GeometryProxy) -> Void) -> some View {
         background(
             GeometryReader { geometry in
                 Color.clear
@@ -55,14 +55,14 @@ extension View {
 // MARK: - PreferenceKey
 
 private struct GeometryPreferenceKey: PreferenceKey {
-    static var defaultValue: GeometryProxyWrapper?
+    static let defaultValue: GeometryProxyWrapper? = nil
     static func reduce(value: inout Value, nextValue: () -> Value) {}
 }
 
 // MARK: - Wrapper
 
-private struct GeometryProxyWrapper: Equatable {
-    let base: GeometryProxy
+private struct GeometryProxyWrapper: Equatable, Sendable {
+    nonisolated(unsafe) let base: GeometryProxy
 
     static func ==(lhs: GeometryProxyWrapper, rhs: GeometryProxyWrapper) -> Bool {
         lhs.base.size == rhs.base.size &&

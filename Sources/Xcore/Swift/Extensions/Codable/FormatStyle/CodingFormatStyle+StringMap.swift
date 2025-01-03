@@ -9,10 +9,10 @@ import Foundation
 // MARK: - Decoding
 
 /// A structure to decode string to output using block based format style.
-public struct StringMapDecodingFormatStyle<Output>: DecodingFormatStyle {
-    private let decode: (String) throws -> Output?
+public struct StringMapDecodingFormatStyle<Output>: DecodingFormatStyle, Sendable {
+    private let decode: @Sendable (String) throws -> Output?
 
-    fileprivate init(_ decode: @escaping (String) throws -> Output?) {
+    fileprivate init(_ decode: @escaping @Sendable (String) throws -> Output?) {
         self.decode = decode
     }
 
@@ -31,7 +31,7 @@ public struct StringMapDecodingFormatStyle<Output>: DecodingFormatStyle {
 // MARK: - Convenience
 
 extension DecodingFormatStyle {
-    public static func string<Output>(_ decode: @escaping (String) throws -> Output?) -> Self where Self == StringMapDecodingFormatStyle<Output> {
+    public static func string<Output>(_ decode: @escaping @Sendable (String) throws -> Output?) -> Self where Self == StringMapDecodingFormatStyle<Output> {
         Self(decode)
     }
 }
@@ -40,9 +40,9 @@ extension DecodingFormatStyle {
 
 /// A structure to encode input to string using block based format style.
 public struct StringMapEncodingFormatStyle<Input>: EncodingFormatStyle {
-    private let encode: (Input) throws -> String?
+    private let encode: @Sendable (Input) throws -> String?
 
-    fileprivate init(_ encode: @escaping (Input) throws -> String?) {
+    fileprivate init(_ encode: @escaping @Sendable (Input) throws -> String?) {
         self.encode = encode
     }
 
@@ -58,7 +58,7 @@ public struct StringMapEncodingFormatStyle<Input>: EncodingFormatStyle {
 // MARK: - Convenience
 
 extension EncodingFormatStyle {
-    public static func string<Input>(_ encode: @escaping (Input) throws -> String?) -> Self where Self == StringMapEncodingFormatStyle<Input> {
+    public static func string<Input>(_ encode: @escaping @Sendable (Input) throws -> String?) -> Self where Self == StringMapEncodingFormatStyle<Input> {
         .init(encode)
     }
 }

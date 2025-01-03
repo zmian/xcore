@@ -29,7 +29,7 @@ extension Timer {
     /// - Returns: A new `Timer` object, configured according to the specified
     ///   parameters.
     @discardableResult
-    public class func after(_ interval: TimeInterval, _ work: @escaping () -> Void) -> Timer {
+    public class func after(_ interval: TimeInterval, _ work: @escaping @Sendable () -> Void) -> Timer {
         Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { _ in
             work()
         }
@@ -67,7 +67,7 @@ extension Timer {
     @discardableResult
     public class func every(
         _ interval: TimeInterval,
-        _ work: @escaping (Timer) -> Void
+        _ work: @escaping @Sendable (Timer) -> Void
     ) -> Timer {
         Timer.scheduledTimer(withTimeInterval: interval, repeats: true) {
             work($0)
@@ -79,8 +79,8 @@ extension Timer {
 
 extension Timer {
     private enum AssociatedKey {
-        static var pauseDate = "pauseDate"
-        static var previousFireDate = "previousFireDate"
+        nonisolated(unsafe) static var pauseDate = "pauseDate"
+        nonisolated(unsafe) static var previousFireDate = "previousFireDate"
     }
 
     /// A property indicating the date when the timer was paused.

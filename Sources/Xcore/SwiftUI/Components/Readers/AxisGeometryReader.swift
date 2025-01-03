@@ -31,7 +31,7 @@ public struct AxisGeometryReader<Content>: View where Content: View {
                 maxHeight: axis == .vertical ? .infinity : nil,
                 alignment: alignment
             )
-            .readSize {
+            .readSize { @MainActor in
                 size = axis == .horizontal ? $0.width : $0.height
             }
     }

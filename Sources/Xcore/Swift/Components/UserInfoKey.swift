@@ -47,12 +47,12 @@ public protocol UserInfoContainer {
 }
 
 extension UserInfoContainer {
-    public subscript<T>(userInfoKey key: UserInfoKey) -> T? {
+    public subscript<T: Sendable>(userInfoKey key: UserInfoKey) -> T? {
         get { userInfo[key] as? T }
         set { userInfo[key] = newValue }
     }
 
-    public subscript<T>(userInfoKey key: UserInfoKey, default defaultValue: @autoclosure () -> T) -> T {
+    public subscript<T: Sendable>(userInfoKey key: UserInfoKey, default defaultValue: @autoclosure () -> T) -> T {
         self[userInfoKey: key] ?? defaultValue()
     }
 }

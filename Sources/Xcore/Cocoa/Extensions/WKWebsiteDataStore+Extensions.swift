@@ -4,7 +4,7 @@
 // MIT license, see LICENSE file for details
 //
 
-@preconcurrency import WebKit
+import WebKit
 
 extension WKWebsiteDataStore {
     public enum DataType {
@@ -14,6 +14,7 @@ extension WKWebsiteDataStore {
         /// Only cache.
         case cache
 
+        @MainActor
         fileprivate var dataTypes: Set<String> {
             switch self {
                 case .all:

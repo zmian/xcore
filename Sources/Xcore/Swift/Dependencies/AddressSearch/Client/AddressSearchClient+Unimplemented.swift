@@ -9,27 +9,27 @@ import Foundation
 public struct UnimplementedAddressSearchClient: AddressSearchClient {
     public func observe(id: UUID) -> AsyncStream<[AddressSearchResult]> {
         .init {
-            XCTFail("\(Self.self).observe is unimplemented")
+            reportIssue("\(Self.self).observe is unimplemented")
             $0.finish()
         }
     }
 
     public func update(id: UUID, searchString: String) {
-        XCTFail("\(Self.self).update is unimplemented")
+        reportIssue("\(Self.self).update is unimplemented")
     }
 
     public func validate(address: PostalAddress) async throws {
-        XCTFail("\(Self.self).validate is unimplemented")
+        reportIssue("\(Self.self).validate is unimplemented")
         throw CancellationError()
     }
 
     public func map(result: AddressSearchResult) async throws -> PostalAddress {
-        XCTFail("\(Self.self).map is unimplemented")
+        reportIssue("\(Self.self).map is unimplemented")
         throw CancellationError()
     }
 
     public func search(query: String) async throws -> PostalAddress {
-        XCTFail("\(Self.self).search is unimplemented")
+        reportIssue("\(Self.self).search is unimplemented")
         throw CancellationError()
     }
 }

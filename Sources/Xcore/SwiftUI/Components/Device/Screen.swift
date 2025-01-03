@@ -8,10 +8,11 @@ import SwiftUI
 import Combine
 
 /// An object representing the device’s screen.
+@MainActor
 @dynamicMemberLookup
 public final class Screen: ObservableObject {
     /// Returns the screen object representing the device’s screen.
-    static let main = Screen()
+    nonisolated static let main = Screen()
 
     /// The bounding rectangle of the screen, measured in points.
     public var bounds: CGRect {
@@ -73,9 +74,9 @@ public final class Screen: ObservableObject {
         main[keyPath: keyPath]
     }
 
-    private var cancellable: AnyCancellable?
+    nonisolated(unsafe) private var cancellable: AnyCancellable?
 
-    private init() {
+    nonisolated private init() {
         #if os(iOS)
         cancellable = NotificationCenter
             .default

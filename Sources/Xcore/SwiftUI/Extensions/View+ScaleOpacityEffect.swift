@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// An enumeration representing the animation effect on press.
-public enum PressedAnimationEffect: Hashable {
+public enum PressedAnimationEffect: Sendable, Hashable {
     /// Changes view opacity on press.
     case opacity
 

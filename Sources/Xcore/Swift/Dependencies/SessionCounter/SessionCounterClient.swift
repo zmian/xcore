@@ -39,10 +39,10 @@ extension SessionCounterClient {
     /// Returns unimplemented variant of `SessionCounterClient`.
     public static var unimplemented: Self {
         .init {
-            XCTFail("\(Self.self).count is unimplemented")
+            reportIssue("\(Self.self).count is unimplemented")
             return 0
         } increment: {
-            XCTFail("\(Self.self).increment is unimplemented")
+            reportIssue("\(Self.self).increment is unimplemented")
         }
     }
 }
@@ -51,9 +51,9 @@ extension SessionCounterClient {
 
 extension DependencyValues {
     private enum SessionCounterClientKey: DependencyKey {
-        static var liveValue: SessionCounterClient = .live
-        static var testValue: SessionCounterClient = .unimplemented
-        static var previewValue: SessionCounterClient = .noop
+        nonisolated(unsafe) static var liveValue: SessionCounterClient = .live
+        nonisolated(unsafe) static var testValue: SessionCounterClient = .unimplemented
+        nonisolated(unsafe) static var previewValue: SessionCounterClient = .noop
     }
 
     /// Provides functionality to keep track of user's session counts.

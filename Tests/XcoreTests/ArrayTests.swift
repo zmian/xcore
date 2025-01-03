@@ -41,6 +41,7 @@ final class ArrayTests: TestCase {
         XCTAssertEqual(values.rawValues, expectedRawValues)
     }
 
+    @MainActor
     func testContains() {
         let instances = [UIView(), UIImageView()]
         let result = instances.contains(any: [UIImageView.self, UILabel.self])
@@ -96,6 +97,7 @@ final class ArrayTests: TestCase {
         XCTAssertNil(resultCGFloat)
     }
 
+    @MainActor
     func testFirstIndex() {
         let tag1View = UIView().apply { $0.tag = 1 }
         let tag2View = UIView().apply { $0.tag = 2 }
@@ -114,6 +116,7 @@ final class ArrayTests: TestCase {
         XCTAssertNil(resultUIViewController)
     }
 
+    @MainActor
     func testLastIndex() {
         let tag1View = UIView().apply { $0.tag = 1 }
         let tag2View = UIView().apply { $0.tag = 2 }
@@ -132,6 +135,7 @@ final class ArrayTests: TestCase {
         XCTAssertNil(resultUIViewController)
     }
 
+    @MainActor
     func testJoined() {
         let label1 = UILabel().apply {
             $0.text = "Hello"

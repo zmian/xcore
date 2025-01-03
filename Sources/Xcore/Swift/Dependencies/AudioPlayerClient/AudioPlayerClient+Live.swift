@@ -20,8 +20,8 @@ extension AudioPlayerClient {
 
 // MARK: - Implementation
 
-private final class LiveAudioClient {
-    private var audioPlayer: AVAudioPlayer?
+private final class LiveAudioClient: Sendable {
+    nonisolated(unsafe) private var audioPlayer: AVAudioPlayer?
 
     public func play(_ file: AudioFile) {
         guard

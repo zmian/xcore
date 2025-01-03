@@ -16,7 +16,7 @@ import Combine
 /// A session is the duration for which the app is in the foreground. If the app
 /// enters background for more then specified `sessionExpirationDuration` then
 /// it's considered a new session and all the cached values are removed.
-public final class AnalyticsSessionTracker {
+public final class AnalyticsSessionTracker: @unchecked Sendable {
     @Dependency(\.appPhase) private var appPhase
     private var cancellable: AnyCancellable?
     private var lastActiveTime = DispatchTime.now().uptimeNanoseconds
@@ -31,7 +31,7 @@ public final class AnalyticsSessionTracker {
     public init(sessionExpirationDuration: TimeInterval = 30) {
         self.sessionExpirationDuration = sessionExpirationDuration
 
-        withDelay(0.3) { [weak self] in
+        withDelay(.seconds(0.3)) { [weak self] in
             // Delay to avoid:
             // Thread 1: Simultaneous accesses to 0x1107dbc18, but modification requires
             // exclusive access. This class can be used inside analytics client that invokes

@@ -7,6 +7,7 @@
 import UIKit
 import WebKit
 
+@MainActor
 public enum SwizzleManager {
     private static var didSwizzle = false
     static var options: SwizzleOptions = .all
@@ -58,7 +59,7 @@ public enum SwizzleManager {
 
 extension SwizzleManager {
     /// A list of features available to swizzle.
-    public struct SwizzleOptions: OptionSet {
+    public struct SwizzleOptions: OptionSet, Sendable {
         public let rawValue: Int
 
         public init(rawValue: Int) {

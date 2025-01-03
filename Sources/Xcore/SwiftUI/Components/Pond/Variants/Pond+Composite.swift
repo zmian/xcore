@@ -5,7 +5,7 @@
 //
 
 import Foundation
-import KeychainAccess
+@preconcurrency import KeychainAccess
 
 extension CompositePond {
     /// An enumeration representing the method requesting the pond for the key.
@@ -20,9 +20,9 @@ extension CompositePond {
 public struct CompositePond: Pond {
     public let id: String
 
-    private let pond: (Method, Key) -> Pond
+    private let pond: @Sendable (Method, Key) -> Pond
 
-    public init(id: String, _ pond: @escaping (Method, Key) -> Pond) {
+    public init(id: String, _ pond: @escaping @Sendable (Method, Key) -> Pond) {
         self.id = "composite:\(id)"
         self.pond = pond
     }
@@ -48,7 +48,7 @@ public struct CompositePond: Pond {
 
 extension Pond where Self == CompositePond {
     /// Returns composite variant of `Pond`.
-    public static func composite(id: String, _ pond: @escaping (Self.Method, Key) -> Pond) -> Self {
+    public static func composite(id: String, _ pond: @escaping @Sendable (Self.Method, Key) -> Pond) -> Self {
         .init(id: id, pond)
     }
 

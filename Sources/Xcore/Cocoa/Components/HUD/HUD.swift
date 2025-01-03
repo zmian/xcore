@@ -251,8 +251,9 @@ open class HUD: Appliable {
             return setHidden(hide, animated: animated, completion)
         }
 
-        Timer.after(delayDuration) { [weak self] in
-            self?.setHidden(hide, animated: animated, completion)
+        Task { @MainActor in
+            try await Task.sleep(for: .seconds(delayDuration))
+            setHidden(hide, animated: animated, completion)
         }
     }
 

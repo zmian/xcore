@@ -225,7 +225,7 @@ extension PushNotificationsClient {
 
 extension DependencyValues {
     private enum PushNotificationsClientKey: DependencyKey {
-        static var liveValue: PushNotificationsClient = .live
+        nonisolated(unsafe) static var liveValue: PushNotificationsClient = .live
 
         // We need to explicitly set the test dependency value to `.unimplemented` as
         // default `.live` variant crashes when used within tests (see crash message

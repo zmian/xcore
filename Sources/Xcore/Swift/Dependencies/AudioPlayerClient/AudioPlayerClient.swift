@@ -48,7 +48,7 @@ extension AudioPlayerClient {
     /// Returns unimplemented variant of `AudioPlayerClient`.
     public static var unimplemented: Self {
         .init { _ in
-            XCTFail(#"Unimplemented: @Dependency(\.audioPlayer)"#)
+            reportIssue(#"Unimplemented: @Dependency(\.audioPlayer)"#)
         }
     }
 }
@@ -57,7 +57,7 @@ extension AudioPlayerClient {
 
 extension DependencyValues {
     private enum AudioPlayerClientKey: DependencyKey {
-        static var liveValue: AudioPlayerClient = .live
+        nonisolated(unsafe) static var liveValue: AudioPlayerClient = .live
     }
 
     /// Provides functionality for playing audio on the device.
