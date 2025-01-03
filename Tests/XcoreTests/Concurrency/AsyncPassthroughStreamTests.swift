@@ -4,11 +4,12 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
 @testable import Xcore
 
-final class AsyncPassthroughStreamTests: XCTestCase {
-    func testIterations() async {
+struct AsyncPassthroughStreamTests {
+    @Test
+    func iterations() async {
         let stream = AsyncPassthroughStream<Int>()
 
         Task {
@@ -20,7 +21,7 @@ final class AsyncPassthroughStreamTests: XCTestCase {
             }
 
             // Verify collected elements
-            XCTAssertEqual(values, [1, 2])
+            #expect(values == [1, 2])
         }
 
         Task {
@@ -32,7 +33,7 @@ final class AsyncPassthroughStreamTests: XCTestCase {
             }
 
             // Verify collected elements
-            XCTAssertEqual(values, [1, 2])
+            #expect(values == [1, 2])
         }
 
         // Produce new elements
@@ -43,7 +44,8 @@ final class AsyncPassthroughStreamTests: XCTestCase {
         stream.finish()
     }
 
-    func testIterations_makeAsyncStream() async {
+    @Test
+    func iterations_makeAsyncStream() async {
         let stream = AsyncPassthroughStream<Int>()
 
         let asyncStream = stream.makeAsyncStream()
@@ -57,7 +59,7 @@ final class AsyncPassthroughStreamTests: XCTestCase {
             }
 
             // Verify collected elements
-            XCTAssertEqual(values, [1, 2])
+            #expect(values == [1, 2])
         }
 
         Task {
@@ -69,7 +71,7 @@ final class AsyncPassthroughStreamTests: XCTestCase {
             }
 
             // Verify collected elements
-            XCTAssertEqual(values, [1, 2])
+            #expect(values == [1, 2])
         }
 
         // Produce new elements
@@ -80,7 +82,8 @@ final class AsyncPassthroughStreamTests: XCTestCase {
         stream.finish()
     }
 
-    func testIterations_asyncStream_directly() async {
+    @Test
+    func iterations_asyncStream_directly() async {
         let stream = AsyncStream<Int> {
             $0.yield(1)
             $0.yield(2)
@@ -96,7 +99,7 @@ final class AsyncPassthroughStreamTests: XCTestCase {
             }
 
             // Verify collected elements
-            XCTAssertEqual(values, [1, 2])
+            #expect(values == [1, 2])
         }
 
         Task {
@@ -108,7 +111,7 @@ final class AsyncPassthroughStreamTests: XCTestCase {
             }
 
             // Verify collected elements
-            XCTAssertEqual(values, [])
+            #expect(values == [])
         }
     }
 }
