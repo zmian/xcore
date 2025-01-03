@@ -3,13 +3,15 @@
 // Copyright © 2018 Xcore
 // MIT license, see LICENSE file for details
 //
+// swiftlint:disable empty_string
 
-import XCTest
+import Testing
+import Foundation
 @testable import Xcore
 
-final class DateTest: XCTestCase {
-    override func setUp() {
-        super.setUp()
+@Suite(.serialized)
+struct DateTest {
+    init() {
         Calendar.default = .iso
     }
 
@@ -29,198 +31,206 @@ final class DateTest: XCTestCase {
         .format(.monthYear(.narrow))
     ]
 
-    func testStringToDate() {
+    @Test
+    func stringToDate() {
         for style in customStyles {
-            let line: UInt
+            let sourceLocation: SourceLocation
             let expectedDate: Date?
             let stringToTest: String
 
             switch style {
                 case .format(.iso8601):
-                    line = #line
                     stringToTest = "2022-04-04T11:11:22.000+0000"
                     expectedDate = Date(year: 2022, month: 4, day: 4, hour: 11, minute: 11, second: 22)
+                    sourceLocation = #_sourceLocation
                 case .format(.iso8601Local):
-                    line = #line
                     stringToTest = "2022-06-04T11:11:22"
                     expectedDate = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
+                    sourceLocation = #_sourceLocation
                 case .iso8601(.withFullDate):
-                    line = #line
                     stringToTest = "2022-06-04"
                     expectedDate = Date(year: 2022, month: 6, day: 4)
+                    sourceLocation = #_sourceLocation
                 case .format(.year):
-                    line = #line
                     stringToTest = "2022"
                     expectedDate = Date(year: 2022, month: 1, day: 1)
+                    sourceLocation = #_sourceLocation
                 case .format(.monthDayYear(.wide)):
-                    line = #line
                     stringToTest = "June 4, 2022"
                     expectedDate = Date(year: 2022, month: 6, day: 4)
+                    sourceLocation = #_sourceLocation
                 case .format(.monthDayYear(.abbreviated)):
-                    line = #line
                     stringToTest = "Jun 4, 2022"
                     expectedDate = Date(year: 2022, month: 6, day: 4)
+                    sourceLocation = #_sourceLocation
                 case .format(.monthDayYear(.narrow)):
-                    line = #line
                     stringToTest = "6/4/22"
                     expectedDate = Date(year: 2022, month: 6, day: 4)
+                    sourceLocation = #_sourceLocation
                 case .format(.monthDay(.wide)):
-                    line = #line
                     stringToTest = "June 4"
                     expectedDate = Date(year: 2000, month: 6, day: 4)
+                    sourceLocation = #_sourceLocation
                 case .format(.monthDay(.abbreviated)):
-                    line = #line
                     stringToTest = "Jun 4"
                     expectedDate = Date(year: 2000, month: 6, day: 4)
+                    sourceLocation = #_sourceLocation
                 case .format(.monthDay(.narrow)):
-                    line = #line
                     stringToTest = "6/4"
                     expectedDate = Date(year: 2000, month: 6, day: 4)
+                    sourceLocation = #_sourceLocation
                 case .format(.monthYear(.wide)):
-                    line = #line
                     stringToTest = "June 2022"
                     expectedDate = Date(year: 2022, month: 6, day: 1)
+                    sourceLocation = #_sourceLocation
                 case .format(.monthYear(.abbreviated)):
-                    line = #line
                     stringToTest = "Jun 2022"
                     expectedDate = Date(year: 2022, month: 6, day: 1)
+                    sourceLocation = #_sourceLocation
                 case .format(.monthYear(.narrow)):
-                    line = #line
                     stringToTest = "6/2022"
                     expectedDate = Date(year: 2022, month: 6, day: 1)
+                    sourceLocation = #_sourceLocation
                 default:
-                    line = #line
                     stringToTest = ""
                     expectedDate = Date()
-                    XCTFail("Unknown format")
+                    sourceLocation = #_sourceLocation
+                    Issue.record("Unknown format")
             }
             let date = Date(stringToTest, style: style)
-            XCTAssertEqual(expectedDate, date, line: line)
+            #expect(expectedDate == date, sourceLocation: sourceLocation)
         }
     }
 
-    func testDateToCustomStringFormatInDefaultCalendar() {
+    @Test
+    func dateToCustomStringFormatInDefaultCalendar() {
         let date = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
 
         for style in customStyles {
-            let line: UInt
+            let sourceLocation: SourceLocation
             let expectedResult: String
 
             switch style {
                 case .format(.iso8601):
-                    line = #line
                     expectedResult = "2022-06-04T11:11:22.000+0000"
+                    sourceLocation = #_sourceLocation
                 case .format(.iso8601Local):
-                    line = #line
                     expectedResult = "2022-06-04T11:11:22"
+                    sourceLocation = #_sourceLocation
                 case .iso8601(.withFullDate):
-                    line = #line
                     expectedResult = "2022-06-04"
+                    sourceLocation = #_sourceLocation
                 case .format(.year):
-                    line = #line
                     expectedResult = "2022"
+                    sourceLocation = #_sourceLocation
                 case .format(.monthDayYear(.wide)):
-                    line = #line
                     expectedResult = "June 4, 2022"
+                    sourceLocation = #_sourceLocation
                 case .format(.monthDayYear(.abbreviated)):
-                    line = #line
                     expectedResult = "Jun 4, 2022"
+                    sourceLocation = #_sourceLocation
                 case .format(.monthDayYear(.narrow)):
-                    line = #line
                     expectedResult = "6/4/22"
+                    sourceLocation = #_sourceLocation
                 case .format(.monthDay(.wide)):
-                    line = #line
                     expectedResult = "June 4"
+                    sourceLocation = #_sourceLocation
                 case .format(.monthDay(.abbreviated)):
-                    line = #line
                     expectedResult = "Jun 4"
+                    sourceLocation = #_sourceLocation
                 case .format(.monthDay(.narrow)):
-                    line = #line
                     expectedResult = "6/4"
+                    sourceLocation = #_sourceLocation
                 case .format(.monthYear(.wide)):
-                    line = #line
                     expectedResult = "June 2022"
+                    sourceLocation = #_sourceLocation
                 case .format(.monthYear(.abbreviated)):
-                    line = #line
                     expectedResult = "Jun 2022"
+                    sourceLocation = #_sourceLocation
                 case .format(.monthYear(.narrow)):
-                    line = #line
                     expectedResult = "6/22"
+                    sourceLocation = #_sourceLocation
                 default:
-                    line = #line
                     expectedResult = ""
-                    XCTFail("Unknown format")
+                    sourceLocation = #_sourceLocation
+                    Issue.record("Unknown format")
             }
 
             let dateString = date.formatted(style: style)
-            XCTAssertEqual(expectedResult, dateString, "\(style) format \(dateString) is not equal to \(expectedResult)", line: line)
+            #expect(expectedResult == dateString, "\(style) format \(dateString) is not equal to \(expectedResult)", sourceLocation: sourceLocation)
         }
     }
 
-    func testDate_monthDayYear() {
+    @Test
+    func date_monthDayYear() {
         let date = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
         // .wide
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.wide)), "June 4, 2022")
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.wide, withTime: true)), "June 4, 2022 - 11:11 AM")
+        #expect(date.formatted(format: .monthDayYear(.wide)) == "June 4, 2022")
+        #expect(date.formatted(format: .monthDayYear(.wide, withTime: true)) == "June 4, 2022 - 11:11 AM")
 
         // .abbreviated
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.abbreviated)), "Jun 4, 2022")
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.abbreviated, withTime: true)), "Jun 4, 2022 - 11:11 AM")
+        #expect(date.formatted(format: .monthDayYear(.abbreviated)) == "Jun 4, 2022")
+        #expect(date.formatted(format: .monthDayYear(.abbreviated, withTime: true)) == "Jun 4, 2022 - 11:11 AM")
 
         // .narrow
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.narrow)), "6/4/22")
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.narrow, withTime: true)), "6/4/22 - 11:11 AM")
+        #expect(date.formatted(format: .monthDayYear(.narrow)) == "6/4/22")
+        #expect(date.formatted(format: .monthDayYear(.narrow, withTime: true)) == "6/4/22 - 11:11 AM")
     }
 
-    func testDate_monthDayOrdinal() {
+    @Test
+    func date_monthDayOrdinal() {
         // Test that May abbreviation should not contain period (e.g., May 3rd).
         let mayDate = Date(year: 2022, month: 5, day: 3, hour: 11, minute: 11, second: 22)
         let mayExpectedResult = "May 3rd" // Shouldn't contain period after May
         let mayResult = mayDate.formatted(style: .monthDayOrdinal(.abbreviated, withPeriod: true))
-        XCTAssertEqual(mayExpectedResult, mayResult)
+        #expect(mayExpectedResult == mayResult)
 
         // Test that June abbreviation should contain period (e.g., Jun. 4th).
         let juneDate = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
         let juneExpectedResult = "Jun. 4th" // Should contain period after Jun.
         let juneResult = juneDate.formatted(style: .monthDayOrdinal(.abbreviated, withPeriod: true))
-        XCTAssertEqual(juneExpectedResult, juneResult)
+        #expect(juneExpectedResult == juneResult)
 
         // WithPeriod: false
-        XCTAssertEqual(juneDate.formatted(style: .monthDayOrdinal), "June 4th")
-        XCTAssertEqual(juneDate.formatted(style: .monthDayOrdinal(.wide)), "June 4th")
-        XCTAssertEqual(juneDate.formatted(style: .monthDayOrdinal(.abbreviated)), "Jun 4th")
-        XCTAssertEqual(juneDate.formatted(style: .monthDayOrdinal(.narrow)), "J 4th")
+        #expect(juneDate.formatted(style: .monthDayOrdinal) == "June 4th")
+        #expect(juneDate.formatted(style: .monthDayOrdinal(.wide)) == "June 4th")
+        #expect(juneDate.formatted(style: .monthDayOrdinal(.abbreviated)) == "Jun 4th")
+        #expect(juneDate.formatted(style: .monthDayOrdinal(.narrow)) == "J 4th")
 
         // WithPeriod: true
-        XCTAssertEqual(juneDate.formatted(style: .monthDayOrdinal(.wide, withPeriod: true)), "June 4th")
-        XCTAssertEqual(juneDate.formatted(style: .monthDayOrdinal(.abbreviated, withPeriod: true)), "Jun. 4th")
-        XCTAssertEqual(juneDate.formatted(style: .monthDayOrdinal(.narrow, withPeriod: true)), "J. 4th")
+        #expect(juneDate.formatted(style: .monthDayOrdinal(.wide, withPeriod: true)) == "June 4th")
+        #expect(juneDate.formatted(style: .monthDayOrdinal(.abbreviated, withPeriod: true)) == "Jun. 4th")
+        #expect(juneDate.formatted(style: .monthDayOrdinal(.narrow, withPeriod: true)) == "J. 4th")
     }
 
-    func testRelativeCalculation() {
+    @Test
+    func relativeCalculation() {
         let date = Date()
-        XCTAssertEqual("Today", date.formatted(style: .date(.full), doesRelativeDateFormatting: true))
-        XCTAssertEqual("hoy", date.formatted(style: .date(.full), doesRelativeDateFormatting: true, in: .spanish))
+        #expect("Today" == date.formatted(style: .date(.full), doesRelativeDateFormatting: true))
+        #expect("hoy" == date.formatted(style: .date(.full), doesRelativeDateFormatting: true, in: .spanish))
     }
 
-    func testTimeInDifferentCalendar() {
+    @Test
+    func timeInDifferentCalendar() {
         let expectedHour = 17
         let date = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22)
         let receivedHour = date.component(.hour, in: .usEastern)
-        XCTAssertEqual(expectedHour, receivedHour)
+        #expect(expectedHour == receivedHour)
     }
 
-    func testDateAdjustments() {
+    @Test
+    func dateAdjustments() {
         let expectedDate = Date(year: 2021, month: 9, day: 1, hour: 21, minute: 11, second: 22)
         let dateToAdjust = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22)
         let adjustedDate = dateToAdjust
             .adjusting(.year, by: -1)
             .adjusting(.month, by: 4)
             .adjusting(.day, by: -3)
-        XCTAssertEqual(expectedDate, adjustedDate)
+        #expect(expectedDate == adjustedDate)
     }
 
-    func testStartOfDate() {
+    @Test
+    func startOfDate() {
         let components: [Calendar.Component] = [.year, .month, .day, .hour, .minute]
         let dateToAdjust = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22)
 
@@ -240,23 +250,25 @@ final class DateTest: XCTestCase {
                     expectedDate = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 0)
                 default:
                     expectedDate = Date()
-                    XCTFail("Unexpected test case")
+                    Issue.record("Unexpected test case")
             }
 
             let startOfDate = dateToAdjust.startOf(component)
             print("Expected Date = \(expectedDate)")
             print("Receieved Result = \(startOfDate)")
-            XCTAssertEqual(expectedDate, startOfDate)
+            #expect(expectedDate == startOfDate)
         }
     }
 
-    func testStartOfDate_Calendar() {
+    @Test
+    func startOfDate_Calendar() {
         let expectedDate = Date(year: 2022, month: 1, day: 1, calendar: .current)
         let adjustedDate = expectedDate.startOf(.month, in: .current)
-        XCTAssertEqual(expectedDate, adjustedDate)
+        #expect(expectedDate == adjustedDate)
     }
 
-    func testEndOfDate() {
+    @Test
+    func endOfDate() {
         let components: [Calendar.Component] = [.year, .month, .day, .hour, .minute]
         let dateToAdjust = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22)
 
@@ -276,15 +288,16 @@ final class DateTest: XCTestCase {
                     expectedDate = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 59).addingTimeInterval(0.999)
                 default:
                     expectedDate = Date()
-                    XCTFail("Unexpected test case")
+                    Issue.record("Unexpected test case")
             }
 
             let endOfDate = dateToAdjust.endOf(component)
-            XCTAssertEqual(expectedDate, endOfDate)
+            #expect(expectedDate == endOfDate)
         }
     }
 
-    func testMonthName() {
+    @Test
+    func monthName() {
         let jan = Date(year: 2022, month: 1, day: 31, hour: 23, minute: 59, second: 59).formatted(style: .monthName)
         let feb = Date(year: 2022, month: 2, day: 4, hour: 21, minute: 11, second: 22).formatted(style: .monthName)
         let mar = Date(year: 2022, month: 3, day: 4, hour: 21, minute: 11, second: 22).formatted(style: .monthName)
@@ -311,34 +324,35 @@ final class DateTest: XCTestCase {
         let nov_es = Date(year: 2022, month: 11, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).formatted(style: .monthName, in: .spanish)
         let dec_es = Date(year: 2022, month: 12, day: 4, hour: 21, minute: 11, second: 22, calendar: .spanish).formatted(style: .monthName, in: .spanish)
 
-        XCTAssertEqual(jan, "January")
-        XCTAssertEqual(feb, "February")
-        XCTAssertEqual(mar, "March")
-        XCTAssertEqual(apr, "April")
-        XCTAssertEqual(may, "May")
-        XCTAssertEqual(jun, "June")
-        XCTAssertEqual(jul, "July")
-        XCTAssertEqual(aug, "August")
-        XCTAssertEqual(sep, "September")
-        XCTAssertEqual(oct, "October")
-        XCTAssertEqual(nov, "November")
-        XCTAssertEqual(dec, "December")
+        #expect(jan == "January")
+        #expect(feb == "February")
+        #expect(mar == "March")
+        #expect(apr == "April")
+        #expect(may == "May")
+        #expect(jun == "June")
+        #expect(jul == "July")
+        #expect(aug == "August")
+        #expect(sep == "September")
+        #expect(oct == "October")
+        #expect(nov == "November")
+        #expect(dec == "December")
 
-        XCTAssertEqual(jan_es, "enero")
-        XCTAssertEqual(feb_es, "febrero")
-        XCTAssertEqual(mar_es, "marzo")
-        XCTAssertEqual(apr_es, "abril")
-        XCTAssertEqual(may_es, "mayo")
-        XCTAssertEqual(jun_es, "junio")
-        XCTAssertEqual(jul_es, "julio")
-        XCTAssertEqual(aug_es, "agosto")
-        XCTAssertEqual(sep_es, "septiembre")
-        XCTAssertEqual(oct_es, "octubre")
-        XCTAssertEqual(nov_es, "noviembre")
-        XCTAssertEqual(dec_es, "diciembre")
+        #expect(jan_es == "enero")
+        #expect(feb_es == "febrero")
+        #expect(mar_es == "marzo")
+        #expect(apr_es == "abril")
+        #expect(may_es == "mayo")
+        #expect(jun_es == "junio")
+        #expect(jul_es == "julio")
+        #expect(aug_es == "agosto")
+        #expect(sep_es == "septiembre")
+        #expect(oct_es == "octubre")
+        #expect(nov_es == "noviembre")
+        #expect(dec_es == "diciembre")
     }
 
-    func testWeekName() {
+    @Test
+    func weekName() {
         let mon = Date(year: 2020, month: 1, day: 6, hour: 23, minute: 59, second: 59).formatted(style: .weekdayName)
         let tue = Date(year: 2020, month: 1, day: 7, hour: 23, minute: 59, second: 59).formatted(style: .weekdayName)
         let wed = Date(year: 2020, month: 1, day: 8, hour: 23, minute: 59, second: 59).formatted(style: .weekdayName)
@@ -355,61 +369,64 @@ final class DateTest: XCTestCase {
         let sat_es = Date(year: 2020, month: 1, day: 11, hour: 23, minute: 59, second: 59, calendar: .spanish).formatted(style: .weekdayName, in: .spanish)
         let sun_es = Date(year: 2020, month: 1, day: 12, hour: 23, minute: 59, second: 59, calendar: .spanish).formatted(style: .weekdayName, in: .spanish)
 
-        XCTAssertEqual(mon, "Monday")
-        XCTAssertEqual(tue, "Tuesday")
-        XCTAssertEqual(wed, "Wednesday")
-        XCTAssertEqual(thu, "Thursday")
-        XCTAssertEqual(fri, "Friday")
-        XCTAssertEqual(sat, "Saturday")
-        XCTAssertEqual(sun, "Sunday")
+        #expect(mon == "Monday")
+        #expect(tue == "Tuesday")
+        #expect(wed == "Wednesday")
+        #expect(thu == "Thursday")
+        #expect(fri == "Friday")
+        #expect(sat == "Saturday")
+        #expect(sun == "Sunday")
 
-        XCTAssertEqual(mon_es, "lunes")
-        XCTAssertEqual(tue_es, "martes")
-        XCTAssertEqual(wed_es, "miércoles")
-        XCTAssertEqual(thu_es, "jueves")
-        XCTAssertEqual(fri_es, "viernes")
-        XCTAssertEqual(sat_es, "sábado")
-        XCTAssertEqual(sun_es, "domingo")
+        #expect(mon_es == "lunes")
+        #expect(tue_es == "martes")
+        #expect(wed_es == "miércoles")
+        #expect(thu_es == "jueves")
+        #expect(fri_es == "viernes")
+        #expect(sat_es == "sábado")
+        #expect(sun_es == "domingo")
     }
 
-    func testWeekNameFromIndex() {
-        XCTAssertEqual(Date.weekdayName(for: 1), "Sunday")
-        XCTAssertEqual(Date.weekdayName(for: 2), "Monday")
-        XCTAssertEqual(Date.weekdayName(for: 3), "Tuesday")
-        XCTAssertEqual(Date.weekdayName(for: 4), "Wednesday")
-        XCTAssertEqual(Date.weekdayName(for: 5), "Thursday")
-        XCTAssertEqual(Date.weekdayName(for: 6), "Friday")
-        XCTAssertEqual(Date.weekdayName(for: 7), "Saturday")
+    @Test
+    func weekNameFromIndex() {
+        #expect(Date.weekdayName(for: 1) == "Sunday")
+        #expect(Date.weekdayName(for: 2) == "Monday")
+        #expect(Date.weekdayName(for: 3) == "Tuesday")
+        #expect(Date.weekdayName(for: 4) == "Wednesday")
+        #expect(Date.weekdayName(for: 5) == "Thursday")
+        #expect(Date.weekdayName(for: 6) == "Friday")
+        #expect(Date.weekdayName(for: 7) == "Saturday")
 
-        XCTAssertEqual(Date.weekdayName(for: 1, in: .spanish), "domingo")
-        XCTAssertEqual(Date.weekdayName(for: 2, in: .spanish), "lunes")
-        XCTAssertEqual(Date.weekdayName(for: 3, in: .spanish), "martes")
-        XCTAssertEqual(Date.weekdayName(for: 4, in: .spanish), "miércoles")
-        XCTAssertEqual(Date.weekdayName(for: 5, in: .spanish), "jueves")
-        XCTAssertEqual(Date.weekdayName(for: 6, in: .spanish), "viernes")
-        XCTAssertEqual(Date.weekdayName(for: 7, in: .spanish), "sábado")
+        #expect(Date.weekdayName(for: 1, in: .spanish) == "domingo")
+        #expect(Date.weekdayName(for: 2, in: .spanish) == "lunes")
+        #expect(Date.weekdayName(for: 3, in: .spanish) == "martes")
+        #expect(Date.weekdayName(for: 4, in: .spanish) == "miércoles")
+        #expect(Date.weekdayName(for: 5, in: .spanish) == "jueves")
+        #expect(Date.weekdayName(for: 6, in: .spanish) == "viernes")
+        #expect(Date.weekdayName(for: 7, in: .spanish) == "sábado")
     }
 
-    func testDateUnit() {
+    @Test
+    func dateUnit() {
         let date = Date(year: 2022, month: 2, day: 1, hour: 3, minute: 41, second: 22)
 
-        XCTAssertEqual(2022, date.component(.year))
-        XCTAssertEqual(2, date.component(.month))
-        XCTAssertEqual(1, date.component(.day))
-        XCTAssertEqual(3, date.component(.hour))
-        XCTAssertEqual(41, date.component(.minute))
-        XCTAssertEqual(22, date.component(.second))
+        #expect(2022 == date.component(.year))
+        #expect(2 == date.component(.month))
+        #expect(1 == date.component(.day))
+        #expect(3 == date.component(.hour))
+        #expect(41 == date.component(.minute))
+        #expect(22 == date.component(.second))
 
         // Test in different calendar.
-        XCTAssertEqual(2022, date.component(.year, in: .usEastern))
-        XCTAssertEqual(1, date.component(.month, in: .usEastern))
-        XCTAssertEqual(31, date.component(.day, in: .usEastern))
-        XCTAssertEqual(22, date.component(.hour, in: .usEastern))
-        XCTAssertEqual(41, date.component(.minute, in: .usEastern))
-        XCTAssertEqual(22, date.component(.second, in: .usEastern))
+        #expect(2022 == date.component(.year, in: .usEastern))
+        #expect(1 == date.component(.month, in: .usEastern))
+        #expect(31 == date.component(.day, in: .usEastern))
+        #expect(22 == date.component(.hour, in: .usEastern))
+        #expect(41 == date.component(.minute, in: .usEastern))
+        #expect(22 == date.component(.second, in: .usEastern))
     }
 
-    func testIsSameDate() {
+    @Test
+    func isSameDate() {
         let testYearGranularityDateLeft = Date(year: 2022, month: 4, day: 5, hour: 1, minute: 45, second: 33)
         let testYearGranularityDateRight = Date(year: 2022, month: 2, day: 1, hour: 3, minute: 41, second: 22)
 
@@ -431,17 +448,18 @@ final class DateTest: XCTestCase {
         let testMultipleCalendarDateLeft = Date(year: 2022, month: 4, day: 5, hour: 1, minute: 45, second: 33, calendar: .iso)
         let testMultipleCalendarDateRight = Date(year: 2022, month: 4, day: 4, hour: 21, minute: 45, second: 33, calendar: .usEastern)
 
-        XCTAssert(testYearGranularityDateLeft.isSame(testYearGranularityDateRight, granularity: .year), "Year granularity failed")
-        XCTAssert(testMonthGranularityDateLeft.isSame(testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
-        XCTAssert(testDayGranularityDateLeft.isSame(testDayGranularityDateRight, granularity: .day), "Day granularity failed")
-        XCTAssert(testHourGranularityDateLeft.isSame(testHourGranularityDateRight, granularity: .hour), "Hour granularity failed")
-        XCTAssert(testMinuteGranularityDateLeft.isSame(testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
-        XCTAssert(testSecondsGranularityDateLeft.isSame(testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
-        XCTAssert(testSecondsGranularityDateLeft.isSame(testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
-        XCTAssert(testMultipleCalendarDateLeft.isSame(testMultipleCalendarDateRight, granularity: .second), "Multi calendar test failed")
+        #expect(testYearGranularityDateLeft.isSame(testYearGranularityDateRight, granularity: .year), "Year granularity failed")
+        #expect(testMonthGranularityDateLeft.isSame(testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
+        #expect(testDayGranularityDateLeft.isSame(testDayGranularityDateRight, granularity: .day), "Day granularity failed")
+        #expect(testHourGranularityDateLeft.isSame(testHourGranularityDateRight, granularity: .hour), "Hour granularity failed")
+        #expect(testMinuteGranularityDateLeft.isSame(testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
+        #expect(testSecondsGranularityDateLeft.isSame(testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
+        #expect(testSecondsGranularityDateLeft.isSame(testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
+        #expect(testMultipleCalendarDateLeft.isSame(testMultipleCalendarDateRight, granularity: .second), "Multi calendar test failed")
     }
 
-    func testIsPastDate() {
+    @Test
+    func isPastDate() {
         let testYearGranularityDateLeft = Date(year: 2019, month: 4, day: 5, hour: 1, minute: 45, second: 33)
         let testYearGranularityDateRight = Date(year: 2022, month: 2, day: 1, hour: 3, minute: 41, second: 22)
 
@@ -463,17 +481,18 @@ final class DateTest: XCTestCase {
         let testMultipleCalendarDateLeft = Date(year: 2022, month: 4, day: 5, hour: 1, minute: 45, second: 33, calendar: .iso)
         let testMultipleCalendarDateRight = Date(year: 2022, month: 4, day: 4, hour: 21, minute: 46, second: 33, calendar: .usEastern)
 
-        XCTAssert(testYearGranularityDateLeft.isBefore(testYearGranularityDateRight, granularity: .year), "Year granularity failed")
-        XCTAssert(testMonthGranularityDateLeft.isBefore(testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
-        XCTAssert(testDayGranularityDateLeft.isBefore(testDayGranularityDateRight, granularity: .day), "Day granularity failed")
-        XCTAssert(testHourGranularityDateLeft.isBefore(testHourGranularityDateRight, granularity: .hour), "Hour granularity failed")
-        XCTAssert(testMinuteGranularityDateLeft.isBefore(testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
-        XCTAssert(testSecondsGranularityDateLeft.isBefore(testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
-        XCTAssert(testSecondsGranularityDateLeft.isBefore(testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
-        XCTAssert(testMultipleCalendarDateLeft.isBefore(testMultipleCalendarDateRight, granularity: .second), "Multi calendar test failed")
+        #expect(testYearGranularityDateLeft.isBefore(testYearGranularityDateRight, granularity: .year), "Year granularity failed")
+        #expect(testMonthGranularityDateLeft.isBefore(testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
+        #expect(testDayGranularityDateLeft.isBefore(testDayGranularityDateRight, granularity: .day), "Day granularity failed")
+        #expect(testHourGranularityDateLeft.isBefore(testHourGranularityDateRight, granularity: .hour), "Hour granularity failed")
+        #expect(testMinuteGranularityDateLeft.isBefore(testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
+        #expect(testSecondsGranularityDateLeft.isBefore(testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
+        #expect(testSecondsGranularityDateLeft.isBefore(testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
+        #expect(testMultipleCalendarDateLeft.isBefore(testMultipleCalendarDateRight, granularity: .second), "Multi calendar test failed")
     }
 
-    func testIsFutureDate() {
+    @Test
+    func isFutureDate() {
         let testYearGranularityDateLeft = Date(year: 2021, month: 4, day: 5, hour: 1, minute: 45, second: 33)
         let testYearGranularityDateRight = Date(year: 2020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
 
@@ -495,29 +514,32 @@ final class DateTest: XCTestCase {
         let testMultipleCalendarDateLeft = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 47, second: 33, calendar: .iso)
         let testMultipleCalendarDateRight = Date(year: 2020, month: 4, day: 4, hour: 21, minute: 46, second: 33, calendar: .usEastern)
 
-        XCTAssert(testYearGranularityDateLeft.isAfter(testYearGranularityDateRight, granularity: .year), "Year granularity failed")
-        XCTAssert(testMonthGranularityDateLeft.isAfter(testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
-        XCTAssert(testDayGranularityDateLeft.isAfter(testDayGranularityDateRight, granularity: .day), "Day granularity failed")
-        XCTAssert(testHourGranularityDateLeft.isAfter(testHourGranularityDateRight, granularity: .hour), "Hour granularity failed")
-        XCTAssert(testMinuteGranularityDateLeft.isAfter(testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
-        XCTAssert(testSecondsGranularityDateLeft.isAfter(testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
-        XCTAssert(testSecondsGranularityDateLeft.isAfter(testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
-        XCTAssert(testMultipleCalendarDateLeft.isAfter(testMultipleCalendarDateRight, granularity: .second), "Multi calendar test failed")
+        #expect(testYearGranularityDateLeft.isAfter(testYearGranularityDateRight, granularity: .year), "Year granularity failed")
+        #expect(testMonthGranularityDateLeft.isAfter(testMonthGranularityDateRight, granularity: .month), "Month granularity failed")
+        #expect(testDayGranularityDateLeft.isAfter(testDayGranularityDateRight, granularity: .day), "Day granularity failed")
+        #expect(testHourGranularityDateLeft.isAfter(testHourGranularityDateRight, granularity: .hour), "Hour granularity failed")
+        #expect(testMinuteGranularityDateLeft.isAfter(testMinuteGranularityDateRight, granularity: .minute), "Minute granularity failed")
+        #expect(testSecondsGranularityDateLeft.isAfter(testSecondsGranularityDateRight, granularity: .second), "Seconds granularity failed")
+        #expect(testSecondsGranularityDateLeft.isAfter(testSecondsGranularityDateRight, granularity: .nanosecond), "NanoSeconds granularity failed")
+        #expect(testMultipleCalendarDateLeft.isAfter(testMultipleCalendarDateRight, granularity: .second), "Multi calendar test failed")
     }
 
-    func testIsAfterDate_seconds() {
+    @Test
+    func isAfterDate_seconds() async throws {
         let pastDate = Date(year: 2021, month: 4, day: 5, hour: 1, minute: 45, second: 33)
-        XCTAssertEqual(pastDate.isAfter(duration: 30), true)
+        #expect(pastDate.isAfter(duration: 30) == true)
 
         let futureDate = Date().adjusting(.second, by: 31)
-        XCTAssertEqual(futureDate.isAfter(duration: 32), true)
-        XCTAssertEqual(futureDate.isAfter(duration: 31), false)
-        XCTAssertEqual(futureDate.isAfter(duration: 30), false)
-        sleep(1) // sleep for 1 second so we can validate it indeed is after
-        XCTAssertEqual(futureDate.isAfter(duration: 31), true)
+        #expect(futureDate.isAfter(duration: 32) == true)
+        #expect(futureDate.isAfter(duration: 31) == false)
+        #expect(futureDate.isAfter(duration: 30) == false)
+        // sleep for 1 second so we can validate it indeed is after
+        try await Task.sleep(for: .seconds(1))
+        #expect(futureDate.isAfter(duration: 31) == true)
     }
 
-    func testIsBetweenDate() {
+    @Test
+    func isBetweenDate() {
         let testYearGranularityDateLeft = Date(year: 2019, month: 2, day: 1, hour: 3, minute: 41, second: 22)
         let testYearGranularityDateMid = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 33)
         let testYearGranularityDateRight = Date(year: 2021, month: 4, day: 5, hour: 1, minute: 45, second: 33)
@@ -553,35 +575,38 @@ final class DateTest: XCTestCase {
         let testMultipleCalendarDateRight = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 47, second: 33, calendar: .iso)
         let testMultipleCalendarDateInterval = DateInterval(start: testMultipleCalendarDateLeft, end: testMultipleCalendarDateRight)
 
-        XCTAssert(testYearGranularityDateMid.isBetween(testYearGranularityDateInterval, granularity: .year), "Year granularity failed")
-        XCTAssert(testMonthGranularityDateMid.isBetween(testMonthGranularityDateInterval, granularity: .month), "Month granularity failed")
-        XCTAssert(testDayGranularityDateMid.isBetween(testDayGranularityDateInterval, granularity: .day), "Day granularity failed")
-        XCTAssert(testHourGranularityDateMid.isBetween(testHourGranularityDateInterval, granularity: .hour), "Hour granularity failed")
-        XCTAssert(testMinuteGranularityDateMid.isBetween(testMinuteGranularityDateInterval, granularity: .minute), "Minute granularity failed")
-        XCTAssert(testSecondsGranularityDateMid.isBetween(testSecondsGranularityDateInterval, granularity: .second), "Seconds granularity failed")
-        XCTAssert(testSecondsGranularityDateMid.isBetween(testSecondsGranularityDateInterval, granularity: .nanosecond), "NanoSeconds granularity failed")
-        XCTAssert(testMultipleCalendarDateMid.isBetween(testMultipleCalendarDateInterval, granularity: .second), "Multi calendar test failed")
+        #expect(testYearGranularityDateMid.isBetween(testYearGranularityDateInterval, granularity: .year), "Year granularity failed")
+        #expect(testMonthGranularityDateMid.isBetween(testMonthGranularityDateInterval, granularity: .month), "Month granularity failed")
+        #expect(testDayGranularityDateMid.isBetween(testDayGranularityDateInterval, granularity: .day), "Day granularity failed")
+        #expect(testHourGranularityDateMid.isBetween(testHourGranularityDateInterval, granularity: .hour), "Hour granularity failed")
+        #expect(testMinuteGranularityDateMid.isBetween(testMinuteGranularityDateInterval, granularity: .minute), "Minute granularity failed")
+        #expect(testSecondsGranularityDateMid.isBetween(testSecondsGranularityDateInterval, granularity: .second), "Seconds granularity failed")
+        #expect(testSecondsGranularityDateMid.isBetween(testSecondsGranularityDateInterval, granularity: .nanosecond), "NanoSeconds granularity failed")
+        #expect(testMultipleCalendarDateMid.isBetween(testMultipleCalendarDateInterval, granularity: .second), "Multi calendar test failed")
     }
 
-    func testNumberOf() {
+    @Test
+    func numberOf() {
         let date = Date(year: 2019, month: 3, day: 4, hour: 2, minute: 22, second: 44)
         let anotherDate = Date(year: 2020, month: 4, day: 5, hour: 1, minute: 45, second: 55)
-        XCTAssertEqual(1, date.numberOf(.year, to: anotherDate))
-        XCTAssertEqual(13, date.numberOf(.month, to: anotherDate))
-        XCTAssertEqual(56, date.numberOf(.weekOfYear, to: anotherDate))
-        XCTAssertEqual(397, date.numberOf(.day, to: anotherDate))
-        XCTAssertEqual(9551, date.numberOf(.hour, to: anotherDate))
-        XCTAssertEqual(573_083, date.numberOf(.minute, to: anotherDate))
-        XCTAssertEqual(34_384_991, date.numberOf(.second, to: anotherDate))
+        #expect(1 == date.numberOf(.year, to: anotherDate))
+        #expect(13 == date.numberOf(.month, to: anotherDate))
+        #expect(56 == date.numberOf(.weekOfYear, to: anotherDate))
+        #expect(397 == date.numberOf(.day, to: anotherDate))
+        #expect(9551 == date.numberOf(.hour, to: anotherDate))
+        #expect(573_083 == date.numberOf(.minute, to: anotherDate))
+        #expect(34_384_991 == date.numberOf(.second, to: anotherDate))
     }
 
-    func testTimeZone() {
-        XCTAssertEqual(Date.timeZoneOffset(calendar: .usEastern), -5)
-        XCTAssertEqual(Date.timeZoneOffset(calendar: .iso), 0)
-        XCTAssertEqual(Date.timeZoneOffset(calendar: .turkey), 3)
+    @Test
+    func timeZone() {
+        #expect(Date.timeZoneOffset(calendar: .usEastern) == -5)
+        #expect(Date.timeZoneOffset(calendar: .iso) == 0)
+        #expect(Date.timeZoneOffset(calendar: .turkey) == 3)
     }
 
-    func testTotalDayInMonth() {
+    @Test
+    func totalDayInMonth() {
         let jan = Date(year: 2020, month: 1, day: 1, hour: 3, minute: 41, second: 22)
         let leapYearFeb = Date(year: 2020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
         let nonLeapYearFeb = Date(year: 2019, month: 2, day: 1, hour: 3, minute: 41, second: 22)
@@ -596,22 +621,23 @@ final class DateTest: XCTestCase {
         let nov = Date(year: 2020, month: 11, day: 1, hour: 3, minute: 41, second: 22)
         let dec = Date(year: 2020, month: 12, day: 1, hour: 3, minute: 41, second: 22)
 
-        XCTAssertEqual(jan.monthDays(), 31)
-        XCTAssertEqual(leapYearFeb.monthDays(), 29)
-        XCTAssertEqual(nonLeapYearFeb.monthDays(), 28)
-        XCTAssertEqual(mar.monthDays(), 31)
-        XCTAssertEqual(apr.monthDays(), 30)
-        XCTAssertEqual(may.monthDays(), 31)
-        XCTAssertEqual(jun.monthDays(), 30)
-        XCTAssertEqual(jul.monthDays(), 31)
-        XCTAssertEqual(aug.monthDays(), 31)
-        XCTAssertEqual(sep.monthDays(), 30)
-        XCTAssertEqual(oct.monthDays(), 31)
-        XCTAssertEqual(nov.monthDays(), 30)
-        XCTAssertEqual(dec.monthDays(), 31)
+        #expect(jan.monthDays() == 31)
+        #expect(leapYearFeb.monthDays() == 29)
+        #expect(nonLeapYearFeb.monthDays() == 28)
+        #expect(mar.monthDays() == 31)
+        #expect(apr.monthDays() == 30)
+        #expect(may.monthDays() == 31)
+        #expect(jun.monthDays() == 30)
+        #expect(jul.monthDays() == 31)
+        #expect(aug.monthDays() == 31)
+        #expect(sep.monthDays() == 30)
+        #expect(oct.monthDays() == 31)
+        #expect(nov.monthDays() == 30)
+        #expect(dec.monthDays() == 31)
     }
 
-    func testAdjustmentWithDateComponents() {
+    @Test
+    func adjustmentWithDateComponents() {
         let dateToAdjust = Date(year: 2020, month: 3, day: 1, hour: 3, minute: 41, second: 22)
         var dateComponents = DateComponents()
         dateComponents.year = 1
@@ -619,32 +645,34 @@ final class DateTest: XCTestCase {
         dateComponents.day = 3
 
         let expectedResult = Date(year: 2021, month: 1, day: 4, hour: 3, minute: 41, second: 22)
-        XCTAssertEqual(expectedResult, dateToAdjust.adjusting(dateComponents))
+        #expect(expectedResult == dateToAdjust.adjusting(dateComponents))
     }
 
-    func testComparisonOperatorDay() {
+    @Test
+    func comparisonOperatorDay() {
         let today = Date()
-        XCTAssertTrue(today.is(.today))
-        XCTAssertFalse(today.is(.tomorrow))
-        XCTAssertFalse(today.is(.yesterday))
+        #expect(today.is(.today))
+        #expect(!today.is(.tomorrow))
+        #expect(!today.is(.yesterday))
 
         let tomorrow = Date().adjusting(.day, by: 1)
-        XCTAssertFalse(tomorrow.is(.today))
-        XCTAssertTrue(tomorrow.is(.tomorrow))
-        XCTAssertFalse(tomorrow.is(.yesterday))
+        #expect(!tomorrow.is(.today))
+        #expect(tomorrow.is(.tomorrow))
+        #expect(!tomorrow.is(.yesterday))
 
         let yesterday = Date().adjusting(.day, by: -1)
-        XCTAssertFalse(yesterday.is(.today))
-        XCTAssertFalse(yesterday.is(.tomorrow))
-        XCTAssertTrue(yesterday.is(.yesterday))
+        #expect(!yesterday.is(.today))
+        #expect(!yesterday.is(.tomorrow))
+        #expect(yesterday.is(.yesterday))
 
         let date = Date(year: 3020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
-        XCTAssertFalse(date.is(.yesterday))
-        XCTAssertFalse(date.is(.today))
-        XCTAssertFalse(date.is(.tomorrow))
+        #expect(!date.is(.yesterday))
+        #expect(!date.is(.today))
+        #expect(!date.is(.tomorrow))
     }
 
-    func testComparisonOperatorNext() {
+    @Test
+    func comparisonOperatorNext() {
         let now = Date()
         let previousDate = Date(year: 3020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
 
@@ -654,20 +682,21 @@ final class DateTest: XCTestCase {
         let nextDate_Month = now.adjusting(.month, by: 1)
         let nextDate_Year = now.adjusting(.year, by: 1)
 
-        XCTAssertFalse(previousDate.is(.next(.day)))
-        XCTAssertFalse(previousDate.is(.next(.weekday)))
-        XCTAssertFalse(previousDate.is(.next(.month)))
-        XCTAssertFalse(previousDate.is(.next(.year)))
+        #expect(!previousDate.is(.next(.day)))
+        #expect(!previousDate.is(.next(.weekday)))
+        #expect(!previousDate.is(.next(.month)))
+        #expect(!previousDate.is(.next(.year)))
 
-        XCTAssertFalse(futureDate_Day.is(.tomorrow), "Expected \(futureDate_Day.component(.day)) to not be tomorrow.")
-        XCTAssertTrue(nextDate_Day.is(.tomorrow), "Expected \(nextDate_Day.component(.day)) to be tomorrow.")
-        XCTAssertTrue(nextDate_Day.is(.next(.day)), "Expected \(nextDate_Day.component(.day)) to be next day after \(now.component(.day)).")
-        XCTAssertTrue(nextDate_Weekday.is(.next(.weekday)), "Expected \(nextDate_Weekday.component(.weekday)) to be next weekday after \(now.component(.weekday)).")
-        XCTAssertTrue(nextDate_Month.is(.next(.month)), "Expected \(nextDate_Month.component(.month)) to be next month after \(now.component(.month)).")
-        XCTAssertTrue(nextDate_Year.is(.next(.year)), "Expected \(nextDate_Year.component(.year)) to be next year after \(now.component(.year)).")
+        #expect(!futureDate_Day.is(.tomorrow), "Expected \(futureDate_Day.component(.day)) to not be tomorrow.")
+        #expect(nextDate_Day.is(.tomorrow), "Expected \(nextDate_Day.component(.day)) to be tomorrow.")
+        #expect(nextDate_Day.is(.next(.day)), "Expected \(nextDate_Day.component(.day)) to be next day after \(now.component(.day)).")
+        #expect(nextDate_Weekday.is(.next(.weekday)), "Expected \(nextDate_Weekday.component(.weekday)) to be next weekday after \(now.component(.weekday)).")
+        #expect(nextDate_Month.is(.next(.month)), "Expected \(nextDate_Month.component(.month)) to be next month after \(now.component(.month)).")
+        #expect(nextDate_Year.is(.next(.year)), "Expected \(nextDate_Year.component(.year)) to be next year after \(now.component(.year)).")
     }
 
-    func testComparisonOperatorPrevious() {
+    @Test
+    func comparisonOperatorPrevious() {
         let now = Date()
         let nextDate = Date(year: 3020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
 
@@ -677,20 +706,21 @@ final class DateTest: XCTestCase {
         let previousDate_Month = now.adjusting(.month, by: -1)
         let previousDate_Year = now.adjusting(.year, by: -1)
 
-        XCTAssertFalse(nextDate.is(.previous(.day)))
-        XCTAssertFalse(nextDate.is(.previous(.weekday)))
-        XCTAssertFalse(nextDate.is(.previous(.month)))
-        XCTAssertFalse(nextDate.is(.previous(.year)))
+        #expect(!nextDate.is(.previous(.day)))
+        #expect(!nextDate.is(.previous(.weekday)))
+        #expect(!nextDate.is(.previous(.month)))
+        #expect(!nextDate.is(.previous(.year)))
 
-        XCTAssertFalse(pastDate_Day.is(.yesterday), "Expected \(pastDate_Day.component(.day)) to not be yesterday.")
-        XCTAssertTrue(previousDate_Day.is(.yesterday), "Expected \(previousDate_Day.component(.day)) to be yesterday.")
-        XCTAssertTrue(previousDate_Day.is(.previous(.day)), "Expected \(previousDate_Day.component(.day)) to be a day before \(now.component(.day)).")
-        XCTAssertTrue(previousDate_Weekday.is(.previous(.weekday)), "Expected \(previousDate_Weekday.component(.weekday)) to be a weekday \(now.component(.weekday)).")
-        XCTAssertTrue(previousDate_Month.is(.previous(.month)), "Expected \(previousDate_Month.component(.month)) to be a month before \(now.component(.month)).")
-        XCTAssertTrue(previousDate_Year.is(.previous(.year)), "Expected \(previousDate_Year.component(.year)) to be a year before \(now.component(.year)).")
+        #expect(!pastDate_Day.is(.yesterday), "Expected \(pastDate_Day.component(.day)) to not be yesterday.")
+        #expect(previousDate_Day.is(.yesterday), "Expected \(previousDate_Day.component(.day)) to be yesterday.")
+        #expect(previousDate_Day.is(.previous(.day)), "Expected \(previousDate_Day.component(.day)) to be a day before \(now.component(.day)).")
+        #expect(previousDate_Weekday.is(.previous(.weekday)), "Expected \(previousDate_Weekday.component(.weekday)) to be a weekday \(now.component(.weekday)).")
+        #expect(previousDate_Month.is(.previous(.month)), "Expected \(previousDate_Month.component(.month)) to be a month before \(now.component(.month)).")
+        #expect(previousDate_Year.is(.previous(.year)), "Expected \(previousDate_Year.component(.year)) to be a year before \(now.component(.year)).")
     }
 
-    func testComparisonOperatorPast() {
+    @Test
+    func comparisonOperatorPast() {
         let now = Date()
         let nextDate = Date(year: 3020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
         let previousDate = Date(year: 1020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
@@ -700,23 +730,24 @@ final class DateTest: XCTestCase {
         let pastDate_Month = now.adjusting(.month, by: -10)
         let pastDate_Year = now.adjusting(.year, by: -10)
 
-        XCTAssertFalse(nextDate.is(.past(.day)))
-        XCTAssertFalse(nextDate.is(.past(.weekday)))
-        XCTAssertFalse(nextDate.is(.past(.month)))
-        XCTAssertFalse(nextDate.is(.past(.year)))
+        #expect(!nextDate.is(.past(.day)))
+        #expect(!nextDate.is(.past(.weekday)))
+        #expect(!nextDate.is(.past(.month)))
+        #expect(!nextDate.is(.past(.year)))
 
-        XCTAssertTrue(previousDate.is(.past(.day)))
-        XCTAssertTrue(previousDate.is(.past(.weekday)))
-        XCTAssertTrue(previousDate.is(.past(.month)))
-        XCTAssertTrue(previousDate.is(.past(.year)))
+        #expect(previousDate.is(.past(.day)))
+        #expect(previousDate.is(.past(.weekday)))
+        #expect(previousDate.is(.past(.month)))
+        #expect(previousDate.is(.past(.year)))
 
-        XCTAssertTrue(pastDate_Day.is(.past(.day)), "Expected \(pastDate_Day.component(.day)) to be day past \(now.component(.day)).")
-        XCTAssertTrue(pastDate_Weekday.is(.past(.weekday)), "Expected \(pastDate_Weekday.component(.weekday)) to be weekday past \(now.component(.weekday)).")
-        XCTAssertTrue(pastDate_Month.is(.past(.month)), "Expected \(pastDate_Month.component(.month)) to be month past \(now.component(.month)).")
-        XCTAssertTrue(pastDate_Year.is(.past(.year)), "Expected \(pastDate_Year.component(.year)) to be year past \(now.component(.year)).")
+        #expect(pastDate_Day.is(.past(.day)), "Expected \(pastDate_Day.component(.day)) to be day past \(now.component(.day)).")
+        #expect(pastDate_Weekday.is(.past(.weekday)), "Expected \(pastDate_Weekday.component(.weekday)) to be weekday past \(now.component(.weekday)).")
+        #expect(pastDate_Month.is(.past(.month)), "Expected \(pastDate_Month.component(.month)) to be month past \(now.component(.month)).")
+        #expect(pastDate_Year.is(.past(.year)), "Expected \(pastDate_Year.component(.year)) to be year past \(now.component(.year)).")
     }
 
-    func testComparisonOperatorFuture() {
+    @Test
+    func comparisonOperatorFuture() {
         let now = Date()
         let nextDate = Date(year: 3020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
         let previousDate = Date(year: 1020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
@@ -726,23 +757,24 @@ final class DateTest: XCTestCase {
         let futureDate_Month = now.adjusting(.month, by: 10)
         let futureDate_Year = now.adjusting(.year, by: 10)
 
-        XCTAssertTrue(nextDate.is(.future(.day)))
-        XCTAssertTrue(nextDate.is(.future(.weekday)))
-        XCTAssertTrue(nextDate.is(.future(.month)))
-        XCTAssertTrue(nextDate.is(.future(.year)))
+        #expect(nextDate.is(.future(.day)))
+        #expect(nextDate.is(.future(.weekday)))
+        #expect(nextDate.is(.future(.month)))
+        #expect(nextDate.is(.future(.year)))
 
-        XCTAssertFalse(previousDate.is(.future(.day)))
-        XCTAssertFalse(previousDate.is(.future(.weekday)))
-        XCTAssertFalse(previousDate.is(.future(.month)))
-        XCTAssertFalse(previousDate.is(.future(.year)))
+        #expect(!previousDate.is(.future(.day)))
+        #expect(!previousDate.is(.future(.weekday)))
+        #expect(!previousDate.is(.future(.month)))
+        #expect(!previousDate.is(.future(.year)))
 
-        XCTAssertTrue(futureDate_Day.is(.future(.day)), "Expected \(futureDate_Day.component(.day)) to be day future \(now.component(.day)).")
-        XCTAssertTrue(futureDate_Weekday.is(.future(.weekday)), "Expected \(futureDate_Weekday.component(.weekday)) to be weekday future \(now.component(.weekday)).")
-        XCTAssertTrue(futureDate_Month.is(.future(.month)), "Expected \(futureDate_Month.component(.month)) to be month future \(now.component(.month)).")
-        XCTAssertTrue(futureDate_Year.is(.future(.year)), "Expected \(futureDate_Year.component(.year)) to be year future \(now.component(.year)).")
+        #expect(futureDate_Day.is(.future(.day)), "Expected \(futureDate_Day.component(.day)) to be day future \(now.component(.day)).")
+        #expect(futureDate_Weekday.is(.future(.weekday)), "Expected \(futureDate_Weekday.component(.weekday)) to be weekday future \(now.component(.weekday)).")
+        #expect(futureDate_Month.is(.future(.month)), "Expected \(futureDate_Month.component(.month)) to be month future \(now.component(.month)).")
+        #expect(futureDate_Year.is(.future(.year)), "Expected \(futureDate_Year.component(.year)) to be year future \(now.component(.year)).")
     }
 
-    func testComparisonOperatorCurrent() {
+    @Test
+    func comparisonOperatorCurrent() {
         let now = Date()
         let nextDate = Date(year: 3020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
         let previousDate = Date(year: 1020, month: 2, day: 1, hour: 3, minute: 41, second: 22)
@@ -752,72 +784,75 @@ final class DateTest: XCTestCase {
         let currentDate_Month = now
         let currentDate_Year = now
 
-        XCTAssertFalse(nextDate.is(.current(.day)))
-        XCTAssertFalse(nextDate.is(.current(.weekday)))
-        XCTAssertFalse(nextDate.is(.current(.month)))
-        XCTAssertFalse(nextDate.is(.current(.year)))
+        #expect(!nextDate.is(.current(.day)))
+        #expect(!nextDate.is(.current(.weekday)))
+        #expect(!nextDate.is(.current(.month)))
+        #expect(!nextDate.is(.current(.year)))
 
-        XCTAssertFalse(previousDate.is(.current(.day)))
-        XCTAssertFalse(previousDate.is(.current(.weekday)))
-        XCTAssertFalse(previousDate.is(.current(.month)))
-        XCTAssertFalse(previousDate.is(.current(.year)))
+        #expect(!previousDate.is(.current(.day)))
+        #expect(!previousDate.is(.current(.weekday)))
+        #expect(!previousDate.is(.current(.month)))
+        #expect(!previousDate.is(.current(.year)))
 
-        XCTAssertTrue(currentDate_Day.is(.current(.day)), "Expected \(currentDate_Day.component(.day)) to be day current \(now.component(.day)).")
-        XCTAssertTrue(currentDate_Weekday.is(.current(.weekday)), "Expected \(currentDate_Weekday.component(.weekday)) to be weekday current \(now.component(.weekday)).")
-        XCTAssertTrue(currentDate_Month.is(.current(.month)), "Expected \(currentDate_Month.component(.month)) to be month current \(now.component(.month)).")
-        XCTAssertTrue(currentDate_Year.is(.current(.year)), "Expected \(currentDate_Year.component(.year)) to be year current \(now.component(.year)).")
+        #expect(currentDate_Day.is(.current(.day)), "Expected \(currentDate_Day.component(.day)) to be day current \(now.component(.day)).")
+        #expect(currentDate_Weekday.is(.current(.weekday)), "Expected \(currentDate_Weekday.component(.weekday)) to be weekday current \(now.component(.weekday)).")
+        #expect(currentDate_Month.is(.current(.month)), "Expected \(currentDate_Month.component(.month)) to be month current \(now.component(.month)).")
+        #expect(currentDate_Year.is(.current(.year)), "Expected \(currentDate_Year.component(.year)) to be year current \(now.component(.year)).")
     }
 
-    func testComparisonOperatorWeekend() {
+    @Test
+    func comparisonOperatorWeekend() {
         let nonWeekend = Date(year: 2000, month: 1, day: 3)
-        XCTAssertFalse(nonWeekend.is(.weekend))
+        #expect(!nonWeekend.is(.weekend))
 
         let weekend = Date(year: 2000, month: 1, day: 1)
-        XCTAssertTrue(weekend.is(.weekend))
+        #expect(weekend.is(.weekend))
     }
 
-    func testDateIntervalsStaticDates() {
+    @Test
+    func dateIntervalsStaticDates() {
         // Week
         let thisWeekStartDate = Date(year: 2020, month: 1, day: 5, hour: 0, minute: 0, second: 0)
         let thisWeekEndDate = Date(year: 2020, month: 1, day: 11, hour: 23, minute: 59, second: 59)
         let thisWeek = thisWeekStartDate.interval(for: .weekOfYear)
-        XCTAssert(thisWeek.start == thisWeekStartDate, "Expected \(thisWeek.start) to equal \(thisWeekStartDate)")
-        XCTAssert(thisWeek.end.removingMilliseconds() == thisWeekEndDate, "Expected \(thisWeek.end) to equal \(thisWeekEndDate)")
+        #expect(thisWeek.start == thisWeekStartDate, "Expected \(thisWeek.start) to equal \(thisWeekStartDate)")
+        #expect(thisWeek.end.removingMilliseconds() == thisWeekEndDate, "Expected \(thisWeek.end) to equal \(thisWeekEndDate)")
 
         let lastWeekStartDate = Date(year: 2019, month: 12, day: 29, hour: 0, minute: 0, second: 0)
         let lastWeekEndDate = Date(year: 2020, month: 1, day: 4, hour: 23, minute: 59, second: 59)
         let lastWeek = thisWeekStartDate.interval(for: .weekOfYear, adjustedBy: -1)
-        XCTAssertTrue(lastWeek.start == lastWeekStartDate, "Expected \(lastWeek.start) to equal \(lastWeekStartDate)")
-        XCTAssert(lastWeek.end.removingMilliseconds() == lastWeekEndDate, "Expected \(lastWeek.end) to equal \(lastWeekEndDate)")
+        #expect(lastWeek.start == lastWeekStartDate, "Expected \(lastWeek.start) to equal \(lastWeekStartDate)")
+        #expect(lastWeek.end.removingMilliseconds() == lastWeekEndDate, "Expected \(lastWeek.end) to equal \(lastWeekEndDate)")
 
         // Month
         let thisMonthStartDate = Date(year: 2020, month: 2, day: 1, hour: 0, minute: 0, second: 0)
         let thisMonthEndDate = Date(year: 2020, month: 2, day: 29, hour: 23, minute: 59, second: 59)
         let thisMonth = thisMonthStartDate.interval(for: .month)
-        XCTAssert(thisMonth.start == thisMonthStartDate, "Expected \(thisMonth.start) to equal \(thisMonthStartDate)")
-        XCTAssert(thisMonth.end.removingMilliseconds() == thisMonthEndDate, "Expected \(thisMonth.end) to equal \(thisMonthEndDate)")
+        #expect(thisMonth.start == thisMonthStartDate, "Expected \(thisMonth.start) to equal \(thisMonthStartDate)")
+        #expect(thisMonth.end.removingMilliseconds() == thisMonthEndDate, "Expected \(thisMonth.end) to equal \(thisMonthEndDate)")
 
         let lastMonthStartDate = Date(year: 2020, month: 1, day: 1, hour: 0, minute: 0, second: 0)
         let lastMonthEndDate = Date(year: 2020, month: 1, day: 31, hour: 23, minute: 59, second: 59)
         let lastMonth = thisMonthStartDate.interval(for: .month, adjustedBy: -1)
-        XCTAssertTrue(lastMonth.start == lastMonthStartDate, "Expected \(lastMonth.start) to equal \(lastMonthStartDate)")
-        XCTAssert(lastMonth.end.removingMilliseconds() == lastMonthEndDate, "Expected \(lastMonth.end) to equal \(lastMonthEndDate)")
+        #expect(lastMonth.start == lastMonthStartDate, "Expected \(lastMonth.start) to equal \(lastMonthStartDate)")
+        #expect(lastMonth.end.removingMilliseconds() == lastMonthEndDate, "Expected \(lastMonth.end) to equal \(lastMonthEndDate)")
 
         // Year
         let thisYearStartDate = Date(year: 2020, month: 1, day: 1, hour: 0, minute: 0, second: 0)
         let thisYearEndDate = Date(year: 2020, month: 12, day: 31, hour: 23, minute: 59, second: 59)
         let thisYear = thisYearStartDate.interval(for: .year)
-        XCTAssert(thisYear.start == thisYearStartDate, "Expected \(thisYear.start) to equal \(thisYearStartDate)")
-        XCTAssert(thisYear.end.removingMilliseconds() == thisYearEndDate, "Expected \(thisYear.end) to equal \(thisYearEndDate)")
+        #expect(thisYear.start == thisYearStartDate, "Expected \(thisYear.start) to equal \(thisYearStartDate)")
+        #expect(thisYear.end.removingMilliseconds() == thisYearEndDate, "Expected \(thisYear.end) to equal \(thisYearEndDate)")
 
         let lastYearStartDate = Date(year: 2019, month: 1, day: 1, hour: 0, minute: 0, second: 0)
         let lastYearEndDate = Date(year: 2019, month: 12, day: 31, hour: 23, minute: 59, second: 59)
         let lastYear = thisYearStartDate.interval(for: .year, adjustedBy: -1)
-        XCTAssertTrue(lastYear.start == lastYearStartDate, "Expected \(lastYear.start) to equal \(lastYearStartDate)")
-        XCTAssert(lastYear.end.removingMilliseconds() == lastYearEndDate, "Expected \(lastYear.end) to equal \(lastYearEndDate)")
+        #expect(lastYear.start == lastYearStartDate, "Expected \(lastYear.start) to equal \(lastYearStartDate)")
+        #expect(lastYear.end.removingMilliseconds() == lastYearEndDate, "Expected \(lastYear.end) to equal \(lastYearEndDate)")
     }
 
-    func testDateIntervalBulk() {
+    @Test
+    func dateIntervalBulk() {
         let components: [Calendar.Component] = [
             .weekOfYear,
             .month,
@@ -828,70 +863,73 @@ final class DateTest: XCTestCase {
         for component in components {
             let interval = Date().interval(for: component)
             let date = Date().startOf(component)
-            XCTAssert(interval.start == date)
-            XCTAssert(interval.end == date.endOf(component))
+            #expect(interval.start == date)
+            #expect(interval.end == date.endOf(component))
         }
 
         // Previous
         for component in components {
             let interval = Date().interval(for: component, adjustedBy: -1)
             let date = Date().startOf(component).adjusting(component, by: -1)
-            XCTAssert(interval.start == date)
-            XCTAssert(interval.end == date.endOf(component))
+            #expect(interval.start == date)
+            #expect(interval.end == date.endOf(component))
         }
     }
 
-    func testDateIntervalLiveDates() {
+    @Test
+    func dateIntervalLiveDates() {
         // Week
         let lastWeek = DateInterval.lastWeek
-        XCTAssert(lastWeek.start == Date().startOf(.weekOfYear).adjusting(.weekOfYear, by: -1))
-        XCTAssert(lastWeek.end == Date().startOf(.weekOfYear).adjusting(.weekOfYear, by: -1).endOf(.weekOfYear))
+        #expect(lastWeek.start == Date().startOf(.weekOfYear).adjusting(.weekOfYear, by: -1))
+        #expect(lastWeek.end == Date().startOf(.weekOfYear).adjusting(.weekOfYear, by: -1).endOf(.weekOfYear))
 
         let thisWeek = DateInterval.thisWeek
-        XCTAssert(thisWeek.start == Date().startOf(.weekOfYear))
-        XCTAssert(thisWeek.end == Date().endOf(.weekOfYear))
+        #expect(thisWeek.start == Date().startOf(.weekOfYear))
+        #expect(thisWeek.end == Date().endOf(.weekOfYear))
 
         // Month
         let lastMonth = DateInterval.lastMonth
-        XCTAssert(lastMonth.start == Date().startOf(.month).adjusting(.month, by: -1))
-        XCTAssert(lastMonth.end == Date().startOf(.month).adjusting(.month, by: -1).endOf(.month))
+        #expect(lastMonth.start == Date().startOf(.month).adjusting(.month, by: -1))
+        #expect(lastMonth.end == Date().startOf(.month).adjusting(.month, by: -1).endOf(.month))
 
         let thisMonth = DateInterval.thisMonth
-        XCTAssert(thisMonth.start == Date().startOf(.month))
-        XCTAssert(thisMonth.end == Date().endOf(.month))
+        #expect(thisMonth.start == Date().startOf(.month))
+        #expect(thisMonth.end == Date().endOf(.month))
 
         // Year
         let lastYear = DateInterval.lastYear
-        XCTAssert(lastYear.start == Date().startOf(.year).adjusting(.year, by: -1))
-        XCTAssert(lastYear.end == Date().startOf(.year).adjusting(.year, by: -1).endOf(.year))
+        #expect(lastYear.start == Date().startOf(.year).adjusting(.year, by: -1))
+        #expect(lastYear.end == Date().startOf(.year).adjusting(.year, by: -1).endOf(.year))
 
         let thisYear = DateInterval.thisYear
-        XCTAssert(thisYear.start == Date().startOf(.year))
-        XCTAssert(thisYear.end == Date().endOf(.year))
+        #expect(thisYear.start == Date().startOf(.year))
+        #expect(thisYear.end == Date().endOf(.year))
     }
 
-    func test_startOf_removingTime() {
+    @Test
+    func startOf_removingTime() {
         let date = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22)
         let expectedDate = Date(year: 2022, month: 5, day: 4)
 
-        XCTAssertEqual(date.startOf(.day), expectedDate)
-        XCTAssertEqual(date.removingTime(), expectedDate)
-        XCTAssertEqual(date.startOf(.day), date.removingTime())
+        #expect(date.startOf(.day) == expectedDate)
+        #expect(date.removingTime() == expectedDate)
+        #expect(date.startOf(.day) == date.removingTime())
 
         let now = Date()
         let nowExpectedDate = Date(year: now.component(.year), month: now.component(.month), day: now.component(.day))
-        XCTAssertEqual(now.startOf(.day), nowExpectedDate)
-        XCTAssertEqual(now.removingTime(), nowExpectedDate)
-        XCTAssertEqual(now.startOf(.day), now.removingTime())
+        #expect(now.startOf(.day) == nowExpectedDate)
+        #expect(now.removingTime() == nowExpectedDate)
+        #expect(now.startOf(.day) == now.removingTime())
     }
 
-    func test_startOf_removingTime_current_calendar() {
+    @Test
+    func startOf_removingTime_current_calendar() {
         let date = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22, calendar: .current)
         let expectedDate = Date(year: 2022, month: 5, day: 4, calendar: .current)
 
-        XCTAssertEqual(date.startOf(.day, in: .current), expectedDate)
-        XCTAssertEqual(date.removingTime(calendar: .current), expectedDate)
-        XCTAssertEqual(date.startOf(.day, in: .current), date.removingTime(calendar: .current))
+        #expect(date.startOf(.day, in: .current) == expectedDate)
+        #expect(date.removingTime(calendar: .current) == expectedDate)
+        #expect(date.startOf(.day, in: .current) == date.removingTime(calendar: .current))
 
         let now = Date()
         let nowExpectedDate = Date(
@@ -900,19 +938,20 @@ final class DateTest: XCTestCase {
             day: now.component(.day, in: .current),
             calendar: .current
         )
-        XCTAssertEqual(now.startOf(.day, in: .current), nowExpectedDate)
-        XCTAssertEqual(now.removingTime(calendar: .current), nowExpectedDate)
-        XCTAssertEqual(now.startOf(.day, in: .current), now.removingTime(calendar: .current))
+        #expect(now.startOf(.day, in: .current) == nowExpectedDate)
+        #expect(now.removingTime(calendar: .current) == nowExpectedDate)
+        #expect(now.startOf(.day, in: .current) == now.removingTime(calendar: .current))
     }
 
-    func test_startOf_removingTime_current_calendar_with() {
+    @Test
+    func startOf_removingTime_current_calendar_with() {
         let date = Date(year: 2022, month: 5, day: 4, hour: 21, minute: 11, second: 22, calendar: .current)
         let expectedDate = Date(year: 2022, month: 5, day: 4, calendar: .current)
 
         Date.withCalendar(.current) {
-            XCTAssertEqual(date.startOf(.day), expectedDate)
-            XCTAssertEqual(date.removingTime(), expectedDate)
-            XCTAssertEqual(date.startOf(.day), date.removingTime())
+            #expect(date.startOf(.day) == expectedDate)
+            #expect(date.removingTime() == expectedDate)
+            #expect(date.startOf(.day) == date.removingTime())
 
             let now = Date()
             let nowExpectedDate = Date(
@@ -920,44 +959,46 @@ final class DateTest: XCTestCase {
                 month: now.component(.month),
                 day: now.component(.day)
             )
-            XCTAssertEqual(now.startOf(.day), nowExpectedDate)
-            XCTAssertEqual(now.removingTime(), nowExpectedDate)
-            XCTAssertEqual(now.startOf(.day), now.removingTime())
+            #expect(now.startOf(.day) == nowExpectedDate)
+            #expect(now.removingTime() == nowExpectedDate)
+            #expect(now.startOf(.day) == now.removingTime())
         }
     }
 
-    func test_custom() {
+    @Test
+    func customFormats() {
         let date = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
 
         // .date(.long) == .monthDayYear(.wide)
-        XCTAssertEqual(date.formatted(style: .date(.long)), "January 1, 2000")
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.wide)), "January 1, 2000")
+        #expect(date.formatted(style: .date(.long)) == "January 1, 2000")
+        #expect(date.formatted(format: .monthDayYear(.wide)) == "January 1, 2000")
 
         // .date(.short) == .monthDayYear(.narrow)
-        XCTAssertEqual(date.formatted(style: .date(.short)), "1/1/00")
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.narrow)), "1/1/00")
-        XCTAssertEqual(date.formatted(style: .dateTime(.short)), "1/1/00, 9:41 AM")
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.narrow, withTime: true)), "1/1/00 - 9:41 AM")
+        #expect(date.formatted(style: .date(.short)) == "1/1/00")
+        #expect(date.formatted(format: .monthDayYear(.narrow)) == "1/1/00")
+        #expect(date.formatted(style: .dateTime(.short)) == "1/1/00, 9:41 AM")
+        #expect(date.formatted(format: .monthDayYear(.narrow, withTime: true)) == "1/1/00 - 9:41 AM")
 
         // .date(.medium) == .monthDayYear(.abbreviated)
-        XCTAssertEqual(date.formatted(style: .date(.medium)), "Jan 1, 2000")
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.abbreviated)), "Jan 1, 2000")
+        #expect(date.formatted(style: .date(.medium)) == "Jan 1, 2000")
+        #expect(date.formatted(format: .monthDayYear(.abbreviated)) == "Jan 1, 2000")
 
         // .dateTime(.medium) ~= .monthDayYear(.abbreviated, withTime: true)
-        XCTAssertEqual(date.formatted(style: .dateTime(.medium, time: .short)), "Jan 1, 2000 at 9:41 AM")
-        XCTAssertEqual(date.formatted(format: .monthDayYear(.abbreviated, withTime: true)), "Jan 1, 2000 - 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.medium, time: .short)) == "Jan 1, 2000 at 9:41 AM")
+        #expect(date.formatted(format: .monthDayYear(.abbreviated, withTime: true)) == "Jan 1, 2000 - 9:41 AM")
 
-        XCTAssertEqual(date.formatted(style: .dateTime(.none)), "")
-        XCTAssertEqual(date.formatted(style: .dateTime(.short)), "1/1/00, 9:41 AM")
-        XCTAssertEqual(date.formatted(style: .dateTime(.medium, time: .short)), "Jan 1, 2000 at 9:41 AM")
-        XCTAssertEqual(date.formatted(style: .dateTime(.medium)), "Jan 1, 2000 at 9:41:00 AM")
-        XCTAssertEqual(date.formatted(style: .dateTime(.long, time: .short)), "January 1, 2000 at 9:41 AM")
-        XCTAssertEqual(date.formatted(style: .dateTime(.full, time: .short)), "Saturday, January 1, 2000 at 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.none)) == "")
+        #expect(date.formatted(style: .dateTime(.short)) == "1/1/00, 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.medium, time: .short)) == "Jan 1, 2000 at 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.medium)) == "Jan 1, 2000 at 9:41:00 AM")
+        #expect(date.formatted(style: .dateTime(.long, time: .short)) == "January 1, 2000 at 9:41 AM")
+        #expect(date.formatted(style: .dateTime(.full, time: .short)) == "Saturday, January 1, 2000 at 9:41 AM")
 
-        XCTAssertEqual(date.formatted(style: .iso8601(.withFullDate)), "2000-01-01")
+        #expect(date.formatted(style: .iso8601(.withFullDate)) == "2000-01-01")
     }
 
-    func test_relative_until_era() {
+    @Test
+    func relative_until_era() {
         let relative = Date.Style.relative(until: .era)
 
         let yesterday = Date().adjusting(.day, by: -1)
@@ -969,17 +1010,18 @@ final class DateTest: XCTestCase {
         let twoMonthAgo = Date().adjusting(.month, by: -2)
         let year2000 = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
 
-        XCTAssertEqual(yesterday.formatted(style: relative), "Yesterday")
-        XCTAssertEqual(now.formatted(style: relative), "Today")
-        XCTAssertEqual(hourAgo.formatted(style: relative), "In 1 hour")
-        XCTAssertEqual(twoAgo.formatted(style: relative), "Today")
-        XCTAssertEqual(tomorrow.formatted(style: relative), "Tomorrow")
-        XCTAssertEqual(twoMonthFromNow.formatted(style: relative), "In 2 months")
-        XCTAssertEqual(twoMonthAgo.formatted(style: relative), "2 months ago")
-        XCTAssertEqual(year2000.formatted(style: relative), "25 years ago")
+        #expect(yesterday.formatted(style: relative) == "Yesterday")
+        #expect(now.formatted(style: relative) == "Today")
+        #expect(hourAgo.formatted(style: relative) == "In 1 hour")
+        #expect(twoAgo.formatted(style: relative) == "Today")
+        #expect(tomorrow.formatted(style: relative) == "Tomorrow")
+        #expect(twoMonthFromNow.formatted(style: relative) == "In 2 months")
+        #expect(twoMonthAgo.formatted(style: relative) == "2 months ago")
+        #expect(year2000.formatted(style: relative) == "25 years ago")
     }
 
-    func test_relative_until_month() {
+    @Test
+    func relative_until_month() {
         let relative = Date.Style.relative(until: .month)
 
         let yesterday = Date().adjusting(.day, by: -1)
@@ -992,54 +1034,55 @@ final class DateTest: XCTestCase {
         let twoMonthAgo = Date().adjusting(.month, by: -2)
         let year2000 = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
 
-        XCTAssertEqual(yesterday.formatted(style: relative), "Yesterday")
-        XCTAssertEqual(now.formatted(style: relative), "Today")
-        XCTAssertEqual(hourAgo.formatted(style: relative), "In 1 hour")
-        XCTAssertEqual(twoAgo.formatted(style: relative), "Today")
-        XCTAssertEqual(tomorrow.formatted(style: relative), "Tomorrow")
+        #expect(yesterday.formatted(style: relative) == "Yesterday")
+        #expect(now.formatted(style: relative) == "Today")
+        #expect(hourAgo.formatted(style: relative) == "In 1 hour")
+        #expect(twoAgo.formatted(style: relative) == "Today")
+        #expect(tomorrow.formatted(style: relative) == "Tomorrow")
 
-        XCTAssertEqual(twoMonthFromNow.formatted(style: relative), twoMonthFromNow.formatted(style: .date(.medium)))
-        XCTAssertEqual(twoMonthAgo.formatted(style: relative), twoMonthAgo.formatted(style: .date(.medium)))
-        XCTAssertEqual(year2000.formatted(style: relative), "Jan 1, 2000")
+        #expect(twoMonthFromNow.formatted(style: relative) == twoMonthFromNow.formatted(style: .date(.medium)))
+        #expect(twoMonthAgo.formatted(style: relative) == twoMonthAgo.formatted(style: .date(.medium)))
+        #expect(year2000.formatted(style: relative) == "Jan 1, 2000")
     }
 
-    func test_custom_style() {
+    @Test
+    func custom_style() {
         let now = Date()
-        XCTAssertEqual(now.formatted(style: .relative), "Today")
+        #expect(now.formatted(style: .relative) == "Today")
 
         let year2000 = Date(year: 2000, month: 1, day: 1, hour: 9, minute: 41)
 
         // Current
-        XCTAssertEqual(year2000.formatted(style: .wide), "January 1, 2000")
-        XCTAssertEqual(year2000.formatted(style: .abbreviated), "Jan 1, 2000")
-        XCTAssertEqual(year2000.formatted(style: .abbreviatedTime), "Jan 1, 2000 at 9:41 AM")
-        XCTAssertEqual(year2000.formatted(style: .narrow), "1/1/00")
-        XCTAssertEqual(year2000.formatted(style: .narrowTime), "1/1/00, 9:41 AM")
-        XCTAssertEqual(year2000.formatted(style: .time), "9:41 AM")
+        #expect(year2000.formatted(style: .wide) == "January 1, 2000")
+        #expect(year2000.formatted(style: .abbreviated) == "Jan 1, 2000")
+        #expect(year2000.formatted(style: .abbreviatedTime) == "Jan 1, 2000 at 9:41 AM")
+        #expect(year2000.formatted(style: .narrow) == "1/1/00")
+        #expect(year2000.formatted(style: .narrowTime) == "1/1/00, 9:41 AM")
+        #expect(year2000.formatted(style: .time) == "9:41 AM")
 
         // London
-        XCTAssertEqual(year2000.formatted(style: .wide, in: .london), "1 January 2000")
-        XCTAssertEqual(year2000.formatted(style: .abbreviated, in: .london), "1 Jan 2000")
-        XCTAssertEqual(year2000.formatted(style: .abbreviatedTime, in: .london), "1 Jan 2000 at 09:41")
-        XCTAssertEqual(year2000.formatted(style: .narrow, in: .london), "01/01/2000")
-        XCTAssertEqual(year2000.formatted(style: .narrowTime, in: .london), "01/01/2000, 09:41")
-        XCTAssertEqual(year2000.formatted(style: .time, in: .london), "09:41")
+        #expect(year2000.formatted(style: .wide, in: .london) == "1 January 2000")
+        #expect(year2000.formatted(style: .abbreviated, in: .london) == "1 Jan 2000")
+        #expect(year2000.formatted(style: .abbreviatedTime, in: .london) == "1 Jan 2000 at 09:41")
+        #expect(year2000.formatted(style: .narrow, in: .london) == "01/01/2000")
+        #expect(year2000.formatted(style: .narrowTime, in: .london) == "01/01/2000, 09:41")
+        #expect(year2000.formatted(style: .time, in: .london) == "09:41")
 
         // Spanish
-        XCTAssertEqual(year2000.formatted(style: .wide, in: .spanish), "1 de enero de 2000")
-        XCTAssertEqual(year2000.formatted(style: .abbreviated, in: .spanish), "1 ene 2000")
-        XCTAssertEqual(year2000.formatted(style: .abbreviatedTime, in: .spanish), "1 ene 2000, 9:41")
-        XCTAssertEqual(year2000.formatted(style: .narrow, in: .spanish), "1/1/00")
-        XCTAssertEqual(year2000.formatted(style: .narrowTime, in: .spanish), "1/1/00, 9:41")
-        XCTAssertEqual(year2000.formatted(style: .time, in: .spanish), "9:41")
+        #expect(year2000.formatted(style: .wide, in: .spanish) == "1 de enero de 2000")
+        #expect(year2000.formatted(style: .abbreviated, in: .spanish) == "1 ene 2000")
+        #expect(year2000.formatted(style: .abbreviatedTime, in: .spanish) == "1 ene 2000, 9:41")
+        #expect(year2000.formatted(style: .narrow, in: .spanish) == "1/1/00")
+        #expect(year2000.formatted(style: .narrowTime, in: .spanish) == "1/1/00, 9:41")
+        #expect(year2000.formatted(style: .time, in: .spanish) == "9:41")
 
         // Turkey
-        XCTAssertEqual(year2000.formatted(style: .wide, in: .turkey), "1 Ocak 2000")
-        XCTAssertEqual(year2000.formatted(style: .abbreviated, in: .turkey), "1 Oca 2000")
-        XCTAssertEqual(year2000.formatted(style: .abbreviatedTime, in: .turkey), "1 Oca 2000 11:41")
-        XCTAssertEqual(year2000.formatted(style: .narrow, in: .turkey), "1.01.2000")
-        XCTAssertEqual(year2000.formatted(style: .narrowTime, in: .turkey), "1.01.2000 11:41")
-        XCTAssertEqual(year2000.formatted(style: .time, in: .turkey), "11:41")
+        #expect(year2000.formatted(style: .wide, in: .turkey) == "1 Ocak 2000")
+        #expect(year2000.formatted(style: .abbreviated, in: .turkey) == "1 Oca 2000")
+        #expect(year2000.formatted(style: .abbreviatedTime, in: .turkey) == "1 Oca 2000 11:41")
+        #expect(year2000.formatted(style: .narrow, in: .turkey) == "1.01.2000")
+        #expect(year2000.formatted(style: .narrowTime, in: .turkey) == "1.01.2000 11:41")
+        #expect(year2000.formatted(style: .time, in: .turkey) == "11:41")
     }
 }
 
