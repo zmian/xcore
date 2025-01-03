@@ -6,11 +6,12 @@
 //  Copyright © 2020 Xcore. All rights reserved.
 //
 
-import XCTest
+import Testing
 @testable import Xcore
 
-final class LazyResetTests: TestCase {
-    func testAllCases() {
+struct LazyResetTests {
+    @Test
+    func allCases() {
         struct Example {
             @LazyReset(7)
             var x: Int
@@ -22,10 +23,10 @@ final class LazyResetTests: TestCase {
 
         var example = Example()
 
-        XCTAssertEqual(example.x, 7)
+        #expect(example.x == 7)
         example.x = 100
-        XCTAssertEqual(example.x, 100)
+        #expect(example.x == 100)
         example.reset()
-        XCTAssertEqual(example.x, 7)
+        #expect(example.x == 7)
     }
 }

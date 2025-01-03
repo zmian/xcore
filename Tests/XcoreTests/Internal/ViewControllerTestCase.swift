@@ -4,20 +4,19 @@
 // MIT license, see LICENSE file for details
 //
 
-import XCTest
+import Testing
 import UIKit
 @testable import Xcore
 
 @MainActor
-class ViewControllerTestCase: TestCase {
+class ViewControllerTestCase {
     let viewController = UIViewController()
+
     var view: UIView {
         viewController.view
     }
 
-    override func setUp() {
-        super.setUp()
-        #warning("fixme")
-//        viewController.loadViewIfNeeded()
+    init() {
+        viewController.loadViewIfNeeded()
     }
 }
