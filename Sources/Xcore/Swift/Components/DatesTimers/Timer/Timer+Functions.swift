@@ -55,7 +55,8 @@ public func withDelay(
             await operation()
         } catch {
             // If the task is cancelled before the time ends, this function throws
-            // `CancellationError`. Thus, we ignore it.
+            // `CancellationError`. Thus, we just report it.
+            reportIssue(error)
         }
     }
 }
