@@ -53,19 +53,6 @@ actor Cache<Key: Sendable & Hashable, Value> {
         cache.object(forKey: KeyWrapper(key))?.value as? Value
     }
 
-    /// Sets the value of the specified key in the cache.
-    ///
-    /// Unlike an `NSMutableDictionary` value, a cache does not copy the key
-    /// values that are put into it.
-    ///
-    /// - Parameters:
-    ///   - value: The value to be stored in the cache.
-    ///   - key: The key with which to associate the value.
-    public func setValue(_ value: Value, forKey key: Key) {
-        keys.insert(key)
-        cache.setObject(Box(value), forKey: KeyWrapper(key))
-    }
-
     /// Sets the value of the specified key in the cache, and associates the
     /// key-value pair with the specified cost.
     ///
@@ -90,9 +77,14 @@ actor Cache<Key: Sendable & Hashable, Value> {
     ///   - value: The value to store in the cache.
     ///   - key: The key with which to associate the value.
     ///   - cost: The cost with which to associate the key-value pair.
-    public func setValue(_ value: Value, forKey key: Key, cost: Int) {
+    public func setValue(_ value: Value, forKey key: Key, cost: Int? = nil) {
         keys.insert(key)
-        cache.setObject(Box(value), forKey: KeyWrapper(key), cost: cost)
+
+        if let cost {
+            cache.setObject(Box(value), forKey: KeyWrapper(key), cost: cost)
+        } else {
+            cache.setObject(Box(value), forKey: KeyWrapper(key))
+        }
     }
 
     /// Removes the value of the specified key in the cache.
