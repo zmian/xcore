@@ -82,7 +82,7 @@ extension AppMonitoring {
 
         if let error {
             #if DEBUG
-            reportIssue(error,  message ?? errorUrl?.absoluteString, fileID: fileID, filePath: filePath, line: line, column: column)
+            reportIssue(error, message ?? errorUrl?.absoluteString, fileID: fileID, filePath: filePath, line: line, column: column)
             #endif
 
             let nsError = error as NSError
