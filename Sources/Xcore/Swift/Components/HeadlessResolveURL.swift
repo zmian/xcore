@@ -60,7 +60,7 @@ private final class HeadlessResolveURL: UIView, WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        debugLog(error, info: "didFailNavigation")
+        reportIssue(error, "didFailNavigation")
         completion(webView.url)
         removeFromSuperview()
     }

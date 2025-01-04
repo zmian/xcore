@@ -71,8 +71,10 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        file: StaticString = #fileID,
-        line: UInt = #line
+        fileID: StaticString = #fileID,
+        filePath: StaticString = #filePath,
+        line: UInt = #line,
+        column: UInt = #column
     ) {
         // Construct an error with minimal information to avoid including potentially
         // any PII.
@@ -80,7 +82,7 @@ extension AppMonitoring {
 
         if let error {
             #if DEBUG
-            debugLog(error, info: message ?? errorUrl?.absoluteString, file: file, line: line)
+            reportIssue(error,  message ?? errorUrl?.absoluteString, fileID: fileID, filePath: filePath, line: line, column: column)
             #endif
 
             let nsError = error as NSError
@@ -96,27 +98,36 @@ extension AppMonitoring {
                 userInfo: ([
                     NSLocalizedDescriptionKey: error.title,
                     NSDebugDescriptionErrorKey: error.debugMessage,
-                    NSFilePathErrorKey: "\(file):\(line)",
+                    NSFilePathErrorKey: "\(fileID):\(line)",
                     NSURLErrorKey: errorUrl,
                     NSUnderlyingErrorKey: nsError
                 ] as [String: Any?]).compacted()
             )
         } else if let message {
             #if DEBUG
-            debugLog(message, file: file, line: line)
+            debugLog(message, file: fileID, line: line)
             #endif
         }
 
         _log(level, message, customError, properties)
     }
 
-    public func logError(_ error: Error, url: URL?, file: StaticString = #fileID, line: UInt = #line) {
+    public func logError(
+        _ error: Error,
+        url: URL?,
+        fileID: StaticString = #fileID,
+        filePath: StaticString = #filePath,
+        line: UInt = #line,
+        column: UInt = #column
+    ) {
         log(
             error.logLevel ?? .debug,
             error: error,
             errorUrl: url,
-            file: file,
-            line: line
+            fileID: fileID,
+            filePath: filePath,
+            line: line,
+            column: column
         )
     }
 }
@@ -129,10 +140,23 @@ extension AppMonitoring {
         errorUrl: URL? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        file: StaticString = #fileID,
-        line: UInt = #line
+        fileID: StaticString = #fileID,
+        filePath: StaticString = #filePath,
+        line: UInt = #line,
+        column: UInt = #column
     ) {
-        log(.debug, error: error, errorUrl: errorUrl, id: customErrorId, message: message, properties: properties, file: file, line: line)
+        log(
+            .debug,
+            error: error,
+            errorUrl: errorUrl,
+            id: customErrorId,
+            message: message,
+            properties: properties,
+            fileID: fileID,
+            filePath: filePath,
+            line: line,
+            column: column
+        )
     }
 
     /// Logs a info message with option to include any additional information.
@@ -141,10 +165,22 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        file: StaticString = #fileID,
-        line: UInt = #line
+        fileID: StaticString = #fileID,
+        filePath: StaticString = #filePath,
+        line: UInt = #line,
+        column: UInt = #column
     ) {
-        log(.info, error: error, id: customErrorId, message: message, properties: properties, file: file, line: line)
+        log(
+            .info,
+            error: error,
+            id: customErrorId,
+            message: message,
+            properties: properties,
+            fileID: fileID,
+            filePath: filePath,
+            line: line,
+            column: column
+        )
     }
 
     /// Logs a warning message with option to include any additional information.
@@ -153,10 +189,21 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        file: StaticString = #fileID,
-        line: UInt = #line
+        fileID: StaticString = #fileID,
+        filePath: StaticString = #filePath,
+        line: UInt = #line,
+        column: UInt = #column
     ) {
-        log(.warn, error: error, id: customErrorId, message: message, properties: properties, file: file, line: line)
+        log(.warn,
+            error: error,
+            id: customErrorId,
+            message: message,
+            properties: properties,
+            fileID: fileID,
+            filePath: filePath,
+            line: line,
+            column: column
+        )
     }
 
     /// Logs an error message with option to include any additional information.
@@ -165,10 +212,22 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        file: StaticString = #fileID,
-        line: UInt = #line
+        fileID: StaticString = #fileID,
+        filePath: StaticString = #filePath,
+        line: UInt = #line,
+        column: UInt = #column
     ) {
-        log(.error, error: error, id: customErrorId, message: message, properties: properties, file: file, line: line)
+        log(
+            .error,
+            error: error,
+            id: customErrorId,
+            message: message,
+            properties: properties,
+            fileID: fileID,
+            filePath: filePath,
+            line: line,
+            column: column
+        )
     }
 
     /// Logs a critical message with option to include any additional information.
@@ -177,10 +236,21 @@ extension AppMonitoring {
         id customErrorId: String? = nil,
         message: String? = nil,
         properties: EncodableDictionary? = nil,
-        file: StaticString = #fileID,
-        line: UInt = #line
+        fileID: StaticString = #fileID,
+        filePath: StaticString = #filePath,
+        line: UInt = #line,
+        column: UInt = #column
     ) {
-        log(.critical, error: error, id: customErrorId, message: message, properties: properties, file: file, line: line)
+        log(.critical,
+            error: error,
+            id: customErrorId,
+            message: message,
+            properties: properties,
+            fileID: fileID,
+            filePath: filePath,
+            line: line,
+            column: column
+        )
     }
 }
 

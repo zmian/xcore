@@ -178,21 +178,29 @@ extension String {
 // MARK: - Random
 
 extension String {
-    /// Returns random elements of the string of the given length.
+    /// Generates a new string containing random characters from the string, with
+    /// the specified length.
     ///
-    /// - Parameter length: Number of random elements to return.
+    /// This method selects random characters from the string and constructs a new
+    /// string of the specified length. If the length is greater than the string’s
+    /// character count, the method will repeat character selection to fulfill the
+    /// requested length.
+    ///
+    /// - Parameter length: The desired number of characters in the resulting
+    ///   string.
+    /// - Returns: A string composed of random characters from the original string.
     public func random(length: Int) -> String {
         String((0..<length).compactMap { _ in randomElement() })
     }
 
-    /// Returns a random alphanumerics string of length based on
-    /// `Int.defaultRandomUpperBound`.
-    public static func random() -> Self {
-        .randomAlphanumerics(length: .defaultRandomUpperBound)
-    }
-
-    /// Returns a random alphanumerics string of the given length.
-    public static func randomAlphanumerics(length: Int) -> String {
+    /// Generates a random alphanumeric string of the specified length.
+    ///
+    /// This method creates a string containing a random sequence of letters
+    /// (uppercase and lowercase) and numbers.
+    ///
+    /// - Parameter length: The desired length of the generated string.
+    /// - Returns: A string consisting of random alphanumeric characters.
+    public static func random(length: Int = .defaultRandomUpperBound) -> String {
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
             .random(length: length)
     }
@@ -201,7 +209,7 @@ extension String {
 // MARK: - Truncation
 
 extension String {
-    public enum TruncationPosition {
+    public enum TruncationPosition: Sendable, Hashable {
         /// Truncate at head: `"...wxyz"`
         case head
         /// Truncate middle: `"ab...yz"`
@@ -321,7 +329,7 @@ extension String {
             }
         } catch {
             #if DEBUG
-            print("Invalid regex: \(error.localizedDescription)")
+            reportIssue(error, "Invalid regex")
             #endif
             return []
         }

@@ -72,7 +72,7 @@ struct StringTests {
 
     @Test
     func randomAlphanumerics() {
-        let result = String.randomAlphanumerics(length: 50)
+        let result = String.random(length: 50)
         #expect(result.count == 50)
     }
 
