@@ -38,6 +38,16 @@ extension AsyncPassthroughStream {
         stream.finish()
         return stream
     }
+
+    /// An `AsyncPassthroughStream` that never emits and completes immediately.
+    ///
+    /// Useful for situations where you must return an asynchronous sequence, but
+    /// you don't need to do anything.
+    public static var finished: Self {
+        let stream = Self()
+        stream.finish()
+        return stream
+    }
 }
 
 // MARK: - AsyncCurrentValueStream

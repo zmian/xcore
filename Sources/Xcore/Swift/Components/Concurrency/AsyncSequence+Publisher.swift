@@ -11,19 +11,15 @@ extension AsyncStream where Element: Sendable {
     /// Returns a publisher that emits events when asynchronous sequence produces
     /// new elements.
     public var publisher: some Publisher<Element, Never> {
-        let box = Box()
+        let box = UncheckedSendable(PassthroughSubject<Element, Never>())
 
         Task {
             for await value in self {
-                box.subject.send(value)
+                box.wrappedValue.send(value)
             }
         }
 
-        return box.subject
-    }
-
-    private final class Box: @unchecked Sendable {
-        let subject = PassthroughSubject<Element, Never>()
+        return box.wrappedValue
     }
 }
 #endif

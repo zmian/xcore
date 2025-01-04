@@ -7,7 +7,6 @@
 import Testing
 @testable import Xcore
 
-@Suite(.serialized)
 struct AsyncPassthroughStreamTests {
     @Test
     func iterations() async {

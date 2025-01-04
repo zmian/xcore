@@ -8,7 +8,6 @@
 import Testing
 @testable import Xcore
 
-@Suite(.serialized)
 struct LiveAddressSearchClientTests {
     init() {
         LiveAddressSearchClient.supportedRegions = [.unitedStates]

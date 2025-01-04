@@ -32,17 +32,21 @@ import Foundation
 public final class AsyncCurrentValueStream<Element: Sendable>: AsyncSequence, Sendable {
     fileprivate typealias Base = AsyncStream<Element>
     private typealias Continuation = Base.Continuation
-    nonisolated(unsafe) private var continuations = [AnyHashable: Continuation]()
+    private let continuations = LockIsolated([UUID: Continuation]())
+    /// The lock-isolated value.
+    private let lockedValue: LockIsolated<Element>
 
     /// The value wrapped by this stream, produced as a new element whenever it
     /// changes.
-    nonisolated(unsafe) public private(set) var value: Element
+    public var value: Element {
+        lockedValue.value
+    }
 
     /// Creates a current value asynchronous sequence with the given initial value.
     ///
     /// - Parameter value: The initial value to produce.
     public init(_ value: Element) {
-        self.value = value
+        lockedValue = LockIsolated(value)
     }
 
     /// Resume the task awaiting the next iteration point by having it return
@@ -56,7 +60,7 @@ public final class AsyncCurrentValueStream<Element: Sendable>: AsyncSequence, Se
     ///
     /// - Parameter value: The value to send from the continuation.
     public func send(_ value: Element) {
-        self.value = value
+        lockedValue.setValue(value)
         continuations.values.forEach {
             $0.yield(value)
         }
@@ -73,7 +77,9 @@ public final class AsyncCurrentValueStream<Element: Sendable>: AsyncSequence, Se
             $0.finish()
         }
 
-        continuations.removeAll()
+        continuations.withValue {
+            $0.removeAll()
+        }
     }
 }
 
@@ -88,16 +94,22 @@ extension AsyncCurrentValueStream {
                 return continuation.finish()
             }
 
-            continuation.yield(value)
-            continuations[id] = continuation
+            continuation.yield(lockedValue.value)
+            continuations.withValue {
+                $0[id] = continuation
+            }
 
             continuation.onTermination = { [weak self] _ in
-                self?.continuations[id] = nil
+                self?.continuations.withValue {
+                    $0[id] = nil
+                }
             }
         }
 
         return Iterator(stream.makeAsyncIterator()) { [weak self] in
-            self?.continuations[id] = nil
+            self?.continuations.withValue {
+                $0[id] = nil
+            }
         }
     }
 

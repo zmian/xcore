@@ -8,7 +8,7 @@ import Foundation
 
 public struct NoopAddressSearchClient: AddressSearchClient {
     public func observe(id: UUID) -> AsyncStream<[AddressSearchResult]> {
-        .none
+        .finished
     }
 
     public func update(id: UUID, searchString: String) {}
