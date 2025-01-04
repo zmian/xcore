@@ -66,12 +66,12 @@ extension Date {
         /// A style that uses the weekday in calendar.
         ///
         /// - Parameter width: The width of the weekday name.
-        case weekdayName(Width)
+        case weekdayName(Date.FormatStyle.Symbol.Weekday)
 
         /// A style that uses the month in calendar.
         ///
         /// - Parameter width: The width of the month name.
-        case monthName(Width)
+        case monthName(Date.FormatStyle.Symbol.Month)
 
         /// A style that uses the ordinal month day in calendar (e.g., June 4th).
         ///
@@ -87,7 +87,7 @@ extension Date {
         /// ```
         ///
         /// - Parameter width: The width of the month name.
-        case monthDayOrdinal(Width, withPeriod: Bool = false)
+        case monthDayOrdinal(Date.FormatStyle.Symbol.Month, withPeriod: Bool = false)
 
         case format(Format)
     }

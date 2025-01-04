@@ -93,22 +93,26 @@ extension Date {
 // MARK: - Weekday & Month Formatted
 
 extension Date {
-    /// Calculates the weekday name in the calendar.
+    /// Calculates the weekday name in the given calendar.
     ///
     /// - Parameters:
-    ///   - weekday: The weekday number.
-    ///   - style: The style of the weekday name.
-    ///   - calendar: The calendar to use when formatting name.
+    ///   - weekday: The weekday number (1 for Sunday, 7 for Saturday in Gregorian).
+    ///   - style: The desired width of the weekday name.
+    ///   - calendar: The calendar to use for formatting the weekday name.
+    /// - Returns: The formatted weekday name as a `String`.
     public static func weekdayName(
         for weekday: Int,
-        style: Style.Width = .wide,
+        style: Date.FormatStyle.Symbol.Weekday = .wide,
         in calendar: Calendar = .default
     ) -> String {
-        _cache.symbolFormatter.weekdayName(
-            for: weekday,
-            style: style,
-            calendar: calendar
-        )
+        guard
+            (1...7).contains(weekday),
+            let date = calendar.date(from: DateComponents(weekday: weekday))
+        else {
+            fatalError("Invalid weekday: \(weekday). Must be between 1 and 7.")
+        }
+
+        return date.weekdayName(style, in: calendar)
     }
 
     /// Calculates the weekday name on the receiver date based on calendar.
@@ -117,13 +121,12 @@ extension Date {
     ///   - style: The style of the weekday name.
     ///   - calendar: The calendar to use when formatting name.
     private func weekdayName(
-        _ style: Style.Width,
+        _ format: Date.FormatStyle.Symbol.Weekday,
         in calendar: Calendar
     ) -> String {
-        Self._cache.symbolFormatter.weekdayName(
-            for: component(.weekday),
-            style: style,
-            calendar: calendar
+        formatted(FormatStyle()
+            .weekday(format)
+            .setCalendar(calendar)
         )
     }
 
@@ -133,13 +136,12 @@ extension Date {
     ///   - style: The style of the month name.
     ///   - calendar: The calendar to use when formatting name.
     private func monthName(
-        _ style: Style.Width,
+        _ format: Date.FormatStyle.Symbol.Month,
         in calendar: Calendar
     ) -> String {
-        Self._cache.symbolFormatter.monthName(
-            for: component(.month),
-            style: style,
-            calendar: calendar
+        formatted(FormatStyle()
+            .month(format)
+            .setCalendar(calendar)
         )
     }
 }

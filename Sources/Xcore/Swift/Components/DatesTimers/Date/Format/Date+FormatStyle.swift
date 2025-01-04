@@ -33,8 +33,22 @@ extension Date.RelativeFormatStyle {
     }
 
     private func applying(_ configure: (inout Self) throws -> Void) rethrows -> Self {
-        var object = self
-        try configure(&object)
-        return object
+        var copy = self
+        try configure(&copy)
+        return copy
+    }
+}
+
+// MARK: - Helpers
+
+extension Date.FormatStyle {
+    func setCalendar(_ newCalendar: Calendar) -> Self {
+        var copy = self
+        copy.calendar = newCalendar
+        copy.timeZone = newCalendar.timeZone
+        newCalendar.locale.map {
+            copy.locale = $0
+        }
+        return copy
     }
 }
