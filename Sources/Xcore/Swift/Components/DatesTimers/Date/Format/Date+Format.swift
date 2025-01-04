@@ -93,11 +93,13 @@ extension Date {
 // MARK: - Weekday & Month Formatted
 
 extension Date {
-    /// Calculates the weekday name in the given calendar.
+    /// Calculates the weekday name for a given weekday number in the specified
+    /// calendar.
     ///
     /// - Parameters:
-    ///   - weekday: The weekday number (1 for Sunday, 7 for Saturday in Gregorian).
-    ///   - style: The desired width of the weekday name.
+    ///   - weekday: The weekday number (1 for Sunday, 7 for Saturday in the
+    ///     Gregorian calendar).
+    ///   - style: The desired width of the weekday name (e.g., `.short`, `.wide`).
     ///   - calendar: The calendar to use for formatting the weekday name.
     /// - Returns: The formatted weekday name as a `String`.
     public static func weekdayName(
@@ -115,33 +117,37 @@ extension Date {
         return date.weekdayName(style, in: calendar)
     }
 
-    /// Calculates the weekday name on the receiver date based on calendar.
+    /// Calculates the weekday name for the receiver date in the specified calendar.
     ///
     /// - Parameters:
-    ///   - style: The style of the weekday name.
-    ///   - calendar: The calendar to use when formatting name.
+    ///   - style: The desired width of the weekday name (e.g., `.short`, `.wide`).
+    ///   - calendar: The calendar to use for formatting the weekday name.
+    /// - Returns: The formatted weekday name as a `String`.
     private func weekdayName(
         _ format: Date.FormatStyle.Symbol.Weekday,
         in calendar: Calendar
     ) -> String {
-        formatted(FormatStyle()
-            .weekday(format)
-            .setCalendar(calendar)
+        formatted(
+            FormatStyle()
+                .weekday(format)
+                .setCalendar(calendar)
         )
     }
 
-    /// Calculates the month name on the receiver date based on calendar.
+    /// Calculates the month name for the receiver date in the specified calendar.
     ///
     /// - Parameters:
-    ///   - style: The style of the month name.
-    ///   - calendar: The calendar to use when formatting name.
+    ///   - style: The desired width of the month name (e.g., `.short`, `.wide`).
+    ///   - calendar: The calendar to use for formatting the month name.
+    /// - Returns: The formatted month name as a `String`.
     private func monthName(
         _ format: Date.FormatStyle.Symbol.Month,
         in calendar: Calendar
     ) -> String {
-        formatted(FormatStyle()
-            .month(format)
-            .setCalendar(calendar)
+        formatted(
+            FormatStyle()
+                .month(format)
+                .setCalendar(calendar)
         )
     }
 }
