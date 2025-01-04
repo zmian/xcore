@@ -15,9 +15,9 @@ public enum MonotonicTimer {}
 // MARK: - Uptime
 
 extension MonotonicTimer {
-    public final class Uptime: Equatable {
+    public final class Uptime: Sendable, Hashable, Identifiable {
         public let id: UUID
-        private lazy var begin = DispatchTime.now().uptimeNanoseconds
+        private let begin = LockIsolated(DispatchTime.now().uptimeNanoseconds)
 
         public init() {
             #if DEBUG
@@ -34,7 +34,7 @@ extension MonotonicTimer {
 
         /// Save the current uptime value internally.
         public func saveValue() {
-            begin = DispatchTime.now().uptimeNanoseconds
+            begin.setValue(DispatchTime.now().uptimeNanoseconds)
         }
 
         public func elapsed(_ duration: TimeInterval) -> Bool {
@@ -60,11 +60,15 @@ extension MonotonicTimer {
         }
 
         private var diffInSeconds: TimeInterval {
-            DispatchTime.seconds(elapsedSince: begin)
+            DispatchTime.seconds(elapsedSince: begin.value)
         }
 
         public static func ==(lhs: Uptime, rhs: Uptime) -> Bool {
             lhs.id == rhs.id
+        }
+
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
         }
     }
 }
