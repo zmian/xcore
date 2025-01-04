@@ -10,20 +10,32 @@ import Foundation
 
 extension String {
     /// A structure representing formatting of a string using a closure.
+    ///
+    /// This structure encapsulates a closure that applies a specific format to an input string,
+    /// enabling custom formatting logic to be reused conveniently.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let uppercaseStyle = String.BlockFormatStyle { $0.uppercased() }
+    /// print("hello".formatted(uppercaseStyle))
+    /// // Prints "HELLO"
+    /// ```
     public struct BlockFormatStyle {
         fileprivate let format: (String) -> String
 
         /// Creates an instance to format given input string.
         ///
-        /// - Parameter format: A closure to format the input string.
+        /// - Parameter format: A closure defining how to format the input string.
         public init(_ format: @escaping (String) -> String) {
             self.format = format
         }
     }
 
-    /// Returns the result of given formatting style applied to `self`.
+    /// Applies the given formatting style to the string.
     ///
     /// - Parameter style: The string formatting style.
+    /// - Returns: A new string with the formatting applied.
     public func formatted(_ style: BlockFormatStyle) -> String {
         style.format(self)
     }
@@ -32,7 +44,13 @@ extension String {
 // MARK: - Masked
 
 extension String.BlockFormatStyle {
-    /// Automatically detects a valid email address and apply email masking.
+    /// Masks an email address or string with a default masking style.
+    ///
+    /// If the input string is a valid email address, it masks all but the first
+    /// character of the local part and retains the domain. For non-email strings,
+    /// it replaces all characters with mask symbols.
+    ///
+    /// **Usage**
     ///
     /// ```swift
     /// print("hello@example.com".formatted(.masked))
@@ -44,11 +62,20 @@ extension String.BlockFormatStyle {
     /// print("Hello World".formatted(.masked))
     /// // Prints "•••••••••••"
     /// ```
+    ///
+    /// - Returns: A `BlockFormatStyle` instance configured to apply email or string
+    ///   masking.
     public static var masked: Self {
         masked()
     }
 
-    /// Automatically detects a valid email address and apply email masking.
+    /// Masks an email address or string with a default masking style.
+    ///
+    /// If the input string is a valid email address, it masks all but the first
+    /// character of the local part and retains the domain. For non-email strings,
+    /// it replaces all characters with mask symbols.
+    ///
+    /// **Usage**
     ///
     /// ```swift
     /// print("hello@example.com".formatted(.masked))
@@ -60,6 +87,11 @@ extension String.BlockFormatStyle {
     /// print("Hello World".formatted(.masked))
     /// // Prints "•••••••••••"
     /// ```
+    ///
+    /// - Parameter count: The `MaskCharacterCount` determining the number of mask
+    ///   symbols to apply.
+    /// - Returns: A `BlockFormatStyle` instance configured to apply email or string
+    ///   masking.
     public static func masked(count: MaskCharacterCount? = nil) -> Self {
         .init {
             guard
@@ -79,7 +111,13 @@ extension String.BlockFormatStyle {
         }
     }
 
-    /// Mask all except the first `n` characters.
+    /// Masks all characters except the first `n` characters in the string.
+    ///
+    /// This method keeps the first `n` characters of the input string visible and
+    /// replaces the remaining characters with a specified number of mask symbols.
+    /// You can optionally add a separator between the visible and masked parts.
+    ///
+    /// **Usage**
     ///
     /// ```swift
     /// print("0123456789".formatted(.maskedAllExcept(first: 4))
@@ -91,13 +129,27 @@ extension String.BlockFormatStyle {
     /// print("0123456789".formatted(.maskedAllExcept(first: 4, count: .equal(4), separator: " ")))
     /// // Prints "0123 ••••"
     /// ```
+    ///
+    /// - Parameters:
+    ///   - maxLength: The number of characters to leave unmasked at the start of
+    ///     the string.
+    ///   - count: The `MaskCharacterCount` specifying the length of the mask.
+    ///   - separator: A string to insert between the visible and masked parts.
+    /// - Returns: A `BlockFormatStyle` instance configured to mask the string
+    ///   accordingly.
     public static func maskedAllExcept(first maxLength: Int, count: MaskCharacterCount = .same, separator: String = "") -> Self {
         .init {
             $0.prefix(maxLength) + count.string(count: $0.count - maxLength, separator: separator, suffix: false)
         }
     }
 
-    /// Mask all except the last `n` characters.
+    /// Masks all characters except the last `n` characters in the string.
+    ///
+    /// This method hides all but the last `n` characters in the string by replacing
+    /// them with a specified number of mask symbols. You can optionally add a
+    /// separator between the masked and visible parts.
+    ///
+    /// **Usage**
     ///
     /// ```swift
     /// print("0123456789".formatted(.maskedAllExcept(last: 4))
@@ -112,18 +164,36 @@ extension String.BlockFormatStyle {
     /// print("0123456789".formatted(.maskedAccountNumber))
     /// // Prints "•••• 6789"
     /// ```
+    ///
+    /// - Parameters:
+    ///   - maxLength: The number of characters to leave unmasked at the end of the
+    ///     string.
+    ///   - count: The `MaskCharacterCount` specifying the length of the mask.
+    ///   - separator: A string to insert between the masked and visible parts.
+    /// - Returns: A `BlockFormatStyle` instance configured to mask the string
+    ///   accordingly.
     public static func maskedAllExcept(last maxLength: Int, count: MaskCharacterCount = .same, separator: String = "") -> Self {
         .init {
             count.string(count: $0.count - maxLength, separator: separator, suffix: true) + $0.suffix(maxLength)
         }
     }
 
-    /// Masked with account number formatting.
+    /// Masks all but the last four characters of the string in account number
+    /// format.
+    ///
+    /// This method is specifically designed for formatting account numbers. It
+    /// masks all but the last four characters and inserts a space separator between
+    /// the masked and visible parts.
+    ///
+    /// **Usage**
     ///
     /// ```swift
     /// print("0123456789".formatted(.maskedAccountNumber))
     /// // Prints "•••• 6789"
     /// ```
+    ///
+    /// - Returns: A `BlockFormatStyle` instance configured to mask the string as an
+    ///   account number.
     public static var maskedAccountNumber: Self {
         maskedAllExcept(last: 4, count: .equal(4), separator: " ")
     }
@@ -132,7 +202,7 @@ extension String.BlockFormatStyle {
 // MARK: - MaskCharacterCount
 
 extension String.BlockFormatStyle {
-    public enum MaskCharacterCount {
+    public enum MaskCharacterCount: Sendable, Hashable {
         /// Mask characters length is same as the input string length.
         case same
 
