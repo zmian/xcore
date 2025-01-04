@@ -11,8 +11,8 @@ import Foundation
 extension String {
     /// A structure representing formatting of a string using a closure.
     ///
-    /// This structure encapsulates a closure that applies a specific format to an input string,
-    /// enabling custom formatting logic to be reused conveniently.
+    /// This structure encapsulates a closure that applies a specific format to an
+    /// input string, enabling custom formatting logic to be reused conveniently.
     ///
     /// **Usage**
     ///
@@ -24,7 +24,7 @@ extension String {
     public struct BlockFormatStyle {
         fileprivate let format: (String) -> String
 
-        /// Creates an instance to format given input string.
+        /// Creates an instance to format a given input string.
         ///
         /// - Parameter format: A closure defining how to format the input string.
         public init(_ format: @escaping (String) -> String) {
@@ -46,9 +46,11 @@ extension String {
 extension String.BlockFormatStyle {
     /// Masks an email address or string with a default masking style.
     ///
-    /// If the input string is a valid email address, it masks all but the first
-    /// character of the local part and retains the domain. For non-email strings,
-    /// it replaces all characters with mask symbols.
+    /// For email addresses:
+    /// - Masks all but the first character of the local part and retains the domain.
+    ///
+    /// For non-email strings:
+    /// - Replaces all characters with mask symbols.
     ///
     /// **Usage**
     ///
@@ -69,7 +71,7 @@ extension String.BlockFormatStyle {
         masked()
     }
 
-    /// Masks an email address or string with a default masking style.
+    /// Masks an email address or string with a customizable masking style.
     ///
     /// If the input string is a valid email address, it masks all but the first
     /// character of the local part and retains the domain. For non-email strings,
@@ -131,15 +133,17 @@ extension String.BlockFormatStyle {
     /// ```
     ///
     /// - Parameters:
-    ///   - maxLength: The number of characters to leave unmasked at the start of
-    ///     the string.
+    ///   - maxLength: The number of characters to leave unmasked at the start of the
+    ///     string.
     ///   - count: The `MaskCharacterCount` specifying the length of the mask.
     ///   - separator: A string to insert between the visible and masked parts.
     /// - Returns: A `BlockFormatStyle` instance configured to mask the string
     ///   accordingly.
     public static func maskedAllExcept(first maxLength: Int, count: MaskCharacterCount = .same, separator: String = "") -> Self {
-        .init {
-            $0.prefix(maxLength) + count.string(count: $0.count - maxLength, separator: separator, suffix: false)
+        .init { input in
+            let visible = input.prefix(maxLength)
+            let masked = count.string(count: input.count - maxLength, separator: separator, suffix: false)
+            return visible + masked
         }
     }
 
@@ -173,8 +177,10 @@ extension String.BlockFormatStyle {
     /// - Returns: A `BlockFormatStyle` instance configured to mask the string
     ///   accordingly.
     public static func maskedAllExcept(last maxLength: Int, count: MaskCharacterCount = .same, separator: String = "") -> Self {
-        .init {
-            count.string(count: $0.count - maxLength, separator: separator, suffix: true) + $0.suffix(maxLength)
+        .init { input in
+            let masked = count.string(count: input.count - maxLength, separator: separator, suffix: true)
+            let visible = input.suffix(maxLength)
+            return masked + visible
         }
     }
 
@@ -202,6 +208,8 @@ extension String.BlockFormatStyle {
 // MARK: - MaskCharacterCount
 
 extension String.BlockFormatStyle {
+    /// An enumeration representing length of mask characters relative to the input
+    /// string.
     public enum MaskCharacterCount: Sendable, Hashable {
         /// Mask characters length is same as the input string length.
         case same
@@ -235,11 +243,8 @@ extension String.BlockFormatStyle {
                 return ""
             }
 
-            if suffix {
-                return String(repeating: .mask, count: length) + separator
-            } else {
-                return separator + String(repeating: .mask, count: length)
-            }
+            let mask = String(repeating: .mask, count: length)
+            return suffix ? mask + separator : separator + mask
         }
     }
 }
