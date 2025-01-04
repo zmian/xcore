@@ -128,9 +128,9 @@ extension Date {
         in calendar: Calendar
     ) -> String {
         formatted(
-            FormatStyle()
-                .weekday(format)
-                .setCalendar(calendar)
+            .dateTime
+            .weekday(format)
+            .setCalendar(calendar)
         )
     }
 
@@ -145,9 +145,9 @@ extension Date {
         in calendar: Calendar
     ) -> String {
         formatted(
-            FormatStyle()
-                .month(format)
-                .setCalendar(calendar)
+            .dateTime
+            .month(format)
+            .setCalendar(calendar)
         )
     }
 }
