@@ -95,21 +95,22 @@ extension String.BlockFormatStyle {
     /// - Returns: A `BlockFormatStyle` instance configured to apply email or string
     ///   masking.
     public static func masked(count: MaskCharacterCount? = nil) -> Self {
-        .init {
+        .init { input in
             guard
-                $0.validate(rule: .email),
-                let firstIndex = $0.index(from: 1),
-                let lastIndex = $0.lastIndex(of: "@")
+                input.validate(rule: .email),
+                let firstIndex = input.index(from: 1),
+                let lastIndex = input.lastIndex(of: "@")
             else {
-                let length = (count ?? .same).length(basedOn: $0.count)
+                let length = (count ?? .same).length(basedOn: input.count)
                 return String(repeating: .mask, count: length)
             }
 
-            var string = $0
+            var result = input
             let range = firstIndex..<lastIndex
-            let count = (count ?? .equal(3)).length(basedOn: $0.distance(from: range.lowerBound, to: range.upperBound))
-            string.replaceSubrange(range, with: String(repeating: .mask, count: count))
-            return string
+            let maskLength = (count ?? .equal(3))
+                .length(basedOn: input.distance(from: range.lowerBound, to: range.upperBound))
+            result.replaceSubrange(range, with: String(repeating: .mask, count: maskLength))
+            return result
         }
     }
 
