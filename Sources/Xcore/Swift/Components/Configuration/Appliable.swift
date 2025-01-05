@@ -92,18 +92,18 @@ extension MutableAppliable {
     /// - Parameter configure: The configuration block to apply.
     @discardableResult
     public func applying(_ configure: (inout Self) throws -> Void) rethrows -> Self {
-        var object = self
-        try configure(&object)
-        return object
+        var copy = self
+        try configure(&copy)
+        return copy
     }
 
     /// Apply styles using the given closure.
     ///
     /// - Parameter configure: The configuration block to apply.
     public mutating func apply(_ configure: (inout Self) throws -> Void) rethrows {
-        var object = self
-        try configure(&object)
-        self = object
+        var copy = self
+        try configure(&copy)
+        self = copy
     }
 }
 
@@ -165,3 +165,13 @@ extension Array where Element: MutableAppliable {
 // MARK: - NSObject
 
 extension NSObject: Appliable {}
+
+// MARK: - FormatStyle
+
+extension FormatStyle {
+    func applying(_ configure: (inout Self) throws -> Void) rethrows -> Self {
+        var copy = self
+        try configure(&copy)
+        return copy
+    }
+}

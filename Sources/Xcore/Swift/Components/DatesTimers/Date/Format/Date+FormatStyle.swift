@@ -31,25 +31,19 @@ extension Date.RelativeFormatStyle {
             $0.calendar = calendar
         }
     }
-
-    private func applying(_ configure: (inout Self) throws -> Void) rethrows -> Self {
-        var copy = self
-        try configure(&copy)
-        return copy
-    }
 }
 
 // MARK: - Helpers
 
 extension Date.FormatStyle {
     func setCalendar(_ newCalendar: Calendar) -> Self {
-        var copy = self
-        copy.calendar = newCalendar
-        copy.timeZone = newCalendar.timeZone
-        newCalendar.locale.map {
-            copy.locale = $0
+        applying { style in
+            style.calendar = newCalendar
+            style.timeZone = newCalendar.timeZone
+            newCalendar.locale.map {
+                style.locale = $0
+            }
         }
-        return copy
     }
 }
 
@@ -88,8 +82,8 @@ extension Date.ISO8601FormatStyle {
     ///   the date.
     /// - Returns: A modified ISO 8601 format style with the specified time zone.
     public func timeZone(_ timeZone: TimeZone) -> Self {
-        var copy = self
-        copy.timeZone = timeZone
-        return copy
+        applying {
+            $0.timeZone = timeZone
+        }
     }
 }
