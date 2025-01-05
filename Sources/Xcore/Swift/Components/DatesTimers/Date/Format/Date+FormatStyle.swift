@@ -52,3 +52,44 @@ extension Date.FormatStyle {
         return copy
     }
 }
+
+extension Date.ISO8601FormatStyle {
+    /// Configures the ISO 8601 date format style to include the date components
+    /// (year, month, and day) in the formatted output.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let date = Date()
+    /// let formattedDate = date.formatted(.iso8601.date())
+    /// print(formattedDate) // Output: "2025-01-04"
+    /// ```
+    ///
+    /// - Returns: An ISO 8601 date format style modified to include the date.
+    public func date() -> Self {
+        year().month().day()
+    }
+
+    /// Configures the ISO 8601 date format style with a specific time zone.
+    ///
+    /// This method allows you to explicitly set the time zone for date formatting
+    /// and parsing. This ensures consistent date and time representation across
+    /// different locales and environments.
+    ///
+    /// **Usage**
+    ///
+    /// ```swift
+    /// let date = Date()
+    /// let formattedDate = date.formatted(.iso8601.timeZone(.utc))
+    /// print(formattedDate) // Output: "2025-01-04T00:00:00Z"
+    /// ```
+    ///
+    /// - Parameter timeZone: The time zone to use for formatting and parsing
+    ///   the date.
+    /// - Returns: A modified ISO 8601 format style with the specified time zone.
+    public func timeZone(_ timeZone: TimeZone) -> Self {
+        var copy = self
+        copy.timeZone = timeZone
+        return copy
+    }
+}

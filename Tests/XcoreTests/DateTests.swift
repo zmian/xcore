@@ -18,7 +18,7 @@ struct DateTest {
     private let customStyles: [Date.Style] = [
         .format(.iso8601),
         .format(.iso8601Local),
-        .iso8601(.withFullDate),
+        .iso8601(.iso8601.date()),
         .format(.year),
         .format(.monthDayYear(.wide)),
         .format(.monthDayYear(.abbreviated)),
@@ -47,7 +47,7 @@ struct DateTest {
                     stringToTest = "2022-06-04T11:11:22"
                     expectedDate = Date(year: 2022, month: 6, day: 4, hour: 11, minute: 11, second: 22)
                     sourceLocation = #_sourceLocation
-                case .iso8601(.withFullDate):
+                case .iso8601(.iso8601.date()):
                     stringToTest = "2022-06-04"
                     expectedDate = Date(year: 2022, month: 6, day: 4)
                     sourceLocation = #_sourceLocation
@@ -117,7 +117,7 @@ struct DateTest {
                 case .format(.iso8601Local):
                     expectedResult = "2022-06-04T11:11:22"
                     sourceLocation = #_sourceLocation
-                case .iso8601(.withFullDate):
+                case .iso8601(.iso8601.date()):
                     expectedResult = "2022-06-04"
                     sourceLocation = #_sourceLocation
                 case .format(.year):
@@ -994,7 +994,7 @@ struct DateTest {
         #expect(date.formatted(style: .dateTime(.long, time: .short)) == "January 1, 2000 at 9:41 AM")
         #expect(date.formatted(style: .dateTime(.full, time: .short)) == "Saturday, January 1, 2000 at 9:41 AM")
 
-        #expect(date.formatted(style: .iso8601(.withFullDate)) == "2000-01-01")
+        #expect(date.formatted(style: .iso8601(.iso8601.date())) == "2000-01-01")
     }
 
     @Test

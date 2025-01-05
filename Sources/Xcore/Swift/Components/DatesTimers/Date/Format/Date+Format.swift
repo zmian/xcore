@@ -49,9 +49,8 @@ extension Date {
                     doesRelativeDateFormatting: doesRelativeDateFormatting,
                     calendar: calendar
                 )
-            case let .iso8601(options):
-                return cache.dateFormatter(options: options, calendar: calendar)
-                    .string(from: self)
+            case let .iso8601(format):
+                return formatted(format.timeZone(calendar.timeZone))
             case let .relative(untilThreshold):
                 return formattedRelative(until: untilThreshold, calendar: calendar)
             case let .weekdayName(width):

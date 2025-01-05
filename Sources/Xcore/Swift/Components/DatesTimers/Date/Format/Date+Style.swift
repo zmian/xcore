@@ -10,7 +10,7 @@ extension Date {
     /// An enumeration representing date and time style of a date object.
     public enum Style: Sendable, Hashable {
         /// A style that uses ISO 8601 representation.
-        case iso8601(ISO8601DateFormatter.Options)
+        case iso8601(Date.ISO8601FormatStyle)
 
         /// A style that uses the date and time styles.
         case dateTime(DateFormatter.Style, time: DateFormatter.Style)

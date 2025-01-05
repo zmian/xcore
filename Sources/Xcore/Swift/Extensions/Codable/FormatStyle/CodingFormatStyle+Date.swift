@@ -11,7 +11,7 @@ public struct DateCodingFormatStyle: CodingFormatStyle, Sendable {
         .format(.iso8601),
         .format(.iso8601Local),
         // yyyy-MM-dd (e.g., 2020-06-04)
-        .iso8601(.withFullDate)
+        .iso8601(.iso8601.date())
     ]
 
     private let calendar: Calendar

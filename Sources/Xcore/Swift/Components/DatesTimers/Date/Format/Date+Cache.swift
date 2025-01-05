@@ -97,26 +97,5 @@ extension Date {
             register(formatter: formatter, with: key)
             return formatter
         }
-
-        func dateFormatter(
-            options: ISO8601DateFormatter.Options,
-            calendar: Calendar
-        ) -> ISO8601DateFormatter {
-            let key = """
-            \(options.rawValue)
-            \(calendar.timeZone.identifier)
-            """.sha256()
-
-            if let formatter = get(key: key) as? ISO8601DateFormatter {
-                return formatter
-            }
-
-            let formatter = ISO8601DateFormatter().apply {
-                $0.timeZone = calendar.timeZone
-                $0.formatOptions = options
-            }
-            register(formatter: formatter, with: key)
-            return formatter
-        }
     }
 }
