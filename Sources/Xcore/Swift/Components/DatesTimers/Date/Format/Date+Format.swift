@@ -129,7 +129,7 @@ extension Date {
         formatted(
             .dateTime
             .weekday(format)
-            .setCalendar(calendar)
+            .calendarTimeZoneLocale(calendar)
         )
     }
 
@@ -146,7 +146,7 @@ extension Date {
         formatted(
             .dateTime
             .month(format)
-            .setCalendar(calendar)
+            .calendarTimeZoneLocale(calendar)
         )
     }
 }
